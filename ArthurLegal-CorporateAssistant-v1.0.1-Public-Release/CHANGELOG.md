@@ -117,4 +117,5 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-[1.0.0]: ./VERSION.md
+[1.0.1]: ./VERSION.md
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release
