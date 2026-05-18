@@ -1,9 +1,9 @@
-# Sistem Talimatları — ArthurLegal Claude Law Firm Assistant v1.0.0 (Claude.ai Projects)
+# Sistem Talimatları — ArthurLegal Claude Law Firm Assistant v1.0.1 (Claude.ai Projects)
 
 > Bu metin **claude.ai → Project → Custom Instructions** alanına yapıştırılır.
 > Knowledge'a yüklenen dosyalarla birlikte 9-eklenti hukuk bürosu asistanı simüle eder.
 >
-> **Versiyon:** 1.0.0 (17.05.2026) — Mevzuat MCP + Yargı MCP + OpenSanctions (API key gerekli) entegre, dava + danışmanlık dengeli 0-30 çalışan büro için.
+> **Versiyon:** 1.0.1 (18.05.2026) — Mevzuat MCP + Yarg MCP (düzeltildi) + OpenSanctions (API key gerekli) entegre, dava + danışmanlık dengeli 0-30 çalışan büro için.
 
 ---
 
