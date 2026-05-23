@@ -38,7 +38,7 @@ Toplam knowledge dosyası: **100** | Toplam paket boyutu: ~500 KB.
 
 ---
 
-## Kurulum — 4 adım, ~10 dakika
+## Kurulum — 5 adım, ~15 dakika
 
 ### Adım 1 — Yeni Claude.ai Project oluşturun
 
@@ -66,7 +66,24 @@ Beklenen sonuç: Project Knowledge'da **~100 dosya** görmelisiniz.
 
 > Not: Claude.ai Projects, alt-klasör yapısını otomatik düzleştirir. Bu sorun değil — sistem prompt'undaki yönlendirmeler dosya isimlerine göre çalışır.
 
-### Adım 4 — Kurum profilini özelleştirin (önerilen)
+### Adım 4 — MCP bağlantılarını Claude.ai'a ekleyin
+
+Bu paket Türk mevzuatına ve yargı kararlarına **canlı erişim** için iki MCP sunucusu kullanır. MCP bağlantısı olmadan asistan yalnızca model bilgisinden yanıt üretir; mevzuat ve içtihat atıfları gerçek zamanlı doğrulanamaz.
+
+1. [claude.ai](https://claude.ai) sol menüsünden **Settings** bölümünü açın.
+2. **Integrations** (veya **Connectors**) sekmesine gidin.
+3. **"Add integration"** butonuna tıklayın ve aşağıdaki iki sunucuyu sırayla ekleyin:
+
+| Sunucu | URL | Auth |
+|---|---|---|
+| **Mevzuat MCP** | `mevzuat.surucu.dev/mcp` | Yok |
+| **Yargı MCP** | `yargimcp.surucu.dev/mcp` | Yok |
+
+Her sunucu için URL'yi girin, kimlik doğrulama seçeneğini atlayın ve kaydedin. Her ikisi de [saidsurucu](https://github.com/saidsurucu) tarafından yayımlanan halka açık sunuculardır.
+
+> **OpenSanctions (isteğe bağlı, ücretli):** Yaptırım/PEP taraması için. API key aldıktan sonra Claude.ai Project ayarlarına `OPENSANCTIONS_API_KEY` ortam değişkeni olarak ekleyin.
+
+### Adım 5 — Kurum profilini özelleştirin (önerilen)
 
 Bu sürümün **şablon** olarak gelmesinin en güçlü tarafı: kendi kurumunuza uyarlanabilir olması.
 
@@ -77,7 +94,7 @@ Bu sürümün **şablon** olarak gelmesinin en güçlü tarafı: kendi kurumunuz
 3. Doldurulmuş dosyayı Claude.ai Project Knowledge'a yeniden yükleyin (eskisini silin).
 4. **Aynı işlemi** `profiles/` klasöründeki 9 plugin profili için de yapın (`commercial-legal.md`, `corporate-legal.md`, ...). Onay eşikleri, dış vekil paneli, eskalasyon matriksi gibi alanları kendi prosedürlerinize göre uyarlayın.
 
-> İpucu: İlk kez kullanıyorsanız Adım 4'ü atlayıp doğrudan kullanmaya başlayabilirsiniz. Asistan size hangi alanların boş olduğunu söyleyecektir; tek tek doldurabilirsiniz.
+> İpucu: İlk kez kullanıyorsanız Adım 5'i atlayıp doğrudan kullanmaya başlayabilirsiniz. Asistan size hangi alanların boş olduğunu söyleyecektir; tek tek doldurabilirsiniz.
 
 ---
 

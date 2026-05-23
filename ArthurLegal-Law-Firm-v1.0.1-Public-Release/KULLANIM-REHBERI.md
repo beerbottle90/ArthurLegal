@@ -38,7 +38,7 @@ ArthurLegal-Law-Firm-v1.0.0-Public-Release/
 
 ---
 
-## Kurulum — 4 adım, ~10 dakika
+## Kurulum — 5 adım, ~15 dakika
 
 ### Adım 1 — Yeni Claude.ai Project oluşturun
 
@@ -66,7 +66,24 @@ Beklenen sonuç: Project Knowledge'da **62 dosya** görmelisiniz.
 
 > Not: Claude.ai Projects, alt-klasör yapısını otomatik düzleştirir. Bu sorun değil — sistem prompt'undaki yönlendirmeler dosya isimlerine göre çalışır (`<plugin>__<skill>.md` adlandırma).
 
-### Adım 4 — Büro profilini özelleştirin (önerilen)
+### Adım 4 — MCP bağlantılarını Claude.ai'a ekleyin
+
+Bu paket Türk mevzuatına ve yargı kararlarına **canlı erişim** için iki MCP sunucusu kullanır. MCP bağlantısı olmadan asistan yalnızca model bilgisinden yanıt üretir; mevzuat ve içtihat atıfları gerçek zamanlı doğrulanamaz.
+
+1. [claude.ai](https://claude.ai) sol menüsünden **Settings** bölümünü açın.
+2. **Integrations** (veya **Connectors**) sekmesine gidin.
+3. **"Add integration"** butonuna tıklayın ve aşağıdaki iki sunucuyu sırayla ekleyin:
+
+| Sunucu | URL | Auth |
+|---|---|---|
+| **Mevzuat MCP** | `mevzuat.surucu.dev/mcp` | Yok |
+| **Yargı MCP** | `yargimcp.surucu.dev/mcp` | Yok |
+
+Her sunucu için URL'yi girin, kimlik doğrulama seçeneğini atlayın ve kaydedin. Her ikisi de [saidsurucu](https://github.com/saidsurucu) tarafından yayımlanan halka açık sunuculardır.
+
+> **OpenSanctions (isteğe bağlı, ücretli):** Müvekkil due diligence — yaptırım/PEP taraması için. API key aldıktan sonra Claude.ai Project ayarlarına `OPENSANCTIONS_API_KEY` ortam değişkeni olarak ekleyin.
+
+### Adım 5 — Büro profilini özelleştirin (önerilen)
 
 Bu sürümün **şablon** olarak gelmesinin en güçlü tarafı: kendi büronuza uyarlanabilir olması.
 
@@ -80,7 +97,7 @@ Bu sürümün **şablon** olarak gelmesinin en güçlü tarafı: kendi büronuza
 3. Doldurulmuş dosyayı Claude.ai Project Knowledge'a yeniden yükleyin (eskisini silin).
 4. **Aynı işlemi** `profiles/` klasöründeki 9 plugin profili için de yapın. Conflict-check eşikleri, AAÜT katsayı tercihi, baro koordinasyonu gibi alanları kendi prosedürlerinize göre uyarlayın.
 
-> İpucu: İlk kez kullanıyorsanız Adım 4'ü atlayıp doğrudan kullanmaya başlayabilirsiniz. Asistan size hangi alanların boş olduğunu söyleyecektir; tek tek doldurabilirsiniz.
+> İpucu: İlk kez kullanıyorsanız Adım 5'i atlayıp doğrudan kullanmaya başlayabilirsiniz. Asistan size hangi alanların boş olduğunu söyleyecektir; tek tek doldurabilirsiniz.
 
 > ⚠️ **MESLEKİ SIR UYARISI:** `firm-profile.md`'ye gerçek müvekkil isimleri YAZMAYIN. Müvekkil portföyü **agregat sektör/tip/coğrafya** olarak tutulur. Matter-spesifik bilgi her matter için ayrı çalışmada — Claude.ai Projects'te müvekkil rumuzu (`[Müvekkil-001]`, `[KOBİ Üretici]`) kullanın.
 

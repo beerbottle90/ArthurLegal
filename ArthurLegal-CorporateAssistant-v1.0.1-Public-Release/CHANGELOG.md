@@ -5,7 +5,12 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-## [1.0.1] — 2026-05-18 — *Yarg MCP Düzeltmesi*
+## [1.0.1] — 2026-05-23 — *Yarg MCP Düzeltmesi + MCP Connector Kurulum Adımı*
+
+### Eklendi
+
+- **KULLANIM-REHBERI.md:** Kurulum akışına Adım 4 olarak MCP bağlantı kurulumu eklendi (Mevzuat MCP + Yargı MCP + OpenSanctions); eski Adım 4 → Adım 5 olarak yeniden numaralandırıldı; adım sayısı 4 → 5, tahmini süre ~10 → ~15 dakika
+- **README.md:** Kurulum adım listesi 5 adıma güncellendi; sürüm v1.0.1 olarak işaretlendi
 
 ### Düzeltildi
 
@@ -117,5 +122,4 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-[1.0.1]: ./VERSION.md
-[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release
+[1.0.0]: ./VERSION.md

@@ -1,6 +1,6 @@
 # ArthurLegal — Claude Law Firm Assistant (TR)
 
-**Sürüm:** v1.0.0 — Initial Public Release · **Tarih:** 17.05.2026 · **Lisans:** Apache 2.0
+**Sürüm:** v1.0.1 · **Tarih:** 23.05.2026 · **Lisans:** Apache 2.0
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
 > Türk hukukuna ve **danışman tarafı (hukuk bürosu)** pratiğine adapte edilmiş, **Claude tabanlı hibrit hukuk asistanı paketi**. Anthropic'in [claude-for-legal](https://github.com/anthropics/claude-for-legal) referans paketinden türetilmiştir.
@@ -66,14 +66,15 @@ Mevzuat MCP ve Yargı MCP, [saidsurucu](https://github.com/saidsurucu) tarafınd
 
 ---
 
-## Kurulum — 4 adım, ~10 dakika
+## Kurulum — 5 adım, ~15 dakika
 
 Tam rehber için → [KULLANIM-REHBERI.md](KULLANIM-REHBERI.md).
 
 1. **Yeni Claude.ai Project oluşturun** — [claude.ai/projects](https://claude.ai/projects) → "+ New Project".
 2. **`SYSTEM_PROMPT.md`** içeriğini Custom Instructions alanına yapıştırın.
 3. **`knowledge/`** klasöründeki ~60 dosyayı Project Knowledge'a sürükle-bırak ile yükleyin.
-4. **`knowledge/firm-profile.md`** ve `profiles/*.md` dosyalarındaki `[DOLDUR]` yer-tutucularını kendi büronuza göre özelleştirin (opsiyonel — atlanabilir).
+4. **MCP bağlantılarını ekleyin** — Claude.ai Settings → Integrations → `mevzuat.surucu.dev/mcp` ve `yargimcp.surucu.dev/mcp` (auth yok).
+5. **`knowledge/firm-profile.md`** ve `profiles/*.md` dosyalarındaki `[DOLDUR]` yer-tutucularını kendi büronuza göre özelleştirin (opsiyonel — atlanabilir).
 
 ---
 
