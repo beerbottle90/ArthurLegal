@@ -1,4 +1,4 @@
-# Mevzuat MCP – Kullanım Rehberi
+﻿# Mevzuat MCP – Kullanım Rehberi
 
 > ⚠️ **GÜNCELLEME (21.05.2026 — v1.5.0): Birleşik MCP**
 > Mevzuat MCP ve Yargı MCP tek birleşik sunucuda birleşti — **yargi-mcp-pro**.
@@ -114,11 +114,11 @@ Türk hukuk araştırmasında iki MCP **tamamlayıcı**:
 | MCP | Verdiği |
 |---|---|
 | **Mevzuat MCP** | Kanun, KHK, tüzük, yönetmelik, CB kararname/genelge, tebliğ — **norm metinleri** |
-| **Yarg MCP** | Yargıtay, Danıştay, AYM, KVKK Kurulu, Rekabet, KİK, BDDK, GİB, Sayıştay, Sigorta Tahkim, alt mahkemeler — **kararlar/yorumlar** |
+| **TR Legal MCP** | Yargıtay, Danıştay, AYM, KVKK Kurulu, Rekabet, KİK, BDDK, GİB, Sayıştay, Sigorta Tahkim, alt mahkemeler — **kararlar/yorumlar** |
 
 Bir hukuki sorgu çoğunlukla ikisini birlikte gerektirir:
 1. **Mevzuat MCP**'den ilgili madde + tüm fıkraları getir
-2. **Yarg MCP**'den o maddenin yargı/idari yorumunu getir
+2. **TR Legal MCP**'den o maddenin yargı/idari yorumunu getir
 3. Sentezle ve atıf etiketlerini koru
 
 Detay: bkz. `yargi-mcp-rehberi.md`

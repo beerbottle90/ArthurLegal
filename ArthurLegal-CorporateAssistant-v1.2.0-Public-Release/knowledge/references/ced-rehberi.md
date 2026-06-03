@@ -86,7 +86,7 @@ mcp__claude_ai_Mevzuat_MCP__search_within_mevzuat(mevzuat_id="103161", keyword="
 - Ceza kararı tebliğden 30 gün → İdare Mah. dava (`idari-para-cezasi-itiraz`)
 - ÇED ret + idari ceza birlikte → koordine savunma
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(

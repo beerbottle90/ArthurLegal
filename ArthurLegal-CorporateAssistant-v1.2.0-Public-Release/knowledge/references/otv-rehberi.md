@@ -72,7 +72,7 @@ Rafineriye giriş →
 - **Danıştay 3. Daire** — KDV/ÖTV uzmanı
 - **Yürütmenin durdurulması** talep et (bekletme zarara yol açıyorsa)
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(

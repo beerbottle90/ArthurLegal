@@ -67,7 +67,7 @@ mahkemenin görevsizliğinin tespiti talep edilir. (HMK m. 116/c)
 
 ⚠️ Bu itiraz **ilk cevap dilekçesinde** sunulmazsa tahkim hakkı düşer (HMK m. 412/3). Çok kritik süre.
 
-## Yarg MCP — tahkim emsal
+## TR Legal MCP — tahkim emsal
 
 Tahkim klozu yorumu, tanıma-tenfiz davaları için:
 

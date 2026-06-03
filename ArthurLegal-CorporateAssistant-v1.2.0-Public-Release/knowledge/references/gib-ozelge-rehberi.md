@@ -41,7 +41,7 @@
    - İlgili Danıştay vergi dairesinde
    - İYUK m. 7 — 30 gün (özelge tebliğden)
 
-## Yarg MCP — benzer özelge tarama
+## TR Legal MCP — benzer özelge tarama
 
 **Özelge talep etmeden ÖNCE** mutlaka mevcut özelgelerde aynı/benzer konu var mı bak:
 

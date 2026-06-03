@@ -370,7 +370,7 @@ Profil dolduktan sonra:
 
 Sadece şu kontrolleri yap:
 
-1. **Yarg MCP** — test sorgu: `search_yargitay_decisions(arananKelime="işe iade", baslangicTarihi="2025-01-01")` → cevap geliyor mu?
+1. **TR Legal MCP** — test sorgu: `search_yargitay_decisions(arananKelime="işe iade", baslangicTarihi="2025-01-01")` → cevap geliyor mu?
 2. **Mevzuat MCP** — test sorgu: `search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")` → HMK dönüyor mu?
 3. **iManage** (varsa) — bağlantı testi
 4. **Slack / Teams** (varsa) — bağlantı testi
@@ -566,7 +566,7 @@ Mahkemenin yerinde inceleme yapması:
 - **Risk:** Mahkeme bizim aleyhimize bir şey görebilir
 - **[ŞİRKET ADI]-özel:** [İşletme Yeri] tesisinde keşif → güvenlik prosedürleri (yangın eğitimi, koruyucu ekipman); EPDK lisans kapsamında izinler
 
-## Yarg MCP — emsal aramaları
+## TR Legal MCP — emsal aramaları
 
 Delil sunumu prosedürlerinde benzer dava emsallerini Yarg MCP'den çek:
 
@@ -795,7 +795,7 @@ Hâkim duruşmada şu soruları sorabilir; cevaplar:
 - **Risk:** [Duruşmadan kötü çıkma olasılığı varsa, neden]
 ```
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
@@ -1359,7 +1359,7 @@ Bu brief'i kabul etmeden önce lütfen kontrol edin:
 Yazılı çıkar çatışması beyanı brief'in kabulüyle birlikte alınır.
 ```
 
-## Yarg MCP — emsal araştırması
+## TR Legal MCP — emsal araştırması
 
 Brief hazırlanırken **mutlaka** karşı tarafın hukuki dayanağına ilişkin son emsal kararları çek:
 

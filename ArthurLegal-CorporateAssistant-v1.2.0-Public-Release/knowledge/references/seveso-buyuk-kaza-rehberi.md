@@ -104,7 +104,7 @@ search_mevzuat(mevzuat_adi="Büyük Endüstriyel Kaza", mevzuat_tur="YONETMELIK"
 search_mevzuat(mevzuat_no="2872", mevzuat_tur="KANUN")  # Çevre K. m. 10/A
 ```
 
-## Yarg MCP — emsal kararlar
+## TR Legal MCP — emsal kararlar
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(

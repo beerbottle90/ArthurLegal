@@ -74,7 +74,7 @@ Her BİM içinde:
 
 İDDK kararları **bağlayıcıdır** — alt mahkemeler için.
 
-## Yarg MCP
+## TR Legal MCP
 
 Bedesten birleşik API ile alt dereceleri (İdare Mah. + BİM) çekebilirsin:
 
