@@ -106,7 +106,7 @@ search_mevzuat(mevzuat_no="6769", mevzuat_tur="KANUN")  # SMK
 search_kurum_yonetmelik(kurum="Türk Patent")             # TÜRKPATENT yönetmelikleri
 ```
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 search_yargitay_decisions(daire="11. Hukuk Dairesi", arananKelime="marka iltibas karıştırılma ihtimali")

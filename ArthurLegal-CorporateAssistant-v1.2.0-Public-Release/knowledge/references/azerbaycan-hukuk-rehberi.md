@@ -264,11 +264,11 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 ## Versiyon disiplini
 
-- Bu rehber **v1.8.1** (*Azerbaycan Hukuku Entegrasyonu*) ile eklendi.
+- Bu rehber **v1.2.0** (*Azerbaycan Hukuku Entegrasyonu*) ile eklendi.
 - Kaynaklar 2026-05-30 tarihli ön araştırmaya dayanır (GitHub + web taraması).
 - LocalDoc/allmalab HuggingFace dataset'lerinin erişilebilirliği değişebilir;
   WebFetch hedefleri (e-qanun.az, minenergy.gov.az) kararlıdır.
 
 ---
 
-*Son güncelleme: 30.05.2026 — v1.8.1. Azerbaycan hukuku WebFetch entegrasyon prosedürü; 5 kaynak, açık erişim.*
+*Son güncelleme: 30.05.2026 — v1.2.0. Azerbaycan hukuku WebFetch entegrasyon prosedürü; 5 kaynak, açık erişim.*

@@ -1,36 +1,37 @@
-﻿# Atıf — ArthurLegal Claude Corporate Assistant v1.0.0
+# Atıf — ArthurLegal Claude Corporate Assistant v1.2.0
 
 ## Yapı
 
 | Rol | Kim |
 |---|---|
-| **Author** (kod & içerik üretimi) | Claude (Anthropic) — Opus 4.7 (`claude-opus-4-7`) |
-| **Designer** (proje tasarımı & domain bilgisi) | [VERSİYON YÖNETİCİSİ] |
+| **Author** (kod & içerik üretimi) | Claude (Anthropic) |
 | **Knowledge base** (temel hukuk asistanı paketi) | Anthropic — [claude-for-legal](https://github.com/anthropics/claude-for-legal) (Apache 2.0) |
 
 ## Türk Mevzuat & Yargı entegrasyonu
 
-Bu paketin Türk mevzuat (Mevzuat MCP) ve Türk yargı (Yargı MCP) entegrasyonu, [saidsurucu](https://github.com/saidsurucu) tarafından yayımlanan açık MCP sunucularını kullanır:
+Bu paketin Türk mevzuat + yargı entegrasyonu, [saidsurucu](https://github.com/saidsurucu) tarafından yayımlanan açık MCP sunucusunu kullanır:
 
-- `mevzuat.surucu.dev/mcp` — Türk mevzuatı norm metinleri (mevzuat.gov.tr + bedesten.adalet.gov.tr)
-- `yargimcp.surucu.dev/mcp` — Türk yargı/idari kararlar (Yargıtay, Danıştay, AYM + 12 diğer kurum)
+- **TR Legal MCP (yargi-mcp-pro)** — `yargi-mcp-pro-production.up.railway.app/mcp`
+  - Mevzuat: mevzuat.gov.tr + bedesten.adalet.gov.tr norm metinleri
+  - Yargı: Yargıtay, Danıştay, AYM + 12 diğer kurum kararları
+  - Auth: OAuth 2.0 (WorkOS) — claude.ai bağlantıyı yönetir
 
-Her iki sunucu da public, auth gerektirmez.
+- **OpenCaseLaw.ch MCP** — `mcp.opencaselaw.ch/sse`
+  - İsviçre 972K+ karar, Fedlex mevzuatı (CC0, auth yok)
 
 ## Üçüncü-taraf veri kaynakları
 
 - **OpenSanctions API** (`api.opensanctions.org`) — paid membership; kullanıcı kendi API key'ini temin eder.
 - **KAP** (`kap.org.tr`) — public özel durum açıklamaları (WebFetch).
 - **e-ŞİRKET** (`e-sirket.mkk.com.tr`) — public sermaye yapısı bilgileri (WebFetch).
+- WebFetch kaynaklar (auth gerektirmez): legislation.gov.uk · GovInfo · CourtListener · EUR-Lex · HUDOC · gesetze-im-internet.de · Légifrance · Normattiva · e-Gov JP · Fedlex · pravo.gov.ru · e-qanun.az · HuggingFace/twang2218 · paragraf.rs
 
 ## Lisans
 
-Apache License 2.0 — bkz. `LICENSE`.
-
-Bu lisans, paketi serbestçe kullanma, değiştirme ve dağıtma hakkı verir; ancak orijinal atıf ve lisans bildirimi korunmalıdır.
+MIT License — bkz. `LICENSE`.
 
 ## Kişisel veri uyarısı
 
-Bu paket halka açık sürümünde **gerçek kişi/şirket verisi içermez**. Tüm gerçek-kişi isimleri rol-bazlı yer-tutucularla (`[CLCO]`, `[DPO]`, `[Hukuk Direktörü A]` vb.) değiştirilmiştir. Kurumsal yapı örneği (`ArthurLegal Holding`) tamamen kurgusaldır.
+Bu paket halka açık sürümünde **gerçek kişi/şirket verisi içermez**. `knowledge/company-profile.md` tamamen `[DOLDUR]` yer-tutucularından oluşan bir şablondur.
 
-Paketi kendi kurumunuza uyarladığınızda doldurduğunuz gerçek veriler **sizin kontrolünüzdedir** — paylaşmadan önce gözden geçirin.
+Paketi kendi kurumunuza uyarladığınızda doldurduğunuz gerçek veriler **sizin kontrolünüzdedir** — public repoya commit etmeden önce gözden geçirin.

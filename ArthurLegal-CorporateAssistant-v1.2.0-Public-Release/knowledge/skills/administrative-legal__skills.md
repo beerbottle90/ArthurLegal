@@ -82,7 +82,7 @@ Her biri ÇED süreci tetikler. **Çevre Bakanlığı'nın ÇED ret kararı**:
 - Olası mevcut faaliyet kısıtlaması
 - Basın/STK takibi yüksek
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
@@ -232,7 +232,7 @@ Argümansız çağrılırsa:
 
 ## --check-integrations
 
-1. **Yarg MCP** — test: `search_danistay_decisions(daire="13. Daire", arananKelime="EPDK lisans")` → cevap geliyor mu?
+1. **TR Legal MCP** — test: `search_danistay_decisions(daire="13. Daire", arananKelime="EPDK lisans")` → cevap geliyor mu?
 2. **Mevzuat MCP** — test: `search_mevzuat(mevzuat_no="2577", mevzuat_tur="KANUN")` → İYUK dönüyor mu?
 3. **iManage** + diğerleri
 
@@ -981,7 +981,7 @@ Danıştay bozdu, dosya BİM'e gönderildi. İki seçenek:
 - Anayasa Mahkemesi'ne, **mülkiyet hakkı** veya **adil yargılanma hakkı ihlali** argümanıyla
 - **Stratejik dava** — büyük tutarlı veya ilkesel dosyalarda
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 # Daire bazlı temyiz emsali
@@ -1238,7 +1238,7 @@ Rekabet Kurulu **olası ihlal alanları:**
 - **Mücbir sebep / makul gerekçe:** Eylem ticari mantıkla açıklanabilir
 - **Ceza orantısız:** Cironun %X'i — kanunda öngörülen aralığın üstünde
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_rekabet_kurumu_decisions(

@@ -120,10 +120,10 @@ get_czech_law_article(
 
 ## Versiyon disiplini
 
-- Bu rehber **v1.8.3** (*Sırbistan + Çek Cumhuriyeti Entegrasyonu*) ile eklendi.
+- Bu rehber **v1.2.0** (*Sırbistan + Çek Cumhuriyeti Entegrasyonu*) ile eklendi.
 - sbirka-mcp geliştirici: saidsurucu (yargi-mcp ile aynı kişi, 31.05.2026 araştırması).
 - Endpoint test: `curl 401` (OAuth akışı bekleniyor — normal).
 
 ---
 
-*Son güncelleme: 31.05.2026 — v1.8.3. Çek Cumhuriyeti hukuku Sbírka MCP entegrasyon prosedürü.*
+*Son güncelleme: 31.05.2026 — v1.2.0. Çek Cumhuriyeti hukuku Sbírka MCP entegrasyon prosedürü.*
