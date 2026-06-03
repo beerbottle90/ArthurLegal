@@ -233,7 +233,7 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 
 ## Versiyon disiplini
 
-- Bu rehber **v1.8.3** (*Sırbistan + Çek Cumhuriyeti Entegrasyonu*) ile eklendi.
+- Bu rehber **v1.2.0** (*Sırbistan + Çek Cumhuriyeti Entegrasyonu*) ile eklendi.
 - Kaynaklar 31.05.2026 tarihli araştırmaya dayanır.
 - paragraf.rs WebFetch'i test edildi ✅ — Borçlar Kanunu, Şirketler Kanunu, İş Kanunu,
   Enerji Kanunu, Kişisel Veri Kanunu, Tahkim Kanunu başarıyla çekildi.
@@ -241,4 +241,4 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 
 ---
 
-*Son güncelleme: 31.05.2026 — v1.8.3. Sırbistan hukuku WebFetch entegrasyon prosedürü; 3 kaynak, açık erişim.*
+*Son güncelleme: 31.05.2026 — v1.2.0. Sırbistan hukuku WebFetch entegrasyon prosedürü; 3 kaynak, açık erişim.*

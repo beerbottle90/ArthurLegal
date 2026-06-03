@@ -8,7 +8,7 @@
 > Araç isimleri/parametreleri (v1.4.2'de doğrulanmış) geçerliliğini korur — yalnızca tek connector altında toplanmıştır.
 
 
-> **Yarg MCP**, saidsurucu/yargi-mcp projesi tarafından sağlanan ücretsiz Türk yargı/idari kararlar erişim katmanıdır. Mevzuat MCP **kanun metinlerini** verir; Yarg MCP **kararları, içtihatları, görüşleri** verir. İkisi birlikte Türk hukuk asistanı için tam paket.
+> **TR Legal MCP**, saidsurucu/yargi-mcp projesi tarafından sağlanan ücretsiz Türk yargı/idari kararlar erişim katmanıdır. Mevzuat MCP **kanun metinlerini** verir; Yarg MCP **kararları, içtihatları, görüşleri** verir. İkisi birlikte Türk hukuk asistanı için tam paket.
 
 **Endpoint:** `https://yargi-mcp-pro-production.up.railway.app/mcp` (birleşik)
 **Versiyon:** v0.2.0+ (semantic search desteği)

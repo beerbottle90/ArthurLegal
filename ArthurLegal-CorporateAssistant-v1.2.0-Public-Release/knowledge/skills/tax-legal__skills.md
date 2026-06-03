@@ -115,7 +115,7 @@ Argümansız çağrılırsa sor:
 
 ## --check-integrations
 
-1. **Yarg MCP** — test: `search_gib_decisions(arananKelime="transfer fiyatlandırma")` → cevap geliyor mu?
+1. **TR Legal MCP** — test: `search_gib_decisions(arananKelime="transfer fiyatlandırma")` → cevap geliyor mu?
 2. **Mevzuat MCP** — test: `search_mevzuat(mevzuat_no="213", mevzuat_tur="KANUN")` → VUK dönüyor mu?
 3. **iManage** — test
 4. **(SAP ERP)** — bağlantı raporu
@@ -1141,7 +1141,7 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 - [ ] **Veya dava** — 30 gün içinde Danıştay'a → `/tax-legal:tax-litigation-prep`
 - [ ] **Veya ikisi** — uzlaşma başvur, görüşme tamamlanırsa kabul/red; uzlaşılmazsa tarhiyat kesinleşir ve sonrasında dava süresi kalmaz! Bu nedenle uzlaşmaya gidersen dava süresi kaçırma riski VAR.
 
-### Yarg MCP — emsal arama
+### TR Legal MCP — emsal arama
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(

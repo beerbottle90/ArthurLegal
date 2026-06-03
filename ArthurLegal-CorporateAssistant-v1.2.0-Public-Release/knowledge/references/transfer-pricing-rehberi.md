@@ -78,7 +78,7 @@
 - **Cost contribution arrangements** — Ortak fayda projeleri için (R&D, IT)
 - **Cost sharing agreement** — Maliyet bölüşüm
 
-## Yarg MCP — TP içtihatı
+## TR Legal MCP — TP içtihatı
 
 ```
 mcp__claude_ai_Yarg_MCP__search_gib_ozelge(

@@ -1256,7 +1256,7 @@ description: >
 argument-hint: "[sözleşme dosyası | governing-law + jurisdiction + tahkim klozunu yapıştır]"
 ---
 
-# /governing-law-review — Cross-Border Yargı Çevresi & İcra Analizi (v1.8.0)
+# /governing-law-review — Cross-Border Yargı Çevresi & İcra Analizi (v1.2.0)
 
 Birincil yargı çevresi Türkiye'dir. Bu skill yabancı hukuk seçimini analiz eder, Türk hukukunu ikame etmez.
 Rehberler: `karsilastirmali-hukuk-rehberi.md` (bağlayıcı) + ilgili yargı çevresi `*-rehberi.md`.

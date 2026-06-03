@@ -305,11 +305,11 @@ Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 
 ## Versiyon disiplini
 
-- Bu rehber **v1.8.2** (*Çin Hukuku Entegrasyonu*) ile eklendi.
+- Bu rehber **v1.2.0** (*Çin Hukuku Entegrasyonu*) ile eklendi.
 - Kaynaklar 31.05.2026 tarihli araştırmaya dayanır.
 - HuggingFace API endpoint'leri kararlı (datasets-server.huggingface.co).
 - flk.npc.gov.cn SPA mimarisi değişirse HF mirror birincil yedek kalır.
 
 ---
 
-*Son güncelleme: 31.05.2026 — v1.8.2. Çin hukuku HuggingFace Datasets API entegrasyon prosedürü; 4 kaynak, açık erişim.*
+*Son güncelleme: 31.05.2026 — v1.2.0. Çin hukuku HuggingFace Datasets API entegrasyon prosedürü; 4 kaynak, açık erişim.*

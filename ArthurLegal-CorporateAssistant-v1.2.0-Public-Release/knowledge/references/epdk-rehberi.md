@@ -82,7 +82,7 @@
 - **İlgili iş birimi başkanı** (Mirzayev rafineri/[petrokimya iştiraki]; İbrahimov doğal gaz) — operasyonel
 - **CLCO ([CLCO ADI])** — kritik politika kararları imzası
 
-## Yarg MCP
+## TR Legal MCP
 
 ```
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(

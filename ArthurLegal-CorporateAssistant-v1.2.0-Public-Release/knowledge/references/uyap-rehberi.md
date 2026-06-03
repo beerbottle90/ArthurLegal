@@ -78,7 +78,7 @@ Karşı tarafa tebligat **UYAP üzerinden** veya KEP üzerinden yapılır. [Şİ
 | Karşı taraf vekili UYAP üzerinden değil fiziksel sunmuş | Mahkemenin kabulu vardır ama dış vekilimiz fiziksel kopyaya da bakmalı |
 | e-Duruşma talep ettik ama mahkeme reddetti | Fiziksel duruşma gerekli; dış vekil İstanbul'dan [İşletme Yeri]'ya gidiyor — maliyet artar |
 
-## Yarg MCP — UYAP entegre
+## TR Legal MCP — UYAP entegre
 
 Yarg MCP'nin **Emsal (UYAP)** aracı UYAP arşivindeki emsal kararlara erişir:
 
