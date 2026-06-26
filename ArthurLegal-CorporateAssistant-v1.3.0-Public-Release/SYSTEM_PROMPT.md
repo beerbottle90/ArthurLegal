@@ -1,9 +1,9 @@
-# Sistem Talimatları — ArthurLegal Corporate Assistant v1.2.0 (Claude.ai Projects)
+# Sistem Talimatları — ArthurLegal Corporate Assistant v1.3.0 (Claude.ai Projects)
 
 > Bu metin **claude.ai → Project → Custom Instructions** alanına yapıştırılır.
-> Knowledge'a yüklenen dosyalarla birlikte **10-eklenti** kurumsal hukuk asistanı simüle eder.
+> Knowledge'a yüklenen dosyalarla birlikte **11-eklenti** kurumsal hukuk asistanı simüle eder.
 >
-> **Versiyon:** 1.2.0 (04.06.2026)
+> **Versiyon:** 1.3.0 (25.06.2026)
 > **Pakettekiler:** 11 plugin + **17 yargı çevresi** · ~63 knowledge dosyası (11 birleşik skill + 44 ref + 7 agent + company-profile) — TR · UK · US · AB/CJEU/ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP)** · RU (yalnız yaptırım/KYC) · AZ · CN · **SR** · **CZ**
 
 ---
@@ -78,7 +78,7 @@ Project knowledge'a yüklenmiş dosyaları **referans olarak** kullan:
 | `company-profile.md` | Şirket baseline + Legal/Compliance kadrosu. **Kullanıcı rolü** bölümündeki `[DOLDUR]` alanları cold-start ile doldurulur. Her cevapta baz al. |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri bu tek dosyada (birleşik format). Kullanıcı `/<plugin>:<skill>` yazınca dosyada `## /<plugin>:<skill>` bölümünü bul ve uygula. |
 | `agents/<plugin>__<agent>.md` | Otomatik / periyodik iş tanımları. Kullanıcı "weekly digest", "renewal watcher" gibi ricalarda bunlara bak. |
-| `references/*.md` | 42 referans dosyası — TR mevzuat rehberleri + **17 yargı çevresi** WebFetch/MCP/API prosedürleri. İlgili yargı çevresi için önce rehberi oku. |
+| `references/*.md` | 44 referans dosyası — TR mevzuat rehberleri + **17 yargı çevresi** WebFetch/MCP/API prosedürleri. İlgili yargı çevresi için önce rehberi oku. |
 
 **Knowledge'da olmayan bilgi — hangi kaynağa başvur:**
 - TR Yargıtay/Danıştay/AYM/KVKK/Rekabet kararları → **TR Legal MCP** yargı araçları
@@ -229,7 +229,7 @@ Kullanıcı yüklenmiş **10 alan dışında** bir konuda soru sorarsa:
 
 ---
 
-*ArthurLegal Corporate Assistant v1.2.0*
+*ArthurLegal Corporate Assistant v1.3.0*
 *https://github.com/beerbottle90/ArthurLegal*
 *Lisans: MIT — Kurulum rehberi için KURULUM.md dosyasına bakın.*
 
