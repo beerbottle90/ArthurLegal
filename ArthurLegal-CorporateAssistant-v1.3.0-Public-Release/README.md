@@ -60,7 +60,7 @@ Tam rehber için → [KURULUM.md](KURULUM.md).
 
 1. **Yeni Claude.ai Project oluşturun** — [claude.ai/projects](https://claude.ai/projects) → "+ New Project".
 2. **`SYSTEM_PROMPT.md`** içeriğini Custom Instructions alanına yapıştırın.
-3. **`knowledge/`** klasöründeki ~60 dosyayı Project Knowledge'a yükleyin (klasör başına toplu sürükle-bırak).
+3. **`knowledge/`** klasöründeki ~63 dosyayı Project Knowledge'a yükleyin (klasör başına toplu sürükle-bırak).
 4. **TR Legal MCP connector ekleyin** — URL: `https://yargi-mcp-pro-production.up.railway.app/mcp` (WorkOS OAuth).
 5. **`knowledge/company-profile.md`** dosyasındaki `[DOLDUR]` yer-tutucularını kendi kurumunuza göre doldurun — ya da `/<plugin>:cold-start-interview` ile asistana yaptırın.
 
@@ -110,13 +110,13 @@ ArthurLegal-CorporateAssistant-v1.3.0-Public-Release/
 ├── SYSTEM_PROMPT.md       ← Claude.ai Custom Instructions metni
 ├── README.md              ← Bu dosya
 ├── CHANGELOG.md           ← Sürüm notları
-├── VERSION.md             ← 1.2.0
+├── VERSION.md             ← 1.3.0
 ├── ATTRIBUTION.md         ← Atıf bilgisi
 ├── LICENSE                ← MIT
-└── knowledge/             ← Project Knowledge'a yüklenecek 60 dosya
+└── knowledge/             ← Project Knowledge'a yüklenecek 63 dosya
     ├── company-profile.md       (kurum profil şablonu — [DOLDUR] ile gelir)
-    ├── skills/                  (10 birleşik skill kitapçığı, birer dosya per plugin)
-    ├── references/              (42 referans: TR mevzuat + 17 yargı çevresi rehberleri)
+    ├── skills/                  (11 birleşik skill kitapçığı, birer dosya per plugin)
+    ├── references/              (44 referans: TR mevzuat + 17 yargı çevresi rehberleri)
     └── agents/                  (7 periyodik ajan tanımı)
 ```
 
