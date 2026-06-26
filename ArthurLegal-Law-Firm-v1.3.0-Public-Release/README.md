@@ -150,9 +150,9 @@ ArthurLegal-Law-Firm-v1.3.0-Public-Release/
 └── knowledge/
     ├── firm-profile.md     ← Büro profil şablonu ([DOLDUR] ile)
     ├── profiles/           ← 11 pratik alan profili
-    ├── skills/             ← 12 birleşik skill dosyası
+    ├── skills/             ← 15 birleşik skill dosyası
     ├── agents/             ← 7 otomasyon agent tanımı
-    └── references/         ← 42+ TR mevzuat + uluslararası yargı rehberi
+    └── references/         ← 47+ TR mevzuat + uluslararası yargı rehberi
 ```
 
 ---
