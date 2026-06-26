@@ -48,7 +48,7 @@ Counterparty bilgisini gönder, eşleşme skoru + bağlantılı varlık döndür
 
 ```bash
 POST https://api.opensanctions.org/match/default
-Authorization: Apikey YOUR_API_KEY
+Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
 Content-Type: application/json
 
 {
@@ -72,7 +72,7 @@ Content-Type: application/json
 
 ```bash
 GET https://api.opensanctions.org/search/default?q=Acme+Trading+LLC
-Authorization: Apikey YOUR_API_KEY
+Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
 ```
 
 ### 3. Entities API — bilinen ID ile detay çekme
@@ -80,7 +80,7 @@ Authorization: Apikey YOUR_API_KEY
 
 ```bash
 GET https://api.opensanctions.org/entities/Q123456
-Authorization: Apikey YOUR_API_KEY
+Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
 ```
 
 ### Scope seçimi
