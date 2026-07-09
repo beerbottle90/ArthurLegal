@@ -1,0 +1,57 @@
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+Copyright 2026 ArthurLegal Academician Assistant contributors
+(Author: Claude / Anthropic, Opus 4.8 — Designer: Ertuğ Demir —
+ Knowledge base: Anthropic claude-for-legal, https://github.com/anthropics/claude-for-legal)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+NOTE ON SCOPE — This Apache-2.0 notice covers the THIRD-PARTY materials
+incorporated into this package (the Anthropic `claude-for-legal` knowledge
+base). The package AS A WHOLE is licensed under the ArthurLegal Proprietary
+Non-Commercial License — see LICENSE. Bu bildirim ÜÇÜNCÜ TARAF bileşenler
+içindir; paketin bütünü LICENSE dosyasındaki lisansa tabidir.
+
+---
+
+DISCLAIMER
+
+Bu paket, hukuk akademisyenleri için bir araştırma ve yazım destek
+ŞABLONUDUR. Çıktıları TASLAKTIR; bilimsel eser, hakem raporu veya
+akademik değerlendirme yerine geçmez.
+
+YAZARLIK VE SORUMLULUK YAZARDADIR. Üretken yapay zekâ yazar olamaz ve
+hukuki veya etik anlamda sorumlu tutulamaz (COPE, ICMJE, WAME; YÖK
+Üretken Yapay Zekâ Etik Rehberi; TÜBİTAK ÜYZ Rehberi). Bu araçtan
+yararlanılması, ilgili dergi / kurum / fon sağlayıcının öngördüğü
+biçimde BEYAN EDİLMELİDİR.
+
+HAKEMLİK VE EDİTÖRLÜK GİZLİLİĞİ. Değerlendirme altındaki yayımlanmamış
+müsvedde, proje önerisi veya tez metninin herhangi bir kısmının üretken
+yapay zekâ araçlarına girilmesi gizlilik yükümlülüğünün ihlalidir
+(TÜBİTAK ÜYZ Rehberi § 2.2.1; NIH NOT-OD-23-149; NSF merit review
+bildirimi; Elsevier, Springer Nature, Wiley, ICMJE). Bu paketin
+hakemlik/editörlük akışları müsvedde metni İSTEMEZ ve KABUL ETMEZ.
+
+ATIF DİSİPLİNİ. Uydurma atıf yalnızca hata değil, yayın etiği
+yönergeleri kapsamında intihal/sahtecilik riskidir. Her dayanak birincil
+kaynaktan (MCP / DOI / resmî yayın) verbatim teyit edilmelidir.
+
+Mevzuat, içtihat, dergi politikaları ve doçentlik ölçütleri değişir;
+başvuru dönemine ait resmî belge daima manuel doğrulanmalıdır.
+
+Araştırma verilerindeki kişisel verilerin korunması (KVKK / GDPR) ve
+etik kurul izninin alınması, paketten BAĞIMSIZ olarak araştırmacının
+ve kurumunun yükümlülüğüdür.
