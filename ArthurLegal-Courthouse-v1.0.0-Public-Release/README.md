@@ -1,6 +1,6 @@
 # ArthurLegal — Claude Courthouse Assistant (TR)
 
-**Sürüm:** v1.0.0 · **Tarih:** 2026-06-28 · **Lisans:** Apache 2.0
+**Sürüm:** v1.0.0 · **Tarih:** 2026-06-28 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
 > **v1.0.0 — 8/8 plugin kurulu** (her biri 2-5 skill, toplam 28 skill + 23 referans). Referansların tamamı yargısal/tarafsız çerçevede (müşteri-spesifik içerik temizlendi).
@@ -84,4 +84,14 @@ ArthurLegal-Courthouse-v1.0.0-Public-Release/
 
 ## Lisans
 
-Apache License 2.0 — bkz. [LICENSE](LICENSE). Atıf için → [ATTRIBUTION.md](ATTRIBUTION.md).
+Bu paket **bir bütün olarak** ArthurLegal Proprietary Non-Commercial License
+kapsamındadır — bkz. [LICENSE](LICENSE). **Ticari kullanım yasaktır.** In-house
+counsel'ın, hukuk bürosu çalışanının ve gerçek kişinin kişisel kullanımı ile bu
+kullanımlar için bizzat yapılan veya üçüncü kişiye yaptırılan geliştirmeler ticari
+kullanım sayılmaz. Tüm hakları saklıdır.
+
+Paketin türetildiği üçüncü taraf bilgi tabanı (Anthropic `claude-for-legal`)
+**Apache License 2.0** altındadır. İlgili lisans ve atıf bildirimi
+[LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-THIRD-PARTY.txt) dosyasında
+korunmuştur ve kaldırılamaz. Çelişki hâlinde, o bileşenler bakımından Apache 2.0
+geçerlidir. Atıf için → [ATTRIBUTION.md](ATTRIBUTION.md).
