@@ -12,7 +12,17 @@ Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden t�
 
 ## Lisans
 
-Apache License 2.0 — bkz. [LICENSE](LICENSE). Serbest kullanım, değiştirme ve dağıtım hakkı verir; orijinal atıf ve lisans bildirimi korunmalıdır.
+Bu paket **bir bütün olarak** ArthurLegal Proprietary Non-Commercial License
+kapsamındadır — bkz. [LICENSE](LICENSE). **Ticari kullanım yasaktır.** In-house
+counsel'ın, hukuk bürosu çalışanının ve gerçek kişinin kişisel kullanımı ile bu
+kullanımlar için bizzat yapılan veya üçüncü kişiye yaptırılan geliştirmeler
+ticari kullanım sayılmaz. Tüm hakları saklıdır.
+
+Paketin türetildiği üçüncü taraf bilgi tabanı (Anthropic `claude-for-legal`)
+**Apache License 2.0** altındadır. İlgili lisans ve atıf bildirimi
+[LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-THIRD-PARTY.txt)
+dosyasında korunmuştur ve kaldırılamaz. Çelişki hâlinde, o bileşenler bakımından
+Apache 2.0 geçerlidir.
 
 ## Önemli
 
