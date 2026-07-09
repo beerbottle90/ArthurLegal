@@ -1,0 +1,33 @@
+# Release arşivleri
+#
+# Bu depo kaynak (markdown) tutar; paketlenmiş arşivler dağıtım çıktısıdır.
+# Ayrıca mevcut .rar dosyaları SANİTİZASYON ÖNCESİ içerik barındırmaktadır —
+# kazara commit'lenmeleri geri dönülemez bir ifşa yaratır.
+*.rar
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+
+# Ofis / ikili çalışma dosyaları
+# (Depo yalnızca markdown ve düz metin içerir. Bir sunum veya belge bilinçli
+#  olarak eklenecekse `git add -f <dosya>` ile zorlayın.)
+*.pptx
+*.docx
+*.xlsx
+*.pdf
+
+# Ofis geçici dosyaları
+~$*
+
+# İşletim sistemi artıkları
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editör
+.vscode/
+.idea/
+*.swp
+*~
