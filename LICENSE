@@ -1,45 +1,180 @@
-ArthurLegal — Proprietary Software License
+ArthurLegal — Proprietary Non-Commercial License
 Copyright (c) 2026 ArthurLegal. All rights reserved.
 
 This repository and all of its contents (the "Software"), including but not
 limited to source code, object code, documentation, prompts, configuration,
-data, and assets, are the exclusive property of ArthurLegal and are protected
-by copyright and other intellectual property laws and treaties.
+data, and assets, are the property of ArthurLegal and are protected by
+copyright and other intellectual property laws and treaties, save for the
+Third-Party Materials identified in Section 4.
 
-NO LICENSE IS GRANTED.
+Permission is granted for Permitted Use, as defined below, and for nothing
+else. All rights not expressly granted are reserved.
 
-Notwithstanding the public visibility of this repository, no right or license
-of any kind is granted to any person or entity. Except where explicitly
-authorized in advance and in a separate writing signed by ArthurLegal, you may
-NOT:
+--------------------------------------------------------------------------------
+1. DEFINITIONS
+--------------------------------------------------------------------------------
 
-  (a) use, run, or execute the Software, in whole or in part;
-  (b) copy, reproduce, or download the Software, except for transient caching
-      strictly necessary to view it on GitHub;
-  (c) modify, adapt, translate, or create derivative works of the Software;
-  (d) distribute, publish, sublicense, sell, rent, lease, or otherwise make the
-      Software available to any third party;
-  (e) remove or alter any copyright, trademark, or proprietary notice.
+"You" (or "Licensee") means any natural or legal person exercising rights under
+this License.
 
-"ArthurLegal" and associated names, logos, and product names are trademarks of
-ArthurLegal. No trademark license is granted.
+"Derivative Work" means any modification, adaptation, translation,
+configuration, extension, or work based upon the Software.
 
-Public visibility of this repository does NOT constitute publication into the
-public domain, an open-source license, or any waiver of rights. All rights not
-expressly granted in a separate signed written agreement are reserved by
-ArthurLegal. Nothing herein shall be construed as granting, by implication,
-estoppel, or otherwise, any license or right.
+"Third-Party Materials" means the components incorporated into the Software that
+are licensed under separate terms, as described in Section 4.
 
-To request a license (including evaluation, internal, or commercial use),
-contact the copyright holder. Any such license must be set out in a separate
-written agreement signed by ArthurLegal.
+"Commercial Use" means any use of the Software or a Derivative Work that is
+directed toward, or results in, commercial advantage or monetary compensation
+DERIVED FROM THE SOFTWARE ITSELF, including without limitation:
+
+  (a) selling, licensing, sublicensing, renting, leasing, or otherwise
+      monetizing the Software or any Derivative Work;
+  (b) distributing or otherwise making the Software or any Derivative Work
+      available to any third party, whether or not for a fee;
+  (c) offering the Software or any Derivative Work to third parties as a
+      product, or as a hosted, managed, or software-as-a-service offering;
+  (d) incorporating the Software or any Derivative Work into any product or
+      service that is sold, licensed, or otherwise offered to third parties;
+  (e) using the Software or any Derivative Work to train, fine-tune, benchmark,
+      or evaluate any model, product, or service that is offered commercially.
+
+"Permitted Use" means any use that is not Commercial Use. For the avoidance of
+doubt, and notwithstanding anything to the contrary, each of the following IS
+Permitted Use and does NOT constitute Commercial Use:
+
+  (a) In-House Use — use by an in-house counsel, or by any member or employee
+      of an in-house legal department, in the ordinary course of their duties
+      for their employer;
+  (b) Law Firm Use — use by a partner, associate, of counsel, trainee,
+      paralegal, or any other employee or contractor of a law firm, in the
+      ordinary course of their duties, including in the course of work
+      performed for the firm's clients;
+  (c) Personal Use — use by a natural person for their own personal purposes;
+  (d) Personal Enhancement — creating, or commissioning a third party to
+      create, modifications, configurations, or Derivative Works of the
+      Software, where the resulting work is used solely for that person's own
+      Permitted Use under (a), (b), or (c), and is not distributed to any
+      other party.
+
+For clarity: the fact that a Licensee, a Licensee's employer, or a law firm's
+clients derive revenue from legal services in connection with which the Software
+is used does NOT make that use Commercial Use. The distinction drawn by this
+License is the commercialization OF THE SOFTWARE ITSELF, not the commercial
+character of the Licensee's professional practice.
+
+Where a third party is engaged under paragraph (d) to develop a Derivative Work
+for a Licensee, that third party's use of the Software is limited to performing
+that engagement for that Licensee. The third party acquires no right to use,
+retain, reuse, or distribute the Software or the resulting Derivative Work for
+any other purpose or for any other person.
+
+--------------------------------------------------------------------------------
+2. GRANT OF LICENSE
+--------------------------------------------------------------------------------
+
+Subject to Your compliance with this License, ArthurLegal grants You a limited,
+worldwide, royalty-free, non-exclusive, non-transferable, non-sublicensable,
+revocable license to:
+
+  (a) use, execute, and run the Software;
+  (b) reproduce the Software as reasonably necessary for Permitted Use;
+  (c) modify the Software and create Derivative Works, solely for Permitted Use.
+
+--------------------------------------------------------------------------------
+3. RESTRICTIONS
+--------------------------------------------------------------------------------
+
+Except as expressly permitted in Section 2, or as authorized in advance in a
+separate writing signed by ArthurLegal, You may NOT:
+
+  (a) engage in Commercial Use;
+  (b) distribute, publish, sublicense, sell, rent, lease, or otherwise make the
+      Software or any Derivative Work available to any third party, whether or
+      not for a fee;
+  (c) remove or alter any copyright, trademark, attribution, or proprietary
+      notice, including the notices required by Section 4;
+  (d) use "ArthurLegal" or any associated name, logo, or product name as a
+      trademark, or in a manner suggesting endorsement. No trademark license is
+      granted;
+  (e) misrepresent the origin of the Software.
+
+Any reproduction of the Software under Section 2(b) must retain this LICENSE
+file, the copyright notice above, and the ATTRIBUTION file accompanying the
+relevant release package.
+
+--------------------------------------------------------------------------------
+4. THIRD-PARTY MATERIALS
+--------------------------------------------------------------------------------
+
+The Software incorporates, and is derived in part from, Third-Party Materials
+licensed under the Apache License, Version 2.0 — including the `claude-for-legal`
+knowledge base published by Anthropic
+(https://github.com/anthropics/claude-for-legal).
+
+Nothing in this License limits, and this License does not purport to modify, any
+rights You may have in such Third-Party Materials under their own licenses. The
+Apache License 2.0 texts and attribution notices distributed within the release
+packages are retained for that purpose and must not be removed.
+
+This License governs the Software as a whole — that is, ArthurLegal's original
+contributions and the compilation, arrangement, and adaptation embodied in it.
+To the extent of any conflict between this License and the license of any
+Third-Party Materials with respect to those materials, the latter governs.
+
+--------------------------------------------------------------------------------
+5. RESERVATION OF RIGHTS
+--------------------------------------------------------------------------------
+
+ALL RIGHTS RESERVED. All rights not expressly granted in Section 2 are reserved
+by ArthurLegal.
+
+The public visibility of this repository does NOT constitute publication into
+the public domain, an open-source license, or any waiver of rights. Nothing
+herein shall be construed as granting, by implication, estoppel, or otherwise,
+any license or right beyond those expressly stated.
+
+--------------------------------------------------------------------------------
+6. TERMINATION
+--------------------------------------------------------------------------------
+
+This License terminates automatically and without notice if You breach any of
+its terms. Upon termination, You must cease all use of the Software and destroy
+all copies in Your possession or control. Sections 4, 5, 7, 8, and 9 survive
+termination.
+
+--------------------------------------------------------------------------------
+7. NO WARRANTY
+--------------------------------------------------------------------------------
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+--------------------------------------------------------------------------------
+8. LIMITATION OF LIABILITY
+--------------------------------------------------------------------------------
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+9. NO LEGAL ADVICE
+--------------------------------------------------------------------------------
+
+The Software is a drafting and research aid. Its outputs are DRAFTS and do not
+constitute legal advice. They must be reviewed by a qualified, admitted lawyer
+before being relied upon, delivered to a client, or filed with any court or
+authority. Professional responsibility remains at all times with the lawyer.
+
+--------------------------------------------------------------------------------
+10. LICENSE REQUESTS
+--------------------------------------------------------------------------------
+
+To request rights beyond Permitted Use — including any Commercial Use,
+redistribution, or sublicensing — contact the copyright holder. Any such license
+must be set out in a separate written agreement signed by ArthurLegal.
 
 ================================================================================
 ÖZET (Türkçe — yalnızca bilgilendirme amaçlıdır; bağlayıcı metin yukarıdaki
@@ -48,9 +183,42 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Telif Hakkı (c) 2026 ArthurLegal. Tüm hakları saklıdır.
 
-Bu depo herkese açık olsa da hiçbir kullanım izni verilmemektedir. ArthurLegal'in
-önceden verilmiş, ayrı ve imzalı yazılı izni olmadan yazılımı kullanamaz,
-çalıştıramaz, kopyalayamaz, değiştiremez, dağıtamaz veya ticarileştiremezsiniz.
-Deponun herkese açık olması; kamuya mal etme, açık kaynak lisansı veya haklardan
-feragat anlamına gelmez. Açıkça verilmeyen tüm haklar ArthurLegal'e aittir.
+TİCARİ KULLANIM YASAKTIR. Yazılım yalnızca "İzinli Kullanım" kapsamında
+kullanılabilir.
+
+Aşağıdakiler ticari kullanım SAYILMAZ ve serbesttir:
+
+  • Şirket içi (in-house) hukuk müşavirinin veya hukuk departmanı çalışanının
+    olağan görevleri kapsamındaki kullanımı;
+  • Bir hukuk bürosunun ortağının, avukatının, stajyerinin veya herhangi bir
+    çalışanının olağan görevleri kapsamındaki kullanımı — büronun müvekkilleri
+    için yapılan çalışmalar dahil;
+  • Gerçek kişinin kişisel kullanımı;
+  • Kişinin kendi izinli kullanımı için bizzat yaptığı veya bir üçüncü kişiye
+    YAPTIRDIĞI geliştirmeler, uyarlamalar ve türev çalışmalar (başkasına
+    dağıtılmamak kaydıyla).
+
+Şüpheye yer bırakmamak için: Kullanıcının, işvereninin veya büronun
+müvekkillerinin, yazılımın kullanıldığı hukuki hizmetlerden gelir elde etmesi
+bu kullanımı ticari kullanım hâline getirmez. Bu lisansın çizdiği ayrım,
+YAZILIMIN KENDİSİNİN ticarileştirilmesidir; kullanıcının mesleki pratiğinin
+ticari niteliği değildir.
+
+Yasak olan (ArthurLegal'in ayrı ve imzalı yazılı izni olmadıkça): yazılımı
+satmak, lisanslamak, kiralamak, üçüncü kişilere dağıtmak veya sunmak (ücretli
+olsun olmasın), bir ürün/hizmete dahil etmek, hizmet olarak (SaaS) sunmak,
+ticari bir modeli eğitmek için kullanmak, telif/atıf bildirimlerini kaldırmak.
+
+Yazılım, Apache 2.0 lisanslı üçüncü taraf bileşenler (Anthropic
+`claude-for-legal` bilgi tabanı) içerir. Bu bileşenler kendi lisanslarına
+tabidir; ilgili lisans metinleri ve atıf bildirimleri paketlerde korunmuştur ve
+kaldırılamaz. Bu lisans, eseri BİR BÜTÜN OLARAK yönetir.
+
+Deponun herkese açık olması; kamuya mal etme, açık kaynak lisansı veya
+haklardan feragat anlamına gelmez. Açıkça verilmeyen tüm haklar ArthurLegal'e
+aittir.
+
+Çıktılar TASLAKTIR, hukuki tavsiye değildir; baroya kayıtlı bir avukatın
+incelemesinden geçmeden müvekkile veya mahkemeye sunulmamalıdır.
+
 Lisans talebi için telif hakkı sahibiyle iletişime geçiniz.

@@ -45,7 +45,17 @@ Bu pakette yeni olarak (Corporate paketinde olmayan) 9 hukuk bürosu spesifik re
 
 ## Lisans
 
-Apache License 2.0 — bkz. `LICENSE`.
+Bu paket **bir bütün olarak** ArthurLegal Proprietary Non-Commercial License
+kapsamındadır — bkz. [LICENSE](LICENSE). **Ticari kullanım yasaktır.** In-house
+counsel'ın, hukuk bürosu çalışanının ve gerçek kişinin kişisel kullanımı ile bu
+kullanımlar için bizzat yapılan veya üçüncü kişiye yaptırılan geliştirmeler
+ticari kullanım sayılmaz. Tüm hakları saklıdır.
+
+Paketin türetildiği üçüncü taraf bilgi tabanı (Anthropic `claude-for-legal`)
+**Apache License 2.0** altındadır. İlgili lisans ve atıf bildirimi
+[LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-THIRD-PARTY.txt)
+dosyasında korunmuştur ve kaldırılamaz. Çelişki hâlinde, o bileşenler bakımından
+Apache 2.0 geçerlidir.
 
 Bu lisans, paketi serbestçe kullanma, değiştirme ve dağıtma hakkı verir; ancak orijinal atıf ve lisans bildirimi korunmalıdır.
 
