@@ -4,7 +4,7 @@
 > Toplam skill: 5
 > Kullanım: /{plugin}:{skill-adı} komutunu yaz, aşağıdaki ilgili bölümü uygula.
 
-## İçindekiler
+## Icindekiler
 
 - /energy-finance:cold-start-interview
 - /energy-finance:jv-agreement-review

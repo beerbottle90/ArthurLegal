@@ -53,12 +53,6 @@ knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 ```
 
-### New practice areas (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← GDPR / KVKK / data protection
-knowledge/profiles/regulatory-legal.md    ← Regulatory / agency law
-```
-
 ### Skill files (all plugins)
 ```
 knowledge/skills/administrative-legal__skills.md
@@ -106,6 +100,7 @@ knowledge/references/masak-kimlik-tespit-rehberi.md
 **Sector-specific references:**
 ```
 knowledge/references/epdk-rehberi.md          ← Energy sector
+knowledge/references/elektrik-uretim-rehberi.md ← Power generation (expert-opinion technical basis)
 knowledge/references/smk-rehberi.md           ← IP / industrial property
 knowledge/references/turkpatent-rehberi.md    ← Trademark / patent
 knowledge/references/istac-rehberi.md         ← Arbitration (ISTAC)

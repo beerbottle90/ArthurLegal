@@ -7,7 +7,7 @@
 >
 > *A Turkish-law adaptation of Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) — packaged as a Claude.ai Projects bundle (SYSTEM_PROMPT + ~60 knowledge files) for small-to-mid (0–30 staff) law firms practicing balanced litigation + advisory work.*
 
-> Kardeş paket: [ArthurLegal Claude Corporate Assistant](../ArthurLegal-v1.0.0-Public-Release/) — in-house (danışan) tarafı. Aynı metodoloji, farklı hedef kullanıcı.
+> Kardeş paket: [ArthurLegal Claude Corporate Assistant](../ArthurLegal-CorporateAssistant-v1.0.0-Public-Release/) — in-house (danışan) tarafı. Aynı metodoloji, farklı hedef kullanıcı.
 
 ---
 
@@ -133,7 +133,7 @@ ArthurLegal-Law-Firm-v1.0.0-Public-Release/
 │   ├── references/            (33 TR mevzuat + meslek pratiği referansı)
 │   └── skills/                (19 adım-adım iş yöntemi — flat naming)
 ├── ATTRIBUTION.md             ← Author / Designer / Knowledge atfı
-├── LICENSE                    ← Apache 2.0
+├── LICENSE                    ← Proprietary Non-Commercial
 └── CHANGELOG.md               ← Sürüm notları
 ```
 

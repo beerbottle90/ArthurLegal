@@ -65,7 +65,7 @@ ArthurLegal-Courthouse-v1.0.0-Public-Release/
 ├── CHANGELOG.md           ← Sürüm notları
 ├── VERSION.md             ← 1.0.0
 ├── ATTRIBUTION.md         ← Atıf bilgisi
-├── LICENSE                ← Apache 2.0
+├── LICENSE                ← Proprietary Non-Commercial
 └── knowledge/             ← Project Knowledge'a yüklenecek dosyalar
     ├── mahkeme-profili.md      (mahkeme profil şablonu — [DOLDUR])
     ├── skills/                 (8 plugin skill kitapçığı — 8/8, 28 skill)

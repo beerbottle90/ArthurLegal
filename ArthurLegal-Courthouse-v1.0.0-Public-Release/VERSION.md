@@ -3,7 +3,7 @@
 **Sürüm:** 1.0.0
 **Yayın tarihi:** 2026-06-28
 **Önceki sürüm:** — (ilk sürüm)
-**Lisans:** Apache 2.0
+**Lisans:** ArthurLegal Proprietary Non-Commercial License (bkz. `LICENSE`)
 
 ## Semver özeti
 

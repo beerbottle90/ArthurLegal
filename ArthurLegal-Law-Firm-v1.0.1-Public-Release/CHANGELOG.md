@@ -27,7 +27,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ## [1.0.0] — 2026-05-17 — *Initial Public Release*
 
-İlk halka açık sürüm. Anthropic'in [claude-for-legal](https://github.com/anthropics/claude-for-legal) referans paketinden türetilmiş, **dava + danışmanlık dengeli, 0–30 çalışanlı Türk hukuk büroları** için **danışman tarafı** adapte edilmiş hibrit hukuk asistanı paketi. Kardeş paket: [ArthurLegal Claude Corporate Assistant](../ArthurLegal%20Claude%20Corporate%20Assistant/) (in-house, danışan tarafı).
+İlk halka açık sürüm. Anthropic'in [claude-for-legal](https://github.com/anthropics/claude-for-legal) referans paketinden türetilmiş, **dava + danışmanlık dengeli, 0–30 çalışanlı Türk hukuk büroları** için **danışman tarafı** adapte edilmiş hibrit hukuk asistanı paketi. Kardeş paket: [ArthurLegal Claude Corporate Assistant](../ArthurLegal-CorporateAssistant-v1.0.0-Public-Release/) (in-house, danışan tarafı).
 
 ### Eklendi
 
