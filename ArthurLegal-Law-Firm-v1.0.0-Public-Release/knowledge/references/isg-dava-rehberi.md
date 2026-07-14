@@ -165,4 +165,4 @@ search_mevzuat(mevzuat_no="5510", mevzuat_tur="KANUN")  # SGK K.
 
 - [HMK rehberi](hmk-rehberi.md)
 - [Yargı MCP rehberi](yargi-mcp-rehberi.md)
-- [Şirket profili → litigation-legal](../profiles/litigation-legal.md)
+- [Şirket profili → dispute-litigation](../profiles/dispute-litigation.md)

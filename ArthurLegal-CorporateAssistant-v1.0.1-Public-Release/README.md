@@ -103,7 +103,7 @@ ArthurLegal-v1.0.0-Public-Release/
 │   ├── skills/                (50+ adım-adım iş yöntemi)
 │   └── agents/                (7 periyodik iş tanımı)
 ├── ATTRIBUTION.md             ← Author / Designer / Knowledge atfı
-├── LICENSE                    ← Apache 2.0
+├── LICENSE                    ← Proprietary Non-Commercial
 └── CHANGELOG.md               ← Sürüm notları
 ```
 

@@ -4,7 +4,7 @@
 > Toplam skill: 3
 > Kullanım: /{plugin}:{skill-adı} komutunu yaz, aşağıdaki ilgili bölümü uygula.
 
-## İçindekiler
+## Icindekiler
 
 - /firm-operations:cold-start-interview
 - /firm-operations:conflict-check

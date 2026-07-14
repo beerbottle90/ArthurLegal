@@ -141,7 +141,7 @@ ArthurLegal-Law-Firm-v1.2.0-Public-Release/
 ├── CHANGELOG.md            ← Sürüm notları
 ├── VERSION.md              ← Sürüm bilgisi
 ├── ATTRIBUTION.md          ← Atıf
-├── LICENSE                 ← Apache 2.0
+├── LICENSE                 ← Proprietary Non-Commercial
 └── knowledge/
     ├── firm-profile.md     ← Büro profil şablonu ([DOLDUR] ile)
     ├── profiles/           ← 11 pratik alan profili

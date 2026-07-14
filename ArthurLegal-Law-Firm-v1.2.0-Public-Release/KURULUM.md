@@ -53,12 +53,6 @@ knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 ```
 
-### Yeni pratik alanlar (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← KVKK / veri koruma
-knowledge/profiles/regulatory-legal.md    ← Regülasyon / düzenleyici
-```
-
 ### Skill dosyaları (tüm plugin'ler)
 ```
 knowledge/skills/administrative-legal__skills.md
