@@ -170,14 +170,14 @@ bunu `[review]` ile flag et.
 UK mevzuatı oturumda fiilen WebFetch ile çekildiyse:
 
 ```
-[UK Legislation — <tür yıl c./no> s.<madde> — GG.AA.YYYY]
+[UK Legislation - <tür yıl c./no> s.<madde> - GG.AA.YYYY]
 ```
 
-Örnek: `[UK Legislation — UCTA 1977 s.2 — 22.05.2026]`,
-`[UK Legislation — Consumer Rights Act 2015 s.62 — 22.05.2026]`.
+Örnek: `[UK Legislation - UCTA 1977 s.2 - 22.05.2026]`,
+`[UK Legislation - Consumer Rights Act 2015 s.62 - 22.05.2026]`.
 
 Çekmediğin bir İngiliz statüsünü "biliyorum" diye `[UK Legislation]`
-etiketleyemezsin → `[model bilgisi — doğrulayın]` kullan. legislation.gov.uk
+etiketleyemezsin → `[model bilgisi - doğrulayın]` kullan. legislation.gov.uk
 **içtihat içermez** (case law); İngiliz mahkeme kararları ayrı kaynaktır
 (BAILII / Westlaw UK — bu pakette bağlı değil).
 

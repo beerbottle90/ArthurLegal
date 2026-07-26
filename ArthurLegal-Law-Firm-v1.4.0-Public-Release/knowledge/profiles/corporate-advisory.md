@@ -9,10 +9,10 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** Kurumsal danışmanlık — **KOBİ + aile şirketi + küçük-orta ölçekli M&A**
-**Aylık matter hacmi:** `[DOLDUR — örn. 2-4 işlem/ay + 5-8 sürekli kurumsal müvekkil yıllık GK takvimi]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. aile şirketlerinde kuşak geçişi + pay devri çatışmaları + esas sözleşme eski/yıpranmış]`
+**Aylık matter hacmi:** `[DOLDUR - örn. 2-4 işlem/ay + 5-8 sürekli kurumsal müvekkil yıllık GK takvimi]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. aile şirketlerinde kuşak geçişi + pay devri çatışmaları + esas sözleşme eski/yıpranmış]`
 
-**Sorumlu ortak:** `[DOLDUR — örn. Yönetici Ortak + Kıdemli Ortak A]`
+**Sorumlu ortak:** `[DOLDUR - örn. Yönetici Ortak + Kıdemli Ortak A]`
 
 ---
 
@@ -128,15 +128,15 @@ AVUKATLIK K. m. 36 – DİLİGENCE RAPORU – DAHİLİ VE GİZLİDİR
 [Büro] – Matter: [matter-slug]
 Hedef: [hedef şirket rumuz] – Müvekkil: [alıcı rumuz]
 Diligence dönemi: [tarih aralığı]
-Bulgu sınıflandırma: 🔴 N – 🟠 N – 🟡 N – 🟢 N (toplam N bulgu)
+Bulgu sınıflandırma: BLOKLAYICI N – YÜKSEK N – ORTA N – DÜŞÜK N (toplam N bulgu)
 ```
 
 ### Atıf disiplini
 
-- `[Mevzuat MCP — TTK m. X — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay 11. HD — GG.AA.YYYY]` (ticari)
-- `[TTSG — Türkiye Ticaret Sicili Gazetesi — sayı/tarih]`
-- `[Müvekkil esas sözleşme — onay tarihi]`
+- `[Mevzuat MCP - TTK m. X - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay 11. HD - GG.AA.YYYY]` (ticari)
+- `[TTSG - Türkiye Ticaret Sicili Gazetesi - sayı/tarih]`
+- `[Müvekkil esas sözleşme - onay tarihi]`
 
 ---
 

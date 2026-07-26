@@ -154,7 +154,7 @@ The interview's information comes only from the user's typed answers and documen
 - **Never** write a configuration with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past. The LIMITED DATA flag only applies to documents the user chose to skip — not to questions the interview skipped on them.
 - **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/employment-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /employment-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -301,7 +301,7 @@ Before asking for documents, ask one infrastructure question:
 
 If they have an HRIS or good document visibility: aim for 10-20 documents across the types described above.
 
-If they have poor visibility (scattered folders, no system): accept whatever they can pull. Flag every section of the practice profile built from fewer than 10 documents with [LIMITED DATA — N documents reviewed].
+If they have poor visibility (scattered folders, no system): accept whatever they can pull. Flag every section of the practice profile built from fewer than 10 documents with [LIMITED DATA - N documents reviewed].
 
 **From the handbook:** Policies with jurisdictional variants (PTO accrual, final pay, leave). State supplements if any. The gaps — things the handbook doesn't cover that it should.
 
@@ -317,7 +317,7 @@ This is the core output. For each state/country in the footprint:
 | New York | Pay transparency in postings. NYC has separate rules. Final pay next regular payday. | Exec hires (pay transparency). |
 | [etc.] | | |
 
-Don't invent rules for jurisdictions they didn't name. If they have one employee in Montana and no memo ever mentioned Montana, note `[Montana: 1 employee, no history — research on first issue]`.
+Don't invent rules for jurisdictions they didn't name. If they have one employee in Montana and no memo ever mentioned Montana, note `[Montana: 1 employee, no history - research on first issue]`.
 
 ## Writing the practice profile
 
@@ -477,7 +477,7 @@ interview and without hand-editing YAML.
 ## Guardrails
 
 - **Never delete a section.** If the user wants to "remove" a jurisdiction,
-  offer to mark it `[Not currently staffed — retain rules for re-entry]` and
+  offer to mark it `[Not currently staffed - retain rules for re-entry]` and
   explain that going to `[Not configured]` will drop state-specific
   flagging.
 - **Flag internal inconsistency.** If the change would make the profile
@@ -590,7 +590,7 @@ Next priorities (open items with earliest due dates or highest-dependency):
    `in-progress`, flag it:
 
 ```
-⚠️ Overdue: [item] — was due [date], owner: [owner]
+Overdue: [item] — was due [date], owner: [owner]
 ```
 
 7. Write the updated tracker. Confirm:
@@ -700,7 +700,7 @@ Flag this. Don't block it — but flag it.
 
 | Section | References changed section | Still accurate? | Fix needed |
 |---|---|---|---|
-| [name] | [how] | ✅/⚠️ | [what] |
+| [name] | [how] | ✅/| [what] |
 
 ### State supplement impact
 
@@ -830,9 +830,9 @@ Per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` restr
 Some companies use them selectively. Apply the house policy first, then
 research overlays from the jurisdiction.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's exemption thresholds, restrictive-covenant rules, pay-transparency law, or any other item you're researching, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's exemption thresholds, restrictive-covenant rules, pay-transparency law, or any other item you're researching, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Tag every citation in the review with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Tag every citation in the review with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ### Step 4: Jurisdiction-specific requirements
 
@@ -883,7 +883,7 @@ Read the letter. Check:
 > **Jurisdiction assumption.** This review applies the rules of the employee's work jurisdiction identified in Step 1. Enforceability of restrictive covenants, exemption thresholds, pay-transparency obligations, salary-history limits, and required notices vary materially by state and locality, and several have shifted recently. If the candidate's work location changes, or the role spans jurisdictions, this review may not apply as written.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Hiring Review: [Candidate] — [Role] — [Jurisdiction]
 
@@ -975,7 +975,7 @@ Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/
 
 > **Distribution discipline.** Every file this skill creates — log entries, memo drafts, audience summaries, document notes — inherits the privilege and confidentiality status of the underlying investigation. Distribution beyond the privilege circle (forwarding to non-attorneys outside the investigation team, cc'ing HR without scoping, handing to the business side) can waive privilege over the entire investigation. Store these files where privileged materials live, label per the work-product header, and make every distribution decision deliberately.
 
-## ⚠️ Privilege notice — read before proceeding
+## Privilege notice — read before proceeding
 
 **Marking does not create privilege.** The header above reflects the intended
 protection and is important to include — but it does not itself establish
@@ -1068,7 +1068,7 @@ Create the following files:
 `~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[matter-slug]/log.yaml`:
 
 ```yaml
-# [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+# [WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 matter: "[matter name]"
 matter_slug: "[slug]"
 opened: "[ISO date]"
@@ -1082,7 +1082,7 @@ status: open
 last_updated: "[ISO date]"
 
 issues:
-  - "[Issue 1 — derived from allegation, e.g. 'alleged hostile work environment']"
+  - "[Issue 1 - derived from allegation, e.g. 'alleged hostile work environment']"
   - "[Issue 2 if applicable]"
 
 entries: []
@@ -1097,7 +1097,7 @@ Generated from the investigation type. See sources checklist templates below.
 `~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[matter-slug]/documents-reviewed.yaml`:
 
 ```yaml
-# [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+# [WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 matter: "[matter name]"
 total_reviewed: 0
 total_surfaced: 0
@@ -1393,18 +1393,18 @@ For each surfaced item, append to `log.yaml`:
 ```yaml
 - entry_id: [auto-increment]
   entry_type: [interview / document / attorney-note / gap]
-  date_of_event: "[date the event occurred — not when logged]"
+  date_of_event: "[date the event occurred - not when logged]"
   date_logged: "[ISO datetime]"
   source: "[witness name/role, or document filename/description]"
   source_type: [complainant / respondent / witness / document / attorney-note]
   issues: ["[which investigation issue(s) this entry relates to]"]
   significance: [high / medium / background]
-  summary: "[what this entry adds to the record — 2-5 sentences]"
-  quote: "[verbatim quote if significant — otherwise empty]"
+  summary: "[what this entry adds to the record - 2-5 sentences]"
+  quote: "[verbatim quote if significant - otherwise empty]"
   contradicts_entry: [entry_id or null]
   corroborates_entry: [entry_id or null]
   credibility_note: ""
-  pull_criterion: "[which criterion triggered — for documents]"
+  pull_criterion: "[which criterion triggered - for documents]"
   privilege: attorney-work-product
 ```
 
@@ -1481,7 +1481,7 @@ Draft the memo in the following structure, following standard internal
 investigation memorandum practice:
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ---
 
@@ -1530,7 +1530,7 @@ appears first.]
 Full document log is maintained separately.]
 
 **Other sources:**
-[Any other sources from checklist — policies, HR records, etc.]
+[Any other sources from checklist - policies, HR records, etc.]
 
 **Limitations:** [Any sources requested but not obtained, any constraints]
 
@@ -1564,13 +1564,13 @@ account is credited.]*
 
 ### [Witness name/role]
 
-**Internal consistency:** [Consistent / Inconsistent — note specifics]
+**Internal consistency:** [Consistent / Inconsistent - note specifics]
 **Corroboration:** [What documentary or other evidence corroborates
 or undermines the account]
 **Motive:** [Any reason to credit or discount the account]
 **Demeanor:** [Attorney's observations if interviews were in person —
 leave blank if not applicable or not observed]
-**Assessment:** [Credit / Do not credit / Partially credit — with basis]
+**Assessment:** [Credit / Do not credit / Partially credit - with basis]
 
 ---
 
@@ -1596,7 +1596,7 @@ Cite the version. Do not cite policies that were adopted after the conduct.]
 
 [Organized by action type:]
 
-**Disciplinary action:** [If any — state the basis, not just the outcome]
+**Disciplinary action:** [If any - state the basis, not just the outcome]
 **Policy or process changes:** [If any gap in policies contributed]
 **Training:** [If indicated]
 **Further investigation:** [Any threads not fully resolved]
@@ -1667,14 +1667,14 @@ support?
 - Key findings
 - Business impact / exposure (high level — no specific legal analysis)
 - What the company is doing about it
-- Header: "[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]"
+- Header: "[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]"
 
 **Outside counsel briefing** (handing off for litigation or deeper review):
 - Full context including legal exposure analysis
 - Open evidentiary threads
 - Credibility issues that remain contested
 - Documents that would be most significant in litigation
-- Header: "[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]"
+- Header: "[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]"
 
 ---
 
@@ -1986,7 +1986,7 @@ identified in Steps 2-4. This file persists across sessions.
 Format:
 
 ```yaml
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 country: [Country name]
 country_slug: [lowercase-hyphenated]
 kickoff_date: [ISO date]
@@ -2023,7 +2023,7 @@ attributable to a single owner.
 > **Jurisdiction assumption.** This plan frames the expansion to the single country identified in intake. Local employment law, tax rules, employee-representation obligations, and data-protection requirements vary materially by country, region, industry, and headcount, and change frequently. Every substantive local-law answer comes from the outside-counsel briefing request, not from this skill. If the plan is adapted for another country later, re-run the briefing.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## International Expansion: [Country] — [Date]
 
@@ -2036,7 +2036,7 @@ attributable to a single owner.
 
 ### EOR vs. Entity
 
-[Framing from Step 2 — table, PE risk flag if applicable, questions for CFO/tax]
+[Framing from Step 2 - table, PE risk flag if applicable, questions for CFO/tax]
 
 ---
 
@@ -2311,7 +2311,7 @@ description: >
   the leaves that require an action and explains why — not a status board.
   Use weekly, or whenever the attorney needs to know which leaves have
   upcoming designation, certification, or exhaustion deadlines.
-argument-hint: "[no arguments — works from HRIS or leave-register.yaml]"
+argument-hint: "[no arguments - works from HRIS or leave-register.yaml]"
 ---
 
 # /leave-tracker
@@ -2352,7 +2352,7 @@ description: >
   start tracking deadlines. Use when an employee goes on leave and you want the
   tracker to watch designation, certification, and exhaustion clocks from day
   one.
-argument-hint: "[describe the leave — employee/role, type, jurisdiction, start date]"
+argument-hint: "[describe the leave - employee/role, type, jurisdiction, start date]"
 ---
 
 # /log-leave
@@ -2528,7 +2528,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -2546,7 +2546,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
+[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other - with one-line rationale]
 
 ## Key facts
 
@@ -2557,12 +2557,12 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 *Any deviation from the practice-level playbook that applies to this matter and only this matter.*
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
+- [e.g., "Tone: relationship-preserving - counterparty is a strategic partner."]
 - [e.g., "Governing law: must be English law, not Delaware."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -2581,7 +2581,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to inbound MSA draft from [counterparty]."]
 ```
 
 ## Cross-matter context
@@ -2608,7 +2608,7 @@ description: >
   the jurisdictional footprint. Use when the user says "draft a [topic]
   policy", "we need a policy on", "update our [topic] policy", or names a
   policy gap.
-argument-hint: "[policy topic — e.g., 'remote work', 'parental leave', 'PTO']"
+argument-hint: "[policy topic - e.g., 'remote work', 'parental leave', 'PTO']"
 ---
 
 # /policy-drafting
@@ -2718,7 +2718,7 @@ Keep supplements tight. Only what's different — don't repeat the core.
 - **Jurisdictional scan:** [which states checked, which have variance]
 - **Conflicts with existing handbook:** [none | list]
 - **Law currently shifting:** [any state where this is in flux]
-- **Review cadence:** [when to revisit — annual, or when X happens]
+- **Review cadence:** [when to revisit - annual, or when X happens]
 ```
 
 > **Draft, not a policy in effect.** This is a drafting aid for attorney review, not a policy you can publish. Publishing a handbook policy has legal consequences — in several states it can bind the company as a contractual promise, and wage/leave/accommodation policies are routinely read against the employer. A licensed attorney, solicitor, barrister, or other authorised legal professional in your jurisdiction reviews, edits as needed, and takes professional responsibility before the policy is rolled out. Do not publish or distribute this draft unreviewed.
@@ -2824,9 +2824,9 @@ following are true:
 
 When all three fire, emit:
 
-> 🔴 **Potential exempt misclassification** — [title] earning $[X] in
+> BLOKLAYICI **Potential exempt misclassification** — [title] earning $[X] in
 > [state]. The exempt salary threshold in [state] is approximately $[Y]
-> `[model knowledge — verify]`. Before termination, route to
+> `[model knowledge - verify]`. Before termination, route to
 > `/employment-legal:wage-hour-qa` for a classification check — a misclassified
 > employee who's terminated has a ready-made FLSA and state-wage claim with
 > liquidated damages, attorneys' fees, and (in CA) PAGA exposure, which
@@ -2871,9 +2871,9 @@ after. Before.
 >
 > Cite primary sources. Verify currency.
 >
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's final-pay, PTO, notice, or WARN rule, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) stop here and flag for attorney verification. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's final-pay, PTO, notice, or WARN rule, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) stop here and flag for attorney verification. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Tag every citation in the plan — final-pay rule, PTO rule, notices, WARN / mini-WARN, OWBPA consideration periods, state release restrictions — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Tag every citation in the plan — final-pay rule, PTO rule, notices, WARN / mini-WARN, OWBPA consideration periods, state release restrictions — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ### Step 4: Severance and release
 
@@ -2916,14 +2916,14 @@ what changed? The answer should be documented.
 
 ## Output
 
-> **Research-connector pre-flight.** Before emitting the memo, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 3 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication topics in termination-law memos are final-pay timing, OWBPA group/individual distinctions, state-specific NDA / non-disparagement rules (e.g., CA SB 331), and NLRB positions (e.g., McLaren Macomb) — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the memo.
+> **Research-connector pre-flight.** Before emitting the memo, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 3 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication topics in termination-law memos are final-pay timing, OWBPA group/individual distinctions, state-specific NDA / non-disparagement rules (e.g., CA SB 331), and NLRB positions (e.g., McLaren Macomb) — spot-check those first`. Per-citation `[model knowledge - verify]` tags remain inline. Do not emit a standalone banner above the memo.
 
 > **Jurisdiction assumption.** This review assumes the employee's jurisdiction as stated in Step 1 and any defaults from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → Jurisdictional footprint. Employment rules, final-pay timing, release requirements, and notice obligations vary materially by jurisdiction. If the employee works in a different state or country, or if choice-of-law is contested, this analysis may not apply as written.
 
 Match the memo format from seed term memos referenced in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If none:
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Termination Review: [Role/Name] — [Date]
 
@@ -2935,13 +2935,13 @@ Match the memo format from seed term memos referenced in `~/.claude/plugins/conf
 
 ### Bottom line
 
-[Can you proceed / Need to fix X first / Stop — one-sentence why]
+[Can you proceed / Need to fix X first / Stop - one-sentence why]
 
 ---
 
 ### High-risk flags
 
-[Every flag from Step 2. ✅ Clear or 🔴 FLAG with detail.]
+[Every flag from Step 2. ✅ Clear or BLOKLAYICI FLAG with detail.]
 
 **Escalation:** [None needed | Escalate to [name] before proceeding — [which flag]]
 
@@ -2976,7 +2976,7 @@ Match the memo format from seed term memos referenced in `~/.claude/plugins/conf
 
 ### Go / No-go
 
-[Clear to proceed | Proceed with changes below | Hold — escalation pending]
+[Clear to proceed | Proceed with changes below | Hold - escalation pending]
 
 ### Checklist for term day
 
@@ -3090,9 +3090,9 @@ State the rule in one paragraph, tied to the cite. Use your tools (web search,
 legal research integrations, team reference materials) to verify currency —
 especially for:
 
-> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, CourtListener, or firm platform) returns few or no results for the jurisdiction-and-question, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / question]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag the question as unverified and stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, CourtListener, or firm platform) returns few or no results for the jurisdiction-and-question, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / question]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag the question as unverified and stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Tag every citation in the answer with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Tag every citation in the answer with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 
 - Salary thresholds for any exemption (federal and state — several states
@@ -3209,7 +3209,7 @@ Is this a close call? Be honest.
 
 Conversational. This is a Q&A, not a memo.
 
-> **Research-connector pre-flight.** Before emitting the answer, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; pinpoint cites (volume/page/subsection) carry the highest fabrication risk, spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+> **Research-connector pre-flight.** Before emitting the answer, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; pinpoint cites (volume/page/subsection) carry the highest fabrication risk, spot-check those first`. Per-citation `[model knowledge - verify]` tags remain inline. Do not emit a standalone banner above the output.
 
 > **Jurisdiction assumption.** Answers apply only to the jurisdiction identified. Wage-hour rules, exemption thresholds, and final-pay timing vary materially by state and country, and many rules index or change year over year. If the employee works in another jurisdiction, or the question is answered for the default-footprint state, this answer may not apply as written.
 
@@ -3336,7 +3336,7 @@ Output exactly this block and wait for a response:
 **Only proceed past this gate with an explicit `"proceed anyway"` (or equivalent user instruction). A hesitant "I guess" does not count — re-prompt. If the user proceeds anyway, prepend this banner to every output of this skill for this session:**
 
 ```
-⚠️ SCOPE MISMATCH — OUT-OF-SCOPE USE
+SCOPE MISMATCH — OUT-OF-SCOPE USE
 This skill analyzes prospective worker engagements. The arrangement here
 already exists. This output is the prospective-style analysis the user
 requested for planning purposes only — it is NOT a remediation plan, does
@@ -3437,9 +3437,9 @@ questions, note the gaps — they affect the analysis.
 If `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` records the company's house classification policy, apply it
 first and flag any tension with the researched test.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a jurisdiction-and-purpose combination, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / purpose / test]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a jurisdiction-and-purpose combination, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / purpose / test]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Tag every citation — each classification test, statute, regulation, or case — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the attorney supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Tag every citation — each classification test, statute, regulation, or case — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations the attorney supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ### Step 3 — Apply the researched tests to the facts
 
@@ -3452,7 +3452,7 @@ researched test, not from this file:
 
 ```
 Test: [name of test, per research]
-Purpose: [what this test governs — federal tax / state wage-hour / UI / etc.]
+Purpose: [what this test governs - federal tax / state wage-hour / UI / etc.]
 Source: [pinpoint cite to statute/regulation/case]
 Currency: [verified as of date]
 
@@ -3468,7 +3468,7 @@ conjunctive test where each prong must be satisfied, or a hybrid. State this
 from research, not from memory.]
 
 Result under this test:
-[Employee-leaning / IC-leaning / Fails prong X / Uncertain — contested prong]
+[Employee-leaning / IC-leaning / Fails prong X / Uncertain - contested prong]
 ```
 
 Repeat for each applicable test.
@@ -3513,10 +3513,10 @@ Intended structure: [what they said they want]
 What the facts suggest: [what the researched tests say this actually is]
 
 Gaps — where the arrangement doesn't match the intended structure:
-🔴 [Factor]: [What they described] conflicts with [intended classification]
+BLOKLAYICI [Factor]: [What they described] conflicts with [intended classification]
    because [specific researched test language + cite]. This is a significant
    misclassification risk if the engagement proceeds as described.
-🟡 [Factor]: [What they described] is a weaker point under [test]. Not
+ORTA [Factor]: [What they described] is a weaker point under [test]. Not
    disqualifying alone, but combined with other factors increases risk.
 ✅ [Factor]: Supports [intended classification]. No issue.
 ```
@@ -3535,12 +3535,12 @@ triggers recorded in that config:
 
 ### Step 5 — Output
 
-> **Research-connector pre-flight.** Before emitting the analysis, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication pinpoints in classification analyses are ABC-test codifications, state carve-out subsections (e.g., CA Lab. Code §§ 2775/2776/2783), element counts in B2B exemptions, and purpose-specific test selection — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+> **Research-connector pre-flight.** Before emitting the analysis, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication pinpoints in classification analyses are ABC-test codifications, state carve-out subsections (e.g., CA Lab. Code §§ 2775/2776/2783), element counts in B2B exemptions, and purpose-specific test selection — spot-check those first`. Per-citation `[model knowledge - verify]` tags remain inline. Do not emit a standalone banner above the output.
 
 > **Jurisdiction assumption.** This analysis applies the tests operative in the jurisdiction(s) identified in intake. Classification rules vary materially by state and country, and the test that governs for one purpose (e.g., federal payroll tax) often differs from the test that governs another (e.g., state wage/hour). If the work will be performed in a jurisdiction not analyzed here, or if a new purpose is added later, this analysis may not apply as written.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Worker Classification Analysis
 **Proposed arrangement:** [what they described]
@@ -3552,7 +3552,7 @@ triggers recorded in that config:
 
 ### Bottom line
 
-[Can you proceed / Need to fix X first / Stop — one-sentence why]
+[Can you proceed / Need to fix X first / Stop - one-sentence why]
 
 ---
 
@@ -3567,18 +3567,18 @@ cited sources.]
 
 ### Test results
 
-#### [Test name — per research]
+#### [Test name - per research]
 Purpose: [...] | Source: [...] | Currency: [...]
 [Scored table from Step 3]
 **Result:** [Employee-leaning / IC-leaning / Fails prong X / Mixed]
 
-#### [Additional researched tests — repeat the block]
+#### [Additional researched tests - repeat the block]
 
 ---
 
 ### Gap analysis
 
-[Flags as structured in Step 4 — 🔴 significant risks, 🟡 weaker points,
+[Flags as structured in Step 4 — BLOKLAYICI significant risks, ORTA weaker points,
 ✅ clean factors]
 
 ---
@@ -3617,7 +3617,7 @@ entity] — coordinate with them on worker agreement. No `/hiring-review` needed
 > - The arrangement (work, control, economics, structure) as described
 > - Jurisdiction and which tests were applied
 > - Test-by-test results with cites and currency
-> - Gap analysis (🔴 / 🟡 / ✅) with the weak prongs called out
+> - Gap analysis (BLOKLAYICI / ORTA / ✅) with the weak prongs called out
 > - Open questions and what's unresolved
 > - What could go wrong (the misclassification theory this arrangement most likely fails on; prior-audit/settlement overlay if any)
 > - What to ask the attorney (is IC viable here; would restructuring through an agency or vendor remove the risk; what contract terms do we need to support the classification)

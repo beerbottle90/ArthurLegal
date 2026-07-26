@@ -25,7 +25,7 @@
 - GK/YK karar paketi, küçük M&A due diligence
 - Enerji M&A, proje finansmanı, LNG offtake inceleme
 
-Çıktılar daima **taslaktır** ve **atanan ortak / Yönetici Ortak onayı** gerektirir. Sıkı atıf disiplini zorunludur: `[Mevzuat MCP — tarih]`, `[Yargı MCP — kurum — tarih]`, `[model bilgisi — doğrulayın]`.
+Çıktılar daima **taslaktır** ve **atanan ortak / Yönetici Ortak onayı** gerektirir. Sıkı atıf disiplini zorunludur: `[Mevzuat MCP - tarih]`, `[Yargı MCP - kurum - tarih]`, `[model bilgisi - doğrulayın]`.
 
 ---
 
@@ -115,7 +115,7 @@ English guide → [INSTALLATION.md](INSTALLATION.md)
 /firm-operations:conflict-check
 [Müvekkil + karşı yan bilgisi]
 ```
-→ Av. K. m. 38 + TBB MK m. 35-36: ⛔ RET / 🟠 İNCELE / ✓ TEMİZ.
+→ Av. K. m. 38 + TBB MK m. 35-36: DURDUR RET / YÜKSEK İNCELE / ✓ TEMİZ.
 
 ```text
 /criminal-defense:cmk-gorev-atama

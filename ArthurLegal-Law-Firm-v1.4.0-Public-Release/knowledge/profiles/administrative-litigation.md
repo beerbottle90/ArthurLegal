@@ -9,14 +9,14 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** İdari yargı — **müvekkil adına idareye karşı dava + idarenin yaptığı işleme itiraz**
-**Aktif idari dava hacmi:** `[DOLDUR — örn. 8-15 aktif dosya]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. EPDK/BDDK gibi sektör regülatörü karar iptal davalarında Ankara'da duruşma günleri trafiği + Danıştay daire farkları]`
+**Aktif idari dava hacmi:** `[DOLDUR - örn. 8-15 aktif dosya]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. EPDK/BDDK gibi sektör regülatörü karar iptal davalarında Ankara'da duruşma günleri trafiği + Danıştay daire farkları]`
 **Birincil venue:**
-- İdare Mahkemeleri: `[DOLDUR — örn. İstanbul İdare Mh. + Ankara İdare Mh. (sektör kurumları)]`
+- İdare Mahkemeleri: `[DOLDUR - örn. İstanbul İdare Mh. + Ankara İdare Mh. (sektör kurumları)]`
 - BİM (Bölge İdare Mahkemesi): İstanbul / Ankara
 - Danıştay: Ankara (temyiz mercii — Danıştay K. m. 23+24+30 istisnaları hariç)
 
-**Sorumlu ortak:** `[DOLDUR — örn. Kıdemli Ortak B (Ankara irtibat)]`
+**Sorumlu ortak:** `[DOLDUR - örn. Kıdemli Ortak B (Ankara irtibat)]`
 
 ---
 
@@ -35,7 +35,7 @@
 | **Yargı MCP — KVKK/Rekabet/BDDK/Sayıştay** | ✓ | Kurum siteleri |
 | **Mevzuat MCP** (özellikle İYUK, sektör mevzuatı) | ✓ | mevzuat.gov.tr |
 | **UYAP** (İdare Mh. + Danıştay) | [DOLDUR ✓/✗] | E-tebligat takip |
-| Sektör kurumu sistemleri (EPDK EPYS, EKAP, BDDK e-rapor) | [DOLDUR — sektör bazlı] | Müvekkilden talep |
+| Sektör kurumu sistemleri (EPDK EPYS, EKAP, BDDK e-rapor) | [DOLDUR - sektör bazlı] | Müvekkilden talep |
 
 ---
 
@@ -54,7 +54,7 @@
 
 ## Vekalet ücreti modeli — idari dava
 
-**Standart yaklaşım:** `[DOLDUR — örn. Götürü matter bazlı (AAÜT × 2x) + başarı bonusu (%15)]`
+**Standart yaklaşım:** `[DOLDUR - örn. Götürü matter bazlı (AAÜT × 2x) + başarı bonusu (%15)]`
 - **Yürütmenin durdurulması (m. 27)** ayrı talep — ayrı ücret kaydı önerilir
 - **Karşı yan vekalet ücreti:** İdare aleyhine hükmedilen vekalet ücreti AAÜT — vekile aittir (Av. K. m. 164/4)
 
@@ -73,7 +73,7 @@
 | **Karar düzeltme (BİM)** | 15 gün (tebliğden) | İYUK m. 54 | Atanan ortak |
 | **Temyiz (Danıştay)** | 30 gün (BİM kararı tebliğden) | İYUK m. 46 | Atanan ortak |
 
-⚠️ **30 vs. 60 gün ayrımı KRİTİK:** 2021/7331 sayılı K. değişikliği ile vergi 30 g, idare 60 g. **Doğru süreyi kontrol et — yanlış dava yanlış süreyle reddedilir.**
+**30 vs. 60 gün ayrımı KRİTİK:** 2021/7331 sayılı K. değişikliği ile vergi 30 g, idare 60 g. **Doğru süreyi kontrol et — yanlış dava yanlış süreyle reddedilir.**
 
 ---
 
@@ -115,9 +115,9 @@ Detay: `references/idari-yargi-yapisi-rehberi.md`
 | AYM bireysel başvuru (idari uyuşmazlık) | Müvekkil + atanan ortak + Yönetici Ortak | — |
 
 **Otomatik eskalasyon:**
-- 🔴 İdari para cezası > `[DOLDUR — örn. 1M TL]` — Yönetici Ortak
-- 🔴 Müvekkilin lisansı (EPDK/BDDK/SPK) iptal riski — Yönetici Ortak + Ortaklar Kurulu
-- 🔴 ÇED ret + büyük yatırım — Yönetici Ortak
+- BLOKLAYICI İdari para cezası > `[DOLDUR - örn. 1M TL]` — Yönetici Ortak
+- BLOKLAYICI Müvekkilin lisansı (EPDK/BDDK/SPK) iptal riski — Yönetici Ortak + Ortaklar Kurulu
+- BLOKLAYICI ÇED ret + büyük yatırım — Yönetici Ortak
 
 ---
 
@@ -148,11 +148,11 @@ Hazırlayan: Claude – avukat incelemesi öncesi
 
 ### Atıf disiplini
 
-- `[Yargı MCP — danistay — [Daire] — GG.AA.YYYY]`
-- `[Yargı MCP — kvkk-kurulu / rekabet / bddk — GG.AA.YYYY]`
-- `[Mevzuat MCP — İYUK m. X — GG.AA.YYYY]`
-- `[Resmi Gazete — sayı/tarih]`
-- `[Sektör kurumu — EPDK/BDDK — karar no — GG.AA.YYYY]` (kurum sitesinden çekildiyse)
+- `[Yargı MCP - danistay - [Daire] — GG.AA.YYYY]`
+- `[Yargı MCP - kvkk-kurulu / rekabet / bddk - GG.AA.YYYY]`
+- `[Mevzuat MCP - İYUK m. X - GG.AA.YYYY]`
+- `[Resmi Gazete - sayı/tarih]`
+- `[Sektör kurumu - EPDK/BDDK - karar no - GG.AA.YYYY]` (kurum sitesinden çekildiyse)
 
 ---
 
@@ -180,7 +180,7 @@ Hazırlayan: Claude – avukat incelemesi öncesi
 **Süre ön-kontrol (her matter intake'inde):**
 - Hangi süre uygulanır? (60 g / 30 g / m. 20/A 30 g)
 - Süre başlangıç tarihi nedir? (tebliğ tarihi vs. ıttıla tarihi)
-- Süre dolmadan kaç gün var? (< 7 gün ise 🔴 acil)
+- Süre dolmadan kaç gün var? (< 7 gün ise BLOKLAYICI acil)
 
 ---
 

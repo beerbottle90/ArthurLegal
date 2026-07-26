@@ -91,7 +91,7 @@ user-invocable: true
 
 Baro CMK servisinden telefon/SMS atama mesajı geldiğinde.
 
-⚠️ **2 saat içinde teyit + 6 saat içinde yere ulaşma** — bu süreler kritik.
+**2 saat içinde teyit + 6 saat içinde yere ulaşma** — bu süreler kritik.
 
 ## Adımlar
 
@@ -112,7 +112,7 @@ Baro CMK servisinden telefon/SMS atama mesajı geldiğinde.
 | T+24 | Savcılığa sevk şart | (toplu yakalamada T+48) |
 | T+48 | Sulh ceza hakimine sevk + karar | Tutuklama veya salıverme |
 
-⚠️ **48. saatten sonra hakim karar vermezse → resen salıverme.**
+**48. saatten sonra hakim karar vermezse → resen salıverme.**
 
 ### 3. Müdafi atama reddi gerekçeleri
 
@@ -142,7 +142,7 @@ Red yazılı + gerekçeli. Sürekli red → CMK gönüllü listesinden çıkarı
 - "Susma hakkımı kullanıyorum" ifadesi kayıt mı?
 - Müvekkil + müdafi imzası tamam mı?
 
-⚠️ **Müdafi olmadan alınan ifade kanıt olarak kullanılamaz** (CMK m. 147/1-h).
+**Müdafi olmadan alınan ifade kanıt olarak kullanılamaz** (CMK m. 147/1-h).
 
 ### 6. Sulh ceza hakimliği duruşması (tutuklama)
 
@@ -166,7 +166,7 @@ Hakim **CMK m. 100** şartlarını değerlendirir:
 
 ```
 CMK ÖDEME CETVELİ — [Baro] — [Tarih]
-Avukat: [Av. ad-soyad — sicil no]
+Avukat: [Av. ad-soyad - sicil no]
 Atama no: [...]
 Müvekkil: [TC kimlik]
 Esas no: [...]
@@ -185,11 +185,11 @@ Teslim: Baronun CMK servisine. Ödeme 30-60 g.
 ## Çıktı
 
 ```markdown
-[ÜST BAŞLIK — CMK MÜDAFİ]
+[ÜST BAŞLIK - CMK MÜDAFİ]
 
 # CMK Görev Atama — [Atama no]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - Atama tipi: m. 150 zorunlu / m. 156 isteğe bağlı
 - Suçlama: TCK m. [X]
 - 48 saat sınırı: T+[N] — kalan [...]

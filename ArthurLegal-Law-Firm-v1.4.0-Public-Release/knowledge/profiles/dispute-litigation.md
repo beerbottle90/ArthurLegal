@@ -15,19 +15,19 @@ Büro bilgisi için `~/.claude/plugins/config/claude-for-legal-law-firm/firm-pro
 oku. Bu eklentiye özel:
 
 **Pratik modeli:** Hukuk bürosu — **müvekkil adına davacı veya davalı vekilliği**
-**Aktif dava hacmi:** `[DOLDUR — örn. 40-60 aktif dosya]`
-**Birincil yakıcı sorun (the thing that hurts):** `[DOLDUR — örn. ticari büyük dava + sulh stratejisi + müvekkilin sabırsızlığı]`
-**Birincil venue:** `[DOLDUR — İstanbul Çağlayan / Anadolu / Bakırköy + bölge mahkemeleri]`
-**Tahkim yaklaşımı:** `[DOLDUR — ISTAC tercih ederiz / yalnızca müvekkil isterse / az]`
+**Aktif dava hacmi:** `[DOLDUR - örn. 40-60 aktif dosya]`
+**Birincil yakıcı sorun (the thing that hurts):** `[DOLDUR - örn. ticari büyük dava + sulh stratejisi + müvekkilin sabırsızlığı]`
+**Birincil venue:** `[DOLDUR - İstanbul Çağlayan / Anadolu / Bakırköy + bölge mahkemeleri]`
+**Tahkim yaklaşımı:** `[DOLDUR - ISTAC tercih ederiz / yalnızca müvekkil isterse / az]`
 
-**Sorumlu ortak (bu plugin):** `[DOLDUR — örn. Kıdemli Ortak A]`
+**Sorumlu ortak (bu plugin):** `[DOLDUR - örn. Kıdemli Ortak A]`
 
 ---
 
 ## Kim kullanıyor
 
-**Rol:** [DOLDUR — Ortak (baroya kayıtlı) / Bağlı avukat / Stajyer]
-**Asıl avukat irtibatı:** [DOLDUR — yönetici ortak veya sorumlu ortak]
+**Rol:** [DOLDUR - Ortak (baroya kayıtlı) / Bağlı avukat / Stajyer]
+**Asıl avukat irtibatı:** [DOLDUR - yönetici ortak veya sorumlu ortak]
 
 ---
 
@@ -37,10 +37,10 @@ oku. Bu eklentiye özel:
 |---|---|---|
 | **Yargı MCP** (TR yargı kararları) | ✓ (.mcp.json'da hazır) | Manuel UYAP/Lexpera arama |
 | **Mevzuat MCP** (TR mevzuat) | ✓ | mevzuat.gov.tr manuel |
-| **UYAP Avukat Portalı** | [DOLDUR ✓/✗ — her avukat kendi oturumu] | Dosya bazlı talep |
-| **KEP** | [DOLDUR ✓/✗ — büro + her ortak] | Adi posta + iadeli |
+| **UYAP Avukat Portalı** | [DOLDUR ✓/✗ - her avukat kendi oturumu] | Dosya bazlı talep |
+| **KEP** | [DOLDUR ✓/✗ - büro + her ortak] | Adi posta + iadeli |
 | **iManage / SharePoint** (doküman) | [DOLDUR ✓/✗] | Drive / dahili |
-| **Matter yönetim yazılımı** | [DOLDUR — Clio / TimeSolv / Excel / dahili] | Excel + SharePoint |
+| **Matter yönetim yazılımı** | [DOLDUR - Clio / TimeSolv / Excel / dahili] | Excel + SharePoint |
 
 ---
 
@@ -55,7 +55,7 @@ Bu plugin'in tipik müvekkilleri:
 | Mid-cap kurumsal | Karşılaşılan büyük dava, JV anlaşmazlığı | ATM / ISTAC |
 | Yabancı yerleşik | Sözleşme + tahkim klozu | ISTAC / ICC |
 
-**Tipik dava değer aralığı:** `[DOLDUR — örn. 100K-50M TL]`
+**Tipik dava değer aralığı:** `[DOLDUR - örn. 100K-50M TL]`
 
 ---
 
@@ -63,13 +63,13 @@ Bu plugin'in tipik müvekkilleri:
 
 > Büro seviyesi modelden farklı olduğunda bu plugin'e özel:
 
-**Standart yaklaşım:** `[DOLDUR — örn. Peşin (AAÜT × 1.5) + başarı bonusu (%15-25)]`
+**Standart yaklaşım:** `[DOLDUR - örn. Peşin (AAÜT × 1.5) + başarı bonusu (%15-25)]`
 - **Peşin avans:** AAÜT × katsayı; matter açılışta
 - **Başarı bonusu (success fee):** Av. K. m. 164 sınırı — **uyuşmazlığa konu değerin %25**'ini geçemez
 - **Yargılama gideri:** Müvekkilden ayrıca tahsil edilir (gider avansı HMK m. 120)
 - **Karşı yan vekalet ücreti:** AAÜT tarifesine göre hükmedilen — müvekkile mi ödenir, müvekkilin AAÜT'ye razı olduğu sözleşmede de bizde kalır mı? **Ücret sözleşmesinde açıkça belirt.**
 
-⚠️ **Av. K. m. 164/4:** Karşı yanın ödediği vekalet ücreti, **müvekkille avukat arasındaki** ücret sözleşmesine konu olamaz; **vekile aittir** (aksi sözleşmede yazılmadıkça).
+**Av. K. m. 164/4:** Karşı yanın ödediği vekalet ücreti, **müvekkille avukat arasındaki** ücret sözleşmesine konu olamaz; **vekile aittir** (aksi sözleşmede yazılmadıkça).
 
 ---
 
@@ -87,10 +87,10 @@ Bu plugin'in tipik müvekkilleri:
 | **Tahkim itirazı sunma** (HMK m. 116/c) | Atanan ortak | Yönetici Ortak bildirme |
 
 **Otomatik eskalasyon (tutardan bağımsız):**
-- 🔴 Müvekkil veya karşı taraf **OFAC/AB yaptırım listesinde** → Yönetici Ortak + matter kapatma değerlendirmesi
-- 🔴 **Basına intikal etmiş veya etme riski** → Yönetici Ortak + medya stratejisi
-- 🔴 **Üst düzey yönetici/PEP** müvekkil — strateji Ortaklar Kurulu
-- 🔴 **Conflict sinyali** (sonradan ortaya çıkan) → matter durdurma + Ortaklar Kurulu
+- BLOKLAYICI Müvekkil veya karşı taraf **OFAC/AB yaptırım listesinde** → Yönetici Ortak + matter kapatma değerlendirmesi
+- BLOKLAYICI **Basına intikal etmiş veya etme riski** → Yönetici Ortak + medya stratejisi
+- BLOKLAYICI **Üst düzey yönetici/PEP** müvekkil — strateji Ortaklar Kurulu
+- BLOKLAYICI **Conflict sinyali** (sonradan ortaya çıkan) → matter durdurma + Ortaklar Kurulu
 
 ---
 
@@ -99,12 +99,12 @@ Bu plugin'in tipik müvekkilleri:
 **Genel kural:** HMK m. 6 vd. — sözleşmesel yetki klozu öncelikli (TBK + HMK m. 17), aksi halde davalı yerleşim yeri.
 
 **Mahkeme tercihleri (davacı olarak müvekkili temsil ettiğimizde):**
-- Ticari uyuşmazlık: ATM — `[DOLDUR — İstanbul Anadolu / Çağlayan ATM tercih]`
+- Ticari uyuşmazlık: ATM — `[DOLDUR - İstanbul Anadolu / Çağlayan ATM tercih]`
 - Bireysel sözleşme: Sulh Hukuk veya Asliye Hukuk (değer eşik)
 - Tüketici: TKHK eşik altı → Tüketici Hakem Heyeti; üstü → Tüketici Mahkemesi
 - Tahkim: ISTAC İstanbul / ICC
 
-**Karşı taraf seçtiğinde dikkatli olduğumuz venue'ler:** `[DOLDUR — örn. tanışık olmadığımız uzak şehir mahkemeleri]`
+**Karşı taraf seçtiğinde dikkatli olduğumuz venue'ler:** `[DOLDUR - örn. tanışık olmadığımız uzak şehir mahkemeleri]`
 
 ---
 
@@ -133,7 +133,7 @@ AVUKATLIK K. m. 36 – VEKİL-MÜVEKKİL YAZIŞMASI – DAHİLİ VE GİZLİDİR
 [Büro Adı] – Matter ID: [matter-slug] – [Müvekkil rumuz]
 Hazırlayan: Claude Hukuk Asistanı – İnsan avukat incelemesi öncesi taslak
 Tarih: GG.AA.YYYY
-[Esas no — varsa, mahkeme]
+[Esas no - varsa, mahkeme]
 ```
 
 **Müvekkile gönderilecek strateji notu:**
@@ -159,26 +159,26 @@ Tribunal: [...] | Case No: [...] | Date: DD.MM.YYYY
 - **CMK m. 130** — savunma hakkı kapsamında dosyalara erişim sınırı (ceza dosyaları için `criminal-defense` plugin'ine yönlendir).
 - **TBB Meslek Kuralları m. 36-37** — mesleki sırrın korunması, istisnaları.
 
-### ⚠️ İnceleyen notu (reviewer note)
+### İnceleyen notu (reviewer note)
 
 Her çıktıda **deliverable'ın üstünde bir blok** olarak şu format:
 
-> **⚠️ İnceleyen notu**
+> **İnceleyen notu**
 > - **Kaynaklar:** Yargı MCP [✓ N karar çekildi / ✗ bağlanamadı]; Mevzuat MCP [✓ X madde / ✗]; UYAP [manuel doğrulanmalı]
 > - **Okuma kapsamı:** [örn. "müvekkil dosyası 1-25/40 sayfa", "3 emsal karar tam metin"]
 > - **İnceleyen kararı bekleyen ([review] etiketli):** N madde
 > - **Güncellik:** [son emsal arama tarihi GG.AA.YYYY]
-> - **Bağlayıcı karar öncesi:** [1-2 maddelik somut adım — örn. "Müvekkilden talimat yazılı al"]
+> - **Bağlayıcı karar öncesi:** [1-2 maddelik somut adım - örn. "Müvekkilden talimat yazılı al"]
 
 ### Atıf disiplini
 
-- `[Yargı MCP — yargitay/danistay/aym — GG.AA.YYYY]` — yargı kararı, oturumda çekildi
-- `[Mevzuat MCP — GG.AA.YYYY]` — kanun/yönetmelik metni, oturumda çekildi
-- `[Resmi Gazete — sayı X / tarih GG.AA.YYYY]` — RG'den fetch
-- `[UYAP — manuel doğrulayın]` — UYAP üzerinden teyit gerekli
-- `[Lexpera/Kazancı — manuel]` — ticari içtihat veri tabanından teyit
-- `[Müvekkil beyanı — GG.AA.YYYY]` — müvekkilin yazılı/sözlü beyanı
-- `[model bilgisi — doğrulayın]` — varsayılan, çekilmediyse
+- `[Yargı MCP - yargitay/danistay/aym - GG.AA.YYYY]` — yargı kararı, oturumda çekildi
+- `[Mevzuat MCP - GG.AA.YYYY]` — kanun/yönetmelik metni, oturumda çekildi
+- `[Resmi Gazete - sayı X / tarih GG.AA.YYYY]` — RG'den fetch
+- `[UYAP - manuel doğrulayın]` — UYAP üzerinden teyit gerekli
+- `[Lexpera/Kazancı - manuel]` — ticari içtihat veri tabanından teyit
+- `[Müvekkil beyanı - GG.AA.YYYY]` — müvekkilin yazılı/sözlü beyanı
+- `[model bilgisi - doğrulayın]` — varsayılan, çekilmediyse
 
 **Asla** çekmediğin kaynağa atıf yapma.
 
@@ -199,7 +199,7 @@ Bu eklentinin uğraştığı **subjective hukuki yargılar** — bir davanın a�
 ## Shared guardrails (Türk hukuku — büro tarafı)
 
 **Üç değer kuralı (no silent supplement):**
-1. **Tamamla ve etiketle** — MCP'den çekemiyorsan model bilgisi ile devam et ama `[model bilgisi — doğrulayın]` etiketi.
+1. **Tamamla ve etiketle** — MCP'den çekemiyorsan model bilgisi ile devam et ama `[model bilgisi - doğrulayın]` etiketi.
 2. **Sus ve sor** — Müvekkilden veya UYAP'tan teyit iste, devam etme.
 3. **Bilirim-ama-kullanamam** — Yeni Yargıtay BAM birleştirici karar, AYM iptal, mevzuat değişikliği varsa flag-but-don't-use.
 
@@ -207,7 +207,7 @@ Bu eklentinin uğraştığı **subjective hukuki yargılar** — bir davanın a�
 
 **Müvekkilin söylediği hukuki olguyu önce doğrula:** Müvekkil bir madde no, esas/karar no, zamanaşımı tarihi, eşik tutar verirse, Mevzuat/Yargı MCP'ye veya verilen dosyaya karşı **önce teyit et**, sonra analize başla.
 
-**Aykırı atıf:** Müvekkil/karşı taraf bir kanun maddesi atfını yanlış kullanıyorsa, **kendin tahmin etme** — "O madde benim beklediğimden farklı, gerçek metni çekemeden ne dediğini söyleyemem `[madde çekilmedi — doğrulayın]`" de.
+**Aykırı atıf:** Müvekkil/karşı taraf bir kanun maddesi atfını yanlış kullanıyorsa, **kendin tahmin etme** — "O madde benim beklediğimden farklı, gerçek metni çekemeden ne dediğini söyleyemem `[madde çekilmedi - doğrulayın]`" de.
 
 **Hassas karar — ön kontrol (pre-flight):** Yargı/Mevzuat MCP yanıt veriyor mu test et; vermiyorsa `Kaynaklar:` satırına yaz.
 
@@ -218,12 +218,12 @@ Bu eklentinin uğraştığı **subjective hukuki yargılar** — bir davanın a�
 - **Büro içi (ortaklar)** — etiket korunur
 
 **Şiddet (severity) ölçeği:**
-- 🔴 **Bloklayıcı** — dava açılmaz / sulh red zorunlu / zamanaşımı bugün dolar
-- 🟠 **Yüksek** — eskalasyon + Yönetici Ortak görüşü şart
-- 🟡 **Orta** — fix gerekli ama deal-breaker değil
-- 🟢 **Düşük** — bilgi notu
+- BLOKLAYICI **Bloklayıcı** — dava açılmaz / sulh red zorunlu / zamanaşımı bugün dolar
+- YÜKSEK **Yüksek** — eskalasyon + Yönetici Ortak görüşü şart
+- ORTA **Orta** — fix gerekli ama deal-breaker değil
+- DÜŞÜK **Düşük** — bilgi notu
 
-**Üst skill 🔴 dediyse, alt skill silent demote etmez.**
+**Üst skill BLOKLAYICI dediyse, alt skill silent demote etmez.**
 
 **Dosya okuyamadığında:** "Bu dosyayı okuyamıyorum [path]. İçeriği yapıştırır mısın veya yolu düzeltir misin?"
 
@@ -272,8 +272,8 @@ Matter komutları: `/dispute-litigation:matter-workspace new | list | switch | c
 ### Av. K. m. 38 — Yasaklılık (conflict check tetikleyici)
 
 Yeni bir matter açılırken veya mevcut matter'da **karşı yanın gerçek kimliği netleştiğinde** (örn. ortak şirket, holding bağlantısı), **`/firm-operations:conflict-check`** zorunlu çalıştırılır. Sonuç:
-- **⛔ Conflict bulundu** — matter ret veya ortaklar kurulu kararıyla yazılı feragat
-- **🟠 Şüpheli — incele** — Yönetici Ortak değerlendirmesi
+- **DURDUR Conflict bulundu** — matter ret veya ortaklar kurulu kararıyla yazılı feragat
+- **YÜKSEK Şüpheli — incele** — Yönetici Ortak değerlendirmesi
 - **✓ Temiz** — devam
 
 ### AAÜT (Avukatlık Asgari Ücret Tarifesi)

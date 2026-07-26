@@ -93,9 +93,9 @@ Tüm konsolide kodları indirmek için (setup amaçlı):
 ## Atıf formatı
 
 ```
-[FR Mevzuat — Code civil Art.{no} / {Kanun adı} — Légifrance — GG.AA.YYYY]
-[Cass. — {Daire} — {Karar no/tarih} — GG.AA.YYYY]
-[CE — {Daire} — {Karar no} — GG.AA.YYYY]
+[FR Mevzuat - Code civil Art.{no} / {Kanun adı} - Légifrance - GG.AA.YYYY]
+[Cass. - {Daire} - {Karar no/tarih} - GG.AA.YYYY]
+[CE - {Daire} - {Karar no} - GG.AA.YYYY]
 ```
 
 ---

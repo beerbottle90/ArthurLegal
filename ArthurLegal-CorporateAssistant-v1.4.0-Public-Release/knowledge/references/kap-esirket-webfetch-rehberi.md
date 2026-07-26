@@ -86,7 +86,7 @@ WebFetch:
 
 ### Atıf etiketi
 
-`[KAP — [HALKA AÇIK İŞTİRAK] — GG.AA.YYYY HH:MM]` formatı.
+`[KAP - [HALKA AÇIK İŞTİRAK] — GG.AA.YYYY HH:MM]` formatı.
 
 ---
 
@@ -167,8 +167,8 @@ KAP ve e-ŞİRKET BIST'teki tüm halka açık şirketler için aynı yapıyı ku
 Bu kaynaklar **resmi public records** statüsünde. M&A diligence raporlarında, hukuki memorandum'larda **doğrudan atıf yapılabilir**.
 
 Format:
-- KAP: `[KAP — [BIST KOD] — özel durum açıklaması GG.AA.YYYY HH:MM]`
-- e-ŞİRKET: `[e-ŞİRKET MKK — [BIST KOD] — sermaye yapısı GG.AA.YYYY]`
+- KAP: `[KAP - [BIST KOD] — özel durum açıklaması GG.AA.YYYY HH:MM]`
+- e-ŞİRKET: `[e-ŞİRKET MKK - [BIST KOD] — sermaye yapısı GG.AA.YYYY]`
 
 ---
 

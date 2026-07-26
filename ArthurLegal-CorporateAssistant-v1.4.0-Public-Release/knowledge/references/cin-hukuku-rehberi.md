@@ -205,7 +205,7 @@ ADIM 1: İlgili kanunu getir
 
 ADIM 2: Sözleşme maddelerini Çin kanununun ilgili hükümleriyle karşılaştır
 
-ADIM 3: Atıf ekle → [CN Mevzuat — HuggingFace/twang2218 — {başlık} — GG.AA.YYYY]
+ADIM 3: Atıf ekle → [CN Mevzuat - HuggingFace/twang2218 - {başlık} - GG.AA.YYYY]
 ```
 
 ### 6.2 Çin karşı taraf due diligence (enerji tedarik)
@@ -238,12 +238,12 @@ ADIM 3: NY Konvansiyonu (m.54 tenfiz) + governing-law-review skill
 
 Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 
-- `[CN Mevzuat — HuggingFace/twang2218 — {kanun adı} — GG.AA.YYYY]` — HF API'dan çekilen mevzuat
-- `[CN Mevzuat — flk.npc.gov.cn — {kanun adı}]` — crawler ile doğrudan alınan (nadir)
-- `[CN Yargı — CAIL2018 — {dava özeti} — yıl]` — CAIL offline veri (tarihsel ceza davaları)
+- `[CN Mevzuat - HuggingFace/twang2218 - {kanun adı} - GG.AA.YYYY]` — HF API'dan çekilen mevzuat
+- `[CN Mevzuat - flk.npc.gov.cn - {kanun adı}]` — crawler ile doğrudan alınan (nadir)
+- `[CN Yargı - CAIL2018 - {dava özeti} - yıl]` — CAIL offline veri (tarihsel ceza davaları)
 
 **Asla:** HF API'dan çekilmediğin Çin hukuku kaynağına atıf koyma.
-Çin hukukunu "biliyorum" diye `[CN Mevzuat]` etiketiyle gösterme → `[model bilgisi — doğrulayın]` kullan.
+Çin hukukunu "biliyorum" diye `[CN Mevzuat]` etiketiyle gösterme → `[model bilgisi - doğrulayın]` kullan.
 
 **⚠️ Dil uyarısı:** Tüm Çin mevzuatı Çincedir. Her atıfta Çince başlığı + Türkçe çevirisini birlikte sun:
 - `中华人民共和国公司法` → "Şirketler Kanunu"

@@ -63,7 +63,7 @@ mahkeme kararına atıf yapılacaksa:
 3. Doğrulanmadıysa **uydurma içtihat riski** → `[review]` + atıf yapma.
 
 ⚠️ Hiçbir ABD içtihatını "biliyorum" diye doğrulanmış gibi sunma. Citation
-verification yapılmadan bir karara dayanan analiz `[CourtListener — doğrulanmadı]`
+verification yapılmadan bir karara dayanan analiz `[CourtListener - doğrulanmadı]`
 ile flag edilir.
 
 ---
@@ -84,13 +84,13 @@ ile flag edilir.
 ABD içtihatı oturumda fiilen CourtListener'dan çekildiyse:
 
 ```
-[CourtListener — <mahkeme> — <taraflar, citation> — GG.AA.YYYY]
+[CourtListener - <mahkeme> - <taraflar, citation> - GG.AA.YYYY]
 ```
 
-Örnek: `[CourtListener — SCOTUS — Alice Corp. v. CLS Bank, 573 U.S. 208 — 22.05.2026]`.
+Örnek: `[CourtListener - SCOTUS - Alice Corp. v. CLS Bank, 573 U.S. 208 - 22.05.2026]`.
 
 Çekmediğin/doğrulamadığın bir kararı `[CourtListener]` etiketleyemezsin →
-`[model bilgisi — doğrulayın]`.
+`[model bilgisi - doğrulayın]`.
 
 ---
 

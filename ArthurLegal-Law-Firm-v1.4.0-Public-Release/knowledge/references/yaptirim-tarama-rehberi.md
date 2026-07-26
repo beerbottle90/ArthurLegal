@@ -125,9 +125,9 @@ Bu ülkelerle bağlantı varsa:
 | Sonuç | Aksiyon |
 |---|---|
 | ✅ Tüm rejimlerde temiz, coğrafi düşük risk | Standart akış, sözleşmeye devam |
-| 🟡 Fuzzy eşleşme veya orta riskli coğrafi | KYC dosyası tamamla, Counsel onayı, devam |
-| 🟠 Tedarik zincirinde Rusya menşeli komponen | CBAM raporlaması + AB tedarikçi pre-clearance, Counsel + Compliance onayı |
-| 🔴 Listeden eşleşme veya yasak coğrafi | **DURDUR**, Hukuk Başkanı ([CLCO]) + Compliance + CEO bilgisi, eskalasyon |
+| ORTA Fuzzy eşleşme veya orta riskli coğrafi | KYC dosyası tamamla, Counsel onayı, devam |
+| YÜKSEK Tedarik zincirinde Rusya menşeli komponen | CBAM raporlaması + AB tedarikçi pre-clearance, Counsel + Compliance onayı |
+| BLOKLAYICI Listeden eşleşme veya yasak coğrafi | **DURDUR**, Hukuk Başkanı ([CLCO]) + Compliance + CEO bilgisi, eskalasyon |
 
 ### Adım 6: Belgeleme ve saklama
 

@@ -320,14 +320,14 @@ OF [COMPANY NAME]
 
 **Opening:**
 - Meeting called to order by [Chair name] at [time]
-- Notice: [proper notice given / notice waived — attach waiver as exhibit if applicable]
+- Notice: [proper notice given / notice waived - attach waiver as exhibit if applicable]
 - Quorum confirmed: [N of M directors present]
 - Secretary: [name]
 
 **Attendees:**
 - Directors present: [list]
 - Directors absent: [list, if any]
-- Also present: [management, outside counsel, guests — with roles]
+- Also present: [management, outside counsel, guests - with roles]
 
 **Previous minutes:**
 Standard language: approval of minutes from prior meeting. Pull date of prior meeting from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` board calendar if available, otherwise leave as [DATE OF PRIOR MEETING].
@@ -339,7 +339,7 @@ Standard language: approval of minutes from prior meeting. Pull date of prior me
 
 [Chair/presenter name] [presented / reported on / led a discussion of] [topic].
 
-[Discussion summary — see drafting notes below]
+[Discussion summary - see drafting notes below]
 
 [If resolution follows:]
 Upon motion duly made and seconded, the following resolution was adopted [by unanimous vote / by a vote of N for, N against, N abstaining]:
@@ -365,7 +365,7 @@ Secretary signature line. Some formats include a chair countersignature.
 
 When materials were provided: pull summary content from the slides and management presentation. The board "received and reviewed" a presentation — summarize what the presentation covered.
 
-When no materials: insert `[PLACEHOLDER — summarize discussion here]` and flag it clearly. Do not fabricate discussion content.
+When no materials: insert `[PLACEHOLDER - summarize discussion here]` and flag it clearly. Do not fabricate discussion content.
 
 **Resolutions:** Use the exact resolution language from the seed minutes — "RESOLVED, THAT" vs. "BE IT RESOLVED" vs. "RESOLVED" alone. The language is house style, not interchangeable.
 
@@ -396,13 +396,13 @@ Do not produce the final adoption-ready version past this gate without an explic
 Produce the full draft. The minutes themselves are a corporate record, not privileged; do not apply the work-product header to the minutes as circulated. The drafting notes, placeholder flags, and review checklist below are work product — prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`):
 
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 ```
 
 After the draft, add a review checklist:
 
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 REVIEW CHECKLIST — please verify before circulating:
 
@@ -548,12 +548,12 @@ handoff:
   category: "[Third-party consents | Shareholder / board action | Regulatory filing | Release / termination | Escrow / holdback | Closing deliverable]"
   source: "[Contract name / statutory section / VDR path + Bates]"
   blocking: true  # unless the agreement has a materiality qualifier
-  severity: "[🔴 / 🟠 / 🟡 / 🟢 — carried from upstream, see severity-floor rule in CLAUDE.md]"
+  severity: "[BLOKLAYICI / YÜKSEK / ORTA / DÜŞÜK - carried from upstream, see severity-floor rule in CLAUDE.md]"
 
   # Consent / third-party action fields
   counterparty: "[e.g., Dunmore Holdings LLC]"
   guarantor: "[e.g., Buyer parent guaranty required, or N/A]"
-  conditions: "[any substantive condition the counterparty attached — e.g., 'replacement guaranty from buyer parent required before consent effective']"
+  conditions: "[any substantive condition the counterparty attached - e.g., 'replacement guaranty from buyer parent required before consent effective']"
   notice_deadline: "[e.g., 30 days prior to closing, or specific date]"
 
   # Corporate action fields
@@ -582,7 +582,7 @@ CP-002: Acme responded, consent form attached, needs countersignature
 ### Mode 4: What's blocking
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 > This status report is derived from the purchase agreement, diligence findings, and internal deal records. It inherits their privilege and confidentiality status — distribution beyond the privilege circle (counterparty, broader business teams) can waive privilege. Confirm the distribution list before sending.
 
@@ -591,13 +591,13 @@ CP-002: Acme responded, consent form attached, needs countersignature
 **Target close:** [date] ([N] days out)
 **Items:** [N] total — [N] done, [N] in progress, [N] not started
 
-### 🔴 Blocking and at risk
+### BLOKLAYICI Blocking and at risk
 
 | ID | Item | Due | Status | Days to due |
 |---|---|---|---|---|
 | [CP-XXX] | [item] | [date] | [status] | **[N]** |
 
-### 🟡 Blocking, on track
+### ORTA Blocking, on track
 
 [same table]
 
@@ -761,7 +761,7 @@ Corollary: the interview's inputs are the user's typed answers and documents the
 
 ---
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -1089,11 +1089,11 @@ Then show the active modules and the populated sections:
 
 > Here's what I've captured: [list active modules]. Practice Profile is written. A few things to check:
 > - [Flag any thin or ambiguous answers worth revisiting]
-> - [If M&A active and no seed docs provided: "Ping me with your request list and a prior issues memo when you have them — I'll update the diligence structure and memo format sections."]
+> - [If M&A active and no seed docs provided: "Ping me with your request list and a prior issues memo when you have them - I'll update the diligence structure and memo format sections."]
 > - [If M&A active: "When a deal comes in, run `/corporate-legal:cold-start-interview --new-deal` to set up deal-specific context on top of the house approach. M&A skills available now: diligence extraction, deal team summaries, material contracts schedule, closing checklist, and post-closing integration."]
 > - [If Board & Secretary active: "Board skills available now: `/corporate-legal:written-consent` for written consents, and the board-minutes skill for drafting minutes in your house format."]
 > - [If Entity Management active: "Entity skill available now: `/corporate-legal:entity-compliance` initializes a compliance tracker from your entity list and surfaces what's due."]
-> - [If Public Company active: "Public Company skills are coming in a future release — the practice profile section is ready to populate when they ship."]
+> - [If Public Company active: "Public Company skills are coming in a future release - the practice profile section is ready to populate when they ship."]
 
 Close with a note on changeability:
 
@@ -1310,7 +1310,7 @@ Ask which tier if not obvious.
 ### Exec tier
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 > This brief aggregates privileged diligence findings and inherits the sources' privilege and confidentiality status. Distribution beyond the privilege circle (including to broader business teams) can waive privilege — confirm the distribution list matches the privilege circle before sending.
 
@@ -1326,7 +1326,7 @@ we're doing about it.]
 
 ## Decisions needed
 
-- [ ] [Specific decision — price adjustment, indemnity ask, walk-away trigger]
+- [ ] [Specific decision - price adjustment, indemnity ask, walk-away trigger]
   — [who decides] — [by when]
 
 ## Since last brief
@@ -1341,10 +1341,10 @@ Same as above plus:
 ```markdown
 ## All open issues by category
 
-### 🔴 Red
-[Finding title + one-line — link to full finding for detail]
+### BLOKLAYICI
+[Finding title + one-line - link to full finding for detail]
 
-### 🟡 Yellow
+### ORTA
 [same]
 
 ## Progress
@@ -1451,7 +1451,7 @@ If VDR MCP (Box/Intralinks/Datasite) is connected, pull the index. Map VDR folde
 | IP | /03-IP | 89 | Not started |
 | [etc.] | | | |
 
-**Gaps:** [Request categories with no VDR content — follow-up request needed]
+**Gaps:** [Request categories with no VDR content - follow-up request needed]
 ```
 
 ### Step 2: Apply materiality filter
@@ -1508,11 +1508,11 @@ For each document read, check against the standard diligence concerns for its ca
 
 ### Step 4: State each finding
 
-> **Source attribution.** Where a finding references a statute, regulation, case, or regulator action — e.g., a change-of-control provision analyzed under an applicable law, an IP ownership gap cited against a specific doctrine, a pending litigation matter with a case citation — tag the citation with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the VDR, deal-team memos, or outside-counsel feedback. Document-source citations (VDR path, Bates, filename) retain their native reference. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Where a finding references a statute, regulation, case, or regulator action — e.g., a change-of-control provision analyzed under an applicable law, an IP ownership gap cited against a specific doctrine, a pending litigation matter with a case citation — tag the citation with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations from the VDR, deal-team memos, or outside-counsel feedback. Document-source citations (VDR path, Bates, filename) retain their native reference. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 >
-> **When disagreeing with a user's cited statute, quote the text or decline to characterize it.** If the user (or a deal-team note, or a sell-side disclosure) cites a statute for a proposition you don't think is correct, and you don't have the statute text available from a connected research tool or the VDR, do not invent a description of what the statute says. Say instead: "That section doesn't match what I'd expect a [bulk-sales notice / successor-liability / whatever] requirement to say — I'd need to pull the actual text to tell you what it actually covers. `[statute unretrieved — verify]`" Then either (a) retrieve the text via the configured research tool and quote it, (b) ask the user to paste the text, or (c) flag for outside counsel. A confident wrong description of a real statute is worse than "I don't know" — a deal-team memo citing a fabricated subchapter is harder to un-believe than a gap. Applies in every skill that characterizes a statute, not just issue extraction.
+> **When disagreeing with a user's cited statute, quote the text or decline to characterize it.** If the user (or a deal-team note, or a sell-side disclosure) cites a statute for a proposition you don't think is correct, and you don't have the statute text available from a connected research tool or the VDR, do not invent a description of what the statute says. Say instead: "That section doesn't match what I'd expect a [bulk-sales notice / successor-liability / whatever] requirement to say — I'd need to pull the actual text to tell you what it actually covers. `[statute unretrieved - verify]`" Then either (a) retrieve the text via the configured research tool and quote it, (b) ask the user to paste the text, or (c) flag for outside counsel. A confident wrong description of a real statute is worse than "I don't know" — a deal-team memo citing a fabricated subchapter is harder to un-believe than a gap. Applies in every skill that characterizes a statute, not just issue extraction.
 >
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a legal basis the finding needs (e.g., the rule governing a change-of-control consent requirement, an IP assignment doctrine, an employment classification test), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / doctrine]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a legal basis the finding needs (e.g., the rule governing a change-of-control consent requirement, an IP assignment doctrine, an employment classification test), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / doctrine]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 
 Per the finding template in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the seed memo used this:
 
@@ -1528,16 +1528,16 @@ Recommendation: [price adjustment / indemnity / consent required / rep & warrant
 ...then use exactly that. If the seed memo was bullets, write bullets.
 
 **Severity calibration** (if house scheme is R/Y/G):
-- 🔴 **Red:** Affects deal value or structure. Change of control requiring major customer consent. Undisclosed material litigation. IP ownership gap.
-- 🟡 **Yellow:** Needs attention, solvable. Consent required but likely obtainable. Open source requiring remediation. Employment classification risk.
-- 🟢 **Green:** Noted for file. Consistent with reps. No action needed beyond the rep.
+- BLOKLAYICI **Red:** Affects deal value or structure. Change of control requiring major customer consent. Undisclosed material litigation. IP ownership gap.
+- ORTA **Yellow:** Needs attention, solvable. Consent required but likely obtainable. Open source requiring remediation. Employment classification risk.
+- DÜŞÜK **Green:** Noted for file. Consistent with reps. No action needed beyond the rep.
 
 ### Step 5: Assemble per category
 
 Group findings by request list category. Within category, sort by severity.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 > This output is derived from VDR materials that are privileged, confidential, or both. It inherits the source's privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Store with the matter's privileged files and make distribution decisions deliberately.
 
@@ -1545,13 +1545,13 @@ Group findings by request list category. Within category, sort by severity.
 
 **Documents reviewed:** [N] of [M] in category
 **Coverage:** [All | >$X threshold | Top N]
-**Findings:** [N]🔴 [N]🟡 [N]🟢
+**Findings:** [N]BLOKLAYICI [N]ORTA [N]DÜŞÜK
 
 ---
 
 ### Bottom line
 
-[🔴 N blocking · 🟠 N high · 🟡 N medium] — [the one thing the deal team needs to know]
+[BLOKLAYICI N blocking · YÜKSEK N high · ORTA N medium] — [the one thing the deal team needs to know]
 
 ---
 
@@ -1583,13 +1583,13 @@ Group findings by request list category. Within category, sort by severity.
 
 ## Batch processing
 
-For large categories (300 contracts), process in batches. After each batch, update the running issues list and flag anything 🔴 immediately — don't wait for the full category to surface a deal-affecting issue.
+For large categories (300 contracts), process in batches. After each batch, update the running issues list and flag anything BLOKLAYICI immediately — don't wait for the full category to surface a deal-affecting issue.
 
 ## Close with the next-steps decision tree
 
 End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
 
-If the extraction surfaced more than ~10 issues, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by severity (🔴 / 🟠 / 🟡 / 🟢), counts by house category, and a sortable grid of issues with materiality, category, and VDR source.
+If the extraction surfaced more than ~10 issues, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by severity (BLOKLAYICI / YÜKSEK / ORTA / DÜŞÜK), counts by house category, and a sortable grid of issues with materiality, category, and VDR source.
 
 ## What this skill does not do
 
@@ -1763,7 +1763,7 @@ custom_jurisdictions:
       - type: "[filing type]"
         due_basis: "[fixed: MM-DD / anniversary month / other description]"
         typical_fee: "[amount or unknown]"
-        notes: "[any other relevant information — e.g., local agent required, filing in local language]"
+        notes: "[any other relevant information - e.g., local agent required, filing in local language]"
     added_by: "manual"
     added_date: "[date]"
 ```
@@ -1813,7 +1813,7 @@ Filings tracked: [N]
 Status summary:
   ✅ Current:   [N]
   ⏰ Due soon:  [N] (next 90 days)
-  🔴 Overdue:   [N]
+  BLOKLAYICI Overdue:   [N]
   ❓ Unknown:   [N] (confirm with registered agent)
 
 Run /corporate-legal:entity-compliance --report to see what's due.
@@ -1835,7 +1835,7 @@ Output format:
 ENTITY COMPLIANCE REPORT — [date]
 [Company Name]
 
-🔴 OVERDUE ([N]):
+BLOKLAYICI OVERDUE ([N]):
   [Entity] / [State] / [Filing type] — was due [date]
 
 ⏰ DUE WITHIN [N] DAYS ([N]):
@@ -1921,8 +1921,8 @@ After processing:
 Updated [N] entities from report.
 
 Matched: [N]
-Unmatched (in report, not in tracker): [list — may need to add to entity table]
-Not in report (in tracker, no update): [list — status unchanged]
+Unmatched (in report, not in tracker): [list - may need to add to entity table]
+Not in report (in tracker, no update): [list - status unchanged]
 ```
 
 ### 3c: Bulk status sweep
@@ -1998,7 +1998,7 @@ GOOD STANDING
   Consider refreshing before: [any upcoming transactions or contract renewals if known]
 
 POTENTIAL GAPS
-  Foreign qualification: [flag question — confirm operational presence in:]
+  Foreign qualification: [flag question - confirm operational presence in:]
     [list of states from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` footprint not in tracker as qualified]
   Intercompany agreements: [status from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
 
@@ -2129,7 +2129,7 @@ metadata:
   last_status_report: "[date or null]"
 
 pa_dates:
-  required_consents_deadline: "[YYYY-MM-DD — extract from PA]"
+  required_consents_deadline: "[YYYY-MM-DD - extract from PA]"
   rep_survival_expires: "[YYYY-MM-DD]"
   escrow_release: "[YYYY-MM-DD or null]"
   earnout_milestones:
@@ -2430,7 +2430,7 @@ Tier 2 — Material, consent required: [N] contracts
   Assignment restriction present, not in PA schedule
   Recommended timeline: obtain within Day 90
 
-Tier 3 — Change of control provisions: [N] contracts ⚠️
+Tier 3 — Change of control provisions: [N] contracts 
   Counterparty has termination or consent right triggered by close
   ACTION REQUIRED: contact counterparty immediately — CoC may already be triggered
 
@@ -2464,7 +2464,7 @@ For each contract, create a tracker entry with:
 Reads current tracker state. Produces:
 
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 > This status report is derived from the purchase agreement, diligence findings, and post-closing integration records. It inherits their privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Confirm the recipient list before sending.
 
@@ -2478,28 +2478,28 @@ EXECUTIVE SUMMARY
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-REQUIRED CONSENTS  [deadline: DATE — N days remaining]
+REQUIRED CONSENTS  [deadline: DATE - N days remaining]
   Obtained:        [N] of [total]  ████████░░  [%]
   In negotiation:  [N]
   Outreach sent:   [N]
   Not started:     [N]
-  Refused:         [N] ⚠️
+  Refused:         [N] 
 
-⚠️ AT RISK: [counterparty] — deadline in [N] days, no response to outreach
-⚠️ REFUSED: [counterparty] — PA obligation not met; escalate to outside counsel
+AT RISK: [counterparty] — deadline in [N] days, no response to outreach
+REFUSED: [counterparty] — PA obligation not met; escalate to outside counsel
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 CONTRACT ASSIGNMENT
   Tier 1 (Required Consents):   [N] complete / [N] in progress / [N] pending
   Tier 2 (Material contracts):  [N] complete / [N] in progress / [N] pending
-  Tier 3 (CoC provisions):      [N] resolved / [N] outstanding ⚠️
+  Tier 3 (CoC provisions):      [N] resolved / [N] outstanding 
   Tier 4 (Auto-assign):         [N] — no action required
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 WORKPLAN — LEGAL OWNS
-  🔴 OVERDUE ([N]):
+  BLOKLAYICI OVERDUE ([N]):
     [item] — was due [date]
 
   ⏰ DUE THIS WEEK ([N]):
@@ -2563,7 +2563,7 @@ Changes:
 
 New flags:
   CON-007 [Counterparty]: refused — PA obligation may be unmet. Consider:
-  outside counsel review of indemnification claim. ⚠️
+  outside counsel review of indemnification claim. 
 ```
 
 ---
@@ -2736,7 +2736,7 @@ The following are the Material Contracts as of the date hereof:
 
 [...]
 
-[etc. — sub-parts per the agreement's definition structure]
+[etc. - sub-parts per the agreement's definition structure]
 ```
 
 ### Step 5: Consent tracking overlay
@@ -2893,7 +2893,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -2911,7 +2911,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
+[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other - with one-line rationale]
 
 ## Key facts
 
@@ -2922,12 +2922,12 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 *Any deviation from the practice-level playbook that applies to this matter and only this matter.*
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
+- [e.g., "Tone: relationship-preserving - counterparty is a strategic partner."]
 - [e.g., "Governing law: must be English law, not Delaware."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -2946,7 +2946,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to inbound MSA draft from [counterparty]."]
 ```
 
 ## Cross-matter context
@@ -3153,10 +3153,10 @@ Write the table in three formats:
 
 **Markdown** (always, for in-session review):
 ```markdown
-| Document | Counterparty | Effective Date | Change of Control | Assignment | ⚠️ Flags |
+| Document | Counterparty | Effective Date | Change of Control | Assignment | Flags |
 |---|---|---|---|---|---|
 | Vendor MSA — Acme | Acme Corp | 2023-04-01 | consent_required | consent_required | — |
-| Supply Agmt — Beta | Beta LLC | 2021-11-15 | ⚠️ unclear | silent | CoC ambiguous §14.2 |
+| Supply Agmt — Beta | Beta LLC | 2021-11-15 | unclear | silent | CoC ambiguous §14.2 |
 ```
 
 **CSV** (`.csv`, always):
@@ -3261,7 +3261,7 @@ Trigger (both must be true):
 
 When both are true, output this and stop:
 
-> ⛔ **Major action + same-day signature — I won't mark this ready to sign.**
+> DURDUR **Major action + same-day signature — I won't mark this ready to sign.**
 >
 > This is [action type], which is a one-way door. You've asked for it to be signed today. That combination is exactly when mistakes on a board consent become hardest to unwind.
 >
@@ -3343,7 +3343,7 @@ Classify the action before searching for precedent:
 
 If the action is in the review-flag category, show this before drafting:
 
-> ⚠️ **Outside counsel review recommended.** This looks like [action type], which is a major corporate action where a precedent-adapted draft may not be sufficient. Consider having outside counsel review before circulation. Want me to proceed with a draft anyway?
+> **Outside counsel review recommended.** This looks like [action type], which is a major corporate action where a precedent-adapted draft may not be sufficient. Consider having outside counsel review before circulation. Want me to proceed with a draft anyway?
 
 ---
 
@@ -3391,7 +3391,7 @@ limited liability company] (the "Company"), hereby adopt the following
 resolutions by written consent pursuant to [Section X of the [State] General
 Corporation Law / applicable operating agreement], in lieu of a meeting:
 
-[AGENDA ITEM / ACTION HEADING — if multiple resolutions]
+[AGENDA ITEM / ACTION HEADING - if multiple resolutions]
 
 WHEREAS, [background recital — one or two sentences stating the relevant facts
 and why the board is being asked to act]; and
@@ -3422,7 +3422,7 @@ which shall be deemed an original and all of which together shall constitute
 one and the same instrument. Electronic signatures shall be deemed original
 signatures for all purposes.
 
-[SIGNATURE BLOCKS — one per required signatory]
+[SIGNATURE BLOCKS - one per required signatory]
 
 _______________________________
 [Director Name]
@@ -3482,12 +3482,12 @@ Produce:
 1. **The consent draft** — complete, ready to review and circulate. The executed written consent itself is a corporate record, not privileged; do not apply the work-product header to the consent as circulated. The drafting notes, signatory tracker, and analysis below are work product — prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`):
 
    ```
-   [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+   [WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
    ```
 
 2. **Signatory checklist:**
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 SIGNATORY CHECKLIST — [Action] — [Date]
 
@@ -3495,7 +3495,7 @@ Required signatories (unanimous consent required):
 □ [Director Name 1]
 □ [Director Name 2]
 □ [Director Name 3]
-[etc. — pulled from board composition in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
+[etc. - pulled from board composition in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
 
 Conflict disclosures:
 [None / [Director Name] has a disclosed interest — confirm whether recusal or disclosure is appropriate]
@@ -3505,7 +3505,7 @@ State law notice: [confirmed-rule-for-state-of-incorporation / confirm]
 
 3. **Review prompts:**
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 BEFORE CIRCULATING — check:
 □ Resolution language precisely describes the action (no vague approvals)

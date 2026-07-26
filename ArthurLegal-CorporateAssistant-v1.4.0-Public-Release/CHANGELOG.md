@@ -81,6 +81,38 @@ Araştırmaları.
 - **`ATTRIBUTION.md`** — sürüm başlığı v1.2.0 → v1.4.0 (paketle uyumsuzdu);
   üç yeni MCP ve upstream veri kaynakları ile lisansları eklendi.
 
+### Düz metin çıktı sözleşmesi (kopyala-yapıştır)
+
+Görünür yanıt artık, hukuk müşavirinin doğrudan bir epostaya, dilekçeye veya
+dosya notuna yapıştırabileceği **düz metindir**. `SYSTEM_PROMPT.md`'ye
+**bağlayıcı bir ÇIKTI SÖZLEŞMESİ** bölümü eklendi; bu bölüm knowledge
+dosyalarındaki tüm biçim örneklerinin üstündedir.
+
+1. Çıktıda kullanılmaz: emoji; yıldızla kalın veya italik; Markdown başlığı;
+   kod çiti; yatay ayraç; boru işaretli tablo çizgisi; stil amaçlı uzun veya
+   orta çizgi; kısa çizgiyle başlayan liste.
+2. Liste 1., 2., 3. biçiminde numaralandırılır. Başlık kendi satırında ve
+   iki nokta ile biter. Bölümler boş satırla ayrılır. Vurgu BÜYÜK HARF veya
+   tırnakla verilir.
+3. **Risk derecesi artık kelimedir:** BLOKLAYICI, YÜKSEK, ORTA, DÜŞÜK.
+   Renk emojisi (kırmızı/turuncu/sarı/yeşil daire) paketten tamamen kaldırıldı.
+   Yaptırım sonucu: PROHIBITED, RESTRICTED, UNCLEAR, CLEAR.
+4. **Atıf etiketlerinde ayraç kısa çizgidir:** `[Mevzuat MCP - GG.AA.YYYY]`.
+   Önceki uzun çizgili biçim (`—`) tüm knowledge dosyalarında değiştirildi.
+   Etiketin kendisi biçim değil kaynak kimliğidir; kaldırılmaz.
+5. **Doğal artefakt üstünlüğü:** kullanıcı yalnız eposta, tablo, JSON,
+   memorandum veya dilekçe isterse o artefaktın kendi biçimi öne geçer.
+   Eposta ilk satırda `Konu:` ile başlar; JSON'da süslü parantez dışında metin
+   olmaz; dilekçe `DRAFT: İNCELEME KOPYASI` satırıyla açılır.
+6. Gönderim öncesi sessiz denetim: kalan emoji, yıldız, Markdown işareti veya
+   stil çizgisi düzeltilir.
+
+Uyarı işareti emojisi de çıktı şablonlarından kaldırıldı (`İnceleyen notu:`
+artık düz yazılır). Referans rehberlerindeki durum işaretleri (bayraklar,
+onay/ret işaretleri, connector sağlık tabloları) **korundu** — bunlar kurulum
+yapan kişinin okuduğu dokümantasyondur, yanıt şablonu değildir; bağlayıcı
+sözleşme bunların çıktıya taşınmasını zaten engeller.
+
 ### Talimat hizalaması — LC Digital Twin canonical prompt'u
 
 `copilot-socar-lc-digital-twin` deposundaki `global-instructions.md`'de bulunup
@@ -102,10 +134,10 @@ bu pakette eksik veya zayıf olan kurallar `SYSTEM_PROMPT.md`'ye taşındı:
   veya bağlantılı kuruluş**. Önceki hâli yalnız "yaptırım listesi eşleşmesi"
   diyordu.
 - **"İmzaya hazır" kapısı** (yeni) — bu ifade, ilgili P0 kontrolleri
-  karşılanmadan ve 🔴/🟠 bulgu kalmadan kullanılamaz; kullanıldığında bile
+  karşılanmadan ve BLOKLAYICI/YÜKSEK bulgu kalmadan kullanılamaz; kullanıldığında bile
   nihai onayın **Hukuk & Uyum'a (L&C)** ait olduğu belirtilir.
 - **Yaptırım skalası dört değerli** — `prohibited` / `restricted` / `unclear` /
-  `clear`, mevcut 🔴🟠🟡🟢 renk koduna eşlendi. **Belirsiz, temiz diye
+  `clear`, mevcut BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK renk koduna eşlendi. **Belirsiz, temiz diye
   raporlanamaz.**
 - **Kişisel veri maskeleme** (yeni madde) — TCKN, pasaport, telefon, IBAN,
   adres, kişisel e-posta; hukuka uygun bir inceleme amacı yoksa maskelenir.

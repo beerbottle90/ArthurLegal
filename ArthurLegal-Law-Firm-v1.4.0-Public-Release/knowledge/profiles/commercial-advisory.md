@@ -9,10 +9,10 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** Ticari sözleşme **YAZMA + inceleme + müzakere** — müvekkil pozisyonunda
-**Aylık sözleşme hacmi:** `[DOLDUR — örn. 10-20 sözleşme/ay (yazma + inceleme karışık)]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. müvekkillerin "dün lazım" baskısı + tutarlılık (her ortağın farklı şablonu) + damga vergisi tartışması]`
+**Aylık sözleşme hacmi:** `[DOLDUR - örn. 10-20 sözleşme/ay (yazma + inceleme karışık)]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. müvekkillerin "dün lazım" baskısı + tutarlılık (her ortağın farklı şablonu) + damga vergisi tartışması]`
 
-**Sorumlu ortak:** `[DOLDUR — örn. Yönetici Ortak]`
+**Sorumlu ortak:** `[DOLDUR - örn. Yönetici Ortak]`
 
 ---
 
@@ -31,7 +31,7 @@
 | **Yargı MCP** (ticari uyuşmazlık emsalleri) | ✓ | UYAP |
 | **iManage / SharePoint** (sözleşme arşivi) | [DOLDUR] | Drive |
 | **KEP** (sözleşme teslim) | [DOLDUR] | E-posta |
-| Şablon kütüphanesi (büro içi) | [DOLDUR — varsa konum] | — |
+| Şablon kütüphanesi (büro içi) | [DOLDUR - varsa konum] | — |
 
 ---
 
@@ -39,17 +39,17 @@
 
 | Tip | Aylık hacim | Şablon var? | Sorumlu ortak |
 |---|---|---|---|
-| NDA (gizlilik) | `[DOLDUR — örn. 4-6]` | ✓ | Yönetici Ortak |
-| Hizmet sözleşmesi | `[DOLDUR — 3-5]` | ✓ | Yönetici Ortak |
-| Tedarik / satış | `[DOLDUR — 2-4]` | ✓ | — |
-| Distribütörlük / acentelik | `[DOLDUR — 1-2]` | ✓ | — |
-| Lisans (yazılım/marka) | `[DOLDUR — 1-3]` | Kısmen | IP danışman |
-| Franchise | `[DOLDUR — nadir]` | Kısmen | — |
-| Joint venture / ortaklık | `[DOLDUR — nadir]` | Kısmen | Yönetici Ortak |
-| SaaS aboneliği (müvekkil alıcı/satıcı) | `[DOLDUR — 2-4]` | ✓ | — |
-| Eser sözleşmesi (inşaat/yazılım) | `[DOLDUR — 1-3]` | Kısmen | — |
-| Kira (ticari) | `[DOLDUR — 2-3]` | ✓ | — |
-| İhtarname | `[DOLDUR — 5-10]` | ✓ (yapısal) | — |
+| NDA (gizlilik) | `[DOLDUR - örn. 4-6]` | ✓ | Yönetici Ortak |
+| Hizmet sözleşmesi | `[DOLDUR - 3-5]` | ✓ | Yönetici Ortak |
+| Tedarik / satış | `[DOLDUR - 2-4]` | ✓ | — |
+| Distribütörlük / acentelik | `[DOLDUR - 1-2]` | ✓ | — |
+| Lisans (yazılım/marka) | `[DOLDUR - 1-3]` | Kısmen | IP danışman |
+| Franchise | `[DOLDUR - nadir]` | Kısmen | — |
+| Joint venture / ortaklık | `[DOLDUR - nadir]` | Kısmen | Yönetici Ortak |
+| SaaS aboneliği (müvekkil alıcı/satıcı) | `[DOLDUR - 2-4]` | ✓ | — |
+| Eser sözleşmesi (inşaat/yazılım) | `[DOLDUR - 1-3]` | Kısmen | — |
+| Kira (ticari) | `[DOLDUR - 2-3]` | ✓ | — |
+| İhtarname | `[DOLDUR - 5-10]` | ✓ (yapısal) | — |
 
 ---
 
@@ -103,7 +103,7 @@ Sözleşme imzalanması → damga vergisi doğar. Tipik oranlar:
 - **Bağışlama (ivazsız):** Vergi yok (genelde)
 - **Yıllık damga tavan:** TL üst sınır var (her yıl güncellenir)
 
-⚠️ **Damga vergisini ödemeyen taraf** sözleşme delil olarak ileri sürmek istediğinde **damga vergisinin 4 katı ceza + vergi** ödemek zorunda — yani **sözleşmeyi imzalayan herkes** kendi nüsha damgasını ödemeli. Maliye sıkı kontrol etmez ama dava açıldığında çıkar.
+**Damga vergisini ödemeyen taraf** sözleşme delil olarak ileri sürmek istediğinde **damga vergisinin 4 katı ceza + vergi** ödemek zorunda — yani **sözleşmeyi imzalayan herkes** kendi nüsha damgasını ödemeli. Maliye sıkı kontrol etmez ama dava açıldığında çıkar.
 
 Detay: `references/damga-vergisi-rehberi.md`
 
@@ -144,24 +144,24 @@ SAYIN MÜVEKKİL – AVUKATLIK K. m. 36 – DAHİLİ
 [Büro] – Matter: [matter-slug]
 İncelenen: [sözleşme tipi] – [karşı yan adı]
 Sözleşme tarihi: [taslak/imza]
-Bulgu sınıflandırma: 🔴 N – 🟠 N – 🟡 N – 🟢 N
+Bulgu sınıflandırma: BLOKLAYICI N – YÜKSEK N – ORTA N – DÜŞÜK N
 ```
 
 **İhtarname:** "TASLAK – İMZA BEKLİYOR + KEP gönderim hazır" ekle.
 
 ### Bulgu severity skalası
 
-- 🔴 **Bloklayıcı** — imzalama; TBK 115 ihlali, kanuna aykırılık, müvekkilin müzakere haklarını kaybetmesi
-- 🟠 **Yüksek** — müzakere şart; tek taraflı fesih hakkı yok, tutar üst sınırı belirsiz, damga ödenmemiş
-- 🟡 **Orta** — fix önerilir; yetki klozu zayıf, tahkim klozu eksik, KVKK referansı yok
-- 🟢 **Düşük** — bilgi notu; tipo, dilbilgisi, format
+- BLOKLAYICI **Bloklayıcı** — imzalama; TBK 115 ihlali, kanuna aykırılık, müvekkilin müzakere haklarını kaybetmesi
+- YÜKSEK **Yüksek** — müzakere şart; tek taraflı fesih hakkı yok, tutar üst sınırı belirsiz, damga ödenmemiş
+- ORTA **Orta** — fix önerilir; yetki klozu zayıf, tahkim klozu eksik, KVKK referansı yok
+- DÜŞÜK **Düşük** — bilgi notu; tipo, dilbilgisi, format
 
 ### Atıf disiplini
 
-- `[Mevzuat MCP — TBK/TTK m. X — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay — emsal — GG.AA.YYYY]`
-- `[Müvekkil pozisyonu — A/B/C-tarafı — atanan ortak değerlendirmesi]`
-- `[Damga vergisi — DVK Tablo I — 2026 oran]`
+- `[Mevzuat MCP - TBK/TTK m. X - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay - emsal - GG.AA.YYYY]`
+- `[Müvekkil pozisyonu - A/B/C-tarafı - atanan ortak değerlendirmesi]`
+- `[Damga vergisi - DVK Tablo I - 2026 oran]`
 
 ---
 
@@ -173,7 +173,7 @@ Sözleşme yazımında **risk-getiri** dengesinin sahibi **müvekkil**. Avukat:
 - Müvekkilin maddi/operasyonel önceliği farklı olabilir — avukat **hukukun en güvenli** yolunu önerir ama dayatmaz
 
 **Aceleci müvekkil** (özellikle "yarın imzalanacak" durumlar):
-- 🟠 hep bir flag — özellikle "tek geçişlik kabul edilebilir" tonu kaçınılan ifade
+- YÜKSEK hep bir flag — özellikle "tek geçişlik kabul edilebilir" tonu kaçınılan ifade
 - "İmzalamadan önce 24 saat bekleme" önerisi yazılı kayıt
 
 ---

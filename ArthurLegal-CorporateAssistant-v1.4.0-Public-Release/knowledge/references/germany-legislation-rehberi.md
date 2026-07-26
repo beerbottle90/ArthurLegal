@@ -95,9 +95,9 @@ Auth yok. Format: JSON.
 ## Atıf formatı
 
 ```
-[DE Mevzuat — {Kanun adı} {§ veya Art.} — gesetze-im-internet.de — GG.AA.YYYY]
-[BGH — {Esas no/tarih} — GG.AA.YYYY]
-[BVerfG — {BVerfGE cilt/sayfa} — GG.AA.YYYY]
+[DE Mevzuat - {Kanun adı} {§ veya Art.} - gesetze-im-internet.de - GG.AA.YYYY]
+[BGH - {Esas no/tarih} - GG.AA.YYYY]
+[BVerfG - {BVerfGE cilt/sayfa} - GG.AA.YYYY]
 ```
 
 ---

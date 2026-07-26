@@ -9,21 +9,21 @@
 ```markdown
 # Hukuk & Uyum Haftalık Bülteni — [Hafta tarih aralığı]
 
-📅 [GG.AA.YYYY - GG.AA.YYYY] | 📊 Toplam: [N] yayın | 🔴 [N] zorunlu uyum | 🟠 [N] süreç güncellemesi
+📅 [GG.AA.YYYY - GG.AA.YYYY] | 📊 Toplam: [N] yayın | BLOKLAYICI [N] zorunlu uyum | YÜKSEK [N] süreç güncellemesi
 
 ---
 
-## 🔴 ZORUNLU UYUM (X gün içinde aksiyon)
+## BLOKLAYICI ZORUNLU UYUM (X gün içinde aksiyon)
 
 ### [Mevzuat adı + sayı]
-**Kaynak:** RG [GG.AA.YYYY] sayı [N] [Mevzuat MCP — GG.AA.YYYY]
+**Kaynak:** RG [GG.AA.YYYY] sayı [N] [Mevzuat MCP - GG.AA.YYYY]
 **Yürürlük tarihi:** [GG.AA.YYYY]
 **Etkilenen birim:** [İK / Finans / IT / Operasyon]
 
 **Özet:** [2-3 cümle özet]
 
 **Şirket etkisi:**
-- [Spesifik etki — politika değişikliği gerekli mi? sistem güncellemesi gerekli mi?]
+- [Spesifik etki - politika değişikliği gerekli mi? sistem güncellemesi gerekli mi?]
 - [Mali etki: TL üzerinden tahmini]
 
 **Aksiyon:**
@@ -32,21 +32,21 @@
 
 ---
 
-## 🟠 SÜREÇ GÜNCELLEMESİ (politika revizyonu gerekli)
+## YÜKSEK SÜREÇ GÜNCELLEMESİ (politika revizyonu gerekli)
 
 [Aynı yapı]
 
 ---
 
-## 🟡 İZLEME (sektör yorumu / kamuoyu görüşü)
+## ORTA İZLEME (sektör yorumu / kamuoyu görüşü)
 
 [Aynı yapı]
 
 ---
 
-## 🟢 BİLGİLENDİRME
+## DÜŞÜK BİLGİLENDİRME
 
-[Tek satır liste — başlık + kaynak]
+[Tek satır liste - başlık + kaynak]
 
 - [Yayın adı] [RG sayı/tarih] — [tek cümle ne]
 - ...
@@ -84,7 +84,7 @@
    - `search_cbk(query="<>")` / `search_cbgenelge(...)`
 3. **Sektör kurumu sitelerini web fetch:** EPDK, BDDK, SPK, KVKK Kurul, Rekabet
 4. **Politika kütüphanesi diff:** Her yeni regülasyonun şirket politika kataloğundaki ilgili dokümanı belirle
-5. **Sınıflandır:** 🔴/🟠/🟡/🟢 — bkz. `regulatory-legal` CLAUDE.md eskalasyon
+5. **Sınıflandır:** BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK — bkz. `regulatory-legal` CLAUDE.md eskalasyon
 6. **Önceki haftanın aksiyonlarını çek** (verification-log + tracker)
 7. **Teams kanalı veya KEP'e gönder**
 8. **Pazartesi 12:00 — toplantıda gözden geçir**
@@ -126,12 +126,12 @@
 | **[ANA ORTAK] grup compliance bültenleri** | İç dağıtım | Ana ortak grup politikası |
 
 ### [ŞİRKET ADI]'a özel kategorik etki alanları (her hafta dön)
-- 🔴 **EPDK kurul kararları** ([HALKA AÇIK İŞTİRAK]/[RAFİNERİ]/[ELEKTRİK SANTRALİ] lisansları, doğal gaz pazar dengesi)
-- 🔴 **CBAM güncellemeleri** ([HALKA AÇIK İŞTİRAK] petrokimya ihracatı)
-- 🔴 **OFAC SDN List** + **AB 833/2014** ek listeler
-- 🟠 **TR İklim Kanunu tasarı** + **karbon vergisi rejimi**
-- 🟠 **KVKK m.9 yurt dışı aktarım** SCC + yeterlilik kararı duyuruları
-- 🟠 **[HALKA AÇIK İŞTİRAK] KAP açıklamaları** (kendi şirketimiz — içsel bilgi koordinasyonu)
-- 🟡 **6331 ISG yönetmelik değişiklikleri** ([İşletme alanı])
-- 🟡 **TTK + SPK Kurumsal Yönetim** güncellemeleri
-- 🟢 **TÜRKPATENT** marka itiraz bültenleri (defansif tarama)
+- BLOKLAYICI **EPDK kurul kararları** ([HALKA AÇIK İŞTİRAK]/[RAFİNERİ]/[ELEKTRİK SANTRALİ] lisansları, doğal gaz pazar dengesi)
+- BLOKLAYICI **CBAM güncellemeleri** ([HALKA AÇIK İŞTİRAK] petrokimya ihracatı)
+- BLOKLAYICI **OFAC SDN List** + **AB 833/2014** ek listeler
+- YÜKSEK **TR İklim Kanunu tasarı** + **karbon vergisi rejimi**
+- YÜKSEK **KVKK m.9 yurt dışı aktarım** SCC + yeterlilik kararı duyuruları
+- YÜKSEK **[HALKA AÇIK İŞTİRAK] KAP açıklamaları** (kendi şirketimiz — içsel bilgi koordinasyonu)
+- ORTA **6331 ISG yönetmelik değişiklikleri** ([İşletme alanı])
+- ORTA **TTK + SPK Kurumsal Yönetim** güncellemeleri
+- DÜŞÜK **TÜRKPATENT** marka itiraz bültenleri (defansif tarama)

@@ -303,7 +303,7 @@ was untouched — skip them entirely.
 **Now:**
 > "[exact quote of replacement language]"
 
-*What changed:* [one sentence — practical effect on the parties]
+*What changed:* [one sentence - practical effect on the parties]
 
 ---
 
@@ -511,7 +511,7 @@ Corollary: the interview's inputs are the user's typed answers and documents the
 - **Never** write a practice profile with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past.
 - **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/commercial-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /commercial-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -624,7 +624,7 @@ Ask conversationally, one cluster at a time. Don't interrogate — listen for wh
 
 Handle the response:
 
-- **One side (sales or purchasing):** "Got it. Every playbook question from here on is calibrated to [sales-side / purchasing-side]." Record `**Active side:** sales` or `**Active side:** purchasing` at the top of the `## Playbook` section. Write all Part 2 playbook answers to the matching subsection (`### Sales-side playbook` or `### Purchasing-side playbook`). Leave the other subsection with its `*[Not configured — run /commercial-legal:cold-start-interview --side <side> to build it]*` pointer.
+- **One side (sales or purchasing):** "Got it. Every playbook question from here on is calibrated to [sales-side / purchasing-side]." Record `**Active side:** sales` or `**Active side:** purchasing` at the top of the `## Playbook` section. Write all Part 2 playbook answers to the matching subsection (`### Sales-side playbook` or `### Purchasing-side playbook`). Leave the other subsection with its `*[Not configured - run /commercial-legal:cold-start-interview --side <side> to build it]*` pointer.
 
 - **Both:** "Got it. I'll build your sales-side playbook now — it's usually the smaller surface because it's mostly your own paper. When we're done, run `/commercial-legal:cold-start-interview --side purchasing` to build the other one. Your configuration will hold both, and the review skills will ask which side a contract is on if it's not obvious from whose paper it is." Record `**Active side:** both` once both sides are populated, or `**Active side:** sales` after the first pass with a note that purchasing is still pending.
 
@@ -740,7 +740,7 @@ Ask two things in order:
 
 If they have a CLM or good contract visibility: aim for 5-10 signed agreements (20 is better), across the agreement types they described in Part 1.
 
-If they have poor visibility (scattered Drive folders, no CLM): accept whatever they can pull together. Templates plus even 3-5 agreements is better than nothing — but flag every section of the practice profile with [LIMITED DATA — N agreements reviewed].
+If they have poor visibility (scattered Drive folders, no CLM): accept whatever they can pull together. Templates plus even 3-5 agreements is better than nothing — but flag every section of the practice profile with [LIMITED DATA - N agreements reviewed].
 
 **How to ingest:**
 1. Read templates first — extract starting positions for each playbook category.
@@ -770,14 +770,14 @@ if given]. [GC name] is the final escalation point. We process roughly [N]
 agreements per month, mostly [vendor/customer/mix]. We use [CLM/other] for
 contract lifecycle management.
 
-**The thing that hurts:** [what they said hurts — write it in their words]
+**The thing that hurts:** [what they said hurts - write it in their words]
 
 ---
 
 ## Who's using this
 
 **Role:** [Lawyer / legal professional | Non-lawyer with attorney access | Non-lawyer without attorney access]
-**Attorney contact:** [Name / team / outside firm / N/A — fill in if non-lawyer]
+**Attorney contact:** [Name / team / outside firm / N/A - fill in if non-lawyer]
 
 ---
 
@@ -806,7 +806,7 @@ contract lifecycle management.
 
 *Applies when the company is the vendor. Usually our paper.*
 
-*[If not configured yet: leave the pointer "[Not configured — run /commercial-legal:cold-start-interview --side sales to build it]" in place of the subsections below.]*
+*[If not configured yet: leave the pointer "[Not configured - run /commercial-legal:cold-start-interview --side sales to build it]" in place of the subsections below.]*
 
 #### Limitation of liability
 
@@ -851,9 +851,9 @@ contract lifecycle management.
 
 *Applies when the company is the customer. Usually their paper.*
 
-*[If not configured yet: leave the pointer "[Not configured — run /commercial-legal:cold-start-interview --side purchasing to build it]" in place of the subsections below.]*
+*[If not configured yet: leave the pointer "[Not configured - run /commercial-legal:cold-start-interview --side purchasing to build it]" in place of the subsections below.]*
 
-[Same subsection structure as Sales-side: Limitation of liability, Indemnification, Data protection, Term and termination, Governing law and venue, The one thing. Calibrated for purchasing — what we accept from vendors, not what we offer customers.]
+[Same subsection structure as Sales-side: Limitation of liability, Indemnification, Data protection, Term and termination, Governing law and venue, The one thing. Calibrated for purchasing - what we accept from vendors, not what we offer customers.]
 
 ---
 
@@ -868,7 +868,7 @@ contract lifecycle management.
 **Dollar thresholds:** [if they mentioned any]
 
 **Automatic escalations regardless of dollar value:**
-- [their list — unlimited liability, unfavorable IP, etc.]
+- [their list - unlimited liability, unfavorable IP, etc.]
 
 ---
 
@@ -911,7 +911,7 @@ confirm_routing: true   # Set to false to skip routing confirmation and proceed 
 
 ## NDA triage preferences
 
-closing_action: "[what the user said to append to every NDA triage output — e.g., 'Forward this output and the NDA to your contracts manager.']"
+closing_action: "[what the user said to append to every NDA triage output - e.g., 'Forward this output and the NDA to your contracts manager.']"
 
 ---
 
@@ -1215,7 +1215,7 @@ The approver should be able to decide from the message alone — no "let me pull
 
 ```markdown
 **Escalating to:** [name]
-**Via:** [Slack #channel / email / meeting — per `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
+**Via:** [Slack #channel / email / meeting - per `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
 **Urgency:** [deadline if there is one]
 
 ---
@@ -1317,12 +1317,12 @@ Tüm unsurları haritalandır. Farklı katmanlar varsa her biri ayrı analiz ger
 ```
 Governing law  : [örn. İngiliz hukuku]
 Venue/tahkim   : [örn. ICC Paris, seat Cenevre/İsviçre]
-Karşı taraf    : [örn. Alman şirket — BGB/HGB]
+Karşı taraf    : [örn. Alman şirket - BGB/HGB]
 TR bağlantısı  : [[ŞİRKET ADI] taraf — Türk hukuku iş hukuku + vergi uygulanır]
 ```
 
 **Uyarı — çoklu yargı çevresi tetikleyici:**
-Governing law ≠ arbitration seat ≠ counterparty ülkesi ise 🟠 flag koy. Her katman ayrı risk ve Adım 4'te ayrı analiz gerektirir.
+Governing law ≠ arbitration seat ≠ counterparty ülkesi ise YÜKSEK flag koy. Her katman ayrı risk ve Adım 4'te ayrı analiz gerektirir.
 
 ---
 
@@ -1332,11 +1332,11 @@ CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 
 | Durum | Severity |
 |---|---|
-| Tercih listesinde (İngiliz/Türk + ICC/LCIA/ISTAC) | 🟢 |
-| Tercih dışı ama kabul edilebilir (Fransız, İsviçre OR + ICC) | 🟡 |
-| Asimetrik venue — tek tarafa mahkeme seçim hakkı | 🟠 |
-| Karanlık yargı çevresi (belirsiz devlet hukuku, kısıtlı mahkeme erişimi) | 🔴 |
-| Rusya, İran, OFAC yaptırım altındaki ülke mahkemesi | 🔴 — dur, [UYUM DİREKTÖRÜ]'e sor |
+| Tercih listesinde (İngiliz/Türk + ICC/LCIA/ISTAC) | DÜŞÜK |
+| Tercih dışı ama kabul edilebilir (Fransız, İsviçre OR + ICC) | ORTA |
+| Asimetrik venue — tek tarafa mahkeme seçim hakkı | YÜKSEK |
+| Karanlık yargı çevresi (belirsiz devlet hukuku, kısıtlı mahkeme erişimi) | BLOKLAYICI |
+| Rusya, İran, OFAC yaptırım altındaki ülke mahkemesi | BLOKLAYICI — dur, [UYUM DİREKTÖRÜ]'e sor |
 
 ---
 
@@ -1363,8 +1363,8 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 | 🇪🇺 AB şirketi | `eu-legislation-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
 | 🇦🇿 Azerbaycan ([ANA ORTAK]) | TR Legal MCP + model | Azerbaycan hukuku — özel dikkat |
 
-Çekilen kanunlara `[DE Mevzuat — ...]` / `[UK Legislation — ...]` vb. atıf koy.
-Çekemediğin hukuku `[model bilgisi — doğrulayın]` etiketle.
+Çekilen kanunlara `[DE Mevzuat - ...]` / `[UK Legislation - ...]` vb. atıf koy.
+Çekemediğin hukuku `[model bilgisi - doğrulayın]` etiketle.
 
 ---
 
@@ -1409,7 +1409,7 @@ NY Konvansiyonu Madde V ret gerekçeleri (m.61 kapıları):
 **Sonuç formatı:**
 ```
 Türkiye'de icra: [MÜMKÜN / SORUNLU / BELİRSİZ]
-Engel riski: [🔴 Yüksek / 🟠 Orta / 🟡 Düşük / 🟢 Yok]
+Engel riski: [BLOKLAYICI Yüksek / YÜKSEK Orta / ORTA Düşük / DÜŞÜK Yok]
 [review] gerektiren: [spesifik şart veya boşluk]
 ```
 
@@ -1437,7 +1437,7 @@ Katman 4 — Türkiye ([ŞİRKET ADI] taraf):
   → Bağlantı noktaları: iş hukuku, vergi, EPDK lisans
 ```
 
-Çakışma riski: iki governing law aynı anda uygulanabilirse ya da çelişen zorunlu kurallar (mandatory rules) varsa 🔴 flag + `[review]`.
+Çakışma riski: iki governing law aynı anda uygulanabilirse ya da çelişen zorunlu kurallar (mandatory rules) varsa BLOKLAYICI flag + `[review]`.
 
 ---
 
@@ -1445,14 +1445,14 @@ Katman 4 — Türkiye ([ŞİRKET ADI] taraf):
 
 | Kriter | Severity |
 |---|---|
-| OpenSanctions eşleşmesi | 🔴 dur |
-| Rusya/İran/OFAC mahkemesi | 🔴 |
-| Çakışan mandatory rules | 🔴 |
-| MÖHUK tenfiz engeli yüksek | 🔴 |
-| Asimetrik venue / tek taraflı seçim | 🟠 |
-| Çoklu yargı çevresi — her biri kontrol edildi | 🟡 |
-| şirket-default dışı ama kabul edilebilir | 🟡 |
-| Tercih listesinde | 🟢 |
+| OpenSanctions eşleşmesi | BLOKLAYICI dur |
+| Rusya/İran/OFAC mahkemesi | BLOKLAYICI |
+| Çakışan mandatory rules | BLOKLAYICI |
+| MÖHUK tenfiz engeli yüksek | BLOKLAYICI |
+| Asimetrik venue / tek taraflı seçim | YÜKSEK |
+| Çoklu yargı çevresi — her biri kontrol edildi | ORTA |
+| şirket-default dışı ama kabul edilebilir | ORTA |
+| Tercih listesinde | DÜŞÜK |
 
 ## Çıktı şablonu
 
@@ -1461,10 +1461,10 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 # Cross-Border Yargı & İcra Analizi — [Sözleşme adı]
 
-## ⚠️ Reviewer note
-- **Kaynaklar:** [TR Legal MCP / UK / DE / FR / CH / EU / CourtListener — hangileri çekildi]
+## Reviewer note
+- **Kaynaklar:** [TR Legal MCP / UK / DE / FR / CH / EU / CourtListener - hangileri çekildi]
 - **Governing law:** [...] | **Seat:** [...] | **Karşı taraf ülkesi:** [...]
-- **Çoklu katman:** [evet/hayır — kaç katman]
+- **Çoklu katman:** [evet/hayır - kaç katman]
 - **Türkiye icra:** [MÜMKÜN / SORUNLU / BELİRSİZ]
 - **[review] sayısı:** N
 
@@ -1605,7 +1605,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -1623,7 +1623,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
+[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other - with one-line rationale]
 
 ## Key facts
 
@@ -1634,12 +1634,12 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 *Any deviation from the practice-level playbook that applies to this matter and only this matter.*
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
+- [e.g., "Tone: relationship-preserving - counterparty is a strategic partner."]
 - [e.g., "Governing law: must be English law, not Delaware."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -1658,7 +1658,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to inbound MSA draft from [counterparty]."]
 ```
 
 ## Cross-matter context
@@ -1713,7 +1713,7 @@ Most inbound NDAs are fine. A few have landmines. This skill sorts them in under
 
 If `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` doesn't have an `NDA triage positions` section yet, or it's silent on a term that comes up in the NDA you're reviewing, ask the user:
 
-> Your playbook doesn't cover [term — e.g., "residuals clauses," "survival period," "one-way NDAs where you're the receiver"]. What's your default position — when should this be GREEN, when YELLOW, when RED? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` so the next review is consistent.
+> Your playbook doesn't cover [term - e.g., "residuals clauses," "survival period," "one-way NDAs where you're the receiver"]. What's your default position — when should this be GREEN, when YELLOW, when RED? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` so the next review is consistent.
 
 Then record the answer in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` and proceed with the triage using the new position.
 
@@ -1746,7 +1746,7 @@ Do not route to signature on defaults. YELLOW is the right call when positions a
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 ## NDA Triage: [Counterparty]
 
@@ -1782,7 +1782,7 @@ One or more terms deviate from the playbook but aren't categorical deal-breakers
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 ## NDA Triage: [Counterparty]
 
@@ -1797,8 +1797,8 @@ YELLOW — flag for [approver name from `~/.claude/plugins/config/claude-for-leg
 
 **1. [Issue]** — Section [X]
    What: [one line]
-   Why flagged: [one line — which playbook position this hits, or "playbook is silent on this"]
-   **Legal risk:** [🔴/🟠/🟡/🟢] | **Business friction:** [🔴 Blocks deals / 🟠 Slows deals / 🟡 Confuses customers / 🟢 Invisible]
+   Why flagged: [one line - which playbook position this hits, or "playbook is silent on this"]
+   **Legal risk:** [BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK] | **Business friction:** [BLOKLAYICI Blocks deals / YÜKSEK Slows deals / ORTA Confuses customers / DÜŞÜK Invisible]
    Likely resolution: [accept / push back on X / depends on deal context]
 
 [repeat for each flag]
@@ -1821,7 +1821,7 @@ The NDA hits a position on the playbook's "never accept" list, or the structure 
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 ## NDA Triage: [Counterparty]
 
@@ -1829,7 +1829,7 @@ RED — do not submit, talk to legal first
 
 ### Executive Summary
 
-- [One-line actionable edit, e.g. "Section 4 — route to Legal for review"]
+- [One-line actionable edit, e.g. "Section 4 - route to Legal for review"]
 - [One-line actionable edit]
 
 ### Critical issues
@@ -1837,7 +1837,7 @@ RED — do not submit, talk to legal first
 **1. [Issue]** — Section [X]
    > "[exact quote]"
    Why this is a problem: [specific risk; cite the playbook position it violates]
-   **Legal risk:** [🔴/🟠/🟡/🟢] | **Business friction:** [🔴 Blocks deals / 🟠 Slows deals / 🟡 Confuses customers / 🟢 Invisible]
+   **Legal risk:** [BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK] | **Business friction:** [BLOKLAYICI Blocks deals / YÜKSEK Slows deals / ORTA Confuses customers / DÜŞÜK Invisible]
    Recommended response: [use our paper instead | push back with specific language | walk]
 
 **Next step:** Send this triage to [GC or named escalation person from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]. Do not send to [CLM or approvals workflow]. Do not tell the counterparty we'll sign.
@@ -2013,7 +2013,7 @@ Surfaces what's renewing and when you have to cancel by.
 
 1. **Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-register.yaml`** (the config directory — survives plugin updates).
 
-2. **Default mode:** Mode 2 — what's coming up in the next 90 days, grouped by urgency using half-open intervals so each deadline lands in exactly one band: 🔴 0–13 days, 🟠 14–44 days, 🟡 45–89 days. Days 14, 45, and 90 are boundaries — each belongs to exactly one band, not two.
+2. **Default mode:** Mode 2 — what's coming up in the next 90 days, grouped by urgency using half-open intervals so each deadline lands in exactly one band: BLOKLAYICI 0–13 days, YÜKSEK 14–44 days, ORTA 45–89 days. Days 14, 45, and 90 are boundaries — each belongs to exactly one band, not two.
 
 3. **`--days N`:** Change the window.
 
@@ -2063,7 +2063,7 @@ Lives at `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-reg
   cancel_by_effective: 2026-04-16   # rolled back to last business day if needed
   send_by_effective: 2026-04-16    # cancel_by_effective minus transit_buffer_days — the date you must SEND the notice
   cancel_by_roll_note: ""           # e.g., "rolled back from Sunday 2026-11-01; verify against contract's business-day definition"
-  cancel_by_provenance: "[model calculation — verify against the notice clause]"
+  cancel_by_provenance: "[model calculation - verify against the notice clause]"
   price_on_renewal: "then-current list (uncapped)"
   annual_value: 48000
   business_owner: "jane@company.com"
@@ -2073,7 +2073,7 @@ Lives at `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-reg
   notes: "Pricing uncapped — revisit before renewal. Alt vendors: X, Y."
 ```
 
-**Notice transit time — alert off `send_by_effective`, not `cancel_by_effective`.** A 60-day window with a certified-mail requirement is really ~55 days. The tracker that alerts on the received-by date is the tracker that misses the deadline. Compute `send_by_effective = cancel_by_effective - transit_buffer_days` and fire alerts (the 🔴 / 🟠 / 🟡 urgency bands in Mode 2) off `send_by_effective`. Mode 2's urgency column shows `send_by_effective`; a detail column surfaces `cancel_by_effective`, `notice_method`, and `transit_buffer_days` so the reader can see the delta and challenge the buffer.
+**Notice transit time — alert off `send_by_effective`, not `cancel_by_effective`.** A 60-day window with a certified-mail requirement is really ~55 days. The tracker that alerts on the received-by date is the tracker that misses the deadline. Compute `send_by_effective = cancel_by_effective - transit_buffer_days` and fire alerts (the BLOKLAYICI / YÜKSEK / ORTA urgency bands in Mode 2) off `send_by_effective`. Mode 2's urgency column shows `send_by_effective`; a detail column surfaces `cancel_by_effective`, `notice_method`, and `transit_buffer_days` so the reader can see the delta and challenge the buffer.
 
 **Rolling renewals — the register that doesn't roll forward is the register that's right once.** Store `initial_term_end` for the record, but compute `cancel_by_*` from `current_term_end`. When a renewal fires (the cancel window passes and no notice was given), prompt:
 
@@ -2093,8 +2093,8 @@ When you compute (or ingest) a cancel-by date:
 1. **Compute the calendar date.** `cancel_by_calendar = initial_term_end − notice_period_days` (or whatever the clause specifies). This is the raw arithmetic.
 2. **Business-day roll-back keyed to governing law.** The contract's governing law determines which holidays count. US: federal holidays + the state's holidays if governing law is a state. England & Wales: bank holidays. Germany: Feiertage (vary by Bundesland — ask which). Canada: federal + provincial. Singapore: public holidays. If Saturday, roll back to Friday. If Sunday, roll back to Friday. If a holiday in the governing-law jurisdiction, roll back to the prior business day. Roll BACK, never forward — forward means notice arrives after the window closes. For non-US governing law, if you can't determine the holiday calendar, flag it: "Governing law is [X] — business-day roll-back uses US federal holidays as a placeholder. Verify against the [jurisdiction] holiday calendar before relying on the effective date."
 3. **Check the contract's own day-counting rule.** Look for "business day," "received by," "deemed received," "5:00 p.m. [local time]," or a notice-method clause. If the contract defines "business day" or specifies receipt mechanics (certified mail, email with read receipt), that definition controls. Flag any mismatch between the default roll-back and the contract's own rule.
-4. **Record BOTH dates in the register.** `cancel_by_calendar` is the raw arithmetic; `cancel_by_effective` is the last business day on which notice is effective; `cancel_by_roll_note` records why they differ (e.g., "rolled back from Sunday 2026-11-01; verify against contract's business-day definition"). Every computed `cancel_by_effective` carries a `cancel_by_provenance` tag of `[model calculation — verify against the notice clause]` so the verify flag travels with the date, not with the surrounding prose.
-5. **Fire alerts off the EFFECTIVE date, not the calendar date.** Urgency bands (🔴 / 🟠 / 🟡 in Mode 2) use `cancel_by_effective`. Mode 2 output shows `cancel_by_effective` in the urgency column and surfaces `cancel_by_calendar` and `cancel_by_roll_note` in a detail column where the roll-back happened, so the reader can see it and challenge it.
+4. **Record BOTH dates in the register.** `cancel_by_calendar` is the raw arithmetic; `cancel_by_effective` is the last business day on which notice is effective; `cancel_by_roll_note` records why they differ (e.g., "rolled back from Sunday 2026-11-01; verify against contract's business-day definition"). Every computed `cancel_by_effective` carries a `cancel_by_provenance` tag of `[model calculation - verify against the notice clause]` so the verify flag travels with the date, not with the surrounding prose.
+5. **Fire alerts off the EFFECTIVE date, not the calendar date.** Urgency bands (BLOKLAYICI / YÜKSEK / ORTA in Mode 2) use `cancel_by_effective`. Mode 2 output shows `cancel_by_effective` in the urgency column and surfaces `cancel_by_calendar` and `cancel_by_roll_note` in a detail column where the roll-back happened, so the reader can see it and challenge it.
 
 A Mode 2 report that prints `cancel_by: 2026-11-01` (a Sunday) with no weekday and no warning is a silently wrong effective deadline. The register is the place to catch it — once, at ingest — not later, when the window has already moved.
 
@@ -2110,25 +2110,25 @@ When saas-msa-review or vendor-agreement-review finds a renewal clause, it hands
 
 **Urgency bands are half-open intervals — a deadline lives in exactly one band.** Use days-until-cancel-by (`cancel_by_effective - today`). Day 14, 45, and 90 each belong to exactly one band, not two; an off-by-one here puts the most-urgent items into the less-urgent bucket.
 
-- 🔴 **0–13 days** (cancel-by in less than 14 days — including today)
-- 🟠 **14–44 days**
-- 🟡 **45–89 days**
+- BLOKLAYICI **0–13 days** (cancel-by in less than 14 days — including today)
+- YÜKSEK **14–44 days**
+- ORTA **45–89 days**
 - (everything 90+ days is outside the default lookback window; include only if the user passed `--horizon` beyond 90)
 
 ```markdown
 ## Renewals — next 90 days
 
-### 🔴 Cancel-by deadline in 0–13 days
+### BLOKLAYICI Cancel-by deadline in 0–13 days
 
 | Counterparty | Cancel by | Renewal date | Annual $ | Owner | Notes |
 |---|---|---|---|---|---|
 | [name] | **[date]** | [date] | $[n] | [email] | [notes] |
 
-### 🟠 Cancel-by deadline in 14–44 days
+### YÜKSEK Cancel-by deadline in 14–44 days
 
 [same table]
 
-### 🟡 Cancel-by deadline in 45–89 days
+### ORTA Cancel-by deadline in 45–89 days
 
 [same table]
 
@@ -2139,7 +2139,7 @@ When saas-msa-review or vendor-agreement-review finds a renewal clause, it hands
 - [ ] [Counterparty] — pricing is uncapped; get a quote from an alternative before we lose leverage
 ```
 
-If the register has more than ~10 renewals in the window, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by urgency tier (🔴 / 🟠 / 🟡), a cancel-by timeline, and a sortable register with counterparty, renewal date, annual $, and owner.
+If the register has more than ~10 renewals in the window, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by urgency tier (BLOKLAYICI / YÜKSEK / ORTA), a cancel-by timeline, and a sortable register with counterparty, renewal date, annual $, and owner.
 
 ### Mode 3: Scan the [CLM] / e-signature tool to populate the register
 
@@ -2322,7 +2322,7 @@ description: >
   when the playbook-monitor agent has surfaced proposals, when the user says
   "review playbook proposals", "what playbook updates are pending", or wants to
   step through deviation-driven playbook changes.
-argument-hint: "[no arguments needed — works from the pending proposals file]"
+argument-hint: "[no arguments needed - works from the pending proposals file]"
 ---
 
 # /review-proposals
@@ -2386,9 +2386,9 @@ It runs the standard playbook check from `~/.claude/plugins/config/claude-for-le
 
 SaaS terms (auto-renewal notice requirements, price-escalation caps, data-portability mandates, subprocessor rules) are jurisdiction-sensitive — California, New York, and EU rules diverge materially, and some states have auto-renewal statutes that override private contract terms. This review applies the team's positions from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, which assume the governing law recorded there. If the agreement picks a different governing law, or the deal spans jurisdictions with statutory overrides (e.g., EU-based users, California consumers), flag it — the analysis may not transfer as written.
 
-> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, or firm platform) returns few or no results for a statutory override that might bear on the deal (auto-renewal statute, data-portability mandate, consumer-protection rule), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, or firm platform) returns few or no results for a statutory override that might bear on the deal (auto-renewal statute, data-portability mandate, consumer-protection rule), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Where the review cites a statute, regulation, or case (e.g., a state auto-renewal law overriding contract terms), tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Where the review cites a statute, regulation, or case (e.g., a state auto-renewal law overriding contract terms), tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ## Load the playbook
 
@@ -2400,7 +2400,7 @@ Then look for a `## Playbook` → matching side → `SaaS positions` section. Th
 
 If `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` doesn't address a SaaS-specific term that comes up in this review, ask:
 
-> Your playbook doesn't cover [term — e.g., "maximum acceptable auto-renewal notice window" or "whether vendor retention of anonymized derivatives is acceptable"]. What's your team's position? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
+> Your playbook doesn't cover [term - e.g., "maximum acceptable auto-renewal notice window" or "whether vendor retention of anonymized derivatives is acceptable"]. What's your team's position? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
 
 Record the answer and proceed.
 
@@ -2505,13 +2505,13 @@ Match each to a playbook position. The practice profile's `## AI/ML training rig
 
 **The playbook applies one governing-law preference globally. Enforceability varies materially.** Check the SaaS contract's actual governing law against the top divergences before accepting playbook positions at face value:
 
-- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction — verify]`
-- **Auto-renewal:** CA GBL §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction — verify]`
-- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction — verify]`
-- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction — verify]`
-- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction — verify]`
+- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction - verify]`
+- **Auto-renewal:** CA GBL §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction - verify]`
+- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction - verify]`
+- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction - verify]`
+- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction - verify]`
 
-When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction — verify]`"
+When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction - verify]`"
 
 ## Redline granularity
 
@@ -2531,19 +2531,19 @@ When in doubt, smaller. A client who receives a surgical redline trusts that you
 Use the vendor-agreement-review memo structure, with a SaaS-specific section added after the standard playbook checks. The vendor-agreement-review memo already carries the privilege header.
 
 **Dual severity.** Every SaaS-specific finding carries both axes (see CLAUDE.md `## Dual severity`):
-- **Legal risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
-- **Business friction:** 🔴 Blocks deals | 🟠 Slows deals | 🟡 Confuses customers | 🟢 Invisible
+- **Legal risk:** BLOKLAYICI Critical | YÜKSEK High | ORTA Medium | DÜŞÜK Low
+- **Business friction:** BLOKLAYICI Blocks deals | YÜKSEK Slows deals | ORTA Confuses customers | DÜŞÜK Invisible
 
-Data-exit, auto-renewal, and price-escalation findings are the ones most likely to be 🟢 legal / 🔴 business — the clause is enforceable, but it's the reason a customer can't leave or a renewal surprises finance. Surface those at the business-friction severity, not the legal one.
+Data-exit, auto-renewal, and price-escalation findings are the ones most likely to be DÜŞÜK legal / BLOKLAYICI business — the clause is enforceable, but it's the reason a customer can't leave or a renewal surprises finance. Surface those at the business-friction severity, not the legal one.
 
 ```markdown
 ### Bottom line
 
-[Can you sign / Need to fight for X first / Walk — one-sentence why]
+[Can you sign / Need to fight for X first / Walk - one-sentence why]
 
 ### AI and machine learning rights
 
-[The #1 emerging SaaS negotiation point. Flag: explicit ML training clauses, "service improvement" catch-alls, usage data definitions, output ownership, third-party AI subprocessors, opt-out vs opt-in. If the agreement is silent: "Silent on AI/ML training rights — request explicit prohibition or defined carve-out."]
+[The #1 emerging SaaS negotiation point. Flag: explicit ML training clauses, "service improvement" catch-alls, usage data definitions, output ownership, third-party AI subprocessors, opt-out vs opt-in. If the agreement is silent: "Silent on AI/ML training rights - request explicit prohibition or defined carve-out."]
 
 ## SaaS-specific findings
 
@@ -2552,16 +2552,16 @@ Data-exit, auto-renewal, and price-escalation findings are the ones most likely 
 **Notice window:** Cancel by [date] ([N] days before renewal)
 **Renewal price mechanism:** [as written]
 **Playbook fit:** [within position / deviation / not addressed]
-**Flag for renewal-tracker:** [yes — and the record the tracker needs]
+**Flag for renewal-tracker:** [yes - and the record the tracker needs]
 
 ### Price escalation
 [findings against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` positions]
 
 ### Data exit
-[findings — this is the one the business owner should read]
+[findings - this is the one the business owner should read]
 
 ### SLA
-[findings, or "Skipped — service is not business-critical per [stakeholder]"]
+[findings, or "Skipped - service is not business-critical per [stakeholder]"]
 
 ### Subprocessors
 [findings against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` positions]
@@ -2581,7 +2581,7 @@ signed_date:          [ISO date]
 initial_term_end:     [ISO date]
 renewal_mechanism:    [e.g., "auto-renew annual"]
 notice_period_days:   [integer]
-cancel_by_effective:            [ISO date — initial_term_end minus notice_period_days]
+cancel_by_effective:            [ISO date - initial_term_end minus notice_period_days]
 price_on_renewal:     [mechanism as written]
 annual_value:         [integer, if stated]
 business_owner:       [email, if known]
@@ -2678,7 +2678,7 @@ If a full conditional quote doesn't fit the summary's length cap, paraphrase rat
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 <!-- Remove the header above if forwarding outside the legal-privileged circle (e.g., to a business stakeholder, counterparty, or vendor). Confirm the correct marking for your jurisdiction and matter before forwarding. -->
 
 **[Counterparty] [Agreement type]** — [READY TO SIGN | NEEDS CHANGES | BLOCKED]
@@ -2734,10 +2734,10 @@ Claiming a tracker entry exists when it does not is worse than omitting the reas
 
 ## When the review found problems
 
-If the review has 🔴 or 🟠 issues, the summary still needs to be two paragraphs — but the second paragraph is "here's what we're pushing back on and why."
+If the review has BLOKLAYICI or YÜKSEK issues, the summary still needs to be two paragraphs — but the second paragraph is "here's what we're pushing back on and why."
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 <!-- Remove the header above if forwarding outside the legal-privileged circle. -->
 
 **[Counterparty] [Agreement type]** — NEEDS CHANGES
@@ -2840,7 +2840,7 @@ The output is a review memo the lawyer can act on in one pass. Every issue has a
 >
 > **Two choices:**
 > - Run `/commercial-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll review tailored to YOUR playbook.
-> - Say **"provisional"** and I'll review against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook (flag all common vendor-contract risks from first principles) — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+> - Say **"provisional"** and I'll review against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook (flag all common vendor-contract risks from first principles) — and tag every output `[PROVISIONAL - configure your profile for tailored output]` so you can see what I do before committing.
 
 ### Provisional mode
 
@@ -2901,7 +2901,7 @@ Do not silently proceed as if the DPA were absent when it is incorporated by ref
 Check the "one thing" from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` first. If present:
 
 ```markdown
-## ⛔ DEAL-BREAKER PRESENT
+## DURDUR DEAL-BREAKER PRESENT
 
 **Section [X.X]** contains [the deal-breaker]. Per the team playbook, this is a
 hard no. Recommend:
@@ -2929,14 +2929,14 @@ For each playbook category in `~/.claude/plugins/config/claude-for-legal/commerc
 
 **Gap:** [Missing term | Weaker than standard | Weaker than fallback | Non-standard structure | Unacceptable]
 
-**Legal risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
-**Business friction:** 🔴 Blocks deals | 🟠 Slows deals | 🟡 Confuses customers | 🟢 Invisible
+**Legal risk:** BLOKLAYICI Critical | YÜKSEK High | ORTA Medium | DÜŞÜK Low
+**Business friction:** BLOKLAYICI Blocks deals | YÜKSEK Slows deals | ORTA Confuses customers | DÜŞÜK Invisible
 
 **Why it matters:** [one or two sentences in plain English — what goes wrong
 for the business if this term stays as-is]
 
 **Proposed redline:**
-> "[the specific replacement language — ready to paste into a markup]"
+> "[the specific replacement language - ready to paste into a markup]"
 
 **If they won't move:** [the fallback from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, or "escalate to [person]"
 if no fallback exists]
@@ -2946,10 +2946,10 @@ if no fallback exists]
 
 | Level | Means |
 |---|---|
-| 🔴 Critical | Don't sign without fixing. A term on the team's "never accept" list in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, or a deal-breaker. |
-| 🟠 High | Strongly push; escalate if they won't move. A term outside the playbook's stated fallback range. |
-| 🟡 Medium | Push in first round; accept if it's the last open item. A term inside the fallback range but short of the standard position. |
-| 🟢 Low | Note it, don't spend capital. A term the playbook explicitly tolerates, or a purely stylistic deviation. |
+| BLOKLAYICI Critical | Don't sign without fixing. A term on the team's "never accept" list in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, or a deal-breaker. |
+| YÜKSEK High | Strongly push; escalate if they won't move. A term outside the playbook's stated fallback range. |
+| ORTA Medium | Push in first round; accept if it's the last open item. A term inside the fallback range but short of the standard position. |
+| DÜŞÜK Low | Note it, don't spend capital. A term the playbook explicitly tolerates, or a purely stylistic deviation. |
 
 Severity is always applied *against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`*. If a term doesn't map cleanly to a playbook position, ask the user which bucket it belongs in and offer to record the answer in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
 
@@ -2969,21 +2969,21 @@ Severity is always applied *against `~/.claude/plugins/config/claude-for-legal/c
 
 **The playbook applies one governing-law preference globally. Enforceability varies materially.** Check the contract's actual governing law against the top divergences before accepting playbook positions at face value:
 
-- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction — verify]`
-- **Auto-renewal:** CA GBL §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction — verify]`
-- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction — verify]`
-- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction — verify]`
-- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction — verify]`
+- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction - verify]`
+- **Auto-renewal:** CA GBL §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction - verify]`
+- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction - verify]`
+- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction - verify]`
+- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction - verify]`
 
-When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction — verify]`"
+When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction - verify]`"
 
-**Cross-border connector teyidi (v1.6.0).** Bir `[jurisdiction — verify]` etiketini boş bırakma — uygulanacak hukuk İngiliz veya ABD hukukuysa ilgili statüyü fiilen çek:
-- **İngiliz hukuku** → `legislation.gov.uk` WebFetch (örn. UCTA 1977, Consumer Rights Act 2015, Arbitration Act 1996). Rehber: `references/uk-legislation-rehberi.md`. Atıf: `[UK Legislation — <tür yıl> s.<madde> — GG.AA.YYYY]`.
-- **ABD federal hukuku** → GovInfo WebFetch / WebFetch. Rehber: `references/us-legislation-rehberi.md`. Atıf: `[US Legislation — GovInfo — <atıf> — GG.AA.YYYY]`.
-- **ABD içtihatı** (örn. CA §16600 enforceability) → CourtListener REST + citation verification. Rehber: `references/courtlistener-rehberi.md`. Atıf: `[CourtListener — <mahkeme> — <citation> — GG.AA.YYYY]`.
+**Cross-border connector teyidi (v1.6.0).** Bir `[jurisdiction - verify]` etiketini boş bırakma — uygulanacak hukuk İngiliz veya ABD hukukuysa ilgili statüyü fiilen çek:
+- **İngiliz hukuku** → `legislation.gov.uk` WebFetch (örn. UCTA 1977, Consumer Rights Act 2015, Arbitration Act 1996). Rehber: `references/uk-legislation-rehberi.md`. Atıf: `[UK Legislation - <tür yıl> s.<madde> - GG.AA.YYYY]`.
+- **ABD federal hukuku** → GovInfo WebFetch / WebFetch. Rehber: `references/us-legislation-rehberi.md`. Atıf: `[US Legislation - GovInfo - <atıf> - GG.AA.YYYY]`.
+- **ABD içtihatı** (örn. CA §16600 enforceability) → CourtListener REST + citation verification. Rehber: `references/courtlistener-rehberi.md`. Atıf: `[CourtListener - <mahkeme> - <citation> - GG.AA.YYYY]`.
 - **ABD eyalet statüsü** (CA/NY/IL) connector kapsamında değil → web search + `[verify]`.
 
-Türkiye'de icra ayağı varsa (yabancı mahkeme kararı tanıma-tenfiz veya yabancı hakem kararı), bunu da flag et — bkz. `references/karsilastirmali-hukuk-rehberi.md`. Çekemediğin yabancı hukuku `[model bilgisi — doğrulayın]` olarak bırak; connector etiketini yalnız fiilen çektiğinde kullan.
+Türkiye'de icra ayağı varsa (yabancı mahkeme kararı tanıma-tenfiz veya yabancı hakem kararı), bunu da flag et — bkz. `references/karsilastirmali-hukuk-rehberi.md`. Çekemediğin yabancı hukuku `[model bilgisi - doğrulayın]` olarak bırak; connector etiketini yalnız fiilen çektiğinde kullan.
 
 ### Step 4: Favorable terms and gaps
 
@@ -2997,7 +2997,7 @@ Two short lists:
 
 Check the escalation matrix in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` against:
 - Contract dollar value
-- Presence of any 🔴 critical issues
+- Presence of any BLOKLAYICI critical issues
 - Any automatic-escalation triggers (unlimited liability, IP assignment, etc.)
 
 State clearly who needs to approve this:
@@ -3045,12 +3045,12 @@ This memo and the underlying agreement may be privileged, confidential, or both.
 
 The playbook positions applied below reflect the jurisdiction recorded in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `Governing law and venue`. Legal rules and enforceability vary materially by jurisdiction. If this deal implicates a different governing law or a choice-of-law question, flag it in the memo — the analysis may not transfer as written.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of a limitation clause, indemnity scope, governing-law choice), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of a limitation clause, indemnity scope, governing-law choice), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Where the memo cites a statute, regulation, or case, tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Where the memo cites a statute, regulation, or case, tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 # Vendor Agreement Review: [Counterparty] [Agreement Type]
 
@@ -3064,8 +3064,8 @@ The playbook positions applied below reflect the jurisdiction recorded in `~/.cl
 
 [Two sentences. Can we sign this? What has to change first?]
 
-**Issues (legal risk):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
-**Issues (business friction):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+**Issues (legal risk):** [N]BLOKLAYICI [N]YÜKSEK [N]ORTA [N]DÜŞÜK
+**Issues (business friction):** [N]BLOKLAYICI [N]YÜKSEK [N]ORTA [N]DÜŞÜK
 
 **Approval needed from:** [name]
 
@@ -3073,7 +3073,7 @@ The playbook positions applied below reflect the jurisdiction recorded in `~/.cl
 
 ## Deal-breaker check
 
-[✅ Clear | ⛔ Present — see above]
+[✅ Clear | DURDUR Present - see above]
 
 ---
 
@@ -3137,7 +3137,7 @@ Do not proceed past this gate without an explicit yes.
 **Slack-sized summary:** Two lines and a link. For when someone asks "is this okay?" in a channel.
 
 ```
-[Counterparty] [type] — NEEDS WORK. 1🔴 (uncapped liability §8.2), 2🟠. Full review: [link]. Needs [GC] approval.
+[Counterparty] [type] — NEEDS WORK. 1BLOKLAYICI (uncapped liability §8.2), 2YÜKSEK. Full review: [link]. Needs [GC] approval.
 ```
 
 **Redline doc:** If the user asks for it, output a .docx with tracked changes. Use the docx skill. Comments on each change cite the playbook position.

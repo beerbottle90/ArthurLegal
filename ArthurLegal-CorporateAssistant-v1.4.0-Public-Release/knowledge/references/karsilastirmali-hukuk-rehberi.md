@@ -140,7 +140,7 @@ Bir sözleşmenin **uygulanacak hukuk** (governing law) ve **yetki/tahkim** kloz
 1. **Klozu tespit et.** Uygulanacak hukuk ne? Yetkili mahkeme/tahkim nerede?
 2. **şirket-default ile karşılaştır.** [ŞİRKET ADI] uluslararası sözleşmelerinde
    yaygın tercih: İngiliz hukuku + Londra tahkimi (LCIA/ICC) **veya** Türk hukuku
-   + ISTAC. Counterparty'nin tek taraflı dayattığı asimetrik venue 🟠/🔴.
+   + ISTAC. Counterparty'nin tek taraflı dayattığı asimetrik venue YÜKSEK/BLOKLAYICI.
 3. **İcra-edilebilirliği çapraz-kontrol et:**
    - Uygulanacak hukuk **İngiliz hukuku** → ilgili statüyü `legislation.gov.uk`'ten
      çek (örn. UCTA 1977, Consumer Rights Act 2015, Arbitration Act 1996).
@@ -150,7 +150,7 @@ Bir sözleşmenin **uygulanacak hukuk** (governing law) ve **yetki/tahkim** kloz
 4. **Türkiye'de icra ayağı:** Karar/hüküm Türkiye'de icra edilecekse, yabancı
    mahkeme kararı **tanıma-tenfiz** (aşağıda) veya yabancı hakem kararı NY
    Konvansiyonu rejimine tabidir. Bunu mutlaka not et.
-5. **Çekemediğin yabancı hukuku** `[model bilgisi — doğrulayın]` etiketle;
+5. **Çekemediğin yabancı hukuku** `[model bilgisi - doğrulayın]` etiketle;
    gerekirse dış yabancı-hukuk uzmanı (İngiliz solicitor / ABD attorney) öner.
 
 ---
@@ -185,7 +185,7 @@ araştırılabilir — ama:
 
 - Sonuç **taslaktır**; yabancı hukukun kesin yorumu için o ülke uzmanı gerekir.
 - Connector'dan çekilen statü/karar metnini `[UK/US Legislation]` / `[CourtListener]`
-  etiketle; çekilmediyse `[model bilgisi — doğrulayın]`.
+  etiketle; çekilmediyse `[model bilgisi - doğrulayın]`.
 
 ---
 
@@ -193,16 +193,16 @@ araştırılabilir — ama:
 
 | Kaynak | Etiket |
 |---|---|
-| Türk mevzuatı | `[Mevzuat MCP — GG.AA.YYYY]` |
-| Türk/idari yargı | `[Yargı MCP — kurum — Esas/Karar — GG.AA.YYYY]` |
-| İngiliz mevzuatı | `[UK Legislation — <tür yıl> s.<madde> — GG.AA.YYYY]` |
-| ABD mevzuatı | `[US Legislation — GovInfo — <atıf> — GG.AA.YYYY]` |
-| ABD içtihatı | `[CourtListener — <mahkeme> — <citation> — GG.AA.YYYY]` |
-| Yaptırım taraması | `[OpenSanctions API — match skoru X — GG.AA.YYYY]` |
-| **AZ mevzuatı** 🆕 | `[AZ Mevzuat — e-qanun MCP — <belge> — id:<id> — <statü> — GG.AA.YYYY]` |
-| **Akademik doktrin** 🆕 | `[LexScholar — <indeks> — <yazar, başlık, dergi, yıl>] doi:<...>` — **ikincil** olarak işaretle |
-| **Sözleşme emsali** 🆕 | `[ResourceContracts.org — <sözleşme adı> — id <id>]` + `source_url` (CC BY-SA 4.0) |
-| Çekilmeyen / model bilgisi | `[model bilgisi — doğrulayın]` |
+| Türk mevzuatı | `[Mevzuat MCP - GG.AA.YYYY]` |
+| Türk/idari yargı | `[Yargı MCP - kurum - Esas/Karar - GG.AA.YYYY]` |
+| İngiliz mevzuatı | `[UK Legislation - <tür yıl> s.<madde> - GG.AA.YYYY]` |
+| ABD mevzuatı | `[US Legislation - GovInfo - <atıf> - GG.AA.YYYY]` |
+| ABD içtihatı | `[CourtListener - <mahkeme> - <citation> - GG.AA.YYYY]` |
+| Yaptırım taraması | `[OpenSanctions API - match skoru X - GG.AA.YYYY]` |
+| **AZ mevzuatı** 🆕 | `[AZ Mevzuat - e-qanun MCP - <belge> - id:<id> - <statü> - GG.AA.YYYY]` |
+| **Akademik doktrin** 🆕 | `[LexScholar - <indeks> - <yazar, başlık, dergi, yıl>] doi:<...>` — **ikincil** olarak işaretle |
+| **Sözleşme emsali** 🆕 | `[ResourceContracts.org - <sözleşme adı> - id <id>]` + `source_url` (CC BY-SA 4.0) |
+| Çekilmeyen / model bilgisi | `[model bilgisi - doğrulayın]` |
 
 **Asla** çekmediğin bir kaynağa atıf yapmış gibi davranma. Connector erişilemezse
 ilgili rehberin "Yedek kaynaklar" bölümüne düş ve kesintiyi kullanıcıya bildir.
@@ -211,12 +211,12 @@ ilgili rehberin "Yedek kaynaklar" bölümüne düş ve kesintiyi kullanıcıya b
 
 ## 7. Severity — sınır-ötesi tetikleyiciler
 
-- 🔴 **Bloklayıcı** — yaptırım rejimi (OFAC/AB/UK) eşleşmesi; Türkiye'de tenfiz
+- BLOKLAYICI **Bloklayıcı** — yaptırım rejimi (OFAC/AB/UK) eşleşmesi; Türkiye'de tenfiz
   edilemeyecek asimetrik yabancı venue; kamu düzenine açık aykırılık.
-- 🟠 **Yüksek** — counterparty dayatması yabancı governing law + yabancı münhasır
+- YÜKSEK **Yüksek** — counterparty dayatması yabancı governing law + yabancı münhasır
   yetki; yabancı hukuk yorumu kritik ve doğrulanamıyor.
-- 🟡 **Orta** — standart İngiliz/ABD hukuku klozu, icra ayağı netleştirilmeli.
-- 🟢 **Düşük** — Türk hukuku + ISTAC, bilgi notu.
+- ORTA **Orta** — standart İngiliz/ABD hukuku klozu, icra ayağı netleştirilmeli.
+- DÜŞÜK **Düşük** — Türk hukuku + ISTAC, bilgi notu.
 
 ---
 

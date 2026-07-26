@@ -23,7 +23,7 @@ Weekly, Monday morning. Configurable — if the contracts volume is high, daily 
 
 1. Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` to get the alert destination (Slack channel or email list).
 2. Load the renewal-tracker skill, run Mode 2 (next 90 days).
-3. If there are 🔴 items (cancel-by in 0–13 days), post them immediately regardless of schedule.
+3. If there are BLOKLAYICI items (cancel-by in 0–13 days), post them immediately regardless of schedule.
 4. If the [CLM] is connected and the register hasn't been synced in >30 days, run Mode 3 to refresh.
 5. Post the report to the destination.
 
@@ -32,14 +32,14 @@ Weekly, Monday morning. Configurable — if the contracts volume is high, daily 
 ```
 📅 **Renewals — week of [date]**
 
-🔴 **Cancel-by in 0–13 days**
+BLOKLAYICI **Cancel-by in 0–13 days**
 • [Counterparty] — cancel by **[date]** ([annual $]) — owner: [business owner]
 
-🟠 **Cancel-by in 14–44 days**
+YÜKSEK **Cancel-by in 14–44 days**
 • [Counterparty] — cancel by [date] ([annual $])
 • ...
 
-🟡 **Cancel-by in 45–89 days**
+ORTA **Cancel-by in 45–89 days**
 • [N] agreements — [link to full register]
 
 **Flagged:** [any with uncapped renewal pricing or notes worth raising]

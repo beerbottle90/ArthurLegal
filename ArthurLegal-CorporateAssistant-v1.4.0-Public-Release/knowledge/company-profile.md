@@ -9,16 +9,16 @@
 
 ## Kim olduğumuz
 
-**Şirket adı:** [DOLDUR — Tam ticaret unvanı, örn. "XYZ Enerji A.Ş."]
-**Şirket türü (entity type):** [DOLDUR — A.Ş. / Ltd. Şti. / Şube / vs.]
-**Endüstri / Sektör:** [DOLDUR — örn. enerji, finans, teknoloji, üretim, perakende]
-**Grubun konumu:** [DOLDUR — Türkiye'deki konumu, grup içindeki yeri]
-**Ana ortak / Hissedar yapısı:** [DOLDUR — varsa ana ortak adı ve ülkesi]
-**Çalışan sayısı:** [DOLDUR — toplam; opsiyonel: lokasyona göre dağılım]
-**Faaliyet gösterilen ülkeler:** [DOLDUR — birincil ve ikincil yargı çevreleri]
-**Borsada işlem görüyor mu:** [DOLDUR — Evet/Hayır; evet ise BIST kodu ve halka açık iştiraklerin listesi]
+**Şirket adı:** [DOLDUR - Tam ticaret unvanı, örn. "XYZ Enerji A.Ş."]
+**Şirket türü (entity type):** [DOLDUR - A.Ş. / Ltd. Şti. / Şube / vs.]
+**Endüstri / Sektör:** [DOLDUR - örn. enerji, finans, teknoloji, üretim, perakende]
+**Grubun konumu:** [DOLDUR - Türkiye'deki konumu, grup içindeki yeri]
+**Ana ortak / Hissedar yapısı:** [DOLDUR - varsa ana ortak adı ve ülkesi]
+**Çalışan sayısı:** [DOLDUR - toplam; opsiyonel: lokasyona göre dağılım]
+**Faaliyet gösterilen ülkeler:** [DOLDUR - birincil ve ikincil yargı çevreleri]
+**Borsada işlem görüyor mu:** [DOLDUR - Evet/Hayır; evet ise BIST kodu ve halka açık iştiraklerin listesi]
 
-**Pratik ortamı (Practice setting):** [DOLDUR — In-house / Law firm / Karma]
+**Pratik ortamı (Practice setting):** [DOLDUR - In-house / Law firm / Karma]
 
 ---
 
@@ -26,8 +26,8 @@
 
 > Bu bölümü şirketinizin iş birimleri, bağlı ortaklıklar ve iştiraklerine göre doldurun.
 
-**İş Birimi 1:** [DOLDUR — ad ve kısa açıklama]
-- [DOLDUR — bağlı iştirakleri, tesisler, ürün/hizmetler]
+**İş Birimi 1:** [DOLDUR - ad ve kısa açıklama]
+- [DOLDUR - bağlı iştirakleri, tesisler, ürün/hizmetler]
 
 **İş Birimi 2:** [DOLDUR]
 - [DOLDUR]
@@ -39,20 +39,20 @@
 
 ## Birincil yargı çevresi (jurisdiction footprint)
 
-- **Birincil:** [DOLDUR — örn. Türkiye Cumhuriyeti]
-- **İkincil:** [DOLDUR — ana ortak ülkesi, AB, vs.]
+- **Birincil:** [DOLDUR - örn. Türkiye Cumhuriyeti]
+- **İkincil:** [DOLDUR - ana ortak ülkesi, AB, vs.]
 - **Tabi olunan başlıca mevzuat:**
-  - [DOLDUR — sektöre göre: TBK, TTK, İş K., KVKK, EPDK, SPK, vs.]
-  - [DOLDUR — sektöre özgü düzenleyici mevzuat]
+  - [DOLDUR - sektöre göre: TBK, TTK, İş K., KVKK, EPDK, SPK, vs.]
+  - [DOLDUR - sektöre özgü düzenleyici mevzuat]
 
 ---
 
 ## Risk duruşu (risk posture)
 
-**Genel:** [DOLDUR — örn. muhafazakâr / dengeli / büyüme odaklı]
+**Genel:** [DOLDUR - örn. muhafazakâr / dengeli / büyüme odaklı]
 
 **Kritik kırmızı çizgiler:**
-- [DOLDUR — sektöre göre: yaptırım uyumu, KAP açıklama, sektör regülatörü, vb.]
+- [DOLDUR - sektöre göre: yaptırım uyumu, KAP açıklama, sektör regülatörü, vb.]
 - [DOLDUR]
 - [DOLDUR]
 
@@ -83,10 +83,10 @@
 | **[Diğer pozisyonlar]** | [DOLDUR] | [DOLDUR] |
 
 **Onay matriksi (tutara göre kademeli):**
-- Counsel düzeyi: [DOLDUR — örn. ≤5M TL]
-- Direktör düzeyi: [DOLDUR — örn. ≤20M TL]
-- CLO / GC: [DOLDUR — örn. ≤50M TL]
-- CEO: [DOLDUR — örn. >50M TL]
+- Counsel düzeyi: [DOLDUR - örn. ≤5M TL]
+- Direktör düzeyi: [DOLDUR - örn. ≤20M TL]
+- CLO / GC: [DOLDUR - örn. ≤50M TL]
+- CEO: [DOLDUR - örn. >50M TL]
 
 ---
 
@@ -95,22 +95,22 @@
 > Bu bölüm `/<plugin>:cold-start-interview` skill'i ile her kullanıcı için ayrı ayrı doldurulur.
 > Alanlar `[DOLDUR]` olduğu sürece asistan kimin kullandığını bilemez.
 
-**Bu asistanı kullanan kişi:** [DOLDUR — ad soyad]
-**Pozisyon / Ekip:** [DOLDUR — örn. Kıdemli Hukuk Müşaviri, Ticari Hukuk]
-**Rol tipi:** [DOLDUR — Avukat (baroya kayıtlı) / Stajyer / Legal Analyst / vs.]
-**Risk duruşu:** [DOLDUR — bireysel tercih: muhafazakâr / dengeli / girişimci]
-**Doğrudan amir:** [DOLDUR — hangi Direktör / GC]
-**Öncelikli pratik alanlar:** [DOLDUR — hangi plugin'leri en çok kullanacaksınız]
+**Bu asistanı kullanan kişi:** [DOLDUR - ad soyad]
+**Pozisyon / Ekip:** [DOLDUR - örn. Kıdemli Hukuk Müşaviri, Ticari Hukuk]
+**Rol tipi:** [DOLDUR - Avukat (baroya kayıtlı) / Stajyer / Legal Analyst / vs.]
+**Risk duruşu:** [DOLDUR - bireysel tercih: muhafazakâr / dengeli / girişimci]
+**Doğrudan amir:** [DOLDUR - hangi Direktör / GC]
+**Öncelikli pratik alanlar:** [DOLDUR - hangi plugin'leri en çok kullanacaksınız]
 
 ---
 
 ## Çıktı dili ve tonu
 
-- **Birincil dil:** [DOLDUR — örn. Türkçe]
-- **İkincil dil:** [DOLDUR — örn. İngilizce (yabancı counterparty ile)]
-- **Ton:** [DOLDUR — örn. profesyonel ve doğrudan; gereksiz formaliteden uzak]
-- **Tarih formatı:** [DOLDUR — örn. GG.AA.YYYY]
-- **Para birimi:** [DOLDUR — örn. TL; uluslararası işlemler için USD/EUR]
+- **Birincil dil:** [DOLDUR - örn. Türkçe]
+- **İkincil dil:** [DOLDUR - örn. İngilizce (yabancı counterparty ile)]
+- **Ton:** [DOLDUR - örn. profesyonel ve doğrudan; gereksiz formaliteden uzak]
+- **Tarih formatı:** [DOLDUR - örn. GG.AA.YYYY]
+- **Para birimi:** [DOLDUR - örn. TL; uluslararası işlemler için USD/EUR]
 
 ---
 
@@ -136,7 +136,7 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 - **Resmi Gazete:** https://www.resmigazete.gov.tr/ (günlük 09:30)
 - **TR Legal MCP:** Birleşik yargi-mcp-pro connector — kanun/mevzuat + yargı/içtihat araçları
-- **Sektör düzenleyicileri:** [DOLDUR — şirketinize göre: EPDK, SPK, BDDK, Rekabet Kurumu, KVKK Kurulu, vs.]
+- **Sektör düzenleyicileri:** [DOLDUR - şirketinize göre: EPDK, SPK, BDDK, Rekabet Kurumu, KVKK Kurulu, vs.]
 
 ---
 
@@ -144,8 +144,8 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 > Uluslararası iş yapan şirketler için bu bölümü doldurun.
 
-- **OFAC (ABD):** [DOLDUR — evet/hayır; yüksek riskli işlemlerde kontrol politikası]
-- **AB Yaptırım Rejimi:** [DOLDUR — evet/hayır]
+- **OFAC (ABD):** [DOLDUR - evet/hayır; yüksek riskli işlemlerde kontrol politikası]
+- **AB Yaptırım Rejimi:** [DOLDUR - evet/hayır]
 - **BM Güvenlik Konseyi:** [DOLDUR]
 - **TR yaptırım rejimi (7262 sayılı K.):** [DOLDUR]
 
@@ -153,19 +153,19 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 ## Litigation profili
 
-**Litigation modeli:** [DOLDUR — dış vekil ağırlıklı / hibrit / in-house]
-**Aktif dava hacmi:** [DOLDUR — yaklaşık sayı ve ağırlıklı türler]
-**Birincil yargı yerleri:** [DOLDUR — İstanbul / Ankara / yerel mahkemeler / tahkim]
-**Dış vekil paneli:** [DOLDUR — pratik alanlara göre tercih edilen büro/lar]
-**Case management yazılımı:** [DOLDUR — varsa]
+**Litigation modeli:** [DOLDUR - dış vekil ağırlıklı / hibrit / in-house]
+**Aktif dava hacmi:** [DOLDUR - yaklaşık sayı ve ağırlıklı türler]
+**Birincil yargı yerleri:** [DOLDUR - İstanbul / Ankara / yerel mahkemeler / tahkim]
+**Dış vekil paneli:** [DOLDUR - pratik alanlara göre tercih edilen büro/lar]
+**Case management yazılımı:** [DOLDUR - varsa]
 
 ---
 
 ## Tax profili
 
-**Tax pratik modeli:** [DOLDUR — Mali İşler ana / Hukuk-Mali İşler hibrit]
-**Birincil yakıcı vergi alanları:** [DOLDUR — KDV, ÖTV, kurumlar vergisi, TP, vb.]
-**Dış vergi danışmanı:** [DOLDUR — varsa]
+**Tax pratik modeli:** [DOLDUR - Mali İşler ana / Hukuk-Mali İşler hibrit]
+**Birincil yakıcı vergi alanları:** [DOLDUR - KDV, ÖTV, kurumlar vergisi, TP, vb.]
+**Dış vergi danışmanı:** [DOLDUR - varsa]
 
 ---
 

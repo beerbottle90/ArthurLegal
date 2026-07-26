@@ -31,33 +31,33 @@
 ### 1. **Doğrudan eşzamanlı çatışma** (m. 38/c)
 
 **Senaryo:** Aynı dava/sözleşmede iki tarafı temsil
-**Karar:** ⛔ **MUTLAK YASAK** — istisnası yok
+**Karar:** DURDUR **MUTLAK YASAK** — istisnası yok
 **Örnekler:**
-- A şirketi alıcı, B şirketi satıcı, ikisi de bizim müvekkilimiz → ⛔
-- A boşanma davası açıyor, eşi B → ⛔
-- A işveren, B işçi → ⛔
+- A şirketi alıcı, B şirketi satıcı, ikisi de bizim müvekkilimiz → DURDUR
+- A boşanma davası açıyor, eşi B → DURDUR
+- A işveren, B işçi → DURDUR
 - Bir miras davasında 2 mirasçı çatışıyor → en fazla **birini** temsil edebiliriz
 
 ### 2. **Eski müvekkille çatışma** (m. 35-36)
 
 **Senaryo:** Eski matter'da öğrendiğimiz bilgi yeni matter'da kullanılabilir
-**Karar:** 🟠 İnceleme — eski müvekkilin **yazılı rızası** veya **bilgi alakası yokluğu** kanıtlanırsa devam
+**Karar:** YÜKSEK İnceleme — eski müvekkilin **yazılı rızası** veya **bilgi alakası yokluğu** kanıtlanırsa devam
 **Örnekler:**
-- 3 yıl önce X şirketine sözleşme yazdık, şimdi rakibi Y şirketi X'e karşı dava açmak istiyor → eski sözleşmeyi biliyorsak, çatışma var → 🟠
+- 3 yıl önce X şirketine sözleşme yazdık, şimdi rakibi Y şirketi X'e karşı dava açmak istiyor → eski sözleşmeyi biliyorsak, çatışma var → YÜKSEK
 - 5 yıl önce A bireyi için boşanma davası açtık, şimdi A'nın eski eşi B bizimle başka bir matter için iletişime geçti → A'nın boşanma bilgisi B'nin yeni matter'ında alakasız → ✓
 - A'ya 10 yıl önce sözleşme yazdık, A'nın aleyhine yeni bir dava → eski sözleşme alakasız mı? **Dikkatli incele**
 
 ### 3. **Grup içi çatışma** (m. 38/a — "aynı iş")
 
 **Senaryo:** Müvekkilin grubuna bağlı bir başka şirket bizimle başka bir matter'da
-**Karar:** 🟠 İnceleme — grup yapısı bağlılığı, bilgi paylaşımı sınırı
+**Karar:** YÜKSEK İnceleme — grup yapısı bağlılığı, bilgi paylaşımı sınırı
 **Örnekler:**
 - Holding A'nın bağlı şirketi A1'e sözleşme yazdık. Şimdi başka bir holding A2'ye karşı dava açmak istiyor → A1'i de etkiliyor mu? Bilgi izolasyonu mümkün mü?
 
 ### 4. **Vekil değişimi (avukat geliş-gidişi) ile gelen çatışma**
 
 **Senaryo:** Yeni gelen ortağın/avukatın eski büroda gördüğü işler
-**Karar:** 🟠 — Yeni avukat **bilgi taşıyıcısı** sıfatıyla çatışma yaratır
+**Karar:** YÜKSEK — Yeni avukat **bilgi taşıyıcısı** sıfatıyla çatışma yaratır
 **Çözüm:**
 - **Ethical wall (çin duvarı)** kur — yeni avukat çatışan matter'lara erişmez
 - Yazılı taahhüt + matter erişim sistemi engeli
@@ -66,12 +66,12 @@
 ### 5. **Kamu görevliyken görülen iş** (m. 38/b)
 
 **Senaryo:** Eski hakim/savcı/müfettiş avukat olmuş, eskiden baktığı dosya tekrar gündeme geldi
-**Karar:** ⛔ **MUTLAK YASAK** — sadece o avukat değil, **büro bütün olarak** yasaklı (TBB içtihadı tartışmalı)
+**Karar:** DURDUR **MUTLAK YASAK** — sadece o avukat değil, **büro bütün olarak** yasaklı (TBB içtihadı tartışmalı)
 
 ### 6. **Müvekkil ile çatışma** (avukatın kendi menfaati)
 
 **Senaryo:** Avukat kendi şirketinin sözleşmesini yazıyor, müvekkilin alıcısıyız
-**Karar:** ⛔ **YASAK** — kendi-çıkar çatışması
+**Karar:** DURDUR **YASAK** — kendi-çıkar çatışması
 
 ---
 
@@ -98,11 +98,11 @@
     - Atanan avukatın kişisel çıkar çatışması
     ↓
 [4] Sonuç sınıflandırma
-    ⛔ Mutlak yasak → RET
-    🟠 Şüpheli → Ortaklar Kurulu inceleme
+    DURDUR Mutlak yasak → RET
+    YÜKSEK Şüpheli → Ortaklar Kurulu inceleme
     ✓ Temiz → devam
     ↓
-[5] (🟠 ise) Çözüm yolu
+[5] (YÜKSEK ise) Çözüm yolu
     a. Eski müvekkilden yazılı rıza al (mümkünse)
     b. Ethical wall kur (büyük büroda)
     c. Reddet
@@ -134,7 +134,7 @@
 
 ## Yazılı rıza pratiği (eski müvekkil)
 
-🟠 şüpheli durumda eski müvekkilden rıza talebi:
+YÜKSEK şüpheli durumda eski müvekkilden rıza talebi:
 
 ```
 Sayın [Eski müvekkil],
@@ -147,8 +147,8 @@ Avukatlık K. m. 38 ve TBB Meslek Kuralları m. 36 gereği, eski müvekkilimizin
 bilgilendirilmesi ve **yazılı rızasının alınması** gerektiğini düşünmekteyiz.
 
 Yeni matter:
-- Konu: [tarafsız tanım — sır ihlal etmeden]
-- Karşı taraf: [genel — "rakip / ilişkili tarafsız üçüncü taraf"]
+- Konu: [tarafsız tanım - sır ihlal etmeden]
+- Karşı taraf: [genel - "rakip / ilişkili tarafsız üçüncü taraf"]
 
 Sizin önceki matter'ınız ile yeni matter'ın bilgi paylaşımı:
 - Eski matter'da öğrendiğimiz [bilgi tipi] yeni matter'ı etkileyebilir / etkilemez
@@ -166,7 +166,7 @@ Tarih: GG.AA.YYYY    İmza:
 
 ## Ethical wall (çin duvarı)
 
-Büyük büroda 🟠 şüpheli durumda:
+Büyük büroda YÜKSEK şüpheli durumda:
 
 1. **Yazılı taahhüt** — çatışan iki matter'ın avukatları/personeli farklı, iletişim yasak
 2. **Erişim sistemi engeli** — iManage/SharePoint izin matrisi, matter çapraz açılmaz
@@ -202,11 +202,11 @@ Conflict check yazılımı şu alanları tutar:
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. 38 — GG.AA.YYYY]`
-- `[TBB Meslek Kuralları m. 35-36 — TBB baskı]`
-- `[Conflict check sistemi — tarama tarihi — N matter karşılaştırıldı]`
-- `[MERSİS — şirket no — ortaklık yapısı tarihi]`
-- `[Eski müvekkil yazılı rıza — GG.AA.YYYY]`
+- `[Mevzuat MCP - Av. K. m. 38 - GG.AA.YYYY]`
+- `[TBB Meslek Kuralları m. 35-36 - TBB baskı]`
+- `[Conflict check sistemi - tarama tarihi - N matter karşılaştırıldı]`
+- `[MERSİS - şirket no - ortaklık yapısı tarihi]`
+- `[Eski müvekkil yazılı rıza - GG.AA.YYYY]`
 
 ---
 

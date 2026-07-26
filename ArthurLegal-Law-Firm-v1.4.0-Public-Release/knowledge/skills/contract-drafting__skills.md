@@ -72,9 +72,9 @@ user-invocable: true
 
 ## ADIM 2 — Yeni belgeyi üret
 
-- Yapıyı koru; değişken alanları yeni parametrelerle doldur; bilinmeyenleri **`[DOLDUR — ...]`** bırak.
+- Yapıyı koru; değişken alanları yeni parametrelerle doldur; bilinmeyenleri **`[DOLDUR - ...]`** bırak.
 - **Standart klozları** ekle/teyit et (mücbir sebep TBK m.136/138, sınırlı sorumluluk, yaptırım/uyum, KVKK, EPDK lisans/devir, uyuşmazlık, damga vergisi).
-- **Emredici hüküm kontrolü:** şablondaki bir kloz emredici kurala aykırıysa düzelt + flag (`[Mevzuat MCP — GG.AA.YYYY]`). (Örn. tüketici/iş sözleşmesinde aleyhe kloz, fahiş cezai şart TBK m.182.)
+- **Emredici hüküm kontrolü:** şablondaki bir kloz emredici kurala aykırıysa düzelt + flag (`[Mevzuat MCP - GG.AA.YYYY]`). (Örn. tüketici/iş sözleşmesinde aleyhe kloz, fahiş cezai şart TBK m.182.)
 - Şablon eski tarihliyse: **mevzuat değişikliği** kontrolü (atıflar güncel mi?).
 
 ## ADIM 3 — Değişiklik notu
@@ -92,12 +92,12 @@ Ana Sözleşme: GG.AA.YYYY tarihli [sözleşme adı] ("Ana Sözleşme")
 1. KONU: İşbu Protokol, Ana Sözleşme'nin [süre maddesi no] maddesinde düzenlenen
    süreyi uzatmak amacıyla akdedilmiştir.
 2. SÜRE UZATIMI: Ana Sözleşme'nin süresi [yeni bitiş tarihi]'ne kadar uzatılmıştır.
-   [Gerekçe: mücbir sebep / iş artışı / mutabakat — TBK m.136 atfı varsa]
+   [Gerekçe: mücbir sebep / iş artışı / mutabakat - TBK m.136 atfı varsa]
 3. BEDEL/ŞARTLAR: [değişen bedel veya "bedel/şartlar aynen geçerlidir"]
 4. SAKLILIK: Ana Sözleşme'nin işbu Protokol'le değiştirilmeyen tüm hükümleri
    aynen yürürlüktedir.
 5. YÜRÜRLÜK: İşbu Protokol imza tarihinde yürürlüğe girer; Ana Sözleşme'nin ayrılmaz
-   ekidir. Damga vergisi: [DOLDUR — DVK kontrolü].
+   ekidir. Damga vergisi: [DOLDUR - DVK kontrolü].
 Tarih / İmzalar: [Müvekkil / Şirket] (yetkili: [imza yetkilisi]) — [Karşı Taraf]
 ```
 
@@ -107,7 +107,7 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 
 # Türetilen Belge — [tip] — [taraflar]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Şablon:** [kaynak emsal] · **Tip:** [...]
 - **Doldurulan / [DOLDUR] kalan:** N / N
 - **Eklenen standart klozlar:** [liste]
@@ -205,7 +205,7 @@ user-invocable: true
 ## ADIM 1 — Bulguları topla / üret
 
 Inceleme bulgusu varsa al; yoksa playbook'a göre çıkar (sözleşme tipini tespit et → `references/` + `commercial-legal` profili + `company-profile.md` standart pozisyonları). Her bulgu için:
-- **Sorun** (kloz + neden) · **Severity** (🔴🟠🟡🟢) · **Önerilen redline** (somut metin) · **Fallback** ("tercih X; kabul edilmezse asgari Y") · **Hukuki dayanak** (`[Mevzuat MCP]` emredici hüküm / `[Yargı MCP]` kloz geçerliliği).
+- **Sorun** (kloz + neden) · **Severity** (BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK) · **Önerilen redline** (somut metin) · **Fallback** ("tercih X; kabul edilmezse asgari Y") · **Hukuki dayanak** (`[Mevzuat MCP]` emredici hüküm / `[Yargı MCP]` kloz geçerliliği).
 
 **Standart kontrol listesi (enerji sözleşmesi):**
 - Mücbir sebep + aşırı ifa güçlüğü (TBK m.136/138) — şebeke kısıtı, mevzuat değişikliği, kuraklık (HES)
@@ -225,7 +225,7 @@ Inceleme bulgusu varsa al; yoksa playbook'a göre çıkar (sözleşme tipini tes
 Taraflar, ~~savaş, grev ve doğal afet~~ **mücbir sebep hâllerinde (TBK m.136 anlamında, şebeke
 operatörü kaynaklı kesinti ve mevzuat değişikliği dâhil)** edimlerini ~~7 gün~~ **30 gün** içinde
 yerine getiremezse...
-> 💬 [Av. — 🟠] Mücbir sebep tanımı dar; şirket için şebeke/regülasyon riskini kapsamalı.
+> 💬 [Av. - YÜKSEK] Mücbir sebep tanımı dar; şirket için şebeke/regülasyon riskini kapsamalı.
 >     Tercih: TBK m.136 atfı + açık liste. Kabul edilmezse asgari: "şebeke kesintisi" eklensin.
 ```
 
@@ -233,7 +233,7 @@ yerine getiremezse...
 ```markdown
 | # | Madde | Değişiklik | Gerekçe | Severity |
 |---|---|---|---|---|
-| 1 | 12.3 Mücbir sebep | tanım genişletildi + 30 gün | şebeke/regülasyon riski | 🟠 |
+| 1 | 12.3 Mücbir sebep | tanım genişletildi + 30 gün | şebeke/regülasyon riski | YÜKSEK |
 ```
 
 **Form (c) — Yapılandırılmış tablo:** `madde | mevcut | önerilen | gerekçe | severity` (uygulamayı kullanıcı yapar).
@@ -247,10 +247,10 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 
 # Redline — [sözleşme adı] — [karşı taraf]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Belge / okuma kapsamı:** [tip, N sayfa okundu]
 - **Kağıt:** bizim / karşı taraf · **Form:** (a)/(b)/(c) · **Ortam:** Projects/Code
-- **Değişiklik sayısı:** 🔴 N · 🟠 N · 🟡 N · 🟢 N
+- **Değişiklik sayısı:** BLOKLAYICI N · YÜKSEK N · ORTA N · DÜŞÜK N
 - **Kaynaklar:** Mevzuat MCP [✓/✗]; Yargı MCP [✓/✗]
 - **Onay:** Baş Hukuk Müşaviri + dış vekil şart
 
@@ -320,7 +320,7 @@ MADDE 3 — SAKLILIK
 
 MADDE 4 — YÜRÜRLÜK VE DAMGA
   Bu belge imza tarihinde yürürlüğe girer; Ana Sözleşme'nin ayrılmaz ekidir.
-  Damga vergisi [DOLDUR — DVK]. [Gerekiyorsa: EPDK/Kurul onayı şartı.]
+  Damga vergisi [DOLDUR - DVK]. [Gerekiyorsa: EPDK/Kurul onayı şartı.]
 
 TARİH / İMZALAR: [Müvekkil / Şirket] ([imza yetkilisi]) — [Karşı Taraf]
 ```
@@ -331,10 +331,10 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 
 # [Tadil / Ek Protokol] — [ana sözleşme] — No: [N]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Ana sözleşme:** [ad, tarih] · **Tadil tipi:** [...]
 - **Değişen madde sayısı:** N
-- **Onay/şart tetikleyici:** [EPDK ön-onay / SHA reserved matter / finansör covenant / damga — varsa]
+- **Onay/şart tetikleyici:** [EPDK ön-onay / SHA reserved matter / finansör covenant / damga - varsa]
 - **Onay:** Baş Hukuk Müşaviri (+ Genel Müdür yüksek tutarda) şart
 
 [taslak]
@@ -376,12 +376,12 @@ user-invocable: true
 - Maddeleri başlık/numara ile eşle (numaralandırma kaymışsa içerikle eşle).
 - Her madde için: **değişmedi / değişti / eklendi / silindi / taşındı**.
 - Metin düzeyinde fark: ~~silinen~~ / **eklenen**.
-- ⚠️ **Sessiz değişiklik avı:** tanım değişikliği, "shall→may", süre/eşik/tutar oynaması, istisna ekleme, sorumluluk tavanı, fesih kolaylaştırma, yetki/hukuk değişimi — küçük ama kritik.
+- **Sessiz değişiklik avı:** tanım değişikliği, "shall→may", süre/eşik/tutar oynaması, istisna ekleme, sorumluluk tavanı, fesih kolaylaştırma, yetki/hukuk değişimi — küçük ama kritik.
 
 ## ADIM 2 — Etki & risk
 
 Her değişiklik için:
-- **Ne değişti** (kısa) · **Lehimize / aleyhimize / nötr** · **Severity** (🔴🟠🟡🟢) · **Etki** (hukuki/ticari sonuç) · **Aksiyon** (kabul / karşı-revize / müzakere).
+- **Ne değişti** (kısa) · **Lehimize / aleyhimize / nötr** · **Severity** (BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK) · **Etki** (hukuki/ticari sonuç) · **Aksiyon** (kabul / karşı-revize / müzakere).
 - Emredici hüküm etkisi varsa `[Mevzuat MCP]`.
 
 ## ADIM 3 — Çıktı
@@ -391,10 +391,10 @@ TASLAK – HUKUK MÜŞAVİRLİĞİ DAHİLİ
 
 # Versiyon Karşılaştırma — [sözleşme] — v[X] ↔ v[Y]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Versiyonlar / okuma kapsamı:** [v1 tarih, v2 tarih, N sayfa]
 - **Toplam değişiklik:** N (lehimize K · aleyhimize L · nötr M)
-- **Kritik (🔴/🟠):** N adet
+- **Kritik (BLOKLAYICI/YÜKSEK):** N adet
 - **Onay:** Baş Hukuk Müşaviri (önemli değişiklik varsa)
 
 ## Özet — karşı taraf bu turda ne yaptı?
@@ -403,10 +403,10 @@ TASLAK – HUKUK MÜŞAVİRLİĞİ DAHİLİ
 ## Madde-madde diff
 | # | Madde | Değişiklik (~~sil~~/**ekle**) | Yön | Severity | Etki | Aksiyon |
 |---|---|---|---|---|---|---|
-| 1 | 8.2 Sorumluluk tavanı | ~~%100~~ **%50 sözleşme bedeli** | aleyhe | 🔴 | tazminat hakkı yarıya iner | karşı-revize |
+| 1 | 8.2 Sorumluluk tavanı | ~~%100~~ **%50 sözleşme bedeli** | aleyhe | BLOKLAYICI | tazminat hakkı yarıya iner | karşı-revize |
 
 ## Dikkat — sessiz/kritik değişiklikler
-[🔴/🟠 maddelerin vurgusu]
+[BLOKLAYICI/YÜKSEK maddelerin vurgusu]
 
 ## Sonraki adımlar
 > 1. **Karşı-revize üret** — `/contract-drafting:redline-contract` (aleyhe maddelere)

@@ -15,14 +15,14 @@ alanları `/firm-operations:cold-start-interview` ile doldurulabilir.*
 
 `firm-profile.md` oku. Bu eklentiye özel:
 
-**Kurulu MCP sunucuları:** `[DOLDUR — hangileri connector olarak eklendi?]`
-**e-qanun host:** `[DOLDUR — https://<HOST>/mcp veya "kurulu değil"]`
+**Kurulu MCP sunucuları:** `[DOLDUR - hangileri connector olarak eklendi?]`
+**e-qanun host:** `[DOLDUR - https://<HOST>/mcp veya "kurulu değil"]`
 **LexScholar host:** `[DOLDUR]`
 **ResourceContracts host:** `[DOLDUR]`
-**OpenAlex API key (opsiyonel, ücretsiz):** `[DOLDUR — yoksa bütçe ~100 arama/gün]`
+**OpenAlex API key (opsiyonel, ücretsiz):** `[DOLDUR - yoksa bütçe ~100 arama/gün]`
 
-**Araştırma sorumlusu:** `[DOLDUR — örn. kıdemli avukat / stajyer koordinatörü]`
-**Araştırma notu saklama yeri:** `[DOLDUR — örn. dosya klasörü / DMS]`
+**Araştırma sorumlusu:** `[DOLDUR - örn. kıdemli avukat / stajyer koordinatörü]`
+**Araştırma notu saklama yeri:** `[DOLDUR - örn. dosya klasörü / DMS]`
 
 > Üç MCP de **isteğe bağlıdır.** Kurulu değilse paket çalışmaya devam eder:
 > AZ mevzuatı WebFetch yoluna düşer (**statü doğrulanmaz**), doktrin ve sözleşme
@@ -135,7 +135,7 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
 | `null` hakemliliği "hakemli" diye yükseltmek | Bilinmiyor demektir — öyle yaz |
 | Emsal klozu "hukuk böyle" diye sunmak | Bir tarafın müzakere sonucudur |
 | Boş dönen aramayı "literatür yok" diye raporlamak | "Bu terimle/dilde bulunamadı" demektir |
-| Çekilmemiş kaynağa atıf etiketi koymak | `[model bilgisi — doğrulayın]` kullan |
+| Çekilmemiş kaynağa atıf etiketi koymak | `[model bilgisi - doğrulayın]` kullan |
 | Doktrini dilekçede tek gerekçe yapmak | Birincil kaynakla birlikte kullanılır |
 | Müvekkil adını arama sorgusuna koymak | Av. K. m. 36 ihlali riski |
 
@@ -148,7 +148,7 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
   UYAP manuel doğrulama) öner.
 - **Yaptırım eşleşmesi** görülürse → dur, `firm-operations:conflict-check` ve
   `references/opensanctions-rehberi.md` akışına geç.
-- Bir MCP sürekli erişilemiyorsa → `[DOLDUR — teknik sorumlu]`'ya bildir; o arada
+- Bir MCP sürekli erişilemiyorsa → `[DOLDUR - teknik sorumlu]`'ya bildir; o arada
   yedek yolu kullan ve kapsam notu ekle.
 
 ---

@@ -172,7 +172,7 @@ KEP'in **kimliğin doğrulanmış** olması delil bağlayıcılığını sağlar
 
 ## KEP fatura + ücret
 
-- KEP hizmet ücreti: yıllık ~`[DOLDUR — örn. 200-500 TL/yıl]` (bireysel)
+- KEP hizmet ücreti: yıllık ~`[DOLDUR - örn. 200-500 TL/yıl]` (bireysel)
 - Büro KEP'i: aylık paket (örn. 1.000 mesaj/ay) veya pay-per-mesaj
 - Yıllık KEP yenileme (kimlik tespit yenilenir) — atlanmaması için takvim
 
@@ -210,9 +210,9 @@ Saygılarımla,
 
 ## Atıf disiplini
 
-- `[KEP gönderim no — tarih GG.AA.YYYY HH:MM]`
-- `[e-Tebligat — UYAP — tebligat no — tarih]`
-- `[Mevzuat MCP — 5070 sayılı K. / TBK m. 117 / 7201 m. 7/A — GG.AA.YYYY]`
+- `[KEP gönderim no - tarih GG.AA.YYYY HH:MM]`
+- `[e-Tebligat - UYAP - tebligat no - tarih]`
+- `[Mevzuat MCP - 5070 sayılı K. / TBK m. 117 / 7201 m. 7/A - GG.AA.YYYY]`
 
 ---
 

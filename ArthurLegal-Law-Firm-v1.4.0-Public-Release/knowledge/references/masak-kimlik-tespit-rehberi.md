@@ -98,20 +98,20 @@ Tüzel kişinin **%25 ve üzeri pay sahibi** veya **kontrol sahibi** gerçek ki�
 ```
 [Şüpheli sinyal tespit]
     ↓
-[Büro MASAK Görevlisi'ne bildirim — dahili]
+[Büro MASAK Görevlisi'ne bildirim - dahili]
     ↓
 [MASAK Görevlisi değerlendirme + Yönetici Ortak danışma]
     ↓
 [Bildirim kararı]
     ↓
-[MASAK Bildirim Formu — online portal üzerinden]
+[MASAK Bildirim Formu - online portal üzerinden]
     https://uyaris.masak.gov.tr/
     ↓
-[Bildirim — 10 iş günü içinde]
+[Bildirim - 10 iş günü içinde]
     ↓
-[Müvekkili bilgilendirme YASAK — "tipping-off" suçu (TCK 282/4)]
+[Müvekkili bilgilendirme YASAK - "tipping-off" suçu (TCK 282/4)]
     ↓
-[Müvekkille çalışmaya devam edebilir veya çekilebilir — durum bazlı]
+[Müvekkille çalışmaya devam edebilir veya çekilebilir - durum bazlı]
 ```
 
 ⚠️ **Tipping-off:** Müvekkili "seni MASAK'a bildirdim" demek **suç** (TCK 282/4). Bildirim **gizli** kalır.
@@ -196,11 +196,11 @@ Tebliğ 5 m. 6:
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — 5549 sayılı K. — GG.AA.YYYY]`
-- `[MASAK Tebliğ Sıra No. 5 — RG 09.04.2008]`
-- `[MASAK Genel Tebliğ — yıl — RG sayı/tarih]`
-- `[MERSİS — şirket no — UBO sorgu — GG.AA.YYYY]`
-- `[OpenSanctions API — match no — GG.AA.YYYY]` (eşzamanlı taramada)
+- `[Mevzuat MCP - 5549 sayılı K. - GG.AA.YYYY]`
+- `[MASAK Tebliğ Sıra No. 5 - RG 09.04.2008]`
+- `[MASAK Genel Tebliğ - yıl - RG sayı/tarih]`
+- `[MERSİS - şirket no - UBO sorgu - GG.AA.YYYY]`
+- `[OpenSanctions API - match no - GG.AA.YYYY]` (eşzamanlı taramada)
 
 ---
 

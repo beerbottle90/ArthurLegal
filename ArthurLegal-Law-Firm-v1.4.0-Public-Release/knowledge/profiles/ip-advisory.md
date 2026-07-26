@@ -9,11 +9,11 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** Fikri sınai haklar — **marka + patent + tasarım + telif + alan adı**
-**Aktif tescil portföyü:** `[DOLDUR — örn. müvekkillerimiz adına aktif 50-150 marka tescili]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. taklit ürün (UDRP + ihtarname) yoğunluğu + YİDK itirazlarında uzun süre + Madrid Protokolü tercüme maliyetleri]`
+**Aktif tescil portföyü:** `[DOLDUR - örn. müvekkillerimiz adına aktif 50-150 marka tescili]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. taklit ürün (UDRP + ihtarname) yoğunluğu + YİDK itirazlarında uzun süre + Madrid Protokolü tercüme maliyetleri]`
 
-**Sorumlu ortak:** `[DOLDUR — örn. Kıdemli Ortak C — IP uzmanlığı + marka vekili lisansı]`
-**Marka vekili lisansı:** `[DOLDUR — büromuzun marka vekili olarak yetkili avukatlar / dış marka vekili firma adı]`
+**Sorumlu ortak:** `[DOLDUR - örn. Kıdemli Ortak C - IP uzmanlığı + marka vekili lisansı]`
+**Marka vekili lisansı:** `[DOLDUR - büromuzun marka vekili olarak yetkili avukatlar / dış marka vekili firma adı]`
 
 ---
 
@@ -50,17 +50,17 @@
 
 | İşlem | Standart ücret |
 |---|---|
-| Marka clearance + ön araştırma | `[DOLDUR — örn. 5.000-10.000 TL]` |
-| Marka tescil başvurusu (TR) | `[DOLDUR — örn. 8.000-15.000 TL + TÜRKPATENT harcı]` |
-| Madrid Protokolü başvuru | `[DOLDUR — örn. 25.000-50.000 TL + WIPO harcı]` |
-| YİDK itiraz / cevap | `[DOLDUR — örn. 10.000-20.000 TL]` |
-| Marka yenileme | `[DOLDUR — örn. 5.000-8.000 TL]` |
-| Patent başvuru — incelemeli | `[DOLDUR — saatlik + harç]` |
-| Tasarım tescil | `[DOLDUR — örn. 5.000-10.000 TL/tasarım]` |
-| İhtarname | `[DOLDUR — örn. AAÜT × 1-2]` |
-| Marka ihlali davası | `[DOLDUR — saatlik veya AAÜT × katsayı + başarı bonusu]` |
-| UDRP domain takedown | `[DOLDUR — örn. 8.000-15.000 TL + WIPO/ICANN harcı]` |
-| 5651 sayılı K. takedown (içerik kaldırma) | `[DOLDUR — örn. 3.000-5.000 TL + hosting ihtarname]` |
+| Marka clearance + ön araştırma | `[DOLDUR - örn. 5.000-10.000 TL]` |
+| Marka tescil başvurusu (TR) | `[DOLDUR - örn. 8.000-15.000 TL + TÜRKPATENT harcı]` |
+| Madrid Protokolü başvuru | `[DOLDUR - örn. 25.000-50.000 TL + WIPO harcı]` |
+| YİDK itiraz / cevap | `[DOLDUR - örn. 10.000-20.000 TL]` |
+| Marka yenileme | `[DOLDUR - örn. 5.000-8.000 TL]` |
+| Patent başvuru — incelemeli | `[DOLDUR - saatlik + harç]` |
+| Tasarım tescil | `[DOLDUR - örn. 5.000-10.000 TL/tasarım]` |
+| İhtarname | `[DOLDUR - örn. AAÜT × 1-2]` |
+| Marka ihlali davası | `[DOLDUR - saatlik veya AAÜT × katsayı + başarı bonusu]` |
+| UDRP domain takedown | `[DOLDUR - örn. 8.000-15.000 TL + WIPO/ICANN harcı]` |
+| 5651 sayılı K. takedown (içerik kaldırma) | `[DOLDUR - örn. 3.000-5.000 TL + hosting ihtarname]` |
 
 ---
 
@@ -138,8 +138,8 @@ SAYIN MÜVEKKİL – AVUKATLIK K. m. 36 – DAHİLİ
 [Büro] – Matter: [matter-slug]
 Aranan marka: "[marka adı]" – Sınıf(lar): [Nice X, Y]
 Müvekkil: [rumuz]
-Sonuç: ✓ TEMİZ / ⚠️ ŞÜPHELİ / ⛔ ÇAKIŞMA RİSKİ
-[N benzer marka bulundu — risk analizi ektedir]
+Sonuç: ✓ TEMİZ / ŞÜPHELİ / DURDUR ÇAKIŞMA RİSKİ
+[N benzer marka bulundu - risk analizi ektedir]
 ```
 
 **TÜRKPATENT başvuru paketi:** Başvuru formu + güç belgesi (vekaletname) + sınıf listesi + ücret hesabı.
@@ -150,12 +150,12 @@ Sonuç: ✓ TEMİZ / ⚠️ ŞÜPHELİ / ⛔ ÇAKIŞMA RİSKİ
 
 ### Atıf disiplini
 
-- `[Mevzuat MCP — 6769 SMK m. X — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay 11. HD — GG.AA.YYYY]`
-- `[TÜRKPATENT — başvuru/tescil no — GG.AA.YYYY]`
-- `[WIPO Madrid — IR no — GG.AA.YYYY]`
-- `[EUIPO — EUTM no — GG.AA.YYYY]`
-- `[Nice Sınıflandırma — 12. baskı (2025)]` (yıllık günceller)
+- `[Mevzuat MCP - 6769 SMK m. X - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay 11. HD - GG.AA.YYYY]`
+- `[TÜRKPATENT - başvuru/tescil no - GG.AA.YYYY]`
+- `[WIPO Madrid - IR no - GG.AA.YYYY]`
+- `[EUIPO - EUTM no - GG.AA.YYYY]`
+- `[Nice Sınıflandırma - 12. baskı (2025)]` (yıllık günceller)
 
 ---
 

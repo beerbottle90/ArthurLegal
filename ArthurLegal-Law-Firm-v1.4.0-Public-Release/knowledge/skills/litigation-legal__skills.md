@@ -64,7 +64,7 @@ Practice-level CLAUDE.md `## Matter workspaces` bölümünü kontrol et. Litigat
 ## Destination check
 
 Çıktının nereye gideceğini sor. Tipik destinasyonlar:
-- **Dış vekil brief'i** → `[Dış vekil — büro adı]` etiketli, AVUKATLIK K. m. 36 üst başlığı
+- **Dış vekil brief'i** → `[Dış vekil - büro adı]` etiketli, AVUKATLIK K. m. 36 üst başlığı
 - **Hukuk Direktörü onayı** → "GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU" üst başlığı
 - **İş birimi / yönetim bilgilendirme** → Quiet mode, hukuki jargon sadeleştir
 - **Mahkemeye sunulacak dilekçe taslağı** → `/litigation-legal:hearing-prep` skill'i daha uygun
@@ -72,10 +72,10 @@ Practice-level CLAUDE.md `## Matter workspaces` bölümünü kontrol et. Litigat
 ## Amaç
 
 Yeni gelen bir dava materyalini **30 dakikalık ön-okumada** kategorize et:
-- **🔴 Acil dış vekil + üst yönetim eskalasyon** — yaptırım, halka açık, üst yönetim sanık, basın
-- **🟠 Standart dış vekil briefing** — normal dava akışı
-- **🟡 Cevap stratejisi tartışılmalı** — ihtarnameye cevap veya açma kararı henüz net değil
-- **🟢 Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borçlar için iflas erteleme
+- **BLOKLAYICI Acil dış vekil + üst yönetim eskalasyon** — yaptırım, halka açık, üst yönetim sanık, basın
+- **YÜKSEK Standart dış vekil briefing** — normal dava akışı
+- **ORTA Cevap stratejisi tartışılmalı** — ihtarnameye cevap veya açma kararı henüz net değil
+- **DÜŞÜK Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borçlar için iflas erteleme
 
 ## Adımlar
 
@@ -106,7 +106,7 @@ HMK ile teyit:
 - Sulh Hukuk — kira, paylı mülkiyet
 - Tüketici Hakem Heyeti — TKHK eşik altı
 
-Mevzuat MCP'den HMK ve görevli mahkeme yönetmeliklerini çek, atıf et: `[Mevzuat MCP — GG.AA.YYYY]`.
+Mevzuat MCP'den HMK ve görevli mahkeme yönetmeliklerini çek, atıf et: `[Mevzuat MCP - GG.AA.YYYY]`.
 
 ### 3. Husumet (taraf sıfatı)
 
@@ -132,7 +132,7 @@ Yanlış husumet → davanın reddi (taraf değişikliği, ek dava açma, zamana
 | Marka ihlali (SMK) | 5 yıl (öğrenme) / 10 yıl (eylem) | 6769 SMK |
 | KVKK ihlal (m. 14/2) | 10 yıl idari para | KVKK 6698 |
 
-⚠️ **Mevzuat MCP'den ilgili maddeyi çek ve atıfta bulun**. Zamanaşımı kullanıcı tarafından söylenmişse **önce doğrula** (no silent supplement).
+**Mevzuat MCP'den ilgili maddeyi çek ve atıfta bulun**. Zamanaşımı kullanıcı tarafından söylenmişse **önce doğrula** (no silent supplement).
 
 ### 5. Ön delil envanteri
 
@@ -154,7 +154,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 )
 ```
 
-Karşı tarafa olumlu mu, bize olumlu mu eğilim? Bir kaç emsal göster, atıfla: `[Yarg MCP — yargitay — GG.AA.YYYY]`.
+Karşı tarafa olumlu mu, bize olumlu mu eğilim? Bir kaç emsal göster, atıfla: `[Yarg MCP - yargitay - GG.AA.YYYY]`.
 
 ### 6.5. TTK m. 5/A Zorunlu Arabuluculuk Kontrolü (ticari uyuşmazlıklar)
 
@@ -176,7 +176,7 @@ Karşı tarafa olumlu mu, bize olumlu mu eğilim? Bir kaç emsal göster, atıfl
 - Paralel olarak ihtiyati tedbir gerekiyorsa (HMK m. 389 vd.) tedbir tek başına dava açılabilir, ana dava arabuluculuk sonrası
 - Sulh teklifi açılış stratejisi `/litigation-legal:settlement-eval` skill ile birlikte düşünülmeli
 
-⚠️ Yanlışlıkla atlanırsa **dava şartı yokluğu nedeniyle dava reddi** — ek 6 hafta + ek vekalet ücreti maliyeti.
+Yanlışlıkla atlanırsa **dava şartı yokluğu nedeniyle dava reddi** — ek 6 hafta + ek vekalet ücreti maliyeti.
 
 ### 7. sektöre-özel kontroller
 
@@ -195,7 +195,7 @@ Bu listeden geçir, gereken eskalasyonu tetikle:
 
 Yukarıdaki tüm bilgileri sentezle ve **şiddet ataması yap:**
 
-🔴 / 🟠 / 🟡 / 🟢
+BLOKLAYICI / YÜKSEK / ORTA / DÜŞÜK
 
 Eskalasyon önerisi:
 - Counsel seviyesinde mi karar verilir?
@@ -207,14 +207,14 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 ## Çıktı şablonu
 
 ```markdown
-[ÜST BAŞLIK — practice profile ## Outputs'tan]
+[ÜST BAŞLIK - practice profile ## Outputs'tan]
 
 # Dava Ön-Değerlendirme — [Dosya Slug / Esas No]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Kaynaklar:** Yarg MCP [✓ N emsal / ✗]; Mevzuat MCP [✓ X madde / ✗]
-- **Okuma kapsamı:** [yapılan oku — örn. "dilekçe + ekler 1-12 sayfa"]
-- **Şiddet ataması:** 🔴/🟠/🟡/🟢
+- **Okuma kapsamı:** [yapılan oku - örn. "dilekçe + ekler 1-12 sayfa"]
+- **Şiddet ataması:** BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK
 - **Acil aksiyonlar (önceki turda yapılmalı):** [N adet]
 - **Güncellik:** [son arama tarihi]
 
@@ -228,7 +228,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 
 ## Yargı yeri ve görevli mahkeme
 
-**Önerilen:** [mahkeme] — HMK m. [X] kapsamında. `[Mevzuat MCP — GG.AA.YYYY]`
+**Önerilen:** [mahkeme] — HMK m. [X] kapsamında. `[Mevzuat MCP - GG.AA.YYYY]`
 **Alternatif/itiraz mümkün:** [varsa]
 
 ## Husumet
@@ -239,7 +239,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 ## Zamanaşımı
 
 - **Hesaplanan zamanaşımı tarihi:** GG.AA.YYYY (kalan: N gün)
-- **Dayanak:** [TBK/TTK/İş K. madde] — `[Mevzuat MCP — GG.AA.YYYY]`
+- **Dayanak:** [TBK/TTK/İş K. madde] — `[Mevzuat MCP - GG.AA.YYYY]`
 - **Risk:** [yorum]
 
 ## Ön delil envanteri
@@ -252,7 +252,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 
 | Karar | Tarih | Daire | Eğilim | Bizim için |
 |---|---|---|---|---|
-| [esas/karar no] | [...] | [...] | bize/aleyhe/karma | [yorum] `[Yarg MCP — yargitay — GG.AA.YYYY]` |
+| [esas/karar no] | [...] | [...] | bize/aleyhe/karma | [yorum] `[Yarg MCP - yargitay - GG.AA.YYYY]` |
 
 ## sektöre-özel kontroller
 
@@ -281,14 +281,14 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 
 ## Reviewer note format
 
-İcra sırasında `## ⚠️ İnceleyen notu` deliverable'ın üstüne yerleştirilir, yukarıdaki şablonda gösterildiği gibi.
+İcra sırasında `## İnceleyen notu` deliverable'ın üstüne yerleştirilir, yukarıdaki şablonda gösterildiği gibi.
 
 ## Hatalar / kenar durumlar
 
 - **Kullanıcı sadece "yeni dava geldi" der, dosya yüklemez** → Sor: "Dilekçe metni veya ihtarnameyi yapıştırır mısın? Veya bir özet ver."
 - **Karşı taraf vekili tanıdık ama dosya tanımıyor** → "Bu vekille daha önce yaşadığımız başka davalar var mı? `/litigation-legal:matter-workspace list` ile bakayım?"
-- **Zamanaşımı çok yakın** → 🔴 + büyük uyarı: "⚠️ Zamanaşımı [X] gün içinde doluyor. Bu dava açma kararı **bu hafta** verilmeli."
-- **Tahkim klozu var ama mahkemede dava açıldı** → 🟠 + "Tahkim itirazı (HMK m. 116/c) sunulmalı; aksi halde tahkim hakkı düşer."
+- **Zamanaşımı çok yakın** → BLOKLAYICI + büyük uyarı: "Zamanaşımı [X] gün içinde doluyor. Bu dava açma kararı **bu hafta** verilmeli."
+- **Tahkim klozu var ama mahkemede dava açıldı** → YÜKSEK + "Tahkim itirazı (HMK m. 116/c) sunulmalı; aksi halde tahkim hakkı düşer."
 
 ---
 
@@ -409,13 +409,13 @@ Rapor:
 |---|---|---|
 | Yarg MCP | ✅ N karar döndü | Aktif |
 | Mevzuat MCP | ✅ HMK 6100 bulundu | Aktif |
-| iManage | ⚠️/❌ | [neden] |
+| iManage | /❌ | [neden] |
 ```
 
 ## Reviewer note
 
 Profil doldurma çıktısı için:
-> ⚠️ İnceleyen notu: Cold-start interview ile dolduruldu. Profil eksik alanlar `[DOLDUR]` etiketli. İlk gerçek skill çağrısı öncesi en azından dış vekil paneli + eskalasyon matriksi doldurulmalı.
+> İnceleyen notu: Cold-start interview ile dolduruldu. Profil eksik alanlar `[DOLDUR]` etiketli. İlk gerçek skill çağrısı öncesi en azından dış vekil paneli + eskalasyon matriksi doldurulmalı.
 
 ---
 
@@ -456,7 +456,7 @@ Matter workspaces ON. Bu skill aktif bir matter'da çalışır:
 
 ### ABD doktrini Türkiye'de DOĞRUDAN yok
 
-⚠️ **Önemli:** ABD "litigation hold" doktrini doğrudan Türk hukukunda yoktur. Buna karşı şu kanuni ödevler vardır:
+**Önemli:** ABD "litigation hold" doktrini doğrudan Türk hukukunda yoktur. Buna karşı şu kanuni ödevler vardır:
 
 | Hukuki temel | Yükümlülük |
 |---|---|
@@ -478,7 +478,7 @@ Matter workspaces ON. Bu skill aktif bir matter'da çalışır:
 Kullanıcı bu skill'i tetiklediğinde, **konuyla ilgili çalışanlara gidecek "delil koruma duyurusu"** taslağını üret:
 
 ```markdown
-[ÜST BAŞLIK: ŞİRKET İÇİ — GİZLİDİR]
+[ÜST BAŞLIK: ŞİRKET İÇİ - GİZLİDİR]
 [Tarih]
 
 Konu: [Dosya / olay] ile ilgili delil koruma duyurusu
@@ -620,15 +620,15 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # Delil Toplama Protokolü — [Dosya slug]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Senaryo:** Delil koruma (legal hold) / Mahkeme delil sunumu / Karma
 - **Acil aksiyonlar:** [liste]
-- **Mevzuat referansları:** HMK m. [...], TCK m. 281, TTK m. 64, KVKK m. 7 `[Mevzuat MCP — GG.AA.YYYY]`
-- **Emsal:** [N karar] `[Yarg MCP — yargitay — GG.AA.YYYY]`
+- **Mevzuat referansları:** HMK m. [...], TCK m. 281, TTK m. 64, KVKK m. 7 `[Mevzuat MCP - GG.AA.YYYY]`
+- **Emsal:** [N karar] `[Yarg MCP - yargitay - GG.AA.YYYY]`
 
 ## A. Delil koruma duyurusu (taslak)
 
-[duyuru taslağı — yukarıdaki şablon]
+[duyuru taslağı - yukarıdaki şablon]
 
 **Dağıtım listesi:**
 - [İlgili çalışan listesi]
@@ -645,10 +645,10 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 [tablo]
 
 ### B3. Bilirkişi talebi
-[varsa — konu, nitelik]
+[varsa - konu, nitelik]
 
 ### B4. Keşif talebi
-[varsa — yer, neden]
+[varsa - yer, neden]
 
 ## Sonraki adımlar (decision tree)
 
@@ -723,7 +723,7 @@ Karşı tarafın muhtemel argümanlarını ve hazır cevapları:
 
 | Karşı argüman | Bizim cevap | Dayanak (madde/içtihat) |
 |---|---|---|
-| [...] | [...] | `[Mevzuat MCP / Yarg MCP — GG.AA.YYYY]` |
+| [...] | [...] | `[Mevzuat MCP / Yarg MCP - GG.AA.YYYY]` |
 
 ### 3. Cevap dilekçesi / beyan taslağı (HMK)
 
@@ -747,7 +747,7 @@ KONU: [Cevap dilekçesi / beyan / ek beyan]
 
 I. OLAYLAR
 
-[Olay özeti — bizim açımızdan]
+[Olay özeti - bizim açımızdan]
 
 II. HUKUKİ DEĞERLENDİRME
 
@@ -840,7 +840,7 @@ Benzer dosyaların **bu aşamada nasıl gittiğini** öğren — strateji şekil
 
 # Duruşma Hazırlık — [Esas No / Dosya Slug]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Duruşma tarihi:** GG.AA.YYYY (kalan: N gün)
 - **Mahkeme:** [...]
 - **Karar verilebilecek:** [N adet]
@@ -878,9 +878,9 @@ user-invocable: true
 
 # İSG / Çevre Olayı — İlk 24-72 Saat Runbook
 
-> **⚠️ Bu skill [Müvekkil] için yakıcı sorun olarak işaretlenmiştir.** büyük endüstriyel tesisnde geçmişte ölümlü/ciddi kaza dosyaları yaşandı; her olayda doğru ilk müdahale tazminat tutarını, ceza dosyasının yönünü ve EPDK lisans riskini doğrudan etkiler.
+> **Bu skill [Müvekkil] için yakıcı sorun olarak işaretlenmiştir.** büyük endüstriyel tesisnde geçmişte ölümlü/ciddi kaza dosyaları yaşandı; her olayda doğru ilk müdahale tazminat tutarını, ceza dosyasının yönünü ve EPDK lisans riskini doğrudan etkiler.
 
-## ⚠️ KAP açıklama tetik haritası — [RAFİNERİ] vs [HALKA AÇIK İŞTİRAK] ayrımı (KRİTİK)
+## KAP açıklama tetik haritası — [RAFİNERİ] vs [HALKA AÇIK İŞTİRAK] ayrımı (KRİTİK)
 
 Olay hangi tüzel kişinin tesisinde / faaliyet alanında oldu, ona göre KAP yükümlülüğü değişir:
 
@@ -926,10 +926,10 @@ Bu skill çıktısının iki ayrı versiyonu olur — destinasyona göre seç:
 
 ```
 Olayın seviyesi nedir?
-A. 🔴 ÖLÜMLÜ veya ÇOK CİDDİ — bir veya birden fazla ölü, kalıcı sakatlık, büyük çevre kirlenmesi, basında haber
-B. 🟠 CİDDİ — hastane sevki, üretim duruş, lokal çevre etki
-C. 🟡 ORTA — yaralanma var ama ayakta tedavi, üretim devam, sınırlı etki
-D. 🟢 KÜÇÜK — ramak kala, hafif yaralanma, raporlama amaçlı
+A. BLOKLAYICI ÖLÜMLÜ veya ÇOK CİDDİ — bir veya birden fazla ölü, kalıcı sakatlık, büyük çevre kirlenmesi, basında haber
+B. YÜKSEK CİDDİ — hastane sevki, üretim duruş, lokal çevre etki
+C. ORTA — yaralanma var ama ayakta tedavi, üretim devam, sınırlı etki
+D. DÜŞÜK KÜÇÜK — ramak kala, hafif yaralanma, raporlama amaçlı
 
 Hangisi?
 ```
@@ -970,7 +970,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | **KAP** (halka açık iştirak ilgili önemli olay) | DERHAL özel durum açıklaması | [HALKA AÇIK İŞTİRAK] | KAP üzerinden, SPK Tebliğ II-15.1 |
 | **[BORU HATTI PROJESİ]** ([BORU HATTI PROJESİ] altyapı etkilendiyse) | 24 saat | İşletmeci | [BORU HATTI PROJESİ] işletme sözleşmesi |
 
-⚠️ Bu süreler **yasal**, gecikme idari para cezası + ceza dosyasında ağırlatıcı.
+Bu süreler **yasal**, gecikme idari para cezası + ceza dosyasında ağırlatıcı.
 
 #### 3. Üst yönetim eskalasyon zinciri
 
@@ -1100,12 +1100,12 @@ D = küçük olay / ramak kala. Bildirim checklist + iç dosyalama yeterli:
 ## Çıktı şablonu
 
 ```markdown
-[ÜST BAŞLIK — practice profile ## Outputs'tan]
+[ÜST BAŞLIK - practice profile ## Outputs'tan]
 
 # İSG/Çevre Olayı Runbook — [Olay slug / Tesis / Tarih]
 
-## ⚠️ İnceleyen notu
-- **Olay seviyesi:** 🔴/🟠/🟡/🟢
+## İnceleyen notu
+- **Olay seviyesi:** BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK
 - **Tetiklenen runbook:** Tam / Sadeleştirilmiş / Sadece raporlama
 - **Kaynaklar:** Yarg MCP [✓ N emsal / not yet]; Mevzuat MCP [✓ X madde]
 - **Acil aksiyonlar (sonraki 1 saat):** [liste]
@@ -1129,7 +1129,7 @@ D = küçük olay / ramak kala. Bildirim checklist + iç dosyalama yeterli:
 
 ## Yasal bildirimler tablosu
 
-[tablo — kim, ne zaman, kime, nasıl]
+[tablo - kim, ne zaman, kime, nasıl]
 
 ## Eskalasyon zinciri ([Müvekkil])
 
@@ -1276,7 +1276,7 @@ Maks 1 sayfa — dış vekil bunu hızla okur. **Zaman çizgisi (timeline)** kro
 ### [Müvekkil]'ın pozisyonu (savunma argümanları)
 1. [Argüman 1] — dayanak: [...]
 2. [Argüman 2] — dayanak: [...]
-3. [Argüman 3 — yedek] — dayanak: [...]
+3. [Argüman 3 - yedek] — dayanak: [...]
 
 ### Zayıf noktalarımız (counter-argumentation öngörüsü)
 - [Zayıf nokta 1] — karşı taraf bunu nasıl kullanır
@@ -1286,7 +1286,7 @@ Maks 1 sayfa — dış vekil bunu hızla okur. **Zaman çizgisi (timeline)** kro
 - [Önceki dosya / sonuç / vekili]
 
 ### İç araştırma (Yarg MCP'den çekilenler)
-- [Karar 1] `[Yarg MCP — daire — GG.AA.YYYY]` — [özet/eğilim]
+- [Karar 1] `[Yarg MCP - daire - GG.AA.YYYY]` — [özet/eğilim]
 - [Karar 2] — [...]
 ```
 
@@ -1306,7 +1306,7 @@ KRİTİK BÖLÜM — net olmalı, eksik kalmamalı:
 ### Sorularımız (cevap bekleniyor)
 1. [Hukuki yorumlama sorusu]
 2. [Strateji sorusu]
-3. [Pratik soru — örn. "Sulh için hangi tutar makul olur?"]
+3. [Pratik soru - örn. "Sulh için hangi tutar makul olur?"]
 
 ### Hangi belge gönderildi (ek listesi)
 - Ek 1: [...] (PDF/DOCX, sayfa sayısı)
@@ -1339,7 +1339,7 @@ KRİTİK BÖLÜM — net olmalı, eksik kalmamalı:
 - **KAP / yatırımcı etkili gelişme:** halka açık iştirak ilgili tüm önemli gelişmeler derhal ([HALKA AÇIK İŞTİRAK] dosyalarında)
 ```
 
-### ⚠️ ZORUNLU ÖN-KONTROL: TTK m. 5/A Zorunlu Arabuluculuk (ticari uyuşmazlıklarda)
+### ZORUNLU ÖN-KONTROL: TTK m. 5/A Zorunlu Arabuluculuk (ticari uyuşmazlıklarda)
 
 **6102 sayılı TTK m. 5/A:** "Konusu bir miktar paranın ödenmesi olan alacak ve tazminat talepleri hakkında, dava açılmadan önce **arabulucuya başvurulmuş olması dava şartıdır**." (2018 değişikliği — 7155 sayılı K.)
 
@@ -1357,7 +1357,7 @@ KRİTİK BÖLÜM — net olmalı, eksik kalmamalı:
 
 **Brief'te HBÖ'ye sorulacak:** "TTK m. 5/A zorunlu arabuluculuk için başvuru tarihi + arabulucu atama + müzakere stratejisi (sulh açılış teklifimiz) — dava dilekçesinden önce paralel hazırlık."
 
-⚠️ **Bu adım atlanırsa dava reddi** (HMK m. 114 + TTK m. 5/A). Hızlı dava ihtiyacı varsa ihtiyati tedbir + arabuluculuk paralel.
+**Bu adım atlanırsa dava reddi** (HMK m. 114 + TTK m. 5/A). Hızlı dava ihtiyacı varsa ihtiyati tedbir + arabuluculuk paralel.
 
 ### 6. sektöre-özel notlar
 
@@ -1406,7 +1406,7 @@ Bunları brief'in **"İç araştırma"** bölümünde özetle — dış vekilin 
 
 # DAVA BRIEF — [Esas No / Dosya Slug]
 
-## ⚠️ İnceleyen notu (bu sayfa brief'in içinde değil, eşlik eden iç memo)
+## İnceleyen notu (bu sayfa brief'in içinde değil, eşlik eden iç memo)
 - **Hazırlayan:** [in-house Counsel]
 - **İç onay:** [Hukuk Direktörü onayı tarihi]
 - **Dış vekil seçimi:** [Büro] — [Pratik alan uygunluğu kontrolü]
@@ -1416,7 +1416,7 @@ Bunları brief'in **"İç araştırma"** bölümünde özetle — dış vekilin 
 ---
 
 ## 1. Genel bilgi
-[başlık bölümü — esas no, taraflar, mahkeme, vs.]
+[başlık bölümü - esas no, taraflar, mahkeme, vs.]
 
 ## 2. Background
 [olay özeti + timeline]
@@ -1558,7 +1558,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 | İç zaman (in-house) | düşük | yüksek (her duruşma 1-2 gün) |
 | **TOPLAM** | [...] | [...] |
 
-⚠️ **Damga vergisi unutulmaz:** 5M TL sulh = ~47.400 TL damga. Sulh anlaşmasında "kim ödeyecek?" netleştirilmeli. Standart: yarı yarıya.
+**Damga vergisi unutulmaz:** 5M TL sulh = ~47.400 TL damga. Sulh anlaşmasında "kim ödeyecek?" netleştirilmeli. Standart: yarı yarıya.
 
 ### 4. Reputational ve stratejik risk
 
@@ -1634,7 +1634,7 @@ Tarih: GG.AA.YYYY
 
 # Sulh Teklifi Değerlendirme — [Dosya slug]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Karar:** Sulh ÖNERİLİR / SULH ÖNERİLMEZ / Müzakere DEVAM
 - **Önerilen sulh tutarı aralığı:** [TL min - TL max]
 - **Eskalasyon noktası:** [Counsel/Direktör/Başkan/CEO]
@@ -1656,7 +1656,7 @@ Tarih: GG.AA.YYYY
 
 ## Hukuki maruziyet (kötümser senaryo)
 
-**Emsal kararlar:** `[Yarg MCP — yargitay/danistay — GG.AA.YYYY]`
+**Emsal kararlar:** `[Yarg MCP - yargitay/danistay - GG.AA.YYYY]`
 
 [tablo: emsal davanın özelliği, karar tutarı, bizim davaya benzerlik]
 
@@ -1683,7 +1683,7 @@ Tarih: GG.AA.YYYY
 
 **Aralık:** [TL min] - [TL max]
 **Hedef:** [TL]
-**Yetkisi:** [Counsel/Direktör/Başkan/CEO seviyesinde — neden]
+**Yetkisi:** [Counsel/Direktör/Başkan/CEO seviyesinde - neden]
 
 ## Müzakere stratejisi
 

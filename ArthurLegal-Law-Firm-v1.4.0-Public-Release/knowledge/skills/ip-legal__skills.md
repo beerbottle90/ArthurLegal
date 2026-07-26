@@ -193,11 +193,11 @@ Present this as a short memo in-chat BEFORE the draft:
 
 - **Entity:** [name, state of formation, parent if any]
 - **Size:** [headcount band, revenue band, funding stage] — [source, `[SME VERIFY]` where applicable]
-- **IP portfolio:** [registered marks / patents / copyrights in adjacent classes — or "none found"]
-- **Litigation history:** [prior IP cases as plaintiff or defendant — or "none found in quick pass"]
-- **Counsel:** [known outside IP counsel — or "none identified"]
-- **DJ-plaintiff risk:** [high / medium / low — reasoning]
-- **Relationship risk:** [any customer / investor / partner / acquirer overlap — or "none identified"]
+- **IP portfolio:** [registered marks / patents / copyrights in adjacent classes - or "none found"]
+- **Litigation history:** [prior IP cases as plaintiff or defendant - or "none found in quick pass"]
+- **Counsel:** [known outside IP counsel - or "none identified"]
+- **DJ-plaintiff risk:** [high / medium / low - reasoning]
+- **Relationship risk:** [any customer / investor / partner / acquirer overlap - or "none identified"]
 
 **Automatic escalations this triggers** (per practice profile `## Enforcement posture` → Automatic escalations):
 - [list each trigger that this diligence surfaces]
@@ -235,7 +235,7 @@ Draft structure:
 
 - **Specificity over adjectives.** Dates, URLs, reg numbers, samples. Adjectives are a draftsperson's tell that the facts are thin.
 - **No overbroad assertions.** If the mark is registered in one class and the accused use is in a different class, say so — don't pretend the registration covers both. Overbroad C&Ds are evidence of bad faith and can support §43(a)(1)(B) or Rule 11 exposure.
-- **Citations as placeholders unless verified.** `[CITE: Lanham Act §32, 15 U.S.C. §1114]` stays as a placeholder unless the user provided the cite or a research tool returned it. Tag every citation with source — `[Westlaw]`, `[user provided]`, `[model knowledge — verify]`, `[web search — verify]`. Never strip the tags.
+- **Citations as placeholders unless verified.** `[CITE: Lanham Act §32, 15 U.S.C. §1114]` stays as a placeholder unless the user provided the cite or a research tool returned it. Tag every citation with source — `[Westlaw]`, `[user provided]`, `[model knowledge - verify]`, `[web search - verify]`. Never strip the tags.
 - **Consequence language matches posture.** Aggressive → specific relief threatened (injunction, statutory damages under 15 U.S.C. §1117 / 17 U.S.C. §504, attorneys' fees). Measured → "we reserve all rights." Conservative → "we'd like to discuss before considering further steps."
 - **Jurisdiction-specific hooks** — if US, watch for Anti-Cybersquatting (15 U.S.C. §1125(d)) for domain matters, §43(a) for unregistered marks, §504(c) for pre-registration timing. Non-US: flag the forum and note the draft may need foreign associate review.
 
@@ -311,7 +311,7 @@ Do not write the .docx or mark the draft as ready without explicit engagement wi
 
 > This is a draft cease-and-desist letter for attorney review, not a letter ready to send. Sending it is an assertion of legal rights with the consequences described in the pre-delivery gate. A licensed attorney reviews, edits, and takes professional responsibility before sending. Do not send this draft unreviewed.
 
-**Citation verification.** Every `[CITE:___]` and every cite carried from a template or provided authority is unverified until run through a citator. Before sending, verify each cite is good law on a legal research platform. Fabricated or misquoted cites in sent assertion letters are professional responsibility exposure. Preserve the source-attribution tags — `[Westlaw]`, `[CourtListener]`, `[Descrybe]`, `[user provided]`, `[model knowledge — verify]`, `[web search — verify]` — tags flagged `verify` get checked first.
+**Citation verification.** Every `[CITE:___]` and every cite carried from a template or provided authority is unverified until run through a citator. Before sending, verify each cite is good law on a legal research platform. Fabricated or misquoted cites in sent assertion letters are professional responsibility exposure. Preserve the source-attribution tags — `[Westlaw]`, `[CourtListener]`, `[Descrybe]`, `[user provided]`, `[model knowledge - verify]`, `[web search - verify]` — tags flagged `verify` get checked first.
 
 **No silent supplement.** If a configured research tool returns few or no results for an authority the draft needs, report what was found and stop. Do NOT backfill from web search or model knowledge without asking. Present options — broaden the query, try a different tool, accept web search with tags, leave the placeholder — and let the user decide.
 
@@ -399,9 +399,9 @@ Ignoring a stated deadline entirely is a choice, not a default. Note that filing
 Output: `<matter-folder>/cease-desist/inbound/<slug>/triage.md` (or at practice level if matter workspaces are off).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
-[PRIVILEGE INHERITANCE BLOCK — pick by role and matter type; see guidance below the template]
+[PRIVILEGE INHERITANCE BLOCK - pick by role and matter type; see guidance below the template]
 
 # C&D Received — Triage
 
@@ -415,19 +415,19 @@ Output: `<matter-folder>/cease-desist/inbound/<slug>/triage.md` (or at practice 
 ## The assertion
 
 **Sender:** [entity, signer, counsel]
-**Asserted right:** [trademark / copyright / both — with specifics, reg numbers, jurisdictions]
+**Asserted right:** [trademark / copyright / both - with specifics, reg numbers, jurisdictions]
 **Alleged conduct:** [their version, one paragraph]
-**Demand:** [list — specific asks]
+**Demand:** [list - specific asks]
 **Their stated deadline:** [date]
 **Tone:** [firm / soft / scorched-earth]
 
 ## Rights validity
 
-[Registrations as asserted — `[SME VERIFY]` against the register; common-law claims evaluated against the evidence cited]
+[Registrations as asserted - `[SME VERIFY]` against the register; common-law claims evaluated against the evidence cited]
 
 ## Legal basis cited
 
-[Each citation inline-tagged with `[SME VERIFY: applicability / currency / jurisdiction]` and source `[Westlaw / user provided / model knowledge — verify / web search — verify]`. Do not rely on any citation here without independent check.]
+[Each citation inline-tagged with `[SME VERIFY: applicability / currency / jurisdiction]` and source `[Westlaw / user provided / model knowledge - verify / web search - verify]`. Do not rely on any citation here without independent check.]
 
 ## Plausibility assessment
 
@@ -440,7 +440,7 @@ Output: `<matter-folder>/cease-desist/inbound/<slug>/triage.md` (or at practice 
 
 - **Actually infringing?** [honest look]
 - **Cost of compliance vs. cost of fight:** [read]
-- **Sender credibility:** [troll / real claimant / repeat plaintiff — with any public-docket evidence]
+- **Sender credibility:** [troll / real claimant / repeat plaintiff - with any public-docket evidence]
 - **Collateral stakes:** [brand, customers, precedent]
 
 **Triage rating:** [substantial / debatable / weak / frivolous] — *structured read for routing, not a merit opinion; `[SME VERIFY]`*
@@ -471,7 +471,7 @@ Output: `<matter-folder>/cease-desist/inbound/<slug>/triage.md` (or at practice 
 
 - **Their stated deadline:** [date]
 - **Our internal decision deadline:** [date]
-- **Legal deadlines on any underlying claim:** [SoL, cure, procedural — with dates]
+- **Legal deadlines on any underlying claim:** [SoL, cure, procedural - with dates]
 
 ## Immediate actions
 
@@ -537,7 +537,7 @@ description: >
   asked whether a mark is available or to run a knockout search, or when
   assessing likelihood-of-confusion factors before a full professional search.
   This skill never concludes a mark is clear.
-argument-hint: "[describe the proposed mark, goods/services, and jurisdictions — or just the mark and I'll ask]"
+argument-hint: "[describe the proposed mark, goods/services, and jurisdictions - or just the mark and I'll ask]"
 ---
 
 # /clearance
@@ -624,7 +624,7 @@ If `~/.claude/plugins/config/claude-for-legal/ip-legal/CLAUDE.md` contains `[PLA
 >
 > **Two choices:**
 > - Run `/ip-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll run this tailored to YOUR practice.
-> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL - configure your profile for tailored output]` so you can see what I do before committing.
 
 ### Provisional mode
 
@@ -697,12 +697,12 @@ Read `## Available integrations` from `~/.claude/plugins/config/claude-for-legal
   the mark or a close variant. Same attribution rule. CourtListener's **citation
   verification** is mandatory before relying on any US case cite — see
   `references/courtlistener-rehberi.md`. Attribute as
-  `[CourtListener — <court> — <citation> — DD.MM.YYYY]`.
+  `[CourtListener - <court> - <citation> - DD.MM.YYYY]`.
 - **If the GovInfo connector is available** and the analysis needs the text of a
   US IP statute (15 U.S.C. Lanham Act for trademark, 35 U.S.C. for patent,
   17 U.S.C. for copyright), pull it from GovInfo rather than reciting from
   memory — see `references/us-legislation-rehberi.md`. Attribute as
-  `[US Legislation — GovInfo — <citation> — DD.MM.YYYY]`.
+  `[US Legislation - GovInfo - <citation> - DD.MM.YYYY]`.
 - **If no search connector is available:** say so, explicitly, in the output.
   Do not infer results from model knowledge and present them as search findings.
 
@@ -765,10 +765,10 @@ with a confirmation prompt:
 
 > **Adjacent families to sweep (please confirm or add):**
 >
-> - [family 1 — e.g., HUB / NEST / LINK / CONNECT]
-> - [family 2 — e.g., ALEXA-style assistant names]
-> - [family 3 — e.g., HOME / HOUSE / SMART variants]
-> - [family 4 — phonetic twins on the root]
+> - [family 1 - e.g., HUB / NEST / LINK / CONNECT]
+> - [family 2 - e.g., ALEXA-style assistant names]
+> - [family 3 - e.g., HOME / HOUSE / SMART variants]
+> - [family 4 - phonetic twins on the root]
 >
 > A clearance that only checks exact and near-exact matches misses the marks a
 > competitor adopted because yours was taken. Confirm this list is complete for
@@ -884,7 +884,7 @@ result here means the triage didn't find anything — it does not mean the mark
 is clear. A registered trademark attorney evaluates before anyone adopts, files,
 or invests in this mark.
 
-**Triage result:** [GREEN / YELLOW / RED — one sentence why]
+**Triage result:** [GREEN / YELLOW / RED - one sentence why]
 
 ## Proposed mark
 
@@ -909,10 +909,10 @@ search run; see scope note below."]
 **Scope:** [classes, jurisdictions, exact-vs-fuzzy, design search or not]
 
 **Adjacent families swept (confirmed with user):**
-- [family 1 — e.g., HUB / NEST / LINK / CONNECT / BRIDGE / GATEWAY]
-- [family 2 — e.g., ALEXA-style assistant names]
-- [family 3 — e.g., HOME / HOUSE / SMART variants]
-- [family 4 — phonetic twins on the root]
+- [family 1 - e.g., HUB / NEST / LINK / CONNECT / BRIDGE / GATEWAY]
+- [family 2 - e.g., ALEXA-style assistant names]
+- [family 3 - e.g., HOME / HOUSE / SMART variants]
+- [family 4 - phonetic twins on the root]
 
 *A clearance that only checks exact and near-exact matches misses the marks a
 competitor adopted because yours was taken. If any family was not swept (no
@@ -921,7 +921,7 @@ to the full professional search — not silently skipped.*
 
 | Mark | Source | Classes / G&S | Owner | Status | First use | Note |
 |---|---|---|---|---|---|---|
-| [exact] | [registration no. / citation / URL] | [class list] | [owner from record] | [reg/pending/abandoned/cancelled] | [date or "not available"] | [why it matters — exact match / adjacent family] |
+| [exact] | [registration no. / citation / URL] | [class list] | [owner from record] | [reg/pending/abandoned/cancelled] | [date or "not available"] | [why it matters - exact match / adjacent family] |
 
 *If no search was run:* **No database search was run.** This triage did not hit
 TESS, Solve Intelligence, Descrybe, CourtListener, state registries,
@@ -1176,7 +1176,7 @@ Corollary: the interview's inputs are the user's typed answers and documents the
 - **Never** write a practice profile with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past.
 - **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/ip-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/ip-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /ip-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -1640,7 +1640,7 @@ description: >
   launch, or to build a claim-chart first pass against the most plausible
   patents before patent counsel review. This skill never concludes a product
   is clear to launch.
-argument-hint: "[describe the product / process / feature and jurisdictions — or just the subject and I'll ask]"
+argument-hint: "[describe the product / process / feature and jurisdictions - or just the subject and I'll ask]"
 ---
 
 # /fto-triage
@@ -1756,7 +1756,7 @@ If `~/.claude/plugins/config/claude-for-legal/ip-legal/CLAUDE.md` contains `[PLA
 >
 > **Two choices:**
 > - Run `/ip-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll run this tailored to YOUR practice.
-> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL - configure your profile for tailored output]` so you can see what I do before committing.
 
 ### Provisional mode
 
@@ -1906,7 +1906,7 @@ each independent claim element-by-element.
 
 | Claim element | Does the product practice this? | Basis |
 |---|---|---|
-| "A [preamble phrase]" | [yes / no / possibly / depends on construction] | [one sentence — what in the product maps; what doesn't; what's ambiguous] |
+| "A [preamble phrase]" | [yes / no / possibly / depends on construction] | [one sentence - what in the product maps; what doesn't; what's ambiguous] |
 | "comprising [element 1]" | [yes / no / possibly] | [mapping or gap] |
 | "wherein [element 2]" | [yes / no / possibly] | [mapping or gap] |
 | [continue for every element] | | |
@@ -2005,14 +2005,14 @@ patents" result means the triage didn't find one — it does not mean the produc
 is clear. A registered patent attorney or agent evaluates before anyone relies
 on this for a product decision.
 
-**Triage result:** [GREEN / YELLOW / RED — one sentence why]
+**Triage result:** [GREEN / YELLOW / RED - one sentence why]
 
 ## Subject
 
 - **Product / process / feature:** [description, technical essence]
 - **Technical detail relied on:** [what was reviewed — spec, diagram, public
   page, code, engineer's description]
-- **Jurisdictions in scope:** [make / use / sell / offer / import — per § 271]
+- **Jurisdictions in scope:** [make / use / sell / offer / import - per § 271]
 - **Timing:** [pre-launch / near-launch / shipping]
 
 ## Search scope
@@ -2181,7 +2181,7 @@ description: >
   assessing whether someone is infringing your IP or whether you might be
   infringing theirs, when a knockoff or copycat surfaces, or when deciding
   whether a matter is worth pursuing and how.
-argument-hint: "[describe the facts and which right — or just the facts and I'll ask which right]"
+argument-hint: "[describe the facts and which right - or just the facts and I'll ask which right]"
 ---
 
 # /infringement-triage
@@ -2297,7 +2297,7 @@ If the config has `[PLACEHOLDER]`, surface this bounce:
 >
 > **Two choices:**
 > - Run `/ip-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll run this tailored to YOUR practice.
-> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+> - Say **"provisional"** and I'll run this against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL - configure your profile for tailored output]` so you can see what I do before committing.
 
 ### Provisional mode
 
@@ -2666,13 +2666,13 @@ jurisdiction, and defenses. Acting on a triage without attorney review is
 how companies end up on the wrong side of fee awards, Rule 11 sanctions,
 declaratory-judgment actions, and enhanced damages.
 
-**Triage result:** [GREEN / YELLOW / RED — one sentence why]
+**Triage result:** [GREEN / YELLOW / RED - one sentence why]
 
 ## Posture and scope
 
 - **Party posture:** [senior / accused]
 - **Right at issue:** [trademark / copyright / patent / trade secret]
-- **Jurisdiction:** [US federal — specific circuit / state / foreign]
+- **Jurisdiction:** [US federal - specific circuit / state / foreign]
 - **Legal framework applied:** [cite the governing test and statute]
 - **Statute of limitations / laches posture:** [clock status]
 - **Exhibits / evidence reviewed:** [list]
@@ -2703,7 +2703,7 @@ factors cutting [direction] are [brief summary].
 ## Recommended next steps
 
 - [formal opinion from counsel / route to IP OC named in the practice profile]
-- [evidence preservation and hold — if a litigation clock is running]
+- [evidence preservation and hold - if a litigation clock is running]
 - [fact development needed before a decision — e.g., access logs, prosecution
   history, market studies, survey evidence]
 - [routing per `~/.claude/plugins/config/claude-for-legal/ip-legal/CLAUDE.md`
@@ -2813,7 +2813,7 @@ description: >
   eligibility, bar dates, detectability, and strategic value. Use when an
   invention disclosure comes in and needs triage on whether to pursue a
   prior-art search and patent counsel review, investigate further, or decline.
-argument-hint: "[paste or describe the invention disclosure — or just the title and I'll ask]"
+argument-hint: "[paste or describe the invention disclosure - or just the title and I'll ask]"
 ---
 
 # /invention-intake
@@ -2837,7 +2837,7 @@ does not do one.
    public disclosure / status / technology area) in one batch and wait.
 4. Run the six screens: novelty signals, obviousness flags, § 101 eligibility,
    public disclosure / bar dates, detectability, strategic value. Each screen
-   gets a ✓ / 🟡 / 🔴 verdict with one-line reasoning.
+   gets a ✓ / ORTA / BLOKLAYICI verdict with one-line reasoning.
 5. Write the invention screen memo to the matter folder (if a matter is
    active) or the practice outputs folder. Apply the work-product header per
    role.
@@ -2969,7 +2969,7 @@ a template, extract these fields from the form and only ask for what's missing.
 ### Step 2: Screen against the checklist
 
 Walk the five screens in order. Each produces a per-screen verdict:
-`✓ clear`, `🟡 flagged — needs further look`, or `🔴 red flag`. Explain the
+`✓ clear`, `ORTA flagged — needs further look`, or `BLOKLAYICI red flag`. Explain the
 reasoning briefly; do not pad.
 
 #### Screen 1: Novelty signals
@@ -2978,7 +2978,7 @@ Does the disclosure describe something new? This is not a full novelty
 analysis — that requires a prior-art search. This screens the disclosure's own
 description for self-evident novelty problems.
 
-**Red flags (🔴):**
+**Red flags (BLOKLAYICI):**
 - "We just applied [known technique] to [new domain]" — e.g., "we took
   gradient boosting and applied it to predicting customer churn"
 - "It's like [existing product] but for [X]" — Uber-for-dog-walking framing
@@ -2995,7 +2995,7 @@ description for self-evident novelty problems.
 - Solving a problem the field **had not solved** — the disclosure explains why
   the prior approaches failed and how this one doesn't
 
-**Flagged (🟡):** anything ambiguous. Prior-art search settles it.
+**Flagged (ORTA):** anything ambiguous. Prior-art search settles it.
 
 #### Screen 2: Obviousness flags
 
@@ -3003,7 +3003,7 @@ Would a person of ordinary skill in the art (POSA) have arrived at this
 combination based on what's known? This is a screen, not a § 103 analysis —
 flag for further investigation, never conclude obviousness or non-obviousness.
 
-**Red flags (🔴) for further investigation:**
+**Red flags (BLOKLAYICI) for further investigation:**
 - Combining **known elements in a predictable way** — putting a known sensor
   on a known machine to measure a known thing
 - **Routine optimization** — "we tuned the existing parameter from X to Y and
@@ -3026,7 +3026,7 @@ Is this an abstract idea, law of nature, or natural phenomenon? This is the
 hardest screen, the most litigated, and the one most likely to require a
 specialist read. Flag anything borderline for specialist review.
 
-**Red flags (🔴) for § 101:**
+**Red flags (BLOKLAYICI) for § 101:**
 - Pure **business method** without technical implementation — "a method of
   pricing widgets more efficiently"
 - **Mathematical algorithm** on its own — even as dressed up in pseudocode
@@ -3045,7 +3045,7 @@ specialist read. Flag anything borderline for specialist review.
 - Improvement to a **technical field** (image processing, compression,
   cryptography, robotics) with the technical means described
 
-**Anything borderline gets a 🟡 with "§ 101 — route to specialist for
+**Anything borderline gets a ORTA with "§ 101 — route to specialist for
 Alice/Mayo analysis."** A non-specialist should not call a close § 101
 question.
 
@@ -3055,7 +3055,7 @@ recites:
 - A naturally occurring substance (isolated gene, natural product) without
   significant human modification
 
-> **§101 is a US standard. Other patent offices are different.** The EPO's "technical effect" test (Art. 52 EPC) is materially more permissive for software and AI inventions than US §101 post-*Alice*. JPO and CNIPA also apply different standards. An invention that screens 🔴 under *Alice* may be perfectly eligible at EPO/JPO/CNIPA.
+> **§101 is a US standard. Other patent offices are different.** The EPO's "technical effect" test (Art. 52 EPC) is materially more permissive for software and AI inventions than US §101 post-*Alice*. JPO and CNIPA also apply different standards. An invention that screens BLOKLAYICI under *Alice* may be perfectly eligible at EPO/JPO/CNIPA.
 >
 > When the practice profile includes non-US jurisdictions: "This §101 screen is US-only. If you file internationally, the eligibility posture may be different — particularly for software, AI/ML, and business methods, which EPO is more permissive on. Don't decline based on US §101 alone if you have EP/JP/CN filing plans."
 
@@ -3067,7 +3067,7 @@ absolutely, or start a clock that cannot be stopped.
 
 Categorize the disclosure status:
 
-**🔴 Likely barred:**
+**BLOKLAYICI Likely barred:**
 - Publicly disclosed, sold, or offered for sale **more than 12 months ago**
   in the US — 35 U.S.C. § 102(b) one-year grace period has run
 - **Any** public disclosure, anywhere, before filing — absolute novelty bar in
@@ -3075,7 +3075,7 @@ Categorize the disclosure status:
   cares about foreign rights, this is potentially fatal even if US is still
   open.
 
-**🟡 Clock is running:**
+**ORTA Clock is running:**
 - Publicly disclosed within the last 12 months — US one-year clock is running,
   foreign rights may already be lost. Urgent. Confirm the disclosure date and
   route to filing immediately.
@@ -3109,7 +3109,7 @@ internal manufacturing techniques — may be better protected as a **trade
 secret** than as a patent. Publishing a patent on an undetectable invention is
 giving it to competitors in exchange for an asset you can never enforce.
 
-**🔴 Low detectability flags:**
+**BLOKLAYICI Low detectability flags:**
 - Server-side algorithm with no observable output pattern
 - Internal manufacturing process (e.g., a novel etch step in a semiconductor
   process)
@@ -3166,7 +3166,7 @@ Format:
 >
 > **Bottom line: [PURSUE / INVESTIGATE / DECLINE]**
 >
-> *[One sentence — the reason in plain language.]*
+> *[One sentence - the reason in plain language.]*
 >
 > ---
 >
@@ -3174,12 +3174,12 @@ Format:
 >
 > | Screen | Verdict | Notes |
 > |---|---|---|
-> | Novelty signals | [✓ / 🟡 / 🔴] | [one-line reasoning] |
-> | Obviousness flags | [✓ / 🟡 / 🔴] | [one-line reasoning] |
-> | § 101 eligibility | [✓ / 🟡 / 🔴] | [one-line reasoning] |
-> | Public disclosure / bar dates | [✓ / 🟡 / 🔴] | [one-line reasoning + dates] |
-> | Detectability | [✓ / 🟡 / 🔴] | [one-line reasoning] |
-> | Strategic value | [✓ / 🟡 / 🔴] | [one-line reasoning, referenced to profile] |
+> | Novelty signals | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning] |
+> | Obviousness flags | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning] |
+> | § 101 eligibility | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning] |
+> | Public disclosure / bar dates | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning + dates] |
+> | Detectability | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning] |
+> | Strategic value | [✓ / ORTA / BLOKLAYICI] | [one-line reasoning, referenced to profile] |
 >
 > ---
 >
@@ -3245,7 +3245,7 @@ construction.
 already exist" is not a prior-art search — it's a credibility check the
 user can also run. If you want to sanity-check novelty, say so explicitly
 ("quick web check — the technique was discussed in [X] — this is not a prior-
-art search, it's context for the screen") and flag it as `[web — verify]`.
+art search, it's context for the screen") and flag it as `[web - verify]`.
 
 **Defer on § 101 calls.** For anything borderline under Alice/Mayo, flag for
 specialist review. § 101 is where practitioners routinely disagree and where
@@ -3276,7 +3276,7 @@ memo with:
 > patent attorney or agent. If this screen says PURSUE or INVESTIGATE, your
 > next step is not to file or draft claims; it is to share this memo (and the
 > underlying disclosure) with patent counsel. If there is no counsel engaged
-> yet, [contact from profile / "your professional regulator's IP referral service — state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent"] is the
+> yet, [contact from profile / "your professional regulator's IP referral service - state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent"] is the
 > starting point.**
 
 ---
@@ -3377,10 +3377,10 @@ Look for:
 - **Further assurances** clause — counterparty agrees to sign whatever else is needed to perfect the assignment later.
 - **Pre-existing IP carveout** — what does the counterparty exclude from the assignment, and is that list specific or open-ended?
 
-If any of the above is missing or weak, flag at the top of the memo with a 🔴 or 🟠 severity and a specific redline.
+If any of the above is missing or weak, flag at the top of the memo with a BLOKLAYICI or YÜKSEK severity and a specific redline.
 
 ```markdown
-## ⚠️ ASSIGNMENT GAP
+## ASSIGNMENT GAP
 
 **Section [X]** assigns IP in the work product, but: [specific issue — e.g.,
 "'agrees to assign' rather than 'hereby assigns,'" or "no moral rights waiver
@@ -3401,7 +3401,7 @@ thought we owned.
 >
 > Check: does the agreement have an AI-use disclosure obligation? A representation about the role of AI in the deliverables? A mechanism to identify which portions are AI-assisted vs. human-authored?
 >
-> If absent and AI-assisted creation is foreseeable (consulting, development, content creation, design): 🟠 High. "The assignment clause is well-drafted but there's no AI-use disclosure. The copyright status of AI-generated content is unsettled, and without a disclosure obligation you won't know which portions are affected. Add an AI-use representation and a disclosure obligation." `[review — copyright status of AI-generated works is an evolving area; verify against current Copyright Office guidance and case law]`
+> If absent and AI-assisted creation is foreseeable (consulting, development, content creation, design): YÜKSEK High. "The assignment clause is well-drafted but there's no AI-use disclosure. The copyright status of AI-generated content is unsettled, and without a disclosure obligation you won't know which portions are affected. Add an AI-use representation and a disclosure obligation." `[review - copyright status of AI-generated works is an evolving area; verify against current Copyright Office guidance and case law]`
 
 > **AI-assisted inventorship.** A patent filed with incorrect inventorship is unenforceable. If a consultant uses AI tools that contribute to an inventive concept, the inventorship question is unsettled and the patent is at risk. For any agreement with patent assignment provisions covering potentially patentable work product:
 >
@@ -3435,7 +3435,7 @@ For each clause present, produce:
 **What's market (for this agreement type, this side, this jurisdiction):**
 [brief reference point]
 
-**Risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
+**Risk:** BLOKLAYICI Critical | YÜKSEK High | ORTA Medium | DÜŞÜK Low
 
 **Why it matters:** [one or two sentences — what goes wrong for the business
 if this stays as-is]
@@ -3452,10 +3452,10 @@ ways. Do not silently decide a subjective allocation question.]
 
 | Level | Means |
 |---|---|
-| 🔴 Critical | Don't sign without fixing. Assignment gap in a document that should have one. Unlimited license where a narrow one was intended. Exclusive grant where non-exclusive was intended. |
-| 🟠 High | Strongly push; escalate if they won't move. Ambiguous scope, missing moral rights waiver in a moral rights jurisdiction, missing further assurances, narrow indemnity. |
-| 🟡 Medium | Push in first round; accept if it's the last open item. Cosmetic but imprecise language, survival periods shorter than standard. |
-| 🟢 Low | Note it, don't spend capital. A stylistic deviation that doesn't change the allocation. |
+| BLOKLAYICI Critical | Don't sign without fixing. Assignment gap in a document that should have one. Unlimited license where a narrow one was intended. Exclusive grant where non-exclusive was intended. |
+| YÜKSEK High | Strongly push; escalate if they won't move. Ambiguous scope, missing moral rights waiver in a moral rights jurisdiction, missing further assurances, narrow indemnity. |
+| ORTA Medium | Push in first round; accept if it's the last open item. Cosmetic but imprecise language, survival periods shorter than standard. |
+| DÜŞÜK Low | Note it, don't spend capital. A stylistic deviation that doesn't change the allocation. |
 
 ### Step 4: Cross-clause consistency
 
@@ -3497,12 +3497,12 @@ Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/
 
 This memo and the underlying agreement may be privileged, confidential, or both. The output inherits that status from the source. Distribute only within the privilege circle; mark and store it where privileged materials live; strip the work-product header before any external delivery.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of a moral rights waiver in a given jurisdiction, scope of an implied license, standard for an IP warranty survival period), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of a moral rights waiver in a given jurisdiction, scope of an implied license, standard for an IP warranty survival period), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Where the memo cites a statute, regulation, case, or treatise, tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Where the memo cites a statute, regulation, case, or treatise, tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 # IP Clause Review: [Counterparty] [Agreement Type]
 
@@ -3516,7 +3516,7 @@ This memo and the underlying agreement may be privileged, confidential, or both.
 
 [Two sentences. Can the IP allocation stand? What has to change first?]
 
-**Issues:** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+**Issues:** [N]BLOKLAYICI [N]YÜKSEK [N]ORTA [N]DÜŞÜK
 
 **Approval needed from:** [name, per practice profile]
 
@@ -3524,7 +3524,7 @@ This memo and the underlying agreement may be privileged, confidential, or both.
 
 ## Assignment gap check
 
-[✅ Clear | ⚠️ Gap present — see above]
+[✅ Clear | Gap present - see above]
 
 ---
 
@@ -3548,7 +3548,7 @@ This memo and the underlying agreement may be privileged, confidential, or both.
 
 ## Approval routing
 
-[From practice profile — who approves, what triggers automatic escalation]
+[From practice profile - who approves, what triggers automatic escalation]
 ```
 
 ## Decision posture
@@ -3559,7 +3559,7 @@ When a clause could be read to allocate IP either way, or when it is unclear whe
 
 - [ ] Practice profile was loaded and the jurisdiction note reflects what's there
 - [ ] Assignment gap checked first (for employment/consulting/SOW/WFH)
-- [ ] Every 🔴 and 🟠 issue has specific replacement language
+- [ ] Every BLOKLAYICI and YÜKSEK issue has specific replacement language
 - [ ] Cross-clause consistency checked, not just clause-by-clause
 - [ ] Source tags applied to citations; no stripped `verify` tags
 - [ ] Approver named per practice profile, not "escalate to legal"
@@ -3689,7 +3689,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -3707,7 +3707,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[trademark clearance | trademark enforcement | DMCA | patent FTO | patent infringement | IP clause review | OSS compliance | portfolio maintenance | other — with one-line rationale]
+[trademark clearance | trademark enforcement | DMCA | patent FTO | patent infringement | IP clause review | OSS compliance | portfolio maintenance | other - with one-line rationale]
 
 ## Key facts
 
@@ -3717,13 +3717,13 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 *Any deviation from the practice-level posture that applies to this matter and only this matter.*
 
-- [e.g., "Enforcement posture: measured here even though house default is aggressive — counterparty is a key channel partner."]
+- [e.g., "Enforcement posture: measured here even though house default is aggressive - counterparty is a key channel partner."]
 - [e.g., "Approval for assertion: extra sign-off from marketing required before any letter goes out."]
 - [e.g., "Clean-team: matter files not readable even with cross-matter context on."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -3742,7 +3742,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to watch-service hit on `APEXLEAF` in class 25."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to watch-service hit on `APEXLEAF` in class 25."]
 ```
 
 ## Cross-matter context
@@ -3911,11 +3911,11 @@ For each classified dependency, state what the deployment model triggers:
 
 **Obligations for our deployment ([SaaS / binary / internal / embedded]):**
 
-- [ ] [Specific obligation — e.g., "Include attribution in a NOTICES file shipped with the app"]
+- [ ] [Specific obligation - e.g., "Include attribution in a NOTICES file shipped with the app"]
 - [ ] [e.g., "If we modify and distribute, publish source of our modifications"]
-- [ ] [e.g., "AGPL network trigger — if users access our modified version over a network, source must be offered to them"]
+- [ ] [e.g., "AGPL network trigger - if users access our modified version over a network, source must be offered to them"]
 
-**Risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
+**Risk:** BLOKLAYICI Critical | YÜKSEK High | ORTA Medium | DÜŞÜK Low
 
 **Recommendation:** [Comply with obligations | Replace with [alternative] | Remove | Attorney review before shipping | Seek commercial license from [vendor]]
 ```
@@ -3928,16 +3928,16 @@ For each classified dependency, state what the deployment model triggers:
 > - **Network API call:** For most licenses, no. For **AGPL**, the network-interaction clause means serving the software over a network IS distribution. In a microservices architecture, an AGPL component behind an API still triggers.
 > - **File-scope copyleft (MPL):** Only the modified files carry copyleft, not the whole work. Check whether any copyleft files were modified.
 >
-> **The severity rating depends on this.** "LGPL — weak copyleft, linking rules vary" without the linking analysis is the answer that gets an engineer sued. Static-linked LGPL in a proprietary product is 🔴 Critical. Dynamic-linked LGPL is 🟢 Low. Same license, opposite rating.
+> **The severity rating depends on this.** "LGPL — weak copyleft, linking rules vary" without the linking analysis is the answer that gets an engineer sued. Static-linked LGPL in a proprietary product is BLOKLAYICI Critical. Dynamic-linked LGPL is DÜŞÜK Low. Same license, opposite rating.
 
 **Severity calibration:**
 
 | Level | Means |
 |---|---|
-| 🔴 Critical | Strong copyleft in a deployment that triggers it (e.g., GPL in a distributed binary, AGPL in a SaaS). Non-OSI license that the business model actually conflicts with (e.g., SSPL while we're building a managed service). License cannot be determined and the package is load-bearing. |
-| 🟠 High | Weak copyleft with obligations the team hasn't set up for (file-level disclosure, NOTICE requirements). Dual-licensed where the chosen license is ambiguous. License file says one thing, headers say another. |
-| 🟡 Medium | Permissive with attribution requirements that haven't been wired into the build (missing NOTICES file, missing LICENSE in distribution). Transitive copyleft in a position that may or may not trigger, depending on how the library is consumed. |
-| 🟢 Low | Permissive with obligations already satisfied. Copyleft in a deployment model that doesn't trigger it (e.g., GPL library used internally only, with no redistribution). |
+| BLOKLAYICI Critical | Strong copyleft in a deployment that triggers it (e.g., GPL in a distributed binary, AGPL in a SaaS). Non-OSI license that the business model actually conflicts with (e.g., SSPL while we're building a managed service). License cannot be determined and the package is load-bearing. |
+| YÜKSEK High | Weak copyleft with obligations the team hasn't set up for (file-level disclosure, NOTICE requirements). Dual-licensed where the chosen license is ambiguous. License file says one thing, headers say another. |
+| ORTA Medium | Permissive with attribution requirements that haven't been wired into the build (missing NOTICES file, missing LICENSE in distribution). Transitive copyleft in a position that may or may not trigger, depending on how the library is consumed. |
+| DÜŞÜK Low | Permissive with obligations already satisfied. Copyleft in a deployment model that doesn't trigger it (e.g., GPL library used internally only, with no redistribution). |
 
 ### Step 5: Flag failure modes
 
@@ -3966,12 +3966,12 @@ Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/
 
 This memo and any dependency list reviewed may be privileged, confidential, or both. The output inherits that status from the source. Distribute only within the privilege circle; strip the work-product header before any external delivery (including before attaching the memo to an engineering ticket outside the privilege circle).
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of AGPL's network trigger in a given jurisdiction, scope of GPL-3.0's patent grant, latest license text for a recently-relicensed package), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / license / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of AGPL's network trigger in a given jurisdiction, scope of GPL-3.0's patent grant, latest license text for a recently-relicensed package), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / license / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Where the memo cites a license text, a court decision interpreting a license, or guidance from a steward (FSF, OSI, SPDX, SFLC), tag the citation: `[OSI]`, `[SPDX]`, `[FSF]`, `[SFC/SFLC]`, `[Westlaw]`, or the MCP tool name for citations retrieved from a connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for license text read directly from the repo. Citations tagged `verify` carry higher fabrication risk. Never strip or collapse the tags.
+> **Source attribution.** Where the memo cites a license text, a court decision interpreting a license, or guidance from a steward (FSF, OSI, SPDX, SFLC), tag the citation: `[OSI]`, `[SPDX]`, `[FSF]`, `[SFC/SFLC]`, `[Westlaw]`, or the MCP tool name for citations retrieved from a connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for license text read directly from the repo. Citations tagged `verify` carry higher fabrication risk. Never strip or collapse the tags.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 # OSS Review: [Project / Dependency List / Package]
 
@@ -3987,7 +3987,7 @@ This memo and any dependency list reviewed may be privileged, confidential, or b
 
 **Packages reviewed:** [N]
 **By classification:** [N permissive, N weak copyleft, N strong copyleft, N public domain, N non-OSI, N unknown]
-**Issues:** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+**Issues:** [N]BLOKLAYICI [N]YÜKSEK [N]ORTA [N]DÜŞÜK
 
 **Approval needed from:** [name, per practice profile]
 
@@ -4019,7 +4019,7 @@ OSS license enforceability varies — AGPL's network trigger has not been broadl
 
 ## Approval routing
 
-[From practice profile — who approves, what triggers automatic escalation]
+[From practice profile - who approves, what triggers automatic escalation]
 ```
 
 ## Decision posture
@@ -4070,8 +4070,8 @@ Surfaces what's renewing, adds assets, records filings, and audits the register.
    `~/.claude/plugins/config/claude-for-legal/ip-legal/portfolio.yaml`.
 
 2. **Default (no args):** equivalent to `--report` — show deadlines in the
-   next 90 days grouped by urgency (🔴 lapsed/grace, ⏰ due within window,
-   🟡 upcoming, 🌐 agent-managed, ❓ unknown).
+   next 90 days grouped by urgency (BLOKLAYICI lapsed/grace, ⏰ due within window,
+   ORTA upcoming, 🌐 agent-managed, ❓ unknown).
 
 3. **`--report [--days N]`:** Mode 2. Change the window with `--days`
    (30 / 60 / 90 / 180 typical). Always prepend the work-product header
@@ -4231,7 +4231,7 @@ assets:
     type: "trademark"                          # trademark / patent / copyright / design / domain
     jurisdiction: "US"
     mark_or_title: "[Mark or title]"
-    owner: "[Record owner — registered entity name]"
+    owner: "[Record owner - registered entity name]"
     status: "registered"                       # pending / registered / lapsed / abandoned / cancelled
     application_number: "[number or null]"
     registration_number: "[number or null]"
@@ -4355,7 +4355,7 @@ Output (prepend work-product header per `~/.claude/plugins/config/claude-for-leg
 IP PORTFOLIO DEADLINE REPORT — [date]
 [Company Name] — window: next [N] days
 
-🔴 LAPSED / IN GRACE ([N])
+BLOKLAYICI LAPSED / IN GRACE ([N])
   [Asset ID] / [Jurisdiction] / [Type] / [Mark or title]
     [Action] — original due [date], grace ends [date]
     Status: [grace / lapsed]
@@ -4364,9 +4364,9 @@ IP PORTFOLIO DEADLINE REPORT — [date]
   [Asset ID] / [Jurisdiction] / [Type] / [Mark or title]
     [Action] — due [date]
     Basis: [e.g., "5th-6th anniversary of registration"]
-    [Agent: firm / docket: id — if present]
+    [Agent: firm / docket: id - if present]
 
-🟡 UPCOMING (next window beyond 30 days, within [N] days)
+ORTA UPCOMING (next window beyond 30 days, within [N] days)
   [list]
 
 🌐 AGENT-MANAGED ([N])
@@ -4558,7 +4558,7 @@ RECOMMENDED ACTIONS
 
 The `ip-renewal-watcher` agent in this plugin runs this skill on a schedule
 (weekly by default) and posts the Mode 2 report to the channel named in
-CLAUDE.md → Renewal alerts. If 🔴 items appear (grace / lapsed), the agent
+CLAUDE.md → Renewal alerts. If BLOKLAYICI items appear (grace / lapsed), the agent
 posts them immediately regardless of schedule.
 
 ## Handoffs
@@ -4820,7 +4820,7 @@ Do not write the final output without explicit engagement with the gate.
 
 > This is a draft DMCA notice for attorney review, not a notice ready to send. Sending it is a sworn statement with §512(f) exposure. A licensed attorney reviews, edits, and takes professional responsibility before submission. Do not send this unreviewed.
 
-**Citation verification.** Any case or statutory citation included (for example, in internal memoranda around the notice) must be verified on a legal research tool. Source-tag each — `[Westlaw]`, `[CourtListener]`, `[user provided]`, `[model knowledge — verify]`, `[web search — verify]`. Citations tagged `verify` get checked first. No silent supplement from web or model knowledge if a configured research tool comes up thin — present options to the user.
+**Citation verification.** Any case or statutory citation included (for example, in internal memoranda around the notice) must be verified on a legal research tool. Source-tag each — `[Westlaw]`, `[CourtListener]`, `[user provided]`, `[model knowledge - verify]`, `[web search - verify]`. Citations tagged `verify` get checked first. No silent supplement from web or model knowledge if a configured research tool comes up thin — present options to the user.
 
 **Post-send record.** After submission, write `<matter-folder>/takedown/<slug>/submission.md`: service provider, designated agent used (address or web form URL), date submitted, confirmation ID if returned, URLs targeted, counter-notice watch date (generally 10–14 business days), legal hold refreshed.
 
@@ -4877,7 +4877,7 @@ Recommend one with two sentences of rationale.
 Output: `<matter-folder>/takedown/inbound/<slug>/triage.md`.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 > **Privilege inheritance.** This triage records our first-pass assessment of an adverse takedown. It is attorney-client and/or work-product material. Do not forward outside the privilege circle or attach to counter-notice submissions without scrubbing.
 
@@ -4896,12 +4896,12 @@ Output: `<matter-folder>/takedown/inbound/<slug>/triage.md`.
 **Claimed work:** [title, description, reg no. if provided]
 **Our content targeted:** [URLs / identifiers]
 **Date of takedown:** [YYYY-MM-DD]
-**Notice meets §512(c)(3) on its face:** [yes / no — list any missing elements]
+**Notice meets §512(c)(3) on its face:** [yes / no - list any missing elements]
 
 ## Assessment
 
 **License / authorization check:** [read]
-**Fair use walkthrough (Lenz factors):** [read — each factor + conclusion; `[SME VERIFY]`]
+**Fair use walkthrough (Lenz factors):** [read - each factor + conclusion; `[SME VERIFY]`]
 **Notice defects:** [list or none]
 **Host compliance with §512(g):** [were we given notice and opportunity]
 **Sender credibility:** [troll / real claimant / repeat takedown pattern]

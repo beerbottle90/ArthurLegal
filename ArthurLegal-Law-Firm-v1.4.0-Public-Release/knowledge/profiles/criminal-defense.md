@@ -9,8 +9,8 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** Ceza müdafaa — **şüpheli/sanık vekilliği + müdahil (mağdur) vekilliği + CMK görevli atama**
-**Aktif ceza dosyası hacmi:** `[DOLDUR — örn. özel 5-10 + CMK görevli aylık 3-8 dosya]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. CMK görevli atama zamanlaması (gece/hafta sonu) + 48 saat sınırı + tutuklama duruşmaları]`
+**Aktif ceza dosyası hacmi:** `[DOLDUR - örn. özel 5-10 + CMK görevli aylık 3-8 dosya]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. CMK görevli atama zamanlaması (gece/hafta sonu) + 48 saat sınırı + tutuklama duruşmaları]`
 **Birincil venue:**
 - Asliye Ceza Mh. (genel)
 - Ağır Ceza Mh. (ağırlaştırılmış cezalı)
@@ -19,14 +19,14 @@
 - BAM Ceza Daireleri (istinaf)
 - Yargıtay Ceza Daireleri (temyiz)
 
-**Sorumlu ortak:** `[DOLDUR — örn. Kıdemli Ortak C — ceza uzmanlığı]`
-**CMK görevli atama gönüllüsü olan avukatlar:** `[DOLDUR — kadrolu liste]`
+**Sorumlu ortak:** `[DOLDUR - örn. Kıdemli Ortak C - ceza uzmanlığı]`
+**CMK görevli atama gönüllüsü olan avukatlar:** `[DOLDUR - kadrolu liste]`
 
 ---
 
 ## Kim kullanıyor
 
-**Rol:** [DOLDUR — özellikle baroya kayıtlı + CMK gönüllüsü mü?]
+**Rol:** [DOLDUR - özellikle baroya kayıtlı + CMK gönüllüsü mü?]
 **Asıl avukat irtibatı:** [DOLDUR]
 
 ---
@@ -38,8 +38,8 @@
 | **Yargı MCP — Yargıtay Ceza Daireleri (1-23 ceza)** | ✓ | UYAP |
 | **Yargı MCP — AYM bireysel başvuru** | ✓ | AYM sitesi |
 | **Mevzuat MCP** (TCK, CMK, KVKK, sektör cezası kanunları) | ✓ | mevzuat.gov.tr |
-| **UYAP — ceza dosya** | [DOLDUR — müdafiilik avukatı sıfatıyla] | E-tebligat |
-| **Baro CMK Servisi** | [DOLDUR — büro telefon/uygulama] | — |
+| **UYAP — ceza dosya** | [DOLDUR - müdafiilik avukatı sıfatıyla] | E-tebligat |
+| **Baro CMK Servisi** | [DOLDUR - büro telefon/uygulama] | — |
 | **Adli Tıp Kurumu (ATK)** rapor | Manuel | — |
 
 ---
@@ -66,7 +66,7 @@ Bu plugin'in **ayırt edici** bölümü:
 - **Savcılık** → **48 saat içinde** (yakalama dahil) sulh ceza hakimine sevk (tutuklama veya salıverme)
 - **Sulh ceza hakimi** → tutuklama veya salıverme kararı (en geç 48. saat doluyor)
 
-⚠️ **Müdafi atama → 48 saat sınırı KRİTİK.** Süreyi geçirirse usul yokluğu gerekçesiyle salıverme.
+**Müdafi atama → 48 saat sınırı KRİTİK.** Süreyi geçirirse usul yokluğu gerekçesiyle salıverme.
 
 ### CMK ödeme takibi
 
@@ -98,13 +98,13 @@ Detay: `references/cmk-gorevli-rehberi.md`
 **CMK görevli atama:** Adalet Bakanlığı tarifesi (sabit, müzakere yok)
 
 **Özel müvekkil:**
-**Standart yaklaşım:** `[DOLDUR — örn. Aşama bazlı: soruşturma + kovuşturma + istinaf/temyiz; her aşama ayrı sözleşme]`
+**Standart yaklaşım:** `[DOLDUR - örn. Aşama bazlı: soruşturma + kovuşturma + istinaf/temyiz; her aşama ayrı sözleşme]`
 - **Aşama 1 — Soruşturma:** AAÜT × 1.5-2x, peşin
 - **Aşama 2 — Kovuşturma (asliye/ağır ceza):** AAÜT × 2-3x, duruşma başına ek (varsa)
 - **Aşama 3 — İstinaf/Temyiz:** AAÜT × 1.5x, peşin
 - **Beraat halinde başarı primi:** Av. K. m. 164 sınırı (uyuşmazlığa konu değerin %25'i — ceza davasında "değer" net olmadığından **tazminat/iadeye konu tutar** referans alınır)
 
-⚠️ **Ceza davasında "uyuşmazlığa konu değer"** çoğu zaman net değil. AAÜT × katsayı + müvekkilin maddi durumunun değerlendirmesi.
+**Ceza davasında "uyuşmazlığa konu değer"** çoğu zaman net değil. AAÜT × katsayı + müvekkilin maddi durumunun değerlendirmesi.
 
 ---
 
@@ -121,7 +121,7 @@ Detay: `references/cmk-gorevli-rehberi.md`
 | **Uzlaştırma kabul** (uzlaştırma kapsamına giren suç) | Müvekkil — avukat tavsiyesi | — |
 | Müdahil sıfatıyla ek dava (mağdur tarafı) | Mağdur müvekkil + atanan ortak | Paralel hukuk davası kararı |
 
-**Otomatik 🔴 eskalasyon:**
+**Otomatik BLOKLAYICI eskalasyon:**
 - Müvekkil veya **mağdur PEP** → Yönetici Ortak
 - Basına intikal etmiş dosya → Yönetici Ortak + medya stratejisi
 - Yargıtay birleştirici kararı son zamanlarda çıkmış konu → strateji revize
@@ -134,8 +134,8 @@ Detay: `references/cmk-gorevli-rehberi.md`
 ```
 AVUKATLIK K. m. 36 – MÜDAFİ ÇALIŞMASI – DAHİLİ VE GİZLİDİR
 [Büro] – Matter: [matter-slug]
-Müvekkil: [şüpheli/sanık rumuz] – [TC kimlik son 4 rakam — opsiyonel]
-Suçlama: [TCK m. X — kısa tanım]
+Müvekkil: [şüpheli/sanık rumuz] – [TC kimlik son 4 rakam - opsiyonel]
+Suçlama: [TCK m. X - kısa tanım]
 Dosya: [esas/soruşturma no]
 Aşama: [Soruşturma / İlk derece / İstinaf / Temyiz / İcra]
 Hazırlayan: Claude – avukat incelemesi öncesi
@@ -147,11 +147,11 @@ Hazırlayan: Claude – avukat incelemesi öncesi
 
 ### Atıf disiplini
 
-- `[Yargı MCP — yargitay — ceza-X-daire — GG.AA.YYYY]`
-- `[Yargı MCP — aym-bireysel — GG.AA.YYYY]`
-- `[Mevzuat MCP — TCK/CMK m. X — GG.AA.YYYY]`
-- `[CMK görevli atama no — Baro — GG.AA.YYYY]`
-- `[ATK raporu — rapor no — GG.AA.YYYY]` (Adli Tıp Kurumu)
+- `[Yargı MCP - yargitay - ceza-X-daire - GG.AA.YYYY]`
+- `[Yargı MCP - aym-bireysel - GG.AA.YYYY]`
+- `[Mevzuat MCP - TCK/CMK m. X - GG.AA.YYYY]`
+- `[CMK görevli atama no - Baro - GG.AA.YYYY]`
+- `[ATK raporu - rapor no - GG.AA.YYYY]` (Adli Tıp Kurumu)
 
 ---
 

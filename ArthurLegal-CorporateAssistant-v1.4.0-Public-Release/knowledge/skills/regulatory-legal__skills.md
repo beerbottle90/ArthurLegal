@@ -131,7 +131,7 @@ Once the user has picked, orient them. Cover, in your own voice:
 - **Never** write the practice profile with silent gaps. Every placeholder should be a deliberate user choice to skip, not a question that scrolled past unanswered.
 - **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/regulatory-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /regulatory-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -439,7 +439,7 @@ This skill surfaces open comment periods and records decisions.
 |---|---|---|---|---|---|
 | CMT-001 | [name] | [date] | [N] | Undecided | [owner] |
 
-### 🟡 Open (>14 days)
+### ORTA Open (>14 days)
 
 [same table]
 
@@ -459,7 +459,7 @@ This skill surfaces open comment periods and records decisions.
 ```
 /regulatory-legal:comments --decide CMT-001
 Decision: [filing / not-filing / waived]
-Rationale: "[brief — e.g., 'Rule doesn't apply to our model' or 'Filing comment on Section 3']"
+Rationale: "[brief - e.g., 'Rule doesn't apply to our model' or 'Filing comment on Section 3']"
 ```
 
 Updates tracker. If decision is "filing": prompt for filing deadline reminder
@@ -652,7 +652,7 @@ Before sending ANY Slack message (assignment notice, overdue reminder, bulk noti
 
 1. Show the user exactly what you're about to send and to whom: "I'm about to send this to [N] people: [preview]."
 2. Wait for an explicit yes.
-3. If the message contains any citations, deadlines, or compliance conclusions, add: "⚠️ The citations in this message are unverified — I'm not confirming they're current before sending. Do you want me to add a 'verify before acting' line?"
+3. If the message contains any citations, deadlines, or compliance conclusions, add: "The citations in this message are unverified — I'm not confirming they're current before sending. Do you want me to add a 'verify before acting' line?"
 4. Never send without the confirm. Not on a cadence. Not in a batch. Not because it was sent yesterday.
 
 Auto-send without confirmation is the most irreversible action in this plugin, sending content this plugin's own footer says may be wrong, to people who have no way to check. That combination does not get to skip review.
@@ -685,13 +685,13 @@ gaps:
     owner_slack: "[Slack user ID or handle, if known]"
     opened: 2026-03-01
     due: 2026-06-01  # reg effective date, internal deadline, or comment deadline
-    status_verified: true  # false if upstream policy-diff could not confirm the rule is in force; unverified items never hit 🔴 Overdue
+    status_verified: true  # false if upstream policy-diff could not confirm the rule is in force; unverified items never hit BLOKLAYICI Overdue
     status: "open"  # open | in-progress | closed | risk-accepted
     notified: false  # set to true after assignment notification sent
     resolution: ""  # filled on close
 ```
 
-**Never classify a gap as Overdue on an unverified rule.** The 🔴 Overdue classification means "we missed a binding deadline." If the rule's status is unverified (policy-diff set `status_verified: false`, or the rule is >12 months old / past its applicability date with no currency confirmation), the deadline may not be binding. Use 🟡 "Review needed" and note: "If this rule is in force as published, this would be overdue by [N] days. Verify rule status before escalating." Route unverified-rule items to `watch`, not to the active overdue/due-soon buckets; the `watch` revisit cadence forces a rule-status check before the item can re-surface as a compliance gap.
+**Never classify a gap as Overdue on an unverified rule.** The BLOKLAYICI Overdue classification means "we missed a binding deadline." If the rule's status is unverified (policy-diff set `status_verified: false`, or the rule is >12 months old / past its applicability date with no currency confirmation), the deadline may not be binding. Use ORTA "Review needed" and note: "If this rule is in force as published, this would be overdue by [N] days. Verify rule status before escalating." Route unverified-rule items to `watch`, not to the active overdue/due-soon buckets; the `watch` revisit cadence forces a rule-status check before the item can re-surface as a compliance gap.
 
 **`gap_type` semantics:**
 
@@ -738,7 +738,7 @@ was not sent and flag for manual follow-up.
 ### Mode 2: Status report
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Open Gaps — [date]
 
@@ -746,16 +746,16 @@ was not sent and flag for manual follow-up.
 
 [N gaps need action by [date] — top 3: X, Y, Z]
 
-### 🔴 Overdue
+### BLOKLAYICI Overdue
 
 | ID | Requirement | Policy | Owner | Due | Days over |
 |---|---|---|---|---|---|
 
-### 🟠 Due in <30 days
+### YÜKSEK Due in <30 days
 
 [same]
 
-### 🟡 Open
+### ORTA Open
 
 [same]
 
@@ -788,7 +788,7 @@ only real compliance deadlines.]
 
 ---
 
-**Verify citations before relying on them.** Regulation citations in this tracker were AI-generated upstream (by reg-feed-watcher and policy-diff) and have not been checked against a primary source. Before closing or risk-accepting a gap — or citing one in an attestation, board report, or regulator response — confirm the underlying rule against Westlaw, your firm's research platform, or the issuing authority's website. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags carried forward from upstream (e.g., `[Federal Register]`, `[web search — verify]`) show where each citation originated; `verify` tags carry higher fabrication risk and should be checked first. Never strip the tags when surfacing gaps.
+**Verify citations before relying on them.** Regulation citations in this tracker were AI-generated upstream (by reg-feed-watcher and policy-diff) and have not been checked against a primary source. Before closing or risk-accepting a gap — or citing one in an attestation, board report, or regulator response — confirm the underlying rule against Westlaw, your firm's research platform, or the issuing authority's website. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags carried forward from upstream (e.g., `[Federal Register]`, `[web search - verify]`) show where each citation originated; `verify` tags carry higher fabrication risk and should be checked first. Never strip the tags when surfacing gaps.
 ```
 
 ## Config-dependent fallbacks
@@ -990,7 +990,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -1008,7 +1008,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
+[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other - with one-line rationale]
 
 ## Key facts
 
@@ -1019,12 +1019,12 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 *Any deviation from the practice-level playbook that applies to this matter and only this matter.*
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
+- [e.g., "Tone: relationship-preserving - counterparty is a strategic partner."]
 - [e.g., "Governing law: must be English law, not Delaware."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -1043,7 +1043,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to inbound MSA draft from [counterparty]."]
 ```
 
 ## Cross-matter context
@@ -1097,7 +1097,7 @@ A reg changed. You have policies. This skill finds which policies the change tou
 If the user asks you to exclude a policy section, requirement, or category from the diff:
 
 1. Do it — the user owns the scope.
-2. But flag it, loudly and permanently: "⚠️ SCOPE LIMITATION: Section [X] excluded at user request. This diff does not reflect the full policy. Gaps in the excluded area are NOT identified." Above the header, carried to every downstream artifact.
+2. But flag it, loudly and permanently: "SCOPE LIMITATION: Section [X] excluded at user request. This diff does not reflect the full policy. Gaps in the excluded area are NOT identified." Above the header, carried to every downstream artifact.
 3. Hand the flag to `gap-surfacer`: "This diff was scope-limited. Do not represent it as a complete compliance picture." Include the scope-limitation banner verbatim on any gap tracker entry derived from this diff.
 4. Note what the exclusion means: "Excluding vendor management means the diff will show 'no policy addresses vendor management' — which is worse than showing the gap."
 
@@ -1115,17 +1115,17 @@ Before diffing a rule against policy, confirm the rule is actually in force. Red
 
 When you see a red flag, check (via research MCP, web search if enabled, or the Federal Register docket) for: delays, stays, injunctions, rescission proposals, vacatur, or amendments. If you can check and the rule is confirmed in force, proceed. If you cannot verify (no tools connected), emit this banner ABOVE the header, before any content:
 
-> `⚠️ RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not treat any compliance date below as binding until you confirm the rule's status at the Federal Register docket or with outside counsel.`
+> `RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not treat any compliance date below as binding until you confirm the rule's status at the Federal Register docket or with outside counsel.`
 
-Tag every due date in the output: `[due date per published rule — status unverified]`.
+Tag every due date in the output: `[due date per published rule - status unverified]`.
 
 Rule-status uncertainty travels downstream. When handing off a gap to `gap-surfacer`, mark the item `status_verified: false` so it never gets routed to an Overdue bucket on the strength of a published date alone.
 
 ### Step 1: Extract the new requirements
 
-**No silent supplement.** If the regulatory change text is partial or ambiguous and the fuller rule isn't available from the indexed source, stop and ask. Do NOT fill the gap from web search or model knowledge without asking. Say: "I have [what you have]. To extract requirements accurately I'd need [what's missing]. Options: (1) paste the full text, (2) point me at the primary source, (3) search the web for the rule — results will be tagged `[web search — verify]` and should be checked against the issuing authority before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
+**No silent supplement.** If the regulatory change text is partial or ambiguous and the fuller rule isn't available from the indexed source, stop and ask. Do NOT fill the gap from web search or model knowledge without asking. Say: "I have [what you have]. To extract requirements accurately I'd need [what's missing]. Options: (1) paste the full text, (2) point me at the primary source, (3) search the web for the rule — results will be tagged `[web search - verify]` and should be checked against the issuing authority before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
 
-**Source attribution.** Tag every citation — the regulatory citation, any cross-references, any policy excerpts — with where it came from: `[<regulator or research tool>]` for items retrieved from a primary source, policy library, or MCP; `[web search — verify]` for items pulled from web search; `[model knowledge — verify]` for items recalled from the model's training data; `[user provided]` for items pasted in by the user. Items tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags in the output.
+**Source attribution.** Tag every citation — the regulatory citation, any cross-references, any policy excerpts — with where it came from: `[<regulator or research tool>]` for items retrieved from a primary source, policy library, or MCP; `[web search - verify]` for items pulled from web search; `[model knowledge - verify]` for items recalled from the model's training data; `[user provided]` for items pasted in by the user. Items tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags in the output.
 
 Read the regulatory change. List each discrete new or changed requirement:
 
@@ -1155,9 +1155,9 @@ For each direct or indirect hit, read the policy and compare:
 **Our policy ([name], last updated [date]) says:**
 > "[relevant excerpt]"
 
-**Gap:** [None — policy already covers this | Partial — policy addresses X but not Y | Full — policy contradicts or doesn't address]
+**Gap:** [None - policy already covers this | Partial - policy addresses X but not Y | Full - policy contradicts or doesn't address]
 
-**Change needed:** [specific — "add a paragraph on X" not "update the policy"]
+**Change needed:** [specific - "add a paragraph on X" not "update the policy"]
 
 **Policy owner:** [from index]
 ```
@@ -1199,8 +1199,8 @@ If every requirement in the extracted list comes out as "no gap against [the nam
 §[X] already covers [Y]. The policies this regulation actually touches are
 [other-policy-1] and [other-policy-2] — rerun `/regulatory-legal:policy-diff` against those.
 
-Review on [next cycle — e.g., "at the next annual policy review"] or if
-[trigger — e.g., "the rule is finalized or amended"].
+Review on [next cycle - e.g., "at the next annual policy review"] or if
+[trigger - e.g., "the rule is finalized or amended"].
 ```
 
 One paragraph, one recommendation, routing note. Don't repeat the "no gap" finding for every requirement — the summary table handles that. A negative finding against the wrong target policy is a routing problem, not a compliance analysis.
@@ -1212,7 +1212,7 @@ Full per-requirement analysis as specified below. The detailed diff format is fo
 ## Output
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Policy Diff: [Regulation name]
 
@@ -1240,11 +1240,11 @@ Full per-requirement analysis as specified below. The detailed diff format is fo
 
 ### No-gap requirements
 
-[List — useful to know what's already covered]
+[List - useful to know what's already covered]
 
 ---
 
-**Verify citations before relying on them.** The regulatory citations and policy references above were AI-generated and have not been checked against a primary source. Before acting on any requirement here, confirm the rule against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each requirement (e.g., `[Federal Register]`, `[web search — verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
+**Verify citations before relying on them.** The regulatory citations and policy references above were AI-generated and have not been checked against a primary source. Before acting on any requirement here, confirm the rule against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each requirement (e.g., `[Federal Register]`, `[web search - verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
 ```
 
 ## Config-dependent fallbacks
@@ -1284,7 +1284,7 @@ argument-hint: "[GAP-ID or gap description]"
 1. Load `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → policy library index + practice profile.
 2. Use the workflow below.
 3. Gather inputs: the gap (from `/regulatory-legal:gaps` output or described directly), the current approved policy text, the rule text.
-4. Verify the rule is current (per the policy-diff rule-status check). If you can't verify, emit the `⚠️ RULE STATUS UNVERIFIED` banner.
+4. Verify the rule is current (per the policy-diff rule-status check). If you can't verify, emit the `RULE STATUS UNVERIFIED` banner.
 5. Produce a marked-up redraft of the affected policy section(s) — smallest-possible edit, `[verify]` tags carried through, inline comments explaining WHY each change was made.
 6. Output a Policy Redraft Memo. Write it to a new file named `[policy-name]-proposed-redraft-[YYYY-MM-DD].md` — never write to the source policy document.
 7. Do NOT close the gap in the tracker. The gap closes when the redraft is applied AND approved, which is the policy owner's action.
@@ -1351,9 +1351,9 @@ Use the same rule-status check pattern as `policy-diff`. Red flags that the rule
 
 When you see a red flag, check (via research MCP, web search if enabled, or the Federal Register docket) for: delays, stays, injunctions, rescission proposals, vacatur, or amendments. If you can verify the rule is in force, proceed. If you cannot verify:
 
-> `⚠️ RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not apply this redraft until you confirm the rule's status at the Federal Register docket or with outside counsel.`
+> `RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not apply this redraft until you confirm the rule's status at the Federal Register docket or with outside counsel.`
 
-Emit that banner above the work-product header. Tag every effective/compliance date in the redraft as `[effective date per published rule — status unverified]`.
+Emit that banner above the work-product header. Tag every effective/compliance date in the redraft as `[effective date per published rule - status unverified]`.
 
 ## Step 3: Produce the redraft
 
@@ -1375,7 +1375,7 @@ A marked-up version of the affected policy section.
   > `[Change: added biometric identifiers to the PII definition per COPPA 2025 amendments, 16 CFR 312.2 (effective Apr 22 2026) [verify]]`
 
 - Any effective date, threshold, citation, or requirement that came from model knowledge or an unverified source gets a `[verify]` tag inline — not just in the change summary.
-- Carry source tags through from the diff: `[Federal Register]`, `[web search — verify]`, `[model knowledge — verify]`, `[user provided]`. Don't strip them when moving from the diff to the redraft.
+- Carry source tags through from the diff: `[Federal Register]`, `[web search - verify]`, `[model knowledge - verify]`, `[user provided]`. Don't strip them when moving from the diff to the redraft.
 
 ### Scope discipline
 
@@ -1386,10 +1386,10 @@ If you see a second gap while redrafting — a provision that's clearly out of s
 ## Step 4: Output — Policy Redraft Memo
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
-> **⚠️ Reviewer note**
-> - **Sources:** [Research connector: CourtListener ✓ verified | not connected — cites from training knowledge, verify before relying]
+> **Reviewer note**
+> - **Sources:** [Research connector: CourtListener ✓ verified | not connected - cites from training knowledge, verify before relying]
 > - **Read:** [sections of the policy reviewed; what wasn't read]
 > - **Flagged for your judgment:** [N items marked `[review]` inline | none]
 > - **Currency:** [rule status verified against [source], [date] | unverified — see banner above]
@@ -1415,7 +1415,7 @@ If you see a second gap while redrafting — a provision that's clearly out of s
 | # | Provision | Current | Proposed | Why | Verify |
 |---|---|---|---|---|---|
 | 1 | §2.1 PII definition | "…names, addresses, SSNs…" | "…names, addresses, SSNs, biometric identifiers…" | COPPA 2025 amendments expand PII to cover biometrics | [Federal Register] |
-| 2 | §4.3 Retention period | "30 days" | "14 days" | New rule imposes 14-day cap | `[verify — model knowledge]` |
+| 2 | §4.3 Retention period | "30 days" | "14 days" | New rule imposes 14-day cap | `[verify - model knowledge]` |
 
 ### Before applying — checklist
 
@@ -1459,7 +1459,7 @@ Say nothing about config when the values are populated.
 
 - **Upstream inputs** come from `policy-diff` (per-requirement gap analysis) and `gap-surfacer` (the tracker). Carry their source tags and `[verify]` flags through.
 - **Gap tracker state:** this skill does NOT change the tracker. It doesn't mark the gap closed, doesn't mark it in-progress, doesn't touch `notified`. If you want a paper trail that a redraft exists, the policy owner or the user can update the gap entry with a resolution note when the redraft is applied and approved — see `/regulatory-legal:gaps --close`.
-- **Severity floor:** if the upstream gap is 🔴 or 🟠, the memo's Bottom line carries that severity. Silent demotion is a contradiction a reviewing lawyer cannot see. See CLAUDE.md `## Cross-skill severity floor`.
+- **Severity floor:** if the upstream gap is BLOKLAYICI or YÜKSEK, the memo's Bottom line carries that severity. Silent demotion is a contradiction a reviewing lawyer cannot see. See CLAUDE.md `## Cross-skill severity floor`.
 
 ## Close with the next-steps decision tree
 
@@ -1557,9 +1557,9 @@ correct slug, or fall back to direct RSS.
 De-duplicate across tiers — the same document may appear in multiple sources.
 Prefer the richest source for the enriched output.
 
-**No silent supplement.** If the feed pull returns few or no results for a regulator in the watchlist, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The feed check returned [N] items from [regulators hit]. Coverage appears thin for [regulator / topic]. Options: (1) broaden the date window, (2) try a different feed or MCP, (3) search the web — results will be tagged `[web search — verify]` and should be checked against the issuing authority's website before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
+**No silent supplement.** If the feed pull returns few or no results for a regulator in the watchlist, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The feed check returned [N] items from [regulators hit]. Coverage appears thin for [regulator / topic]. Options: (1) broaden the date window, (2) try a different feed or MCP, (3) search the web — results will be tagged `[web search - verify]` and should be checked against the issuing authority's website before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
 
-**Source attribution.** Tag every citation and regulatory item with where it came from: `[Federal Register]`, `[<regulator> RSS]`, `[TR]`, `[CourtListener]`, or the specific MCP tool name for items retrieved via connector; `[web search — verify]` for items from web search; `[model knowledge — verify]` for items surfaced from the model's training data; `[user provided]` for manually-pasted items. Items tagged `verify` carry higher fabrication risk than tool-retrieved items and should be checked first. Never strip or collapse the tags — they are the user's fastest signal about which citations to verify.
+**Source attribution.** Tag every citation and regulatory item with where it came from: `[Federal Register]`, `[<regulator> RSS]`, `[TR]`, `[CourtListener]`, or the specific MCP tool name for items retrieved via connector; `[web search - verify]` for items from web search; `[model knowledge - verify]` for items surfaced from the model's training data; `[user provided]` for manually-pasted items. Items tagged `verify` carry higher fabrication risk than tool-retrieved items and should be checked first. Never strip or collapse the tags — they are the user's fastest signal about which citations to verify.
 
 **Secondary sources.** Some catalog entries (IAPP, FPF, Hogan Lovells, Covington, Lexology, JD Supra, Artificial Lawyer, LawSites, and similar commentators/aggregators) report on primary regulatory action but are not the primary source. Tag any item pulled from these feeds with `[secondary source]` in addition to the feed-name tag — e.g., `[IAPP Daily Dashboard] [secondary source]`. In the digest, when a secondary-source item describes a regulator action, add a note: "→ Trace to primary: [link to regulator site if known, otherwise 'find on <regulator>.gov before relying']." Do not classify a secondary-source item as "Always material" on its own strength — bump it down a tier until the primary source is located.
 
@@ -1631,19 +1631,19 @@ The digest goes into the chat by default. **Also write it to a shareable file** 
 Format on disk matches the chat format exactly (below). Markdown renders well in GitHub, Notion, Obsidian, Google Docs (via "Import as Markdown" or Pandoc), and most email clients.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 ## Regulatory Feed Check — [date]
 
 **Period:** [last check] to [now]
-**Feeds checked:** [list active tiers — e.g., "Federal Register API, FTC RSS, TR"]
+**Feeds checked:** [list active tiers - e.g., "Federal Register API, FTC RSS, TR"]
 **Items found:** [N] total
 
 ### Bottom line
 
 [N gaps need action by [date] — top 3: X, Y, Z]
 
-### 🔴 Always material
+### BLOKLAYICI Always material
 
 **[Regulator] — [Title]**
 [One-line summary]. [Relevance hook]. Effective [date].
@@ -1652,7 +1652,7 @@ Format on disk matches the chat format exactly (below). Markdown renders well in
 
 [repeat for each]
 
-### 🟡 Review-worthy
+### ORTA Review-worthy
 
 **[Regulator] — [Title]**
 [One-line]. [Relevance]. [Deadline if any].
@@ -1673,7 +1673,7 @@ Format on disk matches the chat format exactly (below). Markdown renders well in
 
 ---
 
-**Verify citations before relying on them.** Regulatory citations here were AI-generated and have not been checked against a primary source. Before acting on any rule, guidance, or enforcement action above, confirm it against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each item (e.g., `[Federal Register]`, `[web search — verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
+**Verify citations before relying on them.** Regulatory citations here were AI-generated and have not been checked against a primary source. Before acting on any rule, guidance, or enforcement action above, confirm it against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each item (e.g., `[Federal Register]`, `[web search - verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
 ```
 
 ## Config-dependent fallbacks

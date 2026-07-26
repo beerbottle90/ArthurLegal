@@ -54,7 +54,7 @@ For each agreement retrieved:
    - **No deviation:** matches standard position or an acceptable fallback → skip, do not surface
    - **Minor:** outside acceptable fallback but within reasonable market range → flag
    - **Moderate:** materially outside playbook positions → flag
-   - **Critical:** hits a "never accept" or should have triggered escalation → flag with ⚠️
+   - **Critical:** hits a "never accept" or should have triggered escalation → flag with 
 
 5. If an agreement has **no deviations at all**, do not include it in the debrief output. Log it silently with `deviations: []`.
 
@@ -67,7 +67,7 @@ Debrief — week of [date]
 [N] agreements signed | [N] with deviations
 
 # | Deal | Clause | Severity | Add context?
-1 | Acme Corp — MSA | Liability cap | ⚠️ Critical | Y / N
+1 | Acme Corp — MSA | Liability cap | Critical | Y / N
 2 | Acme Corp — MSA | Governing law | Minor | Y / N
 3 | Widgetco — NDA | Survival period | Moderate | Y / N
 4 | Widgetco — NDA | Residuals carveout | Moderate | Y / N
@@ -88,7 +88,7 @@ For each row the attorney marked Y, present sequentially:
 [#] [Deal] — [Clause]
 Playbook position: [standard position from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
 Signed position: [what the agreement actually says]
-Severity: [Minor / Moderate / ⚠️ Critical]
+Severity: [Minor / Moderate / Critical]
 
 What was the basis behind this deviation?
 [ ] Counterparty leverage (significant, well-known, or anchor client)
@@ -160,7 +160,7 @@ Before writing, check whether a `deal_id` already exists in the log. Do not crea
 ```
 Debrief complete.
 [N] agreements reviewed | [N] with deviations | [N] deviation entries logged
-⚠️ Critical deviations this week: [N — list counterparty names, or "none"]
+Critical deviations this week: [N - list counterparty names, or "none"]
 🚫 Excluded from pattern analysis: [N deals flagged as one-offs, or "none"]
 Logged to: ~/.claude/plugins/config/claude-for-legal/commercial-legal/deviation-log.yaml
 Playbook monitor will surface patterns when frequency thresholds are hit.

@@ -171,10 +171,10 @@ Detay: `kvkk-m11-cevap-sablonu.md` + büro VERBİS dökümanı (büro-spesifik).
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. 36 — GG.AA.YYYY]`
-- `[TBB Meslek Kuralları m. 36-37 — TBB onaylı baskı]`
-- `[Mevzuat MCP — CMK m. 154 / HMK m. 249 — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay HGK — mesleki sır içtihadı — GG.AA.YYYY]`
+- `[Mevzuat MCP - Av. K. m. 36 - GG.AA.YYYY]`
+- `[TBB Meslek Kuralları m. 36-37 - TBB onaylı baskı]`
+- `[Mevzuat MCP - CMK m. 154 / HMK m. 249 - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay HGK - mesleki sır içtihadı - GG.AA.YYYY]`
 
 ---
 

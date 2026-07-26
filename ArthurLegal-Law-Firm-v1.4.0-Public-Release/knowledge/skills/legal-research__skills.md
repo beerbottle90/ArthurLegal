@@ -202,7 +202,7 @@ klavye girişi genellikle eşleşir (`emek` → `Əmək`) ama gerçek terimi ter
 
 ## Grounding ve sınırlar
 
-- Aracın döndürmediği bir AZ kuralını **söyleme** → `[model bilgisi — doğrulayın]`.
+- Aracın döndürmediği bir AZ kuralını **söyleme** → `[model bilgisi - doğrulayın]`.
 - **`Ləğv olunmuş` bir aktı asla güncel hukuk gibi sunma**; statüyü **asla
   atlama**.
 - Azerbaycanca metni Türkçe çevirisiyle birlikte ver; çevirinin **sana ait,
@@ -218,7 +218,7 @@ klavye girişi genellikle eşleşir (`emek` → `Əmək`) ama gerçek terimi ter
 ## Atıf
 
 ```
-[AZ Mevzuat — e-qanun MCP — {belge adı} — id:{id} — {statü} — GG.AA.YYYY]
+[AZ Mevzuat - e-qanun MCP - {belge adı} - id:{id} - {statü} - GG.AA.YYYY]
 ```
 
 Statü **atıfın içindedir** — okuyucu yeniden kontrol etmeden görebilmeli.
@@ -229,10 +229,10 @@ Statü **atıfın içindedir** — okuyucu yeniden kontrol etmeden görebilmeli.
 - **Kısa Cevap**
 - **Dayanak** — akt adı, id, **statü**, yürürlük tarihi, ilgili madde
 - **Analiz**
-- **Riskler** (🔴🟠🟡🟢)
+- **Riskler** (BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK)
 - **Kapsam Notu** — mevzuat kontrol edildi; içtihat kontrol edilmediyse belirt
 - **Kaynaklar**
-- **⚠️ İnceleyen notu** — nitelikli avukat incelemesi için taslak
+- **İnceleyen notu** — nitelikli avukat incelemesi için taslak
 - **Sıradaki adımlar** (3-5 seçenek)
 
 ## Entegrasyon
@@ -322,7 +322,7 @@ milletlerarası* → Ankara.
 bağımlılığı kaldırıldı: el sıkışması 0,2 s'de dönerken araması yanıtsız kalıyor
 ve her çağrıda 100 saniyelik limiti dolduruyordu.
 
-## ⚠️ Sorgu dili — en sık yapılan hata
+## Sorgu dili — en sık yapılan hata
 
 İndeksler makalenin **kendi dilindeki** kelimeleri eşler, **çeviri yapmaz.**
 Canlı doğrulama: `force majeure` (EN) Brezilya'dan **0** sonuç döndürdü;
@@ -391,7 +391,7 @@ için `compare_jurisdictions`'ı **dil grubu başına bir kez** çalıştır.
 ## Atıf
 
 ```
-[LexScholar — {indeks} — {yazar, başlık, dergi, yıl}] doi:{...}   ← ikincil kaynak
+[LexScholar - {indeks} - {yazar, başlık, dergi, yıl}] doi:{...}   ← ikincil kaynak
 ```
 
 ## Çıktı
@@ -405,7 +405,7 @@ Bağımsız karşılaştırmalı tarama:
 - **Değerlendirme** (doktrinin birincil kaynakla ilişkisi, ülkeler arası farklar)
 - **Kapsam Notu** (boş dönen yargı çevreleri, atlanan indeksler, iptal olan çağrılar)
 - **Kaynaklar** (her kayıt için `citation`; **ikincil** olarak işaretli)
-- **⚠️ İnceleyen notu** (Yönetici Ortak / dosya sorumlusu avukat incelemesi
+- **İnceleyen notu** (Yönetici Ortak / dosya sorumlusu avukat incelemesi
   için taslak)
 - **Sıradaki adımlar**
 
@@ -473,7 +473,7 @@ user-invocable: true
 | 5 | `get_contract_text` | Temiz OCR/tam metin, PDF sayfa penceresi (`start_page` + `page_count`) |
 | 6-9 | `list_countries` / `list_resources` / `list_years` / `list_annotation_categories` | Sayımlı taksonomi |
 
-> ⚠️ **En sık yapılan hata:** `get_contract_annotations(id, page=2)` sonuç
+> **En sık yapılan hata:** `get_contract_annotations(id, page=2)` sonuç
 > sayfalama **değildir** — PDF'in 2. sayfasındaki anotasyonları filtreler.
 > Tüm klozlar için `page`'i **boş bırak**.
 
@@ -521,10 +521,10 @@ Sayılar keşif anına aittir; **canlı `search_contracts` ile teyit et.**
 ## Atıf
 
 ```
-[ResourceContracts.org — {sözleşme adı} — id {id}]   (+ metadata source_url)
+[ResourceContracts.org - {sözleşme adı} - id {id}]   (+ metadata source_url)
 ```
 
-Çekmediğin bir emsali bu etiketle sunamazsın → `[model bilgisi — doğrulayın]`.
+Çekmediğin bir emsali bu etiketle sunamazsın → `[model bilgisi - doğrulayın]`.
 
 ## Çıktı
 
@@ -536,11 +536,11 @@ Bağımsız emsal/benchmark notu:
 - **Emsal Başına Kilit Klozlar** (anotasyonlardan, atıflı)
 - **Pozisyon İçin Çıkarımlar** (`[review]` noktaları)
 - **Kaynaklar** (her emsal: ad + `source_url`; **CC BY-SA 4.0** atıf)
-- **⚠️ İnceleyen notu** (nitelikli avukat incelemesi için taslak)
+- **İnceleyen notu** (nitelikli avukat incelemesi için taslak)
 - **Sıradaki adımlar**
 
 Daha büyük bir teslimatı beslediğinde: sözleşme incelemesinde benchmark ilgili
-kloz bulgusunun altına girer ve 🔴🟠🟡🟢 severity'yi piyasaya göre kalibre eder;
+kloz bulgusunun altına girer ve BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK severity'yi piyasaya göre kalibre eder;
 hukuki görüşte **Analiz** altında destekleyici karşılaştırma ve **Kaynaklar**
 altında yer alır — **Dayanak birincil hukuk kalır**.
 

@@ -81,16 +81,16 @@
 ## Atıf formatı (standart)
 
 **Mevzuat MCP'den alınan:**
-> TBK m. 26 [Mevzuat MCP — 13.05.2026]
+> TBK m. 26 [Mevzuat MCP - 13.05.2026]
 
 **Resmi Gazete'den alınan:**
 > KVKK Kurul Kararı 2024/256, RG 15.03.2024 sayı 32517 [Resmi Gazete]
 
 **Yargıtay kararı:**
-> Yargıtay 9. HD, E.2023/4521 K.2024/1245 T.12.04.2024 [UYAP/Lexpera — manuel doğrulayın]
+> Yargıtay 9. HD, E.2023/4521 K.2024/1245 T.12.04.2024 [UYAP/Lexpera - manuel doğrulayın]
 
 **Model bilgisi (doğrulayın):**
-> TTK m. 202 — bağlı şirketin kaybı tazmin yükümlülüğü [model bilgisi — doğrulayın]
+> TTK m. 202 — bağlı şirketin kaybı tazmin yükümlülüğü [model bilgisi - doğrulayın]
 
 ## Madde atıf kuralları
 

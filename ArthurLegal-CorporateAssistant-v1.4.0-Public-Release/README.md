@@ -13,7 +13,7 @@
 
 Türkiye'de bir in-house hukuk ekibinin gündelik üretim akışı için **avukat incelemesi öncesi taslak çıktılar** üretir: NDA triage, M&A diligence, KVKK DSAR cevabı, İSG runbook, idari dava ön-değerlendirme, marka clearance, haftalık regülasyon digest, transfer pricing kontrol notu, vergi davası akışı, sınır-ötesi yargı çevresi analizi vb.
 
-Çıktılar daima **taslaktır** ve avukat onayı gerektirir; paket bunu sıkı atıf disiplini ile zorlar (`[Mevzuat MCP — tarih]`, `[Yargı MCP — kurum — tarih]`, `[model bilgisi — doğrulayın]`).
+Çıktılar daima **taslaktır** ve avukat onayı gerektirir; paket bunu sıkı atıf disiplini ile zorlar (`[Mevzuat MCP - tarih]`, `[Yargı MCP - kurum - tarih]`, `[model bilgisi - doğrulayın]`).
 
 ---
 
@@ -81,7 +81,7 @@ Tam rehber için → [KURULUM.md](KURULUM.md).
 
 ```text
 /commercial-legal:governing-law-review
-[Sözleşmeyi yükle — yabancı governing law seç]
+[Sözleşmeyi yükle - yabancı governing law seç]
 ```
 → 17 yargı çevresinde MÖHUK 5718 + NY Konvansiyonu analizi.
 

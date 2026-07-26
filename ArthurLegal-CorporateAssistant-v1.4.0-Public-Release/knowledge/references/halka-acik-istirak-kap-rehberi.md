@@ -160,7 +160,7 @@ Her [Halka Açık İştirak]-ilgili çıktıda **mutlaka** şu satır olmalı:
 ```
 ⚠️ [Halka Açık İştirak] halka açık (BIST: [BIST-KOD]) — bu konu içsel bilgi olabilir.
    - İçsel bilgi listesi güncellemesi: [GEREKTİ / GEREKMEDİ]
-   - KAP açıklama tetikleyici: [VAR — tarih: GG.AA.YYYY / YOK]
+   - KAP açıklama tetikleyici: [VAR - tarih: GG.AA.YYYY / YOK]
    - Yatırımcı İlişkileri brifingi: [HAZIR / HAZIRLANACAK]
 ```
 

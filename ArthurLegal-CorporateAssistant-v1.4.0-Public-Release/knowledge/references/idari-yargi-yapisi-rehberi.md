@@ -9,7 +9,7 @@
 İYUK m. 7 (30 gün) → İdare Mahkemesi (ilk derece) →
 İYUK m. 45 (30 gün) → Bölge İdare Mahkemesi (istinaf) →
 İYUK m. 46 (30 gün) → Danıştay (temyiz, ilgili daire) →
-[İDDK — ısrar/çelişki]
+[İDDK - ısrar/çelişki]
 ```
 
 ## Danıştay daire görevleri (temyiz aşaması)

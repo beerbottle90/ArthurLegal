@@ -9,18 +9,18 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** İş hukuku — **hem işveren tarafı hem işçi tarafı** (büro tarafı dual practice)
-**Aylık matter hacmi:** `[DOLDUR — örn. 8-15 yeni intake/ay]`
-- İşveren tarafı: `[DOLDUR — %X]`
-- İşçi tarafı: `[DOLDUR — %X]`
-**Birincil yakıcı sorun:** `[DOLDUR — örn. işveren müvekkillerin "hızlı fesih" baskısı vs. tazminat riski; işçi müvekkillerde hesaplama doğruluğu + zamanaşımı]`
+**Aylık matter hacmi:** `[DOLDUR - örn. 8-15 yeni intake/ay]`
+- İşveren tarafı: `[DOLDUR - %X]`
+- İşçi tarafı: `[DOLDUR - %X]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. işveren müvekkillerin "hızlı fesih" baskısı vs. tazminat riski; işçi müvekkillerde hesaplama doğruluğu + zamanaşımı]`
 
-**Sorumlu ortak:** `[DOLDUR — örn. Kıdemli Ortak A]`
+**Sorumlu ortak:** `[DOLDUR - örn. Kıdemli Ortak A]`
 
 ---
 
 ## Çıkar çatışması — kritik kural
 
-⚠️ **Hiçbir zaman aynı dosyada hem işveren hem işçi tarafını temsil edemeyiz** (Av. K. m. 38).
+**Hiçbir zaman aynı dosyada hem işveren hem işçi tarafını temsil edemeyiz** (Av. K. m. 38).
 
 **Daha geniş çatışma:**
 - İşveren X'in işçisi A bize gelir — X bizim eski/sürekli müvekkilimiz mi?
@@ -45,13 +45,13 @@
 
 ## İş davası dava şartı (m. 3 İş Mh. K.)
 
-⚠️ **7036 sayılı İş Mahkemeleri K. m. 3:** Bireysel iş uyuşmazlıklarında **arabuluculuk dava şartı**.
+**7036 sayılı İş Mahkemeleri K. m. 3:** Bireysel iş uyuşmazlıklarında **arabuluculuk dava şartı**.
 
 - **Kapsam:** Tüm bireysel iş uyuşmazlıkları (kıdem, ihbar, fazla mesai, izin, ücret, işe iade)
 - **Kapsam dışı:** İş kazası tazminatı, meslek hastalığı tazminatı (TBK haksız fiil temelli)
 - **Akış:** Başvuru (e-arabuluculuk portalı veya yerinde) → atama (3 g) → toplantı (3-6 hafta) → tutanak
 
-⚠️ **Süre durması:** Arabuluculuk başvurusundan tutanak imzasına kadar **dava açma süresi durur** (m. 3/17). Zamanaşımı işlemez.
+**Süre durması:** Arabuluculuk başvurusundan tutanak imzasına kadar **dava açma süresi durur** (m. 3/17). Zamanaşımı işlemez.
 
 **İşveren tarafı pratik:**
 - Arabuluculukta hesaplama sunum + sulh teklif değerlendirme
@@ -77,7 +77,7 @@
 - **Müvekkil arabuluculuk masrafı** ayrıca tahsil edilir
 - **Müvekkili müdafaa etmek için bir miktar peşin** alınır (örn. 5.000-15.000 TL); başarısızlık halinde bu peşin kalır
 
-⚠️ **Av. K. m. 164:** %25 sınırı **uyuşmazlığa konu değer** üzerindendir; "kazanılan tutar" değil. İşçi tarafı hesaplama tipinde dikkatli ol.
+**Av. K. m. 164:** %25 sınırı **uyuşmazlığa konu değer** üzerindendir; "kazanılan tutar" değil. İşçi tarafı hesaplama tipinde dikkatli ol.
 
 ---
 
@@ -85,7 +85,7 @@
 
 ### Kıdem tazminatı tavanı (2026)
 
-- **Kıdem tazminatı tavanı:** `[DOLDUR — 2026 değeri, devlet memurları emekli ikramiyesinin azami brüt aylığı]`
+- **Kıdem tazminatı tavanı:** `[DOLDUR - 2026 değeri, devlet memurları emekli ikramiyesinin azami brüt aylığı]`
 - Bu tavanı geçen ücret için kıdem tazminatı **tavana eşit** ödenir
 - Tavan üzeri brüt ücretle hesaplama hatası en sık görülen yanlış
 
@@ -141,7 +141,7 @@ AVUKATLIK K. m. 36 – DAHİLİ
 Konu: [işçi unvan rumuz] fesih değerlendirmesi
 Önerilen fesih tipi: [Haklı m. 25 / Geçerli m. 18 / İşveren tek taraflı m. 17]
 Tahmini tazminat yükü: [TL]
-Hukuki risk: 🟢/🟡/🟠/🔴
+Hukuki risk: DÜŞÜK/ORTA/YÜKSEK/BLOKLAYICI
 ```
 
 **İşçi tarafı alacak hesaplama:**
@@ -162,10 +162,10 @@ TOPLAM: [TL]
 
 ### Atıf disiplini
 
-- `[Mevzuat MCP — 4857 m. X / 5510 m. X / 6356 m. X — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay 9./22. HD — GG.AA.YYYY]` (iş davası)
-- `[Kıdem tavanı — GG.AA.YYYY — Maliye Bakanlığı duyurusu]`
-- `[Bordro/SGK kaydı — GG.AA.YYYY]` (müvekkil dosyası)
+- `[Mevzuat MCP - 4857 m. X / 5510 m. X / 6356 m. X - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay 9./22. HD - GG.AA.YYYY]` (iş davası)
+- `[Kıdem tavanı - GG.AA.YYYY - Maliye Bakanlığı duyurusu]`
+- `[Bordro/SGK kaydı - GG.AA.YYYY]` (müvekkil dosyası)
 
 ---
 

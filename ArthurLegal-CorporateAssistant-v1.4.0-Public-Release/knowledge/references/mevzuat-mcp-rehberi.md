@@ -92,9 +92,9 @@ get_mevzuat_gerekce(mevzuat_id=<6698 KVKK id>)
 
 Mevzuat MCP'den alınan her atıf **mutlaka** şu etiketlerden biriyle gelmeli:
 
-- `[Mevzuat MCP — GG.AA.YYYY]` — bedesten veya mevzuat.gov.tr'den o oturumda çekildi
-- `[Mevzuat MCP — gerekçe]` — gerekçe metni  
-- `[model bilgisi — doğrulayın]` — MCP'den çekilmediyse
+- `[Mevzuat MCP - GG.AA.YYYY]` — bedesten veya mevzuat.gov.tr'den o oturumda çekildi
+- `[Mevzuat MCP - gerekçe]` — gerekçe metni  
+- `[model bilgisi - doğrulayın]` — MCP'den çekilmediyse
 
 **Asla:** MCP'den çekildiğini iddia eden ama gerçekte sadece model bilgisi olan atıflar verme.
 

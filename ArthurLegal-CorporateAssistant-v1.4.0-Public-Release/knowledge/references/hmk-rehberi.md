@@ -75,7 +75,7 @@ mcp__claude_ai_Mevzuat_MCP__get_mevzuat_madde_tree(mevzuatId=<id>)
 mcp__claude_ai_Mevzuat_MCP__search_within_mevzuat(mevzuatId=<id>, phrase="<madde no veya konu>")
 ```
 
-Atıf: `[Mevzuat MCP — HMK m. XXX — GG.AA.YYYY]`
+Atıf: `[Mevzuat MCP - HMK m. XXX - GG.AA.YYYY]`
 
 ## Yargıtay yorumu için
 

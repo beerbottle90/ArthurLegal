@@ -9,10 +9,10 @@
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Pratik modeli:** Büro işletim — **müvekkil intake, conflict check, fee agreement, vekalet, baro koordinasyonu, aylık fatura**
-**Birincil yakıcı sorun:** `[DOLDUR — örn. müvekkil sayısı arttıkça conflict check'in derinleşmesi + AAÜT eşik kontrolünün matter bazında elle yapılması]`
+**Birincil yakıcı sorun:** `[DOLDUR - örn. müvekkil sayısı arttıkça conflict check'in derinleşmesi + AAÜT eşik kontrolünün matter bazında elle yapılması]`
 
 **Sorumlu ortak:** **Yönetici Ortak** (varsayılan — bu eksen büronun ana operasyon hattıdır)
-**Operasyon ekibi:** `[DOLDUR — Yönetici Ortak + Office Manager + (varsa) Hukuk Asistanı]`
+**Operasyon ekibi:** `[DOLDUR - Yönetici Ortak + Office Manager + (varsa) Hukuk Asistanı]`
 
 ---
 
@@ -52,8 +52,8 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
    - Aciliyet (süre kontrol)
    ↓
 4. /firm-operations:conflict-check  (ZORUNLU)
-   ⛔ Conflict bulundu → ret
-   🟠 Şüpheli → Yönetici Ortak değerlendirme
+   DURDUR Conflict bulundu → ret
+   YÜKSEK Şüpheli → Yönetici Ortak değerlendirme
    ✓ Temiz → devam
    ↓
 5. /firm-operations:masak-kontrol
@@ -64,7 +64,7 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
 6. /firm-operations:sanctions-check
    - Müvekkil + (varsa) yurtdışı bağlantı
    - OpenSanctions API
-   ⛔ Hit → Yönetici Ortak + ret değerlendirme
+   DURDUR Hit → Yönetici Ortak + ret değerlendirme
    ↓
 7. /firm-operations:kvkk-aydinlatma
    - Aydınlatma metni sunma + imza
@@ -120,7 +120,7 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
 
 ### Conflict-clearance prosedürü
 
-🟠 şüpheli durumda:
+YÜKSEK şüpheli durumda:
 1. Eski müvekkille **yazılı rıza** iste (mümkünse — bazen yeni müvekkilin kim olduğunu açıklamak da çatışma)
 2. **Ethical wall (çin duvarı)** kur — büromuzda farklı ortak/avukat ayrı dosyada çalışsın, bilgi paylaşımı yasak
 3. Ortaklar Kurulu kararı
@@ -238,7 +238,7 @@ Detay: `references/baro-islemleri-rehberi.md`
 | Karar | Onay yetkisi |
 |---|---|
 | Yeni müvekkil kabulü (rutin) | Atanan ortak + Yönetici Ortak |
-| Yeni müvekkil kabulü (🟠 incelemeli) | **Ortaklar Kurulu** |
+| Yeni müvekkil kabulü (YÜKSEK incelemeli) | **Ortaklar Kurulu** |
 | Conflict bulundu — yine de kabul | **Ortaklar Kurulu + yazılı feragat** |
 | MASAK şüpheli işlem bildirimi | **MASAK Görevlisi + Yönetici Ortak** |
 | KVKK ihlal şüphesi (büro) | Yönetici Ortak + (gerekirse) KVKK Kurulu bildirim 72 saat |
@@ -257,12 +257,12 @@ AVUKATLIK K. m. 36 – MÜVEKKİL INTAKE NOTU – DAHİLİ VE GİZLİDİR
 [Büro] – Matter ID: [matter-slug] (taslak — henüz açılmadı)
 Müvekkil: [rumuz] – Tip: [Bireysel / Tüzel kişi]
 Talep özeti: [...]
-Conflict check: ✓ TEMİZ / 🟠 ŞÜPHELİ / ⛔ ÇATIŞMA
-MASAK: ✓ TAMAM / 🟠 İNCELE
-Sanctions: ✓ TEMİZ / ⛔ HIT
+Conflict check: ✓ TEMİZ / YÜKSEK ŞÜPHELİ / DURDUR ÇATIŞMA
+MASAK: ✓ TAMAM / YÜKSEK İNCELE
+Sanctions: ✓ TEMİZ / DURDUR HIT
 Önerilen plugin: [dispute-litigation / commercial-advisory / vd.]
 Ücret tahmini: [TL aralık]
-KARAR: ✓ KABUL / 🟠 ORTAKLAR KURULU / ⛔ RET
+KARAR: ✓ KABUL / YÜKSEK ORTAKLAR KURULU / DURDUR RET
 ```
 
 **Ücret sözleşmesi taslağı:** "TASLAK – İMZA BEKLİYOR + DAMGA VERGİSİ ÖDENMELİ" ekle.
@@ -273,19 +273,19 @@ KARAR: ✓ KABUL / 🟠 ORTAKLAR KURULU / ⛔ RET
 
 ### Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. X / TBB MK m. X / DVK Tablo I / GVK m. 94 — GG.AA.YYYY]`
-- `[OpenSanctions API — match skoru — GG.AA.YYYY]`
-- `[MASAK Tebliğ Sıra No. 5 — bölüm]`
-- `[AAÜT — 2026 baskı — TBB onay]`
-- `[KVKK m. X — Kurul kararı — GG.AA.YYYY]`
+- `[Mevzuat MCP - Av. K. m. X / TBB MK m. X / DVK Tablo I / GVK m. 94 - GG.AA.YYYY]`
+- `[OpenSanctions API - match skoru - GG.AA.YYYY]`
+- `[MASAK Tebliğ Sıra No. 5 - bölüm]`
+- `[AAÜT - 2026 baskı - TBB onay]`
+- `[KVKK m. X - Kurul kararı - GG.AA.YYYY]`
 
 ---
 
 ## Karar duruşu
 
 Bu plugin **kapı bekçisi** rolündedir:
-- ⛔ Açıkça yasak (conflict, sanctions, MASAK kırmızı) → RED ve kayıt
-- 🟠 Şüpheli → Ortaklar Kurulu (insan kararı)
+- DURDUR Açıkça yasak (conflict, sanctions, MASAK kırmızı) → RED ve kayıt
+- YÜKSEK Şüpheli → Ortaklar Kurulu (insan kararı)
 - ✓ Temiz → akış başlar
 
 **"Şüphede kalırsak ret"** — büronun uzun vadeli itibarı tek bir riskli matter'dan kıymetlidir.

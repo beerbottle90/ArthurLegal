@@ -58,7 +58,7 @@ user-invocable: true
 
 `knowledge/firm-profile.md` içindeki `[DOLDUR]` alanlarını doldur. ~20-30 dk (büronun tüm bilgisini topluyor).
 
-⚠️ **Bu, paketteki TÜM diğer plugin'lerin okuyacağı ana profildir. Önce bu plugin'i çalıştırın, sonra diğer plugin'lerin cold-start'larını.**
+**Bu, paketteki TÜM diğer plugin'lerin okuyacağı ana profildir. Önce bu plugin'i çalıştırın, sonra diğer plugin'lerin cold-start'larını.**
 
 ## Adımlar
 
@@ -109,7 +109,7 @@ user-invocable: true
 - Conflict check derinliği
 - MASAK kimlik tespit alışkanlığı
 - KVKK aydınlatma metni standardı var mı?
-- Otomatik 🟠 incelemeli kabul tetikleyicileri
+- Otomatik YÜKSEK incelemeli kabul tetikleyicileri
 
 ### 8. Vekalet ücreti modeli (büro seviye)
 
@@ -163,7 +163,7 @@ name: conflict-check
 description: >
   Av. K. m. 38 + TBB Meslek Kuralları m. 35-36 çatışma taraması. Müvekkil + karşı
   yan + atanan avukat üç eksen tarama; eşzamanlı / eski müvekkil / grup içi /
-  vekil değişimi / kamu görevi geçmişi senaryoları. Sonuç: ⛔ RET / 🟠 İNCELE / ✓ TEMİZ.
+  vekil değişimi / kamu görevi geçmişi senaryoları. Sonuç: DURDUR RET / YÜKSEK İNCELE / ✓ TEMİZ.
 user-invocable: true
 ---
 
@@ -221,33 +221,33 @@ Veritabanı sorgu:
 
 | Tip | Kural | Karar |
 |---|---|---|
-| Doğrudan eşzamanlı (m. 38/c) | Aynı işte iki taraf | ⛔ MUTLAK YASAK |
-| Eski müvekkille çatışma (m. 35-36) | Bilgi alakası varsa | 🟠 İNCELE (yazılı rıza) |
-| Grup içi (m. 38/a) | Aynı holding | 🟠 İNCELE (bilgi izolasyonu mümkün?) |
-| Vekil değişimi (yeni gelen avukat) | Eski büro geçmişi | 🟠 İNCELE (ethical wall) |
-| Kamu görevliyken iş (m. 38/b) | Hakim/savcı geçmişi | ⛔ MUTLAK YASAK |
-| Avukatın kendi menfaati | Self-dealing | ⛔ MUTLAK YASAK |
+| Doğrudan eşzamanlı (m. 38/c) | Aynı işte iki taraf | DURDUR MUTLAK YASAK |
+| Eski müvekkille çatışma (m. 35-36) | Bilgi alakası varsa | YÜKSEK İNCELE (yazılı rıza) |
+| Grup içi (m. 38/a) | Aynı holding | YÜKSEK İNCELE (bilgi izolasyonu mümkün?) |
+| Vekil değişimi (yeni gelen avukat) | Eski büro geçmişi | YÜKSEK İNCELE (ethical wall) |
+| Kamu görevliyken iş (m. 38/b) | Hakim/savcı geçmişi | DURDUR MUTLAK YASAK |
+| Avukatın kendi menfaati | Self-dealing | DURDUR MUTLAK YASAK |
 | Hiçbir çakışma yok | — | ✓ TEMİZ |
 
 ## Çıktı
 
 ```markdown
-[ÜST BAŞLIK — CONFLICT CHECK SONUCU — DAHİLİ]
+[ÜST BAŞLIK - CONFLICT CHECK SONUCU - DAHİLİ]
 
 # Conflict Check — [Müvekkil rumuz] vs. [Karşı yan rumuz]
 Tarih: GG.AA.YYYY
 Atanan ortak: [Yönetici Ortak veya öneri]
 
-## ⚠️ İnceleyen notu
-- SONUÇ: ⛔ RET / 🟠 İNCELE / ✓ TEMİZ
+## İnceleyen notu
+- SONUÇ: DURDUR RET / YÜKSEK İNCELE / ✓ TEMİZ
 
 ## SONUÇ
 [Gerekçeli değerlendirme]
 
 ## Sonraki adımlar
 [✓ TEMİZ ise] → /firm-operations:new-client-intake devam
-[🟠 ise] → Ortaklar Kurulu + yazılı rıza
-[⛔ ise] → Müvekkile red + REJECTED.md kaydı
+[YÜKSEK ise] → Ortaklar Kurulu + yazılı rıza
+[DURDUR ise] → Müvekkile red + REJECTED.md kaydı
 ```
 
 ---
@@ -314,11 +314,11 @@ user-invocable: true
 
 | Süre durumu | Etiket |
 |---|---|
-| Dava süresi < 7 gün | 🔴 ACİL |
-| Dava süresi < 30 gün | 🟠 Yüksek |
-| Sözleşme imza < 3 gün | 🟠 Yüksek |
-| Tutuklu müvekkil (ceza) | 🔴 ACİL — 48 saat sınırı |
-| Süre kritik değil | 🟢 Standart akış |
+| Dava süresi < 7 gün | BLOKLAYICI ACİL |
+| Dava süresi < 30 gün | YÜKSEK |
+| Sözleşme imza < 3 gün | YÜKSEK |
+| Tutuklu müvekkil (ceza) | BLOKLAYICI ACİL — 48 saat sınırı |
+| Süre kritik değil | DÜŞÜK Standart akış |
 
 ### 5. Sonraki zorunlu adımlar listesi
 
@@ -336,12 +336,12 @@ ZORUNLU SONRAKI ADIMLAR:
 ## Çıktı
 
 ```markdown
-[ÜST BAŞLIK — INTAKE NOTU — DAHİLİ]
+[ÜST BAŞLIK - INTAKE NOTU - DAHİLİ]
 
 # Müvekkil Intake — [Rumuz] — [Tarih]
 
-## ⚠️ İnceleyen notu
-- Aciliyet: 🔴/🟠/🟢
+## İnceleyen notu
+- Aciliyet: BLOKLAYICI/YÜKSEK/DÜŞÜK
 - Önerilen plugin: [...]
 - Sonraki zorunlu adımlar: 7 adım
 
@@ -356,7 +356,7 @@ ZORUNLU SONRAKI ADIMLAR:
 [Plugin]: [...] — gerekçe
 
 ## Aciliyet
-🔴/🟠/🟢 — [neden]
+BLOKLAYICI/YÜKSEK/DÜŞÜK — [neden]
 
 ## Sonraki ZORUNLU adımlar
 1. /firm-operations:conflict-check (İLK)

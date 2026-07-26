@@ -52,7 +52,7 @@ mcp__...__search_rekabet_kurumu_decisions(PdfText="<konu — örn. elektrik topt
 # 4054 ve tebliğ metinleri
 mcp__...__search_mevzuat(mevzuat_no="4054")   # + Tebliğ 2010/4, 2002/2
 ```
-Atıf: `[Rekabet Kurulu — karar no/tarih — GG.AA.YYYY]` (MCP'den çekildiyse `[Yargı MCP — rekabet — ...]`); mevzuat → `[Mevzuat MCP — GG.AA.YYYY]`. Çekmediğin karara atıf yapma.
+Atıf: `[Rekabet Kurulu - karar no/tarih - GG.AA.YYYY]` (MCP'den çekildiyse `[Yargı MCP - rekabet - ...]`); mevzuat → `[Mevzuat MCP - GG.AA.YYYY]`. Çekmediğin karara atıf yapma.
 
 ## Tipik hatalar
 - Birleşme eşiğini güncel olmayan rakamla hesaplamak (2022 TL eşikleri); **teknoloji teşebbüsü istisnasını** atlamak.
