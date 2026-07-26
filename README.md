@@ -2,6 +2,39 @@
 
 > **Proprietary — Non-Commercial Use Only. All Rights Reserved. See [LICENSE](LICENSE).**
 
+Türk hukukuna adapte edilmiş, **Claude.ai Projects** üzerinde çalışan hukuk
+asistanı paketleri. Her paket bir `SYSTEM_PROMPT.md` (Custom Instructions) ve
+bir `knowledge/` klasöründen oluşur.
+
+## Paketler — güncel sürümler
+
+| Profil | Güncel sürüm | Kime | Kapsam |
+|---|---|---|---|
+| **Corporate Assistant** | **[v1.4.0](ArthurLegal-CorporateAssistant-v1.4.0-Public-Release/)** | Şirket içi (in-house) hukuk ekibi | 12 pratik alan · 17 yargı çevresi · 5 MCP · 67 knowledge dosyası |
+| **Law Firm Assistant** | **[v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/)** | 0–30 kişilik hukuk bürosu | 16 pratik alan · 17 yargı çevresi · 5 MCP · 92 knowledge dosyası |
+| Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Hukuk akademisyeni | Yayın, dergi seçimi, doçentlik, etik kurul |
+| Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Adliye tarafı | Hâkim/savcı iş akışları |
+
+Önceki sürümler arşiv olarak korunur (`v1.0.0`, `v1.0.1`, `v1.2.0`, `v1.3.1`).
+Kurulum için ilgili paketin `KURULUM.md` dosyasından başlayın.
+
+### v1.4.0 — kaynak katmanı (26.07.2026)
+
+Corporate ve Law Firm paketlerine `legal-research` eklentisi ve üç **self-hosted,
+auth'suz** MCP sunucusu eklendi:
+
+| MCP | Rol | Kapsam |
+|---|---|---|
+| **e-qanun** | **BİRİNCİL** | Azerbaycan mevzuatı — resmî `api.e-qanun.az`; **yürürlük statüsü doğrulamalı** (`Qüvvədədir` / `Ləğv olunmuş`) |
+| **LexScholar** | **İKİNCİL** | 10 açık erişim indeksi federe; **DergiPark'ın 19 doğrulanmış Türk hukuk dergisi** resmî OAI-PMH ucundan |
+| **ResourceContracts** | **EMSAL** | 5.125 imzalı petrol & madencilik sözleşmesi, 107 ülke + uzman kloz anotasyonları (CC BY-SA 4.0, NRGI/CCSI) |
+
+Üçü de **isteğe bağlıdır** — kurulmazsa paketler çalışmaya devam eder ve asistan
+kapsam daralmasını çıktısında belirtir. Ayrıntı: ilgili paketin `CHANGELOG.md`
+dosyası.
+
+---
+
 Copyright (c) 2026 ArthurLegal. All rights reserved.
 
 This repository is **source-available but not open source**. **Commercial use is
