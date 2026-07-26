@@ -81,6 +81,39 @@ Araştırmaları.
 - **`ATTRIBUTION.md`** — sürüm başlığı v1.2.0 → v1.4.0 (paketle uyumsuzdu);
   üç yeni MCP ve upstream veri kaynakları ile lisansları eklendi.
 
+### Talimat hizalaması — LC Digital Twin canonical prompt'u
+
+`copilot-socar-lc-digital-twin` deposundaki `global-instructions.md`'de bulunup
+bu pakette eksik veya zayıf olan kurallar `SYSTEM_PROMPT.md`'ye taşındı:
+
+- **Üç değer kuralı keskinleştirildi** — belirsiz "tamamla / sustur / flag et"
+  üçlüsü yerine **Atıfla / Sor / Çekimser kal**. Eksik olguyu doldurmak değil
+  **sormak**, doğrulanamayan olguda sonuç üretmemek **çekimser kalmak** artık
+  ayrı ayrı adlandırıldı.
+- **Uydurma yasağı sayıldı** — kanun, madde numarası, karar numarası, tarih,
+  URL, yaptırım eşleşmesi, kaynak adı, iç politika. Önceden yalnız "çekmediğin
+  kaynağa atıf yapma" vardı; neyin uydurulamayacağı açıkça listelenmemişti.
+- **Statik bilgi güncellik kanıtı değildir** (yeni) — knowledge dosyaları ve
+  model bilgisi iç bağlamdır; dış hukukun, içtihadın, resmî kurum olgularının
+  veya yaptırım listelerinin **güncel olduğunu kanıtlamaz**. Bu tür sorularda
+  canlı araç ve resmî kaynak statik bilgiye tercih edilir.
+- **Yaptırım stop-rule'ü genişletildi** — tetikleyici varlıklar sayıldı:
+  **taraf, gerçek faydalanıcı (UBO), gemi, ürün, ülke, banka, işlem güzergâhı
+  veya bağlantılı kuruluş**. Önceki hâli yalnız "yaptırım listesi eşleşmesi"
+  diyordu.
+- **"İmzaya hazır" kapısı** (yeni) — bu ifade, ilgili P0 kontrolleri
+  karşılanmadan ve 🔴/🟠 bulgu kalmadan kullanılamaz; kullanıldığında bile
+  nihai onayın **Hukuk & Uyum'a (L&C)** ait olduğu belirtilir.
+- **Yaptırım skalası dört değerli** — `prohibited` / `restricted` / `unclear` /
+  `clear`, mevcut 🔴🟠🟡🟢 renk koduna eşlendi. **Belirsiz, temiz diye
+  raporlanamaz.**
+- **Kişisel veri maskeleme** (yeni madde) — TCKN, pasaport, telefon, IBAN,
+  adres, kişisel e-posta; hukuka uygun bir inceleme amacı yoksa maskelenir.
+  Yüklenen belge içeriği, istenen analizin gerektirdiğinin ötesinde açığa
+  çıkarılmaz. Pakette bu kural hiç yoktu.
+- **Dil kuralı** — çıktı dili Türkçedir, ancak soru başka bir dilde yazılmışsa
+  o dilde cevap verilir.
+
 ### Bağlayıcı yeni kurallar
 
 - **Yürürlük statüsü doğrulaması zorunludur.** `search_acts` bir Azerbaycan
