@@ -41,7 +41,7 @@ VDR tools (Box, Intralinks, Datasite) are likewise external MCPs — if none are
 
 **Priority categories:**
 • /02-Contracts/Customer/ — [N] new ([filenames])
-• /05-Litigation/ — [N] new ⚠️
+• /05-Litigation/ — [N] new 
 
 **Other:** [N] docs in [categories]
 

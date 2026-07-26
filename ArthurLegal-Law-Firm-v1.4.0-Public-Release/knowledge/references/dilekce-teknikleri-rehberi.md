@@ -105,7 +105,7 @@ Mevzuat ve emsal **doğrulanmadan** dilekçeye girmez.
 # Mevzuat maddesi
 mcp__claude_ai_Mevzuat_MCP__search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")
 mcp__claude_ai_Mevzuat_MCP__get_mevzuat_madde_tree(mevzuatId=<id>)
-→ Atıf: [Mevzuat MCP — HMK m. 119 — GG.AA.YYYY]
+→ Atıf: [Mevzuat MCP - HMK m. 119 - GG.AA.YYYY]
 
 # Emsal içtihat (Yargıtay / Danıştay / BAM-BİM)
 mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
@@ -113,7 +113,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
   daire="Hukuk Genel Kurulu",      # en bağlayıcı; idari için "İDDK"/ilgili Danıştay dairesi
   baslangicTarihi="2022-01-01"
 )
-→ Atıf: [Yarg MCP — Yargıtay HGK E.YYYY/.. K.YYYY/.. — GG.AA.YYYY]
+→ Atıf: [Yarg MCP - Yargıtay HGK E.YYYY/.. K.YYYY/.. - GG.AA.YYYY]
 ```
 
 - Emsal kararı **esas/karar no + daire + tarih** ile göster; gerekçeden alıntı yapıyorsan birebir tırnak içinde ver.

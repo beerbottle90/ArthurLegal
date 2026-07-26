@@ -136,20 +136,20 @@ search_kik_decisions(arananKelime="elektrik üretim ihalesi")
 
 Yarg MCP'den alınan her atıf **mutlaka** etiketli olmalı:
 
-- `[Yarg MCP — yargitay — GG.AA.YYYY]` — Yargıtay kararı, o oturumda çekildi
-- `[Yarg MCP — danistay — GG.AA.YYYY]` — Danıştay kararı
-- `[Yarg MCP — aym — GG.AA.YYYY]` — Anayasa Mahkemesi
-- `[Yarg MCP — kvkk-kurulu — GG.AA.YYYY]` — KVKK Kurulu
-- `[Yarg MCP — rekabet — GG.AA.YYYY]` — Rekabet Kurulu
-- `[Yarg MCP — gib — GG.AA.YYYY]` — GİB özelge
-- `[Yarg MCP — sayistay — GG.AA.YYYY]` — Sayıştay
-- `[Yarg MCP — bddk — GG.AA.YYYY]` — BDDK
-- `[Yarg MCP — kik — GG.AA.YYYY]` — KİK
-- `[Yarg MCP — sigorta-tahkim — GG.AA.YYYY]` — Sigorta Tahkim
-- `[Yarg MCP — bedesten — GG.AA.YYYY]` — Alt mahkeme (birleşik API)
-- `[Yarg MCP — emsal — GG.AA.YYYY]` — UYAP emsal
+- `[Yarg MCP - yargitay - GG.AA.YYYY]` — Yargıtay kararı, o oturumda çekildi
+- `[Yarg MCP - danistay - GG.AA.YYYY]` — Danıştay kararı
+- `[Yarg MCP - aym - GG.AA.YYYY]` — Anayasa Mahkemesi
+- `[Yarg MCP - kvkk-kurulu - GG.AA.YYYY]` — KVKK Kurulu
+- `[Yarg MCP - rekabet - GG.AA.YYYY]` — Rekabet Kurulu
+- `[Yarg MCP - gib - GG.AA.YYYY]` — GİB özelge
+- `[Yarg MCP - sayistay - GG.AA.YYYY]` — Sayıştay
+- `[Yarg MCP - bddk - GG.AA.YYYY]` — BDDK
+- `[Yarg MCP - kik - GG.AA.YYYY]` — KİK
+- `[Yarg MCP - sigorta-tahkim - GG.AA.YYYY]` — Sigorta Tahkim
+- `[Yarg MCP - bedesten - GG.AA.YYYY]` — Alt mahkeme (birleşik API)
+- `[Yarg MCP - emsal - GG.AA.YYYY]` — UYAP emsal
 
-**Asla:** Çekmediğin bir kararı MCP'den çekmiş gibi gösterme. Çekemiyorsan `[model bilgisi — doğrulayın]`.
+**Asla:** Çekmediğin bir kararı MCP'den çekmiş gibi gösterme. Çekemiyorsan `[model bilgisi - doğrulayın]`.
 
 ---
 

@@ -100,9 +100,9 @@ BGer kararı referansı formatı: `BGE {cilt} {daire} {sayfa}` (ör. BGE 148 III
 ## Atıf formatı
 
 ```
-[CH Mevzuat — {Kanun adı/SR} Art.{no} — Fedlex — GG.AA.YYYY]
-[BGer — BGE {cilt} {daire} {sayfa} / {YILI}_{ESAS_NO} — GG.AA.YYYY]
-[OpenCaseLaw.ch — {mahkeme} — {karar no} — GG.AA.YYYY]
+[CH Mevzuat - {Kanun adı/SR} Art.{no} - Fedlex - GG.AA.YYYY]
+[BGer - BGE {cilt} {daire} {sayfa} / {YILI}_{ESAS_NO} - GG.AA.YYYY]
+[OpenCaseLaw.ch - {mahkeme} - {karar no} - GG.AA.YYYY]
 ```
 
 ---

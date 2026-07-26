@@ -101,11 +101,11 @@ get_czech_law_article(
 
 ## Atıf disiplini
 
-- `[CZ Mevzuat — Sbírka MCP — Zákon č. {no}/Sb. § {madde} — GG.AA.YYYY]`
-- `[CZ Anayasa Mah. — Sbírka MCP — Nález {ref} — GG.AA.YYYY]`
+- `[CZ Mevzuat - Sbírka MCP - Zákon č. {no}/Sb. § {madde} - GG.AA.YYYY]`
+- `[CZ Anayasa Mah. - Sbírka MCP - Nález {ref} - GG.AA.YYYY]`
 
 **Asla:** MCP'den çekilmediğin Çek mevzuatını `[CZ Mevzuat]` etiketiyle gösterme →
-`[model bilgisi — doğrulayın]` kullan.
+`[model bilgisi - doğrulayın]` kullan.
 
 ---
 

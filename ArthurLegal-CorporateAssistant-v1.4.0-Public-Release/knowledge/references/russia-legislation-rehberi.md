@@ -111,9 +111,9 @@ Rosneft, Gazprom, Lukoil vd. Rus enerji şirketleri:
 ## Atıf formatı
 
 ```
-[RU Mevzuat — {Kanun adı/ФЗ no} md.{no} — pravo.gov.ru — GG.AA.YYYY]
-[ЕГРЮЛ — {şirket adı} OGRN:{no} — nalog.ru — GG.AA.YYYY]
-[OpenSanctions — {şirket} — score:{skor} — GG.AA.YYYY]
+[RU Mevzuat - {Kanun adı/ФЗ no} md.{no} - pravo.gov.ru - GG.AA.YYYY]
+[ЕГРЮЛ - {şirket adı} OGRN:{no} - nalog.ru - GG.AA.YYYY]
+[OpenSanctions - {şirket} - score:{skor} - GG.AA.YYYY]
 ```
 
 ---

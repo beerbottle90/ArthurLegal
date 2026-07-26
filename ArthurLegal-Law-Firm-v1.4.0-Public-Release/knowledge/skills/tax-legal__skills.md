@@ -219,7 +219,7 @@ Sayın Yetkilisi,
 
 I. FİİLİ DURUM
 
-[İşlemin/konunun ayrıntılı tarifi — taraflar, tutar, sıklık, fiziksel veya ekonomik gerçekçilik]
+[İşlemin/konunun ayrıntılı tarifi - taraflar, tutar, sıklık, fiziksel veya ekonomik gerçekçilik]
 
 II. HUKUKİ DEĞERLENDİRME
 
@@ -243,8 +243,8 @@ Tarih: GG.AA.YYYY
 
 Ekler:
 1. [İlgili belge]
-2. [Sözleşme örneği — varsa]
-3. [Benzer GİB özelge örnekleri — bizim pozisyonumuzu destekler]
+2. [Sözleşme örneği - varsa]
+3. [Benzer GİB özelge örnekleri - bizim pozisyonumuzu destekler]
 ```
 
 ### 4. Yarg MCP — Danıştay vergi içtihatı
@@ -279,7 +279,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # GİB Özelge Talep Değerlendirme — [Konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Tavsiye:** Özelge TALEP EDİLSİN / EDİLMESİN / FARKLI YOL
 - **Kaynaklar:** Yarg MCP (benzer özelge [N]); Mevzuat MCP (madde [N])
 - **Olumlu/olumsuz cevap olasılığı:** [tahmin]
@@ -290,7 +290,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 [tablo: özelge no, tarih, konu, sonuç, bizim için anlamı]
 
 ## Özelge talep dilekçesi taslağı
-[yukarıdaki şablon — doldurulmuş]
+[yukarıdaki şablon - doldurulmuş]
 
 ## Risk değerlendirmesi
 [olumsuz cevap senaryosu + alternatif yollar]
@@ -472,18 +472,18 @@ mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
 
 # KDV/ÖTV İade Review — [Dönem / Tip]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **İade tipi:** [HALKA AÇIK İŞTİRAK] KDV / [RAFİNERİ] ÖTV / Diğer
 - **Aşama:** A/B/C/D
 - **Beklenen tutar:** [TL]
 - **Tavsiye:** İade talep tamamla / İtiraz dilekçesi sun / Dava aç / Bekleme kabul
-- **Süre kalan:** [N gün — dava açılacaksa İYUK m. 7]
+- **Süre kalan:** [N gün - dava açılacaksa İYUK m. 7]
 - **Kaynaklar:** Yarg MCP (Danıştay [N], GİB özelge [N])
 - **KAP:** [N/A / hazırlanıyor]
 - **Reviewer bekleyen:** N adet
 
 ## Dokümantasyon checklist
-[checklist — eksik kalemler kırmızı]
+[checklist - eksik kalemler kırmızı]
 
 ## Maliye red gerekçesi (varsa) analizi
 [gerekçe + savunma argümanı]
@@ -529,7 +529,7 @@ Bu skill her çalıştırıldığında **ilk işlem süre hesabı**:
 > İYUK m. 7 — **30 gün** içinde Danıştay'a iptal davası açılmalı.
 > Bu süre **hak düşürücü**dür.
 
-Eğer kalan süre < 5 gün → 🔴 ACİL — dış vekille derhal koordinasyon.
+Eğer kalan süre < 5 gün → BLOKLAYICI ACİL — dış vekille derhal koordinasyon.
 
 ## Destination check
 
@@ -574,22 +574,22 @@ DAVA KONUSU:
 [Tarihli, sayılı] tarhiyat işlemi / idari para cezası kararının iptali ile yürütmenin durdurulması talebidir.
 
 İŞLEMİN TARİFİ:
-[Maliye'nin tebliğ ettiği belge — tarih, sayı, tutar, ceza]
+[Maliye'nin tebliğ ettiği belge - tarih, sayı, tutar, ceza]
 Tarafımıza tebliğ tarihi: GG.AA.YYYY
-Dava açma süresi: [tebliğden 30 gün sonu — tarih]
+Dava açma süresi: [tebliğden 30 gün sonu - tarih]
 
 I. OLAYLAR
 
-[Tarihsel olarak — vergi konusu işlem, beyanname, inceleme, tarhiyat]
+[Tarihsel olarak - vergi konusu işlem, beyanname, inceleme, tarhiyat]
 
 II. HUKUKİ DAYANAĞIMIZ
 
 A. Tarhiyatın hukuki dayanaktan yoksun olduğu
    [Argüman 1] — Dayanak: [VUK m. X, KVK m. Y, KDVK m. Z]
 
-B. [Argüman 2] — [Emsal Danıştay kararı: `[Yarg MCP — danistay — esas/karar — GG.AA.YYYY]`]
+B. [Argüman 2] — [Emsal Danıştay kararı: `[Yarg MCP - danistay - esas/karar - GG.AA.YYYY]`]
 
-C. [Argüman 3 — yedek]
+C. [Argüman 3 - yedek]
 
 III. YÜRÜTMENİN DURDURULMASI TALEBİMİZ (İYUK m. 27)
 
@@ -669,9 +669,9 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # Tax Litigation Prep — [Tarhiyat sayı / Konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Tebliğ tarihi:** GG.AA.YYYY
-- **Dava süresi sonu:** GG.AA.YYYY (kalan: N gün) 🔴 🟠 🟡
+- **Dava süresi sonu:** GG.AA.YYYY (kalan: N gün) BLOKLAYICI YÜKSEK ORTA
 - **Görevli daire:** Danıştay [X.] Daire
 - **Yürütmenin durdurulması talep edilecek:** evet
 - **Kaynaklar:** Yarg MCP (Danıştay [N] emsal); Mevzuat MCP (VUK/KDVK m. [N])
@@ -686,7 +686,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 | ... | ... | ... | ... |
 
 ## Hukuki argümanlar
-[A, B, C — emsal kararlarla]
+[A, B, C - emsal kararlarla]
 
 ## Dava dilekçesi taslağı (dış vekil revize için)
 [yukarıdaki şablon]
@@ -808,7 +808,7 @@ Türkiye OECD üyesi, OECD TPG'yi referans alır:
 - **BEPS Action 8-10** — Intangibles, services, financial transactions
 - **BEPS Action 13** — Country-by-Country Reporting (CbCR — [Müvekkil] dahil)
 
-Atıf: `[OECD TPG — Chapter X — 2022]`, `[BEPS Action — sayı]`.
+Atıf: `[OECD TPG - Chapter X - 2022]`, `[BEPS Action - sayı]`.
 
 ### 6. [Ana ortak / ilişkili taraf]-özel kontroller
 
@@ -843,9 +843,9 @@ Her intra-group işlem için:
 
 # Transfer Pricing Review — [Dönem / İşlem]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Kapsam:** Yıllık dokümantasyon / Spesifik işlem / Maliye inceleme cevabı
-- **Risk seviyesi:** 🔴/🟠/🟡/🟢
+- **Risk seviyesi:** BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK
 - **Kaynaklar:** Yarg MCP (GİB özelge [N], Danıştay [N]); OECD TPG referansları
 - **Mali İşler koordinasyon:** [✓/✗ + kim]
 - **CFO bilgi:** [✓/✗]
@@ -922,7 +922,7 @@ user-invocable: true
 | **Risk** | Maliye agresif tutum sergileyebilir | Sonraki dava süresi kaçırılabilir |
 | **Strateji** | Hızlı çözüm istiyorsa | Pazarlık + dava seçeneği aksamadan ise |
 
-⚠️ **KRİTİK:** Tarhiyat sonrası uzlaşma için başvuru = dava süresi durmaz. Uzlaşma sağlanmazsa "uzlaşmama tutanağı" tarihinden itibaren dava süresi devam eder ama **30 gün hesabı tebliğden başlar, uzlaşma için harcanan gün bu süreden düşülür** (VUK Ek m. 4). Çok az süre kalabilir.
+**KRİTİK:** Tarhiyat sonrası uzlaşma için başvuru = dava süresi durmaz. Uzlaşma sağlanmazsa "uzlaşmama tutanağı" tarihinden itibaren dava süresi devam eder ama **30 gün hesabı tebliğden başlar, uzlaşma için harcanan gün bu süreden düşülür** (VUK Ek m. 4). Çok az süre kalabilir.
 
 ## Adımlar
 
@@ -1026,7 +1026,7 @@ Tarih: GG.AA.YYYY
 
 # Uzlaşma Değerlendirme — [Tarhiyat sayı / Konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Aşama:** Ek m. 11 (öncesi) / Ek m. 1 (sonrası)
 - **Süre:** [...] (kalan: N gün)
 - **Tavsiye:** UZLAŞMA ÖNERİLİR / ÖNERİLMEZ / KARMA STRATEJİ
@@ -1051,7 +1051,7 @@ Tarih: GG.AA.YYYY
 **Müzakere stratejisi:** [...]
 
 ## Uzlaşma talep dilekçesi (taslak)
-[şablon — doldurulmuş]
+[şablon - doldurulmuş]
 
 ## Sonraki adımlar
 
@@ -1099,7 +1099,7 @@ Maliye inceleme başlama →
 İnceleme raporu (denetçi hazırlar, Bakanlık onayı) →
 [Tarhiyat öncesi: VUK Ek m. 11 uzlaşma şansı] →
 Tarhiyat (vergi/ceza belirlenir, tebliğ) →
-[Tarhiyat sonrası: VUK Ek m. 1 uzlaşma | İYUK m. 7 — 30 gün dava] →
+[Tarhiyat sonrası: VUK Ek m. 1 uzlaşma | İYUK m. 7 - 30 gün dava] →
 Danıştay dava
 ```
 
@@ -1161,7 +1161,7 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 
 ### D. Tarhiyat tebliğ edildi
 
-⚠️ **30 GÜN SÜRE BAŞLADI** (İYUK m. 7). Aksiyon:
+**30 GÜN SÜRE BAŞLADI** (İYUK m. 7). Aksiyon:
 
 - [ ] **Tarhiyat sonrası uzlaşma (VUK Ek m. 1)** — 30 gün içinde başvur (cezada %75'e kadar indirim)
 - [ ] **Veya dava** — 30 gün içinde Danıştay'a → `/tax-legal:tax-litigation-prep`
@@ -1196,9 +1196,9 @@ mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
 
 # Vergi İncelemesi Response — [İnceleme dönemi / Konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Aşama:** A/B/C/D
-- **Süre kalan:** [İYUK m. 7 30 gün / VUK Ek 30 gün — N gün kaldı]
+- **Süre kalan:** [İYUK m. 7 30 gün / VUK Ek 30 gün - N gün kaldı]
 - **Karar matrisi:** [Uzlaş / Dava / Karma]
 - **Tutar maruziyet:** [TL toplam / vergi + ceza]
 - **Reviewer bekleyen:** N adet

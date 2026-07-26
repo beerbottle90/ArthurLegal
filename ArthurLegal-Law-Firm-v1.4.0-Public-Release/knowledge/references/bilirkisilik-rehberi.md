@@ -182,7 +182,7 @@ search_mevzuat(mevzuat_adi="Bilirkişilik Yönetmeliği", mevzuat_tur="YONETMELI
 search_mevzuat(mevzuat_adi="Bilirkişilik Ücret Tarifesi")
 ```
 
-Atıf: `[Mevzuat MCP — 6754 s. K. m. XX / HMK m. XXX — GG.AA.YYYY]`
+Atıf: `[Mevzuat MCP - 6754 s. K. m. XX / HMK m. XXX - GG.AA.YYYY]`
 
 ---
 

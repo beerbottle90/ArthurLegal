@@ -14,7 +14,7 @@
   - m. 164/4: Karşı yan vekalet ücreti **vekile aittir** (sözleşmede aksi yoksa)
   - m. 168: Asgari Ücret Tarifesi yıllık günceller
 
-- **AAÜT 2026** (varsayımsal güncel) — Resmi Gazete `[sayı/tarih — DOLDUR — TBB her Ocak yayımlar]`
+- **AAÜT 2026** (varsayımsal güncel) — Resmi Gazete `[sayı/tarih - DOLDUR - TBB her Ocak yayımlar]`
 
 ---
 
@@ -132,9 +132,9 @@ Bazı ücret sözleşmelerinde "karşı yandan tahsil edilen vekalet ücreti mü
 
 ## Atıf disiplini
 
-- `[AAÜT — 2026 baskı — TBB onay — RG sayı/tarih]`
-- `[Av. K. m. 164 — Mevzuat MCP — GG.AA.YYYY]`
-- `[Yargıtay HGK — AAÜT yorumu — GG.AA.YYYY]` (içtihat)
+- `[AAÜT - 2026 baskı - TBB onay - RG sayı/tarih]`
+- `[Av. K. m. 164 - Mevzuat MCP - GG.AA.YYYY]`
+- `[Yargıtay HGK - AAÜT yorumu - GG.AA.YYYY]` (içtihat)
 
 ---
 

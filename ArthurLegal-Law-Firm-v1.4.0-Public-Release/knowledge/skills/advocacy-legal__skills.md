@@ -73,7 +73,7 @@ user-invocable: true
 | **Şikayet** (şikayete bağlı suçlar) | **6 ay** (fail+fiili öğrenme) | TCK m.73 |
 | Koruma tedbiri **tazminatı** (m.141) | karar kesinleşmesinden **3 ay / her halde 1 yıl** | CMK m.142 |
 
-Kalan < 2 gün (7 günlük sürelerde) → 🔴. Süreler kesin; kaçırma = hak kaybı.
+Kalan < 2 gün (7 günlük sürelerde) → BLOKLAYICI. Süreler kesin; kaçırma = hak kaybı.
 
 ## ADIM 1 — Evre + rol + dilekçe tipi
 
@@ -109,7 +109,7 @@ search_bedesten_unified(phrase="<suç + somut konu>",
   birimAdi="<ilgili Yargıtay CD, örn. 12. CD (taksirle ölüm), 15. CD, 11. CD>",
   kararTarihiStart="2021-01-01")
 ```
-Yalnızca çekileni işle: `[Yargı MCP — Yargıtay 12.CD — Esas/Karar — GG.AA.YYYY]`.
+Yalnızca çekileni işle: `[Yargı MCP - Yargıtay 12.CD - Esas/Karar - GG.AA.YYYY]`.
 
 ## ADIM 5 — Dilekçe taslakları
 
@@ -126,7 +126,7 @@ SUÇ TARİHİ/YERİ   : GG.AA.YYYY — [santral/saha]
 
 OLAYLAR           : [kronolojik somut anlatım + delil atfı]
 DELİLLER          : kamera kaydı (EK), tutanak, bilirkişi, tanık, [SGK/ÇŞB raporu]
-HUKUKİ NEDENLER   : TCK m.[...], CMK `[Mevzuat MCP — GG.AA.YYYY]`
+HUKUKİ NEDENLER   : TCK m.[...], CMK `[Mevzuat MCP - GG.AA.YYYY]`
 TALEP             : Şüpheli/şüpheliler hakkında soruşturma başlatılmasına, gerekli
                     koruma/delil tedbirlerine, kamu davası açılmasına karar verilmesini
                     ve şikayetçi/müşteki sıfatımızın kabulünü saygıyla talep ederiz.
@@ -150,9 +150,9 @@ EKLER: vekaletname, deliller
 [ÜST BAŞLIK]
 # Ceza Dilekçesi — [tip] — [dosya/soruşturma no]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Evre/rol:** [soruşturma/kovuşturma] — [müşteki/savunma]
-- **Süre:** [işlem] son tarih GG.AA.YYYY (kalan N gün) 🔴/🟠/🟡
+- **Süre:** [işlem] son tarih GG.AA.YYYY (kalan N gün) BLOKLAYICI/YÜKSEK/ORTA
 - **Görev/uzlaştırma:** [mahkeme] · uzlaştırma [kapsamda/değil]
 - **Kaynaklar:** Mevzuat MCP [✓/✗]; Yargı MCP (CD) [✓ N / ✗]
 - **Onay:** dış ceza avukatı + [Baş Hukuk Müşaviri] şart (sanık müdafiliğinde zorunlu)
@@ -249,7 +249,7 @@ user-invocable: true
 | **AYM bireysel başvuru** | **30 gün** (kesinleşmeden/öğrenmeden) | 6216 m.47/5 |
 | Üst makama başvuru (m.11) | 60 gün içinde; cevap/zımni ret sonrası dava süresi işler | İYUK m.11 |
 
-⚠️ **m.11 üst makama başvuru ÇED ivedi yargılama süresini DURDURMAZ.** Kalan < 5 gün → 🔴.
+**m.11 üst makama başvuru ÇED ivedi yargılama süresini DURDURMAZ.** Kalan < 5 gün → BLOKLAYICI.
 
 ## ADIM 0 — Görevli mahkeme (kritik; idari-dava-prep ile teyit)
 
@@ -293,7 +293,7 @@ search_bedesten_unified(phrase="<konu> iptal yürütmenin durdurulması",
   kararTarihiStart="2022-01-01")
 search_rekabet_kurumu_decisions / search_kik_v2_decisions / search_kvkk_decisions  /* kurum birincil */
 ```
-Yalnızca çekileni dilekçeye işle: `[Yargı MCP — Danıştay 13.D — Esas/Karar — GG.AA.YYYY]`.
+Yalnızca çekileni dilekçeye işle: `[Yargı MCP - Danıştay 13.D - Esas/Karar - GG.AA.YYYY]`.
 
 ## ADIM 5 — İdari dava dilekçesi taslağı (İYUK m.3 zorunlu unsurlar)
 
@@ -315,16 +315,16 @@ I. OLAYLAR (idari süreç kronolojisi, işlemin tarif ve tarih/sayısı)
 II. HUKUKA AYKIRILIK NEDENLERİ
   A. Yetki yönünden  B. Şekil/usul yönünden (savunma hakkı/gerekçe)
   C. Sebep yönünden  D. Konu yönünden  E. Maksat yönünden
-  [her biri + emsal: [Yargı MCP — Danıştay …]]
+  [her biri + emsal: [Yargı MCP - Danıştay …]]
 
 III. YÜRÜTMENİN DURDURULMASI (İYUK m.27)
   1. Telafisi güç/imkansız zarar [somut: üretim/lisans/gelir]
   2. Açıkça hukuka aykırılık [en güçlü sebep]
 
-IV. [TAM YARGI — varsa zarar kalemleri ve hesap]
+IV. [TAM YARGI - varsa zarar kalemleri ve hesap]
 
 HUKUKİ SEBEPLER   : 2577 İYUK, 6446 EPDK/Elektrik Piyasası K., 2872 Çevre K.,
-                    ilgili yönetmelikler `[Mevzuat MCP — GG.AA.YYYY]`
+                    ilgili yönetmelikler `[Mevzuat MCP - GG.AA.YYYY]`
 DELİLLER          : Dava konusu işlem ve tebliği (EK), idari dosya (m.20 ara kararı
                     ile celbi talebi), bilirkişi, keşif, her tür yasal delil.
 
@@ -352,10 +352,10 @@ EKLER: 1. Vekaletname  2. İşlem/tebliğ örneği  3. ...
 [ÜST BAŞLIK]
 # Kamu Hukuku Dilekçesi — [tip] — [işlem]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Görevli mahkeme:** [tespit] (gerekçe) `[review]`
-- **Süre:** son tarih GG.AA.YYYY (kalan N gün) — [60/30/15/AYM 30] 🔴/🟠/🟡
-- **Yürütmeyi durdurma:** [evet — gerekçe]
+- **Süre:** son tarih GG.AA.YYYY (kalan N gün) — [60/30/15/AYM 30] BLOKLAYICI/YÜKSEK/ORTA
+- **Yürütmeyi durdurma:** [evet - gerekçe]
 - **Kaynaklar:** Mevzuat MCP [✓/✗]; Yargı MCP (Danıştay/kurum) [✓ N / ✗]
 - **Onay:** dış idari avukat + [Baş Hukuk Müşaviri] şart
 
@@ -403,9 +403,9 @@ user-invocable: true
 | İstinaf/temyiz **cevap** | 2 hafta | HMK m.347/m.366 |
 | Bilirkişi raporuna itiraz | 2 hafta | HMK m.281 |
 
-Kalan < 5 gün → 🔴 ACİL (dış vekille derhal koordine). Süre hak düşürücü/kesin — kaçırma = hak kaybı.
+Kalan < 5 gün → BLOKLAYICI ACİL (dış vekille derhal koordine). Süre hak düşürücü/kesin — kaçırma = hak kaybı.
 
-⚠️ Cevap süresi **dava dilekçesinin tebliğinden** işler; tensiple verilen süreyi teyit et.
+Cevap süresi **dava dilekçesinin tebliğinden** işler; tensiple verilen süreyi teyit et.
 
 ## Destination check
 
@@ -473,7 +473,7 @@ Kullanıcı zamanaşımı tarihi verdiyse **önce doğrula** (no silent suppleme
 search_bedesten_unified(phrase="<uyuşmazlık konusu anahtar kelimeler>",
   birimAdi="<ilgili Yargıtay HD, örn. 11. HD/15. HD/9. HD>", kararTarihiStart="2022-01-01")
 ```
-Lehte/aleyhte eğilimi göster, dilekçeye **yalnızca çekilen** kararı işle: `[Yargı MCP — Yargıtay X.HD — Esas/Karar — GG.AA.YYYY]`. **Uydurma içtihat yazma.**
+Lehte/aleyhte eğilimi göster, dilekçeye **yalnızca çekilen** kararı işle: `[Yargı MCP - Yargıtay X.HD - Esas/Karar - GG.AA.YYYY]`. **Uydurma içtihat yazma.**
 
 ## ADIM 7 — Dilekçe taslağı (HMK m.119 zorunlu unsurlar)
 
@@ -487,20 +487,20 @@ DAVALI            : [ad/unvan] — [adres]
 KONU              : [örn. fazlaya ilişkin haklar saklı kalmak kaydıyla
                     [tutar] TL alacağın/tazminatın temerrüt faiziyle tahsili] talebidir.
 HARCA ESAS DEĞER  : [tutar] TL
-ARABULUCULUK      : [Anlaşmama tutanağı tarih/no — EK-1] (TTK m.5/A)
+ARABULUCULUK      : [Anlaşmama tutanağı tarih/no - EK-1] (TTK m.5/A)
 
 AÇIKLAMALAR
-1. [Vakıa — kronolojik, delil atfı] (EK-...)
+1. [Vakıa - kronolojik, delil atfı] (EK-...)
 2. [Vakıa ...]
 ...
-[Karşı tarafın temerrüdü / ihlal / zarar — somut]
+[Karşı tarafın temerrüdü / ihlal / zarar - somut]
 
 HUKUKİ SEBEPLER   : TBK m. [...], TTK m. [...], HMK ve ilgili mevzuat.
-                    `[Mevzuat MCP — GG.AA.YYYY]`
+                    `[Mevzuat MCP - GG.AA.YYYY]`
 DELİLLER          : Sözleşme (EK-...), ihtarname (EK-...), e-yazışma/KEP,
                     fatura, ticari defterler (TTK m.222), bilirkişi, tanık,
                     keşif, yemin ve her türlü yasal delil.
-EMSAL             : [Yargı MCP — Yargıtay X.HD — Esas/Karar — GG.AA.YYYY] (varsa)
+EMSAL             : [Yargı MCP - Yargıtay X.HD - Esas/Karar - GG.AA.YYYY] (varsa)
 
 SONUÇ VE TALEP    : Yukarıda açıklanan nedenlerle;
   1. Fazlaya ilişkin haklarımız saklı kalmak kaydıyla [tutar] TL'nin
@@ -525,13 +525,13 @@ EKLER: 1. Vekaletname  2. Arabuluculuk anlaşmama tutanağı  3. Sözleşme  4. 
 ## Çıktı
 
 ```markdown
-[ÜST BAŞLIK — destination'a göre]
+[ÜST BAŞLIK - destination'a göre]
 
 # Özel Hukuk Dilekçesi — [tip] — [dosya/konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Kaynaklar:** Mevzuat MCP [✓ N madde / ✗]; Yargı MCP [✓ N emsal / ✗]
-- **Süre:** [dilekçe tipi] son tarih GG.AA.YYYY (kalan: N gün) 🔴/🟠/🟡
+- **Süre:** [dilekçe tipi] son tarih GG.AA.YYYY (kalan: N gün) BLOKLAYICI/YÜKSEK/ORTA
 - **Görev/yetki:** [mahkeme] — HMK m.[X] `[review]`
 - **Arabuluculuk dava şartı:** [N/A / tutanak EK-1 var / gerekli]
 - **Reviewer bekleyen [review]:** N madde
@@ -593,17 +593,17 @@ Kullanıcı tebliğ/tefhim/karar tarihini verir; uygula:
 | **AYM bireysel** | 30 gün (6216 m.47/5) |
 | **İcra/İİK** | itiraz 7 gün · şikayet 7 gün · istihkak süreleri |
 
-Çıktı: tarih satırı + **son tarih + kalan gün + renk (🔴<5 / 🟠<10 / 🟡<20 / 🟢)**. Hafta sonu/resmi tatil son güne denk gelirse **sonraki iş günü** (HMK m.93). Süreyi kullanıcı verdiyse **mevzuattan teyit et** (no silent supplement); emin değilsen ilgili rehbere bak (`references/hmk-rehberi.md` / `iyuk-rehberi.md` / `cmk-rehberi.md`).
+Çıktı: tarih satırı + **son tarih + kalan gün + renk (BLOKLAYICI<5 / YÜKSEK<10 / ORTA<20 / DÜŞÜK)**. Hafta sonu/resmi tatil son güne denk gelirse **sonraki iş günü** (HMK m.93). Süreyi kullanıcı verdiyse **mevzuattan teyit et** (no silent supplement); emin değilsen ilgili rehbere bak (`references/hmk-rehberi.md` / `iyuk-rehberi.md` / `cmk-rehberi.md`).
 
 ```markdown
 | Dosya | İşlem | Tetik tarihi | Süre | SON TARİH | Kalan | Durum |
 |---|---|---|---|---|---|---|
-| [esas no] | Cevap dilekçesi | 12.06.2026 (tebliğ) | 2 hafta | 26.06.2026 | 1 gün | 🔴 |
+| [esas no] | Cevap dilekçesi | 12.06.2026 (tebliğ) | 2 hafta | 26.06.2026 | 1 gün | BLOKLAYICI |
 ```
 
 ## 2) Dosya özeti (1 sayfa)
 
-Kullanıcı dosya/yığın yüklerse: taraflar · mahkeme/esas no · dava konusu/talep · aşama (tensip/ön inceleme/tahkikat/karar/istinaf) · son işlem · **bir sonraki kritik tarih** · dış vekil · risk/şiddet (🔴🟠🟡🟢) · bekleyen aksiyon. "Okuma kapsamı"nı belirt; tamamını okumadıysan söyle.
+Kullanıcı dosya/yığın yüklerse: taraflar · mahkeme/esas no · dava konusu/talep · aşama (tensip/ön inceleme/tahkikat/karar/istinaf) · son işlem · **bir sonraki kritik tarih** · dış vekil · risk/şiddet (BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK) · bekleyen aksiyon. "Okuma kapsamı"nı belirt; tamamını okumadıysan söyle.
 
 ## 3) Evrak / ek kontrol listesi
 
@@ -611,18 +611,18 @@ Dilekçe tipine göre standart ekler:
 - **HMK dava:** vekaletname · arabuluculuk anlaşmama tutanağı (ticari alacak/tazminat) · sözleşme/ihtarname · deliller · harç/gider avansı dekontu
 - **İdari dava:** vekaletname · dava konusu işlem + tebliğ örneği · (varsa m.11 başvuru) · idari dosya celp talebi
 - **Ceza:** vekaletname/müdafi görevlendirme · deliller · (müşteki) zarar belgeleri
-- Eksikleri 🔴/🟡 işaretle.
+- Eksikleri BLOKLAYICI/ORTA işaretle.
 
 ## 4) Harç & gider avansı (yaklaşık)
 
 - **Nispi harç:** konusu para olan davalarda dava değeri üzerinden (peşin ¼) — güncel **Harçlar Kanunu (492) tarifesi** `[Mevzuat MCP / doğrulayın]`
 - **Maktu harç:** idari dava, tespit, bazı davalarda
 - **Başvurma harcı** + **gider avansı** (HMK m.120 — tebligat/bilirkişi/keşif için tarifeyle)
-- ⚠️ Tutarları **güncel tarifeden teyit et**; tahmini ver ve `[doğrulayın]` etiketle. Vekalet ücreti için **AAÜT** (Türkiye Barolar Birliği).
+- Tutarları **güncel tarifeden teyit et**; tahmini ver ve `[doğrulayın]` etiketle. Vekalet ücreti için **AAÜT** (Türkiye Barolar Birliği).
 
 ## 5) Vekaletname / yetki kontrolü
 
-Yapılacak işlem için vekaletnamede özel yetki gerekiyor mu? (örn. **davadan feragat, kabul, sulh, tahkim, ahzu kabz, temyiz/istinaftan feragat** → HMK m.74 özel yetki). Şirket imza sirküleri + **[Baş Hukuk Müşaviri] imza yetkisi** ile uyum. Eksik yetki → 🔴 + "işlem öncesi vekaletname güncellensin".
+Yapılacak işlem için vekaletnamede özel yetki gerekiyor mu? (örn. **davadan feragat, kabul, sulh, tahkim, ahzu kabz, temyiz/istinaftan feragat** → HMK m.74 özel yetki). Şirket imza sirküleri + **[Baş Hukuk Müşaviri] imza yetkisi** ile uyum. Eksik yetki → BLOKLAYICI + "işlem öncesi vekaletname güncellensin".
 
 ## 6) UYAP / e-tebligat takibi
 

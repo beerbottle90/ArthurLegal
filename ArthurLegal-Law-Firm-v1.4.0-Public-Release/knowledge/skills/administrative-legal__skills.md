@@ -59,10 +59,10 @@ user-invocable: true
 ## Tetik
 
 İki ana senaryo:
-1. **ÇED ret kararı tebliğ edildi** → ⚠️ **İYUK m. 20/A İVEDİ YARGILAMA — 30 gün dava süresi** (m. 7 genel kuralı değil! ÇED için özel rejim)
+1. **ÇED ret kararı tebliğ edildi** → **İYUK m. 20/A İVEDİ YARGILAMA — 30 gün dava süresi** (m. 7 genel kuralı değil! ÇED için özel rejim)
 2. **ÇED süreci sorunlu** → henüz ret yok ama olumsuz gidiyor; proaktif strateji
 
-## ⚠️ KRİTİK: İYUK m. 20/A İVEDİ YARGILAMA USULÜ
+## KRİTİK: İYUK m. 20/A İVEDİ YARGILAMA USULÜ
 
 ÇED kararları (idari yaptırım/para cezası **HARİÇ**) bu özel rejime tabidir. Genel rejimden farkları:
 
@@ -92,7 +92,7 @@ Paralel: Çevre Bakanlığı idari para cezası (ayrı süreç — `idari-para-c
 - **Bakanlık merkez kararı** (büyük yatırım) → **Ankara İdare Mahkemesi** ilk derece (30 gün) → **DOĞRUDAN Danıştay 14./10./6. Daire temyiz** (15 gün)
 - **İl müdürlüğü kararı** (yerel etkili) → ilgili **İl İdare Mahkemesi** ([tesis yeri] için ilgili il İdare Mah.) → **DOĞRUDAN Danıştay temyiz**
 
-⚠️ İstinaf (BİM) aşaması ATLANIR — bu önemli, çünkü genel idari davalarda BİM normal kademe.
+İstinaf (BİM) aşaması ATLANIR — bu önemli, çünkü genel idari davalarda BİM normal kademe.
 
 ## sektöre-özel risk
 
@@ -148,7 +148,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # ÇED İtiraz — [Yatırım/Tesis]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Karar:** ÇED ret / koşullu / süreç sorunlu
 - **Görevli mahkeme:** Ankara İdare Mah. (Bakanlık merkez) / İzmir İdare Mah. (yerel)
 - **Süre kalan:** [N gün]
@@ -364,7 +364,7 @@ operasyonel ve mali etki — somut rakamlar]
 
 II. ŞİRKETİMİZ GÖRÜŞÜ
 
-A. [Hukuki dayanak — mevcut mevzuat ile uyumluluk değerlendirmesi]
+A. [Hukuki dayanak - mevcut mevzuat ile uyumluluk değerlendirmesi]
 B. [Operasyonel pratikte uygulanabilirlik]
 C. [Sektör pratiği ile karşılaştırma]
 D. [Önerimiz / alternatif düzenleme]
@@ -381,7 +381,7 @@ Yukarıda açıklanan görüşümüzün dikkate alınmasını ve [düzenleme] ta
 Tarih: GG.AA.YYYY
 
 [Müvekkil]
-[Yetkili imza — Compliance Direktörü [Uyum Direktörü] veya CLCO Shahin Ismayılbaylı]
+[Yetkili imza - Compliance Direktörü [Uyum Direktörü] veya CLCO Shahin Ismayılbaylı]
 
 Ekler:
 1. Operasyonel etki analizi
@@ -413,15 +413,15 @@ Bazı görüşler **sektör koalisyonu** halinde (Türkiye Petrolleri, Tüpraş,
 ## Çıktı
 
 ```markdown
-[ÜST BAŞLIK — Compliance + Hukuk koordineli iç değerlendirme]
+[ÜST BAŞLIK - Compliance + Hukuk koordineli iç değerlendirme]
 
 # EPDK Proaktif Görüş — [Konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Senaryo:** A/B/C/D/E
 - **Hedef:** [Tebliğ değişikliği / Kurul karar etkisi / Yorum alma / Lisans şart revizyonu]
 - **Kaynaklar:** Yarg MCP (Danıştay 13. [N]); Mevzuat MCP
-- **Compliance koordinasyon:** [Uyum Direktörü] + [Compliance Manager] ✓/⚠
+- **Compliance koordinasyon:** [Uyum Direktörü] + [Compliance Manager] ✓/
 - **İş birimi koordinasyon:** [[İş Birimi Başkanı]/[İş Birimi Başkanı]]
 - **Mali etki:** [TL]
 - **Sektör koalisyon olası:** [evet/hayır]
@@ -437,7 +437,7 @@ Bazı görüşler **sektör koalisyonu** halinde (Türkiye Petrolleri, Tüpraş,
 [somut alternatif]
 
 ## Görüş sunum metni (taslak)
-[yukarıdaki şablon — doldurulmuş]
+[yukarıdaki şablon - doldurulmuş]
 
 ## Sonraki adımlar
 
@@ -474,9 +474,9 @@ user-invocable: true
 > - **ÇED kararları: 30 GÜN** (İYUK m. 20/A ivedi yargılama — özel rejim)
 > - **Diğer özel rejim** (kamu ihale belirli kategoriler, özelleştirme): m. 20/A kontrolü
 
-Kalan < 5 gün → 🔴 ACİL. Dış vekille derhal koordinasyon.
+Kalan < 5 gün → BLOKLAYICI ACİL. Dış vekille derhal koordinasyon.
 
-⚠️ **Sık yapılan hata:** Vergi mahkemesi 30 günü idare mahkemesi davalarına yanlış uygulamak. Her zaman görevli mahkemeyi önce tespit et, sonra süreyi.
+**Sık yapılan hata:** Vergi mahkemesi 30 günü idare mahkemesi davalarına yanlış uygulamak. Her zaman görevli mahkemeyi önce tespit et, sonra süreyi.
 
 ## Destination check
 
@@ -485,7 +485,7 @@ Kalan < 5 gün → 🔴 ACİL. Dış vekille derhal koordinasyon.
 - **CEO/Başkan eskalasyon** → 1 sayfa exec summary
 - **Mahkemeye sunulacak dilekçe taslak** → "TASLAK" + dış vekil onayı sonrası
 
-## ⚠️ ADIM 0 — GÖREVLİ MAHKEME TESPİTİ (en kritik)
+## ADIM 0 — GÖREVLİ MAHKEME TESPİTİ (en kritik)
 
 Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **Danıştay genelde TEMYİZ mercii**, sadece dar istisnalarda ilk derece.
 
@@ -514,7 +514,7 @@ Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **D
   - Memur statü: memurun görev yaptığı yer veya idarenin yeri
   - Kamulaştırma: taşınmazın bulunduğu yer
 
-⚠️ **Yanlış mahkemeye dava** → görevsizlik kararı + görevli mahkemeye gönderme (m. 15) **ama süre durmaz**. Süresi geçmişse hak kaybı.
+**Yanlış mahkemeye dava** → görevsizlik kararı + görevli mahkemeye gönderme (m. 15) **ama süre durmaz**. Süresi geçmişse hak kaybı.
 
 ## Adımlar
 
@@ -533,11 +533,11 @@ Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **D
 
 ```markdown
 **Görevli mahkeme:**
-[Ankara X. İdare Mahkemesi — bireysel idari işlem için] VEYA
-[Danıştay X. Daire — istisna kapsamında düzenleyici işlem için]
+[Ankara X. İdare Mahkemesi - bireysel idari işlem için] VEYA
+[Danıştay X. Daire - istisna kapsamında düzenleyici işlem için]
 
-**Yetki gerekçesi:** [İYUK m. 32 — Ankara EPDK Kurul kararı için]
-             VEYA  [Danıştay K. m. 24 — bakanlık yönetmeliği için]
+**Yetki gerekçesi:** [İYUK m. 32 - Ankara EPDK Kurul kararı için]
+             VEYA  [Danıştay K. m. 24 - bakanlık yönetmeliği için]
 ```
 
 ### 3. Süre hesabı
@@ -624,7 +624,7 @@ II. HUKUKİ DAYANAKLARIMIZ
 
 A. **Yetkisizlik** (eğer varsa) [argüman]
 B. **Şekil eksikliği** [varsa]
-C. **Sebep yokluğu** [argüman + emsal Danıştay kararı: `[Yarg MCP — danistay — daire — esas/karar — GG.AA.YYYY]`]
+C. **Sebep yokluğu** [argüman + emsal Danıştay kararı: `[Yarg MCP - danistay - daire - esas/karar - GG.AA.YYYY]`]
 D. **Konu hukuka aykırılığı** [argüman]
 E. **Amaç hukuka aykırılığı** [varsa]
 
@@ -672,9 +672,9 @@ EKLER:
 
 # İdari Dava Hazırlık — [İdari işlem]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Görevli mahkeme:** [tespit] (gerekçe: [...])
-- **Tebliğ tarihi:** GG.AA.YYYY → **Süre sonu: GG.AA.YYYY (kalan: N gün)** 🔴/🟠/🟡
+- **Tebliğ tarihi:** GG.AA.YYYY → **Süre sonu: GG.AA.YYYY (kalan: N gün)** BLOKLAYICI/YÜKSEK/ORTA
 - **Yürütmenin durdurulması:** evet (gerekçe: [...])
 - **Kaynaklar:** Yarg MCP (Danıştay [N] + kurum [N]); Mevzuat MCP
 - **Eskalasyon:** [tetiklendi mi?]
@@ -697,7 +697,7 @@ EKLER:
 [Yarg MCP'den çekilen tablolar]
 
 ## Dava dilekçesi taslağı (dış vekil revize için)
-[yukarıdaki şablon — doldurulmuş]
+[yukarıdaki şablon - doldurulmuş]
 
 ## Sonraki adımlar
 
@@ -816,9 +816,9 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # İdari Para Cezası İptal — [Kurum / Karar no]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Kurum + ceza tutarı:** [...]
-- **Süre kalan:** [N gün] 🔴/🟠
+- **Süre kalan:** [N gün] BLOKLAYICI/YÜKSEK
 - **Görevli mahkeme:** [Ankara/İzmir İdare Mah.]
 - **Yürütmenin durdurulması:** evet (gerekçe: [...])
 - **Tahsil paralel başladı mı:** evet/hayır → AATUHK tehir-i icra ek yol
@@ -1043,16 +1043,16 @@ mcp__claude_ai_Yarg_MCP__search_anayasa_unified(
 
 # İstinaf / Temyiz Hazırlık — [Dosya]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Aşama:** A/B/C/D
 - **Karar veren merci:** [...]
-- **Süre kalan:** [...]  🔴/🟠
+- **Süre kalan:** [...]  BLOKLAYICI/YÜKSEK
 - **Bizim için karar:** [İstinaf/Temyiz başvur / Başvurma]
 - **Kaynaklar:** Yarg MCP [N], Mevzuat MCP
 - **KAP açıklama:** [N/A / hazırlanıyor]
 - **Reviewer bekleyen:** N adet
 
-[Aşamaya göre içerik — dilekçe taslak + emsal + yürütmenin durdurulması]
+[Aşamaya göre içerik - dilekçe taslak + emsal + yürütmenin durdurulması]
 
 ## Sonraki adımlar
 
@@ -1132,7 +1132,7 @@ Konu: [İdare adı] tarafından yapılan [ihale adı + numara] hakkında şikaye
 [hata/yanlışlık/hukuka aykırılık tarif]
 
 ŞİKAYET GEREKÇELERİ:
-1. [Madde — KİK Kanunu / Tebliği]
+1. [Madde - KİK Kanunu / Tebliği]
 2. [...]
 
 SONUÇ ve TALEP:
@@ -1185,7 +1185,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 # KİK İhale İtirazı — [İhale]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Aşama:** A/B/C/D
 - **Süre kalan:** [10 gün KİK şikayet / 30 gün İdare Mah. dava]
 - **İhale değeri:** [TL]
@@ -1193,7 +1193,7 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 - **İhale komisyonu koordinasyon:** [evet/hayır]
 - **Reviewer bekleyen:** N adet
 
-[Aşamaya göre içerik — KİK şikayet dilekçesi / dava dilekçesi]
+[Aşamaya göre içerik - KİK şikayet dilekçesi / dava dilekçesi]
 
 ## Sonraki adımlar
 
@@ -1238,7 +1238,7 @@ Ankara BİM (istinaf) →
 Danıştay 13. Daire (temyiz)
 ```
 
-⚠️ **Rekabet Kurulu kararı doğrudan Danıştay'a gitmez** (artık eski uygulama değişti). 4054 m. 55 referansı yanlış uygulanmamalı.
+**Rekabet Kurulu kararı doğrudan Danıştay'a gitmez** (artık eski uygulama değişti). 4054 m. 55 referansı yanlış uygulanmamalı.
 
 ## sektöre-özel risk
 
@@ -1297,7 +1297,7 @@ Rekabet Kurulu kararları **bağlayıcı emsal** değil ama Kurulun tutarlılı�
 
 # Rekabet Kurulu Kararı İtiraz — [Karar no]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Kararın özeti:** [tip + tutar + koşullar]
 - **Süre kalan:** [N gün]
 - **Vertical entegrasyon ilişkisi:** [evet/hayır]

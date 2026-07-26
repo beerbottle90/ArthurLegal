@@ -63,7 +63,7 @@ Toplam damga:                   [TL]
 Paylaşım: [Eşit / Karşı taraf / Bizim] 
 Şirket payı (tahmini):           [TL]
 
-⚠ İstisnaya tabi mi? [Evet/Hayır — neden]
+⚠ İstisnaya tabi mi? [Evet/Hayır - neden]
 ⚠ KDV iadesi varsa damga geri alınamaz (öder, gider yazılır)
 ```
 
@@ -71,9 +71,9 @@ Paylaşım: [Eşit / Karşı taraf / Bizim]
 
 Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta Mevzuat MCP'den teyit:**
 
-- Damga vergisi azami had (her bir kağıt için): [Mevzuat MCP — doğrulayın]
-- Genel oran (binde): [Mevzuat MCP — doğrulayın]
-- 488 (1) sayılı Tablo güncel tutarları: [Mevzuat MCP — search_kanun("488")]
+- Damga vergisi azami had (her bir kağıt için): [Mevzuat MCP - doğrulayın]
+- Genel oran (binde): [Mevzuat MCP - doğrulayın]
+- 488 (1) sayılı Tablo güncel tutarları: [Mevzuat MCP - search_kanun("488")]
 
 ---
 

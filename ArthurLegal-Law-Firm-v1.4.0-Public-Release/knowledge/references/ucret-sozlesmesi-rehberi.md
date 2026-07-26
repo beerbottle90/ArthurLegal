@@ -55,10 +55,10 @@
 - **Tipik kullanım:** Karmaşık matter (M&A, dava strateji), retainer
 
 **Saatlik oran (2026 varsayımsal — büro bazlı):**
-- Yönetici/Kıdemli Ortak: `[DOLDUR — örn. 8.000-15.000 TL/saat]`
-- Bağlı Avukat (5+ yıl): `[DOLDUR — örn. 4.000-7.000 TL/saat]`
-- Bağlı Avukat (2-5 yıl): `[DOLDUR — örn. 2.500-4.000 TL/saat]`
-- Stajyer (varsa): `[DOLDUR — örn. 1.000-2.000 TL/saat]`
+- Yönetici/Kıdemli Ortak: `[DOLDUR - örn. 8.000-15.000 TL/saat]`
+- Bağlı Avukat (5+ yıl): `[DOLDUR - örn. 4.000-7.000 TL/saat]`
+- Bağlı Avukat (2-5 yıl): `[DOLDUR - örn. 2.500-4.000 TL/saat]`
+- Stajyer (varsa): `[DOLDUR - örn. 1.000-2.000 TL/saat]`
 
 ### 2. Sabit (flat fee)
 
@@ -70,11 +70,11 @@
 **Tipik sabit ücretler (2026 varsayımsal):**
 | İş | Sabit ücret |
 |---|---|
-| NDA inceleme | `[DOLDUR — örn. 3.000-5.000 TL]` |
-| Hizmet sözleşmesi yazımı | `[DOLDUR — 8.000-15.000 TL]` |
-| GK olağan karar paketi | `[DOLDUR — 5.000-10.000 TL]` |
-| Marka tescil (TR — 1 sınıf) | `[DOLDUR — 8.000-15.000 TL]` |
-| İhtarname | `[DOLDUR — 3.000-7.000 TL]` |
+| NDA inceleme | `[DOLDUR - örn. 3.000-5.000 TL]` |
+| Hizmet sözleşmesi yazımı | `[DOLDUR - 8.000-15.000 TL]` |
+| GK olağan karar paketi | `[DOLDUR - 5.000-10.000 TL]` |
+| Marka tescil (TR — 1 sınıf) | `[DOLDUR - 8.000-15.000 TL]` |
+| İhtarname | `[DOLDUR - 3.000-7.000 TL]` |
 
 ### 3. Başarı bonusu (success fee — Av. K. m. 164/2)
 
@@ -216,12 +216,12 @@ arasında akdedilmiştir.
 
 1. KAPSAM
 Vekil, Müvekkil adına aşağıdaki işlerde vekalet üstlenmiştir:
-- [Matter tanımı — net + sınırlı]
+- [Matter tanımı - net + sınırlı]
 - Yargı yeri: [...]
 
 2. ÜCRET
-2.1. Vekalet ücreti: [TL — KDV hariç]
-2.2. Hesap modeli: [Saatlik / Sabit / Karma / Başarı bonusu — %X (max %25)]
+2.1. Vekalet ücreti: [TL - KDV hariç]
+2.2. Hesap modeli: [Saatlik / Sabit / Karma / Başarı bonusu - %X (max %25)]
 2.3. KDV: %20 ek
 2.4. Stopaj: Müvekkil ticari ise %20 (GVK m. 94)
 2.5. Damga vergisi: bu sözleşmenin imzasında binde 9,48
@@ -251,11 +251,11 @@ Damga vergisi: [TL] (ödendi)
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. 163-168 — GG.AA.YYYY]`
-- `[AAÜT — 2026 baskı — TBB — RG sayı/tarih]`
-- `[DVK Tablo I — 2026 oran]`
-- `[GVK m. 94 — stopaj — Mevzuat MCP]`
-- `[Yargı MCP — yargitay 13. HD — ücret tahsil davası içtihadı]`
+- `[Mevzuat MCP - Av. K. m. 163-168 - GG.AA.YYYY]`
+- `[AAÜT - 2026 baskı - TBB - RG sayı/tarih]`
+- `[DVK Tablo I - 2026 oran]`
+- `[GVK m. 94 - stopaj - Mevzuat MCP]`
+- `[Yargı MCP - yargitay 13. HD - ücret tahsil davası içtihadı]`
 
 ---
 

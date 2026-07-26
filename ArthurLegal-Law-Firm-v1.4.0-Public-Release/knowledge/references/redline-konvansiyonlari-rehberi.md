@@ -14,11 +14,11 @@
 | Silinen | `~~silinen metin~~` |
 | Eklenen | `**eklenen metin**` (veya `__altı çizili__`) |
 | Alternatif (düz) | `[-silinen-]` / `[+eklenen+]` |
-| Comment | `> 💬 [Av. — severity] gerekçe + fallback` |
+| Comment | `> 💬 [Av. - severity] gerekçe + fallback` |
 
 ## 3. Severity (tutarlı, üç eksen)
-- 🔴 **Bloklayıcı** — imzalanmaz · 🟠 **Yüksek** — müzakere şart · 🟡 **Orta** — fix · 🟢 **Düşük** — not.
-- Üst incelemenin 🔴'sı sessizce düşürülmez.
+- BLOKLAYICI **Bloklayıcı** — imzalanmaz · YÜKSEK **Yüksek** — müzakere şart · ORTA **Orta** — fix · DÜŞÜK **Düşük** — not.
+- Üst incelemenin BLOKLAYICI'sı sessizce düşürülmez.
 
 ## 4. Sessiz fix vs comment
 - **Sessiz:** yazım, atıf/numara, tutarlılık, tanım hizalama.
@@ -26,7 +26,7 @@
 
 ## 5. Comment yapısı (her zaman fallback)
 ```
-> 💬 [Av. — 🟠] Sorumluluk tavanı %50'ye çekilmiş; müvekkil için risk.
+> 💬 [Av. - YÜKSEK] Sorumluluk tavanı %50'ye çekilmiş; müvekkil için risk.
 >     Tercih: tavan = sözleşme bedeli (kasıt/ağır kusur hariç tutulur).
 >     Kabul edilmezse asgari: %75 + can/mal güvenliği istisnası.
 ```

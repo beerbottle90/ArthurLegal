@@ -92,9 +92,9 @@ WebFetch("https://www.sanctionsmap.eu/api/v1/sanction?include_draft=0&lang=en",
 ## Atıf formatı
 
 ```
-[EU Legislation — CELEX:{no} — GG.AA.YYYY]
-[CJEU — {Dava adı, C-no/YIL} — GG.AA.YYYY]
-[ECHR — {Dava adı} — GG.AA.YYYY]
+[EU Legislation - CELEX:{no} - GG.AA.YYYY]
+[CJEU - {Dava adı, C-no/YIL} - GG.AA.YYYY]
+[ECHR - {Dava adı} - GG.AA.YYYY]
 ```
 
 ---

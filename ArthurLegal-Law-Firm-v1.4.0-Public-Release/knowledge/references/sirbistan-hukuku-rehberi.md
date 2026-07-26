@@ -100,7 +100,7 @@ ADIM 1: Borçlar Kanunu'ndan ilgili hükümleri getir
 
 ADIM 2: Sektöre özel kanunu getir (enerji ise zakon_o_energetici.html)
 
-ADIM 3: Atıf ekle → [SR Mevzuat — paragraf.rs — {Kanun adı} — GG.AA.YYYY]
+ADIM 3: Atıf ekle → [SR Mevzuat - paragraf.rs - {Kanun adı} - GG.AA.YYYY]
 ```
 
 ### 3.2 Srbijagas/EPS enerji tedarik sözleşmesi
@@ -183,12 +183,12 @@ WebFetch:
 
 Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 
-- `[SR Mevzuat — paragraf.rs — {Kanun adı SR} — GG.AA.YYYY]` — Sırbistan mevzuatı
-- `[SR Anayasa Mah. — ustavni.sud.rs — {karar no} — GG.AA.YYYY]` — Anayasa Mahkemesi
-- `[SR Anayasa Mah. — CODICES — {karar adı} — GG.AA.YYYY]` — CODICES üzerinden
+- `[SR Mevzuat - paragraf.rs - {Kanun adı SR} - GG.AA.YYYY]` — Sırbistan mevzuatı
+- `[SR Anayasa Mah. - ustavni.sud.rs - {karar no} - GG.AA.YYYY]` — Anayasa Mahkemesi
+- `[SR Anayasa Mah. - CODICES - {karar adı} - GG.AA.YYYY]` — CODICES üzerinden
 
 **Asla:** Çekmediğin Sırbistan hukuku kaynağına atıf koyma.
-→ `[model bilgisi — doğrulayın]` kullan.
+→ `[model bilgisi - doğrulayın]` kullan.
 
 **Dil notu:** paragraf.rs metinleri Sırpça (Latin yazısı). Alıntıda Sırpça orijinal +
 Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` ekle.

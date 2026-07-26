@@ -123,7 +123,7 @@ Tek bir sahte domain'le yetinmemek için:
 
 | Aksiyon | Onay |
 |---|---|
-| Registrar abuse + 5651 m. 9 başvurusu | Senior Legal Counsel [kuran kişi — company-profile: Kullanıcı rolü] |
+| Registrar abuse + 5651 m. 9 başvurusu | Senior Legal Counsel [kuran kişi - company-profile: Kullanıcı rolü] |
 | Suç duyurusu hazırlık + savcılığa sunum | Counsel + Direktör imza [company-profile: Doğrudan amir] |
 | Resmi açıklama içeriği | Counsel + [İLETİŞİM YÖNETİCİSİ] (İletişim) + [HUKUKİ DİREKTÖR 1] onay |
 | UDRP başvurusu (dış avukatla) | [HUKUKİ DİREKTÖR 1] + [CLCO ADI] (CLCO) bilgi (tutar < 50K TL) |

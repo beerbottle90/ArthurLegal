@@ -179,7 +179,7 @@ resolve_doi("10.1093/jiel/jgaa002")
 Her kayıt hazır bir **`citation`** alanı taşır → **BİREBİR kullan**:
 
 ```
-[LexScholar — {indeks} — {yazar, başlık, dergi, yıl}] doi:{...}
+[LexScholar - {indeks} - {yazar, başlık, dergi, yıl}] doi:{...}
 ```
 
 - **`peer_reviewed` ÜÇ DURUMLU:**
@@ -189,7 +189,7 @@ Her kayıt hazır bir **`citation`** alanı taşır → **BİREBİR kullan**:
     editörlü law review**'ları,
   - `null` — bilinmiyor.
   `false` veya `null` olanı **asla** "hakemli araştırma" diye sunma.
-- Araç döndürmediyse kaynak **UYDURMA** → `[model bilgisi — doğrulayın]`.
+- Araç döndürmediyse kaynak **UYDURMA** → `[model bilgisi - doğrulayın]`.
 - Yazarın görüşünü **yazara atfet** ("[Yazar]'a göre…"), "hukuk şöyle der"
   diye sunma.
 - Öğreti **argümandır, otorite değildir.** Mevzuatla çelişirse birincil kaynak

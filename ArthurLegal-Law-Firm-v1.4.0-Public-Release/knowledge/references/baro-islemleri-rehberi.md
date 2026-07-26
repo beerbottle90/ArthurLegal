@@ -62,10 +62,10 @@ Tipik nedenler:
 
 | Kategori | Aidat |
 |---|---|
-| Asıl üye — meslek 0-5 yıl | `[DOLDUR — örn. 2.000 TL]` |
-| Asıl üye — 5-15 yıl | `[DOLDUR — örn. 3.500 TL]` |
-| Asıl üye — 15+ yıl | `[DOLDUR — örn. 5.000 TL]` |
-| Bağlı üye | `[DOLDUR — örn. asıl × 0.3]` |
+| Asıl üye — meslek 0-5 yıl | `[DOLDUR - örn. 2.000 TL]` |
+| Asıl üye — 5-15 yıl | `[DOLDUR - örn. 3.500 TL]` |
+| Asıl üye — 15+ yıl | `[DOLDUR - örn. 5.000 TL]` |
+| Bağlı üye | `[DOLDUR - örn. asıl × 0.3]` |
 | Stajyer | Genelde ücretsiz veya sembolik |
 | **TBB ek aidatı** | Baro aidatına ek (TBB belirler) |
 
@@ -208,10 +208,10 @@ Detay: `cmk-gorevli-rehberi.md`
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. X — GG.AA.YYYY]`
-- `[TBB — duyuru / sirküler — GG.AA.YYYY]`
-- `[Baro — yönetmelik — yerel]`
-- `[Disiplin karar — esas no / karar no — GG.AA.YYYY]`
+- `[Mevzuat MCP - Av. K. m. X - GG.AA.YYYY]`
+- `[TBB - duyuru / sirküler - GG.AA.YYYY]`
+- `[Baro - yönetmelik - yerel]`
+- `[Disiplin karar - esas no / karar no - GG.AA.YYYY]`
 
 ---
 

@@ -237,18 +237,18 @@ yerel vektör veritabanı oluşturulacaksa temel corpus'u sağlar.
 
 Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 
-- `[AZ Mevzuat — e-qanun MCP — {belge adı} — id:{id} — {statü} — GG.AA.YYYY]`
+- `[AZ Mevzuat - e-qanun MCP - {belge adı} - id:{id} - {statü} - GG.AA.YYYY]`
   — **tercih edilen biçim**; statü atıfın içindedir (bkz. `eqanun-mcp-rehberi.md`)
-- `[AZ Mevzuat — e-qanun.az (WebFetch, statü doğrulanmadı) — {belge adı} — GG.AA.YYYY]`
+- `[AZ Mevzuat - e-qanun.az (WebFetch, statü doğrulanmadı) - {belge adı} - GG.AA.YYYY]`
   — yalnız MCP erişilemediğinde; **statü doğrulanmadığını gizleme**
-- `[AZ Mevzuat — minenergy.gov.az — {kanun adı} — GG.AA.YYYY]` — Enerji Bakanlığı
-- `[AZ Anayasa Mah. — constcourt.gov.az — {karar no} — GG.AA.YYYY]` — Anayasa Mahkemesi
-- `[AZ Anayasa Mah. — CODICES — {karar adı} — GG.AA.YYYY]` — CODICES üzerinden
-- `[AZ İş Hukuku — NATLEX/ILO — {belge adı} — GG.AA.YYYY]` — ILO NATLEX
+- `[AZ Mevzuat - minenergy.gov.az - {kanun adı} - GG.AA.YYYY]` — Enerji Bakanlığı
+- `[AZ Anayasa Mah. - constcourt.gov.az - {karar no} - GG.AA.YYYY]` — Anayasa Mahkemesi
+- `[AZ Anayasa Mah. - CODICES - {karar adı} - GG.AA.YYYY]` — CODICES üzerinden
+- `[AZ İş Hukuku - NATLEX/ILO - {belge adı} - GG.AA.YYYY]` — ILO NATLEX
 
 **Asla:** Çekmediğin Azerbaycan hukuku kaynağına atıf yapmış gibi davranma.
 Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
-`[model bilgisi — doğrulayın]` kullan.
+`[model bilgisi - doğrulayın]` kullan.
 
 ---
 

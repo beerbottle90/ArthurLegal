@@ -75,9 +75,9 @@ user-invocable: true
 Bilirkişi: [ad, uzmanlık alanı, sicil no]   Tarih: GG.AA.YYYY
 
 1. GÖREVLENDİRME VE İNCELEME KONUSU
-   [Mahkemenin sorduğu teknik sorular — aynen]
+   [Mahkemenin sorduğu teknik sorular - aynen]
 2. DOSYA KAPSAMI / İNCELENEN BELGELER
-   [klasör/sayfa, keşif, numune — neyin incelendiği]
+   [klasör/sayfa, keşif, numune - neyin incelendiği]
 3. TEKNİK TESPİTLER (olgu)
    [ölçülebilir, metodolojili: hesap/standart/norm atfı]
 4. DEĞERLENDİRME (özel/teknik bilgi — HUKUKİ NİTELENDİRME YOK)
@@ -108,10 +108,10 @@ KONU: GG.AA.YYYY tarihli bilirkişi raporuna İTİRAZLARIMIZ ve EK RAPOR / YENİ
 
 I. RAPORUN ÖZETİ [bilirkişinin sonucu]
 II. İTİRAZLARIMIZ
-  1. [Görev aşımı — hukuki nitelendirme: rapor m.266'yı aşmış; örnek alıntı]
-  2. [Eksik inceleme — dikkate alınmayan EK-... belgesi]
-  3. [Metodoloji/hesap hatası — doğru hesap: ...]
-  4. [Çelişki — ...]
+  1. [Görev aşımı - hukuki nitelendirme: rapor m.266'yı aşmış; örnek alıntı]
+  2. [Eksik inceleme - dikkate alınmayan EK-... belgesi]
+  3. [Metodoloji/hesap hatası - doğru hesap: ...]
+  4. [Çelişki - ...]
 III. SONUÇ VE TALEP
   1. İtirazlarımız doğrultusunda **aynı bilirkişiden EK RAPOR** alınmasına,
      (kabul görmezse) **yeni bir bilirkişi/heyetten rapor** alınmasına,
@@ -142,7 +142,7 @@ Yerleşik içtihat: "denetime elverişli olmayan rapor hükme esas alınamaz" vb
 [ÜST BAŞLIK]
 # Bilirkişi [Raporu Taslağı / Rapora İtiraz] — [dosya/esas no]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Mod:** (a) rapor taslağı / (b) itiraz
 - **İncelenen rapor kapsamı:** [okunan sayfa/bölüm]
 - **m.266 sınırı:** [rapor hukuki nitelendirme yapmış mı? evet→güçlü itiraz]
@@ -234,12 +234,12 @@ user-invocable: true
 
 ```markdown
 UZMAN GÖRÜŞÜ (HMK m. 293)
-Hazırlayan: [Uzman ad — unvan/akademik kariyer — uzmanlık alanı]
+Hazırlayan: [Uzman ad - unvan/akademik kariyer - uzmanlık alanı]
 Talep eden: [Müvekkil / Şirket] vekili Av. [ad]
-İlgili dava: [Mahkeme — Esas No]   Tarih: GG.AA.YYYY
+İlgili dava: [Mahkeme - Esas No]   Tarih: GG.AA.YYYY
 
 I. KONU VE YÖNELTİLEN SORULAR
-   [Cevaplanması istenen somut soru(lar) — net]
+   [Cevaplanması istenen somut soru(lar) - net]
 II. İNCELENEN BELGELER / VERİ
    [dosya kapsamı, teknik veri, sözleşme]
 III. ÖZET GÖRÜŞ (yönetici özeti)
@@ -247,10 +247,10 @@ III. ÖZET GÖRÜŞ (yönetici özeti)
 IV. GEREKÇELİ ANALİZ
    [Teknik: metodoloji + hesap + standart/norm atfı + alternatif senaryolar]
    [Hukuki: ilgili mevzuat `[Mevzuat MCP]` + yerleşik içtihat `[Yargı MCP]`
-    + doktrin `[yazar/eser — doğrulayın]` sentezi; karşı argümanların ele alınması]
+    + doktrin `[yazar/eser - doğrulayın]` sentezi; karşı argümanların ele alınması]
 V. SONUÇ
    [Soru(lar)a net, gerekçeli cevap; varsayım/sınırlamalar açık]
-   [İmza/kaşe alanı — uzman]
+   [İmza/kaşe alanı - uzman]
 EKLER: özgeçmiş (uzmanlık ispatı), hesap tabloları, kaynak listesi
 ```
 
@@ -285,7 +285,7 @@ Karşı/mahkeme bilirkişi raporu zayıfsa, **uzman görüşü** o raporu çür�
 [ÜST BAŞLIK]
 # Uzman Görüşü Taslağı — [tür] — [konu]
 
-## ⚠️ İnceleyen notu
+## İnceleyen notu
 - **Tür:** teknik / hukuki
 - **Yöneltilen soru(lar):** [N adet]
 - **Kaynaklar:** Mevzuat MCP [✓ N / ✗]; Yargı MCP [✓ N emsal / ✗]; doktrin [✓/doğrulanmalı]

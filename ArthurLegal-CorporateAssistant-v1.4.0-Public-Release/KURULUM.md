@@ -23,8 +23,11 @@ Türk hukuku odaklı 12-eklenti kurumsal hukuk asistanı. Claude.ai Projects üz
 2. `SYSTEM_PROMPT.md` dosyasının tüm içeriğini kopyalayıp yapıştırın
 3. Save.
 
-> Not: Custom instructions limiti ~32K karakter. v1.4.0 SYSTEM_PROMPT.md **~27K** —
-> sığar ama marj daralmıştır. Kendi eklemelerinizi yaparken karakter sayısını kontrol edin.
+> Not: Custom instructions limiti ~32.000 karakter. v1.4.0 SYSTEM_PROMPT.md
+> **29.246 karakter** (limitin ~%91'i) — sığar, ancak **marj dardır**. Kendi
+> kurumunuza özel kural eklerseniz önce karakter sayısını ölçün; taşarsa
+> `Sınır-ötesi connector'lar` tablosunu çıkarın (aynı atıf biçimleri
+> `Atıf disiplini` maddesinde zaten var).
 
 ---
 

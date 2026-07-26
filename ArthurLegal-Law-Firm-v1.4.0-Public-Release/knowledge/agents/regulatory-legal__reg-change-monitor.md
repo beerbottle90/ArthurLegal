@@ -31,11 +31,11 @@ Per `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → F
 ```
 📋 **Regulatory digest — [date]**
 
-🔴 **Material (action likely needed)**
+BLOKLAYICI **Material (action likely needed)**
 • [Regulator] — [title] — [one line] — [link]
-  → Gap check: [policy X may need update — see diff]
+  → Gap check: [policy X may need update - see diff]
 
-🟡 **Review-worthy**
+ORTA **Review-worthy**
 • [Regulator] — [title] — [one line] — [link]
 
 📝 **FYI** — [N] items — [expandable list]

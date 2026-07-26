@@ -34,7 +34,7 @@
      ↓ talep
 [Baro CMK Servisi]
      ↓ nöbet listesi
-[Gönüllü avukat — telefon araması]
+[Gönüllü avukat - telefon araması]
      ↓ kabul/red
 [2 saat içinde teyit + 6 saat içinde yere ulaşma]
      ↓
@@ -42,7 +42,7 @@
      ↓ görev sonu
 [CMK ödeme cetveli doldurma]
      ↓
-[Baroya teslim — 30-60 g ödeme]
+[Baroya teslim - 30-60 g ödeme]
 ```
 
 ### Atama reddetme
@@ -139,7 +139,7 @@ Görev bittikten sonra:
 
 ```
 CMK ÖDEME CETVELİ — [Baro] — [Tarih]
-Avukat: [Av. ad-soyad — sicil no]
+Avukat: [Av. ad-soyad - sicil no]
 Atama no: [...]
 Müvekkil: [TC kimlik]
 Esas no: [...]
@@ -164,9 +164,9 @@ Tarih:
 
 | İşlem | Ücret (TL — Adalet Bakanlığı yıllık) |
 |---|---|
-| Soruşturma aşaması (karakol+savcılık+sulh ceza) | `[DOLDUR — örn. 3.000-6.000 TL]` |
-| Asliye ceza ilk derece (her duruşma) | `[DOLDUR — örn. 2.000-4.000 TL/duruşma]` |
-| Ağır ceza ilk derece (her duruşma) | `[DOLDUR — örn. 3.000-6.000 TL/duruşma]` |
+| Soruşturma aşaması (karakol+savcılık+sulh ceza) | `[DOLDUR - örn. 3.000-6.000 TL]` |
+| Asliye ceza ilk derece (her duruşma) | `[DOLDUR - örn. 2.000-4.000 TL/duruşma]` |
+| Ağır ceza ilk derece (her duruşma) | `[DOLDUR - örn. 3.000-6.000 TL/duruşma]` |
 | BAM (istinaf) duruşma | `[DOLDUR]` |
 | Yargıtay duruşma | `[DOLDUR]` |
 | Çocuk mahkemesi | `[DOLDUR]` |
@@ -217,11 +217,11 @@ CMK m. 233-242:
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — CMK m. X — GG.AA.YYYY]`
-- `[Mevzuat MCP — Av. K. m. 35 — GG.AA.YYYY]`
-- `[Adalet Bakanlığı CMK Tarifesi — yıl — RG sayı/tarih]`
-- `[Baro CMK atama no — GG.AA.YYYY]`
-- `[Yargı MCP — yargitay ceza dairesi — emsal — GG.AA.YYYY]`
+- `[Mevzuat MCP - CMK m. X - GG.AA.YYYY]`
+- `[Mevzuat MCP - Av. K. m. 35 - GG.AA.YYYY]`
+- `[Adalet Bakanlığı CMK Tarifesi - yıl - RG sayı/tarih]`
+- `[Baro CMK atama no - GG.AA.YYYY]`
+- `[Yargı MCP - yargitay ceza dairesi - emsal - GG.AA.YYYY]`
 
 ---
 

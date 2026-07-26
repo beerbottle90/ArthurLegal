@@ -100,14 +100,14 @@ GovInfo `BILLSTATUS` yetersiz kalırsa.
 ABD mevzuatı oturumda fiilen GovInfo'dan (WebFetch) çekildiyse:
 
 ```
-[US Legislation — GovInfo — <koleksiyon/atıf> — GG.AA.YYYY]
+[US Legislation - GovInfo - <koleksiyon/atıf> - GG.AA.YYYY]
 ```
 
-Örnek: `[US Legislation — GovInfo — 35 U.S.C. §101 — 22.05.2026]`,
-`[US Legislation — GovInfo — Federal Register 90 FR 12345 — 22.05.2026]`.
+Örnek: `[US Legislation - GovInfo - 35 U.S.C. §101 - 22.05.2026]`,
+`[US Legislation - GovInfo - Federal Register 90 FR 12345 - 22.05.2026]`.
 
 Çekmediğin bir ABD statüsünü `[US Legislation]` etiketleyemezsin →
-`[model bilgisi — doğrulayın]`. GovInfo **içtihat içermez**; ABD mahkeme
+`[model bilgisi - doğrulayın]`. GovInfo **içtihat içermez**; ABD mahkeme
 kararları için `courtlistener-rehberi.md`.
 
 ---

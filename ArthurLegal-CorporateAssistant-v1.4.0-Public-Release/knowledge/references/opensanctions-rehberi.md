@@ -125,10 +125,10 @@ Claude (sen) sorgu yapıyorsun:
    - Body: { "queries": { "q1": { "schema": "Company", "properties": {...}}}}
 3. Cevap JSON'ı parse et — match skoru ve eşleşen liste(ler)
 4. Skora göre karar:
-   - 90+ → 🔴 DURDUR, eskalasyon
-   - 70-90 → 🟠 manuel inceleme, KYC + UBO doğrulama
-   - <70 → 🟢 devam, kaydet
-5. Çıktıda: "[OpenSanctions API — match scoru X, GG.AA.YYYY]" etiketli atıf
+   - 90+ → BLOKLAYICI DURDUR, eskalasyon
+   - 70-90 → YÜKSEK manuel inceleme, KYC + UBO doğrulama
+   - <70 → DÜŞÜK devam, kaydet
+5. Çıktıda: "[OpenSanctions API - match scoru X, GG.AA.YYYY]" etiketli atıf
 ```
 
 **Pratik:** Bu prosedürü `sirket-yaptirim-tarama-rehberi.md` ile birleştir — orada **Adım 2** (liste eşleşme taraması) yerine OpenSanctions tek çağrı.
@@ -141,11 +141,11 @@ OpenSanctions match skoru 0-100. Genel kalibrasyon önerisi:
 
 | Skor | Anlam | [ŞİRKET ADI] aksiyon |
 |---|---|---|
-| 95-100 | Kesin eşleşme | 🔴 Durdur. Hukuk Başkanı + Compliance + CEO. |
-| 80-95 | Yüksek olasılık | 🔴 Durdur, manuel UBO + KYC doğrula. Birkaç gün sürebilir. |
-| 60-80 | Orta olasılık (fuzzy ad) | 🟠 İlave dilijans: kimlik teyit, ülke teyit, alternative isimler tara. |
-| 40-60 | Düşük olasılık | 🟡 Kayıt al, ek dilijans gerekmez ama veri tabanında işaretle. |
-| <40 | Eşleşme yok | 🟢 Devam, kaydet. |
+| 95-100 | Kesin eşleşme | BLOKLAYICI Durdur. Hukuk Başkanı + Compliance + CEO. |
+| 80-95 | Yüksek olasılık | BLOKLAYICI Durdur, manuel UBO + KYC doğrula. Birkaç gün sürebilir. |
+| 60-80 | Orta olasılık (fuzzy ad) | YÜKSEK İlave dilijans: kimlik teyit, ülke teyit, alternative isimler tara. |
+| 40-60 | Düşük olasılık | ORTA Kayıt al, ek dilijans gerekmez ama veri tabanında işaretle. |
+| <40 | Eşleşme yok | DÜŞÜK Devam, kaydet. |
 
 **Önemli:** Eşik değerleri **counterparty'nin coğrafyasına göre** sıkılaştırılmalı. Rusya/İran/Kuzey Kore origin'li ise eşik 20 puan düşürülmeli (false-negative maliyeti yüksek).
 

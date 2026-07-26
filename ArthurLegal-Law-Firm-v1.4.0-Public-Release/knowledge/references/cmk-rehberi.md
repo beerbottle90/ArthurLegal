@@ -124,7 +124,7 @@ search_mevzuat(mevzuat_no="5235", mevzuat_tur="KANUN")   # Adli yargı görev/te
 → get_mevzuat_content(...) / search_within_mevzuat(phrase="<madde no>")
 ```
 
-Atıf (kanun): `[Mevzuat MCP — CMK m. XXX — GG.AA.YYYY]`
+Atıf (kanun): `[Mevzuat MCP - CMK m. XXX - GG.AA.YYYY]`
 
 ### Ceza içtihatı (Yargı MCP — Yargıtay ceza daireleri)
 
@@ -148,14 +148,14 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 
 > **CGK kararları içtihadı birleştirir** — alt mahkeme ve diğer daireler için en yüksek ağırlık.
 
-**Atıf (içtihat — bu rehberin standardı):** `[Yargı MCP — Yargıtay X.CD — Esas/Karar]`
-Örn: `[Yargı MCP — Yargıtay 12.CD — 2023/4567 E. 2024/1234 K.]`. CGK için: `[Yargı MCP — Yargıtay CGK — Esas/Karar]`.
+**Atıf (içtihat — bu rehberin standardı):** `[Yargı MCP - Yargıtay X.CD - Esas/Karar]`
+Örn: `[Yargı MCP - Yargıtay 12.CD - 2023/4567 E. 2024/1234 K.]`. CGK için: `[Yargı MCP - Yargıtay CGK - Esas/Karar]`.
 
-> **Asla** çekmediğin bir kararı atıfla gösterme. Çekemiyorsan `[model bilgisi — doğrulayın]`.
+> **Asla** çekmediğin bir kararı atıfla gösterme. Çekemiyorsan `[model bilgisi - doğrulayın]`.
 
 ### Resmi Gazete (mevzuat değişikliği / yürürlük teyidi)
 - CMK ve TCK sık değişir (özellikle istinaf/temyiz parasal sınırları, infaz rejimi).
-- Süre/sınır içeren her atıfta yürürlük tarihini RG'den teyit et. Atıf: `[Resmi Gazete — Sayı/Tarih]`.
+- Süre/sınır içeren her atıfta yürürlük tarihini RG'den teyit et. Atıf: `[Resmi Gazete - Sayı/Tarih]`.
 
 ---
 

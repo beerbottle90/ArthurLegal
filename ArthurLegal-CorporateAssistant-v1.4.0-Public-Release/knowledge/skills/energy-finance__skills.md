@@ -168,7 +168,7 @@ Karşı taraf [ANA ORTAK] veya bağlı kuruluş ise:
 
 | # | Kloz | Severity | Not |
 |---|---|---|---|
-| | | 🔴/🟠/🟡/🟢 | |
+| | | BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK | |
 
 ## Çıktı şablonu
 
@@ -177,7 +177,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 # JV & Hissedar Sözleşmesi İncelemesi — [JV adı / tarih]
 
-## ⚠️ Reviewer note
+## Reviewer note
 
 ## Bottom line
 
@@ -275,7 +275,7 @@ argument-hint: "[LNG SPA | gas supply agreement | offtake agreement]"
 
 | # | Kloz | Severity | Not |
 |---|---|---|---|
-| | Take-or-pay | 🔴/🟠/🟡/🟢 | |
+| | Take-or-pay | BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK | |
 | | Force majeure | | |
 | | Sanctions | | |
 | | Price review | | |
@@ -287,7 +287,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 # LNG Offtake İncelemesi — [Sözleşme / Karşı taraf / Tarih]
 
-## ⚠️ Reviewer note
+## Reviewer note
 
 ## Bottom line
 
@@ -388,7 +388,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 | # | Bulgu | Kategori | Severity | Eylem |
 |---|---|---|---|---|
-| 1 | | Lisans / Vergi / Yaptırım / ISG / Sözleşme | 🔴/🟠/🟡/🟢 | |
+| 1 | | Lisans / Vergi / Yaptırım / ISG / Sözleşme | BLOKLAYICI/YÜKSEK/ORTA/DÜŞÜK | |
 
 ## Çıktı şablonu
 
@@ -397,7 +397,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 # Enerji M&A Due Diligence — [Hedef şirket / tarih]
 
-## ⚠️ Reviewer note
+## Reviewer note
 - Kapsam: [okunan belgeler, erişilemeyen alanlar]
 - Bloklayıcı bulgu: [evet/hayır]
 - [review] sayısı: N
@@ -496,10 +496,10 @@ Facility Agreement'dan çıkar:
 
 ## Adım 6 — Risk matrisi
 
-🔴 Bloklayıcı: CP eksik + kapanış tarihi kısa / recourse covenant ihlali / EPDK lisans bekliyor
-🟠 Yüksek: MAC tanımı geniş / dividend lock-up çok uzun / cross-default riski
-🟡 Orta: Margin yüksek ama piyasa normunda / minor CP
-🟢 Düşük: İdari, standart
+BLOKLAYICI: CP eksik + kapanış tarihi kısa / recourse covenant ihlali / EPDK lisans bekliyor
+YÜKSEK: MAC tanımı geniş / dividend lock-up çok uzun / cross-default riski
+ORTA: Margin yüksek ama piyasa normunda / minor CP
+DÜŞÜK: İdari, standart
 
 ## Çıktı şablonu
 
@@ -508,7 +508,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 # Proje Finansmanı İncelemesi — [Proje adı / tarih]
 
-## ⚠️ Reviewer note
+## Reviewer note
 - Belgeler: [okunanlar, atlanlar]
 - CP durumu: N/M tamamlandı
 - Flagged: N [review]

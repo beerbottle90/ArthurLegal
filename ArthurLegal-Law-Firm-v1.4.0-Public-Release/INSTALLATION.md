@@ -28,6 +28,10 @@
 2. Copy the **entire contents** of `SYSTEM_PROMPT.md` and paste it
 3. Click **Save**
 
+> Note: the custom-instructions limit is ~32,000 characters. The v1.4.0
+> `SYSTEM_PROMPT.md` is **27,206 characters** (~85% of the limit). Measure before
+> adding firm-specific rules of your own.
+
 ---
 
 ## Step 3 — Upload Knowledge Files

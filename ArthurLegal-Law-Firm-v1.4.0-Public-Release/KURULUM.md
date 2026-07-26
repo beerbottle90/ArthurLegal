@@ -28,6 +28,10 @@
 2. `SYSTEM_PROMPT.md` dosyasının içeriğini **tamamını** kopyalayıp yapıştırın
 3. **Save** edin
 
+> Not: Custom instructions limiti ~32.000 karakter. v1.4.0 SYSTEM_PROMPT.md
+> **27.206 karakter** (limitin ~%85'i). Kendi bürounuza özel kural eklerseniz
+> önce karakter sayısını ölçün.
+
 ---
 
 ## Adım 3 — Knowledge dosyalarını yükleyin

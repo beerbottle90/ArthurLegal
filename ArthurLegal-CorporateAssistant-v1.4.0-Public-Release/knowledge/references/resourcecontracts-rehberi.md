@@ -95,14 +95,14 @@ uzmanların işaretlediği kilit klozlar.
 Sözleşme oturumda **fiilen araçtan çekildiyse**:
 
 ```
-[ResourceContracts.org — {sözleşme adı} — id {id}]   (+ metadata source_url)
+[ResourceContracts.org - {sözleşme adı} - id {id}]   (+ metadata source_url)
 ```
 
 Örnek:
-`[ResourceContracts.org — Shafag-Asiman Offshore Block PSA — id 31]`
+`[ResourceContracts.org - Shafag-Asiman Offshore Block PSA - id 31]`
 
 - Çekmediğin / aracın döndürmediği bir emsali `[ResourceContracts.org]`
-  etiketleyemezsin → `[model bilgisi — doğrulayın]`.
+  etiketleyemezsin → `[model bilgisi - doğrulayın]`.
 - Anotasyon / metin alıntısı **birebir**; kendi yorumunu **ayrı işaretle**.
 - **Emsal/benchmark'tır, hukuki tavsiye değildir.**
 

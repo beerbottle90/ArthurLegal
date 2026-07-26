@@ -97,8 +97,8 @@ WebFetch("https://www.jftc.go.jp/en/",
 ## Atıf formatı
 
 ```
-[JP Mevzuat — {Kanun adı} Art.{no} — e-Gov/JLT — GG.AA.YYYY]
-[JP Yüksek Mahkeme — {tarih karar özeti} — courts.go.jp — GG.AA.YYYY]
+[JP Mevzuat - {Kanun adı} Art.{no} - e-Gov/JLT - GG.AA.YYYY]
+[JP Yüksek Mahkeme - {tarih karar özeti} - courts.go.jp - GG.AA.YYYY]
 ```
 
 ---

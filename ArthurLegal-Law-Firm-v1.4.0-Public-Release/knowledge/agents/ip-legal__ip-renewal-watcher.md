@@ -54,7 +54,7 @@ for grace/lapsed items happen regardless of schedule.
 ```
 📅 IP Portfolio — week of [date]
 
-🔴 IN GRACE / LAPSED ([N])
+BLOKLAYICI IN GRACE / LAPSED ([N])
 • [Asset ID] / [Jurisdiction] / [Mark or title]
   [Action] — original due [date], grace ends [date]
   Owner: [business owner] | Counsel: [firm or docket ID]
@@ -63,10 +63,10 @@ for grace/lapsed items happen regardless of schedule.
 • [Asset ID] / [Jurisdiction] — [Mark/title]
   [Action] — due [date]
 
-🟠 DUE 30-60 DAYS ([N])
+YÜKSEK DUE 30-60 DAYS ([N])
 • [list]
 
-🟡 DUE 60-90 DAYS ([N])
+ORTA DUE 60-90 DAYS ([N])
 • [N] items — [link to full register if stored somewhere shared]
 
 🌐 AGENT-MANAGED ([N])

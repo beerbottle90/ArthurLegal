@@ -57,7 +57,7 @@ Eğer vekaletnamede bu yetkiler **açıkça** yer almıyorsa, vekil bu işlemler
 1. Müvekkille noter randevusu (genelde 30-60 dk)
 2. Vekaletname taslağı önceden hazırlanır — büromuzun standart şablonu
 3. Noterde müvekkil + (varsa) tercüman ve **kimlik** ile imza
-4. Noter ücreti: 2026'da ~`[DOLDUR — TL aralık]`
+4. Noter ücreti: 2026'da ~`[DOLDUR - TL aralık]`
 5. Noterin damgalı + numaralı nüsha alınır
 
 ### İçerik (standart)
@@ -73,12 +73,12 @@ aşağıdaki yetkilerle vekil olarak tayin ettim:
    nezdinde adıma her türlü dava ve takip işlemini yürütmeye,
 2. Dava açmaya, davaya cevap vermeye, müdafii sıfatıyla
    savunma yapmaya,
-3. [HMK m. 74 özel yetkiler — kullanılacak olanlar:]
+3. [HMK m. 74 özel yetkiler - kullanılacak olanlar:]
    - Sulh anlaşması yapmaya
    - Davayı kabul/red etmeye
    - Davadan ve kanun yollarından feragat etmeye
    - Hakeme başvurmaya
-   - [vd. — matter tipine göre]
+   - [vd. - matter tipine göre]
 4. UYAP üzerinden adıma e-tebligat almaya, dosya işlemi yapmaya,
 5. Karşı yandan tahsil edilecek vekalet ücretini almaya,
 6. Bu vekalete dayanarak başka avukatları yetkilendirmeye / azil etmeye.
@@ -169,10 +169,10 @@ UYAP Avukat Portalı üzerinden:
 
 ## Atıf disiplini
 
-- `[Mevzuat MCP — Av. K. m. 32/35/41 — GG.AA.YYYY]`
-- `[Mevzuat MCP — HMK m. 71-77 — GG.AA.YYYY]`
-- `[Noter onaylı vekaletname — yevmiye no — GG.AA.YYYY]`
-- `[UYAP — dosya işlemi no — GG.AA.YYYY HH:MM]`
+- `[Mevzuat MCP - Av. K. m. 32/35/41 - GG.AA.YYYY]`
+- `[Mevzuat MCP - HMK m. 71-77 - GG.AA.YYYY]`
+- `[Noter onaylı vekaletname - yevmiye no - GG.AA.YYYY]`
+- `[UYAP - dosya işlemi no - GG.AA.YYYY HH:MM]`
 
 ---
 

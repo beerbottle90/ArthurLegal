@@ -1,6 +1,6 @@
 # [Elektrik İştiraki] – Elektrik Üretim Lisans + EPDK Rehberi (Devri Sonrası)
 
-> **[Elektrik İştiraki] = Doğal Gaz Kombine Çevrim Santrali.** [Tesis Lokasyonu]'de [DOLDUR — kapasite] kurulu güçte doğal gaz yakıtlı elektrik üretim. [önceki sahibi]nden ~[DOLDUR — devralma bedeli] karşılığı yakın geçmişte ArthurLegal Holding tarafından devralındı.
+> **[Elektrik İştiraki] = Doğal Gaz Kombine Çevrim Santrali.** [Tesis Lokasyonu]'de [DOLDUR - kapasite] kurulu güçte doğal gaz yakıtlı elektrik üretim. [önceki sahibi]nden ~[DOLDUR - devralma bedeli] karşılığı yakın geçmişte ArthurLegal Holding tarafından devralındı.
 
 > **Stratejik bağlam:** ArthurLegal Holding, **doğal gaz dağıtım ([Şehir Gazı Dağıtım A]/[Şehir Gazı Dağıtım B])** işinden çıkıp **doğal gaz yakıtlı elektrik üretim** alanına geçiyor. Bu, regülatif çerçeveyi de değiştirir — 4646 Doğal Gaz Piyasası → 6446 Elektrik Piyasası.
 

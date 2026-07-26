@@ -120,15 +120,15 @@ search_acts("transfer qiymətləri", scope="text")     # başlık zayıfsa tam m
 ## 5. ATIF DİSİPLİNİ (zorunlu)
 
 ```
-[AZ Mevzuat — e-qanun MCP — {belge adı} — id:{id} — {statü} — GG.AA.YYYY]
+[AZ Mevzuat - e-qanun MCP - {belge adı} - id:{id} - {statü} - GG.AA.YYYY]
 ```
 
 Örnek:
-`[AZ Mevzuat — e-qanun MCP — Əmək Məcəlləsi — id:26559 — Qüvvədədir — 26.07.2026]`
+`[AZ Mevzuat - e-qanun MCP - Əmək Məcəlləsi - id:26559 - Qüvvədədir - 26.07.2026]`
 
 - **Statü atıfın İÇİNDEDİR.** Okuyucu, aktın yürürlükte olduğunu yeniden
   kontrol etmeden görebilmeli.
-- Araç döndürmediyse **UYDURMA** → `[model bilgisi — doğrulayın]`.
+- Araç döndürmediyse **UYDURMA** → `[model bilgisi - doğrulayın]`.
 - Azerbaycanca metni alıntılarken **Türkçe çevirisini yanına koy** ve çevirinin
   **sana ait, resmî olmadığını** işaretle. Kritik metinde `[review]` flag.
 - Çıktı **hukuki tavsiye değildir** — nitelikli avukat incelemesi için taslaktır.

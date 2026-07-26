@@ -99,9 +99,9 @@ WebFetch("https://www.arera.it/it/inglese/arera_en.htm",
 ## Atıf formatı
 
 ```
-[IT Mevzuat — {Kanun adı} Art.{no} — Normattiva — GG.AA.YYYY]
-[Corte Cost. — Sentenza n.{no}/{YIL} — GG.AA.YYYY]
-[Cass. — Sez.{daire} — n.{no}/{YIL} — GG.AA.YYYY]
+[IT Mevzuat - {Kanun adı} Art.{no} - Normattiva - GG.AA.YYYY]
+[Corte Cost. - Sentenza n.{no}/{YIL} - GG.AA.YYYY]
+[Cass. - Sez.{daire} - n.{no}/{YIL} - GG.AA.YYYY]
 ```
 
 ---

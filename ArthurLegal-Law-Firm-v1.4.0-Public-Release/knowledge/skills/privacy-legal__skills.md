@@ -139,7 +139,7 @@ Populate the practice profile only from the user's typed answers and the three s
 - **Never** write a practice profile with silent gaps. Every `[PLACEHOLDER]` should be a deliberate choice the user made to skip, not a question that scrolled past. If the DPA template or reference PIA was skipped, note `[POSITIONS UNTESTED]` so downstream skills know.
 - **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/privacy-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /privacy-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged - verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
 
 ## The interview
 
@@ -328,7 +328,7 @@ If outputs aren't saved anywhere yet:
 [regions]. Privacy team is [N] people. [DPO name or "no formal DPO"]. Escalation
 goes to [GC / CPO / name].
 
-**Regulatory footprint:** [GDPR / CCPA / HIPAA / etc. — only list what applies]
+**Regulatory footprint:** [GDPR / CCPA / HIPAA / etc. - only list what applies]
 
 **Open regulatory matters:** [none / list]
 
@@ -337,7 +337,7 @@ goes to [GC / CPO / name].
 ## Who's using this
 
 **Role:** [Lawyer / legal professional | Non-lawyer with attorney access | Non-lawyer without attorney access]
-**Attorney contact:** [Name / team / outside firm / N/A — fill in if non-lawyer]
+**Attorney contact:** [Name / team / outside firm / N/A - fill in if non-lawyer]
 
 ---
 
@@ -395,7 +395,7 @@ or edit this section.*
 
 ## PIA house style
 
-**Trigger:** [what requires a PIA — new data collection, new vendor, etc.]
+**Trigger:** [what requires a PIA - new data collection, new vendor, etc.]
 **Format:** [structure extracted from the seed PIA]
 **Depth:** [typical length / detail level]
 **Sign-off:** [who approves]
@@ -409,9 +409,9 @@ or edit this section.*
 
 **Volume:** [rough monthly count]
 **Handler:** [privacy team / support team / automated]
-**Systems to check:** [list of every place user data lives — prod DB, analytics, support tickets, backups, etc.]
+**Systems to check:** [list of every place user data lives - prod DB, analytics, support tickets, backups, etc.]
 **Identity verification method:** [how you confirm the requester is the data subject]
-**Response SLA:** [internal SLA target — research the applicable regulatory deadline(s) for each regime in the footprint and cite primary sources before committing]
+**Response SLA:** [internal SLA target - research the applicable regulatory deadline(s) for each regime in the footprint and cite primary sources before committing]
 
 ---
 
@@ -443,7 +443,7 @@ or edit this section.*
 **Naming convention:** [file naming pattern, or "ad hoc"]
 **Privacy policy document:** [path or URL to the actual published privacy policy]
 **Policy last updated:** [date]
-**Last policy sweep:** [date of last policy-monitor crawl — updated automatically]
+**Last policy sweep:** [date of last policy-monitor crawl - updated automatically]
 
 **Work-product header** (prepended to DPA reviews, PIAs, reg-gap analyses, policy-monitor sweeps, and triage outputs):
 
@@ -517,7 +517,7 @@ This solves the cold-start problem (the supervisor doesn't know what to do first
 
 - **Don't assume GDPR applies.** Lots of US-only B2B companies are told they "should probably care about GDPR" — ask whether they actually have EU data subjects.
 - **Don't let them skip the controller/processor question.** If they're not sure, walk through it: "When your customer's user data comes into your system, whose privacy policy governs it — yours or the customer's?"
-- **Don't write a DPA playbook from generic positions.** If they haven't negotiated many DPAs, say so in the config CLAUDE.md: `[POSITIONS UNTESTED — this team hasn't negotiated many DPAs yet. Treat as starting points, not settled positions.]`
+- **Don't write a DPA playbook from generic positions.** If they haven't negotiated many DPAs, say so in the config CLAUDE.md: `[POSITIONS UNTESTED - this team hasn't negotiated many DPAs yet. Treat as starting points, not settled positions.]`
 
 ---
 
@@ -689,9 +689,9 @@ Before reviewing, check the outputs folder for prior work on this counterparty o
 If a prior output is found, cite it in the review:
 
 > "Prior triage ([date]) rated this [risk level] and conditioned approval on [X]. This DPA review is consistent with that finding." — or —
-> "Prior triage ([date]) rated this [risk level]. This DPA review departs from that finding because [reason — new facts, different scope, contract term that changed the picture]."
+> "Prior triage ([date]) rated this [risk level]. This DPA review departs from that finding because [reason - new facts, different scope, contract term that changed the picture]."
 
-**Carry severity from the upstream output as a floor** per the cross-skill severity floor rule in `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` → `## Shared guardrails`. A processing activity the triage rated 🔴 cannot be quietly downgraded to 🟢 in the DPA review; any demotion is stated and explained.
+**Carry severity from the upstream output as a floor** per the cross-skill severity floor rule in `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` → `## Shared guardrails`. A processing activity the triage rated BLOKLAYICI cannot be quietly downgraded to DÜŞÜK in the DPA review; any demotion is stated and explained.
 
 If no prior output is found (new counterparty / new activity), say so explicitly in the review — "No prior triage or PIA on this counterparty in outputs folder" — so the reviewing attorney knows the check ran.
 
@@ -722,7 +722,7 @@ If no sectoral overlay applies, note that explicitly — "no federally-regulated
 
 Walk every DPA through these terms, clause by clause. The *specific* numeric and substantive positions (notice periods, breach timelines, acceptable/unacceptable floors) come from `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` → `## DPA playbook`. The regulatory floors that any DPA has to clear come from primary law — **research the currently operative rule** for each applicable regime and cite primary sources before stating a floor.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a regime's breach window, transfer-mechanism requirement, subprocessor-change rule, or any other floor, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a regime's breach window, transfer-mechanism requirement, subprocessor-change rule, or any other floor, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
 > **Source attribution tiering.** Tag every citation in the review — regulatory floors, SCC versions, adequacy decisions, regulator guidance, case law — with its source. For model-knowledge citations, use one of three tiers rather than a single blanket "verify" tag:
 >
@@ -730,7 +730,7 @@ Walk every DPA through these terms, clause by clause. The *specific* numeric and
 > - `[verify]` — model-knowledge citations that are real but should be verified: specific implementing regulations, regulator guidance, case holdings, adequacy decisions, SCC modules and versions, UK Addendum / IDTA status, thresholds, effective dates.
 > - `[verify-pinpoint]` — pinpoint citations (specific subsection letters, clause numbers within SCCs, paragraph numbers, volume/page references) carry the highest fabrication risk and should ALWAYS be verified against a primary source.
 >
-> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[Commission / regulator site]`, or the MCP tool name); web-search citations remain `[web search — verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
+> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[Commission / regulator site]`, or the MCP tool name); web-search citations remain `[web search - verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
 
 | Term | Looking for | Playbook field | Common fights |
 |---|---|---|---|
@@ -800,7 +800,7 @@ When in doubt, smaller. A client who receives a surgical redline trusts that you
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 # DPA Review: [Counterparty]
 
@@ -814,7 +814,7 @@ Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/
 
 [Two sentences. Can we sign? What has to change?]
 
-**Issues:** [N]🟢 [N]🟡 [N]🟠 [N]🔴
+**Issues:** [N]DÜŞÜK [N]ORTA [N]YÜKSEK [N]BLOKLAYICI
 
 ---
 
@@ -829,13 +829,13 @@ reviewer can skim.]
 
 ## Privacy policy consistency
 
-[🟢 Consistent | 🟡 Flags: list]
+[DÜŞÜK Consistent | ORTA Flags: list]
 
 ---
 
 ## Recommended redlines
 
-[Consolidated — ready to send back]
+[Consolidated - ready to send back]
 
 ---
 
@@ -849,7 +849,7 @@ fallback exists]
 
 If the DPA contemplates cross-border data transfers, **research the currently operative transfer mechanism requirements** for the applicable corridor(s). For each origin/destination pair, identify: the applicable regime, whether any adequacy decision is in force, which transfer mechanism is required or available (e.g., Standard Contractual Clauses and their applicable version/module, UK Addendum or IDTA, BCRs, derogations), whether a transfer impact assessment or equivalent is required, and what supplementary measures may be needed. Cite primary sources (regulation, Commission decision, regulator guidance, controlling case law) with pinpoint cites and verify currency — adequacy decisions, SCC versions, and required supplementary measures change through new Commission decisions, court rulings, and regulator guidance. Flag uncertainty for attorney verification.
 
-If a transfer mechanism is missing and there is an international transfer, that is a 🔴 — there is no lawful transfer mechanism.
+If a transfer mechanism is missing and there is an international transfer, that is a BLOKLAYICI — there is no lawful transfer mechanism.
 
 ## Gate: signing a DPA
 
@@ -951,7 +951,7 @@ Identify which right the data subject is invoking. Common categories:
 
 **Research the applicable rule before proceeding.** For each invoked right, identify the jurisdiction(s) whose law applies (GDPR, UK GDPR, CCPA/CPRA, other US state privacy laws, sectoral regimes). Cite the controlling statute or regulation with pinpoint references — the specific article/section, the scope of the right, any carve-outs. Note effective dates; data subject rights are amended frequently (new state laws each legislative session). Flag uncertainty and escalate for attorney verification rather than stating a rule you haven't confirmed.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's rights, exemptions, or deadlines, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / right]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's rights, exemptions, or deadlines, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / right]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
 > **Source attribution tiering.** Tag every citation with its source. For model-knowledge citations, use one of three tiers rather than a single blanket "verify" tag:
 >
@@ -959,7 +959,7 @@ Identify which right the data subject is invoking. Common categories:
 > - `[verify]` — model-knowledge citations that are real but should be verified: specific implementing regulations, agency guidance, case holdings, thresholds, effective dates, post-2023 amendments.
 > - `[verify-pinpoint]` — pinpoint citations (specific subsection letters, volume/page numbers, paragraph numbers, regulatory subpart references) carry the highest fabrication risk and should ALWAYS be verified against a primary source.
 >
-> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[issuing authority site]`, or the MCP tool name); web-search citations remain `[web search — verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
+> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[issuing authority site]`, or the MCP tool name); web-search citations remain `[web search - verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
 
 Some requests are combinations — "delete my account and send me my data first" is deletion + portability. Handle as two linked requests.
 
@@ -1019,7 +1019,7 @@ Common recurring questions to work through:
 
 ### Step 5: Draft the response — TWO LETTERS
 
-> **Research-connector pre-flight.** Before emitting either letter or the internal exemption analysis, check whether a legal research connector is reachable for this session — Westlaw, an EUR-Lex / regulator-site connector, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs` — the reviewer note sits on the INTERNAL exemption-analysis and cover memo, NOT on the outward-facing DSAR letters to the data subject. If no connector returns results in Step 1 (right classification), Step 4 (exemption analysis), or the Deadline management research step (or none is configured at run time), record it in the **Sources:** line of the internal reviewer note — e.g., `not connected — cites from training knowledge; claimed exemptions, response deadlines, and extension mechanisms are especially fabrication-prone, verify before asserting any exemption to a data subject or regulator`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+> **Research-connector pre-flight.** Before emitting either letter or the internal exemption analysis, check whether a legal research connector is reachable for this session — Westlaw, an EUR-Lex / regulator-site connector, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs` — the reviewer note sits on the INTERNAL exemption-analysis and cover memo, NOT on the outward-facing DSAR letters to the data subject. If no connector returns results in Step 1 (right classification), Step 4 (exemption analysis), or the Deadline management research step (or none is configured at run time), record it in the **Sources:** line of the internal reviewer note — e.g., `not connected — cites from training knowledge; claimed exemptions, response deadlines, and extension mechanisms are especially fabrication-prone, verify before asserting any exemption to a data subject or regulator`. Per-citation `[model knowledge - verify]` tags remain inline. Do not emit a standalone banner above the output.
 
 Most regimes expect (or require) a prompt acknowledgment separate from the substantive response. Produce both; do not collapse them into one letter that waits until the 45-day deadline to go out.
 
@@ -1049,15 +1049,15 @@ Dear [Name],
 
 We received your [access / deletion / portability / correction] request on [date received].
 
-**Your request, as we understand it:** [one-sentence restatement — e.g., "a copy of all personal data we hold associated with your account, along with the categories of third parties with whom we share it, and deletion of your account after we provide the copy."]
+**Your request, as we understand it:** [one-sentence restatement - e.g., "a copy of all personal data we hold associated with your account, along with the categories of third parties with whom we share it, and deletion of your account after we provide the copy."]
 
 **What happens next:**
-- Our target date for the substantive response is [date — no later than the regime's statutory deadline; use internal SLA if tighter]. [If identity verification is outstanding: "We need [specific verification step] before we can proceed — see below."]
+- Our target date for the substantive response is [date - no later than the regime's statutory deadline; use internal SLA if tighter]. [If identity verification is outstanding: "We need [specific verification step] before we can proceed — see below."]
 - If we need more time because the request is complex or we receive other requests from you at the same time, we will tell you before the initial deadline and explain why. [If the regime allows an extension, cite the controlling provision.]
-- No fee applies to this request. [Or: the fee applies only if the regime permits it and the request is manifestly unfounded or excessive — cite the provision.]
+- No fee applies to this request. [Or: the fee applies only if the regime permits it and the request is manifestly unfounded or excessive - cite the provision.]
 
 [If identity verification is outstanding:]
-**To verify your identity,** please [specific verification step — e.g., reply to this email from the address on file with the last 4 digits of the payment method we have on file]. This does not pause our deadline; we continue to work in parallel.
+**To verify your identity,** please [specific verification step - e.g., reply to this email from the address on file with the last 4 digits of the payment method we have on file]. This does not pause our deadline; we continue to work in parallel.
 
 If you have questions, contact [privacy contact].
 
@@ -1290,7 +1290,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 ## `matter.md` template
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
 
 # Matter: [Client] — [short description]
 
@@ -1308,7 +1308,7 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 
 ## Matter type
 
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
+[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other - with one-line rationale]
 
 ## Key facts
 
@@ -1319,12 +1319,12 @@ Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level
 *Any deviation from the practice-level playbook that applies to this matter and only this matter.*
 
 - [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
+- [e.g., "Tone: relationship-preserving - counterparty is a strategic partner."]
 - [e.g., "Governing law: must be English law, not Delaware."]
 
 ## Related matters
 
-- [slug — one line why related]
+- [slug - one line why related]
 
 ## Notes on confidentiality
 
@@ -1343,7 +1343,7 @@ Append-only event log. Most recent at top.
 ## [YYYY-MM-DD] — Matter opened
 
 Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
+[Any initial context worth preserving beyond matter.md - e.g., "Opened in response to inbound MSA draft from [counterparty]."]
 ```
 
 ## Cross-matter context
@@ -1427,7 +1427,7 @@ If a prior output is found, cite it in the PIA:
 > "Prior triage ([date]) rated this [risk level] and required [conditions]. This PIA builds on that finding — [which conditions are satisfied, which remain, which are re-scoped]."
 
 If a prior PIA exists:
-> "This PIA supersedes the [date] PIA because [reason — scope change, new data category, vendor change, regulatory change]. Conclusions carried over: [X]. Conclusions revised: [Y, because Z]."
+> "This PIA supersedes the [date] PIA because [reason - scope change, new data category, vendor change, regulatory change]. Conclusions carried over: [X]. Conclusions revised: [Y, because Z]."
 
 **Carry severity from upstream as a floor** per the cross-skill severity floor rule in `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` → `## Shared guardrails`. A use-case-triage that rated the activity high-risk cannot become a PIA that concludes low-risk without stating why and what changed.
 
@@ -1449,9 +1449,9 @@ Check the trigger criteria in `~/.claude/plugins/config/claude-for-legal/privacy
 
 In addition, **research the currently operative mandatory-assessment triggers** for each regime in the regulatory footprint (GDPR/UK GDPR DPIA triggers, CCPA/CPRA risk-assessment triggers, other US state data-protection assessment triggers, sectoral regimes). Cite the controlling statute, regulation, or regulator guidance with pinpoint references. Verify currency — assessment thresholds and definitions shift through new state laws, rulemaking, and enforcement guidance. Flag uncertainty rather than guess.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a regime's DPIA / risk-assessment triggers or lawful-basis rules, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / question]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a regime's DPIA / risk-assessment triggers or lawful-basis rules, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / question]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
-> **Source attribution.** Tag every citation in the PIA with where it came from: `[Westlaw]`, `[regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+> **Source attribution.** Tag every citation in the PIA with where it came from: `[Westlaw]`, `[regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search - verify]` for web-search citations; `[model knowledge - verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
 
 Beyond statutory mandates, treat these as **strong indicators** that a PIA is worth doing even if not strictly mandatory (research whether any of them independently triggers a mandatory assessment under the applicable regime):
 
@@ -1504,7 +1504,7 @@ Verify currency; statutory definitions and bases are amended often. Flag uncerta
 **Use the seed PIA structure from the config CLAUDE.md.** If none was captured, use this default. Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 # Privacy Impact Assessment: [Feature/Product Name]
 
@@ -1520,17 +1520,17 @@ location data to provide Y. Processing is consistent with existing privacy
 policy commitments and uses consent as lawful basis. Two mitigations
 recommended below; no blockers identified."]
 
-**Overall risk:** [Reviewer to set: 🟢 Low / 🟡 Medium / 🟠 High / 🔴 Very high]
+**Overall risk:** [Reviewer to set: DÜŞÜK Low / ORTA Medium / YÜKSEK High / BLOKLAYICI Very high]
 
 ---
 
 ## 1. Description of processing
 
 **What:** [the feature, in plain English]
-**Data categories:** [specific fields — not "user data"]
+**Data categories:** [specific fields - not "user data"]
 **Data subjects:** [customers / end users / employees / etc.]
-**Purpose:** [why — tie to user benefit]
-**New collection?** [yes — these fields are new / no — reusing existing data]
+**Purpose:** [why - tie to user benefit]
+**New collection?** [yes - these fields are new / no - reusing existing data]
 
 ---
 
@@ -1556,9 +1556,9 @@ recommended below; no blockers identified."]
 
 | Policy commitment | Consistent? | Notes |
 |---|---|---|
-| [commitment from config CLAUDE.md privacy policy section] | 🟢 / 🟡 | |
+| [commitment from config CLAUDE.md privacy policy section] | DÜŞÜK / ORTA | |
 
-[If any 🟡: policy update needed before launch, or processing needs to change]
+[If any ORTA: policy update needed before launch, or processing needs to change]
 
 ---
 
@@ -1566,7 +1566,7 @@ recommended below; no blockers identified."]
 
 | # | Risk | Likelihood | Impact | Mitigation | Status | Owner |
 |---|---|---|---|---|---|---|
-| 1 | [specific risk, tied to the design — not "data breach" generically] | L/M/H | L/M/H | [specific control] | Done / Planned / Gap | [name] |
+| 1 | [specific risk, tied to the design - not "data breach" generically] | L/M/H | L/M/H | [specific control] | Done / Planned / Gap | [name] |
 
 **Residual risk after mitigations:** [assessment]
 
@@ -1659,7 +1659,7 @@ description: >
   "we want to start doing X — does the policy need updating", "run the policy
   monitor", "policy sweep", or wants to find where the privacy policy no longer
   matches what the team actually does.
-argument-hint: "[describe a proposed new practice — or omit / use --sweep for crawl mode]"
+argument-hint: "[describe a proposed new practice - or omit / use --sweep for crawl mode]"
 ---
 
 # /policy-monitor
@@ -1749,7 +1749,7 @@ The website privacy policy is one notice. Federally-regulated practices require 
 **If no sectoral notice is configured for a regime in the footprint**, surface this as a standing gap on every sweep, not a one-time finding. The sweep output should include:
 
 > **Sectoral notice coverage:**
-> - [regime]: [configured notice path + last updated, or "NOT CONFIGURED — flag each sweep until resolved"]
+> - [regime]: [configured notice path + last updated, or "NOT CONFIGURED - flag each sweep until resolved"]
 
 **If the sweep cannot locate the sectoral notice**, say so explicitly — do not silently default to diffing only against the website policy. A fintech DPO relying on a policy-monitor sweep that ignored GLBA would ship with an outdated regulator-facing notice and no warning. Surface the gap loudly.
 
@@ -1826,7 +1826,7 @@ defensible without updating, but cleaner with it.
 ### Sweep output format
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 # Privacy Policy Monitor — Sweep Report
 
@@ -1842,12 +1842,12 @@ defensible without updating, but cleaner with it.
 
 **Source:** [filename / output type that triggered this]
 **What's happening:** [plain description of the new practice]
-**Current policy:** [quote the relevant section — or "No coverage"]
+**Current policy:** [quote the relevant section - or "No coverage"]
 **Gap:** [what's missing or inconsistent]
 
 **Suggested language:**
 > *Add to [section name]:*
-> "[Drafted policy text — specific, consistent with house style of the actual policy]"
+> "[Drafted policy text - specific, consistent with house style of the actual policy]"
 
 ---
 
@@ -1870,7 +1870,7 @@ defensible without updating, but cleaner with it.
 
 ## No action needed
 
-[List outputs scanned where no gaps were found — confirms they were reviewed]
+[List outputs scanned where no gaps were found - confirms they were reviewed]
 
 ---
 
@@ -1906,7 +1906,7 @@ Check the proposed practice against every relevant section of the current policy
 
 | Check | Current policy says | Proposed practice | Verdict |
 |---|---|---|---|
-| Data categories | [what policy lists] | [new category if any] | 🟢 Covered / 🟡 Gap / 🔴 Conflict |
+| Data categories | [what policy lists] | [new category if any] | DÜŞÜK Covered / ORTA Gap / BLOKLAYICI Conflict |
 | Purposes | [stated purposes] | [new purpose] | |
 | Third parties / subprocessors | [stated parties] | [new party if any] | |
 | Retention | [retention commitment] | [implied retention] | |
@@ -1916,7 +1916,7 @@ Check the proposed practice against every relevant section of the current policy
 ### Direct query output format
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs - differs by role; see `## Who's using this`]
 
 # Privacy Policy Check: [Proposed practice in one line]
 
@@ -1934,7 +1934,7 @@ brief, confirms they don't need to change]
 ### [Gap 1]
 
 **Current policy:** [quote or "Silent"]
-**What's needed:** [why this gap matters — legal, reputational, or consistency reason]
+**What's needed:** [why this gap matters - legal, reputational, or consistency reason]
 
 **Suggested language:**
 > *Add to [section]:*
@@ -1945,7 +1945,7 @@ brief, confirms they don't need to change]
 
 ## What conflicts
 
-### [Conflict 1 — if any]
+### [Conflict 1 - if any]
 
 **Current policy says:** [quote]
 **Proposed practice does:** [what conflicts]
@@ -2120,10 +2120,10 @@ Not every gap is equal. Sort by:
 
 Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/privacy-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
 
-> **Research-connector pre-flight.** Before emitting the remediation plan, check whether a legal research connector is reachable for this session — Westlaw, an EUR-Lex / regulator-site connector, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 or the Common regulation categories research step (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication items in privacy gap analyses are new state-law effective dates, enforcement-begins dates, and article/section pinpoints — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+> **Research-connector pre-flight.** Before emitting the remediation plan, check whether a legal research connector is reachable for this session — Westlaw, an EUR-Lex / regulator-site connector, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 or the Common regulation categories research step (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication items in privacy gap analyses are new state-law effective dates, enforcement-begins dates, and article/section pinpoints — spot-check those first`. Per-citation `[model knowledge - verify]` tags remain inline. Do not emit a standalone banner above the output.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[WORK-PRODUCT HEADER - per plugin config ## Outputs]
 
 ## Remediation Plan: [Regulation name]
 
@@ -2142,11 +2142,11 @@ Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/
 
 ### Already compliant
 
-[list of requirements where gap = None — useful for the "we're mostly fine" message]
+[list of requirements where gap = None - useful for the "we're mostly fine" message]
 
 ### Accepted gaps (risk-accepted, not fixing)
 
-[if any — with documented rationale and who accepted the risk]
+[if any - with documented rationale and who accepted the risk]
 ```
 
 ## Common regulation categories
@@ -2162,7 +2162,7 @@ When scoping the delta, it helps to place the new regulation into a rough catego
 
 For each category relevant to the new regulation, **research the currently operative requirements** before drafting the gap analysis. Cite primary sources. Verify currency — new state laws come online each legislative session, and regulators issue interpretive guidance that shifts what "compliance" means for a given control. Flag uncertainty for attorney verification rather than assert a rule you haven't confirmed.
 
-> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, regulator databases, or firm platform) returns few or no results for a regulation, guidance document, or enforcement action, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against the issuing authority before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
+> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, regulator databases, or firm platform) returns few or no results for a regulation, guidance document, or enforcement action, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [regime / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search - verify]` and should be checked against the issuing authority before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
 >
 > **Source attribution tiering.** Tag every citation in the gap analysis with its source. For model-knowledge citations, use one of three tiers rather than a single blanket "verify" tag:
 >
@@ -2170,7 +2170,7 @@ For each category relevant to the new regulation, **research the currently opera
 > - `[verify]` — model-knowledge citations that are real but should be verified: specific implementing regulations, agency guidance, case holdings, thresholds, effective dates, newly enacted state statutes.
 > - `[verify-pinpoint]` — pinpoint citations (specific subsection letters, volume/page numbers, paragraph numbers, regulatory subpart references) carry the highest fabrication risk and should ALWAYS be verified against a primary source.
 >
-> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[issuing authority site]`, or the MCP tool name); web-search citations remain `[web search — verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
+> Tool-retrieved citations keep their source tag (`[Westlaw]`, `[issuing authority site]`, or the MCP tool name); web-search citations remain `[web search - verify]`; user-supplied citations remain `[user provided]`. The tiering surfaces the real verification work — a reader who verifies everything verifies nothing. Never strip or collapse the tags.
 
 ## Integration with other skills
 
@@ -2186,7 +2186,7 @@ If the gap analysis concludes "no gaps, we're compliant," still write the doc �
 
 **Close with a citation-verification note:**
 
-> Citations in this output were generated by an AI model and have not been verified against a primary source. Before relying on any regulation, statute, guidance, or enforcement action, check it against a legal research tool (Westlaw, your firm's research platform, or the issuing authority's website) for accuracy and current status. AI-generated citations are sometimes fabricated or misquoted. Source tags on each citation (e.g., `[web search — verify]`) show where it came from; `verify` tags carry higher fabrication risk and should be checked first.
+> Citations in this output were generated by an AI model and have not been verified against a primary source. Before relying on any regulation, statute, guidance, or enforcement action, check it against a legal research tool (Westlaw, your firm's research platform, or the issuing authority's website) for accuracy and current status. AI-generated citations are sometimes fabricated or misquoted. Source tags on each citation (e.g., `[web search - verify]`) show where it came from; `verify` tags carry higher fabrication risk and should be checked first.
 
 ## Close with the next-steps decision tree
 
@@ -2273,7 +2273,7 @@ If the file is missing or contains `[PLACEHOLDER]`, surface this bounce:
 >
 > **Two choices:**
 > - Run `/privacy-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll triage tailored to YOUR practice.
-> - Say **"provisional"** and I'll triage against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+> - Say **"provisional"** and I'll triage against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook — and tag every output `[PROVISIONAL - configure your profile for tailored output]` so you can see what I do before committing.
 
 ### Provisional mode
 
@@ -2373,7 +2373,7 @@ proceeds.
 ---
 
 ### Bottom line
-[PIA required / Mandatory DPIA required / Proceed — one-sentence why]
+[PIA required / Mandatory DPIA required / Proceed - one-sentence why]
 
 ---
 
@@ -2382,8 +2382,8 @@ proceeds.
 **CLASSIFICATION:** [PROCEED / PIA REQUIRED / DPIA MANDATORY / STOP]
 
 **House trigger met?** [Yes / No]
-**GDPR mandatory DPIA trigger?** [Yes — [trigger] / No / N/A (GDPR not in footprint)]
-**Privacy policy conflict?** [None / Yes — [specific conflict]]
+**GDPR mandatory DPIA trigger?** [Yes - [trigger] / No / N/A (GDPR not in footprint)]
+**Privacy policy conflict?** [None / Yes - [specific conflict]]
 
 **Reasoning:**
 [1-3 sentences. For PROCEED: what makes it safe under current policy. For PIA/DPIA:
@@ -2396,7 +2396,7 @@ is in conflict.]
 
 | Requirement | Owner | Done? |
 |---|---|---|
-| [e.g., Privacy Impact Assessment — full DPIA format] | [Privacy counsel] | ☐ |
+| [e.g., Privacy Impact Assessment - full DPIA format] | [Privacy counsel] | ☐ |
 | [e.g., Legitimate interest assessment (if LI basis)] | [Privacy counsel] | ☐ |
 | [e.g., DPO consultation (DPIA mandatory track)] | [DPO] | ☐ |
 | [e.g., Vendor DPA in place] | [Privacy / Legal] | ☐ |
@@ -2427,7 +2427,7 @@ If they say no, the triage result stands. The PIA can be run any time with:
 **Conflict:** [Specific privacy policy commitment or principle in conflict]
 
 **To proceed, one of these has to change:**
-- [Option A — redesign the activity so it doesn't create the conflict]
+- [Option A - redesign the activity so it doesn't create the conflict]
 - [Option B — update the privacy policy to cover this processing (requires review
   of whether the update is itself consistent with lawful basis)]
 
@@ -2462,10 +2462,10 @@ then expand each non-PROCEED entry:
 
 | # | Activity | Classification | Key condition / blocker |
 |---|---|---|---|
-| 1 | [activity] | 🟢 Proceed | — |
-| 2 | [activity] | 🟡 PIA required | Lawful-basis assessment needed; vendor DPA not in place |
-| 3 | [activity] | 🟠 DPIA mandatory | Large-scale special category data |
-| 4 | [activity] | 🔴 Stop | Privacy policy conflict — purpose limitation |
+| 1 | [activity] | DÜŞÜK Proceed | — |
+| 2 | [activity] | ORTA PIA required | Lawful-basis assessment needed; vendor DPA not in place |
+| 3 | [activity] | YÜKSEK DPIA mandatory | Large-scale special category data |
+| 4 | [activity] | BLOKLAYICI Stop | Privacy policy conflict — purpose limitation |
 
 ---
 
