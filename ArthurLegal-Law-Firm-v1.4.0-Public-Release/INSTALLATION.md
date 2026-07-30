@@ -144,7 +144,6 @@ knowledge/references/switzerland-caselaw-rehberi.md
 knowledge/references/azerbaycan-hukuk-rehberi.md
 knowledge/references/cin-hukuku-rehberi.md
 knowledge/references/sirbistan-hukuku-rehberi.md
-knowledge/references/cek-hukuku-rehberi.md
 knowledge/references/russia-legislation-rehberi.md  ← KYC / sanctions only
 knowledge/references/karsilastirmali-hukuk-rehberi.md
 ```
@@ -163,19 +162,53 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 
 ---
 
+## Step 4a — Jurisdiction connectors (optional)
+
+Add these where your client portfolio touches the jurisdiction.
+
+**From the Anthropic connector directory** (no custom connector needed —
+**Customize → Connectors → Browse Connectors** → select → **Add**):
+
+| Connector | Auth | Coverage |
+|---|---|---|
+| **CourtListener** | OAuth 2.0 (dynamic client registration — no pre-registration, no API key) | **US case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (Free Law Project) |
+| **Fedlex** | None | **Swiss federal legislation** — article text, full statute text, amendment history |
+
+**As custom connectors** (**+ Add custom connector** → *Name* + *URL*):
+
+| Connector | URL | Auth | Coverage |
+|---|---|---|---|
+| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | None | Swiss case law — 972K+ federal and cantonal decisions (33 tools, CC0) |
+
+> ⚠️ **Citation verification is mandatory.** Before citing any US decision, verify
+> it in CourtListener — does the case exist, is the citation correct, has it been
+> overruled? An unverified decision is tagged `[model knowledge — verify]` and
+> never `[CourtListener]`. Every US citation that goes into a pleading passes this
+> check. See `courtlistener-rehberi.md`.
+
+> Without the Fedlex connector, Swiss legislation still works over WebFetch
+> (`fedlex.admin.ch`) — see `switzerland-caselaw-rehberi.md`.
+
+**Jurisdictions needing no connector** (automatic via WebFetch / direct API):
+🇬🇧 UK · 🇺🇸 US legislation (GovInfo — free API key) · 🇪🇺 EU/CJEU/ECHR · 🇩🇪 DE ·
+🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(sanctions / KYC only)* · 🇨🇳 CN · 🇷🇸 RS ·
+🇦🇿 AZ *(case law / English sources — legislation via Step 4b)*
+
+---
+
 ## Step 4b — Three new MCP servers (v1.4.0) — the source layer (optional)
 
-Üçü de **self-hosted, auth'suz** Streamable HTTP MCP sunucusudur. Sunucuları
-kendiniz çalıştırırsınız; sonra her biri için:
+All three are **self-hosted, auth-free** Streamable HTTP MCP servers. You run the
+servers yourself, then for each one:
 
 Project → **Customize** → **Connectors** → **Add custom connector** →
-*Name* + *URL* → Auth bölümünü **boş bırakın** (No authentication).
+*Name* + *URL* → leave the Auth section **empty** (No authentication).
 
-| # | Name | URL | Rol | Rehber |
+| # | Name | URL | Role | Guide |
 |---|---|---|---|---|
-| 1 | `e-qanun` | `https://<HOST>/mcp` | **AZ mevzuatı — BİRİNCİL**, yürürlük statüsü doğrulamalı (6 araç) | `eqanun-mcp-rehberi.md` |
-| 2 | `LexScholar` | `https://<HOST>/mcp` | 10 indeks hukuk doktrini (**DergiPark 19 TR hukuk dergisi dâhil**) — İKİNCİL (6 araç) | `lex-scholar-rehberi.md` |
-| 3 | `ResourceContracts` | `https://<HOST>/mcp` | 5.125 imzalı PSA/JOA — EMSAL (9 araç) | `resourcecontracts-rehberi.md` |
+| 1 | `e-qanun` | `https://<HOST>/mcp` | **Azerbaijani legislation — PRIMARY**, in-force status verified (6 tools) | `eqanun-mcp-rehberi.md` |
+| 2 | `LexScholar` | `https://<HOST>/mcp` | Legal doctrine across 10 indexes (**incl. DergiPark, 19 Turkish law journals**) — SECONDARY (6 tools) | `lex-scholar-rehberi.md` |
+| 3 | `ResourceContracts` | `https://<HOST>/mcp` | 5,125 signed PSA/JOA contracts — PRECEDENT (9 tools) | `resourcecontracts-rehberi.md` |
 
 **Sunucu kaynakları:** `github.com/beerbottle90/eqanun-api` ·
 `github.com/beerbottle90/lex-scholar-api` ·

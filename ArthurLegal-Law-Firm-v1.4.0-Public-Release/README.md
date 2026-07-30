@@ -1,212 +1,230 @@
-# ArthurLegal — Claude Law Firm Assistant (TR)
+# ArthurLegal — Claude Law Firm Assistant
 
-**Sürüm:** v1.4.0 · **Tarih:** 2026-07-26 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
-**Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
+**Version:** v1.4.0 · **Date:** 2026-07-26 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
-> Türk hukukuna ve **danışman tarafı (hukuk bürosu)** pratiğine adapte edilmiş, **Claude tabanlı hibrit hukuk asistanı paketi**.
-> Anthropic'in [claude-for-legal](https://github.com/anthropics/claude-for-legal) referans paketinden türetilmiştir.
+> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 91 knowledge files + up to 7 MCP connectors, covering **14 jurisdictions**.
 >
-> *A Turkish-law adaptation of Anthropic's claude-for-legal — packaged as a Claude.ai Projects bundle (SYSTEM_PROMPT + 92 knowledge files, 5 MCP servers) for small-to-mid (0–30 staff) law firms.*
+> Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
 ---
 
-## Ne işe yarar?
+## What it does
 
-0–30 çalışanlı, **dava + danışmanlık dengeli** Türk hukuk bürosunun gündelik üretim akışı için **atanan avukat incelemesi öncesi taslak çıktılar** üretir:
+Produces **pre-review draft output** for the day-to-day production workflow of a
+law firm with 0–30 staff and a balanced litigation / advisory practice:
 
-- Müvekkil intake + conflict check
-- CMK görevli atama yönetimi (48 saat sınırı)
-- Vergi davası süre kontrolü (30 gün kritik)
+- Client intake + conflict check
+- Duty-counsel assignment management (48-hour limit)
+- Tax litigation deadline control (30-day critical window)
 - NDA GREEN/YELLOW/RED triage
-- Fesih değerlendirmesi ve iş davası arabuluculuk
-- Marka clearance ve TÜRKPATENT itiraz
-- KVKK DSAR yanıtı + DPIA
-- Regülasyon takibi ve gap analizi
-- GK/YK karar paketi, küçük M&A due diligence
-- Enerji M&A, proje finansmanı, LNG offtake inceleme
+- Termination assessment and employment mediation
+- Trademark clearance and patent office oppositions
+- Data-subject access request responses + DPIA
+- Regulatory monitoring and gap analysis
+- Shareholder/board resolution packages, small-cap M&A due diligence
+- Energy M&A, project finance, LNG offtake review
 
-Çıktılar daima **taslaktır** ve **atanan ortak / Yönetici Ortak onayı** gerektirir. Sıkı atıf disiplini zorunludur: `[Mevzuat MCP — tarih]`, `[Yargı MCP — kurum — tarih]`, `[model bilgisi — doğrulayın]`.
+Output is **always a draft** and requires **assigned partner / managing partner
+approval**. Strict citation discipline is mandatory — every legal proposition
+carries its source and retrieval date (`[Legislation MCP — date]`, `[Case Law MCP
+— institution — date]`, `[model knowledge — verify]`), and unretrieved text is
+never presented as retrieved.
 
----
-
-## v1.2.0 — Ne değişti?
-
-| Alan | v1.0.1 | v1.2.0 |
-|---|---|---|
-| Plugin sayısı | 9 | **12** |
-| Yeni pratik alanlar | — | privacy-legal, regulatory-legal, energy-finance |
-| Skill formatı | Bireysel dosyalar | **Birleşik `__skills.md`** (daha kapsamlı) |
-| Agents | Yok | **7 otomasyon agent'ı** |
-| Yargı çevresi | TR | **17 yargı çevresi** (UK/US/AB/DE/FR/IT/JP/CH/RU/AZ/CN/SR/CZ) |
-| Reference dosyası | 33 | **42+** |
-| TR Legal MCP | Ayrı Mevzuat + Yargı MCP | **Birleşik yargi-mcp-pro** (OAuth) |
-| Kurulum rehberi | KULLANIM-REHBERI.md | **KURULUM.md (TR) + INSTALLATION.md (EN)** |
+Version history and the full v1.0.1 → v1.4.0 progression: [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
-## 16 pratik alan
+## 16 practice areas
 
-> **v1.4.0 yeni:** `legal-research` (kaynak katmanı) + üç MCP rehberi — `eqanun-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md` + `profiles/legal-research.md`.
-> **v1.3.0:** `advocacy-legal` (dilekçe üretimi) · `expert-opinion` (bilirkişi/mütalaa) · `contract-drafting` (sözleşme redline) + rekabet/cmk/bilirkişilik/dilekçe-teknikleri referansları.
+> **New in v1.4.0:** `legal-research` (source layer) + three MCP guides — `eqanun-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md` + `profiles/legal-research.md`.
+> **v1.3.0:** `advocacy-legal` (pleading generation) · `expert-opinion` (expert reports / legal opinions) · `contract-drafting` (contract redlining) + competition, duty-counsel, expert-witness and pleading-technique references.
 
-| Plugin | Kapsam |
+| Plugin | Scope |
 |---|---|
-| `commercial-legal` | NDA, MSA, SaaS, vendor; yaptırım taraması; governing law review |
-| `corporate-legal` | M&A, board, due diligence, KAP |
-| `employment-legal` | İş hukuku, internal investigation, TİS |
-| `privacy-legal` | KVKK, DSAR, DPIA, DPA (**YENİ**) |
-| `regulatory-legal` | Regülasyon takibi, EPDK/SPK/Rekabet (**YENİ**) |
-| `ip-legal` | Marka/patent/tasarım, takedown, OSS |
-| `litigation-legal` | HMK + UYAP + dava yönetimi |
-| `tax-legal` | KVK + VUK + KDV/ÖTV + GİB + Danıştay vergi |
-| `administrative-legal` | İdari yargı 3 dereceli + kurul kararları |
-| `energy-finance` | Enerji M&A, proje finansmanı, JV, LNG offtake (**YENİ**) |
-| `criminal-defense` | CMK zorunlu müdafi, özel müvekkil, mağdur müdahil |
-| `firm-operations` | Müvekkil intake, conflict check, MASAK, KVKK |
-| `advocacy-legal` **(YENİ)** | Dava dilekçesi üretimi (özel HMK / kamu İYUK+AYM / ceza CMK) + yazıhane asistanlığı |
-| `expert-opinion` **(YENİ)** | Bilirkişi raporu + uzman mütalaası (HMK m.293); karşı rapora itiraz (m.281) |
-| `contract-drafting` | Sözleşme üretimi & redline: incele→belgeye uygula, emsalden türet, versiyon karşılaştır, tadil |
-| `legal-research` **(YENİ)** | Kaynak katmanı — AZ mevzuatı (e-qanun MCP, statü doğrulamalı) · akademik doktrin (LexScholar; **DergiPark 19 TR hukuk dergisi**) · imzalı PSA/JOA emsali (ResourceContracts) |
+| `commercial-legal` | NDA, MSA, SaaS, vendor agreements; sanctions screening; governing law review |
+| `corporate-legal` | M&A, board, due diligence, public-company disclosure |
+| `employment-legal` | Employment law, internal investigations, collective bargaining |
+| `privacy-legal` | Data protection, DSAR, DPIA, DPA |
+| `regulatory-legal` | Regulatory monitoring — energy, capital markets, competition |
+| `ip-legal` | Trademark / patent / design, takedown, open-source review |
+| `litigation-legal` | Civil procedure + national e-justice portal + case management |
+| `tax-legal` | Corporate tax, tax procedure, VAT / excise, revenue rulings, tax chamber case law |
+| `administrative-legal` | Three-tier administrative judiciary + regulatory board decisions |
+| `energy-finance` | Energy M&A, project finance, JV, LNG offtake |
+| `criminal-defense` | Mandatory duty counsel, privately retained defence, victim intervention |
+| `firm-operations` | Client intake, conflict check, AML, data protection |
+| `advocacy-legal` **(NEW)** | Pleading generation (private-law / public-law / criminal tracks) + clerical assistance |
+| `expert-opinion` **(NEW)** | Expert reports + specialist legal opinions; objections to opposing reports |
+| `contract-drafting` | Contract generation & redlining: review→apply to document, derive from precedent, version comparison, amendment |
+| `legal-research` **(NEW)** | Source layer — Azerbaijani legislation (e-qanun MCP, status-verified) · academic doctrine (LexScholar; **DergiPark, 19 Turkish law journals**) · signed PSA/JOA precedent (ResourceContracts) |
 
 ---
 
-## MCP entegrasyonları
+## MCP integrations & 14 jurisdictions
 
-| Sunucu | URL | Auth | Kapsam |
+| Source | Access | Auth | Coverage |
 |---|---|---|---|
-| **TR Legal MCP (yargi-mcp-pro)** | `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth 2.0 | TR mevzuat + 15 kurum yargı/idari kararlar — 40+ araç |
-| **OpenSanctions** | `api.opensanctions.org` | API key | Müvekkil sanctions/KYC taraması |
-| **OpenCaseLaw.ch** | `mcp.opencaselaw.ch/sse` | Yok | İsviçre içtihadı — 33 araç |
-| **Sbírka MCP** | — | OAuth | Çek mevzuatı + Anayasa Mah. |
-| **e-qanun MCP** 🆕 | self-host `/mcp` | Yok | AZ mevzuatı — resmî `api.e-qanun.az`, **yürürlük statüsü doğrulamalı** (BİRİNCİL) — 6 araç |
-| **LexScholar MCP** 🆕 | self-host `/mcp` | Yok | 10 açık erişim indeksi federe — DOAJ · SciELO · HAL · Dialnet · OpenAIRE · Law Review Commons · OpenAlex · Crossref · Unpaywall · **DergiPark (19 TR hukuk dergisi)** (İKİNCİL) — 6 araç |
-| **ResourceContracts MCP** 🆕 | self-host `/mcp` | Yok | 5.125 imzalı petrol & madencilik sözleşmesi, 107 ülke + uzman kloz anotasyonları (EMSAL) — 9 araç |
+| **TR Legal MCP (yargi-mcp-pro)** | MCP — `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth 2.0 | Turkish legislation + judicial and administrative decisions from 15 institutions — 40+ tools |
+| **OpenCaseLaw.ch** | MCP — `mcp.opencaselaw.ch/sse` | None | Swiss case law — 972K+ federal and cantonal decisions + Fedlex legislation integration (CC0) — 33 tools |
+| **CourtListener** | MCP — official server, Anthropic connector directory | OAuth 2.0 (dynamic client registration) | **United States case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (fabricated-citation defence). Operated by Free Law Project. See `courtlistener-rehberi.md` |
+| **e-qanun** 🆕 | MCP — self-host `/mcp` | None | Azerbaijani legislation — official `api.e-qanun.az`, **in-force status verified** (PRIMARY) — 6 tools |
+| **LexScholar** 🆕 | MCP — self-host `/mcp` | None | 10 federated open-access indexes — DOAJ · SciELO · HAL · Dialnet · OpenAIRE · Law Review Commons · OpenAlex · Crossref · Unpaywall · **DergiPark (19 Turkish law journals)** (SECONDARY) — 6 tools |
+| **ResourceContracts** 🆕 | MCP — self-host `/mcp` | None | 5,125 signed petroleum & mining contracts, 107 countries + expert clause annotations (PRECEDENT) — 9 tools |
+| **OpenSanctions** | REST API — `api.opensanctions.org` | API key | Client sanctions / PEP / KYC screening |
+| **Fedlex** | MCP — Anthropic connector directory *(WebFetch fallback: `fedlex.admin.ch`)* | None | **Swiss federal legislation** — article text, full statute text, amendment history, title search |
 
-> 🆕 = v1.4.0. Üç yeni sunucu **self-hosted ve auth'suz**; kurulumu **isteğe bağlıdır** — kurulmazsa paket çalışmaya devam eder, asistan kapsam daralmasını çıktısında belirtir. Kurulum: [KURULUM.md](KURULUM.md) Adım 4d.
+**Jurisdictions reached via WebFetch** (no additional connector required):
+🇬🇧 UK · 🇺🇸 US *(federal legislation — GovInfo; case law is via the CourtListener MCP above)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(sanctions / KYC only)* · 🇨🇳 CN · 🇷🇸 RS · 🇦🇿 AZ *(case law + English-language sources; legislation via the e-qanun MCP)*
+
+**The 14 jurisdictions** = 12 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ · 🇬🇧 UK · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS) + 2 supranational legal orders (🇪🇺 EU/CJEU · ECHR).
+
+**Coverage depth is not uniform**, and the package says so rather than papering
+over it. Türkiye has the deepest coverage (dedicated MCP, 15 institutions, 40+
+tools, and the largest share of the 57-file reference layer); Switzerland, the
+United States and Azerbaijan follow with primary-source MCP access; the WebFetch
+jurisdictions provide legislation and, where available, case law. When scope
+narrows, the assistant states it in the output.
+
+> 🆕 = v1.4.0. The three new servers are **self-hosted and auth-free**; installing
+> them is **optional** — without them the package still works, and the assistant
+> notes the narrowed scope in its output. Setup: [INSTALLATION.md](INSTALLATION.md)
+> Step 4b (jurisdiction connectors: Step 4a).
 >
-> ⚠️ **Av. K. m. 36:** üç MCP de **public** arama aracıdır — müvekkil adı, dosya özeti veya gizli taslak gönderilmez; sorgu soyut hukuki kavram olur.
+> ⚠️ **Professional secrecy:** all three are **public** search tools — never send a
+> client name, a matter summary or a confidential draft; queries must be framed as
+> abstract legal concepts.
 
 ---
 
-## Kurulum — 7 adım
+## Installation — 7 steps
 
-Türkçe rehber → [KURULUM.md](KURULUM.md)
 English guide → [INSTALLATION.md](INSTALLATION.md)
+Turkish guide → [KURULUM.md](KURULUM.md)
 
-**Özet:**
+**Summary:**
 1. Claude.ai → Projects → New Project
 2. `SYSTEM_PROMPT.md` → Custom Instructions
-3. `knowledge/` klasörü → Upload Files
-4. TR Legal MCP connector ekle
-5. OpenSanctions API key (isteğe bağlı)
-6. `/firm-operations:cold-start-interview` çalıştır
-7. Pratik alan cold-start'larını çalıştır
+3. `knowledge/` folder → Upload Files
+4. Add the TR Legal MCP connector — then, per client portfolio, the jurisdiction connectors (CourtListener · Fedlex · OpenCaseLaw.ch, Step 4a) and the source layer (e-qanun · LexScholar · ResourceContracts, Step 4b)
+5. OpenSanctions API key (optional)
+6. Run `/firm-operations:cold-start-interview`
+7. Run the practice-area cold-starts
 
 ---
 
-## İlk kullanım örnekleri
+## First-use examples
 
 ```text
 /firm-operations:new-client-intake
 ```
-→ Intake + conflict + MASAK + KVKK + fee + vekalet zinciri tetiklenir.
+→ Triggers intake + conflict + AML + data protection + fee + power-of-attorney chain.
 
 ```text
 /firm-operations:conflict-check
-[Müvekkil + karşı yan bilgisi]
+[client + opposing party details]
 ```
-→ Av. K. m. 38 + TBB MK m. 35-36: ⛔ RET / 🟠 İNCELE / ✓ TEMİZ.
+→ Bar act and professional-conduct rules applied: ⛔ DECLINE / 🟠 REVIEW / ✓ CLEAR.
 
 ```text
 /criminal-defense:cmk-gorev-atama
-[Baro atama mesajı]
+[bar association assignment message]
 ```
-→ 48 saat akış, susma hakkı, CMK ödeme cetveli.
+→ 48-hour workflow, right to silence, duty-counsel fee schedule.
 
 ```text
 /tax-legal:tax-litigation-prep
-[İhbarname]
+[tax assessment notice]
 ```
-→ **30 g süre kritik kontrol**, uzlaşma vs. dava matrisi.
+→ **30-day deadline critical check**, settlement vs. litigation matrix.
 
 ```text
 /privacy-legal:dsar-response
-[KVKK m. 11 başvurusu]
+[data-subject request]
 ```
-→ 30 gün yanıt süresi, cevap şablonu, VERBİS uyumu.
+→ 30-day response clock, response template, registry compliance.
 
 ```text
 /regulatory-legal:reg-feed-watcher
 ```
-→ Haftalık regülasyon değişiklik özeti.
+→ Weekly regulatory change digest.
 
-Tüm komutlar için: `/<plugin>:` yazın — asistan o plugin'in tüm skill listesini gösterir.
+To see all commands, type just `/<plugin>:` — the assistant will list that
+plugin's full skill set.
 
 ---
 
-## Paket içeriği
+## Package contents
 
 ```
 ArthurLegal-Law-Firm-v1.4.0-Public-Release/
-├── KURULUM.md              ← Türkçe kurulum rehberi
 ├── INSTALLATION.md         ← English installation guide
-├── SYSTEM_PROMPT.md        ← Claude.ai Custom Instructions metni
-├── README.md               ← Bu dosya
-├── CHANGELOG.md            ← Sürüm notları
-├── VERSION.md              ← Sürüm bilgisi
-├── ATTRIBUTION.md          ← Atıf
+├── KURULUM.md              ← Turkish installation guide
+├── SYSTEM_PROMPT.md        ← Claude.ai Custom Instructions text
+├── README.md               ← This file
+├── CHANGELOG.md            ← Release notes
+├── VERSION.md              ← Version
+├── ATTRIBUTION.md          ← Attribution
 ├── LICENSE                 ← Proprietary — Non-Commercial
 └── knowledge/
-    ├── firm-profile.md     ← Büro profil şablonu ([DOLDUR] ile)
-    ├── profiles/           ← 10 pratik alan profili (legal-research dâhil)
-    ├── skills/             ← 16 birleşik skill dosyası
-    ├── agents/             ← 7 otomasyon agent tanımı
-    └── references/         ← 58 TR mevzuat + uluslararası yargı + MCP rehberi
+    ├── firm-profile.md     ← Firm profile template (ships with [DOLDUR] placeholders)
+    ├── profiles/           ← 10 practice-area profiles (incl. legal-research)
+    ├── skills/             ← 16 consolidated skill files
+    ├── agents/             ← 7 automation agent definitions
+    └── references/         ← 57 references: legislation + international jurisdictions + MCP guides
 ```
 
----
-
-## Sınırlamalar
-
-- **Hukuki tavsiye değildir.** Tüm çıktılar **Yönetici Ortak** incelemesi öncesi taslaktır.
-- **Mesleki sorumluluk** avukatındır; baroya kayıtlı **imzalı** belge olmadan müvekkile/mahkemeye sunulamaz.
-- **Mevzuat / içtihat değişebilir** — kritik karar öncesi UYAP / Lexpera / Resmi Gazete manuel doğrulama.
-- **Conflict check otomatik** ama Av. K. m. 38 nüansları **insan yargısı** ister.
-- **Araç çağrıları 100 saniyede iptal edilir** ve iptal edilen çağrı hiçbir şey döndürmez. Kapsam daraldıysa asistan bunu söyler; kısmi araştırma tam gibi sunulamaz.
-- **Doktrin ve sözleşme emsali ikincil/karşılaştırmalıdır** — dilekçede tek başına gerekçe olmaz. Hakemlilik üç durumludur (`true`/`false`/`null`); ABD law review'ları öğrenci editörlüdür.
-- **Azerbaycan mevzuatında yürürlük statüsü** yalnız `get_act` ile doğrulanır; `Ləğv olunmuş` bir akt dayanak yapılamaz.
-- **Aile/miras + özel denizcilik** kapsam dışı — başka uzmana yönlendirme önerilir.
+> **Note on language:** the knowledge layer and `SYSTEM_PROMPT.md` are written in
+> Turkish, and the assistant's default working language is Turkish. The
+> jurisdictional reach is multi-jurisdictional; the interface language is not yet.
 
 ---
 
-## Kişisel veri uyarısı
+## Limitations
 
-Bu paket halka açık sürümünde **gerçek kişi/şirket/müvekkil verisi içermez**. Tüm alanlar `[DOLDUR]` yer tutucuları ile işaretlenmiştir. Büro örneği (`ArthurLegal Hukuk Bürosu`) tamamen kurgusaldır.
-
-⚠️ **Av. K. m. 36 hatırlatma:** Paketi kendi büronuza uyarladığınızda gerçek müvekkil bilgisini knowledge dosyalarına yazmayın. Matter klasörlerini **cross-matter izoleli** tutun.
+- **This is not legal advice.** All output is a draft for **managing partner** review.
+- **Professional responsibility rests with the attorney**; nothing may be filed with a court or sent to a client without a signed document from a bar-registered attorney.
+- **Legislation and case law change** — verify manually against the official sources before any critical decision.
+- **Conflict check is automated** but the nuances of the bar act's conflict rules require **human judgment**.
+- **Tool calls are cancelled at 100 seconds** and a cancelled call returns nothing. If scope narrowed, the assistant says so; partial research is never presented as complete.
+- **Doctrine and contract precedent are secondary / comparative** — they cannot carry a pleading on their own. Peer-review status is three-valued (`true` / `false` / `null`); US law reviews are student-edited.
+- **In-force status of Azerbaijani legislation** is verified only via `get_act`; a repealed act (`Ləğv olunmuş`) can never be relied on.
+- **Family / inheritance and specialist maritime law are out of scope** — referral to another specialist is recommended.
 
 ---
 
-## Atıf
+## Personal data notice
 
-- **Author** (içerik & kod üretimi): Claude (Anthropic) — Sonnet 4.6
-- **Designer** (proje tasarımı & domain bilgisi): Ertuğ Demir
+The public release of this package contains **no real personal, company or client
+data**. All such fields are marked with `[DOLDUR]` placeholders. The example firm
+(`ArthurLegal Hukuk Bürosu`) is entirely fictional.
+
+⚠️ **Professional secrecy reminder:** when adapting the package to your own firm,
+do not write real client information into the knowledge files. Keep matter folders
+**isolated across matters**.
+
+---
+
+## Attribution
+
+- **Author** (content & code generation): Claude (Anthropic) — Sonnet 4.6
+- **Designer** (project design & domain expertise): Ertuğ Demir
 - **Knowledge base**: Anthropic — [claude-for-legal](https://github.com/anthropics/claude-for-legal) (Apache 2.0)
 
-Detay → [ATTRIBUTION.md](ATTRIBUTION.md)
+For details → [ATTRIBUTION.md](ATTRIBUTION.md)
 
 ---
 
-## Lisans
+## License
 
-Bu paket **bir bütün olarak** ArthurLegal Proprietary Non-Commercial License
-kapsamındadır — bkz. [LICENSE](LICENSE). **Ticari kullanım yasaktır.** In-house
-counsel'ın, hukuk bürosu çalışanının ve gerçek kişinin kişisel kullanımı ile bu
-kullanımlar için bizzat yapılan veya üçüncü kişiye yaptırılan geliştirmeler ticari
-kullanım sayılmaz. Tüm hakları saklıdır.
+This package **as a whole** is governed by the ArthurLegal Proprietary
+Non-Commercial License — see [LICENSE](LICENSE). **Commercial use is prohibited.**
+Use by in-house counsel, by law firm employees, and personal use by a natural
+person — together with modifications made by or commissioned for such permitted
+use — are not commercial use. All rights reserved.
 
-Paketin türetildiği üçüncü taraf bilgi tabanı (Anthropic `claude-for-legal`)
-**Apache License 2.0** altındadır. İlgili lisans ve atıf bildirimi
-[LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-THIRD-PARTY.txt) dosyasında
-korunmuştur ve kaldırılamaz. Çelişki hâlinde, o bileşenler bakımından Apache 2.0
-geçerlidir.
+The third-party knowledge base from which this package is derived (Anthropic
+`claude-for-legal`) is licensed under the **Apache License 2.0**. Its license and
+attribution notice are retained in
+[LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-THIRD-PARTY.txt) and must
+not be removed. In case of conflict, Apache 2.0 governs those components.

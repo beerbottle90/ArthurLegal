@@ -2,10 +2,15 @@
 
 ## ArthurLegal Corporate Assistant v1.4.0
 
-Türk hukuku odaklı 12-eklenti kurumsal hukuk asistanı. Claude.ai Projects üzerinde çalışır.
+Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
+Claude.ai Projects üzerinde çalışır.
 
-**İçerik:** 12 birleşik skill dosyası · 47 referans (17 yargı çevresi) · 7 ajan · company-profile şablonu
-**MCP sunucusu:** 5 — TR Legal · OpenCaseLaw.ch · **e-qanun** 🆕 · **LexScholar** 🆕 · **ResourceContracts** 🆕
+**İçerik:** 12 birleşik skill dosyası · 46 referans (14 yargı çevresi) · 7 ajan · company-profile şablonu
+**MCP connector:** 7'ye kadar — TR Legal · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · **e-qanun** 🆕 · **LexScholar** 🆕 · **ResourceContracts** 🆕
+(TR Legal dışındakiler isteğe bağlıdır · ayrıca OpenSanctions REST API)
+
+> **14 yargı çevresi** = 12 ulusal (TR · CH · US · AZ · UK · DE · FR · IT ·
+> JP · RU · CN · RS) + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
 
 ---
 
@@ -13,7 +18,7 @@ Türk hukuku odaklı 12-eklenti kurumsal hukuk asistanı. Claude.ai Projects üz
 
 1. https://claude.ai/projects → **+ New Project**
 2. **İsim:** `TR Legal Assistant` (veya şirketinize özel bir isim)
-3. **Açıklama (opsiyonel):** "Türk hukuku odaklı in-house hukuk asistanı — 12 pratik alan, 17 yargı çevresi, 5 MCP"
+3. **Açıklama (opsiyonel):** "Multi-jurisdiction in-house hukuk asistanı — 12 pratik alan, 14 yargı çevresi, 7 MCP connector'a kadar"
 
 ---
 
@@ -35,7 +40,7 @@ Türk hukuku odaklı 12-eklenti kurumsal hukuk asistanı. Claude.ai Projects üz
 ```
 knowledge/
   skills/      ← 12 dosya (birleşik skill kitapçıkları — legal-research dâhil)
-  references/  ← 47 dosya (TR mevzuat + 17 yargı çevresi + 3 yeni MCP rehberi)
+  references/  ← 46 dosya (TR mevzuat + 14 yargı çevresi + 3 yeni MCP rehberi)
   agents/      ← 7 dosya (periyodik ajan tanımları)
   company-profile.md
 ```
@@ -74,7 +79,11 @@ Tek birleşik MCP sunucusu — **yargi-mcp-pro** — hem mevzuat hem yargı ara�
 
 ---
 
-## Adım 4b — OpenCaseLaw.ch MCP — İsviçre İçtihadı (isteğe bağlı)
+## Adım 4b — Ek MCP connector'ları (isteğe bağlı)
+
+Üç ayrı connector: İsviçre içtihadı + İsviçre mevzuatı + ABD içtihadı.
+
+### 4b-1 · OpenCaseLaw.ch — İsviçre İçtihadı
 
 Swiss OR sözleşmeleri, ICC/Swiss tahkim kararları için.
 
@@ -83,34 +92,62 @@ Swiss OR sözleşmeleri, ICC/Swiss tahkim kararları için.
 3. **URL:** `https://mcp.opencaselaw.ch/sse`
 4. Auth bölümünü **boş bırak** (auth yok)
 
-**Kapsam:** 972K+ BGer/BVGer/26 kanton kararı, Fedlex mevzuatı (CC0).
+**Kapsam:** 972K+ BGer/BVGer/26 kanton kararı, Fedlex mevzuat entegrasyonu (CC0).
+
+### 4b-2 · CourtListener — ABD İçtihadı
+
+**Resmi MCP sunucusu vardır ve Anthropic connector dizininde listelidir** —
+custom connector eklemek gerekmez:
+
+1. **Customize → Connectors → Browse Connectors**
+2. Listeden **CourtListener**'ı seç → **Add**
+3. CourtListener hesabına yetki ver — **OAuth 2.0** (Dynamic Client Registration;
+   ön-kayıt ve API anahtarı gerekmez)
+
+**Kapsam:** ABD federal/eyalet mahkeme kararları, PACER dosyaları, atıf ağı,
+sözlü duruşma kayıtları ve **citation verification**. Free Law Project işletir.
+
+> ⚠️ **Citation verification zorunludur.** Bir ABD kararına atıf yapılacaksa önce
+> CourtListener'da doğrulanır (karar var mı, citation doğru mu, overrule edilmiş
+> mi). Doğrulanmayan karar `[model bilgisi — doğrulayın]` ile işaretlenir, asla
+> `[CourtListener]` etiketi almaz. Ayrıntı: `courtlistener-rehberi.md`.
+
+### 4b-3 · Fedlex — İsviçre Mevzuatı
+
+Verbatim madde metni ve değişiklik geçmişi için; Anthropic connector dizininde:
+
+1. **Customize → Connectors → Browse Connectors**
+2. Listeden **Fedlex**'i seç → **Add**
+
+**Kapsam:** İsviçre federal mevzuatı — madde metni, kanun tam metni, değişiklik
+listesi, başlığa göre arama. Tahkim ve Swiss OR işlerinde madde metninin
+verbatim gerekmesi hâlinde OpenCaseLaw.ch entegrasyonuna göre daha doğrudandır.
+
+> Connector kurulmazsa Fedlex WebFetch ile de çalışır (`fedlex.admin.ch`) —
+> bkz. `switzerland-caselaw-rehberi.md`.
 
 ---
 
-## Adım 4c — 17 Yargı Çevresi (connector gerektirmez)
+## Adım 4c — Connector gerektirmeyen yargı çevreleri
 
-Aşağıdaki yargı çevreleri WebFetch veya doğrudan API ile otomatik çalışır:
+Aşağıdakiler WebFetch veya doğrudan API ile otomatik çalışır:
 
 | Yargı | Auth | Rehber |
 |---|---|---|
 | 🇬🇧 UK | Yok | `uk-legislation-rehberi.md` |
-| 🇺🇸 US Mevzuat | Ücretsiz API key | `us-legislation-rehberi.md` |
-| 🇺🇸 US İçtihat (CourtListener) | Yok | `courtlistener-rehberi.md` |
+| 🇺🇸 US Mevzuat (GovInfo) | Ücretsiz API key | `us-legislation-rehberi.md` |
 | 🇪🇺 AB/EU + CJEU + ECHR | Yok | `eu-legislation-rehberi.md` |
 | 🇩🇪 Almanya | Yok | `germany-legislation-rehberi.md` |
 | 🇫🇷 Fransa | Yok | `france-legislation-rehberi.md` |
 | 🇮🇹 İtalya | Yok | `italy-legislation-rehberi.md` |
 | 🇯🇵 Japonya | Yok | `japan-legislation-rehberi.md` |
-| 🇨🇭 İsviçre Mevzuat (Fedlex) | Yok | `switzerland-caselaw-rehberi.md` |
 | 🇷🇺 Rusya ⚠️ (yalnız yaptırım/KYC) | Yok | `russia-legislation-rehberi.md` |
 | 🇦🇿 Azerbaycan (içtihat/EN — mevzuat için Adım 4d) | Yok | `azerbaycan-hukuk-rehberi.md` |
 | 🇨🇳 Çin (HuggingFace/twang2218) | Yok | `cin-hukuku-rehberi.md` |
 | 🇷🇸 Sırbistan (paragraf.rs) | Yok | `sirbistan-hukuku-rehberi.md` |
-| 🇨🇿 Çek Cumhuriyeti | OAuth (Sbírka MCP) | `cek-hukuku-rehberi.md` |
 
-**Çek Cumhuriyeti için Sbírka MCP connector:**
-- URL: `sbirka-mcp.fastmcp.app/mcp`
-- Adım 4'teki gibi ekle.
+> 🇺🇸 **ABD içtihadı bu tabloda değildir** — CourtListener MCP connector'ı ile
+> gelir (Adım 4b-2). 🇨🇭 **İsviçre** de öyle: içtihat 4b-1, mevzuat 4b-3.
 
 ---
 
