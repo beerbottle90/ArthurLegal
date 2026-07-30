@@ -2,36 +2,68 @@
 
 > **Proprietary — Non-Commercial Use Only. All Rights Reserved. See [LICENSE](LICENSE).**
 
-Türk hukukuna adapte edilmiş, **Claude.ai Projects** üzerinde çalışan hukuk
-asistanı paketleri. Her paket bir `SYSTEM_PROMPT.md` (Custom Instructions) ve
-bir `knowledge/` klasöründen oluşur.
+**Multi-jurisdiction legal AI assistant packages that run on [Claude.ai Projects](https://claude.ai/projects).**
+Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
+folder, and reaches **14 jurisdictions** through **up to 7 MCP connectors** and a
+curated primary-source reference layer.
 
-## Paketler — güncel sürümler
+Built for legal teams that work across borders: a contract governed by English
+law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
+question is one workflow, not four.
 
-| Profil | Güncel sürüm | Kime | Kapsam |
+## Packages — current versions
+
+| Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.4.0](ArthurLegal-CorporateAssistant-v1.4.0-Public-Release/)** | Şirket içi (in-house) hukuk ekibi | 12 pratik alan · 17 yargı çevresi · 5 MCP · 67 knowledge dosyası |
-| **Law Firm Assistant** | **[v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/)** | 0–30 kişilik hukuk bürosu | 16 pratik alan · 17 yargı çevresi · 5 MCP · 92 knowledge dosyası |
-| Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Hukuk akademisyeni | Yayın, dergi seçimi, doçentlik, etik kurul |
-| Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Adliye tarafı | Hâkim/savcı iş akışları |
+| **Corporate Assistant** | **[v1.4.0](ArthurLegal-CorporateAssistant-v1.4.0-Public-Release/)** | In-house legal teams | 12 practice areas · 14 jurisdictions · up to 7 MCP connectors · 66 knowledge files |
+| **Law Firm Assistant** | **[v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 14 jurisdictions · up to 7 MCP connectors · 91 knowledge files |
+| Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
-Önceki sürümler arşiv olarak korunur (`v1.0.0`, `v1.0.1`, `v1.2.0`, `v1.3.1`).
-Kurulum için ilgili paketin `KURULUM.md` dosyasından başlayın.
+The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
+Academician and Courthouse packages are built around Turkish academic-promotion
+and Turkish judicial procedure respectively, and are jurisdiction-specific by
+design.
 
-### v1.4.0 — kaynak katmanı (26.07.2026)
+Earlier versions are retained as archives (`v1.0.0`, `v1.0.1`, `v1.2.0`, `v1.3.1`).
+To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
+file in the package you want.
 
-Corporate ve Law Firm paketlerine `legal-research` eklentisi ve üç **self-hosted,
-auth'suz** MCP sunucusu eklendi:
+## Jurisdictional coverage
 
-| MCP | Rol | Kapsam |
+Coverage is real but **not uniform in depth** — the packages state which tier a
+source sits in, and the assistant flags reduced coverage in its output rather
+than filling the gap with recalled text.
+
+**14 jurisdictions** = 12 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ · 🇬🇧 UK ·
+🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS) + 2 supranational
+legal orders (🇪🇺 EU/CJEU · ECHR).
+
+| Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **e-qanun** | **BİRİNCİL** | Azerbaycan mevzuatı — resmî `api.e-qanun.az`; **yürürlük statüsü doğrulamalı** (`Qüvvədədir` / `Ləğv olunmuş`) |
-| **LexScholar** | **İKİNCİL** | 10 açık erişim indeksi federe; **DergiPark'ın 19 doğrulanmış Türk hukuk dergisi** resmî OAI-PMH ucundan |
-| **ResourceContracts** | **EMSAL** | 5.125 imzalı petrol & madencilik sözleşmesi, 107 ülke + uzman kloz anotasyonları (CC BY-SA 4.0, NRGI/CCSI) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan | **TR Legal MCP** (15 institutions, 40+ tools) · **OpenCaseLaw.ch** (972K+ decisions, 33 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **e-qanun** (in-force status verified) |
+| **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
+| **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ResourceContracts** · **LexScholar** · **OpenSanctions** (REST API, API key) |
 
-Üçü de **isteğe bağlıdır** — kurulmazsa paketler çalışmaya devam eder ve asistan
-kapsam daralmasını çıktısında belirtir. Ayrıntı: ilgili paketin `CHANGELOG.md`
-dosyası.
+Türkiye currently has the deepest coverage: a dedicated MCP server spanning 15
+institutions with 40+ tools, plus the largest share of the reference layer.
+Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
+`api.e-qanun.az` with in-force status verification) follow.
+
+## v1.4.0 — research source layer (2026-07-26)
+
+The Corporate and Law Firm packages gained a `legal-research` plugin and three
+**self-hosted, no-auth** MCP servers:
+
+| MCP | Role | Coverage |
+|---|---|---|
+| **e-qanun** | **PRIMARY** | Azerbaijani legislation — official `api.e-qanun.az`; **in-force status verified** (`Qüvvədədir` / `Ləğv olunmuş`) |
+| **LexScholar** | **SECONDARY** | 10 federated open-access indexes; includes 19 verified Turkish law journals via DergiPark's official OAI-PMH endpoint |
+| **ResourceContracts** | **PRECEDENT** | 5,125 signed petroleum and mining contracts across 107 countries, with expert clause annotations (CC BY-SA 4.0, NRGI/CCSI) |
+
+All three are **optional** — the packages work without them, and the assistant
+states the narrowed scope in its output. Details: the `CHANGELOG.md` of the
+relevant package.
 
 ---
 
@@ -67,9 +99,12 @@ See the [LICENSE](LICENSE) file for the full and binding terms.
 
 ---
 
-## Türkçe
+## Türkçe — lisans
 
 > **Tescilli (Proprietary) — Yalnızca ticari olmayan kullanım. Tüm hakları saklıdır. Bkz. [LICENSE](LICENSE).**
+
+*Aşağıdaki metin kolaylık sağlamak için sunulmuştur; bağlayıcı olan [LICENSE](LICENSE)
+dosyasındaki İngilizce koşullardır.*
 
 Telif Hakkı (c) 2026 ArthurLegal. Tüm hakları saklıdır.
 

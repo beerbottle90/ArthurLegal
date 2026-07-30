@@ -144,7 +144,6 @@ knowledge/references/switzerland-caselaw-rehberi.md
 knowledge/references/azerbaycan-hukuk-rehberi.md
 knowledge/references/cin-hukuku-rehberi.md
 knowledge/references/sirbistan-hukuku-rehberi.md
-knowledge/references/cek-hukuku-rehberi.md
 knowledge/references/russia-legislation-rehberi.md  ← Yalnız KYC/yaptırım
 knowledge/references/karsilastirmali-hukuk-rehberi.md
 ```
@@ -160,6 +159,40 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
    - **URL:** `https://yargi-mcp-pro-production.up.railway.app/mcp`
    - **Auth:** OAuth 2.0 (WorkOS) — bağlantı kurulurken yetkilendirme ekranı açılır
 3. Bağlantı başarılı olduğunda 40+ TR mevzuat + yargı aracı aktif olur
+
+---
+
+## Adım 4a — Yargı çevresi connector'ları (isteğe bağlı)
+
+Müvekkil portföyünüz o yargı çevresine temas ediyorsa ekleyin.
+
+**Anthropic connector dizininden** (custom connector gerekmez —
+**Customize → Connectors → Browse Connectors** → seç → **Add**):
+
+| Connector | Auth | Kapsam |
+|---|---|---|
+| **CourtListener** | OAuth 2.0 (Dynamic Client Registration — ön-kayıt/API key yok) | **ABD içtihadı** — federal/eyalet kararları, PACER dosyaları, atıf ağı, sözlü duruşma, **citation verification** (Free Law Project) |
+| **Fedlex** | Yok | **İsviçre federal mevzuatı** — madde metni, kanun tam metni, değişiklik listesi |
+
+**Custom connector olarak** (**+ Add custom connector** → *Name* + *URL*):
+
+| Connector | URL | Auth | Kapsam |
+|---|---|---|---|
+| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | Yok | İsviçre içtihadı — 972K+ BGer/BVGer/26 kanton kararı (33 araç, CC0) |
+
+> ⚠️ **Citation verification zorunludur.** Bir ABD kararına atıf yapılacaksa önce
+> CourtListener'da doğrulanır (karar var mı, citation doğru mu, overrule edilmiş
+> mi). Doğrulanmayan karar `[model bilgisi — doğrulayın]` ile işaretlenir, asla
+> `[CourtListener]` etiketi almaz. Dilekçeye giren her ABD atfı bu kontrolden
+> geçer. Ayrıntı: `courtlistener-rehberi.md`.
+
+> Fedlex connector'ı kurulmazsa İsviçre mevzuatı WebFetch ile de çalışır
+> (`fedlex.admin.ch`) — bkz. `switzerland-caselaw-rehberi.md`.
+
+**Connector gerektirmeyen yargı çevreleri** (WebFetch/doğrudan API ile otomatik):
+🇬🇧 UK · 🇺🇸 US mevzuat (GovInfo — ücretsiz API key) · 🇪🇺 AB/CJEU/ECHR · 🇩🇪 DE ·
+🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(yalnız yaptırım/KYC)* · 🇨🇳 CN · 🇷🇸 RS ·
+🇦🇿 AZ *(içtihat/EN — mevzuat için Adım 4b)*
 
 ---
 

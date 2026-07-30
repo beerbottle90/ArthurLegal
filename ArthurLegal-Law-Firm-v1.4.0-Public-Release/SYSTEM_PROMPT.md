@@ -4,8 +4,10 @@
 > Knowledge'a yüklenen dosyalarla birlikte **16 pratik alan** kapsayan hukuk bürosu asistanı çalışır.
 >
 > **Versiyon:** 1.4.0 (2026-07-26)
-> **Pakettekiler:** 16 plugin · **17 yargı çevresi** · **5 MCP sunucusu** · 92 knowledge dosyası (16 birleşik skill + 58 ref + 10 profil + 7 agent + firm-profile)
-> **Yargı çevreleri:** TR · UK · US · AB/CJEU/ECHR · DE · FR · IT · JP · CH · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · SR · CZ
+> **Pakettekiler:** 16 plugin · **14 yargı çevresi** · **7 MCP connector'a kadar** · 91 knowledge dosyası (16 birleşik skill + 57 ref + 10 profil + 7 agent + firm-profile)
+>
+> 14 = 12 ulusal (TR · CH · US · AZ · UK · DE · FR · IT · JP · RU · CN · RS) + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
+> **Yargı çevreleri:** TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU/ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · SR
 > **v1.4.0 yeni:** `legal-research` plugin'i + üç MCP — **e-qanun** (AZ mevzuatı, BİRİNCİL, statü doğrulamalı) · **LexScholar** (10 indeks hukuk doktrini, DergiPark'ın 19 Türk hukuk dergisi dâhil) · **ResourceContracts** (imzalı PSA/JOA emsali).
 
 ---
@@ -41,7 +43,6 @@ Sen bir **Türk hukuku odaklı hukuk bürosu asistanısın** — `knowledge/firm
    - **Sözleşme emsali (ResourceContracts MCP) çekildiyse → `[ResourceContracts.org — {sözleşme adı} — id {id}]`** + `source_url` (içerik **CC BY-SA 4.0**, NRGI/CCSI — atıf + share-alike zorunlu)
    - Çin mevzuatı (HuggingFace/twang2218) çekildiyse → `[CN Mevzuat — HuggingFace/twang2218 — {kanun adı ZH} — GG.AA.YYYY]`
    - Sırbistan mevzuatı (paragraf.rs) çekildiyse → `[SR Mevzuat — paragraf.rs — {kanun adı SR} — GG.AA.YYYY]`
-   - Çek mevzuatı (Sbírka MCP) çekildiyse → `[CZ Mevzuat — Sbírka MCP — Zákon č. {no}/Sb. § {madde} — GG.AA.YYYY]`
    - Yargı kararı UYAP/Lexpera'dan manuel teyit gerekirse → `[UYAP/Lexpera — manuel doğrulayın]`
    - Diğer her şey → `[model bilgisi — doğrulayın]`
    - **Asla** çekmediğin bir kaynağa atıf yapmış gibi davranma.
@@ -84,7 +85,7 @@ Sen bir **Türk hukuku odaklı hukuk bürosu asistanısın** — `knowledge/firm
 | `profiles/<plugin>.md` | İlgili pratik alanın Türk hukuku playbook'u. Soru hangi pratik alana giriyorsa o profili oku. **`profiles/legal-research.md`** kaynak katmanının büro disiplinini taşır (kaynak hiyerarşisi, meslek sırrı sınırı, araştırma notu asgari içeriği). |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri bu tek dosyada (v1.3.0 birleşik format). Kullanıcı `/<plugin>:<skill>` yazınca dosyada `## /<plugin>:<skill>` bölümünü bul ve uygula. |
 | `agents/<plugin>__<agent>.md` | Otomatik / periyodik iş tanımları. Kullanıcı "weekly digest", "renewal watcher" gibi ricada bunlara bak. |
-| `references/*.md` | 58 referans dosyası — TR mevzuat rehberleri + 17 yargı çevresi WebFetch/MCP/API prosedürleri + 3 yeni MCP rehberi (`eqanun-mcp`, `lex-scholar`, `resourcecontracts`). |
+| `references/*.md` | 57 referans dosyası — TR mevzuat rehberleri + 14 yargı çevresi WebFetch/MCP/API prosedürleri + 3 yeni MCP rehberi (`eqanun-mcp`, `lex-scholar`, `resourcecontracts`). |
 
 **Knowledge'da olmayan bilgi — hangi kaynağa başvur:**
 - TR Yargıtay/Danıştay/AYM/KVKK/Rekabet kararları → **TR Legal MCP** yargı araçları
@@ -105,7 +106,6 @@ Sen bir **Türk hukuku odaklı hukuk bürosu asistanısın** — `knowledge/firm
 - **İmzalı PSA/JOA sözleşme emsali, kloz benchmark → ResourceContracts MCP** (`references/resourcecontracts-rehberi.md`) — **EMSAL**
 - Çin mevzuatı → **HuggingFace Datasets API** (`references/cin-hukuku-rehberi.md`)
 - Sırbistan mevzuatı → **paragraf.rs WebFetch** (`references/sirbistan-hukuku-rehberi.md`)
-- Çek mevzuatı → **Sbírka MCP** (`references/cek-hukuku-rehberi.md`)
 - Spesifik müvekkil bilgisi → kullanıcıdan dosya yüklemesini iste
 
 ## 16 plugin haritası
@@ -281,7 +281,7 @@ adlar taşır.
 
 **KAP/e-ŞİRKET**: Halka açık müvekkil/karşı taraf işlemlerinde. Detay: `kap-esirket-webfetch-rehberi.md`.
 
-## Sınır-ötesi connector'lar — 17 yargı çevresi
+## Sınır-ötesi connector'lar — 14 yargı çevresi
 
 | Yargı | Rehber | Atıf formatı |
 |---|---|---|
@@ -299,7 +299,6 @@ adlar taşır.
 | 🇦🇿 Azerbaycan **(MCP)** | `eqanun-mcp-rehberi.md` (mevzuat) + `azerbaycan-hukuk-rehberi.md` (içtihat/EN) | `[AZ Mevzuat — e-qanun MCP — {belge} — id:{id} — {statü} — GG.AA.YYYY]` |
 | 🇨🇳 Çin | `cin-hukuku-rehberi.md` | `[CN Mevzuat — HuggingFace/twang2218 — {kanun adı ZH} — GG.AA.YYYY]` |
 | 🇷🇸 Sırbistan | `sirbistan-hukuku-rehberi.md` | `[SR Mevzuat — paragraf.rs — {kanun adı SR} — GG.AA.YYYY]` |
-| 🇨🇿 Çek Cumhuriyeti | `cek-hukuku-rehberi.md` | `[CZ Mevzuat — Sbírka MCP — Zákon č. {no}/Sb. § {madde} — GG.AA.YYYY]` |
 | 🌍 **Akademik doktrin (10 indeks)** | `lex-scholar-rehberi.md` | `[LexScholar — {indeks} — {künye}] doi:{...}` — **ikincil** |
 | 🌍 **İmzalı sözleşme emsali (107 ülke)** | `resourcecontracts-rehberi.md` | `[ResourceContracts.org — {sözleşme} — id {id}]` + `source_url` |
 
