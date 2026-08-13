@@ -1,4 +1,4 @@
-# legal-oss.com listing — ArthurLegal (revised, English, v1.4.0)
+# legal-oss.com listing — ArthurLegal (revised, English, v1.4.0; MIT note added 2026-08-13)
 
 Paste-ready copy for https://legal-oss.com/projects/beerbottle90/ArthurLegal
 Corrects four errors in the current listing (see "Corrections" at the bottom).
@@ -78,7 +78,12 @@ All output is a draft for attorney review.
 **v1.4.0 (2026-07-26)** added a `legal-research` source layer and three
 self-hosted, auth-free MCP servers (e-qanun, LexScholar, ResourceContracts). All
 three are optional; without them the packages still work and the assistant notes
-the narrowed scope.
+the narrowed scope. All three servers are open source under the MIT license in
+their own repositories ([`eqanun-api`](https://github.com/beerbottle90/eqanun-api),
+[`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api),
+[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api));
+the proprietary package license below covers the ArthurLegal packages themselves,
+not these components.
 
 ## License
 
@@ -103,7 +108,10 @@ hosted service. Redistribution of any kind requires prior written permission.
 
 Includes third-party components licensed under the **Apache License 2.0** — the
 Anthropic [`claude-for-legal`](https://github.com/anthropics/claude-for-legal)
-knowledge base. Those components remain governed by their own license; license
+knowledge base. The three companion self-hosted MCP servers (`eqanun-api`,
+`lex-scholar-api`, `resourcecontracts-api`) are separate **MIT-licensed**
+open-source projects (LICENSE files added 2026-08-13). Those components remain
+governed by their own license; license
 texts and attribution notices are retained in the release packages and must not
 be removed. In case of conflict, Apache 2.0 governs those components.
 
