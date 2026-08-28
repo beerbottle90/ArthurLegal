@@ -144,8 +144,8 @@ ADIM 3 — Seçilen tüzel kişinin direct-parent / ultimate-parent zincirini ç
 Her GLEIF verisi kullanımında kaynak + çekim tarihi zorunlu ("kaynaksız hukuk yok"):
 
 ```
-[GLEIF — LEI 789000J4L7UFTRMDR776 — çekim: 13.08.2026]
-[GLEIF — ultimate-parent: 2549002HARR1VE257O76 — çekim: 13.08.2026]
+[GLEIF — LEI 52990021T5LVTQOGSU18 — çekim: GG.AA.YYYY]
+[GLEIF — ultimate-parent: W38RGI023J3WT1HWRP32 — çekim: GG.AA.YYYY]
 ```
 
 - Çekilmemiş bir kayıt asla "GLEIF'te doğrulandı" diye sunulmaz; LEI kayıtları

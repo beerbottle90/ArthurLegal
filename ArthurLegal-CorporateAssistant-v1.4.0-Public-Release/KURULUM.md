@@ -168,7 +168,6 @@ bölümünü **boş bırak** (No authentication).
 **Sunucu kaynakları (MIT/self-host):**
 `github.com/beerbottle90/eqanun-api` · `github.com/beerbottle90/lex-scholar-api`
 · `github.com/beerbottle90/resourcecontracts-api`
-(umbrella: `github.com/beerbottle90/socar-api-s`)
 
 **Yerel portlar (varsayılan):** e-qanun `8020` · LexScholar `8010` ·
 ResourceContracts `8000`. Her sunucu kendi portunda çalışır; aynı porta ikinci

@@ -20,8 +20,8 @@ KAP, BIST kotasındaki tüm şirketlerin **özel durum açıklamaları**, **mali
 
 | Konu | URL | Durum |
 |---|---|---|
-| [HALKA AÇIK İŞTİRAK] bildirim araması (sayfalı) | https://www.kap.org.tr/tr/search/PETKM/1 | ✅ Aktif — WebFetch içerik döndürür |
-| [HALKA AÇIK İŞTİRAK] bildirim araması sayfa 2 | https://www.kap.org.tr/tr/search/PETKM/2 | ✅ Aktif |
+| [HALKA AÇIK İŞTİRAK] bildirim araması (sayfalı) | https://www.kap.org.tr/tr/search/[BIST KOD]/1 | ✅ Aktif — WebFetch içerik döndürür |
+| [HALKA AÇIK İŞTİRAK] bildirim araması sayfa 2 | https://www.kap.org.tr/tr/search/[BIST KOD]/2 | ✅ Aktif |
 | [HALKA AÇIK İŞTİRAK] şirket özeti (ana sayfa) | https://www.kap.org.tr/tr/sirket-bilgileri/ozet/2400-petrokimya-petrokimya-holding-a-s | ✅ HTTP 200, JS-rendered (kısmi içerik) |
 | KAP ana sayfa / navigasyon | https://www.kap.org.tr/tr/ | ✅ Aktif |
 | BIST şirketler listesi | https://www.kap.org.tr/tr/bist-sirketler | ✅ Aktif |
@@ -33,12 +33,12 @@ KAP, BIST kotasındaki tüm şirketlerin **özel durum açıklamaları**, **mali
 
 | Eski URL | Neden çalışmıyor |
 |---|---|
-| `/tr/sirket-bilgileri/ortaklik-yapisi/PETKM` | 404 — JS-rendered sekmeye taşındı |
-| `/tr/sirket-bilgileri/yk-uyeleri/PETKM` | 404 — JS-rendered |
-| `/tr/sirket-bilgileri/esas-sozlesme/PETKM` | 404 — JS-rendered |
-| `/tr/MaliTablo/PETKM` | 404 — kaldırıldı |
-| `/tr/Bildirim/PETKM` | 404 — kaldırıldı |
-| `/tr/api/disclosure?id=PETKM&...` | WAF engeli (HTTP 666/500) |
+| `/tr/sirket-bilgileri/ortaklik-yapisi/[BIST KOD]` | 404 — JS-rendered sekmeye taşındı |
+| `/tr/sirket-bilgileri/yk-uyeleri/[BIST KOD]` | 404 — JS-rendered |
+| `/tr/sirket-bilgileri/esas-sozlesme/[BIST KOD]` | 404 — JS-rendered |
+| `/tr/MaliTablo/[BIST KOD]` | 404 — kaldırıldı |
+| `/tr/Bildirim/[BIST KOD]` | 404 — kaldırıldı |
+| `/tr/api/disclosure?id=[BIST KOD]&...` | WAF engeli (HTTP 666/500) |
 
 > **Not:** Şirket özeti URL'sindeki ID doğru olmalı: [HALKA AÇIK İŞTİRAK] = **2400** (eski rehberdeki 1094 yanlıştı).
 > Başka şirket için ID, KAP'ta `/tr/search/{TICKER}/1` arama sonuçlarından okunabilir.
@@ -48,7 +48,7 @@ KAP, BIST kotasındaki tüm şirketlerin **özel durum açıklamaları**, **mali
 **Örnek 1: [HALKA AÇIK İŞTİRAK] son bildirimler — BİRİNCİL YÖNTEM**
 ```
 WebFetch:
-  url: "https://www.kap.org.tr/tr/search/PETKM/1"
+  url: "https://www.kap.org.tr/tr/search/[BIST KOD]/1"
   prompt: "Son 5 [HALKA AÇIK İŞTİRAK] özel durum açıklamasını listele: tarih, başlık, kategori,
            2 cümle özet. Kaç toplam sonuç var?"
 ```
@@ -56,7 +56,7 @@ WebFetch:
 **Örnek 2: [HALKA AÇIK İŞTİRAK] son bildirimler sayfa 2-5**
 ```
 WebFetch:
-  url: "https://www.kap.org.tr/tr/search/PETKM/2"   # sayfa 2, 3, 4, 5... artır
+  url: "https://www.kap.org.tr/tr/search/[BIST KOD]/2"   # sayfa 2, 3, 4, 5... artır
   prompt: "Bu sayfadaki [HALKA AÇIK İŞTİRAK] bildirimlerini listele: tarih, başlık, özet."
 ```
 
@@ -69,7 +69,7 @@ WebFetch:
 ```
 > ⚠️ Bu sayfa JavaScript ile yükleniyor. WebFetch kısmi içerik döndürür.
 > Ortaklık yapısı ve YK üyeleri için şirket özeti sayfası yerine
-> `/tr/search/PETKM/1` arama sonuçlarındaki bildirimlerden çıkarım yap.
+> `/tr/search/[BIST KOD]/1` arama sonuçlarındaki bildirimlerden çıkarım yap.
 
 **Örnek 4: Başka BIST şirketi — Ticker değiştir**
 ```
@@ -117,7 +117,7 @@ MKK'nın halka açık şirket bilgi portalı. Aşağıdaki bilgileri **public** 
 **Örnek 1: [HALKA AÇIK İŞTİRAK] sermaye yapısı + son artırım**
 ```
 WebFetch:
-  url: "https://e-sirket.mkk.com.tr/.../PartnerShipDetail?ticker=PETKM"
+  url: "https://e-sirket.mkk.com.tr/.../PartnerShipDetail?ticker=[BIST KOD]"
   prompt: "List the current çıkarılmış sermaye TL, capital structure changes 
            in last 24 months (bedelli/bedelsiz/birleşik), and latest GK kararı 
            regarding capital."
@@ -126,7 +126,7 @@ WebFetch:
 **Örnek 2: Genel Kurul gündem**
 ```
 WebFetch:
-  url: "https://e-sirket.mkk.com.tr/.../GeneralAssembly?ticker=PETKM"
+  url: "https://e-sirket.mkk.com.tr/.../GeneralAssembly?ticker=[BIST KOD]"
   prompt: "Latest GK tarih, gündem maddeleri, alınan kararlar özet."
 ```
 
@@ -167,8 +167,8 @@ KAP ve e-ŞİRKET BIST'teki tüm halka açık şirketler için aynı yapıyı ku
 Bu kaynaklar **resmi public records** statüsünde. M&A diligence raporlarında, hukuki memorandum'larda **doğrudan atıf yapılabilir**.
 
 Format:
-- KAP: `[KAP — PETKM — özel durum açıklaması GG.AA.YYYY HH:MM]`
-- e-ŞİRKET: `[e-ŞİRKET MKK — PETKM — sermaye yapısı GG.AA.YYYY]`
+- KAP: `[KAP — [BIST KOD] — özel durum açıklaması GG.AA.YYYY HH:MM]`
+- e-ŞİRKET: `[e-ŞİRKET MKK — [BIST KOD] — sermaye yapısı GG.AA.YYYY]`
 
 ---
 
@@ -179,8 +179,8 @@ Format:
 ```
 Her Pazartesi 08:00:
   1. KAP [HALKA AÇIK İŞTİRAK] son bildirimleri:
-     WebFetch: https://www.kap.org.tr/tr/search/PETKM/1  (sayfa 1, geçen hafta tarihleri)
-     WebFetch: https://www.kap.org.tr/tr/search/PETKM/2  (gerekirse sayfa 2)
+     WebFetch: https://www.kap.org.tr/tr/search/[BIST KOD]/1  (sayfa 1, geçen hafta tarihleri)
+     WebFetch: https://www.kap.org.tr/tr/search/[BIST KOD]/2  (gerekirse sayfa 2)
   2. e-ŞİRKET [HALKA AÇIK İŞTİRAK] sermaye yapısı (JS-rendered — değişiklik varsa kullanıcı manuel kontrol)
   3. Yönetim Kurulu üyesi değişikliği → KAP bildirimlerinden çıkar + sanctions tarama tetikleyici
   4. Çeyreklik mali tablo bildirimi → bildirim metninde "finansal tablo" anahtar kelimesiyle ara

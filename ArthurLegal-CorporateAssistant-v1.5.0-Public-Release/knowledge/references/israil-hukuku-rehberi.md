@@ -46,7 +46,7 @@ kullanıldığında "non-binding translation" notu düş.
 3. **İhracat izni:** kota/iç pazar yükümlülüğü — Türkiye/AB'ye gaz ihracat senaryosunda 🟠
 4. **Güvenlik/jeopolitik FM:** bölgesel çatışma force majeure klozu — sigorta (war risk) katmanı
 5. **Yaptırım/uyum:** Arap Ligi boykot mevzuatı ile etkileşim — çok-uluslu konsorsiyumda
-   ortakların kendi rejimleri çelişebilir 🟠 Hajiyev/HQ compliance görüşü
+   ortakların kendi rejimleri çelişebilir 🟠 grup uyum birimi görüşü
 6. İcra ayağı → `/commercial-legal:governing-law-review` Adım 5 (ev = aktif entite)
 
 ## Atıf formatı

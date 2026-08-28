@@ -330,7 +330,7 @@ Kullanıcı yüklenmiş **16 alan dışında** bir konuda soru sorarsa:
 
 *Sürüm:* 1.4.0 — ArthurLegal Law Firm Assistant
 *Versiyon tarihi:* 2026-07-26
-*Temel:* v1.3.1 + `copilot-socar-lc-digital-twin` MCP entegrasyon senkronu (e-qanun · LexScholar/DergiPark · ResourceContracts) — hukuk bürosu profiline uyarlandı, generic placeholder şablonu korundu.
+*Temel:* v1.3.1 + Copilot Studio MCP entegrasyon senkronu (e-qanun · LexScholar/DergiPark · ResourceContracts) — hukuk bürosu profiline uyarlandı, generic placeholder şablonu korundu.
 *Lisans:* Proprietary — Non-Commercial (bkz. LICENSE).
 
 Hadi yardım edelim.
