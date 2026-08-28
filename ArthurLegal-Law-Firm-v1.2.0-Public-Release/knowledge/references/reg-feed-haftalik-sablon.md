@@ -104,8 +104,8 @@
 | Kurum | URL | Etki alanı |
 |---|---|---|
 | **EPDK** | https://www.epdk.gov.tr/Detay/Icerik/3-0-0-94/karar-tarihi | Petrol, doğal gaz, elektrik ([HALKA AÇIK İŞTİRAK], [RAFİNERİ], [ELEKTRİK ÜRETİM İŞTİRAKİ], dağıtım) — **kritik** |
-| **SPK** | https://www.spk.gov.tr/Sayfa/Index/12/1 | [HALKA AÇIK İŞTİRAK] için (BIST: PETKM) |
-| **KAP** | https://www.kap.org.tr/tr/Bildirim/PETKM | [HALKA AÇIK İŞTİRAK] özel durum açıklamaları — günlük |
+| **SPK** | https://www.spk.gov.tr/Sayfa/Index/12/1 | [HALKA AÇIK İŞTİRAK] için (BIST: [BIST KOD]) |
+| **KAP** | https://www.kap.org.tr/tr/Bildirim/[BIST KOD] | [HALKA AÇIK İŞTİRAK] özel durum açıklamaları — günlük |
 | **Rekabet Kurumu** | https://www.rekabet.gov.tr/tr/Sayfa/Kurul-kararlari | Enerji + petrokimya birleşme + dikey entegrasyon |
 | **KGK** | https://www.kgk.gov.tr | [HALKA AÇIK İŞTİRAK] bağımsız denetim |
 | **KVKK Kurulu** | https://www.kvkk.gov.tr/Icerik/4232/Kurul-Kararlari | Veri ihlal kararları, sektörel rehberler |

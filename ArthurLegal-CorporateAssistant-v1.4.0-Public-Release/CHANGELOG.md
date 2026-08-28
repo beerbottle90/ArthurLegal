@@ -1,4 +1,4 @@
-﻿# Değişiklik Günlüğü
+# Değişiklik Günlüğü
 
 [Keep a Changelog](https://keepachangelog.com/tr-TR/1.1.0/) formatına uygundur.
 Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
@@ -116,7 +116,7 @@ Araştırmaları.
 - **Araç adı çakışması dersi:** aynı ortamda iki connector aynı araç adını
   taşımamalı — `search_articles` çakışması istemcinin şemaları karıştırıp
   `search_articles_2` üretmesine ve çağrıların 400 ile düşmesine yol açmıştı.
-- Bu sürüm `copilot-socar-lc-digital-twin` deposundaki MCP entegrasyon
+- Bu sürüm, Copilot Studio tarafındaki MCP entegrasyon
   çalışmasından senkronlandı; içerik generic şablon olarak uyarlandı,
   kurum-spesifik veri içermez.
 

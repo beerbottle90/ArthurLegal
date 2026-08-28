@@ -123,7 +123,7 @@ dergiyi seçer.
 - **Araç adı çakışması dersi:** aynı ortamda iki connector aynı araç adını
   taşımamalı — `search_articles` çakışması istemcinin şemaları karıştırıp
   `search_articles_2` üretmesine ve çağrıların 400 ile düşmesine yol açmıştı.
-- Bu sürüm `copilot-socar-lc-digital-twin` deposundaki MCP entegrasyon
+- Bu sürüm, Copilot Studio tarafındaki MCP entegrasyon
   çalışmasından senkronlandı; içerik büro tarafına ve generic placeholder
   şablonuna uyarlandı, gerçek müvekkil/kurum verisi içermez.
 
