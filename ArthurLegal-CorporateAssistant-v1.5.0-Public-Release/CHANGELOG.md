@@ -12,7 +12,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 > tamamı, sekiz yeni yargı çevresi rehberi ve sekiz yeni `legal-research`
 > skill'i. Mevcut plugin'lerin skill içeriği değişmedi.
 >
-> Paket: 12 plugin · 22 yargı çevresi · 8 MCP · 84 knowledge dosyası (12 birleşik skill + 64 referans + 7 agent + company-profile)
+> Paket: 12 plugin · 22 yargı çevresi · 8 MCP · 85 knowledge dosyası (12 birleşik skill + 65 referans + 7 agent + company-profile)
 
 ### Eklendi
 
@@ -33,6 +33,16 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 - **Sekiz yeni `legal-research` skill'i (4 → 12).** `alman-hukuku` ·
   `abd-atif-dogrulama` · `karsi-taraf-kimlik` · `uk-mevzuat` · `ab-mevzuat` ·
   `jp-mevzuat` · `fr-mevzuat` · `echr-ictihat`.
+- **İsviçre emtia ticareti uyum çerçevesi** (`isvicre-emtia-ticareti-rehberi.md`):
+  AML/GwG · SECO yaptırım · OR 964 kurumsal due diligence · FinSA/FinIA. İsviçre
+  merkezli bir emtia ticaret kolu olan gruplar için; OpenCaseLaw.ch MCP + SECO +
+  OpenSanctions üzerinden çalışır.
+- **Dört REST kaynağına "MCP connector olarak eklemek" bölümü** (`gleif` ·
+  `edgar` · `eurlex-cellar` · `japan-egov-api`): sarmalanacak sözleşme (base URL,
+  araç yüzeyi, auth, hız sınırı, lisans), bu ekosistemde kanıtlanmış sarma kalıbı,
+  port konvansiyonu ve claude.ai bağlama adımları. **Hazır endpoint verilmedi** —
+  bu dördünün MCP sunucusu yok; olmayan bir adres yazmak yerine sarmalamayı
+  mümkün kılan sözleşme verildi. WebFetch rotası bağlayıcısız çalışmaya devam eder.
 
 ### Değişti
 

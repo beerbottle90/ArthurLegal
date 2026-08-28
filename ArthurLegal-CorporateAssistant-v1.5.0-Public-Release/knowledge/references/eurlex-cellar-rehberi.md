@@ -230,3 +230,74 @@ Open Data lisans rejimi.
 ---
 
 *Son güncelleme: 13.08.2026 — Cellar SPARQL + CELEX/ELI URI katmanı; açık erişim, anahtar gerektirmez.*
+
+---
+
+## MCP connector olarak eklemek
+
+**Bugünkü durum:** Bu kaynağın hazır bir MCP sunucusu **yoktur**; yukarıdaki
+prosedür `WebFetch` ile çalışır ve bağlayıcı kurulumu gerektirmez. claude.ai'daki
+"custom connector" **MCP tabanlıdır** — dolayısıyla bu kaynağı connector olarak
+eklemek, önce REST ucunu bir MCP sunucusuyla sarmayı gerektirir.
+
+Aşağıdaki bilgi o sarmalamayı yapabilmeniz içindir. **Hazır bir endpoint
+verilmemiştir; olmayan bir adres yazmak yerine sarmalanacak sözleşme verilmiştir.**
+
+### Sarmalanacak sözleşme
+
+| Alan | Değer |
+|---|---|
+| **Base URL** | ``https://publications.europa.eu/webapi/rdf/sparql`` |
+| **Auth** | **Yok** — kayıt gerekmez |
+| **Hız sınırı** | Ağır SPARQL sorgularında zaman aşımı olur; `LIMIT` kullan |
+| **Yanıt** | SPARQL results JSON (`format=application/sparql-results+json`) |
+| **Lisans** | İçerik **CC BY 4.0**, metadata **CC0** (Komisyon Kararı 2011/833/EU) |
+
+**Açılacak araç yüzeyi:**
+
+| Araç | Uç | Ne döndürür |
+|---|---|---|
+| `cellar_sparql` | `/sparql?query=&format=` | Ham SPARQL sonucu |
+| `cellar_find_celex` | (sarmalayıcı sorgusu) | Başlık/tarih/tipten CELEX numarası |
+| `cellar_get_metadata` | (sarmalayıcı sorgusu) | Bir CELEX'in konsolidasyon ve yürürlük metadatası |
+
+> Cellar **kimlik ve metadata** katmanıdır. Operatif metin EUR-Lex'te okunur;
+> sarmalayıcı bunu araç açıklamasında açıkça söylemelidir, yoksa model metni
+> buradan bekler.
+
+### Kanıtlanmış sarma kalıbı
+
+Bu ekosistemde üç MCP sunucusu (`eqanun-api`, `lex-scholar-api`,
+`resourcecontracts-api`) tam olarak bu işi yapıyor: public bir REST API'yi
+bağımlılıksız (yalnız Python stdlib) bir MCP sunucusuyla sarıyorlar. Kalıp:
+
+- **Transport:** Streamable HTTP, `/mcp` yolunda (`x-ms-agentic-protocol:
+  mcp-streamable-1.0` muadili; claude.ai için düz Streamable HTTP yeterli)
+- **Auth:** yok (upstream public olduğu için)
+- **Port:** her sunucu kendi portunda; bu kaynak için önerilen **`8050`**
+  (mevcutlar: resourcecontracts `8000` · lex-scholar `8010` · e-qanun `8020` ·
+  de-eli `8790`). Aynı porta ikinci sunucu başlatmak açıkça hata verir.
+- **Araç adları:** yukarıdaki yüzeyi birebir yansıt; **jenerik ad kullanma**.
+  Başka bir sunucuda aynı adda bir araç varsa istemci şemaları karıştırır ve
+  çağrılar düşer — bu ekosistemde bir kez yaşandı (`search_articles` çakışması).
+
+Referans uygulamalar: `github.com/beerbottle90/eqanun-api` ·
+`github.com/beerbottle90/lex-scholar-api` ·
+`github.com/beerbottle90/resourcecontracts-api` ·
+`github.com/beerbottle90/de-eli-mcp`
+
+### claude.ai'a bağlama (sunucu ayağa kalktıktan sonra)
+
+1. Settings → Connectors → **Add custom connector**
+2. MCP endpoint URL'sini gir (`https://<DEPLOY-FQDN>/mcp`)
+3. Auth: **None**
+4. Araçlar bağlantı sonrası otomatik keşfedilir. Tool isim prefiksi verdiğin
+   connector adına göre üretilir — **prefiksi sabit varsayma**, base isimleri kullan.
+
+> ⚠️ Geçici tünel (`*.trycloudflare.com`) kullanıyorsan adres **her yeniden
+> başlatmada değişir** ve connector sessizce kırılır: tanım doğru görünür,
+> çağrılar düşer. Kalıcı kullanım için adlandırılmış tünel veya hosted deploy.
+
+**Sarmadan da çalışır.** Connector zorunlu değildir; yukarıdaki `WebFetch`
+prosedürü bu kaynağın tam işlevini verir. Sarmalama, yapılandırılmış araç
+çağrısı ve tekrarlanabilir parametre disiplini istendiğinde değer katar.
