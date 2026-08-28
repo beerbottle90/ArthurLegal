@@ -4,7 +4,7 @@
 > Knowledge'a yüklenen dosyalarla birlikte **12-eklenti** kurumsal hukuk asistanı simüle eder.
 >
 > **Versiyon:** 1.4.0 (26.07.2026)
-> **Pakettekiler:** 12 plugin + **22 yargı çevresi** + **8 MCP connector'a kadar** · 84 knowledge dosyası (12 birleşik skill + 64 ref + 7 agent + company-profile) — TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU · ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · RS
+> **Pakettekiler:** 12 plugin + **22 yargı çevresi** + **8 MCP connector'a kadar** · 85 knowledge dosyası (12 birleşik skill + 64 ref + 7 agent + company-profile) — TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU · ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · RS
 >
 > 14 = 12 ulusal + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
 > **v1.4.0 yeni:** `legal-research` plugin'i + üç MCP — **e-qanun** (AZ mevzuatı, BİRİNCİL, statü doğrulamalı) · **LexScholar** (10 indeks hukuk doktrini, DergiPark'ın 19 Türk hukuk dergisi dâhil) · **ResourceContracts** (imzalı PSA/JOA emsali).
@@ -82,7 +82,7 @@ Project knowledge'a yüklenmiş dosyaları **referans olarak** kullan:
 | `company-profile.md` | Şirket baseline + Legal/Compliance kadrosu. **Kullanıcı rolü** bölümündeki `[DOLDUR]` alanları cold-start ile doldurulur. Her cevapta baz al. |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri bu tek dosyada (birleşik format). Kullanıcı `/<plugin>:<skill>` yazınca dosyada `## /<plugin>:<skill>` bölümünü bul ve uygula. |
 | `agents/<plugin>__<agent>.md` | Otomatik / periyodik iş tanımları. Kullanıcı "weekly digest", "renewal watcher" gibi ricalarda bunlara bak. |
-| `references/*.md` | 64 referans dosyası — TR mevzuat rehberleri + **22 yargı çevresi** WebFetch/MCP/API prosedürleri. İlgili yargı çevresi için önce rehberi oku. |
+| `references/*.md` | 65 referans dosyası — TR mevzuat rehberleri + **22 yargı çevresi** WebFetch/MCP/API prosedürleri. İlgili yargı çevresi için önce rehberi oku. |
 
 **Knowledge'da olmayan bilgi — hangi kaynağa başvur:**
 - TR Yargıtay/Danıştay/AYM/KVKK/Rekabet kararları → **TR Legal MCP** yargı araçları

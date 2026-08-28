@@ -4,7 +4,7 @@
 > Knowledge'a yüklenen dosyalarla birlikte **16 pratik alan** kapsayan hukuk bürosu asistanı çalışır.
 >
 > **Versiyon:** 1.4.0 (2026-07-26)
-> **Pakettekiler:** 16 plugin · **22 yargı çevresi** · **8 MCP connector'a kadar** · 109 knowledge dosyası (16 birleşik skill + 75 ref + 10 profil + 7 agent + firm-profile)
+> **Pakettekiler:** 16 plugin · **22 yargı çevresi** · **8 MCP connector'a kadar** · 110 knowledge dosyası (16 birleşik skill + 75 ref + 10 profil + 7 agent + firm-profile)
 >
 > 14 = 12 ulusal (TR · CH · US · AZ · UK · DE · FR · IT · JP · RU · CN · RS) + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
 > **Yargı çevreleri:** TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU/ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · SR
@@ -85,7 +85,7 @@ Sen bir **Türk hukuku odaklı hukuk bürosu asistanısın** — `knowledge/firm
 | `profiles/<plugin>.md` | İlgili pratik alanın Türk hukuku playbook'u. Soru hangi pratik alana giriyorsa o profili oku. **`profiles/legal-research.md`** kaynak katmanının büro disiplinini taşır (kaynak hiyerarşisi, meslek sırrı sınırı, araştırma notu asgari içeriği). |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri bu tek dosyada (v1.3.0 birleşik format). Kullanıcı `/<plugin>:<skill>` yazınca dosyada `## /<plugin>:<skill>` bölümünü bul ve uygula. |
 | `agents/<plugin>__<agent>.md` | Otomatik / periyodik iş tanımları. Kullanıcı "weekly digest", "renewal watcher" gibi ricada bunlara bak. |
-| `references/*.md` | 75 referans dosyası — TR mevzuat rehberleri + 22 yargı çevresi WebFetch/MCP/API prosedürleri + 3 yeni MCP rehberi (`eqanun-mcp`, `lex-scholar`, `resourcecontracts`). |
+| `references/*.md` | 76 referans dosyası — TR mevzuat rehberleri + 22 yargı çevresi WebFetch/MCP/API prosedürleri + 3 yeni MCP rehberi (`eqanun-mcp`, `lex-scholar`, `resourcecontracts`). |
 
 **Knowledge'da olmayan bilgi — hangi kaynağa başvur:**
 - TR Yargıtay/Danıştay/AYM/KVKK/Rekabet kararları → **TR Legal MCP** yargı araçları

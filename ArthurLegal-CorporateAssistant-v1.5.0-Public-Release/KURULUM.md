@@ -5,7 +5,7 @@
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
 
-**İçerik:** 12 birleşik skill dosyası · 64 referans (22 yargı çevresi) · 7 ajan · company-profile şablonu
+**İçerik:** 12 birleşik skill dosyası · 65 referans (22 yargı çevresi) · 7 ajan · company-profile şablonu
 **MCP connector:** 7'ye kadar — TR Legal · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · **e-qanun** 🆕 · **LexScholar** 🆕 · **ResourceContracts** 🆕
 (TR Legal dışındakiler isteğe bağlıdır · ayrıca OpenSanctions REST API)
 
@@ -40,7 +40,7 @@ Claude.ai Projects üzerinde çalışır.
 ```
 knowledge/
   skills/      ← 12 dosya (birleşik skill kitapçıkları — legal-research dâhil)
-  references/  ← 64 dosya (TR mevzuat + 22 yargı çevresi + 3 yeni MCP rehberi)
+  references/  ← 65 dosya (TR mevzuat + 22 yargı çevresi + 3 yeni MCP rehberi)
   agents/      ← 7 dosya (periyodik ajan tanımları)
   company-profile.md
 ```

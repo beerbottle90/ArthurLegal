@@ -88,7 +88,7 @@ Version history and the full v1.0.1 → v1.5.0 progression: [CHANGELOG.md](CHANG
 
 **Coverage depth is not uniform**, and the package says so rather than papering
 over it. Türkiye has the deepest coverage (dedicated MCP, 15 institutions, 40+
-tools, and the largest share of the 75-file reference layer); Switzerland, the
+tools, and the largest share of the 76-file reference layer); Switzerland, the
 United States and Azerbaijan follow with primary-source MCP access; the WebFetch
 jurisdictions provide legislation and, where available, case law. When scope
 narrows, the assistant states it in the output.
@@ -178,7 +178,7 @@ ArthurLegal-Law-Firm-v1.5.0-Public-Release/
     ├── profiles/           ← 10 practice-area profiles (incl. legal-research)
     ├── skills/             ← 16 consolidated skill files
     ├── agents/             ← 7 automation agent definitions
-    └── references/         ← 75 references: legislation + international jurisdictions + MCP guides
+    └── references/         ← 76 references: legislation + international jurisdictions + MCP guides
 ```
 
 > **Note on language:** the knowledge layer and `SYSTEM_PROMPT.md` are written in

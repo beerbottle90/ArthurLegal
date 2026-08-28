@@ -171,7 +171,7 @@ ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/
 └── knowledge/             ← 66 files to upload to Project Knowledge
     ├── company-profile.md       (organization profile template — ships with [DOLDUR] placeholders)
     ├── skills/                  (12 consolidated skill books, one file per plugin)
-    ├── references/              (64 references: legislation + 22 jurisdictions + 4 MCP guides)
+    ├── references/              (65 references: legislation + 22 jurisdictions + 4 MCP guides)
     └── agents/                  (7 scheduled agent definitions)
 ```
 

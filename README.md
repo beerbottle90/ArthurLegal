@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.5.0](ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/)** | In-house legal teams | 12 practice areas · 22 jurisdictions · up to 8 MCP connectors · 84 knowledge files |
-| **Law Firm Assistant** | **[v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 22 jurisdictions · up to 8 MCP connectors · 109 knowledge files |
+| **Corporate Assistant** | **[v1.5.0](ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/)** | In-house legal teams | 12 practice areas · 22 jurisdictions · up to 8 MCP connectors · 85 knowledge files |
+| **Law Firm Assistant** | **[v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 22 jurisdictions · up to 8 MCP connectors · 110 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 

@@ -195,3 +195,74 @@ endpoint'lerin parametre adları, lisans sürümü.
 *Son güncelleme: 13.08.2026. e-Gov 法令API v2 canlı teyit: /laws, /keyword,
 /law_data ve asof parametresi anahtarsız JSON döndürdü; lisans ve JLT
 gayriresmîlik beyanı kaynağından doğrulandı.*
+
+---
+
+## MCP connector olarak eklemek
+
+**Bugünkü durum:** Bu kaynağın hazır bir MCP sunucusu **yoktur**; yukarıdaki
+prosedür `WebFetch` ile çalışır ve bağlayıcı kurulumu gerektirmez. claude.ai'daki
+"custom connector" **MCP tabanlıdır** — dolayısıyla bu kaynağı connector olarak
+eklemek, önce REST ucunu bir MCP sunucusuyla sarmayı gerektirir.
+
+Aşağıdaki bilgi o sarmalamayı yapabilmeniz içindir. **Hazır bir endpoint
+verilmemiştir; olmayan bir adres yazmak yerine sarmalanacak sözleşme verilmiştir.**
+
+### Sarmalanacak sözleşme
+
+| Alan | Değer |
+|---|---|
+| **Base URL** | ``https://laws.e-gov.go.jp/api/2`` |
+| **Auth** | **Yok** (13.08.2026 canlı teyidi; entegrasyon öncesi yeniden doğrula) |
+| **Hız sınırı** | Belgelenmiş sert limit yok |
+| **Yanıt** | JSON |
+| **Lisans** | **Government of Japan Standard Terms of Use v2.0** (CC BY 4.0 uyumlu) |
+
+**Açılacak araç yüzeyi:**
+
+| Araç | Uç | Ne döndürür |
+|---|---|---|
+| `jp_search_laws` | `/laws?lawTitle=` | Mevzuat listesi / metadata araması |
+| `jp_keyword_search` | `/keyword?keyword=` | Tam metin anahtar kelime araması |
+| `jp_get_law_data` | `/law_data/{law_id}?asof=YYYY-MM-DD` | Tam metin + metadata, **point-in-time** destekli |
+
+> `asof` parametresi bu kaynağın en değerli özelliğidir — imza veya uyuşmazlık
+> tarihindeki metni verir. Sarmalayıcı bunu **zorunlu opsiyonel parametre**
+> olarak açmalı ve araç açıklamasında belirtmelidir.
+
+### Kanıtlanmış sarma kalıbı
+
+Bu ekosistemde üç MCP sunucusu (`eqanun-api`, `lex-scholar-api`,
+`resourcecontracts-api`) tam olarak bu işi yapıyor: public bir REST API'yi
+bağımlılıksız (yalnız Python stdlib) bir MCP sunucusuyla sarıyorlar. Kalıp:
+
+- **Transport:** Streamable HTTP, `/mcp` yolunda (`x-ms-agentic-protocol:
+  mcp-streamable-1.0` muadili; claude.ai için düz Streamable HTTP yeterli)
+- **Auth:** yok (upstream public olduğu için)
+- **Port:** her sunucu kendi portunda; bu kaynak için önerilen **`8060`**
+  (mevcutlar: resourcecontracts `8000` · lex-scholar `8010` · e-qanun `8020` ·
+  de-eli `8790`). Aynı porta ikinci sunucu başlatmak açıkça hata verir.
+- **Araç adları:** yukarıdaki yüzeyi birebir yansıt; **jenerik ad kullanma**.
+  Başka bir sunucuda aynı adda bir araç varsa istemci şemaları karıştırır ve
+  çağrılar düşer — bu ekosistemde bir kez yaşandı (`search_articles` çakışması).
+
+Referans uygulamalar: `github.com/beerbottle90/eqanun-api` ·
+`github.com/beerbottle90/lex-scholar-api` ·
+`github.com/beerbottle90/resourcecontracts-api` ·
+`github.com/beerbottle90/de-eli-mcp`
+
+### claude.ai'a bağlama (sunucu ayağa kalktıktan sonra)
+
+1. Settings → Connectors → **Add custom connector**
+2. MCP endpoint URL'sini gir (`https://<DEPLOY-FQDN>/mcp`)
+3. Auth: **None**
+4. Araçlar bağlantı sonrası otomatik keşfedilir. Tool isim prefiksi verdiğin
+   connector adına göre üretilir — **prefiksi sabit varsayma**, base isimleri kullan.
+
+> ⚠️ Geçici tünel (`*.trycloudflare.com`) kullanıyorsan adres **her yeniden
+> başlatmada değişir** ve connector sessizce kırılır: tanım doğru görünür,
+> çağrılar düşer. Kalıcı kullanım için adlandırılmış tünel veya hosted deploy.
+
+**Sarmadan da çalışır.** Connector zorunlu değildir; yukarıdaki `WebFetch`
+prosedürü bu kaynağın tam işlevini verir. Sarmalama, yapılandırılmış araç
+çağrısı ve tekrarlanabilir parametre disiplini istendiğinde değer katar.
