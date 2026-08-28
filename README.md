@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.4.0](ArthurLegal-CorporateAssistant-v1.4.0-Public-Release/)** | In-house legal teams | 12 practice areas · 14 jurisdictions · up to 7 MCP connectors · 66 knowledge files |
-| **Law Firm Assistant** | **[v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 14 jurisdictions · up to 7 MCP connectors · 91 knowledge files |
+| **Corporate Assistant** | **[v1.5.0](ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/)** | In-house legal teams | 12 practice areas · 22 jurisdictions · up to 8 MCP connectors · 85 knowledge files |
+| **Law Firm Assistant** | **[v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 22 jurisdictions · up to 8 MCP connectors · 110 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -49,6 +49,20 @@ Türkiye currently has the deepest coverage: a dedicated MCP server spanning 15
 institutions with 40+ tools, plus the largest share of the reference layer.
 Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
 `api.e-qanun.az` with in-force status verification) follow.
+
+## v1.5.0 — German law, the OSS source wave, eight more jurisdictions (2026-08-29)
+
+A fourth self-hosted MCP server and the full 2026-08 open-source research wave.
+
+| Addition | What it brings |
+|---|---|
+| **de-eli MCP** — **PRIMARY**, 14 tools | German legislation (NeuRIS, BMJV), case law (rechtsprechung-im-internet.de — **complete** for BVerfG, BGH, BAG, BFH, BVerwG, BSG, BPatG; Open Legal Data for the sixteen state courts and full-text search), and Bundestag Drucksachen including legislative explanatory materials. Every response carries `eli_uri`/`ECLI`, `human_readable_citation` and `source_url` — **citation strings are never constructed**. |
+| **OSS source wave** — 10 references | US citation verification (fabricated-citation defence) · PII redaction · GLEIF · SEC EDGAR · UK legislation MCP · EUR-Lex Cellar · Japan e-Gov API · France DILA · ECHR HUDOC · machine-readable source catalogue. 89 candidates screened to 48 independent vetting decisions against five invariants. |
+| **Eight new jurisdictions** (14 → 22) | UAE · Czechia · Georgia · Israel · Central Asia (KZ, UZ) · Romania · Ukraine · Greece |
+| **Eight new `legal-research` skills** (4 → 12) | `alman-hukuku` · `abd-atif-dogrulama` · `karsi-taraf-kimlik` · `uk-mevzuat` · `ab-mevzuat` · `jp-mevzuat` · `fr-mevzuat` · `echr-ictihat` |
+
+Also fixed in this release: broken cross-references between guides, and residual
+client identifiers that had survived into the public packages.
 
 ## v1.4.0 — research source layer (2026-07-26)
 
