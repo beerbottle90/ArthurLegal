@@ -1,107 +1,140 @@
-# MCP Yol Haritası — kanıta dayalı üretim sırası
+# MCP Yol Haritası — durum: 6 sunucu YAZILDI ve test edildi
 
-> **Statü:** planlama belgesi. Buradaki sıralama **tahmin değil**, 30.08.2026'da
-> yapılan canlı endpoint testlerinin sonucudur. Her satırın gerekçesi, o yargı
-> çevresinin rehberinde doğrulanmış test çıktısına dayanır.
-> **Sürüm:** v1.6.0 ile eklendi.
+> **Güncelleme 30.08.2026:** Bu belge bir plan olarak başladı; artık büyük kısmı
+> **uygulanmış** durumda. Altı yargı çevresi için ayrı ayrı MCP sunucusu yazıldı,
+> canlı API'lere karşı test edildi ve GitHub'a yayımlandı. Lüksemburg maddesi ise
+> **iptal edildi** — gerekçesi aşağıda.
 
 ---
 
-## Neden MCP? — üç somut kısıt
+## Yazılan sunucular
 
-WebFetch'in bu pakette karşılaştığı, **rehber yazarak çözülemeyen** üç kısıt var.
-MCP sunucusu üçünü de çözer, çünkü sunucu **kendi egress'inden ve kendi HTTP
-istemcisiyle** çalışır:
+Hepsi ortak bir tasarımı paylaşır: **bağımlılıksız** (yalnız Python standart
+kütüphanesi, `pip install` yok), **auth yok**, MCP JSON-RPC hem **stdio** hem
+**Streamable HTTP** (`POST /mcp`) üzerinden, `/health` sağlık ucu ile.
 
-| Kısıt | Somut örnek (doğrulandı) | MCP çözer mi? |
+| Sunucu | Yargı çevresi | Depo | Neden MCP gerekti | Araç |
+|---|---|---|---|---|
+| `nl-rechtspraak-mcp` | 🇳🇱 Hollanda | [repo](https://github.com/beerbottle90/nl-rechtspraak-mcp) | 3.751.381 karar **aranamıyordu**; API bilinmeyen parametreleri sessizce yok sayıyor | 6 |
+| `pl-sejm-mcp` | 🇵🇱 Polonya | [repo](https://github.com/beerbottle90/pl-sejm-mcp) | API yalnız **başlık** arıyor; gövde ve konu araması yoktu | 6 |
+| `at-ris-mcp` | 🇦🇹 Avusturya | [repo](https://github.com/beerbottle90/at-ris-mcp) | RIS arıyor ama **sıralamıyor** — sonuçlar alfabetik | 4 |
+| `ie-statutebook-mcp` | 🇮🇪 İrlanda | [repo](https://github.com/beerbottle90/ie-statutebook-mcp) | Arama endpoint'i **yok** (`/search` 404) | 5 |
+| `fi-finlex-mcp` | 🇫🇮 Finlandiya | [repo](https://github.com/beerbottle90/fi-finlex-mcp) | Tam metin araması yok + `.akn` ZIP paketi + `{lang@version}` tuzağı | 5 |
+| `es-boe-mcp` | 🇪🇸 İspanya | [repo](https://github.com/beerbottle90/es-boe-mcp) | Konsolide külliyat `Accept` başlığı istiyor; WebFetch gönderemiyor | 6 |
+
+### Arama mimarisi — üçü de her sunucuda
+
+| Kanal | Ne yapar | Her zaman var mı |
 |---|---|---|
-| **1. Özel HTTP başlığı gönderilemez** | ES konsolide mevzuat API'si `Accept: application/xml` şart koşuyor; başlıksız **400**. CourtListener `citation-lookup/` `Authorization: Token` istiyor; **401**. | ✅ evet |
-| **2. Egress engeli** | `legislatie.just.ro` (RO) bağlantıyı düşürüyor; `gesetze-im-internet.de` (DE) erişilemiyor. Ama de-eli MCP'nin `de_rii_*` araçları aynı siteyi **sorunsuz** çekiyor — kanıt burada. | ✅ evet |
-| **3. Kaynakta arama yok** | NL Rechtspraak açık API'sinde **serbest metin araması yok** ve tanınmayan parametreleri sessizce yok sayıyor (3.751.381 karar, hepsi filtresiz dönüyor). IE ve LU'da arama endpoint'i hiç yok. | ✅ evet — kendi indeksiyle |
+| `lexical` | SQLite **FTS5 + BM25**, diyakritiksiz; katı AND → prefix → OR merdiveni | ✅ |
+| `fuzzy` | FTS5 **trigram** — alt dize ve yazım hatası toleransı | ✅ |
+| `semantic` | Yoğun vektör, kosinüs benzerliği | ⚠️ **yalnız yapılandırılırsa** |
 
-**Semantik arama** üçüncü kısıtın üstüne gelen katmandır: kaynak yalnız anahtar
-kelime veriyorsa bile, MCP kendi embedding indeksini kurup *"tedarik sözleşmesinde
-mücbir sebep nedeniyle fesih"* gibi bir soruyu kavramsal olarak eşleştirebilir.
+Üç kanal **Reciprocal Rank Fusion** ile birleştirilir (BM25 sınırsız ve negatif,
+kosinüs [-1,1] — skorlar doğrudan toplanamaz, sıra tabanlı birleştirme şart).
+
+**Prefix merdiveni neden önemli:** Felemenkçe, Fince, Almanca ve Lehçe yoğun
+bileşik kelime üretir. `kartel` tam kelime eşleşmesiyle `kartelverbod`'u bulmaz;
+`kartel*` bulur. Sunucular önce kesin AND dener, boş dönerse prefix'e, o da
+boşsa OR'a iner — kesinlik varken kesinliği korur, yokken kapsama düşer.
+
+### Semantik arama — dürüst sınır
+
+Standart kütüphane transformer çalıştıramaz. Yoğun vektör için dış uç gerekir:
+
+```
+EMBEDDINGS_URL=https://api.example.com/v1/embeddings
+EMBEDDINGS_MODEL=text-embedding-3-small      # opsiyonel
+EMBEDDINGS_API_KEY=...                       # opsiyonel
+```
+
+Yapılandırılmamışsa `mode="hybrid"` sessizce lexical+fuzzy'ye düşer ve **her
+yanıtta bunu söyler** (`retrieval.semantic: "off"` + uyarı). Anahtar kelime
+eşleşmesini asla kavramsal eşleşme gibi sunmaz.
+
+⚠️ **Çok dillilik:** kullanıcı Türkçe sorar, külliyat Felemenkçe/Lehçe/Fince'dir.
+Yapılandırılan modelin **kendisinin çok dilli olması** gerekir; tek dilli bir
+model düşük skor üretir ama durum bloğu yine `semantic: on` der. Bunu sunucu
+tespit edemez — operatörün sorumluluğudur.
+
+### Ortak "yalan söyleme" disiplini
+
+Her sunucu, denetimde yakalanan tuzakların aynısını kendi kullanıcısına
+yaşatmamak için tasarlandı:
+
+- **Sessizce yok sayılan parametre yok.** `nl-rechtspraak-mcp` `browse_caselaw`
+  aracına anahtar kelime verilirse **reddeder** — çünkü upstream onu yok sayıp
+  3,75 milyon kaydın tamamını "sonuç" gibi döndürür.
+- **Boş indeks ≠ boş sonuç.** Her arama yanıtı `indexed_documents` ve
+  `index_coverage` taşır; indeks boşsa açıkça hata verir.
+- **Atıf uydurulmaz.** Her kayıt hazır `citation` alanı taşır; bozuk ECLI/BOE-ID/
+  `lang@version` **reddedilir**, tahmin edilmez.
+- **Konsolide ≠ yayımlandığı hâl.** IE `enacted`, ES `diario_boe`, FI `statute`
+  ve PL statü alanları her yanıtta işaretlenir.
 
 ---
 
-## Sıra — etki / emek oranına göre
+## ❌ İptal edilen: `lu-legilux-mcp` (Lüksemburg)
 
-### 🥇 1. `nl-rechtspraak-mcp` — en yüksek getirili
+İlk taramada Legilux ELI URL'leri **HTTP 200** döndürdüğü için bu belgenin ilk
+sürümü LU'yu `eli-search-mcp` kapsamına almıştı. **İkinci tur testte içerik
+doğrulandığında yanlış olduğu görüldü:** her URL aynı **2.116 baytlık Angular
+kabuğunu** ("no-script-warning") döndürüyor — hiç hukuki metin yok.
 
-| | |
-|---|---|
-| **Neden** | 3.751.381 karar **var** ama **aranamıyor**. Kaynak açık, ücretsiz, ECLI'li — eksik olan tek şey arama katmanı. Boşluk tam olarak MCP'nin doldurduğu boşluk. |
-| **Kaynak** | `data.rechtspraak.nl/uitspraken/zoeken` (yapılandırılmış) + `/content?id={ECLI}` (tam metin) + `/Waardelijst/*` (sözlükler) — hepsi ✅ 200 |
-| **MCP'nin katacağı** | (a) tam metin + **semantik** arama · (b) `rechtsgebied`/`instantie` ile birleşik filtre · (c) ECLI atıf sözleşmesi (`citation` alanı hazır dönsün) |
-| **İş kalemi** | Toplu indirme (`zoeken` sayfalama) → yerel indeks → BM25 + embedding hibrit → `search_decisions` / `get_decision` araçları |
-| **Risk** | 3,7 M belge indekslemek ciddi disk/işlem ister; **tarih penceresiyle başla** (ör. son 15 yıl) |
-| **Referans** | `hollanda-hukuku-rehberi.md` |
+Denenen ve başarısız olan yollar: `/api/v1` (401) · `/sparql` (SPA) ·
+`sitemap.xml` (404) · `/oai` (404) · `data.legilux` ELI (400) ·
+`Accept: application/xml` ve `application/rdf+xml` içerik müzakeresi (yine kabuk).
 
-### 🥈 2. `ro-legislatie-mcp` — tıkalı yargı çevresini açar
+> 📌 **Ders — bu denetimin en pahalı dersi:** *HTTP 200 "çalışıyor" demek
+> değildir.* Bir kaynağı birincil ilan etmeden önce dönen içeriğin gerçekten
+> hukuki metin olduğu doğrulanmalıdır. Bkz. `luksemburg-hukuku-rehberi.md`.
 
-| | |
-|---|---|
-| **Neden** | Romanya'nın **tek** ücretsiz konsolide kaynağı bu ortamdan erişilemiyor. Şu an RO için elimizde yalnız EUR-Lex (AB-türevli) var; saf ulusal mevzuat kapsanmıyor. |
-| **Kanıt** | `legislatie.just.ro` — TLS kuruluyor, istek gidiyor, sunucu `close_notify` göndermeden kapatıyor. İkinci bağımsız egress'ten "HTTP/2 framing layer" hatası. **cdep.ro / scj.ro / idrept.ro** da erişilemez, **ccr.ro** 503. |
-| **⚠️ ÖN KOŞUL** | **Önce erişimi doğrula.** Sunucu adayı (Hetzner/Railway/RO VPS) üzerinden `curl https://legislatie.just.ro/Public/DetaliiDocument/109884` çalışıyor mu? **Çalışmıyorsa bu maddeyi başlatma** — MCP her egress engelini çözmez, yalnız *bizim* egress'imize özgü olanı çözer. |
-| **Referans** | `romanya-hukuku-rehberi.md` bölüm 1b |
-
-### 🥉 3. `es-boe-mcp` — küçük emek, temiz kazanç
-
-| | |
-|---|---|
-| **Neden** | Sorun tek bir HTTP başlığı. `Accept: application/xml` gönderebilen herhangi bir istemci ES **konsolide** mevzuatının tamamına erişiyor. |
-| **Kanıt** | `Accept: application/xml` → `BOE-A-2010-10544` (Ley de Sociedades de Capital) **200** ✅ · başlıksız / `application/json` → **400** ❌ |
-| **İş kalemi** | İnce bir sarmalayıcı: `get_consolidated_act(boe_id)`, `get_document(boe_id)`, `get_daily_summary(date)`. İndeks bile gerekmez. |
-| **Emek** | **En düşük** — bir günlük iş |
-| **Referans** | `ispanya-hukuku-rehberi.md` bölüm 2 |
-
-### 4. `eli-search-mcp` — LU + IE ortak arama katmanı
-
-| | |
-|---|---|
-| **Neden** | İkisinde de **belge URL'leri mükemmel** (ELI, madde düzeyinde) ama **arama yok**. Aynı problem, aynı çözüm → **tek sunucu, iki yargı çevresi**. |
-| **Kanıt** | LU `.../consolide/20230101` ✅ · IE `/eli/2014/act/38/section/1/enacted/en/html` ✅ · IE `/search` **404**, LU `api/v1` **401** |
-| **İş kalemi** | Dizinleri tara (LU `/search`, IE `/eli/acts.html`) → başlık + metin indeksi → semantik arama → mevcut ELI URL'sine yönlendir |
-| **Not** | AT/PL/FI'yi de aynı sunucuya eklemek mümkün ama **gerek yok** — onların kendi API'leri zaten arama yapıyor |
-
-### 5. AT · PL · FI — **şimdilik MCP YAZMA**
-
-Üçünün de resmî API'si arama dahil her şeyi yapıyor:
-
-| Ülke | Doğrulanmış yetenek |
-|---|---|
-| **AT** | RIS OGD v2.6 — mevzuat `Suchworte=Aktiengesetz` → 1.423 hit · içtihat `Konkurrenzklausel` → 148 hit ✅ |
-| **PL** | Sejm ELI — `search?title=` ✅ · statü alanı (`obowiązujący`) ✅ · `text.html`/`text.pdf` ✅ |
-| **FI** | Finlex Akoma Ntoso REST — `/list`, `/{yıl}`, `main.akn` ✅ |
-
-> **Karar:** Rehber yazmak yeterli. MCP yalnızca **semantik arama** istendiğinde
-> ve yukarıdaki 1–4 bittikten sonra gündeme gelir. Erken optimizasyon yapma.
+Lüksemburg şu an **İsrail ve BAE ile aynı kategoridedir**: resmî kaynak agent'a
+kapalı, otomatik araştırma kapasitesi yok.
 
 ---
 
-## Semantik arama — ortak tasarım notu
+## Bekleyen: `ro-legislatie-mcp` (Romanya)
 
-1–4 arasındaki her sunucu aynı iskeleti paylaşmalı ki bakım tek noktada kalsın:
+Yazılmadı, çünkü **ön koşulu sağlanmadı.**
 
+`legislatie.just.ro` bu ortamdan bağlantıyı düşürüyor (TLS kuruluyor, istek
+gidiyor, sunucu `close_notify` göndermeden kapatıyor); bağımsız ikinci bir
+egress'ten "HTTP/2 framing layer" hatası geliyor.
+
+⚠️ **MCP her egress engelini çözmez** — yalnız *bizim* ağımıza özgü olanı çözer.
+Yazmadan önce, sunucunun koşacağı makineden şu doğrulanmalı:
+
+```sh
+curl -sS https://legislatie.just.ro/Public/DetaliiDocument/109884 | head -c 200
 ```
-search(query, filters, mode="hybrid")
-  ├─ BM25 / FTS5            → tam terim eşleşmesi (madde no, taraf adı, docket)
-  ├─ embedding (kosinüs)    → kavramsal eşleşme (dil-içi)
-  └─ RRF ile birleştir      → tek sıralı liste
+
+Gerçek metin dönerse sunucu yazılabilir; dönmezse sorun sitenin kendisindedir ve
+MCP çözmez. O zamana kadar RO için çalışan yol **EUR-Lex CELLAR Romence tam
+metin**'dir (`romanya-hukuku-rehberi.md` bölüm 1b).
+
+---
+
+## Dağıtım durumu
+
+Altı depo da GitHub'da, `Dockerfile` + `railway.json` + `start.sh` ile hazır.
+
+`start.sh` sunucuyu **hemen** başlatır ve indeks yoksa crawl'ı **arka planda**
+çalıştırır — çünkü platform sağlık kontrolü crawl'ı beklerse deploy başarısız
+olur. Doğrudan belge çekme ve gezinme indekssiz de çalışır.
+
+```sh
+docker build -t es-boe-mcp . && docker run -p 8000:8000 -e PORT=8000 es-boe-mcp
 ```
 
-**Dil uyarısı — bu paket için kritik:** kullanıcı Türkçe sorar, kaynak Felemenkçe /
-Lehçe / Fince'dir. İki seçenek:
-- **(a)** çok dilli embedding modeli (tercih) — Türkçe sorgu, Felemenkçe belgeyi bulur;
-- **(b)** sorguyu hedef dile çevirip öyle ara — daha ucuz, terim kaybı riski var.
+⚠️ **Railway dağıtımı yapılamadı:** hesabın deneme süresi dolmuş
+("Your trial has expired. Please select a plan"). Plan seçimi bir faturalandırma
+kararı olduğu için beklemede. Plan aktifleştikten sonra her depo için:
 
-**Atıf sözleşmesi — pazarlık dışı.** Her sunucu, mevcut MCP'lerin (de-eli,
-OpenCaseLaw.ch, e-qanun) kuralını izlemeli: yanıt **hazır bir `citation` alanı**
-taşısın, model atıf dizesini **asla kendisi kurmasın**. Ayrıca `source_url` ve —
-varsa — **statü/konsolidasyon tarihi** dönsün. Bu, paketteki "kaynaksız hukuk yok"
-ilkesinin teknik karşılığıdır.
+```sh
+railway init --name <sunucu-adi> && railway up -d && railway domain
+railway variables --set "CRAWL_ARGS=<crawl argumanlari>"
+```
 
 ---
 
@@ -123,5 +156,6 @@ ilkesinin teknik karşılığıdır.
 
 ---
 
-*Oluşturuldu: 30.08.2026 — v1.6.0. Sıralama, v1.6.0 denetimindeki canlı endpoint
-testlerine dayanır; yeni test yapıldıkça güncellenmelidir.*
+*Oluşturuldu 30.08.2026 (v1.6.0). Altı sunucu yazıldıktan sonra güncellendi.
+Sıralama ve gerekçeler canlı endpoint testlerine dayanır; yeni test yapıldıkça
+güncellenmelidir.*
