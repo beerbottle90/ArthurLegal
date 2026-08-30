@@ -45,11 +45,53 @@ URL'sini gir → auth "None".
 |---|---|---|
 | `lexical` | SQLite FTS5 + BM25, diyakritiksiz; katı AND → prefix → OR merdiveni | ✅ |
 | `fuzzy` | FTS5 trigram — alt dize / yazım hatası toleransı | ✅ |
-| `semantic` | Yoğun vektör (kosinüs) | ⚠️ yalnız `EMBEDDINGS_URL` tanımlıysa |
+| `semantic` | Yoğun vektör (kosinüs), **çok dilli** | ⚠️ `EMBEDDINGS_URL` gerekir |
 
 Üçü **Reciprocal Rank Fusion** ile birleşir. `EMBEDDINGS_URL` yoksa `hybrid`
 sessizce lexical+fuzzy'ye düşer ve **yanıtta `semantic: "off"` der** — anahtar
 kelime eşleşmesini kavramsal eşleşme gibi sunmaz.
+
+### ✅ Semantik kanal nasıl açılır (doğrulanmış kurulum, 30.08.2026)
+
+Yerel, ücretsiz, API anahtarsız — **Ollama + `bge-m3`**:
+
+```sh
+ollama pull bge-m3                     # 1,2 GB, 100+ dil, 1024 boyut
+export EMBEDDINGS_URL=http://127.0.0.1:11434/v1/embeddings
+export EMBEDDINGS_MODEL=bge-m3
+python crawl.py ... --embed            # mevcut indeksi vektörle
+```
+
+Ollama'nın `/v1/embeddings` ucu OpenAI uyumludur; sunucular olduğu gibi konuşur.
+
+**Neden `bge-m3`:** bu paketin asıl ihtiyacı **diller arası** erişim — kullanıcı
+Türkçe sorar, külliyat Felemenkçe/Lehçe/Fince/İspanyolca'dır. Tek dilli bir model
+bunu yapamaz. Ölçülen ayrım (TR sorgu, çok dilli aday havuzu):
+
+| | ortalama kosinüs |
+|---|---|
+| Kavramsal olarak **ilgili** (FI/PL/NL/ES karşılıkları) | **0,70** |
+| **Alakasız** (aynı dillerde başka konu) | **0,41** |
+| **ayrım** | **0,29** |
+
+Canlı örnek — İrlanda Act'lerinde `"iklim değişikliği ve karbon emisyon hedefleri"`:
+
+| Mod | İlk üç sonuç |
+|---|---|
+| `semantic` ✅ | Strategic Gas Reserve Act · Air Pollution (Amendment) Act · Environment (Miscellaneous Provisions) Act |
+| `lexical` ❌ | Veterinary Medicinal Products · Road Traffic · Communications Regulation |
+
+Lexical gürültü döndürüyor çünkü **Türkçe kelime İngilizce metinde geçmiyor**.
+Diller arası soru soracaksan semantik kanal şart.
+
+> ⚠️ **Model çok dilli değilse sunucu bunu anlayamaz.** `semantic: "on"` yalnız
+> "bir uç yapılandırıldı" demektir, "doğru model seçildi" demek değildir. Tek
+> dilli bir model bağlarsan skorlar düşük ve sonuçlar zayıf olur, ama durum
+> bloğu yine `on` der. Model seçimi operatörün sorumluluğudur.
+
+> 📌 **`score` alanı benzerlik değil, sıradır.** RRF sıra tabanlıdır
+> (`1/(60+sıra)`), bu yüzden skorlar birbirine çok yakın çıkar (0,0164 · 0,0161 ·
+> 0,0159). Sıralamayı oku, skor farkını "güven" gibi yorumlama.
 
 
 ## 2. Araçlar (4) — bağlanınca otomatik keşfedilir
