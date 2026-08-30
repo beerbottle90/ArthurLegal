@@ -74,6 +74,12 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | Yaptırım / PEP / UBO taraması | OpenSanctions | STOP-RULE | `opensanctions-rehberi.md` |
 | Halka açık şirket açıklaması | KAP / e-ŞİRKET WebFetch | BİRİNCİL | `kap-esirket-webfetch-rehberi.md` |
 | **DE mevzuatı + içtihat + yasama gerekçesi** | **de-eli MCP** | **BİRİNCİL** | `de-eli-mcp-rehberi.md` |
+| **NL içtihadı (3,75 M ECLI) + mevzuatı** | **nl-rechtspraak MCP** | **BİRİNCİL** | `nl-rechtspraak-mcp-rehberi.md` |
+| **PL mevzuatı + yürürlük statüsü** | **pl-sejm MCP** | **BİRİNCİL** | `pl-sejm-mcp-rehberi.md` |
+| **AT mevzuatı + OGH/VwGH/VfGH içtihadı** | **at-ris MCP** | **BİRİNCİL** | `at-ris-mcp-rehberi.md` |
+| **IE Act'leri (madde düzeyi)** | **ie-statutebook MCP** | **BİRİNCİL** | `ie-statutebook-mcp-rehberi.md` |
+| **FI mevzuatı (fin + swe)** | **fi-finlex MCP** | **BİRİNCİL** | `fi-finlex-mcp-rehberi.md` |
+| **ES konsolide mevzuatı** | **es-boe MCP** | **BİRİNCİL** | `es-boe-mcp-rehberi.md` |
 | **ABD atıfı doğrulama (uydurma savunması)** | **CourtListener** | **ZORUNLU GEÇİŞ** | `abd-atif-dogrulama-rehberi.md` |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
 | UK mevzuatı (yapılandırılmış) | TNA resmî MCP | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |

@@ -1,5 +1,13 @@
 # Hollanda Hukuku — Kullanım Rehberi (açık API yöntemi)
 
+> ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
+> **`nl-rechtspraak MCP`** → `references/nl-rechtspraak-mcp-rehberi.md`. **Önce onu kullan** —
+> arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
+>
+> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
+> **`(MCP kullanılmadı)`** kaydını düş.
+
 > **Erişim tipi:** WebFetch (GET) — auth yok, API anahtarı yok
 > **Durum:** ✅ Mevzuat **tam metin aranabilir** · ✅ İçtihat **3,75 milyon ECLI** erişilebilir
 > **Test:** 30.08.2026 — tüm endpoint'ler canlı doğrulandı

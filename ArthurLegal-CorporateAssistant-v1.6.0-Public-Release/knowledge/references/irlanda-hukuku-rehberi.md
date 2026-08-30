@@ -1,5 +1,13 @@
 # İrlanda Hukuku — Kullanım Rehberi (Irish Statute Book ELI yöntemi)
 
+> ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
+> **`ie-statutebook MCP`** → `references/ie-statutebook-mcp-rehberi.md`. **Önce onu kullan** —
+> arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
+>
+> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
+> **`(MCP kullanılmadı)`** kaydını düş.
+
 > **Erişim tipi:** WebFetch (GET) — auth yok
 > **Durum:** ✅ ELI URL'leri **madde düzeyinde** çalışıyor · ⚠️ arama API'si yok
 > **Test:** 30.08.2026

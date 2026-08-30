@@ -1,5 +1,13 @@
 # Polonya Hukuku — Kullanım Rehberi (Sejm ELI API yöntemi)
 
+> ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
+> **`pl-sejm MCP`** → `references/pl-sejm-mcp-rehberi.md`. **Önce onu kullan** —
+> arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
+>
+> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
+> **`(MCP kullanılmadı)`** kaydını düş.
+
 > **Erişim tipi:** WebFetch (GET) — auth yok, API anahtarı yok
 > **Durum:** ✅ **Tam ELI uyumlu REST API** — arama + metadata + tam metin (HTML/PDF)
 > **Test:** 30.08.2026 — canlı doğrulandı

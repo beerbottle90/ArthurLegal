@@ -131,7 +131,7 @@ Yerleşik içtihat: "denetime elverişli olmayan rapor hükme esas alınamaz" vb
 İş kazası/çevre ceza dosyasında bilirkişi → CMK m.62-73; kusur dağılımı raporuna itiraz aynı mantık + CMK usulü. `/advocacy-legal:ceza-dilekce` ile koordine.
 
 ## Teknik alan ipuçları
-- **Elektrik/şebeke:** kurulu güç, kapasite faktörü, şebeke kısıtı, sayaç/uzlaştırma (EPİAŞ), YEKDEM hesabı `[references/elektrik-uretim-rehberi.md]`
+- **Elektrik/şebeke:** kurulu güç, kapasite faktörü, şebeke kısıtı, sayaç/uzlaştırma (EPİAŞ), YEKDEM hesabı `[references/epdk-rehberi.md]`
 - **EPC/inşaat:** hakediş, gecikme/uzatma analizi (delay), iş artışı, ayıp/kusur
 - **HES:** su kullanım hakkı, çevre debisi (can suyu), üretim kaybı hesabı
 - **İSG/iş kazası:** kusur dağılımı, kişisel koruyucu, SGK/iş müfettişi raporuyla tutarlılık
@@ -267,7 +267,7 @@ search_mevzuat / get_mevzuat_document   # dayanak madde metni
 search_bedesten_unified(phrase="<hukuki sorun>", birimAdi="<ilgili daire>")  # yerleşik içtihat
 search_anayasa_unified                  # AYM (anayasal boyut varsa)
 ```
-Sektörel teknik dayanak: `references/elektrik-uretim-rehberi.md`, `references/ced-rehberi.md`, `references/isg-dava-rehberi.md`, `references/bilirkisilik-rehberi.md`.
+Sektörel teknik dayanak: `references/epdk-rehberi.md`, `references/ced-rehberi.md`, `references/isg-dava-rehberi.md`, `references/bilirkisilik-rehberi.md`.
 
 ## Tipik mütalaa konuları
 - HES üretim/su kullanım kaybı, çevre debisi etkisi hesabı (teknik)

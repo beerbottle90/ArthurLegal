@@ -1,5 +1,13 @@
 # Finlandiya Hukuku — Kullanım Rehberi (Finlex açık veri API'si)
 
+> ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
+> **`fi-finlex MCP`** → `references/fi-finlex-mcp-rehberi.md`. **Önce onu kullan** —
+> arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
+>
+> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
+> **`(MCP kullanılmadı)`** kaydını düş.
+
 > **Erişim tipi:** WebFetch (GET) — auth yok, API anahtarı yok
 > **Durum:** ✅ **Akoma Ntoso XML REST API** — mevzuat + içtihat + otorite düzenlemeleri
 > **Test:** 30.08.2026 — canlı doğrulandı

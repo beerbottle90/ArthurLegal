@@ -1,5 +1,13 @@
 # İspanya Hukuku — Kullanım Rehberi (BOE açık veri yöntemi)
 
+> ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
+> **`es-boe MCP`** → `references/es-boe-mcp-rehberi.md`. **Önce onu kullan** —
+> arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
+>
+> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
+> **`(MCP kullanılmadı)`** kaydını düş.
+
 > **Erişim tipi:** WebFetch (GET) — auth yok
 > **Durum:** ✅ Belge XML'i ve günlük fihrist WebFetch ile çalışıyor ·
 > ⚠️ Konsolide mevzuat API'si **`Accept` başlığı ister** → WebFetch ile erişilemez
