@@ -67,7 +67,7 @@
 ### [ELEKTRİK SANTRALİ] (yeni — Şubat 2025)
 - 6446 EPK kapsamında elektrik üretim lisansı
 - Şubat 2025 devir sonrası **6 adım** EPDK süreci (lisans transferi)
-- Detay: `references/sirket-elektrik-uretim-rehberi.md`
+- Detay: `references/elektrik-uretim-istiraki-rehberi.md`
 
 ### Eski [DAĞITIM İŞTİRAK 1]/[DAĞITIM İŞTİRAK 2]
 - Devir süreci tamamlandı/tamamlanıyor (2024-2026)
@@ -107,5 +107,5 @@ search_mevzuat(mevzuat_adi="EPDK", mevzuat_tur="TEBLIGLER")
 
 - [İYUK rehberi](iyuk-rehberi.md)
 - [İdari yargı yapısı](idari-yargi-yapisi-rehberi.md)
-- [[ŞİRKET ADI] [ELEKTRİK SANTRALİ] elektrik üretim rehberi](sirket-elektrik-uretim-rehberi.md)
+- [[ŞİRKET ADI] [ELEKTRİK SANTRALİ] elektrik üretim rehberi](elektrik-uretim-istiraki-rehberi.md)
 - [[ŞİRKET ADI] [HALKA AÇIK İŞTİRAK] KAP rehberi](sirket-[petrokimya iştiraki]-kap-rehberi.md)

@@ -11,8 +11,8 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 > sorgu** atıldı; status kodu değil, dönen veri incelendi. Yedi kırık kaynak
 > düzeltildi, yedi yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
 >
-> Paket: 16 plugin · **29 yargı çevresi** · 8 MCP · 119 knowledge dosyası
-> (16 birleşik skill + 85 referans + 10 profil + 7 agent + firm-profile)
+> Paket: 16 plugin · **28 yargı çevresi** · 8 MCP · 118 knowledge dosyası
+> (16 birleşik skill + 84 referans + 10 profil + 7 agent + firm-profile)
 
 ### Düzeltildi — canlı testle tespit edilen kırık kaynaklar
 
@@ -46,7 +46,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
   başlık gönderemez. Atıf doğrulaması `analyze_citations` / `extract_citations` MCP
   araçlarına taşındı; camelCase↔snake_case alan adı tuzağı belgelendi.
 
-### Eklendi — 7 yeni yargı çevresi (hepsi canlı API testiyle)
+### Eklendi — 6 yeni yargı çevresi (hepsi canlı API testiyle)
 
 - **🇳🇱 Hollanda** — KOOP SRU **tam metin** mevzuat araması (1961/20991 ayrışması
   doğrulandı) + Rechtspraak Open Data **3.751.381 ECLI**. ⚠️ İçtihatta **serbest metin
@@ -56,7 +56,6 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
   metin ve **`status` alanı** (`obowiązujący`). Statü, AZ kalıbındaki gibi atıfın parçası.
 - **🇦🇹 Avusturya** — RIS OGD **v2.6** (⚠️ v2.5 artık 404): mevzuat **ve** OGH/VwGH/VfGH
   içtihadı tek API'de, tam metin aramasıyla.
-- **🇱🇺 Lüksemburg** — Legilux ELI, **tarihli konsolide** URL'ler.
 - **🇮🇪 İrlanda** — Irish Statute Book ELI, **madde düzeyinde** erişim.
 - **🇫🇮 Finlandiya** — Finlex açık veri **Akoma Ntoso REST API'si**; `{lang@sürüm}`
   tuzağı belgelendi.
@@ -68,6 +67,14 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
   mevcut 8 MCP'nin sağlık tablosu.
 
 ### Bilinen sorun
+
+- **🇱🇺 Lüksemburg pakete alınmadı.** İlk taramada Legilux ELI URL'leri
+  HTTP 200 döndürdüğü için çalışıyor sanıldı; içerik doğrulandığında her
+  URL'in aynı **2.116 baytlık boş Angular kabuğunu** döndürdüğü görüldü.
+  `api/v1` 401, `/sparql` SPA, `sitemap.xml` ve `/oai` 404, içerik
+  müzakeresi yine kabuk — **agent'a açık hiçbir yol yok.** Rehber ve
+  yargı çevresi kaydı kaldırıldı; gerekçe `MCP-ROADMAP.md`'de duruyor.
+  *Ders: HTTP 200 "çalışıyor" demek değildir.*
 
 - **OpenSanctions API anahtarı public repo'da gömülü** (`opensanctions-rehberi.md`).
   Anahtarın **hâlâ geçerli olduğu** doğrulandı. Rotasyon + connector header'ına taşıma

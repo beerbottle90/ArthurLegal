@@ -454,7 +454,7 @@ If the user explicitly asks to re-run setup ("let's redo the interview", "my pla
 Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
 
 - **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
-- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `references/company-profile-template.md` in the plugin root), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
+- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/firm-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
 
 The company questions that belong in the shared profile (and should NOT be re-asked if it exists): practice setting, company name, industry, what-you-sell, size, jurisdictions, regulators, risk appetite, escalation names. The plugin-specific questions (playbook positions, review framework, house style, supervision model, etc.) stay per-plugin.
 
@@ -1360,6 +1360,12 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 | 🇨🇭 İsviçre | `switzerland-caselaw-rehberi.md` | IPRG m.178 tahkim sözleşmesi, OR m.19 |
 | 🇮🇹 İtalya | `italy-legislation-rehberi.md` | Codice Civile, D.Lgs. 231/2001 |
 | 🇯🇵 Japonya | `japan-legislation-rehberi.md` | Companies Act, FEFTA (yabancı taraf ise) |
+| 🇳🇱 Hollanda | **`nl-rechtspraak-mcp-rehberi.md`** | BW Boek 6 (borçlar), Boek 2 (şirketler) — holding yapılarının varsayılan yargı çevresi |
+| 🇵🇱 Polonya | **`pl-sejm-mcp-rehberi.md`** | Kodeks cywilny, KSH; **akt statüsü** (`obowiązujący`) atıfın parçası |
+| 🇦🇹 Avusturya | **`at-ris-mcp-rehberi.md`** | ABGB, AktG/GmbHG; Konkurrenzklausel için OGH içtihadı |
+| 🇮🇪 İrlanda | **`ie-statutebook-mcp-rehberi.md`** | Companies Act 2014; AB içi common law forumu |
+| 🇫🇮 Finlandiya | **`fi-finlex-mcp-rehberi.md`** | Osakeyhtiölaki; iki resmî dil eşit yetkili |
+| 🇪🇸 İspanya | **`es-boe-mcp-rehberi.md`** | Código Civil, LSC; LNG terminal erişimi (Ley 34/1998) |
 | 🇪🇺 AB şirketi | `eu-legislation-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
 | 🇦🇿 Azerbaycan ([Ana ortak / ilişkili taraf]) | TR Legal MCP + model | Azerbaycan hukuku — özel dikkat |
 
@@ -1373,7 +1379,13 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 **Governing law**'u fiilen çek:
 - İngiliz hukuku → `uk-legislation-rehberi.md` → `legislation.gov.uk` WebFetch
 - ABD hukuku → `us-legislation-rehberi.md` + `courtlistener-rehberi.md` → citation verification zorunlu
-- Alman hukuku → `germany-legislation-rehberi.md` → gesetze-im-internet.de/NeuRIS
+- Alman hukuku → **de-eli MCP** (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
+- Hollanda hukuku → **nl-rechtspraak MCP** (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
+- Polonya hukuku → **pl-sejm MCP** (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği
+- Avusturya hukuku → **at-ris MCP** (`at-ris-mcp-rehberi.md`) ⚠️ Rechtssatz karar değildir
+- İrlanda hukuku → **ie-statutebook MCP** (`ie-statutebook-mcp-rehberi.md`) ⚠️ varsayılan metin *as enacted*
+- Finlandiya hukuku → **fi-finlex MCP** (`fi-finlex-mcp-rehberi.md`) ⚠️ `statute` ≠ `statute-consolidated`
+- İspanya hukuku → **es-boe MCP** (`es-boe-mcp-rehberi.md`) ⚠️ konsolide ≠ yayımlandığı hâl
 - Fransız hukuku → `france-legislation-rehberi.md` → Légifrance
 - İsviçre hukuku → `switzerland-caselaw-rehberi.md` → OpenCaseLaw.ch MCP + Fedlex
 - AB hukuku → `eu-legislation-rehberi.md` → EUR-Lex CELEX

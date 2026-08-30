@@ -4,11 +4,11 @@
 > Knowledge'a yüklenen dosyalarla birlikte **12-eklenti** kurumsal hukuk asistanı simüle eder.
 >
 > **Versiyon:** 1.6.0 (30.08.2026)
-> **Pakettekiler:** 12 plugin + **29 yargı çevresi** + **8 MCP connector'a kadar** · 94 knowledge dosyası (12 birleşik skill + 74 ref + 7 agent + company-profile) — TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU · ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · RS · **NL · PL · AT · LU · IE · FI · ES (v1.6.0 yeni)**
+> **Pakettekiler:** 12 plugin + **28 yargı çevresi** + **14 MCP connector'a kadar** · 102 knowledge dosyası (12 birleşik skill + 82 ref + 7 agent + company-profile) — TR · UK · **US (CourtListener MCP — içtihat)** · AB/CJEU · ECHR · DE · FR · IT · JP · **CH (OpenCaseLaw.ch MCP + Fedlex)** · RU (yalnız yaptırım/KYC) · **AZ (e-qanun MCP)** · CN · RS · **NL · PL · AT · IE · FI · ES (v1.6.0 yeni)**
 >
 > 14 = 12 ulusal + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
 > **v1.4.0:** `legal-research` plugin'i + üç MCP — **e-qanun** (AZ mevzuatı, BİRİNCİL, statü doğrulamalı) · **LexScholar** (10 indeks hukuk doktrini, DergiPark'ın 19 Türk hukuk dergisi dâhil) · **ResourceContracts** (imzalı PSA/JOA emsali).
-> **v1.6.0 yeni:** 7 yeni yargı çevresi (NL · PL · AT · LU · IE · FI · ES — hepsi canlı API testiyle) + **7 kırık kaynak düzeltmesi** (DE NeuRIS host'u, RO erişimi, CH REST, AB yaptırım endpoint'i, AZ NATLEX, US citation-lookup, **EUR-Lex tam metin zinciri**) + `references/MCP-ROADMAP.md`.
+> **v1.6.0 yeni:** 6 yeni yargı çevresi (NL · PL · AT · IE · FI · ES) + **6 yeni MCP sunucusu** + **7 kırık kaynak düzeltmesi** (DE NeuRIS host'u, RO erişimi, CH REST, AB yaptırım endpoint'i, AZ NATLEX, US citation-lookup, **EUR-Lex tam metin zinciri**) + `references/MCP-ROADMAP.md`.
 
 ---
 
@@ -83,7 +83,7 @@ Project knowledge'a yüklenmiş dosyaları **referans olarak** kullan:
 | `company-profile.md` | Şirket baseline + Legal/Compliance kadrosu. **Kullanıcı rolü** bölümündeki `[DOLDUR]` alanları cold-start ile doldurulur. Her cevapta baz al. |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri bu tek dosyada (birleşik format). Kullanıcı `/<plugin>:<skill>` yazınca dosyada `## /<plugin>:<skill>` bölümünü bul ve uygula. |
 | `agents/<plugin>__<agent>.md` | Otomatik / periyodik iş tanımları. Kullanıcı "weekly digest", "renewal watcher" gibi ricalarda bunlara bak. |
-| `references/*.md` | 74 referans dosyası — TR mevzuat rehberleri + **29 yargı çevresi** WebFetch/MCP/API prosedürleri + `MCP-ROADMAP.md`. İlgili yargı çevresi için önce rehberi oku. |
+| `references/*.md` | 82 referans dosyası — TR mevzuat rehberleri + **28 yargı çevresi** WebFetch/MCP/API prosedürleri + `MCP-ROADMAP.md`. İlgili yargı çevresi için önce rehberi oku. |
 
 **Knowledge'da olmayan bilgi — hangi kaynağa başvur:**
 - TR Yargıtay/Danıştay/AYM/KVKK/Rekabet kararları → **TR Legal MCP** yargı araçları
@@ -99,13 +99,12 @@ Project knowledge'a yüklenmiş dosyaları **referans olarak** kullan:
 - İsviçre içtihat → **OpenCaseLaw.ch MCP** / **Fedlex WebFetch** (`references/switzerland-caselaw-rehberi.md`)
 - Rusya karşı taraf / yaptırım → **pravo.gov.ru / ЕГРЮЛ WebFetch** (`references/russia-legislation-rehberi.md`) ⚠️ yalnız KYC/yaptırım
 - **Azerbaycan mevzuatı → e-qanun MCP** (`references/eqanun-mcp-rehberi.md`) — **BİRİNCİL, statü doğrulamalı**; içtihat + EN kaynaklar + WebFetch yedeği için `references/azerbaycan-hukuk-rehberi.md`
-- **Hollanda mevzuatı → KOOP SRU tam metin araması** (`references/hollanda-hukuku-rehberi.md`); NL içtihadı ⚠️ **serbest metin aranamaz** — aynı rehberdeki tuzağı oku
-- **Polonya mevzuatı → Sejm ELI API** (`references/polonya-hukuku-rehberi.md`) — **statü atıfın içindedir**
-- **Avusturya mevzuatı + OGH/VwGH/VfGH içtihadı → RIS OGD v2.6** (`references/avusturya-hukuku-rehberi.md`)
-- **Lüksemburg mevzuatı → Legilux ELI, tarihli konsolide** (`references/luksemburg-hukuku-rehberi.md`)
-- **İrlanda mevzuatı → Irish Statute Book ELI, madde düzeyi** (`references/irlanda-hukuku-rehberi.md`)
-- **Finlandiya mevzuatı → Finlex Akoma Ntoso API** (`references/finlandiya-hukuku-rehberi.md`)
-- **İspanya mevzuatı → BOE `xml.php`** (`references/ispanya-hukuku-rehberi.md`); ⚠️ konsolide API'si WebFetch'e kapalı
+- **Hollanda içtihadı + mevzuatı → nl-rechtspraak MCP** (`references/nl-rechtspraak-mcp-rehberi.md`) — **BİRİNCİL, 6 araç**. ⚠️ NL içtihadı **resmî API'den kelimeyle aranamaz** ve o API tanımadığı parametreyi sessizce yok sayar; arama yalnız MCP'nin yerel indeksinden yapılır, `index_coverage` alanını oku. WebFetch yedeği: `references/hollanda-hukuku-rehberi.md`
+- **Polonya mevzuatı → pl-sejm MCP** (`references/pl-sejm-mcp-rehberi.md`) — **BİRİNCİL, statü doğrulamalı, 6 araç**; `references` değişiklik grafiğini oku. **Statü atıfın içindedir.** WebFetch yedeği: `references/polonya-hukuku-rehberi.md`
+- **Avusturya mevzuatı + OGH/VwGH/VfGH içtihadı → at-ris MCP** (`references/at-ris-mcp-rehberi.md`) — **BİRİNCİL, 4 araç**. ⚠️ RIS sıralama yapmaz; MCP yerel olarak yeniden sıralar. **Rechtssatz karar değildir.** WebFetch yedeği: `references/avusturya-hukuku-rehberi.md`
+- **İrlanda Act'leri → ie-statutebook MCP** (`references/ie-statutebook-mcp-rehberi.md`) — **BİRİNCİL, 5 araç**, madde düzeyi. ⚠️ Varsayılan metin **as enacted**'tır, değişiklikler uygulanmamıştır. WebFetch yedeği: `references/irlanda-hukuku-rehberi.md`
+- **Finlandiya mevzuatı → fi-finlex MCP** (`references/fi-finlex-mcp-rehberi.md`) — **BİRİNCİL, 5 araç**, iki resmî dil (fin/swe) eşit yetkili. ⚠️ `statute` ≠ `statute-consolidated`; `{lang@version}` **uydurulmaz**. WebFetch yedeği: `references/finlandiya-hukuku-rehberi.md`
+- **İspanya mevzuatı → es-boe MCP** (`references/es-boe-mcp-rehberi.md`) — **BİRİNCİL, 6 araç**; konsolide külliyatı açar (`Accept` başlığı WebFetch ile gönderilemiyordu). ⚠️ İndeks **künye düzeyidir**, madde metni değil. WebFetch yedeği: `references/ispanya-hukuku-rehberi.md`
 - ⚠️ **AB mevzuatı tam metni → `eur-lex.europa.eu` DEĞİL.** O yollar JS kabuğu döndürüyor. **CELLAR üç adımını** kullan (`references/eurlex-cellar-rehberi.md`) — Romence/Yunanca gibi ulusal portalı tıkalı yargı çevrelerinde de çalışan yol budur
 - **Akademik hukuk doktrini (Türk + yabancı + karşılaştırmalı) → LexScholar MCP** (`references/lex-scholar-rehberi.md`) — **İKİNCİL**
 - **İmzalı PSA/JOA sözleşme emsali, kloz benchmark → ResourceContracts MCP** (`references/resourcecontracts-rehberi.md`) — **EMSAL**
@@ -304,6 +303,36 @@ adlar taşır. Yeni connector eklerken araç adlarını mevcutlarla karşılaşt
 
 > **Birincil yargı çevresi Türkiye'dir.** Yabancı hukuk temas eden işlerde aşağıdaki rehberleri oku. MÖHUK 5718 / NY Konvansiyonu icra ayağı → `[review]` flag → `/commercial-legal:governing-law-review`.
 
+## Altı yeni MCP (v1.6.0) — kaynak katmanı
+
+> Altısı da **bağımlılıksız, auth'suz** Streamable HTTP MCP sunucusudur.
+> claude.ai → Settings → Connectors → *Add custom connector* → `/mcp` URL'i →
+> auth "None". Depolar: `github.com/beerbottle90/<sunucu-adı>`.
+
+| Sunucu | Yargı çevresi | Neden MCP gerekti | Araç |
+|---|---|---|---|
+| `nl-rechtspraak-mcp` | 🇳🇱 Hollanda | 3.751.381 karar **aranamıyordu**; API bilinmeyen parametreyi sessizce yok sayıyor | 6 |
+| `pl-sejm-mcp` | 🇵🇱 Polonya | API yalnız **başlık** arıyor; konu araması yoktu | 6 |
+| `at-ris-mcp` | 🇦🇹 Avusturya | RIS arıyor ama **sıralamıyor** — sonuçlar alfabetik | 4 |
+| `ie-statutebook-mcp` | 🇮🇪 İrlanda | Arama endpoint'i **yok** (`/search` 404) | 5 |
+| `fi-finlex-mcp` | 🇫🇮 Finlandiya | Tam metin araması yok + `.akn` ZIP + `{lang@version}` tuzağı | 5 |
+| `es-boe-mcp` | 🇪🇸 İspanya | Konsolide külliyat `Accept` başlığı istiyor; WebFetch gönderemiyor | 6 |
+
+**Üçü de her sunucuda ortak:** `lexical` (FTS5+BM25, diyakritiksiz) · `fuzzy`
+(trigram) · `semantic` (yoğun vektör — **yalnız `EMBEDDINGS_URL` tanımlıysa**).
+Reciprocal Rank Fusion ile birleşir.
+
+> 🔎 **Her arama yanıtındaki `retrieval` bloğunu oku:** hangi kanallar çalıştı,
+> kaç belge indeksli, `semantic` açık mı. `semantic: "off"` ise sonuçlar
+> **anahtar kelime eşleşmesidir**, kavramsal eşleşme değil — kelime paylaşmayan
+> ilgili bir belge getirilmemiş olabilir.
+
+> ⚠️ **İndeks kapsamı ≠ o ülkenin hukukunun tamamı.** Arama yanıtındaki
+> `index_coverage` taranan aralığı verir. Bir belgenin çıkmaması **yok olduğunun
+> kanıtı değildir** — kapsam dışıysa gezinme araçlarıyla daralt.
+
+---
+
 | Yargı | Rehber | Atıf formatı |
 |---|---|---|
 | 🇬🇧 UK | `uk-legislation-rehberi.md` | `[UK Legislation — tür/yıl s.madde — GG.AA.YYYY]` |
@@ -328,13 +357,12 @@ adlar taşır. Yeni connector eklerken araç adlarını mevcutlarla karşılaşt
 | 🇦🇿 Azerbaycan **(MCP)** | `eqanun-mcp-rehberi.md` (mevzuat) + `azerbaycan-hukuk-rehberi.md` (içtihat/EN) | `[AZ Mevzuat — e-qanun MCP — {belge} — id:{id} — {statü} — GG.AA.YYYY]` |
 | 🇨🇳 Çin | `cin-hukuku-rehberi.md` | `[CN Mevzuat — HuggingFace/twang2218 — {kanun ZH} — GG.AA.YYYY]` |
 | 🇷🇸 Sırbistan | `sirbistan-hukuku-rehberi.md` | `[SR Mevzuat — paragraf.rs — {kanun SR} — GG.AA.YYYY]` |
-| 🇳🇱 Hollanda | `hollanda-hukuku-rehberi.md` | `[NL Mevzuat — {kanun} art.{madde} — {BWB-ID} — GG.AA.YYYY]` · `[NL İçtihat — {ECLI} — {merci}]` |
-| 🇵🇱 Polonya | `polonya-hukuku-rehberi.md` | `[PL Mevzuat — {displayAddress} — {status} — GG.AA.YYYY]` — **statü atıfın içinde** |
-| 🇦🇹 Avusturya | `avusturya-hukuku-rehberi.md` | `[AT Mevzuat — {Kurztitel} — {ELI} — GG.AA.YYYY]` · `[AT İçtihat — {mahkeme} — {ID}]` |
-| 🇱🇺 Lüksemburg | `luksemburg-hukuku-rehberi.md` | `[LU Mevzuat — {metin} — ELI {url} — konsolide {YYYYMMDD}]` |
-| 🇮🇪 İrlanda | `irlanda-hukuku-rehberi.md` | `[IE Mevzuat — {Act} {yıl} (No.{no}) s.{madde} — enacted]` |
-| 🇫🇮 Finlandiya | `finlandiya-hukuku-rehberi.md` | `[FI Mevzuat — {kanun} ({no}/{yıl}) — {akn_uri} — {status}]` |
-| 🇪🇸 İspanya | `ispanya-hukuku-rehberi.md` | `[ES Mevzuat — {metin} — {BOE-ID} — GG.AA.YYYY]` |
+| 🇳🇱 Hollanda **(MCP)** | `nl-rechtspraak-mcp-rehberi.md` (BİRİNCİL) · `hollanda-hukuku-rehberi.md` (yedek) | `[NL Mevzuat — {kanun} art.{madde} — {BWB-ID} — GG.AA.YYYY]` · `[NL İçtihat — {ECLI} — {merci}]` |
+| 🇵🇱 Polonya **(MCP)** | `pl-sejm-mcp-rehberi.md` (BİRİNCİL) · `polonya-hukuku-rehberi.md` (yedek) | `[PL Mevzuat — {displayAddress} — {status} — GG.AA.YYYY]` — **statü atıfın içinde** |
+| 🇦🇹 Avusturya **(MCP)** | `at-ris-mcp-rehberi.md` (BİRİNCİL) · `avusturya-hukuku-rehberi.md` (yedek) | `[AT Mevzuat — {Kurztitel} — {ELI} — GG.AA.YYYY]` · `[AT İçtihat — {mahkeme} — {ID}]` |
+| 🇮🇪 İrlanda **(MCP)** | `ie-statutebook-mcp-rehberi.md` (BİRİNCİL) · `irlanda-hukuku-rehberi.md` (yedek) | `[IE Mevzuat — {Act} {yıl} (No.{no}) s.{madde} — enacted]` |
+| 🇫🇮 Finlandiya **(MCP)** | `fi-finlex-mcp-rehberi.md` (BİRİNCİL) · `finlandiya-hukuku-rehberi.md` (yedek) | `[FI Mevzuat — {kanun} ({no}/{yıl}) — {akn_uri} — {status}]` |
+| 🇪🇸 İspanya **(MCP)** | `es-boe-mcp-rehberi.md` (BİRİNCİL) · `ispanya-hukuku-rehberi.md` (yedek) | `[ES Mevzuat — {metin} — {BOE-ID} — GG.AA.YYYY]` |
 | 🌍 **Akademik doktrin (10 indeks)** | `lex-scholar-rehberi.md` | `[LexScholar — {indeks} — {künye}] doi:{...}` — **ikincil** |
 | 🌍 **İmzalı sözleşme emsali (107 ülke)** | `resourcecontracts-rehberi.md` | `[ResourceContracts.org — {sözleşme} — id {id}]` + `source_url` |
 

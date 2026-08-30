@@ -227,7 +227,7 @@ HGK kararları **birleştirici** — alt mahkemeler için bağlayıcı.
 - [HMK rehberi](hmk-rehberi.md) — m. 266-287 + m. 293'ün genel usul bağlamı
 - [İSG dava rehberi](isg-dava-rehberi.md) — kaza davalarında teknik bilirkişi + kusur dağılımı
 - [İYUK rehberi](iyuk-rehberi.md) — idari yargıda bilirkişi (İYUK atfıyla HMK)
-- [Elektrik üretim rehberi](elektrik-uretim-rehberi.md) — enerji uyuşmazlıklarında teknik claim bağlamı
+- [EPDK rehberi](epdk-rehberi.md) — enerji uyuşmazlıklarında düzenleyici çerçeve ve teknik claim bağlamı
 - [Mevzuat MCP rehberi](mevzuat-mcp-rehberi.md) — madde çekme pattern'ları
 - [Yargı MCP rehberi](yargi-mcp-rehberi.md) — içtihat çekme pattern'ları
 - [Kanun kısaltmalar](kanun-kisaltmalar.md) — 6754 / HMK / CMK kısaltma standardı

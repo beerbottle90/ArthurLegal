@@ -37,7 +37,7 @@
 | AZ upstream/yer alti serveti rejimi, JV ve enerji mevzuati — akt + statu | `/legal-research:az-mevzuat` |
 | Energy Charter Treaty, yatirim tahkimi, stabilizasyon klozu ogretisi — **ikincil** | `/legal-research:karsilastirmali-doktrin` |
 
-Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` · `references/karsilastirmali-hukuk-rehberi.md`
+Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` · `references/karsilastirmali-hukuk-rehberi.md` · `references/nl-rechtspraak-mcp-rehberi.md` · `references/pl-sejm-mcp-rehberi.md` · `references/at-ris-mcp-rehberi.md` · `references/ie-statutebook-mcp-rehberi.md` · `references/fi-finlex-mcp-rehberi.md` · `references/es-boe-mcp-rehberi.md`
 
 ---
 

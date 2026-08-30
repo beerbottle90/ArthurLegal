@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 29 jurisdictions · up to 8 MCP connectors · 94 knowledge files |
-| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 29 jurisdictions · up to 8 MCP connectors · 119 knowledge files |
+| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 8 MCP connectors · 93 knowledge files |
+| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 8 MCP connectors · 118 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -72,11 +72,14 @@ query** — the returned data was inspected, not just the status code.
 - **CourtListener `citation-lookup/`** needs a token header WebFetch cannot send →
   routed to the `analyze_citations` / `extract_citations` MCP tools.
 
-**Added — 7 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
+**Added — 6 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
 full text + 3,751,381 ECLI decisions) · 🇵🇱 Poland (Sejm ELI API with in-force
-status) · 🇦🇹 Austria (RIS OGD v2.6 — legislation *and* case law) · 🇱🇺 Luxembourg
-(Legilux ELI, dated consolidation) · 🇮🇪 Ireland (section-level ELI) · 🇫🇮 Finland
-(Finlex Akoma Ntoso REST) · 🇪🇸 Spain (BOE).
+status) · 🇦🇹 Austria (RIS OGD v2.6 — legislation *and* case law) · 🇮🇪 Ireland
+(section-level ELI) · 🇫🇮 Finland (Finlex Akoma Ntoso REST) · 🇪🇸 Spain (BOE).
+
+Luxembourg was assessed and **dropped**: every Legilux URL returns the same
+2,116-byte empty Angular shell, and no other route exists. HTTP 200 is not the
+same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.

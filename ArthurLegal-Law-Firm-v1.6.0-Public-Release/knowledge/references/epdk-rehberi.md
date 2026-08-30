@@ -107,5 +107,4 @@ search_mevzuat(mevzuat_adi="EPDK", mevzuat_tur="TEBLIGLER")
 
 - [İYUK rehberi](iyuk-rehberi.md)
 - [İdari yargı yapısı](idari-yargi-yapisi-rehberi.md)
-- [[Müvekkil] [ELEKTRİK ÜRETİM İŞTİRAKİ] elektrik üretim rehberi](sirket-elektrik-uretim-rehberi.md)
 - [[Müvekkil] [HALKA AÇIK İŞTİRAK] KAP rehberi](halka-acik-istirak-kap-rehberi.md)
