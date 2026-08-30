@@ -19,8 +19,11 @@
 >    Doğru NeuRIS host'u: **`testphase.rechtsinformationen.bund.de`** ✅ (bölüm 2).
 > 2. **`gesetze-im-internet.de` ve `rechtsprechung-im-internet.de` gerçekten erişilemez**
 >    (bağlantı kurulamıyor, 30.08.2026 doğrulandı) — bu ortamın egress'i bu iki domain'e
->    ulaşamıyor. ⚠️ **Ama de-eli MCP'nin `de_rii_*` araçları çalışır:** MCP sunucusu bu
->    siteleri kendi egress'inden çeker, senin WebFetch engelin onu bağlamaz.
+>    ulaşamıyor. ⚠️ **de-eli MCP'nin `de_rii_*` araçları bu engeli ancak sunucu
+>    BAŞKA BİR MAKİNEDE koşuyorsa aşar.** MCP çağrıyı kendi ağından yapar — ama
+>    sunucuyu bu makinede çalıştırırsan egress aynıdır ve araç da düşer
+>    (30.08.2026 doğrulandı: yerel de-eli, `de_rii_case_search` çağrısında
+>    `ConnectError: getaddrinfo failed` verdi). **Uzak/hosted deploy şart.**
 >
 > **Çalışan birincil kaynaklar (30.08.2026 test):**
 > 1. **de-eli MCP** — mevzuat + içtihat, tercih edilen yol (`de-eli-mcp-rehberi.md`) ✅
