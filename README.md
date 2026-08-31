@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 8 MCP connectors · 93 knowledge files |
-| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 8 MCP connectors · 118 knowledge files |
+| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 14 MCP connectors · 102 knowledge files |
+| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 14 MCP connectors · 127 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -71,6 +71,17 @@ query** — the returned data was inspected, not just the status code.
 - **ILO NATLEX (AZ)** 403 → routed to the e-qanun MCP.
 - **CourtListener `citation-lookup/`** needs a token header WebFetch cannot send →
   routed to the `analyze_citations` / `extract_citations` MCP tools.
+
+**Added — six MCP servers**, one per jurisdiction whose official source cannot be
+searched properly. All dependency-free (standard library only) and auth-free, with
+hybrid retrieval — BM25 plus trigram fuzzy matching, and a dense-vector channel that
+turns on when an embeddings endpoint is configured:
+[nl-rechtspraak-mcp](https://github.com/beerbottle90/nl-rechtspraak-mcp) ·
+[pl-sejm-mcp](https://github.com/beerbottle90/pl-sejm-mcp) ·
+[at-ris-mcp](https://github.com/beerbottle90/at-ris-mcp) ·
+[ie-statutebook-mcp](https://github.com/beerbottle90/ie-statutebook-mcp) ·
+[fi-finlex-mcp](https://github.com/beerbottle90/fi-finlex-mcp) ·
+[es-boe-mcp](https://github.com/beerbottle90/es-boe-mcp)
 
 **Added — 6 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
 full text + 3,751,381 ECLI decisions) · 🇵🇱 Poland (Sejm ELI API with in-force
