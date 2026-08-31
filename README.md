@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.5.0](ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/)** | In-house legal teams | 12 practice areas · 22 jurisdictions · up to 8 MCP connectors · 85 knowledge files |
-| **Law Firm Assistant** | **[v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 22 jurisdictions · up to 8 MCP connectors · 110 knowledge files |
+| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 8 MCP connectors · 93 knowledge files |
+| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 8 MCP connectors · 118 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -49,6 +49,40 @@ Türkiye currently has the deepest coverage: a dedicated MCP server spanning 15
 institutions with 40+ tools, plus the largest share of the reference layer.
 Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
 `api.e-qanun.az` with in-force status verification) follow.
+
+## v1.6.0 — Source audit: 7 broken sources fixed, 7 new jurisdictions (2026-08-30)
+
+Every MCP and every WebFetch/REST source in the package was hit with a **real
+query** — the returned data was inspected, not just the status code.
+
+**Fixed (each verified live):**
+
+- **EUR-Lex full text.** `eur-lex.europa.eu/legal-content/...`, `search.html` and
+  `eli/...` return a JS shell, not the document — a working **CELLAR three-step
+  chain** replaces them (proved on GDPR/EN and Directive 2019/944/RO).
+- **German NeuRIS host.** `api.rechtsinformationen.bund.de` never existed
+  (NXDOMAIN); corrected to `testphase.rechtsinformationen.bund.de`.
+- **Romania.** `legislatie.just.ro` drops the connection; primary source moved to
+  EUR-Lex CELLAR Romanian full text, with working fallbacks documented.
+- **OpenCaseLaw.ch REST fallback.** Every `/api/*` path 404s — the fictitious
+  fallback was removed.
+- **EU sanctions endpoint.** `sanctionsmap.eu/api/v1/sanction` 404s; replaced with
+  the EU FSF consolidated list (CSV/XML) and the working UN consolidated XML.
+- **ILO NATLEX (AZ)** 403 → routed to the e-qanun MCP.
+- **CourtListener `citation-lookup/`** needs a token header WebFetch cannot send →
+  routed to the `analyze_citations` / `extract_citations` MCP tools.
+
+**Added — 6 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
+full text + 3,751,381 ECLI decisions) · 🇵🇱 Poland (Sejm ELI API with in-force
+status) · 🇦🇹 Austria (RIS OGD v2.6 — legislation *and* case law) · 🇮🇪 Ireland
+(section-level ELI) · 🇫🇮 Finland (Finlex Akoma Ntoso REST) · 🇪🇸 Spain (BOE).
+
+Luxembourg was assessed and **dropped**: every Legilux URL returns the same
+2,116-byte empty Angular shell, and no other route exists. HTTP 200 is not the
+same as a working source.
+
+Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
+justify building an MCP server, and which already have a good enough public API.
 
 ## v1.5.0 — German law, the OSS source wave, eight more jurisdictions (2026-08-29)
 
