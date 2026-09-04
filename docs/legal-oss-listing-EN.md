@@ -11,11 +11,11 @@ ArthurLegal
 
 ## Tagline (one line)
 
-Multi-jurisdiction legal AI assistant packages for Claude.ai Projects — 14 jurisdictions, up to 7 MCP connectors, primary-source citation discipline.
+Multi-jurisdiction legal AI assistant packages for Claude.ai Projects — 28 jurisdictions, up to 5 MCP connectors, primary-source citation discipline.
 
 ## Short description (≈50 words)
 
-ArthurLegal packages a legal AI assistant as a Claude.ai Project: a system prompt plus a curated knowledge base that reaches 14 jurisdictions through up to 7 MCP connectors. Four profiles target in-house teams, law firms, legal academics and the bench. Every legal proposition carries its source and retrieval date.
+ArthurLegal packages a legal AI assistant as a Claude.ai Project: a system prompt plus a curated knowledge base that reaches 28 jurisdictions through up to 5 MCP connectors. Four profiles target in-house teams, law firms, legal academics and the bench. Every legal proposition carries its source and retrieval date.
 
 ## Long description
 
@@ -32,8 +32,8 @@ data-transfer question is one workflow, not four.
 
 | Profile | Version | For | Scope |
 |---|---|---|---|
-| Corporate Assistant | v1.4.0 | In-house legal teams | 12 practice areas · 14 jurisdictions · up to 7 MCP connectors · 66 knowledge files |
-| Law Firm Assistant | v1.4.0 | Law firms, 0–30 staff | 16 practice areas · 14 jurisdictions · up to 7 MCP connectors · 91 knowledge files |
+| Corporate Assistant | v1.6.1 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
+| Law Firm Assistant | v1.6.1 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
 | Academician | v1.0.0 | Legal academics | Publication strategy, journal selection, promotion track, ethics board |
 | Courthouse | v1.0.0 | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -52,14 +52,19 @@ source sits in rather than papering over the difference.
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
-  text and amendment history), **e-qanun** (official `api.e-qanun.az` with in-force
-  status verification).
+  text and amendment history), and **ArthurLegal MCP** — ten jurisdictions behind
+  one connector (63 tools): Azerbaijan (official `api.e-qanun.az` with in-force
+  status verification), Austria, Germany, the Netherlands, Poland, Spain, Finland
+  and Ireland, plus scholarship and contract corpora. Every tool carries its
+  jurisdiction as a prefix, because `get_act` means five different things across
+  the underlying servers.
 - **Legislation via WebFetch** (no extra connector): UK · US (federal legislation,
   GovInfo) · EU / CJEU / ECHR · Germany · France · Italy · Japan · Russia · China ·
   Serbia.
-- **Cross-cutting corpora**: **ResourceContracts** (5,125 signed petroleum and
-  mining contracts across 107 countries with expert clause annotations, CC BY-SA
-  4.0, NRGI/CCSI) · **LexScholar** (10 federated open-access scholarship indexes) ·
+- **Cross-cutting corpora** (inside ArthurLegal MCP): 5,125 signed petroleum and
+  mining contracts across 107 countries with expert clause annotations (CC BY-SA
+  4.0, NRGI/CCSI) · 10 federated open-access scholarship indexes, including 19
+  Turkish law journals via DergiPark's official OAI-PMH endpoint ·
   **OpenSanctions** (REST API — sanctions / PEP screening).
 
 Türkiye currently has the deepest coverage — a dedicated MCP server spanning 15
@@ -75,13 +80,26 @@ calls are cancelled at 100 seconds and a cancelled call returns nothing — when
 scope narrows, the assistant states it instead of filling the gap from memory.
 All output is a draft for attorney review.
 
-**v1.4.0 (2026-07-26)** added a `legal-research` source layer and three
-self-hosted, auth-free MCP servers (e-qanun, LexScholar, ResourceContracts). All
-three are optional; without them the packages still work and the assistant notes
-the narrowed scope. All three servers are open source under the MIT license in
-their own repositories ([`eqanun-api`](https://github.com/beerbottle90/eqanun-api),
+**v1.6.1 (2026-09-04)** collapsed ten separate MCP connectors into one hosted
+endpoint, [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp).
+It is optional; without it the packages still work and the assistant notes the
+narrowed scope. Search reports what it actually did: which retrieval channels
+ran, how many documents are indexed, how many are vectorised, and the index's
+date coverage — because a statute outside that coverage is not found, and the
+search returns its nearest neighbour rather than announcing the gap.
+
+The server and its ten backends are open source under the MIT license in their
+own repositories ([`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp),
+[`eqanun-api`](https://github.com/beerbottle90/eqanun-api),
 [`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api),
-[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api));
+[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api),
+[`de-eli-mcp`](https://github.com/beerbottle90/de-eli-mcp),
+[`at-ris-mcp`](https://github.com/beerbottle90/at-ris-mcp),
+[`nl-rechtspraak-mcp`](https://github.com/beerbottle90/nl-rechtspraak-mcp),
+[`pl-sejm-mcp`](https://github.com/beerbottle90/pl-sejm-mcp),
+[`es-boe-mcp`](https://github.com/beerbottle90/es-boe-mcp),
+[`fi-finlex-mcp`](https://github.com/beerbottle90/fi-finlex-mcp),
+[`ie-statutebook-mcp`](https://github.com/beerbottle90/ie-statutebook-mcp));
 the proprietary package license below covers the ArthurLegal packages themselves,
 not these components.
 
