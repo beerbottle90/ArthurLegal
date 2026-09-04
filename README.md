@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.6.1](ArthurLegal-CorporateAssistant-v1.6.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
-| **Law Firm Assistant** | **[v1.6.1](ArthurLegal-Law-Firm-v1.6.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
+| **Corporate Assistant** | **[v1.6.2](ArthurLegal-CorporateAssistant-v1.6.2-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
+| **Law Firm Assistant** | **[v1.6.2](ArthurLegal-Law-Firm-v1.6.2-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -97,6 +97,38 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.6.2 — four more jurisdictions (2026-09-04)
+
+The connector address did not change. The same endpoint now carries **81 tools
+across 14 backends**, up from 63 across 10.
+
+| Prefix | Source |
+|---|---|
+| `uk_` | legislation.gov.uk — The National Archives, OGL v3.0 |
+| `eu_` | CELLAR — EU legislation and CJEU case law |
+| `jp_` | e-Gov 法令API v2 — Japanese statute law |
+| `gleif_` | GLEIF — the global LEI register |
+
+All four query upstream live and rerank in memory: no index to crawl, nothing to
+go stale.
+
+Each exists because the raw API misleads in a specific way, and each was found by
+querying rather than by reading documentation. legislation.gov.uk accepts a
+`year=` parameter and ignores it, so a filtered search returns an unfiltered list
+that looks filtered. Japan's `remain_in_force` field means the opposite of what
+it reads as — 残存効力, the residual effect of an *already repealed* law — so
+trusting the name marks the entire live corpus as repealed. EUR-Lex's document
+paths return a JavaScript shell. And in GLEIF an ACTIVE company can hold a LAPSED
+LEI, which means stale data rather than dissolution.
+
+**The most useful addition is an absence made visible.** The UK revised text is
+current only to a stated date, and amendments enacted after it are not in what
+you read. `uk_get_effects` with `unapplied_only` walks the whole feed to find
+them: the Equality Act 2010 carries 24 such amendments that a single page reports
+as none.
+
+Neither the UK nor the Japanese server holds case law, and both say so.
 
 ## v1.6.1 — ten MCP connectors become one (2026-09-04)
 
