@@ -4,7 +4,7 @@
 
 **Multi-jurisdiction legal AI assistant packages that run on [Claude.ai Projects](https://claude.ai/projects).**
 Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
-folder, and reaches **14 jurisdictions** through **up to 7 MCP connectors** and a
+folder, and reaches **28 jurisdictions** through **up to 5 MCP connectors** and a
 curated primary-source reference layer.
 
 Built for legal teams that work across borders: a contract governed by English
@@ -15,8 +15,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 14 MCP connectors · 102 knowledge files |
-| **Law Firm Assistant** | **[v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 14 MCP connectors · 127 knowledge files |
+| **Corporate Assistant** | **[v1.6.1](ArthurLegal-CorporateAssistant-v1.6.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
+| **Law Firm Assistant** | **[v1.6.1](ArthurLegal-Law-Firm-v1.6.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
 | Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
 | Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
@@ -41,14 +41,17 @@ legal orders (🇪🇺 EU/CJEU · ECHR).
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan | **TR Legal MCP** (15 institutions, 40+ tools) · **OpenCaseLaw.ch** (972K+ decisions, 33 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **e-qanun** (in-force status verified) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **TR Legal MCP** (15 institutions, 40+ tools) · **OpenCaseLaw.ch** (972K+ decisions, 33 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — ten jurisdictions behind one connector, 63 tools, jurisdiction-prefixed |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
-| **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ResourceContracts** · **LexScholar** · **OpenSanctions** (REST API, API key) |
+| **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **OpenSanctions** (REST API, API key) |
 
 Türkiye currently has the deepest coverage: a dedicated MCP server spanning 15
 institutions with 40+ tools, plus the largest share of the reference layer.
 Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
-`api.e-qanun.az` with in-force status verification) follow.
+`api.e-qanun.az` with in-force status verification) follow. Seven more European
+jurisdictions are reached through ArthurLegal MCP, whose `status` tool reports
+each one's index coverage — a statute outside that range is not found, and the
+search returns its nearest neighbour rather than saying so.
 
 ## v1.6.0 — Source audit: 7 broken sources fixed, 7 new jurisdictions (2026-08-30)
 
@@ -94,6 +97,31 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.6.1 — ten MCP connectors become one (2026-09-04)
+
+The packages' content did not change; the way you reach it did. Ten separately
+connected MCP servers now sit behind one permanent endpoint —
+[`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp), 63 tools,
+no auth. You add one connector instead of ten, and you never update a tunnel
+address again.
+
+Every tool now carries its jurisdiction as a prefix (`az_` `at_` `de_` `nl_`
+`pl_` `es_` `fi_` `ie_` `scholar_` `contracts_`). This is not cosmetic: across
+the underlying servers `get_act` means five different things and
+`search_legislation` three, so without prefixes a Spanish question could be
+answered with Finnish law. The nine per-server `server_status` tools collapse
+into one `status`, which reports each jurisdiction's index size, date coverage
+and whether semantic search is live.
+
+**Know this limit.** When a statute falls outside a jurisdiction's index
+coverage, the search does not say "out of scope" — it returns the nearest
+neighbour. Asked in Turkish for Finnish employment-contract termination, it
+returned travel-document and fishing regulations, because the Employment
+Contracts Act is outside the index's 2024-2025 slice. Read `index_coverage`
+from `status`. Where coverage is complete the cross-language retrieval works as
+intended: Turkish *"kişisel verilerin korunması"* returns Spain's LO 15/1999,
+LO 7/2021 and the AEPD Instruction.
 
 ## v1.5.0 — German law, the OSS source wave, eight more jurisdictions (2026-08-29)
 
