@@ -10,6 +10,17 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 > **Kapsam sürümü.** ArthurLegal MCP'ye dört sunucu eklendi. Connector adresi
 > değişmedi — aynı uç, 63 yerine **81 araç**, 10 yerine **14 backend**.
 
+### Talimat revizyonu (2026-09-05, sürüm numarası değişmedi)
+
+`SYSTEM_PROMPT.md` yeniden yazıldı (madde 1 ile 5); aynı gün knowledge seti de elden geçirildi (madde 6). Custom Instructions alanı yeni prompt'la değiştirilir; madde 6'daki dosyalar Project knowledge'a yeniden yüklenir.
+
+1. Yazım ve biçim kuralları eklendi: emoji ve renkli daire yok, uzun ve kısa tire yok, başlık ve kalın en azda, madde işaretli liste yok, tablo yalnız istenirse ve tercihen dosya olarak. Amaç, cevabın olduğu gibi e-posta gövdesine yapıştırılabilmesi. Önem dereceleri kelimeyle yazılır (Bloklayıcı, Yüksek, Orta, Düşük); atıf kalıplarında alanlar virgülle ayrılır. Bu kurallar knowledge dosyalarındaki şablonların üstündedir.
+2. Dosya üretimi kuralları eklendi: docx, xlsx, pptx yazarı `ArthurLegal`; izlenen değişiklik ve Word yorumlarında `w:author="ArthurLegal"`, `w:initials="AL"`; yorum metinleri aynı yazım kurallarına tabi; dosya adları alt çizgili.
+3. TR Legal MCP bölümü canlı araç listesine göre yeniden yazıldı (`mevzuat_ara`, `mevzuat_getir`, `ictihat_ara`, `semantik_ictihat_ara`, `kurum_karari_ara`, `resmi_gazete_fihrist` vb.); `search_mevzuat`, `search_bedesten_unified`, `check_government_servers_health` gibi artık var olmayan adlar kaldırıldı.
+4. ArthurLegal MCP bölümü düzeltildi: 14 backend ve 81 araç; önek başına araç sayıları `status` çıktısıyla eşitlendi; altı sunucu için ayrı connector kurulumunu anlatan bölüm kaldırıldı (hepsi tek uçta); UK, AB ve Japonya için çift yönlendirme (WebFetch ve MCP) tek satıra indirildi, MCP önce, WebFetch yedek. Üç ayrı kaynak listesi (yönlendirme, atıf kalıbı, rehber) tek tabloda birleştirildi.
+5. Araç çağrısı disiplini eklendi: bağımsız aramalar aynı turda, `status` yalnız gerektiğinde, `legal_research_guide` sohbette en fazla bir kez.
+6. Knowledge seti elden geçirildi (aynı gün): TR Legal MCP'nin artık var olmayan araç adlarını kullanan her çağrı ve atıf (`search_bedesten_unified`, `search_mevzuat`, `search_gib_ozelge` ve 30 kadar başka ad; 60'tan fazla dosya) canlı connector'ın 17 aracına ve gerçek parametre adlarına çevrildi; daire adları Bedesten kodlarına (`H9`, `D13`, `HGK`, `IDDK`) dönüştürüldü; `yargi-mcp-rehberi.md` ve `mevzuat-mcp-rehberi.md` şemalara göre yeniden yazıldı. ArthurLegal MCP rehberlerindeki öneksiz araç adları öneklendi (`az_`, `scholar_`, `contracts_`, `uk_`), "on yargı çevresi" ve tekil sunucu araç sayıları düzeltildi, altı rehberdeki Ollama kurulum notu üretim ucunun gerçek yapılandırmasıyla (Voyage `voyage-4-lite`) değiştirildi, `de_coverage` eklendi. Kırık atıflar düzeltildi (Law Firm paketinde `company-profile.md` yerine `firm-profile.md`; Corporate paketinde yer tutucu KAP rehberi adı; var olmayan profil dosyası). `redline-konvansiyonlari-rehberi.md` yazar, yorum ve başlık kurallarına göre yeniden yazıldı; INSTALLATION ve README sayımları güncellendi. Bu dosyaların Project knowledge'a yeniden yüklenmesi gerekir.
+
 ### Eklendi
 
 | Önek | Kaynak | Araç |

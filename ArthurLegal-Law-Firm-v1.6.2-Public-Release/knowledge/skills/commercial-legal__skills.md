@@ -451,7 +451,7 @@ If the user explicitly asks to re-run setup ("let's redo the interview", "my pla
 
 ## Check for the shared company profile
 
-Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
+Look for `~/.claude/plugins/config/claude-for-legal/firm-profile.md`.
 
 - **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
 - **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/firm-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
@@ -1027,7 +1027,7 @@ cold-start interview and without hand-editing YAML.
 
 1. **Read the config.** Read
    `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/company-profile.md` one
+   (and `~/.claude/plugins/config/claude-for-legal/firm-profile.md` one
    level up). If the plugin config does not exist or still contains
    `[PLACEHOLDER]` values, say:
 
@@ -1039,7 +1039,7 @@ cold-start interview and without hand-editing YAML.
 
    - **Company / who you are** — name, industry, jurisdictions, stage, practice
      setting, sales-side vs. purchasing-side orientation *(shared across all
-     12 plugins — changes flow through `company-profile.md`)*
+     12 plugins — changes flow through `firm-profile.md`)*
    - **Risk posture** — conservative / middle / aggressive, what each means
      for fallback positions and escalation triggers
    - **People** — escalation chain, approvers by dollar threshold and by
@@ -1078,7 +1078,7 @@ cold-start interview and without hand-editing YAML.
 
 5. **For shared-profile changes** (company name, industry, jurisdictions,
    practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/company-profile.md` and note:
+   `~/.claude/plugins/config/claude-for-legal/firm-profile.md` and note:
 
    > This change affects all 12 plugins — any plugin that reads your
    > jurisdiction footprint now sees [new value].

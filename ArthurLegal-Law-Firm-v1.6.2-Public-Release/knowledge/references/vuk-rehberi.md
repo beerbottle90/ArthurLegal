@@ -39,8 +39,8 @@
 ## Mevzuat MCP ile çekme
 
 ```
-search_mevzuat(mevzuat_no="213", mevzuat_tur="KANUN")  # VUK
-search_mevzuat(mevzuat_no="2577", mevzuat_tur="KANUN")  # İYUK (idari yargı usul)
+mevzuat_ara(mevzuat_no="213", mevzuat_tur_list=["KANUN"])  # VUK
+mevzuat_ara(mevzuat_no="2577", mevzuat_tur_list=["KANUN"])  # İYUK (idari yargı usul)
 ```
 
 ## Bağlantılı

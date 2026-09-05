@@ -1,4 +1,4 @@
-﻿# ISTAC ve Uluslararası Tahkim Rehberi
+# ISTAC ve Uluslararası Tahkim Rehberi
 
 > [Müvekkil] Türkiye için stratejik dava alanlarından biri: tahkim. [BORU HATTI PROJESİ], intra-group [Ana ortak / ilişkili taraf] işlemleri, büyük EPC sözleşmeleri tahkim klozu içerir.
 
@@ -72,18 +72,19 @@ mahkemenin görevsizliğinin tespiti talep edilir. (HMK m. 116/c)
 Tahkim klozu yorumu, tanıma-tenfiz davaları için:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="tahkim itiraz mahkeme görevsizlik",
-  daire="Hukuk Genel Kurulu",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+tahkim +itiraz +mahkeme +görevsizlik",
+  birimAdi="HGK",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 Yabancı tahkim kararının tanınması:
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="yabancı tahkim karar tanıma tenfiz New York",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  phrase="+yabancı +tahkim +karar +tanıma +tenfiz +New +York",
+  kararTarihiStart="2022-01-01"
 )
 ```
 

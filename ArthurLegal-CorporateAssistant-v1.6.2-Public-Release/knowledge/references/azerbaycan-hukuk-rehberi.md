@@ -1,4 +1,4 @@
-﻿# Azerbaycan Hukuku — Kullanım Rehberi (içtihat + EN kaynaklar + yedekler)
+# Azerbaycan Hukuku — Kullanım Rehberi (içtihat + EN kaynaklar + yedekler)
 
 > ⚠️ **v1.4.0 DEĞİŞİKLİĞİ — mevzuat artık buradan okunmuyor.**
 > Azerbaycan **mevzuatı** için birincil yol **`eqanun-mcp-rehberi.md`**
@@ -193,7 +193,7 @@ WebFetch:
 >
 > 1. **e-qanun MCP** (`eqanun-mcp-rehberi.md`) — **BİRİNCİL**. Əmək Məcəlləsi ve tüm
 >    iş / sosyal güvenlik mevzuatı, **statü doğrulamalı** (`Qüvvədədir` / ləğv edilib).
->    `search_acts(query="Əmək Məcəlləsi")` → `get_act_fulltext(id)`.
+>    `az_search_acts(query="Əmək Məcəlləsi")` → `az_get_act_fulltext(id)`.
 >    NATLEX'in verebileceği her şeyi daha güncel ve statü bilgisiyle verir.
 > 2. **e-qanun.az WebFetch** (`https://e-qanun.az/framework/{id}` ✅ 200) — MCP yoksa.
 >    ⚠️ Bu yolda **statü doğrulanmaz**; atıfa `(statü doğrulanmadı)` kaydını düş.

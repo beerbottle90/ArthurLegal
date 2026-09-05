@@ -1,8 +1,7 @@
 # Japonya e-Gov 法令API v2 — Kullanım Rehberi (WebFetch yöntemi)
 
-> **Custom MCP server YOK** — Japonya Dijital Ajansı'nın (デジタル庁) 法令API'si
-> düz REST/JSON sunar; bu rehber Claude'un `WebFetch` aracıyla kullanım
-> prosedürünü tanımlar. UK Legislation rehberiyle aynı kalıp.
+> **Birincil yol ArthurLegal MCP `jp_` araçlarıdır** (bu rehberin sonundaki bölüm);
+> aşağıdaki WebFetch prosedürü yedek rotadır ve API'nin şemasını belgeler.
 >
 > **Durum:** ✅ Açık erişim — **API anahtarı gerekmez**, kayıt gerekmez
 > (13.08.2026'da canlı teyit edildi; auth modeli entegrasyon öncesi yeniden

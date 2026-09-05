@@ -3,7 +3,7 @@
 > Alan: Bilirkisi raporu + uzman mutalaasi uretimi
 > Toplam skill: 3
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
-> Aktif entite: Tum skill'ler company-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
+> Aktif entite: Tum skill'ler firm-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
 > (varsayilan: [Şirket/Büro adı] -> Bolum A). Cikti dili / onay zinciri / yargi cevresi buradan gelir.
 
 ## Icindekiler
@@ -122,7 +122,7 @@ EKLER: itiraza esas belgeler, (varsa) uzman görüşü
 
 ## Emsal / dayanak (TR Legal MCP)
 ```
-search_bedesten_unified(phrase="bilirkişi raporu eksik inceleme <teknik konu>",
+ictihat_ara(phrase="+bilirkişi +raporu +eksik +inceleme +<teknik +konu>",
   birimAdi="<ilgili HD/CD>", kararTarihiStart="2021-01-01")
 ```
 Yerleşik içtihat: "denetime elverişli olmayan rapor hükme esas alınamaz" vb. — yalnızca çekileni işle.
@@ -178,12 +178,12 @@ user-invocable: true
 
 # expert-opinion — Cold Start Interview
 
-Amaç: Bu eklentinin `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını 5-7 soruda doldurmak. Önce `company-profile.md` ([Şirket/Büro adı]) okunur.
+Amaç: Bu eklentinin `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını 5-7 soruda doldurmak. Önce `firm-profile.md` ([Şirket/Büro adı]) okunur.
 
 ## Akış
 
 ### Adım 0 — Bağlam
-`company-profile.md` + bu plugin `CLAUDE.md` + `references/bilirkisilik-rehberi.md` oku. Dolu alanları tekrar sorma.
+`firm-profile.md` + bu plugin `CLAUDE.md` + `references/bilirkisilik-rehberi.md` oku. Dolu alanları tekrar sorma.
 
 ### Adım 1 — Kullanıcı
 > 1. Adın/rolün? ([Baş Hukuk Müşaviri] / [Kıdemli Hukuk Müşaviri] / [Hukuk Müşaviri] / teknik birim)
@@ -263,9 +263,9 @@ EKLER: özgeçmiş (uzmanlık ispatı), hesap tabloları, kaynak listesi
 
 ## Kaynak (TR Legal MCP)
 ```
-search_mevzuat / get_mevzuat_document   # dayanak madde metni
-search_bedesten_unified(phrase="<hukuki sorun>", birimAdi="<ilgili daire>")  # yerleşik içtihat
-search_anayasa_unified                  # AYM (anayasal boyut varsa)
+mevzuat_ara / mevzuat_getir   # dayanak madde metni
+ictihat_ara(phrase="<hukuki sorun>", birimAdi="<ilgili daire>")  # yerleşik içtihat
+aym_ictihat_ara                  # AYM (anayasal boyut varsa)
 ```
 Sektörel teknik dayanak: `references/epdk-rehberi.md`, `references/ced-rehberi.md`, `references/isg-dava-rehberi.md`, `references/bilirkisilik-rehberi.md`.
 

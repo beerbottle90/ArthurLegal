@@ -1,4 +1,4 @@
-﻿# HMK (6100 sayılı Hukuk Muhakemeleri Kanunu) – Pratik Rehber
+# HMK (6100 sayılı Hukuk Muhakemeleri Kanunu) – Pratik Rehber
 
 > Türk medeni yargı usulünün temel kaynağı. Litigation skill'leri madde atıfları için bu rehbere bakar.
 
@@ -68,11 +68,11 @@ Yatırımcı davaları **İstanbul ATM** (Anadolu) — ortaklık merkezi. SPK uy
 ## Mevzuat MCP ile çekme
 
 ```
-mcp__claude_ai_Mevzuat_MCP__search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")
+mevzuat_ara(mevzuat_no="6100", mevzuat_tur_list=["KANUN"])
 → mevzuatId not
-mcp__claude_ai_Mevzuat_MCP__get_mevzuat_madde_tree(mevzuatId=<id>)
+mevzuat_getir(id=<id>, id_type="outline")
 → Madde ağacı, ilgili maddeye gir
-mcp__claude_ai_Mevzuat_MCP__search_within_mevzuat(mevzuatId=<id>, phrase="<madde no veya konu>")
+mevzuat_icinde_ara(mevzuat_id=<id>, query="<madde no veya konu>")
 ```
 
 Atıf: `[Mevzuat MCP — HMK m. XXX — GG.AA.YYYY]`
@@ -80,10 +80,11 @@ Atıf: `[Mevzuat MCP — HMK m. XXX — GG.AA.YYYY]`
 ## Yargıtay yorumu için
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="HMK <madde no> <konu>",
-  daire="Hukuk Genel Kurulu",  # En bağlayıcı
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+HMK +<madde +no> +<konu>",
+  birimAdi="HGK",  # En bağlayıcı
+  kararTarihiStart="2022-01-01"
 )
 ```
 

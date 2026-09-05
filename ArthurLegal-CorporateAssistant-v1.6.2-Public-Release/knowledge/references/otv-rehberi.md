@@ -1,4 +1,4 @@
-﻿# ÖTV (Özel Tüketim Vergisi) Rehberi — [RAFİNERİ] & Akaryakıt
+# ÖTV (Özel Tüketim Vergisi) Rehberi — [RAFİNERİ] & Akaryakıt
 
 > 4760 sayılı Özel Tüketim Vergisi Kanunu. [RAFİNERİ] akaryakıt ürünleri ÖTV ana mükellefi.
 
@@ -75,22 +75,24 @@ Rafineriye giriş →
 ## TR Legal MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="3. Daire",
-  arananKelime="ÖTV mahsup akaryakıt ihracat istisna rafineri",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D3",
+  phrase="+ÖTV +mahsup +akaryakıt +ihracat +istisna +rafineri",
+  kararTarihiStart="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="ÖTV mahsup rafineri"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="ÖTV mahsup rafineri"
 )
 ```
 
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="4760", mevzuat_tur="KANUN")  # ÖTV K.
-search_mevzuat(mevzuat_no="5015", mevzuat_tur="KANUN")  # Petrol Piyasası K.
+mevzuat_ara(mevzuat_no="4760", mevzuat_tur_list=["KANUN"])  # ÖTV K.
+mevzuat_ara(mevzuat_no="5015", mevzuat_tur_list=["KANUN"])  # Petrol Piyasası K.
 ```
 
 ## Bağlantılı

@@ -1,7 +1,7 @@
 # İspanya Hukuku — es-boe MCP (Kullanım Rehberi)
 
 > ✅ **Custom MCP server VAR (v1.6.0).** BOE konsolide mevzuatı ve günlük
-> Resmî Gazete. **6 araç.**
+> Resmî Gazete. **5 araç** (artı ortak `status`).
 >
 > **BİRİNCİL kaynaktır.**
 >
@@ -18,19 +18,19 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
 | **Araç öneki** | `es_` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
 | **Sunucu kaynağı** | `github.com/beerbottle90/es-boe-mcp` |
-| **Sürüm** | `es-boe-mcp` v1.0.0 — 6 araç |
+| **Sürüm** | `es-boe-mcp` v1.0.0 — 5 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
 URL'sini gir → auth "None".
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`es_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on sunucuda `get_act` beş ayrı şey demek, önek doğru
+> değişmez — alttaki on dört sunucuda `get_act` beş ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -46,26 +46,26 @@ URL'sini gir → auth "None".
 |---|---|---|
 | `lexical` | SQLite FTS5 + BM25, diyakritiksiz; katı AND → prefix → OR merdiveni | ✅ |
 | `fuzzy` | FTS5 trigram — alt dize / yazım hatası toleransı | ✅ |
-| `semantic` | Yoğun vektör (kosinüs), **çok dilli** | ⚠️ `EMBEDDINGS_URL` gerekir |
+| `semantic` | Yoğun vektör (kosinüs), **çok dilli** | üretim ucunda Voyage `voyage-4-lite`; `status` ile doğrula |
 
 Üçü **Reciprocal Rank Fusion** ile birleşir. `EMBEDDINGS_URL` yoksa `hybrid`
 sessizce lexical+fuzzy'ye düşer ve **yanıtta `semantic: "off"` der** — anahtar
 kelime eşleşmesini kavramsal eşleşme gibi sunmaz.
 
-### ✅ Semantik kanal nasıl açılır (doğrulanmış kurulum, 30.08.2026)
+### Semantik kanal: üretim ucunda nasıl çalışır
 
-Yerel, ücretsiz, API anahtarsız — **Ollama + `bge-m3`**:
+Tek uçtaki sunucu Voyage AI `voyage-4-lite` (çok dilli, 1024 boyut) ile
+yapılandırılmıştır ve beş yerel indeksin tamamı bu modelle vektörlenmiştir.
+Kanalın o an açık olup olmadığını iki yerden oku: `status` çıktısındaki
+`semantic` alanı ve her arama yanıtındaki `retrieval.semantic`. `off` ise sebep
+`reason` alanında yazar (uç erişilemiyor, anahtar reddedildi, kota) ve sonuçlar
+yalnız anahtar kelime eşleşmesidir; eş anlamlı ve hedef dildeki terimle ikinci
+bir arama yap. Kendi makinende çalıştırıyorsan `EMBEDDINGS_URL`,
+`EMBEDDINGS_MODEL` ve `EMBEDDINGS_API_KEY` ile herhangi bir OpenAI uyumlu
+`/v1/embeddings` ucu (Voyage ya da Ollama + `bge-m3`) bağlanabilir; model
+değişince indeks yeniden vektörlenir (`crawl.py --embed`).
 
-```sh
-ollama pull bge-m3                     # 1,2 GB, 100+ dil, 1024 boyut
-export EMBEDDINGS_URL=http://127.0.0.1:11434/v1/embeddings
-export EMBEDDINGS_MODEL=bge-m3
-python crawl.py ... --embed            # mevcut indeksi vektörle
-```
-
-Ollama'nın `/v1/embeddings` ucu OpenAI uyumludur; sunucular olduğu gibi konuşur.
-
-**Neden `bge-m3`:** bu paketin asıl ihtiyacı **diller arası** erişim — kullanıcı
+**Neden çok dilli model:** bu paketin asıl ihtiyacı **diller arası** erişim — kullanıcı
 Türkçe sorar, külliyat Felemenkçe/Lehçe/Fince/İspanyolca'dır. Tek dilli bir model
 bunu yapamaz. Ölçülen ayrım (TR sorgu, çok dilli aday havuzu):
 
@@ -94,7 +94,7 @@ Diller arası soru soracaksan semantik kanal şart.
 > (`1/(60+sıra)`), bu yüzden skorlar birbirine çok yakın çıkar (0,0164 · 0,0161 ·
 > 0,0159). Sıralamayı oku, skor farkını "güven" gibi yorumlama.
 
-## 2. Araçlar (6) — bağlanınca otomatik keşfedilir
+## 2. Araçlar (5 artı ortak `status`) — bağlanınca otomatik keşfedilir
 
 | Araç | Ne yapar |
 |---|---|
@@ -147,5 +147,5 @@ daha dar ve daha kırılgandır; o rehberdeki uyarıları uygula ve **atıfa
 ---
 
 *Sunucu: `github.com/beerbottle90/es-boe-mcp` · bağımlılıksız (yalnız Python standart
-kütüphanesi), auth yok. Canlı test: 30.08.2026 — 6 araç, gerçek sorgularla
+kütüphanesi), auth yok. Canlı test: 30.08.2026 — 5 araç, gerçek sorgularla
 doğrulandı. Sürüm: v1.6.0 (yeni).*

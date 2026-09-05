@@ -103,15 +103,16 @@ Mevzuat ve emsal **doğrulanmadan** dilekçeye girmez.
 
 ```
 # Mevzuat maddesi
-mcp__claude_ai_Mevzuat_MCP__search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")
-mcp__claude_ai_Mevzuat_MCP__get_mevzuat_madde_tree(mevzuatId=<id>)
+mevzuat_ara(mevzuat_no="6100", mevzuat_tur_list=["KANUN"])
+mevzuat_getir(id=<id>, id_type="outline")
 → Atıf: [Mevzuat MCP — HMK m. 119 — GG.AA.YYYY]
 
 # Emsal içtihat (Yargıtay / Danıştay / BAM-BİM)
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<konu> <madde>",
-  daire="Hukuk Genel Kurulu",      # en bağlayıcı; idari için "İDDK"/ilgili Danıştay dairesi
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="<konu> <madde>",
+  birimAdi="HGK",      # en bağlayıcı; idari için "İDDK"/ilgili Danıştay dairesi
+  kararTarihiStart="2022-01-01"
 )
 → Atıf: [Yarg MCP — Yargıtay HGK E.YYYY/.. K.YYYY/.. — GG.AA.YYYY]
 ```

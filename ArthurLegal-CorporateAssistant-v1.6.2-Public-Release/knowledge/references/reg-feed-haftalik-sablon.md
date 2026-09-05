@@ -1,4 +1,4 @@
-﻿# Regülasyon Haftalık Digest – Şablon
+# Regülasyon Haftalık Digest – Şablon
 
 > Her Pazartesi 08:00. Geçen haftanın Resmi Gazetelerini + sektör kurumu kararlarını tarar, etki sınıflar.
 
@@ -80,8 +80,8 @@
 
 1. **Pazartesi 07:00** — Otomatik trigger (cron / agent)
 2. **Geçen 7 günün RG'lerini Mevzuat MCP üzerinden tara:**
-   - `search_mevzuat(query="<sektör anahtar kelime>", mevzuat_turu="all")`
-   - `search_cbk(query="<>")` / `search_cbgenelge(...)`
+   - `mevzuat_ara(phrase="<sektör anahtar kelime>", )`
+   - `mevzuat_ara(phrase="<>", mevzuat_tur_list=["CB_KARARNAME"])` / `mevzuat_ara(<filtre>, mevzuat_tur_list=["CB_GENELGE"])`
 3. **Sektör kurumu sitelerini web fetch:** EPDK, BDDK, SPK, KVKK Kurul, Rekabet
 4. **Politika kütüphanesi diff:** Her yeni regülasyonun şirket politika kataloğundaki ilgili dokümanı belirle
 5. **Sınıflandır:** 🔴/🟠/🟡/🟢 — bkz. `regulatory-legal` CLAUDE.md eskalasyon

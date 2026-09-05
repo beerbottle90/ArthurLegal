@@ -1,4 +1,4 @@
-﻿# UYAP (Ulusal Yargı Ağı Bilişim Sistemi) – Pratik Rehber
+# UYAP (Ulusal Yargı Ağı Bilişim Sistemi) – Pratik Rehber
 
 > Türk yargısının elektronik altyapısı. Davaların açılması, takibi, belge sunumu, kararların tebliği UYAP üzerinden yapılır. [ŞİRKET ADI] pratiğinde **dış vekiller UYAP avukat portalı** üzerinden erişir; in-house genelde dış vekilden alınan raporlara bakar.
 
@@ -83,9 +83,10 @@ Karşı tarafa tebligat **UYAP üzerinden** veya KEP üzerinden yapılır. [Şİ
 Yarg MCP'nin **Emsal (UYAP)** aracı UYAP arşivindeki emsal kararlara erişir:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_emsal_detailed_decisions(
-  arananKelime="<konu>",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  court_types=["YERELHUKUK", "ISTINAFHUKUK"],
+  phrase="<konu>",
+  kararTarihiStart="2023-01-01"
 )
 ```
 

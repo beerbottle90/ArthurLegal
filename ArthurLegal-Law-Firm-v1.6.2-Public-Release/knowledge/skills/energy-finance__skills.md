@@ -341,7 +341,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 - Lisans devri için EPDK izni gerekiyor mu? (genellikle gerekli)
 - Ön bildirim süresi ve koşulları
 - Aktif soruşturma / yaptırım prosedürü var mı?
-- TR Legal MCP: `search_rekabet_kurumu_decisions` (enerji piyasası) çek
+- TR Legal MCP: `kurum_karari_ara (kurum="rekabet")` (enerji piyasası) çek
 
 **ÇED ve çevre:**
 - ÇED izni mevcut mu? Kapsamı yeterli mi?
@@ -362,7 +362,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 ## Adım 3 — Vergi durum tespiti
 
-- Vergi borcunun tespiti: Gelir İdaresi GİB sorgusu (TR Legal MCP: `search_gib_ozelge`)
+- Vergi borcunun tespiti: Gelir İdaresi GİB sorgusu (TR Legal MCP: `kurum_karari_ara (kurum="gib")`)
 - Aktif Danıştay vergi davaları
 - Transfer pricing pozisyonu (intra-group bağlantı varsa özel dikkat)
 - KDV iade alacakları — devralma sonrası talep edilebilir mi?

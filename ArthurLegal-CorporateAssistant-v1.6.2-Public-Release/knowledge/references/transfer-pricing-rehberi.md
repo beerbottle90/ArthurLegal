@@ -1,4 +1,4 @@
-﻿# Transfer Pricing Rehberi — [ANA ORTAK] Intra-Group
+# Transfer Pricing Rehberi — [ANA ORTAK] Intra-Group
 
 > KVK m. 13 + OECD TPG. [ŞİRKET ADI]'nin ana ortağı [ŞİRKET ADI] ([ANA ORTAK MERKEZİ]) ile yaptığı intra-group işlemler Maliye için en hassas alanlardan biri.
 
@@ -81,21 +81,23 @@
 ## TR Legal MCP — TP içtihatı
 
 ```
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="transfer fiyatlandırma örtülü kazanç ham petrol"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="transfer fiyatlandırma örtülü kazanç ham petrol"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="4. Daire",
-  arananKelime="KVK 13 transfer pricing emsal fiyat",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D4",
+  phrase="+KVK +13 +transfer +pricing +emsal +fiyat",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="5520", mevzuat_tur="KANUN")  # KVK
+mevzuat_ara(mevzuat_no="5520", mevzuat_tur_list=["KANUN"])  # KVK
 ```
 
 ## Bağlantılı

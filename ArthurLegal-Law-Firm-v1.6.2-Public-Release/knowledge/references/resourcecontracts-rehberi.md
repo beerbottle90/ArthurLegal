@@ -14,7 +14,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
 | **Araç öneki** | `contracts_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (public endpoint) |
@@ -66,7 +66,7 @@ uzmanların işaretlediği kilit klozlar.
 | 5 | `contracts_get_contract_text` | Temiz OCR/tam metin, PDF sayfa penceresi (`start_page` + `page_count`) |
 | 6–9 | `contracts_list_countries` / `contracts_list_resources` / `contracts_list_years` / `contracts_list_annotation_categories` | Sayımlı taksonomi |
 
-> ⚠️ **En sık yapılan hata:** `get_contract_annotations(id, page=2)` sonuç
+> ⚠️ **En sık yapılan hata:** `contracts_get_contract_annotations(id, page=2)` sonuç
 > sayfalama değildir — **PDF'in 2. sayfasındaki** anotasyonları filtreler.
 > Tüm klozları istiyorsan `page`'i **boş bırak**.
 
@@ -78,7 +78,7 @@ uzmanların işaretlediği kilit klozlar.
    karşı taraf pozisyonu → evet. "Kanun ne diyor" → **hayır**, birincil araca git.)
 2. `contracts_search_contracts` ile **emsal havuzunu** çek — aynı emtia + benzer blok tipi
    + benzer dönem. Karşı tarafın küresel duruşu için `company_name` ile genişlet.
-3. `get_contract_annotations(id)` ile kilit klozları çıkar. Anotasyon yoksa
+3. `contracts_get_contract_annotations(id)` ile kilit klozları çıkar. Anotasyon yoksa
    (`ann=0`) ilgili maddeyi `contracts_get_contract_text` ile bul.
 4. **Kloz karşılaştırma tablosu** üret: mevcut/teklif edilen şart vs. Emsal 1 /
    Emsal 2 → değerlendirme (**piyasa / agresif / muhafazakâr**).
@@ -110,7 +110,7 @@ Sözleşme oturumda **fiilen araçtan çekildiyse**:
 
 ## 5. Örnek emsal indeksi — Azerbaycan (16 birincil belge)
 
-`search_contracts(country="az")` → 21 belge (5 tadil/ek dâhil), 16 birincil.
+`contracts_search_contracts(country="az")` → 21 belge (5 tadil/ek dâhil), 16 birincil.
 `ann` = anotasyon (kilit kloz) sayısı; 0 ise `contracts_get_contract_text` ile maddeyi bul.
 
 | id | yıl | emtia | ann | saha / taraflar |

@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.4.0 | **Updated:** 2026-07-26
+**Version:** 1.6.2 | **Updated:** 2026-09-05
 
 ---
 
@@ -10,7 +10,7 @@
 |---|---|
 | Claude.ai account | Pro or Team plan (required for Projects feature) |
 | TR Legal MCP | yargi-mcp-pro connector (optional but recommended) |
-| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, ten jurisdictions, no auth (optional — Step 4b) |
+| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, fourteen jurisdictions, no auth (optional — Step 4b) |
 | OpenSanctions API key | For sanctions screening (optional) |
 
 ---
@@ -53,12 +53,6 @@ knowledge/profiles/firm-operations.md
 knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 knowledge/profiles/legal-research.md          <- source layer (v1.4.0)
-```
-
-### New practice areas (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← GDPR / KVKK / data protection
-knowledge/profiles/regulatory-legal.md    ← Regulatory / agency law
 ```
 
 ### Skill files (all plugins)
@@ -158,7 +152,7 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 2. Connection details:
    - **URL:** `https://yargi-mcp-pro-production.up.railway.app/mcp`
    - **Auth:** OAuth 2.0 (WorkOS) — authorization screen will appear on first connection
-3. Once connected, 40+ Turkish legislation and case law tools become available
+3. Once connected, 17 tools become available: legislation (`mevzuat_ara`, `mevzuat_getir`, `mevzuat_icinde_ara`), case law (`ictihat_ara`, `semantik_ictihat_ara`, `aym_ictihat_ara`, `aihm_ictihat_ara`, `ictihat_getir`), regulatory decisions (`kurum_karari_ara`, `kurum_karari_getir` and three in-document search tools) and the Official Gazette (`resmi_gazete_fihrist`, `resmi_gazete_getir`), plus two guide tools
 
 ---
 
@@ -196,7 +190,7 @@ Add these where your client portfolio touches the jurisdiction.
 
 ---
 
-## Step 4b — ArthurLegal MCP (one connector, ten jurisdictions)
+## Step 4b — ArthurLegal MCP (one connector, fourteen jurisdictions)
 
 Project → **Customize** → **Connectors** → **+ Add custom connector**
 
@@ -334,6 +328,6 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.2.0**. See `CHANGELOG.md` for what changed.
+This is version **1.6.2**. See `CHANGELOG.md` for what changed.
 
 Feedback and support: Open an issue on the project's GitHub page.

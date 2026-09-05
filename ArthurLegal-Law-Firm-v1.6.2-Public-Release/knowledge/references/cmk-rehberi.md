@@ -115,13 +115,13 @@ CMK'nın bütün süre/işlem mantığı bu ikiliye oturur:
 ### Kanun metni (Mevzuat MCP)
 
 ```
-search_mevzuat(mevzuat_no="5271", mevzuat_tur="KANUN")   # CMK
-search_mevzuat(mevzuat_no="5237", mevzuat_tur="KANUN")   # TCK
-search_mevzuat(mevzuat_no="6331", mevzuat_tur="KANUN")   # İSG K.
-search_mevzuat(mevzuat_no="2872", mevzuat_tur="KANUN")   # Çevre K.
-search_mevzuat(mevzuat_no="5607", mevzuat_tur="KANUN")   # Kaçakçılıkla Mücadele K.
-search_mevzuat(mevzuat_no="5235", mevzuat_tur="KANUN")   # Adli yargı görev/teşkilat
-→ get_mevzuat_content(...) / search_within_mevzuat(phrase="<madde no>")
+mevzuat_ara(mevzuat_no="5271", mevzuat_tur_list=["KANUN"])   # CMK
+mevzuat_ara(mevzuat_no="5237", mevzuat_tur_list=["KANUN"])   # TCK
+mevzuat_ara(mevzuat_no="6331", mevzuat_tur_list=["KANUN"])   # İSG K.
+mevzuat_ara(mevzuat_no="2872", mevzuat_tur_list=["KANUN"])   # Çevre K.
+mevzuat_ara(mevzuat_no="5607", mevzuat_tur_list=["KANUN"])   # Kaçakçılıkla Mücadele K.
+mevzuat_ara(mevzuat_no="5235", mevzuat_tur_list=["KANUN"])   # Adli yargı görev/teşkilat
+→ mevzuat_getir(id=<mevzuat_id>, id_type="mevzuat") / mevzuat_icinde_ara(query="<madde no>")
 ```
 
 Atıf (kanun): `[Mevzuat MCP — CMK m. XXX — GG.AA.YYYY]`
@@ -129,8 +129,8 @@ Atıf (kanun): `[Mevzuat MCP — CMK m. XXX — GG.AA.YYYY]`
 ### Ceza içtihatı (Yargı MCP — Yargıtay ceza daireleri)
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  phrase="taksirle öldürme iş kazası yönetici sorumluluk istinaf süresi",
+ictihat_ara(
+  phrase="+taksirle +öldürme +iş +kazası +yönetici +sorumluluk +istinaf +süresi",
   birimAdi="12. Ceza Dairesi",      # iş kazası/taksir temyizi
   kararTarihiStart="2023-01-01"
 )

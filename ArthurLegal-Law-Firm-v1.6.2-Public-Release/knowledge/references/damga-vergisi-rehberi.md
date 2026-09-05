@@ -27,7 +27,7 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 - Bazı kredi sözleşmeleri (BSMV ile değişim)
 - Yargı süreci belgeleri (mahkeme kararı ayrı vergi)
 
-**Pratik:** Bir sözleşmeyi imzalamadan önce DVK (1) ve (2) tablolarına bakmadan "muaf" deme. Mevzuat MCP'den `search_kanun(mevzuat_adi="488")` ile teyit.
+**Pratik:** Bir sözleşmeyi imzalamadan önce DVK (1) ve (2) tablolarına bakmadan "muaf" deme. Mevzuat MCP'den `mevzuat_ara(mevzuat_no="488", mevzuat_tur_list=["KANUN"])` ile teyit.
 
 ## En sık sözleşme türleri ve oranları
 
@@ -73,7 +73,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta Mevzuat MCP'd
 
 - Damga vergisi azami had (her bir kağıt için): [Mevzuat MCP — doğrulayın]
 - Genel oran (binde): [Mevzuat MCP — doğrulayın]
-- 488 (1) sayılı Tablo güncel tutarları: [Mevzuat MCP — search_kanun("488")]
+- 488 (1) sayılı Tablo güncel tutarları: [Mevzuat MCP — mevzuat_ara(mevzuat_no="488", mevzuat_tur_list=["KANUN"])]
 
 ---
 

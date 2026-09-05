@@ -116,7 +116,7 @@ Turkish guide → [KURULUM.md](KURULUM.md)
 1. Claude.ai → Projects → New Project
 2. `SYSTEM_PROMPT.md` → Custom Instructions
 3. `knowledge/` folder → Upload Files
-4. Add the TR Legal MCP connector — then, per client portfolio, the jurisdiction connectors (CourtListener · Fedlex · OpenCaseLaw.ch, Step 4a) and the source layer (ArthurLegal MCP — one connector, ten jurisdictions, Step 4b)
+4. Add the TR Legal MCP connector — then, per client portfolio, the jurisdiction connectors (CourtListener · Fedlex · OpenCaseLaw.ch, Step 4a) and the source layer (ArthurLegal MCP — one connector, fourteen jurisdictions, Step 4b)
 5. OpenSanctions API key (optional)
 6. Run `/firm-operations:cold-start-interview`
 7. Run the practice-area cold-starts

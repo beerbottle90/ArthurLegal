@@ -1,4 +1,4 @@
-﻿# SMK (6769 sayılı Sınai Mülkiyet Kanunu) — Pratik Rehber
+# SMK (6769 sayılı Sınai Mülkiyet Kanunu) — Pratik Rehber
 
 > Türk fikri sınai haklar mevzuatının ana çerçevesi (2017'den beri). Marka, patent, faydalı model, endüstriyel tasarım, coğrafi işaret. **Test v1.3.0'da bu rehber eksikti.**
 
@@ -102,16 +102,16 @@ Marka tescili **TÜRKPATENT re'sen reddeder** (mutlak):
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="6769", mevzuat_tur="KANUN")  # SMK
-search_kurum_yonetmelik(kurum="Türk Patent")             # TÜRKPATENT yönetmelikleri
+mevzuat_ara(mevzuat_no="6769", mevzuat_tur_list=["KANUN"])  # SMK
+mevzuat_ara(mevzuat_adi="Türk Patent", mevzuat_tur_list=["KKY"])             # TÜRKPATENT yönetmelikleri
 ```
 
 ## TR Legal MCP
 
 ```
-search_yargitay_decisions(daire="11. Hukuk Dairesi", arananKelime="marka iltibas karıştırılma ihtimali")
-search_yargitay_decisions(daire="11. Hukuk Dairesi", arananKelime="patent tecavüz")
-search_danistay_decisions(arananKelime="TÜRKPATENT itiraz iptal")  # idari yargı
+ictihat_ara(court_types=["YARGITAYKARARI"], birimAdi="H11", phrase="+marka +iltibas +karıştırılma +ihtimali")
+ictihat_ara(court_types=["YARGITAYKARARI"], birimAdi="H11", phrase="+patent +tecavüz")
+ictihat_ara(court_types=["DANISTAYKARAR"], phrase="+TÜRKPATENT +itiraz +iptal")  # idari yargı
 ```
 
 ## Bağlantılı

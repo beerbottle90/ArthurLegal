@@ -110,16 +110,18 @@ Her biri ÇED süreci tetikler. **Çevre Bakanlığı'nın ÇED ret kararı**:
 ## Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="14. Daire",
-  arananKelime="ÇED ret iptal rafineri petrokimya",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D14",
+  phrase="+ÇED +ret +iptal +rafineri +petrokimya",
+  kararTarihiStart="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="10. Daire",
-  arananKelime="çevre etki değerlendirme",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D10",
+  phrase="+çevre +etki +değerlendirme",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -257,8 +259,8 @@ Argümansız çağrılırsa:
 
 ## --check-integrations
 
-1. **Yarg MCP** — test: `search_danistay_decisions(daire="13. Daire", arananKelime="EPDK lisans")` → cevap geliyor mu?
-2. **Mevzuat MCP** — test: `search_mevzuat(mevzuat_no="2577", mevzuat_tur="KANUN")` → İYUK dönüyor mu?
+1. **Yarg MCP** — test: `ictihat_ara(court_types=["DANISTAYKARAR"], birimAdi="D13", phrase="+EPDK +lisans")` → cevap geliyor mu?
+2. **Mevzuat MCP** — test: `mevzuat_ara(mevzuat_no="2577", mevzuat_tur_list=["KANUN"])` → İYUK dönüyor mu?
 3. **iManage** + diğerleri
 
 Rapor formatı litigation-legal/tax-legal ile aynı.
@@ -337,10 +339,11 @@ Bu kanal başarılı olursa **dava açmaktan kaçınılır** — zaman + maliyet
 - **Sektör emsali** — diğer enerji şirketleri benzer pozisyon mu? (Tüpraş, Aygaz, Akenerji)
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",
-  arananKelime="EPDK lisans şartı yorumu emsal",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",
+  phrase="+EPDK +lisans +şartı +yorumu +emsal",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -569,29 +572,31 @@ Talep şart, **otomatik gelmez**. İki şart birden:
 
 ```
 # Bireysel idari işlem için Danıştay temyiz emsali
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",  # EPDK/Rekabet/BDDK/SPK/KİK için
-  arananKelime="<konu> iptal yürütmenin durdurulması",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",  # EPDK/Rekabet/BDDK/SPK/KİK için
+  phrase="<konu> iptal yürütmenin durdurulması",
+  kararTarihiStart="2022-01-01"
 )
 
 # Çevre/ÇED için
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="10. Daire",
-  arananKelime="çevre ÇED idari para cezası",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D10",
+  phrase="+çevre +ÇED +idari +para +cezası",
+  kararTarihiStart="2022-01-01"
 )
 
 # İdare Mahkemesi/BİM kararları
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  phrase="<konu>",
+  kararTarihiStart="2022-01-01"
 )
 
 # İdari kurum birincil kararları
-mcp__claude_ai_Yarg_MCP__search_rekabet_kurumu_decisions(arananKelime="<konu>")
-mcp__claude_ai_Yarg_MCP__search_kik_v2_decisions(arananKelime="<konu>")
-mcp__claude_ai_Yarg_MCP__search_kvkk_decisions(arananKelime="<konu>")
+kurum_karari_ara(kurum="rekabet", keywords="<konu>")
+kurum_karari_ara(kurum="kik", keywords="<konu>")
+kurum_karari_ara(kurum="kvkk", keywords="<konu>")
 ```
 
 ### 7. Dava dilekçesi taslağı
@@ -777,10 +782,10 @@ user-invocable: true
 ### 2. Bir önceki uygulama / emsal
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<ilgili — 10. çevre, 13. enerji-finans>",
-  arananKelime="<kurum> idari para cezası iptal",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<kurum> idari para cezası iptal",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -1010,23 +1015,24 @@ Danıştay bozdu, dosya BİM'e gönderildi. İki seçenek:
 
 ```
 # Daire bazlı temyiz emsali
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<ilgili>",
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<konu>",
+  kararTarihiStart="2022-01-01"
 )
 
 # İDDK kararları (bağlayıcı)
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="İdari Dava Daireleri Kurulu",
-  arananKelime="<konu>",
-  baslangicTarihi="2020-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="IDDK",
+  phrase="<konu>",
+  kararTarihiStart="2020-01-01"
 )
 
 # AYM bireysel başvuru
-mcp__claude_ai_Yarg_MCP__search_anayasa_unified(
-  arananKelime="<konu> mülkiyet hakkı ihlali",
-  yil="2024"
+aym_ictihat_ara(
+  query="<konu> mülkiyet hakkı ihlali",
+  decision_date_start="2024-01-01"
 )
 ```
 
@@ -1158,15 +1164,17 @@ Ekler:
 ### 4. Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_kik_v2_decisions(
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+kurum_karari_ara(
+  kurum="kik",
+  keywords="<konu>",
+  tarih_baslangic="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",
-  arananKelime="KİK karar iptal ihale",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",
+  phrase="+KİK +karar +iptal +ihale",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -1266,15 +1274,16 @@ Rekabet Kurulu **olası ihlal alanları:**
 ## Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_rekabet_kurumu_decisions(
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+kurum_karari_ara(
+  kurum="rekabet",
+  keywords="<konu>"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",
-  arananKelime="Rekabet Kurulu karar iptal",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",
+  phrase="+Rekabet +Kurulu +karar +iptal",
+  kararTarihiStart="2022-01-01"
 )
 ```
 

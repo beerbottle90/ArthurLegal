@@ -1,5 +1,7 @@
-# MCP Yol Haritası — durum: 6 sunucu YAZILDI ve test edildi
+# MCP Yol Haritası — durum: 6 sunucu yazıldı, test edildi ve ArthurLegal MCP tek ucunda toplandı
 
+> **Güncelleme 05.09.2026:** Altı sunucu ve dört yeni backend (UK, AB, JP, GLEIF) artık tek connector'ın arkasındadır: `https://arthurlegal-mcp.fly.dev/mcp`, 14 backend, 81 araç, önekli adlar. Aşağıdaki tablodaki araç sayıları tekil sunuculara aittir; tek uçta her sunucunun kendi `server_status`'u ortak `status` ile değiştirildiği için birer eksiktir.
+>
 > **Güncelleme 30.08.2026:** Bu belge bir plan olarak başladı; artık büyük kısmı
 > **uygulanmış** durumda. Altı yargı çevresi için ayrı ayrı MCP sunucusu yazıldı,
 > canlı API'lere karşı test edildi ve GitHub'a yayımlandı. Lüksemburg maddesi ise
@@ -87,7 +89,7 @@ Denenen ve başarısız olan yollar: `/api/v1` (401) · `/sparql` (SPA) ·
 
 > 📌 **Ders — bu denetimin en pahalı dersi:** *HTTP 200 "çalışıyor" demek
 > değildir.* Bir kaynağı birincil ilan etmeden önce dönen içeriğin gerçekten
-> hukuki metin olduğu doğrulanmalıdır. Bkz. `luksemburg-hukuku-rehberi.md`.
+> hukuki metin olduğu doğrulanmalıdır. Lüksemburg için ayrı rehber yazılmadı; kapsam dışıdır.
 
 Lüksemburg şu an **İsrail ve BAE ile aynı kategoridedir**: resmî kaynak agent'a
 kapalı, otomatik araştırma kapasitesi yok.
@@ -143,7 +145,7 @@ railway variables --set "CRAWL_ARGS=<crawl argumanlari>"
 | MCP | Test | Sonuç |
 |---|---|---|
 | YargiMCP (TR) | `mevzuat_no=6698` · `+"rekabet yasağı" +"cezai şart"` | ✅ KVKK + 801 karar |
-| e-qanun (AZ) | `search_acts("Mülki Məcəllə")` | ✅ 623 akt |
+| e-qanun (AZ) | `az_search_acts("Mülki Məcəllə")` | ✅ 623 akt |
 | OpenCaseLaw.ch | `Konkurrenzverbot…` court=bger | ✅ 57+ karar, pinpoint E. |
 | Fedlex (CH) | `search_by_title("Obligationenrecht")` | ✅ RS 220 |
 | de-eli (DE) | `de_search("Lieferkettensorgfaltspflichtengesetz")` | ✅ LkSG + ELI |

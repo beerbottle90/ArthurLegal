@@ -53,7 +53,7 @@ kullanılır; tek başına gerekçe olmaz.
 
 | MCP | Rol | Kapsam | Kritik disiplin |
 |---|---|---|---|
-| **e-qanun** | **BİRİNCİL** | AZ mevzuatı (resmî `api.e-qanun.az`) | **`get_act` ile yürürlük statüsü doğrulaması zorunlu** |
+| **e-qanun** | **BİRİNCİL** | AZ mevzuatı (resmî `api.e-qanun.az`) | **`az_get_act` ile yürürlük statüsü doğrulaması zorunlu** |
 | **LexScholar** | **İKİNCİL** | 10 indeks; **DergiPark 19 TR hukuk dergisi** dâhil | Hakemlilik **üç durumlu**; sorgu dili tuzağı |
 | **ResourceContracts** | **EMSAL** | 5.125 imzalı PSA/JOA, 107 ülke | `page` boş = tüm anotasyonlar; CC BY-SA 4.0 atıf |
 
@@ -131,7 +131,7 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
 
 | Hata | Neden yanlış |
 |---|---|
-| `Ləğv olunmuş` bir AZ aktını güncel gibi göstermek | `search_acts` statüyü söylemez; **`get_act` zorunlu** |
+| `Ləğv olunmuş` bir AZ aktını güncel gibi göstermek | `az_search_acts` statüyü söylemez; **`az_get_act` zorunlu** |
 | ABD law review'unu "hakemli" saymak | Öğrenci editörlüdür; `peer_reviewed=false` |
 | `null` hakemliliği "hakemli" diye yükseltmek | Bilinmiyor demektir — öyle yaz |
 | Emsal klozu "hukuk böyle" diye sunmak | Bir tarafın müzakere sonucudur |

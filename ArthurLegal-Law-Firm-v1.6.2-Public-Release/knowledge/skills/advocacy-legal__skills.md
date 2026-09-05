@@ -3,7 +3,7 @@
 > Alan: Dava dilekcesi uretimi (ozel/kamu/ceza) + yazihane asistanligi
 > Toplam skill: 5
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
-> Aktif entite: Tum skill'ler company-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
+> Aktif entite: Tum skill'ler firm-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
 > (varsayilan: [Şirket/Büro adı] -> Bolum A). Cikti dili / onay zinciri / yargi cevresi buradan gelir.
 
 ## Icindekiler
@@ -105,7 +105,7 @@ Kalan < 2 gün (7 günlük sürelerde) → 🔴. Süreler kesin; kaçırma = hak
 ## ADIM 4 — Emsal (TR Legal MCP)
 
 ```
-search_bedesten_unified(phrase="<suç + somut konu>",
+ictihat_ara(phrase="<suç + somut konu>",
   birimAdi="<ilgili Yargıtay CD, örn. 12. CD (taksirle ölüm), 15. CD, 11. CD>",
   kararTarihiStart="2021-01-01")
 ```
@@ -186,12 +186,12 @@ user-invocable: true
 
 # advocacy-legal — Cold Start Interview
 
-Amaç: Bu eklentinin `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını kullanıcıyla 5-8 soruda doldurmak. Önce knowledge'daki `company-profile.md` ([Şirket/Büro adı]) okunur — şirket bilgisi oradan gelir, burada **tekrar sorulmaz**.
+Amaç: Bu eklentinin `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını kullanıcıyla 5-8 soruda doldurmak. Önce knowledge'daki `firm-profile.md` ([Şirket/Büro adı]) okunur — şirket bilgisi oradan gelir, burada **tekrar sorulmaz**.
 
 ## Akış
 
 ### Adım 0 — Bağlamı oku
-- `company-profile.md` ([Şirket/Büro adı]) + bu plugin `CLAUDE.md`'yi oku. Zaten dolu alanları tekrar sorma; yalnızca `[DOLDUR]` olanları sor.
+- `firm-profile.md` ([Şirket/Büro adı]) + bu plugin `CLAUDE.md`'yi oku. Zaten dolu alanları tekrar sorma; yalnızca `[DOLDUR]` olanları sor.
 
 ### Adım 1 — Kullanıcı kim?
 > 1. Adın ve rolün? (örn. **[Baş Hukuk Müşaviri]** — Baş Hukuk Müşaviri / **[Kıdemli Hukuk Müşaviri]** — Senior Legal Counsel / **[Hukuk Müşaviri]** — Junior Legal Counsel / diğer)
@@ -288,10 +288,10 @@ Talep şart, otomatik gelmez. **İki şart birlikte:**
 ## ADIM 4 — Emsal (TR Legal MCP)
 
 ```
-search_bedesten_unified(phrase="<konu> iptal yürütmenin durdurulması",
+ictihat_ara(phrase="<konu> iptal yürütmenin durdurulması",
   birimAdi="13. Daire" /* EPDK/Rekabet */ veya "10. Daire"/"14. Daire" /* ÇED/çevre */,
   kararTarihiStart="2022-01-01")
-search_rekabet_kurumu_decisions / search_kik_v2_decisions / search_kvkk_decisions  /* kurum birincil */
+kurum_karari_ara (kurum="rekabet") / kurum_karari_ara (kurum="kik") / kurum_karari_ara (kurum="kvkk")  /* kurum birincil */
 ```
 Yalnızca çekileni dilekçeye işle: `[Yargı MCP — Danıştay 13.D — Esas/Karar — GG.AA.YYYY]`.
 
@@ -470,7 +470,7 @@ Kullanıcı zamanaşımı tarihi verdiyse **önce doğrula** (no silent suppleme
 ## ADIM 6 — Emsal içtihat (TR Legal MCP)
 
 ```
-search_bedesten_unified(phrase="<uyuşmazlık konusu anahtar kelimeler>",
+ictihat_ara(phrase="<uyuşmazlık konusu anahtar kelimeler>",
   birimAdi="<ilgili Yargıtay HD, örn. 11. HD/15. HD/9. HD>", kararTarihiStart="2022-01-01")
 ```
 Lehte/aleyhte eğilimi göster, dilekçeye **yalnızca çekilen** kararı işle: `[Yargı MCP — Yargıtay X.HD — Esas/Karar — GG.AA.YYYY]`. **Uydurma içtihat yazma.**

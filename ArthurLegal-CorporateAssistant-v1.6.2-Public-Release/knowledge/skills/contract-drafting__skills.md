@@ -238,7 +238,7 @@ yerine getiremezse...
 
 **Form (c) — Yapılandırılmış tablo:** `madde | mevcut | önerilen | gerekçe | severity` (uygulamayı kullanıcı yapar).
 
-> **Claude Code yolu:** python-docx ile `w:del`/`w:ins` (yazar="[Şirket/Büro adı] Hukuk", tarih) + `w:comment` üretip `<dosya>_redline.docx` döndürülebilir. Projects'te bu üretilemez → markdown redline + "Word'de Track Changes açıkken uygula" notu.
+> **Claude Code yolu:** python-docx ile `w:del`/`w:ins` (yazar="ArthurLegal", tarih) + `w:comment` üretip `<dosya>_redline.docx` döndürülebilir. Projects'te dosya oluşturma açıksa aynı yol izlenir; kapalıysa metin redline ([silinen: ...] / [eklenen: ...]) + "Word'de Değişiklikleri İzle açıkken uygulayın" notu.
 
 ## ADIM 3 — Çıktı
 

@@ -1,124 +1,114 @@
-# Mevzuat MCP – Kullanım Rehberi
+# TR Legal MCP (yargi-mcp-pro): Mevzuat ve Resmî Gazete Rehberi
 
-> ⚠️ **GÜNCELLEME (21.05.2026 — v1.5.0): Birleşik MCP**
-> Mevzuat MCP ve Yargı MCP tek birleşik sunucuda birleşti — **yargi-mcp-pro**.
-> Yeni endpoint: `https://yargi-mcp-pro-production.up.railway.app/mcp` · Auth: OAuth 2.0 (WorkOS).
-> claude.ai'da TEK custom connector olarak eklenir (Customize → Connectors → Add custom connector).
-> Eski ayrı connector'lar ve no-auth endpoint'ler (`mevzuat.surucu.dev`, `yargimcp.surucu.dev`) bırakılır.
-> Araç isimleri/parametreleri (v1.4.2'de doğrulanmış) geçerliliğini korur — yalnızca tek connector altında toplanmıştır.
+> Bu rehber mevzuat ve Resmî Gazete araçlarını anlatır. Yargı, AYM, AİHM ve kurum kararları `yargi-mcp-rehberi.md` içindedir; ikisi aynı connector'dır (endpoint ve kurulum orada).
+> Araç adları ve parametreler 05.09.2026'da canlı bağlantıdan doğrulanmıştır. `search_mevzuat`, `get_mevzuat_content`, `search_within_mevzuat`, `get_mevzuat_madde_tree`, `search_kanun`, `search_teblig`, `search_cbk` gibi eski adlar artık yoktur.
 
+## 1. Araçlar
 
-> Mevzuat MCP, Türk mevzuatına Claude'dan doğrudan erişim sağlar. Tüm skill'ler atıfları teyit ederken bu MCP'yi kullanmalıdır.
+| Araç | Ne yapar | Kritik parametreler |
+|---|---|---|
+| `mevzuat_ara` | mevzuat.gov.tr üzerinde 12 tür mevzuatta arama | `mevzuat_adi` (başlıkta arar), `mevzuat_no` (resmî numara, en kesin yol), `phrase` (gövdede arar, operatörsüz), `mevzuat_tur_list` (bir çağrıda en çok 4 tür), `resmi_gazete_tarihi_start`, `resmi_gazete_tarihi_end`, `page`, `page_size` (en çok 20) |
+| `mevzuat_getir` | Tam metin, tek madde veya madde ağacı | `id` (`mevzuat_ara`'dan gelen `mevzuat_id`), `id_type` (`mevzuat`, `madde`, `outline`), `madde_no`, `chunk` |
+| `mevzuat_icinde_ara` | Tek bir mevzuat içinde boolean arama | `mevzuat_id`, `query` (BÜYÜK HARF `AND`, `OR`, `NOT`, tırnak, parantez), `page`, `page_size` (en çok 50), `sort_by` |
+| `resmi_gazete_fihrist` | Bir günün Resmî Gazete içindekiler listesi | `tarih` (ISO; verilmezse bugün), `mukerrer_no`, `include_ilan` |
+| `resmi_gazete_getir` | Fihristteki bir maddenin tam metni | `document_id` (yalnız `resmi_gazete:` kimliği) |
 
-## İki kaynak — hangisini kullan?
+Mevzuat türleri: `KANUN`, `KHK`, `TUZUK`, `YONETMELIK` (Bakanlar Kurulu yönetmelikleri), `CB_KARARNAME`, `CB_YONETMELIK`, `CB_KARAR`, `CB_GENELGE`, `KKY` (kurum ve kuruluş yönetmelikleri), `UY` (üniversite yönetmelikleri), `TEBLIGLER`, `MULGA` (yürürlükten kalkmış kanunlar, kısmi kapsam). `mevzuat_tur_list` verilmezse yalnız `KANUN`, `KHK`, `CB_KARARNAME` ve `TUZUK` aranır; yanıt atlanan türleri `aranmayan_turler` alanında söyler. Yönetmelik, tebliğ veya kurum yönetmeliği arıyorsan türü açıkça yaz.
 
-### mevzuat.gov.tr (Playwright — yavaş ama tam içerik)
-**21 araç**, 9 mevzuat tipi için search + search_within çiftleri.
+## 2. Kimlik disiplini
 
-Tipleri:
-- Kanun (`search_kanun`, `search_within_kanun`)
-- KHK
-- Tüzük
-- Kurum Yönetmeliği
-- Tebliğ
-- CB Kararnamesi (`search_cbk`)
-- CB Kararı (`search_cbbaskankarar`)
-- CB Yönetmeliği
-- CB Genelgesi
+1. `mevzuat_no` resmî kanun numarasıdır (6698 KVKK, 6102 TTK, 6098 TBK, 213 VUK, 5237 TCK, 5271 CMK, 6100 HMK, 2577 İYUK, 4857 İş K., 3065 KDVK). Emin değilsen numarayı uydurma; önce `mevzuat_adi` ile ara, numarayı yanıttan al.
+2. `mevzuat_id` sunucunun iç kimliğidir ve yalnız `mevzuat_ara` yanıtından gelir (`mevzuatgov:kanun:5:6698` biçimi). Kendin kurma; ortadaki tertip numarası tahmin edilemez. Eski sayısal kimlikler (`103161` gibi) çözümlenmez, `unsupported_legacy_id` alırsan yeniden ara.
+3. Madde kimliği mevzuat kimliğinin madde ekli hâlidir (`mevzuatgov:kanun:5:6698:m6`). Normal numaralı maddelerde `mevzuat_getir(id=<mevzuat_id>, id_type="madde", madde_no=6)` tek çağrıda çözer. EK ve GEÇİCİ maddeler ayrı numara dizisi kullanır; onlarda önce `id_type="outline"` ile `madde_id` al.
 
-**Önemli:** Anahtar kelime tabanlıdır, kanun numarasıyla aramada zayıftır.
-- ✓ "katma değer vergisi"
-- ✗ "3065"
+## 3. Arama davranışı
 
-### bedesten.adalet.gov.tr (REST — hızlı, kanun no destekli)
-**5 araç**, 12 mevzuat tipini tek arayüzde.
+1. `phrase` operatör almaz: tırnak, `+`, `-`, joker ve AND/OR/NOT birebir metin olarak aranır. Önce tam öbek denenir, sonuç yoksa kelimeler AND'lenir ve yanıt `note` ile bildirir. 2 ile 5 terim yaz; uzun sorgu sıfır sonuç verir.
+2. Sıralama Resmî Gazete tarihine göredir, ilgi sıralaması yoktur. Hedefi öne çıkarmak için `mevzuat_adi` veya `mevzuat_no` ile daralt.
+3. Resmî Gazete tarih filtresi yayım tarihine bakar, yürürlük tarihine değil. Yürürlüğü kanunun `Yürürlük` maddesinden ve değişiklik notlarından oku.
+4. `mevzuat_icinde_ara` operatörleri BÜYÜK HARF ister ve kök kelime ister (`tazminat`, `tazminatı` değil): `"açık rıza" AND sağlık`, `(ihracat OR ithalat) AND NOT istisna`. Bitişik kelimeler AND sayılır. İsabetler tüm küme üzerinde sıralanır; ilk sayfa en güçlüsüdür. Her isabet `snippet` ve varsa `madde_id` ile `madde_no` taşır.
+5. Tebliğler, Cumhurbaşkanlığı kararları ve genelgeler maddeye bölünmez; `madde` ve `outline` bunlarda `outline_desteklenmiyor` döner. Tam metni getir ya da `mevzuat_icinde_ara` kullan (tek tam metin eşleşmesi döner). Genelge ve karar PDF'leri ilk çağrıda OCR ile açılır, 2 ile 3 saniye sürebilir.
+6. 50 KB üstü tam metin parçalanır: ilk çağrı `chunk: {index, total}` döndürür, kalanı `chunk: 2..total` ile al. Devasa kanunlarda tam metni çekmek yerine `mevzuat_icinde_ara` ile ilgili üç maddeyi bul.
+7. Gerekçe yoktur; mevzuat.gov.tr yasama gerekçesi yayımlamaz. Gerekçe için TBMM kaynaklarına git.
+8. Sayfalama parametresi `page`'dir; `ictihat_ara`'daki `pageNumber` ile karıştırma.
 
-Tipleri:
-- `search_mevzuat(mevzuat_no="6098", mevzuat_turu="KANUN")` — birleşik arama
-- `get_mevzuat_content(...)` — tam metin
-- `search_within_mevzuat(...)` — madde içi kelime
-- `get_mevzuat_gerekce(...)` — gerekçe (KANUN için)
-- `get_mevzuat_madde_tree(...)` — madde ağacı/içindekiler
+## 4. Tipik kullanım
 
-**Solr operatörleri destekli:**
-- `"tam ifade"` — exact phrase
-- `+gerekli +ikinci` — AND (boşlukla AND **DEĞİL**; + kullan)
-- `-istenmeyen` — NOT
-- `joker*` — wildcard
-- `yakın~3` — fuzzy
-- `"iki kelime"~5` — proximity (5 kelime içinde)
+Kanun numarasıyla madde:
 
-## Tipik patternler
-
-### 1. Kanun maddesi tam metin getir
 ```
-search_mevzuat(mevzuat_no="6098", mevzuat_turu="KANUN")
-→ get_mevzuat_content(mevzuat_id=<id>)
-→ search_within_mevzuat(mevzuat_id=<id>, query="+sorumluluğun +sınırlandırılması")
+mevzuat_ara(mevzuat_no="6098", mevzuat_tur_list=["KANUN"])
+mevzuat_getir(id="mevzuatgov:kanun:5:6098", id_type="madde", madde_no=350)
 ```
 
-### 2. Kanun maddesi ağacını gör (içindekiler tablosu)
-```
-get_mevzuat_madde_tree(mevzuat_id=<id>)
-→ M.115 ve civarını oku
-```
+Madde ağacı ve konu başlığı:
 
-### 3. Konu bazlı arama (kanun no bilinmiyor)
 ```
-search_mevzuat(query="kişisel veri yurt dışı aktarım", mevzuat_turu="KANUN")
-veya
-search_mevzuat(query="+kişisel +veri +aktarım")
+mevzuat_getir(id="mevzuatgov:kanun:5:6098", id_type="outline")
 ```
 
-### 4. KVKK Kurul kararı / tebliğ ara
-```
-search_teblig(query="veri ihlal bildirim")
-search_kurum_yonetmelik(kurum="Kişisel Verileri")
-```
+Kanun içinde boolean arama:
 
-### 5. Yeni regülasyon takibi (CB Kararnamesi)
 ```
-search_cbk(query="sermaye hareketleri")
-search_cbgenelge(query="kamu alımları")
+mevzuat_icinde_ara(mevzuat_id="mevzuatgov:kanun:5:4691", query="yazılım AND (ihracat OR \"hizmet ihracı\") AND istisna")
 ```
 
-### 6. Kanun gerekçe sorgusu (madde mantığı)
+Konu araması, kanun numarası bilinmiyor:
+
 ```
-get_mevzuat_gerekce(mevzuat_id=<6698 KVKK id>)
-→ KVKK gerekçesi için 2016 Adalet Komisyonu raporu
+mevzuat_ara(phrase="kişisel veri yurt dışı aktarım", mevzuat_tur_list=["KANUN", "YONETMELIK", "KKY", "TEBLIGLER"])
 ```
 
-## Atıf etiketleri
+Yönetmelik ve tebliğ (tür açıkça verilir):
 
-Mevzuat MCP'den alınan her atıf **mutlaka** şu etiketlerden biriyle gelmeli:
+```
+mevzuat_ara(mevzuat_adi="Kişisel Verilerin Silinmesi", mevzuat_tur_list=["KKY", "YONETMELIK"])
+mevzuat_ara(phrase="veri ihlali bildirim", mevzuat_tur_list=["TEBLIGLER"])
+```
 
-- `[Mevzuat MCP — GG.AA.YYYY]` — bedesten veya mevzuat.gov.tr'den o oturumda çekildi
-- `[Mevzuat MCP — gerekçe]` — gerekçe metni  
-- `[model bilgisi — doğrulayın]` — MCP'den çekilmediyse
+Cumhurbaşkanlığı kararnamesi ve genelgesi:
 
-**Asla:** MCP'den çekildiğini iddia eden ama gerçekte sadece model bilgisi olan atıflar verme.
+```
+mevzuat_ara(phrase="sermaye hareketleri", mevzuat_tur_list=["CB_KARARNAME"])
+mevzuat_ara(phrase="kamu alımları", mevzuat_tur_list=["CB_GENELGE"])
+```
 
-## Sınırlamalar
+Yürürlükten kalkmış kanun:
 
-- **Yargıtay/Danıştay/AYM kararları** Mevzuat MCP'de YOK — **bunlar için Yarg MCP kullanın** (bkz. `yargi-mcp-rehberi.md`). İkisi tamamlayıcıdır.
-- **Kurum kararları (BDDK, SPK, EPDK, KVKK Kurulu) zaman zaman Mevzuat MCP'de eksik** — KVKK Kurulu + BDDK için Yarg MCP daha güçlü; SPK için kurum sitesine + KAP'a fallback; EPDK için kurum sitesi.
-- **Tasarı/Kanun teklifi** aşamasındaki düzenlemeler MCP'de yok — TBMM sitesi
-- **Yerel idari düzenleme** (belediye yönetmelikleri) MCP'de kapsamı sınırlı
+```
+mevzuat_ara(mevzuat_no="765", mevzuat_tur_list=["MULGA"])
+```
 
----
+Belirli bir günün Resmî Gazete'si ve konsolide metne geçiş:
 
-## Mevzuat MCP + Yarg MCP — birlikte kullan
+```
+resmi_gazete_fihrist(tarih="2026-08-06")
+resmi_gazete_getir(document_id="resmi_gazete:20260806/3.htm")
+mevzuat_ara(mevzuat_no="<değiştirilen kanun>", mevzuat_tur_list=["KANUN"])
+```
 
-Türk hukuk araştırmasında iki MCP **tamamlayıcı**:
+Resmî Gazete gün bazlıdır; konu araması yoktur. "Şu konuda ne yayımlandı" sorusu ya tarihle ya da `mevzuat_ara`'nın Resmî Gazete tarih filtresiyle yanıtlanır. RG metni yalnız değişiklik hükmüdür; yürürlükteki hâl için konsolide metne geç. İlan bölümü varsayılan kapalıdır; icra, tebligat ve ihale ilanları için `include_ilan: true` ver. Mükerrer sayı gün içinde sonradan çıkabilir; aynı gün tekrar sorabilirsin.
 
-| MCP | Verdiği |
-|---|---|
-| **Mevzuat MCP** | Kanun, KHK, tüzük, yönetmelik, CB kararname/genelge, tebliğ — **norm metinleri** |
-| **Yarg MCP** | Yargıtay, Danıştay, AYM, KVKK Kurulu, Rekabet, KİK, BDDK, GİB, Sayıştay, Sigorta Tahkim, alt mahkemeler — **kararlar/yorumlar** |
+## 5. Atıf
 
-Bir hukuki sorgu çoğunlukla ikisini birlikte gerektirir:
-1. **Mevzuat MCP**'den ilgili madde + tüm fıkraları getir
-2. **Yarg MCP**'den o maddenin yargı/idari yorumunu getir
-3. Sentezle ve atıf etiketlerini koru
+```
+[Mevzuat MCP, 6098 sayılı TBK m. 350, 05.09.2026]
+[Mevzuat MCP, KVKK Uygulama Yönetmeliği m. 8, 05.09.2026]
+[Resmî Gazete, 32.891, 06.08.2026]
+```
 
-Detay: bkz. `yargi-mcp-rehberi.md`
+Alanlar virgülle ayrılır. Araç çıktısında URL varsa eklenir; mevzuat maddeleri için URL uydurulmaz, belge adı ve madde numarasıyla atıf yapılır. Çekilmediyse `[model bilgisi, doğrulayın]`.
+
+## 6. Sınırlar
+
+1. Yargıtay, Danıştay ve AYM kararları bu araçlarda yoktur; `yargi-mcp-rehberi.md`.
+2. Kurum kararları (BDDK, SPK, EPDK, KVKK Kurulu) mevzuat değildir; `kurum_karari_ara`.
+3. Tasarı ve kanun teklifi aşamasındaki metinler yoktur; TBMM sitesi.
+4. Belediye ve yerel idare düzenlemeleri sınırlıdır.
+5. Her araç çağrısı 100 saniyede iptal edilir; dar tut, iptal olursa aynı sorguyu tekrarlama.
+
+## 7. Birlikte kullanım
+
+Bir hukuki soru çoğunlukla üç adımdır: `mevzuat_ara` ve `mevzuat_getir` ile ilgili madde ve fıkralar; `ictihat_ara` veya `semantik_ictihat_ara` ile o maddenin yargı yorumu; skill playbook'u ile sentez. Atıf etiketleri korunur.
+
+*Son güncelleme: 05.09.2026. Araç listesi ve parametreler canlı bağlantıdan doğrulandı.*
