@@ -166,4 +166,4 @@ mevzuat_ara(mevzuat_no="5510", mevzuat_tur_list=["KANUN"])  # SGK K.
 
 - [HMK rehberi](hmk-rehberi.md)
 - [Yarg MCP rehberi](yargi-mcp-rehberi.md)
-- [[ŞİRKET ADI] profili → litigation-legal](../profiles/litigation-legal.md)
+- [[ŞİRKET ADI] profili → litigation-legal](../skills/litigation-legal__skills.md)
