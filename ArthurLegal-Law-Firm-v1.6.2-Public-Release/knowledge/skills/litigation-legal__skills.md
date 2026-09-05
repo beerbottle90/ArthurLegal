@@ -147,10 +147,10 @@ Yanlış husumet → davanın reddi (taraf değişikliği, ek dava açma, zamana
 Karşı tarafın iddiasının hukuki dayanağı ne ise, **Yarg MCP'den** o konudaki son 2-3 yıl emsal Yargıtay/Danıştay kararını çek:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<konu anahtar kelimeleri>",
-  daire="<ilgili daire>",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  phrase="<konu anahtar kelimeleri>",
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  kararTarihiStart="2023-01-01"
 )
 ```
 
@@ -396,8 +396,8 @@ Profil dolduktan sonra:
 
 Sadece şu kontrolleri yap:
 
-1. **Yarg MCP** — test sorgu: `search_yargitay_decisions(arananKelime="işe iade", baslangicTarihi="2025-01-01")` → cevap geliyor mu?
-2. **Mevzuat MCP** — test sorgu: `search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")` → HMK dönüyor mu?
+1. **Yarg MCP** — test sorgu: `ictihat_ara(court_types=["YARGITAYKARARI"], phrase="+işe +iade", kararTarihiStart="2025-01-01")` → cevap geliyor mu?
+2. **Mevzuat MCP** — test sorgu: `mevzuat_ara(mevzuat_no="6100", mevzuat_tur_list=["KANUN"])` → HMK dönüyor mu?
 3. **iManage** (varsa) — bağlantı testi
 4. **Slack / Teams** (varsa) — bağlantı testi
 
@@ -597,19 +597,20 @@ Mahkemenin yerinde inceleme yapması:
 Delil sunumu prosedürlerinde benzer dava emsallerini Yarg MCP'den çek:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="HMK 220 belge ibraz aleyhe karine",
-  daire="Hukuk Genel Kurulu",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+HMK +220 +belge +ibraz +aleyhe +karine",
+  birimAdi="HGK",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 KEP'in delil değeri için özel arama:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="kayıtlı elektronik posta KEP delil",
-  baslangicTarihi="2020-01-01"
+ictihat_ara(
+  phrase="+kayıtlı +elektronik +posta +KEP +delil",
+  kararTarihiStart="2020-01-01"
 )
 ```
 
@@ -824,10 +825,10 @@ Hâkim duruşmada şu soruları sorabilir; cevaplar:
 ## Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<dava konusu> bilirkişi rapor itiraz",
-  daire="<ilgili daire>",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  phrase="<dava konusu> bilirkişi rapor itiraz",
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  kararTarihiStart="2023-01-01"
 )
 ```
 
@@ -982,7 +983,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | 60-90 dk | İletişim Başkanlığı ([İletişim Başkanlığı]) — basın hazırlık | Telefon + brief |
 | 90 dk - 2 saat | Compliance + Yatırımcı İlişkileri ([HALKA AÇIK İŞTİRAK] ise) | E-posta + telefon |
 
-`company-profile.md` anahtar kişiler tablosunu kontrol et — son atamalar değişebilir.
+`firm-profile.md` anahtar kişiler tablosunu kontrol et — son atamalar değişebilir.
 
 #### 4. Dış vekil mobilizasyonu
 
@@ -1054,21 +1055,23 @@ Her biri için ön-strateji:
 #### 11. Yarg MCP — emsal kararlar
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="iş kazası ölümlü 6331 işveren sorumluluk",
-  daire="9. Hukuk Dairesi",  # iş kazası tazminat
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+iş +kazası +ölümlü +6331 +işveren +sorumluluk",
+  birimAdi="H9",  # iş kazası tazminat
+  kararTarihiStart="2023-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="taksirle öldürme rafineri patlama yönetici sorumluluk",
-  baslangicTarihi="2020-01-01"
+ictihat_ara(
+  phrase="+taksirle +öldürme +rafineri +patlama +yönetici +sorumluluk",
+  kararTarihiStart="2020-01-01"
 )  # Ceza Genel Kurulu kararları
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="10. Daire",
-  arananKelime="çevre kirletme idari para cezası iptali",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D10",
+  phrase="+çevre +kirletme +idari +para +cezası +iptali",
+  kararTarihiStart="2023-01-01"
 )
 ```
 
@@ -1390,10 +1393,10 @@ Yazılı çıkar çatışması beyanı brief'in kabulüyle birlikte alınır.
 Brief hazırlanırken **mutlaka** karşı tarafın hukuki dayanağına ilişkin son emsal kararları çek:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<davanın hukuki konu>",
-  daire="<ilgili daire>",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  phrase="<davanın hukuki konu>",
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  kararTarihiStart="2023-01-01"
 )
 ```
 
@@ -1524,10 +1527,10 @@ Eğer dava devam ederse, **muhtemel mahkeme kararı** ne olur?
 
 - **Emsal Yargıtay/Danıştay kararları** (Yarg MCP):
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<dava konusu>",
-  daire="<ilgili daire>",
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  phrase="<dava konusu>",
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  kararTarihiStart="2023-01-01"
 )
 ```
 - Kazanma olasılığı %

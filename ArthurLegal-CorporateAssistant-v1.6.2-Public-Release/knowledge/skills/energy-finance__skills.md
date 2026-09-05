@@ -1,4 +1,4 @@
-﻿# energy-finance - Skill Referans Kitapcigi
+# energy-finance - Skill Referans Kitapcigi
 
 > Alan: Enerji M&A, proje finansmani, JV, LNG offtake - [ŞİRKET ADI] TR enerji islemi
 > Toplam skill: 5
@@ -341,7 +341,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 - Lisans devri için EPDK izni gerekiyor mu? (genellikle gerekli)
 - Ön bildirim süresi ve koşulları
 - Aktif soruşturma / yaptırım prosedürü var mı?
-- TR Legal MCP: `search_rekabet_kurumu_decisions` (enerji piyasası) çek
+- TR Legal MCP: `kurum_karari_ara (kurum="rekabet")` (enerji piyasası) çek
 
 **ÇED ve çevre:**
 - ÇED izni mevcut mu? Kapsamı yeterli mi?
@@ -362,7 +362,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 ## Adım 3 — Vergi durum tespiti
 
-- Vergi borcunun tespiti: Gelir İdaresi GİB sorgusu (TR Legal MCP: `search_gib_ozelge`)
+- Vergi borcunun tespiti: Gelir İdaresi GİB sorgusu (TR Legal MCP: `kurum_karari_ara (kurum="gib")`)
 - Aktif Danıştay vergi davaları
 - Transfer pricing pozisyonu ([ANA ORTAK] intra-group bağlantısı varsa özel dikkat)
 - KDV iade alacakları — devralma sonrası talep edilebilir mi?
@@ -491,7 +491,7 @@ Facility Agreement'dan çıkar:
 ## Adım 5 — EPDK & SPK bildirim kontrolü
 
 - **EPDK:** Lisans devri veya değişikliği gerektiriyor mu? Üretim/iletim/dağıtım lisans türü — kapasite ve sahiplik eşikleri. Rehber: `references/epdk-rehberi.md`.
-- **SPK/KAP:** [HALKA AÇIK İŞTİRAK] bağlantısı varsa — önemli ilişkili taraf işlemi, maddi gelişme bildirimi. Rehber: `references/sirket-[petrokimya iştiraki]-kap-rehberi.md`.
+- **SPK/KAP:** [HALKA AÇIK İŞTİRAK] bağlantısı varsa — önemli ilişkili taraf işlemi, maddi gelişme bildirimi. Rehber: `references/halka-acik-istirak-kap-rehberi.md`.
 - **Yabancı yatırımcı:** FEFTA (Japonya), FIRPA (ABD) — DFI kredi verenlerin uyum yükümlülüğü.
 
 ## Adım 6 — Risk matrisi

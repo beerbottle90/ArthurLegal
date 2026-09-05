@@ -1,4 +1,4 @@
-﻿# Türk İdari Yargı Yapısı — Daire Haritası ([Müvekkil] Bağlamı)
+# Türk İdari Yargı Yapısı — Daire Haritası ([Müvekkil] Bağlamı)
 
 > 3 dereceli idari yargı: İdare Mahkemesi → BİM → Danıştay. Bu rehber özellikle **Danıştay daire görevlerini** netleştiriyor.
 
@@ -79,23 +79,25 @@ Her BİM içinde:
 Bedesten birleşik API ile alt dereceleri (İdare Mah. + BİM) çekebilirsin:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  phrase="<konu>",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 Danıştay daire bazlı:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",
-  arananKelime="<konu>"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",
+  phrase="<konu>"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="İdari Dava Daireleri Kurulu",
-  arananKelime="<konu>"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="IDDK",
+  phrase="<konu>"
 )
 ```
 

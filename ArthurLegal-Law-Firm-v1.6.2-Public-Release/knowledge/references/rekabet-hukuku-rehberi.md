@@ -1,4 +1,4 @@
-> **Durum:** ✅ Açık — TR Legal MCP `search_rekabet_kurumu_decisions` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `corporate-legal:merger-notification`, `energy-finance:ma-diligence-energy`.
+> **Durum:** ✅ Açık — TR Legal MCP `kurum_karari_ara (kurum="rekabet")` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `corporate-legal:merger-notification`, `energy-finance:ma-diligence-energy`.
 
 # Rekabet Hukuku — Pratik Rehber (4054 sayılı Kanun)
 
@@ -48,9 +48,9 @@
 
 ```
 # Rekabet Kurulu kararı arama (kartel, hakim durum, birleşme emsali)
-mcp__...__search_rekabet_kurumu_decisions(PdfText="<konu — örn. elektrik toptan bilgi paylaşımı>")
+kurum_karari_ara(kurum="rekabet", keywords="<konu — örn. elektrik toptan bilgi paylaşımı>")
 # 4054 ve tebliğ metinleri
-mcp__...__search_mevzuat(mevzuat_no="4054")   # + Tebliğ 2010/4, 2002/2
+mevzuat_ara(mevzuat_no="4054")   # + Tebliğ 2010/4, 2002/2
 ```
 Atıf: `[Rekabet Kurulu — karar no/tarih — GG.AA.YYYY]` (MCP'den çekildiyse `[Yargı MCP — rekabet — ...]`); mevzuat → `[Mevzuat MCP — GG.AA.YYYY]`. Çekmediğin karara atıf yapma.
 

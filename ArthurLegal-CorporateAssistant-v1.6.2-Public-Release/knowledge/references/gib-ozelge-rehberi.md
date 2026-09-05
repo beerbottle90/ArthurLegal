@@ -1,4 +1,4 @@
-﻿# GİB Özelge (Mukteza) Rehberi
+# GİB Özelge (Mukteza) Rehberi
 
 > Belirsiz bir vergi konusunda GİB'den bağlayıcı görüş alma. Türk vergi pratiğinin önemli aracı.
 
@@ -46,8 +46,9 @@
 **Özelge talep etmeden ÖNCE** mutlaka mevcut özelgelerde aynı/benzer konu var mı bak:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="<konu anahtar kelimeleri>"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="<konu anahtar kelimeleri>"
 )
 ```
 
@@ -66,7 +67,7 @@ GİB özelge veri tabanı 18.000+ özelge — büyük ihtimal benzer konu var. E
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="213", mevzuat_tur="KANUN")  # VUK m. 369
+mevzuat_ara(mevzuat_no="213", mevzuat_tur_list=["KANUN"])  # VUK m. 369
 ```
 
 ## Bağlantılı

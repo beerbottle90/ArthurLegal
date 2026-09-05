@@ -3,7 +3,7 @@
 > Alan: Sozlesme uretimi - redline, belge turet, versiyon karsilastir, tadil
 > Toplam skill: 5
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
-> Aktif entite: Tum skill'ler company-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
+> Aktif entite: Tum skill'ler firm-profile.md -> Bolum 0 'Aktif entite' secimini baz alir
 > (varsayilan: [Şirket/Büro adı] -> Bolum A). Cikti dili / onay zinciri / yargi cevresi buradan gelir.
 
 ## Icindekiler
@@ -144,12 +144,12 @@ user-invocable: true
 
 # contract-drafting — Cold Start Interview
 
-Amaç: `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını 5-7 soruda doldurmak. Önce `company-profile.md` + `references/redline-konvansiyonlari-rehberi.md` okunur.
+Amaç: `CLAUDE.md` profilindeki `[DOLDUR]` alanlarını 5-7 soruda doldurmak. Önce `firm-profile.md` + `references/redline-konvansiyonlari-rehberi.md` okunur.
 
 ## Akış
 
 ### Adım 0 — Bağlam
-`company-profile.md` + bu plugin `CLAUDE.md` oku. Dolu alanları tekrar sorma.
+`firm-profile.md` + bu plugin `CLAUDE.md` oku. Dolu alanları tekrar sorma.
 
 ### Adım 1 — Kullanıcı & ortam
 > 1. Adın/rolün? ([Baş Hukuk Müşaviri] / [Kıdemli Hukuk Müşaviri] / [Hukuk Müşaviri] / diğer)
@@ -204,7 +204,7 @@ user-invocable: true
 
 ## ADIM 1 — Bulguları topla / üret
 
-Inceleme bulgusu varsa al; yoksa playbook'a göre çıkar (sözleşme tipini tespit et → `references/` + `commercial-legal` profili + `company-profile.md` standart pozisyonları). Her bulgu için:
+Inceleme bulgusu varsa al; yoksa playbook'a göre çıkar (sözleşme tipini tespit et → `references/` + `commercial-legal` profili + `firm-profile.md` standart pozisyonları). Her bulgu için:
 - **Sorun** (kloz + neden) · **Severity** (🔴🟠🟡🟢) · **Önerilen redline** (somut metin) · **Fallback** ("tercih X; kabul edilmezse asgari Y") · **Hukuki dayanak** (`[Mevzuat MCP]` emredici hüküm / `[Yargı MCP]` kloz geçerliliği).
 
 **Standart kontrol listesi (enerji sözleşmesi):**
@@ -238,7 +238,7 @@ yerine getiremezse...
 
 **Form (c) — Yapılandırılmış tablo:** `madde | mevcut | önerilen | gerekçe | severity` (uygulamayı kullanıcı yapar).
 
-> **Claude Code yolu:** python-docx ile `w:del`/`w:ins` (yazar="[Şirket/Büro adı] Hukuk", tarih) + `w:comment` üretip `<dosya>_redline.docx` döndürülebilir. Projects'te bu üretilemez → markdown redline + "Word'de Track Changes açıkken uygula" notu.
+> **Claude Code yolu:** python-docx ile `w:del`/`w:ins` (yazar="ArthurLegal", tarih) + `w:comment` üretip `<dosya>_redline.docx` döndürülebilir. Projects'te dosya oluşturma açıksa aynı yol izlenir; kapalıysa metin redline ([silinen: ...] / [eklenen: ...]) + "Word'de Değişiklikleri İzle açıkken uygulayın" notu.
 
 ## ADIM 3 — Çıktı
 

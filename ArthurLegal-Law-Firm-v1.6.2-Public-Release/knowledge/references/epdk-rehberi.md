@@ -85,22 +85,23 @@
 ## Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="13. Daire",
-  arananKelime="EPDK lisans iptal idari ceza",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D13",
+  phrase="+EPDK +lisans +iptal +idari +ceza",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="5015", mevzuat_tur="KANUN")  # PPK
-search_mevzuat(mevzuat_no="4646", mevzuat_tur="KANUN")  # DGPK
-search_mevzuat(mevzuat_no="6446", mevzuat_tur="KANUN")  # EPK
-search_mevzuat(mevzuat_no="4628", mevzuat_tur="KANUN")  # EPDK K.
-search_mevzuat(mevzuat_adi="EPDK", mevzuat_tur="YONETMELIK")
-search_mevzuat(mevzuat_adi="EPDK", mevzuat_tur="TEBLIGLER")
+mevzuat_ara(mevzuat_no="5015", mevzuat_tur_list=["KANUN"])  # PPK
+mevzuat_ara(mevzuat_no="4646", mevzuat_tur_list=["KANUN"])  # DGPK
+mevzuat_ara(mevzuat_no="6446", mevzuat_tur_list=["KANUN"])  # EPK
+mevzuat_ara(mevzuat_no="4628", mevzuat_tur_list=["KANUN"])  # EPDK K.
+mevzuat_ara(mevzuat_adi="EPDK", mevzuat_tur_list=["YONETMELIK"])
+mevzuat_ara(mevzuat_adi="EPDK", mevzuat_tur_list=["TEBLIGLER"])
 ```
 
 ## Bağlantılı

@@ -168,10 +168,10 @@ Eğer counterparty veya yaptırım eşleşmesi **[Halka Açık İştirak]'i etki
 Bu rehberin yaslandığı TR mevzuatı için MCP sorguları:
 
 ```
-search_kanun(mevzuat_adi="7262")  → Kitle İmha Silahlarının Yayılmasının Finansmanı K.
-search_kurum_yonetmelik(kurum="MASAK")
-search_kanun(mevzuat_adi="5549")  → MASAK Suç Gelirlerinin Aklanması K.
-search_cbk(query="yaptırım")
+mevzuat_ara(mevzuat_no="7262", mevzuat_tur_list=["KANUN"])  → Kitle İmha Silahlarının Yayılmasının Finansmanı K.
+mevzuat_ara(mevzuat_adi="MASAK", mevzuat_tur_list=["KKY"])
+mevzuat_ara(mevzuat_no="5549", mevzuat_tur_list=["KANUN"])  → MASAK Suç Gelirlerinin Aklanması K.
+mevzuat_ara(phrase="yaptırım", mevzuat_tur_list=["CB_KARARNAME"])
 ```
 
 Yabancı yaptırım rejimleri (OFAC, AB, BM, UK) Mevzuat MCP'de YOK — doğrudan resmi sitelerden veya screening service'ten çek.

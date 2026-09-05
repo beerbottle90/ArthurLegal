@@ -141,8 +141,8 @@ Argümansız çağrılırsa sor:
 
 ## --check-integrations
 
-1. **Yarg MCP** — test: `search_gib_decisions(arananKelime="transfer fiyatlandırma")` → cevap geliyor mu?
-2. **Mevzuat MCP** — test: `search_mevzuat(mevzuat_no="213", mevzuat_tur="KANUN")` → VUK dönüyor mu?
+1. **Yarg MCP** — test: `kurum_karari_ara(kurum="gib", keywords="transfer fiyatlandırma")` → cevap geliyor mu?
+2. **Mevzuat MCP** — test: `mevzuat_ara(mevzuat_no="213", mevzuat_tur_list=["KANUN"])` → VUK dönüyor mu?
 3. **iManage** — test
 4. **(SAP ERP)** — bağlantı raporu
 
@@ -193,8 +193,9 @@ Sor:
 ### 2. Yarg MCP — benzer özelge tarama
 
 ```
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="<konu anahtar kelimeleri>"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="<konu anahtar kelimeleri>"
 )
 ```
 
@@ -252,10 +253,10 @@ Ekler:
 Eğer özelge red gelirse dava açılır → şimdiden Danıştay eğilimini bil:
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<ilgili>",
-  arananKelime="<konu> mukteza GİB",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<konu> mukteza GİB",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -430,22 +431,25 @@ user-invocable: true
 
 ```
 # KDV iade reddi davaları
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="3. Daire",
-  arananKelime="KDV iade ihracat petrokimya bekletme",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D3",
+  phrase="+KDV +iade +ihracat +petrokimya +bekletme",
+  kararTarihiStart="2022-01-01"
 )
 
 # ÖTV mahsubu davaları
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="3. Daire",
-  arananKelime="ÖTV mahsup akaryakıt ihracat istisna",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D3",
+  phrase="+ÖTV +mahsup +akaryakıt +ihracat +istisna",
+  kararTarihiStart="2022-01-01"
 )
 
 # GİB özelgeleri
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="KDV iade petrokimya"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="KDV iade petrokimya"
 )
 ```
 
@@ -630,20 +634,21 @@ Davacıya **otomatik tahsil tehiri** sağlamaz. Talep edilmesi şart. Şartlar:
 ### 4. Yarg MCP — emsal Danıştay kararları
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<seçilen daire>",
-  arananKelime="<dava konusu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<dava konusu>",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 Ayrıca **VDDK kararları** (birleştirici):
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="Vergi Dava Daireleri Kurulu",
-  arananKelime="<konu>",
-  baslangicTarihi="2020-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="VDDK",
+  phrase="<konu>",
+  kararTarihiStart="2020-01-01"
 )
 ```
 
@@ -788,14 +793,16 @@ KVK m. 13/3 ve OECD TPG:
 ### 4. Yarg MCP — GİB özelge + Danıştay emsali
 
 ```
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="transfer fiyatlandırma ham petrol ilişkili"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="transfer fiyatlandırma ham petrol ilişkili"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="4. Daire",  # Kurumlar vergisi
-  arananKelime="örtülü kazanç dağıtımı transfer pricing",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D4",  # Kurumlar vergisi
+  phrase="+örtülü +kazanç +dağıtımı +transfer +pricing",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -967,10 +974,10 @@ user-invocable: true
 **Kazanma olasılığı tahmini:** Yarg MCP'den emsal kararlara bakarak.
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<ilgili>",
-  arananKelime="<konu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<konu>",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
@@ -1170,14 +1177,15 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 ### Yarg MCP — emsal arama
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="<ilgili>",
-  arananKelime="<tespitin konusu>",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  birimAdi="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  phrase="<tespitin konusu>",
+  kararTarihiStart="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_gib_ozelge(
-  arananKelime="<tespitin konusu>"
+kurum_karari_ara(
+  kurum="gib",
+  keywords="<tespitin konusu>"
 )
 ```
 

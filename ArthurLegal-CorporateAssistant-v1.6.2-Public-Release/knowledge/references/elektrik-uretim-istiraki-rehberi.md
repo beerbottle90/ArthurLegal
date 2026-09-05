@@ -134,10 +134,10 @@
 ## Mevzuat MCP entegrasyonu
 
 ```
-search_kanun(mevzuat_adi="6446")  → Elektrik Piyasası K.
-search_kurum_yonetmelik(kurum="Enerji Piyasası")  → EPDK Yönetmelikler
-search_teblig(query="elektrik üretim lisans devir")
-search_cbk(query="enerji yatırımı")
+mevzuat_ara(mevzuat_no="6446", mevzuat_tur_list=["KANUN"])  → Elektrik Piyasası K.
+mevzuat_ara(mevzuat_adi="Enerji Piyasası", mevzuat_tur_list=["KKY"])  → EPDK Yönetmelikler
+mevzuat_ara(phrase="elektrik üretim lisans devir", mevzuat_tur_list=["TEBLIGLER"])
+mevzuat_ara(phrase="enerji yatırımı", mevzuat_tur_list=["CB_KARARNAME"])
 ```
 
 EPDK Kurul kararları: https://www.epdk.gov.tr/ (kurum sitesi — MCP'de değil)

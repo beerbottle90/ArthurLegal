@@ -100,23 +100,25 @@ Yönetmeliğin Ek-1'inde tehlikeli madde miktarı eşiklerine göre:
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_adi="Büyük Endüstriyel Kaza", mevzuat_tur="YONETMELIK")
-search_mevzuat(mevzuat_no="2872", mevzuat_tur="KANUN")  # Çevre K. m. 10/A
+mevzuat_ara(mevzuat_adi="Büyük Endüstriyel Kaza", mevzuat_tur_list=["YONETMELIK"])
+mevzuat_ara(mevzuat_no="2872", mevzuat_tur_list=["KANUN"])  # Çevre K. m. 10/A
 ```
 
 ## Yarg MCP — emsal kararlar
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="14. Daire",
-  arananKelime="Seveso büyük endüstriyel kaza yönetmeliği rafineri",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D14",
+  phrase="+Seveso +büyük +endüstriyel +kaza +yönetmeliği +rafineri",
+  kararTarihiStart="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="12. Ceza Dairesi",
-  arananKelime="büyük endüstriyel kaza önleme yönetmeliği taksir",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  birimAdi="C12",
+  phrase="+büyük +endüstriyel +kaza +önleme +yönetmeliği +taksir",
+  kararTarihiStart="2022-01-01"
 )
 ```
 

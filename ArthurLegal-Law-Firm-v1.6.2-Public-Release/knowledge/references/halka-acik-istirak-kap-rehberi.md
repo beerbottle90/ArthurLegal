@@ -169,11 +169,11 @@ Her [Halka Açık İştirak]-ilgili çıktıda **mutlaka** şu satır olmalı:
 ## Mevzuat MCP entegrasyonu
 
 ```
-search_kanun(mevzuat_adi="6362")  → SPK Kanunu
-search_kurum_yonetmelik(kurum="Sermaye Piyasası")
-search_teblig(query="özel durum açıklama")
-search_teblig(query="içsel bilgi")
-search_teblig(query="önemli işlemler")
+mevzuat_ara(mevzuat_no="6362", mevzuat_tur_list=["KANUN"])  → SPK Kanunu
+mevzuat_ara(mevzuat_adi="Sermaye Piyasası", mevzuat_tur_list=["KKY"])
+mevzuat_ara(phrase="özel durum açıklama", mevzuat_tur_list=["TEBLIGLER"])
+mevzuat_ara(phrase="içsel bilgi", mevzuat_tur_list=["TEBLIGLER"])
+mevzuat_ara(phrase="önemli işlemler", mevzuat_tur_list=["TEBLIGLER"])
 ```
 
 KAP açıklamaları için: https://www.kap.org.tr/tr/sirket-bilgileri/ozet/2400-[halka-acik-istirak]-petrokimya-holding-a-s

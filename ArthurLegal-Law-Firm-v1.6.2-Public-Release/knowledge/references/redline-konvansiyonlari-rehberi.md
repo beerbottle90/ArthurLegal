@@ -1,53 +1,53 @@
-> **Durum:** ✅ Konvansiyon rehberi (erişim gerektirmez). `contract-drafting` eklentisinin (redline-contract, belge-turet, versiyon-karsilastir, tadil-protokol) ev redline & comment standardı. [Şirket/Büro adı]
+> **Durum:** Konvansiyon rehberi (erişim gerektirmez). `contract-drafting` eklentisinin (redline-contract, belge-turet, versiyon-karsilastir, tadil-protokol) ev redline ve yorum standardı. Sistem talimatlarının 1. ve 3. bölümleriyle uyumludur; çelişki hâlinde sistem talimatı üstündür. [Şirket/Büro adı]
 
-# Redline & Comment Konvansiyonları — Pratik Rehber
+# Redline ve Yorum Konvansiyonları: Pratik Rehber
 
-## 1. Ortam gerçeği
+## 1. Ortam ve çıktı biçimi
 
-- **Claude.ai Projects:** native Word tracked-changes (.docx OOXML) ÜRETİLEMEZ → **markdown redline görünümü** kullanılır.
-- **Claude Code (VS Code):** `python-docx` ile gerçek `w:ins`/`w:del` (yazar/tarih) + `w:comment` üretilip `.docx` döndürülebilir.
+1. Dosya üretimi açık olan her ortamda (Claude.ai'da dosya oluşturma, Claude Code) redline gerçek izlenen değişiklik içeren `.docx` olarak verilir: `w:ins` ve `w:del` öğeleri, `w:author="ArthurLegal"`, tarih o günün tarihi; yorumlar `w:comment` ile `w:author="ArthurLegal"`, `w:initials="AL"`. python-docx ile `core_properties.author` ve `core_properties.last_modified_by` de `ArthurLegal` olur.
+2. Dosya üretimi kapalıysa redline metin olarak verilir: silinen kısım `[silinen: ...]`, eklenen kısım `[eklenen: ...]`. Üstü çizili, kalın ve renk kullanılmaz. Kullanıcıya "Word'de Değişiklikleri İzle açıkken uygulayın" notu düşülür.
+3. Dosya adı alt çizgili ve Türkçe karaktersizdir: `hizmet_sozlesmesi_redline_05092026.docx`.
+4. Kullanıcının yüklediği belgede var olan biçim korunur; değiştirilen bölümler belgenin kendi biçimini izler.
 
-## 2. Redline işaretleme (markdown)
+## 2. Yorum yapısı (her zaman fallback ile)
 
-| Eylem | Gösterim |
-|---|---|
-| Silinen | `~~silinen metin~~` |
-| Eklenen | `**eklenen metin**` (veya `__altı çizili__`) |
-| Alternatif (düz) | `[-silinen-]` / `[+eklenen+]` |
-| Comment | `> 💬 [Av. — severity] gerekçe + fallback` |
+Yorum tek paragraf düz metindir; emoji, tire, başlık ve kalın kullanılmaz. Sıra sabittir: önem derecesi kelimeyle, sorun, tercih edilen pozisyon, kabul edilmezse asgari pozisyon.
 
-## 3. Severity (tutarlı, üç eksen)
-- 🔴 **Bloklayıcı** — imzalanmaz · 🟠 **Yüksek** — müzakere şart · 🟡 **Orta** — fix · 🟢 **Düşük** — not.
-- Üst incelemenin 🔴'sı sessizce düşürülmez.
-
-## 4. Sessiz fix vs comment
-- **Sessiz:** yazım, atıf/numara, tutarlılık, tanım hizalama.
-- **Comment ZORUNLU:** hukuki/ticari pozisyon değişikliği, risk dağılımı, tutar/süre/eşik, sorumluluk, fesih, hukuk/yetki.
-
-## 5. Comment yapısı (her zaman fallback)
 ```
-> 💬 [Av. — 🟠] Sorumluluk tavanı %50'ye çekilmiş; müvekkil için risk.
->     Tercih: tavan = sözleşme bedeli (kasıt/ağır kusur hariç tutulur).
->     Kabul edilmezse asgari: %75 + can/mal güvenliği istisnası.
+Yüksek: Sorumluluk tavanı sözleşme bedelinin yüzde 50'sine çekilmiş; müvekkil için risk. Tercih: tavan sözleşme bedeline eşit olsun, kasıt ve ağır kusur hariç tutulsun. Kabul edilmezse asgari: yüzde 75 ve can ve mal güvenliği istisnası.
 ```
 
-## 6. Standart kloz seti (her enerji sözleşmesinde kontrol)
-- Mücbir sebep + aşırı ifa güçlüğü (TBK m.136/138) — şebeke kesintisi, mevzuat değişikliği, kuraklık (HES)
-- Sınırlı sorumluluk + cezai şart (TBK m.179-182; fahiş ceza tenkisi)
-- Yaptırım & uyum (OFAC/AB/BM/OFSI + uluslararası finans kuruluşu yasaklı listeleri) — `yaptirim-tarama-rehberi.md`
-- KVKK (6698) · gizlilik · fikri mülkiyet
-- Uyuşmazlık & uygulanacak hukuk (Türk mah. vs ICC/LCIA) — `governing-law-review`
-- EPDK lisans/pay devri ön-onayı (kontrol değişikliği)
-- Ödeme/teminat (akreditif, teminat mektubu) · damga vergisi/gross-up
-- Devir/temlik · tadil · fesih · süre/yenileme · rekabet klozu (`rekabet-hukuku-rehberi.md`)
+## 3. Önem derecesi (dört kademe, kelimeyle)
 
-## 7. Üst başlık / onay
+Bloklayıcı: imzalanmaz. Yüksek: müzakere şart. Orta: düzeltme gerekli, işlemi bozmaz. Düşük: bilgi notu. Üst incelemenin Bloklayıcı dediği bulgu alt incelemede sessizce düşürülmez. Renkli daire veya simge kullanılmaz; knowledge dosyalarındaki renk kodları bu kelimelere çevrilir.
+
+## 4. Sessiz düzeltme ve yorum ayrımı
+
+Sessiz düzeltilir: yazım, atıf ve numara, tutarlılık, tanım hizalama. Yorum zorunludur: hukuki veya ticari pozisyon değişikliği, risk dağılımı, tutar, süre ve eşik, sorumluluk, fesih, uygulanacak hukuk ve yetki.
+
+## 5. Standart kloz seti (her enerji sözleşmesinde kontrol)
+
+1. Mücbir sebep ve aşırı ifa güçlüğü (TBK m. 136 ve 138): şebeke kesintisi, mevzuat değişikliği, kuraklık (HES).
+2. Sınırlı sorumluluk ve cezai şart (TBK m. 179 ile 182; fahiş cezanın tenkisi).
+3. Yaptırım ve uyum (OFAC, AB, BM, OFSI ve uluslararası finans kuruluşu yasaklı listeleri): `yaptirim-tarama-rehberi.md`.
+4. KVKK (6698), gizlilik, fikri mülkiyet.
+5. Uyuşmazlık ve uygulanacak hukuk (Türk mahkemeleri, ICC, LCIA): `governing-law-review`.
+6. EPDK lisans ve pay devri ön onayı (kontrol değişikliği).
+7. Ödeme ve teminat (akreditif, teminat mektubu), damga vergisi ve gross-up.
+8. Devir ve temlik, tadil, fesih, süre ve yenileme, rekabet klozu: `rekabet-hukuku-rehberi.md`.
+
+## 6. Üst başlık ve onay
+
+Her çıktının ilk satırı:
+
 ```
-TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ([Baş Hukuk Müşaviri]) ONAYI ALINMADAN İMZALANMAZ
+TASLAK. DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ([Baş Hukuk Müşaviri]) ONAYI ALINMADAN İMZALANMAZ.
 ```
-Her çıktı taslaktır; imza öncesi onay zinciri ([Baş Hukuk Müşaviri] → yüksek tutar/stratejik: [Genel Müdür] → SHA reserved matter: [Yönetim Kurulu] + kredi veren/ortak kuruluş onayı).
+
+Her çıktı taslaktır; imza öncesi onay zinciri: [Baş Hukuk Müşaviri], yüksek tutar veya stratejik işlemde [Genel Müdür], SHA reserved matter'da [Yönetim Kurulu] ve kredi veren veya ortak kuruluş onayı.
 
 ## Bağlantılı referanslar
-`kanun-kisaltmalar.md` · `rekabet-hukuku-rehberi.md` · `yaptirim-tarama-rehberi.md` · `kvkk-m11-cevap-sablonu.md`
 
-*Son güncelleme: 25.06.2026 — contract-drafting eklentisi için.*
+`kanun-kisaltmalar.md`, `rekabet-hukuku-rehberi.md`, `yaptirim-tarama-rehberi.md`, `kvkk-m11-cevap-sablonu.md`
+
+*Son güncelleme: 05.09.2026. Yazar, yorum ve başlık kuralları sistem talimatlarıyla hizalandı.*

@@ -17,7 +17,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
 | **Araç öneki** | `scholar_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (tüm upstream'ler public) |
@@ -26,8 +26,8 @@
 | **Mimari** | Bağımlılıksız (yalnız Python stdlib); on public API'yi federe eder |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
-URL → auth "None". Araç isim prefiksi connector adına göre üretilir — prefiksi
-sabit varsayma, base isimleri kullan.
+URL → auth "None". Araç önekleri toplayıcı tarafından sabitlenmiştir (`scholar_`);
+connector adına göre değişmez.
 
 ---
 
@@ -162,14 +162,14 @@ Adil karşılaştırma için `scholar_compare_jurisdictions`'ı tek İngilizce s
 ## 4. Tipik kullanım
 
 ```
-search_legal_scholarship("energy charter treaty", peer_reviewed_only=true)
-search_legal_scholarship("stabilization clause")
-search_legal_scholarship("mücbir sebep uyarlama", language="tr")   # → DergiPark
-compare_jurisdictions("force majeure", ["FR","BR","ID","TR"])
-search_legal_scholarship("arbitraje de inversiones", jurisdiction="ES")
-search_legal_scholarship("oil law", jurisdiction="AZ")   # DOAJ'da yok → OpenAlex
-get_scholarship_fulltext("scielo", "<PID>", collection="scl")
-resolve_doi("10.1093/jiel/jgaa002")
+scholar_search_legal_scholarship("energy charter treaty", peer_reviewed_only=true)
+scholar_search_legal_scholarship("stabilization clause")
+scholar_search_legal_scholarship("mücbir sebep uyarlama", language="tr")   # → DergiPark
+scholar_compare_jurisdictions("force majeure", ["FR","BR","ID","TR"])
+scholar_search_legal_scholarship("arbitraje de inversiones", jurisdiction="ES")
+scholar_search_legal_scholarship("oil law", jurisdiction="AZ")   # DOAJ'da yok → OpenAlex
+scholar_get_scholarship_fulltext("scielo", "<PID>", collection="scl")
+scholar_resolve_doi("10.1093/jiel/jgaa002")
 ```
 
 ---

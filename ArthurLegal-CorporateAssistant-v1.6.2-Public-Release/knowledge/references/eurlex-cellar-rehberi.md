@@ -1,8 +1,8 @@
 # EUR-Lex Cellar — Kullanım Rehberi (SPARQL + REST / WebFetch yöntemi)
 
-> **MCP/connector durumu:** Varsayılan erişim doğrudan `WebFetch`/HTTP GET iledir — MCP gerekmez.
-> Opsiyonel self-hosted MCP seçeneği için aşağıdaki "MCP seçeneği" bölümüne bakın; yalnızca
-> orada sayılan koşullar altında kullanılır.
+> **MCP durumu:** Birincil yol ArthurLegal MCP `eu_` araçlarıdır (aşağıdaki "ArthurLegal MCP"
+> bölümü); CELLAR'ı sunucu tarafında sorgular. Aşağıdaki SPARQL ve WebFetch prosedürü yedek
+> rotadır ve kimlik şemasını belgeler.
 >
 > **Durum:** ✅ Açık erişim — **API anahtarı gerekmez**, kayıt gerekmez. Birincil yargı
 > çevresi Türkiye'dir; bu kaynak yalnızca AB hukuku (AB tüzük/direktifleri, CJEU içtihadı,

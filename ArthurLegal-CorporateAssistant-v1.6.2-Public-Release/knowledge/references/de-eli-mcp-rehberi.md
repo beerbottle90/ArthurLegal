@@ -2,7 +2,7 @@
 
 > ✅ **Custom MCP server VAR (v1.5.0).** Alman mevzuatı, içtihadı ve yasama
 > belgeleri artık WebFetch kazımasıyla değil, dört resmî/kamusal üst kaynağı tek
-> uçta birleştiren bir MCP sunucusu üzerinden okunuyor. **14 araç.**
+> uçta birleştiren bir MCP sunucusu üzerinden okunuyor. **15 araç.**
 >
 > **BİRİNCİL kaynaktır** — mevzuat ve içtihat için. Buradan dönen bir kanun ya da
 > karar hukukun kendisidir ve bir sonucun dayanağı olabilir.
@@ -18,12 +18,12 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
 | **Araç öneki** | `de_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream'lerin hepsi public) |
 | **Sunucu kaynağı** | `github.com/beerbottle90/de-eli-mcp` |
-| **Doğrulanmış sürüm** | `de-eli-mcp` v3.4.6 — 14 araç |
+| **Doğrulanmış sürüm** | `de-eli-mcp` v3.4.6 — 15 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → MCP
 endpoint URL'sini gir → auth "None". Araçlar bağlantı sonrası otomatik keşfedilir.
@@ -32,7 +32,7 @@ göre değişmez.
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`de_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on sunucuda `get_act` beş ayrı şey demek, önek doğru
+> değişmez — alttaki on dört sunucuda `get_act` beş ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -49,7 +49,7 @@ göre değişmez.
 
 ---
 
-## 2. Araçlar (14) — bağlanınca otomatik keşfedilir
+## 2. Araçlar (15) — bağlanınca otomatik keşfedilir
 
 **Mevzuat (NeuRIS)**
 
@@ -60,6 +60,7 @@ göre değişmez.
 | `de_get_text` | Aktın tam metni (`html` veya LegalDocML.de `xml`) |
 | `de_list_publishers` | Yayın organları (BGBl I/II, Bundesanzeiger) |
 | `de_recent_changes` | Belirli tarihten sonra yayımlanan aktlar, yeniden eskiye |
+| `de_coverage` | NeuRIS mevzuat kümesinin kapsamı ve bilinen boşlukları; bir aktın bulunmaması yokluğunun kanıtı değildir |
 
 **İçtihat — yedi federal yüksek mahkeme (RII)**
 

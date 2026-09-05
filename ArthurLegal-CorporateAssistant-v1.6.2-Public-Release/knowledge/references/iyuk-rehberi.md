@@ -78,8 +78,8 @@ Bunların dışındaki **tüm bireysel idari işlemler** İdare Mahkemesi'nde ba
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="2577", mevzuat_tur="KANUN")  # İYUK
-search_mevzuat(mevzuat_no="2575", mevzuat_tur="KANUN")  # Danıştay K.
+mevzuat_ara(mevzuat_no="2577", mevzuat_tur_list=["KANUN"])  # İYUK
+mevzuat_ara(mevzuat_no="2575", mevzuat_tur_list=["KANUN"])  # Danıştay K.
 ```
 
 ## Bağlantılı

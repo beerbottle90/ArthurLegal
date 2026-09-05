@@ -1,13 +1,14 @@
 # UK Legislation MCP (legislation-mcp-ts) — Kullanım Rehberi (MCP yöntemi)
 
-> ✅ **Resmî MCP server VAR** — `legislation-mcp-ts`, legislation.gov.uk'nin
-> işletmecisi **The National Archives** tarafından yayımlanan resmî MCP
-> sunucusudur. 14 yargı çevresi içinde kaynağın **kendi operatörünün** MCP
-> sunduğu ilk örnek budur.
+> **Birincil yol ArthurLegal MCP `uk_` araçlarıdır** (aşağıdaki "ArthurLegal MCP"
+> bölümü): `uk_search_legislation`, `uk_get_legislation`, `uk_get_section`,
+> `uk_get_contents`, `uk_get_effects`. The National Archives'ın kendi
+> `legislation-mcp-ts` sunucusu vardır ama ürün politikası gereği yalnız
+> loopback'e bağlanır; barındırılamaz. Bu yüzden aynı kamuya açık veriye sitenin
+> açık XML ve Atom uçlarından gidilir. Bu rehberin geri kalanı TNA sunucusunun
+> araç yüzeyini belgeler; örneklerdeki araç adları `uk_` karşılıklarıdır.
 >
-> **Durum:** ✅ Açık erişim — çekirdek araçlar için **API anahtarı gerekmez**
-> (yalnızca opsiyonel Research API / semantik arama katmanları kimlik ister).
-> Self-hosted, **loopback stdio** süreci olarak çalıştırılır.
+> **Durum:** Açık erişim, API anahtarı gerekmez.
 >
 > Birincil yargı çevresi Türkiye'dir; bu kaynak yalnızca İngiliz hukuku temas
 > eden işlerde kullanılır (bkz. `karsilastirmali-hukuk-rehberi.md`). Bu rehber,
@@ -84,16 +85,19 @@ yanıtlar. Detay bağlam: `karsilastirmali-hukuk-rehberi.md`.
 **Örnek 1 — Arbitration Act 1996'nın güncel durumu (tahkim klozu incelemesi):**
 
 ```
-search_legislation:
-  q: "arbitration"
+uk_search_legislation:
+  query: "arbitration"
   type: "ukpga"
   year: 1996
 → Arbitration Act 1996 (ukpga/1996/23) bulunur
 
-get_legislation_metadata: ukpga/1996/23
-→ yürürlük durumu + "changes not yet applied" listesi
+uk_get_legislation: ukpga/1996/23
+→ statü (revised / as enacted), metnin güncel olduğu tarih (text_current_to), extent
 
-get_legislation_fragment: ukpga/1996/23, "section/9"
+uk_get_effects: ukpga/1996/23, unapplied_only: true
+→ metne henüz işlenmemiş tadiller; complete_scan false ise sayı tabandır
+
+uk_get_section: ukpga/1996/23, section 9
 → s.9 (stay of legal proceedings) metni
 ```
 
@@ -105,13 +109,11 @@ README'den doğrulanmalı. WebFetch karşılığı (yedek rota, doğrulanmış U
 **Örnek 2 — UCTA 1977 tadil taraması (governing-law risk notu):**
 
 ```
-search_effects:
-  target: ukpga/1977/50
-  applied: false
+uk_get_effects: ukpga/1977/50, unapplied_only: true
 → UCTA 1977'ye işaret eden, henüz metne işlenmemiş tadiller
 
-get_legislation: ukpga/1977/50 (format: text)
-→ konsolide tam metin; işlenmemiş tadil varsa çıktıda [review] flag'i
+uk_get_legislation: ukpga/1977/50
+→ konsolide metin ve text_current_to; işlenmemiş tadil varsa çıktıda [review] flag'i
 ```
 
 Eski rotadaki `/data.rdf` sürüm-zinciri incelemesinin araç karşılığı budur;
@@ -147,7 +149,7 @@ Metin oturumda fiilen bu MCP (veya WebFetch yedeği) ile çekildiyse:
   kısa `OGL v3.0` etiketi + bu ibarenin belge sonunda bir kez verilmesi) taşınır.
 - Çekilmemiş bir İngiliz statüsü `[UK Legislation]` etiketi alamaz →
   `[model bilgisi — doğrulayın]`.
-- `get_legislation_metadata` "changes not yet applied" veriyorsa atıfın yanına
+- `uk_get_effects` işlenmemiş tadil veriyorsa atıfın yanına
   `[review]` eklenir; deneysel semantik arama sonuçları tek başına atıf
   dayanağı olamaz — tam metin çekimiyle teyit edilir.
 
@@ -188,7 +190,7 @@ atıfta OGL v3.0 ibaresi, (3) sürüm sabitleme (release yoksa commit).
 `search_effects` ile tadil takibi. Eski rotada kalanlar: UK **içtihadı**
 (Open Justice Licence sert kapısı nedeniyle belge-başına WebFetch) ve RDF
 sürüm-zinciri ayrıntısı (`uk-legislation-rehberi.md`). Entegrasyonda yeniden
-doğrulanacaklar: güncel araç listesi, `get_legislation` parametre adları,
+doğrulanacaklar: güncel araç listesi, `uk_get_legislation` parametre adları,
 release/commit durumu.
 
 ---

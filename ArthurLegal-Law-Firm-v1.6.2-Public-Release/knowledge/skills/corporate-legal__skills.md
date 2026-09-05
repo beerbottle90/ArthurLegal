@@ -702,7 +702,7 @@ If a CLAUDE.md exists at the old cache path `~/.claude/plugins/cache/claude-for-
 
 ## Check for the shared company profile
 
-Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
+Look for `~/.claude/plugins/config/claude-for-legal/firm-profile.md`.
 
 - **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
 - **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/firm-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
@@ -1184,7 +1184,7 @@ and without hand-editing YAML.
 
 1. **Read the config.** Read
    `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/company-profile.md` one
+   (and `~/.claude/plugins/config/claude-for-legal/firm-profile.md` one
    level up). If the plugin config does not exist or still contains
    `[PLACEHOLDER]` values, say:
 
@@ -1196,7 +1196,7 @@ and without hand-editing YAML.
 
    - **Company / who you are** — name, industry, jurisdictions, stage, public
      vs. private, practice setting *(shared across all 12 plugins — changes
-     flow through `company-profile.md`)*
+     flow through `firm-profile.md`)*
    - **Active modules** — which of M&A, Board & Secretary, Public Company,
      Entity Management are on. Turning a module on/off changes which skills
      prompt for setup.
@@ -1239,7 +1239,7 @@ and without hand-editing YAML.
 
 5. **For shared-profile changes** (company name, industry, jurisdictions,
    practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/company-profile.md` and note:
+   `~/.claude/plugins/config/claude-for-legal/firm-profile.md` and note:
 
    > This change affects all 12 plugins — any plugin that reads your
    > jurisdiction footprint now sees [new value].

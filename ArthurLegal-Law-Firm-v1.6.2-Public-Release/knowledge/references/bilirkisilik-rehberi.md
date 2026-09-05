@@ -169,17 +169,17 @@ Tarafın **kendi seçtiği uzmandan** aldığı **bilimsel mütalaa**. Bilirkiş
 
 ```
 # 6754 Bilirkişilik Kanunu
-search_mevzuat(mevzuat_no="6754", mevzuat_tur="KANUN")
+mevzuat_ara(mevzuat_no="6754", mevzuat_tur_list=["KANUN"])
 # HMK bilirkişi + uzman görüşü
-search_mevzuat(mevzuat_no="6100", mevzuat_tur="KANUN")
-search_within_mevzuat(mevzuatId=<HMK id>, phrase="bilirkişi")     # m. 266-287
-search_within_mevzuat(mevzuatId=<HMK id>, phrase="uzman görüşü")  # m. 293
+mevzuat_ara(mevzuat_no="6100", mevzuat_tur_list=["KANUN"])
+mevzuat_icinde_ara(mevzuat_id=<HMK id>, query="bilirkişi")     # m. 266-287
+mevzuat_icinde_ara(mevzuat_id=<HMK id>, query="uzman görüşü")  # m. 293
 # CMK bilirkişi
-search_mevzuat(mevzuat_no="5271", mevzuat_tur="KANUN")
-search_within_mevzuat(mevzuatId=<CMK id>, phrase="bilirkişi")     # m. 62-73
+mevzuat_ara(mevzuat_no="5271", mevzuat_tur_list=["KANUN"])
+mevzuat_icinde_ara(mevzuat_id=<CMK id>, query="bilirkişi")     # m. 62-73
 # Bilirkişilik Yönetmeliği / Ücret Tarifesi
-search_mevzuat(mevzuat_adi="Bilirkişilik Yönetmeliği", mevzuat_tur="YONETMELIK")
-search_mevzuat(mevzuat_adi="Bilirkişilik Ücret Tarifesi")
+mevzuat_ara(mevzuat_adi="Bilirkişilik Yönetmeliği", mevzuat_tur_list=["YONETMELIK"])
+mevzuat_ara(mevzuat_adi="Bilirkişilik Ücret Tarifesi")
 ```
 
 Atıf: `[Mevzuat MCP — 6754 s. K. m. XX / HMK m. XXX — GG.AA.YYYY]`
@@ -190,20 +190,21 @@ Atıf: `[Mevzuat MCP — 6754 s. K. m. XX / HMK m. XXX — GG.AA.YYYY]`
 
 ```
 # Hukuki nitelendirme yapan bilirkişi raporu → bozma
-mcp__claude_ai_Yargi_MCP__search_bedesten_unified(
-  arananKelime="bilirkişi raporu hukuki nitelendirme HMK 266 görev sınırı",
-  daire="Hukuk Genel Kurulu",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+bilirkişi +raporu +hukuki +nitelendirme +HMK +266 +görev +sınırı",
+  birimAdi="HGK",
+  kararTarihiStart="2022-01-01"
 )
 # Rapora itiraz / ek rapor / m. 281
-mcp__claude_ai_Yargi_MCP__search_bedesten_unified(
-  arananKelime="bilirkişi raporuna itiraz ek rapor yeni bilirkişi HMK 281",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  phrase="+bilirkişi +raporuna +itiraz +ek +rapor +yeni +bilirkişi +HMK +281",
+  kararTarihiStart="2022-01-01"
 )
 # Uzman görüşü m. 293
-mcp__claude_ai_Yargi_MCP__search_bedesten_unified(
-  arananKelime="uzman görüşü HMK 293 taraf delili bilimsel mütalaa",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  phrase="+uzman +görüşü +HMK +293 +taraf +delili +bilimsel +mütalaa",
+  kararTarihiStart="2022-01-01"
 )
 ```
 

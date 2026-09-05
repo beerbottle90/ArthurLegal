@@ -17,7 +17,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
 | **Araç öneki** | `az_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream public) |
@@ -31,7 +31,7 @@ göre değişmez.
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`az_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on sunucuda `get_act` beş ayrı şey demek, önek doğru
+> değişmez — alttaki on sunucuda `az_get_act` beş ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -58,14 +58,14 @@ yürürlükteymiş gibi göstermek. `az_search_acts` bunu sana söyleyemez; **ya
 
 Zorunlu sıra:
 
-1. `search_acts(query, scope="title", status="in_force")` ile ara.
+1. `az_search_acts(query, scope="title", status="in_force")` ile ara.
    Başlık araması zayıf dönerse `scope="text"`e genişlet (daha geniş, daha yavaş).
-2. Dönen `id` ile **`get_act(id)`** çağır ve `statusName` alanını oku:
+2. Dönen `id` ile **`az_get_act(id)`** çağır ve `statusName` alanını oku:
    - **`Qüvvədədir`** → yürürlükte.
    - **`Ləğv olunmuş`** → **yürürlükten kalkmış — DAYANAK YAPMA.** Ardıl aktı ara.
    - Yürürlük tarihini de kontrol et: bir akt yürürlükte olup **henüz
      uygulanabilir olmayabilir**.
-3. Ancak bundan sonra `get_act_fulltext(id)` ile lafzı çek.
+3. Ancak bundan sonra `az_get_act_fulltext(id)` ile lafzı çek.
    Mecelleler büyüktür (Mülki Məcəllə ~1,96M karakter) → hepsini birden çekme,
    `offset` ile sayfala.
 4. **Fiilen okuduğun maddeyi alıntıla.** Başlıktan parafraz yapma.
@@ -98,11 +98,11 @@ gerçek terimi tercih et.
 ## 4. Tipik kullanım
 
 ```
-count_acts("neft və qaz", status="in_force")        # konuyu boyutla
-search_acts("Əmək Məcəlləsi", scope="title", status="in_force")
-get_act(<id>)                                        # ← STATÜ burada
-get_act_fulltext(<id>, offset=0, max_chars=20000)    # sayfalı lafız
-search_acts("transfer qiymətləri", scope="text")     # başlık zayıfsa tam metin
+az_count_acts("neft və qaz", status="in_force")        # konuyu boyutla
+az_search_acts("Əmək Məcəlləsi", scope="title", status="in_force")
+az_get_act(<id>)                                        # ← STATÜ burada
+az_get_act_fulltext(<id>, offset=0, max_chars=20000)    # sayfalı lafız
+az_search_acts("transfer qiymətləri", scope="text")     # başlık zayıfsa tam metin
 ```
 
 **Şirket bağlamında hangi kanunlar?**
@@ -165,7 +165,7 @@ uyguladığına dayanıyorsa:
 ## 8. Sınırlamalar
 
 - **Yalnız mevzuat** — içtihat yok.
-- Host geçici tünelse efemeral; bağlantı koparsa WebFetch yedeğine düş.
+- Adres kalıcıdır (`arthurlegal-mcp.fly.dev`); bağlantı koparsa WebFetch yedeğine düş.
 - Her araç çağrısı **100 saniyede iptal edilir** (platform limiti). Sorguyu dar
   tut: tek konu, makul `length`, tam metni `offset` ile sayfala. İptal olursa
   **aynı sorguyu tekrarlama** — böl ve hangi kısmın kapsanmadığını söyle.

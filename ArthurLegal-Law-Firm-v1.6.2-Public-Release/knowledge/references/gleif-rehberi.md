@@ -1,8 +1,8 @@
 # GLEIF LEI Verisi — Kullanım Rehberi (WebFetch yöntemi)
 
-> **Custom MCP server YOK** — GLEIF (Global Legal Entity Identifier Foundation) verisi
-> açık REST API üzerinden `WebFetch` ile kullanılır. Bu rehber, karşı-taraf kimlik
-> çözümleme (counterparty identity resolution) prosedürünü tanımlar.
+> **Birincil yol ArthurLegal MCP `gleif_` araçlarıdır** (bu rehberin sonundaki bölüm);
+> aşağıdaki WebFetch prosedürü yedek rotadır. Bu rehber karşı taraf kimlik çözümleme
+> (counterparty identity resolution) prosedürünü tanımlar.
 >
 > **Durum:** ✅ Açık erişim — API anahtarı gerekmez, kayıt gerekmez.
 >

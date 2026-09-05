@@ -1,4 +1,4 @@
-﻿# ÇED (Çevresel Etki Değerlendirmesi) Rehberi — [TESİS LOKASYONU] Bağlamı
+# ÇED (Çevresel Etki Değerlendirmesi) Rehberi — [TESİS LOKASYONU] Bağlamı
 
 > 2872 sayılı Çevre Kanunu + ÇED Yönetmeliği. [TESİS LOKASYONU] rafineri/petrokimya kompleksinin sürekli ÇED yenileme/değişiklik süreci yakıcı stres alanı.
 
@@ -68,7 +68,7 @@ Komisyon inceleme + bakanlık değerlendirme →
 
 **Mevzuat MCP doğrulama:**
 ```
-mcp__claude_ai_Mevzuat_MCP__search_within_mevzuat(mevzuat_id="103161", keyword="20/A")
+mevzuat_icinde_ara(mevzuat_id="<mevzuat_ara sonucundaki mevzuat_id>", query="20/A")
 ```
 
 ## Hukuki argümanlar (klasik)
@@ -89,24 +89,26 @@ mcp__claude_ai_Mevzuat_MCP__search_within_mevzuat(mevzuat_id="103161", keyword="
 ## Yarg MCP
 
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="14. Daire",
-  arananKelime="ÇED ret iptal",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D14",
+  phrase="+ÇED +ret +iptal",
+  kararTarihiStart="2022-01-01"
 )
 
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  daire="10. Daire",
-  arananKelime="çevre cezası 2872",
-  baslangicTarihi="2022-01-01"
+ictihat_ara(
+  court_types=["DANISTAYKARAR"],
+  birimAdi="D10",
+  phrase="+çevre +cezası +2872",
+  kararTarihiStart="2022-01-01"
 )
 ```
 
 ## Mevzuat MCP
 
 ```
-search_mevzuat(mevzuat_no="2872", mevzuat_tur="KANUN")  # Çevre K.
-search_mevzuat(mevzuat_adi="ÇED", mevzuat_tur="YONETMELIK")  # ÇED Yön.
+mevzuat_ara(mevzuat_no="2872", mevzuat_tur_list=["KANUN"])  # Çevre K.
+mevzuat_ara(mevzuat_adi="ÇED", mevzuat_tur_list=["YONETMELIK"])  # ÇED Yön.
 ```
 
 ## Bağlantılı

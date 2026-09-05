@@ -1,4 +1,4 @@
-﻿# İSG Davaları Rehberi – [İşletme Yeri] Rafineri & Petrokimya Bağlamı
+# İSG Davaları Rehberi – [İşletme Yeri] Rafineri & Petrokimya Bağlamı
 
 > [ŞİRKET ADI] için yakıcı dava kategorisi. [İşletme alanındaki] ölümlü/ciddi yaralanma kazalarında üçlü-paralel risk: cezai, tazminat, idari.
 
@@ -48,10 +48,11 @@ Bir İSG kazası genelde **3 paralel dava süreci** doğurur — her biri ayrı 
 
 Yarg MCP ile teyit:
 ```
-mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
-  arananKelime="taksirle öldürme iş kazası rafineri yönetici sorumluluk",
-  daire="12. Ceza Dairesi",  # iş kazası temyizi
-  baslangicTarihi="2023-01-01"
+ictihat_ara(
+  court_types=["YARGITAYKARARI"],
+  phrase="+taksirle +öldürme +iş +kazası +rafineri +yönetici +sorumluluk",
+  birimAdi="C12",  # iş kazası temyizi
+  kararTarihiStart="2023-01-01"
 )
 ```
 
@@ -153,12 +154,12 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 ## Mevzuat MCP — temel maddeler
 
 ```
-search_mevzuat(mevzuat_no="6331", mevzuat_tur="KANUN")  # İSG K.
-search_mevzuat(mevzuat_no="6098", mevzuat_tur="KANUN")  # TBK
-search_mevzuat(mevzuat_no="5237", mevzuat_tur="KANUN")  # TCK
-search_mevzuat(mevzuat_no="2872", mevzuat_tur="KANUN")  # Çevre K.
-search_mevzuat(mevzuat_no="4857", mevzuat_tur="KANUN")  # İş K.
-search_mevzuat(mevzuat_no="5510", mevzuat_tur="KANUN")  # SGK K.
+mevzuat_ara(mevzuat_no="6331", mevzuat_tur_list=["KANUN"])  # İSG K.
+mevzuat_ara(mevzuat_no="6098", mevzuat_tur_list=["KANUN"])  # TBK
+mevzuat_ara(mevzuat_no="5237", mevzuat_tur_list=["KANUN"])  # TCK
+mevzuat_ara(mevzuat_no="2872", mevzuat_tur_list=["KANUN"])  # Çevre K.
+mevzuat_ara(mevzuat_no="4857", mevzuat_tur_list=["KANUN"])  # İş K.
+mevzuat_ara(mevzuat_no="5510", mevzuat_tur_list=["KANUN"])  # SGK K.
 ```
 
 ## Bağlantılı

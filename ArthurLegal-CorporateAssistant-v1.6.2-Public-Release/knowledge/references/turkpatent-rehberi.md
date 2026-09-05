@@ -1,4 +1,4 @@
-﻿# TÜRKPATENT (Türk Patent ve Marka Kurumu) — Pratik Rehber
+# TÜRKPATENT (Türk Patent ve Marka Kurumu) — Pratik Rehber
 
 > [ŞİRKET ADI]/[HALKA AÇIK İŞTİRAK] marka + patent + tasarım portföyünün operasyonel kanalı. Online portallar, başvuru pratiği, arama araçları, itiraz süreçleri.
 
@@ -101,7 +101,7 @@
 
 ## Halka açık şirket ([HALKA AÇIK İŞTİRAK]) için ek dikkat
 
-- Yeni ürün markası lansmanı **KAP açıklama** tetikleyici mi? — `sirket-[petrokimya iştiraki]-kap-rehberi.md`
+- Yeni ürün markası lansmanı **KAP açıklama** tetikleyici mi? — `halka-acik-istirak-kap-rehberi.md`
 - İçsel bilgi listesi — Ar-Ge'den marka tesciline kadar her zincir
 - Marka tescili sonrası ticari sonuç (yatırımcı kararını etkileyebilir mi?)
 
@@ -109,5 +109,5 @@
 
 - [SMK rehberi](smk-rehberi.md) — yasal çerçeve
 - [UDRP / Domain rehberi](udrp-domain-rehberi.md) — siber-squatting
-- [[HALKA AÇIK İŞTİRAK] KAP rehberi](sirket-[petrokimya iştiraki]-kap-rehberi.md) — halka açık marka açıklama
+- [[HALKA AÇIK İŞTİRAK] KAP rehberi](halka-acik-istirak-kap-rehberi.md) — halka açık marka açıklama
 - ip-legal plugin overlay
