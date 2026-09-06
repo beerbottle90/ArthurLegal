@@ -47,13 +47,14 @@ Coverage is real but not uniform in depth, and the packages say which tier a
 source sits in rather than papering over the difference.
 
 - **Primary-source MCP** (verbatim norm text and case law): Türkiye · Switzerland ·
-  United States (case law) · Azerbaijan — via **TR Legal MCP** (15
-  institutions, 40+ tools), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
+  United States (case law) · Azerbaijan — via **ArthurLegal MCP** (Türkiye under the
+  `tr_` prefix: courts, legislation with gerekçe, Official Gazette, eight regulators and a
+  19,404-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
-  text and amendment history), and **ArthurLegal MCP** — ten jurisdictions behind
-  one connector (63 tools): Azerbaijan (official `api.e-qanun.az` with in-force
+  text and amendment history), and the same **ArthurLegal MCP** — fourteen more jurisdictions behind
+  the one connector (104 tools in total): Azerbaijan (official `api.e-qanun.az` with in-force
   status verification), Austria, Germany, the Netherlands, Poland, Spain, Finland
   and Ireland, plus scholarship and contract corpora. Every tool carries its
   jurisdiction as a prefix, because `get_act` means five different things across
@@ -67,8 +68,9 @@ source sits in rather than papering over the difference.
   Turkish law journals via DergiPark's official OAI-PMH endpoint ·
   **OpenSanctions** (REST API — sanctions / PEP screening).
 
-Türkiye currently has the deepest coverage — a dedicated MCP server spanning 15
-institutions and the largest share of the reference layer. Switzerland, the United
+Türkiye currently has the deepest coverage — its own backend inside ArthurLegal MCP
+and the largest share of the reference layer. Sources whose official endpoints do not
+answer reliably (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) are left out rather than stubbed. Switzerland, the United
 States and Azerbaijan follow with primary-source MCP access.
 
 **Design principle: no unsourced law**

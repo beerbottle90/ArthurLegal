@@ -4,8 +4,8 @@
 
 **Multi-jurisdiction legal AI assistant packages that run on [Claude.ai Projects](https://claude.ai/projects).**
 Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
-folder, and reaches **28 jurisdictions** through **up to 5 MCP connectors** and a
-curated primary-source reference layer.
+folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
+jurisdictions, no auth), up to four optional ones, and a curated primary-source reference layer.
 
 Built for legal teams that work across borders: a contract governed by English
 law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
@@ -15,17 +15,17 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.6.2](ArthurLegal-CorporateAssistant-v1.6.2-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
-| **Law Firm Assistant** | **[v1.6.2](ArthurLegal-Law-Firm-v1.6.2-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
-| Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
+| **Corporate Assistant** | **[v1.7.0](ArthurLegal-CorporateAssistant-v1.7.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 102 knowledge files |
+| **Law Firm Assistant** | **[v1.7.0](ArthurLegal-Law-Firm-v1.7.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 127 knowledge files |
+| Academician | [v1.0.1](ArthurLegal-Academician-v1.0.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.0.1](ArthurLegal-Courthouse-v1.0.1-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0`, `v1.0.1`, `v1.2.0`, `v1.3.1`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.6.2`).
 To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
 file in the package you want.
 
@@ -41,15 +41,16 @@ legal orders (🇪🇺 EU/CJEU · ECHR).
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **TR Legal MCP** (15 institutions, 17 tools) · **OpenCaseLaw.ch** (972K+ decisions, 33 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — fourteen jurisdictions behind one connector, 81 tools, jurisdiction-prefixed |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 104 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (972K+ decisions, 33 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **OpenSanctions** (REST API, API key) |
 
-Türkiye currently has the deepest coverage: a dedicated MCP server spanning 15
-institutions with 40+ tools, plus the largest share of the reference layer.
+Türkiye currently has the deepest coverage: inside ArthurLegal MCP under the `tr_`
+prefix — courts, legislation, Official Gazette, eight regulators and a 19,404-document
+semantic archive — plus the largest share of the reference layer.
 Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
 `api.e-qanun.az` with in-force status verification) follow. Seven more European
-jurisdictions are reached through ArthurLegal MCP, whose `status` tool reports
+jurisdictions are also reached through ArthurLegal MCP, whose `status` tool reports
 each one's index coverage — a statute outside that range is not found, and the
 search returns its nearest neighbour rather than saying so.
 
@@ -97,6 +98,40 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.7.0 — Türkiye behind the same connector (2026-09-06)
+
+The Turkish sources moved from a third-party OAuth connector into ArthurLegal MCP
+itself. Same endpoint, no auth, prefix `tr_`, 23 tools — **104 tools across 15
+backends**, up from 81 across 14. The packages no longer need a separate
+Turkish-law connector.
+
+| `tr_` family | What it reaches |
+|---|---|
+| `tr_ictihat_*`, `tr_aym_*`, `tr_uyusmazlik_*` | Yargıtay, Danıştay, regional and local courts, KYB (Bedesten); Constitutional Court; Uyuşmazlık Mahkemesi |
+| `tr_mevzuat_*` | 12 legislation types, article tree, single article, in-act search, **gerekçe** |
+| `tr_resmi_gazete_*` | Daily Official Gazette index, document text, date-range title search |
+| `tr_kurum_karari_*`, `tr_spk_bulten_icinde_ara` | Eight regulators behind one interface: Rekabet (10,368 decisions), EPDK (3,744 board decisions across five markets), SPK (weekly bulletins 2005–2026), BDDK (962), KVKK, BTK (1,904), GİB özelge, Sigorta Tahkim (66 journals) |
+| `tr_semantik_ara`, `tr_belge_getir` | A 19,404-document local index — FTS5, trigram and Voyage `voyage-4-lite` vectors — so *"bir bankanın faaliyet izninin kaldırılması"* finds BDDK decisions that share none of its words |
+
+Source: [`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR) (MIT,
+standard library only, no paid search keys). The endpoint knowledge comes from
+[saidsurucu](https://github.com/saidsurucu)'s yargi-mcp and mevzuat-mcp; every
+adapter was rewritten and verified live for both search and fetch.
+
+**What was left out, and why.** KİK (the signed EKAP v2 API answers 500), Sayıştay
+(its WAF answers 418 to every client), TÜRKPATENT (no decision database, reCAPTCHA
+portal) and İSTAÇ (host unreachable) are not in the connector. A source that does
+not answer is removed, not shipped as a stub; the packages route those questions to
+the optional TR Legal MCP (yargi-mcp-pro) or say "not retrieved". The EPDK URL that
+earlier packages cited as the board-decision page was in fact the regulations page;
+the real decision tree is `son-kurul-kararlari/<market>`, and it is now crawled.
+
+Package changes: Corporate and Law Firm **v1.7.0**, Courthouse and Academician
+**v1.0.1** — `tr_` routing in the system prompts, the two Turkish MCP guides
+rewritten, 60+ knowledge files' call examples converted (`phrase` → `query`,
+`court_types` → `courts`, `birimAdi` → `chamber`, `mevzuat_no` → `number`), citation
+tag `[ArthurLegal TR, …]`.
 
 ## v1.6.2 — four more jurisdictions (2026-09-04)
 
