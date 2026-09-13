@@ -109,7 +109,7 @@ ArthurLegal-CorporateAssistant-v1.2.0-Public-Release/
 ├── CHANGELOG.md           ← Sürüm notları
 ├── VERSION.md             ← 1.2.0
 ├── ATTRIBUTION.md         ← Atıf bilgisi
-├── LICENSE                ← MIT
+├── LICENSE                ← Proprietary Non-Commercial
 └── knowledge/             ← Project Knowledge'a yüklenecek 60 dosya
     ├── company-profile.md       (kurum profil şablonu — [DOLDUR] ile gelir)
     ├── skills/                  (10 birleşik skill kitapçığı, birer dosya per plugin)

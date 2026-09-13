@@ -53,12 +53,6 @@ knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 ```
 
-### New practice areas (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← GDPR / KVKK / data protection
-knowledge/profiles/regulatory-legal.md    ← Regulatory / agency law
-```
-
 ### Skill files (all plugins)
 ```
 knowledge/skills/administrative-legal__skills.md

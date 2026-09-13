@@ -4,7 +4,7 @@
 > Toplam skill: 2
 > Kullanım: /{plugin}:{skill-adı} komutunu yaz, aşağıdaki ilgili bölümü uygula.
 
-## İçindekiler
+## Icindekiler
 
 - /criminal-defense:cold-start-interview
 - /criminal-defense:cmk-gorev-atama

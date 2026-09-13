@@ -2,7 +2,7 @@
 
 **Sürüm:** v1.0.0 — Initial Public Release
 **Tarih:** 17.05.2026
-**Lisans:** Apache 2.0
+**Lisans:** ArthurLegal Proprietary Non-Commercial License (bkz. `LICENSE`)
 **Hedef ortam:** Claude.ai Projects (web — `claude.ai`)
 
 ---
@@ -30,7 +30,7 @@ ArthurLegal-v1.0.0-Public-Release/
 │   ├── skills/                (50+ dosya — adım-adım iş yöntemleri)
 │   └── agents/                (7 dosya — periyodik iş tanımları)
 ├── ATTRIBUTION.md             ← Author / Designer / Knowledge atfı
-├── LICENSE                    ← Apache 2.0 + disclaimer
+├── LICENSE                    ← Proprietary Non-Commercial + disclaimer
 └── CHANGELOG.md               ← Sürüm notları
 ```
 

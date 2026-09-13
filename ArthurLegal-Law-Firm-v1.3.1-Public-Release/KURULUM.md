@@ -53,12 +53,6 @@ knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 ```
 
-### Yeni pratik alanlar (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← KVKK / veri koruma
-knowledge/profiles/regulatory-legal.md    ← Regülasyon / düzenleyici
-```
-
 ### Skill dosyaları (tüm plugin'ler)
 ```
 knowledge/skills/administrative-legal__skills.md
@@ -106,6 +100,7 @@ knowledge/references/masak-kimlik-tespit-rehberi.md
 **Sektöre göre ek referanslar:**
 ```
 knowledge/references/epdk-rehberi.md          ← Enerji sektörü
+knowledge/references/elektrik-uretim-rehberi.md ← Elektrik üretim (bilirkişi/mütalaa teknik dayanak)
 knowledge/references/smk-rehberi.md           ← Fikri sınai haklar
 knowledge/references/turkpatent-rehberi.md    ← Marka/patent
 knowledge/references/istac-rehberi.md         ← Tahkim
