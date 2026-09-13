@@ -7,10 +7,10 @@ Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
 jurisdictions, no auth), up to four optional ones, and a curated primary-source reference layer.
 
-> ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows)
-> **[Download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB). The link downloads directly; no GitHub account needed.
-> Double-click the downloaded file to install. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
-> **Türkçe:** [Kurulum dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), inen dosyaya çift tıklayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
+> ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
+> **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
+> Windows: double-click the downloaded file. macOS: open the DMG, drag Arthur Mask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): Arthur Mask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
 
 Built for legal teams that work across borders: a contract governed by English
 law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
@@ -169,6 +169,13 @@ SmartScreen may warn ("More info" → "Run anyway"); the SHA-256 checksum is on 
 proprietary non-commercial license (not an open-source license); its source can be read at
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask). Notices for the
 open-source components it bundles ship inside the installation folder.
+
+**macOS.** **[⬇ ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (about 1.2 GB; Apple Silicon Mac,
+macOS 14 Sonoma or later, Claude Desktop; Intel Macs are not supported). Drag Arthur Mask to Applications
+and open it. It is ad-hoc signed but not notarised, so macOS blocks the first launch: allow it once under
+System Settings → Privacy & Security → Open Anyway. On first launch it registers the `arthur-mask`
+connector in Claude Desktop and offers to restart Claude. Files live in `~/Arthur Mask` (outside iCloud
+Desktop & Documents sync); the vault key is kept in the macOS Keychain.
 
 Package changes: Corporate and Law Firm **v1.8.0**, Courthouse **v1.0.2** — a compact
 Arthur Mask section in each system prompt (fetch with `arthur_mask_belge_getir`, keep labels
