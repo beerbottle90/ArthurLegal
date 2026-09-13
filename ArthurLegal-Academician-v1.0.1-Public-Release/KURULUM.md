@@ -61,6 +61,15 @@ Claude.ai → **Settings → Connectors** üzerinden ekleyin:
 | **Fedlex** | İsviçre federal mevzuatı | Hayır |
 | **OpenCaseLaw.ch** | İsviçre içtihadı + doktrin köprüsü | Hayır |
 
+> **Paket kullanmadan doğrudan bağlanmak.** Aynı uç, ArthurLegal paketi yüklemeden herhangi bir MCP
+> istemcisinde tek başına çalışır (Streamable HTTP, auth yok):
+> - **Claude (claude.ai / Claude Desktop):** Settings → Connectors → Add custom connector, URL `https://arthurlegal-mcp.fly.dev/mcp`
+> - **Claude Code:** `claude mcp add --transport http arthurlegal https://arthurlegal-mcp.fly.dev/mcp`
+> - **Cursor, VS Code gibi JSON yapılandırmalı istemciler:** `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}`
+> - **Yalnız yerel (stdio) sunucu başlatan istemciler:** komut olarak `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp`
+>
+> Bağlandıktan sonra `status` aracını çağırın. Ayrıntı: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
+
 Bağlayıcı yoksa asistan çalışır ama **atıf yapamaz** — her dayanağı
 `[model bilgisi — DOĞRULAYIN]` etiketiyle işaretler ve sizden manuel doğrulama ister.
 Bu, sıfır-halüsinasyon kuralının gereğidir.

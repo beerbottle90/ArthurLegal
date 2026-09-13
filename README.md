@@ -34,6 +34,25 @@ Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
+## Use ArthurLegal MCP directly
+
+The research connector behind every package is a public, hosted endpoint. You can use it
+without installing a package, in any MCP client (Streamable HTTP, no authentication):
+
+    https://arthurlegal-mcp.fly.dev/mcp
+
+| Client | How |
+|---|---|
+| Claude (claude.ai / Claude Desktop) | Settings → Connectors → Add custom connector, URL `https://arthurlegal-mcp.fly.dev/mcp` |
+| Claude Code | `claude mcp add --transport http arthurlegal https://arthurlegal-mcp.fly.dev/mcp` |
+| Cursor, VS Code and other JSON-configured clients | `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}` |
+| Clients that only launch local (stdio) servers | command `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp` |
+
+Call the `status` tool first to see which jurisdictions are loaded. The endpoint searches public
+sources; do not put client names or confidential facts into queries. Setup details and source:
+[github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly).
+Each package's `KURULUM.md` / `INSTALLATION.md` repeats these steps next to the connector step.
+
 ## Jurisdictional coverage
 
 Coverage is real but **not uniform in depth** — the packages state which tier a

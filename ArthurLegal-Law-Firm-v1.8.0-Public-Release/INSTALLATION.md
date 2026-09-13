@@ -205,6 +205,15 @@ documents each regulator has indexed.
 **Source:** `github.com/beerbottle90/arthurlegal-mcp` (Turkish backend: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`) — hosted on Fly.io,
 indexes baked into the image, semantic search via Voyage AI (`voyage-4-lite`).
 
+> **Connect directly, without the package.** The same endpoint works on its own in any MCP client
+> (Streamable HTTP, no auth):
+> - **Claude (claude.ai / Claude Desktop):** Settings → Connectors → Add custom connector, URL `https://arthurlegal-mcp.fly.dev/mcp`
+> - **Claude Code:** `claude mcp add --transport http arthurlegal https://arthurlegal-mcp.fly.dev/mcp`
+> - **Clients with a JSON config such as Cursor or VS Code:** `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}`
+> - **Clients that only launch local (stdio) servers:** use `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp` as the command
+>
+> Once connected, call the `status` tool. Details: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
+
 > **Without it** the package still works: these fifteen jurisdictions fall back to WebFetch
 > (no Turkish case-law search; AZ in-force status **unverified**), scholarship and contract
 > precedent drop out — and the assistant says so in its output.

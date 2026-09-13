@@ -63,6 +63,15 @@ Add via Claude.ai → **Settings → Connectors**:
 | **Fedlex** | Swiss federal legislation | No |
 | **OpenCaseLaw.ch** | Swiss case law + scholarship bridge | No |
 
+> **Connect directly, without the package.** The same endpoint works on its own in any MCP client
+> (Streamable HTTP, no auth):
+> - **Claude (claude.ai / Claude Desktop):** Settings → Connectors → Add custom connector, URL `https://arthurlegal-mcp.fly.dev/mcp`
+> - **Claude Code:** `claude mcp add --transport http arthurlegal https://arthurlegal-mcp.fly.dev/mcp`
+> - **Clients with a JSON config such as Cursor or VS Code:** `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}`
+> - **Clients that only launch local (stdio) servers:** use `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp` as the command
+>
+> Once connected, call the `status` tool. Details: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
+
 Without connectors the assistant still runs, but it **will not cite**. Every proposition is
 tagged `[model bilgisi — DOĞRULAYIN]` (*model knowledge — verify*) and you are asked to
 verify manually. This is the zero-hallucination rule working as intended, not a bug.

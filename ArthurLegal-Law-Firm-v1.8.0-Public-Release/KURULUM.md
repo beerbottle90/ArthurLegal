@@ -213,6 +213,15 @@ Türkiye satırında sekiz kurumun kaçar belgesinin indekslendiği görünür.
 **Kaynak:** `github.com/beerbottle90/arthurlegal-mcp` (Türkiye backend'i: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`) — Fly.io'da barındırılıyor,
 indeksler image'a gömülü, semantik arama Voyage AI (`voyage-4-lite`) ile.
 
+> **Paket kullanmadan doğrudan bağlanmak.** Aynı uç, ArthurLegal paketi yüklemeden herhangi bir MCP
+> istemcisinde tek başına çalışır (Streamable HTTP, auth yok):
+> - **Claude (claude.ai / Claude Desktop):** Settings → Connectors → Add custom connector, URL `https://arthurlegal-mcp.fly.dev/mcp`
+> - **Claude Code:** `claude mcp add --transport http arthurlegal https://arthurlegal-mcp.fly.dev/mcp`
+> - **Cursor, VS Code gibi JSON yapılandırmalı istemciler:** `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}`
+> - **Yalnız yerel (stdio) sunucu başlatan istemciler:** komut olarak `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp`
+>
+> Bağlandıktan sonra `status` aracını çağırın. Ayrıntı: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
+
 > **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu on beş yargı çevresi
 > WebFetch yoluna düşer (Türkiye'de içtihat araması yapılamaz, AZ'de **statü doğrulanmaz**),
 > doktrin ve sözleşme emsali kapsam dışı kalır — asistan bunu çıktısında belirtir.
