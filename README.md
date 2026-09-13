@@ -166,7 +166,8 @@ desktop; open it from Claude Desktop.
 and registers the `arthur-mask` connector in Claude Desktop. It is not code-signed, so
 SmartScreen may warn ("More info" → "Run anyway"); the SHA-256 checksum is on the
 [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). Arthur Mask is covered by the same
-proprietary non-commercial license and its source is not published; notices for the
+proprietary non-commercial license (not an open-source license); its source can be read at
+[beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask). Notices for the
 open-source components it bundles ship inside the installation folder.
 
 Package changes: Corporate and Law Firm **v1.8.0**, Courthouse **v1.0.2** — a compact

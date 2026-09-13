@@ -79,7 +79,8 @@ API'leri sarar. Kaynakları:
 
 Arthur Mask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
 dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
-**ArthurLegal Proprietary Non-Commercial License** kapsamındadır; kaynak kodu yayımlanmaz.
+**ArthurLegal Proprietary Non-Commercial License** kapsamındadır (açık kaynak lisansı değildir); kaynak kodu
+[beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask) adresinde incelenebilir.
 
 Kurulum dosyası aşağıdaki üçüncü taraf açık kaynak bileşenleri içerir. Bu bileşenler kendi
 lisanslarına tabidir. Tam lisans metinleri ve atıf bildirimleri kurulum klasöründe

@@ -2,7 +2,7 @@
 
 > **Sürüm:** Arthur Mask 1.0.0, ArthurLegal v1.8.0 ile birlikte yayımlandı (13.09.2026).
 > **Bu dosya kimin için:** Claude'un, kullanıcının Arthur Mask hakkındaki sorularını (kurulum, günlük kullanım, sorun giderme, sınırlar) doğru cevaplaması ve `arthur_mask_*` araçlarını doğru kullanması için. Hâkim ve kalem personeline yönelik adım adım anlatım paket kökündeki `ARTHUR-MASK.md` dosyasındadır.
-> **Dağıtım:** Yalnız ArthurLegal GitHub sürüm sayfasındaki kurulum dosyası. Kaynak kodu yayımlanmaz.
+> **Dağıtım:** Yalnız ArthurLegal GitHub sürüm sayfasındaki kurulum dosyası. Kaynak kodu `https://github.com/beerbottle90/arthur-mask` adresinde incelenebilir (ticari olmayan kullanım lisansı; açık kaynak değildir).
 
 ---
 

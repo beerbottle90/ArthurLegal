@@ -94,7 +94,8 @@ Anthropic's cloud and cannot reach a program on the user's computer. Masking is
 pseudonymisation, not anonymisation, and detection is probabilistic. The installer
 (`ArthurMask-Kurulum.exe`) is a direct download from the
 [Arthur Mask release](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask); Arthur Mask
-is covered by the proprietary package license and its source is not published.
+is covered by the proprietary package license (not an open-source license); its source can be read at
+[beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask).
 
 **v1.6.1 (2026-09-04)** collapsed ten separate MCP connectors into one hosted
 endpoint, [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp).
