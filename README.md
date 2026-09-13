@@ -15,19 +15,20 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.7.0](ArthurLegal-CorporateAssistant-v1.7.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 102 knowledge files |
-| **Law Firm Assistant** | **[v1.7.0](ArthurLegal-Law-Firm-v1.7.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 127 knowledge files |
+| **Corporate Assistant** | **[v1.8.0](ArthurLegal-CorporateAssistant-v1.8.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.8.0](ArthurLegal-Law-Firm-v1.8.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
 | Academician | [v1.0.1](ArthurLegal-Academician-v1.0.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.1](ArthurLegal-Courthouse-v1.0.1-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows |
+| Courthouse | [v1.0.2](ArthurLegal-Courthouse-v1.0.2-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.6.2`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1.0.0` and `v1.0.1`).
 To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
-file in the package you want.
+file in the package you want. The optional Arthur Mask installer (Windows, Claude Desktop)
+is attached to the [v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0).
 
 ## Jurisdictional coverage
 
@@ -98,6 +99,57 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.8.0 — Arthur Mask: documents are masked before anything leaves the computer (2026-09-13)
+
+The packages gain a local privacy gate. **Arthur Mask 1.0.0** is a Windows app that runs
+only on the user's computer: a lawyer drops a client document into its local browser
+interface, personal data is replaced with labels such as `{{KİŞİ-01}}`, `{{ŞİRKET-02}}` or
+`{{TCKN-01}}`, and the real values stay in an encrypted vault per matter. Claude receives
+only the masked text, through Claude Desktop. Its answer is decoded locally back to real
+names and opened in Word or as a UYAP UDF file.
+
+| Stage | What happens |
+|---|---|
+| **Mask** | Word, UYAP UDF, PDF, scanned PDF or photo (local OCR), .txt and .md. Names, companies, TCKN/VKN, IBAN, addresses, phones, e-mails, birth dates, file numbers, passports and plates become labels; the same person keeps the same label across a matter's documents. Turkish, English and Azerbaijani; bilingual two-column Word contracts keep their table structure |
+| **Review** | Uncertain detections wait for the lawyer's decision (mask or leave visible) |
+| **Red line** | Content that must not reach AI even masked (defence strategy, settlement limits, special-category personal data, inside information) blocks sending until the lawyer writes a justification |
+| **Exit gate** | Every response sent to Claude is re-scanned against all real values in the vault right before sending; any occurrence is replaced with its label |
+| **Decode** | Claude's answer returns with real names; revisions are applied to the original document as Word tracked changes, layout preserved |
+| **Audit** | A log of everything sent to Claude, in masked form, and a leak check that re-scans everything sent and received against the vault |
+
+Everything runs offline: the detection and OCR models ship inside the installer. The only
+other network call is an optional update check that reads the latest version number from
+this repository's releases page.
+
+**What it deliberately does not do.** Dates and amounts are not masked, and supreme and high
+court citations are preserved. Images and embedded objects in Word files, and handwriting,
+signatures, stamps and QR codes in scans, are not masked. Masking is pseudonymisation, not
+anonymisation, and detection is probabilistic; the lawyer's obligations under data
+protection law, professional secrecy, trade secret rules and NDAs are unchanged.
+
+**Claude Desktop only, and why.** Remote connectors on claude.ai are called from
+Anthropic's cloud, which cannot reach a program running on the user's computer. The gate
+works only through Claude Desktop's local connector, so it is not available in claude.ai in
+the browser or in the mobile apps. The ArthurLegal Project itself is shared between web and
+desktop; open it from Claude Desktop.
+
+**Download.** The installer is attached to the
+[v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0) as
+`ArthurMask-Kurulum-1.0.0.exe` (about 1 GB; Windows 10/11 64-bit, Claude Desktop, about
+4 GB free disk, 8 GB RAM recommended). It installs per user without administrator rights
+and registers the `arthur-mask` connector in Claude Desktop. It is not code-signed, so
+SmartScreen may warn ("More info" → "Run anyway"). Arthur Mask is covered by the same
+proprietary non-commercial license and its source is not published; notices for the
+open-source components it bundles ship inside the installation folder.
+
+Package changes: Corporate and Law Firm **v1.8.0**, Courthouse **v1.0.2** — a compact
+Arthur Mask section in each system prompt (fetch with `arthur_mask_belge_getir`, keep labels
+verbatim, never put a label into a research query, revise the uploaded document with
+tracked changes, one non-blocking reminder when identifiable data is pasted into a chat),
+`knowledge/references/arthur-mask-rehberi.md`, an `ARTHUR-MASK.md` user guide (Law Firm
+also `ARTHUR-MASK-EN.md`), a new installation step and third-party notices in
+`ATTRIBUTION.md`. Academician is unchanged at v1.0.1.
 
 ## v1.7.0 — Türkiye behind the same connector (2026-09-06)
 

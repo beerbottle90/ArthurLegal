@@ -11,7 +11,7 @@ ArthurLegal
 
 ## Tagline (one line)
 
-Multi-jurisdiction legal AI assistant packages for Claude.ai Projects — 28 jurisdictions, up to 5 MCP connectors, primary-source citation discipline.
+Multi-jurisdiction legal AI assistant packages for Claude.ai Projects — 28 jurisdictions, up to 5 MCP connectors, primary-source citation discipline, and a local document-masking gate.
 
 ## Short description (≈50 words)
 
@@ -32,10 +32,10 @@ data-transfer question is one workflow, not four.
 
 | Profile | Version | For | Scope |
 |---|---|---|---|
-| Corporate Assistant | v1.6.1 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 102 knowledge files |
-| Law Firm Assistant | v1.6.1 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 127 knowledge files |
-| Academician | v1.0.0 | Legal academics | Publication strategy, journal selection, promotion track, ethics board |
-| Courthouse | v1.0.0 | Bench and prosecution | Judge and prosecutor workflows |
+| Corporate Assistant | v1.8.0 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 103 knowledge files · Arthur Mask |
+| Law Firm Assistant | v1.8.0 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 128 knowledge files · Arthur Mask |
+| Academician | v1.0.1 | Legal academics | Publication strategy, journal selection, promotion track, ethics board |
+| Courthouse | v1.0.2 | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask |
 
 The two flagship packages are multi-jurisdictional. Academician and Courthouse are
 built around Turkish academic-promotion and Turkish judicial procedure
@@ -81,6 +81,20 @@ knowledge — verify]`). Unretrieved text is never presented as retrieved. Tool
 calls are cancelled at 100 seconds and a cancelled call returns nothing — when
 scope narrows, the assistant states it instead of filling the gap from memory.
 All output is a draft for attorney review.
+
+**v1.8.0 (2026-09-13)** adds **Arthur Mask**, a local privacy gate for Windows. Documents
+(Word, UYAP UDF, PDF, scans via local OCR) are masked on the user's own computer: personal
+data becomes labels such as `{{KİŞİ-01}}`, the real values stay in an encrypted vault per
+matter, Claude receives only the masked text through Claude Desktop, and the answer is
+decoded locally back to real names. A review screen, a red line for content that must not
+reach AI even masked, an exit gate that re-scans every outgoing response against the vault,
+and a leak check back it up. It runs fully offline. It works only with Claude Desktop, not
+claude.ai in the browser or the mobile apps, because remote connectors are called from
+Anthropic's cloud and cannot reach a program on the user's computer. Masking is
+pseudonymisation, not anonymisation, and detection is probabilistic. The installer
+(`ArthurMask-Kurulum-1.0.0.exe`) is attached to the
+[v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0); Arthur Mask
+is covered by the proprietary package license and its source is not published.
 
 **v1.6.1 (2026-09-04)** collapsed ten separate MCP connectors into one hosted
 endpoint, [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp).
@@ -134,6 +148,12 @@ open-source projects (LICENSE files added 2026-08-13). Those components remain
 governed by their own license; license
 texts and attribution notices are retained in the release packages and must not
 be removed. In case of conflict, Apache 2.0 governs those components.
+
+The Arthur Mask installer bundles third-party open-source components (among them
+Microsoft Presidio, spaCy, GLiNER with the `urchade/gliner_multi_pii-v1` model, PyTorch,
+Hugging Face Transformers, RapidOCR with PaddleOCR PP-OCRv6 models and ONNX Runtime, under
+MIT, Apache-2.0, BSD-3-Clause and PSF licenses). Their full notices ship inside the
+installation folder, and each package's `ATTRIBUTION.md` lists them.
 
 ## Suggested tags / categories
 
