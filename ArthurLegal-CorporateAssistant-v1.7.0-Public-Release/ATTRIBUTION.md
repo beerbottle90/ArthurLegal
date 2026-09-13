@@ -10,7 +10,7 @@
 ## Türk Mevzuat & Yargı entegrasyonu
 
 Bu paketin Türk hukuku entegrasyonu **ArthurLegal MCP**'nin Türkiye backend'i
-[`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR) (MIT) üzerinden çalışır:
+[`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT) üzerinden çalışır:
 `arthurlegal-mcp.fly.dev/mcp`, `tr_` öneki, auth yok. Yargıtay, Danıştay, BAM, yerel mahkeme,
 KYB (Bedesten), AYM, Uyuşmazlık Mahkemesi, 12 tür mevzuat, Resmî Gazete ve sekiz düzenleyici
 kurum (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim).
@@ -32,10 +32,10 @@ HSK) için kullanılır.
 
 Dördü de self-hosted MCP sunucusudur; public upstream
 API'leri sarar. Kaynakları:
-[`eqanun-api`](https://github.com/beerbottle90/eqanun-api) ·
-[`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api) ·
-[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api)
-· [`de-eli-mcp`](https://github.com/beerbottle90/de-eli-mcp).
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api) ·
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api) ·
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api)
+· [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp).
 
 - **e-qanun MCP** — upstream `api.e-qanun.az`, Azerbaycan Cumhuriyeti **Adalet
   Bakanlığı** (Ədliyyə Nazirliyi) resmî mevzuat veritabanı. Hükümet portalı,

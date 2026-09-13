@@ -49,7 +49,7 @@ source sits in rather than papering over the difference.
 - **Primary-source MCP** (verbatim norm text and case law): Türkiye · Switzerland ·
   United States (case law) · Azerbaijan — via **ArthurLegal MCP** (Türkiye under the
   `tr_` prefix: courts, legislation with gerekçe, Official Gazette, eight regulators and a
-  19,404-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
+  19,404-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
@@ -104,19 +104,25 @@ ran, how many documents are indexed, how many are vectorised, and the index's
 date coverage — because a statute outside that coverage is not found, and the
 search returns its nearest neighbour rather than announcing the gap.
 
-The server and its ten backends are open source under the MIT license in their
-own repositories ([`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp),
-[`eqanun-api`](https://github.com/beerbottle90/eqanun-api),
-[`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api),
-[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api),
-[`de-eli-mcp`](https://github.com/beerbottle90/de-eli-mcp),
-[`at-ris-mcp`](https://github.com/beerbottle90/at-ris-mcp),
-[`nl-rechtspraak-mcp`](https://github.com/beerbottle90/nl-rechtspraak-mcp),
-[`pl-sejm-mcp`](https://github.com/beerbottle90/pl-sejm-mcp),
-[`es-boe-mcp`](https://github.com/beerbottle90/es-boe-mcp),
-[`fi-finlex-mcp`](https://github.com/beerbottle90/fi-finlex-mcp),
-[`ie-statutebook-mcp`](https://github.com/beerbottle90/ie-statutebook-mcp));
-the proprietary package license below covers the ArthurLegal packages themselves,
+The server's 15 backends are open source. Fourteen are published under the MIT
+license as folders of the [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp) repository,
+each with its own `LICENSE` file ([`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR),
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api),
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api),
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api),
+[`at-ris-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp),
+[`nl-rechtspraak-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp),
+[`pl-sejm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/pl-sejm-mcp),
+[`es-boe-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp),
+[`fi-finlex-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/fi-finlex-mcp),
+[`ie-statutebook-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp),
+[`uk-legislation-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/uk-legislation-mcp),
+[`eu-cellar-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eu-cellar-mcp),
+[`jp-egov-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/jp-egov-mcp),
+[`gleif-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/gleif-mcp));
+the German backend is [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp)
+under the Apache-2.0 license.
+The proprietary package license below covers the ArthurLegal packages themselves,
 not these components.
 
 ## License

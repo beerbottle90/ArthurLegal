@@ -345,10 +345,10 @@ bağımlılıksız (yalnız Python stdlib) bir MCP sunucusuyla sarıyorlar. Kal�
   Başka bir sunucuda aynı adda bir araç varsa istemci şemaları karıştırır ve
   çağrılar düşer — bu ekosistemde bir kez yaşandı (`search_articles` çakışması).
 
-Referans uygulamalar: `github.com/beerbottle90/eqanun-api` ·
-`github.com/beerbottle90/lex-scholar-api` ·
-`github.com/beerbottle90/resourcecontracts-api` ·
-`github.com/beerbottle90/de-eli-mcp`
+Referans uygulamalar: `github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api` ·
+`github.com/matematicsolutions/de-eli-mcp`
 
 ### claude.ai'a bağlama (sunucu ayağa kalktıktan sonra)
 

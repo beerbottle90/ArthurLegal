@@ -22,7 +22,7 @@
 | **Araç öneki** | `de_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream'lerin hepsi public) |
-| **Sunucu kaynağı** | `github.com/beerbottle90/de-eli-mcp` |
+| **Sunucu kaynağı** | `github.com/matematicsolutions/de-eli-mcp` |
 | **Doğrulanmış sürüm** | `de-eli-mcp` v3.4.6 — 15 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → MCP

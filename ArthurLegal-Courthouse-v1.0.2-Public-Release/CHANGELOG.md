@@ -7,7 +7,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ## [1.0.2] — 2026-09-13 — *Arthur Mask: dosya belgeleri bilgisayardan çıkmadan maskelenir*
 
-> Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce kullanıcının kendi Windows bilgisayarında maskelenebilir. Yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub v1.8.0 sürümüne kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`). Yalnız **Claude Desktop (Windows)** ile çalışır; claude.ai web ve mobilde çalışmaz. Önceki sürümlerde "sonraki hatta gelecek" denen veri maskeleme katmanı budur.
+> Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce kullanıcının kendi Windows bilgisayarında maskelenebilir. Yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`). Yalnız **Claude Desktop (Windows)** ile çalışır; claude.ai web ve mobilde çalışmaz. Önceki sürümlerde "sonraki hatta gelecek" denen veri maskeleme katmanı budur.
 
 ### Eklendi
 

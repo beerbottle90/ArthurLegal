@@ -23,10 +23,10 @@ Bu paketin Türk mevzuat + yargı entegrasyonu, [saidsurucu](https://github.com/
 
 Dördü de self-hosted MCP sunucusudur; public upstream
 API'leri sarar. Kaynakları:
-[`eqanun-api`](https://github.com/beerbottle90/eqanun-api) ·
-[`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api) ·
-[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api)
-· [`de-eli-mcp`](https://github.com/beerbottle90/de-eli-mcp).
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api) ·
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api) ·
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api)
+· [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp).
 
 - **e-qanun MCP** — upstream `api.e-qanun.az`, Azerbaycan Cumhuriyeti **Adalet
   Bakanlığı** (Ədliyyə Nazirliyi) resmî mevzuat veritabanı. Hükümet portalı,

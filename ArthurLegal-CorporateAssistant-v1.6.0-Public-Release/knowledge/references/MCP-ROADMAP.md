@@ -15,12 +15,12 @@ kütüphanesi, `pip install` yok), **auth yok**, MCP JSON-RPC hem **stdio** hem
 
 | Sunucu | Yargı çevresi | Depo | Neden MCP gerekti | Araç |
 |---|---|---|---|---|
-| `nl-rechtspraak-mcp` | 🇳🇱 Hollanda | [repo](https://github.com/beerbottle90/nl-rechtspraak-mcp) | 3.751.381 karar **aranamıyordu**; API bilinmeyen parametreleri sessizce yok sayıyor | 6 |
-| `pl-sejm-mcp` | 🇵🇱 Polonya | [repo](https://github.com/beerbottle90/pl-sejm-mcp) | API yalnız **başlık** arıyor; gövde ve konu araması yoktu | 6 |
-| `at-ris-mcp` | 🇦🇹 Avusturya | [repo](https://github.com/beerbottle90/at-ris-mcp) | RIS arıyor ama **sıralamıyor** — sonuçlar alfabetik | 4 |
-| `ie-statutebook-mcp` | 🇮🇪 İrlanda | [repo](https://github.com/beerbottle90/ie-statutebook-mcp) | Arama endpoint'i **yok** (`/search` 404) | 5 |
-| `fi-finlex-mcp` | 🇫🇮 Finlandiya | [repo](https://github.com/beerbottle90/fi-finlex-mcp) | Tam metin araması yok + `.akn` ZIP paketi + `{lang@version}` tuzağı | 5 |
-| `es-boe-mcp` | 🇪🇸 İspanya | [repo](https://github.com/beerbottle90/es-boe-mcp) | Konsolide külliyat `Accept` başlığı istiyor; WebFetch gönderemiyor | 6 |
+| `nl-rechtspraak-mcp` | 🇳🇱 Hollanda | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp) | 3.751.381 karar **aranamıyordu**; API bilinmeyen parametreleri sessizce yok sayıyor | 6 |
+| `pl-sejm-mcp` | 🇵🇱 Polonya | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/pl-sejm-mcp) | API yalnız **başlık** arıyor; gövde ve konu araması yoktu | 6 |
+| `at-ris-mcp` | 🇦🇹 Avusturya | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp) | RIS arıyor ama **sıralamıyor** — sonuçlar alfabetik | 4 |
+| `ie-statutebook-mcp` | 🇮🇪 İrlanda | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp) | Arama endpoint'i **yok** (`/search` 404) | 5 |
+| `fi-finlex-mcp` | 🇫🇮 Finlandiya | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/fi-finlex-mcp) | Tam metin araması yok + `.akn` ZIP paketi + `{lang@version}` tuzağı | 5 |
+| `es-boe-mcp` | 🇪🇸 İspanya | [repo](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp) | Konsolide külliyat `Accept` başlığı istiyor; WebFetch gönderemiyor | 6 |
 
 ### Arama mimarisi — üçü de her sunucuda
 

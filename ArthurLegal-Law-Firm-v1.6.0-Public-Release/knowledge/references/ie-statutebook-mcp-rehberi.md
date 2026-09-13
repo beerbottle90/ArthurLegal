@@ -20,7 +20,7 @@
 | **MCP endpoint — yerel** | `http://127.0.0.1:8814/mcp` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
-| **Sunucu kaynağı** | `github.com/beerbottle90/ie-statutebook-mcp` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp` |
 | **Sürüm** | `ie-statutebook-mcp` v1.0.0 — 5 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
@@ -143,6 +143,6 @@ daha dar ve daha kırılgandır; o rehberdeki uyarıları uygula ve **atıfa
 
 ---
 
-*Sunucu: `github.com/beerbottle90/ie-statutebook-mcp` · bağımlılıksız (yalnız Python standart
+*Sunucu: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp` · bağımlılıksız (yalnız Python standart
 kütüphanesi), auth yok. Canlı test: 30.08.2026 — 5 araç, gerçek sorgularla
 doğrulandı. Sürüm: v1.6.0 (yeni).*

@@ -8,8 +8,8 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 ## [1.8.0] — 2026-09-13 — *Arthur Mask: Belgeler Bilgisayardan Çıkmadan Maskelenir*
 
 > **Gizlilik sürümü.** Şirket belgeleri Claude'a verilmeden önce kullanıcının kendi Windows
-> bilgisayarında maskelenebilir. Yeni yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub
-> v1.8.0 sürümüne kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`, yaklaşık 1 GB).
+> bilgisayarında maskelenebilir. Yeni yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub'daki
+> [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`, yaklaşık 1 GB).
 > Connector adresleri ve mevcut skill'ler değişmedi.
 
 ### Eklendi
@@ -75,7 +75,7 @@ knowledge'a eklenir. Arthur Mask için Adım 5; Project Claude Desktop'tan açı
 ### Değişti
 
 1. **TR birincil yolu.** Mevzuat, içtihat, AYM, Uyuşmazlık, Resmî Gazete ve düzenleyici
-   kurum kararları `tr_` araçlarından çekilir. Kaynak: `github.com/beerbottle90/ArthurLegalTR`
+   kurum kararları `tr_` araçlarından çekilir. Kaynak: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`
    — standart kütüphane, ücretli arama anahtarı yok, uç bilgisi saidsurucu/yargi-mcp ve
    mevzuat-mcp'den (MIT). TR Legal MCP (yargi-mcp-pro, OAuth) **isteğe bağlı ikinci
    connector** oldu; yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB ve HSK için kullanılır
@@ -244,11 +244,11 @@ Aşağıdakiler dokümandan değil, **gerçek sorgu atılarak** bulundu.
 
 ---
 
-## [1.6.0] — 2026-08-30 — *Kaynak Denetimi: 7 Kırık Düzeltme + 7 Yeni Yargı Çevresi*
+## [1.6.0] — 2026-08-30 — *Kaynak Denetimi: 7 Kırık Düzeltme + 6 Yeni Yargı Çevresi*
 
 > **Doğrulama sürümü.** Paketteki her MCP ve her WebFetch/REST kaynağına **gerçek
 > sorgu** atıldı; status kodu değil, dönen veri incelendi. Yedi kırık kaynak
-> düzeltildi, yedi yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
+> düzeltildi, altı yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
 >
 > Paket: 16 plugin · **28 yargı çevresi** · 8 MCP · 93 knowledge dosyası
 > (16 birleşik skill + 73 referans + 10 profil + 7 agent + firm-profile)

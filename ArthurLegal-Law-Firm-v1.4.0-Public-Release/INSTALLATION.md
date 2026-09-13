@@ -210,9 +210,9 @@ Project → **Customize** → **Connectors** → **Add custom connector** →
 | 2 | `LexScholar` | `https://<HOST>/mcp` | Legal doctrine across 10 indexes (**incl. DergiPark, 19 Turkish law journals**) — SECONDARY (6 tools) | `lex-scholar-rehberi.md` |
 | 3 | `ResourceContracts` | `https://<HOST>/mcp` | 5,125 signed PSA/JOA contracts — PRECEDENT (9 tools) | `resourcecontracts-rehberi.md` |
 
-**Sunucu kaynakları:** `github.com/beerbottle90/eqanun-api` ·
-`github.com/beerbottle90/lex-scholar-api` ·
-`github.com/beerbottle90/resourcecontracts-api`
+**Sunucu kaynakları:** `github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api`
 
 **Yerel portlar (varsayılan):** e-qanun `8020` · LexScholar `8010` ·
 ResourceContracts `8000`.

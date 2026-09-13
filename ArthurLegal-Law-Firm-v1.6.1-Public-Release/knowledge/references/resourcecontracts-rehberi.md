@@ -18,7 +18,7 @@
 | **Araç öneki** | `contracts_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (public endpoint) |
-| **Sunucu kaynağı** | `github.com/beerbottle90/resourcecontracts-api` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api` |
 | **REST fallback** | `api.resourcecontracts.org` — WebFetch, auth yok |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
@@ -168,7 +168,7 @@ Bu tablo yalnız bir örnektir — aynı desen 107 ülkenin herhangi biri için
 | ResourceContracts (web) | `https://www.resourcecontracts.org` | Manuel arama |
 | REST API | `https://api.resourcecontracts.org` | WebFetch (auth yok) |
 | OpenLandContracts (kardeş) | `https://api.openlandcontracts.org` | Arazi/tarım, aynı API |
-| Sunucu repo | `https://github.com/beerbottle90/resourcecontracts-api` | Self-host |
+| Sunucu repo | `https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api` | Self-host |
 
 ---
 

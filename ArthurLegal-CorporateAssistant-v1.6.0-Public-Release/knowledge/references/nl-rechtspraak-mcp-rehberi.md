@@ -21,7 +21,7 @@
 | **MCP endpoint — yerel** | `http://127.0.0.1:8811/mcp` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
-| **Sunucu kaynağı** | `github.com/beerbottle90/nl-rechtspraak-mcp` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp` |
 | **Sürüm** | `nl-rechtspraak-mcp` v1.0.0 — 6 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
@@ -157,6 +157,6 @@ daha dar ve daha kırılgandır; o rehberdeki uyarıları uygula ve **atıfa
 
 ---
 
-*Sunucu: `github.com/beerbottle90/nl-rechtspraak-mcp` · bağımlılıksız (yalnız Python standart
+*Sunucu: `github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp` · bağımlılıksız (yalnız Python standart
 kütüphanesi), auth yok. Canlı test: 30.08.2026 — 6 araç, gerçek sorgularla
 doğrulandı. Sürüm: v1.6.0 (yeni).*

@@ -22,7 +22,7 @@
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (tüm upstream'ler public) |
 | **Opsiyonel** | `OPENALEX_API_KEY` (ücretsiz) → OpenAlex bütçesini ~100× artırır |
-| **Sunucu kaynağı** | `github.com/beerbottle90/lex-scholar-api` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api` |
 | **Mimari** | Bağımlılıksız (yalnız Python stdlib); on public API'yi federe eder |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint

@@ -22,9 +22,9 @@ Her iki sunucu da public, auth gerektirmez.
 
 Üçü de bağımlılıksız (yalnız Python stdlib) MCP sunucusudur; public upstream
 API'leri sarar. Kaynakları:
-[`eqanun-api`](https://github.com/beerbottle90/eqanun-api) ·
-[`lex-scholar-api`](https://github.com/beerbottle90/lex-scholar-api) ·
-[`resourcecontracts-api`](https://github.com/beerbottle90/resourcecontracts-api).
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api) ·
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api) ·
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api).
 
 - **e-qanun MCP** — upstream `api.e-qanun.az`, Azerbaycan Cumhuriyeti **Adalet
   Bakanlığı** (Ədliyyə Nazirliyi) resmî mevzuat veritabanı. Hükümet portalı,

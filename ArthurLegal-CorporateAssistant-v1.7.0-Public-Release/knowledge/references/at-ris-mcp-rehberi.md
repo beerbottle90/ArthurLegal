@@ -21,7 +21,7 @@
 | **Araç öneki** | `at_` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
-| **Sunucu kaynağı** | `github.com/beerbottle90/at-ris-mcp` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp` |
 | **Sürüm** | `at-ris-mcp` v1.0.0 — 3 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
@@ -145,6 +145,6 @@ daha dar ve daha kırılgandır; o rehberdeki uyarıları uygula ve **atıfa
 
 ---
 
-*Sunucu: `github.com/beerbottle90/at-ris-mcp` · bağımlılıksız (yalnız Python standart
+*Sunucu: `github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp` · bağımlılıksız (yalnız Python standart
 kütüphanesi), auth yok. Canlı test: 30.08.2026 — 3 araç, gerçek sorgularla
 doğrulandı. Sürüm: v1.6.0 (yeni).*

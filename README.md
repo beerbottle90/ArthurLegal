@@ -40,9 +40,12 @@ Coverage is real but **not uniform in depth** — the packages state which tier 
 source sits in, and the assistant flags reduced coverage in its output rather
 than filling the gap with recalled text.
 
-**14 jurisdictions** = 12 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ · 🇬🇧 UK ·
-🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS) + 2 supranational
-legal orders (🇪🇺 EU/CJEU · ECHR).
+**28 jurisdictions** = the original 14 — 12 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ ·
+🇬🇧 UK · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS) + 2 supranational legal
+orders (🇪🇺 EU/CJEU · ECHR) — plus 8 added in v1.5.0 (🇦🇪 UAE · 🇨🇿 Czechia · 🇬🇪 Georgia ·
+🇮🇱 Israel · Central Asia 🇰🇿 KZ + 🇺🇿 UZ · 🇷🇴 Romania · 🇺🇦 Ukraine · 🇬🇷 Greece; reference
+guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵🇱 PL · 🇦🇹 AT · 🇮🇪 IE ·
+🇫🇮 FI · 🇪🇸 ES).
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
@@ -59,7 +62,7 @@ jurisdictions are also reached through ArthurLegal MCP, whose `status` tool repo
 each one's index coverage — a statute outside that range is not found, and the
 search returns its nearest neighbour rather than saying so.
 
-## v1.6.0 — Source audit: 7 broken sources fixed, 7 new jurisdictions (2026-08-30)
+## v1.6.0 — Source audit: 7 broken sources fixed, 6 new jurisdictions (2026-08-30)
 
 Every MCP and every WebFetch/REST source in the package was hit with a **real
 query** — the returned data was inspected, not just the status code.
@@ -85,12 +88,12 @@ query** — the returned data was inspected, not just the status code.
 searched properly. All dependency-free (standard library only) and auth-free, with
 hybrid retrieval — BM25 plus trigram fuzzy matching, and a dense-vector channel that
 turns on when an embeddings endpoint is configured:
-[nl-rechtspraak-mcp](https://github.com/beerbottle90/nl-rechtspraak-mcp) ·
-[pl-sejm-mcp](https://github.com/beerbottle90/pl-sejm-mcp) ·
-[at-ris-mcp](https://github.com/beerbottle90/at-ris-mcp) ·
-[ie-statutebook-mcp](https://github.com/beerbottle90/ie-statutebook-mcp) ·
-[fi-finlex-mcp](https://github.com/beerbottle90/fi-finlex-mcp) ·
-[es-boe-mcp](https://github.com/beerbottle90/es-boe-mcp)
+[nl-rechtspraak-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp) ·
+[pl-sejm-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/pl-sejm-mcp) ·
+[at-ris-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp) ·
+[ie-statutebook-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp) ·
+[fi-finlex-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/fi-finlex-mcp) ·
+[es-boe-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp)
 
 **Added — 6 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
 full text + 3,751,381 ECLI decisions) · 🇵🇱 Poland (Sejm ELI API with in-force
@@ -170,7 +173,7 @@ Turkish-law connector.
 | `tr_kurum_karari_*`, `tr_spk_bulten_icinde_ara` | Eight regulators behind one interface: Rekabet (10,368 decisions), EPDK (3,744 board decisions across five markets), SPK (weekly bulletins 2005–2026), BDDK (962), KVKK, BTK (1,904), GİB özelge, Sigorta Tahkim (66 journals) |
 | `tr_semantik_ara`, `tr_belge_getir` | A 19,404-document local index — FTS5, trigram and Voyage `voyage-4-lite` vectors — so *"bir bankanın faaliyet izninin kaldırılması"* finds BDDK decisions that share none of its words |
 
-Source: [`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR) (MIT,
+Source: [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT,
 standard library only, no paid search keys). The endpoint knowledge comes from
 [saidsurucu](https://github.com/saidsurucu)'s yargi-mcp and mevzuat-mcp; every
 adapter was rewritten and verified live for both search and fetch.

@@ -8,17 +8,17 @@
 
 ## Türetme notu
 
-Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/ArthurLegalTR) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
+Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
 
 ## Arthur Mask kurulum dosyası (v1.8.0)
 
-Arthur Mask, ArthurLegal GitHub v1.8.0 sürümüne eklenen `ArthurMask-Kurulum.exe` kurulum
+Arthur Mask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
 dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
 **ArthurLegal Proprietary Non-Commercial License** kapsamındadır; kaynak kodu yayımlanmaz.
 
 Kurulum dosyası aşağıdaki üçüncü taraf açık kaynak bileşenleri içerir. Bu bileşenler kendi
 lisanslarına tabidir. Tam lisans metinleri ve atıf bildirimleri kurulum klasöründe
-(`%LOCALAPPDATA%\Programs\Arthur Maskelgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
+(`%LOCALAPPDATA%\Programs\Arthur Mask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
 birlikte gelir ve kaldırılamaz.
 
 | Bileşen | Lisans |

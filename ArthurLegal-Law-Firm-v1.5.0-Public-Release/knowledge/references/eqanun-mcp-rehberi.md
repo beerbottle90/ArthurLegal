@@ -21,7 +21,7 @@
 | **MCP endpoint — yerel** | `http://127.0.0.1:8020/mcp` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream public) |
-| **Sunucu kaynağı** | `github.com/beerbottle90/eqanun-api` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api` |
 | **Mimari** | Bağımlılıksız (yalnız Python stdlib) MCP sunucusu |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → MCP

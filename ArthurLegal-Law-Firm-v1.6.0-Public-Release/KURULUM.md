@@ -210,10 +210,10 @@ Project → **Customize** → **Connectors** → **Add custom connector** →
 | 2 | `LexScholar` | `https://<HOST>/mcp` | 10 indeks hukuk doktrini (**DergiPark 19 TR hukuk dergisi dâhil**) — İKİNCİL (6 araç) | `lex-scholar-rehberi.md` |
 | 3 | `ResourceContracts` | `https://<HOST>/mcp` | 5.125 imzalı PSA/JOA — EMSAL (9 araç) | `resourcecontracts-rehberi.md` |
 
-**Sunucu kaynakları:** `github.com/beerbottle90/eqanun-api` ·
-`github.com/beerbottle90/lex-scholar-api` ·
-`github.com/beerbottle90/resourcecontracts-api`
-· `github.com/beerbottle90/de-eli-mcp`
+**Sunucu kaynakları:** `github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api` ·
+`github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api`
+· `github.com/matematicsolutions/de-eli-mcp`
 
 **Yerel portlar (varsayılan):** e-qanun `8020` · LexScholar `8010` ·
 ResourceContracts `8000`.

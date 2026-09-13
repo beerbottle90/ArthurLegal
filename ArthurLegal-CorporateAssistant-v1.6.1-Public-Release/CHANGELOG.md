@@ -65,11 +65,11 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-## [1.6.0] — 2026-08-30 — *Kaynak Denetimi: 7 Kırık Düzeltme + 7 Yeni Yargı Çevresi*
+## [1.6.0] — 2026-08-30 — *Kaynak Denetimi: 7 Kırık Düzeltme + 6 Yeni Yargı Çevresi*
 
 > **Doğrulama sürümü.** Paketteki her MCP ve her WebFetch/REST kaynağına **gerçek
 > sorgu** atıldı; status kodu değil, dönen veri incelendi. Yedi kırık kaynak
-> düzeltildi, yedi yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
+> düzeltildi, altı yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
 >
 > Paket: 16 plugin · **28 yargı çevresi** · 8 MCP · 93 knowledge dosyası
 > (16 birleşik skill + 73 referans + 10 profil + 7 agent + firm-profile)
