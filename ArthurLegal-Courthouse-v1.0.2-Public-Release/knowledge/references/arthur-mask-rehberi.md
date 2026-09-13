@@ -73,7 +73,7 @@ Aynı dosyadaki belgeler etiketleri paylaşır: aynı kişi, dosyanın bütün b
 
 ## 8. Çıkış kapısı ve sızıntı denetimi
 
-**Çıkış kapısı.** Claude'a giden her yanıt, gönderilmeden hemen önce kasadaki bütün gerçek değerlere karşı yeniden taranır; bir gerçek değer geçiyorsa etiketiyle değiştirilir. Bu, inceleme ekranından sonra eklenen bir ikinci savunma hattıdır.
+**Çıkış kapısı.** Claude'a giden her yanıt, gönderilmeden hemen önce kasadaki bütün gerçek değerlere karşı yeniden taranır; bir gerçek değer geçiyorsa etiketiyle değiştirilir. Bu, inceleme ekranından sonra eklenen bir ikinci savunma hattıdır. Kapı yalnız bu dosyada en az bir kez tespit edilmiş değerleri tanır; hiç tespit edilmemiş bir bilgiyi yakalayamaz. Kullanıcıya "her şeyi yakalar" deme.
 
 **"Claude'a giden" paneli.** Claude'a gönderilen her yanıt maskeli hâliyle kayda geçer; kullanıcı Claude'un tam olarak ne gördüğünü sonradan kontrol edebilir.
 

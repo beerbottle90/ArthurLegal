@@ -14,8 +14,18 @@ UDF olarak açılır.
 > web sürümünde ve mobil uygulamalarda çalışmaz. ArthurLegal Project'inizi Claude
 > Desktop'tan açmanız yeterlidir; Project'ler web ile masaüstü arasında ortaktır.
 
-
 > **[⬇ Kurulum dosyasını indirin (Windows, yaklaşık 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** · tıklayınca iner, GitHub hesabı gerekmez
+
+---
+
+## Ne zaman kullanmalı
+
+- **Kullanın:** taraf, şüpheli, sanık, mağdur veya tanık adı; TCKN, adres, telefon, dosya numarası geçen dilekçe, ifade tutanağı, bilirkişi raporu, iddianame ve karar taslakları.
+- **Gerekmez:** somut dosyaya ait bilgi içermeyen usul, mevzuat ve içtihat soruları.
+- **Kararsız kaldığınızda:** belgede bir kişiyi veya şirketi tanıtan tek bir bilgi bile varsa Arthur Mask'ten geçirin.
+  Belgeyi ya da içeriğini Claude sohbetine doğrudan yapıştırmayın veya eklemeyin; o yol Arthur Mask'ten geçmez.
+
+ArthurLegal Project'inizi henüz kurmadıysanız önce [KURULUM.md](KURULUM.md) dosyasındaki adımları tamamlayın.
 
 ---
 
@@ -30,8 +40,9 @@ UDF olarak açılır.
 | İnternet | Maskeleme için gerekmez; program tamamen çevrimdışı çalışır |
 
 Belge verileriniz bilgisayarınızdan çıkmaz. Dışarı çıkan tek şey, Claude Desktop'un
-aldığı maskeli metindir. Program ayrıca, isterseniz, ArthurLegal sürüm sayfasından
-yalnız en son sürüm numarasını okur (belge verisi göndermez).
+aldığı maskeli metindir. Bu metin Claude'a, yani Anthropic'e gider; Claude hesabınızın
+veri kullanımı ve saklama ayarları bu metin için de geçerlidir. Program ayrıca günde bir kez
+ArthurLegal sürüm sayfasından yalnız en son sürüm numarasını okur (belge verisi göndermez).
 
 ---
 
@@ -116,7 +127,9 @@ tarar: **✓ Temiz** ya da bulgu listesi.
 2. **Kırmızı hat.** Maskeli olsa bile yapay zekâya gitmemesi gereken içerik,
    gerekçe yazmadan gönderilemez.
 3. **Çıkış kapısı.** Claude'a giden her yanıt, gönderilmeden hemen önce kasadaki bütün
-   gerçek değerlere karşı yeniden taranır; geçen bir değer etiketiyle değiştirilir.
+   gerçek değerlere karşı yeniden taranır; geçen bir değer etiketiyle değiştirilir. Kapı, bu dosyanın
+   herhangi bir belgesinde **en az bir kez tespit edilmiş** değerleri tanır; hiç tespit edilmemiş bir
+   bilgiyi yakalayamaz. Onun güvencesi inceleme ekranı ve sizin okumanızdır.
 4. **Kayıt ve denetim.** Claude'a giden her şey maskeli hâliyle kaydedilir ve
    istediğiniz an sızıntı denetimi yapabilirsiniz.
 
@@ -133,7 +146,12 @@ saklama ve imha kuralları bu klasöre de uygulanır.
 ## 7. Güncelleme ve kaldırma
 
 **Güncelleme.** Yeni sürüm yayımlandığında Arthur Mask ekranında bildirim çıkar.
-Yeni kurulum dosyasını indirip eskisinin üzerine kurun.
+[Aynı indirme bağlantısından](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe) yeni dosyayı indirip eskisinin üzerine kurun;
+dosyalarınız, kasalarınız ve kurtarma anahtarınız korunur.
+
+**Dosyayı doğrulamak isterseniz.** [Arthur Mask sürüm sayfasında](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyasının
+SHA-256 özeti yayımlanır. PowerShell'de `Get-FileHash .\ArthurMask-Kurulum.exe` komutunun
+çıktısı bu özetle aynı olmalıdır.
 
 **Kaldırma.** Windows **Ayarlar → Uygulamalar → Arthur Mask → Kaldır**. Program ve
 Claude Desktop bağlantısı kaldırılır. `Belgeler\Arthur Mask` klasörü ve kurtarma
@@ -151,6 +169,7 @@ anahtarı dosyası silinmez; isterseniz elle silin.
 | **Temel koruma** | Yapay zekâ tespiti veya OCR yüklenemedi; kurallar yine çalışır. Programı yeniden kurun. |
 | Claude "belge hazır değil" diyor | Arthur Mask'te incelemeyi bitirip **Onayla** deyin. |
 | Cevabın altında bilinmeyen etiket uyarısı | Claude bir etiketi değiştirmiş; o cümleyi kontrol edin. |
+| **Sızıntı denetimi** bulgu gösteriyor | "Çıkış kapısından önce" satırları, değerin depodaki maskeli metinde durduğunu gösterir; Claude'a giderken etiketlenir. "Claude'un yazdığı metin" satırı, Claude'un o değeri bir yerden açık gördüğünü gösterir: sohbete yazılan ya da eklenen bir şey olabilir. İlgili sohbeti gözden geçirin, belgeyi yeni bir dosyada yeniden maskeleyin. |
 | claude.ai web veya telefonda çalışmıyor | Desteklenmez; Claude Desktop'u kullanın. |
 
 ---

@@ -7,7 +7,6 @@
 
 > Türk **yargı mensubu** (mahkeme hâkimleri + mahkeme kalem memurlukları) için **yargısal / tarafsız** decision-support asistanı. ArthurLegal Law-Firm / Corporate iskeletinden türetilmiştir; ancak konum **savunucu değil, yargısaldır**.
 
-
 > ### ⬇ Arthur Mask — belgeleri Claude'a vermeden önce bilgisayarınızda maskeleyin
 > **[Kurulum dosyasını indirin (Windows, yaklaşık 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. Tıklayınca doğrudan iner; GitHub hesabı gerekmez.
 > İnen `ArthurMask-Kurulum.exe` dosyasına çift tıklayın. Adım adım anlatım: **[ARTHUR-MASK.md](ARTHUR-MASK.md)**

@@ -9,7 +9,7 @@ jurisdictions, no auth), up to four optional ones, and a curated primary-source 
 
 > ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows)
 > **[Download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB). The link downloads directly; no GitHub account needed.
-> Double-click the downloaded file to install. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> Double-click the downloaded file to install. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
 > **Türkçe:** [Kurulum dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), inen dosyaya çift tıklayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
 
 Built for legal teams that work across borders: a contract governed by English
@@ -32,8 +32,7 @@ design.
 
 Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1.0.0` and `v1.0.1`).
 To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
-file in the package you want. The optional Arthur Mask privacy gate (Windows, Claude Desktop) installs from one file:
-**[⬇ download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB, direct download, no GitHub account needed).
+file in the package you want. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
 ## Jurisdictional coverage
 
@@ -119,12 +118,12 @@ names and opened in Word or as a UYAP UDF file.
 | **Mask** | Word, UYAP UDF, PDF, scanned PDF or photo (local OCR), .txt and .md. Names, companies, TCKN/VKN, IBAN, addresses, phones, e-mails, birth dates, file numbers, passports and plates become labels; the same person keeps the same label across a matter's documents. Turkish, English and Azerbaijani; bilingual two-column Word contracts keep their table structure |
 | **Review** | Uncertain detections wait for the lawyer's decision (mask or leave visible) |
 | **Red line** | Content that must not reach AI even masked (defence strategy, settlement limits, special-category personal data, inside information) blocks sending until the lawyer writes a justification |
-| **Exit gate** | Every response sent to Claude is re-scanned against all real values in the vault right before sending; any occurrence is replaced with its label |
+| **Exit gate** | Every response sent to Claude is re-scanned against all real values in the vault right before sending; any occurrence is replaced with its label. It recognises values detected at least once in the matter, not information that was never detected |
 | **Decode** | Claude's answer returns with real names; revisions are applied to the original document as Word tracked changes, layout preserved |
 | **Audit** | A log of everything sent to Claude, in masked form, and a leak check that re-scans everything sent and received against the vault |
 
 Everything runs offline: the detection and OCR models ship inside the installer. The only
-other network call is an optional update check that reads the latest version number from
+other network call is a once-a-day update check that reads the latest version number from
 this repository's releases page.
 
 **What it deliberately does not do.** Dates and amounts are not masked, and supreme and high
@@ -143,7 +142,8 @@ desktop; open it from Claude Desktop.
 (always the latest version; about 1 GB; Windows 10/11 64-bit, Claude Desktop, about
 4 GB free disk, 8 GB RAM recommended). It installs per user without administrator rights
 and registers the `arthur-mask` connector in Claude Desktop. It is not code-signed, so
-SmartScreen may warn ("More info" → "Run anyway"). Arthur Mask is covered by the same
+SmartScreen may warn ("More info" → "Run anyway"); the SHA-256 checksum is on the
+[Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). Arthur Mask is covered by the same
 proprietary non-commercial license and its source is not published; notices for the
 open-source components it bundles ship inside the installation folder.
 

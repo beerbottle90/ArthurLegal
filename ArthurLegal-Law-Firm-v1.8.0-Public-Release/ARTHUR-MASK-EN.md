@@ -16,8 +16,17 @@ Word or as a UDF file.
 > not work in claude.ai in the web browser or in the mobile apps. Open your ArthurLegal
 > Project from Claude Desktop; Projects are shared between web and desktop.
 
-
 > **[⬇ Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** · direct download, no GitHub account needed
+
+---
+
+## When to use it
+
+- **Use it for:** pleadings, contracts, expert reports, correspondence and minutes that name clients, counterparties, witnesses or employees, or contain ID numbers, addresses, phone numbers, IBANs or file numbers.
+- **Not needed for:** legal research questions that name no person or company, legislation and case-law searches, blank templates.
+- **When in doubt:** if a document contains even one detail that identifies a person or company, run it through Arthur Mask. Do not paste or attach the document to the Claude chat directly; that path bypasses Arthur Mask.
+
+If you have not set up the ArthurLegal Project yet, complete [INSTALLATION.md](INSTALLATION.md) first.
 
 ---
 
@@ -32,7 +41,8 @@ Word or as a UDF file.
 | Internet | Not needed for masking; the app works fully offline |
 
 Your document data does not leave your computer. The only thing that goes out is the
-masked text Claude Desktop receives. The only other network call is an optional
+masked text Claude Desktop receives. That text goes to Claude, that is, to Anthropic, and your Claude
+account's data-use and retention settings apply to it. The only other network call is a once-a-day
 update check that reads the latest version number from the ArthurLegal releases page
 (no document data).
 
@@ -119,7 +129,9 @@ the vault and returns **✓ Temiz** (clean) or a list of findings.
 2. **Red line.** Content that must not go to AI even when masked cannot be sent without
    your written justification.
 3. **Exit gate.** Every response sent to Claude is re-scanned against all real values in
-   the vault right before sending; any occurrence is replaced with its label.
+   the vault right before sending; any occurrence is replaced with its label. The gate recognises values
+   that were **detected at least once** in any document of the matter; it cannot catch information that
+   was never detected. That is what the review screen and your own reading are for.
 4. **Log and leak check.** Everything sent to Claude is logged in masked form, and you
    can run a leak check at any time.
 
@@ -136,7 +148,11 @@ firm's retention and destruction rules apply to this folder too.
 ## 7. Updates and uninstalling
 
 **Updates.** When a newer installer is published on the ArthurLegal releases page, the
-Arthur Mask interface shows a notice. Install the new version over the old one.
+Arthur Mask interface shows a notice. Download the new file from [the same link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe) and install it
+over the old one; your matters, vaults and recovery key are kept.
+
+**Verifying the file (optional).** The installer's SHA-256 is published on the [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask).
+In PowerShell, `Get-FileHash .\ArthurMask-Kurulum.exe` must print the same value.
 
 **Uninstall.** Windows **Settings → Apps → Arthur Mask → Uninstall**. This removes the
 program and the Claude Desktop connector entry. The `Arthur Mask` documents folder and
@@ -154,6 +170,7 @@ the recovery key file are kept; delete them manually if you wish.
 | **Temel koruma** (basic protection) | The AI detection or OCR component could not load; rules still work. Reinstall. |
 | Claude says the document is not ready | Finish the review in Arthur Mask and approve. |
 | Unknown label warning under an answer | Claude altered a label; check that sentence. |
+| **Leak check** shows findings | "Before the exit gate" rows mean the value sits in the stored masked text and is labelled on the way to Claude. A "text Claude wrote" row means Claude saw that value in plain form somewhere, for example something typed or attached in the chat. Review that conversation and re-mask the document in a new matter. |
 | Not working in claude.ai web or on the phone | Not supported; use Claude Desktop. |
 
 ---

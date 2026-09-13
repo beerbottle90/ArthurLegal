@@ -7,7 +7,6 @@
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
-
 > ### ⬇ Arthur Mask — mask documents on your own computer before Claude sees them
 > **[Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. The link downloads directly; no GitHub account needed.
 > Double-click the downloaded `ArthurMask-Kurulum.exe`. Step-by-step guide: **[ARTHUR-MASK.md](ARTHUR-MASK.md)** (Türkçe)
@@ -52,7 +51,7 @@ applied to the original as tracked changes.
   the user writes a justification; an exit gate that re-scans every response sent to
   Claude against the vault; a log of everything sent and a one-click leak check.
 - **Fully offline.** Detection and OCR models ship inside the installer. The only other
-  network call is an optional update check that reads the latest version number.
+  network call is a once-a-day update check that reads the latest version number.
 - **Claude Desktop for Windows only.** Not supported in claude.ai on the web or in the
   mobile apps: remote connectors there are called from Anthropic's cloud, which cannot reach
   a program on your computer. Open the ArthurLegal Project from Claude Desktop.
