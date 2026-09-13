@@ -281,8 +281,10 @@ back into real names locally and opened in Word or as a UDF file. The app works 
 **Requirements:** Windows 10 or 11 (64-bit) · [Claude Desktop](https://claude.ai/download) ·
 about 4 GB free disk · 8 GB RAM recommended.
 
-1. **Download:** [ArthurLegal v1.8.0 release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-   → `ArthurMask-Kurulum-1.0.0.exe` (about 1 GB).
+1. **Download.** **[⬇ Click here to download the Arthur Mask installer](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, about 1 GB).
+   No GitHub account or GitHub knowledge is needed: the link downloads `ArthurMask-Kurulum.exe` straight into
+   your **Downloads** folder. Depending on your connection this can take a few minutes. If the browser asks
+   whether to keep the file, choose **Keep**. When the download finishes, double-click the file in Downloads.
 2. **Run it.** The installer is not code-signed; if SmartScreen says **"Windows protected your
    PC"** (Turkish: "Windows bilgisayarınızı korudu"), choose **More info** → **Run anyway**.
    Antivirus software may scan the file for a while.

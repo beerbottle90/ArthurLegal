@@ -92,8 +92,8 @@ and a leak check back it up. It runs fully offline. It works only with Claude De
 claude.ai in the browser or the mobile apps, because remote connectors are called from
 Anthropic's cloud and cannot reach a program on the user's computer. Masking is
 pseudonymisation, not anonymisation, and detection is probabilistic. The installer
-(`ArthurMask-Kurulum-1.0.0.exe`) is attached to the
-[v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0); Arthur Mask
+(`ArthurMask-Kurulum.exe`) is a direct download from the
+[Arthur Mask release](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask); Arthur Mask
 is covered by the proprietary package license and its source is not published.
 
 **v1.6.1 (2026-09-04)** collapsed ten separate MCP connectors into one hosted

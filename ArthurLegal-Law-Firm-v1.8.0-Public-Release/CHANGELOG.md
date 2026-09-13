@@ -9,7 +9,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 > **Gizlilik sürümü.** Müvekkil belgeleri Claude'a verilmeden önce avukatın kendi Windows
 > bilgisayarında maskelenebilir. Yeni yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub
-> v1.8.0 sürümüne kurulum dosyası olarak eklendi (`ArthurMask-Kurulum-1.0.0.exe`, yaklaşık 1 GB).
+> v1.8.0 sürümüne kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`, yaklaşık 1 GB).
 > Connector adresleri ve mevcut skill'ler değişmedi.
 
 ### Eklendi

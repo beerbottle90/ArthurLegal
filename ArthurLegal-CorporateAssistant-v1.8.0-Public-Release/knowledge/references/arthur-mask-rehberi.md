@@ -42,7 +42,8 @@ Aynı dosyadaki belgeler etiketleri paylaşır: aynı kişi, dosyanın bütün b
 
 ## 4. İndirme ve kurulum
 
-1. İndirme adresi: https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0 , dosya `ArthurMask-Kurulum-1.0.0.exe` (yaklaşık 1 GB).
+1. Doğrudan indirme bağlantısı (GitHub hesabı gerekmez, tıklayınca `ArthurMask-Kurulum.exe` İndirilenler klasörüne iner, yaklaşık 1 GB): https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe
+   Kullanıcı GitHub sayfasında ne yapacağını bilemiyorsa ona yalnız bu bağlantıyı ver ve "tıklayın, inen dosyaya çift tıklayın" de. Klasör ya da sürüm sayfası tarif etme. Bağlantı her sürümde aynıdır.
 2. Kurulum dosyası kod imzalı değildir. Windows SmartScreen "Windows bilgisayarınızı korudu" uyarısı gösterebilir: "Ek bilgi", ardından "Yine de çalıştır". Bazı antivirüs ürünleri dosyayı bir süre tarayabilir.
 3. Kurulum kullanıcı başınadır, yönetici yetkisi istemez ve `%LOCALAPPDATA%\Programs\Arthur Mask` klasörüne kurar.
 4. Başlat menüsüne ve masaüstüne "Arthur Mask" kısayolu ekler.

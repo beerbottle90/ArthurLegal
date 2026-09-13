@@ -7,6 +7,12 @@
 
 > Türk **yargı mensubu** (mahkeme hâkimleri + mahkeme kalem memurlukları) için **yargısal / tarafsız** decision-support asistanı. ArthurLegal Law-Firm / Corporate iskeletinden türetilmiştir; ancak konum **savunucu değil, yargısaldır**.
 
+
+> ### ⬇ Arthur Mask — belgeleri Claude'a vermeden önce bilgisayarınızda maskeleyin
+> **[Kurulum dosyasını indirin (Windows, yaklaşık 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. Tıklayınca doğrudan iner; GitHub hesabı gerekmez.
+> İnen `ArthurMask-Kurulum.exe` dosyasına çift tıklayın. Adım adım anlatım: **[ARTHUR-MASK.md](ARTHUR-MASK.md)**
+> Claude Desktop (Windows) gerekir; claude.ai web ve mobil uygulamada çalışmaz.
+
 ---
 
 ## Diğer ArthurLegal paketlerinden farkı
@@ -52,7 +58,7 @@ Detay → `knowledge/references/yargi-mcp-rehberi.md`, `mevzuat-mcp-rehberi.md`.
 
 ## Arthur Mask — yerel gizlilik kapısı (v1.0.2)
 
-Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce **kullanıcının kendi Windows bilgisayarında** maskelenebilir. **Arthur Mask 1.0.0**, [ArthurLegal v1.8.0 sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0) kurulum dosyası olarak eklenen yerel programdır (`ArthurMask-Kurulum-1.0.0.exe`, yaklaşık 1 GB). UYAP UDF, Word, PDF veya taranmış belge bırakılır; taraf, şüpheli, sanık, mağdur ve tanık adları, TCKN, adres, telefon, dosya numarası gibi bilgiler `{{KİŞİ-01}}` gibi etiketlere dönüşür, gerçek değerler bilgisayardaki şifreli kasada kalır. Claude yalnız maskeli metni görür; cevap bilgisayarda gerçek adlarla Word veya UYAP editöründe açılır.
+Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce **kullanıcının kendi Windows bilgisayarında** maskelenebilir. **Arthur Mask 1.0.0**, tek bir Windows kurulum dosyasıyla gelen yerel programdır: **[ArthurMask-Kurulum.exe dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (yaklaşık 1 GB; tıklayınca iner, GitHub hesabı gerekmez). UYAP UDF, Word, PDF veya taranmış belge bırakılır; taraf, şüpheli, sanık, mağdur ve tanık adları, TCKN, adres, telefon, dosya numarası gibi bilgiler `{{KİŞİ-01}}` gibi etiketlere dönüşür, gerçek değerler bilgisayardaki şifreli kasada kalır. Claude yalnız maskeli metni görür; cevap bilgisayarda gerçek adlarla Word veya UYAP editöründe açılır.
 
 - **Korumalar:** belirsiz tespitler için inceleme ekranı · kırmızı hat (gerekçe yazılmadan gönderilmez) · Claude'a giden her yanıtın kasaya karşı son taranması (çıkış kapısı) · gönderim kaydı ve sızıntı denetimi.
 - **Tamamen çevrimdışı.** Tespit ve OCR modelleri kurulum dosyasının içindedir.

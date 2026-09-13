@@ -14,6 +14,9 @@ UDF olarak açılır.
 > web sürümünde ve mobil uygulamalarda çalışmaz. ArthurLegal Project'inizi Claude
 > Desktop'tan açmanız yeterlidir; Project'ler web ile masaüstü arasında ortaktır.
 
+
+> **[⬇ Kurulum dosyasını indirin (Windows, yaklaşık 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** · tıklayınca iner, GitHub hesabı gerekmez
+
 ---
 
 ## 1. Neye ihtiyacınız var
@@ -34,8 +37,10 @@ yalnız en son sürüm numarasını okur (belge verisi göndermez).
 
 ## 2. Kurulum (yaklaşık 10 dakika)
 
-1. **İndirin.** [ArthurLegal v1.8.0 sürüm sayfası](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-   → `ArthurMask-Kurulum-1.0.0.exe` (yaklaşık 1 GB).
+1. **İndirin.** **[⬇ Arthur Mask kurulum dosyasını indirmek için buraya tıklayın](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, yaklaşık 1 GB).
+   GitHub hesabı ya da GitHub bilgisi gerekmez: bağlantıya tıklayınca `ArthurMask-Kurulum.exe` dosyası
+   doğrudan bilgisayarınızın **İndirilenler** klasörüne iner. İnternet hızınıza göre birkaç dakika sürebilir.
+   Tarayıcı "Sakla / Keep" diye sorarsa **Sakla**'yı seçin. İndirme bitince İndirilenler klasöründe dosyaya çift tıklayın.
 2. **Çalıştırın.** Kurulum dosyası kod imzalı olmadığından Windows
    **"Windows bilgisayarınızı korudu"** diyebilir: **Ek bilgi** → **Yine de çalıştır**.
    Antivirüs programınız dosyayı bir süre tarayabilir; bekleyin.

@@ -16,6 +16,9 @@ Word or as a UDF file.
 > not work in claude.ai in the web browser or in the mobile apps. Open your ArthurLegal
 > Project from Claude Desktop; Projects are shared between web and desktop.
 
+
+> **[⬇ Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** · direct download, no GitHub account needed
+
 ---
 
 ## 1. What you need
@@ -37,8 +40,10 @@ update check that reads the latest version number from the ArthurLegal releases 
 
 ## 2. Installation (about 10 minutes)
 
-1. **Download.** [ArthurLegal v1.8.0 release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-   → `ArthurMask-Kurulum-1.0.0.exe` (about 1 GB).
+1. **Download.** **[⬇ Click here to download the Arthur Mask installer](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, about 1 GB).
+   No GitHub account or GitHub knowledge is needed: the link downloads `ArthurMask-Kurulum.exe` straight into
+   your **Downloads** folder. Depending on your connection this can take a few minutes. If the browser asks
+   whether to keep the file, choose **Keep**. When the download finishes, double-click the file in Downloads.
 2. **Run it.** The installer is not code-signed, so Windows SmartScreen may say
    **"Windows protected your PC"** (Turkish: "Windows bilgisayarınızı korudu"):
    **More info** → **Run anyway**. Some antivirus products scan the file for a while.

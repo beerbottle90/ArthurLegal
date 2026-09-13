@@ -97,7 +97,7 @@ Bu pakette yeni olarak (Corporate paketinde olmayan) 9 hukuk bürosu spesifik re
 
 ## Arthur Mask kurulum dosyası (v1.8.0)
 
-Arthur Mask, ArthurLegal GitHub v1.8.0 sürümüne eklenen `ArthurMask-Kurulum-1.0.0.exe` kurulum
+Arthur Mask, ArthurLegal GitHub v1.8.0 sürümüne eklenen `ArthurMask-Kurulum.exe` kurulum
 dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
 **ArthurLegal Proprietary Non-Commercial License** kapsamındadır; kaynak kodu yayımlanmaz.
 

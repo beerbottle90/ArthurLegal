@@ -7,6 +7,11 @@ Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
 jurisdictions, no auth), up to four optional ones, and a curated primary-source reference layer.
 
+> ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows)
+> **[Download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB). The link downloads directly; no GitHub account needed.
+> Double-click the downloaded file to install. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> **Türkçe:** [Kurulum dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), inen dosyaya çift tıklayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
+
 Built for legal teams that work across borders: a contract governed by English
 law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
 question is one workflow, not four.
@@ -27,8 +32,8 @@ design.
 
 Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1.0.0` and `v1.0.1`).
 To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
-file in the package you want. The optional Arthur Mask installer (Windows, Claude Desktop)
-is attached to the [v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0).
+file in the package you want. The optional Arthur Mask privacy gate (Windows, Claude Desktop) installs from one file:
+**[⬇ download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB, direct download, no GitHub account needed).
 
 ## Jurisdictional coverage
 
@@ -134,9 +139,8 @@ works only through Claude Desktop's local connector, so it is not available in c
 the browser or in the mobile apps. The ArthurLegal Project itself is shared between web and
 desktop; open it from Claude Desktop.
 
-**Download.** The installer is attached to the
-[v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0) as
-`ArthurMask-Kurulum-1.0.0.exe` (about 1 GB; Windows 10/11 64-bit, Claude Desktop, about
+**Download.** **[⬇ ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**, a direct download that needs no GitHub account
+(always the latest version; about 1 GB; Windows 10/11 64-bit, Claude Desktop, about
 4 GB free disk, 8 GB RAM recommended). It installs per user without administrator rights
 and registers the `arthur-mask` connector in Claude Desktop. It is not code-signed, so
 SmartScreen may warn ("More info" → "Run anyway"). Arthur Mask is covered by the same

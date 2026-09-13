@@ -7,6 +7,14 @@
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
+
+> ### ⬇ Arthur Mask — mask documents on your own computer before Claude sees them
+> **[Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. The link downloads directly; no GitHub account needed.
+> Double-click the downloaded `ArthurMask-Kurulum.exe`. Step-by-step guide: **[ARTHUR-MASK.md](ARTHUR-MASK.md)** (Türkçe) · English: [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md)
+> Requires Claude Desktop for Windows; it does not work in claude.ai on the web or in the mobile apps.
+>
+> **Türkçe:** [Kurulum dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), inen dosyaya çift tıklayın; anlatım [ARTHUR-MASK.md](ARTHUR-MASK.md).
+
 ---
 
 ## What it does
@@ -38,9 +46,9 @@ Version history and the full v1.0.1 → v1.8.0 progression: [CHANGELOG.md](CHANG
 ## Arthur Mask — local privacy gate (new in v1.8.0)
 
 Client documents can now be masked **on the lawyer's own Windows computer** before Claude
-sees them. **Arthur Mask 1.0.0** is a local app, distributed as an installer on the
-[ArthurLegal v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-(`ArthurMask-Kurulum-1.0.0.exe`, about 1 GB). Drop a Word, UYAP UDF, PDF or scanned
+sees them. **Arthur Mask 1.0.0** is a local app, distributed as a single Windows installer:
+**[download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**
+(about 1 GB, direct download, no GitHub account needed). Drop a Word, UYAP UDF, PDF or scanned
 document into its local browser interface; names, companies, national ID and tax numbers,
 IBANs, addresses, phone numbers, e-mail addresses, birth dates, file numbers, passports and
 plates are replaced with labels such as `{{KİŞİ-01}}`. The real values stay in an encrypted

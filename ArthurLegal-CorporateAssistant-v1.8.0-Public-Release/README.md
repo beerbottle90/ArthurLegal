@@ -7,6 +7,14 @@
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
+
+> ### ⬇ Arthur Mask — mask documents on your own computer before Claude sees them
+> **[Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. The link downloads directly; no GitHub account needed.
+> Double-click the downloaded `ArthurMask-Kurulum.exe`. Step-by-step guide: **[ARTHUR-MASK.md](ARTHUR-MASK.md)** (Türkçe)
+> Requires Claude Desktop for Windows; it does not work in claude.ai on the web or in the mobile apps.
+>
+> **Türkçe:** [Kurulum dosyasını indirin](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), inen dosyaya çift tıklayın; anlatım [ARTHUR-MASK.md](ARTHUR-MASK.md).
+
 ---
 
 ## What it does
@@ -29,9 +37,9 @@ never presented as retrieved.
 ## Arthur Mask — local privacy gate (new in v1.8.0)
 
 Company documents can now be masked **on the user's own Windows computer** before Claude
-sees them. **Arthur Mask 1.0.0** is a local app, distributed as an installer on the
-[ArthurLegal v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-(`ArthurMask-Kurulum-1.0.0.exe`, about 1 GB). Drop a Word, UYAP UDF, PDF or scanned
+sees them. **Arthur Mask 1.0.0** is a local app, distributed as a single Windows installer:
+**[download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**
+(about 1 GB, direct download, no GitHub account needed). Drop a Word, UYAP UDF, PDF or scanned
 document into its local browser interface; names, companies, national ID and tax numbers,
 IBANs, addresses, phone numbers, e-mail addresses, birth dates, file numbers, passports and
 plates are replaced with labels such as `{{KİŞİ-01}}`. The real values stay in an encrypted
@@ -131,7 +139,7 @@ Full guide → [KURULUM.md](KURULUM.md) (Turkish).
 2. **Paste `SYSTEM_PROMPT.md`** into the Custom Instructions field.
 3. **Upload the 103 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
 4. **Add the ArthurLegal MCP connector** — URL: `https://arthurlegal-mcp.fly.dev/mcp` (no auth; Türkiye under `tr_` plus 14 jurisdictions — KURULUM.md Step 4). Optional: OpenCaseLaw.ch · CourtListener · Fedlex (Step 4b) · TR Legal MCP for ECHR/KİK/Sayıştay (Step 4d).
-5. **Install Arthur Mask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum-1.0.0.exe` from the [v1.8.0 release](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
+5. **Install Arthur Mask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum.exe` from [this direct download link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
 6. **Fill the `[DOLDUR]` placeholders** in `knowledge/company-profile.md` for your own organization — or have the assistant do it with `/<plugin>:cold-start-interview`.
 
 ---

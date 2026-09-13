@@ -42,8 +42,10 @@ görür; cevap bilgisayarınızda gerçek adlarla Word veya UYAP editöründe (U
 yaklaşık 4 GB boş disk · 8 GB RAM önerilir. Kurumsal bilgisayarlarda yazılım kurma ve harici
 yapay zekâ hizmeti kullanma kurum kurallarına tabidir.
 
-1. **İndirin:** [ArthurLegal v1.8.0 sürüm sayfası](https://github.com/beerbottle90/ArthurLegal/releases/tag/v1.8.0)
-   → `ArthurMask-Kurulum-1.0.0.exe` (yaklaşık 1 GB).
+1. **İndirin.** **[⬇ Arthur Mask kurulum dosyasını indirmek için buraya tıklayın](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, yaklaşık 1 GB).
+   GitHub hesabı ya da GitHub bilgisi gerekmez: bağlantıya tıklayınca `ArthurMask-Kurulum.exe` dosyası
+   doğrudan bilgisayarınızın **İndirilenler** klasörüne iner. İnternet hızınıza göre birkaç dakika sürebilir.
+   Tarayıcı "Sakla / Keep" diye sorarsa **Sakla**'yı seçin. İndirme bitince İndirilenler klasöründe dosyaya çift tıklayın.
 2. **Çalıştırın.** Kurulum dosyası kod imzalı değildir; SmartScreen **"Windows bilgisayarınızı
    korudu"** derse **Ek bilgi** → **Yine de çalıştır**. Antivirüs dosyayı bir süre tarayabilir.
 3. **Kurun.** Yönetici yetkisi gerekmez (`%LOCALAPPDATA%\Programs\Arthur Mask`). Kurulum
