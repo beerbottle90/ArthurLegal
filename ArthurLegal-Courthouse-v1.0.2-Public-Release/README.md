@@ -3,7 +3,7 @@
 **Sürüm:** v1.0.2 · **Tarih:** 2026-09-13 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web ve Claude Desktop; Arthur Mask için Claude Desktop, Windows)
 
-> **v1.0.0 — 8/8 plugin kurulu** (her biri 2-5 skill, toplam 28 skill + 24 referans). Referansların tamamı yargısal/tarafsız çerçevede (müşteri-spesifik içerik temizlendi).
+> **v1.0.2 — 8/8 plugin kurulu** (her biri 2-5 skill, toplam 28 skill + 24 referans). Referansların tamamı yargısal/tarafsız çerçevede (müşteri-spesifik içerik temizlendi).
 
 > Türk **yargı mensubu** (mahkeme hâkimleri + mahkeme kalem memurlukları) için **yargısal / tarafsız** decision-support asistanı. ArthurLegal Law-Firm / Corporate iskeletinden türetilmiştir; ancak konum **savunucu değil, yargısaldır**.
 

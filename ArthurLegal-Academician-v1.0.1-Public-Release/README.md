@@ -3,7 +3,7 @@
 **Sürüm:** v1.0.1 · **Tarih:** 2026-09-06 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
-> **v1.0.0 — 8 plugin · 28 skill · 23 referans · 4 agent.** Tam iki dilli (TR + EN),
+> **v1.0.1 — 8 plugin · 28 skill · 23 referans · 4 agent.** Tam iki dilli (TR + EN),
 > Türkiye ve uluslararası akademik rejimleri eşit ağırlıkta kapsar.
 
 > Hukuk **akademisyeni** (araştırma görevlisi → profesör) için araştırma, yazım, atıf

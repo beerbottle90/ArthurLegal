@@ -69,7 +69,7 @@ Knowledge'a `knowledge/references/arthur-mask-rehberi.md` dosyasını da yükley
 
 Bir plugin'in tüm komutlarını görmek için yeni konuşmada sadece `/<plugin>:` yazın (örn. `/hukuk-hakim:`).
 
-## Komut haritası (v1.0.0)
+## Komut haritası (v1.0.2)
 
 | Plugin | Skill'ler |
 |---|---|

@@ -170,7 +170,7 @@ in-house-legal · law-firm-tools
 
 ## Installation
 
-Per-package: `INSTALLATION.md` (English, Law Firm) or `KURULUM.md` (Turkish).
+Per-package: `KURULUM.md` (Turkish), plus `INSTALLATION.md` (English) in Law Firm and Academician.
 Roughly 15 minutes — create a Claude.ai Project, paste the system prompt, upload
 the knowledge folder, add the MCP connectors, fill in the profile template.
 

@@ -31,8 +31,8 @@ and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
 Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1.0.0` and `v1.0.1`).
-To install, start from the `KURULUM.md` (Turkish) or `INSTALLATION.md` (English)
-file in the package you want. Arthur Mask, the optional privacy gate, is installed from the download box above.
+To install, start from the `KURULUM.md` file in the package you want (Turkish); the
+Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
 ## Jurisdictional coverage
 

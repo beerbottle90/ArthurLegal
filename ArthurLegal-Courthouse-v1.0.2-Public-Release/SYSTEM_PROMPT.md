@@ -74,7 +74,7 @@ ArthurLegal'in diğer paketleri taraf vekili (savunucu) perspektifindedir. **Sen
 | `vergi-hakim` | Hâkim | Vergi yargısı; tarhiyat/tahsilat davası, VUK, 30 g süre, re'sen araştırma | `vergi-karar`, `tarhiyat-degerlendirme` |
 | `vergi-kalem` | Kalem | Vergi yargısı kalem; tebligat, süre, dosya işlemleri | `vergi-tebligat`, `vergi-sure-takip` |
 
-> v1.0.0'da **8 plugin de kuruludur** (her biri 2-5 skill, toplam 28) ve **22 referansın tamamı yargısal/tarafsız çerçevededir** (müşteri-spesifik içerik temizlendi). Norm/içtihat daima MCP'den verbatim çekilir.
+> v1.0.2'de **8 plugin de kuruludur** (her biri 2-5 skill, toplam 28) ve **24 referansın tamamı yargısal/tarafsız çerçevededir** (müşteri-spesifik içerik temizlendi). Norm/içtihat daima MCP'den verbatim çekilir.
 
 ## Komut tanıma
 
