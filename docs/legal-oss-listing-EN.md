@@ -33,9 +33,9 @@ data-transfer question is one workflow, not four.
 | Profile | Version | For | Scope |
 |---|---|---|---|
 | Corporate Assistant | v1.8.0 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 103 knowledge files · Arthur Mask |
-| Law Firm Assistant | v1.8.0 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 128 knowledge files · Arthur Mask |
+| Law Firm Assistant | v1.8.1 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 128 knowledge files · Arthur Mask |
 | Academician | v1.0.1 | Legal academics | Publication strategy, journal selection, promotion track, ethics board |
-| Courthouse | v1.0.2 | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask |
+| Courthouse | v1.0.3 | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask |
 
 The two flagship packages are multi-jurisdictional. Academician and Courthouse are
 built around Turkish academic-promotion and Turkish judicial procedure
@@ -81,6 +81,8 @@ knowledge — verify]`). Unretrieved text is never presented as retrieved. Tool
 calls are cancelled at 100 seconds and a cancelled call returns nothing — when
 scope narrows, the assistant states it instead of filling the gap from memory.
 All output is a draft for attorney review.
+
+**v1.8.1 (2026-09-17)** corrects criminal-procedure deadlines to the text in force after Law 7499 (objection, objection to non-prosecution, appeal and appeal on points of law: two weeks; appeals run from service of the reasoned judgment) and, in Courthouse v1.0.3, the 15-day objection to a tax payment order.
 
 **v1.8.0 (2026-09-13)** adds **Arthur Mask**, a local privacy gate for Windows. Documents
 (Word, UYAP UDF, PDF, scans via local OCR) are masked on the user's own computer: personal

@@ -21,16 +21,16 @@ question is one workflow, not four.
 | Profile | Current version | For | Scope |
 |---|---|---|---|
 | **Corporate Assistant** | **[v1.8.0](ArthurLegal-CorporateAssistant-v1.8.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.8.0](ArthurLegal-Law-Firm-v1.8.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.8.1](ArthurLegal-Law-Firm-v1.8.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
 | Academician | [v1.0.1](ArthurLegal-Academician-v1.0.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.2](ArthurLegal-Courthouse-v1.0.2-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| Courthouse | [v1.0.3](ArthurLegal-Courthouse-v1.0.3-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`; Courthouse `v1.0.0` and `v1.0.1`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`, Law Firm `v1.8.0`; Courthouse `v1.0.0` … `v1.0.2`).
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
@@ -125,6 +125,37 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.8.1 — Criminal-procedure and tax-collection deadlines match the law in force (2026-09-17)
+
+Law Firm **v1.8.1** and Courthouse **v1.0.3** correct deadline statements that predated recent
+amendments. Every corrected figure was checked against the text in force on mevzuat.gov.tr on
+17 September 2026. Corporate stays at v1.8.0 and Academician at v1.0.1; neither contained the
+affected statements.
+
+| Provision | Old statement | In force | Amended by |
+|---|---|---|---|
+| CMK art. 273/1 — appeal on facts and law (istinaf) | 7 days from pronouncement or service | **Two weeks** from service of the judgment with its reasoning | Law 7499 (Official Gazette 12.03.2024) |
+| CMK art. 291/1 — appeal on points of law (temyiz) | 15 days from pronouncement or service | **Two weeks** from service of the judgment with its reasoning | Law 7499 |
+| CMK art. 268/1 — objection (itiraz), including detention orders | 7 days | **Two weeks** from learning of the decision | Law 7499 |
+| CMK art. 173/1 — objection to a decision not to prosecute | 15 days | **Two weeks** from service | Law 7499 |
+| Law 6183 art. 58 — objection to a tax payment order | 7 days | **15 days** from service | Law 7061 (in force 01.01.2018) |
+
+The appeal on points of law was the most consequential: "15 days from pronouncement" counts both
+the wrong length and from the wrong day. One guide also warned lawyers against thinking that a
+criminal appeal takes two weeks, which is now the correct answer; that warning is reversed.
+
+Two related statements in the same passages were corrected as well: objections to detention and
+judicial-control orders of a criminal judgeship of peace are heard by the *asliye ceza* judge
+(CMK art. 268/3-b, Law 7331), and the surcharge on an unfounded objection to a payment order no
+longer exists (Constitutional Court, 21.04.2022, E.2021/119, K.2022/48).
+
+**Updating.** Only knowledge files changed; the system prompts differ only in their version label
+and need not be pasted again. Replace five files in Project knowledge — Law Firm:
+`cmk-rehberi.md`, `cmk-gorevli-rehberi.md`, `dilekce-teknikleri-rehberi.md`,
+`advocacy-legal__skills.md`, `criminal-defense__skills.md`; Courthouse: `cmk-rehberi.md`,
+`sulh-ceza-hakimligi-rehberi.md`, `vergi-yargisi-rehberi.md`, `ceza-kalem__skills.md`,
+`vergi-hakim__skills.md`.
 
 ## v1.8.0 — Arthur Mask: documents are masked before anything leaves the computer (2026-09-13)
 
