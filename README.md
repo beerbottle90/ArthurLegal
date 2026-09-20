@@ -20,17 +20,17 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.8.0](ArthurLegal-CorporateAssistant-v1.8.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.8.1](ArthurLegal-Law-Firm-v1.8.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.0.1](ArthurLegal-Academician-v1.0.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.3](ArthurLegal-Courthouse-v1.0.3-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.9.0](ArthurLegal-CorporateAssistant-v1.9.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.9.0](ArthurLegal-Law-Firm-v1.9.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.0.2](ArthurLegal-Academician-v1.0.2-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.0.4](ArthurLegal-Courthouse-v1.0.4-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.7.0`, Law Firm `v1.8.0`; Courthouse `v1.0.0` … `v1.0.2`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.8.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.0.3`; Academician `v1.0.0`, `v1.0.1`).
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
@@ -73,7 +73,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **OpenSanctions** (REST API, API key) |
 
 Türkiye currently has the deepest coverage: inside ArthurLegal MCP under the `tr_`
-prefix — courts, legislation, Official Gazette, eight regulators and a 19,404-document
+prefix — courts, legislation, Official Gazette, eight regulators and a 19,498-document
 semantic archive — plus the largest share of the reference layer.
 Switzerland (972K+ decisions and Fedlex legislation) and Azerbaijan (official
 `api.e-qanun.az` with in-force status verification) follow. Seven more European
@@ -125,6 +125,34 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.9.0 — Topic triage that runs inside the server, and two filters that silently did nothing (2026-09-20)
+
+Law Firm and Corporate **v1.9.0**, Courthouse **v1.0.4**, Academician **v1.0.2**. The Türkiye backend is now ArthurLegalTR 0.4.0;
+the connector address is unchanged. After connecting, `status` must report `backend_status.tr.version` 0.4.0 or later.
+
+**A question that could not be asked.** Gazette and legislation titles rarely name their subject: in a labelled corpus the topic
+word appears in 10% of enforcement items and 14% of competition items. `tr_resmi_gazete_tara`, `tr_resmi_gazete_fihrist` and
+`tr_mevzuat_ara` now take a `konu` filter (`enerji`, `rekabet`, `vergi`, `icra`): a small model that runs inside the server, makes
+no network call and sends the query to no third party, trained only on the public Official Gazette index. For omnibus laws
+("Bazı Kanunlarda Değişiklik Yapılmasına Dair Kanun") it reads the names of the amended laws — Law 7531 is found through the
+Enforcement and Bankruptcy Code — and an omnibus law whose names cannot be read is never dropped.
+
+**Measured, and the numbers travel with the tool.** Gazette out-of-fold sensitivity 92–100% per topic; on a hand-labelled
+56-item held-out set, energy 5 of 8. Legislation titles were measured separately rather than assumed: on 60 unseen titles, tax
+4/4, enforcement 2/2, **energy 0/3**. These figures are in the tool schema, in every response, in `status`, in the system prompt
+and in the guide. `konu` is a pre-filter; it is not used to confirm publication or to conclude that nothing was issued.
+
+**Two silent failures fixed.** Bedesten ignores a one-sided date range without saying so. A case-law search with only
+`date_from=2025-01-01` returned 52,993 decisions instead of 1,048; `tr_ictihat_semantik_ara` only takes `date_from`, so its date
+filter had never worked. The same held for legislation (917 laws instead of 6). Research narrowed by date with earlier versions
+should be re-checked.
+
+**The archive, honestly.** 13,313 of the 19,404 archived regulator documents (BDDK, BTK, Rekabet) held only a title, so semantic
+search looked at titles, not decisions. BDDK (964) and BTK (1.897) full texts were added — "idari para cezası" occurs in the text
+of 412 BTK decisions and in the title of none, so that question could not be asked at all. Rekabet stays title-only on purpose,
+because its live search already matches inside the decision PDFs. The guide now says, regulator by regulator, what is searched.
+The weekly regulatory template, which sent users to regulator websites for decisions the connector already serves, was rewritten.
 
 ## v1.8.1 — Criminal-procedure and tax-collection deadlines match the law in force (2026-09-17)
 

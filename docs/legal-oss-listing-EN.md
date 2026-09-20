@@ -49,7 +49,7 @@ source sits in rather than papering over the difference.
 - **Primary-source MCP** (verbatim norm text and case law): Türkiye · Switzerland ·
   United States (case law) · Azerbaijan — via **ArthurLegal MCP** (Türkiye under the
   `tr_` prefix: courts, legislation with gerekçe, Official Gazette, eight regulators and a
-  19,404-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
+  19,498-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
