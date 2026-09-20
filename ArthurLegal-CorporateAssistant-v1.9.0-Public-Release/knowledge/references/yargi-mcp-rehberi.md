@@ -74,11 +74,11 @@ Sayılar 20.09.2026 tarihli arşivdir (toplam 19.498 belge). Arşiv haftalık ta
 
 Bu tablonun söylediği şey: bir kararın METNİNE dair soru her kurumda aynı araçla sorulmaz.
 
-1. BDDK ve BTK: canlı arama yalnız başlıktadır; başlıkta geçmeyen içerik arşive sorulur. Ölçüldü (20.09.2026): "idari para cezası" 412 BTK kararının metninde geçer, hiçbirinin başlığında geçmez; "dolaylı pay sahipliği" 60 BDDK kararının metninde geçer, hiçbirinin başlığında geçmez. Bu soruları `tr_semantik_ara(kurum="btk" | "bddk", …)` ile sor. İki kurumun karar metinleri arşive 20.09.2026'da eklendi; o tarihten önce arşiv bu kurumlarda yalnız başlıkları arıyordu.
+1. BDDK ve BTK: canlı arama yalnız başlıktadır; başlıkta geçmeyen içerik arşive sorulur. Ölçüldü (20.09.2026): "idari para cezası" 419 BTK kararının metninde geçer, yalnız 9'unun başlığında geçer; "dolaylı pay sahipliği" 60 BDDK kararının metninde geçer, hiçbirinin başlığında geçmez. Bu soruları `tr_semantik_ara(kurum="btk" | "bddk", …)` ile sor. İki kurumun karar metinleri arşive 20.09.2026'da eklendi; o tarihten önce arşiv bu kurumlarda yalnız başlıkları arıyordu.
 2. Rekabet: tersine, metin araması canlı taraftadır (`tr_kurum_karari_ara(kurum="rekabet", query=…)` karar PDF'inin içinde arar). Yerel arşiv Rekabet kararlarının yalnız başlığını taşır; `tr_semantik_ara(kurum="rekabet")` başlıkta kavramsal arama yapar, gerekçede değil. Gerekçeye dair bir sonucu "arşivde yok" diye kapatma; canlı aramayı dene.
 3. KVKK, SPK ve Sigorta Tahkim: başlıklar bilgi taşımaz ("KVKK Kurul Kararı 2021/1111", bülten bölüm adı, K numarası); soru her zaman metne sorulur, `tr_semantik_ara` ve `tr_spk_bulten_icinde_ara` bunun içindir.
 4. EPDK: `market` ve `category` en güçlü süzgeçtir; metni indekslenmemiş kararlar için `tr_kurum_karari_getir` ile belgeyi aç.
-5. Kurum zaten konudur: `kurum="epdk"` enerji, `kurum="kvkk"` kişisel veri demektir. Resmî Gazete ve mevzuattaki `konu` süzgeci (enerji, rekabet, vergi, icra) kurum kararlarında yoktur ve gerekmez; ölçüldü, kurum kararı başlıklarında bu dört konunun kelimeleri kurumun kendi alanı dışında yüzde 0 ile 1 arasında geçiyor.
+5. Kurum zaten konudur: `kurum="epdk"` enerji, `kurum="kvkk"` kişisel veri demektir. Resmî Gazete ve mevzuattaki `konu` süzgeci (enerji, rekabet, vergi, icra) kurum kararlarında yoktur ve gerekmez; ölçüldü, kurum kararı başlıklarında bu dört konunun kelimeleri kurumun kendi alanı dışında yüzde 2'nin altında geçiyor.
 
 ## 5. Tipik kullanım
 

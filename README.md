@@ -150,7 +150,7 @@ should be re-checked.
 
 **The archive, honestly.** 13,313 of the 19,404 archived regulator documents (BDDK, BTK, Rekabet) held only a title, so semantic
 search looked at titles, not decisions. BDDK (964) and BTK (1.897) full texts were added — "idari para cezası" occurs in the text
-of 412 BTK decisions and in the title of none, so that question could not be asked at all. Rekabet stays title-only on purpose,
+of 419 BTK decisions and in the title of only 9, so for the rest the question could not be asked at all. Rekabet stays title-only on purpose,
 because its live search already matches inside the decision PDFs. The guide now says, regulator by regulator, what is searched.
 The weekly regulatory template, which sent users to regulator websites for decisions the connector already serves, was rewritten.
 

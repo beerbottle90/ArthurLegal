@@ -34,7 +34,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
    sonucunda kullanılmaz; çıktıda elenen ve belirsiz kalem sayısı yazılır.
 5. **BDDK ve BTK karar metinleri yerel arşivde.** BDDK'nin 964, BTK'nin 1.897 kararının tam metni 20.09.2026'da arşive eklendi.
    Bu iki kurumun canlı araması yalnız başlıktadır; karar içeriğine dair soru artık `tr_semantik_ara(kurum="bddk" | "btk")` ile
-   sorulabilir. Ölçü: "idari para cezası" 412 BTK kararının metninde geçiyor, hiçbirinin başlığında geçmiyor; "dolaylı pay
+   sorulabilir. Ölçü: "idari para cezası" 419 BTK kararının metninde geçiyor, yalnız 9'unun başlığında geçiyor; "dolaylı pay
    sahipliği" 60 BDDK kararının metninde geçiyor, hiçbirinin başlığında geçmiyor.
 
 ### Düzeltildi
