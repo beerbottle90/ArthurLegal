@@ -1,0 +1,758 @@
+# Değişiklik Günlüğü
+
+[Keep a Changelog](https://keepachangelog.com/tr-TR/1.1.0/) formatına uygundur.
+Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
+
+---
+
+## [1.9.0] — 2026-09-20 — *Konu Taraması Sunucunun İçinde; Sessizce Çalışmayan İki Süzgeç Düzeltildi*
+
+> **Araştırma sürümü.** Türkiye backend'i (ArthurLegalTR) 0.4.0 oldu. Başlığında konusu yazmayan düzenlemeyi ve torba kanunu
+> bulan yerel bir ön eleme eklendi; Bedesten'in sessizce yok saydığı tek taraflı tarih aralığı içtihat ve mevzuat aramasında
+> düzeltildi; yerel arşivin kurum bazında gerçek kapsamı ölçüldü, BDDK ve BTK karar metinleri arşive eklendi. Connector adresi ve
+> skill yapısı değişmedi. Bu sürümün anlattığı araç davranışı backend 0.4.0'ı gerektirir: `status` çıktısında
+> `backend_status.tr.version` 0.4.0 veya üstü olmalıdır.
+
+### Eklendi
+
+1. **`konu` süzgeci (`enerji`, `rekabet`, `vergi`, `icra`).** `tr_resmi_gazete_tara`, `tr_resmi_gazete_fihrist` ve `tr_mevzuat_ara`
+   araçlarında. Sunucunun içinde koşan yerel bir modeldir: ağa çıkmaz, anahtar istemez, sorgu hiçbir üçüncü tarafa gitmez; yalnız
+   kamuya açık Resmî Gazete fihristinden eğitildi. Gerekçe: `query` harfi harfine eşleşir ve başlıklar konu adını çoğu zaman
+   taşımaz. Etiketli 1.414 kalemde konu adı, icra kalemlerinin yüzde 10'unun, rekabet kalemlerinin yüzde 14'ünün başlığında
+   geçiyor; "Konkordato Gider Avansı Tarifesi" icradır ama "icra" yazmaz. `tr_resmi_gazete_tara` artık `query` olmadan `konu` ile
+   çağrılabilir.
+2. **Torba kanun geçişi.** "Bazı Kanunlarda Değişiklik Yapılmasına Dair Kanun" başlığı neyi değiştirdiğini söylemez.
+   `tr_mevzuat_ara(konu=…)` başlığı eşiği geçemeyen torba kanunun metnini açar ve değiştirilen kanun adlarını skorlar: 7531 sayılı
+   Kanun İcra ve İflas Kanunu üzerinden, 7579 sayılı Kanun Damga Vergisi Kanunu üzerinden bulunur. Adları okunamayan torba kanun
+   elenmez, `konu_kaynak: "belirsiz"` ile döner.
+3. **Sorgusuz mevzuat listelemesi.** `tr_mevzuat_ara` `types` ve/veya RG tarih aralığıyla, sorgu kelimesi olmadan listeler;
+   `konu` ile birlikte `max_pages` art arda beş sayfaya kadar tarar.
+4. **Ölçülmüş sınırlar her yerde yazılı.** Resmî Gazete, kat dışı duyarlılık: enerji yüzde 97, rekabet yüzde 100, vergi yüzde 93,
+   icra yüzde 92; elle etiketli 56 kalemlik sınav kümesinde enerji 8'de 5. Mevzuat başlıkları ayrıca ölçüldü (187 başlık):
+   eğitimde görülmemiş 60 başlıkta vergi 4'te 4, icra 2'de 2, enerji 3'te 0. Bu sayılar araç şemasında, her yanıtta, `status`
+   çıktısında, sistem talimatında ve `mevzuat-mcp-rehberi.md` bölüm 4'te tekrarlanır. `konu` yayım teyidinde ve "düzenleme yok"
+   sonucunda kullanılmaz; çıktıda elenen ve belirsiz kalem sayısı yazılır.
+5. **BDDK ve BTK karar metinleri yerel arşivde.** BDDK'nin 964, BTK'nin 1.897 kararının tam metni 20.09.2026'da arşive eklendi.
+   Bu iki kurumun canlı araması yalnız başlıktadır; karar içeriğine dair soru artık `tr_semantik_ara(kurum="bddk" | "btk")` ile
+   sorulabilir. Ölçü: "idari para cezası" 419 BTK kararının metninde geçiyor, yalnız 9'unun başlığında geçiyor; "dolaylı pay
+   sahipliği" 60 BDDK kararının metninde geçiyor, hiçbirinin başlığında geçmiyor.
+
+### Düzeltildi
+
+1. **İçtihat tarih süzgeci çalışmıyordu.** Bedesten tek taraflı tarih aralığını sessizce yok sayar: `+"işe iade"` için yalnız
+   `date_from="2025-01-01"` verildiğinde 1.048 yerine süzgeçsiz 52.993 karar dönüyordu ve hiçbir uyarı gelmiyordu.
+   `tr_ictihat_semantik_ara` yalnız `date_from` aldığı için tarih süzgeci o araçta hiç çalışmamıştı. Sunucu artık eksik ucu
+   dolduruyor. Önceki sürümlerle "şu tarihten sonraki kararlar" diye daraltılmış araştırmalar bu gözle yeniden değerlendirilmelidir.
+2. **Mevzuat RG tarih süzgeci.** Aynı kusur: yalnız `rg_date_from="2024-09-01"` 6 yerine 917 kanunun hepsini döndürüyordu.
+3. **`tr_mevzuat_ara` sayfa boyu.** Rehber ve şema en çok 50 diyordu; Bedesten 20'den büyüğünü HTTP 400 ile reddediyor. Üst sınır 20.
+4. **Haftalık regülasyon şablonu.** `reg-feed-haftalik-sablon.md` Resmî Gazete taramasını `tr_mevzuat_ara` tam metin aramasıyla
+   yaptırıyordu (RG akışını vermez) ve EPDK, SPK, Rekabet, KVKK, BTK kararları için "connector'da yok, kurum sitesi" diyordu;
+   sekiz kurum da `tr_kurum_karari_ara` içindedir. Şablon `tr_resmi_gazete_tara` ve `tr_kurum_karari_ara` ile yeniden yazıldı.
+5. **Yerel arşiv olduğundan derin gösteriliyordu.** 19.404 belgelik semantik arşivin 13.313'ü (BDDK, BTK, Rekabet) yalnız karar
+   başlığı taşıyordu; `tr_semantik_ara` o kurumlarda kararın metnini değil başlığını arıyordu. `yargi-mcp-rehberi.md` bölüm 4 artık
+   kurum kurum neyin arandığını söylüyor. BDDK ve BTK metinleri eklendi; Rekabet bilinçli olarak başlıkta bırakıldı, çünkü metin
+   araması canlı taraftadır (`tr_kurum_karari_ara(kurum="rekabet")` karar PDF'inin içinde arar).
+
+### Değişti
+
+1. `SYSTEM_PROMPT.md` bölüm 6 (Resmî Gazete satırı) ve bölüm 7 (madde 1 ile 4): `konu`, sorgusuz listeleme, sayfa boyu, tarih
+   kontrolü, arşivin kurum bazında kapsamı.
+2. `knowledge/references/mevzuat-mcp-rehberi.md` yeniden yazıldı (yeni bölüm 4, konu taraması);
+   `knowledge/references/yargi-mcp-rehberi.md` bölüm 3, 4, 7, 8 ve 9; `knowledge/references/reg-feed-haftalik-sablon.md`;
+   `knowledge/references/source-catalog.md`; `knowledge/skills/regulatory-legal__skills.md` (Tier 1'e Türkiye adımı).
+3. Yerel arşiv 19.498 belge (20.09.2026 tazelemesi: 94 yeni karar). Tazeleme artık yalnız yeni kararları ekler; mevcut metin
+   ve vektörlere dokunmaz.
+4. İçtihat için `konu` süzgeci bilinçli olarak yapılmadı: Bedesten karar listesi metin taşımaz, yerel bir modelin eleyeceği
+   girdi yoktur. Kurum kararlarında da yoktur: kurum zaten konudur.
+
+### Yükleme
+
+`SYSTEM_PROMPT.md` Custom Instructions alanına yeniden yapıştırılır. Project knowledge'da şu beş dosyayı yenileyin:
+`knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/source-catalog.md`, `knowledge/skills/regulatory-legal__skills.md`.
+
+---
+
+## [1.8.1] — 2026-09-17 — *Ceza Muhakemesi Süreleri Yürürlükteki Metne Göre Düzeltildi*
+
+> **Düzeltme sürümü.** Bilgi dosyalarındaki CMK kanun yolu süreleri 7499 sayılı Kanun'dan
+> (RG 12.03.2024) önceki metne göreydi. Her süre 17.09.2026'da mevzuat.gov.tr'deki yürürlükteki
+> metinle karşılaştırıldı. Talimat metni, connector adresleri ve skill yapısı değişmedi.
+
+### Düzeltildi
+
+| Hüküm | Eski bilgi | Yürürlükteki metin |
+|---|---|---|
+| CMK m. 273/1 istinaf | 7 gün, tefhim veya tebliğden | **İki hafta**, hükmün gerekçesiyle birlikte tebliğinden |
+| CMK m. 291/1 temyiz | 15 gün, tefhim veya tebliğden | **İki hafta**, hükmün gerekçesiyle birlikte tebliğinden |
+| CMK m. 268/1 itiraz (tutuklama ve adli kontrol dahil) | 7 gün | **İki hafta**, öğrenmeden |
+| CMK m. 173/1 KYOK'a itiraz | 15 gün | **İki hafta**, tebliğden |
+
+1. `knowledge/references/cmk-rehberi.md`: işlem tabloları, süre tablosu ve "tipik hatalar". Rehber
+   "istinaf süresini 2 hafta sanmak"ı hata sayıyordu; bugün doğru cevap budur. Uyarı tersine
+   çevrildi, 7499 değişikliği ayrıca belirtildi.
+2. `knowledge/references/cmk-gorevli-rehberi.md` ve `knowledge/skills/criminal-defense__skills.md`:
+   tutukluluk itirazı süresi ve tutuklama ile adli kontrol kararlarına itirazın inceleme mercii
+   (asliye ceza mahkemesi hâkimi, m. 268/3-b, 7331 s.K.).
+3. `knowledge/skills/advocacy-legal__skills.md`: `ceza-dilekce` süre ön-kontrol tablosu ve süre
+   haritasındaki CMK satırı.
+4. `knowledge/references/dilekce-teknikleri-rehberi.md`: "süre kaçırma" maddesindeki CMK süreleri.
+
+### Yükleme
+
+Project knowledge'da yukarıdaki beş dosyayı yenileyin. `SYSTEM_PROMPT.md` yalnız sürüm etiketinde
+değişti; yeniden yapıştırmak zorunlu değil.
+
+---
+
+## [1.8.0] — 2026-09-13 — *Arthur Mask: Belgeler Bilgisayardan Çıkmadan Maskelenir*
+
+> **Gizlilik sürümü.** Müvekkil belgeleri Claude'a verilmeden önce avukatın kendi Windows
+> bilgisayarında maskelenebilir. Yeni yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub'daki
+> [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`, yaklaşık 1 GB).
+> Connector adresleri ve mevcut skill'ler değişmedi.
+
+### Eklendi
+
+1. **Arthur Mask (yerel gizlilik kapısı).** Word, UYAP UDF, PDF, taranmış belge (yerel OCR),
+   .txt ve .md. Adlar, şirketler, TCKN, VKN, IBAN, adres, telefon, e-posta, doğum tarihi, dosya
+   numarası, pasaport ve plaka `{{KİŞİ-01}}`, `{{ŞİRKET-02}}`, `{{TCKN-01}}` gibi etiketlere
+   dönüşür; gerçek değerler her dosya için ayrı şifreli kasada kalır. Claude yalnız maskeli metni
+   alır; cevap bilgisayarda gerçek adlara geri çevrilip Word veya UDF olarak açılır, revizyonlar
+   orijinal belgeye izli değişiklik olarak işlenir. Türkçe, İngilizce, Azerbaycanca; iki sütunlu
+   iki dilli sözleşmeler tablo yapısını korur. Tamamen çevrimdışı; model ve OCR kurulum dosyasının
+   içinde.
+2. **Dört koruma.** İnceleme ekranı (belirsiz tespitler avukat onayına), kırmızı hat (savunma
+   stratejisi, uzlaşma sınırı, özel nitelikli veri, içeriden öğrenilen bilgi gerekçe yazılmadan
+   gönderilmez), çıkış kapısı (Claude'a giden her yanıt kasaya karşı son kez taranır), "Claude'a
+   giden" kaydı ve sızıntı denetimi.
+3. **Sistem talimatında bölüm 9, Arthur Mask.** `arthur_mask_belgeler`, `arthur_mask_belge_getir`,
+   `arthur_mask_belgeyi_revize_et`, `arthur_mask_teslim` araçlarının kullanımı: etiketler harfi
+   harfine korunur, gerçek değer tahmin edilmez, etiket hiçbir araştırma sorgusuna konmaz, revizyon
+   tek paragraf veya hücreden birebir `eski` ile yapılır. Sohbete tanımlanabilir müvekkil verisi
+   yapıştırılırsa sohbet başına en çok bir kez, işi durdurmayan kısa hatırlatma.
+4. **`knowledge/references/arthur-mask-rehberi.md`.** Claude'un kurulum, günlük kullanım, sorun
+   giderme ve sınırlar hakkındaki soruları cevaplaması ve araçları doğru kullanması için
+   (referans 93 → 94, knowledge dosyası 127 → 128).
+5. **`ARTHUR-MASK.md` ve `ARTHUR-MASK-EN.md`.** Avukata yönelik adım adım kullanım rehberi ve SSS.
+6. **Kurulum.** `KURULUM.md` Adım 5 ve `INSTALLATION.md` Step 5: indirme, SmartScreen, Claude
+   Desktop'u yeniden başlatma, doğrulama, kurtarma anahtarı. Sonraki adımlar birer numara kaydı
+   (OpenSanctions 6, büro profili 7, cold-start 8). Gereksinimler, SSS ve güncelleme notları yenilendi.
+
+### Değişti
+
+1. Sistem talimatında Araç çağrısı disiplini ve sonraki bölümler 10 ile 14 arası yeniden numaralandı;
+   iç atıflar etkilenmedi. Çekilen içerik kuralına Arthur Mask eklendi.
+2. Knowledge dosyalarındaki müvekkil ve karşı taraf yer tutucularında terim "takma ad" olarak
+   birleştirildi (Arthur Mask terminolojisiyle uyum; içerik değişmedi).
+3. `ATTRIBUTION.md`: Arthur Mask kurulum dosyasındaki üçüncü taraf açık kaynak bileşenler.
+
+### Sınırlar (bilerek)
+
+1. **Yalnız Claude Desktop (Windows).** claude.ai web ve mobil uygulamalarda çalışmaz: uzak
+   connector'lar Anthropic'in bulutundan çağrılır, bulut kullanıcının bilgisayarındaki programa
+   ulaşamaz. ArthurLegal Project'ini Claude Desktop'tan açın; Project'ler web ile masaüstü
+   arasında ortaktır.
+2. **Takma adlandırma, anonim hâle getirme değil.** Gerçek değerler kasada durur; maskeli metin
+   kişisel veri niteliğini sürdürebilir. Tespit olasılığa dayalıdır.
+3. **Maskelenmeyenler.** Tarihler ve tutarlar bilinçli olarak; Word içindeki resim ve gömülü
+   nesneler, taramalardaki el yazısı, imza, kaşe ve QR kod kapsam dışı.
+4. **Kurulum dosyası kod imzalı değil.** SmartScreen uyarısı: Ek bilgi, Yine de çalıştır.
+5. **Sorumluluk kullanıcıdadır.** KVKK, Avukatlık Kanunu m. 36 sır saklama yükümlülüğü, ticari sır ve gizlilik
+   sözleşmeleri Arthur Mask kullanılsa da avukat ve büro bakımından devam eder.
+
+### Yükleme
+
+`SYSTEM_PROMPT.md` yeniden yapıştırılır. `knowledge/references/arthur-mask-rehberi.md` Project
+knowledge'a eklenir; yer tutucu terimi değişen profil ve skill dosyalarını da yenilemek isterseniz
+`knowledge/` klasörünü yeniden yükleyin. Arthur Mask için Adım 5; Project Claude Desktop'tan açılır.
+
+---
+
+## [1.7.0] — 2026-09-06 — *Türkiye Aynı Connector'da: `tr_` Öneki, 8 Düzenleyici Kurum, Semantik Arşiv*
+
+> **Kaynak sürümü.** Türk hukuku artık ArthurLegal MCP'nin içinde: aynı uç
+> (`arthurlegal-mcp.fly.dev/mcp`), auth yok, önek `tr_`, 23 araç. 81 yerine
+> **104 araç**, 14 yerine **15 backend**. Ayrı Türk hukuku connector'ı gerekmez.
+
+### Değişti
+
+1. **TR birincil yolu.** Mevzuat, içtihat, AYM, Uyuşmazlık, Resmî Gazete ve düzenleyici
+   kurum kararları `tr_` araçlarından çekilir. Kaynak: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`
+   — standart kütüphane, ücretli arama anahtarı yok, uç bilgisi saidsurucu/yargi-mcp ve
+   mevzuat-mcp'den (MIT). TR Legal MCP (yargi-mcp-pro, OAuth) **isteğe bağlı ikinci
+   connector** oldu; yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB ve HSK için kullanılır
+   (Adım 4d).
+2. **Düzenleyici kurumlar tek arayüzde.** `tr_kurum_karari_ara(kurum=…)`: Rekabet (10.368 karar,
+   PDF metninde arama), EPDK (Kurul kararları ağacı: elektrik, doğal gaz, petrol, LPG, denetim;
+   3.744 karar, belge metinleriyle), SPK (haftalık bültenler 2005–2026, bülten içi arama), BDDK
+   (962 Kurul kararı), KVKK (karar özetleri), BTK (1.904 karar), GİB (özelgeler), Sigorta Tahkim
+   (66 dergi, 652 hakem kararı). Her sonuç kayıttan üretilen `citation` taşır.
+3. **Semantik arşiv.** `tr_semantik_ara`: 19.404 belge FTS5 + trigram + Voyage `voyage-4-lite`
+   vektörleriyle indeksli; `mode="semantic"` kelime paylaşmayan kararı bulur ("bir bankanın
+   faaliyet izninin kaldırılması" → BDDK kararları). Noktasız ı genişletmesi: `aydinlatma`
+   `aydınlatma`yı bulur.
+4. **Mevzuat araçları.** `tr_mevzuat_icindekiler` + `tr_mevzuat_madde_getir` (madde ağacı ve
+   tek madde), `tr_mevzuat_gerekce` (kanun gerekçesi, artık çalışıyor), `tr_resmi_gazete_tara`
+   (tarih aralığında fihrist araması). 60'tan fazla knowledge dosyasındaki çağrı örnekleri ve
+   parametre adları (`phrase` → `query`, `court_types` → `courts`, `birimAdi` → `chamber`,
+   `mevzuat_no` → `number`, `keywords` → `query`) yeni araçlara çevrildi; `yargi-mcp-rehberi.md`
+   ve `mevzuat-mcp-rehberi.md` baştan yazıldı. Atıf etiketi `[ArthurLegal TR, …]`.
+5. **Çıkarılanlar, dürüstçe.** KİK, Sayıştay, TÜRKPATENT ve İSTAÇ ArthurLegal MCP'de yoktur
+   çünkü resmî uçları çalışmıyor (EKAP 500, WAF 418, reCAPTCHA, DNS). Sistem promptu bunları
+   açıkça söyler; asistan bu kurumlar için "çekilmedi" der, sonuç uydurmaz.
+6. **Düzeltmeler.** Önceki paketlerdeki EPDK Kurul kararı adresi (`3-0-0-94/karar-tarihi`)
+   yönetmelik sayfasıydı; gerçek ağaç `son-kurul-kararlari/<piyasa>` sayfaları. Kurulum,
+   README ve atıf dosyaları yeni yapıya göre yenilendi.
+
+### Yükleme
+
+`SYSTEM_PROMPT.md` yeniden yapıştırılır; `knowledge/` klasörünün tamamı Project knowledge'a
+yeniden yüklenir (çağrı örnekleri değişti). Connector: Adım 4 (ArthurLegal MCP); isteğe bağlı
+Adım 4d (TR Legal MCP).
+
+---
+
+## [1.6.2] — 2026-09-04 — *Dört Yargı Çevresi Daha: UK · AB · Japonya · GLEIF*
+
+> **Kapsam sürümü.** ArthurLegal MCP'ye dört sunucu eklendi. Connector adresi
+> değişmedi — aynı uç, 63 yerine **81 araç**, 10 yerine **14 backend**.
+
+### Talimat revizyonu (2026-09-05, sürüm numarası değişmedi)
+
+`SYSTEM_PROMPT.md` yeniden yazıldı (madde 1 ile 5); aynı gün knowledge seti de elden geçirildi (madde 6). Custom Instructions alanı yeni prompt'la değiştirilir; madde 6'daki dosyalar Project knowledge'a yeniden yüklenir.
+
+1. Yazım ve biçim kuralları eklendi: emoji ve renkli daire yok, uzun ve kısa tire yok, başlık ve kalın en azda, madde işaretli liste yok, tablo yalnız istenirse ve tercihen dosya olarak. Amaç, cevabın olduğu gibi e-posta gövdesine yapıştırılabilmesi. Önem dereceleri kelimeyle yazılır (Bloklayıcı, Yüksek, Orta, Düşük); atıf kalıplarında alanlar virgülle ayrılır. Bu kurallar knowledge dosyalarındaki şablonların üstündedir.
+2. Dosya üretimi kuralları eklendi: docx, xlsx, pptx yazarı `ArthurLegal`; izlenen değişiklik ve Word yorumlarında `w:author="ArthurLegal"`, `w:initials="AL"`; yorum metinleri aynı yazım kurallarına tabi; dosya adları alt çizgili.
+3. TR Legal MCP bölümü canlı araç listesine göre yeniden yazıldı (`mevzuat_ara`, `mevzuat_getir`, `ictihat_ara`, `semantik_ictihat_ara`, `kurum_karari_ara`, `resmi_gazete_fihrist` vb.); `search_mevzuat`, `search_bedesten_unified` gibi artık var olmayan adlar kaldırıldı.
+4. ArthurLegal MCP bölümü düzeltildi: 14 backend ve 81 araç; önek başına araç sayıları `status` çıktısıyla eşitlendi; altı sunucu için ayrı connector kurulumunu anlatan bölüm kaldırıldı (hepsi tek uçta); UK, AB ve Japonya için çift yönlendirme (WebFetch ve MCP) tek satıra indirildi, MCP önce, WebFetch yedek. Üç ayrı kaynak listesi (yönlendirme, atıf kalıbı, rehber) tek tabloda birleştirildi.
+5. Araç çağrısı disiplini eklendi: bağımsız aramalar aynı turda, `status` yalnız gerektiğinde, `legal_research_guide` sohbette en fazla bir kez.
+6. Knowledge seti elden geçirildi (aynı gün): TR Legal MCP'nin artık var olmayan araç adlarını kullanan her çağrı ve atıf (`search_bedesten_unified`, `search_mevzuat`, `search_gib_ozelge` ve 30 kadar başka ad; 60'tan fazla dosya) canlı connector'ın 17 aracına ve gerçek parametre adlarına çevrildi; daire adları Bedesten kodlarına (`H9`, `D13`, `HGK`, `IDDK`) dönüştürüldü; `yargi-mcp-rehberi.md` ve `mevzuat-mcp-rehberi.md` şemalara göre yeniden yazıldı. ArthurLegal MCP rehberlerindeki öneksiz araç adları öneklendi (`az_`, `scholar_`, `contracts_`, `uk_`), "on yargı çevresi" ve tekil sunucu araç sayıları düzeltildi, altı rehberdeki Ollama kurulum notu üretim ucunun gerçek yapılandırmasıyla (Voyage `voyage-4-lite`) değiştirildi, `de_coverage` eklendi. Kırık atıflar düzeltildi (Law Firm paketinde `company-profile.md` yerine `firm-profile.md`; Corporate paketinde yer tutucu KAP rehberi adı; var olmayan profil dosyası). `redline-konvansiyonlari-rehberi.md` yazar, yorum ve başlık kurallarına göre yeniden yazıldı; INSTALLATION ve README sayımları güncellendi. Bu dosyaların Project knowledge'a yeniden yüklenmesi gerekir.
+
+### Eklendi
+
+| Önek | Kaynak | Araç |
+|---|---|---|
+| `uk_` | legislation.gov.uk (The National Archives, OGL v3.0) | 5 |
+| `eu_` | CELLAR — AB mevzuatı + CJEU içtihadı | 4 |
+| `jp_` | e-Gov 法令API v2 (Dijital Ajans) | 5 |
+| `gleif_` | GLEIF — küresel LEI kütüğü | 4 |
+
+Dördü de **passthrough**: yukarı akış canlı sorgulanıp sonuçlar bellekte
+yeniden sıralanıyor. Yerel indeks yok, dolayısıyla taranacak, bakımı yapılacak
+veya bayatlayacak külliyat da yok.
+
+### Neden bu dördü — her biri belirli bir yanıltmayı kapatıyor
+
+Aşağıdakiler dokümandan değil, **gerçek sorgu atılarak** bulundu.
+
+- **🇬🇧 Sessizce yok sayılan filtre.** legislation.gov.uk `year=` sorgu
+  parametresini kabul edip yok sayıyor: aynı toplam, aynı ilk sonuç. Filtrelenmiş
+  görünen filtresiz liste. Yıl **yola** konuyor. Ayrıca birkaç `data.xml` yolu
+  veri yerine web sayfası döndürüyor; bu artık hata olarak bildiriliyor, boş
+  sonuç diye geçiştirilmiyor.
+
+- **🇬🇧 Tadil tuzağı — sürümün asıl kazancı.** Revize metin yalnızca belirli bir
+  tarihe güncel. **Equality Act 2010'da 24 tadil yürürlükte ama metne
+  işlenmemiş.** `uk_get_effects` + `unapplied_only` bunları bulmak için tüm
+  beslemeyi tarıyor; tek sayfa filtrelemek, o sayfada olmadığı için "yok" derdi.
+  Tarama bitmezse `complete_scan: false` diyor — sayı bir taban, toplam değil.
+
+- **🇯🇵 Adının tersini söyleyen alan.** `remain_in_force` aslında 残存効力:
+  *ilga edilmiş* bir kanunun artakalan etkisi. Yürürlükteki kanunlar `False`
+  taşıyor — ilk denemede Yerel Özerklik Kanunu "yürürlükte değil" çıktı. Yürürlük
+  artık `current_revision_status` + `repeal_status`'tan hesaplanıyor, dört kontrol
+  kanunuyla doğrulandı. `as_of` yalnızca 2017-04-01'den itibaren çalışıyor;
+  daha erken tarih sessizce güncel metne düşmüyor, açıkça reddediliyor.
+
+- **🇪🇺 JS kabuğu.** `eur-lex.europa.eu` belge yolları her istek için Resmî
+  Gazete tarih dizinini döndürüyor — sorunsuz parse olan, istenmeyen içerik.
+  CELLAR sunucudan çalışan tek yol: CELEX → 303 → SPARQL manifestation →
+  `DOC_1`. Konsolide metinler işaretleniyor: **hukuki bağlayıcılıkları yok.**
+
+- **🌍 İki ayrı statü.** GLEIF'te ACTIVE bir şirket LAPSED bir LEI taşıyabilir —
+  "veri bayat" demek, "şirket tasfiye" değil. Ve "ana şirket yok" üç ayrı bulguyu
+  (yok · LEI'si yok · açıklama hukuken engelli) tek 404'e indiriyor; belirsizlik
+  olduğu gibi döndürülüyor.
+
+### Sınırlar
+
+- **🇬🇧 ve 🇯🇵 içtihat içermez.** İngiliz hukuku common law'dur: bir maddenin
+  anlamı çoğu kez bu sunucuların göremediği kararlarla yerleşir. Cevap mahkeme
+  uygulamasına dayanıyorsa "içtihat kontrol edilmedi" denir.
+- **GLEIF ticaret sicili değildir** — beyan, sermaye, yönetici, finansal veri yok.
+- UK'nin resmî MCP sunucusu (`legislation-mcp-ts`) ürün politikası gereği yalnız
+  loopback'e bağlıdır; barındırmak politikayı çiğnerdi. Aynı kamuya açık veriye
+  sitenin açık XML/Atom uçlarından gidildi, hiçbir şey yeniden dağıtılmıyor.
+
+---
+
+## [1.6.1] — 2026-09-04 — *On MCP Connector Tek Uçta*
+
+> **Dağıtım sürümü.** Paketin içeriği değişmedi; ona erişim yolu değişti. Daha
+> önce ayrı ayrı bağlanan on MCP sunucusu tek bir kalıcı adresin arkasında
+> toplandı — kullanıcı bir connector girer ve arkasına yaslanır.
+
+### Değişti
+
+- **Tek connector.** `https://arthurlegal-mcp.fly.dev/mcp` — auth yok, 63 araç.
+  Yerini aldığı on connector: e-qanun · LexScholar · ResourceContracts · de-eli ·
+  nl-rechtspraak · pl-sejm · at-ris · ie-statutebook · fi-finlex · es-boe.
+  Adres kalıcıdır; geçici tünel adresleri (`*.trycloudflare.com`) her yeniden
+  başlatmada değişiyor ve connector'ı **sessizce** kırıyordu — tanım doğru
+  görünüyor, çağrılar düşüyordu.
+
+- **Araç adları artık yargı çevresi önekli** — `az_` `at_` `de_` `nl_` `pl_`
+  `es_` `fi_` `ie_` `scholar_` `contracts_`. Bu şart: alttaki sunucularda
+  `get_act` **beş ayrı şey**, `search_legislation` üç ayrı şey demek. Öneksiz
+  birleştirilseydi İspanyol hukuku sorusu Fin mevzuatıyla cevaplanabilirdi.
+  Tüm referanslar, system prompt ve kurulum rehberleri önekli adlara geçirildi.
+
+- **Dokuz ayrı `server_status` yerine tek `status`.** Her yargı çevresinin
+  indeks büyüklüğünü, `index_coverage` aralığını ve semantiğin açık olup
+  olmadığını bir seferde verir. Yüklenemeyen bir yargı çevresi **duyurulur**;
+  sessizce boş sonuç dönmez — "sonuç yok" ile "aranmadı" farklı cevaplardır.
+
+- **Araç sayıları düzeltildi.** System prompt bağımsız sunucuların sayılarını
+  yazıyordu; toplayıcıda her sunucunun `server_status`'ı tek `status`a indiği
+  için hepsi bir eksik: NL 6→5 · PL 6→5 · AT 4→3 · IE 5→4 · FI 5→4 · ES 6→5 ·
+  DE 14→15.
+
+### Bilinmesi gereken sınırlar
+
+- **Kapsam dışında sessiz kalmaz, en yakınını döndürür.** Aradığın kanun
+  indekste yoksa arama "kapsam dışı" demez — en yakın komşuyu döndürür.
+  Ölçüldü: Finlandiya'ya *"iş sözleşmesi feshi"* sorulduğunda seyahat belgesi
+  ve balıkçılık yönetmeliği döndü, çünkü İş Sözleşmeleri Kanunu indeksin
+  2024-2025 diliminde yok. `status` aracının `index_coverage` alanını oku.
+
+- **İndeks derinliği yargı çevresine göre değişir.** İspanya konsolide
+  külliyatın tamamını taşır (12.376 akt) ve diller arası semantik arama orada
+  ölçülerek doğrulandı: Türkçe *"kişisel verilerin korunması"* → LO 15/1999,
+  LO 7/2021 ve AEPD Talimatı. Hollanda içtihat indeksi iki haftalık bir dilimdir
+  ve karar metni içermez, yalnızca künye — Rechtspraak karar başına ayrı istek
+  ister. Hollanda **mevzuatı** bundan etkilenmez (`nl_search_legislation` tüm
+  KOOP deposunda tam metin arar) ve `nl_get_decision` kararın tam metnini
+  anında getirir.
+
+- **Kimlik doğrulama yok.** Adresi bilen herkes tüm araçları çağırabilir.
+  Araçlar kamuya açık kaynaklarda arama yapar; müvekkil adı, dosya numarası
+  veya gizli taslak sorguya konmaz.
+
+### Düzeltildi
+
+- `es-boe/crawl.py` belgesi `materias` konu etiketlerini indekslediğini
+  yazıyordu; kod onları indekslemiyor (BOE onları yalnızca akt-detay ucunda
+  veriyor). Konu sinyali başlıktan gelir.
+
+---
+
+## [1.6.0] — 2026-08-30 — *Kaynak Denetimi: 7 Kırık Düzeltme + 6 Yeni Yargı Çevresi*
+
+> **Doğrulama sürümü.** Paketteki her MCP ve her WebFetch/REST kaynağına **gerçek
+> sorgu** atıldı; status kodu değil, dönen veri incelendi. Yedi kırık kaynak
+> düzeltildi, altı yeni yargı çevresi eklendi — hepsi canlı endpoint testiyle.
+>
+> Paket: 16 plugin · **28 yargı çevresi** · 8 MCP · 118 knowledge dosyası
+> (16 birleşik skill + 84 referans + 10 profil + 7 agent + firm-profile)
+
+### Düzeltildi — canlı testle tespit edilen kırık kaynaklar
+
+- **🔴 EUR-Lex tam metin zinciri (en yüksek etkili).** `eur-lex.europa.eu/legal-content/...`,
+  `search.html` ve `eli/...` yollarının **hiçbiri WebFetch ile belge döndürmüyor** —
+  JS kabuğu geliyor, içerik Resmî Gazete tarih indeksi oluyor. GDPR, Direktif 2019/944
+  ve serbest metin araması ayrı ayrı doğrulandı. Çalışan **CELLAR üç adımı** belgelendi
+  (`resource/celex/{CELEX}` → 303'ten UUID → SPARQL ile dil manifestation'ı →
+  `{manif}/DOC_1`) ve GDPR (EN) + Dir. 2019/944 (RO) üzerinde kanıtlandı.
+  `eu-legislation-rehberi.md` + `eurlex-cellar-rehberi.md`.
+- **🔴 Alman NeuRIS host'u.** `api.rechtsinformationen.bund.de` **hiç var olmadı**
+  (NXDOMAIN). Doğru host `testphase.rechtsinformationen.bund.de` ile değiştirildi ve
+  mevzuat + içtihat uçları canlı doğrulandı. `gesetze-im-internet.de` /
+  `rechtsprechung-im-internet.de` erişilemezliği yeniden doğrulandı; **de-eli MCP'nin
+  `de_rii_*` araçlarının bu engelden etkilenmediği** not edildi.
+- **🔴 Romanya erişimi.** `legislatie.just.ro` bağlantıyı düşürüyor (TLS kuruluyor,
+  sunucu `close_notify` göndermeden kapatıyor); `cdep.ro`, `scj.ro`, `idrept.ro` de
+  erişilemez, `ccr.ro` 503. Birincil kaynak **EUR-Lex CELLAR Romence tam metne**
+  taşındı; `portal.just.ro`, `just.ro/legislatie`, `anre.ro` çalışan yollar olarak
+  eklendi; `lege5.ro` ücretsiz katmanı **"konsolide değil"** uyarısıyla belgelendi.
+- **🔴 OpenCaseLaw.ch REST yedeği.** `mcp.opencaselaw.ch/api/*` yollarının **hepsi 404** —
+  böyle bir REST endpoint'i yok. Yanıltıcı "yedek" kaldırıldı; connector yokken
+  izlenecek adımlar ve **atıf uydurma yasağı** yazıldı.
+- **🔴 AB yaptırım endpoint'i.** `sanctionsmap.eu/api/v1/sanction` **404**; ayrıca
+  sanctionsmap bir isim-arama API'si değil. İsim taraması OpenSanctions'a, resmî kayıt
+  doğrulaması **AB FSF konsolide listesine** (CSV/XML, canlı doğrulandı) yönlendirildi.
+  BM listesi için de çalışan tek yol (`consolidated.xml`) düzeltildi.
+- **🟠 ILO NATLEX (AZ).** Eski ve yeni host'ların ikisi de **403**. e-qanun MCP'ye
+  yönlendirildi (zaten daha güncel ve **statü doğrulamalı**).
+- **🟠 CourtListener `citation-lookup/`.** Token başlığı istiyor (**401**), WebFetch
+  başlık gönderemez. Atıf doğrulaması `analyze_citations` / `extract_citations` MCP
+  araçlarına taşındı; camelCase↔snake_case alan adı tuzağı belgelendi.
+
+### Eklendi — 6 yeni yargı çevresi (hepsi canlı API testiyle)
+
+- **🇳🇱 Hollanda** — KOOP SRU **tam metin** mevzuat araması (1961/20991 ayrışması
+  doğrulandı) + Rechtspraak Open Data **3.751.381 ECLI**. ⚠️ İçtihatta **serbest metin
+  araması yok** ve tanınmayan parametreler **sessizce yok sayılıyor** — bu tuzak
+  baseline karşılaştırmasıyla belgelendi.
+- **🇵🇱 Polonya** — Sejm **ELI API'si**: başlıkla arama, `text.html`/`text.pdf` tam
+  metin ve **`status` alanı** (`obowiązujący`). Statü, AZ kalıbındaki gibi atıfın parçası.
+- **🇦🇹 Avusturya** — RIS OGD **v2.6** (⚠️ v2.5 artık 404): mevzuat **ve** OGH/VwGH/VfGH
+  içtihadı tek API'de, tam metin aramasıyla.
+- **🇮🇪 İrlanda** — Irish Statute Book ELI, **madde düzeyinde** erişim.
+- **🇫🇮 Finlandiya** — Finlex açık veri **Akoma Ntoso REST API'si**; `{lang@sürüm}`
+  tuzağı belgelendi.
+- **🇪🇸 İspanya** — `xml.php` belge XML'i + günlük `sumario`. ⚠️ Konsolide mevzuat
+  API'si `Accept` başlığı istediği için WebFetch'e kapalı — MCP adayı olarak işaretlendi.
+
+- **`references/MCP-ROADMAP.md`** — hangi yargı çevresi için MCP yazılmalı, hangisi
+  için gerekmiyor: canlı test kanıtına dayalı sıralama, semantik arama tasarımı ve
+  mevcut 8 MCP'nin sağlık tablosu.
+
+### Bilinen sorun
+
+- **🇱🇺 Lüksemburg pakete alınmadı.** İlk taramada Legilux ELI URL'leri
+  HTTP 200 döndürdüğü için çalışıyor sanıldı; içerik doğrulandığında her
+  URL'in aynı **2.116 baytlık boş Angular kabuğunu** döndürdüğü görüldü.
+  `api/v1` 401, `/sparql` SPA, `sitemap.xml` ve `/oai` 404, içerik
+  müzakeresi yine kabuk — **agent'a açık hiçbir yol yok.** Rehber ve
+  yargı çevresi kaydı kaldırıldı; gerekçe `MCP-ROADMAP.md`'de duruyor.
+  *Ders: HTTP 200 "çalışıyor" demek değildir.*
+
+- **OpenSanctions API anahtarı public repo'da gömülü** (`opensanctions-rehberi.md`).
+  Anahtarın **hâlâ geçerli olduğu** doğrulandı. Rotasyon + connector header'ına taşıma
+  önerilir; bu sürümde **bilinçli olarak değiştirilmedi** (paket sahibinin kararı).
+- **sbirka-mcp (CZ)** endpoint'i canlı ama **401** — connector yetkilendirilmeden
+  `cek-hukuku-rehberi.md` çalışmaz.
+- **İsrail ve BAE** rehberleri, resmî portalların agent'a kapalı olduğunu (403)
+  dürüstçe belgeliyor; bu iki yargı çevresinde otomatik araştırma kapasitesi yoktur.
+
+---
+
+## [1.5.0] — 2026-08-29 — *OSS Kaynak Dalgası + Alman Hukuku MCP + 8 Yeni Yargı Çevresi*
+
+> **Kaynak katmanı sürümü.** Bir yeni MCP sunucusu (de-eli — Alman mevzuatı,
+> içtihadı ve yasama belgeleri, 14 araç), 13.08.2026 OSS kaynak dalgasının
+> tamamı, sekiz yeni yargı çevresi rehberi ve sekiz yeni `legal-research`
+> skill'i. Mevcut plugin'lerin skill içeriği değişmedi.
+>
+> Paket: 16 plugin · 22 yargı çevresi · 8 MCP · 110 knowledge dosyası (16 birleşik skill + 76 referans + 10 profil + 7 agent + firm-profile)
+
+### Eklendi
+
+- **de-eli MCP — Alman hukuku (BİRİNCİL, 14 araç).** Dört üst kaynak tek uçta:
+  NeuRIS federal mevzuat (BMJV), rechtsprechung-im-internet.de (BVerfG, BGH,
+  BAG, BFH, BVerwG, BSG, BPatG için **tam** külliyat), Open Legal Data (16 eyalet
+  dahil, tek tam metin araması) ve Bundestag DIP (Drucksachen, gerekçeler,
+  tutanaklar). Rehber: `references/de-eli-mcp-rehberi.md`. Skill:
+  `/legal-research:alman-hukuku`. Atıf sözleşmesi: her yanıt `eli_uri` / `ECLI`,
+  `human_readable_citation` ve `source_url` taşır — **atıf dizesi asla kurulmaz**.
+- **OSS kaynak dalgası (13.08.2026) — 10 referans.** `abd-atif-dogrulama` ·
+  `pii-redaksiyon` · `gleif` · `edgar` · `uk-legislation-mcp` · `eurlex-cellar` ·
+  `japan-egov-api` · `france-dila` · `echr-hudoc` + makine-okur `oss-source-catalog.json`.
+  89 aday → 48 bağımsız vet kararı; beş değişmez (resmî provenans, açık lisans,
+  kimlik bilgisisiz erişim, aktif bakım, kaynak + çekim tarihi atıf disiplini).
+- **Sekiz yeni yargı çevresi (14 → 22).** BAE · Çekya · Gürcistan · İsrail ·
+  Orta Asya (KZ + UZ) · Romanya · Ukrayna · Yunanistan.
+- **Sekiz yeni `legal-research` skill'i (4 → 12).** `alman-hukuku` ·
+  `abd-atif-dogrulama` · `karsi-taraf-kimlik` · `uk-mevzuat` · `ab-mevzuat` ·
+  `jp-mevzuat` · `fr-mevzuat` · `echr-ictihat`.
+- **İsviçre emtia ticareti uyum çerçevesi** (`isvicre-emtia-ticareti-rehberi.md`):
+  AML/GwG · SECO yaptırım · OR 964 kurumsal due diligence · FinSA/FinIA. İsviçre
+  merkezli bir emtia ticaret kolu olan gruplar için; OpenCaseLaw.ch MCP + SECO +
+  OpenSanctions üzerinden çalışır.
+- **Dört REST kaynağına "MCP connector olarak eklemek" bölümü** (`gleif` ·
+  `edgar` · `eurlex-cellar` · `japan-egov-api`): sarmalanacak sözleşme (base URL,
+  araç yüzeyi, auth, hız sınırı, lisans), bu ekosistemde kanıtlanmış sarma kalıbı,
+  port konvansiyonu ve claude.ai bağlama adımları. **Hazır endpoint verilmedi** —
+  bu dördünün MCP sunucusu yok; olmayan bir adres yazmak yerine sarmalamayı
+  mümkün kılan sözleşme verildi. WebFetch rotası bağlayıcısız çalışmaya devam eder.
+
+### Değişti
+
+- `germany-legislation-rehberi.md` artık MCP'yi birincil yol olarak gösteriyor.
+  Rehberde kayıtlı **ECONNREFUSED** ölçümü MCP rotasında görülmez; çağrıyı
+  sunucu kendi tarafında yapar, istemcinin çıkış ağı devreye girmez.
+- Kaynak yönlendirme matrisine on satır eklendi; Almanya WebFetch satırından
+  çıkarılıp MCP satırına taşındı.
+- `cin-hukuku` · `switzerland-caselaw` · `seveso-buyuk-kaza` · `courtlistener`
+  (+ Corporate'ta `mevzuat-mcp`) rehberleri güncel içerikle tazelendi.
+
+### Düzeltildi
+
+- **Kırık çapraz atıflar.** `opensanctions-rehberi.md` var olmayan bir dosyaya
+  işaret ediyordu; Law Firm'de `turkpatent-rehberi.md` ve üç rehber yanlış profil
+  dosyasını çağırıyordu. Paket genelinde kırık iç atıf kalmadı.
+- **Artık müşteri tanımlayıcıları.** Law Firm'de iki referans dosyası
+  (`kap-esirket-webfetch`, `reg-feed-haftalik-sablon`) URL'lerde bir BIST kodu
+  taşımaya devam ediyordu; `[BIST KOD]` yer tutucusuna çevrildi. GLEIF rehberinin
+  çalışılmış örneği de müşteriyi ele veriyordu — yerine canlı GLEIF üzerinde
+  28.08.2026'da doğrulanmış nötr bir örnek kondu (Siemens AG Österreich → Siemens
+  AG); örnek, rehberin "aynı marka, farklı tüzel kişi" dersini birebir gösteriyor.
+
+---
+
+## [1.4.0] — 2026-07-26 — *Copilot Studio MCP Senkronu: e-qanun · LexScholar (DergiPark) · ResourceContracts*
+
+> **Kaynak katmanı sürümü.** Üç yeni MCP sunucusu, bir yeni plugin, bir yeni
+> pratik profil ve bağlayıcı bir araç-kullanım disiplini eklendi. Mevcut
+> 15 plugin'in skill içeriği değişmedi; her birine yalnızca kaynak yönlendirme
+> bloğu eklendi.
+
+### Eklendi
+
+**1 yeni pratik alan (plugin) — `legal-research` (kaynak katmanı):**
+
+- `/legal-research:kaynak-secimi` — kaynak yönlendirme matrisi, kaynak
+  hiyerarşisi, 100 saniye kuralı, **meslek sırrı sınırı (Av. K. m. 36)**,
+  "araç ne tutmuyor" kontrolü.
+- `/legal-research:az-mevzuat` — e-qanun MCP; akt arama + **yürürlük statüsü
+  doğrulaması** + madde metni.
+- `/legal-research:karsilastirmali-doktrin` — LexScholar MCP; Türk + yabancı +
+  karşılaştırmalı akademik doktrin.
+- `/legal-research:sozlesme-emsali` — ResourceContracts MCP; imzalı PSA/JOA
+  emsali ve kloz benchmark.
+
+> `legal-research` bağımsız bir pratik alan değil, **kaynak katmanıdır** —
+> dilekçenin, mütalaanın ve görüşün altındaki kaynağı besler.
+
+**1 yeni pratik profil:**
+
+- `profiles/legal-research.md` — kaynak hiyerarşisi tablosu, DergiPark dergi
+  eşlemesi, meslek sırrı sınırı, 100 saniyenin dosya planlamasına etkisi,
+  **araştırma notu asgari içeriği** (7 madde) ve "bu büroda kabul edilmeyen
+  yaygın hatalar" listesi.
+
+**3 yeni MCP sunucusu (self-hosted, auth'suz):**
+
+| MCP | Rol | Kapsam |
+|---|---|---|
+| **e-qanun** | **BİRİNCİL** — AZ mevzuatı | Adalet Bakanlığı'nın resmî `api.e-qanun.az` veritabanı; 6 araç; **yürürlük statüsü** (`Qüvvədədir` / `Ləğv olunmuş`) doğrulamalı |
+| **LexScholar** | **İKİNCİL** — hukuk doktrini | 10 açık erişim indeksi federe: DOAJ · SciELO · HAL · Dialnet · OpenAIRE · Law Review Commons · OpenAlex · Crossref · Unpaywall · **DergiPark**; 6 araç |
+| **ResourceContracts** | **EMSAL** — imzalı sözleşme | 5.125 sözleşme, 107 ülke, 141 emtia + uzman kloz anotasyonları (NRGI/CCSI/Dünya Bankası); 9 araç |
+
+**3 yeni referans dosyası:**
+
+- `eqanun-mcp-rehberi.md` · `lex-scholar-rehberi.md` · `resourcecontracts-rehberi.md`
+
+**Türk doktrini artık araçla aranabiliyor.** DergiPark'ın **resmî OAI-PMH** ucu
+LexScholar'ın onuncu kaynak adaptörü olarak eklendi — anahtar yok, CAPTCHA yok,
+0,2-0,5 s. **19 hukuk dergisi tek tek doğrulandı:** 15 hukuk fakültesi dergisi
+(Ankara, Ankara Hacı Bayram Veli, Ankara Sosyal Bilimler, Anadolu, Dicle,
+Dokuz Eylül, İnönü, İstanbul, Kocaeli, Marmara, Necmettin Erbakan, Sakarya,
+Selçuk, Yeditepe, Karatekin) + Ceza Hukuku ve Kriminoloji, İdare Hukuku ve
+İlimleri, Adalet Dergisi, İslam Hukuku Araştırmaları. Router konuya göre doğru
+dergiyi seçer.
+
+### Değiştirildi
+
+- **`SYSTEM_PROMPT.md`** — 16 plugin haritası; üç yeni atıf biçimi (AZ mevzuatı
+  **statü atıfın içinde**, LexScholar `citation` birebir, ResourceContracts
+  `source_url` + CC BY-SA); yeni **"Üç yeni MCP"** bölümü (kaynak hiyerarşisi,
+  100 saniye kuralı, araçların ne tutmadığı, **Av. K. m. 36 sınırı**, araç adı
+  çakışması); sınır-ötesi tabloya iki satır; footer sürüm ve lisans düzeltildi.
+- **`azerbaycan-hukuk-rehberi.md`** — kapsamı daraltıldı: mevzuat okuma yolu
+  `eqanun-mcp-rehberi.md`'ye taşındı; bu rehber içtihat (constcourt.gov.az,
+  CODICES) + İngilizce kaynaklar (minenergy.gov.az, NATLEX) + WebFetch yedekleri
+  için kaldı. WebFetch yolunda **statünün doğrulanmadığı** açıkça işaretlendi.
+- **`karsilastirmali-hukuk-rehberi.md`** — MCP sunucu haritası (5 sunucu);
+  AZ satırı WebFetch'ten MCP'ye taşındı; **100 saniye kuralı** ve "özel araç >
+  genel web arama" ölçümü; kaynak hiyerarşisi; üç yeni atıf etiketi.
+- **On iki plugin skill kitapçığı** (`commercial-legal`, `corporate-legal`,
+  `energy-finance`, `regulatory-legal`, `litigation-legal`, `tax-legal`,
+  `contract-drafting`, `administrative-legal`, `employment-legal`,
+  **`advocacy-legal`**, **`expert-opinion`**, **`firm-operations`**) —
+  İçindekiler altına **"Kaynak katmanı — /legal-research"** yönlendirme bloğu
+  eklendi. Skill gövdeleri değişmedi.
+- **`KURULUM.md` / `INSTALLATION.md`** — v1.4.0 sayıları ve üç MCP connector
+  kurulum adımı.
+- **`ATTRIBUTION.md`** — sürüm başlığı v1.0.0 → v1.4.0 (paketle uyumsuzdu);
+  üç yeni MCP, upstream veri kaynakları ve lisansları eklendi.
+- **`README.md`** — 16 pratik alan, MCP tablosu, paket ağacı (92 knowledge dosyası,
+  58 referans), sınırlamalar;
+  `LICENSE ← Apache 2.0` satırı `Proprietary — Non-Commercial` olarak düzeltildi.
+
+### Bağlayıcı yeni kurallar
+
+- **Yürürlük statüsü doğrulaması zorunludur.** `search_acts` bir Azerbaycan
+  aktının yürürlükte olup olmadığını **söyleyemez**; yalnız `get_act` söyler.
+  `Ləğv olunmuş` bir akt **dayanak yapılamaz** ve statü **atıfın içinde** taşınır.
+  Müvekkile giden bir görüşte yürürlükten kalkmış bir aktın güncelmiş gibi
+  görünmesi meslekî sorumluluk doğurur.
+- **Kaynak hiyerarşisi:** BİRİNCİL (mevzuat/içtihat) → EMSAL (imzalı sözleşme)
+  → DOKTRİN (akademik). Çelişki hâlinde birincil üstündür; çelişki **raporlanır**.
+  **Dilekçede doktrin tek başına gerekçe olmaz** — birincil kaynakla birlikte
+  kullanılır ve yazarına atfedilir.
+- **Hakemlilik üç durumludur** (`true` / `false` / `null`). Preprint'ler ve
+  **ABD öğrenci editörlü law review'ları** hakemli değildir.
+- **100 saniye kuralı.** Her araç çağrısı 100 saniyede iptal edilir ve **hiçbir
+  şey döndürmez**. Kısmi araştırmayı tam gibi sunmak meslekî sorumluluk doğurur —
+  kapsam daralması dosya notuna yazılır.
+- **Özel araç > genel web arama.** Ölçüm (25.07.2026): üç yargı çevresini
+  kapsayan bir karşılaştırmalı soru özel araçtan **1 saniyenin altında** isabetli
+  sonuç verdi; **aynı soru** genel web-arama sohbetinde **iki kez 100 saniyede
+  iptal edildi**.
+- **Meslek sırrı sınırı (Av. K. m. 36).** Üç MCP de **public** arama aracıdır;
+  müvekkil adı, dosya numarası, dosya özeti, gizli taslak, müzakere pozisyonu
+  veya kişisel veri gönderilmez. Sorgu soyut hukuki kavram olur. Bir arama,
+  vekâlet ilişkisini ele verebilecek kadar belirginse yapılmaz.
+- **Kapsam dürüstlüğü.** e-qanun içtihat tutmaz; LexScholar kanun/karar resmî
+  metnini tutmaz; ResourceContracts mevzuat tutmaz. Çekilmemiş bir kaynağa
+  bakılmış gibi **ima edilmez**.
+
+### Notlar
+
+- Üç MCP **isteğe bağlıdır**. Kurulmazsa paket çalışmaya devam eder: AZ mevzuatı
+  WebFetch yoluna düşer (statü doğrulanmaz), doktrin ve sözleşme emsali kapsam
+  dışı kalır — asistan bunu çıktısında belirtir.
+- Üçüncü taraf DergiPark scraper'ına (`literatur-mcp`) **bağımlılık kaldırıldı**;
+  resmî OAI-PMH ucu kullanılıyor.
+- **Araç adı çakışması dersi:** aynı ortamda iki connector aynı araç adını
+  taşımamalı — `search_articles` çakışması istemcinin şemaları karıştırıp
+  `search_articles_2` üretmesine ve çağrıların 400 ile düşmesine yol açmıştı.
+- Bu sürüm, Copilot Studio tarafındaki MCP entegrasyon
+  çalışmasından senkronlandı; içerik büro tarafına ve generic placeholder
+  şablonuna uyarlandı, gerçek müvekkil/kurum verisi içermez.
+
+---
+
+## [1.3.1] — 2026-06-28 — *Connector Fallback'leri + OpenSanctions Key Default*
+
+> Yalnızca **dış kaynak erişim/connector** güncellemesi — plugin/skill içeriği değişmedi.
+
+### Eklendi / Düzeltildi
+
+- **Connector sağlık taraması (2026-06-28):** API/WebFetch jurisdiction connector'ları canlı test edildi; `karsilastirmali-hukuk-rehberi`'ye **Connector Sağlık & Fallback tablosu** (16 connector) eklendi.
+- **🇩🇪 DE:** `gesetze-im-internet.de` erişilemiyor (ECONNREFUSED) → birincil alternatif **NeuRIS API** (`testphase.rechtsinformationen.bund.de`).
+- **🇷🇺 RU:** `pravo.gov.ru` geo-block → çalışan alternatif **consultant.ru**.
+- **🇺🇸 US (no-key):** GovInfo alternatifi **Cornell LII** (`law.cornell.edu/uscode`).
+- **🇦🇿 AZ:** e-qanun.az anti-bot → **cis-legislation.com**. **🇨🇳 CN:** HuggingFace gated → **flk.npc.gov.cn / gov.cn**.
+- **🌍 OpenSanctions:** API key (`a1c019…`) **default gömülü** işlendi; `{API_KEY_FROM_ENV}` placeholder ve çelişkili "env'de tut / paylaşılan dosyaya yazma" notları kaldırıldı.
+
+---
+
+## [1.3.0] — 2026-06-25 — *Dilekçe Üretimi + Bilirkişi/Mütalaa + Sözleşme Redline + Rekabet*
+
+### Eklendi
+
+**3 yeni pratik alan (plugin):**
+- `advocacy-legal` — dava dilekçesi üretimi + yazıhane asistanlığı: özel hukuk (HMK), kamu/idari (İYUK + AYM bireysel başvuru), ceza (CMK) dilekçeleri + süre/duruşma takvimi, dosya özeti, evrak/harç.
+- `expert-opinion` — bilirkişi raporu + uzman mütalaası (HMK m.293 uzman görüşü): teknik rapor taslağı / karşı rapora itiraz (HMK m.281) + taraf lehine bilimsel/hukuki mütalaa.
+- `contract-drafting` — sözleşme belgesi üretimi & redline: incele→belgeye uygula, emsalden türet, versiyon karşılaştır, tadil/süre uzatımı.
+
+**5 yeni referans dosyası:**
+- `rekabet-hukuku-rehberi.md` (4054 + birleşme eşikleri 2022 + Tebliğ 2010/4 + muafiyet + soruşturma/ceza + uzlaşma)
+- `cmk-rehberi.md` (5271 CMK genel — süre/görev/dilekçe tipleri; mevcut `cmk-gorevli-rehberi`yi tamamlar)
+- `bilirkisilik-rehberi.md` (6754 + HMK m.266-287/m.293 + CMK m.62-73)
+- `dilekce-teknikleri-rehberi.md` (HMK m.119 / İYUK m.3 / CMK zorunlu unsurlar + iskelet + harç)
+- `redline-konvansiyonlari-rehberi.md` (redline & comment standardı)
+
+> Tüm içerik generic hukuk bürosu şablonu; kişisel veri / kurum-spesifik bilgi içermez.
+
+---
+
+## [1.2.0] — 2026-06-04 — *Multi-Jurisdiction Merge + 3 Yeni Pratik Alan*
+
+v1.0.1 (Law Firm Public) + TR Legal Suite v1.8.3 (dist) birleştirmesi.
+Tüm kişisel veri ve kurum-spesifik içerik temizlenmiş, generic hukuk bürosu şablonuna dönüştürülmüştür.
+
+### Eklendi
+
+**3 yeni pratik alan:**
+- `privacy-legal` — KVKK, GDPR, DSAR (veri sahibi başvurusu), DPIA, DPA müzakeresi; cold-start + 7 skill
+- `regulatory-legal` — Regülasyon takibi, gap analizi, EPDK/SPK/Rekabet; cold-start + 7 skill + `reg-change-monitor` agent
+- `energy-finance` — Enerji M&A, proje finansmanı, JV, LNG offtake; cold-start + 4 skill
+
+**7 otomasyon agent'ı** (`knowledge/agents/`):
+- `commercial-legal__deal-debrief.md` — Deal sonrası özet
+- `commercial-legal__playbook-monitor.md` — Playbook değişiklik takibi
+- `commercial-legal__renewal-watcher.md` — Sözleşme yenileme alarmı (haftalık)
+- `corporate-legal__dataroom-watcher.md` — VDR yeni belge bildirimi
+- `employment-legal__leave-tracker.md` — İzin ve devamsızlık takibi
+- `ip-legal__ip-renewal-watcher.md` — Marka/patent yenileme alarmı
+- `regulatory-legal__reg-change-monitor.md` — Düzenleyici değişiklik izleme
+
+**18 yeni yargı çevresi referansı** (`knowledge/references/`):
+- `azerbaycan-hukuk-rehberi.md` — e-qanun.az + minenergy.gov.az + CODICES
+- `cek-hukuku-rehberi.md` — Sbírka MCP (1848'den günümüze)
+- `cin-hukuku-rehberi.md` — HuggingFace/twang2218 (22.552 kanun)
+- `courtlistener-rehberi.md` — ABD federal içtihat REST API
+- `eu-legislation-rehberi.md` — EUR-Lex CELEX + CJEU + ECHR/HUDOC
+- `france-legislation-rehberi.md` — Légifrance WebFetch
+- `germany-legislation-rehberi.md` — gesetze-im-internet.de / NeuRIS
+- `italy-legislation-rehberi.md` — Normattiva WebFetch
+- `japan-legislation-rehberi.md` — e-Gov API + JLT
+- `karsilastirmali-hukuk-rehberi.md` — Karşılaştırmalı hukuk araştırma rehberi
+- `reg-feed-haftalik-sablon.md` — Düzenleyici değişiklik haftalık şablon
+- `russia-legislation-rehberi.md` — pravo.gov.ru / ЕГРЮЛ (yalnız KYC/yaptırım)
+- `seveso-buyuk-kaza-rehberi.md` — Büyük endüstriyel kaza mevzuatı
+- `sirbistan-hukuku-rehberi.md` — paragraf.rs WebFetch
+- `switzerland-caselaw-rehberi.md` — OpenCaseLaw.ch MCP (33 araç)
+- `uk-legislation-rehberi.md` — legislation.gov.uk data.xml
+- `us-legislation-rehberi.md` — GovInfo REST
+- `yargi-mcp-rehberi.md` — TR Legal MCP birleşik (yargi-mcp-pro)
+
+**Skill kapsamı artırıldı** — Mevcut 9 pratik alan için v1.8.3 birleşik skill dosyaları:
+- `administrative-legal__skills.md` (11 skill — idari dava, ÇED, EPDK proaktif görüş, vd.)
+- `commercial-legal__skills.md` (13 skill — governing-law-review, amendment-history, vd.)
+- `corporate-legal__skills.md` (11 skill — closing-checklist, dataroom-review, vd.)
+- `employment-legal__skills.md` (16 skill — internal-investigation, leave-tracker, vd.)
+- `ip-legal__skills.md` (12 skill — cease-desist, takedown, OSS audit, vd.)
+- `litigation-legal__skills.md` (15 skill — outside-counsel-brief, case-intake, vd.)
+- `tax-legal__skills.md` (7 skill — kdv-otv-iade-review, transfer-pricing-review, vd.)
+
+**Kurulum dosyaları:**
+- `KURULUM.md` — Türkçe, 7 adım, referans seçim rehberi dahil
+- `INSTALLATION.md` — İngilizce, aynı içerik
+
+### Değişti
+
+- **Skill formatı:** Bireysel dosyalar (`__cold-start-interview.md`, `__draft-nda.md` vb.) → **Birleşik `__skills.md`** (tüm skill'ler tek dosyada, `## /<plugin>:<skill>` başlıklarıyla)
+- **Plugin adlandırması:** `administrative-litigation` → `administrative-legal`, `commercial-advisory` → `commercial-legal`, `corporate-advisory` → `corporate-legal`, `dispute-litigation` → `litigation-legal`, `employment-advisory` → `employment-legal`, `ip-advisory` → `ip-legal`, `tax-litigation` → `tax-legal` (v1.8.3 standart adlandırması)
+- **TR Legal MCP:** Ayrı Mevzuat MCP + Yargı MCP → **Tek birleşik `yargi-mcp-pro`** (OAuth 2.0, WorkOS)
+- **SYSTEM_PROMPT.md:** 17 yargı çevresi atıf formatları, 12 plugin haritası, generic büro kadro entegrasyonu
+- **firm-profile.md:** Kurum-spesifik içerik tamamen kaldırıldı → tam `[DOLDUR]` placeholder şablonu
+- **`knowledge/references/`:** 33 → 42+ dosya (eskiler güncellendi, yeniler eklendi)
+- **README.md:** v1.2.0 içerik tablosu, yeni komut örnekleri, güncel paket yapısı
+- **KULLANIM-REHBERI.md:** `KURULUM.md` ve `INSTALLATION.md` olarak ikiye ayrıldı; ana klasör altına taşındı
+
+### Kaldırıldı
+
+- `KULLANIM-REHBERI.md` → yerini `KURULUM.md` + `INSTALLATION.md` aldı
+- `knowledge/references/sirket-*.md` (3 dosya) — kurum-spesifik içerik, public release için uygun değil
+- v1.0.1 bireysel skill dosyaları (criminals+firm-operations hariç yeni birleşik format ile değiştirildi)
+
+### Güvenlik / Gizlilik
+
+- Tüm gerçek kişi isimleri, unvanlar, şirket adları, vergi numaraları temizlendi
+- `firm-profile.md` sıfırdan yazıldı — herhangi bir tüzel kişi veya gerçek kişi verisi içermez
+- Tüm referans dosyaları kurum-spesifik bölümlerden arındırıldı
+- `energy-finance__skills.md` içinde kurum adları `[Müvekkil]` ile değiştirildi
+
+---
+
+## [1.0.1] — 2026-05-23 — *Yargı MCP Düzeltmesi + MCP Connector Kurulum Adımı*
+
+### Eklendi
+- **KULLANIM-REHBERI.md:** MCP bağlantı kurulumu eklendi (Mevzuat MCP + Yargı MCP + OpenSanctions)
+
+### Düzeltildi
+- **Yargı MCP connector adı hatası:** `mcp__claude_ai_Yargi_MCP__*` → `mcp__claude_ai_Yarg_MCP__*`
+- **14 hatalı araç adı** gerçek 26 araç isimleriyle değiştirildi
+- Atıf formatı güncellendi: `[Yargı MCP ...]` → `[Yarg MCP ...]`
+
+---
+
+## [1.0.0] — 2026-05-17 — *Initial Public Release*
+
+İlk halka açık sürüm. Anthropic'in [claude-for-legal](https://github.com/anthropics/claude-for-legal) referans paketinden türetilmiş, dava + danışmanlık dengeli, 0–30 çalışanlı Türk hukuk büroları için danışman tarafı adapte edilmiş hibrit hukuk asistanı paketi.
+
+### Eklendi
+- 9 plugin (dispute-litigation, administrative-litigation, tax-litigation, criminal-defense, commercial-advisory, corporate-advisory, employment-advisory, ip-advisory, firm-operations)
+- 19 bireysel skill dosyası
+- 33 TR mevzuat ve meslek pratiği referansı
+- Mevzuat MCP + Yargı MCP entegrasyonu
+
+---
+
+[1.2.0]: ./VERSION.md
+[1.0.1]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.1-Public-Release
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.0-Public-Release
