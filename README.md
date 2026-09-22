@@ -7,6 +7,16 @@ Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
 jurisdictions, no auth), up to four optional ones, and a curated primary-source reference layer.
 
+<img src="ArthurLegal-setup/varlik/banner.png" alt="ArthurLegal — open source legal AI" width="760">
+
+> ### ⬇ ArthurLegal Setup — one click on Windows ([ArthurLegal-setup/](ArthurLegal-setup/))
+> A single installer puts the Law Firm and Corporate packages, the research connector and the local
+> Turkish land-registry tools into Claude Desktop, then keeps them up to date from signed releases.
+> No admin rights, no manual knowledge upload: the only manual step is pasting one short, never
+> changing prompt into a Claude Project. Download `ArthurLegal-Kurulum.exe` (or `.zip` where Windows
+> Smart App Control is on) from the [Releases](https://github.com/beerbottle90/ArthurLegal/releases) page.
+> **Türkçe kurulum anlatımı:** [ArthurLegal-setup/README.md](ArthurLegal-setup/README.md).
+
 > ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
 > Windows: double-click the downloaded file. macOS: open the DMG, drag Arthur Mask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.

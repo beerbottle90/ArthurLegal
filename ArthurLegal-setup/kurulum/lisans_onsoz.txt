@@ -1,0 +1,29 @@
+ARTHURLEGAL KURULUM PAKETİ — LİSANS SÖZLEŞMESİ
+
+Bu kurulum şu bileşenleri bilgisayarınıza kurar:
+
+  • ArthurLegal Hukuk Bürosu ve Kurumsal Asistan paketleri ........ ArthurLegal Lisansı (1)
+  • ArthurLegal yerel sunucusu, güncelleyicisi ve UYAP köprüsü ..... ArthurLegal Lisansı (1)
+  • Arthur Mask yerel gizlilik kapısı (ayrıca indirilir) ........... Arthur Mask Lisansı (2)
+  • ArthurLegal Tapu (tkgm-mcp) .................................... MIT Lisansı (3)
+  • Üçüncü taraf içerik ............................................ Apache 2.0 bildirimi (4)
+  • Python 3.12 çalışma ortamı ...................................... PSF Lisansı (runtime\LICENSE.txt)
+
+"Sözleşmeyi kabul ediyorum" seçeneğini işaretleyerek aşağıdaki lisansların tamamını kabul
+etmiş olursunuz. Bağlayıcı olan İngilizce lisans metinleridir; bu Türkçe özet yalnız
+bilgilendirme amaçlıdır.
+
+Kurulumdan önce bilmeniz gerekenler:
+
+  • ArthurLegal bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her
+    çıktıyı bir avukat doğrulamalıdır.
+  • Arthur Mask takma adlandırma yapar, anonim hâle getirmez. KVKK, Avukatlık Kanunu m. 36
+    sır saklama yükümlülüğü ve gizlilik sözleşmelerinden doğan sorumluluk kullanıcıdadır.
+  • Kurulum, Claude Desktop yapılandırmasına dört yerel sunucu ekler (arthurlegal-yerel,
+    arthur-tapu, arthur-uyap, arthur-mask); değiştirmeden önce yapılandırmanın yedeğini alır.
+  • Güncellemeler GitHub'daki ArthurLegal yayınlarından arka planda kurulur. Her güncelleme
+    ArthurLegal yayın anahtarıyla imzalıdır; imzası doğrulanmayan dosya kurulmaz.
+  • Araştırma araçları, Claude'un yazdığı arama sorgularını ArthurLegal araştırma sunucusuna
+    (arthurlegal-mcp.fly.dev) iletir. Bu sorgulara müvekkil adı veya gizli bilgi yazılmamalıdır.
+  • UYAP köprüsü salt okunurdur; UYAP'a hiçbir şey göndermez ve verileri maskelemeden
+    modele vermez.

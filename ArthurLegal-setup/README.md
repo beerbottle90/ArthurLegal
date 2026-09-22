@@ -1,0 +1,99 @@
+<img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
+
+# ArthurLegal Setup v2.0.0
+
+**Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
+Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
+Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası doğrulanarak sessizce kurulur.
+
+> Paketlerin kendisi (SYSTEM_PROMPT + knowledge) bu deponun kökündedir ve Claude.ai'de elle de
+> kurulabilir: `ArthurLegal-Law-Firm-v*/KURULUM.md`. Bu klasör, o kurulumu tek tıka indiren ve
+> güncel tutan Windows paketidir.
+
+## Ne kurulur
+
+| Bileşen | Nerede çalışır | Ne yapar |
+|---|---|---|
+| **arthurlegal-yerel** | Claude Desktop · gömülü Python 3.12 | İki paketin sistem talimatını ve 230+ bilgi dosyasını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz |
+| **arthur-tapu** | Claude Desktop + masaüstü kısayolu | tkgm-mcp: parsel, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
+| **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil belgelerini bilgisayarda maskeleyen gizlilik kapısı. Kurulum sırasında indirilir (≈1 GB), isteğe bağlı |
+| *arthur-uyap* | (bu pakette yok) | UYAP köprüsü ayrı dağıtılır; kurulum, bilgisayarda varsa kendiliğinden bağlar |
+
+Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
+
+## Kurulum
+
+1. **[Releases](https://github.com/beerbottle90/ArthurLegal/releases)** sayfasından `ArthurLegal-Kurulum.exe`
+   dosyasını indirin ve çift tıklayın. Windows "bilinmeyen yayımcı" derse **Ek bilgi → Yine de çalıştır**.
+2. Kurulum bitince açılan **Başlangıç Rehberi**'nden talimatı kopyalayın, Claude Desktop'ta yeni bir
+   **Proje** açıp Talimatlar alanına yapıştırın. Bu adım bir kezdir; talimat hiç değişmez, paket
+   güncellemeleri kendiliğinden gelir.
+3. Projede bir hukuk sorusu sorun. Asistan önce `arthurlegal_talimat` aracını çağırır.
+
+**Windows 11 Akıllı Uygulama Denetimi (Smart App Control) açıksa** imzasız kurulum motoru engellenir
+(`Hata 4551`). O bilgisayarda `ArthurLegal-Kurulum.zip` dosyasını indirin, klasöre çıkarın ve
+`KUR.cmd` dosyasına çift tıklayın: aynı kurulumu imzalı Python ile yapar. Denetim durumu:
+`(Get-MpComputerStatus).SmartAppControlState`.
+
+Kaldırma: **Ayarlar → Uygulamalar → ArthurLegal**, ya da zip yoluyla kurulduysa kurulum klasöründeki
+`KALDIR.cmd`.
+
+## Güncelleme
+
+Oturum açılışında ve Claude Desktop açıkken altı saatte bir, en son yayındaki `arthurlegal-manifest.json`
+denetlenir. Manifest **Ed25519** ile imzalıdır: imza kurulumdaki açık anahtarla doğrulanmazsa hiçbir
+şey kurulmaz. Yeni sürüm ayrı bir klasöre açılır, `aktif.txt` tek adımda değişir, bir önceki sürüm geri
+dönüş için kalır ve yeni sürüm Claude Desktop'ın bir sonraki açılışında devreye girer.
+
+## Gizlilik
+
+- Paket dosyaları, büro katmanı ve tapu kayıtları bilgisayardan çıkmaz; yerel sunucular yalnız
+  stdio üzerinden Claude Desktop ile konuşur.
+- Araştırma araçları, modelin yazdığı arama sorgularını ArthurLegal araştırma sunucusuna iletir.
+  Bu sorgulara müvekkil adı veya gizli bilgi yazılmaz; talimat bunu ayrıca hatırlatır.
+- Bulut tarafındaki `tkgm_` araçları kuruluma dahil edilmez: tapu kaydı metni yalnız yereldeki
+  `arthur-tapu` ile işlenir.
+- Güncelleyicinin tek dış bağlantısı GitHub'dır; günlüklere sorgu veya belge içeriği yazılmaz.
+
+## Derleme
+
+Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
+(`winget install -e --id JRSoftware.InnoSetup --scope user`), bu deponun yanında
+[`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp) ve
+[`arthur-mask`](https://github.com/beerbottle90/arthur-mask) klonları (`kaynaklar.json` → `depolar`).
+
+```bash
+python varlik/gorseller.py             # pixel art simge ve görseller
+python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
+python -m unittest discover -s tests   # 12 test, ağa çıkmaz
+python yayin/yayinla.py v2.0.0         # imzalı manifest + dosyalar → GitHub Release
+```
+
+Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
+(`--calisma-agaci` ile tersi). `kurulum/ArthurLegal.iss` ve lisans metni **UTF-8 BOM** ile
+kaydedilir, yoksa Inno Setup Türkçe karakterleri bozar (derle.py denetler).
+
+**Kendi bürona özel kurulum.** `firma/<kod>/firma.json` ve `firma/<kod>/knowledge/firm-profile.md`
+oluşturup `python yayin/derle.py --firma <kod>` derlerseniz büro profiliniz kuruluma gömülür ve
+paketteki boş şablonun yerine geçer; güncellemeler onu ezmez. İsterseniz kendi kurulumunuzu private
+bir depodan dağıtabilirsiniz: `kaynaklar.json` → `dagitim_deposu` + `yayin/jeton_ayarla.py`.
+
+**İmzalama.** `kaynaklar.json` → `imzalama.komut` (ya da `ARTHURLEGAL_IMZA_KOMUTU`) verilirse kurulum
+ve kaldırıcı signtool ile imzalanır (`$f` dosya, `$q` tırnak). İmzalı kurulum Akıllı Uygulama
+Denetimi'ne de takılmaz. Gömülü Python dosyaları zaten Python Software Foundation imzalıdır.
+
+## Lisans
+
+ArthurLegal paketleri ve bu kurulum: deponun kökündeki [LICENSE](../LICENSE) (hukuk bürolarında
+kullanım, ücretli müvekkil işi dâhil, serbesttir; ürün veya hizmet olarak yeniden dağıtım ayrı yazılı
+izne bağlıdır). ArthurLegal Tapu MIT, gömülü Python PSF lisanslıdır; kurulumdaki lisans sayfası
+hepsini birlikte gösterir.
+
+---
+
+**English.** One-click Windows installer for the ArthurLegal legal-AI packages. It installs an
+embedded Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
+the public ArthurLegal research endpoint, plus the Turkish land-registry tools), optionally installs
+the Arthur Mask local privacy gate, and keeps itself up to date from signed GitHub releases
+(Ed25519). No admin rights. The only manual step is pasting a short, never-changing bootstrap prompt
+into a Claude Project. Build it yourself with `python yayin/derle.py`.
