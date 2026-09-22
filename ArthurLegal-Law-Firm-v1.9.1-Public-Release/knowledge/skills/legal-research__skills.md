@@ -83,6 +83,7 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **FI mevzuatı (fin + swe)** | **fi-finlex MCP** | **BİRİNCİL** | `fi-finlex-mcp-rehberi.md` |
 | **ES konsolide mevzuatı** | **es-boe MCP** | **BİRİNCİL** | `es-boe-mcp-rehberi.md` |
 | **ABD atıfı doğrulama (uydurma savunması)** | **CourtListener** | **ZORUNLU GEÇİŞ** | `abd-atif-dogrulama-rehberi.md` |
+| **TR kanun maddesi doğrulama (teslim öncesi, belge gövdesi dâhil)** | **ArthurLegal MCP `tr_mevzuat_madde_getir`** | **ZORUNLU GEÇİŞ** | `mevzuat-mcp-rehberi.md` bölüm 9 |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
 | UK mevzuatı (yapılandırılmış) | TNA resmî MCP | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
 | AB tüzük/direktif/ABAD kimlikleme | EUR-Lex Cellar | BİRİNCİL | `eurlex-cellar-rehberi.md` |

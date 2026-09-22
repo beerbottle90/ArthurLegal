@@ -116,6 +116,12 @@
 - **Bordro imzalı** ücret farkı — 2 yıl/10 yıl tartışmalı (Yargıtay içtihadı kontrol et)
 - İş kazası tazminatı: 2/10 yıl TBK m. 72 + ceza zamanaşımı uzaması
 
+### Çalışan buluşları ve fikri haklar klozları
+
+İş sözleşmesine, ek protokole veya ayrılış protokolüne konan buluş ve fikri haklar klozlarında **SMK m. 113 ile 122 emredicidir** (m. 117/1): çalışan aleyhine düzenleme yapılamaz; sözleşme serbestliği hizmet buluşunda patent başvurusundan, serbest buluşta çalışanın bildiriminden sonra başlar. Madde haritası ve süreler `smk-rehberi.md` Çalışan buluşları bölümündedir; kloza yazılan her madde numarası `tr_mevzuat_madde_getir` ile çekilir ve başlığıyla eşleştirilir (`mevzuat-mcp-rehberi.md` bölüm 9). Eser niteliğindeki çalışan ürünleri için FSEK'teki ilgili hüküm ayrıca çekilir; numarası ezberden yazılmaz.
+
+⚠️ SMK m. 120 önalım hakkını işverene değil, **işverenin iflasında çalışana** tanır; şirkete önalım hakkı veren bir kloza dayanak olamaz.
+
 ---
 
 ## Eskalasyon ve onay matrisi

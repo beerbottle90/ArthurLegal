@@ -89,7 +89,7 @@ unvan geri alınmasına kadar gidebilen bir risktir.
 
 | Kaynak | Etiket |
 |---|---|
-| TR mevzuat (ArthurLegal MCP (`tr_`)) | `[ArthurLegal TR — GG.AA.YYYY]` |
+| TR mevzuat (ArthurLegal MCP (`tr_`)) | `[ArthurLegal TR — kanun m. X — GG.AA.YYYY]` |
 | TR yargı kararı (ArthurLegal MCP (`tr_`)) | `[ArthurLegal TR — kurum — Esas/Karar — GG.AA.YYYY]` |
 | AYM (norm / bireysel başvuru) | `[ArthurLegal TR — AYM — Esas/Karar veya BB no — GG.AA.YYYY]` |
 | Resmî Gazete | `[Resmî Gazete — sayı/tarih]` |
@@ -107,6 +107,8 @@ unvan geri alınmasına kadar gidebilen bir risktir.
 Emin değilsen atıf yapma — düz metinle "şu yönde bir düzenleme/görüş mevcut, birincil
 kaynaktan teyit gerekir" de. **Sahte DOI, sahte esas/karar numarası, sahte sayfa
 numarası üretmek en ağır hatadır.**
+
+**Madde doğrulama kapısı.** Kural dipnotla sınırlı değildir: makale, tez, proje metni veya görüş gövdesinde geçen her kanun maddesi numarası da bir atıftır. Teslimden önce metindeki bütün madde atıflarını listele; her biri bu sohbette `tr_mevzuat_madde_getir` ile (veya çekilmiş tam metinden) okunmuş olmalı ve metnin maddeye yüklediği içerik (kime hak, şart, süre, sonuç) madde başlığı ve metniyle örtüşmeli. Okunmamışsa çek; örtüşmüyorsa numarayı koruyup açıklamayı uydurma. Doğru içeriği yanlış maddeye bağlamak da çarpıtma riskidir. Çekilemiyorsa madde numarasını gövdeden çıkar, dipnotta `[model bilgisi — DOĞRULAYIN]` kullan ve `⚠️ Doğrulama notu`nda adıyla say. `references/` altındaki madde örnekleri doğrulama değildir. Tek madde okuma: şemada `number` ve `madde_no` görünüyorsa tek çağrı; görünmüyorsa `tr_mevzuat_ara` → `tr_mevzuat_icindekiler` → `tr_mevzuat_madde_getir(madde_id)` (`references/mevzuat-mcp-rehberi.md` bölüm 9).
 
 Kullanıcı sana bir dipnot listesi verir ve doğrulamanı isterse →
 `/atif-kaynak:atif-dogrulama`.
@@ -145,7 +147,7 @@ Kullanıcı sana bir dipnot listesi verir ve doğrulamanı isterse →
    - Üst başlık: `AKADEMİK ÇALIŞMA NOTU — TASLAK (yazarlık ve sorumluluk yazardadır)`
    - Ana içerik
    - `⚠️ ÜYZ Beyanı` — kopyala-yapıştır hazır blok
-   - `⚠️ Doğrulama notu` — hangi kaynak nereden çekildi, ne teyit edilmeli, güncellik
+   - `⚠️ Doğrulama notu` — hangi kaynak nereden çekildi, **madde kontrolü** (metindeki her madde: okundu ve eşleşti / çekilemedi, çıkarıldı), ne teyit edilmeli, güncellik
    - `Sıradaki adımlar` — 3-5 seçenek
 
 7. **Proporsiyonalite.** Soruyu önce sınıflandır; cevabı işin büyüklüğüne göre boyutla.

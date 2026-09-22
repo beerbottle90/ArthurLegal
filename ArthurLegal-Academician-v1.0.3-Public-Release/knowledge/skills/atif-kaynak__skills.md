@@ -38,7 +38,7 @@ numarası üretmeye **yapısal olarak eğilimlidir**. Bu skill o eğilime karş�
 
 | Kaynak türü | Doğrulama yolu | Provenans etiketi |
 |---|---|---|
-| TR mevzuat | ArthurLegal MCP (`tr_`) | `[ArthurLegal TR — GG.AA.YYYY]` |
+| TR mevzuat | ArthurLegal MCP (`tr_`), `tr_mevzuat_madde_getir` | `[ArthurLegal TR — kanun m. X — GG.AA.YYYY]` |
 | Yargıtay / Danıştay / BAM | ArthurLegal MCP (`tr_`) | `[ArthurLegal TR — kurum — Esas/Karar — GG.AA.YYYY]` |
 | AYM (norm / bireysel) | ArthurLegal MCP (`tr_`) | `[ArthurLegal TR — AYM — Esas/Karar veya BB no — GG.AA.YYYY]` |
 | Resmî Gazete | WebFetch resmigazete.gov.tr | `[Resmî Gazete — sayı/tarih]` |
@@ -65,6 +65,7 @@ Kullanıcının dipnot listesi veya kaynakçası. Ham makale metni **gerekmez**.
 2. Türüne göre doğrulama kaynağını seç (yukarıdaki tablo).
 3. Çek. **Çekemiyorsan uydurma.**
 4. Karşılaştır: künye alanları eşleşiyor mu? Özellikle **yıl, cilt, sayı, sayfa aralığı**.
+   Mevzuat kaleminde: madde numarası, madde başlığı ve dipnotun veya metnin maddeye yüklediği içerik (kime hak, şart, süre, sonuç) çekilen metinle eşleşiyor mu? Yalnız dipnotlar değil, metin gövdesindeki madde atıfları da bu adımdan geçer.
 5. Sınıflandır (aşağıdaki tablo).
 6. Rapor üret.
 
@@ -76,7 +77,7 @@ Kullanıcının dipnot listesi veya kaynakçası. Ham makale metni **gerekmez**.
 | ⚠️ **Kısmen doğrulandı** | Kaynak var ama bir alan tutmuyor (yıl/sayfa/cilt) | Alanı düzelt |
 | 🟠 **Doğrulanamadı — erişim yok** | Kaynak muhtemelen gerçek, ama API yok (kitap, abonelik DB) | Kullanıcı manuel doğrulasın |
 | 🔴 **Bulunamadı** | Aramalarda hiçbir iz yok | **Kaynağı kaldırın veya elinizdeki fiziki/PDF nüshadan künyeyi teyit edin.** Uydurma atıf riski. |
-| 🔴 **Çelişkili** | DOI başka esere ait; esas/karar no başka kararı gösteriyor | Ciddi hata — düzeltilmeden gönderilmemeli |
+| 🔴 **Çelişkili** | DOI başka esere ait; esas/karar no başka kararı gösteriyor; madde no başka hükmü gösteriyor veya maddeye yüklenen içerik metinle çelişiyor | Ciddi hata — düzeltilmeden gönderilmemeli |
 
 > 🔴 **Bulunamadı** çıkan bir kalem için asla "muhtemelen şudur" diye alternatif **önerme**.
 > Kullanıcıya bulunamadığını söyle ve nasıl doğrulayacağını anlat.

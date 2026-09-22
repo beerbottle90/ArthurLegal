@@ -37,6 +37,7 @@
 |---|---|
 | redline ve fallback pozisyonlari icin imzali emsal kloz metni | `/legal-research:sozlesme-emsali` |
 | AZ hukuku secilmisse emredici hukum kontrolu — akt + statu | `/legal-research:az-mevzuat` |
+| TR kanun maddesi (kloz govdesindeki atiflar dahil) — okuma + baslik ve icerik eslestirme | ArthurLegal MCP `tr_mevzuat_madde_getir` · `references/mevzuat-mcp-rehberi.md` bolum 9 |
 
 Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` · `references/karsilastirmali-hukuk-rehberi.md` · `references/nl-rechtspraak-mcp-rehberi.md` · `references/pl-sejm-mcp-rehberi.md` · `references/at-ris-mcp-rehberi.md` · `references/ie-statutebook-mcp-rehberi.md` · `references/fi-finlex-mcp-rehberi.md` · `references/es-boe-mcp-rehberi.md`
 
@@ -74,7 +75,8 @@ user-invocable: true
 
 - Yapıyı koru; değişken alanları yeni parametrelerle doldur; bilinmeyenleri **`[DOLDUR — ...]`** bırak.
 - **Standart klozları** ekle/teyit et (mücbir sebep TBK m.136/138, sınırlı sorumluluk, yaptırım/uyum, KVKK, EPDK lisans/devir, uyuşmazlık, damga vergisi).
-- **Emredici hüküm kontrolü:** şablondaki bir kloz emredici kurala aykırıysa düzelt + flag (`[ArthurLegal TR — GG.AA.YYYY]`). (Örn. tüketici/iş sözleşmesinde aleyhe kloz, fahiş cezai şart TBK m.182.)
+- **Emredici hüküm kontrolü:** şablondaki bir kloz emredici kurala aykırıysa düzelt + flag (`[ArthurLegal TR — kanun m. X — GG.AA.YYYY]`, madde çekildikten sonra). (Örn. tüketici/iş sözleşmesinde aleyhe kloz, fahiş cezai şart TBK m.182, çalışan buluşu klozunda SMK m. 117 emredici sınırı.)
+- **Madde doğrulama kapısı (teslim öncesi, zorunlu):** Belge gövdesine yazılan her kanun maddesi (şablondan gelen, bu kitapçıktaki örneklerden gelen veya yeni eklenen) `tr_mevzuat_madde_getir` ile çekilir; kloz maddeye ne yüklüyorsa (hakkın sahibi, şart, süre, sonuç) başlık ve metinle eşleştirilir. Eşleşmiyorsa numara korunup açıklama uydurulmaz. Çekilemiyorsa madde numarası gövdeden çıkarılır, kloz numarasız kurulur ("ilgili mevzuatın emredici hükümleri saklıdır") ve eksik İnceleyen notuna yazılır. Bu kitapçıktaki örnek madde numaraları (TBK m.13, 136, 138, 182 gibi) doğrulama değildir. Yol: `references/mevzuat-mcp-rehberi.md` bölüm 9.
 - Şablon eski tarihliyse: **mevzuat değişikliği** kontrolü (atıflar güncel mi?).
 
 ## ADIM 3 — Değişiklik notu
@@ -111,7 +113,8 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 - **Şablon:** [kaynak emsal] · **Tip:** [...]
 - **Doldurulan / [DOLDUR] kalan:** N / N
 - **Eklenen standart klozlar:** [liste]
-- **Emredici hüküm/güncellik düzeltmesi:** [N adet] `[ArthurLegal MCP (`tr_`)]`
+- **Emredici hüküm/güncellik düzeltmesi:** [N adet] `[ArthurLegal TR — kanun m. X — GG.AA.YYYY]`
+- **Madde kontrolü:** [belgedeki her madde atfı → okundu ve eşleşti / çekilemedi, gövdeden çıkarıldı] — belgede madde atfı varsa bu satır doldurulmadan teslim edilmez
 - **Onay:** Baş Hukuk Müşaviri + dış vekil şart
 
 [yeni belge metni]
@@ -205,7 +208,7 @@ user-invocable: true
 ## ADIM 1 — Bulguları topla / üret
 
 Inceleme bulgusu varsa al; yoksa playbook'a göre çıkar (sözleşme tipini tespit et → `references/` + `commercial-legal` profili + `firm-profile.md` standart pozisyonları). Her bulgu için:
-- **Sorun** (kloz + neden) · **Severity** (🔴🟠🟡🟢) · **Önerilen redline** (somut metin) · **Fallback** ("tercih X; kabul edilmezse asgari Y") · **Hukuki dayanak** (`[ArthurLegal MCP (`tr_`)]` emredici hüküm / `[ArthurLegal MCP (`tr_`)]` kloz geçerliliği).
+- **Sorun** (kloz + neden) · **Severity** (🔴🟠🟡🟢) · **Önerilen redline** (somut metin) · **Fallback** ("tercih X; kabul edilmezse asgari Y") · **Hukuki dayanak** (çekilmiş madde, `[ArthurLegal TR — kanun m. X — GG.AA.YYYY]`; önerilen redline metnine yazılan madde numarası da belge-turet ADIM 2'deki doğrulama kapısından geçer, çekilemiyorsa redline numarasız yazılır).
 
 **Standart kontrol listesi (enerji sözleşmesi):**
 - Mücbir sebep + aşırı ifa güçlüğü (TBK m.136/138) — şebeke kısıtı, mevzuat değişikliği, kuraklık (HES)
@@ -251,7 +254,8 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 - **Belge / okuma kapsamı:** [tip, N sayfa okundu]
 - **Kağıt:** bizim / karşı taraf · **Form:** (a)/(b)/(c) · **Ortam:** Projects/Code
 - **Değişiklik sayısı:** 🔴 N · 🟠 N · 🟡 N · 🟢 N
-- **Kaynaklar:** ArthurLegal MCP (`tr_`) [✓/✗]; ArthurLegal MCP (`tr_`) [✓/✗]
+- **Kaynaklar:** ArthurLegal MCP (`tr_`) [✓/✗]
+- **Madde kontrolü:** [redline, yorum ve gerekçedeki her madde atfı → okundu ve eşleşti / çekilemedi, çıkarıldı]
 - **Onay:** Baş Hukuk Müşaviri + dış vekil şart
 
 [seçilen formda redline]
@@ -298,6 +302,7 @@ user-invocable: true
 - **Yürürlük:** imza/tarih; geriye etki isteniyorsa açıkça yaz.
 - **Damga vergisi:** tadil ayrı damga doğurabilir (DVK — değişen tutar üzerinden) → `[DOLDUR/doğrulayın]`.
 - **Sektörel özel:** süre uzatımı mücbir sebebe dayanıyorsa TBK m.136 gerekçesi; **EPDK lisans şartlarını etkiliyorsa** ön-onay; **SHA tadili** ise reserved matters + ortak/finansör onayı; **kredi tadili** ise finansör covenant/onay.
+- **Madde doğrulama kapısı:** tadil metnine, gerekçesine ve eski/yeni metin karşılaştırmasına yazılan her kanun maddesi `/contract-drafting:belge-turet` ADIM 2'deki kapıdan geçer; ana sözleşmedeki bir madde atfına tadilde dayanılıyorsa o da çekilir.
 
 ## ADIM 2 — Taslak
 
@@ -335,6 +340,7 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 - **Ana sözleşme:** [ad, tarih] · **Tadil tipi:** [...]
 - **Değişen madde sayısı:** N
 - **Onay/şart tetikleyici:** [EPDK ön-onay / SHA reserved matter / finansör covenant / damga — varsa]
+- **Madde kontrolü:** [tadil metnindeki her madde atfı → okundu ve eşleşti / çekilemedi, gövdeden çıkarıldı]
 - **Onay:** Baş Hukuk Müşaviri (+ Genel Müdür yüksek tutarda) şart
 
 [taslak]

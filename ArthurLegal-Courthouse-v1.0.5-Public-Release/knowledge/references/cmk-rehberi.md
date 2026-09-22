@@ -114,7 +114,8 @@ tr_mevzuat_ara(number="6331", types=["KANUN"])   # İSG K.
 tr_mevzuat_ara(number="2872", types=["KANUN"])   # Çevre K.
 tr_mevzuat_ara(number="5607", types=["KANUN"])   # Kaçakçılıkla Mücadele K.
 tr_mevzuat_ara(number="5235", types=["KANUN"])   # Adli yargı görev/teşkilat
-→ tr_mevzuat_getir(mevzuat_id="<mevzuat_id>") / tr_mevzuat_icinde_ara(phrase="<madde no>")
+→ tr_mevzuat_icindekiler(mevzuat_id="<mevzuat_id>") → tr_mevzuat_madde_getir(madde_id="<madde_id>")   # şemada number ve madde_no varsa tek çağrı
+→ tr_mevzuat_icinde_ara(mevzuat_id="<mevzuat_id>", query="<konu kelimeleri>")   # konu araması; madde bulma yolu değil
 ```
 
 Atıf (kanun): `[ArthurLegal TR — CMK m. XXX — GG.AA.YYYY]`

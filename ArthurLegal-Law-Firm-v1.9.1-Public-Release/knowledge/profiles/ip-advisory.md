@@ -68,20 +68,24 @@
 
 ### 6769 sayılı SMK (Sınai Mülkiyet Kanunu)
 
+> Madde numaraları yol göstericidir, atıf değildir. Bir maddeyi nota, sözleşmeye veya dilekçeye yazmadan önce `tr_mevzuat_madde_getir` ile çek ve başlığın anlattığın içerikle örtüştüğünü kontrol et (`mevzuat-mcp-rehberi.md` bölüm 9). Tablodaki madde numaraları 21.09.2026'da canlı madde ağacıyla karşılaştırıldı; pratik süreler (ay ve yıl tahminleri) madde değildir.
+
 | Konu | Madde | Pratik notu |
 |---|---|---|
 | **Marka tescili** | m. 4-22 | Başvuru → yayım → itiraz (2 ay) → tescil; toplam 12-18 ay |
 | **Mutlak red sebepleri** | m. 5 | Ayırt edicilik yokluğu, tanımlayıcılık, kamu düzeni, vd. |
 | **Nispi red sebepleri** | m. 6 | Benzer marka, ticaret unvanı, telif, vd. — **itiraz üzerine** |
-| **Marka iptal davası** | m. 25-26 | TÜRKPATENT'e veya FSH Mh.'ne (sınırlı) |
+| **Marka iptal** | m. 26 | TÜRKPATENT'e veya FSH Mh.'ne (sınırlı) |
 | **Marka hükümsüzlük** | m. 25 | FSH Mh.'ne dava |
-| **YİDK itiraz** | m. 20-21 | Mütalaa veya karara karşı 2 ay içinde |
-| **YİDK karar iptali davası** | m. 23 | FSH Mh.'ne karara karşı 2 ay |
+| **YİDK itiraz** | m. 20-21 | Karara karşı bildirimden itibaren 2 ay (m. 20/2) |
+| **Kurum (YİDK) kararına karşı dava** | m. 156/2 | Ankara FSH Hukuk Mh.; dava süresi maddeden çekilerek teyit edilir |
 | **Tasarım tescili** | m. 55-81 | Yenilik + ayırt edicilik; başvuru → yayım → tescil (~6 ay) |
-| **Patent — incelemeli** | m. 88-114 | TÜRKPATENT veya EPO (Avrupa); inceleme 3-5 yıl |
-| **Patent — incelemesiz (faydalı model)** | m. 115-118 | Daha hızlı, daha zayıf koruma |
-| **Marka ihlali** | m. 7 / 29-32 | Tazminat + ihlalin men'i + yedek imha |
-| **Zamanaşımı** | m. 157 | **2 yıl (öğrenme)** / **10 yıl (eylem)** |
+| **Patent başvurusu, araştırma, inceleme, itiraz** | m. 90-100 | TÜRKPATENT veya EPO (Avrupa); inceleme 3-5 yıl |
+| **Patent ve faydalı model koruma süresi** | m. 101 | Patent 20 yıl, faydalı model 10 yıl; uzatılamaz |
+| **Faydalı model** | m. 142-145 | Daha hızlı, daha zayıf koruma |
+| **Çalışan buluşları** | m. 113-122 | Emredici (m. 117); işverenin hak talebi 4 ay (m. 115/1); önalım hakkı çalışanındır (m. 120). `smk-rehberi.md` Çalışan buluşları bölümü |
+| **Marka ihlali** | m. 7, 29; ceza m. 30; hukuki talepler m. 149; tazminat m. 150-151 | Tazminat + ihlalin men'i + yedek imha |
+| **Zamanaşımı** | m. 157 | TBK zamanaşımı hükümlerine atıf; **2 yıl (öğrenme)** / **10 yıl (eylem)** TBK'dan gelir |
 
 ### 5846 sayılı FSEK (Fikir ve Sanat Eserleri K.)
 

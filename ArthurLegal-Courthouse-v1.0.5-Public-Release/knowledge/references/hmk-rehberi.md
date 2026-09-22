@@ -68,9 +68,11 @@
 ```
 tr_mevzuat_ara(number="6100", types=["KANUN"])
 → mevzuatId not
-tr_mevzuat_icindekiler(id=<id>)
-→ Madde ağacı, ilgili maddeye gir
-tr_mevzuat_icinde_ara(id=<id>, phrase="<madde no veya konu>")
+tr_mevzuat_icindekiler(mevzuat_id=<id>)
+→ Madde ağacı, ilgili maddenin madde_id'sini al
+tr_mevzuat_madde_getir(madde_id=<madde_id>)
+→ Şemada number ve madde_no varsa tek çağrı: tr_mevzuat_madde_getir(number="6100", madde_no="<no>")
+tr_mevzuat_icinde_ara(mevzuat_id=<id>, query="<konu kelimeleri>")   # konu araması; madde numarasıyla madde bulmaz
 ```
 
 Atıf: `[ArthurLegal TR — HMK m. XXX — GG.AA.YYYY]`

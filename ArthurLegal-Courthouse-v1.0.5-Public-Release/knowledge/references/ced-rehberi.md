@@ -67,7 +67,9 @@ Komisyon inceleme + bakanlık değerlendirme →
 
 **ArthurLegal MCP (`tr_`) doğrulama:**
 ```
-tr_mevzuat_icinde_ara(mevzuat_id="103161", keywords="20/A")
+tr_mevzuat_ara(number="2577", types=["KANUN"])   # İYUK, mevzuat_id buradan
+tr_mevzuat_icindekiler(mevzuat_id="<mevzuat_id>")   # m. 20/A'nın madde_id'si
+tr_mevzuat_madde_getir(madde_id="<madde_id>")
 ```
 
 ## Hukuki argümanlar (klasik)
