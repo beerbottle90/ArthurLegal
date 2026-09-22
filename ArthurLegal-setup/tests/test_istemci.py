@@ -162,6 +162,38 @@ class ClaudeAyariTesti(unittest.TestCase):
             self.assertEqual(veri["preferences"], {"x": 1})
 
 
+class ProjeKlasoruTesti(unittest.TestCase):
+    """'Use a folder' klasörleri: yönetilen içerik yenilenir, kullanıcı dosyaları korunur."""
+
+    def calistir(self, kok, proje_koku, kod):
+        tam = f"import sys, json; sys.path.insert(0, r'{kok}/surumler/0.0.1/istemci'); import proje; {kod}"
+        env = {**ENV, "ARTHURLEGAL_PROJE_KOKU": str(proje_koku)}
+        return subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True,
+                              encoding="utf-8", check=True).stdout.strip()
+
+    def test_esitle_korur_ve_kaldirir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            pk = t / "projeler"
+            self.assertEqual(self.calistir(t / "kok", pk, "print(len(proje.esitle()))"), "1")
+            hedef = pk / "Hukuk Bürosu"
+            self.assertIn("arthurlegal_talimat", (hedef / "CLAUDE.md").read_text(encoding="utf-8"))
+            self.assertIn("Test & Ortakları", (hedef / "knowledge" / "firm-profile.md").read_text(encoding="utf-8"),
+                          "büro katmanı paketteki şablonu ezmeli")
+            self.assertTrue((hedef / "buro" / "ek-3-kirmizi-hatlar.md").exists())
+            (hedef / "calismalar" / "taslak.txt").write_text("avukatın taslağı", encoding="utf-8")
+            (hedef / "notlar.txt").write_text("kişisel not", encoding="utf-8")
+            self.assertEqual(self.calistir(t / "kok", pk, "print(len(proje.esitle()))"), "0", "sürüm aynıysa dokunmamalı")
+            self.calistir(t / "kok", pk, "proje.esitle(zorla=True)")
+            self.assertEqual((hedef / "calismalar" / "taslak.txt").read_text(encoding="utf-8"), "avukatın taslağı")
+            self.calistir(t / "kok", pk, "proje.kaldir()")
+            self.assertFalse((hedef / "SYSTEM_PROMPT.md").exists())
+            self.assertFalse((hedef / "knowledge").exists())
+            self.assertTrue((hedef / "notlar.txt").exists(), "kullanıcı dosyası silinmemeli")
+            self.assertTrue((hedef / "calismalar" / "taslak.txt").exists())
+
+
 class SunucuTesti(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

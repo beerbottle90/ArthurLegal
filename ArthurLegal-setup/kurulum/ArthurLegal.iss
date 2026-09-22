@@ -57,13 +57,13 @@ Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl"
 [Messages]
 ; Inno Setup 6 karşılama sayfasını göstermez; kurulum lisans sayfasıyla açılır. Bilgi "Kurulmaya hazır" sayfasında.
 #if FirmaAd != ""
-ReadyLabel1=Kurulum, {#FirmaAd} için ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, Arthur Mask, ArthurLegal Tapu ve UYAP bağlantısı.
+ReadyLabel1=Kurulum, {#FirmaAd} için ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, araştırma bağlantısı, ArthurLegal Tapu ve Arthur Mask.
 #else
-ReadyLabel1=Kurulum, ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, Arthur Mask, ArthurLegal Tapu ve UYAP bağlantısı.
+ReadyLabel1=Kurulum, ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, araştırma bağlantısı, ArthurLegal Tapu ve Arthur Mask.
 #endif
 ReadyLabel2a=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB, birkaç dakika) ve açıksa Claude Desktop kapatılır. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 ReadyLabel2b=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB, birkaç dakika) ve açıksa Claude Desktop kapatılır. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
-FinishedLabel=ArthurLegal kuruldu.%n%nSon adım (bir dakika): açılan başlangıç rehberindeki talimatı kopyalayın ve Claude Desktop'ta yeni bir Proje oluşturup Talimatlar alanına yapıştırın. Bu adım bir kez yapılır; sonraki güncellemeler kendiliğinden gelir.
+FinishedLabel=ArthurLegal kuruldu.%n%nClaude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın; asistan ArthurLegal talimatını kendisi yükler. İlk araç kullanımında çıkan izin penceresinde 'Her zaman izin ver'i seçin.%n%nMasaüstündeki ArthurLegal simgesi Claude Desktop'u ve başlangıç panelini açar.
 
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -92,9 +92,9 @@ Filename: "claude://"; Description: "Claude Desktop'u başlat"; Flags: postinsta
 Filename: "{app}\runtime\python.exe"; Parameters: "-B ""{app}\bin\al.py"" kur --kaldir"; Flags: runhidden waituntilterminated; RunOnceId: "ClaudeKaydiniSil"
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{app}\surumler"
-Type: filesandordirs; Name: "{app}\veri"
-Type: files; Name: "{app}\aktif.txt"
+; Kurulumdan sonra yazılanlar (güncellemeyle gelen sürüm klasörleri, durum.js, KALDIR.cmd, günlükler)
+; Inno'nun dosya listesinde yok; klasör tümüyle silinir. Klasör yalnız ArthurLegal'e aittir.
+Type: filesandordirs; Name: "{app}"
 
 [Code]
 var

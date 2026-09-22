@@ -39,11 +39,15 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <div id="durum"></div>
 
-<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. Claude'un Project'lerine yazan bir arayüz olmadığı için son adımı
-bir kez elle yapıyorsunuz: aşağıdaki kısa talimatı Claude'da bir <b>Proje</b>ye yapıştırmak. Talimat hiç değişmez;
-paket güncellemeleri bundan sonra kendiliğinden gelir. Proje açmak istemiyorsanız bir alttaki kısa yol da var.</p>
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. İlk araç kullanımında çıkan izin penceresinde <b>Her zaman izin ver</b>'i seçin. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
 
-<h2>Son adım: proje ve talimat</h2>
+<h2>Yedek yol 1: hazır proje klasörü</h2>
+<p>Claude'da <b>Projeler → Yeni proje</b> penceresinde <b>Use a folder</b> düğmesine basın ve aşağıdaki klasörlerden birini
+seçin. Klasörde talimat (<code>CLAUDE.md</code>), sistem talimatı ve bütün bilgi dosyaları hazırdır; her güncellemede
+kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</code> alt klasörüne koyun.</p>
+<div id="klasorler" class="kart"><span style="color:var(--soluk)">Klasör yolları kurulumdan sonra burada görünür.</span></div>
+
+<h2>Yedek yol 2: proje ve talimat</h2>
 <div class="adim a1"><div class="no">1</div><div><b>Claude Desktop açık olmalı.</b> Kapalıysa bu sayfayı açan <i>ArthurLegal</i> simgesi onu da açar.
   Yüklü değilse <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
 <div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projeler → Yeni proje</b>, ad olarak örneğin <code>ArthurLegal – Hukuk Bürosu</code>.
@@ -65,10 +69,8 @@ paket güncellemeleri bundan sonra kendiliğinden gelir. Proje açmak istemiyors
 <div class="adim a4"><div class="no">4</div><div><b>Deneyin:</b> projede yeni bir sohbet açıp bir hukuk sorusu yazın. Asistan önce
   <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Her zaman izin ver</b> deyin.</div></div>
 
-<h2>Proje açmadan kullanmak</h2>
-<p>Tek seferlik bir iş için proje açmaya gerek yok. Claude Desktop'ta yeni bir sohbette yazma kutusunun yanındaki
-<b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altındaki <b>hukuk-burosu</b> (ya da <b>kurumsal</b>) istemini seçin.
-Aynı talimat sohbete eklenir. Proje yolunun farkı, ayarın kalıcı olması ve projeye dosya ekleyebilmenizdir.</p>
+<h2>Asistan talimatı yüklemezse</h2>
+<p>Nadiren model ilk soruda talimat aracını çağırmadan cevaplamaya başlayabilir. O durumda yazma kutusunun yanındaki <b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altındaki <b>hukuk-burosu</b> (ya da <b>kurumsal</b>) istemini seçin; ya da yukarıdaki proje adımını bir kez yapın.</p>
 
 <h2>Diğer bileşenler</h2>
 <ul>
@@ -76,8 +78,8 @@ Aynı talimat sohbete eklenir. Proje yolunun farkı, ayarın kalıcı olması ve
     <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
   <li><b>ArthurLegal Tapu</b> — Masaüstündeki <i>ArthurLegal - Tapu</i> kısayolu parsel arayüzünü açar; Claude tapu
     araçlarını bu bilgisayarda çalıştırır.</li>
-  <li><b>Knowledge klasörü</b> — Başlat menüsündeki <i>ArthurLegal - Knowledge Klasörü</i> kısayolu dosyaları Gezgin'de
-    açar. Klasik yolu tercih edip bunları bir projeye yüklerseniz o kopya güncellenmez; güncel kalan yol araçlardır.</li>
+  <li><b>Proje klasörleri</b> — Başlat menüsündeki <i>ArthurLegal - Proje Klasörleri</i> kısayolu hazır klasörleri Gezgin'de
+    açar. Dosyaları bir projeye elle sürüklerseniz o kopya güncellenmez; güncel kalan yollar araçlar ve "Use a folder"dır.</li>
   <li><b>Güncelleme</b> — Arka planda kurulur. Elle denetlemek için Başlat menüsünde <i>ArthurLegal - Güncellemeleri Denetle</i>.</li>
 </ul>
 
@@ -103,6 +105,12 @@ Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumlu
     ["Arthur Mask", d.mask || "kurulu değil"],
     ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]
   ];
+  var k = d.proje_klasorleri || {};
+  var ad = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal"};
+  var liste = Object.keys(k).map(function (p) {
+    return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";
+  }).join("");
+  if (liste) document.getElementById("klasorler").innerHTML = liste;
   document.getElementById("durum").innerHTML = satirlar.map(function (s) {
     return "<div><b>" + s[0] + "</b><span>" + String(s[1]).replace(/</g, "&lt;") + "</span></div>";
   }).join("");

@@ -23,6 +23,7 @@ from urllib.parse import quote
 
 import claude_ayari
 import ortak
+import proje
 
 
 def claude_kurulu() -> bool:
@@ -73,7 +74,7 @@ def _kisayol_listesi() -> list:
         (menu / "ArthurLegal.lnk", *ana),
         (menu / "ArthurLegal - Tapu.lnk", *tapu),
         (menu / "ArthurLegal - Başlangıç Rehberi.lnk", ortak.KOK / "rehber" / "baslangic.html", "", "Kurulum sonrası adımlar"),
-        (menu / "ArthurLegal - Knowledge Klasörü.lnk", ortak.SURUM_DIZINI / "paketler", "", "Paketin bilgi dosyaları"),
+        (menu / "ArthurLegal - Proje Klasörleri.lnk", proje.kok(), "", "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri"),
         (menu / "ArthurLegal - Güncellemeleri Denetle.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
     ]
     if (ortak.SURUM_DIZINI / "uyap").exists():
@@ -82,28 +83,63 @@ def _kisayol_listesi() -> list:
     return liste
 
 
+# WScript.Shell .lnk dosya adını ANSI kod sayfasına çevirir: Türkçe olmayan Windows'ta "ş", "ı", "ğ"
+# bozulur ("Başlangıç" -> "Baslangiç") ve kullanıcı adında bu harfler varsa hedef yol da bozulabilir.
+# IShellLinkW + IPersistFile Unicode'dur; Add-Type ile derlenir (Akıllı Uygulama Denetimi açıkken denendi).
+_KISAYOL_CS = r"""
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+[ComImport, Guid("00021401-0000-0000-C000-000000000046")] class ArthurShellLink {}
+[ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
+interface IArthurShellLinkW {
+  void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder f, int c, IntPtr d, uint fl);
+  void GetIDList(out IntPtr p); void SetIDList(IntPtr p);
+  void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder n, int c);
+  void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string n);
+  void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder d, int c);
+  void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string d);
+  void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder a, int c);
+  void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string a);
+  void GetHotkey(out short h); void SetHotkey(short h);
+  void GetShowCmd(out int s); void SetShowCmd(int s);
+  void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder p, int c, out int i);
+  void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string p, int i);
+  void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string p, uint r);
+  void Resolve(IntPtr h, uint f);
+  void SetPath([MarshalAs(UnmanagedType.LPWStr)] string f);
+}
+public static class ArthurKisayol {
+  public static void Yaz(string yol, string hedef, string arg, string calisma, string aciklama, string ikon) {
+    var l = (IArthurShellLinkW)new ArthurShellLink();
+    l.SetPath(hedef); if (arg.Length > 0) l.SetArguments(arg); l.SetWorkingDirectory(calisma);
+    l.SetDescription(aciklama); if (ikon.Length > 0) l.SetIconLocation(ikon, 0);
+    ((IPersistFile)l).Save(yol, true);
+  }
+}
+"""
+
+
 def kisayollar_yaz() -> None:
-    """Simgeli .lnk kısayolları (WScript.Shell). COM engellenirse .cmd yedeğine düşer."""
+    """Simgeli .lnk kısayolları (IShellLinkW, Unicode). Add-Type engellenirse .cmd yedeğine düşer."""
     menu = _menu()
     menu.mkdir(parents=True, exist_ok=True)
     ikon = ortak.KOK / "bin" / "arthurlegal.ico"
-    satirlar = ["$w = New-Object -ComObject WScript.Shell"]
+    tirnak = lambda s: str(s).replace("'", "''")  # noqa: E731
+    satirlar = ["$ErrorActionPreference = 'Stop'", "Add-Type -TypeDefinition @'", _KISAYOL_CS.strip(), "'@"]
     for yol, hedef, arg, aciklama in _kisayol_listesi():
-        tirnak = lambda s: str(s).replace("'", "''")  # noqa: E731
-        satirlar += [f"$s = $w.CreateShortcut('{tirnak(yol)}')", f"$s.TargetPath = '{tirnak(hedef)}'"]
-        if arg:
-            satirlar.append(f"$s.Arguments = '{tirnak(arg)}'")
-        satirlar += [f"$s.WorkingDirectory = '{tirnak(ortak.KOK)}'", f"$s.Description = '{tirnak(aciklama)}'"]
-        if ikon.exists():
-            satirlar.append(f"$s.IconLocation = '{tirnak(ikon)}'")
-        satirlar.append("$s.Save()")
+        satirlar.append(f"[ArthurKisayol]::Yaz('{tirnak(yol)}', '{tirnak(hedef)}', '{tirnak(arg)}', "
+                        f"'{tirnak(ortak.KOK)}', '{tirnak(aciklama)}', '{tirnak(ikon) if ikon.exists() else ''}')")
     betik = ortak.VERI / "kisayollar.ps1"
     betik.parent.mkdir(parents=True, exist_ok=True)
     betik.write_text("\n".join(satirlar) + "\n", encoding="utf-8-sig")
     try:
         sonuc = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(betik)],
-                               capture_output=True, creationflags=ortak.PENCERESIZ, timeout=120)
-        tamam = sonuc.returncode == 0 and (_masaustu() / "ArthurLegal.lnk").exists()
+                               capture_output=True, creationflags=ortak.PENCERESIZ, timeout=180)
+        tamam = sonuc.returncode == 0 and all(y.exists() for y, *_ in _kisayol_listesi())
+        if not tamam:
+            ortak.gunluk("kurulum", "kısayol betiği: " + sonuc.stderr.decode("utf-8", "replace")[-400:])
     except (OSError, subprocess.SubprocessError) as e:
         ortak.gunluk("kurulum", f"kısayol betiği çalışmadı: {e!r}")
         tamam = False
@@ -199,6 +235,7 @@ def main(argv=None) -> int:
         silinen = claude_ayari.sil()
         kisayollar_sil()
         run_anahtari(False)
+        proje.kaldir()
         ortak.gunluk("kurulum", f"kaldırma: {len(silinen)} yapılandırmadan silindi")
         return 0
     if args.kurulum:
@@ -214,6 +251,10 @@ def main(argv=None) -> int:
         import kisayol  # başlangıç panelinin durum kartı ilk açılışta dolu gelsin
         kisayol.durum_yaz()
     degisen = claude_ayari.kaydet()
+    try:  # "Use a folder" proje klasörleri; güncelleyici her sürümde buradan tazeler
+        proje.esitle()
+    except OSError as e:
+        ortak.gunluk("kurulum", f"proje klasörleri yazılamadı: {e!r}")
     ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
         print(f"Kuruldu. Claude Desktop'a {len(claude_ayari.istenen_girdiler())} sunucu eklendi.")

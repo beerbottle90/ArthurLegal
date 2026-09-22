@@ -19,6 +19,7 @@ from pathlib import Path
 
 import claude_ayari
 import ortak
+import proje
 
 TAPU_ADRES = ("127.0.0.1", 8765)
 
@@ -66,6 +67,7 @@ def durum_yaz(claude_durumu: str | None = None) -> Path:
         "claude": claude_durumu,
         "son_denetim": time.strftime("%d.%m.%Y %H:%M", time.localtime(d["son_denetim"])) if d.get("son_denetim") else "",
         "son_sonuc": d.get("son_sonuc", ""),
+        "proje_klasorleri": proje.durum(),
     }
     yol = ortak.KOK / "rehber" / "durum.js"
     yol.parent.mkdir(parents=True, exist_ok=True)
@@ -105,8 +107,9 @@ def uyap_tarayici() -> int:
 
 
 def knowledge() -> int:
-    """Klasik yol: dosyaları Claude'da bir Project'e sürüklemek isteyen için klasörü açar."""
-    os.startfile(ortak.SURUM_DIZINI / "paketler")  # noqa: S606
+    """Proje klasörlerini açar: Claude'da 'Use a folder' ile seçilir ya da dosyalar projeye sürüklenir."""
+    proje.esitle()
+    os.startfile(proje.kok())  # noqa: S606
     return 0
 
 

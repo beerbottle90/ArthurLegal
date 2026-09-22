@@ -25,10 +25,17 @@ Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
 
 1. **[Releases](https://github.com/beerbottle90/ArthurLegal/releases)** sayfasından `ArthurLegal-Kurulum.exe`
    dosyasını indirin ve çift tıklayın. Windows "bilinmeyen yayımcı" derse **Ek bilgi → Yine de çalıştır**.
-2. Kurulum bitince açılan **Başlangıç Rehberi**'nden talimatı kopyalayın, Claude Desktop'ta yeni bir
-   **Proje** açıp Talimatlar alanına yapıştırın. Bu adım bir kezdir; talimat hiç değişmez, paket
-   güncellemeleri kendiliğinden gelir.
-3. Projede bir hukuk sorusu sorun. Asistan önce `arthurlegal_talimat` aracını çağırır.
+2. Claude Desktop'ta **yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın.** Proje ya da yapıştırma
+   gerekmez: `arthurlegal_talimat` aracının açıklaması ve sunucunun `instructions` alanı modele "hukukla
+   ilgili her soruda önce beni çağır" der; profil verilmezse kurulumdaki varsayılan kullanılır.
+3. İlk araç kullanımında çıkan izin penceresinde **Her zaman izin ver**'i seçin. Araç izinleri Claude
+   Desktop'ın kendi deposunda tutulur; kurulum bunları önceden işaretleyemez.
+
+**Yedek yollar.** (1) Kurulum `%USERPROFILE%\ArthurLegal\Hukuk Bürosu` ve `...\Kurumsal` proje klasörlerini
+hazırlar (`CLAUDE.md`, `SYSTEM_PROMPT.md`, `knowledge/`; güncelleyici her sürümde yeniler, kullanıcının
+kendi dosyalarına dokunmaz): Claude'da **Projeler → Yeni proje → Use a folder** ile seçilir.
+(2) Başlangıç panelindeki kısa talimat bir projenin Talimatlar alanına yapıştırılır. (3) Sohbette **+**
+menüsünden `arthurlegal-yerel` altındaki `hukuk-burosu` istemi seçilir.
 
 **Windows 11 Akıllı Uygulama Denetimi (Smart App Control) açıksa** imzasız kurulum motoru engellenir
 (`Hata 4551`). O bilgisayarda `ArthurLegal-Kurulum.zip` dosyasını indirin, klasöre çıkarın ve
