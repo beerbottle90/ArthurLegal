@@ -1,4 +1,4 @@
-# Kurulum — ArthurLegal Academician Assistant v1.0.2
+# Kurulum — ArthurLegal Academician Assistant v1.0.3
 
 > Türkçe kurulum rehberi. English → [INSTALLATION.md](INSTALLATION.md)
 >

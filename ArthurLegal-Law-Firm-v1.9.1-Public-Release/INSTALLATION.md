@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.9.0 | **Updated:** 2026-09-20
+**Version:** 1.9.1 | **Updated:** 2026-09-22
 
 ---
 
@@ -401,7 +401,7 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.9.0**. See `CHANGELOG.md` for what changed.
+This is version **1.9.1**. See `CHANGELOG.md` for what changed.
 
 Upgrading from 1.8.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (sections 6 and 7: the `konu` topic filter, date ranges, what the local archive really holds). Replace these five files in Project knowledge: `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/source-catalog.md`, `knowledge/skills/regulatory-legal__skills.md`. The connector address is unchanged; after connecting call `status` — `backend_status.tr.version` must be 0.4.0 or later.
 

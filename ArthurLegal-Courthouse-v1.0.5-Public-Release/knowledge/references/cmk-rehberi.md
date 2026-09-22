@@ -4,7 +4,7 @@
 >
 > Türk ceza yargılaması usulünün temel kaynağı. `advocacy-legal` eklentisindeki **`ceza-dilekce`** skill'i, ceza dilekçe/işlem taslakları için madde atıflarını ve süre/görev kurallarını bu rehberden alır.
 >
-> **Neden gerekli?** Enerji üretim ve altyapı taahhüt sahasında faaliyet gösteren bir şirket için (örn. rüzgar/HES/jeotermal santral işletme, enerji & su altyapısı proje geliştirme) ceza dosyaları genelde **şirket/çalışan** odaklıdır: iş kazası (6331 + TCK taksirle yaralama/öldürme), çevre suçları, bilişim suçları, kaçakçılık. Şirket çoğunlukla **müşteki/katılan** (zarar gören şirket) **VEYA çalışan müdafii destek** (şirket çalışanı şüpheli/sanık) tarafındadır — nadiren doğrudan fail. Tüzel kişi hakkında ceza değil, **güvenlik tedbiri** (CMK m. 138) gündeme gelir.
+> **Neden gerekli?** Enerji üretim ve altyapı taahhüt sahasında faaliyet gösteren bir şirket için (örn. rüzgar/HES/jeotermal santral işletme, enerji & su altyapısı proje geliştirme) ceza dosyaları genelde **şirket/çalışan** odaklıdır: iş kazası (6331 + TCK taksirle yaralama/öldürme), çevre suçları, bilişim suçları, kaçakçılık. Şirket çoğunlukla **müşteki/katılan** (zarar gören şirket) **VEYA çalışan müdafii destek** (şirket çalışanı şüpheli/sanık) tarafındadır — nadiren doğrudan fail. Tüzel kişi hakkında ceza değil, **güvenlik tedbiri** (TCK m. 60 — izin iptali, müsadere) gündeme gelir.
 
 ---
 
@@ -32,7 +32,7 @@ CMK'nın bütün süre/işlem mantığı bu ikiliye oturur:
 | **Şüpheli savunması (ifade)** | m. 147 (ifade/sorgu usulü) | Şüpheli + müdafi | Susma hakkı, müdafi hazır bulunma; **m. 148** baskı/işkence ile alınan ifade hükümsüz |
 | **Tahliye talebi** | m. 104 | Şüpheli/sanık müdafii | Soruşturmada savcı/sulh ceza hakimi; her aşamada istenebilir |
 | **Tutuklamaya itiraz** | m. 267-271 | Şüpheli/sanık müdafii | Sulh ceza hakimliği kararına → öğrenmeden itibaren **iki hafta** içinde itiraz (m. 268/1); inceleme mercii yargı çevresindeki **asliye ceza mahkemesi hâkimi** (m. 268/3-b) |
-| **Adli kontrole itiraz** | m. 110/3 + m. 267 | Şüpheli müdafii | Tutuklama yerine adli kontrol tedbirine itiraz |
+| **Adli kontrole itiraz** | m. 111/2 + m. 267-268 (inceleme mercii m. 268/3-b) | Şüpheli müdafii | Tutuklama yerine adli kontrol tedbirine itiraz |
 | **KYOK'a (kovuşturmaya yer olmadığı) itiraz** | m. 173 | Müşteki / suçtan zarar gören | KYOK tebliğinden **iki hafta** içinde **Sulh Ceza Hakimliği**'ne (m. 173/1). Genel itiraz süresi de iki haftadır (m. 268/1); fark başlangıçtadır: KYOK'ta tebliğ, genel itirazda öğrenme. |
 
 ### Kovuşturma evresi
@@ -45,7 +45,7 @@ CMK'nın bütün süre/işlem mantığı bu ikiliye oturur:
 | **Esas hakkında mütalaaya karşı beyan** | m. 216/1 | Taraflar | Savcının esas hakkındaki mütalaasına cevap |
 | **İstinaf (BAM ceza dairesi)** | m. 272 vd. | Taraf / katılan | **SÜRE: İKİ HAFTA** — hükmün **gerekçesiyle birlikte tebliğinden** itibaren (m. 273/1); hüküm yüze karşı açıklanmış olsa da süre tefhimle başlamaz. Tutuklu sanık için m. 263 saklı. İstinaf edilemeyen hükümler m. 272/3 (örn. çok düşük adli para cezaları). |
 | **Temyiz (Yargıtay)** | m. 286 vd. | Taraf / katılan | BAM kararına karşı; süre **iki hafta**, hükmün **gerekçesiyle birlikte tebliğinden** itibaren (m. 291/1). Temyiz edilemeyen BAM kararları m. 286/2. |
-| **Koruma tedbiri tazminatı** | m. 141-144 | Haksız tedbire maruz kalan | Haksız yakalama/tutuklama/elkoyma vb. → karar/hükmün kesinleşmesinden itibaren **3 ay / her halde 1 yıl** içinde **Ağır Ceza Mahkemesi**'ne (m. 142). Çalışan haksız tutuklandıysa şirket destekli tazminat yolu. |
+| **Koruma tedbiri tazminatı** | m. 141-144 | Haksız tedbire maruz kalan | Haksız yakalama/tutuklama/elkoyma vb. → karar/hükmün kesinleştiğinin ilgilisine tebliğinden itibaren **3 ay**, her hâlde kesinleşmeyi izleyen **1 yıl** içinde, zarara uğrayanın oturduğu yer **Ağır Ceza Mahkemesi**'ne (m. 142/1-2). **7499 s.K. ile:** m. 141/1-(e), (f) ve (l) bentlerindeki istemler (ör. yakalama/tutuklamadan sonra KYOK veya beraat) 6384 sayılı Kanun uyarınca **Tazminat Komisyonu**'na aittir; ağır ceza mahkemesine yapılırsa Komisyona gönderilir (m. 142/2). Çalışan haksız tutuklandıysa şirket destekli tazminat yolu. |
 
 > **`ceza-dilekce` çıktısı** her dilekçede: (1) doğru evre + merci, (2) madde atfı, (3) süre hesabı (istinaf/temyizde gerekçeli hükmün tebliğinden, itirazda öğrenmeden), (4) sıfat (müşteki/katılan/şüpheli/sanık/müdafi), (5) talep sonucu net.
 
@@ -93,12 +93,12 @@ CMK'nın bütün süre/işlem mantığı bu ikiliye oturur:
 
 | Suç kategorisi | Tipik dayanak | Görevli mahkeme |
 |---|---|---|
-| **Taksirle öldürme/yaralama (iş kazası)** | TCK m. 85, 89, 22/3; 6331 | Tek ölü → Asliye Ceza; birden çok ölü / nitelikli → Ağır Ceza |
-| **Çevre suçları** | TCK m. 181-184 + 2872 | Asliye Ceza (idari para cezası ayrı, idari yargıda) |
+| **Taksirle öldürme/yaralama (iş kazası)** | TCK m. 85, 89, 22/3; 6331 | Tek ölü, yaralı yok (m. 85/1: 2-6 yıl) → Asliye Ceza; birden çok ölü veya ölümle birlikte yaralanma (m. 85/2: 2-15 yıl) → Ağır Ceza |
+| **Çevre suçları** | TCK m. 181-184 + 2872 | Asliye Ceza; TCK m. 181/4 (beş yıldan az olmamak üzere hapis — üst sınır TCK m. 49/1 ile 20 yıl) → Ağır Ceza (idari para cezası ayrı, idari yargıda) |
 | **Bilişim suçları** | TCK m. 243-245 | Asliye Ceza |
 | **Kaçakçılık** | 5607 KMK | Asliye Ceza; nitelikli haller → Ağır Ceza |
 
-> **Görev (CMK m. 3-7):** Kural Asliye Ceza; ağır cezalık suçlar (kanunda gösterilen) Ağır Ceza Mahkemesinde. Görev kamu düzenindendir, her aşamada re'sen gözetilir.
+> **Görev (5235 s.K. m. 11-12; usul CMK m. 3-7):** Kural Asliye Ceza; ağır cezalık suçlar (kanunda gösterilen) Ağır Ceza Mahkemesinde. Görev kamu düzenindendir, her aşamada re'sen gözetilir.
 > **Tüzel kişi:** Ceza verilemez; yalnızca **güvenlik tedbiri** (TCK m. 60 / CMK ilgili hükümler) uygulanabilir.
 
 ---
@@ -157,11 +157,11 @@ tr_ictihat_ara(
 
 - ❌ **Ceza istinafını hâlâ 7 gün sanmak** — 7499 s.K. ile istinaf süresi **iki hafta** (m. 273/1), başlangıç **gerekçeli hükmün tebliği**. Eski kaynaklardaki 7 gün yürürlükte değil.
 - ❌ **Temyizi ve KYOK itirazını 15 gün, genel itirazı 7 gün sanmak** — üçü de artık **iki hafta** (m. 291/1, m. 173/1, m. 268/1). Başlangıçları farklı: temyizde gerekçeli hükmün tebliği, KYOK'ta tebliğ, genel itirazda öğrenme.
-- ❌ **Müşteki için katılma talebini atlamak** — m. 237. Katılmayan müşteki/zarar gören kanun yoluna başvuramaz (m. 260). Şirket müştekiyse **mutlaka katılma**.
+- ❌ **Müşteki için katılma talebini atlamak** — m. 237. Kanun yolu aşamasında katılma istenemez (m. 237/2); m. 260/1 kanun yolunu katılana, katılma isteği reddedilene/karara bağlanmayana ve katılan sıfatını alabilecek surette suçtan zarar görene açar — hak kaybı riskine karşı ilk derecede katılma istenmeli. Şirket müştekiyse **mutlaka katılma**.
 - ❌ **Son söz sanığa verilmemesi** — m. 216/3 ihlali kesin bozma sebebi; savunma dilekçesinde bu hakkı koru.
 - ❌ **Süre başlangıcını karıştırmak** — istinaf ve temyizde süre **gerekçeli hükmün tebliğinden** işler, tefhim süreyi başlatmaz (m. 273/1, 291/1); itirazda **öğrenme** esastır: yüze karşı açıklanan kararda açıklama, yoklukta tebliğ (m. 35, 268/1).
 - ❌ **Şikayet süresini kaçırmak** — şikayete bağlı suçta 6 ay (TCK m. 73); geçince soruşturma açılmaz.
-- ❌ **Tüzel kişiye "ceza" istemek** — tüzel kişiye ceza verilmez; **güvenlik tedbiri** (CMK m. 138) + idari yaptırım yolu doğru.
+- ❌ **Tüzel kişiye "ceza" istemek** — tüzel kişiye ceza verilmez; **güvenlik tedbiri** (TCK m. 60) + idari yaptırım yolu doğru.
 
 ---
 

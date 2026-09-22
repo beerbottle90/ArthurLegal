@@ -93,10 +93,10 @@ Kullanıcı bir dosya (dilekçe, ihtarname, mahkeme tebligatı, dış vekil ön-
 HMK ile teyit:
 
 - **Genel yetki (m. 6):** Davalı yerleşim yeri
-- **Şirketler için yetki (m. 14):** Şirket merkezi ([Müvekkil] için İstanbul)
-- **Sözleşmesel yetki (m. 17):** Sözleşmede yetki klozu varsa öncelik (TBK + HMK)
-- **Tüketici sözleşmesinde (m. 19):** Tüketicinin lehine kesin
-- **İş davaları (4857 + HMK):** İşyerinin bulunduğu yer ([TESİS LOKASYONU], Yalova, vs.)
+- **Şirketler için yetki (m. 6/1 + TMK m. 51; şube işlemleri ve ortaklık/üyelik davaları için m. 14):** Şirket merkezi ([Müvekkil] için İstanbul)
+- **Yetki sözleşmesi (HMK m. 17-18):** Yalnız tacirler veya kamu tüzel kişileri arasında ve yazılı yapılırsa geçerli; aksi kararlaştırılmadıkça dava yalnız seçilen mahkemede açılır
+- **Tüketici davalarında (TKHK m. 73/5):** Tüketicinin yerleşim yerindeki tüketici mahkemesi de yetkili (seçimlik, kesin yetki değil; HMK m. 19 = yetki itirazının ileri sürülmesi)
+- **İş davaları (7036 m. 6):** Davalının yerleşim yeri veya işin yapıldığı yer (iş kazası tazminatında kaza/zarar yeri ve işçinin yerleşim yeri de; aykırı yetki sözleşmesi geçersiz) ([TESİS LOKASYONU], Yalova, vs.)
 - **Tahkim klozu (HMK m. 412 vd. + ISTAC/MTK kuralları):** Geçerliyse mahkeme yerine tahkim
 
 **Görevli mahkeme:**
@@ -122,15 +122,15 @@ Yanlış husumet → davanın reddi (taraf değişikliği, ek dava açma, zamana
 | Dava tipi | Zamanaşımı | Madde |
 |---|---|---|
 | Sözleşme aykırılığı (genel) | 10 yıl | TBK m. 146 |
-| Ticari satım/hizmet sözleşme | 10 yıl | TBK m. 146 + TTK m. 21 |
+| Ticari satım/hizmet sözleşme | 10 yıl; 5 yıl: dönemsel edimler, vekâlet/komisyon/acentelik ve (yüklenicinin ağır kusuru hariç) eser alacakları — TBK m. 147; satımda ayıp davaları devirden 2 yıl (satıcının ağır kusuru hariç) — TBK m. 231 | TBK m. 146-147, 231 |
 | Haksız fiil tazminatı | 2 yıl (öğrenme) / 10 yıl (mutlak) | TBK m. 72 |
-| **İSG kazası — bedensel zarar** | **2/10 + ceza zamanaşımı uzaması (TBK m. 72/2)** | TBK m. 72 |
-| İş davası — alacak (kıdem, ihbar, ücret) | **5 yıl** (kıdem değişti) | İş K. m. 32 / 4857 + TBK |
-| Vergi davası (Danıştay) | **30 gün** tebligattan | İYUK m. 7 |
+| **İSG kazası — bedensel zarar** | **2/10 + ceza zamanaşımı uzaması (TBK m. 72/1, 2. cümle)** | TBK m. 72 |
+| İş davası — alacak (kıdem, ihbar, ücret) | **5 yıl** | İş K. m. 32 son fıkra (ücret) + Ek m. 3 (kıdem, ihbar, kötüniyet tazminatı, yıllık izin ücreti) |
+| Vergi davası (vergi mahkemesi) | **30 gün** tebligattan | İYUK m. 7/1 |
 | İdari işlem iptal (genel) | 60 gün | İYUK m. 7 |
-| Sözleşmeden doğan menfi tespit | 1 yıl | TTK çek/bono özel |
-| Marka ihlali (SMK) | 5 yıl (öğrenme) / 10 yıl (eylem) | 6769 SMK |
-| KVKK ihlal (m. 14/2) | 10 yıl idari para | KVKK 6698 |
+| İstirdat (icra takibinde ödenen borç) | 1 yıl (ödeme tarihinden) | İİK m. 72/7 (menfi tespit için ayrı süre yok) |
+| Marka ihlali (SMK) — tazminat | 2 yıl (öğrenme) / 10 yıl (fiil); fiil SMK m. 30 suçu ise daha uzun ceza zamanaşımı (TBK m. 72/1, 2. cümle) | SMK m. 157 → TBK m. 72 (5 yıl sessiz kalma yalnız hükümsüzlük için: SMK m. 25/6) |
+| KVKK ihlali — Kurula şikâyet / tazminat | Şikâyet: veri sorumlusunun cevabının öğrenildiği tarihten itibaren 30 gün, her hâlde başvuru tarihinden itibaren 60 gün (önce veri sorumlusuna m. 13 başvurusu şart — m. 14/2); tazminat: genel hükümler (2/10 yıl) | KVKK m. 14 + TBK m. 72 |
 
 ⚠️ **ArthurLegal MCP (`tr_`)'den ilgili maddeyi çek ve atıfta bulun**. Zamanaşımı kullanıcı tarafından söylenmişse **önce doğrula** (no silent supplement).
 
@@ -158,18 +158,18 @@ Karşı tarafa olumlu mu, bize olumlu mu eğilim? Bir kaç emsal göster, atıfl
 
 ### 6.5. TTK m. 5/A Zorunlu Arabuluculuk Kontrolü (ticari uyuşmazlıklar)
 
-**6102 TTK m. 5/A:** Konusu **alacak + tazminat** olan **ticari uyuşmazlıklarda** dava açmadan önce **zorunlu arabuluculuk dava şartı**.
+**6102 TTK m. 5/A:** Ticari davalardan konusu bir miktar para olan **alacak, tazminat, itirazın iptali, menfi tespit ve istirdat** davalarında dava açmadan önce **zorunlu arabuluculuk dava şartı** (7445 s. K. ile genişletilmiş hâli).
 
 **Bu dosya kapsama giriyor mu?**
-- [ ] Uyuşmazlık ticari mi? (TTK m. 4 — iki tacir + ticari iş)
-- [ ] Talep "miktarı para" (alacak veya tazminat) mı?
-- [ ] Konu KAPSAM DIŞI mı? (tüketici, iş davası, ihtiyati tedbir/haciz, ihbar — bunlar arabulucusuz dava açılabilir)
+- [ ] Uyuşmazlık ticari dava mı? (TTK m. 4/1 — her iki tarafın ticari işletmesiyle ilgili nispi ticari dava veya taraflara bakılmaksızın m. 4/1-a–f mutlak ticari dava)
+- [ ] Dava konusu bir miktar para mı (alacak, tazminat, itirazın iptali, menfi tespit veya istirdat)?
+- [ ] Konu TTK m. 5/A dışında mı? (ihtiyati tedbir/haciz arabuluculuk beklenmeden istenebilir — HUAK m. 18/A/16; tüketici davası TKHK m. 73/A, iş davası 7036 m. 3 uyarınca KENDİ dava şartı arabuluculuğuna tabidir — iş kazası tazminatı hariç, 7036 m. 3/3)
 
 **Kapsama giriyorsa:**
 - Dava açmadan önce **Adalet Bakanlığı Arabuluculuk Daire Başkanlığı**'na başvur
 - Arabulucu atama (3 gün) + ilk toplantı (3 hafta) + tutanak (6 hafta tipik)
 - Anlaşma → ilam niteliğinde icra edilebilir
-- Anlaşmama → tutanak alınır, dava dilekçesine ekle (yoksa dava reddi — HMK m. 114)
+- Anlaşmama → son tutanak dava dilekçesine eklenir; eklenmemişse mahkeme 1 haftalık kesin süre verir, sunulmazsa usulden ret; hiç başvurulmamışsa doğrudan usulden ret (HUAK m. 18/A/2)
 
 **büro pratiği:**
 - Vendor 80M TL gibi büyük ticari talepte zorunlu
@@ -288,7 +288,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 - **Kullanıcı sadece "yeni dava geldi" der, dosya yüklemez** → Sor: "Dilekçe metni veya ihtarnameyi yapıştırır mısın? Veya bir özet ver."
 - **Karşı taraf vekili tanıdık ama dosya tanımıyor** → "Bu vekille daha önce yaşadığımız başka davalar var mı? `/litigation-legal:matter-workspace list` ile bakayım?"
 - **Zamanaşımı çok yakın** → 🔴 + büyük uyarı: "⚠️ Zamanaşımı [X] gün içinde doluyor. Bu dava açma kararı **bu hafta** verilmeli."
-- **Tahkim klozu var ama mahkemede dava açıldı** → 🟠 + "Tahkim itirazı (HMK m. 116/c) sunulmalı; aksi halde tahkim hakkı düşer."
+- **Tahkim klozu var ama mahkemede dava açıldı** → 🟠 + "Tahkim itirazı (HMK m. 116/1-b) cevap dilekçesinde sunulmalı (m. 117/1); aksi halde itiraz dinlenemez."
 
 ---
 
@@ -461,7 +461,7 @@ Matter workspaces ON. Bu skill aktif bir matter'da çalışır:
 | Hukuki temel | Yükümlülük |
 |---|---|
 | **TCK m. 281** | Suç delilini yok etme — cezai sorumluluk |
-| **TBK m. 50-52** | Tazminat sorumluluğu için delil koruma |
+| **TBK m. 50** | Zarar gören zararı ve kusuru ispat yükü altında — delil korunmazsa ispat edilemez |
 | **TTK m. 64 + 82** | Ticari defter ve belgelerin 10 yıl saklama |
 | **HMK m. 219-220** | Hasım tarafın elinde olan delili sunma yükümlülüğü |
 | **6698 KVKK m. 7** | Veri saklama süresi (ama dava varsa daha uzun saklanır) |
@@ -469,7 +469,7 @@ Matter workspaces ON. Bu skill aktif bir matter'da çalışır:
 | **SGK Kanunu** | İş kazası belgeleri 10 yıl saklama |
 
 **Pratik:** Bir dava açıldığında veya başlama beklentisi gerçekleşince:
-1. **İlgili belgelerin silinmesi/yok edilmesi → TCK m. 281 ve HMK m. 217 kapsamında ihlal**
+1. **İlgili belgelerin silinmesi/yok edilmesi → TCK m. 281 kapsamında suç (belge bir suçun delili ise); ibraz edilmeyen belgede HMK m. 220/3 uyarınca karşı tarafın beyanı kabul edilebilir**
 2. KVKK saklama süresi geçmiş olsa bile **dava nedeniyle saklanır** (KVKK Kurul kararı çeşitli)
 3. Belge silinirse mahkeme **aleyhe karine** kurabilir (HMK m. 220)
 
@@ -529,16 +529,16 @@ Hukuk, Uyum ve Kurumsal Yönetişim Başkanlığı
 
 ## B. MAHKEMEDE DELİL SUNUMU (HMK)
 
-### Delil çeşitleri (HMK m. 192-294)
+### Delil çeşitleri (HMK m. 187-293)
 
 | Delil tipi | HMK madde | Kullanım | [Müvekkil]-spesifik |
 |---|---|---|---|
-| **Belge (yazılı delil)** | m. 199-224 | Sözleşme, ihtarname, e-posta (KEP), fatura, raporlar | KEP çıktısı **kesin delil** (TTK m. 18/3) |
+| **Belge (yazılı delil)** | m. 199-224 | Sözleşme, ihtarname, e-posta (KEP), fatura, raporlar | KEP kaydı/delili **senet hükmünde**, aksi ispat edilinceye kadar kesin delil (KEP Yönetmeliği m. 15/1; HMK m. 205/2) — TTK m. 18/3 yalnız tacirler arası ihtar şekli |
 | **Tanık** | m. 240-265 | Olaya tanıklık eden gerçek kişi | İSG kazasında işçi/teknisyen kritik |
 | **Bilirkişi** | m. 266-287 | Teknik/uzmanlık gerektiren mesele | Rafineri/petrokimya teknik konular, çevre etkisi, vergi hesabı |
 | **Keşif** | m. 288-292 | Mahkemenin yerinde inceleme | [TESİS LOKASYONU] tesisi kaza sonrası keşif |
 | **Yemin** | m. 225-239 | Kesin delil ikamesi (nadir) | Genelde ticari uyuşmazlıkta |
-| **Bilirkişi heyeti raporu** | m. 281 | Karmaşık konularda 3+ kişi | Rafineri kazası standart 3 kişilik heyet |
+| **Bilirkişi heyeti raporu** | m. 267 | Gerekçesi gösterilerek tek sayıda, birden fazla kişilik kurul (rapora itiraz: m. 281 — tebliğden 2 hafta) | Rafineri kazası standart 3 kişilik heyet |
 
 ### HMK m. 220 — Hasım tarafın elindeki delil
 
@@ -566,7 +566,7 @@ Bu talep dilekçesinin **taslağını üret** (kullanıcıdan dosya bilgisi al �
 | 2 | [...] | | | "Sözleşmenin kuruluşu" |
 
 **sektöre-özel:**
-- Şirket çalışanı tanıklık edebilir mi? → HMK m. 248 — yakınlık ilişkisi varsa hâkim takdiri
+- Şirket çalışanı tanıklık edebilir mi? → Evet; davada taraf olmayan herkes tanık olabilir (HMK m. 240/1); işveren bağımlılığı/yarar tanığa itiraz sebebi (m. 255) ve beyan hâkimce serbestçe değerlendirilir (m. 198) — m. 248 yalnız yakınlara tanıklıktan çekinme hakkı verir
 - Yabancı uyruklu üst yönetici tanıklığı → tercüman gerekli (HMK m. 263), KEP/Apostille gerekebilir
 - Sendika temsilcisi tanıklığı → Petrol-İş ile koordinasyon
 ```
@@ -963,7 +963,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | Kuruma | Yasal süre | Kim | Nasıl |
 |---|---|---|---|
 | **SGK** (iş kazası bildirimi) | 3 iş günü | İşveren | EBYS / SGK portalı |
-| **Çalışma ve Sosyal Güvenlik Bakanlığı** | 3 iş günü | İşveren | Online |
+| **Çalışma ve Sosyal Güvenlik Bakanlığı** | Kanunda süreli bildirim yok — 6331 m. 14/2 bildirimi SGK'ya yapılır | — | — |
 | **Polise/Savcılığa** (ölümlü/ciddi yaralanma) | DERHAL | İşveren / 112 | Telefon + yazılı tutanak |
 | **Çevre Bakanlığı** (çevre etkisi varsa) | DERHAL | Tesis müdürü | İl Çevre Müdürlüğü + telefon |
 | **EPDK** (lisansa konu tesisin durması) | 24 saat (lisans şartlarına göre) | Lisans sahibi | EPDK portal + yazılı |
@@ -998,12 +998,12 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 
 #### 5. Savcılık beklenti planlaması
 
-**CMK m. 130 — savunma hakkı sınırı:** Sanık vekili olarak resmen atanmadan, savcılık dosyasına tam erişim YOK. Bu nedenle:
+**CMK m. 153 — müdafiin dosyayı inceleme yetkisi (ve hâkim kararıyla kısıtlanması):** Sanık vekili olarak resmen atanmadan, savcılık dosyasına tam erişim YOK. Bu nedenle:
 
 - [ ] Ceza avukatı olabilecek müdafilerin **derhal vekalet ile sanık adayı yöneticiler için** atanması
 - [ ] **Yöneticilere "ifade verme hakkı"** hatırlatılır:
-  - Şüpheli sıfatıyla ifade verirken (CMK m. 147) **susma hakkı** var (m. 147/2-e)
-  - Kendisi aleyhinde delil vermeme hakkı (m. 147/2-d)
+  - Şüpheli sıfatıyla ifade verirken (CMK m. 147) **susma hakkı** var (m. 147/1-e)
+  - Kendisini suçlayan beyanda bulunmaya/delil göstermeye zorlanamama (Anayasa m. 38/5); lehine delil toplanmasını isteme (CMK m. 147/1-f)
   - Müdafi olmadan ifade vermemesi şiddetle önerilir
 - [ ] İçeriği bilinmeyen tutanak / ifade tutanağına **imza atılmaması** önerisi
 
@@ -1042,14 +1042,14 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 #### 10. Stratejik karar — dava beklentisi
 
 - **Mağdur tarafı tazminat davası açar mı?** (1-2 yıl içinde muhtemel)
-- **Savcılık ceza davası açacak mı?** (KAP m. 170 vd. — iddianame değerlendirme süreci)
-- **Çevre Bakanlığı idari para cezası kesilecek mi?** (60 gün içinde itiraz hakkı — Danıştay 10. Daire)
+- **Savcılık ceza davası açacak mı?** (CMK m. 170 vd. — iddianame değerlendirme süreci)
+- **Çevre Bakanlığı idari para cezası kesilecek mi?** (tebliğden itibaren 30 gün içinde idare mahkemesinde dava — Çevre K. m. 25; dava tahsili durdurmaz)
 - **EPDK lisans askıya alma yapacak mı?** (lisans hükümleri + EPDK kurul kararı süreci)
 
 Her biri için ön-strateji:
 - Sulh hazırlığı (mağdurla aktif veya tazminat fonu)
 - Ceza savunması (taksir derecesi argümantı, fail-vendor/altışveren ayırımı)
-- İdari ceza itirazı (Danıştay)
+- İdari ceza itirazı (idare mahkemesi, 30 gün — Çevre K. m. 25)
 - EPDK lisans savunması (düzeltici aksiyon ispatı)
 
 #### 11. ArthurLegal MCP (`tr_`) — emsal kararlar
@@ -1344,12 +1344,12 @@ KRİTİK BÖLÜM — net olmalı, eksik kalmamalı:
 
 ### ⚠️ ZORUNLU ÖN-KONTROL: TTK m. 5/A Zorunlu Arabuluculuk (ticari uyuşmazlıklarda)
 
-**6102 sayılı TTK m. 5/A:** "Konusu bir miktar paranın ödenmesi olan alacak ve tazminat talepleri hakkında, dava açılmadan önce **arabulucuya başvurulmuş olması dava şartıdır**." (2018 değişikliği — 7155 sayılı K.)
+**6102 sayılı TTK m. 5/A:** "Bu Kanunun 4 üncü maddesinde ve diğer kanunlarda belirtilen ticari davalardan, konusu bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit ve istirdat davalarında, dava açılmadan önce **arabulucuya başvurulmuş olması dava şartıdır**." (Ek: 7155 s. K., 2018; kapsam 7445 s. K. m. 31 ile 2023'te genişletildi)
 
 **Kapsam:**
 - ✅ Ticari uyuşmazlıklar (TTK m. 4 — mutlak/nispi ticari iş)
-- ✅ Alacak + tazminat talepli davalar (vendor uyuşmazlığı, EPC, satım, lojistik)
-- ❌ KAPSAM DIŞI: İhtiyati tedbir, ihtiyati haciz, geçici hukuki koruma; tüketici davaları; iş davaları (4857 İş K. m. 3 zorunlu arabuluculuk paraleli)
+- ✅ Konusu bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit ve istirdat davaları (vendor uyuşmazlığı, EPC, satım, lojistik)
+- ❌ KAPSAM DIŞI: İhtiyati tedbir, ihtiyati haciz, geçici hukuki koruma; tüketici davaları (ayrıca TKHK m. 73/A dava şartı arabuluculuk); iş davaları (7036 sayılı İş Mahkemeleri K. m. 3 dava şartı arabuluculuk)
 
 **[Müvekkil]/[HALKA AÇIK İŞTİRAK] için pratik:**
 - Vendor 80M TL gibi büyük ticari uyuşmazlık → **dava açmadan önce arabuluculuk dava şartı**
@@ -1368,7 +1368,7 @@ KRİTİK BÖLÜM — net olmalı, eksik kalmamalı:
 ## sektöre-özel notlar
 
 - **Avukatlık K. m. 36 kapsamında gizlilik:** Bu brief ve tüm yazışmalar dahildir.
-- **TBK m. 6 + TTK m. 18 ticari sır:** İhlal halinde tazminat sorumluluğu.
+- **TTK m. 55/1-d + m. 56 (haksız rekabet — üretim ve iş sırları) ve TCK m. 239 (ticari sır):** İhlal halinde tazminat ve cezai sorumluluk.
 - **Ana ortak [Ana ortak / ilişkili taraf] ile koordinasyon:** Stratejik dosyalarda [ANA ORTAK MERKEZİ] ile bilgi paylaşımı yapılmadan önce onay alınmalı (intra-group işlemler).
 - **EPDK lisans riski:** Karar EPDK lisansını etkileyebilir mi? Etkilemesi mümkünse derhal in-house Counsel'a bildirin.
 - **Üst yönetim ismi:** Üst yönetim adının açıkça geçtiği bir gelişme olursa derhal CEO + Hukuk Başkanı bilgi.
@@ -1557,7 +1557,7 @@ tr_ictihat_ara(
 | Karşı taraf vekalet (AAÜT) | dahil / hariç | %12-15 × karar tutarı |
 | Dış vekil ücreti (bizim) | [bittiği tutar] | [tahmin: + N saat × saat ücreti] |
 | Yargılama masrafı | yok | [bilirkişi, harç, posta] |
-| Damga vergisi (DVK Tablo I) | sulh tutarı × ‰9,48 | yok (mahkeme kararı muaf — bkz. DVK m. 6) |
+| Damga vergisi (DVK Tablo I) | sulh tutarı × ‰9,48 | yok (adli yargı ilamı (1) sayılı tabloda yer almaz — DVK m. 1; hakem kararı ise tabidir: (1) sayılı tablo II-1) |
 | İç zaman (in-house) | düşük | yüksek (her duruşma 1-2 gün) |
 | **TOPLAM** | [...] | [...] |
 

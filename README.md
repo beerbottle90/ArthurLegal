@@ -20,10 +20,10 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.9.0](ArthurLegal-CorporateAssistant-v1.9.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.9.0](ArthurLegal-Law-Firm-v1.9.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.0.2](ArthurLegal-Academician-v1.0.2-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.4](ArthurLegal-Courthouse-v1.0.4-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.9.1](ArthurLegal-CorporateAssistant-v1.9.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.9.1](ArthurLegal-Law-Firm-v1.9.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.0.3](ArthurLegal-Academician-v1.0.3-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.0.5](ArthurLegal-Courthouse-v1.0.5-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -125,6 +125,15 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.9.1 — Article verification gate; wrong article citations in the knowledge files corrected (2026-09-22)
+
+Law Firm and Corporate **v1.9.1**, Courthouse **v1.0.5**, Academician **v1.0.3**. A drafted protocol cited SMK m. 120 as the
+company's pre-emption right; m. 120 is the employee's pre-emption right on the employer's bankruptcy. Every statute article
+that appears in a deliverable, including inside contract and petition bodies, must now be fetched in the conversation and its
+heading matched against what the text says it provides; an article that cannot be fetched is not written into the body.
+Knowledge files were checked against the official current text and 301 verified wrong citations were corrected. See each
+package's CHANGELOG.
 
 ## v1.9.0 — Topic triage that runs inside the server, and two filters that silently did nothing (2026-09-20)
 

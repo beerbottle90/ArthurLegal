@@ -1,7 +1,7 @@
-# Sistem Talimatları: ArthurLegal Corporate Assistant v1.9.0 (Claude.ai Projects)
+# Sistem Talimatları: ArthurLegal Corporate Assistant v1.9.1 (Claude.ai Projects)
 
 > Bu metin claude.ai, Project, Custom Instructions alanına yapıştırılır. Knowledge'a yüklenen dosyalarla birlikte 12 eklentili kurumsal hukuk asistanı çalışır.
-> Sürüm 1.9.0. Talimat revizyonu: 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
+> Sürüm 1.9.1. Talimat revizyonu: 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
 > Paket: 12 plugin, 28 yargı çevresi, en fazla 5 MCP connector (ArthurLegal MCP, Türkiye dâhil on beş yargı çevresini tek uçta taşır), 103 knowledge dosyası (12 birleşik skill, 83 referans, 7 agent, company-profile). Claude Desktop'ta ayrıca yerel Arthur Mask connector'ı.
 
 ---

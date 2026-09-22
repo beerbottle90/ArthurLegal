@@ -71,7 +71,7 @@ user-invocable: true
 | **İtiraz** (tutuklama/adli kontrol vb.) | **İki hafta** (öğrenmeden) | CMK m.268 |
 | **KYOK'a itiraz** (Sulh Ceza Hâkimliği) | **İki hafta** (tebliğden) | CMK m.173 |
 | **Şikayet** (şikayete bağlı suçlar) | **6 ay** (fail+fiili öğrenme) | TCK m.73 |
-| Koruma tedbiri **tazminatı** (m.141) | karar kesinleşmesinden **3 ay / her halde 1 yıl** | CMK m.142 |
+| Koruma tedbiri **tazminatı** (m.141) | kesinleşmenin ilgiliye tebliğinden **3 ay** / her hâlde kesinleşme tarihini izleyen **1 yıl** içinde | CMK m.142 |
 
 Kalan < 2 gün → 🔴. Süreler kesin; kaçırma = hak kaybı. 7499 s.K. (RG 12.03.2024) öncesindeki "7 gün / 15 gün" bilgisi yürürlükte değil.
 
@@ -88,7 +88,7 @@ Kalan < 2 gün → 🔴. Süreler kesin; kaçırma = hak kaybı. 7499 s.K. (RG 1
 | Tutuklama/adli kontrol | **Tahliye talebi / itiraz** | CMK m.104, m.267-268 |
 | Aleyhe hüküm | **İstinaf dilekçesi** | CMK m.273 |
 | Aleyhe BAM kararı | **Temyiz dilekçesi** | CMK m.291 |
-| Haksız koruma tedbiri | **m.141 tazminat davası** (Ağır Ceza) | CMK m.141 |
+| Haksız koruma tedbiri | **m.141 tazminat istemi** (Ağır Ceza; m.141/1-e, f, l hâllerinde 6384 s.K. Tazminat Komisyonu — 7499 s.K.) | CMK m.141-142 |
 
 ## ADIM 2 — Görevli/yetkili mahkeme + uzlaştırma süzgeci
 
@@ -100,7 +100,7 @@ Kalan < 2 gün → 🔴. Süreler kesin; kaçırma = hak kaybı. 7499 s.K. (RG 1
 
 - **Olay:** somut, tarih/yer/kişi; iş kazasında olay yeri/SGK/iş müfettişi raporu, çevre olayında ölçüm/tutanak.
 - **Suç vasfı (müşteki isek):** TCK'daki karşılığı (örn. m.142 nitelikli hırsızlık, m.157-158 dolandırıcılık, m.243-244 bilişim, m.151-152 mala zarar). Savunma isek: kast/taksir ayrımı, kusurun bulunmadığı/iştirak/illiyet.
-- **Delil:** tutanak, kamera, bilirkişi (CMK m.62-73), tanık, SGK/iş müfettişi/ÇŞB raporu, dijital delil. **CMK m.130** — savunma hakkı kapsamında dosya erişimi (müdafi sıfatı gerekir).
+- **Delil:** tutanak, kamera, bilirkişi (CMK m.62-73), tanık, SGK/iş müfettişi/ÇŞB raporu, dijital delil. **CMK m.153** — müdafiin dosyayı inceleme yetkisi (müdafi sıfatı gerekir).
 
 ## ADIM 4 — Emsal (ArthurLegal MCP (`tr_`))
 
@@ -142,7 +142,7 @@ EKLER: vekaletname, deliller
 - [ ] **Çevre olayı** → TCK m.181-182 + 2872 idari ceza paralel.
 - [ ] **Sanık müdafiliği** → baroya kayıtlı (dış) avukat şart; in-house destek üretir.
 - [ ] **Üst yönetim/YK adı geçiyor** → [Baş Hukuk Müşaviri] + [Genel Müdür]; basın riski → iletişim koordinasyon.
-- [ ] **CMK m.130 dosya erişimi** → müdafi sıfatı yoksa tam erişim yok; hatırlat.
+- [ ] **CMK m.153 dosya erişimi** → müdafi sıfatı yoksa tam erişim yok; hatırlat.
 
 ## Çıktı
 
@@ -247,13 +247,13 @@ user-invocable: true
 | İstinaf (BİM) | **30 gün** | İYUK m.45 |
 | Temyiz (Danıştay) | **30 gün** (ÇED ivedi: 15 gün) | İYUK m.46 / m.20/A |
 | **AYM bireysel başvuru** | **30 gün** (kesinleşmeden/öğrenmeden) | 6216 m.47/5 |
-| Üst makama başvuru (m.11) | 60 gün içinde; cevap/zımni ret sonrası dava süresi işler | İYUK m.11 |
+| Üst makama başvuru (m.11) | dava açma süresi (60 / vergi 30 gün) içinde; başvuru süreyi durdurur, 30 gün cevap yoksa zımni ret; ret/zımni ret sonrası süre kaldığı yerden işler (başvuruya kadar geçen süre hesaba katılır) | İYUK m.11 |
 
 ⚠️ **m.11 üst makama başvuru ÇED ivedi yargılama süresini DURDURMAZ.** Kalan < 5 gün → 🔴.
 
 ## ADIM 0 — Görevli mahkeme (kritik; idari-dava-prep ile teyit)
 
-Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay (temyiz). **Danıştay ilk derece sadece istisnada** (Danıştay K. m.24): CB Kararı/kararnamesi, bakanlık/kurum **genel tebliğ/yönetmeliği** (normatif düzenleyici işlem).
+Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay (temyiz). **Danıştay ilk derece sadece istisnada** (Danıştay K. m.24): CB kararları, Cumhurbaşkanınca çıkarılan ve CB kararnamesi dışında kalan düzenleyici işlemler (CB kararnamesinin denetimi AYM'dedir — AY m.148), bakanlık/kamu kurumlarının **ülke çapında uygulanacak** tebliğ/yönetmeliği (normatif düzenleyici işlem).
 - **EPDK bireysel Kurul kararı (lisans iptali/ceza/ret)** → **Ankara İdare Mahkemesi** (kurum Ankara) → BİM → Danıştay 13. Daire (temyiz)
 - **EPDK/bakanlık genel yönetmelik/tebliğ** → doğrudan **Danıştay** (ilk derece)
 - **ÇED ret/«ÇED gerekli değildir» iptali** → yer İdare Mahkemesi (projenin ili) → m.20/A ivedi → Danıştay 10./14. Daire
@@ -434,7 +434,7 @@ Kalan < 5 gün → 🔴 ACİL (dış vekille derhal koordine). Süre hak düşü
 - Tüketici Mahkemesi/Hakem Heyeti — TKHK (nadir)
 
 **Yetki (HMK):**
-- Genel: davalı yerleşim yeri (m.6) / şirket merkezi (m.14)
+- Genel: davalının yerleşim yeri — şirkette merkezi (m.6; TMK m.51) / şube işlemlerinden doğan davada şubenin bulunduğu yer de (m.14/1)
 - Sözleşmesel yetki klozu (m.17 — tacirler arası geçerli) → öncelik
 - Haksız fiil: fiilin işlendiği/zararın doğduğu yer (m.16)
 - Taşınmaz (HES/arazi/ecrimisil): taşınmazın bulunduğu yer (m.12) — **kesin yetki**
@@ -443,9 +443,9 @@ Kalan < 5 gün → 🔴 ACİL (dış vekille derhal koordine). Süre hak düşü
 
 ## ADIM 3 — TTK m.5/A zorunlu arabuluculuk (DAVA ŞARTI)
 
-Konusu **alacak veya tazminat** olan **ticari uyuşmazlıkta** dava açmadan önce **zorunlu arabuluculuk** (dava şartı).
-- [ ] Ticari iş mi (TTK m.4)? [ ] Talep para alacağı/tazminat mı? [ ] Kapsam dışı mı? (ihtiyati tedbir/haciz tek başına açılabilir)
-- Kapsama giriyorsa: arabuluculuk **anlaşmama tutanağı** dava dilekçesi ekinde olmalı; yoksa **dava şartı yokluğundan usulden ret** (HMK m.114/m.115).
+Konusu **bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit ve istirdat** davası olan **ticari davalarda** dava açmadan önce **zorunlu arabuluculuk** (dava şartı; TTK m.5/A, 7445 s.K. ile genişletilmiş hâli).
+- [ ] Ticari iş mi (TTK m.4)? [ ] Konusu bir miktar para olan alacak/tazminat/itirazın iptali/menfi tespit/istirdat davası mı? [ ] Kapsam dışı mı? (ihtiyati tedbir/haciz tek başına açılabilir)
+- Kapsama giriyorsa: arabuluculuk **son tutanağı** (aslı/onaylı örneği) dava dilekçesine eklenmeli; eklenmemişse mahkeme 1 haftalık kesin süre verir, sunulmazsa usulden ret; **arabulucuya hiç başvurulmadan** dava açılmışsa doğrudan **dava şartı yokluğundan usulden ret** (HUAK m.18/A-2; HMK m.114/2, m.115).
 
 > İş davaları (7036) ve tüketici davaları için de ayrı zorunlu arabuluculuk rejimi vardır — kontrol et.
 
@@ -465,7 +465,7 @@ Kullanıcı zamanaşımı tarihi verdiyse **önce doğrula** (no silent suppleme
 
 - **Vakıalar:** kronolojik, somut, tarih/sayı/tutar ile. Her vakıaya bağlanacak delil.
 - **Hukuki sebepler:** ilgili TBK/TTK/HMK maddeleri — `[ArthurLegal MCP (`tr_`)]` ile metni çek.
-- **Deliller (HMK m.119/1-f):** sözleşme, ihtarname, e-yazışma/KEP, fatura, ticari defterler (TTK m.222), tanık (m.240), bilirkişi (m.266), keşif (m.288), yemin. **Somutlaştırma yükü** (m.194) — her delili hangi vakıa için gösterdiğini belirt.
+- **Deliller (HMK m.119/1-f):** sözleşme, ihtarname, e-yazışma/KEP, fatura, ticari defterler (HMK m.222), tanık (m.240), bilirkişi (m.266), keşif (m.288), yemin. **Somutlaştırma yükü** (m.194) — her delili hangi vakıa için gösterdiğini belirt.
 
 ## ADIM 6 — Emsal içtihat (ArthurLegal MCP (`tr_`))
 
@@ -498,7 +498,7 @@ AÇIKLAMALAR
 HUKUKİ SEBEPLER   : TBK m. [...], TTK m. [...], HMK ve ilgili mevzuat.
                     `[ArthurLegal TR — GG.AA.YYYY]`
 DELİLLER          : Sözleşme (EK-...), ihtarname (EK-...), e-yazışma/KEP,
-                    fatura, ticari defterler (TTK m.222), bilirkişi, tanık,
+                    fatura, ticari defterler (HMK m.222), bilirkişi, tanık,
                     keşif, yemin ve her türlü yasal delil.
 EMSAL             : [ArthurLegal TR — Yargıtay X.HD — Esas/Karar — GG.AA.YYYY] (varsa)
 
@@ -513,11 +513,11 @@ SONUÇ VE TALEP    : Yukarıda açıklanan nedenlerle;
 EKLER: 1. Vekaletname  2. Arabuluculuk anlaşmama tutanağı  3. Sözleşme  4. ...
 ```
 
-> Cevap dilekçesinde: davaya/yetkiye/göreve **ilk itirazlar** (HMK m.116 — kesin/sözleşmesel yetki itirazı, tahkim itirazı, derdestlik), zamanaşımı def'i, vakıaların ayrı ayrı cevabı (m.129/c — inkar/kabul/bilmeme), karşı deliller.
+> Cevap dilekçesinde: **ilk itirazlar** (HMK m.116 — kesin yetki kuralı bulunmayan hâllerde yetki itirazı [yetki sözleşmesi dâhil] ve tahkim itirazı; cevap dilekçesinde ileri sürülmezse dinlenmez, m.117) — görev, kesin yetki ve derdestlik ilk itiraz değil **dava şartıdır** (m.114/1-c, ç, ı), zamanaşımı def'i, vakıaların ayrı ayrı cevabı (m.129/1-d — inkar/kabul/bilmeme), karşı deliller.
 
 ## ADIM 8 — Sektörel/örnek senaryolar kontrolleri
 
-- [ ] **EPC/vendor uluslararası** → governing law/tahkim klozu var mı? (ICC/LCIA) → `/commercial-legal:governing-law-review`; varsa Türk mahkemesinde **tahkim ilk itirazı** (m.116/c)
+- [ ] **EPC/vendor uluslararası** → governing law/tahkim klozu var mı? (ICC/LCIA) → `/commercial-legal:governing-law-review`; varsa Türk mahkemesinde **tahkim ilk itirazı** (m.116/1-b)
 - [ ] **HES su kullanım / ecrimisil / kamulaştırma** → taşınmaz kesin yetki + DSİ/idare tarafı varsa idari yargı ayrımı (`/advocacy-legal:kamu-hukuku-dilekce`)
 - [ ] **Yaptırım taraflı / finansör-kreditör ilgili / yüksek tutar** → [Baş Hukuk Müşaviri] + [Genel Müdür] eskalasyon
 - [ ] **İş davası** → işyeri (santral/saha ili) yetki + arabuluculuk (7036)
@@ -622,7 +622,7 @@ Dilekçe tipine göre standart ekler:
 
 ## 5) Vekaletname / yetki kontrolü
 
-Yapılacak işlem için vekaletnamede özel yetki gerekiyor mu? (örn. **davadan feragat, kabul, sulh, tahkim, ahzu kabz, temyiz/istinaftan feragat** → HMK m.74 özel yetki). Şirket imza sirküleri + **[Baş Hukuk Müşaviri] imza yetkisi** ile uyum. Eksik yetki → 🔴 + "işlem öncesi vekaletname güncellensin".
+Yapılacak işlem için vekaletnamede özel yetki gerekiyor mu? (örn. **davadan feragat, davayı kabul, sulh, tahkim/hakem sözleşmesi, davanın tamamen ıslahı, ibra, kanun yollarından feragat** → HMK m.74 özel yetki; **ahzu kabz** HMK m.74'te sayılmaz — vekâletnamede ayrıca kontrol et). Şirket imza sirküleri + **[Baş Hukuk Müşaviri] imza yetkisi** ile uyum. Eksik yetki → 🔴 + "işlem öncesi vekaletname güncellensin".
 
 ## 6) UYAP / e-tebligat takibi
 

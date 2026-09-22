@@ -51,7 +51,7 @@ Bu plugin'in **ayırt edici** bölümü:
 ### CMK 5271 m. 150-156 — Müdafi atama
 
 **Atama tipleri:**
-1. **Zorunlu müdafi** (m. 150/3 — 18 yaş altı, akıl hastalığı, ceza alt sınırı > 5 yıl, vd.)
+1. **Zorunlu müdafi** (m. 150/2 — çocuk, kendisini savunamayacak derecede malul, sağır ve dilsiz; m. 150/3 — alt sınırı 5 yıldan fazla hapis gerektiren suç; tutuklama istemi — m. 101/3)
 2. **İsteğe bağlı atama** (şüpheli/sanık istediği, kendi müdafii yoksa)
 3. **Talimat müdafiliği** (başka yer mahkemesi talimatıyla)
 
@@ -60,13 +60,13 @@ Bu plugin'in **ayırt edici** bölümü:
 - Genelde **gece + hafta sonu** çok yoğun
 - Atama mesajı sonrası **2 saat içinde teyit + 6 saat içinde karakola/cezaevine ulaşma**
 
-### 48 saat kritik kontrolü (CMK m. 91)
+### Gözaltı süresi kritik kontrolü (CMK m. 91 — kural 24 saat; toplu suçta en çok 4 gün)
 
-- **Yakalama** → **24 saat içinde** savcılığa sevk (toplu yakalamada 48 saat)
-- **Savcılık** → **48 saat içinde** (yakalama dahil) sulh ceza hakimine sevk (tutuklama veya salıverme)
-- **Sulh ceza hakimi** → tutuklama veya salıverme kararı (en geç 48. saat doluyor)
+- **Yakalama** → gözaltı süresi yakalamadan itibaren **24 saat** (zorunlu yol süresi hariç, o da en çok 12 saat — m. 91/1); toplu suçlarda C. savcısı her defasında 1 günü geçmemek üzere **3 gün** uzatabilir (m. 91/3) → en çok 4 gün
+- **Süre sonunda** → bırakılmayan şüpheli sulh ceza hâkimi önüne çıkarılıp sorguya çekilir (m. 91/7) (tutuklama veya salıverme); suçüstü kolluk gözaltısında en geç 48 saat / toplu suçta 4 gün (m. 91/4; AY m. 19)
+- **Sulh ceza hakimi** → tutuklama veya salıverme kararı (şüpheli gözaltı süresi — m. 91/1, 91/3 — sonunda hâkim önüne çıkarılmış olmalı)
 
-⚠️ **Müdafi atama → 48 saat sınırı KRİTİK.** Süreyi geçirirse usul yokluğu gerekçesiyle salıverme.
+⚠️ **Müdafi atama → gözaltı süresi (m. 91) KRİTİK.** Süre aşılırsa gözaltı hukuka aykırıdır: serbest bırakılma için sulh ceza hâkimine başvuru (m. 91/5); kanuni gözaltı süresinde hâkim önüne çıkarılmama tazminat sebebidir (m. 141/1-b).
 
 ### CMK ödeme takibi
 
@@ -114,7 +114,7 @@ Detay: `references/cmk-gorevli-rehberi.md`
 |---|---|---|
 | CMK görevli kabul/red | Atanan avukat | Reddedilmesi nadir + gerekçeli |
 | Özel müvekkil ceza dosyası kabul | **Conflict check + Yönetici Ortak** | Mevzuubahis menfaat çatışması (mağdur müvekkilse?) |
-| **Tutuklama itirazı** (sulh ceza hakimi kararına) | Atanan ortak (anında — 7 g süre) | Yönetici Ortak'a bildir |
+| **Tutuklama itirazı** (sulh ceza hakimi kararına) | Atanan ortak (anında — iki hafta süre, CMK m. 268/1) | Yönetici Ortak'a bildir |
 | Üst yargı yolu (istinaf/temyiz) | **Müvekkil + atanan ortak** | — |
 | AYM bireysel başvuru (tutukluluk) | Müvekkil + atanan ortak + Yönetici Ortak | — |
 | AİHM başvurusu | Müvekkil + Ortaklar Kurulu | — |
@@ -174,17 +174,17 @@ Müvekkil ileride suç işlemeyi planlıyorsa: **mesleki sır istisnası** (TBB 
 ### Tutukluluk süreleri (CMK m. 102)
 
 - **Asliye ceza:** üst sınır 1 yıl (uzatılabilir — toplam 1.5 yıl)
-- **Ağır ceza:** üst sınır 2 yıl (uzatılabilir — toplam 3 yıl)
-- **Çocuk:** 6 ay (üst sınır)
+- **Ağır ceza:** üst sınır 2 yıl (uzatma toplam en çok 3 yıl → azami 5 yıl; TCK 2. Kitap 4. Kısım 4-7. Bölüm ve TMK kapsamı suçlarda uzatma en çok 5 yıl → azami 7 yıl — m. 102/2)
+- **Çocuk:** fiil tarihinde 15 yaşını doldurmamışsa süreler yarı, 18 yaşını doldurmamışsa dörtte üç oranında uygulanır (m. 102/5)
 - Süre uzatma kararları **tutukluluğun devam zorunluluğu** + gerekçeli olmalı
 
 Tutukluluk süreleri dolduğunda **resen salıverme** + adli kontrol.
 
 ### Uzlaştırma (CMK m. 253-255)
 
-Bazı suçlarda **uzlaştırma şart** (örn. basit yaralama TCK 86/1, hakaret TCK 125). Uzlaştırma teklif edildiğinde:
+Bazı suçlarda **uzlaştırma şart** (örn. kasten yaralama TCK 86/1, taksirle yaralama TCK 89, tehdit TCK 106/1 — CMK m. 253/1). **Hakaret (TCK 125) şikâyete bağlı olsa da uzlaştırma kapsamı dışındadır** (CMK m. 253/3; 7531 ve 7571 s.K.). Uzlaştırma teklif edildiğinde:
 - Müvekkile **avantajları + dezavantajları** açıkla
-- Uzlaştırma kabul = ceza davası düşer
+- Uzlaşma + edimin def'aten ifası = dava düşer (kovuşturma, CMK m. 254/2) / KYOK (soruşturma, m. 253/19); edim ileri tarihli/taksitli ise durma kararı (m. 254/2, 7531 s.K.) veya kamu davasının açılmasının ertelenmesi (m. 253/19)
 - Reddederse dava devam, ama "uzlaştırma teklifi reddedildi" karar gerekçesinde yer alır
 
 ---
@@ -194,8 +194,8 @@ Bazı suçlarda **uzlaştırma şart** (örn. basit yaralama TCK 86/1, hakaret T
 `dispute-litigation.md` ile aynı çerçeve.
 
 **Ceza özel:**
-- **CMK m. 130:** Soruşturma dosyası **savcının yetkisi altında** — kovuşturmaya geçinceye kadar müdafii erişim sınırlı (örn. kısıtlama kararı varsa)
-- **Müvekkil ifade verirken müdafii hazır olmadıkça** (CMK m. 147/1-h) ifade kullanılamaz — bu kuralı her zaman koru
+- **CMK m. 153:** Müdafi soruşturma evresinde dosya içeriğini inceleyip belge örneği alabilir (m. 153/1); bu yetki yalnız m. 153/2'de sayılan suçlarda, soruşturmanın amacını tehlikeye düşürebilecekse C. savcısının istemi üzerine **hâkim kararıyla** kısıtlanabilir; ifade tutanakları ve bilirkişi raporları kısıtlanamaz (m. 153/3); iddianamenin kabulünden itibaren tam erişim (m. 153/4)
+- **Müdafi hazır bulunmaksızın kollukça alınan ifade**, hâkim veya mahkeme huzurunda doğrulanmadıkça hükme esas alınamaz (CMK m. 148/4) — bu kuralı her zaman koru
 - **Susma hakkı** (CMK m. 147/1-e) müvekkile hatırlatılır + kayıtlı
 
 ---

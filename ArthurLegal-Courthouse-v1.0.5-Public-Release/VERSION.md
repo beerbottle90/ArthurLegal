@@ -1,8 +1,8 @@
 # Sürüm Bilgisi
 
-**Sürüm:** 1.0.4
-**Yayın tarihi:** 2026-09-20
-**Önceki sürüm:** 1.0.3
+**Sürüm:** 1.0.5
+**Yayın tarihi:** 2026-09-22
+**Önceki sürüm:** 1.0.4
 **Lisans:** Proprietary, Non-Commercial (bkz. [LICENSE](LICENSE)); `claude-for-legal` bileşenleri Apache 2.0
 
 ## Semver özeti
@@ -12,6 +12,8 @@
 - **Patch (x.x.1):** Hata düzeltme, içerik güncelleme
 
 ## Bu sürümde
+
+**v1.0.5 — Madde doğrulama kapısı.** Gerekçe, tensip zaptı ve usul belgelerinin gövdesindeki her madde numarası da atıftır: bu sohbette çekilmiş olmalı ve maddeye yüklenen içerik başlık ve metinle örtüşmeli. HMK m. 269 ile 278 bilirkişi haritası ve diğer yanlış madde atıfları resmî metne göre düzeltildi (CHANGELOG).
 
 **v1.0.4 — İçtihat tarih süzgeci ve araştırma rehberleri.** Bedesten tek taraflı tarih aralığını sessizce yok sayıyordu; yalnız `date_from` ile yapılan içtihat araması süzgeçsiz dönüyordu. Türkiye backend'i 0.4.0 bunu düzeltti; `yargi-mcp-rehberi.md` ve `mevzuat-mcp-rehberi.md` yenilendi (tarih kontrolü, yerel arşivin kurum bazında gerçek kapsamı, `konu` ön elemesi ve ölçülmüş sınırları). Talimat metni yalnız sürüm etiketinde değişti.
 

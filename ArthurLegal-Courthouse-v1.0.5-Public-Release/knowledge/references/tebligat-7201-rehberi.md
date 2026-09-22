@@ -20,14 +20,14 @@
 | m. 10 | Muhatap adreste | Normal tebliğ |
 | m. 16 | Aynı konutta kişi/çalışan | Birlikte oturan / hizmetçi vb. |
 | m. 21/1 | Adreste bulunamama | Muhtar/ihtiyar heyeti + 2 no'lu haber kâğıdı kapıya |
-| m. 21/2 | Bilinen adrese tebliğ edilemez | Adres kayıt sistemindeki yere |
+| m. 21/2 | Gösterilen adres muhatabın adres kayıt sistemi (MERNİS) adresi; muhatap orada hiç oturmamış veya sürekli ayrılmış | Muhtar/zabıtaya teslim + ihbarname kapıya; yapıştırma tarihi tebliğ tarihi (bilinen adreste tebliğ yapılamazsa MERNİS adresine çıkarma: m. 10/2) |
 | m. 35 | Daha önce tebligat yapılan adres değişmiş | Yeni adres bildirilmemişse eski adrese |
 | m. 7/a | e-Tebligat | Zorunlu muhataplar (avukat, tüzel kişi, kamu) |
 
 ## e-Tebligat (m. 7/a + Elektronik Tebligat Yönetmeliği)
 
 - **Zorunlu muhataplar:** avukatlar, noterler, tüzel kişiler, kamu kurumları, kanunla belirli kişiler.
-- UETS (Ulusal Elektronik Tebligat Sistemi) üzerinden; tebliğ, gönderimi izleyen **5. günün sonunda** yapılmış sayılır.
+- UETS (Ulusal Elektronik Tebligat Sistemi) üzerinden; tebliğ, muhatabın elektronik adresine ulaştığı tarihi izleyen **5. günün sonunda** yapılmış sayılır.
 - Detay: `kep-etebligat-rehberi.md`.
 
 ## Sık usulsüzlük sebepleri (kontrol)

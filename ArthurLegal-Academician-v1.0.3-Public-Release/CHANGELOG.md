@@ -4,6 +4,42 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 ---
 
+## [1.0.3] — 2026-09-22 — *Madde Doğrulama Kapısı; Yanlış Madde Atıfları Düzeltildi*
+
+> **Düzeltme sürümü.** Bir iş ve fikri haklar protokolünün 5.5 klozuna "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120
+> "Çalışanın önalım hakkı"dır: işveren iflas eder ve iflas idaresi buluşu işletmeden ayrı devretmek isterse hak çalışanındır.
+> Kök neden: belge gövdesine yazılan madde numaraları atıf disiplininin dışında kalıyordu, bir maddeyi okumak iki çağrı ve
+> büyük bir madde ağacı gerektiriyordu ve bilgi dosyalarındaki bazı madde haritaları yanlıştı. Talimat metni değişti.
+
+### Değişti
+
+1. `SYSTEM_PROMPT.md` (ÜYZ Kapısı): **madde doğrulama kapısı.** Not, sözleşme, protokol, dilekçe veya dosya gövdesinde geçen her
+   kanun maddesi bu sohbette çekilmiş olmalı; maddeye yüklenen içerik (hakkın sahibi, şart, süre, sonuç) başlık ve metinle
+   örtüşmeli; çekilemeyen madde gövdeye numarasıyla yazılmaz. İnceleme notunda "Madde kontrolü:" cümlesi. Doğrulama çağrıları
+   "en az çağrı" kuralına tabi değildir; Bedesten hız kuralı bir tempo kuralıdır, doğrulanacak madde sayısına sınır değildir.
+2. `knowledge/references/mevzuat-mcp-rehberi.md`: bölüm 9 (madde doğrulama kapısı); tek çağrılı madde okuma
+   (`tr_mevzuat_madde_getir(number="6769", madde_no="120")`, araç şemasında görünüyorsa; görünmüyorsa ağaç yolu);
+   `tr_mevzuat_icinde_ara` madde numarasıyla madde bulma yolu değildir.
+
+### Düzeltildi
+
+1. Bu paketin bilgi dosyalarında ikinci denetimden geçen madde atfı düzeltmesi yoktur.
+2. `smk-rehberi.md` (Law Firm, Corporate): m. 5/1 ve m. 6 bentleri, m. 29 ve 30 ile 149 ile 151 (ceza m. 30'dadır), m. 156,
+   m. 101 (koruma süresi), m. 18 ve 20 itiraz süreleri resmî metne göre düzeltildi; **Çalışan buluşları (SMK m. 113 ile 122)**
+   bölümü eklendi. `ip-advisory.md`: m. 115 ile 118 faydalı model değil çalışan buluşu hükümleridir.
+
+### Bilinen açık
+
+- İdari yargı ve vergi dosya gruplarındaki 130 bulgu ikinci denetimden geçmediği için uygulanmadı; fikri mülkiyet ve ticaret,
+  avukatlık ve büro, iş hukuku ve KVKK grupları henüz denetlenmedi. Madde doğrulama kapısı bu dosyalardaki numaraları da
+  çekmeden kullanmayı yasaklar.
+
+### Yükleme
+
+`SYSTEM_PROMPT.md` yeniden yapıştırılır. Project knowledge'da şu dosyalar yenilenir: `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/skills/atif-kaynak__skills.md`.
+
+---
+
 ## [1.0.2] — 2026-09-20
 
 Türkiye backend'i (ArthurLegalTR) 0.4.0: içtihat ve mevzuat aramasında tek taraflı tarih aralığı artık çalışıyor. Bedesten yalnız

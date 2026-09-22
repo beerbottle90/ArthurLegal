@@ -21,7 +21,7 @@
 
 ### 6754 teşkilat yapısı
 - **Bilirkişilik Daire Başkanlığı (BDB)** — Adalet Bakanlığı Hukuk İşleri Genel Müdürlüğü bünyesinde; merkezi sicil + temel eğitim + tarife + etik.
-- **Bilirkişilik Bölge Kurulları** — Adli Yargı İlk Derece Mahkemesi Adalet Komisyonları nezdinde; **başvuru, sicile kayıt, listeye alma, denetim, disiplin** bölge düzeyinde yürütülür.
+- **Bilirkişilik Bölge Kurulları** — her bölge adliye mahkemesinin kurulu bulunduğu yerde kurulur (6754 m. 7/1; sekretarya: BAM bünyesindeki yazı işleri müdürlüğü, m. 7/4); **başvuru, sicile kayıt, listeye alma, denetim, disiplin** bölge düzeyinde yürütülür.
 - **Sicil + Liste:** Bilirkişi olmak için temel eğitim (BDB onaylı eğitim kuruluşu) + uzmanlık alanında **asgari 5 yıl fiili meslek deneyimi** + bölge kuruluna başvuru → **bilirkişilik siciline kayıt** → **bölge listesine** alınma. Mahkeme kural olarak **listeden** bilirkişi seçer.
 
 ---
@@ -31,7 +31,7 @@
 > **HMK m. 266 / CMK m. 63:** Bilirkişiye **YALNIZCA** çözümü **özel veya teknik bilgi** gerektiren hallerde başvurulur.
 
 ### Kesin sınır (en sık temyiz/itiraz sebebi)
-- ❌ **Hakimlik mesleğinin gerektirdiği GENEL ve HUKUKİ BİLGİYLE çözülmesi mümkün olan konularda bilirkişiye BAŞVURULAMAZ** (HMK m. 266 son cümle). Hukuku hakim bilir (*iura novit curia*).
+- ❌ **GENEL BİLGİ veya TECRÜBEYLE ya da hakimlik mesleğinin gerektirdiği HUKUKİ BİLGİYLE çözülmesi mümkün olan konularda bilirkişiye BAŞVURULAMAZ** (HMK m. 266/1 ikinci cümle; 6754 m. 3/3). Hukuku hakim bilir (*iura novit curia*).
 - ❌ **Bilirkişi HUKUKİ NİTELENDİRME yapamaz.** Sözleşmenin geçerliliği, kusurun hukuki sonucu, hangi tarafın haklı olduğu, faiz türü/başlangıcı gibi **hukuki değerlendirme** hakime aittir. Bilirkişi yalnızca **maddi/teknik tespit** + hesaplama yapar.
 - ✅ Uygun konular: mühendislik/teknik hesap, hasar tespiti, değer/zarar hesabı, muhasebe-bilanço analizi, imza/belge incelemesi, yapı/elektrik tesisat tekniği, çevre-emisyon ölçümü, proje/keşif bedeli, gecikme/iş artışı analizi.
 
@@ -46,19 +46,19 @@
 | **m. 266** | Bilirkişiye başvurulmasını gerektiren haller (özel/teknik bilgi; hukuki bilgi hariç) |
 | **m. 267** | Bilirkişi sayısı (kural: bir; gerekirse tek sayıda — üç, beş) |
 | **m. 268** | Bilirkişinin görevlendirilmesi (listeden seçim) |
-| **m. 269** | Bilirkişiliğin zorunluluğu (kabul yükümü, istisnalar) |
-| **m. 270** | Bilirkişilikten kaçınma + yasaklılık halleri |
-| **m. 271-272** | Hakimin reddi sebepleriyle bilirkişinin reddi (tarafsızlık) |
+| **m. 269** | Bilirkişilik görevinin kapsamı (davete uyma, yemin, süresinde oy ve görüş bildirme; özürsüz kaçınana tanıklık disiplin hükümleri) |
+| **m. 270** | Bilirkişilik görevini kabulle yükümlü olanlar (çekinme ancak tanıklıktan çekinme sebepleri veya mahkemece kabul edilebilir sebeple) |
+| **m. 271-272** | Bilirkişiye yemin verdirilmesi (m. 271) · hakimlerin yasaklılık/ret sebepleriyle bilirkişinin yasaklılığı ve reddi; ret talebi öğrenmeden itibaren en geç 1 hafta (m. 272) |
 | **m. 273** | Görevlendirme kararının içeriği (inceleme konusu, süre, görev sınırı) |
-| **m. 274-277** | Bilirkişinin görev kapsamı + yetkileri (belge/şey inceleme, açıklama isteme) |
-| **m. 278** | Bilirkişinin yemini |
+| **m. 274-277** | Görev süresi (en çok 3 ay + 3 ay uzatma; basit yargılamada 2 ay + 2 ay) · haber verme yükümlülüğü (1 hafta) · görevi bizzat yapma · sır saklama |
+| **m. 278** | Bilirkişinin yetkileri (mahkemenin sevk ve idaresi altında; görev sınırında tereddüt, tarafların bilgisine başvurma, şey üzerinde inceleme) |
 | **m. 279** | Bilirkişinin oy ve görüşünü açıklaması (rapor / sözlü) |
-| **m. 280** | Bilirkişi raporu (yazılı, gerekçeli, görev sınırı içinde) |
+| **m. 280** | Bilirkişi raporunun verilmesi (dizi pusulasıyla mahkemeye; duruşmadan önce taraflara tebliğ) — rapor içeriği m. 279/2, hukuki nitelendirme yasağı m. 279/4 |
 | **m. 281** | **RAPORA İTİRAZ + EK RAPOR / YENİ BİLİRKİŞİ** ⭐ |
 | **m. 282** | Hakimin raporu serbestçe takdiri (rapor bağlayıcı DEĞİL) |
 | **m. 283** | Bilirkişi gider ve ücreti |
-| **m. 284-285** | Bilirkişinin yükümlülüğünü yerine getirmemesi (sorumluluk, ceza) |
-| **m. 286-287** | Bilirkişinin hukuki + cezai sorumluluğu |
+| **m. 284-285** | Bilirkişi TCK anlamında kamu görevlisidir (m. 284) · hukuki sorumluluk: kasten/ağır ihmalle gerçeğe aykırı rapor hükme esas alınmışsa **Devlete** karşı tazminat davası, Devlet bilirkişiye rücu eder (m. 285) |
+| **m. 286-287** | Tazminat davasının görüleceği mahkeme (BAM hukuk dairesi / Yargıtay ilgili hukuk dairesi) · rücu davasında zamanaşımı (ödemeden itibaren 1 yıl; kasten gerçeğe aykırı raporda ceza zamanaşımı) |
 
 ### m. 281 — rapora itiraz mekaniği ⭐ (itiraz tarafının ana silahı)
 1. Rapor taraflara tebliğ edilir.
@@ -74,14 +74,14 @@
 
 | Madde | Konu |
 |---|---|
-| **m. 62** | HMK'ya atıf (uygun düştüğü ölçüde) |
+| **m. 62** | Tanıklara ilişkin (CMK) hükümlerden sonraki bilirkişi maddelerine aykırı olmayanların bilirkişilere de uygulanması |
 | **m. 63** | Bilirkişi incelemesi — özel/teknik bilgi (hukuki bilgi hariç; aynı ilke) |
 | **m. 64** | Bilirkişinin atanması (listeden; istisnaen liste dışı gerekçeli) |
 | **m. 66** | Atama kararı + süre (kural 3 ay, +3 ay uzatma) |
-| **m. 67** | Rapor + **mağdur/şüpheli/sanık/müdafi/vekilin uzman görüşü (mütalaa) sunma hakkı** ⭐ |
+| **m. 67** | Rapor + **C. savcısı/katılan/vekili/şüpheli-sanık/müdafi/kanuni temsilcinin uzman görüşü (mütalaa) alma hakkı (m. 67/6)** ⭐ |
 | **m. 68** | Bilirkişinin duruşmada dinlenmesi |
 | **m. 69** | Bilirkişinin reddi (hakimin reddi sebepleri) |
-| **m. 70-73** | Yemin, görevi kötüye kullanma, ücret |
+| **m. 70-73** | Bilirkişilikten çekinme (m. 70) · görevini yapmayan bilirkişi (m. 71) · gider ve ücret (m. 72) · sahte para/değer incelemesi (m. 73); yemin: m. 64/5-7 |
 
 > **CMK m. 67/6:** Cumhuriyet savcısı, katılan, vekil, şüpheli/sanık, müdafi veya kanuni temsilci, **kendi seçtiği uzmandan rapor (mütalaa) alıp** dosyaya sunabilir. → Ceza dosyasında tarafın uzman görüşü kanalı.
 
@@ -100,7 +100,7 @@ Tarafın **kendi seçtiği uzmandan** aldığı **bilimsel mütalaa**. Bilirkiş
 | **Sayı sınırı** | Mahkeme belirler | Sınır yok |
 | **Bağlayıcılık** | Hakim serbestçe takdir | Hakim serbestçe takdir; ancak bilirkişi raporunu çürütmede **güçlü destek** |
 
-**m. 293 metni özü:** Taraflar, dava konusu olayla ilgili olarak uzmanından bilimsel mütalaa alabilir; talep halinde uzman duruşmaya çağrılıp dinlenebilir; ancak uzman **yemin etmez** ve **bilirkişi gibi sorumlu tutulmaz**.
+**m. 293 metni özü:** Taraflar, dava konusu olayla ilgili olarak uzmanından bilimsel mütalaa alabilir; **sadece bu nedenle ayrıca süre istenemez** (m. 293/1). Hakim talep üzerine veya resen uzmanın davet edilerek dinlenmesine karar verebilir; hakim ve taraflar soru sorabilir (m. 293/2). Çağrıldığı duruşmaya geçerli özrü olmadan gelmeyen uzmanın raporu **değerlendirmeye alınmaz** (m. 293/3). (Uzmanın yemin etmemesi ve bilirkişi gibi sorumlu tutulmaması maddede yazılı değildir; kurumun niteliğinden çıkan sonuçtur.)
 
 **Stratejik kullanım:** Mahkeme bilirkişi raporu müvekkil aleyhineyse → bağımsız uzmandan **m. 293 mütalaası** alıp **m. 281 itirazına EK** olarak sun. Hakim m. 282 uyarınca rapora uymak zorunda olmadığından, güçlü bir mütalaa ek rapor / yeni bilirkişi kararı aldırabilir.
 
@@ -117,7 +117,7 @@ Tarafın **kendi seçtiği uzmandan** aldığı **bilimsel mütalaa**. Bilirkiş
 7. **Ekler** — hesap tabloları, fotoğraf, kroki, mevzuat/standart atıfları.
 8. **İmza + tarih + bilirkişi sicil no.**
 
-> **Üretim kuralı:** Skill bir bilirkişi raporu üretirken **HMK m. 280 + 266** sınırlarına uymalı — hukuki sonuç/nitelendirme yazmamalı; aksi halde rapor itiraza/bozmaya açık olur.
+> **Üretim kuralı:** Skill bir bilirkişi raporu üretirken **HMK m. 266 + 279/4** sınırlarına uymalı — hukuki sonuç/nitelendirme yazmamalı; aksi halde rapor itiraza/bozmaya açık olur.
 
 ---
 
@@ -126,9 +126,9 @@ Tarafın **kendi seçtiği uzmandan** aldığı **bilimsel mütalaa**. Bilirkiş
 1. **Başlık** — mahkeme, esas no, "BİLİRKİŞİ RAPORUNA İTİRAZLARIMIZ" + raporun tebliğ tarihi (süre 2 hafta — m. 281).
 2. **Usuli itirazlar:**
    - Bilirkişi **görev sınırını aştı** (m. 273 dışı konuya girdi).
-   - **Hukuki nitelendirme yaptı** (m. 266 ihlali) — en güçlü itiraz.
+   - **Hukuki nitelendirme yaptı** (m. 279/4 ve m. 266 ihlali) — en güçlü itiraz.
    - Bilirkişi **uzmanlık alanı dışında** görüş verdi (yanlış uzmanlık).
-   - **Tarafsızlık / red sebebi** (m. 271-272).
+   - **Tarafsızlık / red sebebi** (m. 272).
 3. **Esasa ilişkin itirazlar (teknik):**
    - Hatalı/eksik veri, yanlış varsayım, yöntem hatası, hesap hatası, mevzuat/standart yanlış uygulaması.
    - **Dinlenmeyen deliller / incelenmeyen belgeler.**
@@ -141,14 +141,14 @@ Tarafın **kendi seçtiği uzmandan** aldığı **bilimsel mütalaa**. Bilirkiş
 ## 8. Ücret / tarife
 
 - **Yıllık Bilirkişilik Ücret Tarifesi** BDB tarafından hazırlanır, **RG'de yayımlanır** (her yıl güncel). Uzmanlık alanı + iş türüne göre asgari ücret kalemleri.
-- **Bilirkişi ücreti** yargılama giderlerine dahildir (HMK m. 283); kural olarak **davayı kaybeden** taraf üzerinde kalır.
+- **Bilirkişi ücreti** yargılama giderlerine dahildir (HMK m. 323/1-e; ücret/tarife m. 283); kural olarak **davayı kaybeden** taraf üzerinde kalır (m. 326/1).
 - **Uzman görüşü (m. 293) ücreti** tarifeye tabi DEĞİL — **mütalaayı alan taraf serbestçe kararlaştırır ve kendisi öder**; yargılama giderine kural olarak dahil olmaz.
 
 ---
 
 ## 9. Stratejik kullanım
 
-> **Müvekkil/şirket mühendisinin/uzmanının BİLİRKİŞİ olarak atanması NADİR** — çıkar çatışması (m. 270/272) ve tarafsızlık şüphesi nedeniyle mahkeme kendi listesinden atar. Dolayısıyla taraf için bilirkişilik **savunma/itiraz** kanalıdır, atanma kanalı değil.
+> **Müvekkil/şirket mühendisinin/uzmanının BİLİRKİŞİ olarak atanması NADİR** — çıkar çatışması (m. 272 — yasaklılık/ret) ve tarafsızlık şüphesi nedeniyle mahkeme kendi listesinden atar. Dolayısıyla taraf için bilirkişilik **savunma/itiraz** kanalıdır, atanma kanalı değil.
 
 ### Asıl iki kullanım
 1. **Karşı taraf / mahkeme bilirkişi raporuna İTİRAZ** (m. 281): EPC/inşaat gecikme-iş artışı uyuşmazlıkları, RES/GES proje hak ediş anlaşmazlıkları, türbin/ekipman ayıp davaları, altyapı/su projeleri teknik claim'leri, sözleşme bedeli/zarar hesabı raporlarına teknik+usuli itiraz.
@@ -208,7 +208,7 @@ tr_ictihat_ara(
 )
 ```
 
-HGK kararları **birleştirici** — alt mahkemeler için bağlayıcı.
+HGK kararları yol göstericidir ancak kural olarak bağlayıcı değildir: benzer hukuki konularda Yargıtay kurullarını, dairelerini ve adliye mahkemelerini bağlayan **içtihadı birleştirme kararlarıdır** (2797 s. Yargıtay K. m. 45); HGK'nın direnme üzerine verdiği karara yalnızca o dosyada uyulması zorunludur (HMK m. 373/7).
 
 ---
 
@@ -219,7 +219,7 @@ HGK kararları **birleştirici** — alt mahkemeler için bağlayıcı.
 - ❌ Bilirkişiden **hukuki görüş** beklemek/almak — m. 266 ihlali; rapor itiraza açık.
 - ❌ Uzman görüşünü (m. 293) **bilirkişi raporu** zannetmek — uzman görüşü **taraf delili**, ücretini taraf öder, yemin/sorumluluk yok.
 - ❌ Sadece "katılmıyoruz" demek — itiraz **teknik gerekçe + karşı uzman mütalaası** ile somutlaştırılmazsa etkisiz.
-- ❌ Müvekkil/şirket uzmanını bilirkişi olarak önermek — **çıkar çatışması/red** (m. 270/272); doğru yol m. 293 uzman görüşü.
+- ❌ Müvekkil/şirket uzmanını bilirkişi olarak önermek — **çıkar çatışması/red** (m. 272); doğru yol m. 293 uzman görüşü.
 
 ---
 

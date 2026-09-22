@@ -5,6 +5,42 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.0.5] — 2026-09-22 — *Madde Doğrulama Kapısı; Yanlış Madde Atıfları Düzeltildi*
+
+> **Düzeltme sürümü.** Bir iş ve fikri haklar protokolünün 5.5 klozuna "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120
+> "Çalışanın önalım hakkı"dır: işveren iflas eder ve iflas idaresi buluşu işletmeden ayrı devretmek isterse hak çalışanındır.
+> Kök neden: belge gövdesine yazılan madde numaraları atıf disiplininin dışında kalıyordu, bir maddeyi okumak iki çağrı ve
+> büyük bir madde ağacı gerektiriyordu ve bilgi dosyalarındaki bazı madde haritaları yanlıştı. Talimat metni değişti.
+
+### Değişti
+
+1. `SYSTEM_PROMPT.md` (Üretim ilkeleri): **madde doğrulama kapısı.** Not, sözleşme, protokol, dilekçe veya dosya gövdesinde geçen her
+   kanun maddesi bu sohbette çekilmiş olmalı; maddeye yüklenen içerik (hakkın sahibi, şart, süre, sonuç) başlık ve metinle
+   örtüşmeli; çekilemeyen madde gövdeye numarasıyla yazılmaz. İnceleme notunda "Madde kontrolü:" cümlesi. Doğrulama çağrıları
+   "en az çağrı" kuralına tabi değildir; Bedesten hız kuralı bir tempo kuralıdır, doğrulanacak madde sayısına sınır değildir.
+2. `knowledge/references/mevzuat-mcp-rehberi.md`: bölüm 9 (madde doğrulama kapısı); tek çağrılı madde okuma
+   (`tr_mevzuat_madde_getir(number="6769", madde_no="120")`, araç şemasında görünüyorsa; görünmüyorsa ağaç yolu);
+   `tr_mevzuat_icinde_ara` madde numarasıyla madde bulma yolu değildir.
+
+### Düzeltildi
+
+1. Bilgi dosyalarında resmî güncel metinle (Bedesten, 21.09.2026) karşılaştırılıp bağımsız ikinci denetimden geçen **67 yanlış madde atfı** düzeltildi (kritik 15, yüksek 20, orta 21, düşük 11). Örnekler: "CMK m.130 dosya erişimi" → m.153 (müdafiin dosyayı inceleme yetkisi); "TTK m.222 ticari defterler" → HMK m.222; HMK m.119/2 istisna bentleri; HMK m.269 ile 278 bilirkişi madde haritası; TTK m.5/A zorunlu arabuluculuk kapsamı (7445 s.K.).
+2. `smk-rehberi.md` (Law Firm, Corporate): m. 5/1 ve m. 6 bentleri, m. 29 ve 30 ile 149 ile 151 (ceza m. 30'dadır), m. 156,
+   m. 101 (koruma süresi), m. 18 ve 20 itiraz süreleri resmî metne göre düzeltildi; **Çalışan buluşları (SMK m. 113 ile 122)**
+   bölümü eklendi. `ip-advisory.md`: m. 115 ile 118 faydalı model değil çalışan buluşu hükümleridir.
+
+### Bilinen açık
+
+- İdari yargı ve vergi dosya gruplarındaki 130 bulgu ikinci denetimden geçmediği için uygulanmadı; fikri mülkiyet ve ticaret,
+  avukatlık ve büro, iş hukuku ve KVKK grupları henüz denetlenmedi. Madde doğrulama kapısı bu dosyalardaki numaraları da
+  çekmeden kullanmayı yasaklar.
+
+### Yükleme
+
+`SYSTEM_PROMPT.md` yeniden yapıştırılır. Project knowledge'da şu dosyalar yenilenir: `knowledge/references/bilirkisilik-rehberi.md`, `knowledge/references/ced-rehberi.md`, `knowledge/references/cmk-rehberi.md`, `knowledge/references/hakimlik-etigi-rehberi.md`, `knowledge/references/hmk-rehberi.md`, `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/tebligat-7201-rehberi.md`, `knowledge/references/uyap-rehberi.md`, `knowledge/skills/ceza-hakim__skills.md`, `knowledge/skills/ceza-kalem__skills.md`, `knowledge/skills/hukuk-hakim__skills.md`, `knowledge/skills/hukuk-kalem__skills.md`.
+
+---
+
 ## [1.0.4] — 2026-09-20 — *İçtihat tarih süzgeci düzeltildi; araştırma rehberleri yenilendi*
 
 > **Düzeltme sürümü.** Bedesten tek taraflı tarih aralığını sessizce yok sayıyordu: yalnız `date_from` verilen içtihat araması

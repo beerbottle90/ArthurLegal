@@ -69,7 +69,7 @@ Bu plugin'in tipik müvekkilleri:
 - **Yargılama gideri:** Müvekkilden ayrıca tahsil edilir (gider avansı HMK m. 120)
 - **Karşı yan vekalet ücreti:** AAÜT tarifesine göre hükmedilen — müvekkile mi ödenir, müvekkilin AAÜT'ye razı olduğu sözleşmede de bizde kalır mı? **Ücret sözleşmesinde açıkça belirt.**
 
-⚠️ **Av. K. m. 164/4:** Karşı yanın ödediği vekalet ücreti, **müvekkille avukat arasındaki** ücret sözleşmesine konu olamaz; **vekile aittir** (aksi sözleşmede yazılmadıkça).
+⚠️ **Av. K. m. 164/5:** Dava sonunda kararla tarifeye dayanılarak karşı tarafa yüklenen vekâlet ücreti, ücret sözleşmesinde aksi kararlaştırılmadıkça (Yargıtay uygulaması) **avukata aittir**; iş sahibinin borcu nedeniyle takas ve mahsup edilemez, haczedilemez.
 
 ---
 
@@ -84,7 +84,7 @@ Bu plugin'in tipik müvekkilleri:
 | Temyiz başvurusu | Müvekkil + atanan ortak | Ortaklar Kurulu bildirme |
 | **AYM bireysel başvuru** | Müvekkil + atanan ortak + Yönetici Ortak | Stratejik karar |
 | Karşı yan vekille sulh görüşmesi | Atanan ortak | — |
-| **Tahkim itirazı sunma** (HMK m. 116/c) | Atanan ortak | Yönetici Ortak bildirme |
+| **Tahkim itirazı sunma** (HMK m. 116/1-b; cevap dilekçesinde — m. 117/1) | Atanan ortak | Yönetici Ortak bildirme |
 
 **Otomatik eskalasyon (tutardan bağımsız):**
 - 🔴 Müvekkil veya karşı taraf **OFAC/AB yaptırım listesinde** → Yönetici Ortak + matter kapatma değerlendirmesi
@@ -96,12 +96,12 @@ Bu plugin'in tipik müvekkilleri:
 
 ## Birincil venue ve yargı yeri
 
-**Genel kural:** HMK m. 6 vd. — sözleşmesel yetki klozu öncelikli (TBK + HMK m. 17), aksi halde davalı yerleşim yeri.
+**Genel kural:** HMK m. 6 vd. — yetki sözleşmesi yalnız tacirler/kamu tüzel kişileri arasında ve yazılı yapılırsa geçerli; aksi kararlaştırılmadıkça dava yalnız seçilen mahkemede açılır (HMK m. 17-18), aksi halde davalı yerleşim yeri.
 
 **Mahkeme tercihleri (davacı olarak müvekkili temsil ettiğimizde):**
 - Ticari uyuşmazlık: ATM — `[DOLDUR — İstanbul Anadolu / Çağlayan ATM tercih]`
 - Bireysel sözleşme: Sulh Hukuk veya Asliye Hukuk (değer eşik)
-- Tüketici: TKHK eşik altı → Tüketici Hakem Heyeti; üstü → Tüketici Mahkemesi
+- Tüketici: TKHK eşik altı → Tüketici Hakem Heyeti (TKHK m. 68); üstü → önce dava şartı arabuluculuk (TKHK m. 73/A), sonra Tüketici Mahkemesi
 - Tahkim: ISTAC İstanbul / ICC
 
 **Karşı taraf seçtiğinde dikkatli olduğumuz venue'ler:** `[DOLDUR — örn. tanışık olmadığımız uzak şehir mahkemeleri]`
@@ -110,14 +110,14 @@ Bu plugin'in tipik müvekkilleri:
 
 ## TTK m. 5/A Zorunlu Arabuluculuk
 
-**6102 TTK m. 5/A:** Konusu **alacak + tazminat** olan **ticari uyuşmazlıklarda** dava açmadan önce **zorunlu arabuluculuk dava şartı**.
+**6102 TTK m. 5/A:** Ticari davalardan konusu bir miktar para olan **alacak, tazminat, itirazın iptali, menfi tespit ve istirdat** davalarında dava açmadan önce **zorunlu arabuluculuk dava şartı** (7445 s. K. ile genişletilmiş hâli).
 
 Pratiğimiz:
 - Müvekkille dava açma kararı verildiğinde **ÖNCE arabuluculuk** başvur (Adalet Bakanlığı Arabuluculuk Daire Başkanlığı)
 - Arabulucu atama 3 gün + ilk toplantı 3 hafta + tutanak 6 hafta tipik
 - Anlaşma → ilam niteliğinde icra
-- Anlaşmama → tutanak alınır, dava dilekçesine ekle (yoksa **HMK m. 114 dava reddi**)
-- **İhtiyati tedbir/haciz (HMK m. 389 vd.)** tek başına dava açılabilir, ana dava arabuluculuk sonrası
+- Anlaşmama → son tutanak dava dilekçesine eklenir; eklenmemişse 1 haftalık kesin süre, sunulmazsa usulden ret; hiç başvurulmamışsa doğrudan usulden ret (**HUAK m. 18/A/2**)
+- **İhtiyati tedbir (HMK m. 389 vd.) / ihtiyati haciz (İİK m. 257 vd.)** arabuluculuktan önce talep edilebilir (dava açma süresi arabuluculukta işlemez — HUAK m. 18/A/16), ana dava arabuluculuk sonrası
 
 **Skill `/dispute-litigation:case-intake` bunu otomatik kontrol eder** — ticari + alacak/tazminat sinyali görürse arabuluculuk öncesi flag çıkarır.
 
@@ -156,7 +156,7 @@ Tribunal: [...] | Case No: [...] | Date: DD.MM.YYYY
 
 **Türk hukuku özellikleri:**
 - **Avukatlık K. m. 36** — avukatın iş ile ilgili öğrendikleri sır olarak korunur. **Tam koruma** — büro olarak bu plugin'in birincil guardrail'idir.
-- **CMK m. 130** — savunma hakkı kapsamında dosyalara erişim sınırı (ceza dosyaları için `criminal-defense` plugin'ine yönlendir).
+- **CMK m. 153** — müdafiin soruşturma dosyasını inceleme yetkisi ve hâkim kararıyla kısıtlanması (ceza dosyaları için `criminal-defense` plugin'ine yönlendir).
 - **TBB Meslek Kuralları m. 36-37** — mesleki sırrın korunması, istisnaları.
 
 ### ⚠️ İnceleyen notu (reviewer note)
@@ -237,7 +237,7 @@ Bu eklentinin uğraştığı **subjective hukuki yargılar** — bir davanın a�
 
 Bu plugin'in skill'leri ve checklist'leri **taban**, tavan değil. Kullanıcı checklist'in dışında bir doktrinsel soru sorarsa, **direkt cevapla**.
 
-**Doktrinsel soru, dava-dosya sorusu DEĞİL:** "HMK m. 297 ihtar süresi nedir?" sorarsa, dosya-review akışına zorlama; direkt cevap ver, ArthurLegal MCP (`tr_`)'den madde getir.
+**Doktrinsel soru, dava-dosya sorusu DEĞİL:** "HMK m. 127 cevap süresi nedir?" sorarsa, dosya-review akışına zorlama; direkt cevap ver, ArthurLegal MCP (`tr_`)'den madde getir.
 
 ## Yanlış skill'e zorlama
 
@@ -278,7 +278,7 @@ Yeni bir matter açılırken veya mevcut matter'da **karşı yanın gerçek kiml
 
 ### AAÜT (Avukatlık Asgari Ücret Tarifesi)
 
-Sulh teklif değerlendirmesinde, vekalet ücreti hesabında **AAÜT** bağlayıcıdır. Detay: `references/aaut-rehberi.md`. Karşı yan vekalet ücreti AAÜT üzerinden hesaplanır ve **Av. K. m. 164/4** gereği vekile aittir.
+Sulh teklif değerlendirmesinde, vekalet ücreti hesabında **AAÜT** bağlayıcıdır. Detay: `references/aaut-rehberi.md`. Karşı yan vekalet ücreti AAÜT üzerinden hesaplanır ve **Av. K. m. 164/5** gereği avukata aittir.
 
 ### Damga vergisi (sulh anlaşması)
 
@@ -291,7 +291,7 @@ Karşı yan halka açık bir şirketse ve dava sonucu yatırımcı kararını et
 - Müvekkilin de halka açıksa benzer durum
 - Müvekkilin sermaye piyasası konseyi varsa bilgilendirme
 
-### CMK m. 130 — Ceza dosyası erişim sınırı
+### CMK m. 153 — Ceza dosyası erişim sınırı
 
 Ceza dosyaları (özellikle iş kazası ceza, çevre suçu, ticari suç) `criminal-defense` plugin'ine ait — bu plugin'de ortaya çıkarsa o plugin'e yönlendir.
 

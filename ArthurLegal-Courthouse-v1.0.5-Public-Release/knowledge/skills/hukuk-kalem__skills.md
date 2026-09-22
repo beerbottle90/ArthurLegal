@@ -7,7 +7,7 @@
 
 ## İçindekiler
 
-- /hukuk-kalem:tensip-zapti — HMK m. 137 sonrası tensip tutanağı & tahkikat planı
+- /hukuk-kalem:tensip-zapti — dava açılışında (HMK m. 137 ön incelemesinden önce) tensip tutanağı & tahkikat planı
 - /hukuk-kalem:tebligat — 7201 Tebligat K. usulü, tebliğ şerhi, e-tebligat
 - /hukuk-kalem:harc-hesabi — Harçlar K. 492 nispi/maktu harç + gider avansı (HMK m. 120)
 
@@ -32,7 +32,7 @@ Dava dosyası açıldığında kalemin hazırladığı ilk işlem zincirini eksi
 
 ## Kontrol & adımlar
 
-1. **Dava dilekçesi kontrolü (HMK m. 119):** zorunlu unsurlar tam mı (taraflar, talep, vakıa, deliller, hukuki sebep, imza). Eksikse 1 haftalık kesin süre (m. 119/2).
+1. **Dava dilekçesi kontrolü (HMK m. 119):** zorunlu unsurlar tam mı (taraflar, talep, vakıa, deliller, hukuki sebep, imza). Eksiklik (b), (c), (ç), (ğ) veya (h) bentlerinde ise (taraf ad/soyad/adres, davacı T.C. kimlik no, kanuni temsilci/vekil bilgisi, talep sonucu, imza) 1 haftalık kesin süre; tamamlanmazsa dava açılmamış sayılır (m. 119/2). (a), (d), (e), (f), (g) bentleri — mahkeme adı, dava konusu/değer, vakıalar, deliller, hukuki sebepler — bu kesin sürenin kapsamı dışındadır.
 2. **Harç & gider avansı (m. 120):** başvuru + peşin harç yatırılmış mı; gider avansı tarifesi. Eksikse muhtıra. → `harc-gider-rehberi.md`.
 3. **Tensip maddeleri (kalıp):**
    - Dilekçenin davalıya tebliği, **2 hafta** cevap süresi (m. 127)
@@ -74,7 +74,7 @@ Bir evrakın hangi usulle, kime ve nasıl tebliğ edileceğini doğru belirle. Y
    - **m. 21/2** — bilinen adrese tebliğ edilemezse (adres kaydındaki yere).
    - **m. 35** — daha önce tebligat yapılmış adres değişmişse.
    - **e-Tebligat** (m. 7/a) — zorunlu muhataplar (avukat, tüzel kişi, kamu) için. → `kep-etebligat-rehberi.md`.
-4. **Şerh & süre:** tebliğ tarihi sürelerin başlangıcı (m. 297 kanun yolu süresi de buradan). Şerhin usulüne uygunluğunu kontrol et.
+4. **Şerh & süre:** tebliğ tarihi sürelerin başlangıcı (istinaf ve temyiz süresi de ilamın tebliğinden işler — HMK m. 345/1, 361/1; hükümde kanun yolu ve süresinin gösterilmesi HMK m. 297/1-ç). Şerhin usulüne uygunluğunu kontrol et.
 
 ## Çıktı
 

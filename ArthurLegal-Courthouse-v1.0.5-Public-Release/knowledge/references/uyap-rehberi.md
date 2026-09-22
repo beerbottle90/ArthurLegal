@@ -55,7 +55,7 @@ mevzuat/yargı araçları → Bedesten/Emsal birleşik arama (konu + tarih aral�
 | Sorun | Not |
 |---|---|
 | e-İmza süresi dolmuş | Karar imzalanamaz; e-imza yenileme |
-| e-Tebligat okunmamış ama süre işliyor | UETS'te gönderimi izleyen 5. günün sonunda tebliğ sayılır (süre işler) |
+| e-Tebligat okunmamış ama süre işliyor | UETS'te muhatabın elektronik adresine ulaştığı tarihi izleyen 5. günün sonunda tebliğ sayılır (Teb. K. m. 7/a; süre işler) |
 | SEGBİS/e-duruşma bağlantı sorunu | İstinabe/uzaktan ifade için yedek plan; tutanağa şerh |
 | Fiziksel sunulan evrak | Taranıp dosyaya eklenir; UYAP kaydı tutulur |
 

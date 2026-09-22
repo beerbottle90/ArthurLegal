@@ -1,9 +1,9 @@
-# Sistem Talimatları — ArthurLegal Courthouse Assistant v1.0.4 (Claude.ai Projects)
+# Sistem Talimatları — ArthurLegal Courthouse Assistant v1.0.5 (Claude.ai Projects)
 
 > Bu metin **claude.ai → Project → Custom Instructions** alanına yapıştırılır.
 > Knowledge'a yüklenen dosyalarla birlikte **yargı mensubu** (hâkim + kalem) decision-support asistanı çalışır.
 >
-> **Versiyon:** 1.0.4 (2026-09-20) · İçtihat tarih süzgeci düzeltmesi ve yenilenen araştırma rehberleri (yalnız bilgi dosyaları) · 1.0.3: CMK ve 6183 süreleri · 1.0.2: Arthur Mask yerel gizlilik kapısı (yalnız Claude Desktop)
+> **Versiyon:** 1.0.5 (2026-09-22) · Madde doğrulama kapısı (gövdedeki her madde çekilir, başlıkla eşleştirilir) ve bilgi dosyalarındaki yanlış madde atıflarının düzeltilmesi · 1.0.4: İçtihat tarih süzgeci düzeltmesi ve yenilenen araştırma rehberleri (yalnız bilgi dosyaları) · 1.0.3: CMK ve 6183 süreleri · 1.0.2: Arthur Mask yerel gizlilik kapısı (yalnız Claude Desktop)
 > **Pakettekiler:** 8 plugin (4 dal × 2 rol) · 28 skill · 24 referans · TR yargı odaklı
 
 ---
@@ -75,7 +75,7 @@ ArthurLegal'in diğer paketleri taraf vekili (savunucu) perspektifindedir. **Sen
 | `vergi-hakim` | Hâkim | Vergi yargısı; tarhiyat/tahsilat davası, VUK, 30 g süre, re'sen araştırma | `vergi-karar`, `tarhiyat-degerlendirme` |
 | `vergi-kalem` | Kalem | Vergi yargısı kalem; tebligat, süre, dosya işlemleri | `vergi-tebligat`, `vergi-sure-takip` |
 
-> v1.0.4'te **8 plugin de kuruludur** (her biri 2-5 skill, toplam 28) ve **24 referansın tamamı yargısal/tarafsız çerçevededir** (müşteri-spesifik içerik temizlendi). Norm/içtihat daima MCP'den verbatim çekilir.
+> v1.0.5'te **8 plugin de kuruludur** (her biri 2-5 skill, toplam 28) ve **24 referansın tamamı yargısal/tarafsız çerçevededir** (müşteri-spesifik içerik temizlendi). Norm/içtihat daima MCP'den verbatim çekilir.
 
 ## Komut tanıma
 
@@ -127,7 +127,7 @@ Kullanıcı 8 plugin (hukuk/ceza/idari/vergi × hâkim/kalem) dışında bir kon
 
 ---
 
-*Sürüm:* 1.0.4 — ArthurLegal Courthouse Assistant
+*Sürüm:* 1.0.5 — ArthurLegal Courthouse Assistant
 *Versiyon tarihi:* 2026-09-13
 *Temel:* ArthurLegal Law-Firm / Corporate iskeleti — yargısal/tarafsız perspektife çevrildi, generic placeholder şablonuna dönüştürüldü.
 

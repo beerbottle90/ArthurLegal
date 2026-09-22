@@ -20,7 +20,7 @@
 | **CMK m. 62-73** | Ceza yargısında bilirkişi |
 | **Yıllık Bilirkişilik Ücret Tarifesi** | BDB, her yıl RG'de |
 
-Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kuruluna başvuru → sicile kayıt → bölge listesine alınma. **Mahkeme kural olarak listeden seçer** (HMK m. 268; istisnaen liste dışı gerekçeli).
+Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kuruluna başvuru → sicile kayıt → bölge listesine alınma. **Mahkeme kural olarak listeden seçer** (HMK m. 268/1; ilgili uzmanlık dalında bölge listesinde bilirkişi yoksa diğer bölge listelerinden, orada da yoksa 6754 m. 10/1 şartlarını — (d), (e), (f) bentleri hariç — taşıyan liste dışı kişi görevlendirilebilir ve bölge kuruluna bildirilir: m. 268/2).
 
 ---
 
@@ -28,7 +28,7 @@ Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kur
 
 > **HMK m. 266 / CMK m. 63:** Bilirkişiye **YALNIZCA** çözümü **özel veya teknik bilgi** gerektiren hallerde başvurulur.
 
-- ❌ **Hâkimlik mesleğinin gerektirdiği genel ve hukuki bilgiyle çözülebilecek konularda bilirkişiye başvurulamaz** (HMK m. 266 son cümle). *Iura novit curia* — hukuku hâkim bilir.
+- ❌ **Genel bilgi veya tecrübeyle ya da hâkimlik mesleğinin gerektirdiği hukuki bilgiyle çözülebilecek konularda bilirkişiye başvurulamaz** (HMK m. 266/1 ikinci cümle). *Iura novit curia* — hukuku hâkim bilir.
 - ❌ **Bilirkişi hukuki nitelendirme yapamaz.** Sözleşmenin geçerliliği, kusurun hukuki sonucu, hangi tarafın haklı olduğu, faiz türü/başlangıcı → **hâkimin işi**. Bilirkişi yalnızca maddi/teknik tespit + hesap yapar.
 - ✅ Uygun konular: mühendislik/teknik hesap, hasar/değer/zarar tespiti, muhasebe-bilanço analizi, imza/belge incelemesi, tesisat tekniği, emisyon ölçümü, keşif bedeli, gecikme/iş artışı analizi.
 
@@ -43,12 +43,12 @@ Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kur
 | m. 266 | Başvuru halleri (özel/teknik bilgi; hukuki bilgi hariç) |
 | m. 267 | Bilirkişi sayısı (kural bir; gerekirse tek sayıda) |
 | m. 268 | Görevlendirme (listeden seçim) |
-| m. 269 | Bilirkişiliğin zorunluluğu (kabul yükümü, istisnalar) |
-| m. 270 | Kaçınma + yasaklılık halleri |
-| m. 271-272 | Hâkimin reddi sebepleriyle bilirkişinin reddi (tarafsızlık) |
+| m. 269 | Bilirkişilik görevinin kapsamı (davete uyma, yemin, süresinde oy ve görüş bildirme) |
+| m. 270 | Bilirkişiliği kabulle yükümlü olanlar (çekinme: tanıklıktan çekinme sebepleri / mahkemece kabul edilebilir sebep) |
+| m. 271-272 | Yemin (m. 271) · hâkimlerin yasaklılık/ret sebepleriyle bilirkişinin yasaklılığı ve reddi; ret talebi öğrenmeden itibaren en geç 1 hafta (m. 272) |
 | m. 273 | Görevlendirme kararının içeriği (inceleme konusu, **görev sınırı**, süre) |
-| m. 274-277 | Görev kapsamı + yetkiler |
-| m. 278 | Yemin |
+| m. 274-277 | Görev süresi (en çok 3 ay + 3 ay uzatma; basit yargılamada 2 ay + 2 ay), haber verme (1 hafta), görevi bizzat yapma, sır saklama |
+| m. 278 | Bilirkişinin yetkileri (mahkemenin sevk ve idaresi altında; tarafların bilgisine başvurma, şey üzerinde inceleme) |
 | m. 279-280 | Oy/görüş açıklama + yazılı gerekçeli rapor (görev sınırı içinde) |
 | **m. 281** | Rapora itiraz → **ek rapor / yeni bilirkişi** |
 | **m. 282** | **Hâkim raporu serbestçe takdir eder — rapor BAĞLAYICI DEĞİL** |
@@ -66,13 +66,13 @@ Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kur
 
 | Madde | Konu |
 |---|---|
-| m. 62-63 | HMK'ya atıf + özel/teknik bilgi ilkesi |
+| m. 62-63 | Tanıklara ilişkin (CMK) hükümlerin bilirkişilere uygulanması (m. 62) + atama ve özel/teknik bilgi ilkesi (m. 63) |
 | m. 64 | Atama (listeden; istisnaen liste dışı gerekçeli) |
 | m. 66 | Atama kararı + süre (kural 3 ay, +3 ay) |
 | m. 67 | Rapor + tarafların uzman görüşü (mütalaa) sunma hakkı |
 | m. 68 | Bilirkişinin duruşmada dinlenmesi |
 | m. 69 | Bilirkişinin reddi |
-| m. 70-73 | Yemin, sorumluluk, ücret |
+| m. 70-73 | Çekinme (m. 70), görevini yapmayan bilirkişi (m. 71), gider ve ücret (m. 72), sahte para/değer incelemesi (m. 73); yemin: m. 64/5-7 |
 
 > **CMK m. 67/6:** C. savcısı, katılan, vekil, şüpheli/sanık, müdafi kendi uzmanından mütalaa alıp dosyaya sunabilir; hâkim bunu serbestçe değerlendirir.
 
@@ -96,10 +96,10 @@ Bilirkişi olmak: temel eğitim + uzmanlıkta asgari 5 yıl deneyim + bölge kur
 
 Bir bilirkişi raporu hükme esas alınmadan önce:
 
-1. **Görev sınırı (m. 273/280):** rapor, görevlendirme kararındaki sorularla sınırlı mı; dışına çıkmış mı?
-2. **Hukuki nitelendirme yok mu (m. 266):** rapor hukuki sonuç/haklılık değerlendirmesi yapmış mı? Yapmışsa o kısım dışlanır.
+1. **Görev sınırı (m. 273, 279/4):** rapor, görevlendirme kararındaki sorularla sınırlı mı; dışına çıkmış mı?
+2. **Hukuki nitelendirme yok mu (m. 279/4; m. 266):** rapor hukuki sonuç/haklılık değerlendirmesi yapmış mı? Yapmışsa o kısım dışlanır.
 3. **Uzmanlık uyumu:** bilirkişinin alanı uyuşmazlığın teknik konusuyla örtüşüyor mu?
-4. **Tarafsızlık (m. 271-272):** red/yasaklılık sebebi var mı?
+4. **Tarafsızlık (m. 272):** red/yasaklılık sebebi var mı?
 5. **Denetime elverişlilik:** veri, varsayım, yöntem ve hesap açık ve izlenebilir mi? Çelişki/eksik var mı?
 6. **İtirazların karşılanması (m. 281):** taraf itirazları somut ve teknikse → ek rapor/yeni bilirkişi; değilse gerekçeyle reddi.
 7. **Takdir (m. 282):** rapora uyulup uyulmadığı kararda **gerekçelendirilir** (matbu "rapora itibar edilmiştir" yetmez).
@@ -109,7 +109,7 @@ Bir bilirkişi raporu hükme esas alınmadan önce:
 ## 7. Ücret / tarife
 
 - **Yıllık Bilirkişilik Ücret Tarifesi** BDB tarafından RG'de yayımlanır.
-- Bilirkişi ücreti yargılama giderine dahildir (m. 283); kural olarak haksız çıkan taraf üzerinde.
+- Bilirkişi ücreti yargılama giderine dahildir (m. 323/1-e; ücret/tarife m. 283); kural olarak aleyhine hüküm verilen taraf üzerinde (m. 326/1).
 - Uzman görüşü (m. 293) ücreti tarifeye tabi değil; mütalaayı alan taraf öder.
 
 ---

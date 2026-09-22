@@ -22,9 +22,9 @@
 |---|---|---|
 | Hukuk | HMK m. 34 (yasaklılık sebepleri) | HMK m. 36 (reddi hâkim) |
 | Ceza | CMK m. 22-23 (yasaklılık) | CMK m. 24-26 (ret) |
-| İdari/Vergi | İYUK m. 56-57 (HMK'ye atıf) | — |
+| İdari/Vergi | İYUK m. 31/1 → HMK m. 34 (yasaklılık) | İYUK m. 31/1 → HMK m. 36 (ret); inceleme mercii İYUK m. 56-57 |
 
-- **Yasaklılık (re'sen):** davada taraf/ilgili olma, akrabalık, önceki görev (bilirkişi/tanık/vekil), aynı işte alt derece kararına katılma.
+- **Yasaklılık (re'sen):** davada taraf/ilgili olma, akrabalık, vekil/vasi/kayyım/yasal danışman sıfatı (HMK m. 34); ceza yargısında ayrıca aynı davada savcılık/kolluk/müdafilik/mağdur vekilliği, tanık veya bilirkişi olarak dinlenmiş olma (CMK m. 22) ve aynı işte alt derece kararına katılma (CMK m. 23). HMK'da davada tanık/bilirkişi olarak dinlenmiş veya hâkim/hakem sıfatıyla hareket etmiş olma (ör. alt derece kararına katılma) yasaklılık değil **ret** sebebidir (HMK m. 36/1-c).
 - **Ret:** tarafsızlığı şüpheye düşüren haller; süresinde ileri sürülmeli.
 
 ## Kişisel veri & gizlilik

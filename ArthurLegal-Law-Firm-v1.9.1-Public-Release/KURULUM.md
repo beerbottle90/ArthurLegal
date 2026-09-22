@@ -1,6 +1,6 @@
 # ArthurLegal Hukuk Bürosu Asistanı — Kurulum Rehberi
 
-**Versiyon:** 1.9.0 | **Güncelleme:** 2026-09-20
+**Versiyon:** 1.9.1 | **Güncelleme:** 2026-09-22
 
 ---
 
@@ -410,7 +410,7 @@ A: `/<plugin>:` yazın — asistan o plugin'in tüm mevcut skill'lerini listeler
 
 ## Güncelleme notları
 
-Bu versiyon **v1.9.0**'dır. Değişiklikler için `CHANGELOG.md` dosyasına bakın.
+Bu versiyon **v1.9.1**'dır. Değişiklikler için `CHANGELOG.md` dosyasına bakın.
 
 v1.8.1'den geçiş: `SYSTEM_PROMPT.md` Custom Instructions alanına yeniden yapıştırılır (bölüm 6 ve 7: `konu` taraması, tarih aralığı, arşiv kapsamı). Project knowledge'da şu beş dosyayı yenileyin: `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/source-catalog.md`, `knowledge/skills/regulatory-legal__skills.md`. Connector adresi değişmedi; bağlandıktan sonra `status` çağırın, `backend_status.tr.version` 0.4.0 veya üstü olmalıdır.
 

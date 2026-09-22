@@ -49,7 +49,7 @@ Kullanıcı şunları sağlamalı (eksikse iste, varsayma):
 4. **Uyuşmazlık konusu** — tarafların üzerinde anlaştığı ve çekiştiği noktalar ayrı ayrı.
 5. **Deliller ve değerlendirilmesi** — her delil için: ne ispatlıyor, çekişme var mı, ispat yükü kimde (HMK m. 187). Bilirkişi raporu varsa: rapor sonucu + itirazların karşılanması.
 6. **Gerekçe** — uygulanacak norm (MCP'den `[ArthurLegal TR — GG.AA.YYYY]`) + varsa emsal içtihat (`[ArthurLegal TR — kurum — Esas/Karar — GG.AA.YYYY]`) + somut olaya uygulama. **İki yönlü:** kabul gerekçesi ile ret gerekçesi ayrı ayrı kurulur; hangisinin daha güçlü olduğunu hâkim takdir eder.
-7. **Hüküm (iskelet)** — HMK m. 297/2 unsurları: talep kalemleri tek tek, vekâlet ücreti, yargılama gideri, kanun yolu/süre. **Sonuç boş bırakılır veya seçenekli sunulur.**
+7. **Hüküm (iskelet)** — HMK m. 297/1-ç (hüküm sonucu, yargılama giderleri, avansın iadesi, kanun yolu ve süresi) ve m. 297/2 (her talep hakkında sıra numaralı, açık hüküm) unsurları: talep kalemleri tek tek, vekâlet ücreti, yargılama gideri, kanun yolu/süre. **Sonuç boş bırakılır veya seçenekli sunulur.**
 
 ## Adımlar
 
@@ -94,8 +94,8 @@ user-invocable: true
 ## Kontrol listesi
 
 1. **Dava şartları (m. 114) — re'sen:** görev, yetki (kesin mi), hukuki yarar, taraf/dava ehliyeti, derdestlik, kesin hüküm. 🔴 eksikse dava usulden ret.
-2. **İlk itirazlar (m. 116):** yetki (kesin değilse), tahkim itirazı, iş bölümü — **cevap dilekçesinde** ileri sürülmüş mü; süresinde değilse dinlenmez.
-3. **TTK m. 5/A dava şartı arabuluculuk:** ticari/alacak-tazminat davasıysa arabuluculuk şartı sağlanmış mı. 🔴 değilse dava şartı yokluğundan ret.
+2. **İlk itirazlar (m. 116-117):** yetki (kesin değilse) ve tahkim itirazı — **cevap dilekçesinde** ileri sürülmüş mü (m. 117/1); süresinde değilse dinlenmez. (İş bölümü itirazı m. 116/1-c'den 7251 s. K. ile kaldırılmıştır; artık ilk itiraz değildir.)
+3. **TTK m. 5/A dava şartı arabuluculuk:** ticari davalardan konusu bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit veya istirdat davasıysa (TTK m. 5/A/1 — 7445 s. K. ile genişletilmiş hâli) dava açılmadan önce arabulucuya başvurulmuş mu. 🔴 değilse dava şartı yokluğundan ret.
 4. **Sulh ve arabuluculuk teşviki (m. 140/2):** tarafları teşvik et, tutanağa geçir.
 5. **Uyuşmazlık noktalarının tespiti (m. 140/3):** çekişmeli/çekişmesiz vakıalar ayrılır — tahkikatın sınırını çizer.
 6. **Delil gösterme & sunma süresi (m. 140/5, 145):** taraflara kesin süre; sonradan delil sınırlı.
@@ -128,7 +128,7 @@ Delil takdirini **yöntemli** hale getir. Sonucu söyleme; hâkimin vicdani kana
 1. **Vakıaları ayır:** çekişmeli mi, çekişmesiz mi (m. 187/2 — çekişmesiz ispat gerektirmez).
 2. **İspat yükü (m. 190):** kural — iddia eden ispatla yükümlü. Karine/aksi ispat hâlleri ayrıca işaretle.
 3. **Delil türü sınırları:**
-   - Senetle ispat zorunluluğu ve istisnaları (m. 200-201).
+   - Senetle ispat zorunluluğu (m. 200/1) ve istisnaları (hatırlatma üzerine karşı tarafın açık muvafakati m. 200/2; delil başlangıcı m. 202; diğer istisnalar m. 203).
    - Tanıkla ispat sınırı (senede karşı tanık yasağı, m. 201).
    - Kesin deliller (senet, yemin, kesin hüküm) ↔ takdiri deliller (tanık, bilirkişi, keşif, özel uzman görüşü m. 293).
 4. **Bilirkişi raporu (m. 266 vd.):** rapor hâkimi bağlamaz; teknik/özel bilgi alanı mı, denetime elverişli mi, itirazlar karşılandı mı. Çelişki varsa ek rapor/yeni bilirkişi. Detay: `bilirkisilik-rehberi.md`.
@@ -161,7 +161,7 @@ Geçici koruma istisnaidir ve **gerekçeli** olmalıdır. Uyuşmazlık konusu ha
 
 1. **Tedbir sebebi (m. 389):** mevcut durumda meydana gelebilecek değişiklik nedeniyle hakkın elde edilmesinin önemli ölçüde zorlaşması / imkânsızlaşması veya gecikmede sakınca / ciddi zarar.
 2. **Yaklaşık ispat (m. 390/3):** talep eden, davanın esası yönünden haklılığını **yaklaşık** ispatla yükümlü (kesin ispat aranmaz).
-3. **Teminat (m. 392):** kural olarak teminat karşılığı; istisnaları (yaklaşık ispatın kuvveti / kamu).
+3. **Teminat (m. 392):** kural olarak teminat karşılığı (m. 392/1); istisnaları: talep resmî belgeye veya başkaca kesin delile dayanıyorsa ya da durum ve koşullar gerektiriyorsa gerekçesi açıkça belirtilerek teminat alınmayabilir; adli yardımdan yararlanan teminat göstermez. Kamu kurumlarına özel kanunlarla tanınan teminat muafiyetleri (ör. 6362 s. SPKn m. 92/3) saklıdır.
 
 ## Adımlar
 

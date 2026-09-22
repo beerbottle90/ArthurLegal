@@ -1,6 +1,6 @@
 # Claude.ai Projects – Kurulum Rehberi
 
-## ArthurLegal Corporate Assistant v1.9.0
+## ArthurLegal Corporate Assistant v1.9.1
 
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
@@ -361,4 +361,4 @@ v1.7.0'dan v1.8.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (yeni 
 
 ---
 
-*ArthurLegal Corporate Assistant v1.9.0 — https://github.com/beerbottle90/ArthurLegal*
+*ArthurLegal Corporate Assistant v1.9.1 — https://github.com/beerbottle90/ArthurLegal*

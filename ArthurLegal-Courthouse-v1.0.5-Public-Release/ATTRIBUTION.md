@@ -1,6 +1,6 @@
 # Atıf
 
-## ArthurLegal Courthouse Assistant v1.0.4
+## ArthurLegal Courthouse Assistant v1.0.5
 
 - **Author** (kod & içerik üretimi): Claude (Anthropic) — Opus 4.8 (`claude-opus-4-8`)
 - **Designer** (proje tasarımı & domain bilgisi): Ertuğ Demir

@@ -6,7 +6,7 @@
 
 ## Hukuki dayanak
 
-- **5070 sayılı Elektronik İmza Kanunu** — KEP altyapı
+- **6102 TTK m. 1525/2 + KEP Yönetmeliği (RG 25.08.2011/28036)** — KEP altyapı; **5070 sayılı Elektronik İmza Kanunu** — güvenli e-imza
 - **6102 sayılı TTK m. 18/3** — Tacirler arası KEP yazışma
 - **7201 sayılı Tebligat Kanunu m. 7/A** — Elektronik tebligat
 - **e-Tebligat Yönetmeliği** (RG 06.12.2018 / 30617)
@@ -21,8 +21,8 @@
 **Kayıtlı Elektronik Posta** — kanunla tanımlı **güvenli elektronik posta** sistemi:
 - Gönderici + alıcı kimliği **doğrulanmış**
 - Gönderim + alma + okuma zamanları **noter onaylı** delil değerinde
-- Posta operatörü (KEP hizmet sağlayıcı — BTK lisanslı) tarafından **arşivlenir** (15 yıl)
-- **5070 sayılı K. çerçevesinde** — yazılı belge gücünde
+- Posta operatörü (KEP hizmet sağlayıcı — BTK lisanslı) tarafından **arşivlenir** (en az 20 yıl — KEP Yönetmeliği m. 16/1-ı)
+- **KEP Yönetmeliği m. 15/1** — KEP kayıtları ve delilleri **senet hükmünde**, aksi ispat edilinceye kadar kesin delil
 
 ### KEP hizmet sağlayıcıları (BTK lisanslı)
 
@@ -115,22 +115,22 @@ KEP gönderim no: [...]
 
 ### Kapsam
 
-- **Anonim Şirketler + Limited Şirketler:** Zorunlu (2019 sonrası)
+- **Tüm özel hukuk tüzel kişileri** (AŞ, Ltd., kooperatif, dernek, vakıf vb.): Zorunlu (7201 m. 7/a, 1. fıkra bent 7)
 - **Avukatlar:** Zorunlu (TBB üyesi olarak)
 - **Noterler, kamu kurumları:** Zorunlu
 - **Gerçek kişi:** İsteğe bağlı (talep ederse)
 
 ### Sistem
 
-- **PTT KEP** üzerinden çalışır
+- PTT A.Ş.'nin **Ulusal Elektronik Tebligat Sistemi (UETS)** üzerinden çalışır — KEP'ten ayrı sistem (7201 m. 7/a)
 - UYAP'la entegre — mahkeme/savcılık/icra tebligatı bu kanaldan
 - Açma + okuma kayıtları — tebligat tarihi otomatik
 
 ### Tebligat tarihi hesabı
 
 7201 m. 7/A:
-- e-Tebligat **gönderildikten sonra 5. günün sonunda** **tebliğ edilmiş sayılır** (alıcı açmasa bile)
-- Açıldığı tarih erkenkse — açıldığı tarih
+- e-Tebligat **muhatabın elektronik adresine ulaştığı tarihi izleyen 5. günün sonunda** **tebliğ edilmiş sayılır** (alıcı açmasa bile)
+- Erken açılsa (okunsa) bile tebliğ tarihi değişmez — ulaştığı tarihi izleyen 5. günün sonu esas alınır (7201 m. 7/a; Elektronik Tebligat Yönetmeliği m. 9/6)
 - **5 günlük süre dolduğunda tüm yargı süreleri başlar**
 
 ⚠️ **Bu nedenle e-Tebligat günlük kontrol** — özellikle dava süresi kritik matter'larda.
@@ -222,4 +222,4 @@ Saygılarımla,
 2. **KEP göndermeden önce müvekkil yazılı yetki almama** — bağlayıcı teklif
 3. **KEP adresini yanlış doğrulama** — eski şirket yetkilisine teklif
 4. **Hassas matter'da sadece KEP kullanmak** — Yargıtay zaman zaman noter ister
-5. **KEP arşivini silme** — KEP sağlayıcı 15 yıl tutuyor ama büroda yedek yok = delil kaybı
+5. **KEP arşivini silme** — KEP sağlayıcı en az 20 yıl tutuyor (KEP Yönetmeliği m. 16/1-ı) ama büroda yedek yok = delil kaybı

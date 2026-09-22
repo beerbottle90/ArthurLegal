@@ -1,9 +1,9 @@
 # ArthurLegal — Claude Courthouse Assistant (TR)
 
-**Sürüm:** v1.0.4 · **Tarih:** 2026-09-20 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
+**Sürüm:** v1.0.5 · **Tarih:** 2026-09-22 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web ve Claude Desktop; Arthur Mask için Claude Desktop, Windows)
 
-> **v1.0.4 — 8/8 plugin kurulu** (her biri 2-5 skill, toplam 28 skill + 24 referans). Referansların tamamı yargısal/tarafsız çerçevede (müşteri-spesifik içerik temizlendi).
+> **v1.0.5 — 8/8 plugin kurulu** (her biri 2-5 skill, toplam 28 skill + 24 referans). Referansların tamamı yargısal/tarafsız çerçevede (müşteri-spesifik içerik temizlendi).
 
 > Türk **yargı mensubu** (mahkeme hâkimleri + mahkeme kalem memurlukları) için **yargısal / tarafsız** decision-support asistanı. ArthurLegal Law-Firm / Corporate iskeletinden türetilmiştir; ancak konum **savunucu değil, yargısaldır**.
 
@@ -77,13 +77,13 @@ Tam rehber → [KURULUM.md](KURULUM.md). Özet: Claude.ai Project oluştur → `
 ## Paket içeriği
 
 ```
-ArthurLegal-Courthouse-v1.0.4-Public-Release/
+ArthurLegal-Courthouse-v1.0.5-Public-Release/
 ├── KURULUM.md             ← Kurulum rehberi (buradan başlayın)
 ├── ARTHUR-MASK.md         ← Arthur Mask kullanım rehberi
 ├── SYSTEM_PROMPT.md       ← Claude.ai Custom Instructions metni
 ├── README.md              ← Bu dosya
 ├── CHANGELOG.md           ← Sürüm notları
-├── VERSION.md             ← 1.0.4
+├── VERSION.md             ← 1.0.5
 ├── ATTRIBUTION.md         ← Atıf bilgisi
 ├── LICENSE                ← Proprietary — Non-Commercial
 └── knowledge/             ← Project Knowledge'a yüklenecek dosyalar

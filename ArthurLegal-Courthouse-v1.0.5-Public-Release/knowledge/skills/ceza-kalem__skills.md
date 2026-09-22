@@ -34,7 +34,7 @@ Hâkimin ara kararı doğrultusunda çıkacak müzekkerenin doğru muhataba, do�
 1. **Adli sicil / arşiv kaydı** — Adli Sicil ve İstatistik GM.
 2. **Nüfus & MERNİS adres** — NVİ.
 3. **SGK / işyeri kaydı, HTS-baz kaydı, banka kayıtları** — koruma tedbiri/karar şartı varsa (CMK m. 135 vd. iletişim tespiti hâkim kararı gerektirir 🔴).
-4. **Talimat (istinabe) müzekkeresi (CMK m. 197 vd.)** — başka yer mahkemesinden tanık/sanık ifadesi.
+4. **Talimat (istinabe) müzekkeresi (CMK m. 180 — tanık/bilirkişi; m. 196/2 — sanık sorgusu, alt sınırı beş yıl ve daha fazla hapis gerektiren suçlar hariç)** — başka yer mahkemesinden tanık/sanık ifadesi.
 5. **Bilirkişi / ATK** — rapor talebi, sorulacak sorular net.
 
 ## Kontrol
@@ -99,7 +99,7 @@ Karar kesinleştiğinde infaz sürecini başlatacak evrakı eksiksiz hazırla.
 
 1. **Kesinleşme kontrolü:** kanun yolu sürelerinin geçtiği / mercilerce onandığı; kesinleşme tarihi tespiti.
 2. **Kesinleşme şerhi** — karara işlenir.
-3. **Müddetname** (5275 İnfaz K.) — ceza süresi hesabı; mahsup (gözaltı/tutukluluk, CMK m. 109/6, TCK m. 63).
+3. **Müddetname** (5275 İnfaz K.) — ceza süresi hesabı; mahsup (gözaltı/tutukluluk: TCK m. 63; adli kontrol süresi kural olarak mahsup edilmez — m. 109/3-e tedavi/muayene ve m. 109/3-j konutu terk etmeme hâlleri hariç, (j)'de her iki gün bir gün: CMK m. 109/6).
 4. **İnfaz C. Başsavcılığına gönderme** — ilam + müddetname + kesinleşme şerhi.
 5. **Harç/yargılama gideri** tahsili, varsa adli para cezası infazı.
 

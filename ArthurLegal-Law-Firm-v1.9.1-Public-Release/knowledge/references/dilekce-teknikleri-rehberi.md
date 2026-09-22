@@ -14,21 +14,21 @@
 
 | Unsur | HMK m. 119 (dava dilekçesi) | İYUK m. 3 (idari dava dilekçesi) | CMK (ilgili maddeler) |
 |---|---|---|---|
-| Mahkeme başlığı | ✅ m. 119/1-a | ✅ m. 3/2 (mahkeme başkanlığı) | ✅ ilgili mahkeme/C. Başsavcılığı |
+| Mahkeme başlığı | ✅ m. 119/1-a | ✅ m. 3/1 (Danıştay/mahkeme başkanlığına hitaben) | ✅ ilgili mahkeme/C. Başsavcılığı |
 | Davacı/şikâyetçi kimlik + adres | ✅ m. 119/1-b | ✅ m. 3/2-a | ✅ (şikâyette m. 158; sanık/müşteki bilgisi) |
-| TC kimlik no | ✅ m. 119/1-ç (davacı TCKN) | ✅ uygulamada | ✅ uygulamada |
-| Davalı/karşı taraf + adres | ✅ m. 119/1-c | ✅ m. 3/2-a (davalı idare) | C. Başsavcılığı şüpheli; mahkemede sanık |
-| Vekil (varsa) + adres/KEP | ✅ m. 119/1-d | ✅ m. 3/2-b | ✅ müdafi/vekil |
-| **Konu** (talep özeti) | ✅ m. 119/1-e | ✅ m. 3/2-c (dava konusu işlem + tebliğ tarihi) | ✅ dilekçe konusu |
-| **Açıklamalar / vakıalar** | ✅ m. 119/1-f (dayanılan vakıalar, sıra no'lu) | ✅ m. 3/2-ç (olayların özeti + sebepler) | ✅ olayların anlatımı |
+| TC kimlik no | ✅ m. 119/1-c (davacı TCKN) | ✅ m. 3/2-a (gerçek kişilerin TCKN) | ✅ uygulamada |
+| Davalı/karşı taraf + adres | ✅ m. 119/1-b | ✅ m. 3/2-a (davalı idare) | C. Başsavcılığı şüpheli; mahkemede sanık |
+| Vekil (varsa) + adres/KEP | ✅ m. 119/1-ç | ✅ m. 3/2-a | ✅ müdafi/vekil |
+| **Konu** (talep özeti) | ✅ m. 119/1-d (konu + malvarlığı davalarında dava değeri) | ✅ m. 3/2-b (dava konusu) + m. 3/2-c (işlemin yazılı bildirim tarihi) | ✅ dilekçe konusu |
+| **Açıklamalar / vakıalar** | ✅ m. 119/1-e (dayanılan vakıalar, sıra no'lu) | ✅ m. 3/2-b (davanın konu ve sebepleri) | ✅ olayların anlatımı |
 | Her vakıanın hangi delille ispatı | ✅ m. 119/1-f | uygulamada | uygulamada |
 | **Hukuki sebepler** | ✅ m. 119/1-g | ✅ m. 3/2-ç (hukuki sebepler) | ✅ ilgili TCK/CMK maddeleri |
-| **Deliller** | ✅ m. 119/1-f, ğ | ✅ ekli belge listesi | ✅ delil listesi |
-| **Sonuç ve talep (netice-i talep)** | ✅ m. 119/1-h | ✅ m. 3/2-d (sonuç ve istem) | ✅ açık talep |
-| İmza | ✅ m. 119/1-h (taraf/vekil) | ✅ m. 3/2 (imza) | ✅ |
+| **Deliller** | ✅ m. 119/1-f | ✅ m. 3/2-b (dayanılan deliller) + m. 3/3 (ekler) | ✅ delil listesi |
+| **Sonuç ve talep (netice-i talep)** | ✅ m. 119/1-ğ | ✅ uygulamada (m. 3'te ayrı bent yok; vergi ve tam yargı davalarında uyuşmazlık konusu miktar m. 3/2-d) | ✅ açık talep |
+| İmza | ✅ m. 119/1-h (taraf/vekil) | ✅ m. 3/1 (imzalı dilekçe) | ✅ |
 | Ekler / dayanak belgeler | ✅ (delil ekleri) | ✅ m. 3/3 (idari işlem + ekleri) | ✅ |
 
-> **HMK m. 119/2 uyarısı:** (1)-d (vekil), (1)-f (vakıaların delili) ve (1)-ğ (delil dökümü) **dışındaki** eksiklikler için hâkim 1 haftalık **kesin süre** verir; giderilmezse dava açılmamış sayılır. İYUK'ta dilekçe ret rejimi **m. 15/1-d + m. 3/2** üzerinden işler (30 gün içinde yenileme) — ama **dava açma süresi durmaz**, bu yüzden ret kararı kritiktir.
+> **HMK m. 119/2 uyarısı:** (1)-a (mahkemenin adı), (1)-d (dava konusu ve değeri), (1)-e (vakıalar), (1)-f (vakıaların delili) ve (1)-g (hukuki sebepler) **dışındaki** eksiklikler için hâkim 1 haftalık **kesin süre** verir; giderilmezse dava açılmamış sayılır. İYUK'ta dilekçe ret rejimi **m. 15/1-d + m. 3/2** üzerinden işler (30 gün içinde yenileme) — ama **dava açma süresi durmaz**, bu yüzden ret kararı kritiktir.
 
 ## Ortak iskelet (üç türde de aynı omurga)
 
@@ -76,7 +76,7 @@
 | **Başvurma harcı** | Maktu — Harçlar K. (492) tarifesi | Maktu |
 | **Peşin harç** | Konusu para/para ile ölçülebilen davada **nispi** (dava değerinin binde'si, peşin ¼); değilse **maktu** | Genelde **maktu** (iptal davası); tam yargıda tazminat tutarına göre nispi olabilir |
 | **Karar/ilam harcı** | Hüküm sonrası tamamlanır | — |
-| **Gider avansı** | HMK m. 120 — dava açarken yatırılır; eksikse 2 haftalık kesin süre, yatmazsa dava açılmamış sayılır (m. 120/2 işlemden kaldırma rejimi) | İYUK m. 6 — posta/tebligat avansı; tamamlanmazsa dilekçe işleme konmaz |
+| **Gider avansı** | HMK m. 120 — dava açarken yatırılır; dava sırasında yetersiz kalırsa 2 haftalık kesin süre (m. 120/2); tamamlanmazsa dava şartı (m. 114/1-g) yokluğundan usulden ret (m. 115/2) | İYUK m. 6 — harç + posta ücreti; eksikse 30 gün içinde tamamlanması tebliğ edilir (bir kez tekrarlanır), tamamlanmazsa dava açılmamış sayılır (m. 6/4); dava sırasında posta ücreti azalırsa işlemden kaldırma, 3 ay içinde tamamlanmazsa dava açılmamış sayılır (m. 6/5) |
 | **Tanık/bilirkişi/keşif** | Avanstan veya ayrıca | Avanstan |
 
 - Nispi harçta **dava değeri** netice-i talepteki tutarla bağlıdır; eksik harç → **harç ikmali** istenir, yatmazsa dava görülmez. Değer düşük gösterip sonra **ıslahla** artırmak harç ikmali doğurur.
@@ -85,7 +85,7 @@
 ## UYAP / e-imza / e-Tebligat
 
 - Dilekçeler **UYAP Avukat Portalı** üzerinden, **e-imzalı PDF** olarak sunulur (fiziksel sunum istisna). Bkz. [uyap-rehberi.md](uyap-rehberi.md).
-- Müvekkil tacir olduğunda **KEP** zorunlu (TTK m. 18/3); mahkeme tebligatı ve karşı taraf tebligatı **e-Tebligat (UETS)** / KEP üzerinden gelir. e-Tebligat **okunmasa bile 5. günün sonunda tebliğ edilmiş sayılır** (Tebligat K. m. 7/a) — süre buradan işler.
+- Müvekkil şirket (özel hukuk tüzel kişisi) ise **elektronik tebligat (UETS) zorunludur** (Tebligat K. m. 7/a); mahkeme tebligatı bu adrese gelir. TTK m. 18/3 ise yalnızca tacirler arası temerrüt/fesih/dönme ihbar ve ihtarlarının noter, taahhütlü mektup, telgraf veya güvenli e-imzalı **KEP** ile yapılmasını düzenler; genel bir KEP zorunluluğu getirmez. e-Tebligat **okunmasa bile 5. günün sonunda tebliğ edilmiş sayılır** (Tebligat K. m. 7/a) — süre buradan işler.
 - Vekil bilgisinde adres + **KEP/UETS adresi** yazılır; tebligata esas adres budur.
 - Ekler ayrı PDF olarak UYAP'a yüklenir; boyut/format sınırına dikkat (taranmış belgede OCR'lı PDF tercih).
 
@@ -124,9 +124,9 @@ tr_ictihat_ara(
 ## Sık hatalar (önlem)
 
 - ❌ **Süre kaçırma** — HMK'da kanun yolu süreleri tebliğden 2 hafta (istinaf m. 345); İYUK ilk derece **60 gün** / vergi **30 gün** (m. 7), istinaf-temyiz **30 gün** (m. 45-46); ivedi yargılamada **30/15 gün** (m. 20/A). CMK istinaf ve temyiz **iki hafta** (m. 273, 291 — gerekçeli hükmün tebliğinden; 7499 s.K.). **Her zaman tebliğ/öğrenme tarihinden hesapla.**
-- ❌ **Görev/yetki hatası** — bireysel idari işlemi (EPDK kurul kararı, idari ceza) doğrudan Danıştay'a açmak; tahkim klozu varken mahkemede dava açmak (HMK m. 116/c); yanlış yer mahkemesi. Yanlış mahkeme → gönderme ama süre koruması sınırlı.
+- ❌ **Görev/yetki hatası** — bireysel idari işlemi (EPDK kurul kararı, idari ceza) doğrudan Danıştay'a açmak; tahkim klozu varken mahkemede dava açmak (HMK m. 116/1-b); yanlış yer mahkemesi. Yanlış mahkeme → gönderme ama süre koruması sınırlı.
 - ❌ **Taraf teşkili / husumet** — davalıyı yanlış göstermek (idari davada **davalı idare** doğru tüzel kişilik olmalı; iş kazasında işveren + varsa müteselsil sorumlular). Husumetten ret riski.
-- ❌ **Talep sonucu netliğinde belirsizlik** — "fazlaya ilişkin haklar saklı" demeden tüm tutarı talep etmek; faiz türü/başlangıcını yazmamak; terditli talebi unutmak (sonradan ıslah gerektirir). Belirsiz alacakta HMK m. 107 (belirsiz alacak davası) doğru kurgu.
+- ❌ **Talep sonucu netliğinde belirsizlik** — "fazlaya ilişkin haklar saklı" demeden tüm tutarı talep etmek; faiz türü/başlangıcını yazmamak; terditli talebi unutmak (sonradan ıslah gerektirir). HMK m. 107 (belirsiz alacak davası) 7589 s.K. ile 31.07.2026'dan itibaren **mülga**; alacak tam belirlenemiyorsa **kısmi dava (HMK m. 109)** açılır — talep, aynı davada bir defaya mahsus, iddianın genişletilmesi yasağına tabi olmaksızın tahkikat sonuna kadar artırılabilir; artırılan kısım için zamanaşımı dava tarihinden kesilmiş sayılır (m. 109/4).
 - ❌ **Vakıa-delil bağını kurmamak** — m. 119/1-f gereği her vakıanın hangi delille ispatlanacağı gösterilmeli; "her türlü delil" tek başına yetersiz.
 - ❌ **Yürütmenin durdurulmasını istememek** (idari) — işlem uygulanmaya devam eder; İYUK m. 27, ayrı ve gerekçeli talep.
 - ❌ **Harç/gider avansı eksiği** — dava açılmamış sayılma veya işlemden kaldırma riski.

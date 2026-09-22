@@ -1,7 +1,7 @@
 # Kurulum — ArthurLegal Courthouse
 
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
-**Sürüm:** v1.0.4 · 2026-09-20
+**Sürüm:** v1.0.5 · 2026-09-22
 **Süre:** ~10 dakika (Arthur Mask ile ~20 dakika)
 
 > ⚠️ Bu paket **yargı mensupları** (mahkeme hâkimleri + kalem memurlukları) içindir. Tüm çıktılar **taslaktır** ve **hâkim / heyet onayı** gerektirir; hiçbir çıktı yargısal karar yerine geçmez.
@@ -78,7 +78,7 @@ Knowledge'a `knowledge/references/arthur-mask-rehberi.md` dosyasını da yükley
 
 Bir plugin'in tüm komutlarını görmek için yeni konuşmada sadece `/<plugin>:` yazın (örn. `/hukuk-hakim:`).
 
-## Komut haritası (v1.0.4)
+## Komut haritası (v1.0.5)
 
 | Plugin | Skill'ler |
 |---|---|
@@ -98,7 +98,7 @@ A: Önce kurum kurallarınızın harici bir yapay zekâ hizmetinin kullanılmas�
 
 ## Güncelleme notları
 
-Bu sürüm **v1.0.4**'tür. v1.0.3'ten geçiş: yalnız bilgi dosyaları değişti. Project knowledge'da şu iki dosyayı yenileyin: `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md`. `SYSTEM_PROMPT.md` yalnız sürüm etiketinde değişti; yeniden yapıştırmak zorunlu değil. Bağlandıktan sonra `status` çağırın, `backend_status.tr.version` 0.4.0 veya üstü olmalıdır.
+Bu sürüm **v1.0.5**'tür. v1.0.3'ten geçiş: yalnız bilgi dosyaları değişti. Project knowledge'da şu iki dosyayı yenileyin: `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md`. `SYSTEM_PROMPT.md` yalnız sürüm etiketinde değişti; yeniden yapıştırmak zorunlu değil. Bağlandıktan sonra `status` çağırın, `backend_status.tr.version` 0.4.0 veya üstü olmalıdır.
 
 v1.0.2'den geçiş (v1.0.3): yalnız bilgi dosyaları değişti (CMK ve 6183 süreleri). Project knowledge'da şu beş dosyayı yenileyin: `knowledge/references/cmk-rehberi.md`, `knowledge/references/sulh-ceza-hakimligi-rehberi.md`, `knowledge/references/vergi-yargisi-rehberi.md`, `knowledge/skills/ceza-kalem__skills.md`, `knowledge/skills/vergi-hakim__skills.md`. `SYSTEM_PROMPT.md` yalnız sürüm etiketinde değişti; yeniden yapıştırmak zorunlu değil.
 

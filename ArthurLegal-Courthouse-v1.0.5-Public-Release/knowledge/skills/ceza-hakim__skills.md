@@ -77,8 +77,10 @@ user-invocable: true
 1. **m. 170 zorunlu unsurlar:** şüpheli kimliği, müdafi, mağdur, suç tarihi/yeri, suçu oluşturan olaylar, deliller, sevk maddeleri, yüklenen suç.
 2. **İade sebepleri (m. 174/1):**
    - 🔴 m. 170'e aykırı düzenleme (eksik unsur)
-   - 🔴 Soruşturma evresi tamamlanmamış (eksik soruşturma — toplanması gereken delil)
-   - 🔴 Önödeme/uzlaştırma/seri-basit yargılama yoluna gidilmemiş (gerekli hâllerde)
+   - 🔴 Suçun sübûtuna doğrudan etki edecek mevcut bir delil toplanmadan düzenlenmiş (m. 174/1-b; genel 'eksik soruşturma' iade sebebi değildir)
+   - 🔴 Önödeme, uzlaştırma veya seri muhakemeye tâbi olduğu soruşturma dosyasından açıkça anlaşılan işte bu usuller uygulanmaksızın düzenlenmiş (m. 174/1-c; basit yargılama iade sebebi değildir)
+   - 🔴 Soruşturma veya kovuşturma yapılması izne/talebe bağlı suçta izin alınmaksızın/talep olmaksızın düzenlenmiş (m. 174/1-d)
+   - 🔴 Onbeş yaşını doldurmamış çocuk hakkında sosyal inceleme yaptırılmaksızın düzenlenmiş (m. 174/1-e, 7593 s.K.)
 3. **İade edilemez (m. 174/2):** suçun hukuki nitelendirmesi sebebiyle iade yapılamaz (vasıflandırma mahkemeye ait).
 4. **Süre:** 15 gün içinde iade edilmezse iddianame **kabul edilmiş sayılır** (m. 174/3).
 
@@ -127,7 +129,7 @@ Adli kontrol ↔ tutuklama seçenek analizi + somut gerekçe iskeleti (matbu DE�
 name: hagb-degerlendirme
 description: >
   CMK m. 231 hükmün açıklanmasının geri bırakılması: objektif ve sübjektif
-  şartlar, sanığın kabulü, zararın giderilmesi, 5 yıllık denetim süresi.
+  şartlar (7589 s.K. metni), zararın giderilmesi (m. 231/6-c, taksitle m. 231/9), 5 yıllık denetim süresi.
   HAGB'yi DAYATMAZ; şart kontrolü + ölçüt sunar.
 user-invocable: true
 ---
@@ -136,7 +138,7 @@ user-invocable: true
 
 ## Konum hatırlatması
 
-HAGB, kurulan hükmün açıklanmasının geri bırakılmasıdır; uygulanıp uygulanmaması ölçütlere bağlıdır, takdir hâkim/heyettedir. **Sanığın kabulü şarttır.**
+HAGB, kurulan hükmün açıklanmasının geri bırakılmasıdır; uygulanıp uygulanmaması ölçütlere bağlıdır, takdir hâkim/heyettedir. (7589 s.K. ile yeniden düzenlenen m. 231/6'da sanığın kabulü koşulu yer almaz.)
 
 ## Şartlar (m. 231/6)
 
@@ -144,14 +146,14 @@ HAGB, kurulan hükmün açıklanmasının geri bırakılmasıdır; uygulanıp uy
 2. **Sabıka:** sanık daha önce kasıtlı suçtan mahkûm olmamış.
 3. **Kanaat:** sanığın yeniden suç işlemeyeceği yönünde kanaat (kişilik + duruşmadaki tutum).
 4. **Zarar:** mağdurun/kamunun zararının **aynen iade / öncesi hale getirme / tazmin** yoluyla giderilmesi.
-5. **Sanığın kabulü (m. 231/6 son):** kabul etmezse HAGB uygulanmaz.
+5. **Taksitle zarar giderimi (m. 231/9):** (c) koşulu derhal yerine getirilemiyorsa, zararın denetim süresince aylık taksitlerle tamamen giderilmesi koşuluyla da HAGB verilebilir. (Eski m. 231/6 son cümlesindeki 'sanığın kabulü' koşulu, 7589 s.K. ile yeniden düzenlenen metinde yer almaz — 31/7/2026.)
 
 ## Sonuç & denetim
 
 - **Denetim süresi 5 yıl** (m. 231/8); denetimli serbestlik tedbiri eklenebilir.
 - Süre içinde kasıtlı suç işlenmez + yükümlülüklere uyulursa → **dava düşer** (m. 231/10).
 - İhlal → **hüküm açıklanır** (m. 231/11).
-- Kanun yolu: **itiraz** (m. 231/12).
+- Kanun yolu: **istinaf** (m. 231/12 — 7499 s.K. ile itirazdan istinafa çevrildi; m. 272/3 saklı); BAM kararlarına m. 286 uygulanır. Denetim süresinde açıklanan/yeniden kurulan hükme **itiraz** (m. 231/11).
 
 ## Çıktı
 
@@ -181,7 +183,7 @@ Uzlaştırma, uzlaştırmacı eliyle yürür; mahkeme **kapsamı** ve **raporu**
 1. **Kapsam (m. 253/1):** şikâyete bağlı suçlar + kanunda sayılan belirli suçlar. **İstisnalar (m. 253/3):** cinsel dokunulmazlığa karşı suçlar vb. uzlaştırma kapsamı dışı.
 2. **Zorunluluk:** kapsamdaysa uzlaştırma zorunlu ön/ara aşamadır; atlanmışsa giderilir.
 3. **Rapor denetimi:** uzlaştırmacı raporu usulüne uygun mu; tarafların özgür iradesi, edimin belirliliği.
-4. **Sonuç (m. 253/19):** edim derhal ifa → kovuşturmaya yer yok / düşme; ileri tarihli/taksitli edim → denetim, ifa edilirse düşme, edilmezse devam.
+4. **Sonuç (soruşturmada m. 253/19, kovuşturmada m. 254/2):** edim def'aten ifa → kovuşturmaya yer olmadığı (soruşturma) / davanın düşmesi (kovuşturma); ileri tarihli/taksitli/süreklilik arz eden edim → kamu davasının açılmasının ertelenmesi (soruşturma) / **durma kararı** (kovuşturma, 7531 s.K.); edim yerine getirilmezse kamu davası açılır / yargılamaya kaldığı yerden devam olunur.
 
 ## Çıktı
 

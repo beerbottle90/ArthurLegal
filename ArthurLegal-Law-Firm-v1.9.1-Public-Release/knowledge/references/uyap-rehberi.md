@@ -20,7 +20,7 @@
 
 ## büro pratiğinde tipik akış
 
-1. **Yeni dava** — Mahkemeden [Müvekkil]'a yapılan tebligat KEP üzerinden gelir (TTK m. 18/3) veya fiziksel olarak. In-house Counsel dış vekili haberdar eder.
+1. **Yeni dava** — Mahkemeden [Müvekkil]'a yapılan tebligat e-Tebligat (UETS) üzerinden gelir (Tebligat K. m. 7/a — özel hukuk tüzel kişilerine zorunlu) veya fiziksel olarak. In-house Counsel dış vekili haberdar eder.
 2. **Dış vekil dosyayı UYAP'tan açar** — taraflar, mahkeme, esas no, tebligatlar görülür.
 3. **Belgeleri çeker** — dava dilekçesi, ekleri, mahkeme ara kararları.
 4. **Aylık özetler** — dış vekil UYAP'tan dava durum raporları çıkarır, Excel formatında [Müvekkil]'a gönderir.
@@ -37,7 +37,7 @@
 
 | Belge | Format | UYAP üzerinden mi? |
 |---|---|---|
-| Dava dilekçesi | PDF (e-imzalı) | Evet (m. 119) |
+| Dava dilekçesi | PDF (e-imzalı) | Evet (HMK m. 445/2; içerik m. 119) |
 | Cevap dilekçesi | PDF | Evet |
 | Delil eki | PDF/Word/Excel | Evet |
 | Bilirkişi raporu | PDF (bilirkişi e-imzası) | Evet |
@@ -67,14 +67,14 @@ Teşekkürler.
 
 ### Karşı taraf tebligatını UYAP'tan çekme
 
-Karşı tarafa tebligat **UYAP üzerinden** veya KEP üzerinden yapılır. [Müvekkil]'da KEP tebligatı zorunludur (TTK m. 18/3 tacir).
+Karşı tarafa tebligat **UYAP/UETS (e-Tebligat — Tebligat K. m. 7/a)** üzerinden veya fiziki olarak yapılır; KEP bir mahkeme tebligat kanalı değildir. [Müvekkil]'da e-Tebligat (UETS) zorunludur (Tebligat K. m. 7/a); TTK m. 18/3 yalnız tacirler arası temerrüt/fesih/dönme ihbar ve ihtarlarının şeklini düzenler.
 
 ## Tipik sorunlar ve çözüm
 
 | Sorun | Çözüm |
 |---|---|
 | UYAP'a dış vekil giriş yapamıyor (e-imza süresi dolmuş) | Avukatı yeni e-imzayla mı? Veya başka vekil üzerinden? |
-| Mahkeme kararı UYAP'tan tebliğ geldi ama dış vekil görmedi | E-tebligat UYAP'ta okunmuş sayılır (Tebligat K.); süre işlemiş, derhal aksiyon |
+| Mahkeme kararı UYAP'tan tebliğ geldi ama dış vekil görmedi | E-tebligat, elektronik adrese ulaştığı tarihi izleyen 5. günün sonunda tebliğ edilmiş sayılır (Tebligat K. m. 7/a) — okunmasa da süre işler, derhal aksiyon |
 | Karşı taraf vekili UYAP üzerinden değil fiziksel sunmuş | Mahkemenin kabulu vardır ama dış vekilimiz fiziksel kopyaya da bakmalı |
 | e-Duruşma talep ettik ama mahkeme reddetti | Fiziksel duruşma gerekli; dış vekil İstanbul'dan [TESİS LOKASYONU]'ya gidiyor — maliyet artar |
 

@@ -15,13 +15,13 @@
 
 ## Zorunlu müdafi atama (CMK m. 150)
 
-### m. 150/3 — Zorunlu durumlar
+### m. 150/2-3 (+ tutuklama istemi m. 101/3) — Zorunlu durumlar
 
 Şüpheli/sanık aşağıdaki durumlarda **müdafii zorunlu**:
 
 - **18 yaş altı** (çocuk)
 - **Sağır-dilsiz** veya **kendisini savunamayacak akıl hastalığı**
-- **Üst sınırı 5 yıldan fazla hapis** cezasını gerektiren suç
+- **Alt sınırı 5 yıldan fazla hapis** cezasını gerektiren suç (m. 150/3)
 - **Bedensel/zihinsel olarak kendisini savunamayacak durum**
 - **Tutuklama duruşması** (sulh ceza hakimliği önünde)
 
@@ -57,15 +57,15 @@ Avukat haklı sebeple reddedebilir:
 
 ---
 
-## 48 saat kritik sınırı (CMK m. 91)
+## Gözaltı süresi kritik sınırı (CMK m. 91 — kural 24 saat; toplu suçta en çok 4 gün)
 
 ```
 T+0:  Yakalama (polis tarafından)
-T+24: Savcılığa sevk şart (toplu yakalamada T+48)
-T+48: Sulh ceza hakimine sevk şart (tutuklama veya salıverme)
+T+24: Gözaltı süresi dolar (m. 91/1; en yakın hâkime gönderme için zorunlu süre hariç, o da en çok 12 saat) — toplu suçlarda C. savcısı her defasında 1 günü geçmemek üzere 3 gün uzatabilir (m. 91/3) → en çok 4 gün
+Süre sonu: bırakılmayan şüpheli sulh ceza hâkimi önüne çıkarılıp sorguya çekilir (m. 91/7) → tutuklama veya salıverme [istisna: suçüstü kolluk gözaltısı m. 91/4 — en geç 48 saat, toplu suçta 4 gün içinde hâkim önüne]
 ```
 
-⚠️ **48 saat sınırı dolduğunda** sulh ceza hakimi karar vermezse → **resen salıverme**.
+⚠️ **Gözaltı süresi (kural 24 saat; toplu suçta uzatmayla en çok 4 gün) dolduğunda** şüpheli ya serbest bırakılır ya da sulh ceza hâkimi önüne çıkarılır (m. 91/7); gözaltı ve uzatma emrine karşı sulh ceza hâkimine başvuru: m. 91/5.
 
 **Müdafi olarak:**
 - Karakol/savcılıkta **ifade öncesi** mutlaka görüş
@@ -87,7 +87,7 @@ T+48: Sulh ceza hakimine sevk şart (tutuklama veya salıverme)
 - [ ] Avukatın kanaati: "ifade ver / verme / kısmi"
 - [ ] Tutuklama olasılığı değerlendirmesi
 - [ ] Ailenin bilgilendirilmesi (müvekkil isterse)
-- [ ] **Vekalet** (yazılı talep) alınır — Av. K. m. 35
+- [ ] **Baro görevlendirme yazısı** dosyada — CMK m. 156 (şüpheli/sanık müdafi ile vekâletname aranmaksızın görüşür, CMK m. 154/1; özel müdafilikte vekâletname ayrıca alınır)
 
 ### İfade tutanağı kontrol
 
@@ -96,7 +96,7 @@ T+48: Sulh ceza hakimine sevk şart (tutuklama veya salıverme)
 - **Susma hakkını kullanıyorum** ifadesi kayıt edildi mi?
 - Yazılı tutanak **müvekkil + müdafi imzası** ile kapanır
 
-⚠️ **Müdafi olmadan alınan ifade** kanıt olarak kullanılamaz (CMK m. 147/1-h)
+⚠️ **Müdafi hazır bulunmaksızın kollukça alınan ifade**, hâkim veya mahkeme huzurunda şüpheli/sanık tarafından doğrulanmadıkça hükme esas alınamaz (CMK m. 148/4)
 
 ---
 
@@ -106,7 +106,7 @@ T+48: Sulh ceza hakimine sevk şart (tutuklama veya salıverme)
 
 Hakim **şu kritik şartları** değerlendirir (CMK m. 100):
 1. **Kuvvetli suç şüphesi**
-2. **Kaçma şüphesi** veya **delil karartma** veya **suça yeniden başlama**
+2. **Kaçma şüphesi** veya **delil karartma / tanık-mağdur üzerinde baskı** (m. 100/2) ya da **katalog suç** (m. 100/3) — 'suça yeniden başlama' CMK m. 100'de tutuklama nedeni değildir
 3. **Adli kontrol yetersizliği**
 
 **Müdafi savunma stratejisi:**
@@ -125,8 +125,8 @@ Hakim **şu kritik şartları** değerlendirir (CMK m. 100):
 | Suç tipi | Üst sınır | Uzatma |
 |---|---|---|
 | Asliye ceza | 1 yıl | + 6 ay (1.5 yıl toplam) |
-| Ağır ceza | 2 yıl | + 1 yıl (3 yıl toplam) |
-| Çocuk | 6 ay | — |
+| Ağır ceza | 2 yıl | Uzatma toplam en çok 3 yıl (azami 5 yıl); TCK 2. Kitap 4. Kısım 4-7. Bölüm suçları ve TMK kapsamındaki suçlarda uzatma en çok 5 yıl (azami 7 yıl) — m. 102/2 |
+| Çocuk | Fiil tarihinde 15 yaşını doldurmamış: bu süreler yarı oranında; 18 yaşını doldurmamış: dörtte üç oranında (m. 102/5) | — |
 | Terör/örgüt | Özel (uzun) | — |
 
 Süre dolduğunda **resen salıverme** + (gerekirse) adli kontrol.
