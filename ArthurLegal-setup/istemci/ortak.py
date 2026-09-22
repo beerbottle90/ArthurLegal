@@ -43,6 +43,7 @@ VARSAYILAN_AYAR = {
     "jeton": "",
     "api_tabani": "https://api.github.com",
     "kanal": "kararli",  # "beta": ön sürümleri de kurar
+    "varsayilan_profil": "hukuk-burosu",  # talimat aracı profil verilmeden çağrılınca
     "uzak_mcp": "https://arthurlegal-mcp.fly.dev/mcp",
     "yayin_anahtari": "",
     "denetim_araligi_saat": 6,

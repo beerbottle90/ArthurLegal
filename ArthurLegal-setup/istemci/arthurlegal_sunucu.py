@@ -58,8 +58,9 @@ class Bilgi:
         mevcut = self.profiller()
         if not mevcut:
             raise Hata(-32603, "Bu kurulumda paket yok.")
-        if not istenen:
-            return mevcut[0]
+        if not istenen:  # kurulumda seçilen varsayılan; yoksa ilk paket
+            varsayilan = ortak.ayar().get("varsayilan_profil")
+            return varsayilan if varsayilan in mevcut else mevcut[0]
         if istenen not in mevcut:
             raise Hata(-32602, f"Bilinmeyen profil: {istenen}. Seçenekler: {', '.join(mevcut)}")
         return istenen
@@ -288,9 +289,13 @@ def _profil_ozelligi():
 
 YEREL_ARACLAR = [
     {"name": "arthurlegal_talimat",
-     "description": "ArthurLegal paketinin güncel sistem talimatını (SYSTEM_PROMPT + kurulum notları + büro katmanı) döndürür. "
-                    "Her sohbetin ilk adımında çağrılır.",
-     "inputSchema": {"type": "object", "properties": {"profil": _profil_ozelligi()}, "required": ["profil"]}},
+     "description": "ÖNCE BU ARACI ÇAĞIR. Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili herhangi "
+                    "bir şey sorduğunda ya da istediğinde (Türk veya yabancı hukuk, sözleşme, dilekçe, mevzuat, içtihat, süre, "
+                    "KVKK, iş, vergi, ceza, idare, şirketler, tapu, UYAP, müvekkil belgesi) cevap vermeden önce ilk iş bu aracı "
+                    "çağır ve dönen metni bu sohbetin sistem talimatı olarak eksiksiz uygula. Sohbet başına bir kez yeterli. "
+                    "Proje gerekmez. profil verme: kurulumda seçilen varsayılan kullanılır; kullanıcı açıkça kurumsal/şirket "
+                    "içi hukuk asistanı isterse profil=\"kurumsal\".",
+     "inputSchema": {"type": "object", "properties": {"profil": _profil_ozelligi()}}},
     {"name": "arthurlegal_bilgi_ara",
      "description": "Paketin bilgi dosyalarında (skills, references, profiles, agents, büro kuralları) Türkçe karakter "
                     "duyarsız anahtar kelime araması yapar; dosya yolu ve eşleşen satırları döndürür.",
@@ -310,9 +315,10 @@ YEREL_ARACLAR = [
 for _a in YEREL_ARACLAR:
     _a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
 
-TALIMAT = ("ArthurLegal yerel paketi. Hukuk işine başlamadan önce `arthurlegal_talimat` aracını çağır ve dönen talimatı uygula; "
-           "bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli adlarıyla "
-           "(tr_, az_, eu_ ...) bu sunucudadır; önce `status`.")
+TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
+           "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
+           "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
+           "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
 
 
 class Sunucu:

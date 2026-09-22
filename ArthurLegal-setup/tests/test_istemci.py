@@ -215,6 +215,8 @@ class SunucuTesti(unittest.TestCase):
         self.assertIn("Paket 1.9.1", metin)
         self.assertIn("Test & Ortakları", metin)
         self.assertIn("buro/ek-3-kirmizi-hatlar.md", metin)
+        varsayilan = self.arac("arthurlegal_talimat")["content"][0]["text"]  # profil verilmeden: kurulum varsayılanı
+        self.assertIn("Hukuk Bürosu", varsayilan.splitlines()[0])
         profil = self.arac("arthurlegal_bilgi_getir", yol="firm-profile.md")["content"][0]["text"]
         self.assertIn("Test & Ortakları", profil, "büro katmanı paketteki şablonu ezmeli")
 
