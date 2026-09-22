@@ -57,35 +57,92 @@ def _masaustu() -> Path:
     return Path(os.environ["USERPROFILE"]) / "Desktop"
 
 
+ESKI_KISAYOLLAR = ("ArthurLegal - Tapu.cmd", "ArthurLegal - UYAP Tarayıcısı.cmd",
+                   "ArthurLegal - Güncellemeleri Denetle.cmd", "ArthurLegal - Başlangıç Rehberi.url")
+
+
+def _kisayol_listesi() -> list:
+    """(yol, hedef, argüman, açıklama) dörtlüleri. Ana simge 'ArthurLegal': Claude'u açar, paneli gösterir."""
+    py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
+    menu, masa = _menu(), _masaustu()
+    ana = (pyw, f'-B "{al}" kisayol baslat', "ArthurLegal'i başlat: Claude Desktop ve başlangıç paneli")
+    tapu = (pyw, f'-B "{al}" kisayol tapu', "ArthurLegal Tapu arayüzü")
+    liste = [
+        (masa / "ArthurLegal.lnk", *ana),
+        (masa / "ArthurLegal - Tapu.lnk", *tapu),
+        (menu / "ArthurLegal.lnk", *ana),
+        (menu / "ArthurLegal - Tapu.lnk", *tapu),
+        (menu / "ArthurLegal - Başlangıç Rehberi.lnk", ortak.KOK / "rehber" / "baslangic.html", "", "Kurulum sonrası adımlar"),
+        (menu / "ArthurLegal - Knowledge Klasörü.lnk", ortak.SURUM_DIZINI / "paketler", "", "Paketin bilgi dosyaları"),
+        (menu / "ArthurLegal - Güncellemeleri Denetle.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
+    ]
+    if (ortak.SURUM_DIZINI / "uyap").exists():
+        liste.append((menu / "ArthurLegal - UYAP Tarayıcısı.lnk", py, f'-B "{al}" kisayol uyap-tarayici',
+                      "UYAP için ayrı profilli tarayıcı"))
+    return liste
+
+
 def kisayollar_yaz() -> None:
-    """Kısayollar .cmd ve .url olarak yazılır: COM (WScript.Shell) Akıllı Uygulama Denetimi altında
-    kısıtlı dil kipinde kullanılamıyor. İçerik saf ASCII'dir (yol %LOCALAPPDATA% ile çözülür);
-    Türkçe karakterli bir kullanıcı adı .cmd kod sayfasını bozmasın diye."""
-    kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
-    komutlar = {
-        "ArthurLegal - Tapu": f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol tapu',
-        "ArthurLegal - UYAP Tarayıcısı": f'"{kok}\\runtime\\python.exe" -B "{kok}\\bin\\al.py" kisayol uyap-tarayici',
-        "ArthurLegal - Güncellemeleri Denetle": f'"{kok}\\runtime\\python.exe" -B "{kok}\\bin\\al.py" guncelle',
-    }
+    """Simgeli .lnk kısayolları (WScript.Shell). COM engellenirse .cmd yedeğine düşer."""
     menu = _menu()
     menu.mkdir(parents=True, exist_ok=True)
-    for ad, komut in komutlar.items():
-        (menu / f"{ad}.cmd").write_text(f'@echo off\r\nstart "" {komut}\r\n', encoding="ascii")
-    adres = quote(str(ortak.KOK / "rehber" / "baslangic.html").replace(chr(92), "/"), safe=":/")
-    rehber = f"[InternetShortcut]\r\nURL=file:///{adres}\r\n"
-    for klasor in (menu, _masaustu()):
-        (klasor / "ArthurLegal - Başlangıç Rehberi.url").write_text(rehber, encoding="ascii")
-    (_masaustu() / "ArthurLegal - Tapu.cmd").write_text(
-        f'@echo off\r\nstart "" {komutlar["ArthurLegal - Tapu"]}\r\n', encoding="ascii")
+    ikon = ortak.KOK / "bin" / "arthurlegal.ico"
+    satirlar = ["$w = New-Object -ComObject WScript.Shell"]
+    for yol, hedef, arg, aciklama in _kisayol_listesi():
+        tirnak = lambda s: str(s).replace("'", "''")  # noqa: E731
+        satirlar += [f"$s = $w.CreateShortcut('{tirnak(yol)}')", f"$s.TargetPath = '{tirnak(hedef)}'"]
+        if arg:
+            satirlar.append(f"$s.Arguments = '{tirnak(arg)}'")
+        satirlar += [f"$s.WorkingDirectory = '{tirnak(ortak.KOK)}'", f"$s.Description = '{tirnak(aciklama)}'"]
+        if ikon.exists():
+            satirlar.append(f"$s.IconLocation = '{tirnak(ikon)}'")
+        satirlar.append("$s.Save()")
+    betik = ortak.VERI / "kisayollar.ps1"
+    betik.parent.mkdir(parents=True, exist_ok=True)
+    betik.write_text("\n".join(satirlar) + "\n", encoding="utf-8-sig")
+    try:
+        sonuc = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(betik)],
+                               capture_output=True, creationflags=ortak.PENCERESIZ, timeout=120)
+        tamam = sonuc.returncode == 0 and (_masaustu() / "ArthurLegal.lnk").exists()
+    except (OSError, subprocess.SubprocessError) as e:
+        ortak.gunluk("kurulum", f"kısayol betiği çalışmadı: {e!r}")
+        tamam = False
+    finally:
+        betik.unlink(missing_ok=True)
+    if not tamam:
+        ortak.gunluk("kurulum", "kısayollar .cmd yedeğiyle yazıldı (COM kullanılamadı)")
+        _kisayol_cmd_yedegi()
+    kalacak = {y for y, *_ in _kisayol_listesi()} | {menu / "ArthurLegal'i Kaldır.lnk"}
+    for klasor in (menu, _masaustu()):  # önceki sürümlerden kalan kısayollar (UYAP, .cmd, .url) temizlenir
+        for desen in ("ArthurLegal.lnk", "ArthurLegal.cmd", "ArthurLegal - *.lnk", "ArthurLegal - *.cmd",
+                      "ArthurLegal - *.url", "ArthurLegal*.url"):
+            for y in klasor.glob(desen):
+                if y not in kalacak:
+                    y.unlink(missing_ok=True)
+    kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
     (ortak.KOK / "KALDIR.cmd").write_text(
         "@echo off\r\nchcp 65001 >nul\r\n"
         f'"{kok}\\runtime\\python.exe" -B "{kok}\\bin\\al.py" kur --kaldir\r\n'
         f'start "" cmd /c "timeout /t 3 >nul & rmdir /s /q "{kok}""\r\n', encoding="ascii")
 
 
+def _kisayol_cmd_yedegi() -> None:
+    """COM yoksa: .cmd ve .url kısayolları. İçerik saf ASCII (yol %LOCALAPPDATA% ile çözülür)."""
+    kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
+    for ad, komut in (("ArthurLegal", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol baslat'),
+                      ("ArthurLegal - Tapu", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol tapu')):
+        icerik = f'@echo off\r\nstart "" {komut}\r\n'
+        (_menu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
+        (_masaustu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
+    adres = quote(str(ortak.KOK / "rehber" / "baslangic.html").replace(chr(92), "/"), safe=":/")
+    (_menu() / "ArthurLegal - Başlangıç Rehberi.url").write_text(
+        f"[InternetShortcut]\r\nURL=file:///{adres}\r\n", encoding="ascii")
+
+
 def kisayollar_sil() -> None:
-    for klasor, desenler in ((_menu(), ("*.cmd", "*.url")), (_masaustu(), ("ArthurLegal - *.cmd", "ArthurLegal - *.url"))):
-        for desen in desenler:
+    for klasor in (_menu(), _masaustu()):
+        for desen in ("ArthurLegal.lnk", "ArthurLegal.cmd", "ArthurLegal - *.lnk", "ArthurLegal - *.cmd",
+                      "ArthurLegal - *.url", "ArthurLegal'i Kaldır.lnk"):
             for y in klasor.glob(desen):
                 y.unlink(missing_ok=True)
     if _menu().is_dir() and not any(_menu().iterdir()):
@@ -154,13 +211,15 @@ def main(argv=None) -> int:
     if args.kisayol:
         kisayollar_yaz()
         run_anahtari(True)
+        import kisayol  # başlangıç panelinin durum kartı ilk açılışta dolu gelsin
+        kisayol.durum_yaz()
     degisen = claude_ayari.kaydet()
     ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
         print(f"Kuruldu. Claude Desktop'a {len(claude_ayari.istenen_girdiler())} sunucu eklendi.")
         if not ortak.mask_python():
-            print("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı ve UYAP bağlantısı bu bilgisayarda çalışmaz.")
-        print("Son adım rehberde: masaüstünde 'ArthurLegal - Başlangıç Rehberi'.")
+            print("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.")
+        print("Masaüstündeki 'ArthurLegal' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.")
     return 0
 
 

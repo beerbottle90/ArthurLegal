@@ -65,9 +65,6 @@ ReadyLabel2a=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB,
 ReadyLabel2b=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB, birkaç dakika) ve açıksa Claude Desktop kapatılır. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 FinishedLabel=ArthurLegal kuruldu.%n%nSon adım (bir dakika): açılan başlangıç rehberindeki talimatı kopyalayın ve Claude Desktop'ta yeni bir Proje oluşturup Talimatlar alanına yapıştırın. Bu adım bir kez yapılır; sonraki güncellemeler kendiliğinden gelir.
 
-[Tasks]
-Name: "masaustu"; Description: "Masaüstüne kısayol ekle (Tapu, Başlangıç Rehberi)"; GroupDescription: "Kısayollar:"
-
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#Kaynak}\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -80,13 +77,9 @@ Source: "{#Kaynak}\firma\*"; DestDir: "{app}\firma"; Flags: ignoreversion recurs
 #endif
 
 [Icons]
-Name: "{group}\ArthurLegal - Başlangıç Rehberi"; Filename: "{app}\rehber\baslangic.html"; IconFilename: "{app}\bin\ArthurLegal.ico"
-Name: "{group}\ArthurLegal - Tapu"; Filename: "{app}\runtime\pythonw.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol tapu"; WorkingDir: "{app}"; IconFilename: "{app}\bin\ArthurLegal-Tapu.ico"
-Name: "{group}\ArthurLegal - UYAP Tarayıcısı"; Filename: "{app}\runtime\python.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol uyap-tarayici"; WorkingDir: "{app}"; IconFilename: "{app}\bin\ArthurLegal.ico"
-Name: "{group}\ArthurLegal - Güncellemeleri Denetle"; Filename: "{app}\runtime\python.exe"; Parameters: "-B ""{app}\bin\al.py"" guncelle"; WorkingDir: "{app}"; IconFilename: "{app}\bin\ArthurLegal.ico"
+; Kısayolları kur.py yazar (zip yolu da aynısını yazsın diye): ana ArthurLegal simgesi, Tapu, rehber,
+; knowledge klasörü, güncelleme denetimi. Burada yalnız kaldırma girdisi kalır.
 Name: "{group}\ArthurLegal'i Kaldır"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\ArthurLegal - Tapu"; Filename: "{app}\runtime\pythonw.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol tapu"; WorkingDir: "{app}"; IconFilename: "{app}\bin\ArthurLegal-Tapu.ico"; Tasks: masaustu
-Name: "{userdesktop}\ArthurLegal - Başlangıç Rehberi"; Filename: "{app}\rehber\baslangic.html"; IconFilename: "{app}\bin\ArthurLegal.ico"; Tasks: masaustu
 
 [Registry]
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ArthurLegalGuncelleme"; ValueData: """{app}\runtime\pythonw.exe"" -B ""{app}\bin\al.py"" guncelle --sessiz"; Flags: uninsdeletevalue
@@ -205,7 +198,7 @@ begin
       Log('Arthur Mask kurulumu başarısız, çıkış kodu ' + IntToStr(Sonuc));
   end;
   WizardForm.StatusLabel.Caption := 'Claude Desktop''a bağlanıyor...';
-  Exec(ExpandConstant('{app}\runtime\python.exe'), '-B "' + ExpandConstant('{app}\bin\al.py') + '" kur --kurulum',
+  Exec(ExpandConstant('{app}\runtime\python.exe'), '-B "' + ExpandConstant('{app}\bin\al.py') + '" kur --kurulum --kisayol',
        ExpandConstant('{app}'), SW_HIDE, ewWaitUntilTerminated, Sonuc);
   if Sonuc <> 0 then
     Log('kur --kurulum çıkış kodu ' + IntToStr(Sonuc));

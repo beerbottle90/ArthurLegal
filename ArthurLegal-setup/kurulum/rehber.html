@@ -5,27 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ArthurLegal Başlangıç</title>
 <style>
-:root{--zemin:#f6f4ee;--kart:#fff;--yazi:#1b2433;--soluk:#5b6576;--lacivert:#14233c;--altin:#b08d3c;--cizgi:#e3dfd3;--kod:#f1eee6}
-@media (prefers-color-scheme:dark){:root{--zemin:#0e1522;--kart:#16202f;--yazi:#e8e4da;--soluk:#9aa4b4;--lacivert:#e8e4da;--altin:#d4b36a;--cizgi:#26334a;--kod:#1c2839}}
+:root{--zemin:#f6f4ee;--kart:#fff;--yazi:#1b2433;--soluk:#5b6576;--lacivert:#14233c;--altin:#b08d3c;--cizgi:#e3dfd3;--kod:#f1eee6;--yesil:#2e7d4f}
+@media (prefers-color-scheme:dark){:root{--zemin:#0e1522;--kart:#16202f;--yazi:#e8e4da;--soluk:#9aa4b4;--lacivert:#e8e4da;--altin:#d4b36a;--cizgi:#26334a;--kod:#1c2839;--yesil:#57c08a}}
 *{box-sizing:border-box}body{margin:0;background:var(--zemin);color:var(--yazi);font:16px/1.6 "Segoe UI",system-ui,sans-serif}
-main{max-width:880px;margin:0 auto;padding:40px 16px 64px}
-header{margin-bottom:28px}
-header img{display:block;width:100%;max-width:820px;height:auto;image-rendering:pixelated;border-radius:8px}
-.serit{display:flex;height:8px;border-radius:0 0 8px 8px;overflow:hidden;max-width:820px;margin-top:-8px}
-.serit i{flex:1}
-h1{margin:0;font-size:30px;color:var(--lacivert);letter-spacing:-.01em}h1 span{color:var(--altin)}
-.alt{color:var(--soluk);margin-top:10px}
-h2{font-size:20px;margin:36px 0 10px;color:var(--lacivert)}
-.adim{display:flex;gap:14px;margin:14px 0}.no{flex:0 0 32px;height:32px;background:var(--altin);color:#12202f;font-weight:700;display:grid;place-items:center;font-family:Consolas,monospace}
-.adim:nth-of-type(2) .no{background:#3faE6a;color:#fff}.adim:nth-of-type(3) .no{background:#5ec8e5;color:#12202f}.adim:nth-of-type(4) .no{background:#7b5cc4;color:#fff}
+main{max-width:880px;margin:0 auto;padding:36px 16px 64px}
+header img{display:block;width:100%;max-width:840px;height:auto;image-rendering:pixelated;border-radius:8px 8px 0 0}
+.serit{display:flex;height:8px;border-radius:0 0 8px 8px;overflow:hidden;max-width:840px}.serit i{flex:1}
+h2{font-size:20px;margin:34px 0 10px;color:var(--lacivert)}
+.adim{display:flex;gap:14px;margin:14px 0}
+.no{flex:0 0 32px;height:32px;background:var(--altin);color:#12202f;font-weight:700;display:grid;place-items:center;font-family:Consolas,monospace}
+.a2 .no{background:#3fae6a;color:#fff}.a3 .no{background:#5ec8e5;color:#12202f}.a4 .no{background:#7b5cc4;color:#fff}
 .kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:10px;padding:16px 18px;margin:12px 0}
 .kart h3{margin:0 0 8px;font-size:17px}
 textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--cizgi);border-radius:8px;background:var(--kod);color:var(--yazi);font:14px/1.5 Consolas,monospace;padding:10px}
-button{margin-top:10px;background:var(--lacivert);color:var(--zemin);border:0;border-radius:8px;padding:10px 18px;font:600 15px "Segoe UI",sans-serif;cursor:pointer}
-button.tamam{background:#2e7d4f;color:#fff}
+button,a.dugme{display:inline-block;margin:10px 8px 0 0;background:var(--lacivert);color:var(--zemin);border:0;border-radius:8px;padding:10px 18px;font:600 15px "Segoe UI",sans-serif;cursor:pointer;text-decoration:none}
+a.dugme.ikincil{background:transparent;color:var(--lacivert);border:1px solid var(--cizgi)}
+button.tamam{background:var(--yesil);color:#fff}
 .uyari{border-left:4px solid var(--altin);padding:10px 14px;background:var(--kart);border-radius:0 8px 8px 0}
 code{background:var(--kod);padding:1px 6px;border-radius:4px;font-size:14px}
-li{margin:6px 0}footer{margin-top:48px;color:var(--soluk);font-size:14px}
+li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
+#durum{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+#durum div{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px 12px}
+#durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
+#durum span{font-size:15px}
 </style>
 </head>
 <body>
@@ -33,15 +35,21 @@ li{margin:6px 0}footer{margin-top:48px;color:var(--soluk);font-size:14px}
 <header>
   <img src="banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı">
   <div class="serit"><i style="background:#c8453b"></i><i style="background:#f29b4b"></i><i style="background:#ffe066"></i><i style="background:#3fae6a"></i><i style="background:#5ec8e5"></i><i style="background:#3b7dd8"></i><i style="background:#7b5cc4"></i><i style="background:#b45a9a"></i></div>
-  <div class="alt">{{FIRMA_SATIRI}}Yerel kurulum {{SURUM}} · Hukuk Bürosu {{PAKET_HUKUK}} · Kurumsal {{PAKET_KURUMSAL}}</div>
 </header>
 
-<p>Kurulum tamamlandı. ArthurLegal'i kullanmaya başlamak için bir kez, yaklaşık bir dakikalık bir adım kaldı: Claude'da bir <b>Proje</b> açıp aşağıdaki kısa talimatı yapıştırmak. Paket güncellemeleri bundan sonra kendiliğinden gelir; bu talimat hiç değişmez.</p>
+<div id="durum"></div>
 
-<h2>Son adım</h2>
-<div class="adim"><div class="no">1</div><div><b>Claude Desktop'u açın ve oturum açın.</b> Claude Desktop yüklü değilse <a href="https://claude.ai/download">claude.ai/download</a> adresinden indirip kurun, ardından bu kurulumu yeniden çalıştırın.</div></div>
-<div class="adim"><div class="no">2</div><div><b>Yeni bir proje oluşturun:</b> sol menüde <b>Projeler</b> → <b>Yeni proje</b>. Ad olarak örneğin <code>ArthurLegal – Hukuk Bürosu</code> yazın.</div></div>
-<div class="adim"><div class="no">3</div><div><b>Talimatı yapıştırın:</b> projede <b>Talimatlar</b> (Instructions) alanını açın, aşağıdan kullanacağınız profilin talimatını kopyalayıp yapıştırın ve kaydedin. İki profili de kullanacaksanız iki ayrı proje açın.</div></div>
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. Claude'un Project'lerine yazan bir arayüz olmadığı için son adımı
+bir kez elle yapıyorsunuz: aşağıdaki kısa talimatı Claude'da bir <b>Proje</b>ye yapıştırmak. Talimat hiç değişmez;
+paket güncellemeleri bundan sonra kendiliğinden gelir. Proje açmak istemiyorsanız bir alttaki kısa yol da var.</p>
+
+<h2>Son adım: proje ve talimat</h2>
+<div class="adim a1"><div class="no">1</div><div><b>Claude Desktop açık olmalı.</b> Kapalıysa bu sayfayı açan <i>ArthurLegal</i> simgesi onu da açar.
+  Yüklü değilse <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
+<div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projeler → Yeni proje</b>, ad olarak örneğin <code>ArthurLegal – Hukuk Bürosu</code>.
+  <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Projeler sayfasını aç</a></div></div>
+<div class="adim a3"><div class="no">3</div><div><b>Talimatı yapıştırın:</b> projede <b>Talimatlar</b> (Instructions) alanını açın, aşağıdaki metni kopyalayıp
+  yapıştırın ve kaydedin. <b>Knowledge dosyası yüklemeyin</b>; dosyalar araçlarla okunur ve güncel kalır.</div></div>
 
 <div class="kart">
   <h3>Hukuk Bürosu (Law Firm)</h3>
@@ -54,21 +62,51 @@ li{margin:6px 0}footer{margin-top:48px;color:var(--soluk);font-size:14px}
   <button data-hedef="kurumsal">Talimatı kopyala</button>
 </div>
 
-<div class="adim"><div class="no">4</div><div><b>Deneyin:</b> projede yeni bir sohbet açıp bir hukuk sorusu yazın. Asistan önce <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Her zaman izin ver</b> seçin.</div></div>
+<div class="adim a4"><div class="no">4</div><div><b>Deneyin:</b> projede yeni bir sohbet açıp bir hukuk sorusu yazın. Asistan önce
+  <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Her zaman izin ver</b> deyin.</div></div>
+
+<h2>Proje açmadan kullanmak</h2>
+<p>Tek seferlik bir iş için proje açmaya gerek yok. Claude Desktop'ta yeni bir sohbette yazma kutusunun yanındaki
+<b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altındaki <b>hukuk-burosu</b> (ya da <b>kurumsal</b>) istemini seçin.
+Aynı talimat sohbete eklenir. Proje yolunun farkı, ayarın kalıcı olması ve projeye dosya ekleyebilmenizdir.</p>
 
 <h2>Diğer bileşenler</h2>
 <ul>
-  <li><b>Arthur Mask</b> — Masaüstündeki Arthur Mask kısayolunu açın ve ilk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp güvenli bir yerde saklayın. Müvekkil belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın.</li>
-  <li><b>ArthurLegal Tapu</b> — Masaüstündeki <i>ArthurLegal - Tapu</i> kısayolu parsel arayüzünü tarayıcıda açar. Claude, tapu araçlarını bu bilgisayarda çalıştırır.</li>
-  <li><b>UYAP</b> — Başlat menüsündeki <i>ArthurLegal - UYAP Tarayıcısı</i>, UYAP için ayrı profilli bir tarayıcı açar. UYAP bağlantısı salt okunurdur ve verileri maskeler; canlı veriye geçiş danışmanınızın kalibrasyonuyla etkinleşir.</li>
+  <li><b>Arthur Mask</b> — Müvekkil belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın. İlk açılışta
+    <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
+  <li><b>ArthurLegal Tapu</b> — Masaüstündeki <i>ArthurLegal - Tapu</i> kısayolu parsel arayüzünü açar; Claude tapu
+    araçlarını bu bilgisayarda çalıştırır.</li>
+  <li><b>Knowledge klasörü</b> — Başlat menüsündeki <i>ArthurLegal - Knowledge Klasörü</i> kısayolu dosyaları Gezgin'de
+    açar. Klasik yolu tercih edip bunları bir projeye yüklerseniz o kopya güncellenmez; güncel kalan yol araçlardır.</li>
+  <li><b>Güncelleme</b> — Arka planda kurulur. Elle denetlemek için Başlat menüsünde <i>ArthurLegal - Güncellemeleri Denetle</i>.</li>
 </ul>
 
 <h2>Sorun giderme</h2>
-<div class="uyari">Araçlar görünmüyorsa Claude Desktop'u sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b> yeniden açın. <b>Ayarlar → Geliştirici</b> bölümünde <code>arthurlegal-yerel</code>, <code>arthur-tapu</code>, <code>arthur-uyap</code> ve <code>arthur-mask</code> çalışıyor görünmelidir. Güncellemeleri elle denetlemek için Başlat menüsünde <i>ArthurLegal - Güncellemeleri Denetle</i>.</div>
+<div class="uyari">Araçlar görünmüyorsa Claude Desktop'u sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b> yeniden açın.
+<b>Ayarlar → Geliştirici</b> bölümünde <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> ve (kuruluysa)
+<code>arthur-mask</code> çalışıyor görünmelidir. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
-<footer>ArthurLegal bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her çıktıyı bir avukat doğrulamalıdır. Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumluluğu avukattadır.</footer>
+<footer>ArthurLegal bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her çıktıyı bir avukat doğrulamalıdır.
+Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumluluğu avukattadır.</footer>
 </main>
+<script src="durum.js" onerror="void 0"></script>
 <script>
+(function () {
+  var d = window.ARTHURLEGAL_DURUM;
+  if (!d) return;
+  var paket = Object.keys(d.paketler || {}).map(function (k) { return (k === "hukuk-burosu" ? "Hukuk Bürosu " : "Kurumsal ") + d.paketler[k]; }).join(" · ");
+  var satirlar = [
+    ["Kurulum", d.surum],
+    ["Paketler", paket || "-"],
+    ["Claude Desktop", d.claude === "bulunamadı" ? "kurulu değil" : d.claude],
+    ["Bağlı sunucular", (d.sunucular || []).join(", ") || "-"],
+    ["Arthur Mask", d.mask || "kurulu değil"],
+    ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]
+  ];
+  document.getElementById("durum").innerHTML = satirlar.map(function (s) {
+    return "<div><b>" + s[0] + "</b><span>" + String(s[1]).replace(/</g, "&lt;") + "</span></div>";
+  }).join("");
+})();
 document.querySelectorAll("button[data-hedef]").forEach(function (b) {
   b.addEventListener("click", function () {
     var alan = document.getElementById(b.dataset.hedef);
