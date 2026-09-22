@@ -44,8 +44,11 @@ RestartApplications=no
 SetupLogging=yes
 #ifdef Imzali
 ; Windows 11 Akıllı Uygulama Denetimi imzasız kurulum motorunu (.tmp) engeller; imza hem kurulumu hem kaldırıcıyı kapsar.
+; Bulut imzalama (Certum SimplySign, SSL.com eSigner) hız sınırlıdır: yeniden deneme ve bekleme olmadan derleme yarıda düşer.
 SignTool=imzaci
 SignedUninstaller=yes
+SignToolRetryCount=3
+SignToolMinimumTimeBetween=2000
 #endif
 
 [Languages]

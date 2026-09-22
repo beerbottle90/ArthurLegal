@@ -79,8 +79,18 @@ paketteki boş şablonun yerine geçer; güncellemeler onu ezmez. İsterseniz ke
 bir depodan dağıtabilirsiniz: `kaynaklar.json` → `dagitim_deposu` + `yayin/jeton_ayarla.py`.
 
 **İmzalama.** `kaynaklar.json` → `imzalama.komut` (ya da `ARTHURLEGAL_IMZA_KOMUTU`) verilirse kurulum
-ve kaldırıcı signtool ile imzalanır (`$f` dosya, `$q` tırnak). İmzalı kurulum Akıllı Uygulama
-Denetimi'ne de takılmaz. Gömülü Python dosyaları zaten Python Software Foundation imzalıdır.
+ve kaldırıcı signtool ile imzalanır (`$f` dosya, `$q` tırnak); bulut imzalamanın hız sınırına karşı
+yeniden deneme ayarları betikte hazırdır. Örnek (Certum SimplySign, oturum açıkken):
+
+```
+signtool.exe sign /sha1 <PARMAK-IZI> /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 $f
+```
+
+Paketin içinde imzasız çalıştırılabilir dosya yoktur: gömülü Python ve DLL'leri Python Software
+Foundation imzalar, gerisi `.py` ve metindir. Dolayısıyla kurulum ve kaldırıcıyı imzalamak yeter.
+İmzalı kurulum Akıllı Uygulama Denetimi'ne takılmaz; SmartScreen uyarısı ise (Microsoft'un 2024'te
+EV ayrıcalığını kaldırmasından beri) ancak aynı imza kimliğiyle sürüm dağıtıldıkça, haftalar içinde
+kalkar. Bu yüzden sertifika bir kez alınır ve değiştirilmez.
 
 ## Lisans
 
