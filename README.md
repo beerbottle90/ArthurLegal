@@ -5,13 +5,13 @@
 **Multi-jurisdiction legal AI assistant packages that run on [Claude.ai Projects](https://claude.ai/projects).**
 Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
-jurisdictions, no auth), up to four optional ones, and a curated primary-source reference layer.
+jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
 
 <img src="ArthurLegal-setup/varlik/banner.png" alt="ArthurLegal — open source legal AI" width="760">
 
 > ### ⬇ ArthurLegal Setup — one click on Windows ([ArthurLegal-setup/](ArthurLegal-setup/))
 > A single installer puts the Law Firm and Corporate packages, the research connector and the local
-> Turkish land-registry tools into Claude Desktop, then keeps them up to date from signed releases.
+> Turkish land-registry tools (live parcels from TKGM Parsel Sorgu) into Claude Desktop, then keeps them up to date from signed releases.
 > No admin rights, no manual knowledge upload: the only manual step is pasting one short, never
 > changing prompt into a Claude Project. Download `ArthurLegal-Kurulum.exe` (or `.zip` where Windows
 > Smart App Control is on) from the [Releases](https://github.com/beerbottle90/ArthurLegal/releases) page.
@@ -30,17 +30,17 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.9.1](ArthurLegal-CorporateAssistant-v1.9.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 103 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.9.1](ArthurLegal-Law-Firm-v1.9.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions) · 128 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.0.3](ArthurLegal-Academician-v1.0.3-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.0.5](ArthurLegal-Courthouse-v1.0.5-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.10.0](ArthurLegal-CorporateAssistant-v1.10.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.10.0](ArthurLegal-Law-Firm-v1.10.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.1.0](ArthurLegal-Academician-v1.1.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.1.0](ArthurLegal-Courthouse-v1.1.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.8.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.0.3`; Academician `v1.0.0`, `v1.0.1`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.9.1`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.0.5`; Academician `v1.0.0` … `v1.0.3`).
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
@@ -58,7 +58,7 @@ without installing a package, in any MCP client (Streamable HTTP, no authenticat
 | Cursor, VS Code and other JSON-configured clients | `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}` |
 | Clients that only launch local (stdio) servers | command `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp` |
 
-Call the `status` tool first to see which jurisdictions are loaded. The endpoint searches public
+Call the `status` tool first to see which jurisdictions are loaded. The land-registry tools (`tkgm_`) fetch single parcels live from TKGM Parsel Sorgu, at most 30 requests a minute for all users together; the first live call in a chat returns a one-time consent card ([design](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/tkgm-mcp/docs/MANIFESTO.md)). The endpoint searches public
 sources; do not put client names or confidential facts into queries. Setup details and source:
 [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly).
 Each package's `KURULUM.md` / `INSTALLATION.md` repeats these steps next to the connector step.
@@ -117,12 +117,12 @@ query** — the returned data was inspected, not just the status code.
 searched properly. All dependency-free (standard library only) and auth-free, with
 hybrid retrieval — BM25 plus trigram fuzzy matching, and a dense-vector channel that
 turns on when an embeddings endpoint is configured:
-[nl-rechtspraak-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp) ·
-[pl-sejm-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/pl-sejm-mcp) ·
-[at-ris-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp) ·
-[ie-statutebook-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp) ·
-[fi-finlex-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/fi-finlex-mcp) ·
-[es-boe-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp)
+[nl-rechtspraak-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/nl-rechtspraak-mcp) ·
+[pl-sejm-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/pl-sejm-mcp) ·
+[at-ris-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/at-ris-mcp) ·
+[ie-statutebook-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/ie-statutebook-mcp) ·
+[fi-finlex-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/fi-finlex-mcp) ·
+[es-boe-mcp](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/es-boe-mcp)
 
 **Added — 6 jurisdictions, each with a live-tested API:** 🇳🇱 Netherlands (KOOP SRU
 full text + 3,751,381 ECLI decisions) · 🇵🇱 Poland (Sejm ELI API with in-force
@@ -135,6 +135,28 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.10.0 — The Turkish land registry answers in the chat; the tool map matches the live endpoint (2026-09-23)
+
+Law Firm and Corporate **v1.10.0**, Courthouse **v1.1.0**, Academician **v1.1.0**, ArthurLegal Setup **2.1.0**.
+
+- **Land registry, live.** ArthurLegal MCP now carries the Turkish land-registry tools (`tkgm_`, 17 tools). Say a place, a
+  coordinate, or a province, district and neighbourhood with block and parcel ("Kadıköy Caferağa 123 ada 45 parsel"); the
+  parcel comes live from TKGM Parsel Sorgu's public data with a parcel report, a scaled sketch, a map and the statute
+  addresses for the dispute at hand. There is no file download step any more. The connector keeps one queue for all users:
+  one request in flight, at most 30 a minute, backs off when TKGM slows down, stops on 429/503/403, caches a parcel for a
+  day, refuses bulk scans, and names itself in every request. The first live call in a chat shows a one-time consent card.
+  Design: [MANIFESTO.md](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/tkgm-mcp/docs/MANIFESTO.md). The data is informational: no owner, annotation or mortgage data.
+- **Türkiye backend 0.5.0, renamed.** The Turkish backend is now `arthur-tr-hukuk-mcp` (formerly ArthurLegalTR; the old
+  name was too close to this repository's). The single-call article read
+  (`tr_mevzuat_madde_getir(number="6769", madde_no="120")`) the v1.9.1 packages rely on is live.
+- **Every tool reference checked against the live schema.** 121 tools, 16 backends. Two example calls were wrong: a GİB
+  search passed `phrase`, which does not exist, so the search text never reached GİB and results came back unfiltered; an
+  EPDK example passed `category` outside `params`. Both corrected.
+- **ArthurLegal Setup 2.1.0** installs the new packages and the local ArthurLegal Tapu 0.5.0 (same live parcel tools,
+  unprefixed in Claude Desktop), and updates existing installations silently.
+
+See each package's CHANGELOG.
 
 ## v1.9.1 — Article verification gate; wrong article citations in the knowledge files corrected (2026-09-22)
 

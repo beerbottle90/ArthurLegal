@@ -1,0 +1,220 @@
+# ArthurLegal MCP (`tr_`): Yargı, AYM, Uyuşmazlık ve Kurum Kararları Rehberi
+
+> Türkiye ArthurLegal MCP'nin içindedir: aynı connector, `tr_` öneki, kimlik doğrulama yok. Bu rehber içtihat, AYM, Uyuşmazlık Mahkemesi ve düzenleyici kurum araçlarını anlatır; mevzuat, Resmî Gazete ve `konu` süzgeci `mevzuat-mcp-rehberi.md` içindedir.
+> Araç adları ve parametreler 20.09.2026'da Türkiye backend'inin (arthur-tr-hukuk-mcp, eski adı ArthurLegalTR) 0.4.0 sürümünden ve canlı Bedesten, BTK ve GİB çağrılarından doğrulanmış, 23.09.2026'da 0.5.0'ın canlı şemasıyla yeniden karşılaştırılmıştır. `status` çıktısında `backend_status.tr.version` 0.4.0'dan küçükse bölüm 3'teki tarih düzeltmesi o uçta yoktur: tarih aralığının iki ucunu da ver. `search_bedesten_unified`, `ictihat_ara`, `semantik_ictihat_ara`, `aym_ictihat_ara` gibi öneksiz adlar bu connector'da yoktur; her araç `tr_` ile başlar.
+
+## 0. Bağlantı
+
+| Alan | Değer |
+|------|-------|
+| Endpoint | `https://arthurlegal-mcp.fly.dev/mcp` (tek uç: Türkiye + 14 yargı çevresi) |
+| Auth | Yok; adresi bilen herkes çağırabilir, kamuya açık kaynaklarda arar |
+| Önek | `tr_` (23 araç). `status` tek çağrıda TR sürümünü, indeksini, vektör durumunu ve `konu` modelinin varlığını verir |
+| Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
+| İlk çağrı | Karmaşık soruda `tr_hukuk_arastirma_rehberi` (hangi soru için hangi araç); kurum filtreleri için `tr_kurum_listesi` |
+
+## 1. Araçlar
+
+| Araç | Ne yapar | Kritik parametreler |
+|---|---|---|
+| `tr_ictihat_ara` | Yargıtay, Danıştay, yerel hukuk, istinaf hukuk ve KYB kararlarında arama (Bedesten) | `query` (Bedesten diyalekti), `courts` (`YARGITAYKARARI`, `DANISTAYKARAR`, `YERELHUKUK`, `ISTINAFHUKUK`, `KYB`; varsayılan ilk ikisi), `chamber` (daire kodu), `date_from`, `date_to` (ISO; bölüm 3), `page`, `page_size` (en çok 10), `sort` |
+| `tr_ictihat_getir` | Bir kararın tam metni, sayfalı | `document_id` (aramadan), `page`, `page_chars` |
+| `tr_ictihat_semantik_ara` | Anahtar kelimeyle bulunan ilk kararları (en çok 10) çekip doğal dil sorusuna göre anlamsal sıralar | `query` (doğal dil cümle), `initial_keyword` (Bedesten'e gidecek 1 ile 3 terim), `courts`, `chamber`, `date_from`, `max_docs` (varsayılan 5; karar başına 4 saniye) |
+| `tr_aym_ara` | Anayasa Mahkemesi norm denetimi veya bireysel başvuru | `query` (düz kelime), `kind` (`norm` veya `bireysel`), `page`, `page_size` |
+| `tr_aym_getir` | AYM karar tam metni | `id` (aramadan, UUID), `kind`, `page` |
+| `tr_uyusmazlik_ara` | Uyuşmazlık Mahkemesi kararları (adli, idari görev uyuşmazlığı) | `query`, `scope` (`All`, `EsasNo`, `KararNo`), `page` |
+| `tr_uyusmazlik_getir` | Karar PDF metni | `document_url` (aramadan) |
+| `tr_kurum_karari_ara` | Sekiz düzenleyici kurumun kararlarında arama, tek arayüz | `kurum` (zorunlu), `query`, kuruma özgü filtreler (aşağıda) |
+| `tr_kurum_karari_getir` | Kurum kararı veya belgesi tam metni, sayfalı | `kurum`, `id` (aramadan), `page` |
+| `tr_kurum_listesi` | Kurumlar, kapsamları, canlı veya yerel durumu, arama parametreleri | parametre yok |
+| `tr_spk_bulten_icinde_ara` | Bir SPK haftalık bülteni içinde bölüm bazında arama | `bulten` (`2026/27` biçimi), `query`, `limit` |
+| `tr_semantik_ara` | Yerel indekste hibrit arama (BM25, trigram, vektör): kurum kararları, SPK bültenleri, Sigorta Tahkim dergileri. Hangi kurumda metnin, hangisinde yalnız başlığın arandığı bölüm 4'te | `query`, `kurum` (daraltma), `mode` (`hybrid`, `lexical`, `semantic`, `fuzzy`), `limit`, `date_from`, `date_to` |
+| `tr_belge_getir` | Yerel indeksteki belgenin tam metni | `ref` (semantik aramadan) |
+| `tr_hukuk_arastirma_rehberi` | Sunucunun kendi yönlendirme kılavuzu | parametre yok; sohbette en çok bir kez |
+
+`kurum` değerleri: `rekabet` (Rekabet Kurulu), `epdk` (EPDK Kurul kararları), `spk` (SPK haftalık bültenleri), `bddk` (BDDK Kurul kararları), `kvkk` (KVK Kurulu karar özetleri), `btk` (BTK Kurul kararları), `gib` (GİB özelgeleri), `sigorta_tahkim` (Hakem Karar Dergisi).
+
+Bu connector'da olmayanlar ve neden: KİK (EKAP v2 imzalı API 500 döndürüyor), Sayıştay (WAF her sorguya 418 veriyor), TÜRKPATENT (karar veritabanı yok, portal reCAPTCHA'lı), İSTAÇ (site erişilemez), AİHM, Reklam Kurulu, KDK, TBB, HSK (kapsam dışı). Bunlar için isteğe bağlı ikinci connector TR Legal MCP (yargi-mcp-pro, OAuth) kurulmuşsa oradaki `aihm_ictihat_ara` ve `kurum_karari_ara(kurum="kik" | "sayistay" | "reklam" | "kdk" | "tbb" | "hsk")` kullanılır; kurulu değilse kaynak WebFetch ile veya hiç çekilemez ve çıktıda "çekilmedi" denir. Çalışmayan kaynak çalışıyormuş gibi gösterilmez.
+
+## 2. Arama diyalekti
+
+1. `tr_ictihat_ara.query` Bedesten diyalektidir: çıplak kelimeler, `"tam öbek"`, `+zorunlu`, `-hariç`, büyük harf `AND`, `OR`, `NOT`; joker ve yakınlık operatörü yoktur. Kullanıcının cümlesini yapıştırma; 2 ile 5 hukuki terim çıkar ve kavramları `+` ile zorunlu kıl: `+"işe iade" +"kıdem tazminatı"`.
+2. `tr_aym_ara.query` düz kelime alır; operatör yok. Her ek kelime kümeyi daraltır.
+3. `tr_ictihat_semantik_ara.query` operatör almaz; hukuki fikri tek cümleyle anlat. `initial_keyword` Bedesten'e gider ve adayları belirler; anlamsal sıralama yalnız çekilen metinler üzerindedir, keşif aracı değildir.
+4. `tr_semantik_ara.query` doğal dil; kelime paylaşmayan belgeyi de bulur. Yanıttaki `retrieval.semantic` alanı `off` ise sonuçlar anahtar kelime eşleşmesidir; `mode="semantic"` ile tekrar dene veya eş anlamlı terim kullan.
+
+Türkçe diyakritikler korunur; klavyesiz yazılan `aydinlatma` da `aydınlatma`yı bulur (noktasız ı genişletmesi yalnız yerel indekste).
+
+## 3. Filtreler
+
+Mahkeme: `courts` varsayılanı Yargıtay ve Danıştay. İstinaf için `ISTINAFHUKUK`, yerel için `YERELHUKUK`, kanun yararına bozma için `KYB` açıkça verilir. İstinaf ve yerel kapsam kısmidir; sıfır sonuç yokluğun kanıtı değildir.
+
+Daire: `chamber` kod alır: Yargıtay hukuk `H1` ile `H23`, ceza `C1` ile `C23`, `HGK`, `CGK`, `BGK`; Danıştay `D1` ile `D17`, `IDDK`, `VDDK`, `IBK`. Tam Türkçe ad da kabul edilir. Genel kurul kararı tek daire kararından ağırdır.
+
+Dosya numarası: ayrı `esas_no` filtresi yoktur; numarayı tırnak içinde `query`'ye yaz (`"2023/1234"`) ve `courts` ile daralt.
+
+Tarih: `date_from` ve `date_to` ISO `YYYY-MM-DD`, karar tarihine göre. Bedesten tek taraflı tarih aralığını sessizce yok sayar: 20.09.2026'da ölçüldü, `+"işe iade"` için yalnız `date_from="2025-01-01"` verildiğinde 1.048 yerine süzgeçsiz 52.993 karar dönüyordu ve hiçbir uyarı gelmiyordu. `tr_ictihat_semantik_ara` yalnız `date_from` aldığı için tarih süzgeci o araçta hiç çalışmamıştı. Sunucu 0.4.0'dan itibaren eksik ucu kendisi doldurur. Kural: tarih süzgeci kullandığında dönen kararların `karar_tarihi` alanına bak; aralık dışı karar görürsen süzgeç uygulanmamıştır, iki ucu da vererek yeniden ara ve "en güncel içtihat" sonucuna o kontrolü yapmadan varma. BTK ve GİB tarih süzgeçleri tek uçla doğru çalışır (aynı gün ölçüldü). Sayfalama `page`; `page_size` en çok 10 (Bedesten sınırı).
+
+Hız sınırı: Bedesten IP başına 30 saniyede 10 istek kabul eder; sunucu istekleri 3,5 saniye aralıkla gönderir. Art arda 5'ten fazla arama yapma; `retry: true` gelirse birkaç saniye bekle. Karar listesi metin içermez: yorum yapmadan önce `tr_ictihat_getir` ile metni oku.
+
+## 4. Kurum filtreleri ve yerel arşivin gerçek kapsamı
+
+| `kurum` | Canlı arama neyi arar | Filtreler | `id` (getir) | Yerel arşivde (`tr_semantik_ara`) |
+|---|---|---|---|---|
+| `rekabet` | Karar PDF'lerinin metni (rekabet.gov.tr) | `query`, `decision_type` (`birlesme_devralma`, `rekabet_ihlali`, `muafiyet_menfi_tespit`, `ozellestirme`, `diger`), `decision_number`, `decision_date`, `page` | `karar_id` | 10.445 karar, YALNIZ BAŞLIK |
+| `epdk` | Kurul kararları ağacında konu ve kategori satırı: elektrik, doğal gaz, petrol, LPG, denetim | `query`, `market`, `category` (`lisans`, `tarife`, `YEKDEM`), `decision_no`, `year`, `limit` | `documents[0].url` | 3.745 karar; yaklaşık yarısında tam metin, kalanında konu satırı |
+| `spk` | Bülten listesi; içerik için `tr_spk_bulten_icinde_ara` | `year`, `number` | bülten no `2026/27` | 2022 ile 2026 bültenleri, 1.497 bölüm, tam metin |
+| `bddk` | Karar BAŞLIĞI; iki liste (RG'de yayımlanan, yayımlanmayan) | `query` (başlıkta), `list` (`rg`, `diger`), `year`, `limit` | `id` (DokumanGetir kimliği) | 964 karar, tam metin |
+| `kvkk` | Son sayfalardaki karar özetleri | `query`, `scan_pages` | `id` (içerik kimliği) | 291 özet, tam metin |
+| `btk` | Karar BAŞLIĞI | `query`, `decision_no`, `decision_date`, `date_from`, `date_to`, `unit`, `page` | `pdf_url` | 1.904 karar; 1.897 kararda tam metin, kalanında başlık (taranmış PDF) |
+| `gib` | Özelge metni (18.000'den fazla) | `query`, `ozelge_no`, `kanun_id`, `date_from`, `date_to`, `page` | `ozelge_no` | yok; yalnız canlı |
+| `sigorta_tahkim` | Tek dergi sayısının metni | `query`, `issue` (sayı, varsayılan son), `limit` | `"<sayı>:<karar başlığı>"` | 66 sayı, 652 karar, tam metin |
+
+Sayılar 20.09.2026 tarihli arşivdir (toplam 19.498 belge). Arşiv haftalık tazelenir ve yalnız yeni kararlar eklenir; `status` çıktısındaki `local_index` güncel sayıları ve her kurumun son karar tarihini verir.
+
+Bu tablonun söylediği şey: bir kararın METNİNE dair soru her kurumda aynı araçla sorulmaz.
+
+1. BDDK ve BTK: canlı arama yalnız başlıktadır; başlıkta geçmeyen içerik arşive sorulur. Ölçüldü (20.09.2026): "idari para cezası" 419 BTK kararının metninde geçer, yalnız 9'unun başlığında geçer; "dolaylı pay sahipliği" 60 BDDK kararının metninde geçer, hiçbirinin başlığında geçmez. Bu soruları `tr_semantik_ara(kurum="btk" | "bddk", …)` ile sor. İki kurumun karar metinleri arşive 20.09.2026'da eklendi; o tarihten önce arşiv bu kurumlarda yalnız başlıkları arıyordu.
+2. Rekabet: tersine, metin araması canlı taraftadır (`tr_kurum_karari_ara(kurum="rekabet", query=…)` karar PDF'inin içinde arar). Yerel arşiv Rekabet kararlarının yalnız başlığını taşır; `tr_semantik_ara(kurum="rekabet")` başlıkta kavramsal arama yapar, gerekçede değil. Gerekçeye dair bir sonucu "arşivde yok" diye kapatma; canlı aramayı dene.
+3. KVKK, SPK ve Sigorta Tahkim: başlıklar bilgi taşımaz ("KVKK Kurul Kararı 2021/1111", bülten bölüm adı, K numarası); soru her zaman metne sorulur, `tr_semantik_ara` ve `tr_spk_bulten_icinde_ara` bunun içindir.
+4. EPDK: `market` ve `category` en güçlü süzgeçtir; metni indekslenmemiş kararlar için `tr_kurum_karari_getir` ile belgeyi aç.
+5. Kurum zaten konudur: `kurum="epdk"` enerji, `kurum="kvkk"` kişisel veri demektir. Resmî Gazete ve mevzuattaki `konu` süzgeci (enerji, rekabet, vergi, icra) kurum kararlarında yoktur ve gerekmez; ölçüldü, kurum kararı başlıklarında bu dört konunun kelimeleri kurumun kendi alanı dışında yüzde 2'nin altında geçiyor.
+
+## 5. Tipik kullanım
+
+İş davası içtihadı (Yargıtay 9. Hukuk Dairesi, 2023 ile 2024):
+
+```
+tr_ictihat_ara(
+  query="+\"işe iade\" +\"kıdem tazminatı\"",
+  courts=["YARGITAYKARARI"],
+  chamber="H9",
+  date_from="2023-01-01",
+  date_to="2024-12-31"
+)
+tr_ictihat_getir(document_id="<document_id>")
+```
+
+AYM bireysel başvuru (mülkiyet hakkı, kamulaştırma):
+
+```
+tr_aym_ara(query="mülkiyet hakkı kamulaştırma", kind="bireysel")
+tr_aym_getir(id="<uuid>", kind="bireysel")
+```
+
+KVKK Kurulu kararı ve Danıştay denetimi:
+
+```
+tr_kurum_karari_ara(kurum="kvkk", query="veri ihlali bildirim")
+tr_semantik_ara(query="veri ihlali bildiriminin 72 saat içinde yapılmaması", kurum="kvkk", limit=5)
+tr_ictihat_ara(query="+KVKK +\"idari para cezası\"", courts=["DANISTAYKARAR"], chamber="D10")
+```
+
+Rekabet Kurulu kararı (karar türü filtresiyle, PDF metninde) ve tam metin:
+
+```
+tr_kurum_karari_ara(kurum="rekabet", query="dikey entegrasyon petrol", decision_type="rekabet_ihlali")
+tr_kurum_karari_getir(kurum="rekabet", id="<karar_id>", page=1)
+```
+
+BDDK ve BTK kararının içeriğine dair soru (başlıkta geçmeyen kavram; canlı arama bunu bulamaz):
+
+```
+tr_semantik_ara(query="dolaylı pay sahipliği değişikliğine izin", kurum="bddk", mode="hybrid", limit=5)
+tr_semantik_ara(query="hizmet kalitesi yükümlülüğüne aykırılık nedeniyle idari para cezası", kurum="btk", mode="hybrid", limit=5)
+tr_belge_getir(ref="<semantik aramadan>")
+tr_kurum_karari_getir(kurum="btk", id="<pdf_url>")                   # kararın kendisi, atıf için
+```
+
+GİB özelgesi ve Danıştay vergi dairesi:
+
+```
+tr_kurum_karari_ara(kurum="gib", query="transfer fiyatlandırması ilişkili taraf", date_from="2023-01-01")
+tr_kurum_karari_getir(kurum="gib", id="<ozelge_no>")
+tr_ictihat_ara(query="+\"transfer fiyatlandırması\" +\"örtülü kazanç\"", courts=["DANISTAYKARAR"], chamber="D4")
+```
+
+EPDK Kurul kararı (piyasa ve kategori filtresi; ilk çağrı piyasa başına onlarca istek atar, sonra önbellek):
+
+```
+tr_kurum_karari_ara(kurum="epdk", query="lisans iptal", market="elektrik", params={"category": "lisans"})
+tr_kurum_karari_getir(kurum="epdk", id="<documents[0].url>")
+tr_resmi_gazete_fihrist(date="<rg_date>")
+```
+
+SPK bülteni:
+
+```
+tr_kurum_karari_ara(kurum="spk", year=2026)
+tr_spk_bulten_icinde_ara(bulten="2026/27", query="halka arz")
+```
+
+Sigorta Tahkim (tek sayı canlı, arşiv semantik):
+
+```
+tr_kurum_karari_ara(kurum="sigorta_tahkim", query="kasko", issue=66)
+tr_semantik_ara(query="araç hasarında sigortacının ödeme yükümlülüğü", kurum="sigorta_tahkim", mode="semantic", limit=5)
+tr_kurum_karari_getir(kurum="sigorta_tahkim", id="66:<karar başlığı>")
+```
+
+Kavram araması ve doğrulama:
+
+```
+tr_ictihat_semantik_ara(query="kira sözleşmesinde ihtiyaç sebebiyle tahliyede samimiyet şartı", initial_keyword="ihtiyaç tahliye samimiyet", courts=["YARGITAYKARARI"], max_docs=5)
+```
+
+## 6. Atıf
+
+Kararı yalnız o oturumda fiilen çektiysen etiketle; alanlar virgülle ayrılır ve araç çıktısındaki `citation` alanı birebir kullanılır:
+
+```
+[ArthurLegal TR, Yargıtay 9. Hukuk Dairesi, E. 2023/1234, K. 2024/567, 12.03.2024]
+[ArthurLegal TR, Danıştay 13. Daire, E. 2022/456, K. 2023/789, 05.06.2023]
+[ArthurLegal TR, AYM, B. No: 2021/30620, 14.09.2023]
+[ArthurLegal TR, Rekabet Kurulu, 28.02.2024 tarih ve 24-11/123-45 sayılı karar]
+[ArthurLegal TR, EPDK, 18.06.2026 tarihli ve 14681 sayılı Kurul Kararı (RG 20.06.2026/33286)]
+[ArthurLegal TR, GİB, GG.AA.YYYY tarih ve <no> sayılı özelge]
+```
+
+Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Çekmediğin kararı çekmiş gibi gösterme; çekemiyorsan `[model bilgisi, doğrulayın]` veya `[UYAP/Lexpera, manuel doğrulayın]`.
+
+## 7. Disiplin
+
+1. Önce kanun, sonra karar: `tr_mevzuat_ara` ile maddeyi bul, sonra o maddenin yorumunu ara. Karar bulunca atıf yaptığı maddenin güncel metnini ve geçici maddeleri kontrol et.
+2. Yürürlükten kaldırma önceki içtihadı kendiliğinden geçersiz kılmaz; geçici maddelere bak. Lex mitior yalnız ceza hukuku ilkesidir (TCK m. 7).
+3. `error`, `upstream_blocked` veya `unavailable` alanı taşıyan yanıt boş sonuç değildir; kaynağın erişilemediğini söyle.
+4. Özelge bağlayıcı değildir, idarenin görüşüdür. Rekabet, EPDK ve BDDK kararlarının RG'de yayımlandığını `tr_resmi_gazete_fihrist` ile ve `query` kullanarak teyit et; yayım teyidinde `konu` süzgeci kullanılmaz.
+5. Her araç çağrısı 100 saniyede iptal edilir ve hiçbir şey döndürmez; sorguyu dar tut, iptal olursa böl.
+6. Her araştırma kanun metni (mevzuat araçları), yargı veya idari yorum (bu rehber) ve playbook üçgeninde sentezlenir.
+7. Tarih süzgeci verdiysen sonucu tarihine bakarak doğrula (bölüm 3). Yerel arşivde bir kurumun yalnız başlığı varsa (bölüm 4) "arşivde bulunamadı" sonucunu metin için geçerli sayma.
+
+## 8. Tipik başvurular
+
+| Konu | Araç ve filtre |
+|---|---|
+| İş davası içtihadı (işe iade, kıdem, fazla mesai) | `tr_ictihat_ara`, `chamber` `H9` veya `H22` |
+| İş kazası tazminatı ve ceza boyutu | `tr_ictihat_ara`, hukuk için `H10`, ceza için `C12`, genel kurul için `HGK` ve `CGK` |
+| EPDK lisans iptali, enerji idari yargısı | `tr_kurum_karari_ara(kurum="epdk")`, sonra `tr_ictihat_ara` `courts` `DANISTAYKARAR`, `chamber` `D13` |
+| SPK düzenlemesine itiraz | `tr_kurum_karari_ara(kurum="spk")` ve `tr_spk_bulten_icinde_ara`; sonra `tr_ictihat_ara` `D13` veya `D10` |
+| Rekabet Kurulu kararı ve Danıştay denetimi | `tr_kurum_karari_ara(kurum="rekabet")` (PDF metninde), sonra `tr_ictihat_ara` `D13` |
+| KVKK idari para cezası emsali | `tr_kurum_karari_ara(kurum="kvkk")`, arşiv için `tr_semantik_ara(kurum="kvkk")` |
+| Vergi ve transfer fiyatlandırması | `tr_kurum_karari_ara(kurum="gib")`, `tr_ictihat_ara` `D3`, `D4`, `VDDK` |
+| Banka ve finans kuruluşu izinleri, karar içeriği | başlık için `tr_kurum_karari_ara(kurum="bddk")`, içerik için `tr_semantik_ara(kurum="bddk")` |
+| Telekomünikasyon, karar içeriği | başlık için `tr_kurum_karari_ara(kurum="btk")`, içerik için `tr_semantik_ara(kurum="btk")` |
+| Sigorta tazminatı hakem kararı | `tr_kurum_karari_ara(kurum="sigorta_tahkim")` |
+| Adli ve idari yargı görev uyuşmazlığı | `tr_uyusmazlik_ara` |
+| ÇED ve çevre cezası | `tr_ictihat_ara`, `D14` ve `D10` |
+| Bir dönemde belirli bir kanunu değiştiren düzenlemeler | `tr_mevzuat_ara(types=["KANUN"], rg_date_from=…, konu=…)`; `mevzuat-mcp-rehberi.md` bölüm 4 |
+| İhale itirazı (KİK), Sayıştay, AİHM, Reklam Kurulu | Bu connector'da yok; isteğe bağlı TR Legal MCP veya WebFetch, aksi hâlde "çekilmedi" |
+
+## 9. Sınırlar
+
+1. Karar metinleri özet değildir; uzun olabilir, sayfalıdır.
+2. Bazı kararlarda gizli kısımlar karartılmıştır (KVKK, AYM bireysel başvuru).
+3. Yeni kararlar yayımdan sonra indekse girer; birkaç gün gecikme olabilir. Yerel arşiv haftalık tazelenir; Rekabet Kurumu gerekçeli kararları aylar sonra yayımladığı için en yeni Rekabet kararları arşivde de canlı listede de geç görünür.
+4. Araç metni getirir; içtihat ağırlığını ve güncelliğini sen değerlendirirsin.
+5. Yerel ve istinaf kapsamı bölgeye göre değişir; yokluk kanıtı değildir.
+6. Yerel indeks (`tr_semantik_ara`) taranmış kadarıyla vardır ve kurumdan kuruma derinliği farklıdır (bölüm 4); kapsamı `status` söyler.
+7. İçtihatta konu süzgeci yoktur. Bedesten karar listesi metin taşımaz; yerel bir modelin eleyeceği bir girdi bulunmaz. Konuya göre daraltma `chamber` ve `query` ile yapılır.
+
+*Son güncelleme: 23.09.2026: araç adları ve örnek çağrı parametreleri 0.5.0'ın canlı şemasıyla karşılaştırıldı, EPDK örneğinde `category` `params` içine alındı. Önceki: 20.09.2026. Araç listesi ve parametreler arthur-tr-hukuk-mcp (eski adı ArthurLegalTR) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten, BTK ve GİB çağrılarıyla doğrulandı.*

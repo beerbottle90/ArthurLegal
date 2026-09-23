@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.0.0
+# ArthurLegal Setup v2.1.0
 
 **Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
 Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
@@ -15,7 +15,7 @@ Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası doğrulanara
 | Bileşen | Nerede çalışır | Ne yapar |
 |---|---|---|
 | **arthurlegal-yerel** | Claude Desktop · gömülü Python 3.12 | İki paketin sistem talimatını ve 230+ bilgi dosyasını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz |
-| **arthur-tapu** | Claude Desktop + masaüstü kısayolu | tkgm-mcp: parsel, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
+| **arthur-tapu** | Claude Desktop + masaüstü kısayolu | tkgm-mcp 0.5.0: TKGM Parsel Sorgu'dan canlı parsel (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
 | **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil belgelerini bilgisayarda maskeleyen gizlilik kapısı. Kurulum sırasında indirilir (≈1 GB), isteğe bağlı |
 | *arthur-uyap* | (bu pakette yok) | UYAP köprüsü ayrı dağıtılır; kurulum, bilgisayarda varsa kendiliğinden bağlar |
 
@@ -73,7 +73,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 12 test, ağa çıkmaz
-python yayin/yayinla.py v2.0.0         # imzalı manifest + dosyalar → GitHub Release
+python yayin/yayinla.py v2.1.0         # imzalı manifest + dosyalar → GitHub Release
 ```
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez

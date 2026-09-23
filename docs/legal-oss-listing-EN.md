@@ -53,8 +53,8 @@ source sits in rather than papering over the difference.
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
-  text and amendment history), and the same **ArthurLegal MCP** — fourteen more jurisdictions behind
-  the one connector (104 tools in total): Azerbaijan (official `api.e-qanun.az` with in-force
+  text and amendment history), and the same **ArthurLegal MCP** — fourteen more jurisdictions and the
+  Turkish land registry (live parcels from TKGM Parsel Sorgu) behind the one connector (121 tools in total): Azerbaijan (official `api.e-qanun.az` with in-force
   status verification), Austria, Germany, the Netherlands, Poland, Spain, Finland
   and Ireland, plus scholarship and contract corpora. Every tool carries its
   jurisdiction as a prefix, because `get_act` means five different things across
@@ -107,22 +107,23 @@ ran, how many documents are indexed, how many are vectorised, and the index's
 date coverage — because a statute outside that coverage is not found, and the
 search returns its nearest neighbour rather than announcing the gap.
 
-The server's 15 backends are open source. Fourteen are published under the MIT
+The server's 16 backends are open source. Fifteen are published under the MIT
 license as folders of the [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp) repository,
 each with its own `LICENSE` file ([`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp),
-[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api),
-[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api),
-[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api),
-[`at-ris-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/at-ris-mcp),
-[`nl-rechtspraak-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/nl-rechtspraak-mcp),
-[`pl-sejm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/pl-sejm-mcp),
-[`es-boe-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp),
-[`fi-finlex-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/fi-finlex-mcp),
-[`ie-statutebook-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ie-statutebook-mcp),
-[`uk-legislation-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/uk-legislation-mcp),
-[`eu-cellar-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eu-cellar-mcp),
-[`jp-egov-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/jp-egov-mcp),
-[`gleif-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/gleif-mcp));
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api),
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/lex-scholar-api),
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/resourcecontracts-api),
+[`at-ris-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/at-ris-mcp),
+[`nl-rechtspraak-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/nl-rechtspraak-mcp),
+[`pl-sejm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/pl-sejm-mcp),
+[`es-boe-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/es-boe-mcp),
+[`fi-finlex-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/fi-finlex-mcp),
+[`ie-statutebook-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/ie-statutebook-mcp),
+[`uk-legislation-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/uk-legislation-mcp),
+[`eu-cellar-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eu-cellar-mcp),
+[`jp-egov-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/jp-egov-mcp),
+[`gleif-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/gleif-mcp),
+[`tkgm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/tkgm-mcp));
 the German backend is [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp)
 under the Apache-2.0 license.
 The proprietary package license below covers the ArthurLegal packages themselves,

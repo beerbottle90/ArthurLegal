@@ -191,8 +191,11 @@ class Bilgi:
             "`knowledge/firm-profile.md` (Corporate'ta `knowledge/company-profile.md`) dosyasındadır.",
             "Araştırma araçları (`tr_`, `az_`, `eu_`, `uk_` ... önekli) ve `status` bu `arthurlegal-yerel` sunucusundan "
             "gelir. Aynı araçlar ayrıca claude.ai connector'ı olarak görünüyorsa bu sunucudakini kullan.",
-            "Tapu, parsel ve harç işlerinde `arthur-tapu` yerel araçlarını kullan (tapu kaydı metni bilgisayardan "
-            "çıkmaz); `tkgm_` önekli uzak araçları kullanma.",
+            "Tapu, parsel ve harç işlerinde `arthur-tapu` yerel araçlarını kullan; `tkgm_` önekli uzak araçları kullanma. "
+            "Parseli `parsel_sorgula` (il/ilçe/mahalle + ada/parsel ya da `metin`), `konumdan_parsel` ve `yer_bul` TKGM "
+            "Parsel Sorgu'dan canlı getirir: kullanıcıdan GeoJSON/KML dosyası isteme. Sohbetteki ilk canlı çağrı onay "
+            "kartı döndürür; kartı olduğu gibi göster, kabulde `onay=true` ile yinele ve o sohbette `onay=true` gönder. "
+            "Tapu kaydı metni (`tapu_kaydi_oku`) bilgisayardan çıkmaz. Ayrıntı: `tapu-kadastro-rehberi.md`.",
             "Arthur Mask ve UYAP (`arthur-uyap`, salt okunur, maskeli) için SYSTEM_PROMPT'taki kurallar geçerlidir; "
             "müvekkil belgesi sohbete doğrudan yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir.",
         ]

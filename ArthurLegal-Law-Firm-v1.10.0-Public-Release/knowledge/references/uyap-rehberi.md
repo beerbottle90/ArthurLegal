@@ -1,0 +1,105 @@
+# UYAP (Ulusal Yargı Ağı Bilişim Sistemi) – Pratik Rehber
+
+> Türk yargısının elektronik altyapısı. Davaların açılması, takibi, belge sunumu, kararların tebliği UYAP üzerinden yapılır. büro pratiğinde **dış vekiller UYAP avukat portalı** üzerinden erişir; in-house genelde dış vekilden alınan raporlara bakar.
+
+## UYAP modülleri (litigation için)
+
+| Modül | Kullanım |
+|---|---|
+| **UYAP Avukat Portalı** | Dava dosyalarına erişim, dilekçe sunma, duruşma takvimi |
+| **UYAP Vatandaş Portalı** | Vatandaşın kendi davalarını görmesi |
+| **UYAP Kurum Portalı** | Kamu kurumlarının erişimi ([Müvekkil] için sınırlı) |
+| **e-Duruşma** | Online duruşma katılım (pandemi sonrası kalıcı) |
+| **UYAP Bilirkişi Portalı** | Bilirkişilerin atama ve rapor sunumu |
+| **EBYS entegrasyonu** | Elektronik belge yönetim sistemi |
+
+## Avukat girişi
+
+- **e-İmza** veya **mobil imza** (Turkcell, Vodafone, Türk Telekom)
+- Baro kayıt bilgileri ile
+
+## büro pratiğinde tipik akış
+
+1. **Yeni dava** — Mahkemeden [Müvekkil]'a yapılan tebligat e-Tebligat (UETS) üzerinden gelir (Tebligat K. m. 7/a — özel hukuk tüzel kişilerine zorunlu) veya fiziksel olarak. In-house Counsel dış vekili haberdar eder.
+2. **Dış vekil dosyayı UYAP'tan açar** — taraflar, mahkeme, esas no, tebligatlar görülür.
+3. **Belgeleri çeker** — dava dilekçesi, ekleri, mahkeme ara kararları.
+4. **Aylık özetler** — dış vekil UYAP'tan dava durum raporları çıkarır, Excel formatında [Müvekkil]'a gönderir.
+5. **Duruşma takibi** — UYAP duruşma günlerini gösterir; e-duruşma talep edilebilir.
+
+## In-house tarafında UYAP
+
+[Müvekkil] in-house hukuk müşaviri genelde UYAP avukat portalına **doğrudan giriş yapmaz** (dış vekil giriyor) — ancak:
+
+- Vatandaş portalından **kendi davalarımı** görebilir (eğer şahsen taraf varsa)
+- Kurum portalına [Müvekkil]'ın resmi kanalları üzerinden erişim olabilir (ihtisas mahkemelerinde)
+
+## Kritik belgeler ve sunum (HMK + UYAP)
+
+| Belge | Format | UYAP üzerinden mi? |
+|---|---|---|
+| Dava dilekçesi | PDF (e-imzalı) | Evet (HMK m. 445/2; içerik m. 119) |
+| Cevap dilekçesi | PDF | Evet |
+| Delil eki | PDF/Word/Excel | Evet |
+| Bilirkişi raporu | PDF (bilirkişi e-imzası) | Evet |
+| Mahkeme kararı | PDF | Evet, vekile UYAP üzerinden tebliğ |
+| Karşı vekil tebligatı | PDF | UYAP veya KEP/fiziksel posta |
+
+## Yararlı pattern'lar
+
+### Dava durum bilgisi sorgulama (dış vekilden)
+
+In-house olarak istek formu:
+
+```markdown
+Sayın [vekil],
+
+[Esas no] dosyası için UYAP üzerinden:
+1. Son durum (sonraki duruşma tarihi)
+2. Karşı tarafın yeni sunduğu delil/dilekçe (varsa)
+3. Mahkeme ara kararları (varsa)
+4. Bilirkişi raporu durumu (atandı/sunuldu)
+
+bilgisini rica ederim.
+
+Teşekkürler.
+[Counsel]
+```
+
+### Karşı taraf tebligatını UYAP'tan çekme
+
+Karşı tarafa tebligat **UYAP/UETS (e-Tebligat — Tebligat K. m. 7/a)** üzerinden veya fiziki olarak yapılır; KEP bir mahkeme tebligat kanalı değildir. [Müvekkil]'da e-Tebligat (UETS) zorunludur (Tebligat K. m. 7/a); TTK m. 18/3 yalnız tacirler arası temerrüt/fesih/dönme ihbar ve ihtarlarının şeklini düzenler.
+
+## Tipik sorunlar ve çözüm
+
+| Sorun | Çözüm |
+|---|---|
+| UYAP'a dış vekil giriş yapamıyor (e-imza süresi dolmuş) | Avukatı yeni e-imzayla mı? Veya başka vekil üzerinden? |
+| Mahkeme kararı UYAP'tan tebliğ geldi ama dış vekil görmedi | E-tebligat, elektronik adrese ulaştığı tarihi izleyen 5. günün sonunda tebliğ edilmiş sayılır (Tebligat K. m. 7/a) — okunmasa da süre işler, derhal aksiyon |
+| Karşı taraf vekili UYAP üzerinden değil fiziksel sunmuş | Mahkemenin kabulu vardır ama dış vekilimiz fiziksel kopyaya da bakmalı |
+| e-Duruşma talep ettik ama mahkeme reddetti | Fiziksel duruşma gerekli; dış vekil İstanbul'dan [TESİS LOKASYONU]'ya gidiyor — maliyet artar |
+
+## ArthurLegal MCP (`tr_`) — UYAP entegre
+
+ArthurLegal MCP (`tr_`)'nin **Emsal (UYAP)** aracı UYAP arşivindeki emsal kararlara erişir:
+
+```
+tr_ictihat_ara(
+  courts=["YERELHUKUK", "ISTINAFHUKUK"],
+  query="<konu>",
+  date_from="2023-01-01"
+)
+```
+
+Bu **karar arşividir**, dava durum sorgulama değildir. Dava durum için her zaman dış vekil.
+
+## [Müvekkil]-özel notlar
+
+- **[TESİS LOKASYONU] İş Mahkemesi** ve **Karşıyaka Asliye Hukuk** — UYAP destekli ama bazı duruşmalar fiziksel yapılır; İzmir'deki yerel vekil önemli.
+- **Ankara Danıştay** — tamamen UYAP üzerinden; yazılı yargı ağırlıklı.
+- **İstanbul Anadolu ATM** — UYAP + duruşma karması.
+
+## Bağlantılı referanslar
+
+- [HMK rehberi](hmk-rehberi.md)
+- [İSG dava rehberi](isg-dava-rehberi.md)
+- [ArthurLegal MCP TR rehberi](yargi-mcp-rehberi.md)
