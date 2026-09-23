@@ -1,7 +1,7 @@
 # ArthurLegal MCP (`tr_`): Mevzuat ve Resmî Gazete Rehberi
 
 > Bu rehber mevzuat ve Resmî Gazete araçlarını anlatır. Yargı, AYM, Uyuşmazlık ve kurum kararları `yargi-mcp-rehberi.md` içindedir; ikisi aynı connector'dır (endpoint `arthurlegal-mcp.fly.dev/mcp`, auth yok, önek `tr_`).
-> Araç adları ve parametreler 20.09.2026'da Türkiye backend'inin (arthur-tr-hukuk-mcp, eski adı arthur-tr-hukuk-mcp) 0.4.0 sürümünden ve canlı Bedesten çağrılarından doğrulanmıştır. `status` çıktısında `backend_status.tr.version` 0.4.0'dan küçükse bölüm 4'teki `konu` süzgeci, sorgusuz listeleme ve tarih aralığı düzeltmesi o uçta yoktur; o durumda `query` ile çalış ve tarih aralığının iki ucunu da ver. `search_mevzuat`, `mevzuat_ara`, `mevzuat_getir(id_type=...)`, `search_kanun`, `search_teblig` gibi öneksiz veya eski adlar bu connector'da yoktur.
+> Araç adları ve parametreler 20.09.2026'da Türkiye backend'inin (arthur-tr-hukuk-mcp, eski adı ArthurLegalTR) 0.4.0 sürümünden ve canlı Bedesten çağrılarından doğrulanmıştır. `status` çıktısında `backend_status.tr.version` 0.4.0'dan küçükse bölüm 4'teki `konu` süzgeci, sorgusuz listeleme ve tarih aralığı düzeltmesi o uçta yoktur; o durumda `query` ile çalış ve tarih aralığının iki ucunu da ver. `search_mevzuat`, `mevzuat_ara`, `mevzuat_getir(id_type=...)`, `search_kanun`, `search_teblig` gibi öneksiz veya eski adlar bu connector'da yoktur.
 
 ## 1. Araçlar
 
@@ -203,4 +203,4 @@ Knowledge dosyalarındaki madde haritaları (`smk-rehberi.md`, `hmk-rehberi.md` 
 
 Örnek hata: bir iş ve fikri haklar protokolünün 5.5 klozunda "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120'nin başlığı "Çalışanın önalım hakkı"dır; hak, işveren iflas ettiğinde ve iflas idaresi buluşu işletmeden ayrı devretmek istediğinde çalışana tanınır. Madde çekilseydi başlık hatayı tek bakışta gösterirdi.
 
-*Son güncelleme: 22.09.2026. Madde doğrulama kapısı (bölüm 9) ve tek çağrılı madde okuma (`tr_mevzuat_madde_getir(number=…, madde_no=…)`, şemada görünüyorsa) eklendi. Önceki doğrulama: 20.09.2026. Parametreler arthur-tr-hukuk-mcp (eski adı arthur-tr-hukuk-mcp) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten çağrılarıyla doğrulandı; `konu` ölçümleri arthurlegal-1.9.1-jev-edition deposundaki sınav kümelerine dayanır.*
+*Son güncelleme: 22.09.2026. Madde doğrulama kapısı (bölüm 9) ve tek çağrılı madde okuma (`tr_mevzuat_madde_getir(number=…, madde_no=…)`, şemada görünüyorsa) eklendi. Önceki doğrulama: 20.09.2026. Parametreler arthur-tr-hukuk-mcp (eski adı ArthurLegalTR) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten çağrılarıyla doğrulandı; `konu` ölçümleri arthurlegal-1.9.1-jev-edition deposundaki sınav kümelerine dayanır.*
