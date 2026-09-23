@@ -12,7 +12,7 @@
 ## Türk Mevzuat & Yargı entegrasyonu
 
 Bu paketin Türk hukuku entegrasyonu **ArthurLegal MCP**'nin Türkiye backend'i
-[`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT) üzerinden çalışır:
+[`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT) üzerinden çalışır:
 `arthurlegal-mcp.fly.dev/mcp`, `tr_` öneki, auth yok. Yargıtay, Danıştay, BAM, yerel mahkeme,
 KYB (Bedesten), AYM, Uyuşmazlık Mahkemesi, 12 tür mevzuat, Resmî Gazete ve sekiz düzenleyici
 kurum (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim).

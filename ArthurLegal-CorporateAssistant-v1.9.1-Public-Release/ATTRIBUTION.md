@@ -10,17 +10,17 @@
 ## Türk Mevzuat & Yargı entegrasyonu
 
 Bu paketin Türk hukuku entegrasyonu **ArthurLegal MCP**'nin Türkiye backend'i
-[`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT) üzerinden çalışır:
+[`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT) üzerinden çalışır:
 `arthurlegal-mcp.fly.dev/mcp`, `tr_` öneki, auth yok. Yargıtay, Danıştay, BAM, yerel mahkeme,
 KYB (Bedesten), AYM, Uyuşmazlık Mahkemesi, 12 tür mevzuat, Resmî Gazete ve sekiz düzenleyici
 kurum (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim).
 
 Resmî uçların hangi adreste ve hangi biçimde konuştuğu bilgisi
 [saidsurucu](https://github.com/saidsurucu)'nun açık kaynak `yargi-mcp` ve `mevzuat-mcp`
-projelerinden (MIT) alınmıştır; transport, adaptörler ve yerel indeks ArthurLegalTR'de yeniden
-yazılmıştır. Ayrıntı: ArthurLegalTR reposundaki `ATTRIBUTION.md`.
+projelerinden (MIT) alınmıştır; transport, adaptörler ve yerel indeks arthur-tr-hukuk-mcp'de yeniden
+yazılmıştır. Ayrıntı: arthur-tr-hukuk-mcp reposundaki `ATTRIBUTION.md`.
 
-`konu` süzgeci (v1.9.0) ArthurLegalTR'nin içinde koşan yerel bir modeldir: karakter n-gramı üzerinde lojistik regresyon ve gerekçeli kurallar. Yalnız kamuya açık Resmî Gazete fihristinden eğitildi; üçüncü taraf model, veri kümesi veya müvekkil verisi içermez. Etiketler Claude ile damıtıldı, sınav kümeleri elle ve gerekçeli etiketlendi. Eğitim ve ölçüm kodu ayrı bir depodadır; pakete yalnız çıkarım girer.
+`konu` süzgeci (v1.9.0) arthur-tr-hukuk-mcp'nin içinde koşan yerel bir modeldir: karakter n-gramı üzerinde lojistik regresyon ve gerekçeli kurallar. Yalnız kamuya açık Resmî Gazete fihristinden eğitildi; üçüncü taraf model, veri kümesi veya müvekkil verisi içermez. Etiketler Claude ile damıtıldı, sınav kümeleri elle ve gerekçeli etiketlendi. Eğitim ve ölçüm kodu ayrı bir depodadır; pakete yalnız çıkarım girer.
 
 **TR Legal MCP (yargi-mcp-pro)** — `yargi-mcp-pro-production.up.railway.app/mcp`, OAuth 2.0
 (WorkOS), saidsurucu'nun ücretli sunucusu — bu pakette **isteğe bağlı ikinci connector**dır ve

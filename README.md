@@ -278,7 +278,7 @@ Turkish-law connector.
 | `tr_kurum_karari_*`, `tr_spk_bulten_icinde_ara` | Eight regulators behind one interface: Rekabet (10,368 decisions), EPDK (3,744 board decisions across five markets), SPK (weekly bulletins 2005–2026), BDDK (962), KVKK, BTK (1,904), GİB özelge, Sigorta Tahkim (66 journals) |
 | `tr_semantik_ara`, `tr_belge_getir` | A 19,404-document local index — FTS5, trigram and Voyage `voyage-4-lite` vectors — so *"bir bankanın faaliyet izninin kaldırılması"* finds BDDK decisions that share none of its words |
 
-Source: [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT,
+Source: [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (formerly `ArthurLegalTR`; MIT,
 standard library only, no paid search keys). The endpoint knowledge comes from
 [saidsurucu](https://github.com/saidsurucu)'s yargi-mcp and mevzuat-mcp; every
 adapter was rewritten and verified live for both search and fetch.

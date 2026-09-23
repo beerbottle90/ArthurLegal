@@ -202,7 +202,7 @@ documents each regulator has indexed.
 "kişisel verilerin korunması" (Spain)        → es_search_legislation → LO 15/1999, LO 7/2021
 ```
 
-**Source:** `github.com/beerbottle90/arthurlegal-mcp` (Turkish backend: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`) — hosted on Fly.io,
+**Source:** `github.com/beerbottle90/arthurlegal-mcp` (Turkish backend: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`) — hosted on Fly.io,
 indexes baked into the image, semantic search via Voyage AI (`voyage-4-lite`).
 
 > **Connect directly, without the package.** The same endpoint works on its own in any MCP client

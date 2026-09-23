@@ -59,7 +59,7 @@ paket yalnızca **atıf yapar ve yönlendirir**. Güncel metinler ilgili kurumda
 
 ## Veri kaynakları
 
-**MCP:** ArthurLegal MCP — Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden) · CourtListener (Free Law Project) · Fedlex ·
+**MCP:** ArthurLegal MCP — Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden) · CourtListener (Free Law Project) · Fedlex ·
 OpenCaseLaw.ch · TR Legal MCP (isteğe bağlı)
 
 **Ücretsiz REST:** Crossref · OpenAlex · Semantic Scholar · DOAJ · ORCID · EUR-Lex · HUDOC

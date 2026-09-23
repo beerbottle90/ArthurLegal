@@ -8,7 +8,7 @@
 
 ## Türetme notu
 
-Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
+Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
 
 ## Lisans
 

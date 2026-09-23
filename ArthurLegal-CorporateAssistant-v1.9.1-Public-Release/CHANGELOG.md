@@ -178,7 +178,7 @@ knowledge'a eklenir. Arthur Mask için Adım 5; Project Claude Desktop'tan açı
 ### Değişti
 
 1. **TR birincil yolu.** Mevzuat, içtihat, AYM, Uyuşmazlık, Resmî Gazete ve düzenleyici
-   kurum kararları `tr_` araçlarından çekilir. Kaynak: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`
+   kurum kararları `tr_` araçlarından çekilir. Kaynak: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`
    — standart kütüphane, ücretli arama anahtarı yok, uç bilgisi saidsurucu/yargi-mcp ve
    mevzuat-mcp'den (MIT). TR Legal MCP (yargi-mcp-pro, OAuth) **isteğe bağlı ikinci
    connector** oldu; yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB ve HSK için kullanılır

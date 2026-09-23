@@ -49,7 +49,7 @@ source sits in rather than papering over the difference.
 - **Primary-source MCP** (verbatim norm text and case law): Türkiye · Switzerland ·
   United States (case law) · Azerbaijan — via **ArthurLegal MCP** (Türkiye under the
   `tr_` prefix: courts, legislation with gerekçe, Official Gazette, eight regulators and a
-  19,498-document semantic archive; source [`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
+  19,498-document semantic archive; source [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
   decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
@@ -109,7 +109,7 @@ search returns its nearest neighbour rather than announcing the gap.
 
 The server's 15 backends are open source. Fourteen are published under the MIT
 license as folders of the [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp) repository,
-each with its own `LICENSE` file ([`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR),
+each with its own `LICENSE` file ([`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp),
 [`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api),
 [`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api),
 [`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api),

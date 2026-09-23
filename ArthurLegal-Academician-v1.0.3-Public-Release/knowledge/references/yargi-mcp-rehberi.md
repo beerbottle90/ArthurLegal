@@ -1,7 +1,7 @@
 # ArthurLegal MCP (`tr_`): Yargı, AYM, Uyuşmazlık ve Kurum Kararları Rehberi
 
 > Türkiye ArthurLegal MCP'nin içindedir: aynı connector, `tr_` öneki, kimlik doğrulama yok. Bu rehber içtihat, AYM, Uyuşmazlık Mahkemesi ve düzenleyici kurum araçlarını anlatır; mevzuat, Resmî Gazete ve `konu` süzgeci `mevzuat-mcp-rehberi.md` içindedir.
-> Araç adları ve parametreler 20.09.2026'da Türkiye backend'inin (ArthurLegalTR) 0.4.0 sürümünden ve canlı Bedesten, BTK ve GİB çağrılarından doğrulanmıştır. `status` çıktısında `backend_status.tr.version` 0.4.0'dan küçükse bölüm 3'teki tarih düzeltmesi o uçta yoktur: tarih aralığının iki ucunu da ver. `search_bedesten_unified`, `ictihat_ara`, `semantik_ictihat_ara`, `aym_ictihat_ara` gibi öneksiz adlar bu connector'da yoktur; her araç `tr_` ile başlar.
+> Araç adları ve parametreler 20.09.2026'da Türkiye backend'inin (arthur-tr-hukuk-mcp, eski adı arthur-tr-hukuk-mcp) 0.4.0 sürümünden ve canlı Bedesten, BTK ve GİB çağrılarından doğrulanmıştır. `status` çıktısında `backend_status.tr.version` 0.4.0'dan küçükse bölüm 3'teki tarih düzeltmesi o uçta yoktur: tarih aralığının iki ucunu da ver. `search_bedesten_unified`, `ictihat_ara`, `semantik_ictihat_ara`, `aym_ictihat_ara` gibi öneksiz adlar bu connector'da yoktur; her araç `tr_` ile başlar.
 
 ## 0. Bağlantı
 
@@ -10,7 +10,7 @@
 | Endpoint | `https://arthurlegal-mcp.fly.dev/mcp` (tek uç: Türkiye + 14 yargı çevresi) |
 | Auth | Yok; adresi bilen herkes çağırabilir, kamuya açık kaynaklarda arar |
 | Önek | `tr_` (23 araç). `status` tek çağrıda TR sürümünü, indeksini, vektör durumunu ve `konu` modelinin varlığını verir |
-| Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
+| Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
 | İlk çağrı | Karmaşık soruda `tr_hukuk_arastirma_rehberi` (hangi soru için hangi araç); kurum filtreleri için `tr_kurum_listesi` |
 
 ## 1. Araçlar
@@ -217,4 +217,4 @@ Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Ç
 6. Yerel indeks (`tr_semantik_ara`) taranmış kadarıyla vardır ve kurumdan kuruma derinliği farklıdır (bölüm 4); kapsamı `status` söyler.
 7. İçtihatta konu süzgeci yoktur. Bedesten karar listesi metin taşımaz; yerel bir modelin eleyeceği bir girdi bulunmaz. Konuya göre daraltma `chamber` ve `query` ile yapılır.
 
-*Son güncelleme: 20.09.2026. Araç listesi ve parametreler ArthurLegalTR 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten, BTK ve GİB çağrılarıyla doğrulandı.*
+*Son güncelleme: 20.09.2026. Araç listesi ve parametreler arthur-tr-hukuk-mcp (eski adı arthur-tr-hukuk-mcp) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten, BTK ve GİB çağrılarıyla doğrulandı.*

@@ -10,7 +10,7 @@
 | Endpoint | `https://arthurlegal-mcp.fly.dev/mcp` (tek uç: Türkiye + 14 yargı çevresi) |
 | Auth | Yok; adresi bilen herkes çağırabilir, kamuya açık kaynaklarda arar |
 | Önek | `tr_` (23 araç). `status` tek çağrıda TR sürümünü, indeksini, vektör durumunu ve `konu` modelinin varlığını verir |
-| Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
+| Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
 | İlk çağrı | Karmaşık soruda `tr_hukuk_arastirma_rehberi` (hangi soru için hangi araç); kurum filtreleri için `tr_kurum_listesi` |
 
 ## 1. Araçlar

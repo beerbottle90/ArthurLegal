@@ -204,7 +204,7 @@ Türkiye satırında sekiz kurumun kaçar belgesinin indekslendiği görünür.
 "kişisel verilerin korunması" (İspanya)       → es_search_legislation, LO 15/1999 ve LO 7/2021 dönmeli
 ```
 
-**Kaynak:** `github.com/beerbottle90/arthurlegal-mcp` (Türkiye backend'i: `github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR`) — Fly.io'da barındırılıyor,
+**Kaynak:** `github.com/beerbottle90/arthurlegal-mcp` (Türkiye backend'i: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`) — Fly.io'da barındırılıyor,
 indeksler image'a gömülü, semantik arama Voyage AI (`voyage-4-lite`) ile.
 
 > **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu on beş yargı çevresi

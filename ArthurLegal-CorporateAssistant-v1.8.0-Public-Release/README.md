@@ -118,7 +118,7 @@ States and Azerbaijan follow with primary-source MCP access; the WebFetch
 jurisdictions provide legislation and, where available, case law. When scope
 narrows, the assistant states it in the output.
 
-The Turkish backend ([`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/ArthurLegalTR), MIT) reuses endpoint knowledge from [saidsurucu](https://github.com/saidsurucu)'s open-source yargi-mcp and mevzuat-mcp; sources whose official endpoints do not answer reliably (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) are left out rather than shipped as stubs.
+The Turkish backend ([`ArthurLegalTR`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp), MIT) reuses endpoint knowledge from [saidsurucu](https://github.com/saidsurucu)'s open-source yargi-mcp and mevzuat-mcp; sources whose official endpoints do not answer reliably (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) are left out rather than shipped as stubs.
 **ArthurLegal MCP is auth-free** — anyone with the URL can call every tool, so no
 company secret, negotiating position or confidential draft goes into a query.
 Every tool carries its jurisdiction as a prefix, because `get_act` means five
