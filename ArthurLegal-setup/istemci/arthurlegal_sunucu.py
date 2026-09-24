@@ -23,6 +23,7 @@ import time
 import traceback
 import urllib.error
 
+import belge_oku
 import ortak
 
 PROTOKOLLER = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
@@ -311,6 +312,14 @@ YEREL_ARACLAR = [
      "inputSchema": {"type": "object", "properties": {
          "yol": {"type": "string"}, "profil": _profil_ozelligi(), "bolum": {"type": "string"},
          "baslangic": {"type": "integer", "minimum": 0}}, "required": ["yol"]}},
+    {"name": "arthurlegal_belge_oku",
+     "description": "Bilgisayardaki bir belgeyi (DOCX, PDF, HTML...) Markdown olarak okur. DOCX'te izlenen değişiklikleri ve "
+                    "yorumları KORUR: {++eklenen++} {--silinen--} {==işaretli==}{>>yorum<<} (CriticMarkup); karşı taraf "
+                    "redline'ı böyle okunur. Taranmış ya da okunamaz PDF'te metin uydurmaz. Yalnız kullanıcı klasörü "
+                    "altındaki belgeler; uzun belgeler `baslangic` ile parça parça okunur.",
+     "inputSchema": {"type": "object", "properties": {
+         "yol": {"type": "string", "description": "Dosya yolu ya da file: URI"},
+         "baslangic": {"type": "integer", "minimum": 0}}, "required": ["yol"]}},
     {"name": "arthurlegal_durum",
      "description": "Yerel kurulumun durumu: paket ve bileşen sürümleri, son güncelleme denetimi, araştırma sunucusu bağlantısı.",
      "inputSchema": {"type": "object", "properties": {}}},
@@ -321,7 +330,8 @@ for _a in YEREL_ARACLAR:
 TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
            "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
            "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
-           "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
+           "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır. Kullanıcının bilgisayarındaki belgeler (özellikle karşı taraf "
+           "redline'ı DOCX) `arthurlegal_belge_oku` ile okunur; izlenen değişiklikler ve yorumlar korunur.")
 
 
 class Sunucu:
@@ -405,6 +415,7 @@ class Sunucu:
             "arthurlegal_bilgi_getir": lambda: self.bilgi.getir(self.bilgi.profil(a.get("profil")), a.get("yol", ""),
                                                                 a.get("bolum"), a.get("baslangic", 0)),
             "arthurlegal_durum": self._durum,
+            "arthurlegal_belge_oku": lambda: self._belge(a),
         }
         if ad in yerel:
             try:
@@ -424,6 +435,13 @@ class Sunucu:
             ortak.gunluk("sunucu", f"uzak çağrı başarısız ({ad}): {e!r}")
             return {"content": [{"type": "text", "text": f"ArthurLegal araştırma sunucusuna ulaşılamadı ({e}). "
                                  "İnternet bağlantısını denetleyin; sonuç doğrulanmadan cevap vermeyin."}], "isError": True}
+
+    @staticmethod
+    def _belge(a):
+        try:
+            return belge_oku.oku(a.get("yol", ""), a.get("baslangic", 0))
+        except (belge_oku.BelgeHatasi, OSError, ValueError) as e:
+            raise Hata(-32602, f"Belge okunamadı: {e}") from e
 
     def _uzak_yenile(self, zaman_asimi=False):
         if not self._yenile_kilit.acquire(blocking=not zaman_asimi or self.uzak_araclar is None):

@@ -72,7 +72,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 12 test, ağa çıkmaz
+python -m unittest discover -s tests   # 18 test, ağa çıkmaz
 python yayin/yayinla.py v2.1.0         # imzalı manifest + dosyalar → GitHub Release
 ```
 

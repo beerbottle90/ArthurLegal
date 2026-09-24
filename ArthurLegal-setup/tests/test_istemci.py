@@ -238,6 +238,7 @@ class SunucuTesti(unittest.TestCase):
         self.surec.stdin.flush()
         adlar = [t["name"] for t in self.iste("tools/list")["result"]["tools"]]
         self.assertIn("arthurlegal_bilgi_getir", adlar)
+        self.assertIn("arthurlegal_belge_oku", adlar)
         self.assertIn("tr_ictihat_ara", adlar)
         self.assertNotIn("tkgm_tapu_kaydi_oku", adlar, "tapu kaydı aracı buluta aktarılmamalı")
 
