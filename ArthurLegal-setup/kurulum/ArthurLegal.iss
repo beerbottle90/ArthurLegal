@@ -8,19 +8,35 @@
 #ifndef FirmaAd
   #define FirmaAd ""
 #endif
+; Büroya özel kurulumda ürün adı ve simge büronun markasından gelir (derle.py, ortak.urun_adi):
+; programlar listesi, Başlat menüsü ve kaldırma kısayolu bu adı taşır. Kurulum klasörü değişmez.
+#ifndef UrunAd
+  #define UrunAd "ArthurLegal"
+#endif
+#ifndef Simge
+  #define Simge "arthurlegal.ico"
+#endif
+; kur.py'deki _kaldir_adi ile aynı olmalı.
+#if UrunAd == "ArthurLegal"
+  #define KaldirAdi "ArthurLegal'i Kaldır"
+#else
+  #define KaldirAdi UrunAd + " - Kaldır"
+#endif
 
 [Setup]
 AppId={{5B7A1E2C-9D4F-4C8B-A6E3-2F1D0C9B8A71}
-AppName=ArthurLegal
+AppName={#UrunAd}
 AppVersion={#Surum}
-AppVerName=ArthurLegal {#Surum}
+AppVerName={#UrunAd} {#Surum}
 AppPublisher=ArthurLegal
 AppPublisherURL=https://github.com/beerbottle90/ArthurLegal
 AppSupportURL=https://github.com/beerbottle90/ArthurLegal/issues
 VersionInfoVersion={#Surum}
-VersionInfoDescription=ArthurLegal Kurulum
+VersionInfoDescription={#UrunAd} Kurulum
 DefaultDirName={localappdata}\Programs\ArthurLegal
-DefaultGroupName=ArthurLegal
+DefaultGroupName={#UrunAd}
+; Üzerine kurulumda Başlat menüsü klasörü önceki kurulumdan değil ürün adından gelir (kur.py ile aynı).
+UsePreviousGroup=no
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
@@ -30,11 +46,11 @@ MinVersion=10.0
 OutputDir={#CiktiDizini}
 OutputBaseFilename={#CiktiAdi}
 LicenseFile={#Kaynak}\LISANS.txt
-SetupIconFile={#Kaynak}\bin\arthurlegal.ico
-UninstallDisplayIcon={app}\bin\arthurlegal.ico
+SetupIconFile={#Kaynak}\bin\{#Simge}
+UninstallDisplayIcon={app}\bin\{#Simge}
 WizardImageFile={#Varlik}\sihirbaz.png
 WizardSmallImageFile={#Varlik}\sihirbaz-kucuk.png
-UninstallDisplayName=ArthurLegal
+UninstallDisplayName={#UrunAd}
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
@@ -57,13 +73,13 @@ Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl"
 [Messages]
 ; Inno Setup 6 karşılama sayfasını göstermez; kurulum lisans sayfasıyla açılır. Bilgi "Kurulmaya hazır" sayfasında.
 #if FirmaAd != ""
-ReadyLabel1=Kurulum, {#FirmaAd} için ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, araştırma bağlantısı, ArthurLegal Tapu ve Arthur Mask.
+ReadyLabel1={#UrunAd} kurulmaya hazır ({#FirmaAd}): Hukuk Bürosu ve Kurumsal Asistan paketleri, araştırma bağlantısı, ArthurLegal Tapu ve Arthur Mask.
 #else
 ReadyLabel1=Kurulum, ArthurLegal'i kurmaya hazır: Hukuk Bürosu ve Kurumsal Asistan paketleri, araştırma bağlantısı, ArthurLegal Tapu ve Arthur Mask.
 #endif
 ReadyLabel2a=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB, birkaç dakika) ve açıksa Claude Desktop kapatılır. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 ReadyLabel2b=Kur düğmesine tıklayın. Arthur Mask indirilir (yaklaşık 1 GB, birkaç dakika) ve açıksa Claude Desktop kapatılır. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
-FinishedLabel=ArthurLegal kuruldu.%n%nClaude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın; asistan ArthurLegal talimatını kendisi yükler. İlk araç kullanımında çıkan izin penceresinde 'Her zaman izin ver'i seçin.%n%nMasaüstündeki ArthurLegal simgesi Claude Desktop'u ve başlangıç panelini açar.
+FinishedLabel={#UrunAd} kuruldu.%n%nClaude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın; asistan ArthurLegal talimatını kendisi yükler. İlk araç kullanımında çıkan izin penceresinde 'Her zaman izin ver'i seçin.%n%nMasaüstündeki {#UrunAd} simgesi Claude Desktop'u ve başlangıç panelini açar.
 
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -79,7 +95,7 @@ Source: "{#Kaynak}\firma\*"; DestDir: "{app}\firma"; Flags: ignoreversion recurs
 [Icons]
 ; Kısayolları kur.py yazar (zip yolu da aynısını yazsın diye): ana ArthurLegal simgesi, Tapu, rehber,
 ; knowledge klasörü, güncelleme denetimi. Burada yalnız kaldırma girdisi kalır.
-Name: "{group}\ArthurLegal'i Kaldır"; Filename: "{uninstallexe}"
+Name: "{group}\{#KaldirAdi}"; Filename: "{uninstallexe}"
 
 [Registry]
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ArthurLegalGuncelleme"; ValueData: """{app}\runtime\pythonw.exe"" -B ""{app}\bin\al.py"" guncelle --sessiz"; Flags: uninsdeletevalue
@@ -198,6 +214,11 @@ begin
       Log('Arthur Mask kurulumu başarısız, çıkış kodu ' + IntToStr(Sonuc));
   end;
   WizardForm.StatusLabel.Caption := 'Claude Desktop''a bağlanıyor...';
+  { al.py aktif.txt'deki sürümü seçer; üzerine kurulumda o hâlâ önceki sürümdür ve kısayollar önceki sürümün
+    koduyla (eski adlarla) yazılırdı. aktif.txt yoksa al.py en yeni sürümü seçer, kur.py onu yeniden yazar;
+    eski bir kurulum dosyası daha yeni bir sürümün üzerine çalışsa da en yeni sürüm kalır. kur.py doğrudan
+    çalıştırılamaz: gömülü Python betiğin klasörünü sys.path'e eklemez (al.py bunun için vardır). }
+  DeleteFile(ExpandConstant('{app}\aktif.txt'));
   Exec(ExpandConstant('{app}\runtime\python.exe'), '-B "' + ExpandConstant('{app}\bin\al.py') + '" kur --kurulum --kisayol',
        ExpandConstant('{app}'), SW_HIDE, ewWaitUntilTerminated, Sonuc);
   if Sonuc <> 0 then

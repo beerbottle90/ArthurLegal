@@ -96,6 +96,24 @@ def ayar() -> dict:
     return {**VARSAYILAN_AYAR, **json_oku(KOK / "ayar.json")}
 
 
+URUN_VARSAYILAN = "ArthurLegal"
+# Kısayol, Başlat menüsü ve programlar listesi adı olur: Windows dosya adında ve kurulum metninde güvenli
+# karakterler (\ / : * ? " < > | { } % yok), en çok 60 karakter, aygıt adı (CON, NUL…) değil.
+_URUN_DESENI = re.compile(r"^[\w .&'()·-]{1,60}$")
+_AYGIT_ADLARI = {"CON", "PRN", "AUX", "NUL"} | {f"{o}{n}" for o in ("COM", "LPT") for n in range(1, 10)}
+
+
+def urun_adi(firma_dizini: Path | None = None) -> str:
+    """Kısayolların, Başlat menüsünün, başlangıç sayfasının ve programlar listesinin adı. Büroya özel
+    kurulumda büronun markasındaki ürün adıdır (``firma/marka/tema.json`` → ``urun``); yoksa ya da
+    güvenli değilse ArthurLegal. Kurulum betiği (derle.py) ve kısayollar (kur.py) aynı adı buradan alır."""
+    tema = json_oku((firma_dizini or FIRMA) / "marka" / "tema.json")
+    ad = " ".join(str(tema.get("urun") or "").split()) if isinstance(tema, dict) else ""
+    if not _URUN_DESENI.match(ad) or ad.endswith(".") or ad.upper() in _AYGIT_ADLARI:
+        return URUN_VARSAYILAN
+    return ad
+
+
 def durum() -> dict:
     return json_oku(VERI / "durum.json")
 

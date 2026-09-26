@@ -177,19 +177,23 @@ def paket_hazirla(k: dict, hedef: Path) -> dict:
     return icerik
 
 
-def buro_simgesi(firma_dizini: Path, bin_dizini: Path) -> bool:
-    """Büronun simgesi (``firma/<kod>/marka/simge.ico``) varsa ArthurLegal simgesinin yerini alır:
-    kurulum dosyası, kısayollar ve kaldırma girdisi ``bin/arthurlegal.ico``'yu kullanır. Güncelleme
-    paketi ``bin/``'e dokunmadığı için simge güncellemelerde korunur. Geçerli bir ICO değilse
-    (başlık 00 00 01 00) ya da 1 MB'tan büyükse ArthurLegal simgesi kalır."""
+def buro_simgesi(firma_dizini: Path, bin_dizini: Path) -> str:
+    """Büronun simgesi (``firma/<kod>/marka/simge.ico``) varsa ArthurLegal simgesinin yerini alır ve
+    kurulum dosyası, kısayollar ve kaldırma girdisi için döndürdüğü adla da yazılır: ``buro-<özet>.ico``.
+    Ad içeriğin özetini taşır, çünkü Windows simgeleri dosya yoluna göre önbelleğe alır; aynı yolda yeni bir
+    simge eski resmi göstermeye devam ederdi. Güncelleme paketi ``bin/``'e dokunmadığı için simge
+    güncellemelerde korunur. Geçerli bir ICO değilse (başlık 00 00 01 00) ya da 1 MB'tan büyükse boş
+    döner, ArthurLegal simgesi kalır."""
     simge = firma_dizini / "marka" / "simge.ico"
     if not simge.is_file() or simge.stat().st_size > 1024 * 1024:
-        return False
-    with open(simge, "rb") as f:
-        if f.read(4) != b"\x00\x00\x01\x00":
-            return False
+        return ""
+    veri = simge.read_bytes()
+    if veri[:4] != b"\x00\x00\x01\x00":
+        return ""
+    ad = "buro-" + hashlib.sha256(veri).hexdigest()[:8] + ".ico"
     shutil.copy2(simge, bin_dizini / "arthurlegal.ico")
-    return True
+    shutil.copy2(simge, bin_dizini / ad)
+    return ad
 
 
 def firma_hazirla(kod: str, hedef: Path) -> dict:
@@ -241,9 +245,10 @@ def lisans_yaz(k: dict, hedef: Path) -> None:
     (hedef / "LISANS.txt").write_bytes(BOM + metin.replace("\r\n", "\n").replace("\n", "\r\n").encode("utf-8"))
 
 
-def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict) -> None:
+def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_VARSAYILAN) -> None:
     sablon = (BURASI / "kurulum" / "rehber.html").read_text(encoding="utf-8")
     degerler = {
+        "{{URUN}}": html.escape(urun),
         "{{FIRMA_SATIRI}}": html.escape(firma_ad) + " · " if firma_ad else "",
         "{{SURUM}}": icerik["surum"],
         "{{PAKET_HUKUK}}": icerik["paketler"].get("hukuk-burosu", "-"),
@@ -313,9 +318,15 @@ def main(argv=None) -> int:
         shutil.copy2(BURASI / "varlik" / ad_varlik, hazirlik / "bin" / ad_varlik)
     icerik = paket_hazirla(k, hazirlik / "surumler" / surum)
     firma = firma_hazirla(args.firma, hazirlik / "firma") if args.firma else {}
-    if args.firma and buro_simgesi(BURASI / "firma" / args.firma, hazirlik / "bin"):
-        print(f"  büro simgesi: firma/{args.firma}/marka/simge.ico")
-    rehber_yaz(hazirlik, firma.get("ad", ""), icerik)
+    # Büroya özel kurulumda ürün adı ve simge büronun markasından: kısayollar, Başlat menüsü, başlangıç
+    # sayfası ve programlar listesi. Kurulumdan sonra kur.py aynı adı kurulu büro katmanından okur.
+    urun = ortak.urun_adi(BURASI / "firma" / args.firma) if args.firma else ortak.URUN_VARSAYILAN
+    simge = buro_simgesi(BURASI / "firma" / args.firma, hazirlik / "bin") if args.firma else ""
+    if simge:
+        print(f"  büro simgesi: firma/{args.firma}/marka/simge.ico → bin/{simge}")
+    if urun != ortak.URUN_VARSAYILAN:
+        print(f"  ürün adı: {urun} (kısayollar, Başlat menüsü, başlangıç sayfası, programlar listesi)")
+    rehber_yaz(hazirlik, firma.get("ad", ""), icerik, urun)
     shutil.copy2(BURASI / "varlik" / "rehber-banner.png", hazirlik / "rehber" / "banner.png")
     lisans_yaz(k, hazirlik)
     ayar = {"manifest_url": f"https://github.com/{k['yayin_deposu']}/releases/latest/download/arthurlegal-manifest.json",
@@ -325,6 +336,8 @@ def main(argv=None) -> int:
         ayar.update(dagitim_deposu=k["dagitim_deposu"], jeton=k.get("istemci_jetonu", ""), manifest_url="")
         if not k.get("istemci_jetonu"):
             print("  Uyarı: private dağıtım seçili ama istemci jetonu yok; kurulumlar güncelleme alamaz.")
+    if simge:
+        ayar["simge"] = simge  # kur.py kısayollara bu simgeyi koyar
     ortak.json_yaz(hazirlik / "ayar.json", ayar)
 
     # Yedek kurulum yolu: Akıllı Uygulama Denetimi açık bilgisayarlarda imzasız kurulum motoru
@@ -366,6 +379,7 @@ def main(argv=None) -> int:
             print("  Uyarı: kod imzası yok. Windows 11 Akıllı Uygulama Denetimi açık bilgisayarlarda kurulum çalışmaz;"
                   " SmartScreen 'Yine de çalıştır' ister (README: Kod imzalama).")
         r = subprocess.run([str(iscc_bul()), f"/DKaynak={hazirlik}", f"/DSurum={surum}", f"/DFirmaAd={firma.get('ad', '')}",
+                            f"/DUrunAd={urun}", f"/DSimge={simge or 'arthurlegal.ico'}",
                             f"/DCiktiDizini={CIKTI}", f"/DCiktiAdi={ad}", f"/DMaskUrl={mask['url']}",
                             f"/DMaskSha={mask['sha256']}", f"/DVarlik={BURASI / 'varlik'}", *imza_args, "/Qp", str(iss)])
         if r.returncode:

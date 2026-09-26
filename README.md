@@ -136,6 +136,18 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.3.0 — A firm's own product name (2026-09-27)
+
+- **Product name.** In a firm-specific build, when the firm's brand folder names a product
+  (`firma/<code>/marka/tema.json` → `urun`), the shortcuts, the Start menu folder, the start page and the
+  Windows programs list carry that name instead of ArthurLegal. The install folder and the Claude Desktop server
+  names do not change. Unsafe names (path characters, device names, over 60 characters) fall back to ArthurLegal.
+- **Icon cache.** The firm icon reaches the shortcuts through a file named after its content hash
+  (`bin/buro-<hash>.ico`): Windows caches icons by path, and a new icon under an old path keeps showing the old
+  picture. When the product name changes, shortcuts left over under the previous name are removed.
+- **Reinstall over an existing install.** Shortcuts were written by the previously active version's code and
+  the Start menu folder kept its previous name; the installer now uses the newest version and the product name.
+
 ## Setup 2.2.0 — A desktop shortcut for the UYAP screen (2026-09-26)
 
 - **UYAP screen shortcut.** When the separately distributed UYAP bridge includes its local screen (`uyap/ekran.py`)

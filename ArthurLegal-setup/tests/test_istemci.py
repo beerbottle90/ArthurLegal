@@ -139,14 +139,57 @@ class BuroSimgesiTesti(unittest.TestCase):
 
     def test_buro_simgesi_yerine_gecer(self):
         (self.kok / "firma" / "marka" / "simge.ico").write_bytes(b"\x00\x00\x01\x00buro")
-        self.assertTrue(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
+        ad = self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin")
+        self.assertRegex(ad, r"^buro-[0-9a-f]{8}\.ico$", "ad içeriğin özetini taşır: Windows simge önbelleği")
         self.assertEqual((self.kok / "bin" / "arthurlegal.ico").read_bytes(), b"\x00\x00\x01\x00buro")
+        self.assertEqual((self.kok / "bin" / ad).read_bytes(), b"\x00\x00\x01\x00buro")
+        (self.kok / "firma" / "marka" / "simge.ico").write_bytes(b"\x00\x00\x01\x00yeni")
+        self.assertNotEqual(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"), ad, "yeni simge yeni ad")
 
     def test_simge_yoksa_ya_da_ico_degilse_dokunulmaz(self):
         self.assertFalse(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
         (self.kok / "firma" / "marka" / "simge.ico").write_bytes(b"\x89PNG")
         self.assertFalse(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
         self.assertEqual((self.kok / "bin" / "arthurlegal.ico").read_bytes(), b"\x00\x00\x01\x00arthurlegal")
+        self.assertEqual(sorted(p.name for p in (self.kok / "bin").iterdir()), ["arthurlegal.ico"])
+
+    def test_baslangic_sayfasi_urun_adiyla(self):
+        icerik = {"surum": "0.0.1", "paketler": {}}
+        self.derle.rehber_yaz(self.kok, "Örnek Büro", icerik, "Örnek Büro Asistanı")
+        sayfa = (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8")
+        self.assertIn("<title>Örnek Büro Asistanı Başlangıç</title>", sayfa)
+        self.assertIn("<i>Örnek Büro Asistanı - Tapu</i>", sayfa)
+        self.assertNotIn("{{", sayfa)
+        self.derle.rehber_yaz(self.kok, "", icerik)
+        self.assertIn("<title>ArthurLegal Başlangıç</title>",
+                      (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8"))
+
+
+class KurulumBetigiTesti(unittest.TestCase):
+    """Üzerine kurulum: kısayollar kurulan sürümün koduyla yazılır, Başlat menüsü klasörü ürün adından gelir."""
+
+    def test_uzerine_kurulum_yeni_kodla_ve_yeni_klasorle(self):
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        self.assertIn("UsePreviousGroup=no", iss, "Inno önceki kurulumun menü klasörünü yeniden kullanırdı")
+        sil, kur = iss.find(r"DeleteFile(ExpandConstant('{app}\aktif.txt'))"), iss.find("kur --kurulum --kisayol")
+        self.assertTrue(0 < sil < kur, "al.py aktif.txt'deki eski sürümü seçerdi; önce silinmeli")
+        # Kaldırma kısayolunun adı kur._kaldir_adi ile aynı olmalı.
+        self.assertIn('#define KaldirAdi "ArthurLegal\'i Kaldır"', iss)
+        self.assertIn('#define KaldirAdi UrunAd + " - Kaldır"', iss)
+
+    def test_aktif_yoksa_en_yeni_surum(self):
+        """Kurulumun dayandığı kural: aktif.txt silinince al.py en yeni sürüm klasörünü seçer."""
+        with tempfile.TemporaryDirectory() as t:
+            kok = Path(t) / "kok"
+            sahte_kok(kok, surum="0.0.1")
+            paket_yaz(kok / "surumler" / "0.0.2", "0.0.2")
+            (kok / "aktif.txt").write_text("0.0.1", encoding="utf-8")
+            kod = f"import runpy; print(runpy.run_path(r'{kok / 'bin' / 'al.py'}')['etkin_dizin']())"
+            secilen = lambda: Path(subprocess.run([sys.executable, "-c", kod], env=ENV, capture_output=True,  # noqa: E731
+                                                  text=True, check=True).stdout.strip()).name
+            self.assertEqual(secilen(), "0.0.1")
+            (kok / "aktif.txt").unlink()
+            self.assertEqual(secilen(), "0.0.2")
 
 
 class ClaudeAyariTesti(unittest.TestCase):
@@ -226,6 +269,68 @@ class KisayolTesti(unittest.TestCase):
             self.assertEqual(baslatilan[0][0][0], str(mask / "pythonw.exe"))
             self.assertEqual(Path(baslatilan[0][0][-1]), uyap / "ekran.py")
             self.assertEqual(baslatilan[0][1], {"HF_HUB_OFFLINE": "1", "PYTHONNOUSERSITE": "1"})
+
+    def test_urun_adi_kisayollarda_ve_eski_adlar_temizlenir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            self.assertIn("ArthurLegal.lnk", [s[0] for s in self.calistir(t, self.LISTE)], "ürün adı yoksa ArthurLegal")
+            (t / "kok" / "firma" / "marka").mkdir(parents=True)
+            (t / "kok" / "firma" / "marka" / "tema.json").write_text(json.dumps({"urun": "Örnek Büro Asistanı"}),
+                                                                     encoding="utf-8")
+            adlar = [s[0] for s in self.calistir(t, self.LISTE)]
+            self.assertIn("Örnek Büro Asistanı.lnk", adlar)
+            self.assertIn("Örnek Büro Asistanı - Tapu.lnk", adlar)
+            self.assertFalse([a for a in adlar if a.startswith("ArthurLegal")])
+            self.assertEqual(self.calistir(t, "import kur; print(json.dumps([kur._menu().name, "
+                                              "kur._kaldir_adi(kur.ortak.urun_adi())]))"),
+                             ["Örnek Büro Asistanı", "Örnek Büro Asistanı - Kaldır"])
+            # Ürün adı değişince önceki adla (ArthurLegal) kalan kısayollar ve boş kalan Başlat klasörü gider.
+            masa = t / "ev" / "Desktop"
+            programlar = t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs"
+            eski_menu, yeni_menu = programlar / "ArthurLegal", programlar / "Örnek Büro Asistanı"
+            for klasor in (masa, eski_menu, yeni_menu):
+                klasor.mkdir(parents=True, exist_ok=True)
+            for yol in (masa / "ArthurLegal.lnk", masa / "ArthurLegal - Tapu.lnk", eski_menu / "ArthurLegal.lnk",
+                        eski_menu / "ArthurLegal'i Kaldır.lnk", masa / "Örnek Büro Asistanı.lnk",
+                        yeni_menu / "Örnek Büro Asistanı - Kaldır.lnk", masa / "Başka Program.lnk"):
+                yol.write_bytes(b"")
+            self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
+                             "kur._kisayol_listesi()} | {kur._menu() / (kur._kaldir_adi(kur.ortak.urun_adi()) + "
+                             "'.lnk')}); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Başka Program.lnk", "Örnek Büro Asistanı.lnk"])
+            self.assertFalse(eski_menu.exists(), "boş kalan eski Başlat menüsü klasörü silinir")
+            self.assertEqual([p.name for p in yeni_menu.iterdir()], ["Örnek Büro Asistanı - Kaldır.lnk"])
+            self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
+            self.assertEqual([p.name for p in masa.iterdir()], ["Başka Program.lnk"])
+            self.assertFalse(yeni_menu.exists())
+
+    def test_guvenli_olmayan_urun_adi_kullanilmaz(self):
+        import ortak
+        with tempfile.TemporaryDirectory() as t:
+            marka = Path(t) / "marka"
+            marka.mkdir()
+            for ad in ("Kötü/Ad", "Ad: İki", "CON", "nul", "a" * 61, "Ad.", "", "{app}", "Yüzde %n", None):
+                with self.subTest(ad=ad):
+                    (marka / "tema.json").write_text(json.dumps({"urun": ad}), encoding="utf-8")
+                    self.assertEqual(ortak.urun_adi(Path(t)), "ArthurLegal")
+            (marka / "tema.json").write_text(json.dumps({"urun": "  Örnek   Büro (Hukuk) · Asistanı  "}),
+                                             encoding="utf-8")
+            self.assertEqual(ortak.urun_adi(Path(t)), "Örnek Büro (Hukuk) · Asistanı")
+
+    def test_simge_ayardaki_ozetli_dosya(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = "import kur; print(json.dumps(kur._simge().name))"
+            self.assertEqual(self.calistir(t, kod), "arthurlegal.ico")
+            ayar = json.loads((t / "kok" / "ayar.json").read_text(encoding="utf-8"))
+            for deger in ("buro-1234abcd.ico", "..\\disari.ico"):          # dosya yok; klasör dışı
+                (t / "kok" / "ayar.json").write_text(json.dumps({**ayar, "simge": deger}), encoding="utf-8")
+                self.assertEqual(self.calistir(t, kod), "arthurlegal.ico")
+            (t / "kok" / "bin" / "buro-1234abcd.ico").write_bytes(b"\x00\x00\x01\x00")
+            (t / "kok" / "ayar.json").write_text(json.dumps({**ayar, "simge": "buro-1234abcd.ico"}), encoding="utf-8")
+            self.assertEqual(self.calistir(t, kod), "buro-1234abcd.ico")
 
 
 class ProjeKlasoruTesti(unittest.TestCase):
