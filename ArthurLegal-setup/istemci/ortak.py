@@ -187,10 +187,10 @@ def mask_surumu() -> str | None:
         return "0.0.0" if mask_python() else None
 
 
-def arka_planda(args: list) -> None:
-    """Pencere açmadan, bu süreçten bağımsız başlatır."""
+def arka_planda(args: list, ortam: dict | None = None) -> None:
+    """Pencere açmadan, bu süreçten bağımsız başlatır. ``ortam`` verilmezse bu sürecinki geçer."""
     bayrak = (0x00000008 | 0x00000200 | PENCERESIZ) if sys.platform == "win32" else 0  # DETACHED|NEW_GROUP
-    subprocess.Popen([str(a) for a in args], creationflags=bayrak, close_fds=True,
+    subprocess.Popen([str(a) for a in args], creationflags=bayrak, close_fds=True, env=ortam,
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 

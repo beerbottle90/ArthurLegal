@@ -3,6 +3,7 @@
     al.py kisayol baslat          ana simge: Claude Desktop'ı açar ve başlat panelini gösterir
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
     al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge)
+    al.py kisayol uyap-ekran      UYAP Ekranı: sabah taraması, son gün, uyuşmazlık; Claude'suz, yerel
     al.py kisayol knowledge       paket bilgi dosyalarını Gezgin'de açar (klasik Project yükleme yolu)
 """
 from __future__ import annotations
@@ -106,6 +107,20 @@ def uyap_tarayici() -> int:
                             "-Tarayici", "brave" if brave else "edge"])
 
 
+def uyap_ekran() -> int:
+    """UYAP Ekranı Arthur Mask'in Python'unda açılır: maskeleme orada. Ortam, Claude Desktop'taki UYAP
+    kaydıyla aynıdır (claude_ayari): model indirilmez, kullanıcı paketleri karışmaz."""
+    mask, ekran = ortak.mask_python(), ortak.SURUM_DIZINI / "uyap" / "ekran.py"
+    if not mask or not ekran.exists():
+        print("Bu kurulumda UYAP Ekranı yok: UYAP köprüsü ve Arthur Mask gerekir.")
+        return 1
+    pencereli = mask.with_name("pythonw.exe")
+    ortam = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",
+             "HF_HUB_OFFLINE": "1", "PYTHONNOUSERSITE": "1"}
+    ortak.arka_planda([pencereli if pencereli.exists() else mask, "-B", ekran], ortam)
+    return 0
+
+
 def knowledge() -> int:
     """Proje klasörlerini açar: Claude'da 'Use a folder' ile seçilir ya da dosyalar projeye sürüklenir."""
     proje.esitle()
@@ -114,8 +129,8 @@ def knowledge() -> int:
 
 
 if __name__ == "__main__":
-    islem = {"baslat": baslat, "tapu": tapu, "uyap-tarayici": uyap_tarayici, "knowledge": knowledge}.get(
-        sys.argv[1] if len(sys.argv) > 1 else "")
+    islem = {"baslat": baslat, "tapu": tapu, "uyap-tarayici": uyap_tarayici, "uyap-ekran": uyap_ekran,
+             "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
     if not islem:
-        sys.exit("kullanım: al.py kisayol baslat|tapu|uyap-tarayici|knowledge")
+        sys.exit("kullanım: al.py kisayol baslat|tapu|uyap-tarayici|uyap-ekran|knowledge")
     sys.exit(islem())

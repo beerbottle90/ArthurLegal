@@ -189,6 +189,45 @@ class ClaudeAyariTesti(unittest.TestCase):
             self.assertEqual(veri["preferences"], {"x": 1})
 
 
+class KisayolTesti(unittest.TestCase):
+    """UYAP Ekranı kısayolu yalnız köprü ve Arthur Mask birlikteyse; Ekran Mask'in Python'unda açılır."""
+
+    LISTE = "import kur; print(json.dumps([[y.name, str(h), a] for y, h, a, _ in kur._kisayol_listesi()]))"
+    AC = ("import kisayol, ortak; k = []; ortak.arka_planda = lambda a, o=None: k.append([[str(x) for x in a], "
+          "{d: o.get(d) for d in ('HF_HUB_OFFLINE', 'PYTHONNOUSERSITE')}]); print(json.dumps([kisayol.uyap_ekran(), k]))")
+
+    def calistir(self, t, kod):
+        tam = f"import sys, json; sys.path.insert(0, r'{t / 'kok'}/surumler/0.0.1/istemci'); {kod}"
+        env = {**ENV, "APPDATA": str(t / "Roaming"), "LOCALAPPDATA": str(t / "Local"), "USERPROFILE": str(t / "ev"),
+               "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
+        cikti = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True,
+                               encoding="utf-8", check=True).stdout
+        return json.loads(cikti.strip().splitlines()[-1])       # işleyicinin uyarı satırından sonra
+
+    def test_ekran_kisayolu_ve_acilisi(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            uyap = t / "kok" / "surumler" / "0.0.1" / "uyap"
+            uyap.mkdir()
+            (uyap / "ekran.py").write_text("", encoding="utf-8")
+            self.assertNotIn("ArthurLegal - UYAP Ekranı.lnk", [s[0] for s in self.calistir(t, self.LISTE)],
+                             "Arthur Mask yokken eklenmemeli")
+            self.assertEqual(self.calistir(t, self.AC), [1, []])
+            mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
+            mask.mkdir(parents=True)
+            for ad in ("python.exe", "pythonw.exe"):
+                (mask / ad).write_bytes(b"")
+            ekran = [s for s in self.calistir(t, self.LISTE) if s[0] == "ArthurLegal - UYAP Ekranı.lnk"]
+            self.assertEqual(len(ekran), 2, "masaüstü ve Başlat menüsü")
+            self.assertTrue(all(s[1].endswith("pythonw.exe") and s[2].endswith("kisayol uyap-ekran") for s in ekran))
+            sonuc, baslatilan = self.calistir(t, self.AC)
+            self.assertEqual(sonuc, 0)
+            self.assertEqual(baslatilan[0][0][0], str(mask / "pythonw.exe"))
+            self.assertEqual(Path(baslatilan[0][0][-1]), uyap / "ekran.py")
+            self.assertEqual(baslatilan[0][1], {"HF_HUB_OFFLINE": "1", "PYTHONNOUSERSITE": "1"})
+
+
 class ProjeKlasoruTesti(unittest.TestCase):
     """'Use a folder' klasörleri: yönetilen içerik yenilenir, kullanıcı dosyaları korunur."""
 

@@ -136,6 +136,14 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.2.0 — A desktop shortcut for the UYAP screen (2026-09-26)
+
+- **UYAP screen shortcut.** When the separately distributed UYAP bridge includes its local screen (`uyap/ekran.py`)
+  and Arthur Mask is installed, the installer adds an "ArthurLegal - UYAP Ekranı" shortcut to the desktop and the
+  Start menu. The screen runs in Arthur Mask's Python with the same environment as the Claude Desktop registration
+  (offline model, no user site-packages). Shortcuts are written at install time; silent updates do not add them.
+  Packages are unchanged; no new public release.
+
 ## Setup 2.1.1 — A firm's own icon (2026-09-26)
 
 - **Firm icon.** A firm-specific build (`derle.py --firma <code>`) takes `firma/<code>/marka/simge.ico` when present: the

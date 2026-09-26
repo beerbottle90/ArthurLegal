@@ -80,6 +80,10 @@ def _kisayol_listesi() -> list:
     if (ortak.SURUM_DIZINI / "uyap").exists():
         liste.append((menu / "ArthurLegal - UYAP Tarayıcısı.lnk", py, f'-B "{al}" kisayol uyap-tarayici',
                       "UYAP için ayrı profilli tarayıcı"))
+    # UYAP Ekranı maskeleme olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir.
+    if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
+        ekran = (pyw, f'-B "{al}" kisayol uyap-ekran', "UYAP Ekranı: sabah taraması, son gün ve uyuşmazlık, Claude'suz")
+        liste += [(masa / "ArthurLegal - UYAP Ekranı.lnk", *ekran), (menu / "ArthurLegal - UYAP Ekranı.lnk", *ekran)]
     return liste
 
 
