@@ -177,6 +177,21 @@ def paket_hazirla(k: dict, hedef: Path) -> dict:
     return icerik
 
 
+def buro_simgesi(firma_dizini: Path, bin_dizini: Path) -> bool:
+    """Büronun simgesi (``firma/<kod>/marka/simge.ico``) varsa ArthurLegal simgesinin yerini alır:
+    kurulum dosyası, kısayollar ve kaldırma girdisi ``bin/arthurlegal.ico``'yu kullanır. Güncelleme
+    paketi ``bin/``'e dokunmadığı için simge güncellemelerde korunur. Geçerli bir ICO değilse
+    (başlık 00 00 01 00) ya da 1 MB'tan büyükse ArthurLegal simgesi kalır."""
+    simge = firma_dizini / "marka" / "simge.ico"
+    if not simge.is_file() or simge.stat().st_size > 1024 * 1024:
+        return False
+    with open(simge, "rb") as f:
+        if f.read(4) != b"\x00\x00\x01\x00":
+            return False
+    shutil.copy2(simge, bin_dizini / "arthurlegal.ico")
+    return True
+
+
 def firma_hazirla(kod: str, hedef: Path) -> dict:
     kaynak = BURASI / "firma" / kod
     bilgi = ortak.json_oku(kaynak / "firma.json")
@@ -298,6 +313,8 @@ def main(argv=None) -> int:
         shutil.copy2(BURASI / "varlik" / ad_varlik, hazirlik / "bin" / ad_varlik)
     icerik = paket_hazirla(k, hazirlik / "surumler" / surum)
     firma = firma_hazirla(args.firma, hazirlik / "firma") if args.firma else {}
+    if args.firma and buro_simgesi(BURASI / "firma" / args.firma, hazirlik / "bin"):
+        print(f"  büro simgesi: firma/{args.firma}/marka/simge.ico")
     rehber_yaz(hazirlik, firma.get("ad", ""), icerik)
     shutil.copy2(BURASI / "varlik" / "rehber-banner.png", hazirlik / "rehber" / "banner.png")
     lisans_yaz(k, hazirlik)

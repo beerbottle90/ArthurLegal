@@ -136,6 +136,12 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.1.1 — A firm's own icon (2026-09-26)
+
+- **Firm icon.** A firm-specific build (`derle.py --firma <code>`) takes `firma/<code>/marka/simge.ico` when present: the
+  installer, the shortcuts and the uninstall entry carry the firm's icon instead of ArthurLegal's. Silent updates do not touch
+  it. Packages are unchanged; no new public release.
+
 ## v1.10.0 — The Turkish land registry answers in the chat; the tool map matches the live endpoint (2026-09-23)
 
 Law Firm and Corporate **v1.10.0**, Courthouse **v1.1.0**, Academician **v1.1.0**, ArthurLegal Setup **2.1.0**.

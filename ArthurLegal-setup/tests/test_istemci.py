@@ -122,6 +122,33 @@ class Ed25519Testi(unittest.TestCase):
         self.assertFalse(ed25519.verify(ed25519.public_key(sk), b"", imza[:-1] + bytes([imza[-1] ^ 1])))
 
 
+class BuroSimgesiTesti(unittest.TestCase):
+    """derle.py: büronun simgesi ArthurLegal simgesinin yerini alır; bozuk dosya almaz."""
+
+    def setUp(self):
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import derle
+        self.derle = derle
+        self.kok = Path(tempfile.mkdtemp())
+        (self.kok / "bin").mkdir()
+        (self.kok / "bin" / "arthurlegal.ico").write_bytes(b"\x00\x00\x01\x00arthurlegal")
+        (self.kok / "firma" / "marka").mkdir(parents=True)
+
+    def tearDown(self):
+        shutil.rmtree(self.kok, ignore_errors=True)
+
+    def test_buro_simgesi_yerine_gecer(self):
+        (self.kok / "firma" / "marka" / "simge.ico").write_bytes(b"\x00\x00\x01\x00buro")
+        self.assertTrue(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
+        self.assertEqual((self.kok / "bin" / "arthurlegal.ico").read_bytes(), b"\x00\x00\x01\x00buro")
+
+    def test_simge_yoksa_ya_da_ico_degilse_dokunulmaz(self):
+        self.assertFalse(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
+        (self.kok / "firma" / "marka" / "simge.ico").write_bytes(b"\x89PNG")
+        self.assertFalse(self.derle.buro_simgesi(self.kok / "firma", self.kok / "bin"))
+        self.assertEqual((self.kok / "bin" / "arthurlegal.ico").read_bytes(), b"\x00\x00\x01\x00arthurlegal")
+
+
 class ClaudeAyariTesti(unittest.TestCase):
     def calistir(self, komut, kok, appdata, yerel):
         kod = f"import sys; sys.path.insert(0, r'{kok}/surumler/0.0.1/istemci'); import claude_ayari, json; print(json.dumps([str(y) for y in claude_ayari.{komut}()]))"
