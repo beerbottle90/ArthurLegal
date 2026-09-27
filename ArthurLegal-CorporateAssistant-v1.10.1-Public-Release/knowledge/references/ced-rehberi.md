@@ -1,0 +1,118 @@
+# ÇED (Çevresel Etki Değerlendirmesi) Rehberi — [İşletme Yeri] Bağlamı
+
+> 2872 sayılı Çevre Kanunu + ÇED Yönetmeliği. [İşletme Yeri] rafineri/[petrokimya iştiraki] kompleksinin sürekli ÇED yenileme/değişiklik süreci yakıcı stres alanı.
+
+## Hukuki çerçeve
+
+- **2872 sayılı Çevre Kanunu** — m. 10 ÇED zorunluluğu, m. 20-22 idari para cezaları
+- **ÇED Yönetmeliği** (yıllık güncellenir, Çevre Bakanlığı tebliği)
+- **ÇED Genel Müdürlüğü** — Çevre, Şehircilik ve İklim Değişikliği Bakanlığı
+
+## ÇED süreci tipleri
+
+| Tip | Kapsam | [ŞİRKET ADI] örneği |
+|---|---|---|
+| **ÇED gereklilik var/yok** | Ön inceleme | Yeni proje başlangıç |
+| **ÇED olumlu/olumsuz** | Tam ÇED süreci | [RAFİNERİ] kapasite artırımı, yeni [HALKA AÇIK İŞTİRAK] hattı |
+| **Proje tanıtım dosyası (PTD)** | Küçük etkili proje | Tank, ek depo |
+| **ÇED muafiyeti** | Listede yok ise | — |
+| **Kümülatif etki değerlendirmesi** | Birden fazla proje birlikte | [ÖZEL ENDÜSTRİ BÖLGESİ] içi yeni yatırımlar |
+
+## Süreç akışı
+
+```
+Başvuru (proje sahibi) →
+ÇED kapsamlama (scoping) — komisyon →
+ÇED raporu (proje sahibi tarafından bağımsız uzman ile hazırlanır) →
+Halk katılımı (toplantı) →
+Komisyon inceleme + bakanlık değerlendirme →
+ÇED Olumlu / ÇED Olumsuz / Koşullu Olumlu →
+  [Olumsuz → İYUK 30 gün → İdare Mah. iptal davası]
+```
+
+## [ŞİRKET ADI] [İşletme Alanı] için özel durumlar
+
+### Sürekli ÇED dosyaları
+- **[RAFİNERİ]:** Kapasite artırımı, yeni ünite eklemesi
+- **[HALKA AÇIK İŞTİRAK]:** Yeni petrokimya hattı (etilen, propilen genişleme)
+- **[ŞİRKET ADI] Terminal ([KONTEYNER TERMİNAL]):** Kapasite genişleme, yeni rıhtım
+- **[ŞİRKET ADI] Depolama:** Yeni tank, yeni boru hattı
+- **[ÖZEL ENDÜSTRİ BÖLGESİ] ortak altyapı:** Yol, su, atık su
+
+### Risk faktörleri
+- **STK + yerel toplum** baskısı (basın etkili)
+- **Bakanlık komisyon değerlendirmesi** öznel
+- **Halk katılımı toplantısında** ihtilaf
+- **Kümülatif etki** — [ÖZEL ENDÜSTRİ BÖLGESİ] içinde tek tek projelerin değerlendirmesi ama toplamda büyük etki
+
+## ÇED ret kararına dava — ⚠️ ÖZEL REJİM: İYUK m. 20/A İVEDİ YARGILAMA USULÜ
+
+**ÇED kararları (idari yaptırım/para cezası HARİÇ) İYUK m. 20/A kapsamındadır:**
+
+| Kalem | ÇED ret kararı (m. 20/A) | Çevre idari para cezası (genel rejim) |
+|---|---|---|
+| **Dava açma süresi** | **30 gün** (hak düşürücü) | **60 gün** |
+| İYUK m. 11 üst makama başvuru | **UYGULANMAZ** (süre durmaz) | Uygulanır |
+| İstinaf (BİM) | **YOK — atlanır** | Var (30 gün) |
+| Temyiz | **Doğrudan Danıştay (15 gün)** | Danıştay (BİM kararına 30 gün) |
+| Temyiz dairesi | Danıştay **14. Daire** (ÇED) veya **10. Daire** veya **6. Daire** (imar/çevre işbölümüne göre) | Danıştay 10. Daire |
+| Yürütmenin durdurulması | Talep edilebilir | Talep edilebilir |
+
+⚠️ **KRİTİK BUG TARİHÇESİ:** v1.3.0'da bu rehberde ÇED için "60 gün + BİM + Danıştay" yazılıydı — **yanlış**. v1.3.1 patch ile düzeltildi. ArthurLegal MCP (`tr_`)'den teyit edilen doğru rejim: m. 20/A → 30 gün, BİM yok, 15 gün temyiz.
+
+**[ŞİRKET ADI] pratik:**
+- **ÇED ret kararı geldiyse derhal 30 gün takvim başlatılır** — kaçırılırsa hak düşer, m. 11 başvurusu süreyi DURDURMAZ
+- Doğrudan Ankara İdare Mahkemesi (Bakanlık merkez) veya il İdare Mahkemesi (il müdürlüğü)
+- Yürütmenin durdurulması talebi (telafisi güç zarar = yatırım blokesi)
+- Kararla aleyhe karara karşı 15 gün içinde **doğrudan Danıştay'a** temyiz
+
+**ArthurLegal MCP (`tr_`) doğrulama:**
+```
+tr_mevzuat_icinde_ara(mevzuat_id="<tr_mevzuat_ara sonucundaki mevzuat_id>", query="20/A")
+```
+
+## Hukuki argümanlar (klasik)
+
+- **Komisyon uzmanlığı yetersiz** — komisyon üyelerinin niteliği
+- **Bağımsız uzman raporu göz ardı edildi** — bizim hazırlattığımız rapor
+- **BAT (Best Available Techniques) uyumu** — AB direktif paraleli
+- **Sektör emsali yatırımların ÇED onayı** — neden bizim red?
+- **Bakanlık prosedürü ihlali** — halk katılımı, komisyon toplantı
+
+## Paralel idari ceza
+
+Çevre Bakanlığı **idari para cezası** (2872 m. 20-22) ayrı süreçtir:
+- Çevre denetiminden çıkar (planlı veya şikayet üzerine)
+- Ceza kararı tebliğden 30 gün → İdare Mah. dava (`idari-para-cezasi-itiraz`)
+- ÇED ret + idari ceza birlikte → koordine savunma
+
+## ArthurLegal MCP (`tr_`)
+
+```
+tr_ictihat_ara(
+  courts=["DANISTAYKARAR"],
+  chamber="D14",
+  query="+ÇED +ret +iptal",
+  date_from="2022-01-01"
+)
+
+tr_ictihat_ara(
+  courts=["DANISTAYKARAR"],
+  chamber="D10",
+  query="+çevre +cezası +2872",
+  date_from="2022-01-01"
+)
+```
+
+## ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_ara(number="2872", types=["KANUN"])  # Çevre K.
+tr_mevzuat_ara(query="ÇED", types=["YONETMELIK"])  # ÇED Yön.
+```
+
+## Bağlantılı
+
+- [İYUK rehberi](iyuk-rehberi.md) — dava usulü
+- [İSG dava rehberi](isg-dava-rehberi.md) — [İşletme Yeri] İSG ile koordineli
+- [ŞİRKET ADI] profili → administrative-legal
