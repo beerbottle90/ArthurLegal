@@ -196,8 +196,10 @@ class Bilgi:
             "Parsel Sorgu'dan canlı getirir: kullanıcıdan GeoJSON/KML dosyası isteme. Sohbetteki ilk canlı çağrı onay "
             "kartı döndürür; kartı olduğu gibi göster, kabulde `onay=true` ile yinele ve o sohbette `onay=true` gönder. "
             "Tapu kaydı metni (`tapu_kaydi_oku`) bilgisayardan çıkmaz. Ayrıntı: `tapu-kadastro-rehberi.md`.",
-            "Arthur Mask ve UYAP (`arthur-uyap`, salt okunur, maskeli) için SYSTEM_PROMPT'taki kurallar geçerlidir; "
-            "müvekkil belgesi sohbete doğrudan yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir.",
+            "Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan "
+            "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. UYAP (`arthur-uyap`, salt okunur, maskeli) kuruluysa "
+            "onun kendi talimatı geçerlidir: son gün hesaplanmaz ve sana gün gelmez, takvim kaydı avukatın "
+            "bilgisayarında oluşur.",
         ]
         if buro:
             maddeler.append(
