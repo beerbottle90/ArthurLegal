@@ -60,8 +60,16 @@ def durum_yaz(claude_durumu: str | None = None) -> Path:
     d = ortak.durum()
     kayitli = claude_ayari.kayitli()
     sunucular = sorted({s for adlar in kayitli.values() for s in adlar if s.startswith("arthur")})
+    sg = d.get("son_guncelleme") if isinstance(d.get("son_guncelleme"), dict) else {}
     veri = {
         "surum": ortak.surum(),
+        "urun": ortak.urun_adi(),
+        # Yalnız doğrulanmış güncelleme (guncelle.py); kurulumdan beri güncelleme yoksa boş.
+        "son_guncelleme": (time.strftime("%d.%m.%Y %H:%M", time.localtime(sg["zaman"])) + " · "
+                           + str(sg.get("onceki", "?")) + " → " + str(sg.get("yeni", "?"))) if sg.get("zaman") else "",
+        # Claude Desktop'taki yerel sunucunun açılışta yazdığı sürüm: güncelleme kurulu ama Claude yeniden
+        # açılmadıysa burada eski numara görünür.
+        "calisan_surum": d.get("calisan_surum", ""),
         "paketler": bilgi.get("paketler", {}),
         "bilesenler": bilgi.get("bilesenler", {}),
         "mask": ortak.mask_surumu() or "",

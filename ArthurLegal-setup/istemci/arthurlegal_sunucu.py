@@ -345,6 +345,12 @@ class Sunucu:
                 s.reconfigure(encoding="utf-8")
             except (AttributeError, ValueError):
                 pass
+        try:
+            # Başlangıç paneli Claude Desktop'ın gerçekte hangi sürümle çalıştığını gösterir: güncelleme
+            # kurulduysa ama Claude Desktop yeniden açılmadıysa panel bunu söyler.
+            ortak.durum_guncelle(calisan_surum=ortak.surum(), calisan_zaman=time.time())
+        except OSError:
+            pass
         for satir in sys.stdin:
             if not satir.strip():
                 continue

@@ -147,6 +147,15 @@ justify building an MCP server, and which already have a good enough public API.
   (`tema.json` → `kisa_ad`): "<short name> - UYAP Dashboard". The other shortcuts keep the product name. Unsafe
   names fall back to ArthurLegal. Uninstall removes only "<short name> - UYAP…" shortcuts, nothing else that
   starts with the short name.
+- **Version in every name.** Shortcut names end with the installed version ("ArthurLegal 2.4.0",
+  "ArthurLegal - Tapu 2.4.0", "ArthurLegal - UYAP Dashboard 2.4.0"); so do the start page title and the Windows
+  programs list entry. The number always comes from the running code's `surum.txt`.
+- **Honest updates.** After a silent or manual update, the updater rewrites the shortcuts and the programs list
+  entry only once the new package has been verified and made active, using the new version's code; if the update
+  did not happen, names keep the old number and the start page shows why. A shortcut left with another number
+  (for example after an interrupted update) is corrected at the next check. The start page also shows the last
+  verified update ("2.3.0 → 2.4.0") and the version Claude Desktop is actually running, with a note to restart
+  Claude Desktop when it is still on the old one.
   Packages are unchanged; no new public release.
 
 ## Setup 2.3.0 — A firm's own product name (2026-09-27)

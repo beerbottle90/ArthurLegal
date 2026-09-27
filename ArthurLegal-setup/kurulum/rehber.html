@@ -98,8 +98,14 @@ Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumlu
   var d = window.ARTHURLEGAL_DURUM;
   if (!d) return;
   var paket = Object.keys(d.paketler || {}).map(function (k) { return (k === "hukuk-burosu" ? "Hukuk Bürosu " : "Kurumsal ") + d.paketler[k]; }).join(" · ");
+  if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Başlangıç";
+  // Claude Desktop'ın gerçekte çalıştırdığı sürüm; güncelleme kurulu ama Claude yeniden açılmadıysa eski numara.
+  var calisan = !d.calisan_surum ? "henüz açılmadı" : (d.calisan_surum === d.surum ? d.calisan_surum + " (güncel)"
+      : d.calisan_surum + " — Claude Desktop'u sistem tepsisindeki simge dâhil kapatıp açın; " + d.surum + " devreye girsin");
   var satirlar = [
     ["Kurulum", d.surum],
+    ["Son güncelleme", d.son_guncelleme || "yok (kurulumdan beri)"],
+    ["Claude Desktop'ta çalışan", calisan],
     ["Paketler", paket || "-"],
     ["Claude Desktop", d.claude === "bulunamadı" ? "kurulu değil" : d.claude],
     ["Bağlı sunucular", (d.sunucular || []).join(", ") || "-"],

@@ -86,12 +86,14 @@ def _kisayol_klasorleri(menu: Path) -> list:
 
 
 def _desenler(ad: str, kisa: str = "") -> list:
-    """Bu kurulumun kısayollarını tanıyan adlar: ürün adıyla ve (önceki kurulumdan kalan) ArthurLegal adıyla.
-    Kısa ad yalnız UYAP simgesinde kullanılır; onunla yalnız "<kısa ad> - UYAP…" tanınır, başka kısayol değil."""
+    """Bu kurulumun kısayollarını tanıyan adlar: ürün adıyla ve (önceki kurulumdan kalan) ArthurLegal adıyla,
+    sürümlü ("<ad> 2.4.0") ya da sürümsüz (2.4.0'dan önceki kurulumlar). Kısa ad yalnız UYAP simgesinde
+    kullanılır; onunla yalnız "<kısa ad> - UYAP…" tanınır, başka kısayol değil."""
     adlar = sorted({ortak.URUN_VARSAYILAN, ad})
     kisa_desen = [f"{kisa} - UYAP*.lnk"] if kisa and kisa not in adlar else []
     return [d.format(a) for a in adlar
-            for d in ("{}.lnk", "{}.cmd", "{} - *.lnk", "{} - *.cmd", "{} - *.url", "{}*.url")] \
+            for d in ("{}.lnk", "{} [0-9]*.lnk", "{}.cmd", "{} [0-9]*.cmd", "{} - *.lnk", "{} - *.cmd",
+                      "{} - *.url", "{}*.url")] \
         + kisa_desen + ["ArthurLegal'i Kaldır.lnk"]
 
 
@@ -101,28 +103,62 @@ ESKI_KISAYOLLAR = ("ArthurLegal - Tapu.cmd", "ArthurLegal - UYAP Tarayıcısı.c
 
 def _kisayol_listesi() -> list:
     """(yol, hedef, argüman, açıklama) dörtlüleri. Adlar ürün adını taşır (ortak.urun_adi): genel kurulumda
-    ArthurLegal, büroya özel kurulumda büronun ürün adı. Ana simge Claude'u açar, paneli gösterir."""
+    ArthurLegal, büroya özel kurulumda büronun ürün adı. Ana simge Claude'u açar, paneli gösterir.
+
+    Her ad sonda çalışan kodun sürümünü taşır (ortak.surum: bu dosyanın sürüm klasöründeki surum.txt):
+    "<ad> 2.4.0", "<ad> - Tapu 2.4.0". Güncelleyici adları ancak yeni sürüm doğrulanıp etkin olunca, o
+    sürümün koduyla yeniden yazar; güncelleme olmadıysa ad eski numarada kalır."""
     py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
-    ad, kisa, menu, masa = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu()
-    ana = (pyw, f'-B "{al}" kisayol baslat', "Claude Desktop'ı ve başlangıç panelini açar")
-    tapu = (pyw, f'-B "{al}" kisayol tapu', "ArthurLegal Tapu arayüzü")
+    ad, kisa, menu, masa, s = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu(), ortak.surum()
+    ana = (pyw, f'-B "{al}" kisayol baslat', f"Claude Desktop'ı ve başlangıç panelini açar ({s})")
+    tapu = (pyw, f'-B "{al}" kisayol tapu', f"ArthurLegal Tapu arayüzü ({s})")
     liste = [
-        (masa / f"{ad}.lnk", *ana),
-        (masa / f"{ad} - Tapu.lnk", *tapu),
-        (menu / f"{ad}.lnk", *ana),
-        (menu / f"{ad} - Tapu.lnk", *tapu),
-        (menu / f"{ad} - Başlangıç Rehberi.lnk", ortak.KOK / "rehber" / "baslangic.html", "", "Kurulum sonrası adımlar"),
-        (menu / f"{ad} - Proje Klasörleri.lnk", proje.kok(), "", "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri"),
-        (menu / f"{ad} - Güncellemeleri Denetle.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
+        (masa / f"{ad} {s}.lnk", *ana),
+        (masa / f"{ad} - Tapu {s}.lnk", *tapu),
+        (menu / f"{ad} {s}.lnk", *ana),
+        (menu / f"{ad} - Tapu {s}.lnk", *tapu),
+        (menu / f"{ad} - Başlangıç Rehberi {s}.lnk", ortak.KOK / "rehber" / "baslangic.html", "", "Kurulum sonrası adımlar"),
+        (menu / f"{ad} - Proje Klasörleri {s}.lnk", proje.kok(), "", "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri"),
+        (menu / f"{ad} - Güncellemeleri Denetle {s}.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
     ]
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
     # olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir. Ad kısa addan ("<kısa ad> - UYAP Dashboard").
     if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
         dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran',
-                     "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz")
-        liste += [(masa / f"{kisa} - UYAP Dashboard.lnk", *dashboard),
-                  (menu / f"{kisa} - UYAP Dashboard.lnk", *dashboard)]
+                     f"UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})")
+        liste += [(masa / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard),
+                  (menu / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard)]
     return liste
+
+
+def eski_surumlu_kisayol_var() -> bool:
+    """Bu kurulumun kısayollarından biri çalışan sürümden başka bir numara (ya da hiç numara) taşıyor mu?
+    Güncelleme yarıda kaldıysa ya da ad yazılamadıysa güncelleyici bir sonraki denetimde düzeltir."""
+    s, menu = ortak.surum(), _menu()
+    kaldir = _kaldir_adi(ortak.urun_adi()) + ".lnk"
+    for klasor in _kisayol_klasorleri(menu):
+        for desen in _desenler(ortak.urun_adi(), ortak.kisa_ad()):
+            for y in klasor.glob(desen):
+                if y.suffix.lower() == ".lnk" and y.name != kaldir and not y.stem.endswith(" " + s):
+                    return True
+    return False
+
+
+# Kurulum betiğindeki AppId (kurulum/ArthurLegal.iss) ile aynı olmalı; test karşılaştırır.
+KALDIRMA_ANAHTARI = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\{5B7A1E2C-9D4F-4C8B-A6E3-2F1D0C9B8A71}_is1"
+
+
+def programlar_listesi_yaz() -> bool:
+    """Windows programlar listesindeki ad ve sürüm, çalışan kodun sürümüyle: kurulum betiği bunları yalnız
+    kurulumda yazar, sessiz güncellemeden sonra eski numara kalırdı. Girdi yoksa (zip kurulumu) bir şey yapmaz."""
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, KALDIRMA_ANAHTARI, 0, winreg.KEY_SET_VALUE) as k:
+            winreg.SetValueEx(k, "DisplayName", 0, winreg.REG_SZ, f"{ortak.urun_adi()} {ortak.surum()}")
+            winreg.SetValueEx(k, "DisplayVersion", 0, winreg.REG_SZ, ortak.surum())
+        return True
+    except (ImportError, OSError):
+        return False
 
 
 # WScript.Shell .lnk dosya adını ANSI kod sayfasına çevirir: Türkçe olmayan Windows'ta "ş", "ı", "ğ"
@@ -215,14 +251,14 @@ def eski_kisayollari_temizle(menu: Path, kalacak: set) -> None:
 def _kisayol_cmd_yedegi() -> None:
     """COM yoksa: .cmd ve .url kısayolları. İçerik saf ASCII (yol %LOCALAPPDATA% ile çözülür)."""
     kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
-    urun = ortak.urun_adi()
-    for ad, komut in ((urun, f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol baslat'),
-                      (f"{urun} - Tapu", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol tapu')):
+    urun, s = ortak.urun_adi(), ortak.surum()
+    for ad, komut in ((f"{urun} {s}", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol baslat'),
+                      (f"{urun} - Tapu {s}", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol tapu')):
         icerik = f'@echo off\r\nstart "" {komut}\r\n'
         (_menu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
         (_masaustu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
     adres = quote(str(ortak.KOK / "rehber" / "baslangic.html").replace(chr(92), "/"), safe=":/")
-    (_menu() / f"{urun} - Başlangıç Rehberi.url").write_text(
+    (_menu() / f"{urun} - Başlangıç Rehberi {s}.url").write_text(
         f"[InternetShortcut]\r\nURL=file:///{adres}\r\n", encoding="ascii")
 
 
@@ -282,6 +318,8 @@ def main(argv=None) -> int:
     g.add_argument("--kaydet", action="store_true")
     g.add_argument("--kaldir", action="store_true")
     ap.add_argument("--kisayol", action="store_true", help="kısayolları ve oturum açılışı güncellemesini de yaz")
+    ap.add_argument("--kisayol-esitle", action="store_true",
+                    help="kısayollar çalışan sürümden başka bir numara taşıyorsa yeniden yaz (güncelleyici)")
     args = ap.parse_args(argv)
 
     if args.zip_kurulum:
@@ -300,9 +338,10 @@ def main(argv=None) -> int:
         if not claude_kurulu():
             ortak.durum_guncelle(claude_winget=claude_kur())
         ortak.durum_guncelle(kurulum_zamani=time.time(), kurulum_surumu=ortak.surum())
-    if args.kisayol:
+    if args.kisayol or (args.kisayol_esitle and eski_surumlu_kisayol_var()):
         kisayollar_yaz()
         run_anahtari(True)
+        programlar_listesi_yaz()
         import kisayol  # başlangıç panelinin durum kartı ilk açılışta dolu gelsin
         kisayol.durum_yaz()
     degisen = claude_ayari.kaydet()
@@ -315,7 +354,7 @@ def main(argv=None) -> int:
         print(f"Kuruldu. Claude Desktop'a {len(claude_ayari.istenen_girdiler())} sunucu eklendi.")
         if not ortak.mask_python():
             print("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.")
-        print(f"Masaüstündeki '{ortak.urun_adi()}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.")
+        print(f"Masaüstündeki '{ortak.urun_adi()} {ortak.surum()}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.")
     return 0
 
 

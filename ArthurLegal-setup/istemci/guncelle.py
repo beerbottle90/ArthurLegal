@@ -166,11 +166,15 @@ def mask_guncelle(manifest: dict) -> str:
     return f"mask: {m['surum']} kuruldu"
 
 
-def _claude_kaydet() -> None:
-    """Etkin (belki yeni) sürümün kodu ile Claude Desktop kaydını tazeler."""
+def _claude_kaydet(guncellendi: bool = False) -> None:
+    """Etkin (belki yeni) sürümün kodu ile Claude Desktop kaydını tazeler. Paket güncellendiyse kısayollar ve
+    programlar listesi yeni sürümün koduyla, onun numarasıyla yeniden yazılır; güncellenmediyse yalnız başka
+    numara taşıyan (yarım kalmış bir güncellemeden kalan) kısayollar çalışan sürüme eşitlenir. Numara hep
+    çalışan kodun surum.txt'sinden gelir: güncelleme olmadıysa ad değişmez."""
     py = ortak.RUNTIME / "python.exe"
     if py.exists():
-        subprocess.run([str(py), "-B", str(ortak.AL), "kur", "--kaydet"], creationflags=ortak.PENCERESIZ, timeout=120)
+        subprocess.run([str(py), "-B", str(ortak.AL), "kur", "--kaydet", "--kisayol" if guncellendi else "--kisayol-esitle"],
+                       creationflags=ortak.PENCERESIZ, timeout=180)
 
 
 def main(argv=None) -> int:
@@ -192,19 +196,26 @@ def main(argv=None) -> int:
         os.close(fd)
         ortak.durum_guncelle(son_denetim=time.time())
         sonuclar = []
+        guncellendi = False
         try:
             manifest, indirici = manifest_getir(ortak.ayar())
             if manifest is None:
                 sonuclar.append("yayında manifest yok")
             else:
-                sonuclar.append(f"paket {manifest['surum']} kuruldu" if paket_guncelle(manifest, indirici)
+                onceki = ortak.aktif() or (ortak.surumler() or ["?"])[-1]
+                guncellendi = paket_guncelle(manifest, indirici)
+                if guncellendi:
+                    # Yalnız paket doğrulanıp etkin sürüm değiştikten sonra: panel bunu "son güncelleme" diye gösterir.
+                    ortak.durum_guncelle(son_guncelleme={"zaman": time.time(), "onceki": onceki,
+                                                         "yeni": manifest["surum"]})
+                sonuclar.append(f"paket {manifest['surum']} kuruldu" if guncellendi
                                 else f"paket güncel ({ortak.aktif()})")
                 if not args.mask_yok:
                     sonuclar.append(mask_guncelle(manifest))
         except (GuncellemeHatasi, OSError, ValueError, KeyError) as e:
             sonuclar.append(f"hata: {e}")
             ortak.gunluk("guncelle", f"hata: {e!r}")
-        _claude_kaydet()
+        _claude_kaydet(guncellendi)
         ortak.durum_guncelle(son_sonuc="; ".join(sonuclar))
         if not args.sessiz:
             print("\n".join(sonuclar))

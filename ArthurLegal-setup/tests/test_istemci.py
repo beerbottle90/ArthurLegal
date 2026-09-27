@@ -262,9 +262,9 @@ class KisayolTesti(unittest.TestCase):
             for ad in ("python.exe", "pythonw.exe"):
                 (mask / ad).write_bytes(b"")
             liste = self.calistir(t, self.LISTE)
-            ekran = [s for s in liste if s[0] == "ArthurLegal - UYAP Dashboard.lnk"]
+            ekran = [s for s in liste if s[0] == "ArthurLegal - UYAP Dashboard 0.0.1.lnk"]
             self.assertEqual(len(ekran), 2, "masaüstü ve Başlat menüsü")
-            self.assertEqual([s[0] for s in liste if "UYAP" in s[0]], ["ArthurLegal - UYAP Dashboard.lnk"] * 2,
+            self.assertEqual([s[0] for s in liste if "UYAP" in s[0]], ["ArthurLegal - UYAP Dashboard 0.0.1.lnk"] * 2,
                              "UYAP için tek simge; ayrı giriş kısayolu yok")
             self.assertTrue(all(s[1].endswith("pythonw.exe") and s[2].endswith("kisayol uyap-ekran") for s in ekran))
             sonuc, baslatilan = self.calistir(t, self.AC)
@@ -277,13 +277,13 @@ class KisayolTesti(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
             sahte_kok(t / "kok")
-            self.assertIn("ArthurLegal.lnk", [s[0] for s in self.calistir(t, self.LISTE)], "ürün adı yoksa ArthurLegal")
+            self.assertIn("ArthurLegal 0.0.1.lnk", [s[0] for s in self.calistir(t, self.LISTE)], "ürün adı yoksa ArthurLegal")
             (t / "kok" / "firma" / "marka").mkdir(parents=True)
             (t / "kok" / "firma" / "marka" / "tema.json").write_text(json.dumps({"urun": "Örnek Büro Asistanı"}),
                                                                      encoding="utf-8")
             adlar = [s[0] for s in self.calistir(t, self.LISTE)]
-            self.assertIn("Örnek Büro Asistanı.lnk", adlar)
-            self.assertIn("Örnek Büro Asistanı - Tapu.lnk", adlar)
+            self.assertIn("Örnek Büro Asistanı 0.0.1.lnk", adlar)                 # sürüm adın sonunda
+            self.assertIn("Örnek Büro Asistanı - Tapu 0.0.1.lnk", adlar)
             self.assertFalse([a for a in adlar if a.startswith("ArthurLegal")])
             self.assertEqual(self.calistir(t, "import kur; print(json.dumps([kur._menu().name, "
                                               "kur._kaldir_adi(kur.ortak.urun_adi())]))"),
@@ -296,12 +296,13 @@ class KisayolTesti(unittest.TestCase):
                 klasor.mkdir(parents=True, exist_ok=True)
             for yol in (masa / "ArthurLegal.lnk", masa / "ArthurLegal - Tapu.lnk", eski_menu / "ArthurLegal.lnk",
                         eski_menu / "ArthurLegal'i Kaldır.lnk", masa / "Örnek Büro Asistanı.lnk",
+                        masa / "Örnek Büro Asistanı 0.0.0.lnk", masa / "Örnek Büro Asistanı 0.0.1.lnk",
                         yeni_menu / "Örnek Büro Asistanı - Kaldır.lnk", masa / "Başka Program.lnk"):
                 yol.write_bytes(b"")
             self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
                              "kur._kisayol_listesi()} | {kur._menu() / (kur._kaldir_adi(kur.ortak.urun_adi()) + "
                              "'.lnk')}); print(1)")
-            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Başka Program.lnk", "Örnek Büro Asistanı.lnk"])
+            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Başka Program.lnk", "Örnek Büro Asistanı 0.0.1.lnk"])
             self.assertFalse(eski_menu.exists(), "boş kalan eski Başlat menüsü klasörü silinir")
             self.assertEqual([p.name for p in yeni_menu.iterdir()], ["Örnek Büro Asistanı - Kaldır.lnk"])
             self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
@@ -322,20 +323,21 @@ class KisayolTesti(unittest.TestCase):
             (t / "kok" / "firma" / "marka" / "tema.json").write_text(
                 json.dumps({"urun": "Örnek Büro Asistanı", "kisa_ad": "Örnek"}), encoding="utf-8")
             adlar = [s[0] for s in self.calistir(t, self.LISTE)]
-            self.assertEqual([a for a in adlar if "UYAP" in a], ["Örnek - UYAP Dashboard.lnk"] * 2)
-            self.assertIn("Örnek Büro Asistanı - Tapu.lnk", adlar)            # öteki simgeler tam adla
+            self.assertEqual([a for a in adlar if "UYAP" in a], ["Örnek - UYAP Dashboard 0.0.1.lnk"] * 2)
+            self.assertIn("Örnek Büro Asistanı - Tapu 0.0.1.lnk", adlar)      # öteki simgeler tam adla
             # Önceki sürümlerin UYAP kısayolları gider; kullanıcının kısa adla başlayan başka kısayolu kalır.
             masa = t / "ev" / "Desktop"
             menu = t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Örnek Büro Asistanı"
             for klasor in (masa, menu):
                 klasor.mkdir(parents=True, exist_ok=True)
             for yol in (masa / "Örnek Büro Asistanı - UYAP Ekranı.lnk", menu / "Örnek Büro Asistanı - UYAP Tarayıcısı.lnk",
-                        masa / "Örnek - UYAP Dashboard.lnk", masa / "Örnek.lnk", masa / "Örnek - Notlar.lnk"):
+                        masa / "Örnek - UYAP Dashboard.lnk", masa / "Örnek - UYAP Dashboard 0.0.1.lnk",
+                        masa / "Örnek.lnk", masa / "Örnek - Notlar.lnk"):
                 yol.write_bytes(b"")
             self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
                              "kur._kisayol_listesi()}); print(1)")
             self.assertEqual(sorted(p.name for p in masa.iterdir()),
-                             ["Örnek - Notlar.lnk", "Örnek - UYAP Dashboard.lnk", "Örnek.lnk"])
+                             ["Örnek - Notlar.lnk", "Örnek - UYAP Dashboard 0.0.1.lnk", "Örnek.lnk"])
             self.assertEqual(list(menu.iterdir()), [])
             self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
             self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Örnek - Notlar.lnk", "Örnek.lnk"])
@@ -353,6 +355,44 @@ class KisayolTesti(unittest.TestCase):
                     self.assertEqual(ortak.kisa_ad(Path(t)), "ArthurLegal")
             (marka / "tema.json").write_text(json.dumps({"kisa_ad": " Örnek  Hukuk "}), encoding="utf-8")
             self.assertEqual(ortak.kisa_ad(Path(t)), "Örnek Hukuk")
+
+    def test_eski_numarali_kisayol_taninir(self):
+        """Güncelleme yarıda kaldıysa: kısayol çalışan sürümden başka bir numara taşıyor; güncelleyici eşitler."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            masa = t / "ev" / "Desktop"
+            masa.mkdir(parents=True)
+            kod = "import kur; print(json.dumps(kur.eski_surumlu_kisayol_var()))"
+            self.assertFalse(self.calistir(t, kod), "hiç kısayol yoksa eşitlenecek bir şey yok")
+            (masa / "ArthurLegal 0.0.1.lnk").write_bytes(b"")
+            (masa / "Başka Program 0.0.0.lnk").write_bytes(b"")
+            self.assertFalse(self.calistir(t, kod), "çalışan sürümle aynı numara; başka programa bakılmaz")
+            (masa / "ArthurLegal - Tapu 0.0.0.lnk").write_bytes(b"")
+            self.assertTrue(self.calistir(t, kod))
+            (masa / "ArthurLegal - Tapu 0.0.0.lnk").unlink()
+            (masa / "ArthurLegal - Tapu.lnk").write_bytes(b"")                     # 2.4.0'dan önceki sürümsüz ad
+            self.assertTrue(self.calistir(t, kod))
+
+    def test_programlar_listesi_anahtari_kurulum_betigiyle_ayni(self):
+        import re
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        appid = re.search(r"^AppId=\{(\{[0-9A-F-]+\})", iss, re.M).group(1)
+        kod = "import kur; print(json.dumps(kur.KALDIRMA_ANAHTARI))"
+        with tempfile.TemporaryDirectory() as t:
+            sahte_kok(Path(t) / "kok")
+            self.assertTrue(self.calistir(Path(t), kod).endswith("\\" + appid + "_is1"))
+        self.assertIn("UninstallDisplayName={#UrunAd} {#Surum}", iss)
+
+    def test_guncelleyici_yalniz_dogrulanmis_guncellemede_yeniden_yazar(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            (t / "kok" / "runtime").mkdir()
+            (t / "kok" / "runtime" / "python.exe").write_bytes(b"")
+            kod = ("import guncelle; c = []; guncelle.subprocess.run = lambda a, **k: c.append(a[-1]); "
+                   "guncelle._claude_kaydet(True); guncelle._claude_kaydet(False); print(json.dumps(c))")
+            self.assertEqual(self.calistir(t, kod), ["--kisayol", "--kisayol-esitle"])
 
     def test_guvenli_olmayan_urun_adi_kullanilmaz(self):
         import ortak
@@ -539,6 +579,8 @@ class GuncelleyiciTesti(unittest.TestCase):
             self.assertEqual(aktif, "0.0.2")
             self.assertTrue((Path(t) / "kok" / "surumler" / "0.0.2" / "istemci" / "arthurlegal_sunucu.py").exists())
             self.assertTrue((Path(t) / "kok" / "surumler" / "0.0.1").exists(), "önceki sürüm geri dönüş için kalmalı")
+            durum = json.loads((Path(t) / "kok" / "veri" / "durum.json").read_text(encoding="utf-8"))
+            self.assertEqual((durum["son_guncelleme"]["onceki"], durum["son_guncelleme"]["yeni"]), ("0.0.1", "0.0.2"))
 
     def test_kurcalanmis_manifest_reddedilir(self):
         with tempfile.TemporaryDirectory() as t:
@@ -546,6 +588,8 @@ class GuncelleyiciTesti(unittest.TestCase):
             self.assertIn("imza", r.stdout)
             self.assertEqual(aktif, "")
             self.assertFalse((Path(t) / "kok" / "surumler" / "0.0.3").exists())
+            durum = json.loads((Path(t) / "kok" / "veri" / "durum.json").read_text(encoding="utf-8"))
+            self.assertNotIn("son_guncelleme", durum, "güncelleme olmadıysa olmuş gibi gösterilmez")
 
     def test_private_depo_jetonla_iner(self):
         """Dağıtım private depodan: varlıklar GitHub API'sinden, kurulumdaki jetonla indirilir."""
