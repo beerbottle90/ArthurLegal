@@ -30,17 +30,17 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.10.0](ArthurLegal-CorporateAssistant-v1.10.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.10.0](ArthurLegal-Law-Firm-v1.10.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.0](ArthurLegal-Academician-v1.1.0-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.1.0](ArthurLegal-Courthouse-v1.1.0-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.10.1](ArthurLegal-CorporateAssistant-v1.10.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.10.1](ArthurLegal-Law-Firm-v1.10.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.1.1](ArthurLegal-Academician-v1.1.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
+| Courthouse | [v1.1.1](ArthurLegal-Courthouse-v1.1.1-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.9.1`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.0.5`; Academician `v1.0.0` … `v1.0.3`).
+Earlier versions are retained as archives (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.0`; Academician `v1.0.0` … `v1.1.0`).
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
 
@@ -62,6 +62,32 @@ Call the `status` tool first to see which jurisdictions are loaded. The land-reg
 sources; do not put client names or confidential facts into queries. Setup details and source:
 [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly).
 Each package's `KURULUM.md` / `INSTALLATION.md` repeats these steps next to the connector step.
+
+## UYAP bridge — distributed separately
+
+For lawyers who follow their own case files in UYAP, ArthurLegal has a read-only bridge to the lawyer's **own**
+UYAP session. It is not part of the packages or of the public installer: it is distributed separately, and a firm
+reviews the UYAP Lawyer Portal terms of use in writing before switching it on. When it is installed together with
+Arthur Mask, ArthurLegal Setup adds one desktop icon for it: **"ArthurLegal - UYAP Dashboard"** (Setup 2.4.0).
+
+- **Sign-in.** If UYAP is not connected, the Dashboard opens the UYAP Lawyer Portal (`avukat.uyap.gov.tr`) in a
+  separate browser profile; the lawyer signs in with e-signature or e-Devlet.
+- **Scan on click only.** UYAP is asked only when the lawyer presses Scan. There are no scheduled queries, and a rate
+  limit protects the portal.
+- **Deadlines, entered twice.** The lawyer calculates and types the last day first; the bridge's own calculation runs
+  only afterwards and warns only on a mismatch, which a second lawyer resolves on the same screen after a blind
+  calculation. Until then the earlier day stands. No date is ever given to the model.
+- **Calendar.** One click writes an all-day calendar entry with reminders three days and one day before, at 09:00;
+  the file is written only on the lawyer's computer.
+- **Privacy.** Real values, case numbers included, are masked before anything reaches Claude. The real list opens only
+  on the lawyer's screen and cannot be copied.
+- **Firm settings.** A firm file decides whether a red-line warning can be overridden with the lawyer's approval (the
+  default) or never, and whether criminal files give Claude calendar data only.
+
+**Türkçe:** UYAP köprüsü ayrı dağıtılır; paketlerde ve genel kurulumda yoktur. Kurulduğunda masaüstünde tek simge
+olur: "ArthurLegal - UYAP Dashboard". Avukatın kendi oturumunda, yalnız onun tıkıyla ve salt okunur çalışır. Son günü
+önce avukat yazar; takvim kaydı avukatın bilgisayarında oluşur, modele gün gitmez. Büro, Avukat Portal Kullanım
+Sözleşmesini yazılı olarak değerlendirmeden köprüyü açmaz.
 
 ## Jurisdictional coverage
 
@@ -135,6 +161,26 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## v1.10.1 — A plain warning when live data cannot be retrieved (2026-09-27)
+
+Law Firm and Corporate **v1.10.1**, Courthouse **v1.1.1**, Academician **v1.1.1**, ArthurLegal Setup **2.4.1** (bundles the
+new packages).
+
+- **One visible warning instead of bracket tags.** When a legal fact is not retrieved in the current chat through the
+  path the rules name for it (the tool is not installed, did not answer, failed, was cancelled or not approved, or the
+  fact came from memory or from a path outside the rules, such as a general web search), the answer now says so in
+  plain words, exactly: `UYARI: veri çekilemedi, teyidiniz gerekli: <link>` ("warning: the data could not be
+  retrieved; your verification is needed"). Bracket tags such as `[model bilgisi — doğrulayın]`, `[doğrulayın]` and
+  `[UYAP/Lexpera — manuel doğrulayın]` are gone from the Turkish knowledge files. The English skills keep their
+  `[verify]` family of tags internally; the system prompt turns each of them into the same warning in the answer.
+- **The link is real.** It is the address the tool returned for that document, or the official entry page listed in
+  the system prompt (mevzuat.gov.tr, the Court of Cassation and Council of State decision search, the Constitutional
+  Court databases, Resmî Gazete, the regulators, UYAP, TKGM Parsel Sorgu, EUR-Lex, HUDOC, legislation.gov.uk,
+  CourtListener, GovInfo, Fedlex); for other countries, the official address in that country's guide. Deep links are
+  never guessed.
+- **Unchanged:** information that carries the warning still never enters the body of a contract, petition or file
+  before it is verified. The article verification gate now writes the warning with the mevzuat.gov.tr link.
 
 ## Setup 2.4.0 — One UYAP icon: the UYAP Dashboard (2026-09-27)
 

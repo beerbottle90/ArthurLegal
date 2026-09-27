@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.4.0
+# ArthurLegal Setup v2.4.1
 
 **Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
 Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
@@ -73,7 +73,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 22 test, ağa çıkmaz
-python yayin/yayinla.py v2.4.0         # imzalı manifest + dosyalar → GitHub Release
+python yayin/yayinla.py v2.4.1         # imzalı manifest + dosyalar → GitHub Release
 ```
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
