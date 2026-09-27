@@ -233,7 +233,7 @@ class ClaudeAyariTesti(unittest.TestCase):
 
 
 class KisayolTesti(unittest.TestCase):
-    """UYAP Ekranı kısayolu yalnız köprü ve Arthur Mask birlikteyse; Ekran Mask'in Python'unda açılır."""
+    """UYAP için tek simge (UYAP Dashboard) yalnız köprü ve Arthur Mask birlikteyse; Mask'in Python'unda açılır."""
 
     LISTE = "import kur; print(json.dumps([[y.name, str(h), a] for y, h, a, _ in kur._kisayol_listesi()]))"
     AC = ("import kisayol, ortak; k = []; ortak.arka_planda = lambda a, o=None: k.append([[str(x) for x in a], "
@@ -254,15 +254,18 @@ class KisayolTesti(unittest.TestCase):
             uyap = t / "kok" / "surumler" / "0.0.1" / "uyap"
             uyap.mkdir()
             (uyap / "ekran.py").write_text("", encoding="utf-8")
-            self.assertNotIn("ArthurLegal - UYAP Ekranı.lnk", [s[0] for s in self.calistir(t, self.LISTE)],
-                             "Arthur Mask yokken eklenmemeli")
+            adlar = [s[0] for s in self.calistir(t, self.LISTE)]
+            self.assertFalse([a for a in adlar if "UYAP" in a], "Arthur Mask yokken UYAP simgesi yok")
             self.assertEqual(self.calistir(t, self.AC), [1, []])
             mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
             mask.mkdir(parents=True)
             for ad in ("python.exe", "pythonw.exe"):
                 (mask / ad).write_bytes(b"")
-            ekran = [s for s in self.calistir(t, self.LISTE) if s[0] == "ArthurLegal - UYAP Ekranı.lnk"]
+            liste = self.calistir(t, self.LISTE)
+            ekran = [s for s in liste if s[0] == "ArthurLegal - UYAP Dashboard.lnk"]
             self.assertEqual(len(ekran), 2, "masaüstü ve Başlat menüsü")
+            self.assertEqual([s[0] for s in liste if "UYAP" in s[0]], ["ArthurLegal - UYAP Dashboard.lnk"] * 2,
+                             "UYAP için tek simge; ayrı giriş kısayolu yok")
             self.assertTrue(all(s[1].endswith("pythonw.exe") and s[2].endswith("kisayol uyap-ekran") for s in ekran))
             sonuc, baslatilan = self.calistir(t, self.AC)
             self.assertEqual(sonuc, 0)
@@ -304,6 +307,52 @@ class KisayolTesti(unittest.TestCase):
             self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
             self.assertEqual([p.name for p in masa.iterdir()], ["Başka Program.lnk"])
             self.assertFalse(yeni_menu.exists())
+
+    def test_uyap_simgesi_kisa_adla_eskiler_temizlenir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            (t / "kok" / "surumler" / "0.0.1" / "uyap").mkdir()
+            (t / "kok" / "surumler" / "0.0.1" / "uyap" / "ekran.py").write_text("", encoding="utf-8")
+            mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
+            mask.mkdir(parents=True)
+            for ad in ("python.exe", "pythonw.exe"):
+                (mask / ad).write_bytes(b"")
+            (t / "kok" / "firma" / "marka").mkdir(parents=True)
+            (t / "kok" / "firma" / "marka" / "tema.json").write_text(
+                json.dumps({"urun": "Örnek Büro Asistanı", "kisa_ad": "Örnek"}), encoding="utf-8")
+            adlar = [s[0] for s in self.calistir(t, self.LISTE)]
+            self.assertEqual([a for a in adlar if "UYAP" in a], ["Örnek - UYAP Dashboard.lnk"] * 2)
+            self.assertIn("Örnek Büro Asistanı - Tapu.lnk", adlar)            # öteki simgeler tam adla
+            # Önceki sürümlerin UYAP kısayolları gider; kullanıcının kısa adla başlayan başka kısayolu kalır.
+            masa = t / "ev" / "Desktop"
+            menu = t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Örnek Büro Asistanı"
+            for klasor in (masa, menu):
+                klasor.mkdir(parents=True, exist_ok=True)
+            for yol in (masa / "Örnek Büro Asistanı - UYAP Ekranı.lnk", menu / "Örnek Büro Asistanı - UYAP Tarayıcısı.lnk",
+                        masa / "Örnek - UYAP Dashboard.lnk", masa / "Örnek.lnk", masa / "Örnek - Notlar.lnk"):
+                yol.write_bytes(b"")
+            self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
+                             "kur._kisayol_listesi()}); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()),
+                             ["Örnek - Notlar.lnk", "Örnek - UYAP Dashboard.lnk", "Örnek.lnk"])
+            self.assertEqual(list(menu.iterdir()), [])
+            self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Örnek - Notlar.lnk", "Örnek.lnk"])
+
+    def test_guvenli_olmayan_kisa_ad_kullanilmaz(self):
+        import ortak
+        with tempfile.TemporaryDirectory() as t:
+            marka = Path(t) / "marka"
+            marka.mkdir()
+            (marka / "tema.json").write_text(json.dumps({"urun": "Örnek Büro"}), encoding="utf-8")
+            self.assertEqual(ortak.kisa_ad(Path(t)), "ArthurLegal")          # alan yoksa ArthurLegal
+            for ad in ("Kötü/Ad", "CON", "a" * 61, "{app}"):
+                with self.subTest(ad=ad):
+                    (marka / "tema.json").write_text(json.dumps({"kisa_ad": ad}), encoding="utf-8")
+                    self.assertEqual(ortak.kisa_ad(Path(t)), "ArthurLegal")
+            (marka / "tema.json").write_text(json.dumps({"kisa_ad": " Örnek  Hukuk "}), encoding="utf-8")
+            self.assertEqual(ortak.kisa_ad(Path(t)), "Örnek Hukuk")
 
     def test_guvenli_olmayan_urun_adi_kullanilmaz(self):
         import ortak

@@ -85,12 +85,14 @@ def _kisayol_klasorleri(menu: Path) -> list:
     return [menu, _masaustu()] + ([eski] if eski != menu else [])
 
 
-def _desenler(ad: str) -> list:
-    """Bu kurulumun kısayollarını tanıyan adlar: ürün adıyla ve (önceki kurulumdan kalan) ArthurLegal adıyla."""
+def _desenler(ad: str, kisa: str = "") -> list:
+    """Bu kurulumun kısayollarını tanıyan adlar: ürün adıyla ve (önceki kurulumdan kalan) ArthurLegal adıyla.
+    Kısa ad yalnız UYAP simgesinde kullanılır; onunla yalnız "<kısa ad> - UYAP…" tanınır, başka kısayol değil."""
     adlar = sorted({ortak.URUN_VARSAYILAN, ad})
+    kisa_desen = [f"{kisa} - UYAP*.lnk"] if kisa and kisa not in adlar else []
     return [d.format(a) for a in adlar
             for d in ("{}.lnk", "{}.cmd", "{} - *.lnk", "{} - *.cmd", "{} - *.url", "{}*.url")] \
-        + ["ArthurLegal'i Kaldır.lnk"]
+        + kisa_desen + ["ArthurLegal'i Kaldır.lnk"]
 
 
 ESKI_KISAYOLLAR = ("ArthurLegal - Tapu.cmd", "ArthurLegal - UYAP Tarayıcısı.cmd",
@@ -101,7 +103,7 @@ def _kisayol_listesi() -> list:
     """(yol, hedef, argüman, açıklama) dörtlüleri. Adlar ürün adını taşır (ortak.urun_adi): genel kurulumda
     ArthurLegal, büroya özel kurulumda büronun ürün adı. Ana simge Claude'u açar, paneli gösterir."""
     py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
-    ad, menu, masa = ortak.urun_adi(), _menu(), _masaustu()
+    ad, kisa, menu, masa = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu()
     ana = (pyw, f'-B "{al}" kisayol baslat', "Claude Desktop'ı ve başlangıç panelini açar")
     tapu = (pyw, f'-B "{al}" kisayol tapu', "ArthurLegal Tapu arayüzü")
     liste = [
@@ -113,13 +115,13 @@ def _kisayol_listesi() -> list:
         (menu / f"{ad} - Proje Klasörleri.lnk", proje.kok(), "", "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri"),
         (menu / f"{ad} - Güncellemeleri Denetle.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
     ]
-    if (ortak.SURUM_DIZINI / "uyap").exists():
-        liste.append((menu / f"{ad} - UYAP Tarayıcısı.lnk", py, f'-B "{al}" kisayol uyap-tarayici',
-                      "UYAP için ayrı profilli tarayıcı"))
-    # UYAP Ekranı maskeleme olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir.
+    # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
+    # olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir. Ad kısa addan ("<kısa ad> - UYAP Dashboard").
     if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
-        ekran = (pyw, f'-B "{al}" kisayol uyap-ekran', "UYAP Ekranı: sabah taraması, son gün ve uyuşmazlık, Claude'suz")
-        liste += [(masa / f"{ad} - UYAP Ekranı.lnk", *ekran), (menu / f"{ad} - UYAP Ekranı.lnk", *ekran)]
+        dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran',
+                     "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz")
+        liste += [(masa / f"{kisa} - UYAP Dashboard.lnk", *dashboard),
+                  (menu / f"{kisa} - UYAP Dashboard.lnk", *dashboard)]
     return liste
 
 
@@ -201,7 +203,7 @@ def eski_kisayollari_temizle(menu: Path, kalacak: set) -> None:
     """Önceki sürümlerden (UYAP, .cmd, .url) ve ürün adı değiştiyse önceki adla (ArthurLegal) kalan
     kısayolları siler; boş kalan eski Başlat menüsü klasörü de gider."""
     for klasor in _kisayol_klasorleri(menu):
-        for desen in _desenler(ortak.urun_adi()):
+        for desen in _desenler(ortak.urun_adi(), ortak.kisa_ad()):
             for y in klasor.glob(desen):
                 if y not in kalacak:
                     y.unlink(missing_ok=True)
@@ -227,7 +229,7 @@ def _kisayol_cmd_yedegi() -> None:
 def kisayollar_sil() -> None:
     menu = _menu()
     for klasor in _kisayol_klasorleri(menu):
-        for desen in _desenler(ortak.urun_adi()):
+        for desen in _desenler(ortak.urun_adi(), ortak.kisa_ad()):
             for y in klasor.glob(desen):
                 y.unlink(missing_ok=True)
     for klasor in {menu, _programlar() / ortak.URUN_VARSAYILAN}:

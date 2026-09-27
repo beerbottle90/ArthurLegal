@@ -2,8 +2,9 @@
 
     al.py kisayol baslat          ana simge: Claude Desktop'ı açar ve başlat panelini gösterir
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
-    al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge)
-    al.py kisayol uyap-ekran      UYAP Ekranı: sabah taraması, son gün, uyuşmazlık; Claude'suz, yerel
+    al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge). Kısayolu
+                                  yok: UYAP Dashboard girişi kendisi açar; elle çalıştırmak için durur
+    al.py kisayol uyap-ekran      UYAP Dashboard: giriş, sabah taraması, son gün, uyuşmazlık, takvim; Claude'suz
     al.py kisayol knowledge       paket bilgi dosyalarını Gezgin'de açar (klasik Project yükleme yolu)
 """
 from __future__ import annotations
@@ -108,11 +109,11 @@ def uyap_tarayici() -> int:
 
 
 def uyap_ekran() -> int:
-    """UYAP Ekranı Arthur Mask'in Python'unda açılır: maskeleme orada. Ortam, Claude Desktop'taki UYAP
+    """UYAP Dashboard Arthur Mask'in Python'unda açılır: maskeleme orada. Ortam, Claude Desktop'taki UYAP
     kaydıyla aynıdır (claude_ayari): model indirilmez, kullanıcı paketleri karışmaz."""
     mask, ekran = ortak.mask_python(), ortak.SURUM_DIZINI / "uyap" / "ekran.py"
     if not mask or not ekran.exists():
-        print("Bu kurulumda UYAP Ekranı yok: UYAP köprüsü ve Arthur Mask gerekir.")
+        print("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve Arthur Mask gerekir.")
         return 1
     pencereli = mask.with_name("pythonw.exe")
     ortam = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",

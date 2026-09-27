@@ -103,15 +103,26 @@ _URUN_DESENI = re.compile(r"^[\w .&'()·-]{1,60}$")
 _AYGIT_ADLARI = {"CON", "PRN", "AUX", "NUL"} | {f"{o}{n}" for o in ("COM", "LPT") for n in range(1, 10)}
 
 
+def _tema_adi(alan: str, firma_dizini: Path | None) -> str:
+    """Büro temasındaki bir ad (``firma/marka/tema.json``); yoksa ya da güvenli değilse ArthurLegal."""
+    tema = json_oku((firma_dizini or FIRMA) / "marka" / "tema.json")
+    ad = " ".join(str(tema.get(alan) or "").split()) if isinstance(tema, dict) else ""
+    if not _URUN_DESENI.match(ad) or ad.endswith(".") or ad.upper() in _AYGIT_ADLARI:
+        return URUN_VARSAYILAN
+    return ad
+
+
 def urun_adi(firma_dizini: Path | None = None) -> str:
     """Kısayolların, Başlat menüsünün, başlangıç sayfasının ve programlar listesinin adı. Büroya özel
     kurulumda büronun markasındaki ürün adıdır (``firma/marka/tema.json`` → ``urun``); yoksa ya da
     güvenli değilse ArthurLegal. Kurulum betiği (derle.py) ve kısayollar (kur.py) aynı adı buradan alır."""
-    tema = json_oku((firma_dizini or FIRMA) / "marka" / "tema.json")
-    ad = " ".join(str(tema.get("urun") or "").split()) if isinstance(tema, dict) else ""
-    if not _URUN_DESENI.match(ad) or ad.endswith(".") or ad.upper() in _AYGIT_ADLARI:
-        return URUN_VARSAYILAN
-    return ad
+    return _tema_adi("urun", firma_dizini)
+
+
+def kisa_ad(firma_dizini: Path | None = None) -> str:
+    """UYAP Dashboard simgesinin adı: "<kısa ad> - UYAP Dashboard" (``tema.json`` → ``kisa_ad``; yoksa
+    ArthurLegal). UYAP köprüsü Dashboard penceresinin başlığını aynı alandan alır."""
+    return _tema_adi("kisa_ad", firma_dizini)
 
 
 def durum() -> dict:

@@ -136,6 +136,19 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.4.0 — One UYAP icon: the UYAP Dashboard (2026-09-27)
+
+- **One icon for UYAP.** When the separately distributed UYAP bridge and Arthur Mask are both installed, the
+  installer adds a single UYAP shortcut to the desktop and the Start menu: "ArthurLegal - UYAP Dashboard" (the
+  bridge's local screen, formerly "UYAP Ekranı"). The separate "UYAP Tarayıcısı" Start menu shortcut is gone:
+  the Dashboard opens the separate-profile login browser itself. Shortcuts left over from earlier versions are
+  removed on reinstall.
+- **Short name.** In a firm-specific build the brand file may give a short name for this icon
+  (`tema.json` → `kisa_ad`): "<short name> - UYAP Dashboard". The other shortcuts keep the product name. Unsafe
+  names fall back to ArthurLegal. Uninstall removes only "<short name> - UYAP…" shortcuts, nothing else that
+  starts with the short name.
+  Packages are unchanged; no new public release.
+
 ## Setup 2.3.0 — A firm's own product name (2026-09-27)
 
 - **Product name.** In a firm-specific build, when the firm's brand folder names a product
