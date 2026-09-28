@@ -1,0 +1,163 @@
+{
+ "tarih": "2026-09-28",
+ "a": [
+  {
+   "no": 1,
+   "p_ilk": 0.06,
+   "p_yeni": 0.07,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 2,
+   "p_ilk": 0.8,
+   "p_yeni": 0.83,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 3,
+   "p_ilk": 0.02,
+   "p_yeni": 0.03,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 4,
+   "p_ilk": 0.97,
+   "p_yeni": 0.98,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 5,
+   "p_ilk": 0.92,
+   "p_yeni": 0.94,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 6,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 7,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "metinde_yok"
+  },
+  {
+   "no": 8,
+   "p_ilk": 0.86,
+   "p_yeni": 0.9,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 9,
+   "p_ilk": 0.88,
+   "p_yeni": 0.89,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 10,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 11,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 12,
+   "p_ilk": 0.92,
+   "p_yeni": 0.9,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 13,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "metinde_yok"
+  },
+  {
+   "no": 14,
+   "p_ilk": 0.8,
+   "p_yeni": 0.6,
+   "altin": "destekliyor"
+  },
+  {
+   "no": 15,
+   "p_ilk": 0.18,
+   "p_yeni": 0.08,
+   "altin": "celisiyor"
+  },
+  {
+   "no": 16,
+   "p_ilk": 0.01,
+   "p_yeni": 0.02,
+   "altin": "celisiyor"
+  }
+ ],
+ "b": [
+  {
+   "kod": "P1",
+   "altin": "destekliyor",
+   "p_destek": 0.91,
+   "durum": "destekliyor"
+  },
+  {
+   "kod": "P2",
+   "altin": "celisiyor",
+   "p_destek": 0.05,
+   "durum": "celisiyor"
+  },
+  {
+   "kod": "P3",
+   "altin": "celisiyor",
+   "p_destek": 0.05,
+   "durum": "celisiyor"
+  },
+  {
+   "kod": "P4",
+   "altin": "destekliyor",
+   "p_destek": 0.84,
+   "durum": "destekliyor"
+  },
+  {
+   "kod": "P5",
+   "altin": "destekliyor",
+   "p_destek": 0.95,
+   "durum": "destekliyor"
+  },
+  {
+   "kod": "P6",
+   "altin": "metinde_yok",
+   "p_destek": 0.1,
+   "durum": "metinde_yok"
+  },
+  {
+   "kod": "P7",
+   "altin": "celisiyor",
+   "p_destek": 0.02,
+   "durum": "celisiyor"
+  },
+  {
+   "kod": "P8",
+   "altin": "destekliyor",
+   "p_destek": 0.83,
+   "durum": "destekliyor"
+  },
+  {
+   "kod": "P9",
+   "altin": "celisiyor",
+   "p_destek": 0.03,
+   "durum": "celisiyor"
+  },
+  {
+   "kod": "P10",
+   "altin": "celisiyor",
+   "p_destek": 0.02,
+   "durum": "celisiyor"
+  }
+ ]
+}

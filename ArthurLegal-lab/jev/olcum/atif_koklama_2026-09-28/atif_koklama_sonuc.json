@@ -1,0 +1,150 @@
+{
+ "tarih": "2026-09-28",
+ "istemci": "Jev (jev-latest · api.typesafe.ai)",
+ "satirlar": [
+  {
+   "no": 1,
+   "madde": "SMK120",
+   "altin": "celisiyor",
+   "tur": "hak sahibi ters (rehberdeki örnek hata)",
+   "p_destek": 0.06,
+   "durum": "celisiyor",
+   "ms": 455
+  },
+  {
+   "no": 2,
+   "madde": "SMK120",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.8,
+   "durum": "destekliyor",
+   "ms": 354
+  },
+  {
+   "no": 3,
+   "madde": "SMK120",
+   "altin": "celisiyor",
+   "tur": "şart düşürülmüş (ince)",
+   "p_destek": 0.02,
+   "durum": "celisiyor",
+   "ms": 396
+  },
+  {
+   "no": 4,
+   "madde": "SMK120",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.97,
+   "durum": "destekliyor",
+   "ms": 329
+  },
+  {
+   "no": 5,
+   "madde": "TBK146",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.92,
+   "durum": "destekliyor",
+   "ms": 336
+  },
+  {
+   "no": 6,
+   "madde": "TBK146",
+   "altin": "celisiyor",
+   "tur": "süre yanlış",
+   "p_destek": 0.01,
+   "durum": "celisiyor",
+   "ms": 332
+  },
+  {
+   "no": 7,
+   "madde": "TBK146",
+   "altin": "metinde_yok",
+   "tur": "yanlış madde (doğrusu m. 147)",
+   "p_destek": 0.01,
+   "durum": "celisiyor",
+   "ms": 316
+  },
+  {
+   "no": 8,
+   "madde": "TBK147",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.86,
+   "durum": "destekliyor",
+   "ms": 339
+  },
+  {
+   "no": 9,
+   "madde": "ISK17",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.88,
+   "durum": "destekliyor",
+   "ms": 333
+  },
+  {
+   "no": 10,
+   "madde": "ISK17",
+   "altin": "celisiyor",
+   "tur": "kademe yok sayılmış",
+   "p_destek": 0.01,
+   "durum": "celisiyor",
+   "ms": 310
+  },
+  {
+   "no": 11,
+   "madde": "ISK17",
+   "altin": "celisiyor",
+   "tur": "asgari/azami ters (ince)",
+   "p_destek": 0.01,
+   "durum": "celisiyor",
+   "ms": 327
+  },
+  {
+   "no": 12,
+   "madde": "KVKK11",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.92,
+   "durum": "destekliyor",
+   "ms": 327
+  },
+  {
+   "no": 13,
+   "madde": "KVKK11",
+   "altin": "metinde_yok",
+   "tur": "yanlış madde (sicil başka maddede)",
+   "p_destek": 0.01,
+   "durum": "metinde_yok",
+   "ms": 335
+  },
+  {
+   "no": 14,
+   "madde": "HMK345",
+   "altin": "destekliyor",
+   "tur": "-",
+   "p_destek": 0.8,
+   "durum": "destekliyor",
+   "ms": 373
+  },
+  {
+   "no": 15,
+   "madde": "HMK345",
+   "altin": "celisiyor",
+   "tur": "başlangıç anı yanlış (ince)",
+   "p_destek": 0.18,
+   "durum": "celisiyor",
+   "ms": 324
+  },
+  {
+   "no": 16,
+   "madde": "HMK345",
+   "altin": "celisiyor",
+   "tur": "süre yanlış",
+   "p_destek": 0.01,
+   "durum": "celisiyor",
+   "ms": 355
+  }
+ ]
+}

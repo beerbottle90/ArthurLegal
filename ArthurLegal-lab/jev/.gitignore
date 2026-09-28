@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+sonuc*.json
+*.yedek.json
+fixtures/secim.json

@@ -1,0 +1,3169 @@
+{
+ "aciklama": "Mevzuat (Bedesten) başlıklarında konu triyajı sınav kümesi. 187 başlık: 6 tür, RG tarihi 2024-09-01..2026-09-19, tür başına en yeni 60.",
+ "kaynak": "bedesten.adalet.gov.tr/mevzuat/searchDocuments — sorgusuz, mevzuatTurList + RG tarih aralığı, pageSize 20 (üst sınır).",
+ "etiketleyen": "Görülmemiş 60 kalem: elle, RG altın kümesindeki ölçütlerle (pilot_b_fihrist.SORULAR); torba kanunlar METİN OKUNARAK. Görülmüş 127 kalem: eğitim etiketi.",
+ "onyargi_notu": "127/187 başlık RG modelinin EĞİTİM örneğidir (RG fihristi aynı başlıkları taşır). O dilim genelleme ölçmez, yalnız Bedesten biçimine (BÜYÜK HARF, bölüm adı yok, satır sonları) aktarımı ölçer. Genelleme yalnız görülmemiş 60 kalemde okunur ve pozitif sayısı azdır (enerji 3, vergi 4, icra 2, rekabet 0): yüzde değil SAYI raporlayın.",
+ "konular": [
+  "enerji",
+  "rekabet",
+  "vergi",
+  "icra"
+ ],
+ "kalemler": [
+  {
+   "id": 1,
+   "tur": "KANUN",
+   "mevzuat_id": "353145",
+   "number": 7595,
+   "tarih": "2026-08-18",
+   "baslik": "MİLLÎ DAYANIŞMA VE TOPLUMSAL BÜTÜNLEŞMENİN GÜÇLENDİRİLMESİNE DAİR KANUN",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "icra"
+   ],
+   "gerekce": "7595: terör suçlarında soruşturma/kovuşturma ve infaz ertelemesi. Ceza muhakemesi; ölçütteki icra-iflas/HMK/yargı teşkilatı kapsamı değil. Metin okunarak etiketlendi."
+  },
+  {
+   "id": 2,
+   "tur": "KANUN",
+   "mevzuat_id": "352551",
+   "number": 7579,
+   "tarih": "2026-05-22",
+   "baslik": "TAPU KANUNU İLE BAZI KANUNLARDA VE 375 SAYILI KANUN HÜKMÜNDE KARARNAMEDE DEĞİŞİKLİK YAPILMASINA DAİR KANUN",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "vergi",
+    "rekabet"
+   ],
+   "gerekce": "7579 torba kanun: m.2 Damga Vergisi Kanununu, m.18-20 4706'yı (KDV Kanununda değişiklik içeren kanun) değiştiriyor; metin okunarak etiketlendi. Başlıkta vergi yok. 4046 değişikliği özelleştirme uygulamasıdır, Rekabet Kurulu izni değil.",
+   "torba": true,
+   "degistirilen_kanunlar": [
+    "Tapu Kanunu",
+    "Damga Vergisi Kanunu",
+    "Kat Mülkiyeti Kanunu",
+    "Kooperatifler Kanunu",
+    "Çevre Kanunu",
+    "Toplu Konut Kanunu",
+    "İmar Kanunu",
+    "Kadastro Kanunu",
+    "Özelleştirme Uygulamaları Hakkında Kanun",
+    "Hazineye Ait Taşınmaz Malların Değerlendirilmesi ve Katma Değer Vergisi Kanununda Değişiklik Yapılması Hakkında Kanun",
+    "Yapı Denetimi Hakkında Kanun",
+    "Kamu İhale Sözleşmeleri Kanunu",
+    "Türkiye Çevre Ajansının Kurulması ile Bazı Kanunlarda Değişiklik Yapılmasına Dair Kanun",
+    "Olağanüstü Hal Kapsamında Yerleşme ve Yapılaşmaya İlişkin Cumhurbaşkanlığı Kararnamesinin Kabul Edilmesine Dair Kanun"
+   ]
+  },
+  {
+   "id": 3,
+   "tur": "KANUN",
+   "mevzuat_id": "345097",
+   "number": 7557,
+   "tarih": "2025-07-24",
+   "baslik": "SAĞLIKLA İLGİLİ BAZI KANUNLARDA VE 663 SAYILI KANUN HÜKMÜNDE KARARNAMEDE DEĞİŞİKLİK YAPILMASINA DAİR KANUN",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "gerekce": "7557: sağlık kanunları; vergi/enerji/icra hükmü yok (metin okundu; değiştirilen kanun adları metinde sayılmıyor).",
+   "torba": true,
+   "degistirilen_kanunlar": []
+  },
+  {
+   "id": 4,
+   "tur": "KANUN",
+   "mevzuat_id": "340691",
+   "number": 7540,
+   "tarih": "2025-02-27",
+   "baslik": "TÜRKİYE ADALET AKADEMİSİ KANUNU",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "icra"
+   ],
+   "gerekce": "Adalet Akademisi bir eğitim kurumudur; mahkeme teşkilatı veya yargı çevresi değil."
+  },
+  {
+   "id": 5,
+   "tur": "KANUN",
+   "mevzuat_id": "334714",
+   "number": 7531,
+   "tarih": "2024-11-14",
+   "baslik": "BAZI KANUNLARDA DEĞİŞİKLİK YAPILMASINA DAİR KANUN",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "icra"
+   ],
+   "gerekce": "7531 (9. yargı paketi): m.1-2 İcra ve İflas Kanunu, m.22 HMK, m.13 5235, m.5 2576; metin okunarak etiketlendi. Başlık 'Bazı Kanunlarda Değişiklik' — başlıktan anlaşılamaz.",
+   "torba": true,
+   "degistirilen_kanunlar": [
+    "İcra ve İflas Kanunu",
+    "Avukatlık Kanunu",
+    "Yükseköğretim Kanunu",
+    "Bölge İdare Mahkemeleri, İdare Mahkemeleri ve Vergi Mahkemelerinin Kuruluşu ve Görevleri Hakkında Kanun",
+    "Hâkimler ve Savcılar Kanunu",
+    "Karayolları Trafik Kanunu",
+    "Türk Medenî Kanunu",
+    "Adlî Yargı İlk Derece Mahkemeleri ile Bölge Adliye Mahkemelerinin Kuruluş, Görev ve Yetkileri Hakkında Kanun",
+    "Türk Ceza Kanunu",
+    "Ceza Muhakemesi Kanunu",
+    "Çocuk Koruma Kanunu",
+    "Vakıflar Kanunu",
+    "Hâkimler ve Savcılar Kurulu Kanunu",
+    "Hukuk Muhakemeleri Kanunu",
+    "Anayasa Mahkemesinin Kuruluşu ve Yargılama Usulleri Hakkında Kanun",
+    "Hukuk Uyuşmazlıklarında Arabuluculuk Kanunu",
+    "İş Mahkemeleri Kanunu"
+   ]
+  },
+  {
+   "id": 6,
+   "tur": "KANUN",
+   "mevzuat_id": "332571",
+   "number": 7528,
+   "tarih": "2024-10-18",
+   "baslik": "ÖĞRETMENLİK MESLEĞİ KANUNU",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 7,
+   "tur": "CB_KARARNAME",
+   "mevzuat_id": "336747",
+   "number": 172,
+   "tarih": "2024-12-25",
+   "baslik": "NÜFUS POLİTİKALARI KURULU HAKKINDA CUMHURBAŞKANLIĞI KARARNAMESİ (KARARNAME NUMARASI: 172)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 8,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353284",
+   "number": 11641,
+   "tarih": "2026-08-22",
+   "baslik": "KAMULAŞTIRMA BİLGİLERİ VE GÜZERGÂHLARI YER ALAN DOĞAL GAZ BAĞLANTI HATTI PROJELERİNİN GERÇEKLEŞTİRİLMESİ AMACIYLA BAZI TAŞINMAZLARIN BORU HATLARI İLE PETROL TAŞIMA ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11641)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 9,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353285",
+   "number": 11640,
+   "tarih": "2026-08-22",
+   "baslik": "ERZURUM İLİ, AZİZİYE İLÇESİ, YARIMCA MAHALLESİ SINIRLARI İÇERİSİNDE BULUNAN BAZI TAŞINMAZLARIN AZİZİYE BELEDİYE BAŞKANLIĞI TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11640)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 10,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353286",
+   "number": 11639,
+   "tarih": "2026-08-22",
+   "baslik": "ANTALYA İLİ, ALANYA İLÇESİNDE KURULACAK RMS-A İSTASYONU İLE DOĞAL GAZ DAĞITIM TESİSLERİNİN YAPIMI AMACIYLA BAZI TAŞINMAZLARIN ENERJİ PİYASASI DÜZENLEME KURUMU TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11639)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 11,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353287",
+   "number": 11638,
+   "tarih": "2026-08-22",
+   "baslik": "KAMULAŞTIRMA BİLGİLERİ VE GÜZERGÂHLARI GÖSTERİLEN ENERJİ NAKİL HATLARININ YAPIMI AMACIYLA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK DAĞITIM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11638)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 12,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353288",
+   "number": 11637,
+   "tarih": "2026-08-21",
+   "baslik": "154/33KV YAHŞİHAN TRANSFORMATÖR MERKEZİ SAHASI PROJESİ KAPSAMINDA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11637)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 13,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353289",
+   "number": 11636,
+   "tarih": "2026-08-21",
+   "baslik": "KAMULAŞTIRMA BİLGİLERİ VE GÜZERGÂHLARI YER ALAN DOĞAL GAZ BORU HATTI PROJELERİ İLE DOĞALGAZ BAĞLANTI HATTI PROJESİNİN GERÇEKLEŞTİRİLMESİ AMACIYLA BAZI TAŞINMAZLARIN BORU HATLARI İLE PETROL TAŞIMA ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11636)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 14,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353290",
+   "number": 11635,
+   "tarih": "2026-08-21",
+   "baslik": "MUĞLA İLİ, ORTACA VE DALAMAN İLÇELERİ SINIRLARI İÇERİSİNDE İLAN EDİLEN ORTACA-SARIGERME-DALAMAN DOĞAL SİT ALANI KESİN KORUNACAK HASSAS ALANININ SINIRLARININ DEĞİŞTİRİLMESİ HAKKINDA KARAR (KARAR SAYISI: 11635)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 15,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353291",
+   "number": 11629,
+   "tarih": "2026-08-19",
+   "baslik": "BİTLİS İLİ, TATVAN, AHLAT VE GÜROYMAK İLÇELERİ SINIRLARI İÇERİSİNDE BULUNAN ALANIN NEMRUT KALDERASI MİLLİ PARKI OLARAK BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11629)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 16,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353292",
+   "number": 11628,
+   "tarih": "2026-08-18",
+   "baslik": "ŞEHİR İÇİ RAYLI ULAŞIM SİSTEMLERİ, METROLAR VE BUNLARLA İLGİLİ TESİSLERİN ULAŞTIRMA VE ALTYAPI BAKANLIĞINCA ÜSTLENİLMESİ, DEVRALINMASI VE TAMAMLANMASINI MÜTEAKİP DEVRİ İLE İLGİLİ ŞARTLARIN BELİRLENMESİNE İLİŞKİN KARARDA DEĞİŞİKLİK YAPILMASI HAKKINDA KARAR (KARAR SAYISI: 11628)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 17,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353295",
+   "number": 11627,
+   "tarih": "2026-08-16",
+   "baslik": "EKLİ HARİTA İLE KOORDİNAT LİSTESİNDE SINIRLARI BELİRTİLEN ALANIN \"KUZEY EGE DENİZ MİLLİ PARKI\" OLARAK BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11627)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 18,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353296",
+   "number": 11626,
+   "tarih": "2026-08-16",
+   "baslik": "EKLİ HARİTA İLE KOORDİNAT LİSTESİNDE SINIRLARI BELİRTİLEN ALANIN \"FETHİYE-KAŞ DENİZ MİLLİ PARKI\" OLARAK BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11626)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 19,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353293",
+   "number": 11625,
+   "tarih": "2026-08-15",
+   "baslik": "2026-2027 EĞİTİM-ÖĞRETİM YILINDA YÜKSEKÖĞRETİM KURUMLARINDA CARİ HİZMET MALİYETLERİNE ÖĞRENCİ KATKISI OLARAK ALINACAK KATKI PAYLARI VE ÖĞRENİM ÜCRETLERİNİN TESPİTİNE DAİR KARAR (KARAR SAYISI: 11625)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 20,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353294",
+   "number": 11624,
+   "tarih": "2026-08-15",
+   "baslik": "BİRLEŞMİŞ MİLLETLER GÜVENLİK KONSEYİNİN 1267 (1999), 1988 (2011), 1989 (2011) VE 2253 (2015) SAYILI KARARLARIYLA LİSTELENEN KİŞİ, KURULUŞ VEYA ORGANİZASYONLARIN TASARRUFUNDA BULUNAN MALVARLIĞININ DONDURULMASI HAKKINDAKİ 30/9/2013 TARİHLİ VE 2013/5428 SAYILI BAKANLAR KURULU KARARININ EKİ (1) SAYILI LİSTEDE DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11624)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 21,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353297",
+   "number": 11606,
+   "tarih": "2026-08-13",
+   "baslik": "BAZI MALLARA UYGULANAN ÖZEL TÜKETİM VERGİSİ TUTARLARININ YENİDEN BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11606)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "etiket_kaynagi": "RG altın kümesi #52 (elle, gerekçeli)",
+   "sinirda": [
+    "enerji"
+   ],
+   "not": "ÖTV (I) sayılı liste akaryakıttır; başlıkta 'bazı mallar' dendiği için enerji etiketi verilemez. Başlık-düzeyi filtrelemenin sınırını gösterir."
+  },
+  {
+   "id": 22,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353298",
+   "number": 11580,
+   "tarih": "2026-08-09",
+   "baslik": "400/33 KV BAŞKENT OSB TRANSFORMATÖR MERKEZİ SAHASI PROJESİ KAPSAMINDA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11580)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 23,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353299",
+   "number": 11579,
+   "tarih": "2026-08-09",
+   "baslik": "ERZİNCAN İLİ, MERKEZ İLÇESİ, KARAAĞAÇ MAHALLESİ SINIRLARI İÇERİSİNDE BULUNAN BAZI TAŞINMAZLARIN, BÖLGEDE YÜRÜTÜLEN KENTSEL DÖNÜŞÜM VE GELİŞİM PROJESİ KAPSAMINDA ERZİNCAN BELEDİYE BAŞKANLIĞI TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11579)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 24,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353300",
+   "number": 11578,
+   "tarih": "2026-08-09",
+   "baslik": "ŞANLIURFA İLİ, EYYÜBİYE İLÇESİ, BATIKENT MAHALLESİ SINIRLARI İÇERİSİNDE BULUNAN TAŞINMAZLAR İLE ÜZERLERİNDEKİ MUHDESATIN, EVREN SANAYİ SİTESİ KÖPRÜLÜ KAVŞAK PROJESİ KAPSAMINDA ŞANLIURFA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11578)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 25,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353301",
+   "number": 11577,
+   "tarih": "2026-08-09",
+   "baslik": "400 KV GÖLBAŞI KAYSERİ KAPASİTÖR KUZEY ENERJİ İLETİM HATTI KISMİ YENİLEME PROJESİ KAPSAMINDA GÖSTERİLEN BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11577)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 26,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353302",
+   "number": 11576,
+   "tarih": "2026-08-09",
+   "baslik": "154 KV FALP RES TM-ÇİNE TM ENERJİ İLETİM HATTI PROJESİ KAPSAMINDA GÖSTERİLEN BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11576)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 27,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353303",
+   "number": 11575,
+   "tarih": "2026-08-09",
+   "baslik": "ŞANLIURFA İLİ, EYYÜBİYE İLÇESİ SINIRLARI İÇERİSİNDE BULUNAN TAŞINMAZLAR İLE ÜZERLERİNDEKİ MUHDESATIN, EYYÜBİYE-HALİLİYE HAFİF RAYLI SİSTEM 1. AŞAMA HATTI İLE ŞANLIURFA EĞİTİM VE ARAŞTIRMA HASTANESİ ÖNÜ KATLI KAVŞAK PROJESİ KAPSAMINDA ŞANLIURFA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11575)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 28,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353304",
+   "number": 11574,
+   "tarih": "2026-08-09",
+   "baslik": "MUĞLA İLİ, KÖYCEĞİZ, MİLAS, SEYDİKEMER VE YATAĞAN İLÇELERİNDE MEYDANA GELEN AŞIRI YAĞIŞLAR SONUCUNDA BAZI KÖPRÜLERİN TAŞIYICI AYAKLARI İLE ZEMİNLERİNDE OLUŞAN KALICI HASAR NEDENİYLE ORTAYA ÇIKAN CAN VE MAL GÜVENLİĞİ RİSKİNİN BERTARAF EDİLMESİ AMACIYLA BAZI TAŞINMAZLARIN, MUĞLA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11574)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 29,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353305",
+   "number": 11573,
+   "tarih": "2026-08-09",
+   "baslik": "BELEDİYELER VE İL ÖZEL İDARELERİNİN GENEL BÜTÇE VERGİ GELİRLERİ PAYINDAN YAPILACAK AYDINLATMA GİDERİ KESİNTİLERİNE İLİŞKİN KARAR (KARAR SAYISI: 11573)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "etiket_kaynagi": "RG altın kümesi #51 (elle, gerekçeli)",
+   "sinirda": [
+    "enerji"
+   ],
+   "not": "Çift etiketli: genel aydınlatma gideri elektrik maliyetidir, pay kesintisi vergi gelirindendir."
+  },
+  {
+   "id": 30,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353306",
+   "number": 11572,
+   "tarih": "2026-08-09",
+   "baslik": "YATIRIMLARA PROJE BAZLI DEVLET YARDIMI VERİLMESİNE İLİŞKİN KARARDA DEĞİŞİKLİK YAPILMASINA DAİR KARAR (KARAR SAYISI: 11572)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 31,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353307",
+   "number": 11571,
+   "tarih": "2026-08-09",
+   "baslik": "ORMAN GENEL MÜDÜRLÜĞÜNÜN TAŞRA TEŞKİLATINDA BELİRTİLEN ORMAN İŞLETME MÜDÜRLÜĞÜNÜN KURULMASI HAKKINDA KARAR (KARAR SAYISI: 11571)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 32,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353308",
+   "number": 11570,
+   "tarih": "2026-08-09",
+   "baslik": "KAMU KURUM VE KURULUŞLARININ YURTDIŞI TEŞKİLATINI OLUŞTURAN BİRİMLERİN NİTELİK, KURULDUĞU ŞEHİR VE ÜLKE, GÖREV ALANI, AKREDİTE EDİLDİĞİ ÜLKELER VE BAĞLI BULUNDUĞU MİSYONLAR HAKKINDAKİ 13/4/1999 TARİHLİ VE 99/12770 SAYILI BAKANLAR KURULU KARARINDA DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11570)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 33,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353309",
+   "number": 11569,
+   "tarih": "2026-08-09",
+   "baslik": "KAMU KURUM VE KURULUŞLARININ YURTDIŞI TEŞKİLATINI OLUŞTURAN BİRİMLERİN NİTELİK, KURULDUĞU ŞEHİR VE ÜLKE, GÖREV ALANI, AKREDİTE EDİLDİĞİ ÜLKELER VE BAĞLI BULUNDUĞU MİSYONLAR HAKKINDAKİ 13/4/1999 TARİHLİ VE 99/12770 SAYILI BAKANLAR KURULU KARARINDA DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11569)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 34,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353110",
+   "number": 11568,
+   "tarih": "2026-08-01",
+   "baslik": "BİRLEŞMİŞ MİLLETLER GÜVENLİK KONSEYİNİN 1267 (1999), 1988 (2011), 1989 (2011) VE 2253 (2015) SAYILI KARARLARIYLA LİSTELENEN KİŞİ, KURULUŞ VEYA ORGANİZASYONLARIN TASARRUFUNDA BULUNAN MALVARLIĞININ DONDURULMASI HAKKINDAKİ 30/9/2013 TARİHLİ VE 2013/5428 SAYILI BAKANLAR KURULU KARARININ EKİ (1) SAYILI LİSTEDE DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11568)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 35,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353097",
+   "number": 11563,
+   "tarih": "2026-07-31",
+   "baslik": "İTHALAT REJİMİ KARARINDA DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11563)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 36,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353090",
+   "number": 11564,
+   "tarih": "2026-07-31",
+   "baslik": "MALDİVLER CUMHURİYETİ MENŞELİ BAZI ÜRÜNLERİN İTHALATINDA TARİFE KONTENJANI UYGULANMASI HAKKINDA KARAR (KARAR SAYISI: 11564)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 37,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353043",
+   "number": 11549,
+   "tarih": "2026-07-18",
+   "baslik": "BORU HATLARI İLE PETROL TAŞIMA ANONİM ŞİRKETİ (BOTAŞ) TARAFINDAN 4734 SAYILI KAMU İHALE KANUNUNUN 3 ÜNCÜ MADDESİNİN (M) BENDİ KAPSAMINDA YAPILACAK ALIMLARA İLİŞKİN USUL VE ESASLAR (KARAR SAYISI: 11549)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 38,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353044",
+   "number": 11548,
+   "tarih": "2026-07-18",
+   "baslik": "İSTANBUL İLİ, SARIYER İLÇESİ SINIRLARI İÇERİSİNDE İLAN EDİLEN KİLYOS CADDESİ VE YAKIN ÇEVRESİ DOĞAL SİT ALANI KESİN KORUNACAK HASSAS ALANININ SINIRLARININ EKLİ KROKİ İLE KOORDİNAT LİSTESİNDE GÖSTERİLDİĞİ ŞEKİLDE DEĞİŞTİRİLMESİ HAKKINDA KARAR (KARAR SAYISI: 11548)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 39,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353045",
+   "number": 11547,
+   "tarih": "2026-07-18",
+   "baslik": "BAZI KAMU İKTİSADİ TEŞEBBÜSLERİNDEN ALINACAK HASILAT PAYLARINA İLİŞKİN 30/12/2005 TARİHLİ VE 2005/9916 SAYILI BAKANLAR KURULU KARARININ 1/6/2026 TARİHİNDEN GEÇERLİ OLMAK ÜZERE YÜRÜRLÜKTEN KALDIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11547)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 40,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353046",
+   "number": 11546,
+   "tarih": "2026-07-18",
+   "baslik": "İSTANBUL İHTİSAS SERBEST BÖLGESİNİN SINIRLARININ YENİDEN BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11546)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 41,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353047",
+   "number": 2026176,
+   "tarih": "2026-07-14",
+   "baslik": "BAZI KAMU İKTİSADİ TEŞEBBÜSLERİNE AİT KADRO VE POZİSYONLARIN İPTALİ VE İHDASI HAKKINDA KARAR (KARAR: 2026/176)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 42,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353042",
+   "number": 11509,
+   "tarih": "2026-07-11",
+   "baslik": "PET RESİN İTHALATINDA KORUNMA ÖNLEMİ UYGULANMASINA İLİŞKİN KARAR (KARAR SAYISI: 11509)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 43,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353048",
+   "number": 11526,
+   "tarih": "2026-07-11",
+   "baslik": "SİVAS İLİ, KANGAL İLÇESİNDE BULUNAN VE İSİMLERİ BELİRTİLEN YERLERDE ARAZİ TOPLULAŞTIRMASI VE TARLA İÇİ GELİŞTİRME HİZMETLERİ YAPILMASI HAKKINDA KARAR (KARAR SAYISI: 11526)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 44,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353049",
+   "number": 11525,
+   "tarih": "2026-07-11",
+   "baslik": "154 KV YURTÇİM TM-KIYIK TM ENERJİ İLETİM HATTI PROJESİ KAPSAMINDA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11525)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 45,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353050",
+   "number": 11524,
+   "tarih": "2026-07-11",
+   "baslik": "154 KV BİSMİL-L-BİSMİL-2 ENERJİ İLETİM HATTI PROJESİ KAPSAMINDA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11524)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 46,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353051",
+   "number": 11523,
+   "tarih": "2026-07-11",
+   "baslik": "TÜRKİYE PETROLLERİ ANONİM ORTAKLIĞINA AİT AR/TPO/K/M43-A PAFTA NUMARALI PETROL ARAMA RUHSATINDA AÇILAN ZİNCİRLİÇAY-1 KUYUSUNUN LOKASYON SAHASI VE YOLUNUN YAPIMI AMACIYLA ŞANLIURFA İLİ, SİVEREK İLÇESİNDE BULUNAN BAZI TAŞINMAZLARIN MADEN VE PETROL İŞLERİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11523)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 47,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353052",
+   "number": 11522,
+   "tarih": "2026-07-11",
+   "baslik": "SAGE BAĞLANTI YOLU PROJESİ (KM:0+000.00-2+646.82 ARASI) KAPSAMINDA ARAZİYE GİRİLEREK YOL YAPIM ÇALIŞMALARININ TAMAMLANMASI AMACIYLA BAZI TAŞINMAZLAR İLE ÜZERLERİNDEKİ MÜŞTEMİLATIN KARAYOLLARI GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11522)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 48,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353053",
+   "number": 11521,
+   "tarih": "2026-07-11",
+   "baslik": "KARAPÜRÇEK-ROKETSAN BAĞLANTI YOLU PROJESİ (KM:0+038.57-8+746.67 ARASI) KAPSAMINDA ARAZİYE GİRİLEREK YOL YAPIM ÇALIŞMALARININ TAMAMLANMASI AMACIYLA BAZI TAŞINMAZLAR İLE ÜZERLERİNDEKİ MÜŞTEMİLATIN KARAYOLLARI GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11521)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 49,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353054",
+   "number": 11520,
+   "tarih": "2026-07-11",
+   "baslik": "154 KV İNCİR HES TM-(AKŞAR NAZAR TM-SİİRT 2 TM) GİRDİ-ÇIKTI ENERJİ İLETİM HATTI PROJESİ KAPSAMINDA BAZI TAŞINMAZLARIN TÜRKİYE ELEKTRİK İLETİM ANONİM ŞİRKETİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11520)",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 50,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353055",
+   "number": 11519,
+   "tarih": "2026-07-11",
+   "baslik": "KAMU KURUM VE KURULUŞLARININ ÜRETTİKLERİ BAZI MAL VE HİZMETLERDEN ÜCRETSİZ VEYA İNDİRİMLİ OLARAK FAYDALANACAKLARIN TESPİTİNE İLİŞKİN KARAR (KARAR SAYISI: 11519)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 51,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353056",
+   "number": 11518,
+   "tarih": "2026-07-11",
+   "baslik": "KAMU KURUM VE KURULUŞLARININ ÜRETTİKLERİ BAZI MAL VE HİZMETLERDEN ÜCRETSİZ VEYA İNDİRİMLİ OLARAK FAYDALANACAKLARIN TESPİTİNE İLİŞKİN KARAR (KARAR SAYISI: 11518)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 52,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353057",
+   "number": 11517,
+   "tarih": "2026-07-11",
+   "baslik": "MİLLÎ EĞİTİM BAKANLIĞI YÖNETİCİ VE ÖĞRETMENLERİNİN DERS VE EK DERS SAATLERİNE İLİŞKİN KARARDA DEĞİŞİKLİK YAPILMASINA DAİR KARAR (KARAR SAYISI: 11517)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 53,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353058",
+   "number": 11516,
+   "tarih": "2026-07-11",
+   "baslik": "DEVLET MEMURLARINA ÖDENECEK ZAM VE TAZMİNATLARA İLİŞKİN KARARDA DEĞİŞİKLİK YAPILMASINA DAİR KARAR (KARAR SAYISI: 11516)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 54,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353059",
+   "number": 11515,
+   "tarih": "2026-07-11",
+   "baslik": "BALON BALIĞI AVCILIĞININ DESTEKLENMESİ HAKKINDA KARARDA DEĞİŞİKLİK YAPILMASINA DAİR KARAR (KARAR SAYISI: 11515)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 55,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353060",
+   "number": 11514,
+   "tarih": "2026-07-11",
+   "baslik": "BATMAN HAVALİMANININ ULUSLARARASI GİRİŞ-ÇIKIŞLARA AÇIK DAİMİ HAVA HUDUT KAPISI OLARAK TESPİTİ HAKKINDA KARAR (KARAR SAYISI: 11514)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 56,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353061",
+   "number": 11513,
+   "tarih": "2026-07-11",
+   "baslik": "BİRLEŞMİŞ MİLLETLER GÜVENLİK KONSEYİNİN 1267 (1999), 1988 (2011), 1989 (2011) VE 2253 (2015) SAYILI KARARLARIYLA LİSTELENEN KİŞİ, KURULUŞ VEYA ORGANİZASYONLARIN TASARRUFUNDA BULUNAN MALVARLIĞININ DONDURULMASI HAKKINDAKİ 30/9/2013 TARİHLİ VE 2013/5428 SAYILI BAKANLAR KURULU KARARININ EKİ (1) SAYILI LİSTEDE DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11513)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 57,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353062",
+   "number": 11512,
+   "tarih": "2026-07-11",
+   "baslik": "BAZI KİŞİ VE KURULUŞLARIN TASARRUFUNDA BULUNAN TÜRKİYE?DEKİ MALVARLIKLARININ DONDURULMASINA İLİŞKİN 28/10/2021 TARİHLİ VE 4713 SAYILI CUMHURBAŞKANI KARARININ EKİ LİSTEDE YER ALAN BİR KİŞİYE AİT BİLGİLERİN GÜNCELLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11512)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "gerekce": "Malvarlığının dondurulması kararının eki listenin güncellenmesi; RG altın #28 ile aynı ölçüt."
+  },
+  {
+   "id": 58,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353063",
+   "number": 11511,
+   "tarih": "2026-07-11",
+   "baslik": "YEREL VE KÜRESEL ASGARİ TAMAMLAYICI KURUMLAR VERGİSİ KAPSAMINDA GÜVENLİ LİMAN OLARAK İLAN EDİLECEK YERLERİN VE NİTELİKLİ GELİRİN DÂHİL EDİLMESİ ESASI ÇERÇEVESİNDE KÜRESEL ASGARİ TAMAMLAYICI KURUMLAR VERGİSİNİN UYGULANDIĞI YERLER İLE NİTELİKLİ YEREL ASGARİ TAMAMLAYICI KURUMLAR VERGİSİNİN UYGULANDIĞI YERLERİN BELİRLENMESİ HAKKINDA KARAR (KARAR SAYISI: 11511)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 59,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353064",
+   "number": 11510,
+   "tarih": "2026-07-11",
+   "baslik": "SAMSUN SERBEST BÖLGESİNİN, SASBAŞ SAMSUN SERBEST BÖLGESİ KURUCU VE İŞLETİCİSİ ANONİM ŞİRKETİ TARAFINDAN KURULUP İŞLETİLMESİNDE SÜRE UZATIMI YAPILMASI HAKKINDA KARAR (KARAR SAYISI: 11510)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 60,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353065",
+   "number": 11508,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA İLAVE GÜMRÜK VERGİSİ UYGULANMASINA İLİŞKİN KARARDA DEĞİŞİKLİK YAPILMASINA DAİR KARAR (KARAR SAYISI: 11508)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 61,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353066",
+   "number": 11507,
+   "tarih": "2026-07-11",
+   "baslik": "İSTATİSTİK POZİSYONLARINA BÖLÜNMÜŞ TÜRK GÜMRÜK TARİFE CETVELİNDE DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11507)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 62,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353067",
+   "number": 11506,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALAT REJİMİ KARARINDA DEĞİŞİKLİK YAPILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11506)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 63,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "353068",
+   "number": 11505,
+   "tarih": "2026-07-11",
+   "baslik": "BAZI ANLAŞMALARIN YÜRÜRLÜĞE GİRDİĞİ TARİHLERİN TESPİT EDİLMESİ HAKKINDA KARAR (KARAR SAYISI: 11505)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 64,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "352856",
+   "number": 11502,
+   "tarih": "2026-07-04",
+   "baslik": "KAMU KURUM VE KURULUŞLARININ ÜRETTİKLERİ BAZI MAL VE HİZMETLERDEN ÜCRETSİZ VEYA İNDİRİMLİ OLARAK FAYDALANACAKLARIN TESPİTİNE İLİŞKİN KARAR (KARAR SAYISI: 11502)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 65,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "352857",
+   "number": 11501,
+   "tarih": "2026-07-04",
+   "baslik": "İŞSİZLİK SİGORTASI FONU GELİRLERİNİN, 4447 SAYILI İŞSİZLİK SİGORTASI KANUNUNUN 48 İNCİ MADDESİNİN YEDİNCİ FIKRASINDA BELİRTİLEN AMAÇLAR İÇİN KULLANILACAK ORANININ ARTIRILMASINA İLİŞKİN KARAR (KARAR SAYISI: 11501)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 66,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "352858",
+   "number": 11500,
+   "tarih": "2026-07-04",
+   "baslik": "BİTLİS-AHLAT İÇMESUYU PROJESİNİN YAPIMI AMACIYLA BAZI TAŞINMAZLARIN DEVLET SU İŞLERİ GENEL MÜDÜRLÜĞÜ TARAFINDAN ACELE KAMULAŞTIRILMASI HAKKINDA KARAR (KARAR SAYISI: 11500)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 67,
+   "tur": "CB_KARAR",
+   "mevzuat_id": "352859",
+   "number": 11499,
+   "tarih": "2026-07-04",
+   "baslik": "YAĞLIK AYÇİÇEĞİ TOHUMU VE HAM AYÇİÇEĞİ YAĞI İTHALATINDA TARİFE KONTENJANI UYGULANMASI HAKKINDA KARAR (KARAR SAYISI: 11499)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 68,
+   "tur": "KKY",
+   "mevzuat_id": "353345",
+   "number": 46293,
+   "tarih": "2026-09-17",
+   "baslik": "TÜRK OPTİSYEN-GÖZLÜKÇÜLER BİRLİĞİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 69,
+   "tur": "KKY",
+   "mevzuat_id": "353346",
+   "number": 46290,
+   "tarih": "2026-09-16",
+   "baslik": "HAVA KALİTESİNİN KORUNMASI AMACIYLA KATI YAKITLARIN KONTROLÜ YÖNETMELİĞİ",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "RG altın kümesi #17 (elle, gerekçeli)",
+   "sinirda": [
+    "enerji"
+   ],
+   "not": "En zor vaka: 'katı yakıt' = kömür piyasası; çevre yönetmeliği kılığında enerji düzenlemesi."
+  },
+  {
+   "id": 70,
+   "tur": "KKY",
+   "mevzuat_id": "353347",
+   "number": 46279,
+   "tarih": "2026-09-14",
+   "baslik": "TÜRK GIDA KODEKSİ AROMA VERİCİLER VE AROMA VERME ÖZELLİĞİ TAŞIYAN GIDA BİLEŞENLERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 71,
+   "tur": "KKY",
+   "mevzuat_id": "353335",
+   "number": 46272,
+   "tarih": "2026-09-08",
+   "baslik": "SAHİL GÜVENLİK KOMUTANLIĞINA AİT ARAÇ, GEREÇ, MAL VE MALZEMELERİN SATIŞ, HİBE, HEK VE HURDA DURUM VE İŞLEMLERİ İLE HİZMET SATIŞINA DAİR YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 72,
+   "tur": "KKY",
+   "mevzuat_id": "353336",
+   "number": 46271,
+   "tarih": "2026-09-05",
+   "baslik": "ORMAN YANGINLARIYLA MÜCADELE ÇALIŞMALARI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 73,
+   "tur": "KKY",
+   "mevzuat_id": "353327",
+   "number": 46262,
+   "tarih": "2026-08-27",
+   "baslik": "TÜRKİYE CUMHURİYET MERKEZ BANKASI PERFORMANS DEĞERLENDİRME YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 74,
+   "tur": "KKY",
+   "mevzuat_id": "353328",
+   "number": 46261,
+   "tarih": "2026-08-27",
+   "baslik": "TÜRKİYE EMİSYON TİCARET SİSTEMİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 75,
+   "tur": "KKY",
+   "mevzuat_id": "353280",
+   "number": 46257,
+   "tarih": "2026-08-24",
+   "baslik": "TÜRKİYE CUMHURİYETİ İLE MALDİVLER CUMHURİYETİ ARASINDA TERCİHLİ TİCARET ANLAŞMASI ÇERÇEVESİNDEKİ TİCARETTE EŞYANIN TERCİHLİ MENŞEİNİN TESPİTİ HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 76,
+   "tur": "KKY",
+   "mevzuat_id": "353281",
+   "number": 46255,
+   "tarih": "2026-08-21",
+   "baslik": "TÜRKİYE CUMHURİYET MERKEZ BANKASI DİSİPLİN YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 77,
+   "tur": "KKY",
+   "mevzuat_id": "353130",
+   "number": 46247,
+   "tarih": "2026-08-11",
+   "baslik": "SPORCU SAĞLIK RAPORLARI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 78,
+   "tur": "KKY",
+   "mevzuat_id": "353120",
+   "number": 46234,
+   "tarih": "2026-08-04",
+   "baslik": "YEREL İKLİM DEĞİŞİKLİĞİ EYLEM PLANLARI İLE İL İKLİM DEĞİŞİKLİĞİ KOORDİNASYON KURULLARI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 79,
+   "tur": "KKY",
+   "mevzuat_id": "353084",
+   "number": 46226,
+   "tarih": "2026-07-29",
+   "baslik": "ÜCRETLİ KARAYOLLARINDA YABANCI PLAKALI ARAÇLARA AİT GEÇİŞ ÜCRETLERİ VE İDARİ PARA CEZALARI İLE CEZALARIN TAHSİLİNE İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 80,
+   "tur": "KKY",
+   "mevzuat_id": "353070",
+   "number": 46219,
+   "tarih": "2026-07-21",
+   "baslik": "TÜRKİYE YAZMA ESERLER KURUMU BAŞKANLIĞI ARAŞTIRMA VE EĞİTİM MERKEZİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 81,
+   "tur": "KKY",
+   "mevzuat_id": "352847",
+   "number": 46202,
+   "tarih": "2026-07-04",
+   "baslik": "ESENLİK HİZMETLERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 82,
+   "tur": "KKY",
+   "mevzuat_id": "352838",
+   "number": 46199,
+   "tarih": "2026-07-03",
+   "baslik": "ARI ZEHRİNİN TOPLANMASINA İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 83,
+   "tur": "KKY",
+   "mevzuat_id": "352837",
+   "number": 46196,
+   "tarih": "2026-07-02",
+   "baslik": "TIBBİ BİTKİ ÇAYLARI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 84,
+   "tur": "KKY",
+   "mevzuat_id": "352836",
+   "number": 46195,
+   "tarih": "2026-07-02",
+   "baslik": "AROMATERAPÖTİK ÜRÜNLER HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 85,
+   "tur": "KKY",
+   "mevzuat_id": "353112",
+   "number": 46233,
+   "tarih": "2026-06-27",
+   "baslik": "YENİLENMİŞ ÜRÜNLER HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 86,
+   "tur": "KKY",
+   "mevzuat_id": "352823",
+   "number": 46190,
+   "tarih": "2026-06-27",
+   "baslik": "KAMU KURUM VE KURULUŞLARINCA 2828 SAYILI SOSYAL HİZMETLER KANUNUNA GÖRE AÇILACAK KREŞ VE GÜNDÜZ BAKIMEVLERİ HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 87,
+   "tur": "KKY",
+   "mevzuat_id": "352818",
+   "number": 46188,
+   "tarih": "2026-06-25",
+   "baslik": "TÜRKİYE ENERJİ, NÜKLEER VE MADEN ARAŞTIRMA KURUMU BURS PROGRAMLARINA İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 88,
+   "tur": "KKY",
+   "mevzuat_id": "352813",
+   "number": 46186,
+   "tarih": "2026-06-23",
+   "baslik": "EVDE SAĞLIK VE PALYATİF BAKIM HİZMETLERİNİN SUNUMU VE KOORDİNASYONUNA İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 89,
+   "tur": "KKY",
+   "mevzuat_id": "352797",
+   "number": 46182,
+   "tarih": "2026-06-22",
+   "baslik": "GEMİ GERİ DÖNÜŞÜM TESİSLERİNİN YETKİLENDİRİLMESİ HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 90,
+   "tur": "KKY",
+   "mevzuat_id": "352791",
+   "number": 46179,
+   "tarih": "2026-06-18",
+   "baslik": "KÜLTÜR VE TURİZM BAKANLIĞI YAYIN YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 91,
+   "tur": "KKY",
+   "mevzuat_id": "352588",
+   "number": 46171,
+   "tarih": "2026-06-09",
+   "baslik": "JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ YETERLİLİK SINAVI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 92,
+   "tur": "KKY",
+   "mevzuat_id": "352545",
+   "number": 46151,
+   "tarih": "2026-05-22",
+   "baslik": "SİVİL HAVACILIK GÜVENLİĞİ YÖNETMELİĞİ (SHY-GÜVENLİK)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 93,
+   "tur": "KKY",
+   "mevzuat_id": "352531",
+   "number": 45149,
+   "tarih": "2026-05-20",
+   "baslik": "TÜRK GIDA KODEKSİ YENİ GIDALAR YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 94,
+   "tur": "KKY",
+   "mevzuat_id": "352528",
+   "number": 45147,
+   "tarih": "2026-05-16",
+   "baslik": "ÇALIŞMA VE SOSYAL GÜVENLİK BAKANLIĞI İŞ SAĞLIĞI VE GÜVENLİĞİ GENEL MÜDÜRLÜĞÜ DÖNER SERMAYE İŞLETMESİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 95,
+   "tur": "KKY",
+   "mevzuat_id": "352521",
+   "number": 45140,
+   "tarih": "2026-05-14",
+   "baslik": "GEMİ ACENTELERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 96,
+   "tur": "KKY",
+   "mevzuat_id": "353119",
+   "number": 46235,
+   "tarih": "2026-05-06",
+   "baslik": "BİTKİ KARANTİNASI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 97,
+   "tur": "KKY",
+   "mevzuat_id": "352257",
+   "number": 45129,
+   "tarih": "2026-05-06",
+   "baslik": "HUZUREVLERİ İLE HUZUREVİ YAŞLI BAKIM VE REHABİLİTASYON MERKEZLERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 98,
+   "tur": "KKY",
+   "mevzuat_id": "352120",
+   "number": 45127,
+   "tarih": "2026-05-05",
+   "baslik": "NÜKLEER TESİSLERDE SİBER GÜVENLİĞE İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 99,
+   "tur": "KKY",
+   "mevzuat_id": "352087",
+   "number": 45119,
+   "tarih": "2026-04-28",
+   "baslik": "MEYVE FİDANI VE ÜRETİM MATERYALİ SERTİFİKASYONU İLE PAZARLAMASI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 100,
+   "tur": "KKY",
+   "mevzuat_id": "352088",
+   "number": 45118,
+   "tarih": "2026-04-28",
+   "baslik": "ASMA FİDANI VE ÜRETİM MATERYALİ SERTİFİKASYONU İLE PAZARLAMASI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 101,
+   "tur": "KKY",
+   "mevzuat_id": "352089",
+   "number": 45117,
+   "tarih": "2026-04-28",
+   "baslik": "GELENEKSEL VE TAMAMLAYICI TIP UYGULAMALARI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 102,
+   "tur": "KKY",
+   "mevzuat_id": "352042",
+   "number": 45105,
+   "tarih": "2026-04-18",
+   "baslik": "AFET VE ACİL DURUM YÖNETİMİ BAŞKANLIĞI AFET ARAŞTIRMALARI MERKEZİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 103,
+   "tur": "KKY",
+   "mevzuat_id": "352028",
+   "number": 45103,
+   "tarih": "2026-04-17",
+   "baslik": "KONYA BÜYÜKŞEHİR BELEDİYESİ İMAR YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 104,
+   "tur": "KKY",
+   "mevzuat_id": "352013",
+   "number": 45099,
+   "tarih": "2026-04-11",
+   "baslik": "DOĞA KORUMA VE MİLLİ PARKLAR UZMANLIĞI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 105,
+   "tur": "KKY",
+   "mevzuat_id": "352007",
+   "number": 45093,
+   "tarih": "2026-04-08",
+   "baslik": "ESKİŞEHİR BÜYÜKŞEHİR BELEDİYESİ İMAR YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 106,
+   "tur": "KKY",
+   "mevzuat_id": "352000",
+   "number": 45092,
+   "tarih": "2026-04-04",
+   "baslik": "TARIM ARAZİLERİNİN KORUNMASI VE KULLANILMASI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 107,
+   "tur": "KKY",
+   "mevzuat_id": "352001",
+   "number": 45091,
+   "tarih": "2026-04-04",
+   "baslik": "ARAZİ KULLANIM PLANLAMASI UYGULAMA YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 108,
+   "tur": "KKY",
+   "mevzuat_id": "351874",
+   "number": 45087,
+   "tarih": "2026-04-02",
+   "baslik": "ÇALIŞANLARIN İŞ SAĞLIĞI VE GÜVENLİĞİ EĞİTİMLERİNİN USUL VE ESASLARI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 109,
+   "tur": "KKY",
+   "mevzuat_id": "351867",
+   "number": 45085,
+   "tarih": "2026-03-31",
+   "baslik": "SAĞLIK BAKANLIĞI DİSİPLİN AMİRLERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 110,
+   "tur": "KKY",
+   "mevzuat_id": "351793",
+   "number": 45074,
+   "tarih": "2026-03-17",
+   "baslik": "TAHIL TOHUMU SERTİFİKASYONU VE PAZARLAMASI YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 111,
+   "tur": "KKY",
+   "mevzuat_id": "351794",
+   "number": 45073,
+   "tarih": "2026-03-17",
+   "baslik": "MİLLÎ EĞİTİM BAKANLIĞI ÖĞRETMENLİK MESLEĞİNE HAZIRLIK EĞİTİMİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 112,
+   "tur": "KKY",
+   "mevzuat_id": "351788",
+   "number": 45071,
+   "tarih": "2026-03-14",
+   "baslik": "TÜRKİYE YAZMA ESERLER KURUMU BAŞKANLIĞI DİSİPLİN AMİRLERİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 113,
+   "tur": "KKY",
+   "mevzuat_id": "351772",
+   "number": 45070,
+   "tarih": "2026-03-13",
+   "baslik": "TÜRKİYE ENERJİ, NÜKLEER VE MADEN ARAŞTIRMA KURUMU FİKRÎ VE SINAİ HAKLAR YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 114,
+   "tur": "KKY",
+   "mevzuat_id": "351764",
+   "number": 45068,
+   "tarih": "2026-03-12",
+   "baslik": "MALÎ SUÇLARLA MÜCADELE KOORDİNASYON KURULUNUN ÇALIŞMA USUL VE ESASLARI HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 115,
+   "tur": "KKY",
+   "mevzuat_id": "351497",
+   "number": 45054,
+   "tarih": "2026-03-03",
+   "baslik": "SOSYAL GÜVENLİK KURUMU KLİNİK ARAŞTIRMALARDA SUNULAN SAĞLIK HİZMETLERİNİN ÖDENMESİNE İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 116,
+   "tur": "KKY",
+   "mevzuat_id": "351498",
+   "number": 45052,
+   "tarih": "2026-03-03",
+   "baslik": "İSTİHDAMI KORUMA DESTEK PROGRAMI UYGULAMA YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 117,
+   "tur": "KKY",
+   "mevzuat_id": "351232",
+   "number": 45041,
+   "tarih": "2026-02-25",
+   "baslik": "TÜRKİYE DEĞERLEME UZMANLARI BİRLİĞİ DİSİPLİN YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 118,
+   "tur": "KKY",
+   "mevzuat_id": "351233",
+   "number": 45040,
+   "tarih": "2026-02-25",
+   "baslik": "TÜRKİYE DEĞERLEME UZMANLARI BİRLİĞİ DENETİM YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 119,
+   "tur": "KKY",
+   "mevzuat_id": "351234",
+   "number": 45039,
+   "tarih": "2026-02-25",
+   "baslik": "MİLLÎ SAVUNMA BAKANLIĞI DEVLET MEMURLARI VE SÖZLEŞMELİ PERSONEL DİSİPLİN YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 120,
+   "tur": "KKY",
+   "mevzuat_id": "350986",
+   "number": 45035,
+   "tarih": "2026-02-21",
+   "baslik": "İSTİLACI YABANCI TÜRLERİN GİRİŞİNİN VE YAYILMASININ ÖNLENMESİ İLE YÖNETİMİ HAKKINDA YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 121,
+   "tur": "KKY",
+   "mevzuat_id": "350987",
+   "number": 45031,
+   "tarih": "2026-02-21",
+   "baslik": "MESLEKÎ YETERLİLİK KURUMUNDA GEÇİCİ NİTELİKTEKİ İŞLERİN VEKÂLET VE İSTİSNA SÖZLEŞMESİYLE YAPTIRILMASINA İLİŞKİN YÖNETMELİK",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 122,
+   "tur": "KKY",
+   "mevzuat_id": "350976",
+   "number": 45022,
+   "tarih": "2026-02-14",
+   "baslik": "ULUSLARARASI SAĞLIK HİZMETLERİNDE İŞ BİRLİĞİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 123,
+   "tur": "KKY",
+   "mevzuat_id": "351871",
+   "number": 45086,
+   "tarih": "2026-02-12",
+   "baslik": "SİGORTA EKSPERLERİ ATAMA YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 124,
+   "tur": "KKY",
+   "mevzuat_id": "350845",
+   "number": 45018,
+   "tarih": "2026-02-12",
+   "baslik": "TARIM VE ORMAN BAKANLIĞI DÖNER SERMAYE İŞLETMESİ YÖNETMELİĞİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 125,
+   "tur": "KKY",
+   "mevzuat_id": "350841",
+   "number": 45016,
+   "tarih": "2026-02-10",
+   "baslik": "TÜRKİYE GELENEKSEL VE TAMAMLAYICI TIP ENSTİTÜSÜNÜN YAPILANMASI VE FAALİYETLERİNİN YÜRÜTÜLMESİNE DAİR YÖNETMELİK",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 126,
+   "tur": "KKY",
+   "mevzuat_id": "350832",
+   "number": 45010,
+   "tarih": "2026-02-06",
+   "baslik": "RÜZGÂR GÜCÜ İZLEME VE TAHMİN MERKEZİNE BAĞLANTI YÖNETMELİĞİ",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "gerekce": "Rüzgâr santrallerinin RİTM'e bağlantısı: yenilenebilir elektrik üretimine ilişkin teknik piyasa düzenlemesi. Başlıkta 'enerji' ve 'elektrik' geçmiyor."
+  },
+  {
+   "id": 127,
+   "tur": "KKY",
+   "mevzuat_id": "350808",
+   "number": 45002,
+   "tarih": "2026-01-31",
+   "baslik": "KUR’AN KURSLARI YÖNETMELİĞİ",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 128,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353343",
+   "number": 46269,
+   "tarih": "2026-09-06",
+   "baslik": "ULUSAL MESLEK STANDARTLARINA DAİR TEBLİĞ (TEBLİĞ NO: 2026/10)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 129,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353333",
+   "number": 46265,
+   "tarih": "2026-08-29",
+   "baslik": "BEŞERİ TIBBİ ÜRÜNLERİN FİYATLANDIRILMASI HAKKINDA TEBLİĞ",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "RG altın kümesi #45 (elle, gerekçeli)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "not": "Fiyat düzenlemesi — rekabet hukuku komşusu ama Rekabet Kurumu işlemi değil."
+  },
+  {
+   "id": 130,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353321",
+   "number": 46260,
+   "tarih": "2026-08-26",
+   "baslik": "KONKORDATO GİDER AVANSI TARİFESİ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 131,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353282",
+   "number": 46258,
+   "tarih": "2026-08-23",
+   "baslik": "ULUSAL MESLEK STANDARTLARINA DAİR TEBLİĞ (TEBLİĞ NO: 2026/8)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 132,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353283",
+   "number": 46256,
+   "tarih": "2026-08-21",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/30)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 133,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353135",
+   "number": 46249,
+   "tarih": "2026-08-14",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/28)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 134,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353136",
+   "number": 46248,
+   "tarih": "2026-08-12",
+   "baslik": "PROJE VE KONTROLLUK İŞLERİNDE UYGULANACAK FİYAT ARTIŞ ORANLARI HAKKINDA TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 135,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353129",
+   "number": 46237,
+   "tarih": "2026-08-06",
+   "baslik": "EMLAK VERGİSİ KANUNU GENEL TEBLİĞİ (SERİ NO: 90)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "etiket_kaynagi": "RG altın kümesi #50 (elle, gerekçeli)"
+  },
+  {
+   "id": 136,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353089",
+   "number": 46228,
+   "tarih": "2026-07-31",
+   "baslik": "MALDİVLER CUMHURİYETİ MENŞELİ BAZI ÜRÜNLERİN İTHALATINDA TARİFE KONTENJANI UYGULANMASINA İLİŞKİN TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 137,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353081",
+   "number": 46224,
+   "tarih": "2026-07-25",
+   "baslik": "İTHALATTA KOTA VE TARİFE KONTENJANI İDARESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/10)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 138,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353137",
+   "number": 46246,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/45)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 139,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353138",
+   "number": 46245,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/44)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 140,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353139",
+   "number": 46244,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/43)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 141,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353140",
+   "number": 46243,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/42)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 142,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353141",
+   "number": 46242,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/41)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 143,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353142",
+   "number": 46241,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/40)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 144,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353143",
+   "number": 46239,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/39)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 145,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353144",
+   "number": 46238,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/38)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 146,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353028",
+   "number": 46213,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA KORUNMA ÖNLEMLERİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/6)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 147,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353029",
+   "number": 46212,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA KORUNMA ÖNLEMLERİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/5)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 148,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "353030",
+   "number": 46211,
+   "tarih": "2026-07-11",
+   "baslik": "İTHALATTA KORUNMA ÖNLEMLERİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/4)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 149,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352850",
+   "number": 46208,
+   "tarih": "2026-07-04",
+   "baslik": "YAĞLIK AYÇİÇEĞİ TOHUMU VE HAM AYÇİÇEĞİ YAĞI İTHALATINDA TARİFE KONTENJANI UYGULANMASINA İLİŞKİN TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 150,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352851",
+   "number": 46207,
+   "tarih": "2026-07-04",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/26)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 151,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352852",
+   "number": 46206,
+   "tarih": "2026-07-04",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/24)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 152,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352853",
+   "number": 46205,
+   "tarih": "2026-07-04",
+   "baslik": "GELİR VERGİSİ GENEL TEBLİĞİ (SERİ NO: 334)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 153,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352854",
+   "number": 46204,
+   "tarih": "2026-07-04",
+   "baslik": "GELİR VERGİSİ GENEL TEBLİĞİ (SERİ NO: 333)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 154,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352855",
+   "number": 46203,
+   "tarih": "2026-07-04",
+   "baslik": "BAZI VARLIKLARIN EKONOMİYE KAZANDIRILMASI HAKKINDA GENEL TEBLİĞ (SERİ NO: 1)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 155,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352839",
+   "number": 46198,
+   "tarih": "2026-07-03",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/27)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 156,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352840",
+   "number": 46197,
+   "tarih": "2026-07-03",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/25)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 157,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352830",
+   "number": 46194,
+   "tarih": "2026-07-01",
+   "baslik": "İTHALATTA KOTA VE TARİFE KONTENJANI İDARESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/9)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 158,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352827",
+   "number": 46193,
+   "tarih": "2026-06-30",
+   "baslik": "5201 SAYILI KANUN GEREĞİNCE KONTROLE TÂBİ TUTULACAK HARP ARAÇ VE GEREÇLERİ İLE SİLAH, MÜHİMMAT VE BUNLARA AİT YEDEK PARÇALAR, ASKERÎ PATLAYICI MADDELER, BUNLARA AİT TEKNOLOJİLERE İLİŞKİN LİSTE (2026 YILI KONTROLE TÂBİ MALZEME LİSTESİ)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 159,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352816",
+   "number": 46187,
+   "tarih": "2026-06-24",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/23)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 160,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352800",
+   "number": 46184,
+   "tarih": "2026-06-22",
+   "baslik": "EMBRİYO ÜRETİMİNE DAİR TEBLİĞ (TEBLİĞ NO: 2026/8)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 161,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352799",
+   "number": 46185,
+   "tarih": "2026-06-20",
+   "baslik": "İTHALATTA KOTA VE TARİFE KONTENJANI İDARESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/5)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 162,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352793",
+   "number": 46181,
+   "tarih": "2026-06-19",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/22)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 163,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352794",
+   "number": 46180,
+   "tarih": "2026-06-19",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/10)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 164,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352785",
+   "number": 46178,
+   "tarih": "2026-06-16",
+   "baslik": "TAHSİLAT GENEL TEBLİĞİ (SERİ:B SIRA NO:20)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 1
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 165,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352786",
+   "number": 46177,
+   "tarih": "2026-06-16",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/9)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 166,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352787",
+   "number": 46176,
+   "tarih": "2026-06-16",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/17)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 167,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352788",
+   "number": 46175,
+   "tarih": "2026-06-16",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/21)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 168,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352771",
+   "number": 46173,
+   "tarih": "2026-06-14",
+   "baslik": "ULUSAL MESLEK STANDARTLARINA DAİR TEBLİĞ (TEBLİĞ NO: 2026/6)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 169,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352562",
+   "number": 46160,
+   "tarih": "2026-05-24",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/20)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 170,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352564",
+   "number": 46159,
+   "tarih": "2026-05-24",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/19)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 171,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352565",
+   "number": 46158,
+   "tarih": "2026-05-24",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/16)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 172,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352542",
+   "number": 46149,
+   "tarih": "2026-05-21",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/18)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 173,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352532",
+   "number": 45150,
+   "tarih": "2026-05-20",
+   "baslik": "TÜRK GIDA KODEKSİ YENİ GIDALARA İLİŞKİN UYGULAMA TEBLİĞİ (TEBLİĞ NO: 2026/3)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 174,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352523",
+   "number": 45141,
+   "tarih": "2026-05-14",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/11)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 175,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352515",
+   "number": 45138,
+   "tarih": "2026-05-10",
+   "baslik": "ULUSAL MESLEK STANDARTLARINA DAİR TEBLİĞ (TEBLİĞ NO: 2026/3)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 176,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352516",
+   "number": 45137,
+   "tarih": "2026-05-09",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/15)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 177,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352266",
+   "number": 45134,
+   "tarih": "2026-05-08",
+   "baslik": "VERGİ USUL KANUNU GENEL TEBLİĞİ (SIRA NO: 593)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 178,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352261",
+   "number": 45132,
+   "tarih": "2026-05-07",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/12)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 179,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352258",
+   "number": 45131,
+   "tarih": "2026-05-06",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/14)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 180,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352121",
+   "number": 45128,
+   "tarih": "2026-05-05",
+   "baslik": "İTHALATTA HAKSIZ REKABETİN ÖNLENMESİNE İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/13)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "rekabet"
+   ],
+   "gerekce": "Antidamping tebliği: 'haksız rekabet' kelime tuzağı, rekabet hukuku değil (RG ölçütüyle aynı)."
+  },
+  {
+   "id": 181,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352061",
+   "number": 45112,
+   "tarih": "2026-04-24",
+   "baslik": "2026 YILI KURBAN HİZMETLERİNİN UYGULANMASINA DAİR TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 182,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352055",
+   "number": 45111,
+   "tarih": "2026-04-24",
+   "baslik": "DANIŞMANLIK TEDBİRİ KARARLARININ UYGULAMA USUL VE ESASLARI HAKKINDA TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 183,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352045",
+   "number": 45108,
+   "tarih": "2026-04-18",
+   "baslik": "VETERİNER BİYOLOJİK ÜRÜN VE HAYVAN TANIMLAMA ARAÇLARININ BEDELLERİ İLE UYGULAMA ÜCRETLERİNİN TAHSİLİNE İLİŞKİN USUL VE ESASLAR HAKKINDA TEBLİĞ (TEBLİĞ NO: 2026/2)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)",
+   "sinirda": [
+    "vergi"
+   ],
+   "gerekce": "'Tahsil' geçiyor ama konu hizmet bedeli; amme alacağı/vergi usulü değil."
+  },
+  {
+   "id": 184,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352029",
+   "number": 45104,
+   "tarih": "2026-04-17",
+   "baslik": "MISIR İTHALATINDA TARİFE KONTENJANI UYGULANMASINA İLİŞKİN TEBLİĞ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 185,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352025",
+   "number": 45100,
+   "tarih": "2026-04-15",
+   "baslik": "ELEKTRİKLİ SKUTERLERİN ÜRETİMİNDEKİ YERLİLİK ESASLARI HAKKINDA TEBLİĞ (SGM-2026/5)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "egitimde_goruldu": true,
+   "etiket_kaynagi": "egitim etiketi (Opus damıtması) — yalnız BİÇİM aktarımını ölçer"
+  },
+  {
+   "id": 186,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "352009",
+   "number": 45094,
+   "tarih": "2026-04-09",
+   "baslik": "İTHALATTA GÖZETİM UYGULANMASINA İLİŞKİN TEBLİĞ (TEBLİĞ NO: 2026/37)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  },
+  {
+   "id": 187,
+   "tur": "TEBLIGLER",
+   "mevzuat_id": "351883",
+   "number": 45089,
+   "tarih": "2026-04-03",
+   "baslik": "KIRSAL KALKINMA YATIRIM PROGRAMI KAPSAMINDA TASARRUFLU TARIMSAL SULAMA SİSTEMLERİNE YÖNELİK YATIRIMLARIN DESTEKLENMESİ HAKKINDA TEBLİĞ (TEBLİĞ NO: 2026/10)",
+   "egitimde_goruldu": false,
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "etiket_kaynagi": "elle (4. oturum, 2026-09-20)"
+  }
+ ]
+}

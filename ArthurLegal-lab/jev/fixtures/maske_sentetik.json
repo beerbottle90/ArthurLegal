@@ -1,0 +1,80 @@
+{
+  "aciklama": "Maskeleme denetçisi (Pilot C) için TAMAMEN UYDURMA test metinleri. Hiçbiri gerçek kişi, şirket, dosya veya numara içermez.",
+  "uyari": "Bu dosyaya asla gerçek veri eklenmeyecektir. pilot_c_maske.py her kalemde 'sentetik': true arar ve bulamazsa çalışmayı reddeder.",
+  "uydurma_kimlikler": {
+    "kisiler": ["Ayşe Yılmaz", "Zeynep Arslan", "Mehmet Kaya", "Hakan Öztürk"],
+    "sirketler": ["Demir Lojistik A.Ş.", "Karataş Nakliyat Ltd. Şti."],
+    "not": "TCKN'ler geçersiz (aynı rakam tekrarı — algoritma reddeder), IBAN sağlaması tutmaz, telefonlar 000'lı."
+  },
+  "kalemler": [
+    {"id": 1, "sentetik": true, "durum": "temiz",
+     "aciklama": "Maske çalıştı — her şey etiket.",
+     "metin": "Dosya {{DOSYA-01}} kapsamında borçlu {{KİŞİ-01}} aleyhine {{ŞİRKET-01}} tarafından takip başlatılmıştır. Takip tarihi 12.03.2026'dır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 2, "sentetik": true, "durum": "sizinti_kisi",
+     "aciklama": "Kişi adı maskeden kaçtı.",
+     "metin": "Dosya {{DOSYA-01}} kapsamında borçlu Ayşe Yılmaz aleyhine {{ŞİRKET-01}} tarafından takip başlatılmıştır.",
+     "sizinti": {"kisi": 1, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 3, "sentetik": true, "durum": "sizinti_unvan",
+     "aciklama": "Ticaret unvanı maskeden kaçtı.",
+     "metin": "Alacaklı Demir Lojistik A.Ş. vekili tarafından {{KİŞİ-02}} hakkında ihtiyati haciz talep edilmiştir.",
+     "sizinti": {"kisi": 0, "unvan": 1, "numara": 0, "adres": 0}},
+
+    {"id": 4, "sentetik": true, "durum": "sizinti_tckn",
+     "aciklama": "TC kimlik numarası maskeden kaçtı (geçersiz numara).",
+     "metin": "Borçlu {{KİŞİ-01}} (T.C. Kimlik No: 11111111111) adına düzenlenen ödeme emri tebliğ edilmiştir.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 1, "adres": 0}},
+
+    {"id": 5, "sentetik": true, "durum": "sizinti_iban",
+     "aciklama": "IBAN maskeden kaçtı (sağlaması tutmaz).",
+     "metin": "Tahsilat {{ŞİRKET-01}} adına TR00 0000 0000 0000 0000 0000 00 numaralı hesaba yapılacaktır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 1, "adres": 0}},
+
+    {"id": 6, "sentetik": true, "durum": "sizinti_adres",
+     "aciklama": "Açık adres maskeden kaçtı.",
+     "metin": "Tebligat {{KİŞİ-03}} adına Yıldız Mahallesi Çınar Sokak No: 14/7 Beşiktaş/İstanbul adresine çıkarılmıştır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 1}},
+
+    {"id": 7, "sentetik": true, "durum": "sizinti_telefon",
+     "aciklama": "Telefon numarası maskeden kaçtı.",
+     "metin": "{{KİŞİ-04}} ile 0555 000 00 00 numaralı telefondan görüşülmüş, beyanı alınmıştır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 1, "adres": 0}},
+
+    {"id": 8, "sentetik": true, "durum": "sizinti_coklu",
+     "aciklama": "Aynı anda kişi + unvan + numara kaçtı — en kötü hâl.",
+     "metin": "Mehmet Kaya ile Karataş Nakliyat Ltd. Şti. arasındaki sözleşme uyarınca 11111111111 kimlik numaralı borçluya ihtar çekilmiştir.",
+     "sizinti": {"kisi": 1, "unvan": 1, "numara": 1, "adres": 0}},
+
+    {"id": 9, "sentetik": true, "durum": "zor_negatif_mahkeme",
+     "aciklama": "ZOR NEGATİF: özel isim dolu ama hiçbiri kişisel veri değil. Mahkeme, daire ve kanun adları maskelenmez.",
+     "metin": "İstanbul Anadolu 5. İcra Hukuk Mahkemesinin kararı, Yargıtay 12. Hukuk Dairesinin 2025/4471 E. sayılı ilamı doğrultusunda İİK m. 89 uyarınca bozulmuştur.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 10, "sentetik": true, "durum": "zor_negatif_esas_no",
+     "aciklama": "ZOR NEGATİF: esas/karar numaraları bilinçli olarak açık bırakılır — kimlik numarası sanılmamalı.",
+     "metin": "{{KİŞİ-01}} vekili, 2026/1834 E. ve 2026/992 K. sayılı dosyada istinaf yoluna başvurmuştur. Harç 1.240,50 TL yatırılmıştır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 11, "sentetik": true, "durum": "zor_negatif_mevzuat",
+     "aciklama": "ZOR NEGATİF: saf mevzuat metni, hiç kişisel veri yok.",
+     "metin": "6100 sayılı Hukuk Muhakemeleri Kanununun 317 nci maddesi uyarınca basit yargılama usulünde cevap süresi iki haftadır. Bu süre hâkim tarafından uzatılamaz.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 12, "sentetik": true, "durum": "zor_negatif_kurum",
+     "aciklama": "ZOR NEGATİF: kamu kurumu adı ticaret unvanı değildir.",
+     "metin": "Sosyal Güvenlik Kurumu ile Gelir İdaresi Başkanlığı arasındaki yazışmada {{ŞİRKET-01}} kaydı sorgulanmıştır.",
+     "sizinti": {"kisi": 0, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 13, "sentetik": true, "durum": "zor_pozitif_kismi",
+     "aciklama": "ZOR POZİTİF: ad maskelenmiş ama soyad kaçmış — kısmî sızıntı.",
+     "metin": "{{KİŞİ-02}} Arslan isimli borçlunun beyanı alınmış, taşınır haczi yapılmamıştır.",
+     "sizinti": {"kisi": 1, "unvan": 0, "numara": 0, "adres": 0}},
+
+    {"id": 14, "sentetik": true, "durum": "zor_pozitif_ikinci_kisi",
+     "aciklama": "ZOR POZİTİF: metnin çoğu temiz, sonda tek bir tanık adı kaçmış.",
+     "metin": "Dosya {{DOSYA-01}} borçlusu {{KİŞİ-01}} hakkında yapılan işlemler usulüne uygundur. Duruşmada tanık olarak Hakan Öztürk dinlenmiştir.",
+     "sizinti": {"kisi": 1, "unvan": 0, "numara": 0, "adres": 0}}
+  ]
+}

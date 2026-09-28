@@ -1,0 +1,940 @@
+{
+ "istemci": "Jev (jev-latest · api.typesafe.ai)",
+ "sahte": false,
+ "alt": 0.2,
+ "ust": 0.6,
+ "olcum": {
+  "enerji": {
+   "duyarlilik": 0.875,
+   "isabet": 0.875,
+   "altin_pozitif": 8,
+   "kaciranlar": [
+    51
+   ]
+  },
+  "rekabet": {
+   "duyarlilik": 1.0,
+   "isabet": 1.0,
+   "altin_pozitif": 1,
+   "kaciranlar": []
+  },
+  "vergi": {
+   "duyarlilik": 1.0,
+   "isabet": 1.0,
+   "altin_pozitif": 7,
+   "kaciranlar": []
+  },
+  "icra": {
+   "duyarlilik": 0.5,
+   "isabet": 0.2,
+   "altin_pozitif": 2,
+   "kaciranlar": [
+    28
+   ]
+  }
+ },
+ "kalemler": [
+  {
+   "id": 1,
+   "baslik": "Türkiye Cumhuriyeti Hükümeti ile Brezilya Federatif Cumhuriyeti Hükümeti Arasınd",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 2,
+   "baslik": "Kamu Hizmeti Yükümlülüğü Kapsamında Yolcu Taşımacılığı Hizmeti Verilecek Demiryo",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.1,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 3,
+   "baslik": "Burdur İlinde Bulunan İsimleri Belirtilen Yerlerde Arazi Toplulaştırması ve Tarl",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 4,
+   "baslik": "Kamulaştırma Bilgileri ve Güzergâhları Gösterilen Enerji Nakil Hatlarının Yapımı",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.92,
+    "rekabet": 0.02,
+    "vergi": 0.03,
+    "icra": 0.04
+   }
+  },
+  {
+   "id": 5,
+   "baslik": "Batman İli, Merkez İlçesi, Tilmis (Akça) Köyü Sınırları İçerisinde Bulunan Bazı ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.06,
+    "rekabet": 0.02,
+    "vergi": 0.03,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 6,
+   "baslik": "154 kV G24-Van GES TM-Özalp TM Enerji İletim Hattı Projesi Kapsamında Bazı Taşın",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.95,
+    "rekabet": 0.02,
+    "vergi": 0.03,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 7,
+   "baslik": "Özelleştirme İdaresi Başkanlığı ile İlgili Kararlar (Karar Sayısı: 11805, 11806,",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 1,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.19,
+    "rekabet": 0.3,
+    "vergi": 0.06,
+    "icra": 0.04
+   }
+  },
+  {
+   "id": 8,
+   "baslik": "Cumhurbaşkanlığı Tarafından Yapılan Atamalar Hakkında Kararlar (Karar: 2026/314,",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.11,
+    "rekabet": 0.05,
+    "vergi": 0.06,
+    "icra": 0.09
+   }
+  },
+  {
+   "id": 9,
+   "baslik": "Hazine ve Maliye Bakanlığı Disiplin Amirleri Yönetmeliği",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.03,
+    "vergi": 0.08,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 10,
+   "baslik": "Sivil Havacılık Emniyet Olayları Yönetmeliği (SHY-OLAY)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 11,
+   "baslik": "Basın İlân Kurumu Yönetmeliğinde Değişiklik Yapılmasına Dair Yönetmelik",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.08,
+    "vergi": 0.05,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 12,
+   "baslik": "Resmî İlan ve Reklam Yönetmeliğinde Değişiklik Yapılmasına Dair Yönetmelik",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.07,
+    "vergi": 0.04,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 13,
+   "baslik": "Anayasa Mahkemesinin 13/5/2026 Tarihli ve E: 2026/41, K: 2026/107 Sayılı Kararı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.08,
+    "rekabet": 0.11,
+    "vergi": 0.16,
+    "icra": 0.26
+   }
+  },
+  {
+   "id": 14,
+   "baslik": "Anayasa Mahkemesinin 25/6/2026 Tarihli ve E: 2025/247, K: 2026/147 Sayılı Kararı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.08,
+    "rekabet": 0.09,
+    "vergi": 0.16,
+    "icra": 0.24
+   }
+  },
+  {
+   "id": 15,
+   "baslik": "Anayasa Mahkemesinin 25/6/2026 Tarihli ve E: 2026/71, K: 2026/148 Sayılı Kararı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.09,
+    "rekabet": 0.11,
+    "vergi": 0.15,
+    "icra": 0.25
+   }
+  },
+  {
+   "id": 16,
+   "baslik": "T.C. Merkez Bankasınca Belirlenen Döviz Kurları ve Devlet İç Borçlanma Senetleri",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.09,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 17,
+   "baslik": "Hava Kalitesinin Korunması Amacıyla Katı Yakıtların Kontrolü Yönetmeliği",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.49,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 18,
+   "baslik": "Isınmadan Kaynaklanan Hava Kirliliğinin Kontrolü Yönetmeliğinde Değişiklik Yapıl",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.28,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 19,
+   "baslik": "Yurt İçinde Canlı Hayvan ve Hayvansal Ürünlerin Nakilleri Hakkında Yönetmelikte ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.01,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 20,
+   "baslik": "6/1 Numaralı Ticari Amaçlı Su Ürünleri Avcılığının Düzenlenmesi Hakkında Tebliğ ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 21,
+   "baslik": "6/2 Numaralı Amatör Amaçlı Su Ürünleri Avcılığının Düzenlenmesi Hakkında Tebliğ ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 22,
+   "baslik": "Türk Gıda Kodeksi Et, Hazırlanmış Et Karışımları ve Et Ürünleri Tebliği (No: 202",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.01,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 23,
+   "baslik": "Türk Gıda Kodeksi İçme Sütleri Tebliği (Tebliğ No: 2019/12)'nde Değişiklik Yapıl",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 24,
+   "baslik": "Yaprak Sigara Kağıdının Teknik Düzenlemelere Uygunluğunun Belirlenmesine İlişkin",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.04,
+    "vergi": 0.08,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 25,
+   "baslik": "Tıbbi Cihaz Yönetmeliği ve İn Vitro Tanı Amaçlı Tıbbi Cihaz Yönetmeliği Kapsamın",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.01,
+    "rekabet": 0.03,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 26,
+   "baslik": "Enerji Piyasası Düzenleme Kurulunun 10/09/2026 Tarihli ve 14864 Sayılı Kararı",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.97,
+    "rekabet": 0.06,
+    "vergi": 0.04,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 27,
+   "baslik": "T.C. Merkez Bankasınca Belirlenen Döviz Kurları ve Devlet İç Borçlanma Senetleri",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.1,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 28,
+   "baslik": "Birleşmiş Milletler Güvenlik Konseyinin 1267 (1999), 1988 (2011), 1989 (2011) ve",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.18
+   }
+  },
+  {
+   "id": 29,
+   "baslik": "İzmir Bakırçay Üniversitesi Ön Lisans ve Lisans Eğitim-Öğretim ve Sınav Yönetmel",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 30,
+   "baslik": "İzmir Bakırçay Üniversitesi Tıp Fakültesi Eğitim-Öğretim ve Sınav Yönetmeliğinin",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.01,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 31,
+   "baslik": "Kafkas Üniversitesi Tıp Fakültesi Eğitim-Öğretim ve Sınav Yönetmeliği",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 32,
+   "baslik": "Iğdır İdare Mahkemesi Kurulmasına ve Yargı Çevresinin Belirlenmesine İlişkin Kar",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 1
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.03,
+    "icra": 0.78
+   }
+  },
+  {
+   "id": 33,
+   "baslik": "T.C. Merkez Bankasınca Belirlenen Döviz Kurları ve Devlet İç Borçlanma Senetleri",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.11,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 34,
+   "baslik": "Ödeme Hizmetleri ve Elektronik Para İhracı ile Ödeme Hizmeti Sağlayıcıları Hakkı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.05,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 35,
+   "baslik": "Ödeme ve Elektronik Para Kuruluşlarının Bilgi Sistemleri ile Ödeme Hizmeti Sağla",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.06,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 36,
+   "baslik": "Enerji Piyasası Düzenleme Kurulunun 03/09/2026 Tarihli ve 14847 ve 14848 Sayılı ",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.98,
+    "rekabet": 0.05,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 37,
+   "baslik": "Yargıtay 5. Hukuk Dairesine Ait Karar",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.08,
+    "rekabet": 0.11,
+    "vergi": 0.09,
+    "icra": 0.43
+   }
+  },
+  {
+   "id": 38,
+   "baslik": "T.C. Merkez Bankasınca Belirlenen Döviz Kurları ve Devlet İç Borçlanma Senetleri",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.12,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 39,
+   "baslik": "Yeniköprü-Hakkari Devlet Yolu Projesi (Km:48+991.12-52+113.02 arası) ile Heyelan",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 40,
+   "baslik": "Sınırları Gösterilen Alanın \"Milli Savunma Üniversitesi Teknoloji Geliştirme Böl",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.03,
+    "vergi": 0.04,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 41,
+   "baslik": "Sınırları Gösterilen Alanın İkinci Derece Kara Askeri Yasak Bölge İlan Edilmesi ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 42,
+   "baslik": "Özel Hastaneler Yönetmeliğinde Değişiklik Yapılmasına Dair Yönetmelik",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.06,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 43,
+   "baslik": "Doğal Afet Sigortaları Kurumu Çalışma Esasları Yönetmeliğinde Değişiklik Yapılma",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.03,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 44,
+   "baslik": "Sinop Üniversitesi Bilimsel ve Teknolojik Araştırmalar Uygulama ve Araştırma Mer",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.02,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 45,
+   "baslik": "Beşeri Tıbbi Ürünlerin Fiyatlandırılması Hakkında Tebliğ",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.07,
+    "vergi": 0.04,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 46,
+   "baslik": "Sosyal Güvenlik Kurumu Sağlık Uygulama Tebliğinde Değişiklik Yapılmasına Dair Te",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.03,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 47,
+   "baslik": "Sağlık Hizmetleri Fiyatlandırma Komisyonu Kararı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.07,
+    "vergi": 0.04,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 48,
+   "baslik": "Enerji Piyasası Düzenleme Kurulunun 27/08/2026 Tarihli ve 14830, 14831, 14832, 1",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.98,
+    "rekabet": 0.05,
+    "vergi": 0.03,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 49,
+   "baslik": "T.C. Merkez Bankasınca Belirlenen Döviz Kurları ve Devlet İç Borçlanma Senetleri",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 0,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.08,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 50,
+   "baslik": "Emlak Vergisi Kanunu Genel Tebliği (Seri No: 90)",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.98,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 51,
+   "baslik": "Belediyeler ve İl Özel İdarelerinin Genel Bütçe Vergi Gelirleri Payından Yapılac",
+   "altin": {
+    "enerji": 1,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.51,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 52,
+   "baslik": "Bazı Mallara Uygulanan Özel Tüketim Vergisi Tutarlarının Yeniden Belirlenmesi Ha",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.31,
+    "rekabet": 0.03,
+    "vergi": 0.98,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 53,
+   "baslik": "İhracat, Transit Ticaret, İhracat Sayılan Satış ve Teslimler ile Döviz Kazandırı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.04,
+    "rekabet": 0.03,
+    "vergi": 0.89,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 54,
+   "baslik": "193 Sayılı Gelir Vergisi Kanununun Geçici 67 nci Maddesinde Yer Alan Tevkifat Or",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.02,
+    "rekabet": 0.02,
+    "vergi": 0.98,
+    "icra": 0.02
+   }
+  },
+  {
+   "id": 55,
+   "baslik": "Vergi Usul Kanunu Genel Tebliği (Sıra No: 538)'nde Değişiklik Yapılmasına Dair T",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.03,
+    "rekabet": 0.02,
+    "vergi": 0.98,
+    "icra": 0.03
+   }
+  },
+  {
+   "id": 56,
+   "baslik": "İhracat, Transit Ticaret, İhracat Sayılan Satış ve Teslimler ile Döviz Kazandırı",
+   "altin": {
+    "enerji": 0,
+    "rekabet": 0,
+    "vergi": 1,
+    "icra": 0
+   },
+   "p": {
+    "enerji": 0.04,
+    "rekabet": 0.02,
+    "vergi": 0.91,
+    "icra": 0.02
+   }
+  }
+ ],
+ "aciklama": "Gercek Jev ucuna karsi ilk olcum. Gonderilen veri yalniz kamuya acik Resmi Gazete basliklaridir.",
+ "tarih": "2026-09-20",
+ "model_cozulen": "jev-1.13.0",
+ "medyan_ms": 774,
+ "toplam_girdi_token": 58921,
+ "maliyet_usd": 0.002475
+}
