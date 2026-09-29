@@ -3,7 +3,9 @@ ve güncelleyici (sahte GitHub yayınıyla). Ağa çıkmaz; her şey 127.0.0.1'd
 
     python -m unittest discover -s tests
 """
+import contextlib
 import http.server
+import io
 import json
 import os
 import queue
@@ -21,6 +23,8 @@ sys.path.insert(0, str(BURASI / "istemci"))
 import ed25519  # noqa: E402
 
 TEST_TOHUM = bytes(range(32))
+KASA_TOHUM = bytes(range(32, 64))
+YABANCI_TOHUM = bytes(range(64, 96))
 ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "ARTHURLEGAL_GUNCELLEME": "0"}
 ENV.pop("ARTHURLEGAL_KOK", None)
 
@@ -37,7 +41,8 @@ Yenileme adımları.
 """
 
 
-def sahte_kok(kok: Path, surum="0.0.1", uzak="http://127.0.0.1:9/mcp", manifest="http://127.0.0.1:9/m.json"):
+def sahte_kok(kok: Path, surum="0.0.1", uzak="http://127.0.0.1:9/mcp", manifest="http://127.0.0.1:9/m.json",
+              anahtarlar=None):
     (kok / "bin").mkdir(parents=True)
     shutil.copy2(BURASI / "bin" / "al.py", kok / "bin" / "al.py")
     s = kok / "surumler" / surum
@@ -50,7 +55,10 @@ def sahte_kok(kok: Path, surum="0.0.1", uzak="http://127.0.0.1:9/mcp", manifest=
     (p / "knowledge" / "firm-profile.md").write_text("# Büro Profili — [BÜRO_ADI]\n[DOLDUR]", encoding="utf-8")
     (p / "knowledge" / "skills" / "commercial-legal__skills.md").write_text(BECERILER, encoding="utf-8")
     (p / "knowledge" / "references" / "hmk-rehberi.md").write_text("# HMK\nIslah HMK m. 176.\nİstinaf süresi iki hafta.", encoding="utf-8")
-    (s / "icerik.json").write_text(json.dumps({"paketler": {"hukuk-burosu": "1.9.1"}}), encoding="utf-8")
+    icerik = {"paketler": {"hukuk-burosu": "1.9.1"}}
+    if anahtarlar is not None:
+        icerik["anahtarlar"] = anahtarlar
+    (s / "icerik.json").write_text(json.dumps(icerik), encoding="utf-8")
     f = kok / "firma"
     (f / "knowledge").mkdir(parents=True)
     (f / "buro").mkdir()
@@ -538,7 +546,7 @@ class SunucuTesti(unittest.TestCase):
 
 
 class GuncelleyiciTesti(unittest.TestCase):
-    def hazirla(self, t: Path, kurcala=None):
+    def hazirla(self, t: Path, kurcala=None, tohum=TEST_TOHUM, anahtarlar=None):
         yayin = t / "yayin"
         yayin.mkdir()
         paket_yaz(t / "yeni", "0.0.2")
@@ -551,7 +559,7 @@ class GuncelleyiciTesti(unittest.TestCase):
         if kurcala == "sha":
             manifest["paket"]["sha256"] = "0" * 64
         ham = json.dumps(manifest).encode()
-        (yayin / "arthurlegal-manifest.sig").write_text(ed25519.sign(TEST_TOHUM, ham).hex(), encoding="ascii")
+        (yayin / "arthurlegal-manifest.sig").write_text(ed25519.sign(tohum, ham).hex(), encoding="ascii")
         if kurcala == "imza":
             ham = ham.replace(b"0.0.2", b"0.0.3", 1)
         (yayin / "arthurlegal-manifest.json").write_bytes(ham)
@@ -566,7 +574,7 @@ class GuncelleyiciTesti(unittest.TestCase):
         httpd, url = sunucu_baslat(Statik)
         self.addCleanup(httpd.server_close)
         self.addCleanup(httpd.shutdown)
-        sahte_kok(t / "kok", manifest=url + "/arthurlegal-manifest.json")
+        sahte_kok(t / "kok", manifest=url + "/arthurlegal-manifest.json", anahtarlar=anahtarlar)
         r = subprocess.run([sys.executable, "-B", str(t / "kok" / "bin" / "al.py"), "guncelle", "--mask-yok"],
                            env=ENV, capture_output=True, text=True, encoding="utf-8", timeout=120)
         aktif = (t / "kok" / "aktif.txt").read_text(encoding="utf-8") if (t / "kok" / "aktif.txt").exists() else ""
@@ -590,6 +598,28 @@ class GuncelleyiciTesti(unittest.TestCase):
             self.assertFalse((Path(t) / "kok" / "surumler" / "0.0.3").exists())
             durum = json.loads((Path(t) / "kok" / "veri" / "durum.json").read_text(encoding="utf-8"))
             self.assertNotIn("son_guncelleme", durum, "güncelleme olmadıysa olmuş gibi gösterilmez")
+
+    def test_kasa_anahtariyla_imzali_paket_kurulur(self):
+        """Günlük anahtar kaybolursa yayın kasadaki yedekle imzalanır; güvenilen liste çalışan paketten gelir."""
+        liste = [ed25519.public_key(TEST_TOHUM).hex(), ed25519.public_key(KASA_TOHUM).hex()]
+        with tempfile.TemporaryDirectory() as t:
+            r, aktif = self.hazirla(Path(t), tohum=KASA_TOHUM, anahtarlar=liste)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            self.assertEqual(aktif, "0.0.2")
+
+    def test_listede_olmayan_anahtar_reddedilir(self):
+        liste = [ed25519.public_key(TEST_TOHUM).hex(), ed25519.public_key(KASA_TOHUM).hex()]
+        with tempfile.TemporaryDirectory() as t:
+            r, aktif = self.hazirla(Path(t), tohum=YABANCI_TOHUM, anahtarlar=liste)
+            self.assertIn("imza", r.stdout)
+            self.assertEqual(aktif, "")
+
+    def test_paketteki_liste_eski_anahtarin_yerine_gecer(self):
+        """Anahtar değişikliği güncellemeyle yayılır: listede olmayan eski anahtar (ayar.json'daki) artık geçmez."""
+        with tempfile.TemporaryDirectory() as t:
+            r, aktif = self.hazirla(Path(t), tohum=TEST_TOHUM, anahtarlar=[ed25519.public_key(KASA_TOHUM).hex()])
+            self.assertIn("imza", r.stdout)
+            self.assertEqual(aktif, "")
 
     def test_private_depo_jetonla_iner(self):
         """Dağıtım private depodan: varlıklar GitHub API'sinden, kurulumdaki jetonla indirilir."""
@@ -655,6 +685,53 @@ class GuncelleyiciTesti(unittest.TestCase):
             self.assertIn("sha256", r.stdout)
             self.assertEqual(aktif, "")
             self.assertFalse((Path(t) / "kok" / "surumler" / "0.0.2").exists())
+
+
+class YayinAnahtariTesti(unittest.TestCase):
+    """yayinla.py: kasa anahtarının üretimi ve onunla imza. Ağa çıkmaz (--kuru); gerçek anahtarlara dokunmaz."""
+
+    def setUp(self):
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import yayinla
+        self.y = yayinla
+        self.t = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.t, True)
+        eski = {a: getattr(yayinla, a) for a in ("BURASI", "CIKTI", "ANAHTAR", "KASA")}
+        self.addCleanup(lambda: [setattr(yayinla, a, d) for a, d in eski.items()])
+        yayinla.BURASI, yayinla.CIKTI = self.t, self.t / "cikti"
+        yayinla.ANAHTAR = self.t / "imza" / "yayin_anahtari.hex"
+        yayinla.KASA = self.t / "imza" / "kasa_anahtari.hex"
+        (self.t / "kaynaklar.json").write_text(json.dumps({"surum": "9.9.9", "yayin_deposu": "x/y",
+                                                           "yayin_anahtari": "", "dallar": {}}), encoding="utf-8")
+
+    def derleme_yaz(self, anahtarlar):
+        (self.t / "cikti").mkdir(exist_ok=True)
+        (self.t / "cikti" / "derleme.json").write_text(json.dumps({
+            "surum": "9.9.9", "icerik": {}, "mask": {}, "paket": {"dosya": "p.zip", "sha256": "0" * 64},
+            "anahtarlar": anahtarlar}), encoding="utf-8")
+
+    def test_kasa_anahtari_uretilir_ve_kasayla_imzalanir(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.anahtar_uret()
+            self.y.anahtar_uret(kasa=True)
+        k = json.loads((self.t / "kaynaklar.json").read_text(encoding="utf-8"))
+        self.assertEqual(list(k).index("kasa_anahtari"), list(k).index("yayin_anahtari") + 1)
+        with self.assertRaises(SystemExit):  # var olan kasa anahtarı sessizce yenilenmez
+            self.y.anahtar_uret(kasa=True)
+        self.derleme_yaz([k["yayin_anahtari"], k["kasa_anahtari"]])
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.main(["v9.9.9", "--kuru", "--kasa"])
+        ham = (self.t / "cikti" / "arthurlegal-manifest.json").read_bytes()
+        imza = bytes.fromhex((self.t / "cikti" / "arthurlegal-manifest.sig").read_text(encoding="ascii"))
+        self.assertTrue(ed25519.verify(bytes.fromhex(k["kasa_anahtari"]), ham, imza))
+        self.assertFalse(ed25519.verify(bytes.fromhex(k["yayin_anahtari"]), ham, imza))
+
+    def test_paketin_tanimadigi_anahtarla_imzalanmaz(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.anahtar_uret()
+        self.derleme_yaz(["0" * 64])
+        with self.assertRaises(SystemExit):
+            self.y.main(["v9.9.9", "--kuru"])
 
 
 if __name__ == "__main__":

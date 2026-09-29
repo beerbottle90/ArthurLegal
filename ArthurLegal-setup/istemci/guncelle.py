@@ -1,8 +1,9 @@
 """ArthurLegal sessiz güncelleyici.
 
 Oturum açılışında (HKCU Run) ve yerel sunucu açıkken 6 saatte bir çalışır:
-1. En son GitHub Release'teki arthurlegal-manifest.json ve .sig indirilir; imza, kurulumdaki
-   yayın anahtarıyla (Ed25519) doğrulanmadan hiçbir şey kurulmaz.
+1. En son GitHub Release'teki arthurlegal-manifest.json ve .sig indirilir; imza güvenilen
+   anahtarlardan biriyle (Ed25519: günlük yayın anahtarı ya da kasadaki yedek; liste çalışan
+   paketten, ortak.guvenilen_anahtarlar) doğrulanmadan hiçbir şey kurulmaz.
 2. Manifest'teki paket sürümü etkin sürümden yeniyse zip indirilir, sha256 doğrulanır, yeni
    bir surumler\\<sürüm> klasörüne açılır ve aktif.txt tek adımda değiştirilir. Çalışan
    sunucular eski klasörle devam eder; yeni sürüm Claude Desktop'ın bir sonraki açılışında
@@ -33,10 +34,11 @@ class GuncellemeHatasi(Exception):
 
 
 def _dogrula(ham: bytes, imza_metni: bytes, ayar: dict) -> dict:
-    anahtar = bytes.fromhex(ayar.get("yayin_anahtari") or "")
-    if len(anahtar) != 32:
+    anahtarlar = ortak.guvenilen_anahtarlar(ayar)
+    if not anahtarlar:
         raise GuncellemeHatasi("kurulumda yayın anahtarı yok")
-    if not ed25519.verify(anahtar, ham, bytes.fromhex(imza_metni.decode("ascii").strip())):
+    imza = bytes.fromhex(imza_metni.decode("ascii").strip())
+    if not any(ed25519.verify(bytes.fromhex(a), ham, imza) for a in anahtarlar):
         raise GuncellemeHatasi("manifest imzası geçersiz; güncelleme reddedildi")
     return json.loads(ham.decode("utf-8"))
 

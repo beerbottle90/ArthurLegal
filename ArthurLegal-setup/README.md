@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.4.2
+# ArthurLegal Setup v2.4.3
 
 **Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
 Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
@@ -48,9 +48,14 @@ Kaldırma: **Ayarlar → Uygulamalar → ArthurLegal**, ya da zip yoluyla kuruld
 ## Güncelleme
 
 Oturum açılışında ve Claude Desktop açıkken altı saatte bir, en son yayındaki `arthurlegal-manifest.json`
-denetlenir. Manifest **Ed25519** ile imzalıdır: imza kurulumdaki açık anahtarla doğrulanmazsa hiçbir
+denetlenir. Manifest **Ed25519** ile imzalıdır: imza güvenilen anahtarlardan biriyle doğrulanmazsa hiçbir
 şey kurulmaz. Yeni sürüm ayrı bir klasöre açılır, `aktif.txt` tek adımda değişir, bir önceki sürüm geri
 dönüş için kalır ve yeni sürüm Claude Desktop'ın bir sonraki açılışında devreye girer.
+
+**İki anahtar (2.4.3).** Kurulumlar iki anahtara güvenir: günlük yayın anahtarı ve kasada duran yedek
+anahtar. Liste paketin içinde, imzalı güncellemeyle gelir. Günlük anahtar kaybolursa yayın kasadaki
+anahtarla imzalanır; anahtar değişikliği de yeniden kurulum gerektirmez. Adımlar `yayin/yayinla.py`'nin
+başındaki açıklamada.
 
 **2.4.2'de yayın anahtarı yenilendi.** 2.4.2'den eski kurulumlar yeni imzayı tanımaz ve hiçbir şey kurmaz;
 güncelleme durumunda "manifest imzası geçersiz" görünür. `ArthurLegal-Kurulum.exe`'yi bir kez çalıştırın:
@@ -76,8 +81,8 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 22 test, ağa çıkmaz
-python yayin/yayinla.py v2.4.2         # imzalı manifest + dosyalar → GitHub Release
+python -m unittest discover -s tests   # 32 test, ağa çıkmaz
+python yayin/yayinla.py v2.4.3         # imzalı manifest + dosyalar → GitHub Release
 ```
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez

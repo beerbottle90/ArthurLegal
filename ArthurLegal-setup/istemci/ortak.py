@@ -96,6 +96,22 @@ def ayar() -> dict:
     return {**VARSAYILAN_AYAR, **json_oku(KOK / "ayar.json")}
 
 
+_ACIK_ANAHTAR = re.compile(r"[0-9a-fA-F]{64}")
+
+
+def guvenilen_anahtarlar(a: dict) -> list:
+    """Güncelleme imzasını doğrulayabilen açık anahtarlar (Ed25519, onaltılık).
+
+    Liste çalışan sürümün icerik.json'undan gelir: günlük yayın anahtarı ve kasada duran yedek anahtar.
+    Paket imzası doğrulanmış bir güncellemeyle geldiği için anahtar değişikliği de yeniden kurulum
+    gerektirmeden yayılır; listeye girmeyen eski anahtar geçerliliğini yitirir. Liste yoksa (eski paket
+    biçimi, kaynak ağacından çalışma) kurulumdaki ayar.json'un tek anahtarı kullanılır."""
+    liste = json_oku(SURUM_DIZINI / "icerik.json").get("anahtarlar") or []
+    gecerli = [x.lower() for x in liste if isinstance(x, str) and _ACIK_ANAHTAR.fullmatch(x)]
+    tek = str(a.get("yayin_anahtari") or "")
+    return gecerli or ([tek.lower()] if _ACIK_ANAHTAR.fullmatch(tek) else [])
+
+
 URUN_VARSAYILAN = "ArthurLegal"
 # Kısayol, Başlat menüsü ve programlar listesi adı olur: Windows dosya adında ve kurulum metninde güvenli
 # karakterler (\ / : * ? " < > | { } % yok), en çok 60 karakter, aygıt adı (CON, NUL…) değil.

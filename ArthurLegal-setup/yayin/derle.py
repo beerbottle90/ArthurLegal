@@ -147,8 +147,14 @@ def mask_bilgisi(k: dict) -> dict:
     return m
 
 
+def anahtarlar(k: dict) -> list:
+    """Kurulumların güvendiği açık anahtarlar: günlük yayın anahtarı ve kasadaki yedek. Paketle gider;
+    güncelleyici listeyi çalışan sürümün icerik.json'undan okur (ortak.guvenilen_anahtarlar)."""
+    return [a for a in (k.get("yayin_anahtari"), k.get("kasa_anahtari")) if a]
+
+
 def paket_hazirla(k: dict, hedef: Path) -> dict:
-    icerik = {"surum": k["surum"], "paketler": {}, "bilesenler": {}, "kaynak": {}}
+    icerik = {"surum": k["surum"], "paketler": {}, "bilesenler": {}, "kaynak": {}, "anahtarlar": anahtarlar(k)}
     kopyala(BURASI / "istemci", hedef / "istemci", lambda g: g.endswith(".py"))
     al = depo(k, "ArthurLegal")
     for profil, desen in k["paketler"].items():
@@ -300,6 +306,11 @@ def main(argv=None) -> int:
     k = kaynaklar()
     if len(bytes.fromhex(k.get("yayin_anahtari") or "")) != 32:
         sys.exit("Yayın anahtarı yok: önce  python yayin/yayinla.py --anahtar-uret")
+    if k.get("kasa_anahtari") and len(bytes.fromhex(k["kasa_anahtari"])) != 32:
+        sys.exit("kaynaklar.json → kasa_anahtari geçersiz: 64 onaltılık karakter olmalı.")
+    if not k.get("kasa_anahtari"):
+        print("  Uyarı: kasa anahtarı yok; günlük anahtar kaybolursa kurulumlar güncelleme alamaz"
+              " (python yayin/yayinla.py --kasa-anahtari-uret).")
     iss = BURASI / "kurulum" / "ArthurLegal.iss"
     if not iss.read_bytes().startswith(BOM):
         sys.exit(f"{iss.name} UTF-8 BOM olmadan kaydedilmiş; Türkçe karakterler bozulur. BOM ile yeniden kaydedin.")
@@ -365,7 +376,7 @@ def main(argv=None) -> int:
     mask = mask_bilgisi(k)
     ortak.json_yaz(CIKTI / "derleme.json", {
         "surum": surum, "icerik": {"paketler": icerik["paketler"], "bilesenler": icerik["bilesenler"]},
-        "kaynak": icerik["kaynak"], "mask": mask,
+        "kaynak": icerik["kaynak"], "mask": mask, "anahtarlar": icerik["anahtarlar"],
         "paket": {"dosya": zip_adi, "sha256": sha256(CIKTI / zip_adi), "boyut": (CIKTI / zip_adi).stat().st_size}})
     print(f"  paket: {zip_adi} ({(CIKTI / zip_adi).stat().st_size // 1024} KB)")
 

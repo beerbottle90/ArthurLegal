@@ -1,13 +1,21 @@
 """Derlenen sürümü imzalar ve public ArthurLegal deposunun GitHub Release'ine koyar.
 
     python yayin/yayinla.py --anahtar-uret        ilk kez: yayın anahtarı (gizli kısım depoya GİRMEZ)
+    python yayin/yayinla.py --kasa-anahtari-uret  bir kez: kasada duracak yedek anahtar
     python yayin/yayinla.py v2.0.0 --kuru         yalnız imzalı manifest üret, yükleme yapma
     python yayin/yayinla.py v2.0.0 --on-surum     pre-release: avukatların güncelleyicisi görmez
     python yayin/yayinla.py v2.0.0                latest olarak yayımla: kurulu bilgisayarlar 6 saat içinde alır
+    python yayin/yayinla.py v2.0.0 --kasa         günlük anahtar kayıpsa kasadaki yedekle imzala
 
 Önce: python yayin/derle.py  (standart kurulum ve paket zip'i). Etiket zaten varsa (ör. sürüm notu
 elle açıldıysa) dosyalar o yayına eklenir. Büroya özel kurulumlar ve büro katmanı YÜKLENMEZ.
-Gizli anahtar: %USERPROFILE%\\.arthurlegal\\imza\\yayin_anahtari.hex — yedekleyin; kaybolursa kurulu
+
+Kurulumlar iki anahtara güvenir; liste paketin icerik.json'unda, güncellemeyle gelir:
+- günlük yayın anahtarı: %USERPROFILE%\\.arthurlegal\\imza\\yayin_anahtari.hex — yedekleyin;
+- kasa anahtarı: kâğıtta ya da USB bellekte, kasada durur; bilgisayarda kalmaz.
+Günlük anahtar kaybolursa: kasadaki anahtarı imza klasörüne kasa_anahtari.hex adıyla yazın,
+--anahtar-uret ile yeni günlük anahtar üretin, derleyin ve --kasa ile imzalayın. Kurulumlar yeni
+listeyi bu güncellemeyle alır; kimsenin yeniden kurması gerekmez. İkisi birden kaybolursa kurulu
 bilgisayarlar yeni güncelleme alamaz, herkese yeni kurulum dosyası gerekir.
 """
 from __future__ import annotations
@@ -29,22 +37,37 @@ import ed25519  # noqa: E402
 import ortak  # noqa: E402
 
 ANAHTAR = Path.home() / ".arthurlegal" / "imza" / "yayin_anahtari.hex"
+KASA = ANAHTAR.with_name("kasa_anahtari.hex")
 
 
 def kaynaklar() -> dict:
     return json.loads((BURASI / "kaynaklar.json").read_text(encoding="utf-8"))
 
 
-def anahtar_uret() -> int:
-    if ANAHTAR.exists():
-        sys.exit(f"Anahtar zaten var: {ANAHTAR}")
-    tohum = os.urandom(32)
-    ANAHTAR.parent.mkdir(parents=True, exist_ok=True)
-    ANAHTAR.write_text(tohum.hex(), encoding="ascii")
+def anahtar_uret(kasa: bool = False) -> int:
+    """Günlük yayın anahtarını ya da kasada duracak yedek anahtarı üretir; açık kısmı kaynaklar.json'a yazar."""
+    dosya, alan = (KASA, "kasa_anahtari") if kasa else (ANAHTAR, "yayin_anahtari")
+    if dosya.exists():
+        sys.exit(f"Anahtar zaten var: {dosya}")
     k = kaynaklar()
-    k["yayin_anahtari"] = ed25519.public_key(tohum).hex()
+    if kasa and k.get(alan):
+        sys.exit("kaynaklar.json'da kasa anahtarı zaten var. Yenilemek bilinçli bir iştir: önce oradaki "
+                 "kasa_anahtari satırını silin.")
+    tohum = os.urandom(32)
+    dosya.parent.mkdir(parents=True, exist_ok=True)
+    dosya.write_text(tohum.hex(), encoding="ascii")
+    k[alan] = ed25519.public_key(tohum).hex()
+    sira = list(k)  # kasa anahtarı yayın anahtarının hemen altında dursun
+    if kasa and "yayin_anahtari" in sira:
+        sira.remove(alan)
+        sira.insert(sira.index("yayin_anahtari") + 1, alan)
+    k = {a: k[a] for a in sira}
     (BURASI / "kaynaklar.json").write_text(json.dumps(k, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Gizli anahtar: {ANAHTAR}  (YEDEKLEYİN, depoya koymayın)\nAçık anahtar kaynaklar.json'a yazıldı: {k['yayin_anahtari']}")
+    if kasa:
+        print(f"Kasa anahtarı: {dosya}\n  Kâğıda basın ya da USB belleğe alın, kasaya koyun, sonra bu dosyayı "
+              f"bilgisayardan SİLİN.\nAçık anahtar kaynaklar.json'a yazıldı: {k[alan]}")
+    else:
+        print(f"Gizli anahtar: {dosya}  (YEDEKLEYİN, depoya koymayın)\nAçık anahtar kaynaklar.json'a yazıldı: {k[alan]}")
     return 0
 
 
@@ -99,13 +122,15 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="ArthurLegal yayını")
     ap.add_argument("etiket", nargs="?")
     ap.add_argument("--anahtar-uret", action="store_true")
+    ap.add_argument("--kasa-anahtari-uret", action="store_true", help="kasada duracak yedek anahtarı üret (bir kez)")
     ap.add_argument("--link", metavar="DOSYA", help="private yayındaki dosya için geçici indirme adresi üret")
     ap.add_argument("--kararli-yap", action="store_true", help="var olan ön sürümü kararlıya çevir (sessiz güncelleme açılır)")
     ap.add_argument("--kuru", action="store_true")
     ap.add_argument("--on-surum", action="store_true")
+    ap.add_argument("--kasa", action="store_true", help="günlük anahtar kayıpsa kasadaki yedek anahtarla imzala")
     args = ap.parse_args(argv)
-    if args.anahtar_uret:
-        return anahtar_uret()
+    if args.anahtar_uret or args.kasa_anahtari_uret:
+        return anahtar_uret(kasa=args.kasa_anahtari_uret)
     if args.link:
         if not args.etiket:
             ap.error("etiket gerekli: python yayin/yayinla.py v2.0.0 --link ArthurLegal-Kurulum.exe")
@@ -133,11 +158,18 @@ def main(argv=None) -> int:
         "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
     }
     ham = json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8")
-    gizli = bytes.fromhex(ANAHTAR.read_text(encoding="ascii").strip())
-    if ed25519.public_key(gizli).hex() != k["yayin_anahtari"]:
-        sys.exit("Gizli anahtar kaynaklar.json'daki açık anahtarla eşleşmiyor.")
+    dosya, alan = (KASA, "kasa_anahtari") if args.kasa else (ANAHTAR, "yayin_anahtari")
+    if not dosya.exists():
+        sys.exit(f"İmza anahtarı yok: {dosya}" + ("" if args.kasa else "\n  Kayıpsa kasadaki yedekle imzalayın: --kasa"))
+    gizli = bytes.fromhex(dosya.read_text(encoding="ascii").strip())
+    acik = ed25519.public_key(gizli).hex()
+    if acik != k.get(alan):
+        sys.exit(f"Gizli anahtar kaynaklar.json'daki {alan} ile eşleşmiyor.")
+    if d.get("anahtarlar") and acik not in d["anahtarlar"]:
+        sys.exit("Bu derlemenin paketi imzalayan anahtarı tanımıyor (derleme eski kaynaklar.json'la yapılmış "
+                 "olabilir); yeniden derleyin.")
     imza = ed25519.sign(gizli, ham)
-    assert ed25519.verify(bytes.fromhex(k["yayin_anahtari"]), ham, imza)
+    assert ed25519.verify(bytes.fromhex(acik), ham, imza)
     (CIKTI / "arthurlegal-manifest.json").write_bytes(ham)
     (CIKTI / "arthurlegal-manifest.sig").write_text(imza.hex(), encoding="ascii")
     print(f"İmzalı manifest: sürüm {d['surum']}, etiket {args.etiket}")

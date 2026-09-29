@@ -1,5 +1,5 @@
 {
-  "surum": "2.4.2",
+  "surum": "2.4.3",
   "depolar": {
     "ArthurLegal": "..",
     "tapu": "../../arthurlegal-mcp",
@@ -34,6 +34,7 @@
   "kanal": "kararli",
   "uzak_mcp": "https://arthurlegal-mcp.fly.dev/mcp",
   "yayin_anahtari": "187f2a7112a481c0d6b9c88c90983ffec4a019464004e2af9122ae633c6c54fe",
+  "kasa_anahtari": "091e0aa64e95062998c0458667fdba09ace4ee4d4579cef8acafe35d720445a8",
   "dallar": {
     "tapu": "origin/master",
     "arthur-mask": "origin/main"

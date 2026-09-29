@@ -162,6 +162,13 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.4.3 — A spare signing key kept offline (2026-09-29)
+
+Installations now trust two update-signing keys: the everyday release key and a spare kept offline. The list
+travels inside the signed update package, so if the everyday key is ever lost, updates are signed with the spare
+and still reach every installation from 2.4.3 on without a reinstall; a key change spreads the same way. 2.4.2
+installations move to 2.4.3 silently. The packages are unchanged: Law Firm and Corporate **v1.10.1**.
+
 ## Setup 2.4.2 — New update-signing key (2026-09-29)
 
 The Windows installer signs its silent updates with a new key. Installations older than 2.4.2 do not accept
