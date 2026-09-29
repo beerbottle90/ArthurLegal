@@ -162,6 +162,14 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.4.2 — New update-signing key (2026-09-29)
+
+The Windows installer signs its silent updates with a new key. Installations older than 2.4.2 do not accept
+updates signed with it: they install nothing and show `manifest imzası geçersiz` in their update status. Run
+`ArthurLegal-Kurulum.exe` once to install over them; later updates arrive silently again. The installer bundles
+Tapu 0.5.2 (province, district and neighbourhood from lists; block and parcel in separate boxes). The packages are
+unchanged: Law Firm and Corporate **v1.10.1**.
+
 ## v1.10.1 — A plain warning when live data cannot be retrieved (2026-09-27)
 
 Law Firm and Corporate **v1.10.1**, Courthouse **v1.1.1**, Academician **v1.1.1**, ArthurLegal Setup **2.4.1** (bundles the
