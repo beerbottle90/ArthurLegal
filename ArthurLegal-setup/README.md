@@ -23,8 +23,11 @@ Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
 
 ## Kurulum
 
-1. **[Releases](https://github.com/beerbottle90/ArthurLegal/releases)** sayfasından `ArthurLegal-Kurulum.exe`
-   dosyasını indirin ve çift tıklayın. Windows "bilinmeyen yayımcı" derse **Ek bilgi → Yine de çalıştır**.
+1. **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
+   dosyasını indirin (bağlantı her zaman en son sürümü verir) ve çift tıklayın. Edge ya da Windows uyarı
+   verirse resimli anlatım [ana sayfanın indirme bölümünde](https://github.com/beerbottle90/ArthurLegal#indir);
+   kısaca Edge'de **⋯ → Sakla → Daha fazla göster → Yine de sakla**, mavi SmartScreen penceresinde
+   **Ek bilgi → Yine de çalıştır**.
 2. Claude Desktop'ta **yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın.** Proje ya da yapıştırma
    gerekmez: `arthurlegal_talimat` aracının açıklaması ve sunucunun `instructions` alanı modele "hukukla
    ilgili her soruda önce beni çağır" der; profil verilmezse kurulumdaki varsayılan kullanılır.
@@ -38,7 +41,7 @@ kendi dosyalarına dokunmaz): Claude'da **Projeler → Yeni proje → Use a fold
 menüsünden `arthurlegal-yerel` altındaki `hukuk-burosu` istemi seçilir.
 
 **Windows 11 Akıllı Uygulama Denetimi (Smart App Control) açıksa** imzasız kurulum motoru engellenir
-(`Hata 4551`). O bilgisayarda `ArthurLegal-Kurulum.zip` dosyasını indirin, klasöre çıkarın ve
+(`Hata 4551`). O bilgisayarda [`ArthurLegal-Kurulum.zip`](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip) dosyasını indirin, klasöre çıkarın ve
 `KUR.cmd` dosyasına çift tıklayın: aynı kurulumu imzalı Python ile yapar. Denetim durumu:
 `(Get-MpComputerStatus).SmartAppControlState`.
 

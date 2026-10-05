@@ -1,4 +1,96 @@
-# ArthurLegal
+<h1 id="indir">ArthurLegal</h1>
+
+<p align="center">
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="docs/kurulum/indir-dugmesi.svg" width="560" alt="ArthurLegal'i indir: Windows kurulum dosyası ArthurLegal-Kurulum.exe, her zaman en güncel sürüm"></a>
+</p>
+<p align="center">
+  <b>Windows 10 ve 11</b> (64 bit) · yaklaşık 12 MB · yönetici şifresi istemez<br>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm&color=14233c" alt="Güncel sürüm"></a>
+</p>
+
+Düğme açılmazsa bu bağlantıya tıklayın: **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
+Bağlantı her zaman en son sürümü indirir. Kurduktan sonra ArthurLegal yeni sürümleri arka planda,
+imzalarını doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekmez.
+
+### Kurulum: üç adım
+
+**1. İndirin.** Yukarıdaki düğmeye tıklayın. Dosya tarayıcının sağ üstündeki indirmeler listesine iner;
+liste kapanırsa <kbd>Ctrl</kbd> + <kbd>J</kbd> ile açın.
+
+Edge "**ArthurLegal-Kurulum.exe yaygın olarak indirilen bir dosya değil**" derse dosya silinmedi, onayınızı
+bekliyor: dosyanın yanındaki **⋯** düğmesine, sonra **Sakla**'ya tıklayın. Açılan pencerede
+**Daha fazla göster**'e, sonra **Yine de sakla**'ya tıklayın.
+
+<p align="center">
+  <img src="docs/kurulum/edge-1-sakla.svg" width="400" alt="Örnek çizim: Edge indirme listesinde dosyanın yanındaki üç nokta düğmesi (1) ve açılan menüde Sakla (2)">
+  <img src="docs/kurulum/edge-2-yine-de-sakla.svg" width="400" alt="Örnek çizim: Edge onay penceresinde Daha fazla göster (3) ve Yine de sakla (4)">
+</p>
+
+Chrome uyarırsa: sağ üstteki indirme simgesine tıklayın, dosyanın satırındaki uyarıyı açın ve dosyayı
+tutmayı seçin (**Yine de indir** / **Sakla**).
+
+**2. Çift tıklayın.** İndirilen `ArthurLegal-Kurulum.exe` dosyasını açın. Mavi bir pencerede
+"**Windows bilgisayarınızı korudu**" yazarsa korkmayın; kod imzası taşımayan her yeni programda çıkar.
+Önce **Ek bilgi** yazısına, sonra beliren **Yine de çalıştır** düğmesine tıklayın.
+
+<p align="center">
+  <img src="docs/kurulum/smartscreen-1-ek-bilgi.svg" width="400" alt="Örnek çizim: mavi SmartScreen penceresinde Ek bilgi yazısı (1)">
+  <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
+</p>
+
+**3. Kurun.** Kurulum penceresinde **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye, sonra **Kur**'a tıklayın.
+Kurulum Arthur Mask'i de indirir (yaklaşık 1 GB, birkaç dakika) ve Claude Desktop açıksa kapatır. Bitince
+Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin
+sorarsa **Her zaman izin ver**'i seçin.
+
+<details>
+<summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>
+
+Windows ve Edge, az indirilmiş ve kod imzası taşımayan her programı tanımadıkları için uyarır. ArthurLegal
+kurulum dosyası henüz ücretli bir kod imzalama sertifikasıyla imzalanmadı; "Bilinmeyen yayımcı" yazması
+bundandır, dosyanın zararlı olduğu anlamına gelmez. Yine de yalnız bu sayfadaki düğmeden ya da
+[yayın sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/latest) indirdiğiniz dosya için
+devam edin; e-postayla ya da başka bir siteden gelen kopyayı açmayın. Kurulumdan sonraki güncellemeler
+ayrıca dijital imzayla doğrulanır: imza tutmazsa hiçbir şey kurulmaz.
+</details>
+
+<details>
+<summary><b>"Yine de çalıştır" düğmesi hiç çıkmıyor ya da "Uygulama Denetimi" engeli var (Windows 11)</b></summary>
+
+Bilgisayarınızda Windows 11'in **Akıllı Uygulama Denetimi** açık. Bu denetim imzasız kurulum dosyalarına
+hiç izin vermez. Denetimi kapatmanız gerekmez; aynı kurulumun zip yolunu kullanın:
+
+1. **[ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip)**
+   dosyasını indirin (bu bağlantı da her zaman en son sürümü verir).
+2. Zip dosyasına sağ tıklayın, **Tümünü Ayıkla…**'yı, sonra **Ayıkla**'yı seçin.
+3. Açılan klasörde **KUR.cmd** dosyasına çift tıklayın. "Dosya Aç - Güvenlik Uyarısı" çıkarsa **Çalıştır**'a
+   tıklayın. Siyah pencere sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
+
+Bu yolla Arthur Mask kurulmaz (müvekkil belgesini maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal
+paketleri, araştırma araçları ve Tapu çalışır.
+</details>
+
+<details>
+<summary><b>Mac kullanıyorum</b></summary>
+
+Kurulum dosyası yalnız Windows içindir. Mac'te ArthurLegal'i Claude.ai Projects ile kurun: aşağıdaki
+[güncel paketler](#packages--current-versions) tablosundan paketinizi açın ve içindeki `KURULUM.md` dosyasını
+izleyin. Arthur Mask'in Mac sürümü hemen aşağıda.
+</details>
+
+Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir**
+
+**English.** **[Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**,
+always the latest release. One installer puts the Law Firm and Corporate packages, the research connector
+and the local Turkish land-registry tools into Claude Desktop, then keeps them up to date from signed
+releases; no admin rights. The installer is not code-signed yet: Edge may say the file "isn't commonly
+downloaded" (**⋯ → Keep → Show more → Keep anyway**) and Windows SmartScreen may say "Windows protected your
+PC" (**More info → Run anyway**). With Windows 11 Smart App Control on, use
+[ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip):
+extract it and run `KUR.cmd`. On a Mac, install through Claude.ai Projects (`KURULUM.md` / `INSTALLATION.md`
+in each package). Details: [ArthurLegal-setup/](ArthurLegal-setup/).
+
+---
 
 > **Proprietary — Non-Commercial Use Only. All Rights Reserved. See [LICENSE](LICENSE).**
 
@@ -8,14 +100,6 @@ folder, and reaches **28 jurisdictions** through **one primary MCP connector** (
 jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
 
 <img src="ArthurLegal-setup/varlik/banner.png" alt="ArthurLegal — open source legal AI" width="760">
-
-> ### ⬇ ArthurLegal Setup — one click on Windows ([ArthurLegal-setup/](ArthurLegal-setup/))
-> A single installer puts the Law Firm and Corporate packages, the research connector and the local
-> Turkish land-registry tools (live parcels from TKGM Parsel Sorgu) into Claude Desktop, then keeps them up to date from signed releases.
-> No admin rights, no manual knowledge upload: the only manual step is pasting one short, never
-> changing prompt into a Claude Project. Download `ArthurLegal-Kurulum.exe` (or `.zip` where Windows
-> Smart App Control is on) from the [Releases](https://github.com/beerbottle90/ArthurLegal/releases) page.
-> **Türkçe kurulum anlatımı:** [ArthurLegal-setup/README.md](ArthurLegal-setup/README.md).
 
 > ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
@@ -42,7 +126,7 @@ design.
 
 Only the current version of each package sits at the top of the repository; earlier versions are kept in
 [`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.0`; Academician `v1.0.0` … `v1.1.0`).
-To install, start from the `KURULUM.md` file in the package you want (Turkish); the
+To install, use the [download section](#indir) at the top of this page, or start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
 
 ## Use ArthurLegal MCP directly
