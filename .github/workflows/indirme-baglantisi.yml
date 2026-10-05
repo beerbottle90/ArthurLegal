@@ -1,0 +1,110 @@
+# İndirme bağlantısı bekçisi.
+#
+# README'deki "ArthurLegal'i indir" düğmesi ve kurulu bilgisayarların güncelleyicisi aynı adrese bakar:
+#   https://github.com/<depo>/releases/latest/download/<dosya>
+# GitHub bu adresi "en son yayın" (Latest) neyse ona yönlendirir; yeni sürüm yayımlanınca düğme de
+# kendiliğinden yeni sürümü indirir. Bu iş, adresin gerçekten en son ArthurLegal sürümünü verdiğini
+# her gün ve her yayın olayında denetler. Bir sorun varsa iş kırmızı biter ve GitHub depo sahibine
+# e-posta gönderir. Denetlenenler:
+#   1. "En son yayın" bir ArthurLegal sürümü mü (vX.Y.Z; ör. arthur-mask yayını değil)
+#   2. O yayında kurulum dosyaları ve imzalı manifest var mı
+#   3. README'deki bağlantı oturumsuz olarak o sürüme yönleniyor ve dosya iniyor mu
+#   4. Güncelleyicinin okuduğu manifest aynı sürümü mü söylüyor
+#   5. Yayını açılmamış daha yeni bir sürüm etiketi var mı (etiket basmak yayın açmak değildir)
+
+name: İndirme bağlantısı denetimi
+
+on:
+  schedule:
+    - cron: "17 5 * * *"   # her gün 08.17 (Türkiye saati)
+  release:
+    types: [published, released, edited, deleted, unpublished]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indirme-baglantisi
+  cancel-in-progress: true
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: İndirme bağlantısını denetle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPO: ${{ github.repository }}
+          OLAY: ${{ github.event_name }}
+        run: |
+          set -uo pipefail
+          TABAN="https://github.com/$DEPO/releases/latest/download"
+          GEREKLI="ArthurLegal-Kurulum.exe ArthurLegal-Kurulum.zip arthurlegal-manifest.json arthurlegal-manifest.sig"
+          SORUN=""
+
+          denetle() {
+            SORUN=""
+            local son varliklar eksik d hedef kod manifest m_etiket m_surum en_yeni durum
+            son=$(gh api "repos/$DEPO/releases/latest" --jq .tag_name 2>/dev/null) \
+              || { SORUN="En son yayın okunamadı."; return 1; }
+            if ! [[ "$son" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              SORUN="'En son yayın' bir ArthurLegal sürümü değil: $son. İndirme düğmesi ve güncelleyici bu yayına bakıyor. Doğru sürümün yayın sayfasında Edit → 'Set as the latest release' seçin."
+              return 1
+            fi
+            varliklar=$(gh api "repos/$DEPO/releases/tags/$son" --jq '.assets[].name') \
+              || { SORUN="$son yayınının dosyaları okunamadı."; return 1; }
+            eksik=""
+            for d in $GEREKLI; do grep -qxF "$d" <<<"$varliklar" || eksik="$eksik $d"; done
+            [ -z "$eksik" ] || { SORUN="$son yayınında eksik dosya:$eksik"; return 1; }
+
+            hedef=$(curl -sS -o /dev/null -w '%{redirect_url}' "$TABAN/ArthurLegal-Kurulum.exe")
+            [[ "$hedef" == *"/releases/download/$son/ArthurLegal-Kurulum.exe" ]] \
+              || { SORUN="İndirme bağlantısı $son'e değil şuraya yönleniyor: ${hedef:-yönlendirme yok}"; return 1; }
+            kod=$(curl -sSL -r 0-1023 -o /dev/null -w '%{http_code}' "$TABAN/ArthurLegal-Kurulum.exe")
+            [[ "$kod" == 200 || "$kod" == 206 ]] || { SORUN="Kurulum dosyası inmiyor (HTTP $kod)."; return 1; }
+
+            manifest=$(curl -sSfL "$TABAN/arthurlegal-manifest.json") \
+              || { SORUN="Güncelleyicinin manifesti inmiyor."; return 1; }
+            m_etiket=$(jq -r .etiket <<<"$manifest"); m_surum=$(jq -r .surum <<<"$manifest")
+            [ "$m_etiket" = "$son" ] \
+              || { SORUN="Manifest $m_etiket diyor, en son yayın $son. Kurulu bilgisayarlar yanlış sürümü görür."; return 1; }
+            [ "v$m_surum" = "$son" ] || echo "::warning::Manifestteki sürüm ($m_surum) etiketle ($son) aynı değil."
+
+            en_yeni=$(gh api "repos/$DEPO/tags" --paginate --jq '.[].name' \
+              | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+            if [ -n "$en_yeni" ] && [ "$en_yeni" != "$son" ] \
+               && [ "$(printf '%s\n%s\n' "$son" "$en_yeni" | sort -V | tail -n 1)" = "$en_yeni" ]; then
+              durum=$(gh api "repos/$DEPO/releases/tags/$en_yeni" --jq .prerelease 2>/dev/null || true)
+              if [ -z "$durum" ]; then
+                SORUN="$en_yeni etiketi var ama yayını açılmamış; indirme düğmesi hâlâ $son veriyor. Bu sürümün GitHub yayınını açın (ArthurLegal-setup/README.md → Derleme) ya da bilerek bekletiliyorsa ön sürüm olarak yayımlayın."
+                return 1
+              fi
+              echo "::notice::$en_yeni ön sürüm olarak yayında; düğme bilerek $son'de kalıyor."
+            fi
+
+            {
+              echo "### ✅ İndirme bağlantısı çalışıyor"
+              echo
+              echo "README'deki düğme ve güncelleyici **$son** sürümünü veriyor."
+              echo "Bağlantı: $TABAN/ArthurLegal-Kurulum.exe"
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "Tamam: bağlantı $son veriyor."
+            return 0
+          }
+
+          # Yayın olayında dosyalar yayın açıldıktan sonra tek tek yüklenir; yüklemelerin bitmesi beklenir.
+          if [ "$OLAY" = "release" ]; then deneme=30; else deneme=3; fi
+          for i in $(seq 1 "$deneme"); do
+            if denetle; then exit 0; fi
+            echo "Deneme $i/$deneme: $SORUN"
+            [ "$i" -lt "$deneme" ] && sleep 60
+          done
+          echo "::error title=İndirme bağlantısı bozuk::$SORUN"
+          {
+            echo "### ❌ İndirme bağlantısı sorunu"
+            echo
+            echo "$SORUN"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1
