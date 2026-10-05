@@ -5,45 +5,6 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-## [1.10.1] — 2026-09-27 — *Canlı Veri Uyarısı: Çekilemeyen Bilgi Açıkça Yazılır*
-
-> **Yama sürümü.** Yalnız talimat ve etiket metni değişti; araçlar, skill sayıları ve kaynaklar aynı.
-
-### Değişti
-
-1. `SYSTEM_PROMPT.md` bölüm 6: Canlı veri uyarısı. Bir hukuki bilgi kural setindeki yolla (araç ya da tanımlı yedek yol) çekilemediyse çıktı artık köşeli ayraçlı etiket yerine açıkça `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` yazar. Bağlantı, aracın döndürdüğü adres ya da sistem talimatındaki tablodan resmî giriş sayfasıdır; uydurulmaz. Eski etiketler (`[model bilgisi — doğrulayın]`, `[doğrulayın]`, `[UYAP/Lexpera — manuel doğrulayın]` ve İngilizce skill'lerdeki `[verify]` türevleri) çıktıda bu satıra döner. Resmî teyit bağlantıları tablosu eklendi.
-2. Madde doğrulama kapısı ve CourtListener kuralı uyarı satırını bağlantısıyla yazar.
-3. `knowledge/` altındaki rehber ve profillerde eski Türkçe etiketler uyarı satırına çevrildi.
-
-## [1.10.0] — 2026-09-23 — *Tapu: TKGM Parsel Sorgu'dan Canlı Parsel; Araç Haritası Canlı Uçla Eşitlendi*
-
-> **Özellik sürümü.** ArthurLegal MCP artık tapu-kadastro araçlarını (`tkgm_`, 17 araç) taşır: kullanıcı sohbette
-> il, ilçe, mahalle ile ada/parsel, bir koordinat ya da yer adı söyler; parsel TKGM Parsel Sorgu'nun herkese açık
-> verisinden canlı gelir, dosya indirme adımı yoktur. Türkiye backend'inin adı `arthur-tr-hukuk-mcp` oldu (eski
-> ArthurLegalTR), sürümü 0.5.0. Uç 121 araç, 16 backend.
-
-### Eklendi
-
-1. `knowledge/references/tapu-kadastro-rehberi.md`: canlı parsel akışı, sohbet başına onay kartı, claude.ai'de `tkgm_`
-   önekli ve Claude Desktop'ta öneksiz araç adları, hız sınırı (dakikada en çok 30 istek), disiplin ve atıf kalıbı.
-2. `SYSTEM_PROMPT.md`: bölüm 6 kaynak tablosuna taşınmaz/parsel satırı, bölüm 8'e `tkgm_` maddesi (16).
-
-### Değişti
-
-1. `mevzuat-mcp-rehberi.md`, `yargi-mcp-rehberi.md`: araç adları ve örnek çağrı parametreleri 23.09.2026'da
-   Türkiye 0.5.0'ın canlı şemasıyla karşılaştırıldı.
-2. `SYSTEM_PROMPT.md` bölüm 8: uç 121 araç, 16 backend; bölüm 7: Türkiye `arthur-tr-hukuk-mcp` 0.5.0.
-3. `firm-profile.md` ve dava, idari yargı, ticari danışmanlık profilleri: taşınmaz dosyaları için ArthurLegal
-   Tapu satırı; `legal-research.md`: uç tanımı güncel sayılarla.
-
-### Düzeltildi
-
-1. `yargi-mcp-rehberi.md`: EPDK örneğindeki `category` kuruma özel süzgeçtir, `params={"category": …}` içinde verilir.
-2. Önceki sürümdeki ad değişikliği bazı notlarda "(arthur-tr-hukuk-mcp, eski adı arthur-tr-hukuk-mcp)" yazdırmıştı;
-   doğrusu "eski adı ArthurLegalTR".
-
----
-
 ## [1.9.1] — 2026-09-22 — *Madde Doğrulama Kapısı; Yanlış Madde Atıfları Düzeltildi*
 
 > **Düzeltme sürümü.** Bir iş ve fikri haklar protokolünün 5.5 klozuna "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120

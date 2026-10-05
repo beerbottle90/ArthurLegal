@@ -1,0 +1,20 @@
+# Arşiv: eski paket sürümleri
+
+Bu klasör ArthurLegal paketlerinin **eski** sürümlerini saklar; bunlar güncellenmez. Güncel sürümler
+deponun kökündedir. Kurmak için [ana sayfadaki indirme bölümünü](https://github.com/beerbottle90/ArthurLegal#indir)
+ya da güncel paketin `KURULUM.md` dosyasını kullanın.
+
+**Archive: earlier package versions.** This folder keeps earlier versions of the ArthurLegal packages;
+they receive no updates. Current versions live at the repository root. To install, use the
+[download section](https://github.com/beerbottle90/ArthurLegal#indir) on the main page or the current
+package's `KURULUM.md` / `INSTALLATION.md`.
+
+| Paket · Package | Arşivdeki sürümler · Archived versions |
+|---|---|
+| Hukuk Bürosu · Law Firm | [v1.0.0](ArthurLegal-Law-Firm-v1.0.0-Public-Release/) · [v1.0.1](ArthurLegal-Law-Firm-v1.0.1-Public-Release/) · [v1.2.0](ArthurLegal-Law-Firm-v1.2.0-Public-Release/) · [v1.3.1](ArthurLegal-Law-Firm-v1.3.1-Public-Release/) · [v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/) · [v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/) · [v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/) · [v1.6.1](ArthurLegal-Law-Firm-v1.6.1-Public-Release/) · [v1.6.2](ArthurLegal-Law-Firm-v1.6.2-Public-Release/) · [v1.7.0](ArthurLegal-Law-Firm-v1.7.0-Public-Release/) · [v1.8.0](ArthurLegal-Law-Firm-v1.8.0-Public-Release/) · [v1.8.1](ArthurLegal-Law-Firm-v1.8.1-Public-Release/) · [v1.9.0](ArthurLegal-Law-Firm-v1.9.0-Public-Release/) · [v1.9.1](ArthurLegal-Law-Firm-v1.9.1-Public-Release/) · [v1.10.0](ArthurLegal-Law-Firm-v1.10.0-Public-Release/) |
+| Kurumsal · Corporate Assistant | [v1.0.0](ArthurLegal-CorporateAssistant-v1.0.0-Public-Release/) · [v1.0.1](ArthurLegal-CorporateAssistant-v1.0.1-Public-Release/) · [v1.2.0](ArthurLegal-CorporateAssistant-v1.2.0-Public-Release/) · [v1.3.1](ArthurLegal-CorporateAssistant-v1.3.1-Public-Release/) · [v1.4.0](ArthurLegal-CorporateAssistant-v1.4.0-Public-Release/) · [v1.5.0](ArthurLegal-CorporateAssistant-v1.5.0-Public-Release/) · [v1.6.0](ArthurLegal-CorporateAssistant-v1.6.0-Public-Release/) · [v1.6.1](ArthurLegal-CorporateAssistant-v1.6.1-Public-Release/) · [v1.6.2](ArthurLegal-CorporateAssistant-v1.6.2-Public-Release/) · [v1.7.0](ArthurLegal-CorporateAssistant-v1.7.0-Public-Release/) · [v1.8.0](ArthurLegal-CorporateAssistant-v1.8.0-Public-Release/) · [v1.9.0](ArthurLegal-CorporateAssistant-v1.9.0-Public-Release/) · [v1.9.1](ArthurLegal-CorporateAssistant-v1.9.1-Public-Release/) · [v1.10.0](ArthurLegal-CorporateAssistant-v1.10.0-Public-Release/) |
+| Courthouse | [v1.0.0](ArthurLegal-Courthouse-v1.0.0-Public-Release/) · [v1.0.1](ArthurLegal-Courthouse-v1.0.1-Public-Release/) · [v1.0.2](ArthurLegal-Courthouse-v1.0.2-Public-Release/) · [v1.0.3](ArthurLegal-Courthouse-v1.0.3-Public-Release/) · [v1.0.4](ArthurLegal-Courthouse-v1.0.4-Public-Release/) · [v1.0.5](ArthurLegal-Courthouse-v1.0.5-Public-Release/) · [v1.1.0](ArthurLegal-Courthouse-v1.1.0-Public-Release/) |
+| Academician | [v1.0.0](ArthurLegal-Academician-v1.0.0-Public-Release/) · [v1.0.1](ArthurLegal-Academician-v1.0.1-Public-Release/) · [v1.0.2](ArthurLegal-Academician-v1.0.2-Public-Release/) · [v1.0.3](ArthurLegal-Academician-v1.0.3-Public-Release/) · [v1.1.0](ArthurLegal-Academician-v1.1.0-Public-Release/) |
+
+Sürüm notlarının tamamı güncel paketin `CHANGELOG.md` dosyasındadır. · The full release history is in
+each current package's `CHANGELOG.md`.

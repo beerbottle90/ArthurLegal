@@ -40,9 +40,10 @@ Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
-Earlier versions are retained as archives (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.0`; Academician `v1.0.0` … `v1.1.0`).
+Only the current version of each package sits at the top of the repository; earlier versions are kept in
+[`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.0`; Academician `v1.0.0` … `v1.1.0`).
 To install, start from the `KURULUM.md` file in the package you want (Turkish); the
-Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed from the download box above.
+Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
 
 ## Use ArthurLegal MCP directly
 

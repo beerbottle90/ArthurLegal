@@ -5,16 +5,6 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-## [1.10.1] — 2026-09-27 — *Canlı Veri Uyarısı: Çekilemeyen Bilgi Açıkça Yazılır*
-
-> **Yama sürümü.** Yalnız talimat ve etiket metni değişti; araçlar, skill sayıları ve kaynaklar aynı.
-
-### Değişti
-
-1. `SYSTEM_PROMPT.md` bölüm 6: Canlı veri uyarısı. Bir hukuki bilgi kural setindeki yolla (araç ya da tanımlı yedek yol) çekilemediyse çıktı artık köşeli ayraçlı etiket yerine açıkça `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` yazar. Bağlantı, aracın döndürdüğü adres ya da sistem talimatındaki tablodan resmî giriş sayfasıdır; uydurulmaz. Eski etiketler (`[model bilgisi — doğrulayın]`, `[doğrulayın]`, `[UYAP/Lexpera — manuel doğrulayın]` ve İngilizce skill'lerdeki `[verify]` türevleri) çıktıda bu satıra döner. Resmî teyit bağlantıları tablosu eklendi.
-2. Madde doğrulama kapısı ve CourtListener kuralı uyarı satırını bağlantısıyla yazar.
-3. `knowledge/` altındaki rehber ve profillerde eski Türkçe etiketler uyarı satırına çevrildi.
-
 ## [1.10.0] — 2026-09-23 — *Tapu: TKGM Parsel Sorgu'dan Canlı Parsel; Araç Haritası Canlı Uçla Eşitlendi*
 
 > **Özellik sürümü.** ArthurLegal MCP artık tapu-kadastro araçlarını (`tkgm_`, 17 araç) taşır: kullanıcı sohbette
