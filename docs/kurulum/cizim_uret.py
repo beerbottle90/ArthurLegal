@@ -16,13 +16,19 @@ from xml.sax.saxutils import escape
 BURASI = Path(__file__).resolve().parent
 DOSYA = "ArthurLegal-Kurulum.exe"
 
-# Ekranda birebir görünen metinler. Kaynaklar README'nin indirme bölümünde ve commit mesajında.
+# Ekranda görünen Türkçe metinler ve kaynakları (Ekim 2026):
+# - SmartScreen: çevrimiçi pencerenin metni Microsoft'un sunucusundan gelir, Windows'ta yerel kaydı yoktur.
+#   Başlık birbirinden bağımsız çok sayıda Türkçe ekran alıntısından ("Windows kişisel bilgisayarınızı
+#   korudu"); gövde metni kullanıcı alıntılarından (2021), en az kesin olan budur. "Ek bilgi",
+#   "Yine de çalıştır", "Çalıştırma", "Uygulama:", "Yayımcı:" yerel smartscreen.exe.mui şablonuyla da uyumlu.
+# - Edge: Edge 153'ün tr.pak dosyası. Bu sürümde onay penceresinde "Daha fazla göster" yoktur;
+#   "Yine de sakla", mavi "Sil" düğmesinin yanındaki okla açılır.
 METIN = {
-    "ss_baslik": "Windows bilgisayarınızı korudu",
+    "ss_baslik": "Windows kişisel bilgisayarınızı korudu",
     "ss_govde": [
         "Microsoft Defender SmartScreen tanınmayan bir uygulamanın",
-        "başlatılmasını engelledi. Bu uygulamanın çalıştırılması",
-        "bilgisayarınızı riske atabilir.",
+        "başlamasını engelledi. Bu uygulamayı çalıştırmak",
+        "bilgisayarınızın güvenliğini tehlikeye sokabilir.",
     ],
     "ss_ek_bilgi": "Ek bilgi",
     "ss_uygulama": "Uygulama:",
@@ -36,7 +42,9 @@ METIN = {
         f"bir dosya değil. Açmadan önce {DOSYA}",
         "dosyasının güvenilir olduğundan emin olun.",
     ],
-    "edge_menu": ["Sil", "Sakla", "Bu dosyayı güvenli olarak bildir", "Daha fazla bilgi edinin", "Bağlantıyı kopyala"],
+    # None: menüdeki ayırıcı çizgi
+    "edge_menu": ["Sil", "Sakla", None, "Bu dosyayı güvenli olarak bildir", "Daha fazla bilgi edinin", None,
+                  "İndirme bağlantısını kopyala"],
     "edge_sakla": "Sakla",
     "edge_d_baslik": [f"Açmadan önce {DOSYA} dosyasının", "güvenilir olduğundan emin olun"],
     "edge_d_govde": [
@@ -45,9 +53,9 @@ METIN = {
         "indirdiğiniz dosyanın veya kaynağının güvenli olduğundan emin olun.",
     ],
     "edge_d_ad": f"Ad: {DOSYA}",
+    "edge_d_yayimci": "Yayımcı: Bilinmiyor",
     "edge_d_bildir": "Bu uygulamayı güvenli olarak bildir",
-    "edge_d_bilgi": "Microsoft Defender SmartScreen hakkında daha fazla bilgi edinin",
-    "edge_d_daha": "Daha fazla göster",
+    "edge_d_bilgi": "Daha fazla bilgi edinin",
     "edge_d_yine": "Yine de sakla",
     "edge_d_sil": "Sil",
     "edge_d_iptal": "İptal",
@@ -102,12 +110,12 @@ def dugme() -> str:
 
 
 def smartscreen(adim: int) -> str:
-    gen, yuk = 560, 352
-    x0, y0, g, h = 10, 10, 540, 316
+    gen, yuk = 600, 352
+    x0, y0, g, h = 10, 10, 580, 316
     govde = (f'<rect x="{x0 + 3}" y="{y0 + 4}" width="{g}" height="{h}" fill="#000000" opacity="0.18"/>'
              f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" fill="{SS_MAVI}" stroke="#16477f"/>'
-             + t(x0 + 506, y0 + 26, "✕", 15, "#ffffff", 400)
-             + t(x0 + 26, y0 + 66, METIN["ss_baslik"], 27, "#ffffff", 600)
+             + t(x0 + g - 34, y0 + 26, "✕", 15, "#ffffff", 400)
+             + t(x0 + 26, y0 + 66, METIN["ss_baslik"], 25, "#ffffff", 600)
              + satirlar(x0 + 26, y0 + 102, METIN["ss_govde"], 14.5, "#ffffff", 21))
     if adim == 1:
         lx, ly = x0 + 26, y0 + 180
@@ -116,7 +124,7 @@ def smartscreen(adim: int) -> str:
         govde += (f'<rect x="{x0 + g - 150}" y="{y0 + h - 58}" width="126" height="36" fill="#174b8a" '
                   f'stroke="#ffffff" stroke-width="1.5"/>'
                   + t(x0 + g - 87, y0 + h - 34, METIN["ss_calistirma"], 15, "#ffffff", 600, hiza="middle"))
-        baslik = "Örnek: SmartScreen penceresinde önce Ek bilgi yazısına tıklayın"
+        baslik = "Örnek: Windows kişisel bilgisayarınızı korudu penceresinde önce Ek bilgi yazısına tıklayın"
     else:
         satir_y = y0 + 186
         govde += (t(x0 + 26, satir_y, METIN["ss_uygulama"], 14, "#ffffff")
@@ -137,7 +145,7 @@ def smartscreen(adim: int) -> str:
 
 
 def edge_panel() -> str:
-    gen, yuk = 560, 350
+    gen, yuk = 560, 356
     px, py, pg, ph = 10, 10, 480, 200
     govde = (f'<rect x="{px + 2}" y="{py + 4}" width="{pg}" height="{ph}" rx="10" fill="#000000" opacity="0.12"/>'
              f'<rect x="{px}" y="{py}" width="{pg}" height="{ph}" rx="10" fill="#ffffff" stroke="#d0d7de"/>'
@@ -147,23 +155,32 @@ def edge_panel() -> str:
              + f'<path d="M{px + 32} {py + 70} l13 24 h-26 z" fill="#f2c94c" stroke="#9a6700" stroke-width="1.2"/>'
              + t(px + 32, py + 90, "!", 14, "#1f2328", 700, hiza="middle")
              + satirlar(px + 56, py + 76, METIN["edge_uyari"], 12.5, "#1f2328", 18))
-    # "..." düğmesi
+    # satırdaki çöp kutusu (dosyayı siler) ve "..." (Diğer eylemler) düğmesi
     dx, dy = px + pg - 50, py + 64
+    cx = dx - 34
+    govde += (f'<path d="M{cx + 8} {dy + 9} h14 M{cx + 12} {dy + 9} v-2 h6 v2 M{cx + 10} {dy + 9} l1 13 h8 l1 -13" '
+              f'stroke="#57606a" stroke-width="1.6" fill="none" stroke-linejoin="round"/>')
     govde += (f'<rect x="{dx}" y="{dy}" width="32" height="28" rx="6" fill="#f0f0f0"/>'
               + t(dx + 16, dy + 19, "⋯", 18, "#1f2328", 700, hiza="middle")
               + isaret(dx - 4, dy - 4, 40, 36, 1, rozet="sag"))
     # açılan menü
     mx, my, mg = px + 190, py + 130, 300
-    mh = 16 + 30 * len(METIN["edge_menu"])
+    oge = METIN["edge_menu"]
+    mh = 12 + sum(30 if o else 12 for o in oge)
     govde += (f'<rect x="{mx + 2}" y="{my + 4}" width="{mg}" height="{mh}" rx="8" fill="#000000" opacity="0.12"/>'
               f'<rect x="{mx}" y="{my}" width="{mg}" height="{mh}" rx="8" fill="#ffffff" stroke="#d0d7de"/>')
-    for i, s in enumerate(METIN["edge_menu"]):
-        sy = my + 30 + i * 30
-        govde += t(mx + 18, sy, s, 13.5, "#1f2328", 600 if s == METIN["edge_sakla"] else 400)
-        if s == METIN["edge_sakla"]:
-            govde += isaret(mx + 8, sy - 20, 120, 28, 2)
+    sy = my + 6
+    for o in oge:
+        if o is None:
+            govde += f'<line x1="{mx + 10}" y1="{sy + 6}" x2="{mx + mg - 10}" y2="{sy + 6}" stroke="#e6e6e6"/>'
+            sy += 12
+            continue
+        govde += t(mx + 18, sy + 20, o, 13.5, "#1f2328", 600 if o == METIN["edge_sakla"] else 400)
+        if o == METIN["edge_sakla"]:
+            govde += isaret(mx + 8, sy + 1, 120, 28, 2)
+        sy += 30
     govde += dipnot(gen, yuk, "Çizim · Microsoft Edge indirme uyarısı (örnek görünüm)")
-    return svg(gen, yuk, govde, "Örnek: Edge'de indirilen dosyanın yanındaki üç noktaya, sonra Sakla'ya tıklayın")
+    return svg(gen, yuk, govde, "Örnek: Edge'de dosyanın satırındaki üç noktaya, sonra Sakla'ya tıklayın")
 
 
 def edge_dialog() -> str:
@@ -174,25 +191,27 @@ def edge_dialog() -> str:
              + satirlar(x0 + 22, y0 + 36, METIN["edge_d_baslik"], 17, "#1f2328", 23, 600)
              + satirlar(x0 + 22, y0 + 96, METIN["edge_d_govde"], 12.5, "#1f2328", 18)
              + t(x0 + 22, y0 + 164, METIN["edge_d_ad"], 12.5, "#1f2328")
-             + t(x0 + 22, y0 + 190, METIN["edge_d_bildir"], 12.5, "#0f6cbd", cizgi=True)
-             + t(x0 + 22, y0 + 212, METIN["edge_d_bilgi"], 12.5, "#0f6cbd", cizgi=True))
-    dy = y0 + 244
-    govde += (t(x0 + 22, dy, METIN["edge_d_daha"], 13.5, "#1f2328", 600)
-              + f'<path d="M{x0 + 158} {dy - 8} l5 5 l5 -5" stroke="#1f2328" stroke-width="1.8" fill="none" '
-                f'stroke-linecap="round" stroke-linejoin="round"/>'
-              + isaret(x0 + 14, dy - 20, 168, 30, 3, rozet="sag"))
-    yy = dy + 38
-    govde += (f'<rect x="{x0 + 22}" y="{yy - 22}" width="120" height="32" rx="6" fill="#ffffff" stroke="#8c959f"/>'
-              + t(x0 + 82, yy - 1, METIN["edge_d_yine"], 13.5, "#1f2328", 600, hiza="middle")
-              + isaret(x0 + 16, yy - 28, 132, 44, 4, rozet="sag"))
-    bx = x0 + g - 196
+             + t(x0 + 22, y0 + 184, METIN["edge_d_yayimci"], 12.5, "#1f2328")
+             + t(x0 + 22, y0 + 212, METIN["edge_d_bildir"], 12.5, "#0f6cbd", cizgi=True)
+             + t(x0 + 22, y0 + 234, METIN["edge_d_bilgi"], 12.5, "#0f6cbd", cizgi=True))
+    # düğmeler: [İptal] [Sil | ˅]; okla açılan tek öğe: Yine de sakla
     by = y0 + h - 50
-    govde += (f'<rect x="{bx}" y="{by}" width="84" height="32" rx="6" fill="#0f6cbd"/>'
-              + t(bx + 42, by + 21, METIN["edge_d_sil"], 13.5, "#ffffff", 600, hiza="middle")
-              + f'<rect x="{bx + 96}" y="{by}" width="84" height="32" rx="6" fill="#ffffff" stroke="#8c959f"/>'
-              + t(bx + 138, by + 21, METIN["edge_d_iptal"], 13.5, "#1f2328", 600, hiza="middle"))
+    sx = x0 + g - 132
+    ix = sx - 96
+    govde += (f'<rect x="{ix}" y="{by}" width="84" height="32" rx="6" fill="#ffffff" stroke="#8c959f"/>'
+              + t(ix + 42, by + 21, METIN["edge_d_iptal"], 13.5, "#1f2328", 600, hiza="middle")
+              + f'<rect x="{sx}" y="{by}" width="112" height="32" rx="6" fill="#0f6cbd"/>'
+              + t(sx + 38, by + 21, METIN["edge_d_sil"], 13.5, "#ffffff", 600, hiza="middle")
+              + f'<line x1="{sx + 76}" y1="{by + 6}" x2="{sx + 76}" y2="{by + 26}" stroke="#ffffff" opacity="0.6"/>'
+              + f'<path d="M{sx + 88} {by + 13} l6 6 l6 -6" stroke="#ffffff" stroke-width="2" fill="none" '
+                f'stroke-linecap="round" stroke-linejoin="round"/>'
+              + isaret(sx + 77, by - 4, 37, 40, 3, rozet="sag"))
+    my = by - 52
+    govde += (f'<rect x="{sx - 40}" y="{my}" width="152" height="40" rx="8" fill="#ffffff" stroke="#d0d7de"/>'
+              + t(sx - 24, my + 25, METIN["edge_d_yine"], 13.5, "#1f2328", 600)
+              + isaret(sx - 34, my + 5, 140, 30, 4, rozet="sol"))
     govde += dipnot(gen, yuk, "Çizim · Microsoft Edge onay penceresi (örnek görünüm)")
-    return svg(gen, yuk, govde, "Örnek: Daha fazla göster'e, sonra Yine de sakla'ya tıklayın")
+    return svg(gen, yuk, govde, "Örnek: mavi Sil düğmesinin yanındaki oka, sonra Yine de sakla'ya tıklayın")
 
 
 def main() -> int:

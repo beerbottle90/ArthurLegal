@@ -17,54 +17,71 @@ imzalarını doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekme
 **1. İndirin.** Yukarıdaki düğmeye tıklayın. Dosya tarayıcının sağ üstündeki indirmeler listesine iner;
 liste kapanırsa <kbd>Ctrl</kbd> + <kbd>J</kbd> ile açın.
 
-Edge "**ArthurLegal-Kurulum.exe yaygın olarak indirilen bir dosya değil**" derse dosya silinmedi, onayınızı
-bekliyor: dosyanın yanındaki **⋯** düğmesine, sonra **Sakla**'ya tıklayın. Açılan pencerede
-**Daha fazla göster**'e, sonra **Yine de sakla**'ya tıklayın.
+**Edge** "**ArthurLegal-Kurulum.exe yaygın olarak indirilen bir dosya değil**" derse dosya silinmedi, onayınızı
+bekliyor. Satırdaki çöp kutusuna basmayın:
+
+1. Fareyle satırın üzerine gelin, sağda beliren **⋯** düğmesine, sonra **Sakla**'ya tıklayın.
+2. Açılan pencerede mavi **Sil** düğmesine değil, hemen yanındaki küçük oka (**˅**) tıklayın ve
+   **Yine de sakla**'yı seçin. Eski Edge sürümlerinde bu pencerede önce **Daha fazla göster**'e tıklanır.
 
 <p align="center">
-  <img src="docs/kurulum/edge-1-sakla.svg" width="400" alt="Örnek çizim: Edge indirme listesinde dosyanın yanındaki üç nokta düğmesi (1) ve açılan menüde Sakla (2)">
-  <img src="docs/kurulum/edge-2-yine-de-sakla.svg" width="400" alt="Örnek çizim: Edge onay penceresinde Daha fazla göster (3) ve Yine de sakla (4)">
+  <img src="docs/kurulum/edge-1-sakla.svg" width="400" alt="Örnek çizim: Edge indirme listesinde dosyanın satırındaki üç nokta düğmesi (1) ve açılan menüde Sakla (2)">
+  <img src="docs/kurulum/edge-2-yine-de-sakla.svg" width="400" alt="Örnek çizim: Edge onay penceresinde Sil düğmesinin yanındaki ok (3) ve açılan Yine de sakla (4)">
 </p>
 
-Chrome uyarırsa: sağ üstteki indirme simgesine tıklayın, dosyanın satırındaki uyarıyı açın ve dosyayı
-tutmayı seçin (**Yine de indir** / **Sakla**).
+**Chrome** "**Şüpheli indirme işlemi engellendi**" derse: sağ üstteki indirme simgesine, sonra dosyanın satırına
+tıklayın ve **Şüpheli dosyayı indir**'i seçin. **Geçmişten sil** dosyayı atar.
 
-**2. Çift tıklayın.** İndirilen `ArthurLegal-Kurulum.exe` dosyasını açın. Mavi bir pencerede
-"**Windows bilgisayarınızı korudu**" yazarsa korkmayın; kod imzası taşımayan her yeni programda çıkar.
-Önce **Ek bilgi** yazısına, sonra beliren **Yine de çalıştır** düğmesine tıklayın.
+**2. Çift tıklayın.** İndirilen **ArthurLegal-Kurulum** dosyasını açın; Edge'de dosya adının altındaki
+**Dosya aç**'a da tıklayabilirsiniz. Mavi bir pencerede "**Windows kişisel bilgisayarınızı korudu**" yazarsa
+korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **Ek bilgi** yazısına, sonra beliren
+**Yine de çalıştır** düğmesine tıklayın. <kbd>Enter</kbd>'a basmayın: Enter **Çalıştırma**'yı seçer, kurulum açılmaz.
 
 <p align="center">
-  <img src="docs/kurulum/smartscreen-1-ek-bilgi.svg" width="400" alt="Örnek çizim: mavi SmartScreen penceresinde Ek bilgi yazısı (1)">
+  <img src="docs/kurulum/smartscreen-1-ek-bilgi.svg" width="400" alt="Örnek çizim: mavi Windows kişisel bilgisayarınızı korudu penceresinde Ek bilgi yazısı (1)">
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Kurun.** Kurulum penceresinde **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye, sonra **Kur**'a tıklayın.
-Kurulum Arthur Mask'i de indirir (yaklaşık 1 GB, birkaç dakika) ve Claude Desktop açıksa kapatır. Bitince
-Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin
-sorarsa **Her zaman izin ver**'i seçin.
+**3. Kurun.** Claude Desktop açıksa kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. Kurulum
+penceresinde **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye, sonra **Kur**'a tıklayın. Kurulum Arthur Mask'i
+de indirir (yaklaşık 1 GB, birkaç dakika); beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya
+**Evet** deyin, Arthur Mask sonra arka planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç
+rehberi ve Claude Desktop açılır. Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı
+ilk kez kullanırken izin sorarsa **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri
+İngilizcedir. Claude Desktop kurulu değilse kurulum onu da kurmayı dener; açılmazsa
+[claude.ai/download](https://claude.ai/download) adresinden kurun.
 
 <details>
 <summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>
 
-Windows ve Edge, az indirilmiş ve kod imzası taşımayan her programı tanımadıkları için uyarır. ArthurLegal
-kurulum dosyası henüz ücretli bir kod imzalama sertifikasıyla imzalanmadı; "Bilinmeyen yayımcı" yazması
+Windows ve tarayıcılar, az indirilmiş ve kod imzası taşımayan her programı tanımadıkları için uyarır. ArthurLegal
+kurulum dosyası henüz ücretli bir kod imzalama sertifikasıyla imzalanmadı; yayımcının "bilinmeyen" görünmesi
 bundandır, dosyanın zararlı olduğu anlamına gelmez. Yine de yalnız bu sayfadaki düğmeden ya da
 [yayın sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/latest) indirdiğiniz dosya için
 devam edin; e-postayla ya da başka bir siteden gelen kopyayı açmayın. Kurulumdan sonraki güncellemeler
 ayrıca dijital imzayla doğrulanır: imza tutmazsa hiçbir şey kurulmaz.
+
+İnternet bağlantısı yokken mavi pencere "**SmartScreen'e şu anda ulaşılamıyor**" der; orada **Çalıştır**'a
+tıklayın. Kurumun yönettiği bir bilgisayarda **Sakla** ya da **Yine de sakla** soluk görünüyorsa ("Kuruluşunuz
+tarafından yönetilir") kurulum için bilgi işlem sorumlunuza başvurun.
 </details>
 
 <details>
-<summary><b>"Yine de çalıştır" düğmesi hiç çıkmıyor ya da "Uygulama Denetimi" engeli var (Windows 11)</b></summary>
+<summary><b>"Yine de çalıştır" hiç çıkmıyor ya da "Uygulama Denetimi" engeli var (Windows 11)</b></summary>
 
-Bilgisayarınızda Windows 11'in **Akıllı Uygulama Denetimi** açık. Bu denetim imzasız kurulum dosyalarına
-hiç izin vermez. Denetimi kapatmanız gerekmez; aynı kurulumun zip yolunu kullanın:
+Bilgisayarınızda Windows 11'in **Akıllı Uygulama Denetimi** açık. Bu denetim imzasız kurulum dosyalarına hiç
+izin vermez, tek bir uygulamaya izin verme yolu da yoktur. Denetimi kapatmanız gerekmez; aynı kurulumun zip
+yolunu kullanın:
 
 1. **[ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip)**
    dosyasını indirin (bu bağlantı da her zaman en son sürümü verir).
-2. Zip dosyasına sağ tıklayın, **Tümünü Ayıkla…**'yı, sonra **Ayıkla**'yı seçin.
-3. Açılan klasörde **KUR.cmd** dosyasına çift tıklayın. "Dosya Aç - Güvenlik Uyarısı" çıkarsa **Çalıştır**'a
-   tıklayın. Siyah pencere sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
+2. Ayıklamadan önce zip dosyasına sağ tıklayıp **Özellikler**'i açın. **Genel** sekmesinin altında "Bu dosya
+   başka bir bilgisayardan geldi…" yazıyorsa yanındaki **Engellemeyi Kaldır** kutusunu işaretleyip **Tamam**'a
+   tıklayın. Bu adım atlanırsa Windows, zipten çıkan kurulum dosyasını da engeller.
+3. Zip dosyasına sağ tıklayın, **Tümünü Ayıkla...**'yı, sonra **Ayıkla**'yı seçin. Zip'i açıp içindeki dosyaya
+   doğrudan çift tıklamayın; Windows sorarsa **Tümünü Ayıkla**'yı seçin.
+4. Açılan klasörde **KUR** dosyasına (türü: Windows Komut Dosyası) çift tıklayın. Siyah pencere sizden bir tuşa
+   basmanızı isteyince kurulum bitmiştir.
 
 Bu yolla Arthur Mask kurulmaz (müvekkil belgesini maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal
 paketleri, araştırma araçları ve Tapu çalışır.
@@ -83,12 +100,13 @@ Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/Arth
 **English.** **[Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**,
 always the latest release. One installer puts the Law Firm and Corporate packages, the research connector
 and the local Turkish land-registry tools into Claude Desktop, then keeps them up to date from signed
-releases; no admin rights. The installer is not code-signed yet: Edge may say the file "isn't commonly
-downloaded" (**⋯ → Keep → Show more → Keep anyway**) and Windows SmartScreen may say "Windows protected your
-PC" (**More info → Run anyway**). With Windows 11 Smart App Control on, use
-[ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip):
-extract it and run `KUR.cmd`. On a Mac, install through Claude.ai Projects (`KURULUM.md` / `INSTALLATION.md`
-in each package). Details: [ArthurLegal-setup/](ArthurLegal-setup/).
+releases; no admin rights. The installer is not code-signed yet. Edge may say the file "isn't commonly
+downloaded": choose **⋯ → Keep**, then the small arrow next to **Delete** → **Keep anyway**. Chrome may say
+"Suspicious download blocked": open the row and choose **Download suspicious file**. Windows SmartScreen may
+say "Windows protected your PC": click **More info → Run anyway** with the mouse. With Windows 11 Smart App
+Control on, use [ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip): unblock it first
+(right-click → Properties → **Unblock**), extract it and run `KUR.cmd`. On a Mac, install through Claude.ai
+Projects (`KURULUM.md` / `INSTALLATION.md` in each package). Details: [ArthurLegal-setup/](ArthurLegal-setup/).
 
 ---
 
