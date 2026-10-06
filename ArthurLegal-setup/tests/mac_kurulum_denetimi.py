@@ -119,9 +119,13 @@ def kurulum(secim: list, surum: str) -> None:
     makine, surum_py, openssl = json.loads(r.stdout) if r.returncode == 0 else ("?", "?", r.stderr[-300:])
     denetle(makine == ("arm64" if arm else "x86_64"), f"işlemciye uyan Python: {makine} {surum_py} ({openssl})")
     denetle(not (KOK / "runtime-arm64").exists() and not (KOK / "runtime-x86_64").exists(), "öteki işlemcinin Python'u silindi")
-    r = calistir([PY, "-c", "import urllib.request; print(urllib.request.urlopen('https://api.github.com', timeout=30).status)"])
-    denetle(r.stdout.strip() == "200", "HTTPS (sertifika doğrulaması; güncelleyici ve uzak sunucu için)" +
-            ("" if r.returncode == 0 else f": {r.stderr.strip()[-300:]}"))
+    # Sertifika doğrulanırsa sunucu bir HTTP cevabı verir (GitHub'ın hız sınırı 403'ü de sayılır); doğrulanamazsa
+    # urllib SSL hatası verir.
+    r = calistir([PY, "-c", "import urllib.request, urllib.error\ntry:\n"
+                            "    print(urllib.request.urlopen('https://github.com', timeout=30).status)\n"
+                            "except urllib.error.HTTPError as e:\n    print(e.code)"])
+    denetle(r.stdout.strip().isdigit(), f"HTTPS sertifika doğrulaması (güncelleyici ve uzak sunucu için): "
+            f"{r.stdout.strip() or r.stderr.strip()[-300:]}")
 
     print("\n2. Modül seçimi ve sürüm")
     moduller = json.loads((KOK / "moduller.json").read_text(encoding="utf-8")).get("moduller")

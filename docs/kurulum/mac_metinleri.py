@@ -19,7 +19,8 @@ from pathlib import Path
 KOKLER = [
     "/System/Library/CoreServices/Installer.app",
     "/System/Library/CoreServices/CoreServicesUIAgent.app",
-    "/System/Library/ExtensionKit/Extensions/SecurityPrivacyExtension.appex",
+    "/System/Library/ExtensionKit/Extensions",          # Sistem Ayarları bölümleri (Gizlilik ve Güvenlik)
+    "/System/Library/PreferencePanes/Security.prefPane",
     "/System/Applications/System Settings.app",
     "/System/Library/PrivateFrameworks/SystemPolicy.framework",
 ]
@@ -27,10 +28,10 @@ KOKLER = [
 BIREBIR = {"Continue", "Go Back", "Install", "Agree", "Disagree", "Customize", "Standard Install", "Close", "Done",
            "Introduction", "License", "Summary", "Installation", "Installation Type", "Destination Select",
            "Package Name", "Action", "Size", "Skip", "Open Anyway", "Move to Trash", "Privacy & Security",
-           "System Settings", "Open", "Cancel"}
+           "System Settings", "Open", "Cancel", "Customise", "Security", "Install for me only"}
 PARCA = ["Not Opened", "blocked to protect", "could not verify", "free of malware", "Custom Install on",
          "Standard Install on", "unidentified developer", "must agree to the terms", "Click Agree to continue",
-         "was blocked from use", "Open Anyway"]
+         "was blocked from use", "Open Anyway", "was blocked", "Allow applications", "identified developer"]
 EN = ("en", "English", "Base", "en_US", "en_GB")
 TR = ("tr", "Turkish", "tr_TR")
 

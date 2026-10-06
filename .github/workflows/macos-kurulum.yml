@@ -99,6 +99,37 @@ jobs:
       - name: Kaldır
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir
 
+      # README'deki Mac çizimleri için örnek ekranlar (İngilizce macOS): kurulum sihirbazının ilk adımları (Yükle'ye
+      # basılmaz) ve internetten inmiş gibi işaretli paketin ilk açılışı. İş çıktısı olarak saklanır.
+      - name: Ekran görüntüleri
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          E="$RUNNER_TEMP/ekran"; mkdir -p "$E"
+          cek() { sleep "${2:-4}"; screencapture -x "$E/$1.png" || true; }
+          tikla() { osascript -e "tell application \"System Events\" to tell process \"Installer\" to click button \"$1\" of $2" || true; }
+          dugmeler() { osascript -e 'tell application "System Events" to tell process "Installer" to get name of every button of window 1' || true; }
+          open -a Installer yayin/cikti/ArthurLegal-Kurulum.pkg; cek 1-giris 12; dugmeler
+          tikla Continue "window 1"; cek 2-lisans; dugmeler
+          tikla Continue "window 1"; cek 3-lisans-onayi
+          tikla Agree "sheet 1 of window 1"; cek 4-sonraki; dugmeler
+          tikla Continue "window 1"; cek 5-sonraki; dugmeler
+          osascript -e 'tell application "Installer" to quit' || true
+          cp yayin/cikti/ArthurLegal-Kurulum.pkg "$HOME/Downloads/"
+          xattr -w com.apple.quarantine "0081;$(printf %x "$(date +%s)");Safari;$(uuidgen)" "$HOME/Downloads/ArthurLegal-Kurulum.pkg"
+          open "$HOME/Downloads/ArthurLegal-Kurulum.pkg"; cek 6-ilk-acilis 10
+          open "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension"; cek 7-gizlilik-ve-guvenlik 10
+          ls -la "$E"
+
+      - name: Ekran görüntülerini sakla
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ekran-goruntuleri-${{ github.sha }}
+          path: ${{ runner.temp }}/ekran
+          retention-days: 14
+
       - name: Günlükler
         if: ${{ always() }}
         working-directory: .
