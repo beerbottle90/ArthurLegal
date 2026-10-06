@@ -202,8 +202,10 @@ def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool) -> di
         ["arthurlegal-manifest.sig", "arthurlegal-manifest.json"]
     jeton = github_jetonu()
     taban = f"https://api.github.com/repos/{depo}/releases"
-    govde = (f"Yerel kurulum {d['surum']} · Hukuk Bürosu {d['icerik']['paketler'].get('hukuk-burosu')} · "
-             f"Kurumsal {d['icerik']['paketler'].get('kurumsal')}\n\nKurulum: ArthurLegal-Kurulum.exe")
+    # Sürüm notu derlemedeki her paketi sayar (2.5.0'dan beri dördü de kurulumun modülüdür).
+    adlar = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse", "akademisyen": "Akademisyen"}
+    paketler = " · ".join(f"{adlar.get(p, p)} {s}" for p, s in d["icerik"]["paketler"].items())
+    govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: ArthurLegal-Kurulum.exe"
     yayin, yeni = yayin_ac(taban, jeton, etiket, govde, on_surum)
     dosyalari_yukle(yayin, jeton, dosyalar, yeni)
     if yeni:  # bütün dosyalar yerinde: tek adımda yayımla (ön sürüm Latest olmaz)
