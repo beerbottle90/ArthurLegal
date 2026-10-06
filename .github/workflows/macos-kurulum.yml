@@ -51,6 +51,13 @@ jobs:
         continue-on-error: true
         run: python3 docs/kurulum/mac_metinleri.py
 
+      - name: Ekran (metinlerden sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3; command -v python3; python3 -c 'import sys; print(sys.executable)'
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/00-metinlerden-sonra.png" || true
+
       - name: Tapu kaynağı (public arthurlegal-mcp)
         working-directory: .
         run: git clone --quiet https://github.com/beerbottle90/arthurlegal-mcp.git "$GITHUB_WORKSPACE/../arthurlegal-mcp"
@@ -186,5 +193,5 @@ jobs:
           grep -i "arthurlegal\|postinstall\|preinstall" /var/log/install.log | tail -n 80 || true
           # macOS 15'in "yerel ağdaki aygıtları bulma" izni: hangi süreç istedi (kurulumun Python'u mu, iş araçları mı)
           echo "== yerel ağ izni istekleri"
-          log show --last 90m --style compact --predicate 'process == "nehelper" OR (subsystem == "com.apple.networkextension" AND eventMessage CONTAINS[c] "local network")' 2>/dev/null | grep -v "^Timestamp" | tail -n 40 || true
-          log show --last 90m --style compact --predicate 'eventMessage CONTAINS[c] "local network"' 2>/dev/null | grep -i -E "python|pid|path" | tail -n 30 || true
+          sudo log show --last 90m --style compact --predicate 'process == "nehelper"' 2>/dev/null | grep -v "^Timestamp" | tail -n 60 || true
+          sudo log show --last 90m --style compact --predicate 'eventMessage CONTAINS[c] "local network" OR eventMessage CONTAINS[c] "LocalNetwork"' 2>/dev/null | grep -v "^Timestamp" | tail -n 40 || true
