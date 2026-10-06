@@ -1,18 +1,19 @@
 <h1 id="indir">ArthurLegal</h1>
 
 <p align="center">
-  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="docs/kurulum/indir-dugmesi.svg" width="560" alt="ArthurLegal'i indir: Windows kurulum dosyası ArthurLegal-Kurulum.exe, her zaman en güncel sürüm"></a>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="docs/kurulum/indir-dugmesi.svg" width="600" alt="ArthurLegal'i indir · Download ArthurLegal: Windows kurulum dosyası ArthurLegal-Kurulum.exe, her zaman en güncel sürüm · Windows installer, always the latest version"></a>
 </p>
 <p align="center">
-  <b>Windows 10 ve 11</b> (64 bit) · yaklaşık 12 MB · yönetici şifresi istemez<br>
-  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm&color=14233c" alt="Güncel sürüm"></a>
+  <b>Windows 10 / 11</b> (64 bit) · ~12 MB · yönetici şifresi istemez · no admin rights<br>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm%20%C2%B7%20latest&color=14233c" alt="Güncel sürüm · latest version"></a>
 </p>
+<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> · <a href="#download">English installation guide</a></p>
+
+<h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
 Düğme açılmazsa bu bağlantıya tıklayın: **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
 Bağlantı her zaman en son sürümü indirir. Kurduktan sonra ArthurLegal yeni sürümleri arka planda,
 imzalarını doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekmez.
-
-### Kurulum: üç adım
 
 **1. İndirin.** Yukarıdaki düğmeye tıklayın. Dosya tarayıcının sağ üstündeki indirmeler listesine iner;
 liste kapanırsa <kbd>Ctrl</kbd> + <kbd>J</kbd> ile açın.
@@ -42,14 +43,14 @@ korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Kurun.** Claude Desktop açıksa kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. Kurulum
-penceresinde **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye, sonra **Kur**'a tıklayın. Kurulum Arthur Mask'i
-de indirir (yaklaşık 1 GB, birkaç dakika); beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya
-**Evet** deyin, Arthur Mask sonra arka planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç
-rehberi ve Claude Desktop açılır. Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı
-ilk kez kullanırken izin sorarsa **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri
-İngilizcedir. Claude Desktop kurulu değilse kurulum onu da kurmayı dener; açılmazsa
-[claude.ai/download](https://claude.ai/download) adresinden kurun.
+**3. Kurun.** Kurulum önce dili sorar: **Türkçe**'yi seçip **Tamam**'a (OK) tıklayın. Claude Desktop açıksa
+kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. **Anlaşmayı kabul ediyorum**'u seçip
+**Sonraki**'ye, sonra **Kur**'a tıklayın. Kurulum Arthur Mask'i de indirir (yaklaşık 1 GB, birkaç dakika);
+beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
+planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç rehberi ve Claude Desktop açılır. Claude
+Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa
+**Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Claude Desktop kurulu
+değilse kurulum onu da kurmayı dener; açılmazsa [claude.ai/download](https://claude.ai/download) adresinden kurun.
 
 <details>
 <summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>
@@ -92,21 +93,100 @@ paketleri, araştırma araçları ve Tapu çalışır.
 
 Kurulum dosyası yalnız Windows içindir. Mac'te ArthurLegal'i Claude.ai Projects ile kurun: aşağıdaki
 [güncel paketler](#packages--current-versions) tablosundan paketinizi açın ve içindeki `KURULUM.md` dosyasını
-izleyin. Arthur Mask'in Mac sürümü hemen aşağıda.
+izleyin. Arthur Mask'in Mac sürümü aşağıdaki Arthur Mask kutusunda.
 </details>
 
 Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir**
 
-**English.** **[Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**,
-always the latest release. One installer puts the Law Firm and Corporate packages, the research connector
-and the local Turkish land-registry tools into Claude Desktop, then keeps them up to date from signed
-releases; no admin rights. The installer is not code-signed yet. Edge may say the file "isn't commonly
-downloaded": choose **⋯ → Keep**, then the small arrow next to **Delete** → **Keep anyway**. Chrome may say
-"Suspicious download blocked": open the row and choose **Download suspicious file**. Windows SmartScreen may
-say "Windows protected your PC": click **More info → Run anyway** with the mouse. With Windows 11 Smart App
-Control on, use [ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip): unblock it first
-(right-click → Properties → **Unblock**), extract it and run `KUR.cmd`. On a Mac, install through Claude.ai
-Projects (`KURULUM.md` / `INSTALLATION.md` in each package). Details: [ArthurLegal-setup/](ArthurLegal-setup/).
+<h2 id="download">English: download and installation</h2>
+
+**[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
+The link always downloads the latest release. One installer puts the Law Firm and Corporate packages, the
+research connector and the local Turkish land-registry tools into Claude Desktop; after that, ArthurLegal
+installs new versions itself in the background and verifies their signatures, so you never need to download
+this file again. No administrator rights are needed.
+
+**1. Download.** Click the button above. The file goes to your browser's downloads list at the top right; if
+the list closes, press <kbd>Ctrl</kbd> + <kbd>J</kbd>.
+
+If **Edge** says "**ArthurLegal-Kurulum.exe isn't commonly downloaded**", the file has not been deleted; it is
+waiting for your approval. Do not click the bin icon on the row:
+
+1. Hover over the row, click the **⋯** button that appears on the right, then **Keep**.
+2. In the window that opens, do not click the blue **Delete** button; click the small arrow (**˅**) right next to
+   it and choose **Keep anyway**. In older Edge versions you click **Show more** first in this window.
+
+<p align="center">
+  <img src="docs/kurulum/edge-1-keep-en.svg" width="400" alt="Example drawing: the three-dot button on the file's row in the Edge downloads list (1) and Keep in the menu (2)">
+  <img src="docs/kurulum/edge-2-keep-anyway-en.svg" width="400" alt="Example drawing: the arrow next to the Delete button in the Edge confirmation window (3) and Keep anyway (4)">
+</p>
+
+If **Chrome** says "**Suspicious download blocked**": click the downloads icon at the top right, then the file's
+row, and choose **Download suspicious file**. **Delete from history** discards the file.
+
+**2. Double-click.** Open the downloaded **ArthurLegal-Kurulum** file; in Edge you can also click **Open file**
+under its name. If a blue window says "**Windows protected your PC**", don't worry: it appears for every new
+program without a code signature. With the mouse, click **More info**, then the **Run anyway** button that
+appears. Do not press <kbd>Enter</kbd>: Enter selects **Don't run** and setup does not open.
+
+<p align="center">
+  <img src="docs/kurulum/smartscreen-1-more-info-en.svg" width="400" alt="Example drawing: More info in the blue Windows protected your PC window (1)">
+  <img src="docs/kurulum/smartscreen-2-run-anyway-en.svg" width="400" alt="Example drawing: the Run anyway button that appears after More info (2)">
+</p>
+
+**3. Install.** Setup first asks for a language: choose **English** and click **OK**. If Claude Desktop is open,
+setup closes it, so send any message you are typing first. Select **I accept the agreement**, click **Next**,
+then **Install**. Setup also downloads Arthur Mask (about 1 GB, a few minutes); if you don't want to wait, click
+**Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the background. On
+the last page click **Finish**: the start guide and Claude Desktop open. Open a new chat in Claude Desktop and
+type your legal question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
+If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
+[claude.ai/download](https://claude.ai/download).
+
+<details>
+<summary><b>Why do these warnings appear? Is the file safe?</b></summary>
+
+Windows and browsers warn about any program that is rarely downloaded and carries no code signature. The
+ArthurLegal installer is not yet signed with a paid code-signing certificate; that is why the publisher shows as
+unknown, not because the file is harmful. Still, continue only with a file you downloaded from the button on this
+page or from the [release page](https://github.com/beerbottle90/ArthurLegal/releases/latest); do not open a copy
+that came by e-mail or from another site. Updates after setup are also verified with a digital signature: if the
+signature does not match, nothing is installed.
+
+Without an internet connection the blue window says "**SmartScreen can't be reached right now**"; click **Run**
+there. On a computer managed by an organisation, if **Keep** or **Keep anyway** is greyed out ("Managed by your
+organization"), ask your IT team to install it.
+</details>
+
+<details>
+<summary><b>No "Run anyway" button, or an "App Control" block (Windows 11)</b></summary>
+
+Windows 11 **Smart App Control** is on. It never allows unsigned installers and has no way to allow a single app.
+You do not need to turn it off; use the zip version of the same setup:
+
+1. Download **[ArthurLegal-Kurulum.zip](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip)**
+   (this link also always gives the latest release).
+2. Before extracting, right-click the zip file and open **Properties**. If the **General** tab says "This file
+   came from another computer…", tick **Unblock** next to it and click **OK**. If you skip this step, Windows
+   also blocks the setup file that comes out of the zip.
+3. Right-click the zip file, choose **Extract All...**, then **Extract**. Do not open the zip and double-click the
+   file inside it; if Windows asks, choose **Extract all**.
+4. In the folder that opens, double-click **KUR** (type: Windows Command Script). When the black window asks
+   you to press a key, setup has finished.
+
+Arthur Mask is not installed this way (client-document masking and the UYAP bridge do not work); the
+ArthurLegal packages, the research tools and Tapu work.
+</details>
+
+<details>
+<summary><b>I use a Mac</b></summary>
+
+The installer is for Windows only. On a Mac, install ArthurLegal through Claude.ai Projects: open your package
+from the [current packages](#packages--current-versions) table below and follow its `INSTALLATION.md` (or
+`KURULUM.md`). The Mac version of Arthur Mask is in the Arthur Mask box below.
+</details>
+
+Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download**
 
 ---
 
@@ -117,7 +197,7 @@ Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
 jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
 
-<img src="ArthurLegal-setup/varlik/banner.png" alt="ArthurLegal — open source legal AI" width="760">
+<img src="ArthurLegal-setup/varlik/banner-en.png" alt="ArthurLegal — open source legal AI" width="760">
 
 > ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
@@ -264,6 +344,26 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.4.4 — The installer speaks English too; research tools are read-only (2026-10-06)
+
+- **English and Turkish.** Setup asks for its language at start, preselecting the one that matches Windows. The
+  wizard, the license page (an English or Turkish preface over the same English licence texts), the finish page,
+  the start guide, the Start-menu shortcut names and the zip instructions (`README.txt`, `BENIOKU.txt`) follow
+  the choice. Installations from before 2.4.4 keep their Turkish names.
+- **Claude's permission button.** Claude Desktop's menus are in English, so every guide now names the real button,
+  **Always allow**. The research tools reached through the local bridge are marked read-only, so Claude can offer
+  a lasting permission instead of asking again in each chat.
+- **No "Not Found" while a release is published.** A new release is opened as a draft, every file is uploaded,
+  and only then is it published and marked Latest; a file replaced in an existing release is uploaded under a
+  temporary name first. Publishing to this repository refuses an installer that is not from the current build
+  or that contains the UYAP bridge.
+- **Smart App Control.** On a Windows 11 computer with Smart App Control on, the updater no longer downloads the
+  1 GB Arthur Mask installer that Windows would block anyway. The zip instructions now say to unblock the zip
+  before extracting it: Smart App Control blocks an internet `.cmd` file, and File Explorer carries that mark onto
+  the extracted files.
+
+The packages are unchanged: Law Firm and Corporate **v1.10.1**.
 
 ## Setup 2.4.3 — A spare signing key kept offline (2026-09-29)
 
