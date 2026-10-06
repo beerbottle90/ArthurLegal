@@ -100,7 +100,7 @@ paneli ve Claude Desktop açılır, masaüstünde **ArthurLegal - Courthouse**, 
 
 **1. İndirin ve açın.** İndirilen **ArthurLegal-Kurulum.pkg** dosyasına çift tıklayın. Kurulum dosyası henüz
 Apple'ın noter onayını taşımadığı için macOS ilk açılışta "**“ArthurLegal-Kurulum.pkg” Açılmadı**" der: **Bitti**'ye
-tıklayın. **Sistem Ayarları → Gizlilik ve Güvenlik**'i açıp sayfanın altındaki **Yine de Aç**'a tıklayın, parolanızı
+tıklayın (mavi **Çöp Sepeti’ne Taşı**'ya değil; <kbd>Enter</kbd>'a da basmayın). **Sistem Ayarları → Gizlilik ve Güvenlik**'i açıp sayfanın altındaki **Yine de Aç**'a tıklayın, parolanızı
 girin ve çıkan pencerede yine **Yine de Aç**'ı seçin. Bunu yalnız ilk açılışta bir kez yaparsınız.
 
 <p align="center">
@@ -109,14 +109,14 @@ girin ve çıkan pencerede yine **Yine de Aç**'ı seçin. Bunu yalnız ilk aç�
 </p>
 
 **2. Modülleri seçin.** **Sürdür**'e tıklayarak ilerleyin; lisanstan sonra **Kabul Ediyorum**'u seçin. **Yükleme
-Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve **Arthur Mask**'i işaretleyin; bir modülün adına
-tıklayınca ne işe yaradığı altta yazar.
+Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve **Arthur Mask**'i işaretleyip **Sürdür**'e tıklayın;
+bir modülün adına tıklayınca ne işe yaradığı altta yazar.
 
 <p align="center">
-  <img src="../docs/kurulum/mac-3-moduller-courthouse.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Courthouse (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Yükle düğmesi (4)">
+  <img src="../docs/kurulum/mac-3-moduller-courthouse.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Courthouse (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
-**3. Kurun.** **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç paneli tarayıcıda açılır. Masaüstünde ve
+**3. Kurun.** Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç paneli tarayıcıda açılır. Masaüstünde ve
 Uygulamalar klasöründe **ArthurLegal Courthouse** ve **ArthurLegal Tapu** simgeleri olur. Arthur Mask kurulumdan
 sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne **Arthur Mask** simgesi
 eklenir.

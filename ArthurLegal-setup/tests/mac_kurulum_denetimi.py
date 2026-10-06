@@ -286,7 +286,8 @@ def kaldir() -> None:
 def main(argv: list) -> int:
     secim = (argv[0] if argv and not argv[0].startswith("--") else "adliye,tapu,mask").split(",")
     surum = json.loads((BURASI / "kaynaklar.json").read_text(encoding="utf-8"))["surum"]
-    print(f"ArthurLegal {surum} macOS kurulumu denetleniyor: {KOK} (modüller: {', '.join(secim)})")
+    print(f"ArthurLegal {surum} macOS kurulumu denetleniyor: {KOK} (modüller: {', '.join(secim)}; "
+          f"denetimin Python'u: {sys.executable})")
     try:
         if "--mask" in argv:
             mask(surum)

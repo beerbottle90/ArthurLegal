@@ -91,7 +91,7 @@ macOS 11 ve sonrası; Apple Silicon ve Intel için tek paket. Resimli anlatım
 
 - **İlk açılış.** Paket henüz Apple noter onayı (notarization) taşımaz: macOS ilk açılışta durdurur, bir kez
   **Sistem Ayarları → Gizlilik ve Güvenlik → Yine de Aç** ile izin verilir.
-- **Sihirbaz.** macOS Installer: karşılama, lisans, **Kurulum Türü** ekranında modüller (Windows sihirbazıyla aynı
+- **Sihirbaz.** macOS Installer: karşılama, lisans, **Yükleme Türü** ekranında modüller (Windows sihirbazıyla aynı
   ad ve açıklamalar, `kurulum/ArthurLegal.iss`'ten), kurulum, bitiş. Kurulum yalnız kullanıcının ev klasörüne
   yapılır, yönetici şifresi istemez. Yeniden açılınca son seçim işaretli gelir.
 - **Nereye.** `~/Library/Application Support/ArthurLegal` (Windows'taki `%LOCALAPPDATA%\Programs\ArthurLegal`'ın

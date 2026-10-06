@@ -125,7 +125,7 @@ güncellemeler Windows'takiyle aynıdır; bu dosyayı da yeniden indirmeniz gere
 
 **2. Açın.** **ArthurLegal-Kurulum.pkg** dosyasına çift tıklayın. Kurulum dosyası henüz Apple'ın noter onayını
 (notarization) taşımadığı için macOS ilk açılışta "**“ArthurLegal-Kurulum.pkg” Açılmadı**" der. **Bitti**'ye
-tıklayın; **Çöp Sepeti’ne Taşı**'ya değil. Sonra:
+tıklayın; mavi **Çöp Sepeti’ne Taşı**'ya değil. <kbd>Enter</kbd>'a basmayın: Enter dosyayı çöpe taşır. Sonra:
 
 1. **Sistem Ayarları**'nı açın (sol üstteki Apple menüsü → **Sistem Ayarları**) ve soldaki listeden
    **Gizlilik ve Güvenlik**'i seçin.
@@ -140,15 +140,15 @@ tıklayın; **Çöp Sepeti’ne Taşı**'ya değil. Sonra:
 
 **3. Modülleri seçin.** Kurulum Mac'inizin dilinde açılır. **Sürdür**'e tıklayarak ilerleyin; lisans sayfasından
 sonra çıkan pencerede **Kabul Ediyorum**'u seçin. **Yükleme Türü** ekranında kurmak istediğiniz modülleri
-işaretleyin: bir modülün adına tıklayınca ne işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır
+işaretleyip **Sürdür**'e tıklayın: bir modülün adına tıklayınca ne işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır
 (yukarıdaki tablo); ilk kurulumda hiçbiri işaretli gelmez, en az bir paket gerekir. Arthur Mask yalnız Apple
 Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Yükle düğmesi (4)">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
-**4. Kurun.** **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
+**4. Kurun.** Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
 modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
 **ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Arthur
 Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
@@ -272,7 +272,8 @@ to download this file again either.
 **1. Download.** Click the link above. The file goes to your Downloads folder.
 
 **2. Open.** Double-click **ArthurLegal-Kurulum.pkg**. The installer is not yet notarised by Apple, so the first
-time macOS says "**“ArthurLegal-Kurulum.pkg” Not Opened**". Click **Done**, not **Move to Trash**. Then:
+time macOS says "**“ArthurLegal-Kurulum.pkg” Not Opened**". Click **Done**, not the blue **Move to Trash**. Do not
+press <kbd>Enter</kbd>: Enter moves the file to the Trash. Then:
 
 1. Open **System Settings** (Apple menu at the top left → **System Settings**) and choose **Privacy & Security**
    in the list on the left.
@@ -286,16 +287,17 @@ time macOS says "**“ArthurLegal-Kurulum.pkg” Not Opened**". Click **Done**, 
 </p>
 
 **3. Choose modules.** Setup opens in your Mac's language. Click **Continue** to move on, and **Agree** in the
-window that follows the licence page. On the **Installation Type** screen, tick the modules you want; click a
-module's name to see what it does below the list. The modules are the same as on Windows (table above); nothing is
+window that follows the licence page. On the **Installation Type** screen, tick the modules you want and click
+**Continue**; click a module's name to see what it does below the list. The modules are the same as on Windows (table above); nothing is
 ticked on a first installation and at least one package is needed. Arthur Mask can be chosen on Apple Silicon with
 macOS 14 (Sonoma) or later only.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Install button (4)">
+  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Continue button (4)">
 </p>
 
-**4. Install.** Click **Install**, then **Close** on the last page: the start guide opens in your browser. The
+**4. Install.** On the next page click **Install**, then **Close** on the last page: the start guide opens in your
+browser. The
 modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal** for Law
 Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. If you
 chose Arthur Mask, it downloads in the background after setup (about 1.2 GB); a notification says when it is

@@ -26,7 +26,7 @@
 **[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** (macOS 11 ve sonrası; Apple Silicon ve Intel) aynı modülleri kurar. İlk
 açılışta macOS dosyayı durdurursa **Sistem Ayarları → Gizlilik ve Güvenlik → Yine de Aç**; resimli anlatım bu
 paketin [README](README.md#mac) dosyasında. **Yükleme Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve
-**Arthur Mask**'i işaretleyip **Yükle**'ye tıklayın. Arthur Mask Mac'te Apple Silicon ve macOS 14 ister ve
+**Arthur Mask**'i işaretleyip **Sürdür**'e, sonraki sayfada **Yükle**'ye tıklayın. Arthur Mask Mac'te Apple Silicon ve macOS 14 ister ve
 kurulumdan sonra arka planda iner.
 
 Kurulum dosyası kullanılamıyorsa (claude.ai web ya da kurulum izni olmayan bilgisayar) aşağıdaki elle kurulum

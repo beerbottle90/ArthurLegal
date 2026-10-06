@@ -378,13 +378,12 @@ MAC_METIN = {
         "bitti": "Bitti", "cop": "Çöp Sepeti’ne Taşı",
         "gizlilik": "Gizlilik ve Güvenlik", "yine_de_ac": "Yine de Aç",
         "adimlar": ("Giriş", "Lisans", "Hedef Seç", "Yükleme Türü", "Yükleme", "Özet"),
-        "ozel": "“Macintosh HD” Üzerine Özel Yükleme",
         "sutunlar": ("Paket Adı", "Eylem", "Büyüklük"),
-        "yukle": "Yükle", "atla": "Atla", "geri": "Geri Dön",
+        "yukle": "Yükle", "atla": "Atla", "geri": "Geri Dön", "surdur": "Sürdür",
         "dipnot1": "Çizim · macOS ilk açılış uyarısı (örnek görünüm)",
         "dipnot2": "Çizim · Sistem Ayarları, Gizlilik ve Güvenlik (örnek görünüm)",
         "dipnot3": "Çizim · ArthurLegal macOS kurulumunun Yükleme Türü ekranı (örnek görünüm)",
-        "baslik1": "Örnek: macOS'un Açılmadı penceresinde Bitti'ye tıklayın",
+        "baslik1": "Örnek: macOS'un Açılmadı penceresinde Bitti'ye tıklayın, mavi Çöp Sepeti'ne Taşı'ya değil",
         "baslik2": "Örnek: Sistem Ayarları'nda Gizlilik ve Güvenlik'i seçip Yine de Aç'a tıklayın",
     },
     "en": {
@@ -394,13 +393,12 @@ MAC_METIN = {
         "bitti": "Done", "cop": "Move to Trash",
         "gizlilik": "Privacy & Security", "yine_de_ac": "Open Anyway",
         "adimlar": ("Introduction", "License", "Destination Select", "Installation Type", "Installation", "Summary"),
-        "ozel": "Custom Install on “Macintosh HD”",
         "sutunlar": ("Package Name", "Action", "Size"),
-        "yukle": "Install", "atla": "Skip", "geri": "Go Back",
+        "yukle": "Install", "atla": "Skip", "geri": "Go Back", "surdur": "Continue",
         "dipnot1": "Drawing · macOS first-launch warning (example)",
         "dipnot2": "Drawing · System Settings, Privacy & Security (example)",
         "dipnot3": "Drawing · the Installation Type screen of the ArthurLegal Mac installer (example)",
-        "baslik1": "Example: in macOS's Not Opened window, click Done",
+        "baslik1": "Example: in macOS's Not Opened window, click Done, not the blue Move to Trash",
         "baslik2": "Example: in System Settings choose Privacy & Security, then click Open Anyway",
     },
 }
@@ -428,37 +426,44 @@ def mac_pencere(x, y, g, h, renk="#ececec", r=12) -> str:
                       for i, c in enumerate(("#ff5f57", "#febc2e", "#28c840"))))
 
 
-def paket_simgesi(cx, cy, boy=54) -> str:
-    """Kurulum paketi simgesinin sade çizimi: açık kapaklı kahverengi kutu."""
+def uyari_simgesi(cx, cy, boy=50) -> str:
+    """macOS uyarı penceresinin sarı üçgeni ve ünlem işareti."""
     y = cy - boy / 2
-    return (f'<path d="M{cx - boy / 2} {y + boy * 0.32} h{boy} v{boy * 0.62} q0 6 -6 6 h{-boy + 12} q-6 0 -6 -6 z" '
-            f'fill="#c79a5b" stroke="#8a6332" stroke-width="1.5"/>'
-            f'<path d="M{cx - boy / 2} {y + boy * 0.32} l{boy * 0.14} {-boy * 0.3} h{boy * 0.72} l{boy * 0.14} '
-            f'{boy * 0.3} z" fill="#e0b97c" stroke="#8a6332" stroke-width="1.5"/>'
-            f'<rect x="{cx - 5}" y="{y + boy * 0.02}" width="10" height="{boy * 0.5}" fill="#8a6332" opacity="0.55"/>')
+    return (f'<path d="M{cx} {y} L{cx + boy * 0.56} {y + boy * 0.92} Q{cx + boy * 0.6} {y + boy} {cx + boy * 0.5} {y + boy} '
+            f'H{cx - boy * 0.5} Q{cx - boy * 0.6} {y + boy} {cx - boy * 0.56} {y + boy * 0.92} Z" fill="#ffcc00" '
+            f'stroke="#d9a400" stroke-width="1.5" stroke-linejoin="round"/>'
+            f'<rect x="{cx - 3}" y="{y + boy * 0.3}" width="6" height="{boy * 0.38}" rx="3" fill="#3a3a3c"/>'
+            f'<circle cx="{cx}" cy="{y + boy * 0.82}" r="3.4" fill="#3a3a3c"/>')
 
 
 def mac_acilmadi(m: dict) -> str:
-    """İlk açılış uyarısı: Apple'ın onayından (noterleştirme) geçmemiş paket açılmaz; Bitti ile kapatılır."""
-    gen, yuk = 420, 372
-    x0, y0, g, h = 60, 10, 300, 330
+    """İlk açılış uyarısı (macOS 15): Apple'ın onayından (noterleştirme) geçmemiş paket açılmaz. Bitti ile kapatılır;
+    mavi olan ve Enter'ın seçtiği düğme Çöp Sepeti'ne Taşı'dır."""
+    gen, yuk = 420, 360
+    x0, y0, g, h = 55, 10, 310, 316
     govde = (f'<rect x="{x0 + 1}" y="{y0 + 5}" width="{g}" height="{h}" rx="14" fill="#000000" opacity="0.16"/>'
-             f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" rx="14" fill="#f2f2f4" stroke="#b9b9be"/>'
-             + paket_simgesi(x0 + g / 2, y0 + 50))
-    y = y0 + 104
-    for satir in sar(m["acilmadi"], 30):
-        govde += t(x0 + g / 2, y, satir, 13.5, "#1d1d1f", 700, hiza="middle")
-        y += 18
+             f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" rx="14" fill="#ececee" stroke="#b9b9be"/>'
+             f'<circle cx="{x0 + g - 26}" cy="{y0 + 26}" r="9" fill="#ffffff" stroke="#c7c7cc"/>'
+             + t(x0 + g - 26, y0 + 30.5, "?", 12, "#3a3a3c", 600, hiza="middle")
+             + uyari_simgesi(x0 + g / 2, y0 + 52))
+    y = y0 + 110
+    baslik = m["acilmadi"]
+    kes = baslik.index("”") + 1                     # macOS dosya adından sonra satır kırar
+    for satir in (baslik[:kes], baslik[kes:].strip()):
+        govde += t(x0 + g / 2, y, satir, 13, "#1d1d1f", 700, hiza="middle")
+        y += 17
     y += 6
-    for satir in sar(m["dogrulanamadi"], 42):
-        govde += t(x0 + g / 2, y, satir, 11.5, "#1d1d1f", 400, hiza="middle")
-        y += 16
-    by = y0 + h - 84
-    govde += (f'<rect x="{x0 + 18}" y="{by}" width="{g - 36}" height="28" rx="7" fill="{MAC_MAVI}"/>'
-              + t(x0 + g / 2, by + 19, m["bitti"], 13, "#ffffff", 600, hiza="middle")
-              + f'<rect x="{x0 + 18}" y="{by + 36}" width="{g - 36}" height="28" rx="7" fill="#e3e3e8"/>'
-              + t(x0 + g / 2, by + 55, m["cop"], 13, "#1d1d1f", 400, hiza="middle")
-              + isaret(x0 + 13, by - 5, g - 26, 38, 1, rozet="sol"))
+    for satir in sar(m["dogrulanamadi"], 44):
+        govde += t(x0 + g / 2, y, satir, 11, "#1d1d1f", 400, hiza="middle")
+        y += 15
+    by = y0 + h - 46
+    bg = (g - 46) / 2
+    bx, cx = x0 + 18, x0 + 28 + bg
+    govde += (f'<rect x="{bx}" y="{by}" width="{bg}" height="28" rx="7" fill="#dcdce0"/>'
+              + t(bx + bg / 2, by + 18.5, m["bitti"], 12, "#1d1d1f", 500, hiza="middle")
+              + f'<rect x="{cx}" y="{by}" width="{bg}" height="28" rx="7" fill="{MAC_MAVI}"/>'
+              + t(cx + bg / 2, by + 18.5, m["cop"], 12, "#ffffff", 500, hiza="middle")
+              + isaret(bx - 5, by - 5, bg + 10, 38, 1, rozet="sol"))
     govde += dipnot(gen, yuk, m["dipnot1"])
     return svg(gen, yuk, govde, m["baslik1"], MAC_YAZI)
 
@@ -518,7 +523,7 @@ def mac_metinleri_kurulum(dil: str) -> dict:
 
 def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
     """macOS kurulumunun Yükleme Türü ekranı: modüller tabloda onay kutusuyla; seçilen modülün açıklaması altta.
-    ``numaralar`` sırayla kırmızı çerçeve alan satırlar, en sonda Yükle düğmesi."""
+    ``numaralar`` sırayla kırmızı çerçeve alan satırlar, en sonda Sürdür düğmesi (Yükle sonraki sayfadadır)."""
     mm, m = MAC_METIN[dil], mac_metinleri_kurulum(dil)
     gen, yuk = 640, 500
     x0, y0, g, h = 10, 10, 620, 462
@@ -534,7 +539,7 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
     # sağ: içerik
     cx, cy, cg = x0 + 170, y0 + 46, g - 186
     govde += f'<rect x="{cx}" y="{cy}" width="{cg}" height="{h - 110}" rx="8" fill="#ffffff" stroke="#d1d1d6"/>'
-    govde += t(cx + 16, cy + 26, mm["ozel"], 13, "#1d1d1f", 700)
+    govde += f'<rect x="{cx + 16}" y="{cy + 16}" width="190" height="10" rx="5" fill="#c7c7cc"/>'   # başlık
     tx, ty, tg = cx + 14, cy + 40, cg - 28
     sutun = (tx + 10, tx + tg - 150, tx + tg - 70)
     govde += (f'<rect x="{tx}" y="{ty}" width="{tg}" height="{22 + 6 * 24}" fill="#ffffff" stroke="#d1d1d6"/>'
@@ -553,11 +558,14 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
                   + (f'<path d="M{kx + 2.5} {ky + 6} l2.8 2.8 l4.5 -5.3" stroke="#ffffff" stroke-width="1.8" fill="none" '
                      f'stroke-linecap="round" stroke-linejoin="round"/>' if isaretli_mi else "")
                   + t(kx + 20, sy + 16.5, m[ileti], 12, "#1d1d1f")
-                  + t(sutun[1], sy + 16.5, mm["yukle"] if isaretli_mi else mm["atla"], 12, "#1d1d1f" if isaretli_mi else "#8e8e93"))
+                  + t(sutun[1], sy + 16.5, mm["yukle"] if isaretli_mi else mm["atla"], 12, "#1d1d1f" if isaretli_mi else "#8e8e93")
+                  + t(sutun[2], sy + 16.5, "1 KB", 12, "#1d1d1f" if isaretli_mi else "#8e8e93"))
         satirlar_y[ileti] = sy
         sy += 24
-    # seçili modülün açıklaması
-    ay = sy + 14
+    # gereken ve kalan alan satırı (yer tutucu), sonra seçili modülün açıklaması
+    govde += (f'<rect x="{tx + 10}" y="{sy + 12}" width="120" height="8" rx="4" fill="#d1d1d6"/>'
+              f'<rect x="{tx + tg - 130}" y="{sy + 12}" width="120" height="8" rx="4" fill="#d1d1d6"/>')
+    ay = sy + 30
     govde += f'<rect x="{tx}" y="{ay}" width="{tg}" height="70" rx="4" fill="#ffffff" stroke="#d1d1d6"/>'
     yy = ay + 20
     for satir in sar(m[secili + "Aciklama"], 64):
@@ -570,9 +578,9 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
     govde += (f'<rect x="{gx}" y="{by}" width="100" height="28" rx="7" fill="#ffffff" stroke="#c7c7cc"/>'
               + t(gx + 50, by + 18.5, mm["geri"], 12.5, "#1d1d1f", 500, hiza="middle")
               + f'<rect x="{yx}" y="{by}" width="100" height="28" rx="7" fill="{MAC_MAVI}"/>'
-              + t(yx + 50, by + 18.5, mm["yukle"], 12.5, "#ffffff", 600, hiza="middle"))
+              + t(yx + 50, by + 18.5, mm["surdur"], 12.5, "#ffffff", 600, hiza="middle"))
     for no, ileti in enumerate(numaralar, 1):
-        if ileti == "yukle":
+        if ileti == "surdur":
             govde += isaret(yx - 5, by - 5, 110, 38, no, rozet="ust")
         else:
             govde += isaret(sutun[0] - 6, satirlar_y[ileti] + 1, 30 + len(m[ileti]) * 7.4, 22, no, rozet="sag")
@@ -616,17 +624,17 @@ def main() -> int:
         ciktilar.update({ad1: mac_acilmadi(MAC_METIN[dil]), ad2: mac_yine_de_ac(MAC_METIN[dil])})
     ciktilar.update({
         "mac-3-moduller.svg": mac_moduller("tr", ("ModulHukuk", "ModulTapu", "ModulMask"),
-                                           ("ModulHukuk", "ModulTapu", "ModulMask", "yukle"),
+                                           ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
                                            "Örnek: Yükleme Türü ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu "
-                                           "ve Arthur Mask'i işaretleyip Yükle'ye tıklayın"),
+                                           "ve Arthur Mask'i işaretleyip Sürdür'e tıklayın"),
         "mac-3-modules-en.svg": mac_moduller("en", ("ModulHukuk", "ModulTapu", "ModulMask"),
-                                             ("ModulHukuk", "ModulTapu", "ModulMask", "yukle"),
+                                             ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
                                              "Example: on the Installation Type screen tick your package (here Law Firm), "
-                                             "optionally Tapu and Arthur Mask, then click Install"),
+                                             "optionally Tapu and Arthur Mask, then click Continue"),
         "mac-3-moduller-courthouse.svg": mac_moduller("tr", ("ModulAdliye", "ModulTapu", "ModulMask"),
-                                                      ("ModulAdliye", "ModulTapu", "ModulMask", "yukle"),
+                                                      ("ModulAdliye", "ModulTapu", "ModulMask", "surdur"),
                                                       "Örnek: Yükleme Türü ekranında Courthouse, ArthurLegal Tapu ve "
-                                                      "Arthur Mask'i işaretleyip Yükle'ye tıklayın"),
+                                                      "Arthur Mask'i işaretleyip Sürdür'e tıklayın"),
     })
     for ad, icerik in ciktilar.items():
         (BURASI / ad).write_text(icerik, encoding="utf-8", newline="\n")

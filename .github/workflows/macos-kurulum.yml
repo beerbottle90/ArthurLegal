@@ -156,3 +156,7 @@ jobs:
           for f in "$KOK"/veri/gunluk/*.log; do echo "== $f"; tail -n 80 "$f"; done 2>/dev/null || true
           echo "== /var/log/install.log (ArthurLegal)"
           grep -i "arthurlegal\|postinstall\|preinstall" /var/log/install.log | tail -n 80 || true
+          # macOS 15'in "yerel ağdaki aygıtları bulma" izni: hangi süreç istedi (kurulumun Python'u mu, iş araçları mı)
+          echo "== yerel ağ izni istekleri"
+          log show --last 90m --style compact --predicate 'process == "nehelper" OR (subsystem == "com.apple.networkextension" AND eventMessage CONTAINS[c] "local network")' 2>/dev/null | grep -v "^Timestamp" | tail -n 40 || true
+          log show --last 90m --style compact --predicate 'eventMessage CONTAINS[c] "local network"' 2>/dev/null | grep -i -E "python|pid|path" | tail -n 30 || true
