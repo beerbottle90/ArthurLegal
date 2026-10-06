@@ -51,18 +51,16 @@ jobs:
         continue-on-error: true
         run: python3 docs/kurulum/mac_metinleri.py
 
-      - name: Ekran (metinlerden sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3; command -v python3; python3 -c 'import sys; print(sys.executable)'
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/00-metinlerden-sonra.png" || true
-
       - name: Tapu kaynağı (public arthurlegal-mcp)
         working-directory: .
         run: git clone --quiet https://github.com/beerbottle90/arthurlegal-mcp.git "$GITHUB_WORKSPACE/../arthurlegal-mcp"
 
       - uses: astral-sh/setup-uv@v6
+
+      # Not: macOS 15'in "Python yerel ağdaki aygıtları bulmak istiyor" penceresini bu testler açar (iş bilgisayarına
+      # özgü; kurulu ürünün adımlarında çıkmaz). Ekran görüntülerinde arkada görünebilir.
+      - name: Testler
+        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
 
       - name: Derle
         run: uv run --no-project --python 3.12 python yayin/derle_macos.py
@@ -93,33 +91,12 @@ jobs:
           installer -pkg yayin/cikti/ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory \
             -applyChoiceChangesXML "$RUNNER_TEMP/secim.xml" -verbose
 
-      - name: Ekran (kurulumdan sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0b-kurulumdan-sonra.png" || true
-
       - name: Kurulumu denetle
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask
-
-      - name: Ekran (denetimden sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0c-denetimden-sonra.png" || true
 
       - name: Arthur Mask (iner, kurulur, Claude Desktop'a kaydolur)
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.mask }}
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask
-
-      - name: Ekran (Arthur Mask'tan sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0d-masktan-sonra.png" || true
 
       - name: Kaldır
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir
@@ -163,19 +140,6 @@ jobs:
           cek 8-guvenlik 3
           ls -la "$E"
 
-      # Birim testleri en sonda: test sunucularının yol açabileceği macOS izin pencereleri, yukarıdaki ekran
-      # görüntülerine (kurulu ürünün davranışına) karışmasın.
-      - name: Testler
-        if: ${{ !cancelled() }}
-        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
-
-      - name: Ekran (testlerden sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/9-testlerden-sonra.png" || true
-
       - name: Ekran görüntülerini sakla
         if: ${{ always() }}
         continue-on-error: true
@@ -194,7 +158,3 @@ jobs:
           for f in "$KOK"/veri/gunluk/*.log; do echo "== $f"; tail -n 80 "$f"; done 2>/dev/null || true
           echo "== /var/log/install.log (ArthurLegal)"
           grep -i "arthurlegal\|postinstall\|preinstall" /var/log/install.log | tail -n 80 || true
-          # macOS 15'in "yerel ağdaki aygıtları bulma" izni: hangi süreç istedi (kurulumun Python'u mu, iş araçları mı)
-          echo "== yerel ağ izni istekleri"
-          sudo log show --last 90m --style compact --predicate 'process == "nehelper"' 2>/dev/null | grep -v "^Timestamp" | tail -n 60 || true
-          sudo log show --last 90m --style compact --predicate 'eventMessage CONTAINS[c] "local network" OR eventMessage CONTAINS[c] "LocalNetwork"' 2>/dev/null | grep -v "^Timestamp" | tail -n 40 || true

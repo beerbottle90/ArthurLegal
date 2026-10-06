@@ -1305,6 +1305,7 @@ class MacKurulumTesti(unittest.TestCase):
             self.kok(t, "adliye", "tapu", "mask")
             py = ((t / "kok").resolve() / "runtime" / "bin" / "python3").as_posix()
             liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
+            liste.pop("Desktop/Arthur Mask.app", None)  # bu Mac'te /Applications'ta kurulu bir Arthur Mask varsa
             self.assertEqual(sorted(y for y in liste if not y.startswith("Applications/ArthurLegal/")),
                              ["Applications/ArthurLegal Courthouse.app", "Applications/ArthurLegal Tapu.app",
                               "Desktop/ArthurLegal Courthouse.app", "Desktop/ArthurLegal Tapu.app"],
@@ -1321,7 +1322,8 @@ class MacKurulumTesti(unittest.TestCase):
                               yardimci["Güncellemeleri Denetle.app"]), ("/usr/bin/open", "/bin/sh", py))
             # Arthur Mask kuruluysa ve seçildiyse masaüstünde onun da takma adı olur.
             if not Path("/Applications/Arthur Mask.app").exists():
-                self.assertNotIn("Desktop/Arthur Mask.app", liste, "Arthur Mask kurulu değil")
+                self.assertNotIn("Desktop/Arthur Mask.app", [y for y, *_ in self.calistir(t, self.LISTE)],
+                                 "Arthur Mask kurulu değil")
             mask = t / "ev" / "Applications" / "Arthur Mask.app" / "Contents" / "Resources" / "runtime" / "bin"
             mask.mkdir(parents=True)
             (mask / "python3").write_bytes(b"")
