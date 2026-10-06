@@ -31,7 +31,8 @@ BIREBIR = {"Continue", "Go Back", "Install", "Agree", "Disagree", "Customize", "
            "System Settings", "Open", "Cancel", "Customise", "Security", "Install for me only"}
 PARCA = ["Not Opened", "blocked to protect", "could not verify", "free of malware", "Custom Install on",
          "Standard Install on", "unidentified developer", "must agree to the terms", "Click Agree to continue",
-         "was blocked from use", "Open Anyway", "was blocked", "Allow applications", "identified developer"]
+         "was blocked from use", "Open Anyway", "was blocked", "Allow applications", "identified developer",
+         "to protect your Mac", "Allow applications from"]
 EN = ("en", "English", "Base", "en_US", "en_GB")
 TR = ("tr", "Turkish", "tr_TR")
 
@@ -48,9 +49,16 @@ def oku(yol: Path):
             return {}
 
 
+def kokler() -> list:
+    """KOKLER ve Gatekeeper'la ilgili özel çerçeveler (engellenen dosyanın Gizlilik ve Güvenlik'teki satırı)."""
+    ozel = [p for desen in ("*Security*", "*Policy*", "*Gatekeeper*", "*Quarantine*", "*ExecutionPolicy*")
+            for p in Path("/System/Library/PrivateFrameworks").glob(desen)]
+    return [Path(k) for k in KOKLER] + ozel
+
+
 def ciftler():
     """(dosya, anahtar, ingilizce, türkçe) dörtlüleri."""
-    for kok in map(Path, KOKLER):
+    for kok in kokler():
         if not kok.exists():
             continue
         for tablo in kok.rglob("*.loctable"):

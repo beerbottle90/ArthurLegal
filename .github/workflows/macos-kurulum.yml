@@ -106,19 +106,25 @@ jobs:
         continue-on-error: true
         run: |
           E="$RUNNER_TEMP/ekran"; mkdir -p "$E"
+          sinirli() { perl -e 'alarm shift; exec @ARGV' 20 "$@" || true; }   # izin penceresinde beklemesin
           cek() { sleep "${2:-4}"; screencapture -x "$E/$1.png" || true; }
-          tikla() { osascript -e "tell application \"System Events\" to tell process \"Installer\" to click button \"$1\" of $2" || true; }
-          dugmeler() { osascript -e 'tell application "System Events" to tell process "Installer" to get name of every button of window 1' || true; }
+          tikla() { sinirli osascript -e "tell application \"System Events\" to tell process \"Installer\" to click button \"$1\" of $2"; }
+          dugmeler() { sinirli osascript -e 'tell application "System Events" to tell process "Installer" to get name of every button of window 1'; }
           open -a Installer yayin/cikti/ArthurLegal-Kurulum.pkg; cek 1-giris 12; dugmeler
           tikla Continue "window 1"; cek 2-lisans; dugmeler
           tikla Continue "window 1"; cek 3-lisans-onayi
           tikla Agree "sheet 1 of window 1"; cek 4-sonraki; dugmeler
           tikla Continue "window 1"; cek 5-sonraki; dugmeler
-          osascript -e 'tell application "Installer" to quit' || true
+          sinirli osascript -e 'tell application "Installer" to quit'; pkill -x Installer || true
           cp yayin/cikti/ArthurLegal-Kurulum.pkg "$HOME/Downloads/"
           xattr -w com.apple.quarantine "0081;$(printf %x "$(date +%s)");Safari;$(uuidgen)" "$HOME/Downloads/ArthurLegal-Kurulum.pkg"
           open "$HOME/Downloads/ArthurLegal-Kurulum.pkg"; cek 6-ilk-acilis 10
           open "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension"; cek 7-gizlilik-ve-guvenlik 10
+          for i in 1 2 3 4 5 6; do   # sayfanın altındaki Güvenlik bölümü (Yine de Aç)
+            sinirli osascript -e 'tell application "System Events" to tell process "System Settings" to key code 121'
+          done
+          cek 8-guvenlik 3
+          sinirli osascript -e 'tell application "System Events" to tell process "System Settings" to get name of every button of window 1'
           ls -la "$E"
 
       - name: Ekran görüntülerini sakla

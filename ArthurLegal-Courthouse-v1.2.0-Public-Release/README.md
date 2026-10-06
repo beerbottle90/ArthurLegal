@@ -1,10 +1,11 @@
 <h1 id="indir">ArthurLegal Courthouse</h1>
 
 <p align="center">
-  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="../docs/kurulum/indir-dugmesi.svg" width="600" alt="ArthurLegal'i indir: Windows kurulum dosyası ArthurLegal-Kurulum.exe, her zaman en güncel sürüm"></a>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="../docs/kurulum/indir-dugmesi.svg" width="600" alt="Windows için indir: ArthurLegal-Kurulum.exe, her zaman en güncel sürüm"></a><br>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg"><img src="../docs/kurulum/indir-dugmesi-mac.svg" width="600" alt="Mac için indir: ArthurLegal-Kurulum.pkg, her zaman en güncel sürüm"></a>
 </p>
 <p align="center">
-  <b>Windows 10 / 11</b> (64 bit) · ~12 MB · yönetici şifresi istemez<br>
+  <b>Windows 10 / 11</b> (64 bit) · <b>macOS 11+</b> (Apple Silicon · Intel) · yönetici şifresi istemez<br>
   <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm&color=14233c" alt="Güncel sürüm"></a>
 </p>
 
@@ -21,14 +22,18 @@ Kurulumdan sonra masaüstünde üç simge olur:
 | **ArthurLegal - Tapu** | Ada/parsel ya da yer adıyla TKGM Parsel Sorgu'dan canlı parsel bilgisi, kroki ve harç |
 | **Arthur Mask** | Dosya belgelerini Claude'a vermeden önce bu bilgisayarda maskeler |
 
-Sürüm: **Courthouse v1.2.0** (2026-10-06) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası ·
+Mac'te simgeler Uygulamalar klasöründe de durur ve adlarında tire yoktur: **ArthurLegal Courthouse**,
+**ArthurLegal Tapu**.
+
+Sürüm: **Courthouse v1.2.0** (2026-10-06) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası (Mac: 2.6.0) ·
 [sürüm notları](CHANGELOG.md) · [lisans](LICENSE)
 
 ---
 
 <h2 id="kurulum">İndirme ve kurulum: dört adım</h2>
 
-Düğme açılmazsa bu bağlantıya tıklayın: **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
+Aşağıdaki adımlar Windows içindir; Mac'te kurulum [aşağıda](#mac). Düğme açılmazsa bu bağlantıya tıklayın:
+**[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
 Bağlantı her zaman en son sürümü indirir. Kurduktan sonra ArthurLegal yeni sürümleri arka planda, imzalarını
 doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekmez.
 
@@ -88,6 +93,38 @@ hızınıza göre birkaç dakika sürer; beklemek istemezseniz **İndirmeyi durd
 paneli ve Claude Desktop açılır, masaüstünde **ArthurLegal - Courthouse**, **ArthurLegal - Tapu** ve
 **Arthur Mask** simgeleri olur.
 
+<h3 id="mac">Mac'te kurulum</h3>
+
+**[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)**: macOS 11 ve sonrası, Apple Silicon ve Intel Mac'ler için tek dosya; yönetici
+şifresi istemez. Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.
+
+**1. İndirin ve açın.** İndirilen **ArthurLegal-Kurulum.pkg** dosyasına çift tıklayın. Kurulum dosyası henüz
+Apple'ın noter onayını taşımadığı için macOS ilk açılışta "**“ArthurLegal-Kurulum.pkg” Açılmadı**" der: **Bitti**'ye
+tıklayın. **Sistem Ayarları → Gizlilik ve Güvenlik**'i açıp sayfanın altındaki **Yine de Aç**'a tıklayın, parolanızı
+girin ve çıkan pencerede yine **Yine de Aç**'ı seçin. Bunu yalnız ilk açılışta bir kez yaparsınız.
+
+<p align="center">
+  <img src="../docs/kurulum/mac-1-acilmadi.svg" width="400" alt="Örnek çizim: macOS'un ArthurLegal-Kurulum.pkg Açılmadı penceresinde Bitti düğmesi (1)">
+  <img src="../docs/kurulum/mac-2-yine-de-ac.svg" width="400" alt="Örnek çizim: Sistem Ayarları'nda Gizlilik ve Güvenlik (2) ve Yine de Aç düğmesi (3)">
+</p>
+
+**2. Modülleri seçin.** **Sürdür**'e tıklayarak ilerleyin; lisanstan sonra **Kabul Ediyorum**'u seçin. **Yükleme
+Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve **Arthur Mask**'i işaretleyin; bir modülün adına
+tıklayınca ne işe yaradığı altta yazar.
+
+<p align="center">
+  <img src="../docs/kurulum/mac-3-moduller-courthouse.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Courthouse (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Yükle düğmesi (4)">
+</p>
+
+**3. Kurun.** **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç paneli tarayıcıda açılır. Masaüstünde ve
+Uygulamalar klasöründe **ArthurLegal Courthouse** ve **ArthurLegal Tapu** simgeleri olur. Arthur Mask kurulumdan
+sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne **Arthur Mask** simgesi
+eklenir.
+
+**4. Claude Desktop'u yeniden açın.** Açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; kurulu değilse
+[claude.ai/download](https://claude.ai/download) adresinden kurun. Sonrası aşağıdaki **İlk kullanım** ile aynıdır.
+Kaldırmak için: Uygulamalar → ArthurLegal → **ArthurLegal'i Kaldır**.
+
 <h3 id="ilk-kullanim">İlk kullanım</h3>
 
 Claude Desktop'ta yeni bir sohbet açıp işi yazın; asistan Courthouse talimatını ve bilgi dosyalarını kendisi
@@ -140,10 +177,10 @@ Tapu çalışır.
 </details>
 
 <details>
-<summary><b>Mac ya da tarayıcıda claude.ai kullanıyorum</b></summary>
+<summary><b>Tarayıcıda claude.ai kullanıyorum</b></summary>
 
-Kurulum dosyası yalnız Windows içindir. Mac'te ve claude.ai web'de Courthouse paketi Claude.ai Projects ile elle
-kurulur: [KURULUM.md](KURULUM.md#elle-kurulum-4-adım). Arthur Mask yalnız Claude Desktop'ta çalışır (Windows ve
+Kurulum dosyaları Claude Desktop içindir (Windows ve Mac). claude.ai web'de Courthouse paketi Claude.ai Projects ile
+elle kurulur: [KURULUM.md](KURULUM.md#elle-kurulum-4-adım). Arthur Mask yalnız Claude Desktop'ta çalışır (Windows ve
 Apple Silicon Mac); web ve mobil uygulamada çalışmaz.
 </details>
 
@@ -160,6 +197,14 @@ Modül adları: `hukuk-burosu`, `kurumsal`, `adliye` (Courthouse), `akademisyen`
 paket gerekir; geçersiz bir liste verilirse kurulum hiçbir şey kurmadan durur. Kurulum kullanıcı kapsamındadır
 (`%LOCALAPPDATA%\Programs\ArthurLegal`), yönetici yetkisi istemez. Modül eklemek ya da çıkarmak için kurulum
 dosyası yeniden çalıştırılır; aynı bilgisayarda son seçim işaretli gelir.
+
+Mac'te aynı iş macOS'un `installer` komutuyla, kullanıcının ev klasörüne yapılır
+(`~/Library/Application Support/ArthurLegal`); seçim bir XML dosyasıyla verilir (biçimi:
+`installer -showChoicesXML -pkg ArthurLegal-Kurulum.pkg`, modül kimlikleri yukarıdakilerle aynı):
+
+```text
+installer -pkg ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory -applyChoiceChangesXML secim.xml
+```
 </details>
 
 Bu sayfayı paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Courthouse-v1.2.0-Public-Release**

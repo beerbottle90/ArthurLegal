@@ -1,17 +1,19 @@
 <h1 id="indir">ArthurLegal</h1>
 
 <p align="center">
-  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="docs/kurulum/indir-dugmesi.svg" width="600" alt="ArthurLegal'i indir · Download ArthurLegal: Windows kurulum dosyası ArthurLegal-Kurulum.exe, her zaman en güncel sürüm · Windows installer, always the latest version"></a>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe"><img src="docs/kurulum/indir-dugmesi.svg" width="600" alt="Windows için indir · Download for Windows: ArthurLegal-Kurulum.exe, her zaman en güncel sürüm · always the latest version"></a><br>
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg"><img src="docs/kurulum/indir-dugmesi-mac.svg" width="600" alt="Mac için indir · Download for Mac: ArthurLegal-Kurulum.pkg, her zaman en güncel sürüm · always the latest version"></a>
 </p>
 <p align="center">
-  <b>Windows 10 / 11</b> (64 bit) · ~12 MB · yönetici şifresi istemez · no admin rights<br>
+  <b>Windows 10 / 11</b> (64 bit) · <b>macOS 11+</b> (Apple Silicon · Intel) · yönetici şifresi istemez · no admin rights<br>
   <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm%20%C2%B7%20latest&color=14233c" alt="Güncel sürüm · latest version"></a>
 </p>
-<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> · <a href="#download">English installation guide</a></p>
+<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>)</p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
-Düğme açılmazsa bu bağlantıya tıklayın: **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
+Bu adımlar Windows içindir; Mac'te kurulum [aşağıda](#mac). Düğme açılmazsa bu bağlantıya tıklayın:
+**[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
 Bağlantı her zaman en son sürümü indirir. Kurduktan sonra ArthurLegal yeni sürümleri arka planda,
 imzalarını doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekmez.
 
@@ -109,20 +111,61 @@ Bu yolla Arthur Mask kurulmaz (belge maskeleme ve UYAP bağlantısı çalışmaz
 araçları ve Tapu çalışır.
 </details>
 
-<details>
-<summary><b>Mac kullanıyorum</b></summary>
+<h3 id="mac">Mac'te kurulum</h3>
 
-Kurulum dosyası yalnız Windows içindir. Mac'te ArthurLegal'i Claude.ai Projects ile kurun: aşağıdaki
-[güncel paketler](#packages--current-versions) tablosundan paketinizi açın ve içindeki `KURULUM.md` dosyasını
-izleyin. Arthur Mask'in Mac sürümü aşağıdaki Arthur Mask kutusunda.
-</details>
+<p align="center">
+  <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg"><img src="docs/kurulum/indir-dugmesi-mac.svg" width="600" alt="Mac için indir: ArthurLegal-Kurulum.pkg, her zaman en güncel sürüm"></a>
+</p>
 
-Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir**
+Düğme açılmazsa bu bağlantıya tıklayın: **[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)**. macOS 11 ve sonrası, Apple
+Silicon (M1 ve sonrası) ve Intel Mac'ler için tek dosya; yönetici şifresi istemez. Paketler, modüller ve
+güncellemeler Windows'takiyle aynıdır; bu dosyayı da yeniden indirmeniz gerekmez.
+
+**1. İndirin.** Yukarıdaki düğmeye tıklayın. Dosya İndirilenler klasörüne iner.
+
+**2. Açın.** **ArthurLegal-Kurulum.pkg** dosyasına çift tıklayın. Kurulum dosyası henüz Apple'ın noter onayını
+(notarization) taşımadığı için macOS ilk açılışta "**“ArthurLegal-Kurulum.pkg” Açılmadı**" der. **Bitti**'ye
+tıklayın; **Çöp Sepeti’ne Taşı**'ya değil. Sonra:
+
+1. **Sistem Ayarları**'nı açın (sol üstteki Apple menüsü → **Sistem Ayarları**) ve soldaki listeden
+   **Gizlilik ve Güvenlik**'i seçin.
+2. Sayfayı aşağı kaydırın. ArthurLegal-Kurulum.pkg'nin engellendiğini söyleyen satırın yanındaki **Yine de Aç**'a
+   tıklayın ve Mac'inizin parolasını girin (ya da Touch ID).
+3. Çıkan pencerede yine **Yine de Aç**'a tıklayın. Bu izni yalnız ilk açılışta bir kez verirsiniz.
+
+<p align="center">
+  <img src="docs/kurulum/mac-1-acilmadi.svg" width="400" alt="Örnek çizim: macOS'un ArthurLegal-Kurulum.pkg Açılmadı penceresinde Bitti düğmesi (1)">
+  <img src="docs/kurulum/mac-2-yine-de-ac.svg" width="400" alt="Örnek çizim: Sistem Ayarları'nda Gizlilik ve Güvenlik (2) ve Yine de Aç düğmesi (3)">
+</p>
+
+**3. Modülleri seçin.** Kurulum Mac'inizin dilinde açılır. **Sürdür**'e tıklayarak ilerleyin; lisans sayfasından
+sonra çıkan pencerede **Kabul Ediyorum**'u seçin. **Yükleme Türü** ekranında kurmak istediğiniz modülleri
+işaretleyin: bir modülün adına tıklayınca ne işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır
+(yukarıdaki tablo); ilk kurulumda hiçbiri işaretli gelmez, en az bir paket gerekir. Arthur Mask yalnız Apple
+Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir.
+
+<p align="center">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Yükle düğmesi (4)">
+</p>
+
+**4. Kurun.** **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
+modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
+**ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Arthur
+Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
+**Arthur Mask** simgesi eklenir. Claude Desktop açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; sonra yeni bir
+sohbet açıp sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
+Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek ya da
+çıkarmak için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
+ArthurLegal → **ArthurLegal'i Kaldır**.
+
+Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir** (Mac:
+**https://github.com/beerbottle90/ArthurLegal#mac**)
 
 <h2 id="download">English: download and installation</h2>
 
-**[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
-The link always downloads the latest release. One installer lets you choose the packages (Law Firm, Corporate
+**[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
+· **[⬇ Download the Mac installer (ArthurLegal-Kurulum.pkg)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** ([Mac steps](#mac-en)).
+The links always download the latest release. One installer lets you choose the packages (Law Firm, Corporate
 Assistant, Courthouse, Academician) and the tools (the Turkish land registry, Arthur Mask) you need and puts them
 into Claude Desktop with the research connector; after that, ArthurLegal installs new versions itself in the
 background and verifies their signatures, so you never need to download this file again. No administrator
@@ -220,15 +263,50 @@ Arthur Mask is not installed this way (document masking and the UYAP bridge do n
 packages, the research tools and Tapu work.
 </details>
 
-<details>
-<summary><b>I use a Mac</b></summary>
+<h3 id="mac-en">Installing on a Mac</h3>
 
-The installer is for Windows only. On a Mac, install ArthurLegal through Claude.ai Projects: open your package
-from the [current packages](#packages--current-versions) table below and follow its `INSTALLATION.md` (or
-`KURULUM.md`). The Mac version of Arthur Mask is in the Arthur Mask box below.
-</details>
+**[⬇ ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)**: one file for Apple Silicon (M1 or later) and Intel Macs with macOS 11 or
+later; no administrator password. The packages, modules and updates are the same as on Windows, and you never need
+to download this file again either.
 
-Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download**
+**1. Download.** Click the link above. The file goes to your Downloads folder.
+
+**2. Open.** Double-click **ArthurLegal-Kurulum.pkg**. The installer is not yet notarised by Apple, so the first
+time macOS says "**“ArthurLegal-Kurulum.pkg” Not Opened**". Click **Done**, not **Move to Trash**. Then:
+
+1. Open **System Settings** (Apple menu at the top left → **System Settings**) and choose **Privacy & Security**
+   in the list on the left.
+2. Scroll down. Next to the line saying that ArthurLegal-Kurulum.pkg was blocked, click **Open Anyway** and enter
+   your Mac's password (or use Touch ID).
+3. In the window that appears, click **Open Anyway** again. You allow it once, the first time only.
+
+<p align="center">
+  <img src="docs/kurulum/mac-1-not-opened-en.svg" width="400" alt="Example drawing: the Done button in macOS's ArthurLegal-Kurulum.pkg Not Opened window (1)">
+  <img src="docs/kurulum/mac-2-open-anyway-en.svg" width="400" alt="Example drawing: Privacy & Security in System Settings (2) and the Open Anyway button (3)">
+</p>
+
+**3. Choose modules.** Setup opens in your Mac's language. Click **Continue** to move on, and **Agree** in the
+window that follows the licence page. On the **Installation Type** screen, tick the modules you want; click a
+module's name to see what it does below the list. The modules are the same as on Windows (table above); nothing is
+ticked on a first installation and at least one package is needed. Arthur Mask can be chosen on Apple Silicon with
+macOS 14 (Sonoma) or later only.
+
+<p align="center">
+  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Install button (4)">
+</p>
+
+**4. Install.** Click **Install**, then **Close** on the last page: the start guide opens in your browser. The
+modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal** for Law
+Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. If you
+chose Arthur Mask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
+ready and an **Arthur Mask** icon appears on the desktop. If Claude Desktop is open, quit it completely with
+**Cmd+Q** and open it again; then open a new chat and type your question. When Claude asks for permission the
+first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
+[claude.ai/download](https://claude.ai/download). To add or remove modules, open the installer again; your last
+choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
+
+Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download** (Mac:
+**https://github.com/beerbottle90/ArthurLegal#mac-en**)
 
 ---
 
@@ -243,7 +321,7 @@ jurisdictions and the Turkish land registry, no auth), up to four optional ones,
 
 > ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
-> Windows: double-click the downloaded file. macOS: open the DMG, drag Arthur Mask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> Windows: double-click the downloaded file. macOS: open the DMG, drag Arthur Mask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. The ArthurLegal installers (Windows and Mac) can also install it for you: tick Arthur Mask on their module screen. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
 > **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): Arthur Mask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
 
 Built for legal teams that work across borders: a contract governed by English
@@ -256,8 +334,8 @@ question is one workflow, not four.
 |---|---|---|---|
 | **Corporate Assistant** | **[v1.10.1](ArthurLegal-CorporateAssistant-v1.10.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
 | **Law Firm Assistant** | **[v1.10.1](ArthurLegal-Law-Firm-v1.10.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.1](ArthurLegal-Academician-v1.1.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · Windows installer module |
-| **Courthouse** | **[v1.2.0](ArthurLegal-Courthouse-v1.2.0-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · Windows installer module · Arthur Mask local privacy gate |
+| Academician | [v1.1.1](ArthurLegal-Academician-v1.1.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.0](ArthurLegal-Courthouse-v1.2.0-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -266,8 +344,8 @@ design.
 
 Only the current version of each package sits at the top of the repository; earlier versions are kept in
 [`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.1`; Academician `v1.0.0` … `v1.1.0`).
-To install on Windows, use the [download section](#indir) at the top of this page: all four packages are modules of
-the same installer. Otherwise start from the `KURULUM.md` file in the package you want (Turkish); the
+To install on Windows or a Mac, use the [download section](#indir) at the top of this page: all four packages are
+modules of the same installer. Otherwise start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
 
 ## Use ArthurLegal MCP directly
@@ -387,6 +465,29 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.6.0 — ArthurLegal on the Mac (2026-10-06)
+
+- **A Mac installer.** `ArthurLegal-Kurulum.pkg` installs the same packages and modules as the Windows installer,
+  on Apple Silicon and Intel Macs with macOS 11 or later, without an administrator password. The module screen is
+  the macOS Installer's **Installation Type** step, with the same names and descriptions; running it again shows
+  the last choice. Steps with drawings: [Installing on a Mac](#mac-en).
+- **Icons.** Each chosen package and Tapu becomes an app in the Applications folder (Launchpad, Spotlight) with an
+  alias on the desktop: **ArthurLegal**, **ArthurLegal Courthouse**, **ArthurLegal Academician**,
+  **ArthurLegal Tapu**. The start guide, project folders, update check and uninstaller are in Applications →
+  ArthurLegal.
+- **The same updates.** Macs and Windows PCs read the same signed release; a Mac checks at login and every six
+  hours.
+- **Arthur Mask on the Mac.** If chosen, it downloads after setup (about 1.2 GB; Apple Silicon and macOS 14 or
+  later), is checked against the signed release and registers itself with Claude Desktop; a notification says when
+  it is ready.
+- **Tested on a Mac at every build.** A GitHub Actions job builds the package, installs it on an Apple Silicon Mac
+  with Courthouse, Tapu and Arthur Mask ticked, checks the Claude Desktop registration, the icons, the update job
+  and both local servers, then uninstalls it.
+- The Mac installer is not yet notarised by Apple: allow it once under System Settings → Privacy & Security →
+  **Open Anyway**.
+
+On Windows nothing changes apart from the version number. The packages stay at their current versions.
 
 ## Setup 2.5.0 — One installer, choose your modules; Courthouse 1.2.0 (2026-10-06)
 

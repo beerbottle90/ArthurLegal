@@ -7,8 +7,8 @@
 # her gün ve her yayın olayında denetler. Bir sorun varsa iş kırmızı biter ve GitHub depo sahibine
 # e-posta gönderir. Denetlenenler:
 #   1. "En son yayın" bir ArthurLegal sürümü mü (vX.Y.Z; ör. arthur-mask yayını değil)
-#   2. O yayında kurulum dosyaları ve imzalı manifest var mı
-#   3. README'deki bağlantı oturumsuz olarak o sürüme yönleniyor ve dosya iniyor mu
+#   2. O yayında kurulum dosyaları (Windows .exe ve .zip, macOS .pkg) ve imzalı manifest var mı
+#   3. README'deki bağlantılar (Windows ve Mac) oturumsuz olarak o sürüme yönleniyor ve dosyalar iniyor mu
 #   4. Güncelleyicinin okuduğu manifest aynı sürümü mü söylüyor
 #   5. Yayını açılmamış daha yeni bir sürüm etiketi var mı (etiket basmak yayın açmak değildir)
 
@@ -41,12 +41,12 @@ jobs:
         run: |
           set -uo pipefail
           TABAN="https://github.com/$DEPO/releases/latest/download"
-          GEREKLI="ArthurLegal-Kurulum.exe ArthurLegal-Kurulum.zip arthurlegal-manifest.json arthurlegal-manifest.sig"
+          GEREKLI="ArthurLegal-Kurulum.exe ArthurLegal-Kurulum.zip ArthurLegal-Kurulum.pkg arthurlegal-manifest.json arthurlegal-manifest.sig"
           SORUN=""
 
           denetle() {
             SORUN=""
-            local son varliklar eksik d hedef kod manifest m_etiket m_surum en_yeni durum
+            local son varliklar eksik d hedef kod manifest m_etiket m_surum en_yeni durum kurulum
             son=$(gh api "repos/$DEPO/releases/latest" --jq .tag_name 2>/dev/null) \
               || { SORUN="En son yayın okunamadı."; return 1; }
             if ! [[ "$son" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -59,11 +59,13 @@ jobs:
             for d in $GEREKLI; do grep -qxF "$d" <<<"$varliklar" || eksik="$eksik $d"; done
             [ -z "$eksik" ] || { SORUN="$son yayınında eksik dosya:$eksik"; return 1; }
 
-            hedef=$(curl -sS -o /dev/null -w '%{redirect_url}' "$TABAN/ArthurLegal-Kurulum.exe")
-            [[ "$hedef" == *"/releases/download/$son/ArthurLegal-Kurulum.exe" ]] \
-              || { SORUN="İndirme bağlantısı $son'e değil şuraya yönleniyor: ${hedef:-yönlendirme yok}"; return 1; }
-            kod=$(curl -sSL -r 0-1023 -o /dev/null -w '%{http_code}' "$TABAN/ArthurLegal-Kurulum.exe")
-            [[ "$kod" == 200 || "$kod" == 206 ]] || { SORUN="Kurulum dosyası inmiyor (HTTP $kod)."; return 1; }
+            for kurulum in ArthurLegal-Kurulum.exe ArthurLegal-Kurulum.pkg; do
+              hedef=$(curl -sS -o /dev/null -w '%{redirect_url}' "$TABAN/$kurulum")
+              [[ "$hedef" == *"/releases/download/$son/$kurulum" ]] \
+                || { SORUN="$kurulum bağlantısı $son'e değil şuraya yönleniyor: ${hedef:-yönlendirme yok}"; return 1; }
+              kod=$(curl -sSL -r 0-1023 -o /dev/null -w '%{http_code}' "$TABAN/$kurulum")
+              [[ "$kod" == 200 || "$kod" == 206 ]] || { SORUN="$kurulum inmiyor (HTTP $kod)."; return 1; }
+            done
 
             manifest=$(curl -sSfL "$TABAN/arthurlegal-manifest.json") \
               || { SORUN="Güncelleyicinin manifesti inmiyor."; return 1; }
@@ -91,8 +93,10 @@ jobs:
             {
               echo "### ✅ İndirme bağlantısı çalışıyor"
               echo
-              echo "README'deki düğme ve güncelleyici **$son** sürümünü veriyor."
-              echo "Bağlantı: $TABAN/ArthurLegal-Kurulum.exe"
+              echo "README'deki düğmeler ve güncelleyici **$son** sürümünü veriyor."
+              echo "Windows: $TABAN/ArthurLegal-Kurulum.exe"
+              echo
+              echo "Mac: $TABAN/ArthurLegal-Kurulum.pkg"
             } >> "$GITHUB_STEP_SUMMARY"
             echo "Tamam: bağlantı $son veriyor."
             return 0

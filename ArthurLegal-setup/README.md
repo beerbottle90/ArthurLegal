@@ -1,11 +1,12 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.5.0
+# ArthurLegal Setup v2.6.0
 
-**Tek dosyalık Windows kurulumu.** Kullanıcı indirir, çift tıklar, modül ekranında işine yarayan paketleri
-(Hukuk Bürosu, Kurumsal Asistan, Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, Arthur Mask) seçer;
-seçtikleri, araştırma bağlantısıyla birlikte Claude Desktop'a kendiliğinden bağlanır. Yönetici yetkisi gerekmez.
-Sonraki sürümler arka planda, imzası doğrulanarak sessizce kurulur.
+**Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
+`ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
+Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, Arthur Mask) seçer; seçtikleri, araştırma bağlantısıyla
+birlikte Claude Desktop'a kendiliğinden bağlanır. Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası
+doğrulanarak sessizce kurulur. İki kurulum aynı paketleri, aynı modülleri ve aynı güncelleme kanalını kullanır.
 
 > Paketlerin kendisi (SYSTEM_PROMPT + knowledge) bu deponun kökündedir ve Claude.ai'de elle de
 > kurulabilir: her paketin `KURULUM.md` dosyası. Bu klasör, o kurulumu tek tıka indiren ve
@@ -27,16 +28,21 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 | **ArthurLegal Tapu** | `tapu` | ArthurLegal - Tapu | Yerel `arthur-tapu` sunucusu (aşağıda) |
 | **Arthur Mask** | `mask` | Arthur Mask (kendi kurulumundan) | Kurulum sırasında indirilir; kuruluysa kutu işaretli ve kilitli görünür |
 
+macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır, masaüstünde birer
+takma adları durur; adlarda tire ve sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
+**ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Arthur Mask'in masaüstü takma adını da kurulum koyar.
+
 Bileşenler:
 
 | Bileşen | Nerede çalışır | Ne yapar |
 |---|---|---|
-| **arthurlegal-yerel** | Claude Desktop · gömülü Python 3.12 | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz. Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
+| **arthurlegal-yerel** | Claude Desktop · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz. Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
 | **arthur-tapu** | Claude Desktop + masaüstü kısayolu | Yalnız Tapu seçildiyse. tkgm-mcp 0.5.2: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
 | **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil ya da dosya belgelerini bilgisayarda maskeleyen gizlilik kapısı. Seçildiyse kurulum sırasında indirilir (≈1 GB); seçilmediyse güncelleyici de indirmez |
 | *arthur-uyap* | (bu pakette yok) | UYAP köprüsü ayrı dağıtılır; kurulum, bilgisayarda varsa kendiliğinden bağlar. Köprünün yerel ekranı varsa ve Arthur Mask kuruluysa masaüstüne ve Başlat menüsüne UYAP için tek simge ekler: "ArthurLegal - UYAP Dashboard" (büro kurulumunda markadaki kısa adla). UYAP'a giriş tarayıcısını Dashboard kendisi açar |
 
-Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
+Claude Desktop kurulu değilse Windows'ta `winget` ile kullanıcı kapsamında kurulur; Mac'te başlangıç paneli
+[claude.ai/download](https://claude.ai/download) adresini gösterir.
 
 ## Kurulum
 
@@ -77,6 +83,34 @@ açıkken Arthur Mask kurulamaz; güncelleyici onu indirmeye çalışmaz (2.4.4)
 Kaldırma: **Ayarlar → Uygulamalar → ArthurLegal**, ya da zip yoluyla kurulduysa kurulum klasöründeki
 `KALDIR.cmd`.
 
+## macOS
+
+**[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)**
+macOS 11 ve sonrası; Apple Silicon ve Intel için tek paket. Resimli anlatım
+[ana sayfanın Mac bölümünde](https://github.com/beerbottle90/ArthurLegal#mac).
+
+- **İlk açılış.** Paket henüz Apple noter onayı (notarization) taşımaz: macOS ilk açılışta durdurur, bir kez
+  **Sistem Ayarları → Gizlilik ve Güvenlik → Yine de Aç** ile izin verilir.
+- **Sihirbaz.** macOS Installer: karşılama, lisans, **Kurulum Türü** ekranında modüller (Windows sihirbazıyla aynı
+  ad ve açıklamalar, `kurulum/ArthurLegal.iss`'ten), kurulum, bitiş. Kurulum yalnız kullanıcının ev klasörüne
+  yapılır, yönetici şifresi istemez. Yeniden açılınca son seçim işaretli gelir.
+- **Nereye.** `~/Library/Application Support/ArthurLegal` (Windows'taki `%LOCALAPPDATA%\Programs\ArthurLegal`'ın
+  karşılığı; içinde `runtime/bin/python3`, `bin/al.py`, `surumler/`). Claude Desktop kaydı
+  `~/Library/Application Support/Claude/claude_desktop_config.json`'a, proje klasörleri `~/ArthurLegal`'a yazılır.
+  Paket iki Python taşır (Apple Silicon ve Intel); kurulumun son adımı bilgisayara uyanı bırakır.
+- **Güncelleme.** Oturum açılışında ve altı saatte bir `~/Library/LaunchAgents/com.arthurlegal.guncelleme.plist`
+  çalıştırır; paket ve imza denetimi Windows'takiyle aynıdır. Elle: Uygulamalar → ArthurLegal →
+  **Güncellemeleri Denetle**.
+- **Arthur Mask.** Seçildiyse kurulumdan sonra güncelleyici disk görüntüsünü (≈1,2 GB) indirir, sha256'sını imzalı
+  manifestle doğrular, Uygulamalar'a kopyalar ve Claude Desktop'a kaydettirir; bitince bildirim gelir. Arthur Mask'in
+  Mac sürümü Apple Silicon ve macOS 14 ister; öteki Mac'lerde seçenek soluk gelir.
+- **Kaldırma.** Uygulamalar → ArthurLegal → **ArthurLegal'i Kaldır**: onay sorar; Claude Desktop kaydını,
+  uygulamaları, masaüstü takma adlarını, oturum açılışı görevini ve kurulum klasörünü siler. Proje klasörlerindeki
+  kendi dosyalarınız kalır.
+- **Sessiz kurulum.** `installer -pkg ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory
+  -applyChoiceChangesXML secim.xml` (seçim dosyasının biçimi: `installer -showChoicesXML`; modül kimlikleri
+  Windows'takilerle aynı: `adliye`, `tapu`, `mask` ...).
+
 ## Güncelleme
 
 Oturum açılışında ve Claude Desktop açıkken altı saatte bir, en son yayındaki `arthurlegal-manifest.json`
@@ -113,9 +147,16 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 52 test, ağa çıkmaz
-python yayin/yayinla.py v2.5.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python -m unittest discover -s tests   # 61 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
+python yayin/yayinla.py v2.6.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
+
+**macOS paketi** yalnız macOS'ta derlenir (`pkgbuild`, `productbuild`, `iconutil`, [uv](https://docs.astral.sh/uv/)):
+`python yayin/derle_macos.py` → `yayin/cikti/ArthurLegal-Kurulum.pkg` ve `derleme-macos.json`. Bunu GitHub Actions
+yapar ([`macos-kurulum.yml`](../.github/workflows/macos-kurulum.yml)): her derlemede paketi Apple Silicon bir Mac'te
+kurar (Courthouse, Tapu ve Arthur Mask seçili), `tests/mac_kurulum_denetimi.py` ile denetler, kaldırır ve paketi iş
+çıktısı olarak saklar. Yayında `.pkg`'yi `yayin/cikti`'ye koymak yeter: `yayinla.py` onu yalnız Windows derlemesiyle
+aynı sürümün ve aynı commit'lerin (ArthurLegal, Tapu) derlemesiyse yükler.
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
 (`--calisma-agaci` ile tersi). `kurulum/ArthurLegal.iss` ve lisans metni **UTF-8 BOM** ile
@@ -155,9 +196,10 @@ hepsini birlikte gösterir.
 
 ---
 
-**English.** One-click Windows installer for the ArthurLegal legal-AI packages, in English and Turkish (the
-language is asked at start; shortcut names and the start guide follow it). It installs an
-embedded Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
+**English.** One-click installer for the ArthurLegal legal-AI packages, for Windows (`ArthurLegal-Kurulum.exe`)
+and macOS (`ArthurLegal-Kurulum.pkg`, Apple Silicon and Intel), in English and Turkish (on Windows the language is
+asked at start, on a Mac it follows the system; shortcut names and the start guide follow it). It installs a
+private Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
 the public ArthurLegal research endpoint, plus the Turkish land-registry tools), optionally installs
 the Arthur Mask local privacy gate, and keeps itself up to date from signed GitHub releases
 (Ed25519). No admin rights. The only manual step is pasting a short, never-changing bootstrap prompt

@@ -1,6 +1,6 @@
 # Kurulum — ArthurLegal Courthouse
 
-**Hedef ortam:** Windows'ta Claude Desktop (kurulum dosyası) · Mac ve web'de [Claude.ai Projects](https://claude.ai/projects) (elle kurulum)
+**Hedef ortam:** Windows ve Mac'te Claude Desktop (kurulum dosyası) · web'de [Claude.ai Projects](https://claude.ai/projects) (elle kurulum)
 **Sürüm:** v1.2.0 · 2026-10-06
 **Süre:** kurulum dosyasıyla ~5 dakika (Arthur Mask indirmesiyle ~15 dakika) · elle ~10 dakika
 
@@ -21,7 +21,15 @@
    **Always allow**'u seçin. Proje açmak, talimat yapıştırmak, dosya yüklemek gerekmez; güncellemeler arka planda
    kendiliğinden kurulur.
 
-Kurulum dosyası kullanılamıyorsa (Mac, claude.ai web ya da kurulum izni olmayan bilgisayar) aşağıdaki elle kurulum
+## Mac kurulum dosyasıyla
+
+**[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** (macOS 11 ve sonrası; Apple Silicon ve Intel) aynı modülleri kurar. İlk
+açılışta macOS dosyayı durdurursa **Sistem Ayarları → Gizlilik ve Güvenlik → Yine de Aç**; resimli anlatım bu
+paketin [README](README.md#mac) dosyasında. **Yükleme Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve
+**Arthur Mask**'i işaretleyip **Yükle**'ye tıklayın. Arthur Mask Mac'te Apple Silicon ve macOS 14 ister ve
+kurulumdan sonra arka planda iner.
+
+Kurulum dosyası kullanılamıyorsa (claude.ai web ya da kurulum izni olmayan bilgisayar) aşağıdaki elle kurulum
 aynı paketi kurar.
 
 ## Elle kurulum: 4 adım
