@@ -560,7 +560,9 @@ class Sunucu:
             "buro": self.bilgi.firma_bilgi.get("ad") or "yok (standart paket)",
             "son_guncelleme_denetimi": time.strftime("%Y-%m-%d %H:%M", time.localtime(d["son_denetim"])) if d.get("son_denetim") else "henüz yok",
             "son_guncelleme_sonucu": d.get("son_sonuc", "-"),
-            "arastirma_sunucusu": "bağlı" if self.uzak_araclar and not self.uzak_hata else f"ulaşılamadı: {self.uzak_hata}",
+            # Araç listesi henüz gelmediyse "ulaşılamadı" denmez: bağlantı denenmeden başarısız sayılmaz.
+            "arastirma_sunucusu": (f"ulaşılamadı: {self.uzak_hata}" if self.uzak_hata else
+                                   "bağlı" if self.uzak_araclar else "henüz bağlanılmadı (araç listesi bekleniyor)"),
             "uzak_arac_sayisi": len(self.uzak_araclar or []),
         }, ensure_ascii=False, indent=2)
 
