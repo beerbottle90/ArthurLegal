@@ -51,6 +51,11 @@ def calistir(komut, **k):
     return subprocess.run([str(x) for x in komut], check=True, **k)
 
 
+# Arthur Mask'in Mac sürümünün koşulu: seçenek öteki Mac'lerde soluk gelir, nedeni açıklamasında yazar.
+MASK_KOSULU = {"tr": " Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 gerekir.",
+               "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14."}
+
+
 def iletiler() -> dict:
     """Modül ekranının metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss [CustomMessages])."""
     iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
@@ -59,6 +64,8 @@ def iletiler() -> dict:
         m = re.match(r"^(tr|en)\.(Modul\w+)=(.*)$", satir)
         if m:
             sonuc[m.group(1)][m.group(2)] = m.group(3).replace("%n", "\n")
+    for dil, ek in MASK_KOSULU.items():
+        sonuc[dil]["ModulMaskAciklama"] = sonuc[dil].get("ModulMaskAciklama", "") + ek
     return sonuc
 
 
@@ -131,7 +138,7 @@ yaradığı altta yazar. İlk kurulumda hiçbir kutu işaretli gelmez; <b>en az 
 Kurumsal Asistan, Courthouse ya da Akademisyen.</li>
 <li>Kurulum yalnız sizin kullanıcı hesabınıza yapılır, yönetici şifresi istemez.</li>
 <li>Arthur Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
-Arthur Mask Mac'te yalnız Apple Silicon (M1 ve sonrası) işlemcilerde çalışır.</li>
+Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
         "bitis": """<h2>ArthurLegal kuruldu</h2>
 <p>Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe ve masaüstünde. Başlangıç rehberi tarayıcıda açılır.</p>
@@ -152,7 +159,7 @@ below the list. Nothing is ticked on a first installation; <b>at least one packa
 Assistant, Courthouse or Academician.</li>
 <li>Setup installs for your user account only and does not ask for an administrator password.</li>
 <li>If you choose Arthur Mask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
-when it is ready. On a Mac, Arthur Mask runs on Apple Silicon (M1 or later) only.</li>
+when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
 <li>From now on, updates install themselves in the background after their signatures are verified.</li></ul>""",
         "bitis": """<h2>ArthurLegal is installed</h2>
 <p>The icons of the modules you chose are in the Applications folder and on the desktop. The start guide opens in
@@ -169,14 +176,14 @@ type your question. When Claude asks for permission the first time it uses a too
 
 
 def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
-    """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, işlemci ve önceki
-    seçim için Installer JavaScript'i. Bileşenler seçim sırasıyla kurulur: önce çekirdek, sonra işaretler, en son
+    """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, Arthur Mask'in koşulu
+    (Apple Silicon, macOS 14) ve önceki seçim için Installer JavaScript'i. Bileşenler seçim sırasıyla kurulur: önce çekirdek, sonra işaretler, en son
     postinstall'u çalışan 'son' bileşeni."""
     satirlar = "\n".join(f'    <line choice="{m}"/>' for m in moduller)
     secimler = []
     for m in moduller:
-        ek = ' start_enabled="arm()"' if m == "mask" else ""
-        secili = f"onceki('{m}') &amp;&amp; arm()" if m == "mask" else f"onceki('{m}')"
+        ek = ' start_enabled="mask_uygun()"' if m == "mask" else ""
+        secili = f"onceki('{m}') &amp;&amp; mask_uygun()" if m == "mask" else f"onceki('{m}')"
         secimler.append(f'  <choice id="{m}" title="{MODUL_ILETISI[m]}" description="{MODUL_ILETISI[m]}Aciklama" '
                         f'start_selected="{secili}"{ek}>\n    <pkg-ref id="{KIMLIK}.modul.{m}"/>\n  </choice>')
     paketler = "\n".join(f'  <pkg-ref id="{KIMLIK}.{ad}" version="{surum}" auth="none">{ad}.pkg</pkg-ref>'
@@ -197,8 +204,11 @@ function onceki(kod) {{
   try {{ return system.files.fileExistsAtPath(system.env.HOME + '/Library/Application Support/ArthurLegal/onceki/' + kod); }}
   catch (e) {{ return false; }}
 }}
-function arm() {{
-  try {{ return system.sysctl('hw.optional.arm64') == 1; }} catch (e) {{ return true; }}
+function mask_uygun() {{
+  var arm = true, surum = true;
+  try {{ arm = system.sysctl('hw.optional.arm64') == 1; }} catch (e) {{}}
+  try {{ surum = system.compareVersions(system.version.ProductVersion, '14.0') >= 0; }} catch (e) {{}}
+  return arm && surum;
 }}
   ]]></script>
   <choices-outline>

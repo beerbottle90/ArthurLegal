@@ -5,16 +5,19 @@
 #  2. Seçilen modüllerin işaretlerini (secim/<kod>) kur.py'ye --moduller olarak geçirir: Claude Desktop kaydı,
 #     uygulamalar, masaüstü takma adları ve oturum açılışında güncelleme (LaunchAgent) yazılır.
 #  3. Paket seçilmediyse uyarır ve kaydı yapmaz; seçildiyse başlangıç rehberini açar.
-# Ev klasörü: $3 (kurulumun hedefi; ev klasörüne kurulumda kullanıcının ev klasörü), olmazsa $HOME.
+# Ev klasörü: ev klasörüne kurulumda $2 kullanıcının ev klasörüdür ($3 '/'); bulunamazsa $HOME.
 KOK="$HOME/Library/Application Support/ArthurLegal"
-if [ -n "$3" ] && [ "$3" != "/" ] && [ -d "$3/Library/Application Support/ArthurLegal/bin" ]; then
-  KOK="$3/Library/Application Support/ArthurLegal"
-  # Betik yönetici olarak çalıştırıldıysa kayıt ve kısayollar ev klasörünün sahibi adına yazılır.
-  SAHIP=$(/usr/bin/stat -f %Su "$3" 2>/dev/null)
-  if [ "$(id -u)" = "0" ] && [ -n "$SAHIP" ] && [ "$SAHIP" != "root" ]; then
-    exec /usr/bin/sudo -u "$SAHIP" -H /bin/bash "$0" "$@"
+for EV in "$2" "$3"; do
+  if [ -n "$EV" ] && [ "$EV" != "/" ] && [ -d "$EV/Library/Application Support/ArthurLegal/bin" ]; then
+    KOK="$EV/Library/Application Support/ArthurLegal"
+    # Betik yönetici olarak çalıştırıldıysa kayıt ve kısayollar ev klasörünün sahibi adına yazılır.
+    SAHIP=$(/usr/bin/stat -f %Su "$EV" 2>/dev/null)
+    if [ "$(id -u)" = "0" ] && [ -n "$SAHIP" ] && [ "$SAHIP" != "root" ]; then
+      exec /usr/bin/sudo -u "$SAHIP" -H /bin/bash "$0" "$@"
+    fi
+    break
   fi
-fi
+done
 GUNLUK="$KOK/veri/gunluk/kurulum-pkg.log"
 mkdir -p "$(dirname "$GUNLUK")"
 exec >>"$GUNLUK" 2>&1

@@ -146,9 +146,22 @@ def paket_guncelle(manifest: dict, indirici) -> bool:
     return True
 
 
+def mask_mac_engeli() -> str:
+    """Arthur Mask'in Mac sürümü Apple Silicon ve macOS 14 (Sonoma) ister. Uymuyorsa nedeni, uyuyorsa boş."""
+    arm = subprocess.run(["sysctl", "-n", "hw.optional.arm64"], capture_output=True, text=True).stdout.strip() == "1"
+    if not arm:
+        return "Arthur Mask Mac'te yalnız Apple Silicon'da çalışır"
+    import platform
+    try:
+        ana = int((platform.mac_ver()[0] or "0").split(".")[0])
+    except ValueError:
+        ana = 0
+    return "" if ana >= 14 else "Arthur Mask Mac'te macOS 14 (Sonoma) ya da sonrasını ister"
+
+
 def mac_mask_kur(manifest: dict) -> str:
-    """macOS: Arthur Mask'i ilk kez kurar (kurulumda seçildiyse, Apple Silicon'da). Disk görüntüsü indirilir,
-    sha256'sı imzalı manifestteki değerle (mask_macos) doğrulanır, uygulama Uygulamalar klasörüne kopyalanır
+    """macOS: Arthur Mask'i ilk kez kurar (kurulumda seçildiyse; Apple Silicon ve macOS 14'te). Disk görüntüsü
+    indirilir, sha256'sı imzalı manifestteki değerle (mask_macos) doğrulanır, uygulama Uygulamalar klasörüne kopyalanır
     (yazılamıyorsa ~/Applications) ve Arthur Mask'in kendi aracıyla Claude Desktop'a kaydedilir. Kurulu Arthur Mask
     güncellemesini kendisi yapar; buraya karışılmaz. Bu yolla indirilen dosya karantina işareti taşımaz."""
     kurulu = ortak.mask_surumu()
@@ -156,9 +169,9 @@ def mac_mask_kur(manifest: dict) -> str:
         return f"mask: kurulu ({kurulu}); Arthur Mask Mac'te güncellemesini kendisi yapar"
     if "mask" not in ortak.moduller():
         return "mask: kurulumda seçilmedi"
-    arm = subprocess.run(["sysctl", "-n", "hw.optional.arm64"], capture_output=True, text=True).stdout.strip() == "1"
-    if not arm:
-        return "mask: Arthur Mask Mac'te yalnız Apple Silicon'da çalışır"
+    engel = mask_mac_engeli()
+    if engel:
+        return f"mask: {engel}"
     m = manifest.get("mask_macos")
     if not m:
         return "mask: manifest'te macOS sürümü yok"

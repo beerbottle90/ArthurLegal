@@ -46,6 +46,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: macOS arayüz metinleri (README'deki Mac çizimleri için)
+        working-directory: .
+        continue-on-error: true
+        run: python3 docs/kurulum/mac_metinleri.py
+
       - name: Tapu kaynağı (public arthurlegal-mcp)
         working-directory: .
         run: git clone --quiet https://github.com/beerbottle90/arthurlegal-mcp.git "$GITHUB_WORKSPACE/../arthurlegal-mcp"

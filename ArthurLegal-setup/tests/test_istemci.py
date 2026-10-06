@@ -1440,14 +1440,17 @@ class MacKurulumTesti(unittest.TestCase):
                              "seçimden çıkan Tapu'nun kaydı silinir")
 
     def test_arthur_mask_mac_kosullari(self):
-        """Mac'te Arthur Mask'i güncelleyici ilk kez kurar: yalnız seçildiyse, Apple Silicon'da, manifestte macOS disk
-        görüntüsü varsa ve sha256'sı tutuyorsa. Kurulu Arthur Mask'in güncellemesine karışılmaz."""
+        """Mac'te Arthur Mask'i güncelleyici ilk kez kurar: yalnız seçildiyse, Apple Silicon ve macOS 14'te, manifestte
+        macOS disk görüntüsü varsa ve sha256'sı tutuyorsa. Kurulu Arthur Mask'in güncellemesine karışılmaz."""
+        import platform
         import guncelle
         import ortak
         eski = (ortak.MAC, ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.VERI, guncelle.subprocess.run)
+        eski_mac_ver = platform.mac_ver
         t = Path(tempfile.mkdtemp())
-        islemci = ["1"]
+        islemci, macos = ["1"], ["15.0"]
         try:
+            platform.mac_ver = lambda *a: (macos[0], ("", "", ""), "arm64")
             def indir(url, hedef=None, **k):
                 Path(hedef).parent.mkdir(parents=True, exist_ok=True)
                 Path(hedef).write_bytes(b"bozuk")
@@ -1462,18 +1465,21 @@ class MacKurulumTesti(unittest.TestCase):
             ortak.moduller = lambda: ["adliye", "mask"]
             islemci[0] = "0"
             self.assertIn("yalnız Apple Silicon", guncelle.mask_guncelle(manifest))
-            islemci[0] = "1"
+            islemci[0], macos[0] = "1", "13.6"
+            self.assertIn("macOS 14 (Sonoma)", guncelle.mask_guncelle(manifest))
+            macos[0] = "14.0"
             self.assertEqual(guncelle.mask_guncelle({}), "mask: manifest'te macOS sürümü yok")
             with self.assertRaises(guncelle.GuncellemeHatasi):
                 guncelle.mask_guncelle(manifest)
             self.assertEqual(list((t / "indirilen").iterdir()), [], "özeti tutmayan disk görüntüsü silinir")
         finally:
             ortak.MAC, ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.VERI, guncelle.subprocess.run = eski
+            platform.mac_ver = eski_mac_ver
             shutil.rmtree(t, ignore_errors=True)
 
     def test_kurulum_paketi_sihirbazi(self):
         """Distribution.xml: modül ekranı (Özelleştir) Windows sihirbazıyla aynı metinlerle; yalnız ev klasörüne kurulum;
-        kur.py'yi çağıran 'son' bileşeni en son; Arthur Mask yalnız Apple Silicon'da seçilebilir."""
+        kur.py'yi çağıran 'son' bileşeni en son; Arthur Mask yalnız Apple Silicon ve macOS 14'te seçilebilir."""
         import xml.etree.ElementTree as ET
         sys.path.insert(0, str(BURASI / "yayin"))
         import derle_macos
@@ -1496,7 +1502,10 @@ class MacKurulumTesti(unittest.TestCase):
                     self.assertIn(secim[m].get("title"), ileti[dil])
                     self.assertIn(secim[m].get("description"), ileti[dil])
                 self.assertIn(f"onceki('{m}')", secim[m].get("start_selected"), "önceki seçim işaretli gelir")
-            self.assertEqual(secim["mask"].get("start_enabled"), "arm()")
+            self.assertEqual(secim["mask"].get("start_enabled"), "mask_uygun()")
+            self.assertEqual(secim["mask"].get("start_selected"), "onceki('mask') && mask_uygun()")
+            self.assertIn("compareVersions(system.version.ProductVersion, '14.0')", kok.find("script").text)
+            self.assertIn("Apple Silicon", ileti["tr"]["ModulMaskAciklama"], "Mac'teki koşul modül açıklamasında")
             self.assertTrue(all(p.get("auth") == "none" for p in kok.findall("pkg-ref") if p.text))
             strings = Path(t) / "Localizable.strings"
             derle_macos.strings_yaz(strings, {"A": 'tırnak " ve\nsatır'})

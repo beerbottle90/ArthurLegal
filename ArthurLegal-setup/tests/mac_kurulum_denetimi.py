@@ -221,7 +221,8 @@ def kurulum(secim: list, surum: str) -> None:
         try:
             r = s.el_sikis()
             araclar = [t["name"] for t in s.iste("tools/list")["result"]["tools"]]
-            denetle(any(a.startswith("tkgm_") for a in araclar),
+            # Yerel Tapu sunucusunun araçları öneksizdir (parsel_sorgula); tkgm_ öneki uzak sunucunundur.
+            denetle("parsel_sorgula" in araclar,
                     f"Tapu: {r.get('serverInfo', {}).get('name')}, {len(araclar)} araç ({', '.join(araclar[:4])} ...)")
         except (TimeoutError, KeyError, ValueError) as e:
             denetle(False, f"Tapu sunucusu: {e!r}")
