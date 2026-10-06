@@ -1,8 +1,9 @@
 """Kurulum sonrası adım ve kaldırma. Inno Setup, KUR.cmd ve güncelleyici çağırır.
 
     al.py kur --kurulum      etkin sürümü seç, Claude Desktop yoksa winget ile kur, sunucuları kaydet
-    al.py kur --zip-kurulum  zip'ten kurulum: içeriği %LOCALAPPDATA%\\Programs\\ArthurLegal'e taşı,
-                             kısayolları ve oturum açılışı güncellemesini de kendisi yazar
+                             (--moduller adliye,tapu,mask: kurulumda seçilen modüller; moduller.json'a yazılır)
+    al.py kur --zip-kurulum  zip'ten kurulum: modülleri konsolda sorar, içeriği %LOCALAPPDATA%\\Programs\\ArthurLegal'e
+                             taşır, kısayolları ve oturum açılışı güncellemesini de kendisi yazar
     al.py kur --kaydet       yalnız Claude Desktop kaydını tazele (güncelleyici kullanır)
     al.py kur --kaldir       Claude Desktop girdilerini, kısayolları ve Run anahtarını sil
 
@@ -71,15 +72,22 @@ def _kaldir_adi(ad: str, dil: str | None = None) -> str:
     return "ArthurLegal'i Kaldır" if ad == ortak.URUN_VARSAYILAN else ad + " - Kaldır"
 
 
-# Kısayol adları ve açıklamaları, kurulumun dilinde (ortak.dil). "Tapu" ve "UYAP Dashboard" özel ad, çevrilmez.
+# Kısayol adları ve açıklamaları, kurulumun dilinde (ortak.dil). "Tapu", "Courthouse" ve "UYAP Dashboard" özel ad,
+# çevrilmez. Paket simgeleri (ana, Courthouse, Akademisyen) aynı işi yapar: Claude Desktop'ı ve başlangıç panelini açar.
 KISAYOL_METNI = {
     "tr": {"ana": "Claude Desktop'ı ve başlangıç panelini açar ({s})", "tapu": "ArthurLegal Tapu arayüzü ({s})",
+           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (hâkim ve kalem): Claude Desktop'ı ve başlangıç panelini açar ({s})",
+           "akademisyen": "Akademisyen",
+           "akademisyen_aciklama": "Akademisyen: Claude Desktop'ı ve başlangıç panelini açar ({s})",
            "rehber": "Başlangıç Rehberi", "rehber_aciklama": "Kurulum sonrası adımlar",
            "proje": "Proje Klasörleri", "proje_aciklama": "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri",
            "guncelle": "Güncellemeleri Denetle", "guncelle_aciklama": "Güncellemeleri şimdi denetle",
            "uyap": "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})"},
     "en": {"ana": "Opens Claude Desktop and the start panel ({s})",
            "tapu": "ArthurLegal Tapu: Turkish land-registry parcel tool ({s})",
+           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (judges and court clerks): opens Claude Desktop and the start panel ({s})",
+           "akademisyen": "Academician",
+           "akademisyen_aciklama": "Academician: opens Claude Desktop and the start panel ({s})",
            "rehber": "Start Guide", "rehber_aciklama": "Steps after setup",
            "proje": "Project Folders", "proje_aciklama": "Ready-made project folders to choose with 'Use a folder' in Claude",
            "guncelle": "Check for Updates", "guncelle_aciklama": "Check for updates now",
@@ -130,13 +138,20 @@ def _kisayol_listesi() -> list:
     py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
     ad, kisa, menu, masa, s = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu(), ortak.surum()
     m = KISAYOL_METNI[ortak.dil()]
-    ana = (pyw, f'-B "{al}" kisayol baslat', m["ana"].format(s=s))
-    tapu = (pyw, f'-B "{al}" kisayol tapu', m["tapu"].format(s=s))
-    liste = [
-        (masa / f"{ad} {s}.lnk", *ana),
-        (masa / f"{ad} - Tapu {s}.lnk", *tapu),
-        (menu / f"{ad} {s}.lnk", *ana),
-        (menu / f"{ad} - Tapu {s}.lnk", *tapu),
+    secili = ortak.moduller()
+    # Kurulumda seçilen modüllere göre (ortak.moduller): Hukuk Bürosu ya da Kurumsal seçildiyse ana simge "<ad> <s>";
+    # Courthouse ve Akademisyen kendi simgesini ("<ad> - Courthouse <s>"), Tapu kendi simgesini alır. Seçimden
+    # çıkarılan modülün simgesi eski_kisayollari_temizle'de gider ("<ad> - *" deseni).
+    simgeler = []
+    if {"hukuk-burosu", "kurumsal"} & set(secili):
+        simgeler.append((f"{ad} {s}.lnk", (pyw, f'-B "{al}" kisayol baslat', m["ana"].format(s=s))))
+    for profil in ("adliye", "akademisyen"):
+        if profil in secili:
+            simgeler.append((f"{ad} - {m[profil]} {s}.lnk",
+                             (pyw, f'-B "{al}" kisayol baslat {profil}', m[profil + "_aciklama"].format(s=s))))
+    if ortak.bilesen_var("tapu"):
+        simgeler.append((f"{ad} - Tapu {s}.lnk", (pyw, f'-B "{al}" kisayol tapu', m["tapu"].format(s=s))))
+    liste = [(klasor / dosya, *hedef) for klasor in (masa, menu) for dosya, hedef in simgeler] + [
         (menu / f"{ad} - {m['rehber']} {s}.lnk", ortak.rehber_dosyasi(), "", m["rehber_aciklama"]),
         (menu / f"{ad} - {m['proje']} {s}.lnk", proje.kok(), "", m["proje_aciklama"]),
         (menu / f"{ad} - {m['guncelle']} {s}.lnk", py, f'-B "{al}" guncelle', m["guncelle_aciklama"]),
@@ -271,11 +286,12 @@ def _kisayol_cmd_yedegi() -> None:
     """COM yoksa: .cmd ve .url kısayolları. İçerik saf ASCII (yol %LOCALAPPDATA% ile çözülür)."""
     kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
     urun, s = ortak.urun_adi(), ortak.surum()
-    for ad, komut in ((f"{urun} {s}", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol baslat'),
-                      (f"{urun} - Tapu {s}", f'"{kok}\\runtime\\pythonw.exe" -B "{kok}\\bin\\al.py" kisayol tapu')):
-        icerik = f'@echo off\r\nstart "" {komut}\r\n'
-        (_menu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
-        (_masaustu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
+    for yol, hedef, arg, _ in _kisayol_listesi():  # paket ve Tapu simgeleri, seçilen modüllere göre
+        if Path(hedef).name != "pythonw.exe":
+            continue
+        komut = f'"{kok}\\runtime\\pythonw.exe" ' + arg.replace(f'"{ortak.AL}"', f'"{kok}\\bin\\al.py"')
+        yol.parent.mkdir(parents=True, exist_ok=True)
+        yol.with_suffix(".cmd").write_text(f'@echo off\r\nstart "" {komut}\r\n', encoding="ascii")
     adres = quote(str(ortak.rehber_dosyasi()).replace(chr(92), "/"), safe=":/")
     (_menu() / f"{urun} - {KISAYOL_METNI[ortak.dil()]['rehber']} {s}.url").write_text(
         f"[InternetShortcut]\r\nURL=file:///{adres}\r\n", encoding="ascii")
@@ -305,14 +321,69 @@ def run_anahtari(yaz: bool) -> None:
         pass
 
 
+# Modül adları ve kısa açıklamaları; zip kurulumunun konsol sorusunda. Kurulum sihirbazındaki metinler
+# kurulum/ArthurLegal.iss'tedir ([CustomMessages] Modul*), iki yer aynı tutulur.
+MODUL_METNI = {
+    "tr": {"hukuk-burosu": ("Hukuk Bürosu", "avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması"),
+           "kurumsal": ("Kurumsal Asistan", "şirket hukuk birimleri için sözleşme, uyum ve KVKK işleri"),
+           "adliye": ("Courthouse", "hâkim ve kalem için tarafsız taslak: gerekçe, tensip, müzekkere, tebligat"),
+           "akademisyen": ("Akademisyen", "hukuk akademisyenleri için literatür, atıf, dergi seçimi, yayın etiği"),
+           "tapu": ("ArthurLegal Tapu", "ada/parsel ya da yer adıyla TKGM'den canlı parsel, kroki ve harç"),
+           "mask": ("Arthur Mask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler")},
+    "en": {"hukuk-burosu": ("Law Firm", "for lawyers: petitions, contracts, case-law and legislation research"),
+           "kurumsal": ("Corporate Assistant", "for in-house legal teams: contracts, compliance, data protection"),
+           "adliye": ("Courthouse", "for judges and court clerks: neutral drafts of reasoning, orders, writs, service"),
+           "akademisyen": ("Academician", "for legal academics: literature, citations, journal choice, ethics"),
+           "tapu": ("ArthurLegal Tapu", "live Turkish land-registry parcels (TKGM) with sketch and fees"),
+           "mask": ("Arthur Mask", "masks documents on this computer before Claude sees them")},
+}
+
+
+def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
+    """Zip kurulumunda modül seçimi, konsolda numarayla. Arthur Mask bu yolla kurulamaz (Akıllı Uygulama Denetimi imzasız
+    kurulumu engeller), sorulmaz. Enter: önceki seçim. Konsol yoksa (girdi okunamıyorsa) önceki seçim, o da yoksa 2.5.0
+    öncesinin modülleri; kurulum yarıda kalmaz."""
+    secenekler = [m for m in ortak.MODULLER if m != "mask"]
+    onceki = [m for m in (onceki or []) if m in secenekler]
+    metin = MODUL_METNI[dil]
+    en = dil == "en"
+    print("Which modules should be installed? At least one of the first four is needed." if en
+          else "Hangi modüller kurulsun? İlk dördünden en az biri gerekir.")
+    for no, m in enumerate(secenekler, 1):
+        print(f"  {no}  {metin[m][0]} - {metin[m][1]}")
+    print("Arthur Mask cannot be installed this way." if en else "Arthur Mask bu yolla kurulamaz.")
+    soru = ("Type the numbers separated by commas (e.g. 3,5)" if en else "Numaraları virgülle yazın (ör. 3,5)")
+    if onceki:
+        soru += " [Enter: " + ", ".join(metin[m][0] for m in onceki) + "]"
+    soru += ": "
+    for _ in range(20):
+        try:
+            cevap = girdi(soru).strip()
+        except (EOFError, OSError):
+            return onceki or [m for m in ortak.ESKI_SECIM if m != "mask"]
+        if not cevap and onceki:
+            return onceki
+        try:
+            nolar = [int(x) for x in cevap.replace(" ", "").split(",") if x]
+            if not nolar or any(not 1 <= n <= len(secenekler) for n in nolar):
+                raise ValueError(cevap)
+            return ortak.secim_coz(",".join(secenekler[n - 1] for n in nolar))
+        except ValueError:
+            print("Please type the numbers from the list, including at least one of 1-4." if en
+                  else "Listedeki numaraları yazın; 1-4 arasından en az biri olmalı.")
+    return onceki or [m for m in ortak.ESKI_SECIM if m != "mask"]
+
+
 def zip_kurulum() -> int:
     """Zip'ten çalıştırılınca içeriği kurulum klasörüne taşır ve kurulumu oradan sürdürür. Dil sorulmaz: önceki
-    kurulumun dili, yoksa Windows'un arayüz dili (ortak.sistem_dili)."""
+    kurulumun dili, yoksa Windows'un arayüz dili (ortak.sistem_dili). Modüller konsolda sorulur (zip_secimi)."""
     kaynak = ortak.KOK
     dil = ortak.json_oku(VARSAYILAN_KOK / "veri" / "durum.json").get("dil")
     dil = dil if dil in ortak.DILLER else ortak.sistem_dili()
+    onceki = ortak.json_oku(VARSAYILAN_KOK / "moduller.json").get("moduller")
+    secim = ",".join(zip_secimi(dil, onceki if isinstance(onceki, list) else None))
     if kaynak.resolve() == VARSAYILAN_KOK.resolve():
-        return main(["--kurulum", "--kisayol", "--dil", dil])
+        return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim])
     print((f"ArthurLegal {ortak.surum()} is being installed: {VARSAYILAN_KOK}" if dil == "en"
            else f"ArthurLegal {ortak.surum()} kuruluyor: {VARSAYILAN_KOK}"))
     for y in sorted(kaynak.rglob("*")):
@@ -329,7 +400,8 @@ def zip_kurulum() -> int:
     # koduyla yazılırdı. aktif.txt yoksa en yeni sürüm seçilir; kur.py onu yeniden yazar (kurulum betiği de aynı).
     (VARSAYILAN_KOK / "aktif.txt").unlink(missing_ok=True)
     sonuc = subprocess.run([str(VARSAYILAN_KOK / "runtime" / "python.exe"), "-B",
-                            str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol", "--dil", dil])
+                            str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol", "--dil", dil,
+                            "--moduller", secim])
     return sonuc.returncode
 
 
@@ -344,9 +416,17 @@ def main(argv=None) -> int:
     ap.add_argument("--kisayol-esitle", action="store_true",
                     help="kısayollar çalışan sürümden başka bir numara taşıyorsa yeniden yaz (güncelleyici)")
     ap.add_argument("--dil", choices=ortak.DILLER, help="kurulumun dili (kurulum sihirbazında seçilen)")
+    ap.add_argument("--moduller", help="kurulumda seçilen modüller, virgülle: " + ",".join(ortak.MODULLER))
     args = ap.parse_args(argv)
     if args.dil and not args.zip_kurulum:
         ortak.durum_guncelle(dil=args.dil)
+    if args.moduller and not args.zip_kurulum:
+        try:
+            ortak.moduller_yaz(args.moduller)
+        except ValueError as e:
+            ortak.gunluk("kurulum", f"geçersiz modül seçimi: {e}")
+            print(f"Geçersiz modül seçimi / invalid module selection: {e}")
+            return 2
 
     if args.zip_kurulum:
         return zip_kurulum()
@@ -375,9 +455,12 @@ def main(argv=None) -> int:
         proje.esitle()
     except OSError as e:
         ortak.gunluk("kurulum", f"proje klasörleri yazılamadı: {e!r}")
-    ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; Mask {'var' if ortak.mask_python() else 'yok'}")
+    ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; modüller "
+                            f"{','.join(ortak.moduller())}; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
-        sayi, simge = len(claude_ayari.istenen_girdiler()), f"{ortak.urun_adi()} {ortak.surum()}"
+        paket = next((y.stem for y, _, a, _ in _kisayol_listesi() if y.parent == _masaustu() and "kisayol baslat" in a),
+                     f"{ortak.urun_adi()} {ortak.surum()}")
+        sayi, simge = len(claude_ayari.istenen_girdiler()), paket
         print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
                           f"Installed. {sayi} servers were added to Claude Desktop."))
         if not ortak.mask_python():

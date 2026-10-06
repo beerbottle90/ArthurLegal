@@ -8,6 +8,7 @@ Kurulu düzen (%LOCALAPPDATA%\\Programs\\ArthurLegal):
     bin\\al.py           sabit başlatıcı; Claude Desktop ve kısayollar hep bunu çağırır
     surumler\\<sürüm>\\  istemci\\, paketler\\, tapu\\, uyap\\ (güncelleme yeni klasör açar)
     aktif.txt           etkin sürüm
+    moduller.json       kurulumda seçilen modüller (paketler, Tapu, Arthur Mask); güncelleme dokunmaz
     firma\\              büro katmanı (yalnız büroya özel kurulumda)
     veri\\               durum, günlük, indirilen dosyalar
 """
@@ -49,7 +50,18 @@ VARSAYILAN_AYAR = {
     "denetim_araligi_saat": 6,
 }
 
-PROFILLER = {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal Asistan (Corporate)"}
+PROFILLER = {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal Asistan (Corporate)",
+             "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"}
+
+# Kurulumda seçilen modüller (2.5.0). Paketler talimat profilleridir; sıraları varsayılan profilin önceliğidir.
+# Bileşenler: ArthurLegal Tapu ve Arthur Mask. Seçim kurulum klasörünün kökünde durur (moduller.json): güncelleme
+# yalnız surumler\ altına yazar, seçime dokunmaz.
+PAKETLER = tuple(PROFILLER)
+BILESENLER = ("tapu", "mask")
+MODULLER = PAKETLER + BILESENLER
+# 2.5.0'dan önceki kurulumların seçim dosyası yoktur; bu modüllerle sürerler. Sessiz güncelleme kimseye yeni
+# paket ya da simge eklemez.
+ESKI_SECIM = ("hukuk-burosu", "kurumsal", "tapu", "mask")
 
 # Project > Custom Instructions alanına BİR KEZ yapıştırılır ve hiç değişmez; asıl talimat
 # her sohbette yerel sunucudan gelir. Metni değiştirmek her avukata yeniden yapıştırtmak demektir.
@@ -65,7 +77,8 @@ ONYUKLEME = {
     for profil, ad in PROFILLER.items()
 }
 # İngilizce kurulumun başlangıç rehberinde gösterilen karşılığı (aynı iş; Türkçe metin değişmez).
-PROFILLER_EN = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate"}
+PROFILLER_EN = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate", "adliye": "Courthouse",
+                "akademisyen": "Academician"}
 ONYUKLEME_EN = {
     profil: (
         f"You are the ArthurLegal {ad} assistant. In every chat, before doing anything else, call the "
@@ -108,6 +121,40 @@ def json_yaz(yol: Path, veri) -> None:
 def ayar() -> dict:
     return {**VARSAYILAN_AYAR, **json_oku(KOK / "ayar.json")}
 
+
+def moduller() -> list:
+    """Bu bilgisayarda seçilen modüller, MODULLER sırasıyla. Seçim dosyası yoksa ya da bozuksa 2.5.0'dan önceki
+    kurulumun modülleri (ESKI_SECIM)."""
+    veri = json_oku(KOK / "moduller.json")
+    secim = veri.get("moduller") if isinstance(veri, dict) else None
+    if not isinstance(secim, list):
+        return list(ESKI_SECIM)
+    return [m for m in MODULLER if m in secim]
+
+
+def secim_coz(metin: str) -> list:
+    """Virgülle ayrılmış modül listesini doğrular ("adliye, tapu,mask"). Bilinmeyen ad ya da hiç paket yoksa
+    ValueError: kurulum yanlış bir seçimle sessizce sürmemeli."""
+    adlar = [a.strip().lower() for a in str(metin or "").replace(";", ",").split(",") if a.strip()]
+    bilinmeyen = [a for a in adlar if a not in MODULLER]
+    if bilinmeyen:
+        raise ValueError("bilinmeyen modül: " + ", ".join(bilinmeyen) + " (seçenekler: " + ", ".join(MODULLER) + ")")
+    if not any(a in PAKETLER for a in adlar):
+        raise ValueError("en az bir paket seçilmeli: " + ", ".join(PAKETLER))
+    return [m for m in MODULLER if m in adlar]
+
+
+def moduller_yaz(secim) -> list:
+    """Seçimi doğrulayıp kurulum klasörüne yazar (kur.py --moduller); doğrulanmış listeyi döndürür."""
+    temiz = secim_coz(secim if isinstance(secim, str) else ",".join(secim))
+    json_yaz(KOK / "moduller.json", {"moduller": temiz})
+    return temiz
+
+
+def bilesen_var(ad: str) -> bool:
+    """Bileşen (tapu) seçildi mi ve etkin sürümde var mı. İkisi birlikte gerekir: seçilmeyen bileşen kaydedilmez,
+    sürümde olmayan bileşen (ör. Tapu'suz büro derlemesi) seçilse de kaydedilmez."""
+    return ad in moduller() and (SURUM_DIZINI / ad / "server.py").exists()
 
 _ACIK_ANAHTAR = re.compile(r"[0-9a-fA-F]{64}")
 

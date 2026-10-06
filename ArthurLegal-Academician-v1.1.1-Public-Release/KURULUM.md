@@ -5,6 +5,12 @@
 > Hedef ortam: [Claude.ai Projects](https://claude.ai/projects) (web).
 > Süre: ~15 dakika.
 
+> **Windows'ta tek dosyayla:** [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)
+> dosyasını indirip çalıştırın ve **Modülleri seçin** ekranında **Akademisyen**'i işaretleyin. Paket Claude
+> Desktop'a kendiliğinden bağlanır; aşağıdaki adımlar (proje, talimat, dosya yükleme) gerekmez ve güncellemeler
+> arka planda gelir. Resimli anlatım: [ana sayfanın indirme bölümü](https://github.com/beerbottle90/ArthurLegal#indir).
+> Aşağıdaki elle kurulum Mac ve claude.ai web içindir.
+
 ---
 
 ## Adım 1 — Claude.ai Project oluştur

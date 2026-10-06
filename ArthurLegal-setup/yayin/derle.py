@@ -5,8 +5,9 @@
     python yayin/derle.py --exe-yok          yalnız hazırlık klasörü ve güncelleme paketi (Inno Setup gerekmez)
 
 Kaynaklar kaynaklar.json'daki yerel klonlardan, her deponun commitlenmiş HEAD'inden alınır:
-paketler bu deponun kendisinden, Tapu public arthurlegal-mcp klonundan. En yeni Law Firm ve
-Corporate klasörü kendiliğinden seçilir. Çıktı yayin/cikti/ altına yazılır; yayinla.py
+paketler bu deponun kendisinden, Tapu public arthurlegal-mcp klonundan. Her paketin (Law Firm,
+Corporate, Courthouse, Academician) en yeni klasörü kendiliğinden seçilir; hangilerinin kurulacağını
+kullanıcı kurulumdaki modül ekranında seçer. Çıktı yayin/cikti/ altına yazılır; yayinla.py
 derleme.json'u okuyup imzalı manifest üretir.
 """
 from __future__ import annotations
@@ -259,21 +260,37 @@ def lisans_yaz(k: dict, hedef: Path) -> None:
         (hedef / dosya).write_bytes(BOM + metin.replace("\r\n", "\n").replace("\n", "\r\n").encode("utf-8"))
 
 
+REHBER_KIMLIGI = {"hukuk-burosu": "hukuk", "kurumsal": "kurumsal", "adliye": "adliye", "akademisyen": "akademisyen"}
+KART_BASLIGI = {"tr": {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal Asistan (Corporate)",
+                       "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"},
+                "en": {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate Assistant", "adliye": "Courthouse",
+                       "akademisyen": "Academician"}}
+
+
+def onyukleme_kartlari(profiller, dil: str) -> str:
+    """Başlangıç sayfasındaki "talimatı kopyala" kartları, derlemedeki her paket için. Kart data-modul taşır: sayfa,
+    kurulumda seçilmeyen paketin kartını gizler (durum.js → moduller)."""
+    metinler, dugme = (ortak.ONYUKLEME, "Talimatı kopyala") if dil == "tr" else (ortak.ONYUKLEME_EN, "Copy instructions")
+    return "\n".join(
+        f'<div class="kart" data-modul="{p}">\n  <h3>{html.escape(KART_BASLIGI[dil][p])}</h3>\n'
+        f'  <textarea id="{REHBER_KIMLIGI[p]}" readonly>{html.escape(metinler[p])}</textarea>\n'
+        f'  <button data-hedef="{REHBER_KIMLIGI[p]}">{dugme}</button>\n</div>' for p in profiller)
+
+
 def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_VARSAYILAN) -> None:
     """Başlangıç rehberi iki dilde: baslangic.html (Türkçe) ve baslangic-en.html (İngilizce). Kurulum, seçilen dildeki
-    sayfayı açar (ortak.rehber_dosyasi); iki sayfa birbirine bağlantı verir."""
+    sayfayı açar (ortak.rehber_dosyasi); iki sayfa birbirine bağlantı verir. Derlemedeki her paket için bir kart
+    yazılır; sayfa seçilmeyenleri kendisi gizler."""
     (hedef / "rehber").mkdir(parents=True, exist_ok=True)
-    for sablon_adi, sayfa, onyukleme in (("rehber.html", "baslangic.html", ortak.ONYUKLEME),
-                                         ("rehber-en.html", "baslangic-en.html", ortak.ONYUKLEME_EN)):
+    # Paket bilgisi olmayan içerik (eski derleme biçimi) iki avukat paketini gösterir.
+    profiller = [p for p in ortak.PAKETLER if p in icerik.get("paketler", {})] or ["hukuk-burosu", "kurumsal"]
+    for sablon_adi, sayfa, dil in (("rehber.html", "baslangic.html", "tr"), ("rehber-en.html", "baslangic-en.html", "en")):
         sablon = (BURASI / "kurulum" / sablon_adi).read_text(encoding="utf-8")
         degerler = {
             "{{URUN}}": html.escape(urun),
             "{{FIRMA_SATIRI}}": html.escape(firma_ad) + " · " if firma_ad else "",
             "{{SURUM}}": icerik["surum"],
-            "{{PAKET_HUKUK}}": icerik["paketler"].get("hukuk-burosu", "-"),
-            "{{PAKET_KURUMSAL}}": icerik["paketler"].get("kurumsal", "-"),
-            "{{ONYUKLEME_HUKUK}}": html.escape(onyukleme["hukuk-burosu"]),
-            "{{ONYUKLEME_KURUMSAL}}": html.escape(onyukleme["kurumsal"]),
+            "{{ONYUKLEME_KARTLARI}}": onyukleme_kartlari(profiller, dil),
         }
         for anahtar, deger in degerler.items():
             sablon = sablon.replace(anahtar, deger)
@@ -301,8 +318,10 @@ ZIP_BENIOKU = (
     "   Tamam'a tıklayın.\r\n"
     "2. Zip dosyasına sağ tıklayın, Tümünü Ayıkla... ve Ayıkla'yı seçin (zip içinden çalıştırmayın).\r\n"
     "3. Açılan klasörde KUR dosyasına (Windows Komut Dosyası) çift tıklayın. Yönetici yetkisi gerekmez.\r\n"
-    "4. Kurulum bitince masaüstündeki ArthurLegal simgesine çift tıklayın; Claude Desktop'ta yeni bir\r\n"
-    "   sohbet açıp hukuki sorunuzu yazın.\r\n\r\n"
+    "   Siyah pencere modülleri sorar: kurmak istediklerinizin numaralarını virgülle yazıp Enter'a basın\r\n"
+    "   (ör. hâkim ve kalem için Courthouse ve Tapu: 3,5).\r\n"
+    "4. Kurulum bitince masaüstündeki ArthurLegal simgesine (Courthouse ya da Akademisyen seçtiyseniz\r\n"
+    "   onların simgesine) çift tıklayın; Claude Desktop'ta yeni bir sohbet açıp sorunuzu yazın.\r\n\r\n"
     "Bu dosyayı zip'i ayıkladıktan sonra okuyorsanız ve KUR engellenirse: ayıklanan klasörü silin,\r\n"
     "1. adımı yapın ve zip'i yeniden ayıklayın.\r\n\r\n"
     "Bu yolla Arthur Mask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
@@ -318,8 +337,10 @@ ZIP_README = (
     "   \"This file came from another computer...\", tick Unblock and click OK.\r\n"
     "2. Right-click the zip file, choose Extract All... and then Extract (do not run it from inside the zip).\r\n"
     "3. In the folder that opens, double-click KUR (Windows Command Script). No administrator rights are needed.\r\n"
-    "4. When setup finishes, double-click the ArthurLegal icon on the desktop, open a new chat in\r\n"
-    "   Claude Desktop and type your legal question.\r\n\r\n"
+    "   The black window asks for the modules: type the numbers of the ones you want, separated by commas,\r\n"
+    "   and press Enter (e.g. Courthouse and Tapu for judges and court clerks: 3,5).\r\n"
+    "4. When setup finishes, double-click the ArthurLegal icon on the desktop (or the Courthouse or\r\n"
+    "   Academician icon if you chose those), open a new chat in Claude Desktop and type your question.\r\n\r\n"
     "If you are reading this after extracting the zip and KUR is blocked: delete the extracted folder,\r\n"
     "do step 1 and extract the zip again.\r\n\r\n"
     "Arthur Mask is not installed this way: client-document masking and the UYAP bridge do not work.\r\n"
@@ -438,7 +459,10 @@ def main(argv=None) -> int:
         r = subprocess.run([str(iscc_bul()), f"/DKaynak={hazirlik}", f"/DSurum={surum}", f"/DFirmaAd={firma.get('ad', '')}",
                             f"/DUrunAd={urun}", f"/DSimge={simge or 'arthurlegal.ico'}",
                             f"/DCiktiDizini={CIKTI}", f"/DCiktiAdi={ad}", f"/DMaskUrl={mask['url']}",
-                            f"/DMaskSha={mask['sha256']}", f"/DVarlik={BURASI / 'varlik'}", *imza_args, "/Qp", str(iss)])
+                            f"/DMaskSha={mask['sha256']}", f"/DVarlik={BURASI / 'varlik'}",
+                            # Modül ekranı yalnız bu derlemedeki paketleri ve bileşenleri gösterir.
+                            f"/DPaketler={','.join(p for p in ortak.PAKETLER if p in icerik['paketler'])}",
+                            f"/DTapuVar={1 if icerik['bilesenler'].get('tapu') else 0}", *imza_args, "/Qp", str(iss)])
         if r.returncode:
             sys.exit(f"ISCC hata verdi ({r.returncode})")
         exe = CIKTI / f"{ad}.exe"

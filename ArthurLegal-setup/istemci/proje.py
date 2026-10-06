@@ -1,6 +1,7 @@
 """Claude Desktop "Use a folder" yolu için hazır proje klasörleri.
 
-Kurulum %USERPROFILE%\\ArthurLegal\\ altında her paket için bir klasör açar (Hukuk Bürosu, Kurumsal).
+Kurulum %USERPROFILE%\\ArthurLegal\\ altında seçilen her paket için bir klasör açar (Hukuk Bürosu, Kurumsal,
+Courthouse, Akademisyen). Seçimden çıkarılan paketin klasöründe yalnız yönetilen içerik silinir.
 Kullanıcı Claude'da proje oluştururken "Use a folder" ile bu klasörü seçer; talimat ve bilgi dosyaları
 klasörden gelir. Yerel araçlar (arthurlegal-yerel) çalışıyorsa CLAUDE.md önce onları kullandırır.
 
@@ -17,7 +18,9 @@ from pathlib import Path
 
 import ortak
 
-KLASOR_ADLARI = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal"}
+# Adlar iki dilli kurulumda da aynı kalır: değişseler Claude'daki "Use a folder" projelerinin bağlantısı koparırdı.
+KLASOR_ADLARI = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse",
+                 "akademisyen": "Akademisyen"}
 YONETILEN = ("CLAUDE.md", "SYSTEM_PROMPT.md", "knowledge", "buro", ".arthurlegal.json")
 
 
@@ -52,9 +55,12 @@ def esitle(zorla: bool = False) -> list:
     surum_dizini = ortak.SURUM_DIZINI
     icerik = ortak.json_oku(surum_dizini / "icerik.json")
     firma = ortak.json_oku(ortak.FIRMA / "firma.json").get("ad", "")
-    yazilan = []
+    yazilan, secili = [], ortak.moduller()
     for profil, hedef in klasorler().items():
         paket = surum_dizini / "paketler" / profil
+        if profil not in secili:  # seçimden çıkarıldı: yönetilen içerik gider, kullanıcının dosyaları kalır
+            _klasoru_bosalt(hedef)
+            continue
         if not (paket / "SYSTEM_PROMPT.md").exists():
             continue
         paket_surumu = icerik.get("paketler", {}).get(profil, "?")
@@ -79,17 +85,22 @@ def esitle(zorla: bool = False) -> list:
     return yazilan
 
 
+def _klasoru_bosalt(hedef: Path) -> None:
+    """Yönetilen içeriği siler; boş kalan çalışma klasörü ve klasör de gider, kullanıcının dosyaları kalır."""
+    if not hedef.is_dir():
+        return
+    for ad in YONETILEN:
+        _sil(hedef / ad)
+    calisma = hedef / "calismalar"
+    if calisma.is_dir() and not any(calisma.iterdir()):
+        calisma.rmdir()
+    if not any(hedef.iterdir()):
+        hedef.rmdir()
+
+
 def kaldir() -> None:
     for hedef in klasorler().values():
-        if not hedef.is_dir():
-            continue
-        for ad in YONETILEN:
-            _sil(hedef / ad)
-        calisma = hedef / "calismalar"
-        if calisma.is_dir() and not any(calisma.iterdir()):
-            calisma.rmdir()
-        if not any(hedef.iterdir()):
-            hedef.rmdir()
+        _klasoru_bosalt(hedef)
     if kok().is_dir() and not any(kok().iterdir()):
         kok().rmdir()
 
@@ -102,7 +113,9 @@ def _sil(yol: Path) -> None:
 
 
 def durum() -> dict:
-    return {profil: str(hedef) for profil, hedef in klasorler().items() if (hedef / "SYSTEM_PROMPT.md").exists()}
+    secili = ortak.moduller()
+    return {profil: str(hedef) for profil, hedef in klasorler().items()
+            if profil in secili and (hedef / "SYSTEM_PROMPT.md").exists()}
 
 
 if __name__ == "__main__":

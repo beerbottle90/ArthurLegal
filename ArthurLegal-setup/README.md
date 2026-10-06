@@ -1,22 +1,39 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.4.4
+# ArthurLegal Setup v2.5.0
 
-**Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
-Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
-Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası doğrulanarak sessizce kurulur.
+**Tek dosyalık Windows kurulumu.** Kullanıcı indirir, çift tıklar, modül ekranında işine yarayan paketleri
+(Hukuk Bürosu, Kurumsal Asistan, Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, Arthur Mask) seçer;
+seçtikleri, araştırma bağlantısıyla birlikte Claude Desktop'a kendiliğinden bağlanır. Yönetici yetkisi gerekmez.
+Sonraki sürümler arka planda, imzası doğrulanarak sessizce kurulur.
 
 > Paketlerin kendisi (SYSTEM_PROMPT + knowledge) bu deponun kökündedir ve Claude.ai'de elle de
-> kurulabilir: `ArthurLegal-Law-Firm-v*/KURULUM.md`. Bu klasör, o kurulumu tek tıka indiren ve
+> kurulabilir: her paketin `KURULUM.md` dosyası. Bu klasör, o kurulumu tek tıka indiren ve
 > güncel tutan Windows paketidir.
 
 ## Ne kurulur
 
+Lisans sayfasından sonraki **Modülleri seçin** ekranında her modül bir onay kutusu ve altında kısa açıklamadır.
+İlk kurulumda hiçbir kutu işaretli gelmez, en az bir paket gerekir; kurulum yeniden açılınca son seçim işaretli
+gelir. Seçim kurulum klasöründeki `moduller.json`'a yazılır ve güncellemelerde korunur. 2.5.0'dan önceki
+kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal, Tapu, Arthur Mask) sürer.
+
+| Modül | Kod | Masaüstü simgesi | Ne yapar |
+|---|---|---|---|
+| **Hukuk Bürosu** | `hukuk-burosu` | ArthurLegal | Law Firm paketi: avukatlar ve hukuk büroları |
+| **Kurumsal Asistan** | `kurumsal` | ArthurLegal | Corporate paketi: şirket hukuk birimleri |
+| **Courthouse** | `adliye` | ArthurLegal - Courthouse | Hâkim ve kalem için tarafsız taslak paketi |
+| **Akademisyen** | `akademisyen` | ArthurLegal - Akademisyen | Academician paketi: hukuk akademisyenleri |
+| **ArthurLegal Tapu** | `tapu` | ArthurLegal - Tapu | Yerel `arthur-tapu` sunucusu (aşağıda) |
+| **Arthur Mask** | `mask` | Arthur Mask (kendi kurulumundan) | Kurulum sırasında indirilir; kuruluysa kutu işaretli ve kilitli görünür |
+
+Bileşenler:
+
 | Bileşen | Nerede çalışır | Ne yapar |
 |---|---|---|
-| **arthurlegal-yerel** | Claude Desktop · gömülü Python 3.12 | İki paketin sistem talimatını ve 230+ bilgi dosyasını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz |
-| **arthur-tapu** | Claude Desktop + masaüstü kısayolu | tkgm-mcp 0.5.2: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
-| **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil belgelerini bilgisayarda maskeleyen gizlilik kapısı. Kurulum sırasında indirilir (≈1 GB), isteğe bağlı |
+| **arthurlegal-yerel** | Claude Desktop · gömülü Python 3.12 | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz. Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
+| **arthur-tapu** | Claude Desktop + masaüstü kısayolu | Yalnız Tapu seçildiyse. tkgm-mcp 0.5.2: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
+| **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil ya da dosya belgelerini bilgisayarda maskeleyen gizlilik kapısı. Seçildiyse kurulum sırasında indirilir (≈1 GB); seçilmediyse güncelleyici de indirmez |
 | *arthur-uyap* | (bu pakette yok) | UYAP köprüsü ayrı dağıtılır; kurulum, bilgisayarda varsa kendiliğinden bağlar. Köprünün yerel ekranı varsa ve Arthur Mask kuruluysa masaüstüne ve Başlat menüsüne UYAP için tek simge ekler: "ArthurLegal - UYAP Dashboard" (büro kurulumunda markadaki kısa adla). UYAP'a giriş tarayıcısını Dashboard kendisi açar |
 
 Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
@@ -29,7 +46,7 @@ Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
    kısaca Edge'de **⋯ → Sakla**, sonra mavi **Sil** düğmesinin yanındaki ok **→ Yine de sakla**; mavi
    "Windows kişisel bilgisayarınızı korudu" penceresinde **Ek bilgi → Yine de çalıştır**. Kurulum İngilizce ve
    Türkçedir: açılışta dil sorulur, Windows'un diline uyan dil seçili gelir. Kısayol adları ve başlangıç rehberi
-   seçilen dilde yazılır.
+   seçilen dilde yazılır. Lisanstan sonra modülleri seçin (yukarıda).
 2. Claude Desktop'ta **yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın.** Proje ya da yapıştırma
    gerekmez: `arthurlegal_talimat` aracının açıklaması ve sunucunun `instructions` alanı modele "hukukla
    ilgili her soruda önce beni çağır" der; profil verilmezse kurulumdaki varsayılan kullanılır.
@@ -38,17 +55,22 @@ Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
    önceden işaretleyemez. Araştırma araçları salt okunur diye işaretlenir (2.4.4), böylece Claude kalıcı izin
    sunabilir.
 
-**Yedek yollar.** (1) Kurulum `%USERPROFILE%\ArthurLegal\Hukuk Bürosu` ve `...\Kurumsal` proje klasörlerini
-hazırlar (`CLAUDE.md`, `SYSTEM_PROMPT.md`, `knowledge/`; güncelleyici her sürümde yeniler, kullanıcının
-kendi dosyalarına dokunmaz): Claude'da **Projects → New project → Use a folder** ile seçilir.
-(2) Başlangıç panelindeki kısa talimat bir projenin **Instructions** alanına yapıştırılır. (3) Sohbette **+**
-menüsünden `arthurlegal-yerel` altındaki `hukuk-burosu` istemi seçilir.
+**Yedek yollar.** (1) Kurulum seçilen her paket için `%USERPROFILE%\ArthurLegal\` altında bir proje klasörü
+hazırlar (`Hukuk Bürosu`, `Kurumsal`, `Courthouse`, `Akademisyen`; içinde `CLAUDE.md`, `SYSTEM_PROMPT.md`,
+`knowledge/`; güncelleyici her sürümde yeniler, kullanıcının kendi dosyalarına dokunmaz): Claude'da
+**Projects → New project → Use a folder** ile seçilir. (2) Başlangıç panelindeki kısa talimat bir projenin
+**Instructions** alanına yapıştırılır. (3) Sohbette **+** menüsünden `arthurlegal-yerel` altındaki paketin istemi
+(`hukuk-burosu`, `kurumsal`, `adliye`, `akademisyen`) seçilir.
+
+**Sessiz kurulum.** `ArthurLegal-Kurulum.exe /VERYSILENT /SUPPRESSMSGBOXES /MODULLER=adliye,tapu,mask`. Liste
+geçersizse (bilinmeyen ad, derlemede olmayan modül ya da hiç paket yok) kurulum hiçbir şey kurmadan durur.
+`/MODULLER` verilmezse önceki kurulumun seçimi, o da yoksa 2.5.0 öncesinin modülleri kullanılır.
 
 **Windows 11 Akıllı Uygulama Denetimi (Smart App Control) açıksa** imzasız kurulum motoru engellenir
 (`Hata 4551`). O bilgisayarda [`ArthurLegal-Kurulum.zip`](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip) dosyasını indirin;
 ayıklamadan önce **Özellikler → Engellemeyi Kaldır** (denetim internetten gelen `.cmd` dosyasını engeller, Gezgin
 bu işareti zipten çıkan dosyalara taşır), sonra klasöre çıkarın ve `KUR.cmd` dosyasına çift tıklayın: aynı
-kurulumu imzalı Python ile yapar. Zip'in içinde Türkçe `BENIOKU.txt` ve İngilizce `README.txt` vardır. Denetim
+kurulumu imzalı Python ile yapar, modülleri konsolda numarayla sorar (Arthur Mask bu yolla kurulamaz). Zip'in içinde Türkçe `BENIOKU.txt` ve İngilizce `README.txt` vardır. Denetim
 açıkken Arthur Mask kurulamaz; güncelleyici onu indirmeye çalışmaz (2.4.4). Denetim durumu:
 `(Get-MpComputerStatus).SmartAppControlState`.
 
@@ -91,8 +113,8 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 41 test, ağa çıkmaz
-python yayin/yayinla.py v2.4.4         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python -m unittest discover -s tests   # 52 test, ağa çıkmaz
+python yayin/yayinla.py v2.5.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez

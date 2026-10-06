@@ -29,6 +29,7 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
 #durum span{font-size:15px}
 .dil{text-align:right;margin:0 0 10px;font-size:14px}.dil a{color:var(--lacivert)}
+#paketler .kart{margin:8px 0}.odak{border:2px solid var(--altin)!important;box-shadow:0 0 0 3px rgba(176,141,60,.18)}
 </style>
 </head>
 <body>
@@ -43,6 +44,14 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <p style="margin-top:22px">{{FIRMA_SATIRI}}Setup is complete. <b>Open a new chat in Claude Desktop and type your legal question:</b> the assistant loads the ArthurLegal instructions and knowledge files itself. When Claude asks for permission the first time it uses a tool, choose <b>Always allow</b>. The project step below is optional: it is for those who want to fix a profile or add their own files to a project.</p>
 
+<h2>Installed packages</h2>
+<div id="paketler">
+<div class="kart" data-modul="hukuk-burosu"><b>Law Firm</b> — for lawyers: petitions, contracts, case-law and legislation research, deadlines. To list commands, type a plugin name such as <code>/litigation-legal:</code> in the chat, or simply describe the task.</div>
+<div class="kart" data-modul="kurumsal"><b>Corporate Assistant</b> — for in-house legal teams: contract review, compliance, data protection and company law. Describe the task; the assistant picks the steps itself.</div>
+<div class="kart" data-modul="adliye"><b>Courthouse</b> — neutral drafts for judges and court clerks (Turkish procedure). For example <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; for the reminders type "yarının duruşmaları" or "kesinleşme kontrolü". Do not attach case documents to the chat directly; drop them into Arthur Mask first. Every output is a draft for the judge or the panel to approve.</div>
+<div class="kart" data-modul="akademisyen"><b>Academician</b> — for legal academics: literature, citation checks, journal choice, publication ethics and grant applications. For example type <code>/atif-kaynak:</code> or <code>/makale-yazim:</code>. Confidential manuscripts and review material under evaluation are never given to the chat.</div>
+</div>
+
 <h2>Fallback 1: ready-made project folder</h2>
 <p>In Claude, open <b>Projects → New project</b>, click <b>Use a folder</b> and choose one of the folders below.
 Each folder already holds the instructions (<code>CLAUDE.md</code>), the system prompt and all knowledge files, and it is
@@ -52,33 +61,24 @@ refreshed with every update. Put your own drafts in the folder's <code>calismala
 <h2>Fallback 2: project and instructions</h2>
 <div class="adim a1"><div class="no">1</div><div><b>Claude Desktop must be open.</b> If it is closed, the <i>{{URUN}}</i> icon that opened this page opens it too.
   If it is not installed, get it from <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
-<div class="adim a2"><div class="no">2</div><div><b>New project:</b> in the left menu choose <b>Projects → New project</b> and name it, for example <code>{{URUN}} – Law Firm</code>.
+<div class="adim a2"><div class="no">2</div><div><b>New project:</b> in the left menu choose <b>Projects → New project</b> and name it, for example <code>{{URUN}} – Law Firm</code> or <code>{{URUN}} – Courthouse</code>.
   <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Open the Projects page</a></div></div>
 <div class="adim a3"><div class="no">3</div><div><b>Paste the instructions:</b> in the project, open the <b>Instructions</b> field, copy the text below,
   paste it and save. <b>Do not upload knowledge files</b>; the files are read through the tools and stay up to date.</div></div>
 
-<div class="kart">
-  <h3>Law Firm</h3>
-  <textarea id="hukuk" readonly>{{ONYUKLEME_HUKUK}}</textarea>
-  <button data-hedef="hukuk">Copy instructions</button>
-</div>
-<div class="kart">
-  <h3>Corporate Assistant</h3>
-  <textarea id="kurumsal" readonly>{{ONYUKLEME_KURUMSAL}}</textarea>
-  <button data-hedef="kurumsal">Copy instructions</button>
-</div>
+{{ONYUKLEME_KARTLARI}}
 
 <div class="adim a4"><div class="no">4</div><div><b>Try it:</b> open a new chat in the project and ask a legal question. The assistant first calls the
   <code>arthurlegal_talimat</code> tool. If Claude asks for permission to use the tool, choose <b>Always allow</b>.</div></div>
 
 <h2>If the assistant does not load its instructions</h2>
-<p>Occasionally the model starts answering the first question without calling the instructions tool. In that case click the <b>+</b> button next to the message box and choose the <b>hukuk-burosu</b> (Law Firm) or <b>kurumsal</b> (Corporate) prompt under <b>arthurlegal-yerel</b>, or do the project step above once.</p>
+<p>Occasionally the model starts answering the first question without calling the instructions tool. In that case click the <b>+</b> button next to the message box and choose the prompt named after your package under <b>arthurlegal-yerel</b> (<b>hukuk-burosu</b> = Law Firm, <b>kurumsal</b> = Corporate, <b>adliye</b> = Courthouse, <b>akademisyen</b> = Academician), or do the project step above once.</p>
 
 <h2>Other components</h2>
 <ul>
-  <li><b>Arthur Mask</b> — Do not attach client documents to the chat directly; drop them into Arthur Mask first. On first
-    start, print the <b>recovery key</b> and keep it safe.</li>
-  <li><b>ArthurLegal Tapu</b> — Turkish land registry: type a parcel such as "İstanbul Kadıköy Caferağa 123 ada 45 parsel" or a place
+  <li data-modul="mask"><b>Arthur Mask</b> — Do not attach client or case documents to the chat directly; drop them into Arthur Mask
+    first. On first start, print the <b>recovery key</b> and keep it safe.</li>
+  <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Turkish land registry: type a parcel such as "İstanbul Kadıköy Caferağa 123 ada 45 parsel" or a place
     name in the chat. The parcel comes from the public data of TKGM Parsel Sorgu (one consent is asked at the first query).
     The <i>{{URUN}} - Tapu</i> shortcut on the desktop opens the same parcel tool in your browser. Land-registry record text
     never leaves this computer.</li>
@@ -89,11 +89,12 @@ refreshed with every update. Put your own drafts in the folder's <code>calismala
 
 <h2>Troubleshooting</h2>
 <div class="uyari">If the tools do not appear, quit Claude Desktop <b>completely</b>, including the icon in the system tray, and open it
-again. Under <b>Settings → Developer</b>, <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> and (if installed)
-<code>arthur-mask</code> should show as running. The first tool list also contacts the remote research server, so it can take a few seconds.</div>
+again. Under <b>Settings → Developer</b>, <code>arthurlegal-yerel</code> and (if you chose them) <code>arthur-tapu</code> and
+<code>arthur-mask</code> should show as running. To add or remove modules, run the installer again. The first tool list also contacts the remote research server, so it can take a few seconds.</div>
 
-<footer>{{URUN}} is a legal research and drafting tool; it does not give legal advice. A lawyer must verify every output.
-Arthur Mask pseudonymises; it does not anonymise. The duty of confidentiality stays with the lawyer.</footer>
+<footer>{{URUN}} is a legal research and drafting tool; it does not give legal advice and does not decide. The legal professional
+using it (lawyer, judge, court clerk or academic) must verify every output. Arthur Mask pseudonymises; it does not anonymise.
+The duty of confidentiality stays with the user.</footer>
 </main>
 <script src="durum.js" onerror="void 0"></script>
 <script>
@@ -110,6 +111,7 @@ Arthur Mask pseudonymises; it does not anonymise. The duty of confidentiality st
     [/^mask: (\S+) kuruldu$/, "Arthur Mask $1 installed"],
     [/^mask: indirildi, Claude Desktop kapanınca kurulacak$/, "Arthur Mask downloaded; it installs when Claude Desktop is closed"],
     [/^mask: Akıllı Uygulama Denetimi açık.*$/, "Arthur Mask skipped: Smart App Control is on"],
+    [/^mask: kurulumda seçilmedi$/, "Arthur Mask was not selected in setup"],
     [/^mask: manifest'te yok$/, "Arthur Mask is not part of this release"],
     [/^yayında manifest yok$/, "no update manifest in the latest release"],
     [/^hata: (.*)$/, "error: $1"]
@@ -122,7 +124,13 @@ Arthur Mask pseudonymises; it does not anonymise. The duty of confidentiality st
       return parca;
     }).join("; ");
   };
-  var paket = Object.keys(d.paketler || {}).map(function (k) { return (k === "hukuk-burosu" ? "Law Firm " : "Corporate ") + d.paketler[k]; }).join(" · ");
+  var ad = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate", "adliye": "Courthouse", "akademisyen": "Academician"};
+  // Sections of modules that were not chosen are hidden; the Courthouse or Academician icon highlights that package.
+  if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
+    if (d.moduller.indexOf(el.getAttribute("data-modul")) < 0) el.style.display = "none";
+  });
+  if (d.odak) document.querySelectorAll('#paketler [data-modul="' + d.odak + '"]').forEach(function (el) { el.classList.add("odak"); });
+  var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Start";
   // The version Claude Desktop is really running; after an update it stays old until Claude Desktop is reopened.
   var calisan = !d.calisan_surum ? "not opened yet" : (d.calisan_surum === d.surum ? d.calisan_surum + " (current)"
@@ -138,7 +146,6 @@ Arthur Mask pseudonymises; it does not anonymise. The duty of confidentiality st
     ["Last update check", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + cevir(d.son_sonuc) : "") : "not yet"]
   ];
   var k = d.proje_klasorleri || {};
-  var ad = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate"};
   var liste = Object.keys(k).map(function (p) {
     return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";
   }).join("");

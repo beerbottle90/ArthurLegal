@@ -6,9 +6,13 @@
 yer kırmızı çerçeve ve numarayla gösterilir. Üzerindeki yazılar Windows'un ve Edge'in o dildeki birebir
 metinleridir; Microsoft bir metni değiştirirse yalnız aşağıdaki METIN sözlüğü düzeltilip bu betik
 yeniden çalıştırılır. SVG dosyaları elle düzenlenmez.
+
+Modül ekranı çizimlerinin (moduller.svg, modules-en.svg, moduller-courthouse.svg) yazıları ArthurLegal kurulum
+betiğinden okunur (ArthurLegal-setup/kurulum/ArthurLegal.iss, Modul* iletileri).
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -139,11 +143,12 @@ def satirlar(x, y, liste, boyut, renk, aralik, agirlik=400) -> str:
 
 
 def isaret(x, y, g, h, no, rozet="sol") -> str:
-    """Tıklanacak yerin kırmızı çerçevesi ve numara rozeti."""
-    rx = x - 14 if rozet == "sol" else x + g + 14
+    """Tıklanacak yerin kırmızı çerçevesi ve numara rozeti (solda, sağda ya da üstte)."""
+    rx = {"sol": x - 14, "sag": x + g + 14, "ust": x + g / 2}[rozet]
+    ry = y - 14 if rozet == "ust" else y + h / 2
     return (f'<rect x="{x}" y="{y}" width="{g}" height="{h}" rx="7" fill="none" stroke="{KIRMIZI}" stroke-width="3"/>'
-            f'<circle cx="{rx}" cy="{y + h / 2}" r="13" fill="{KIRMIZI}"/>'
-            + t(rx, y + h / 2 + 5, str(no), 15, "#ffffff", 700, hiza="middle"))
+            f'<circle cx="{rx}" cy="{ry}" r="13" fill="{KIRMIZI}"/>'
+            + t(rx, ry + 5, str(no), 15, "#ffffff", 700, hiza="middle"))
 
 
 def svg(gen, yuk, govde, baslik) -> str:
@@ -276,6 +281,84 @@ def edge_dialog(m: dict) -> str:
     return svg(gen, yuk, govde, m["baslik_edge2"])
 
 
+def kurulum_metinleri() -> dict:
+    """Modül ekranının yazıları kurulum betiğinden okunur ([CustomMessages] Modul*): çizim kurulumla aynı kalır,
+    metin bir yerde değişince yalnız bu betik yeniden çalıştırılır."""
+    iss = (BURASI.parents[1] / "ArthurLegal-setup" / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+    metin = {"tr": {}, "en": {}}
+    for satir in iss.splitlines():
+        m = re.match(r"^(tr|en)\.(Modul\w+)=(.*)$", satir)
+        if m:
+            metin[m.group(1)][m.group(2)] = m.group(3)
+    return metin
+
+
+# Inno Setup 6'nın kendi metinleri (Default.isl, Languages\Turkish.isl) ve çizimin yazıları.
+SIHIRBAZ = {
+    "tr": {"pencere": "ArthurLegal - Kurulum yardımcısı", "onceki": "Önceki", "sonraki": "Sonraki", "iptal": "İptal",
+           "dipnot": "Çizim · ArthurLegal kurulumunun modül ekranı (örnek görünüm)"},
+    "en": {"pencere": "Setup - ArthurLegal", "onceki": "Back", "sonraki": "Next", "iptal": "Cancel",
+           "dipnot": "Drawing · the module screen of ArthurLegal Setup (example)"},
+}
+MODUL_SIRASI = ("ModulHukuk", "ModulKurumsal", "ModulAdliye", "ModulAkademisyen", "ModulTapu", "ModulMask")
+
+
+def moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
+    """Kurulumun modül ekranı: her modül kalın adlı bir onay kutusu ve altında gri kısa açıklama. ``isaretli``
+    işaretli kutular; ``numaralar`` sırayla kırmızı çerçeve alan kutular, en sonda Sonraki düğmesi."""
+    m, s = kurulum_metinleri()[dil], SIHIRBAZ[dil]
+    gen, yuk = 600, 520
+    x0, y0, g, h = 10, 10, 580, 484
+    govde = (f'<rect x="{x0 + 2}" y="{y0 + 4}" width="{g}" height="{h}" fill="#000000" opacity="0.14"/>'
+             f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" fill="#f0f0f0" stroke="#8c959f"/>'
+             f'<rect x="{x0 + 1}" y="{y0 + 1}" width="{g - 2}" height="31" fill="#ffffff"/>'
+             f'<rect x="{x0 + 10}" y="{y0 + 9}" width="16" height="16" fill="{LACIVERT}"/>'
+             + t(x0 + 34, y0 + 22, s["pencere"], 12.5, "#1f2328")
+             + t(x0 + g - 26, y0 + 22, "✕", 13, "#1f2328")
+             + f'<rect x="{x0 + 1}" y="{y0 + 32}" width="{g - 2}" height="64" fill="#ffffff"/>'
+             + t(x0 + 22, y0 + 54, m["ModulBaslik"], 13.5, "#1f2328", 700))
+    aciklama = m["ModulAciklama"]
+    if len(aciklama) > 84:  # sihirbazdaki gibi iki satır
+        kes = aciklama.rfind(" ", 0, 84)
+        govde += satirlar(x0 + 34, y0 + 74, [aciklama[:kes], aciklama[kes + 1:]], 12, "#1f2328", 16)
+    else:
+        govde += t(x0 + 34, y0 + 74, aciklama, 12, "#1f2328")
+    govde += (f'<rect x="{x0 + g - 58}" y="{y0 + 38}" width="46" height="52" fill="{LACIVERT}"/>'
+              + t(x0 + g - 35, y0 + 74, "A", 26, ALTIN, 700, hiza="middle")
+              + f'<line x1="{x0 + 1}" y1="{y0 + 96}" x2="{x0 + g - 1}" y2="{y0 + 96}" stroke="#d0d7de"/>')
+    y = y0 + 124
+    cerceveler = {}
+    for i, ileti in enumerate(MODUL_SIRASI):
+        if i in (0, 4):
+            if i == 4:
+                y += 4
+            govde += t(x0 + 22, y, m["ModulPaketler" if i == 0 else "ModulAraclar"], 12.5, "#1f2328")
+            y += 14
+        kx, ky = x0 + 24, y
+        isaretli_mi = ileti in isaretli
+        govde += (f'<rect x="{kx}" y="{ky}" width="13" height="13" fill="#ffffff" stroke="#333333"/>'
+                  + (f'<path d="M{kx + 2.5} {ky + 6.5} l3 3 l5.5 -6" stroke="#1f2328" stroke-width="1.8" fill="none" '
+                     f'stroke-linecap="round" stroke-linejoin="round"/>' if isaretli_mi else "")
+                  + t(kx + 20, ky + 11, m[ileti], 13, "#1f2328", 700)
+                  + t(kx + 20, ky + 29, m[ileti + "Aciklama"], 12, "#6e7781"))
+        cerceveler[ileti] = (kx - 5, ky - 5, 26 + len(m[ileti]) * 8, 23)
+        y += 44
+    by = y0 + h - 44
+    govde += f'<line x1="{x0 + 1}" y1="{by - 12}" x2="{x0 + g - 1}" y2="{by - 12}" stroke="#d0d7de"/>'
+    dugmeler = ((s["onceki"], x0 + g - 268), (s["sonraki"], x0 + g - 184), (s["iptal"], x0 + g - 96))
+    for ad, bx in dugmeler:
+        govde += (f'<rect x="{bx}" y="{by}" width="78" height="26" fill="#e1e1e1" '
+                  f'stroke="{"#0f6cbd" if ad == s["sonraki"] else "#adadad"}"/>'
+                  + t(bx + 39, by + 17, ad, 12.5, "#1f2328", hiza="middle"))
+    for no, ileti in enumerate(numaralar, 1):
+        if ileti == "sonraki":
+            govde += isaret(x0 + g - 188, by - 4, 86, 34, no, rozet="ust")
+        else:
+            govde += isaret(*cerceveler[ileti], no, rozet="sag")
+    govde += dipnot(gen, yuk, s["dipnot"])
+    return svg(gen, yuk, govde, baslik)
+
+
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -284,6 +367,21 @@ def main() -> int:
         d = DOSYALAR[dil]
         ciktilar.update({d["edge1"]: edge_panel(m), d["edge2"]: edge_dialog(m),
                          d["ss1"]: smartscreen(m, 1), d["ss2"]: smartscreen(m, 2)})
+    # Modül ekranı: ana sayfa için genel örnek (avukat), Courthouse sayfası için hâkim ve kalem örneği.
+    ciktilar.update({
+        "moduller.svg": moduller("tr", ("ModulHukuk", "ModulTapu", "ModulMask"),
+                                 ("ModulHukuk", "ModulTapu", "ModulMask", "sonraki"),
+                                 "Örnek: modül ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu ve Arthur Mask'i "
+                                 "işaretleyip Sonraki'ye tıklayın"),
+        "modules-en.svg": moduller("en", ("ModulHukuk", "ModulTapu", "ModulMask"),
+                                   ("ModulHukuk", "ModulTapu", "ModulMask", "sonraki"),
+                                   "Example: on the module screen tick your package (here Law Firm), optionally Tapu and "
+                                   "Arthur Mask, then click Next"),
+        "moduller-courthouse.svg": moduller("tr", ("ModulAdliye", "ModulTapu", "ModulMask"),
+                                            ("ModulAdliye", "ModulTapu", "ModulMask", "sonraki"),
+                                            "Örnek: modül ekranında Courthouse, ArthurLegal Tapu ve Arthur Mask'i "
+                                            "işaretleyip Sonraki'ye tıklayın"),
+    })
     for ad, icerik in ciktilar.items():
         (BURASI / ad).write_text(icerik, encoding="utf-8", newline="\n")
         print(f"  yazıldı: docs/kurulum/{ad}")

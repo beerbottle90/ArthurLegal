@@ -1,6 +1,8 @@
 """Başlat menüsü ve masaüstü kısayollarının işleri.
 
     al.py kisayol baslat          ana simge: Claude Desktop'ı açar ve başlat panelini gösterir
+    al.py kisayol baslat adliye   Courthouse simgesi (akademisyen: Akademisyen simgesi): aynı iş; panel o paketin
+                                  kartını öne çıkarır
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
     al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge). Kısayolu
                                   yok: UYAP Dashboard girişi kendisi açar; elle çalıştırmak için durur
@@ -51,8 +53,9 @@ def claude_ac() -> str:
     return "bulunamadı"
 
 
-def durum_yaz(claude_durumu: str | None = None) -> Path:
-    """Başlat panelinin okuduğu durum dosyası (rehber/durum.js)."""
+def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
+    """Başlat panelinin okuduğu durum dosyası (rehber/durum.js). Panel seçilmeyen modüllerin bölümlerini gizler;
+    ``odak`` (Courthouse ya da Akademisyen simgesi) o paketin kartını öne çıkarır."""
     if claude_durumu is None:
         import kur
         claude_durumu = "açık" if ortak.claude_calisiyor() else ("kurulu" if kur.claude_kurulu() else "bulunamadı")
@@ -70,8 +73,10 @@ def durum_yaz(claude_durumu: str | None = None) -> Path:
         # Claude Desktop'taki yerel sunucunun açılışta yazdığı sürüm: güncelleme kurulu ama Claude yeniden
         # açılmadıysa burada eski numara görünür.
         "calisan_surum": d.get("calisan_surum", ""),
-        "paketler": bilgi.get("paketler", {}),
+        "paketler": {p: s for p, s in bilgi.get("paketler", {}).items() if p in ortak.moduller()},
         "bilesenler": bilgi.get("bilesenler", {}),
+        "moduller": ortak.moduller(),
+        "odak": odak if odak in ortak.PAKETLER else "",
         "mask": ortak.mask_surumu() or "",
         "sunucular": sunucular,
         "claude": claude_durumu,
@@ -85,13 +90,16 @@ def durum_yaz(claude_durumu: str | None = None) -> Path:
     return yol
 
 
-def baslat() -> int:
-    durum_yaz(claude_ac())
+def baslat(profil: str = "") -> int:
+    durum_yaz(claude_ac(), profil)
     webbrowser.open(ortak.rehber_dosyasi().as_uri())
     return 0
 
 
 def tapu() -> int:
+    if not ortak.bilesen_var("tapu"):
+        print(ortak.metin("Bu kurulumda ArthurLegal Tapu seçilmedi.", "ArthurLegal Tapu was not selected in this installation."))
+        return 1
     try:
         socket.create_connection(TAPU_ADRES, 1).close()
         webbrowser.open(f"http://{TAPU_ADRES[0]}:{TAPU_ADRES[1]}/")
@@ -142,5 +150,5 @@ if __name__ == "__main__":
     islem = {"baslat": baslat, "tapu": tapu, "uyap-tarayici": uyap_tarayici, "uyap-ekran": uyap_ekran,
              "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
     if not islem:
-        sys.exit("kullanım: al.py kisayol baslat|tapu|uyap-tarayici|uyap-ekran|knowledge")
-    sys.exit(islem())
+        sys.exit("kullanım: al.py kisayol baslat [adliye|akademisyen]|tapu|uyap-tarayici|uyap-ekran|knowledge")
+    sys.exit(islem(*sys.argv[2:3]) if islem is baslat else islem())

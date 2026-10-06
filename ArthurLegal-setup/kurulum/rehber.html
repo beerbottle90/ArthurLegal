@@ -29,6 +29,7 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
 #durum span{font-size:15px}
 .dil{text-align:right;margin:0 0 10px;font-size:14px}.dil a{color:var(--lacivert)}
+#paketler .kart{margin:8px 0}.odak{border:2px solid var(--altin)!important;box-shadow:0 0 0 3px rgba(176,141,60,.18)}
 </style>
 </head>
 <body>
@@ -43,6 +44,14 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
 
+<h2>Kurulu paketler</h2>
+<div id="paketler">
+<div class="kart" data-modul="hukuk-burosu"><b>Hukuk Bürosu</b> — avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması, süre takibi. Komutları görmek için sohbete <code>/litigation-legal:</code> gibi bir eklenti adı yazın; ya da işi doğrudan anlatın.</div>
+<div class="kart" data-modul="kurumsal"><b>Kurumsal Asistan</b> — şirket hukuk birimleri için sözleşme incelemesi, uyum, KVKK ve şirketler hukuku. İşi doğrudan anlatın; asistan uygun adımları kendisi seçer.</div>
+<div class="kart" data-modul="adliye"><b>Courthouse</b> — hâkim ve kalem için tarafsız taslak. Örnek: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izleyiciler için "yarının duruşmaları" ya da "kesinleşme kontrolü" yazın. Dosya belgelerini sohbete doğrudan eklemeyin, önce Arthur Mask'e bırakın. Her çıktı taslaktır, hâkim ya da heyet onayından geçer.</div>
+<div class="kart" data-modul="akademisyen"><b>Akademisyen</b> — hukuk akademisyenleri için literatür, atıf doğrulama, dergi seçimi, yayın etiği ve proje başvurusu. Örnek: <code>/atif-kaynak:</code> ya da <code>/makale-yazim:</code> yazın. Değerlendirme altındaki gizli müsvedde ve hakem materyali sohbete verilmez.</div>
+</div>
+
 <h2>Yedek yol 1: hazır proje klasörü</h2>
 <p>Claude'da <b>Projects → New project</b> penceresinde <b>Use a folder</b> düğmesine basın ve aşağıdaki klasörlerden birini
 seçin. Klasörde talimat (<code>CLAUDE.md</code>), sistem talimatı ve bütün bilgi dosyaları hazırdır; her güncellemede
@@ -52,33 +61,24 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <h2>Yedek yol 2: proje ve talimat</h2>
 <div class="adim a1"><div class="no">1</div><div><b>Claude Desktop açık olmalı.</b> Kapalıysa bu sayfayı açan <i>{{URUN}}</i> simgesi onu da açar.
   Yüklü değilse <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
-<div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projects → New project</b>, ad olarak örneğin <code>{{URUN}} – Hukuk Bürosu</code>.
+<div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projects → New project</b>, ad olarak örneğin <code>{{URUN}} – Hukuk Bürosu</code> ya da <code>{{URUN}} – Courthouse</code>.
   <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Projeler sayfasını aç</a></div></div>
 <div class="adim a3"><div class="no">3</div><div><b>Talimatı yapıştırın:</b> projede <b>Instructions</b> (talimatlar) alanını açın, aşağıdaki metni kopyalayıp
   yapıştırın ve kaydedin. <b>Knowledge dosyası yüklemeyin</b>; dosyalar araçlarla okunur ve güncel kalır.</div></div>
 
-<div class="kart">
-  <h3>Hukuk Bürosu (Law Firm)</h3>
-  <textarea id="hukuk" readonly>{{ONYUKLEME_HUKUK}}</textarea>
-  <button data-hedef="hukuk">Talimatı kopyala</button>
-</div>
-<div class="kart">
-  <h3>Kurumsal Asistan (Corporate)</h3>
-  <textarea id="kurumsal" readonly>{{ONYUKLEME_KURUMSAL}}</textarea>
-  <button data-hedef="kurumsal">Talimatı kopyala</button>
-</div>
+{{ONYUKLEME_KARTLARI}}
 
 <div class="adim a4"><div class="no">4</div><div><b>Deneyin:</b> projede yeni bir sohbet açıp bir hukuk sorusu yazın. Asistan önce
   <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Always allow</b> deyin.</div></div>
 
 <h2>Asistan talimatı yüklemezse</h2>
-<p>Nadiren model ilk soruda talimat aracını çağırmadan cevaplamaya başlayabilir. O durumda yazma kutusunun yanındaki <b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altındaki <b>hukuk-burosu</b> (ya da <b>kurumsal</b>) istemini seçin; ya da yukarıdaki proje adımını bir kez yapın.</p>
+<p>Nadiren model ilk soruda talimat aracını çağırmadan cevaplamaya başlayabilir. O durumda yazma kutusunun yanındaki <b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altında paketinizin adını taşıyan istemi seçin (<b>hukuk-burosu</b>, <b>kurumsal</b>, <b>adliye</b> ya da <b>akademisyen</b>); ya da yukarıdaki proje adımını bir kez yapın.</p>
 
 <h2>Diğer bileşenler</h2>
 <ul>
-  <li><b>Arthur Mask</b> — Müvekkil belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın. İlk açılışta
-    <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
-  <li><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
+  <li data-modul="mask"><b>Arthur Mask</b> — Müvekkil ya da dosya belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın.
+    İlk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
+  <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
     parsel TKGM Parsel Sorgu'nun herkese açık verisinden gelir (ilk sorguda bir kez onay istenir). Masaüstündeki
     <i>{{URUN}} - Tapu</i> kısayolu aynı işi yapan parsel arayüzünü açar. Tapu kaydı metni bu bilgisayardan çıkmaz.</li>
   <li><b>Proje klasörleri</b> — Başlat menüsündeki <i>{{URUN}} - Proje Klasörleri</i> kısayolu hazır klasörleri Gezgin'de
@@ -88,18 +88,25 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 
 <h2>Sorun giderme</h2>
 <div class="uyari">Araçlar görünmüyorsa Claude Desktop'u sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b> yeniden açın.
-<b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> ve (kuruluysa)
-<code>arthur-mask</code> çalışıyor görünmelidir. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
+<b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code> ile
+<code>arthur-mask</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
-<footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her çıktıyı bir avukat doğrulamalıdır.
-Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumluluğu avukattadır.</footer>
+<footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir ve karar vermez. Her çıktıyı onu kullanan
+hukukçu (avukat, hâkim, kalem ya da akademisyen) doğrulamalıdır. Arthur Mask takma adlandırma yapar, anonim hâle getirmez;
+gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
 </main>
 <script src="durum.js" onerror="void 0"></script>
 <script>
 (function () {
   var d = window.ARTHURLEGAL_DURUM;
   if (!d) return;
-  var paket = Object.keys(d.paketler || {}).map(function (k) { return (k === "hukuk-burosu" ? "Hukuk Bürosu " : "Kurumsal ") + d.paketler[k]; }).join(" · ");
+  var ad = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse", "akademisyen": "Akademisyen"};
+  // Seçilmeyen modüllerin bölümleri gizlenir; Courthouse ya da Akademisyen simgesi o paketin kartını öne çıkarır.
+  if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
+    if (d.moduller.indexOf(el.getAttribute("data-modul")) < 0) el.style.display = "none";
+  });
+  if (d.odak) document.querySelectorAll('#paketler [data-modul="' + d.odak + '"]').forEach(function (el) { el.classList.add("odak"); });
+  var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Başlangıç";
   // Claude Desktop'ın gerçekte çalıştırdığı sürüm; güncelleme kurulu ama Claude yeniden açılmadıysa eski numara.
   var calisan = !d.calisan_surum ? "henüz açılmadı" : (d.calisan_surum === d.surum ? d.calisan_surum + " (güncel)"
@@ -115,7 +122,6 @@ Arthur Mask takma adlandırma yapar, anonim hâle getirmez; sır saklama sorumlu
     ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]
   ];
   var k = d.proje_klasorleri || {};
-  var ad = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal"};
   var liste = Object.keys(k).map(function (p) {
     return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";
   }).join("");

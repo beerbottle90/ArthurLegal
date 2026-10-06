@@ -1,5 +1,5 @@
 {
-  "surum": "2.4.4",
+  "surum": "2.5.0",
   "depolar": {
     "ArthurLegal": "..",
     "tapu": "../../arthurlegal-mcp",
@@ -15,7 +15,9 @@
   },
   "paketler": {
     "hukuk-burosu": "ArthurLegal-Law-Firm-v*-Public-Release",
-    "kurumsal": "ArthurLegal-CorporateAssistant-v*-Public-Release"
+    "kurumsal": "ArthurLegal-CorporateAssistant-v*-Public-Release",
+    "adliye": "ArthurLegal-Courthouse-v*-Public-Release",
+    "akademisyen": "ArthurLegal-Academician-v*-Public-Release"
   },
   "python": {
     "surum": "3.12.10",

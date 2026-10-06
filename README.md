@@ -43,14 +43,34 @@ korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Kurun.** Kurulum önce dili sorar: **Türkçe**'yi seçip **Tamam**'a (OK) tıklayın. Claude Desktop açıksa
-kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. **Anlaşmayı kabul ediyorum**'u seçip
-**Sonraki**'ye, sonra **Kur**'a tıklayın. Kurulum Arthur Mask'i de indirir (yaklaşık 1 GB, birkaç dakika);
+**3. Modülleri seçin.** Kurulum önce dili sorar: **Türkçe**'yi seçip **Tamam**'a (OK) tıklayın.
+**Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye tıklayın. **Modülleri seçin** ekranında kurmak
+istediklerinizi işaretleyin; her birinin altında ne işe yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli
+gelmez. En az bir paket gerekir:
+
+| Modül | Kimin için |
+|---|---|
+| **Hukuk Bürosu** | Avukatlar ve hukuk büroları |
+| **Kurumsal Asistan** | Şirket hukuk birimleri |
+| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.0-Public-Release/)) |
+| **Akademisyen** | Hukuk akademisyenleri |
+| **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
+| **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir) |
+
+<p align="center">
+  <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sonraki düğmesi (4)">
+</p>
+
+**4. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
+önce yazdığınız mesajı gönderin. Arthur Mask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
 beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
-planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç rehberi ve Claude Desktop açılır. Claude
-Desktop'ta yeni bir sohbet açıp hukuki sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa
+planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç rehberi ve Claude Desktop açılır.
+Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
+**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**. Claude
+Desktop'ta yeni bir sohbet açıp sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa
 **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Claude Desktop kurulu
 değilse kurulum onu da kurmayı dener; açılmazsa [claude.ai/download](https://claude.ai/download) adresinden kurun.
+Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın; son seçiminiz işaretli gelir.
 
 <details>
 <summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>
@@ -81,11 +101,12 @@ yolunu kullanın:
    tıklayın. Bu adım atlanırsa Windows, zipten çıkan kurulum dosyasını da engeller.
 3. Zip dosyasına sağ tıklayın, **Tümünü Ayıkla...**'yı, sonra **Ayıkla**'yı seçin. Zip'i açıp içindeki dosyaya
    doğrudan çift tıklamayın; Windows sorarsa **Tümünü Ayıkla**'yı seçin.
-4. Açılan klasörde **KUR** dosyasına (türü: Windows Komut Dosyası) çift tıklayın. Siyah pencere sizden bir tuşa
-   basmanızı isteyince kurulum bitmiştir.
+4. Açılan klasörde **KUR** dosyasına (türü: Windows Komut Dosyası) çift tıklayın. Siyah pencere önce modülleri
+   sorar: kurmak istediklerinizin numaralarını virgülle yazıp <kbd>Enter</kbd>'a basın (ör. Hukuk Bürosu ve Tapu
+   için `1,5`). Sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
 
-Bu yolla Arthur Mask kurulmaz (müvekkil belgesini maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal
-paketleri, araştırma araçları ve Tapu çalışır.
+Bu yolla Arthur Mask kurulmaz (belge maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal paketleri, araştırma
+araçları ve Tapu çalışır.
 </details>
 
 <details>
@@ -101,10 +122,11 @@ Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/Arth
 <h2 id="download">English: download and installation</h2>
 
 **[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**.
-The link always downloads the latest release. One installer puts the Law Firm and Corporate packages, the
-research connector and the local Turkish land-registry tools into Claude Desktop; after that, ArthurLegal
-installs new versions itself in the background and verifies their signatures, so you never need to download
-this file again. No administrator rights are needed.
+The link always downloads the latest release. One installer lets you choose the packages (Law Firm, Corporate
+Assistant, Courthouse, Academician) and the tools (the Turkish land registry, Arthur Mask) you need and puts them
+into Claude Desktop with the research connector; after that, ArthurLegal installs new versions itself in the
+background and verifies their signatures, so you never need to download this file again. No administrator
+rights are needed.
 
 **1. Download.** Click the button above. The file goes to your browser's downloads list at the top right; if
 the list closes, press <kbd>Ctrl</kbd> + <kbd>J</kbd>.
@@ -134,14 +156,33 @@ appears. Do not press <kbd>Enter</kbd>: Enter selects **Don't run** and setup do
   <img src="docs/kurulum/smartscreen-2-run-anyway-en.svg" width="400" alt="Example drawing: the Run anyway button that appears after More info (2)">
 </p>
 
-**3. Install.** Setup first asks for a language: choose **English** and click **OK**. If Claude Desktop is open,
-setup closes it, so send any message you are typing first. Select **I accept the agreement**, click **Next**,
-then **Install**. Setup also downloads Arthur Mask (about 1 GB, a few minutes); if you don't want to wait, click
-**Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the background. On
-the last page click **Finish**: the start guide and Claude Desktop open. Open a new chat in Claude Desktop and
-type your legal question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
+**3. Choose modules.** Setup first asks for a language: choose **English** and click **OK**. Select **I accept the
+agreement** and click **Next**. On the **Choose modules** screen, tick what you want to install; each module has a
+short description under it, and nothing is ticked on a first installation. At least one package is needed:
+
+| Module | For |
+|---|---|
+| **Law Firm** | Lawyers and law firms |
+| **Corporate Assistant** | In-house legal teams |
+| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.0-Public-Release/), in Turkish) |
+| **Academician** | Legal academics |
+| **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
+| **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download) |
+
+<p align="center">
+  <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Next button (4)">
+</p>
+
+**4. Install.** Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
+you are typing first. If you chose Arthur Mask, setup also downloads it (about 1 GB, a few minutes); if you don't
+want to wait, click **Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the
+background. On the last page click **Finish**: the start guide and Claude Desktop open. The desktop gets an icon
+for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
+**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**. Open a new chat in Claude Desktop and
+type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
 If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
-[claude.ai/download](https://claude.ai/download).
+[claude.ai/download](https://claude.ai/download). To add or remove modules, run the installer again; your last
+choice comes pre-ticked.
 
 <details>
 <summary><b>Why do these warnings appear? Is the file safe?</b></summary>
@@ -171,11 +212,12 @@ You do not need to turn it off; use the zip version of the same setup:
    also blocks the setup file that comes out of the zip.
 3. Right-click the zip file, choose **Extract All...**, then **Extract**. Do not open the zip and double-click the
    file inside it; if Windows asks, choose **Extract all**.
-4. In the folder that opens, double-click **KUR** (type: Windows Command Script). When the black window asks
-   you to press a key, setup has finished.
+4. In the folder that opens, double-click **KUR** (type: Windows Command Script). The black window first asks
+   for the modules: type the numbers of the ones you want, separated by commas, and press <kbd>Enter</kbd>
+   (e.g. `1,5` for Law Firm and Tapu). When it asks you to press a key, setup has finished.
 
-Arthur Mask is not installed this way (client-document masking and the UYAP bridge do not work); the
-ArthurLegal packages, the research tools and Tapu work.
+Arthur Mask is not installed this way (document masking and the UYAP bridge do not work); the ArthurLegal
+packages, the research tools and Tapu work.
 </details>
 
 <details>
@@ -214,8 +256,8 @@ question is one workflow, not four.
 |---|---|---|---|
 | **Corporate Assistant** | **[v1.10.1](ArthurLegal-CorporateAssistant-v1.10.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
 | **Law Firm Assistant** | **[v1.10.1](ArthurLegal-Law-Firm-v1.10.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.1](ArthurLegal-Academician-v1.1.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board |
-| Courthouse | [v1.1.1](ArthurLegal-Courthouse-v1.1.1-Public-Release/) | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask local privacy gate |
+| Academician | [v1.1.1](ArthurLegal-Academician-v1.1.1-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · Windows installer module |
+| **Courthouse** | **[v1.2.0](ArthurLegal-Courthouse-v1.2.0-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · Windows installer module · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -223,8 +265,9 @@ and Turkish judicial procedure respectively, and are jurisdiction-specific by
 design.
 
 Only the current version of each package sits at the top of the repository; earlier versions are kept in
-[`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.0`; Academician `v1.0.0` … `v1.1.0`).
-To install, use the [download section](#indir) at the top of this page, or start from the `KURULUM.md` file in the package you want (Turkish); the
+[`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.1`; Academician `v1.0.0` … `v1.1.0`).
+To install on Windows, use the [download section](#indir) at the top of this page: all four packages are modules of
+the same installer. Otherwise start from the `KURULUM.md` file in the package you want (Turkish); the
 Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
 
 ## Use ArthurLegal MCP directly
@@ -344,6 +387,32 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.5.0 — One installer, choose your modules; Courthouse 1.2.0 (2026-10-06)
+
+- **Choose modules.** After the licence page a new screen lists six modules, each with a short description under it:
+  the Law Firm, Corporate Assistant, Courthouse and Academician packages, ArthurLegal Tapu and Arthur Mask. Nothing is
+  ticked on a first installation and at least one package is needed. The selection decides the desktop icons
+  (**ArthurLegal** for Law Firm or Corporate, **ArthurLegal - Courthouse**, **ArthurLegal - Academician**,
+  **ArthurLegal - Tapu**; Arthur Mask adds its own), the Claude Desktop registration, the packages the assistant offers
+  and the ready-made project folders. A judge or court clerk who ticks Courthouse, Tapu and Arthur Mask gets exactly
+  those three icons. Running the installer again shows the last choice; a module that is unticked loses its icon and
+  registration, while the user's own files in its project folder stay.
+- **Courthouse and Academician in Claude Desktop.** Both packages, until now set up by hand in Claude.ai Projects,
+  install like Law Firm and Corporate: no project, no pasted instructions, no uploaded files. With one package the
+  assistant uses it by default; with several, the instructions tell the model which package fits which task.
+- **Updates keep the choice.** Installations from before 2.5.0 update silently and keep exactly what they had (Law
+  Firm, Corporate, Tapu and Arthur Mask); nothing new is added to them. The updater no longer downloads Arthur Mask
+  for an installation that did not choose it.
+- **Silent installation.** `ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask` installs without
+  windows; an invalid list stops setup before anything is installed. The zip route asks for the modules in its
+  console window.
+- **Courthouse 1.2.0** (Turkish): 12 plugins and 56 skills (appeal chamber and clerk, shared research, publication of
+  decisions), 10 court-type profiles, 7 reminder watchers that work from a list the user gives, and 36 references;
+  every statute article written into the package was checked against the official text. Its page now starts with
+  the download button and an illustrated installation guide.
+
+The Law Firm and Corporate packages are unchanged at **v1.10.1**; Academician stays **v1.1.1**.
 
 ## Setup 2.4.4 — The installer speaks English too; research tools are read-only (2026-10-06)
 

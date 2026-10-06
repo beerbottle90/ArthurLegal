@@ -34,10 +34,10 @@ def istenen_girdiler() -> dict:
     py = str(ortak.RUNTIME / "python.exe")
     al = str(ortak.AL)
     env = {"PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1"}
-    girdiler = {
-        "arthurlegal-yerel": {"command": py, "args": ["-B", al, "sunucu"], "env": dict(env)},
-        "arthur-tapu": {"command": py, "args": ["-B", al, "tapu", "--ui-ile"], "env": dict(env)},
-    }
+    girdiler = {"arthurlegal-yerel": {"command": py, "args": ["-B", al, "sunucu"], "env": dict(env)}}
+    # Tapu yalnız kurulumda seçildiyse (ortak.moduller) kaydedilir; seçimden çıkarılınca eski kayıt silinir.
+    if ortak.bilesen_var("tapu"):
+        girdiler["arthur-tapu"] = {"command": py, "args": ["-B", al, "tapu", "--ui-ile"], "env": dict(env)}
     mask = ortak.mask_python()
     # UYAP yalnız bu kurulumda varsa ve Arthur Mask kuruluysa kaydedilir: maskelemeyi atlayamaz,
     # arthur_mask olmadan veri döndürmez, o yüzden Mask'in Python'unda çalışır.

@@ -55,6 +55,8 @@ def sahte_kok(kok: Path, surum="0.0.1", uzak="http://127.0.0.1:9/mcp", manifest=
     (p / "knowledge" / "firm-profile.md").write_text("# Büro Profili — [BÜRO_ADI]\n[DOLDUR]", encoding="utf-8")
     (p / "knowledge" / "skills" / "commercial-legal__skills.md").write_text(BECERILER, encoding="utf-8")
     (p / "knowledge" / "references" / "hmk-rehberi.md").write_text("# HMK\nIslah HMK m. 176.\nİstinaf süresi iki hafta.", encoding="utf-8")
+    (s / "tapu").mkdir()  # genel derlemede Tapu bileşeni var (seçilirse kaydedilir)
+    (s / "tapu" / "server.py").write_text("", encoding="utf-8")
     icerik = {"paketler": {"hukuk-burosu": "1.9.1"}}
     if anahtarlar is not None:
         icerik["anahtarlar"] = anahtarlar
@@ -973,6 +975,254 @@ class YayinAnahtariTesti(unittest.TestCase):
         self.derleme_yaz(["0" * 64])
         with self.assertRaises(SystemExit):
             self.y.main(["v9.9.9", "--kuru"])
+
+
+def dort_paket(kok: Path, surum="0.0.1"):
+    """sahte_kok'a Kurumsal, Courthouse ve Akademisyen paketlerini ekler (genel derlemede dördü de var)."""
+    s = kok / "surumler" / surum
+    for profil, dosya in (("kurumsal", "company-profile.md"), ("adliye", "mahkeme-profili.md"),
+                          ("akademisyen", "akademisyen-profili.md")):
+        p = s / "paketler" / profil
+        (p / "knowledge").mkdir(parents=True)
+        (p / "SYSTEM_PROMPT.md").write_text(f"# SİSTEM\n{profil} talimatı.", encoding="utf-8")
+        (p / "knowledge" / dosya).write_text(f"# {profil} profili — [DOLDUR]", encoding="utf-8")
+    (s / "paketler" / "adliye" / "knowledge" / "profiles").mkdir()
+    (s / "paketler" / "adliye" / "knowledge" / "profiles" / "asliye-hukuk.md").write_text("# Asliye Hukuk", encoding="utf-8")
+    (s / "icerik.json").write_text(json.dumps({"paketler": {"hukuk-burosu": "1.10.1", "kurumsal": "1.10.1",
+                                                            "adliye": "1.2.0", "akademisyen": "1.1.1"},
+                                               "bilesenler": {"tapu": "0.5.2"}}), encoding="utf-8")
+
+
+def secim_yaz(kok: Path, *moduller):
+    (kok / "moduller.json").write_text(json.dumps({"moduller": list(moduller)}), encoding="utf-8")
+
+
+class ModulTesti(unittest.TestCase):
+    """2.5.0: tek kurulum dosyası, modül ekranı. Seçim kurulum klasöründeki moduller.json'dadır; kısayollar, Claude
+    kaydı, paketler, proje klasörleri ve Arthur Mask indirmesi ona uyar. Seçim dosyası olmayan (2.5.0 öncesi) kurulum
+    eski modülleriyle sürer."""
+
+    def calistir(self, t, kod, kontrol=True):
+        tam = f"import sys, json; sys.path.insert(0, r'{t / 'kok'}/surumler/0.0.1/istemci'); {kod}"
+        env = {**ENV, "APPDATA": str(t / "Roaming"), "LOCALAPPDATA": str(t / "Local"), "USERPROFILE": str(t / "ev"),
+               "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
+        r = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True, encoding="utf-8",
+                           check=kontrol)
+        return json.loads(r.stdout.strip().splitlines()[-1]) if kontrol else r
+
+    def kok(self, t, *moduller):
+        sahte_kok(t / "kok")
+        dort_paket(t / "kok")
+        if moduller:
+            secim_yaz(t / "kok", *moduller)
+
+    def test_secim_dogrulanir_ve_siralanir(self):
+        import ortak
+        self.assertEqual(ortak.secim_coz(" Mask, tapu;ADLIYE "), ["adliye", "tapu", "mask"])
+        for kotu in ("tapu,mask", "", "adliye,uyap", "courthouse"):
+            with self.subTest(kotu=kotu), self.assertRaises(ValueError):
+                ortak.secim_coz(kotu)
+        self.assertEqual(ortak.MODULLER, ("hukuk-burosu", "kurumsal", "adliye", "akademisyen", "tapu", "mask"))
+
+    def test_secim_dosyasi_yoksa_eski_modullerle_surer(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t)
+            kod = "import ortak; print(json.dumps(ortak.moduller()))"
+            self.assertEqual(self.calistir(t, kod), ["hukuk-burosu", "kurumsal", "tapu", "mask"])
+            (t / "kok" / "moduller.json").write_text("bozuk", encoding="utf-8")
+            self.assertEqual(self.calistir(t, kod), ["hukuk-burosu", "kurumsal", "tapu", "mask"])
+            self.assertEqual(self.calistir(t, "import kur; print(kur.main(['--kaydet', '--moduller', 'mask,adliye']))"), 0)
+            self.assertEqual(json.loads((t / "kok" / "moduller.json").read_text(encoding="utf-8")),
+                             {"moduller": ["adliye", "mask"]})
+            r = self.calistir(t, "import kur; print(kur.main(['--kaydet', '--moduller', 'tapu']))")
+            self.assertEqual(r, 2, "paket seçilmemiş: kurulum durur")
+            self.assertEqual(self.calistir(t, kod), ["adliye", "mask"], "geçersiz seçim öncekini bozmaz")
+
+    def test_courthouse_tapu_mask_simgeleri(self):
+        """Kullanıcının istediği: masaüstünde Courthouse, Tapu ve (Arthur Mask'in kendi kurulumundan) Mask simgesi."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "tapu", "mask")
+            liste = self.calistir(t, KisayolTesti.LISTE)
+            adlar = sorted({s[0] for s in liste})
+            self.assertIn("ArthurLegal - Courthouse 0.0.1.lnk", adlar)
+            self.assertIn("ArthurLegal - Tapu 0.0.1.lnk", adlar)
+            self.assertNotIn("ArthurLegal 0.0.1.lnk", adlar, "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
+            self.assertFalse([a for a in adlar if "Akademisyen" in a])
+            courthouse = [s for s in liste if s[0] == "ArthurLegal - Courthouse 0.0.1.lnk"]
+            self.assertEqual(len(courthouse), 2, "masaüstü ve Başlat menüsü")
+            self.assertTrue(all(s[2].endswith("kisayol baslat adliye") for s in courthouse))
+            masa = self.calistir(t, "import kur; print(json.dumps(sorted(y.name for y, *_ in kur._kisayol_listesi() "
+                                    "if y.parent == kur._masaustu())))")
+            self.assertEqual(masa, ["ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Tapu 0.0.1.lnk"],
+                             "Arthur Mask simgesini Arthur Mask'in kendi kurulumu koyar")
+
+    def test_paket_simgeleri_ve_secimden_cikan_temizlenir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "hukuk-burosu", "adliye", "akademisyen")
+            adlar = {s[0] for s in self.calistir(t, KisayolTesti.LISTE)}
+            for ad in ("ArthurLegal 0.0.1.lnk", "ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Akademisyen 0.0.1.lnk"):
+                self.assertIn(ad, adlar)
+            self.assertFalse([a for a in adlar if "Tapu" in a], "Tapu seçilmedi")
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'en']))")
+            adlar = {s[0] for s in self.calistir(t, KisayolTesti.LISTE)}
+            self.assertIn("ArthurLegal - Academician 0.0.1.lnk", adlar)
+            self.assertIn("ArthurLegal - Courthouse 0.0.1.lnk", adlar, "Courthouse özel ad, çevrilmez")
+            # Courthouse seçimden çıkınca simgesi gider; kullanıcının başka kısayolu kalır.
+            masa = t / "ev" / "Desktop"
+            masa.mkdir(parents=True)
+            for ad in ("ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Academician 0.0.1.lnk", "Başka Program.lnk"):
+                (masa / ad).write_bytes(b"")
+            secim_yaz(t / "kok", "hukuk-burosu", "akademisyen")
+            self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
+                             "kur._kisayol_listesi()}); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()),
+                             ["ArthurLegal - Academician 0.0.1.lnk", "Başka Program.lnk"])
+
+    def test_tapu_yalniz_secilirse_kaydedilir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "tapu")
+            yapi = t / "Roaming" / "Claude" / "claude_desktop_config.json"
+            yapi.parent.mkdir(parents=True)
+            yapi.write_text(json.dumps({"mcpServers": {"arthur-mask": {"command": "m"}}}), encoding="utf-8")
+            kod = "import claude_ayari; claude_ayari.kaydet(); print(1)"
+            self.calistir(t, kod)
+            self.assertEqual(set(json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]),
+                             {"arthur-mask", "arthurlegal-yerel", "arthur-tapu"})
+            secim_yaz(t / "kok", "adliye")
+            self.calistir(t, kod)
+            self.assertEqual(set(json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]),
+                             {"arthur-mask", "arthurlegal-yerel"}, "seçimden çıkan Tapu'nun kaydı silinir")
+            self.assertEqual(self.calistir(t, "import kisayol; print(json.dumps(kisayol.tapu()))"), 1)
+
+    def test_sunucu_yalniz_secilen_paketleri_sunar(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "mask")
+            kod = ("import arthurlegal_sunucu as s, ortak; b = s.Bilgi(ortak.SURUM_DIZINI, ortak.FIRMA); "
+                   "p = b.profil(None); a = s.yerel_araclar(b.profiller(), b.varsayilan()); "
+                   "print(json.dumps([b.profiller(), p, b.talimat(p), a[0]['inputSchema']['properties']['profil']['enum'], "
+                   "a[0]['description']]))")
+            profiller, varsayilan, talimat, secenek, aciklama = self.calistir(t, kod)
+            self.assertEqual((profiller, varsayilan, secenek), (["adliye"], "adliye", ["adliye"]),
+                             "yalnız Courthouse seçilmiş: varsayılan Courthouse")
+            self.assertTrue(talimat.startswith("# ArthurLegal — oturum talimatı: Courthouse (Adliye)"))
+            self.assertIn("knowledge/mahkeme-profili.md", talimat)
+            self.assertIn("knowledge/profiles/", talimat)
+            self.assertIn("UYARI: veri çekilemedi, teyidiniz gerekli: https://parselsorgu.tkgm.gov.tr/", talimat,
+                          "Tapu seçilmedi: parsel bilgisi uydurulmaz")
+            self.assertNotIn("`arthur-tapu` yerel araçlarını kullan", talimat)
+            self.assertIn("dosya belgesi (UYAP UDF dâhil)", talimat)
+            self.assertNotIn("müvekkil belgesi", aciklama)
+            self.assertIn("gerekçeli karar", aciklama)
+            r = self.calistir(t, "import arthurlegal_sunucu as s, ortak; b = s.Bilgi(ortak.SURUM_DIZINI, ortak.FIRMA); "
+                                 "b.profil('hukuk-burosu')", kontrol=False)
+            self.assertIn("Bu kurulumda olmayan profil", r.stderr)
+            # Birden çok paket: varsayılan Hukuk Bürosu; talimat öteki paketleri ve ne zaman seçileceklerini söyler.
+            secim_yaz(t / "kok", "hukuk-burosu", "adliye", "akademisyen", "tapu")
+            profiller, varsayilan, talimat, secenek, aciklama = self.calistir(t, kod)
+            self.assertEqual(varsayilan, "hukuk-burosu")
+            self.assertEqual(secenek, ["hukuk-burosu", "adliye", "akademisyen"])
+            self.assertIn("`adliye` = hâkim ve kalem", talimat)
+            self.assertIn("`arthur-tapu` yerel araçlarını kullan", talimat)
+            self.assertIn('profil="akademisyen"', aciklama)
+            akademisyen = self.calistir(t, "import arthurlegal_sunucu as s, ortak; b = s.Bilgi(ortak.SURUM_DIZINI, "
+                                           "ortak.FIRMA); print(json.dumps(b.talimat('akademisyen')))")
+            self.assertIn("knowledge/akademisyen-profili.md", akademisyen)
+            self.assertIn("maskeli olsa bile sohbete alınmaz", akademisyen)
+
+    def test_secimden_cikan_paketin_proje_klasoru_bosaltilir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "hukuk-burosu", "adliye")
+            self.assertEqual(self.calistir(t, "import proje; print(len(proje.esitle()))"), 2)
+            courthouse = t / "projeler" / "Courthouse"
+            self.assertIn('profil="adliye"', (courthouse / "CLAUDE.md").read_text(encoding="utf-8"))
+            self.assertTrue((courthouse / "knowledge" / "profiles" / "asliye-hukuk.md").exists())
+            self.assertFalse((t / "projeler" / "Akademisyen").exists(), "seçilmeyen paketin klasörü açılmaz")
+            (courthouse / "calismalar" / "taslak.md").write_text("hâkimin taslağı", encoding="utf-8")
+            secim_yaz(t / "kok", "hukuk-burosu")
+            self.calistir(t, "import proje; proje.esitle(); print(1)")
+            self.assertFalse((courthouse / "SYSTEM_PROMPT.md").exists())
+            self.assertFalse((courthouse / "knowledge").exists())
+            self.assertTrue((courthouse / "calismalar" / "taslak.md").exists(), "kullanıcının dosyası kalır")
+            self.assertEqual(list(self.calistir(t, "import proje; print(json.dumps(proje.durum()))")), ["hukuk-burosu"])
+
+    def test_mask_secilmediyse_indirilmez(self):
+        import guncelle
+        import ortak
+        eski = (ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.akilli_denetim_acik, ortak.VERI)
+        try:
+            def indir(*a, **k):
+                raise AssertionError("indirilmemeliydi")
+            ortak.VERI = Path(tempfile.mkdtemp())
+            ortak.indir, ortak.akilli_denetim_acik = indir, lambda: False
+            ortak.moduller, ortak.mask_surumu = (lambda: ["adliye"]), (lambda: None)
+            manifest = {"mask": {"surum": "1.0.0", "url": "https://ornek.invalid/m.exe", "sha256": "0" * 64}}
+            self.assertEqual(guncelle.mask_guncelle(manifest), "mask: kurulumda seçilmedi")
+            ortak.mask_surumu = lambda: "0.9.0"  # kendi kurulumuyla gelmiş eski Arthur Mask güncellenir
+            with self.assertRaises(AssertionError):
+                guncelle.mask_guncelle(manifest)
+        finally:
+            shutil.rmtree(ortak.VERI, ignore_errors=True)
+            ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.akilli_denetim_acik, ortak.VERI = eski
+
+    def test_zip_kurulumu_modulleri_sorar(self):
+        import kur
+        cevaplar = iter(["", "6", "5", "3,5"])
+        with contextlib.redirect_stdout(io.StringIO()) as cikti:
+            self.assertEqual(kur.zip_secimi("tr", None, lambda _: next(cevaplar)), ["adliye", "tapu"])
+        self.assertIn("Arthur Mask bu yolla kurulamaz", cikti.getvalue())
+        self.assertEqual(cikti.getvalue().count("en az biri olmalı"), 3, "boş, liste dışı ve paketsiz cevap reddedilir")
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(kur.zip_secimi("en", ["adliye", "mask"], lambda _: ""), ["adliye"], "Enter: önceki seçim")
+
+            def kapali(_):
+                raise EOFError
+            self.assertEqual(kur.zip_secimi("tr", None, kapali), ["hukuk-burosu", "kurumsal", "tapu"])
+        self.assertEqual(list(kur.MODUL_METNI["tr"]), list(kur.ortak.MODULLER))
+
+    def test_baslangic_sayfasi_dort_paket_karti(self):
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import derle
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            icerik = {"surum": "0.0.1", "paketler": {"hukuk-burosu": "1", "kurumsal": "1", "adliye": "1", "akademisyen": "1"}}
+            derle.rehber_yaz(t, "", icerik)
+            for sayfa, metin in (("baslangic.html", "Sen ArthurLegal Courthouse (Adliye) asistanısın"),
+                                 ("baslangic-en.html", "You are the ArthurLegal Courthouse assistant")):
+                html = (t / "rehber" / sayfa).read_text(encoding="utf-8")
+                self.assertNotIn("{{", html)
+                self.assertIn(metin, html)
+                for profil in ("hukuk-burosu", "kurumsal", "adliye", "akademisyen"):
+                    self.assertEqual(html.count(f'<div class="kart" data-modul="{profil}">'), 2,
+                                     "paket kartı ve talimat kartı; sayfa seçilmeyeni gizler")
+                self.assertIn('data-modul="tapu"', html)
+                self.assertIn("d.moduller", html)
+            self.assertIn("3,5", derle.ZIP_BENIOKU)
+
+    def test_kurulum_betigi_modul_ekrani(self):
+        import re
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        self.assertIn("CreateCustomPage(wpLicense", iss, "modül ekranı lisanstan sonra")
+        self.assertIn("{param:MODULLER|}", iss)
+        self.assertIn("SetPreviousData(PreviousDataKey, 'Moduller', Secim)", iss)
+        self.assertIn("ActiveLanguage + ' --moduller ' + Secim", iss)
+        self.assertIn("ESKI_SECIM = 'hukuk-burosu,kurumsal,tapu,mask'", iss)
+        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr")}
+        kodlar = re.findall(r"\d: Result := '(\w+)';|else\s+Result := '(Modul\w+)';", iss)
+        iletiler = {a or b for a, b in kodlar if (a or b).startswith("Modul")}
+        self.assertEqual(len(iletiler), 6)
+        for ileti in iletiler:  # CustomMessage(ModulIletisi(I)) ve ... + 'Aciklama' çalışırken çözülür
+            for dil in ("en", "tr"):
+                self.assertIn(ileti, tanimli[dil])
+                self.assertIn(ileti + "Aciklama", tanimli[dil])
+        import ortak
+        sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["mask"]
+        self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
 
 
 if __name__ == "__main__":

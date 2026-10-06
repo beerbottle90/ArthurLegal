@@ -5,6 +5,12 @@
 > Target environment: [Claude.ai Projects](https://claude.ai/projects) (web).
 > Time required: ~15 minutes.
 
+> **On Windows, with one file:** download and run [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)
+> and tick **Academician** on the **Choose modules** screen. The package connects to Claude Desktop by itself; the
+> steps below (project, instructions, file upload) are not needed and updates arrive in the background.
+> Illustrated guide: [download section of the main page](https://github.com/beerbottle90/ArthurLegal#download).
+> The manual installation below is for Mac and claude.ai on the web.
+
 ---
 
 ## Step 1 — Create a Claude.ai Project

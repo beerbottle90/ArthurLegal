@@ -1,9 +1,9 @@
 """ArthurLegal yerel MCP sunucusu (stdio) — Claude Desktop'ta `arthurlegal-yerel`.
 
 İki iş yapar:
-1. Paket: Law Firm ve Corporate paketlerinin SYSTEM_PROMPT'u ve bütün knowledge dosyaları
-   (büro katmanıyla) araçla okunur. Paket güncellenince Project'e hiçbir şey yüklenmez;
-   Project'teki kısa ön yükleme talimatı (ortak.ONYUKLEME) hiç değişmez.
+1. Paket: kurulumda seçilen paketlerin (Law Firm, Corporate, Courthouse, Academician; ortak.moduller)
+   SYSTEM_PROMPT'u ve bütün knowledge dosyaları (büro katmanıyla) araçla okunur. Paket güncellenince
+   Project'e hiçbir şey yüklenmez; Project'teki kısa ön yükleme talimatı (ortak.ONYUKLEME) hiç değişmez.
 2. Araştırma köprüsü: https://arthurlegal-mcp.fly.dev/mcp araçları aynen aktarılır, connector
    eklemek gerekmez. `tkgm_` araçları aktarılmaz: tapu işleri yerel arthur-tapu'dadır ve tapu
    kaydı metni buluta gitmez.
@@ -44,6 +44,30 @@ class Hata(Exception):
 
 # ---------------------------------------------------------------------------- paket bilgisi
 
+# Paketin hangi iş için olduğu: araç açıklamasında ve birden çok paket kuruluyken oturum talimatında.
+PROFIL_ACIKLAMASI = {
+    "hukuk-burosu": "avukat ve hukuk bürosu işi (dilekçe, sözleşme, dava, müvekkil)",
+    "kurumsal": "şirket içi hukuk birimi işi",
+    "adliye": "hâkim ve kalem (mahkeme) işi: gerekçeli karar, tensip, müzekkere, tebligat, duruşma",
+    "akademisyen": "hukuk akademisyeninin işi: makale, tez, atıf, dergi seçimi, proje başvurusu",
+}
+
+_AVUKAT_MASK = ("Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan "
+                "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. UYAP (`arthur-uyap`, salt okunur, maskeli) kuruluysa "
+                "onun kendi talimatı geçerlidir: son gün hesaplanmaz ve sana gün gelmez, takvim kaydı avukatın "
+                "bilgisayarında oluşur.")
+MASK_MADDESI = {
+    "hukuk-burosu": _AVUKAT_MASK,
+    "kurumsal": _AVUKAT_MASK,
+    "adliye": "Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; dosya belgesi (UYAP UDF dâhil) sohbete doğrudan "
+              "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. Gizlilik ya da kısıtlama kararı olan dosyanın "
+              "içeriği maskeli olsa bile kurum kuralları izin vermedikçe sohbete alınmaz. Asistan UYAP'a bağlanmaz.",
+    "akademisyen": "Arthur Mask kuruluysa kişisel veri içeren belgeler için kullanılabilir; ancak değerlendirme altındaki "
+                   "gizli müsvedde, proje önerisi, tez ya da hakem materyali maskeli olsa bile sohbete alınmaz "
+                   "(SYSTEM_PROMPT, ÜYZ Kapısı).",
+}
+
+
 class Bilgi:
     def __init__(self, surum_dizini, firma_dizini):
         self.paketler = surum_dizini / "paketler"
@@ -52,17 +76,25 @@ class Bilgi:
         self._harita, self._metin, self._kilit = {}, {}, threading.Lock()
 
     def profiller(self):
-        return [p for p in ortak.PROFILLER if (self.paketler / p / "SYSTEM_PROMPT.md").exists()]
+        """Kurulumda seçilen ve bu sürümde bulunan paketler; sıra varsayılan profilin önceliğidir."""
+        secili = ortak.moduller()
+        return [p for p in ortak.PROFILLER if p in secili and (self.paketler / p / "SYSTEM_PROMPT.md").exists()]
+
+    def varsayilan(self, mevcut=None):
+        """Profil verilmeden çağrılınca: ayardaki varsayılan kuruluysa o, değilse ilk kurulu paket. Yalnız Courthouse
+        seçilmiş bir bilgisayarda Courthouse'tur."""
+        mevcut = self.profiller() if mevcut is None else mevcut
+        istenen = ortak.ayar().get("varsayilan_profil")
+        return istenen if istenen in mevcut else (mevcut[0] if mevcut else "")
 
     def profil(self, istenen):
         mevcut = self.profiller()
         if not mevcut:
             raise Hata(-32603, "Bu kurulumda paket yok.")
-        if not istenen:  # kurulumda seçilen varsayılan; yoksa ilk paket
-            varsayilan = ortak.ayar().get("varsayilan_profil")
-            return varsayilan if varsayilan in mevcut else mevcut[0]
+        if not istenen:
+            return self.varsayilan(mevcut)
         if istenen not in mevcut:
-            raise Hata(-32602, f"Bilinmeyen profil: {istenen}. Seçenekler: {', '.join(mevcut)}")
+            raise Hata(-32602, f"Bu kurulumda olmayan profil: {istenen}. Kurulu olanlar: {', '.join(mevcut)}")
         return istenen
 
     def harita(self, profil):
@@ -175,6 +207,17 @@ class Bilgi:
         except OSError:
             return "?"
 
+    @staticmethod
+    def _profil_dosyasi(profil, h):
+        """Paketin kendi profil dosyası (büro, şirket, mahkeme, akademisyen)."""
+        if profil == "adliye":
+            turler = any(k.startswith("knowledge/profiles/") for k in h)
+            return ("mahkeme bilgisi `knowledge/mahkeme-profili.md` dosyasındadır"
+                    + ("; mahkeme türüne göre ayrıntı `knowledge/profiles/` altındadır." if turler else "."))
+        if profil == "akademisyen":
+            return "akademisyen bilgisi `knowledge/akademisyen-profili.md` dosyasındadır."
+        return "büro bilgisi `knowledge/firm-profile.md` (Corporate'ta `knowledge/company-profile.md`) dosyasındadır."
+
     def talimat(self, profil):
         h = self.harita(profil)
         sp, _ = self.metin(h["SYSTEM_PROMPT.md"])
@@ -187,20 +230,25 @@ class Bilgi:
             "Okumadığın dosyanın içeriğini varsayma.",
             "`/eklenti:komut` biçimindeki bir komut istendiğinde `knowledge/skills/<eklenti>__skills.md` dosyasını "
             "`bolum=\"/<eklenti>:<komut>\"` ile getir ve oradaki adımları uygula.",
-            "Metinde geçen `~/.claude/plugins/config/...` yolları bu kurulumda yoktur; büro bilgisi "
-            "`knowledge/firm-profile.md` (Corporate'ta `knowledge/company-profile.md`) dosyasındadır.",
+            "Metinde geçen `~/.claude/plugins/config/...` yolları bu kurulumda yoktur; " + self._profil_dosyasi(profil, h),
             "Araştırma araçları (`tr_`, `az_`, `eu_`, `uk_` ... önekli) ve `status` bu `arthurlegal-yerel` sunucusundan "
             "gelir. Aynı araçlar ayrıca claude.ai connector'ı olarak görünüyorsa bu sunucudakini kullan.",
-            "Tapu, parsel ve harç işlerinde `arthur-tapu` yerel araçlarını kullan; `tkgm_` önekli uzak araçları kullanma. "
-            "Parseli `parsel_sorgula` (il/ilçe/mahalle + ada/parsel ya da `metin`), `konumdan_parsel` ve `yer_bul` TKGM "
-            "Parsel Sorgu'dan canlı getirir: kullanıcıdan GeoJSON/KML dosyası isteme. Sohbetteki ilk canlı çağrı onay "
-            "kartı döndürür; kartı olduğu gibi göster, kabulde `onay=true` ile yinele ve o sohbette `onay=true` gönder. "
-            "Tapu kaydı metni (`tapu_kaydi_oku`) bilgisayardan çıkmaz. Ayrıntı: `tapu-kadastro-rehberi.md`.",
-            "Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan "
-            "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. UYAP (`arthur-uyap`, salt okunur, maskeli) kuruluysa "
-            "onun kendi talimatı geçerlidir: son gün hesaplanmaz ve sana gün gelmez, takvim kaydı avukatın "
-            "bilgisayarında oluşur.",
+            ("Tapu, parsel ve harç işlerinde `arthur-tapu` yerel araçlarını kullan; `tkgm_` önekli uzak araçları kullanma. "
+             "Parseli `parsel_sorgula` (il/ilçe/mahalle + ada/parsel ya da `metin`), `konumdan_parsel` ve `yer_bul` TKGM "
+             "Parsel Sorgu'dan canlı getirir: kullanıcıdan GeoJSON/KML dosyası isteme. Sohbetteki ilk canlı çağrı onay "
+             "kartı döndürür; kartı olduğu gibi göster, kabulde `onay=true` ile yinele ve o sohbette `onay=true` gönder. "
+             "Tapu kaydı metni (`tapu_kaydi_oku`) bilgisayardan çıkmaz. Ayrıntı: `tapu-kadastro-rehberi.md`."
+             if ortak.bilesen_var("tapu") else
+             "Bu kurulumda ArthurLegal Tapu seçilmedi; `tkgm_` önekli uzak araçları da kullanma. Taşınmaz ya da parsel "
+             "bilgisi gerekiyorsa uydurma, `UYARI: veri çekilemedi, teyidiniz gerekli: https://parselsorgu.tkgm.gov.tr/` "
+             "yaz."),
+            MASK_MADDESI.get(profil, MASK_MADDESI["hukuk-burosu"]),
         ]
+        oteki = [p for p in self.profiller() if p != profil]
+        if oteki:
+            maddeler.append(
+                "Bu bilgisayarda başka paketler de kurulu: " + "; ".join(f"`{p}` = {PROFIL_ACIKLAMASI[p]}" for p in oteki)
+                + ". İstenen iş o paketlerden birine aitse `arthurlegal_talimat`'ı o profille yeniden çağır.")
         if buro:
             maddeler.append(
                 f"Büro kuralları ({firma or 'büro'}): " + ", ".join(f"`{k}`" for k in buro) + " dosyaları bu büronun "
@@ -287,38 +335,51 @@ class Uzak:
 
 # ---------------------------------------------------------------------------- sunucu
 
-def _profil_ozelligi():
-    return {"type": "string", "enum": list(ortak.PROFILLER),
-            "description": "hukuk-burosu = Law Firm paketi, kurumsal = Corporate paketi"}
+TALIMAT_KONULARI = "Türk veya yabancı hukuk, sözleşme, dilekçe, mevzuat, içtihat, süre, KVKK, iş, vergi, ceza, idare, şirketler, tapu, UYAP"
+EK_KONULAR = {"adliye": "gerekçeli karar, tensip, müzekkere, tebligat, duruşma, dosya belgesi",
+              "akademisyen": "makale, tez, atıf, dergi, proje başvurusu"}
 
 
-YEREL_ARACLAR = [
-    {"name": "arthurlegal_talimat",
-     "description": "ÖNCE BU ARACI ÇAĞIR. Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili herhangi "
-                    "bir şey sorduğunda ya da istediğinde (Türk veya yabancı hukuk, sözleşme, dilekçe, mevzuat, içtihat, süre, "
-                    "KVKK, iş, vergi, ceza, idare, şirketler, tapu, UYAP, müvekkil belgesi) cevap vermeden önce ilk iş bu aracı "
-                    "çağır ve dönen metni bu sohbetin sistem talimatı olarak eksiksiz uygula. Sohbet başına bir kez yeterli. "
-                    "Proje gerekmez. profil verme: kurulumda seçilen varsayılan kullanılır; kullanıcı açıkça kurumsal/şirket "
-                    "içi hukuk asistanı isterse profil=\"kurumsal\".",
-     "inputSchema": {"type": "object", "properties": {"profil": _profil_ozelligi()}}},
-    {"name": "arthurlegal_bilgi_ara",
-     "description": "Paketin bilgi dosyalarında (skills, references, profiles, agents, büro kuralları) Türkçe karakter "
-                    "duyarsız anahtar kelime araması yapar; dosya yolu ve eşleşen satırları döndürür.",
-     "inputSchema": {"type": "object", "properties": {
-         "sorgu": {"type": "string"}, "profil": _profil_ozelligi(),
-         "en_fazla": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}, "required": ["sorgu"]}},
-    {"name": "arthurlegal_bilgi_getir",
-     "description": "Bir bilgi dosyasını getirir (ör. knowledge/references/hmk-rehberi.md). `bolum` verilirse yalnız o başlığın "
-                    "bölümü döner; skill komutları için bolum=\"/eklenti:komut\". Uzun dosyalar `baslangic` ile parça parça okunur.",
-     "inputSchema": {"type": "object", "properties": {
-         "yol": {"type": "string"}, "profil": _profil_ozelligi(), "bolum": {"type": "string"},
-         "baslangic": {"type": "integer", "minimum": 0}}, "required": ["yol"]}},
-    {"name": "arthurlegal_durum",
-     "description": "Yerel kurulumun durumu: paket ve bileşen sürümleri, son güncelleme denetimi, araştırma sunucusu bağlantısı.",
-     "inputSchema": {"type": "object", "properties": {}}},
-]
-for _a in YEREL_ARACLAR:
-    _a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
+def yerel_araclar(profiller, varsayilan):
+    """Yerel araçlar, bu bilgisayarda kurulu paketlere göre: profil seçenekleri yalnız kurulu paketlerdir ve
+    talimat aracının açıklaması hangi işte hangi profilin verileceğini söyler."""
+    profiller = list(profiller) or list(ortak.ESKI_SECIM[:2])
+    ozellik = {"type": "string", "enum": profiller,
+               "description": ", ".join(f"{p} = {PROFIL_ACIKLAMASI[p]}" for p in profiller)}
+    konular = ", ".join([TALIMAT_KONULARI] + [EK_KONULAR[p] for p in profiller if p in EK_KONULAR]
+                        + (["müvekkil belgesi"] if {"hukuk-burosu", "kurumsal"} & set(profiller) else []))
+    oteki = [p for p in profiller if p != varsayilan]
+    secim = ("profil verme: kurulumda seçilen varsayılan (" + (varsayilan or profiller[0]) + ") kullanılır"
+             + ("; istenen iş başka bir kurulu pakete aitse o profili ver: "
+                + "; ".join(f"profil=\"{p}\" = {PROFIL_ACIKLAMASI[p]}" for p in oteki) if oteki else "") + ".")
+    araclar = [
+        {"name": "arthurlegal_talimat",
+         "description": "ÖNCE BU ARACI ÇAĞIR. Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili "
+                        f"herhangi bir şey sorduğunda ya da istediğinde ({konular}) cevap vermeden önce ilk iş bu aracı "
+                        "çağır ve dönen metni bu sohbetin sistem talimatı olarak eksiksiz uygula. Sohbet başına bir kez "
+                        "yeterli. Proje gerekmez. " + secim,
+         "inputSchema": {"type": "object", "properties": {"profil": ozellik}}},
+        {"name": "arthurlegal_bilgi_ara",
+         "description": "Paketin bilgi dosyalarında (skills, references, profiles, agents, büro kuralları) Türkçe karakter "
+                        "duyarsız anahtar kelime araması yapar; dosya yolu ve eşleşen satırları döndürür.",
+         "inputSchema": {"type": "object", "properties": {
+             "sorgu": {"type": "string"}, "profil": ozellik,
+             "en_fazla": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}, "required": ["sorgu"]}},
+        {"name": "arthurlegal_bilgi_getir",
+         "description": "Bir bilgi dosyasını getirir (ör. knowledge/references/hmk-rehberi.md). `bolum` verilirse yalnız o "
+                        "başlığın bölümü döner; skill komutları için bolum=\"/eklenti:komut\". Uzun dosyalar `baslangic` ile "
+                        "parça parça okunur.",
+         "inputSchema": {"type": "object", "properties": {
+             "yol": {"type": "string"}, "profil": ozellik, "bolum": {"type": "string"},
+             "baslangic": {"type": "integer", "minimum": 0}}, "required": ["yol"]}},
+        {"name": "arthurlegal_durum",
+         "description": "Yerel kurulumun durumu: seçilen modüller, paket ve bileşen sürümleri, son güncelleme denetimi, "
+                        "araştırma sunucusu bağlantısı.",
+         "inputSchema": {"type": "object", "properties": {}}},
+    ]
+    for a in araclar:
+        a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
+    return araclar
 
 def salt_okunur_isaretle(araclar):
     """Köprülenen araştırma araçları yalnız okur (arama, getirme, sayma): uzak sunucu işaret koymadıysa
@@ -408,15 +469,16 @@ class Sunucu:
         if metod == "tools/list":
             if self.uzak_araclar is None:
                 self._uzak_yenile(zaman_asimi=True)
-            return {"tools": YEREL_ARACLAR + (self.uzak_araclar or [])}
+            profiller = self.bilgi.profiller()
+            return {"tools": yerel_araclar(profiller, self.bilgi.varsayilan(profiller)) + (self.uzak_araclar or [])}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
-            return {"prompts": [{"name": pr, "description": f"ArthurLegal {ad} olarak başla (Project kullanmadan)"}
-                                for pr, ad in ortak.PROFILLER.items()]}
+            return {"prompts": [{"name": pr, "description": f"ArthurLegal {ortak.PROFILLER[pr]} olarak başla (Project kullanmadan)"}
+                                for pr in self.bilgi.profiller()]}
         if metod == "prompts/get":
             ad = p.get("name")
-            if ad not in ortak.ONYUKLEME:
+            if ad not in ortak.ONYUKLEME or ad not in self.bilgi.profiller():
                 raise Hata(-32602, f"Bilinmeyen istem: {ad}")
             return {"messages": [{"role": "user", "content": {"type": "text", "text": ortak.ONYUKLEME[ad]}}]}
         if metod in ("resources/list", "resources/templates/list"):
@@ -438,8 +500,9 @@ class Sunucu:
             except Hata as e:
                 return {"content": [{"type": "text", "text": str(e)}], "isError": True}
         if ad.startswith("tkgm_"):
-            return {"content": [{"type": "text", "text": "tkgm_ araçları bu kurulumda yerel arthur-tapu sunucusundadır."}],
-                    "isError": True}
+            metin = ("tkgm_ araçları bu kurulumda yerel arthur-tapu sunucusundadır." if ortak.bilesen_var("tapu") else
+                     "Bu kurulumda ArthurLegal Tapu seçilmedi; parsel bilgisi bu kurulumdan alınamaz.")
+            return {"content": [{"type": "text", "text": metin}], "isError": True}
         try:
             return self.uzak.cagir("tools/call", {"name": ad, "arguments": a})
         except Hata as e:
@@ -490,6 +553,7 @@ class Sunucu:
         icerik = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json")
         return json.dumps({
             "yerel_kurulum": ortak.surum(),
+            "secilen_moduller": ortak.moduller(),
             "paketler": {p: self.bilgi.paket_surumu(p) for p in self.bilgi.profiller()},
             "bilesenler": icerik.get("bilesenler", {}),
             "arthur_mask": ortak.mask_surumu() or "kurulu değil",
