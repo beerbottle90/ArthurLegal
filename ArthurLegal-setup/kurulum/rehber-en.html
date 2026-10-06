@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{URUN}} Start</title>
+<style>
+:root{--zemin:#f6f4ee;--kart:#fff;--yazi:#1b2433;--soluk:#5b6576;--lacivert:#14233c;--altin:#b08d3c;--cizgi:#e3dfd3;--kod:#f1eee6;--yesil:#2e7d4f}
+@media (prefers-color-scheme:dark){:root{--zemin:#0e1522;--kart:#16202f;--yazi:#e8e4da;--soluk:#9aa4b4;--lacivert:#e8e4da;--altin:#d4b36a;--cizgi:#26334a;--kod:#1c2839;--yesil:#57c08a}}
+*{box-sizing:border-box}body{margin:0;background:var(--zemin);color:var(--yazi);font:16px/1.6 "Segoe UI",system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding:36px 16px 64px}
+header img{display:block;width:100%;max-width:840px;height:auto;image-rendering:pixelated;border-radius:8px 8px 0 0}
+.serit{display:flex;height:8px;border-radius:0 0 8px 8px;overflow:hidden;max-width:840px}.serit i{flex:1}
+h2{font-size:20px;margin:34px 0 10px;color:var(--lacivert)}
+.adim{display:flex;gap:14px;margin:14px 0}
+.no{flex:0 0 32px;height:32px;background:var(--altin);color:#12202f;font-weight:700;display:grid;place-items:center;font-family:Consolas,monospace}
+.a2 .no{background:#3fae6a;color:#fff}.a3 .no{background:#5ec8e5;color:#12202f}.a4 .no{background:#7b5cc4;color:#fff}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:10px;padding:16px 18px;margin:12px 0}
+.kart h3{margin:0 0 8px;font-size:17px}
+textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--cizgi);border-radius:8px;background:var(--kod);color:var(--yazi);font:14px/1.5 Consolas,monospace;padding:10px}
+button,a.dugme{display:inline-block;margin:10px 8px 0 0;background:var(--lacivert);color:var(--zemin);border:0;border-radius:8px;padding:10px 18px;font:600 15px "Segoe UI",sans-serif;cursor:pointer;text-decoration:none}
+a.dugme.ikincil{background:transparent;color:var(--lacivert);border:1px solid var(--cizgi)}
+button.tamam{background:var(--yesil);color:#fff}
+.uyari{border-left:4px solid var(--altin);padding:10px 14px;background:var(--kart);border-radius:0 8px 8px 0}
+code{background:var(--kod);padding:1px 6px;border-radius:4px;font-size:14px}
+li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
+#durum{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+#durum div{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px 12px}
+#durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
+#durum span{font-size:15px}
+.dil{text-align:right;margin:0 0 10px;font-size:14px}.dil a{color:var(--lacivert)}
+</style>
+</head>
+<body>
+<main>
+<nav class="dil" lang="tr"><a href="baslangic.html">Türkçe</a></nav>
+<header>
+  <img src="banner-en.png" alt="ArthurLegal — open source legal AI">
+  <div class="serit"><i style="background:#c8453b"></i><i style="background:#f29b4b"></i><i style="background:#ffe066"></i><i style="background:#3fae6a"></i><i style="background:#5ec8e5"></i><i style="background:#3b7dd8"></i><i style="background:#7b5cc4"></i><i style="background:#b45a9a"></i></div>
+</header>
+
+<div id="durum"></div>
+
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Setup is complete. <b>Open a new chat in Claude Desktop and type your legal question:</b> the assistant loads the ArthurLegal instructions and knowledge files itself. When Claude asks for permission the first time it uses a tool, choose <b>Always allow</b>. The project step below is optional: it is for those who want to fix a profile or add their own files to a project.</p>
+
+<h2>Fallback 1: ready-made project folder</h2>
+<p>In Claude, open <b>Projects → New project</b>, click <b>Use a folder</b> and choose one of the folders below.
+Each folder already holds the instructions (<code>CLAUDE.md</code>), the system prompt and all knowledge files, and it is
+refreshed with every update. Put your own drafts in the folder's <code>calismalar</code> subfolder.</p>
+<div id="klasorler" class="kart"><span style="color:var(--soluk)">The folder paths appear here after setup.</span></div>
+
+<h2>Fallback 2: project and instructions</h2>
+<div class="adim a1"><div class="no">1</div><div><b>Claude Desktop must be open.</b> If it is closed, the <i>{{URUN}}</i> icon that opened this page opens it too.
+  If it is not installed, get it from <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
+<div class="adim a2"><div class="no">2</div><div><b>New project:</b> in the left menu choose <b>Projects → New project</b> and name it, for example <code>{{URUN}} – Law Firm</code>.
+  <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Open the Projects page</a></div></div>
+<div class="adim a3"><div class="no">3</div><div><b>Paste the instructions:</b> in the project, open the <b>Instructions</b> field, copy the text below,
+  paste it and save. <b>Do not upload knowledge files</b>; the files are read through the tools and stay up to date.</div></div>
+
+<div class="kart">
+  <h3>Law Firm</h3>
+  <textarea id="hukuk" readonly>{{ONYUKLEME_HUKUK}}</textarea>
+  <button data-hedef="hukuk">Copy instructions</button>
+</div>
+<div class="kart">
+  <h3>Corporate Assistant</h3>
+  <textarea id="kurumsal" readonly>{{ONYUKLEME_KURUMSAL}}</textarea>
+  <button data-hedef="kurumsal">Copy instructions</button>
+</div>
+
+<div class="adim a4"><div class="no">4</div><div><b>Try it:</b> open a new chat in the project and ask a legal question. The assistant first calls the
+  <code>arthurlegal_talimat</code> tool. If Claude asks for permission to use the tool, choose <b>Always allow</b>.</div></div>
+
+<h2>If the assistant does not load its instructions</h2>
+<p>Occasionally the model starts answering the first question without calling the instructions tool. In that case click the <b>+</b> button next to the message box and choose the <b>hukuk-burosu</b> (Law Firm) or <b>kurumsal</b> (Corporate) prompt under <b>arthurlegal-yerel</b>, or do the project step above once.</p>
+
+<h2>Other components</h2>
+<ul>
+  <li><b>Arthur Mask</b> — Do not attach client documents to the chat directly; drop them into Arthur Mask first. On first
+    start, print the <b>recovery key</b> and keep it safe.</li>
+  <li><b>ArthurLegal Tapu</b> — Turkish land registry: type a parcel such as "İstanbul Kadıköy Caferağa 123 ada 45 parsel" or a place
+    name in the chat. The parcel comes from the public data of TKGM Parsel Sorgu (one consent is asked at the first query).
+    The <i>{{URUN}} - Tapu</i> shortcut on the desktop opens the same parcel tool in your browser. Land-registry record text
+    never leaves this computer.</li>
+  <li><b>Project folders</b> — The <i>{{URUN}} - Project Folders</i> shortcut in the Start menu opens the ready-made folders in
+    File Explorer. If you drag files into a project by hand, that copy is not updated; the tools and "Use a folder" stay current.</li>
+  <li><b>Updates</b> — Installed in the background. To check now, use <i>{{URUN}} - Check for Updates</i> in the Start menu.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+<div class="uyari">If the tools do not appear, quit Claude Desktop <b>completely</b>, including the icon in the system tray, and open it
+again. Under <b>Settings → Developer</b>, <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> and (if installed)
+<code>arthur-mask</code> should show as running. The first tool list also contacts the remote research server, so it can take a few seconds.</div>
+
+<footer>{{URUN}} is a legal research and drafting tool; it does not give legal advice. A lawyer must verify every output.
+Arthur Mask pseudonymises; it does not anonymise. The duty of confidentiality stays with the lawyer.</footer>
+</main>
+<script src="durum.js" onerror="void 0"></script>
+<script>
+(function () {
+  var d = window.ARTHURLEGAL_DURUM;
+  if (!d) return;
+  // durum.js is written by the installed client in Turkish; known values are shown in English here.
+  var claude = {"açık": "running", "kurulu": "installed", "bulunamadı": "not installed", "zaten açık": "already running",
+                "başlatıldı": "started"};
+  var ceviriler = [
+    [/^paket (\S+) kuruldu$/, "package $1 installed"],
+    [/^paket güncel \((.*)\)$/, "package up to date ($1)"],
+    [/^mask: güncel \((.*)\)$/, "Arthur Mask up to date ($1)"],
+    [/^mask: (\S+) kuruldu$/, "Arthur Mask $1 installed"],
+    [/^mask: indirildi, Claude Desktop kapanınca kurulacak$/, "Arthur Mask downloaded; it installs when Claude Desktop is closed"],
+    [/^mask: Akıllı Uygulama Denetimi açık.*$/, "Arthur Mask skipped: Smart App Control is on"],
+    [/^mask: manifest'te yok$/, "Arthur Mask is not part of this release"],
+    [/^yayında manifest yok$/, "no update manifest in the latest release"],
+    [/^hata: (.*)$/, "error: $1"]
+  ];
+  var cevir = function (metin) {
+    return String(metin || "").split("; ").map(function (parca) {
+      for (var i = 0; i < ceviriler.length; i++) {
+        if (ceviriler[i][0].test(parca)) return parca.replace(ceviriler[i][0], ceviriler[i][1]);
+      }
+      return parca;
+    }).join("; ");
+  };
+  var paket = Object.keys(d.paketler || {}).map(function (k) { return (k === "hukuk-burosu" ? "Law Firm " : "Corporate ") + d.paketler[k]; }).join(" · ");
+  if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Start";
+  // The version Claude Desktop is really running; after an update it stays old until Claude Desktop is reopened.
+  var calisan = !d.calisan_surum ? "not opened yet" : (d.calisan_surum === d.surum ? d.calisan_surum + " (current)"
+      : d.calisan_surum + " — quit Claude Desktop completely, including the tray icon, and reopen it to start " + d.surum);
+  var satirlar = [
+    ["Installed", d.surum],
+    ["Last update", d.son_guncelleme || "none since installation"],
+    ["Running in Claude Desktop", calisan],
+    ["Packages", paket || "-"],
+    ["Claude Desktop", claude[d.claude] || d.claude],
+    ["Connected servers", (d.sunucular || []).join(", ") || "-"],
+    ["Arthur Mask", d.mask || "not installed"],
+    ["Last update check", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + cevir(d.son_sonuc) : "") : "not yet"]
+  ];
+  var k = d.proje_klasorleri || {};
+  var ad = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate"};
+  var liste = Object.keys(k).map(function (p) {
+    return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";
+  }).join("");
+  if (liste) document.getElementById("klasorler").innerHTML = liste;
+  document.getElementById("durum").innerHTML = satirlar.map(function (s) {
+    return "<div><b>" + s[0] + "</b><span>" + String(s[1]).replace(/</g, "&lt;") + "</span></div>";
+  }).join("");
+})();
+document.querySelectorAll("button[data-hedef]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var alan = document.getElementById(b.dataset.hedef);
+    var bitti = function () { b.textContent = "Copied ✓"; b.classList.add("tamam"); };
+    var yedek = function () { alan.select(); document.execCommand("copy"); bitti(); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(alan.value).then(bitti, yedek);
+    else yedek();
+  });
+});
+</script>
+</body>
+</html>

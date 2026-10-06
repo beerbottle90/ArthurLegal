@@ -97,7 +97,9 @@ class SahteUzak(http.server.BaseHTTPRequestHandler):
             sonuc = {"protocolVersion": "2025-06-18", "capabilities": {"tools": {}}, "serverInfo": {"name": "sahte"}}
         elif m["method"] == "tools/list":
             sonuc = {"tools": [{"name": n, "description": n, "inputSchema": {"type": "object"}}
-                               for n in ("status", "tr_ictihat_ara", "tkgm_tapu_kaydi_oku")]}
+                               for n in ("status", "tr_ictihat_ara", "tkgm_tapu_kaydi_oku")]
+                     + [{"name": "ornek_yazan", "description": "yazar", "inputSchema": {"type": "object"},
+                         "annotations": {"readOnlyHint": False}}]}
         else:
             if self.headers.get("Mcp-Session-Id") != "oturum-1":
                 self.send_response(404)
@@ -168,9 +170,25 @@ class BuroSimgesiTesti(unittest.TestCase):
         self.assertIn("<title>Örnek Büro Asistanı Başlangıç</title>", sayfa)
         self.assertIn("<i>Örnek Büro Asistanı - Tapu</i>", sayfa)
         self.assertNotIn("{{", sayfa)
+        self.assertIn('<a href="baslangic-en.html">English</a>', sayfa)
+        self.assertIn("<b>Always allow</b>", sayfa, "Claude Desktop'un arayüzü Türkçe değil")
+        en = (self.kok / "rehber" / "baslangic-en.html").read_text(encoding="utf-8")
+        self.assertIn("<title>Örnek Büro Asistanı Start</title>", en)
+        self.assertIn("<i>Örnek Büro Asistanı - Tapu</i>", en)
+        self.assertIn('<a href="baslangic.html">Türkçe</a>', en)
+        self.assertIn("You are the ArthurLegal Law Firm assistant.", en, "İngilizce ön yükleme talimatı")
+        self.assertNotIn("{{", en)
         self.derle.rehber_yaz(self.kok, "", icerik)
         self.assertIn("<title>ArthurLegal Başlangıç</title>",
                       (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8"))
+
+    def test_zip_talimati_iki_dilde(self):
+        """Akıllı Uygulama Denetimi internetten gelen .cmd'yi engeller: işaret ayıklamadan önce kaldırılır."""
+        self.assertIn("Engellemeyi Kaldır", self.derle.ZIP_BENIOKU)
+        self.assertIn("Tümünü Ayıkla...", self.derle.ZIP_BENIOKU)
+        self.assertIn("Unblock", self.derle.ZIP_README)
+        self.assertIn("Extract All...", self.derle.ZIP_README)
+        self.assertLess(self.derle.ZIP_BENIOKU.index("Engellemeyi Kaldır"), self.derle.ZIP_BENIOKU.index("Tümünü Ayıkla"))
 
 
 class KurulumBetigiTesti(unittest.TestCase):
@@ -181,9 +199,30 @@ class KurulumBetigiTesti(unittest.TestCase):
         self.assertIn("UsePreviousGroup=no", iss, "Inno önceki kurulumun menü klasörünü yeniden kullanırdı")
         sil, kur = iss.find(r"DeleteFile(ExpandConstant('{app}\aktif.txt'))"), iss.find("kur --kurulum --kisayol")
         self.assertTrue(0 < sil < kur, "al.py aktif.txt'deki eski sürümü seçerdi; önce silinmeli")
-        # Kaldırma kısayolunun adı kur._kaldir_adi ile aynı olmalı.
-        self.assertIn('#define KaldirAdi "ArthurLegal\'i Kaldır"', iss)
-        self.assertIn('#define KaldirAdi UrunAd + " - Kaldır"', iss)
+        # Kaldırma kısayolunun adı iki dilde de kur._kaldir_adi ile aynı olmalı.
+        self.assertIn('#define KaldirAdiTr "ArthurLegal\'i Kaldır"', iss)
+        self.assertIn('#define KaldirAdiTr UrunAd + " - Kaldır"', iss)
+        self.assertIn('#define KaldirAdiEn "Uninstall ArthurLegal"', iss)
+        self.assertIn('#define KaldirAdiEn UrunAd + " - Uninstall"', iss)
+        self.assertIn('Name: "{group}\\{cm:KaldirAdi}"', iss)
+
+    def test_iki_dil_ve_dil_kur_py_ye_gecer(self):
+        """Kurulum İngilizce ve Türkçe; dil sorulur, lisans sayfası dile göre, seçilen dil kur.py'ye --dil ile geçer."""
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        self.assertIn('Name: "en"; MessagesFile: "compiler:Default.isl"; LicenseFile: "{#Kaynak}\\LICENSE.txt"', iss)
+        self.assertIn('Name: "tr"; MessagesFile: "compiler:Languages\\Turkish.isl"; LicenseFile: "{#Kaynak}\\LISANS.txt"', iss)
+        self.assertIn("ShowLanguageDialog=yes", iss)
+        self.assertIn("kur --kurulum --kisayol --dil ' +\n       ActiveLanguage", iss)
+        self.assertIn("en.RehberDosyasi=baslangic-en.html", iss)
+        self.assertIn("tr.RehberDosyasi=baslangic.html", iss)
+        self.assertNotIn("Her zaman izin ver'i seçin", iss, "Claude Desktop'un düğmesi İngilizce: Always allow")
+        import re
+        # Her özel ileti iki dilde de tanımlı olmalı; CustomMessage('X') tanımsız ileti çalışırken hata verir.
+        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr")}
+        self.assertEqual(tanimli["en"], tanimli["tr"])
+        kullanilan = set(re.findall(r"CustomMessage\('(\w+)'\)", iss)) | set(re.findall(r"\{cm:(\w+)\}", iss))
+        self.assertTrue(kullanilan, "özel iletiler kullanılıyor")
+        self.assertLessEqual(kullanilan, tanimli["en"])
 
     def test_aktif_yoksa_en_yeni_surum(self):
         """Kurulumun dayandığı kural: aktif.txt silinince al.py en yeni sürüm klasörünü seçer."""
@@ -364,6 +403,41 @@ class KisayolTesti(unittest.TestCase):
             (marka / "tema.json").write_text(json.dumps({"kisa_ad": " Örnek  Hukuk "}), encoding="utf-8")
             self.assertEqual(ortak.kisa_ad(Path(t)), "Örnek Hukuk")
 
+    def test_kisayollar_kurulumun_dilinde(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            adlar = [s[0] for s in self.calistir(t, self.LISTE)]
+            self.assertIn("ArthurLegal - Başlangıç Rehberi 0.0.1.lnk", adlar, "dil yazılmamışsa (eski kurulum) Türkçe")
+            (t / "kok" / "rehber").mkdir()
+            (t / "kok" / "rehber" / "baslangic-en.html").write_text("", encoding="utf-8")
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'en']))")
+            liste = self.calistir(t, self.LISTE)
+            adlar = [s[0] for s in liste]
+            for ad in ("ArthurLegal 0.0.1.lnk", "ArthurLegal - Tapu 0.0.1.lnk", "ArthurLegal - Start Guide 0.0.1.lnk",
+                       "ArthurLegal - Project Folders 0.0.1.lnk", "ArthurLegal - Check for Updates 0.0.1.lnk"):
+                self.assertIn(ad, adlar)
+            self.assertFalse([a for a in adlar if "Rehberi" in a or "Denetle" in a])
+            rehber = next(s for s in liste if s[0] == "ArthurLegal - Start Guide 0.0.1.lnk")
+            self.assertEqual(Path(rehber[1]).name, "baslangic-en.html")
+            self.assertEqual(self.calistir(t, "import kur; print(json.dumps([kur._kaldir_adi('ArthurLegal'), "
+                                              "kur._kaldir_adi('Örnek'), kur._kaldir_adi('ArthurLegal', 'tr')]))"),
+                             ["Uninstall ArthurLegal", "Örnek - Uninstall", "ArthurLegal'i Kaldır"])
+            # Dil değişince öteki dildeki kısayollar ve kaldırma kısayolu temizlenir.
+            menu = t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "ArthurLegal"
+            menu.mkdir(parents=True)
+            for ad in ("ArthurLegal - Başlangıç Rehberi 0.0.1.lnk", "ArthurLegal - Güncellemeleri Denetle 0.0.1.lnk",
+                       "ArthurLegal'i Kaldır.lnk", "Uninstall ArthurLegal.lnk"):
+                (menu / ad).write_bytes(b"")
+            self.calistir(t, "import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in "
+                             "kur._kisayol_listesi()} | {kur._menu() / (kur._kaldir_adi(kur.ortak.urun_adi()) + "
+                             "'.lnk')}); print(1)")
+            self.assertEqual([p.name for p in menu.iterdir()], ["Uninstall ArthurLegal.lnk"])
+            # İngilizce sayfa yoksa (eski kurulumun rehber klasörü) Türkçesi açılır.
+            (t / "kok" / "rehber" / "baslangic-en.html").unlink()
+            self.assertEqual(self.calistir(t, "import ortak; print(json.dumps(ortak.rehber_dosyasi().name))"),
+                             "baslangic.html")
+
     def test_eski_numarali_kisayol_taninir(self):
         """Güncelleme yarıda kaldıysa: kısayol çalışan sürümden başka bir numara taşıyor; güncelleyici eşitler."""
         with tempfile.TemporaryDirectory() as t:
@@ -504,10 +578,14 @@ class SunucuTesti(unittest.TestCase):
         self.assertIn("arthurlegal_talimat", r["instructions"])
         self.surec.stdin.write(json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}) + "\n")
         self.surec.stdin.flush()
-        adlar = [t["name"] for t in self.iste("tools/list")["result"]["tools"]]
+        araclar = {t["name"]: t for t in self.iste("tools/list")["result"]["tools"]}
+        adlar = list(araclar)
         self.assertIn("arthurlegal_bilgi_getir", adlar)
         self.assertIn("tr_ictihat_ara", adlar)
         self.assertNotIn("tkgm_tapu_kaydi_oku", adlar, "tapu kaydı aracı buluta aktarılmamalı")
+        # Araştırma araçları salt okunur: Claude Desktop kalıcı "Always allow" sunabilsin.
+        self.assertEqual(araclar["tr_ictihat_ara"]["annotations"], {"readOnlyHint": True, "openWorldHint": True})
+        self.assertEqual(araclar["ornek_yazan"]["annotations"], {"readOnlyHint": False}, "uzak işaret korunur")
 
     def test_2_talimat_buro_katmani(self):
         metin = self.arac("arthurlegal_talimat", profil="hukuk-burosu")["content"][0]["text"]
@@ -543,6 +621,169 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(r["isError"])
         self.assertEqual(self.iste("yok/boyle")["error"]["code"], -32601)
         self.assertIn("uzak_arac_sayisi", self.arac("arthurlegal_durum")["content"][0]["text"])
+
+
+class SaltOkunurTesti(unittest.TestCase):
+    def test_isaretsiz_arac_salt_okunur_olur_acik_isarete_dokunulmaz(self):
+        import arthurlegal_sunucu as s
+        girdi = [{"name": "a"}, {"name": "b", "annotations": {"title": "B"}},
+                 {"name": "c", "annotations": {"readOnlyHint": False}}, {"name": "d", "annotations": {"destructiveHint": True}}]
+        cikti = {t["name"]: t["annotations"] for t in s.salt_okunur_isaretle(girdi)}
+        self.assertEqual(cikti["a"], {"readOnlyHint": True, "openWorldHint": True})
+        self.assertEqual(cikti["b"], {"title": "B", "readOnlyHint": True, "openWorldHint": True})
+        self.assertEqual(cikti["c"], {"readOnlyHint": False})
+        self.assertEqual(cikti["d"], {"destructiveHint": True})
+        self.assertNotIn("annotations", girdi[0], "girdi değiştirilmez")
+        self.assertEqual(s.salt_okunur_isaretle(None), [])
+
+
+class AkilliDenetimTesti(unittest.TestCase):
+    """Akıllı Uygulama Denetimi açıkken imzasız Arthur Mask kurulumu çalışmaz: güncelleyici onu indirmez."""
+
+    def test_denetim_acikken_mask_indirilmez(self):
+        import guncelle
+        import ortak
+        eski = (ortak.akilli_denetim_acik, ortak.mask_surumu, ortak.indir, ortak.VERI)
+        with tempfile.TemporaryDirectory() as t:
+            try:
+                ortak.VERI = Path(t)
+                (Path(t) / "indirilen").mkdir()
+                kalan = Path(t) / "indirilen" / "ArthurMask-Kurulum-1.0.0.exe"
+                kalan.write_bytes(b"onceki deneme")
+                ortak.mask_surumu = lambda: None
+
+                def indir(*a, **k):
+                    raise AssertionError("indirilmemeliydi")
+                ortak.indir = indir
+                ortak.akilli_denetim_acik = lambda: True
+                manifest = {"mask": {"surum": "1.0.0", "url": "https://ornek.invalid/m.exe", "sha256": "0" * 64}}
+                self.assertIn("Akıllı Uygulama Denetimi açık", guncelle.mask_guncelle(manifest))
+                self.assertFalse(kalan.exists(), "önceki denemeden kalan 1 GB'lık dosya silinir")
+                # Arthur Mask kurulumu imzalıysa (manifest bunu söylerse) denetim engel değildir: indirmeye çalışır.
+                manifest["mask"]["imzali"] = True
+                with self.assertRaises(AssertionError):
+                    guncelle.mask_guncelle(manifest)
+                ortak.akilli_denetim_acik = lambda: False
+                manifest["mask"].pop("imzali")
+                with self.assertRaises(AssertionError):
+                    guncelle.mask_guncelle(manifest)
+            finally:
+                ortak.akilli_denetim_acik, ortak.mask_surumu, ortak.indir, ortak.VERI = eski
+
+
+class YayimlamaTesti(unittest.TestCase):
+    """yayinla.py: yeni yayın önce taslak açılır, bütün dosyalar yüklenince tek adımda yayımlanır (indirme düğmesi
+    ve güncelleyici arada "Not Found" görmez); var olan yayında dosya geçici adla yüklenip adı düzeltilir; public
+    depoya yalnız bu derlemenin genel kurulumu gider."""
+
+    KURULUMLAR = ("ArthurLegal-Kurulum.exe", "ArthurLegal-Kurulum.zip")
+
+    def setUp(self):
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import ortak
+        import yayinla
+        self.y = yayinla
+        self.cikti = Path(tempfile.mkdtemp())
+        self.eski = (yayinla.CIKTI, yayinla.api, yayinla.github_jetonu)
+        yayinla.CIKTI = self.cikti
+        yayinla.github_jetonu = lambda: "jeton"
+        for ad in ("arthurlegal-paket-9.9.9.zip", "arthurlegal-manifest.json", "arthurlegal-manifest.sig") + self.KURULUMLAR:
+            (self.cikti / ad).write_bytes(ad.encode())
+        self.d = {"surum": "9.9.9", "icerik": {"paketler": {}, "bilesenler": {"tapu": "0.5.2"}},
+                  "paket": {"dosya": "arthurlegal-paket-9.9.9.zip"},
+                  "kurulum": {a: ortak.sha256_dosya(self.cikti / a) for a in self.KURULUMLAR}}
+
+    def tearDown(self):
+        self.y.CIKTI, self.y.api, self.y.github_jetonu = self.eski
+        shutil.rmtree(self.cikti, ignore_errors=True)
+
+    def sahte_github(self, var_olan=None):
+        """İstekleri sırayla kaydeden sahte GitHub API'si. var_olan: yayımlanmış yayının dosya adları."""
+        import urllib.error
+        kayit, yayin = [], {}
+        sayac = iter(range(1, 1000))
+
+        def varlik(ad):
+            return {"name": ad, "url": f"A/{next(sayac)}"}
+        if var_olan is not None:
+            yayin.update(url="R/1", upload_url="U{?name,label}", html_url="h", draft=False,
+                         assets=[varlik(a) for a in var_olan])
+
+        def api(yontem, url, jeton, veri=None, tur="application/json"):
+            yol = url.replace("https://api.github.com/repos/o/r/releases", "R")
+            kayit.append((yontem, yol, veri if isinstance(veri, dict) else None))
+            if yontem == "GET" and yol.startswith("R/tags/"):
+                if not yayin:
+                    raise urllib.error.HTTPError(url, 404, "yok", {}, None)
+                return dict(yayin)
+            if yontem == "GET" and yol.startswith("R?"):
+                return []
+            if yontem == "POST" and yol == "R":
+                yayin.update(url="R/1", upload_url="U{?name,label}", html_url="h", assets=[], **veri)
+                return dict(yayin)
+            if yontem == "POST" and yol.startswith("U?name="):
+                yeni = varlik(urllib.parse.unquote(yol.split("=", 1)[1]))
+                yayin["assets"].append(yeni)
+                return yeni
+            if yontem == "DELETE":
+                yayin["assets"] = [a for a in yayin["assets"] if a["url"] != yol]
+                return None
+            if yontem == "PATCH" and yol.startswith("A/"):
+                next(a for a in yayin["assets"] if a["url"] == yol)["name"] = veri["name"]
+                return None
+            if yontem == "PATCH" and yol == "R/1":
+                yayin.update(veri)
+                return dict(yayin)
+            raise AssertionError(f"beklenmeyen istek: {yontem} {yol}")
+        import urllib.parse
+        self.y.api = api
+        return kayit, yayin
+
+    def test_yeni_yayin_once_taslak_sonra_tek_adimda_latest(self):
+        kayit, yayin = self.sahte_github()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, False, public=True)
+        olustur = next(v for y, u, v in kayit if y == "POST" and u == "R")
+        self.assertTrue(olustur["draft"])
+        self.assertNotIn("make_latest", olustur, "taslak Latest olamaz; işaret yayımlarken verilir")
+        yuklenen = [u.split("=", 1)[1] for y, u, v in kayit if y == "POST" and u.startswith("U?")]
+        self.assertEqual(yuklenen, ["arthurlegal-paket-9.9.9.zip", *self.KURULUMLAR, "arthurlegal-manifest.sig",
+                                    "arthurlegal-manifest.json"], "manifest en son")
+        son = kayit[-1]
+        self.assertEqual(son, ("PATCH", "R/1", {"draft": False, "prerelease": False, "make_latest": "true"}))
+        self.assertFalse(yayin["draft"])
+
+    def test_on_surum_latest_olmaz(self):
+        kayit, _ = self.sahte_github()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, True, public=True)
+        self.assertEqual(kayit[-1][2], {"draft": False, "prerelease": True, "make_latest": "false"})
+
+    def test_var_olan_yayinda_dosya_gecici_adla_degisir(self):
+        adlar = ["arthurlegal-paket-9.9.9.zip", *self.KURULUMLAR, "arthurlegal-manifest.sig", "arthurlegal-manifest.json"]
+        kayit, yayin = self.sahte_github(var_olan=adlar)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, False, public=True)
+        exe = [(y, u.split("=", 1)[-1] if y == "POST" else u, v) for y, u, v in kayit
+               if (y == "POST" and "Kurulum.exe" in u) or (y == "DELETE" and u == "A/2")
+               or (y == "PATCH" and v == {"name": "ArthurLegal-Kurulum.exe"})]
+        self.assertEqual([x[0] for x in exe], ["POST", "DELETE", "PATCH"], "yeni dosya yüklenmeden eski silinmez")
+        self.assertEqual(exe[0][1], "yukleniyor-ArthurLegal-Kurulum.exe")
+        self.assertEqual(sorted(a["name"] for a in yayin["assets"]), sorted(adlar))
+        self.assertFalse([y for y, u, v in kayit if y == "PATCH" and u == "R/1"], "yayımlanmış yayına dokunulmaz")
+
+    def test_public_depoya_yalniz_bu_derlemenin_genel_kurulumu(self):
+        (self.cikti / "ArthurLegal-Kurulum-ornek.exe").write_bytes(b"buro")
+        self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, self.d, True), list(self.KURULUMLAR))
+        self.assertIn("ArthurLegal-Kurulum-ornek.exe", self.y.yuklenecek_kurulumlar(self.cikti, self.d, False))
+        (self.cikti / "ArthurLegal-Kurulum.exe").write_bytes(b"UYAP'li deneme derlemesi")
+        with self.assertRaises(SystemExit):
+            self.y.yuklenecek_kurulumlar(self.cikti, self.d, True)
+        (self.cikti / "ArthurLegal-Kurulum.exe").write_bytes(b"ArthurLegal-Kurulum.exe")
+        with self.assertRaises(SystemExit):
+            self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "icerik": {"bilesenler": {"uyap": "1.18.3"}}}, True)
+        with self.assertRaises(SystemExit):
+            self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "kurulum": {}}, True)
 
 
 class GuncelleyiciTesti(unittest.TestCase):

@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.4.3
+# ArthurLegal Setup v2.4.4
 
 **Tek dosyalık Windows kurulumu.** Avukat indirir, çift tıklar; ArthurLegal Hukuk Bürosu ve Kurumsal
 Asistan paketleri, araştırma bağlantıları ve yerel araçlar Claude Desktop'a kendiliğinden bağlanır.
@@ -26,23 +26,30 @@ Claude Desktop kurulu değilse `winget` ile kullanıcı kapsamında kurulur.
 1. **[ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
    dosyasını indirin (bağlantı her zaman en son sürümü verir) ve çift tıklayın. Edge ya da Windows uyarı
    verirse resimli anlatım [ana sayfanın indirme bölümünde](https://github.com/beerbottle90/ArthurLegal#indir);
-   kısaca Edge'de **⋯ → Sakla → Daha fazla göster → Yine de sakla**, mavi SmartScreen penceresinde
-   **Ek bilgi → Yine de çalıştır**.
+   kısaca Edge'de **⋯ → Sakla**, sonra mavi **Sil** düğmesinin yanındaki ok **→ Yine de sakla**; mavi
+   "Windows kişisel bilgisayarınızı korudu" penceresinde **Ek bilgi → Yine de çalıştır**. Kurulum İngilizce ve
+   Türkçedir: açılışta dil sorulur, Windows'un diline uyan dil seçili gelir. Kısayol adları ve başlangıç rehberi
+   seçilen dilde yazılır.
 2. Claude Desktop'ta **yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın.** Proje ya da yapıştırma
    gerekmez: `arthurlegal_talimat` aracının açıklaması ve sunucunun `instructions` alanı modele "hukukla
    ilgili her soruda önce beni çağır" der; profil verilmezse kurulumdaki varsayılan kullanılır.
-3. İlk araç kullanımında çıkan izin penceresinde **Her zaman izin ver**'i seçin. Araç izinleri Claude
-   Desktop'ın kendi deposunda tutulur; kurulum bunları önceden işaretleyemez.
+3. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u (Her zaman izin ver) seçin; Claude
+   Desktop'un menüleri İngilizcedir. Araç izinleri Claude Desktop'ın kendi deposunda tutulur; kurulum bunları
+   önceden işaretleyemez. Araştırma araçları salt okunur diye işaretlenir (2.4.4), böylece Claude kalıcı izin
+   sunabilir.
 
 **Yedek yollar.** (1) Kurulum `%USERPROFILE%\ArthurLegal\Hukuk Bürosu` ve `...\Kurumsal` proje klasörlerini
 hazırlar (`CLAUDE.md`, `SYSTEM_PROMPT.md`, `knowledge/`; güncelleyici her sürümde yeniler, kullanıcının
-kendi dosyalarına dokunmaz): Claude'da **Projeler → Yeni proje → Use a folder** ile seçilir.
-(2) Başlangıç panelindeki kısa talimat bir projenin Talimatlar alanına yapıştırılır. (3) Sohbette **+**
+kendi dosyalarına dokunmaz): Claude'da **Projects → New project → Use a folder** ile seçilir.
+(2) Başlangıç panelindeki kısa talimat bir projenin **Instructions** alanına yapıştırılır. (3) Sohbette **+**
 menüsünden `arthurlegal-yerel` altındaki `hukuk-burosu` istemi seçilir.
 
 **Windows 11 Akıllı Uygulama Denetimi (Smart App Control) açıksa** imzasız kurulum motoru engellenir
-(`Hata 4551`). O bilgisayarda [`ArthurLegal-Kurulum.zip`](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip) dosyasını indirin, klasöre çıkarın ve
-`KUR.cmd` dosyasına çift tıklayın: aynı kurulumu imzalı Python ile yapar. Denetim durumu:
+(`Hata 4551`). O bilgisayarda [`ArthurLegal-Kurulum.zip`](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.zip) dosyasını indirin;
+ayıklamadan önce **Özellikler → Engellemeyi Kaldır** (denetim internetten gelen `.cmd` dosyasını engeller, Gezgin
+bu işareti zipten çıkan dosyalara taşır), sonra klasöre çıkarın ve `KUR.cmd` dosyasına çift tıklayın: aynı
+kurulumu imzalı Python ile yapar. Zip'in içinde Türkçe `BENIOKU.txt` ve İngilizce `README.txt` vardır. Denetim
+açıkken Arthur Mask kurulamaz; güncelleyici onu indirmeye çalışmaz (2.4.4). Denetim durumu:
 `(Get-MpComputerStatus).SmartAppControlState`.
 
 Kaldırma: **Ayarlar → Uygulamalar → ArthurLegal**, ya da zip yoluyla kurulduysa kurulum klasöründeki
@@ -84,8 +91,8 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 32 test, ağa çıkmaz
-python yayin/yayinla.py v2.4.3         # imzalı manifest + dosyalar → GitHub Release
+python -m unittest discover -s tests   # 41 test, ağa çıkmaz
+python yayin/yayinla.py v2.4.4         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
@@ -126,7 +133,8 @@ hepsini birlikte gösterir.
 
 ---
 
-**English.** One-click Windows installer for the ArthurLegal legal-AI packages. It installs an
+**English.** One-click Windows installer for the ArthurLegal legal-AI packages, in English and Turkish (the
+language is asked at start; shortcut names and the start guide follow it). It installs an
 embedded Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
 the public ArthurLegal research endpoint, plus the Turkish land-registry tools), optionally installs
 the Arthur Mask local privacy gate, and keeps itself up to date from signed GitHub releases

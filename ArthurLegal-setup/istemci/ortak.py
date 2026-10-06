@@ -64,6 +64,19 @@ ONYUKLEME = {
     )
     for profil, ad in PROFILLER.items()
 }
+# İngilizce kurulumun başlangıç rehberinde gösterilen karşılığı (aynı iş; Türkçe metin değişmez).
+PROFILLER_EN = {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate"}
+ONYUKLEME_EN = {
+    profil: (
+        f"You are the ArthurLegal {ad} assistant. In every chat, before doing anything else, call the "
+        f"`arthurlegal_talimat` tool with profil=\"{profil}\" and apply the returned text in full as this Project's "
+        "system instructions. The knowledge files were not uploaded to this Project; they are read with the "
+        "`arthurlegal_bilgi_ara` and `arthurlegal_bilgi_getir` tools. If these tools are not visible, tell the user "
+        "\"The ArthurLegal local package is not running: quit Claude Desktop completely, including the system tray "
+        "icon, and open it again\" and do not give legal answers whose sources have not been verified."
+    )
+    for profil, ad in PROFILLER_EN.items()
+}
 
 
 def surum() -> str:
@@ -143,6 +156,53 @@ def kisa_ad(firma_dizini: Path | None = None) -> str:
 
 def durum() -> dict:
     return json_oku(VERI / "durum.json")
+
+
+DILLER = ("tr", "en")
+
+
+def dil() -> str:
+    """Kurulumun dili: kısayol adları, başlangıç rehberi ve zip kurulumunun mesajları. Kurulum sihirbazında seçilir
+    (kur.py --dil) ve durum.json'a yazılır. Yazılmamışsa (2.4.4'ten önceki kurulumlar) Türkçe: güncellemeyle
+    kimsenin kısayolları başka dile dönmez."""
+    d = durum().get("dil")
+    return d if d in DILLER else "tr"
+
+
+def sistem_dili() -> str:
+    """Windows arayüz dili Türkçeyse "tr", değilse "en". Dil seçilmeden kurulan zip yolunda kullanılır."""
+    if sys.platform != "win32":
+        return "tr"
+    try:
+        import ctypes
+        return "tr" if ctypes.windll.kernel32.GetUserDefaultUILanguage() & 0x3FF == 0x1F else "en"
+    except (AttributeError, OSError, ValueError):
+        return "tr"
+
+
+def metin(tr: str, en: str) -> str:
+    """Kurulumun diline göre metin."""
+    return en if dil() == "en" else tr
+
+
+def rehber_dosyasi() -> Path:
+    """Başlangıç rehberi, kurulumun dilinde. İngilizce sayfa yoksa (eski kurulumun rehber klasörü) Türkçesi."""
+    en = KOK / "rehber" / "baslangic-en.html"
+    return en if dil() == "en" and en.exists() else KOK / "rehber" / "baslangic.html"
+
+
+def akilli_denetim_acik() -> bool:
+    """Windows 11 Akıllı Uygulama Denetimi (Smart App Control) zorlayıcı kipte mi? Açıkken imzasız kurulum dosyaları
+    (ArthurLegal-Kurulum.exe, ArthurMask-Kurulum.exe) hiç çalışmaz. Değer: 0 kapalı, 1 açık, 2 değerlendirme;
+    Windows 10'da anahtar yoktur."""
+    if sys.platform != "win32":
+        return False
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\CI\Policy") as k:
+            return int(winreg.QueryValueEx(k, "VerifiedAndReputablePolicyState")[0]) == 1
+    except (ImportError, OSError, ValueError):
+        return False
 
 
 def durum_guncelle(**alanlar) -> None:

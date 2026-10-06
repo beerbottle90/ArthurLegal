@@ -87,7 +87,7 @@ def durum_yaz(claude_durumu: str | None = None) -> Path:
 
 def baslat() -> int:
     durum_yaz(claude_ac())
-    webbrowser.open((ortak.KOK / "rehber" / "baslangic.html").as_uri())
+    webbrowser.open(ortak.rehber_dosyasi().as_uri())
     return 0
 
 
@@ -110,7 +110,7 @@ def uyap_tarayici() -> int:
     brave = any((Path(k) / "BraveSoftware" / "Brave-Browser" / "Application" / "brave.exe").exists() for k in kokler if k)
     betik = ortak.SURUM_DIZINI / "uyap" / "araclar" / "tarayici_uyap.ps1"
     if not betik.exists():
-        print("Bu kurulumda UYAP köprüsü yok.")
+        print(ortak.metin("Bu kurulumda UYAP köprüsü yok.", "This installation has no UYAP bridge."))
         return 1
     return subprocess.call(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(betik),
                             "-Tarayici", "brave" if brave else "edge"])
@@ -121,7 +121,8 @@ def uyap_ekran() -> int:
     kaydıyla aynıdır (claude_ayari): model indirilmez, kullanıcı paketleri karışmaz."""
     mask, ekran = ortak.mask_python(), ortak.SURUM_DIZINI / "uyap" / "ekran.py"
     if not mask or not ekran.exists():
-        print("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve Arthur Mask gerekir.")
+        print(ortak.metin("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve Arthur Mask gerekir.",
+                          "This installation has no UYAP Dashboard: it needs the UYAP bridge and Arthur Mask."))
         return 1
     pencereli = mask.with_name("pythonw.exe")
     ortam = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",

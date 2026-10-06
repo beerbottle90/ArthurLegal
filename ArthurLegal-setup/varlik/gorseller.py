@@ -4,8 +4,10 @@
 
 Üretilenler (hepsi bu klasöre):
     arthurlegal.ico        kurulum ve kısayol simgesi (16/32/48/64/128/256)
-    banner.png             README afişi
-    rehber-banner.png      başlangıç rehberi başlığı
+    banner.png             afiş, Türkçe alt yazılı (kurulum README'si)
+    banner-en.png          afiş, İngilizce alt yazılı (depo README'si)
+    rehber-banner.png      başlangıç rehberi başlığı (Türkçe)
+    rehber-banner-en.png   başlangıç rehberi başlığı (İngilizce)
     sihirbaz.png           Inno Setup sihirbaz görseli (164x312)
     sihirbaz-kucuk.png     Inno Setup küçük görsel (55x55)
 
@@ -97,31 +99,39 @@ def simge() -> Path:
     return Path(t.ico_yaz(BURASI / "arthurlegal.ico"))
 
 
-def afis() -> Path:
+def afis(alt_yazi: str = "ACIK KAYNAK HUKUK YAPAY ZEKASI", ad: str = "banner.png") -> Path:
     t = Tuval(200, 64, "N")
     zemin(t, (("N", 0.0), ("n", 0.62), ("m", 0.88)))
     a_isareti(t, 8, 8, 6)
     t.yazi(48, 10, "ARTHUR", "G", 3)
     t.yazi(48, 32, "LEGAL", "c", 3)
-    t.yazi(10, 54, "ACIK KAYNAK HUKUK YAPAY ZEKASI", "E", 1)
+    t.yazi(10, 54, alt_yazi, "E", 1)
     t.sprite(162, 6, TERAZI)
     t.sprite(181, 8, KILIT)
     t.sprite(163, 24, TOKMAK)
     t.sprite(180, 28, KOD)
     gokkusagi(t, 62, 63)
-    return Path(t.png_yaz(BURASI / "banner.png", 5))
+    return Path(t.png_yaz(BURASI / ad, 5))
 
 
-def rehber_afisi() -> Path:
+def afis_en() -> Path:
+    return afis("OPEN SOURCE LEGAL AI", "banner-en.png")
+
+
+def rehber_afisi(alt_yazi: str = "ACIK KAYNAK HUKUK YZ", ad: str = "rehber-banner.png") -> Path:
     t = Tuval(200, 30, "N")
     zemin(t, (("N", 0.0), ("n", 0.7)))
     a_isareti(t, 6, 3, 3)
     t.yazi(32, 5, "ARTHURLEGAL", "G", 2)
-    t.yazi(32, 21, "ACIK KAYNAK HUKUK YZ", "E", 1)
+    t.yazi(32, 21, alt_yazi, "E", 1)
     t.sprite(166, 6, TERAZI)
     t.sprite(185, 8, KILIT)
     gokkusagi(t, 28, 29)
-    return Path(t.png_yaz(BURASI / "rehber-banner.png", 4))
+    return Path(t.png_yaz(BURASI / ad, 4))
+
+
+def rehber_afisi_en() -> Path:
+    return rehber_afisi("OPEN SOURCE LEGAL AI", "rehber-banner-en.png")
 
 
 def sihirbaz() -> Path:
@@ -146,7 +156,7 @@ def sihirbaz_kucuk() -> Path:
 
 
 def main() -> int:
-    for uret in (simge, afis, rehber_afisi, sihirbaz, sihirbaz_kucuk):
+    for uret in (simge, afis, afis_en, rehber_afisi, rehber_afisi_en, sihirbaz, sihirbaz_kucuk):
         yol = uret()
         print(f"  {yol.name} ({yol.stat().st_size // 1024} KB)")
     return 0

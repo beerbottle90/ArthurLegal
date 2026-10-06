@@ -9,7 +9,7 @@ Oturum açılışında (HKCU Run) ve yerel sunucu açıkken 6 saatte bir çalı�
    sunucular eski klasörle devam eder; yeni sürüm Claude Desktop'ın bir sonraki açılışında
    devreye girer. Bir önceki sürüm geri dönüş için saklanır.
 3. Arthur Mask kurulu sürümden yeniyse (≈1 GB) arka planda indirilir, Claude Desktop kapalıyken
-   sessiz kurulur.
+   sessiz kurulur. Windows 11 Akıllı Uygulama Denetimi açıksa indirilmez: imzasız kurulum orada hiç çalışmaz.
 """
 from __future__ import annotations
 
@@ -152,6 +152,13 @@ def mask_guncelle(manifest: dict) -> str:
     kurulu = ortak.mask_surumu()
     if kurulu and ortak.surum_demeti(kurulu) >= ortak.surum_demeti(m["surum"]):
         return f"mask: güncel ({kurulu})"
+    if ortak.akilli_denetim_acik() and not m.get("imzali"):
+        # Denetim imzasız kurulumu engeller: ~1 GB boşuna iner ve her denetimde engellenen kurulum yeni bir Windows
+        # uyarısı gösterirdi (zip yoluyla kurulan bilgisayarlar). Denetim kapatılırsa ya da Arthur Mask kurulumu
+        # imzalanırsa (manifest: mask.imzali) bir sonraki denetimde iner. Önceki denemeden kalan dosya silinir.
+        for eski in (ortak.VERI / "indirilen").glob("ArthurMask-Kurulum-*.exe*"):
+            eski.unlink(missing_ok=True)
+        return "mask: Akıllı Uygulama Denetimi açık, Arthur Mask bu bilgisayarda kurulamaz"
     exe = ortak.VERI / "indirilen" / f"ArthurMask-Kurulum-{m['surum']}.exe"
     if not (exe.exists() and ortak.sha256_dosya(exe) == m["sha256"]):
         if ortak.indir(m["url"], exe, zaman=120) != m["sha256"]:

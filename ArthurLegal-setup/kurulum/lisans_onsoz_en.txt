@@ -1,0 +1,32 @@
+ARTHURLEGAL SETUP PACKAGE — LICENSE AGREEMENT
+
+This setup installs the following components on your computer:
+
+  • ArthurLegal Law Firm and Corporate Assistant packages ......... ArthurLegal License (1)
+  • ArthurLegal local server and updater ........................... ArthurLegal License (1)
+  • Arthur Mask local privacy gate (downloaded separately) ......... Arthur Mask License (2)
+  • ArthurLegal Tapu (tkgm-mcp) .................................... MIT License (3)
+  • Third-party content ............................................ Apache 2.0 notice (4)
+  • Python 3.12 runtime ............................................ PSF License (runtime\LICENSE.txt)
+
+By selecting "I accept the agreement" you accept all of the licenses below.
+
+Before you install:
+
+  • ArthurLegal is a legal research and drafting tool; it does not give legal advice. A
+    lawyer must verify every output.
+  • Arthur Mask pseudonymises; it does not anonymise. Responsibility under data protection
+    law (such as the GDPR or Turkey's KVKK), professional secrecy rules (such as Article 36
+    of the Turkish Attorneys Act) and confidentiality agreements remains with the user.
+  • Setup adds its local servers to the Claude Desktop configuration (arthurlegal-yerel,
+    arthur-tapu; arthur-mask if installed; arthur-uyap if the UYAP bridge is present on this
+    computer) and backs the configuration up before changing it.
+  • Updates install in the background from the ArthurLegal releases on GitHub. Every update
+    is signed with the ArthurLegal release key; a file whose signature does not verify is not
+    installed.
+  • The research tools send the search queries Claude writes to the ArthurLegal research
+    server (arthurlegal-mcp.fly.dev). Do not put client names or confidential information
+    into these queries.
+  • The UYAP bridge (Turkey's court information system) is distributed separately. If it is
+    installed, it is read-only: it sends nothing to UYAP and passes no data to the model
+    without masking it.

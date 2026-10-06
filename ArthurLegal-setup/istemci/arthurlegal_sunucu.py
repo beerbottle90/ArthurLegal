@@ -320,6 +320,23 @@ YEREL_ARACLAR = [
 for _a in YEREL_ARACLAR:
     _a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
 
+def salt_okunur_isaretle(araclar):
+    """Köprülenen araştırma araçları yalnız okur (arama, getirme, sayma): uzak sunucu işaret koymadıysa
+    readOnlyHint (ve dış kaynağa gittiği için openWorldHint) eklenir. Claude Desktop kalıcı "Always allow" iznini
+    salt okunur araçlara sunar; işaretsiz araç her sohbette yeniden izin isteyebilir. Uzak sunucu bir aracı açıkça
+    yazan (readOnlyHint false) ya da yıkıcı (destructiveHint true) diye işaretlediyse işarete dokunulmaz."""
+    sonuc = []
+    for arac in araclar or []:
+        arac = dict(arac)
+        isaret = dict(arac.get("annotations") or {})
+        if "readOnlyHint" not in isaret and not isaret.get("destructiveHint"):
+            isaret["readOnlyHint"] = True
+            isaret.setdefault("openWorldHint", True)
+        arac["annotations"] = isaret
+        sonuc.append(arac)
+    return sonuc
+
+
 TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
            "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
            "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
@@ -331,7 +348,8 @@ class Sunucu:
         self.bilgi = Bilgi(ortak.SURUM_DIZINI, ortak.FIRMA)
         self.uzak = Uzak(ortak.ayar()["uzak_mcp"])
         self.onbellek = ortak.VERI / "uzak_araclar.json"
-        self.uzak_araclar = ortak.json_oku(self.onbellek, {}).get("araclar")
+        onbellek = ortak.json_oku(self.onbellek, {}).get("araclar")
+        self.uzak_araclar = None if onbellek is None else salt_okunur_isaretle(onbellek)
         self.uzak_hata, self.baslatildi = None, False
         self._yaz_kilit, self._yenile_kilit = threading.Lock(), threading.Lock()
         self.havuz = concurrent.futures.ThreadPoolExecutor(8)
@@ -437,7 +455,7 @@ class Sunucu:
         if not self._yenile_kilit.acquire(blocking=not zaman_asimi or self.uzak_araclar is None):
             return
         try:
-            araclar = [t for t in self.uzak.araclar() if not t.get("name", "").startswith("tkgm_")]
+            araclar = salt_okunur_isaretle([t for t in self.uzak.araclar() if not t.get("name", "").startswith("tkgm_")])
             self.uzak_hata = None
         except Exception as e:  # noqa: BLE001
             self.uzak_hata = str(e)

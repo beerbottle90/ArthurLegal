@@ -63,9 +63,28 @@ def _masaustu() -> Path:
     return Path(os.environ["USERPROFILE"]) / "Desktop"
 
 
-def _kaldir_adi(ad: str) -> str:
-    """Kaldırma kısayolunun adı; kurulum betiğindeki KaldirAdi ile aynı olmalı (kurulum/ArthurLegal.iss)."""
+def _kaldir_adi(ad: str, dil: str | None = None) -> str:
+    """Kaldırma kısayolunun adı, kurulumun dilinde; kurulum betiğindeki KaldirAdiTr/KaldirAdiEn ile aynı olmalı
+    (kurulum/ArthurLegal.iss)."""
+    if (dil or ortak.dil()) == "en":
+        return "Uninstall ArthurLegal" if ad == ortak.URUN_VARSAYILAN else ad + " - Uninstall"
     return "ArthurLegal'i Kaldır" if ad == ortak.URUN_VARSAYILAN else ad + " - Kaldır"
+
+
+# Kısayol adları ve açıklamaları, kurulumun dilinde (ortak.dil). "Tapu" ve "UYAP Dashboard" özel ad, çevrilmez.
+KISAYOL_METNI = {
+    "tr": {"ana": "Claude Desktop'ı ve başlangıç panelini açar ({s})", "tapu": "ArthurLegal Tapu arayüzü ({s})",
+           "rehber": "Başlangıç Rehberi", "rehber_aciklama": "Kurulum sonrası adımlar",
+           "proje": "Proje Klasörleri", "proje_aciklama": "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri",
+           "guncelle": "Güncellemeleri Denetle", "guncelle_aciklama": "Güncellemeleri şimdi denetle",
+           "uyap": "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})"},
+    "en": {"ana": "Opens Claude Desktop and the start panel ({s})",
+           "tapu": "ArthurLegal Tapu: Turkish land-registry parcel tool ({s})",
+           "rehber": "Start Guide", "rehber_aciklama": "Steps after setup",
+           "proje": "Project Folders", "proje_aciklama": "Ready-made project folders to choose with 'Use a folder' in Claude",
+           "guncelle": "Check for Updates", "guncelle_aciklama": "Check for updates now",
+           "uyap": "UYAP Dashboard: UYAP sign-in, morning scan, deadlines, mismatches and calendar; works without Claude ({s})"},
+}
 
 
 def _simge() -> Path:
@@ -94,7 +113,7 @@ def _desenler(ad: str, kisa: str = "") -> list:
     return [d.format(a) for a in adlar
             for d in ("{}.lnk", "{} [0-9]*.lnk", "{}.cmd", "{} [0-9]*.cmd", "{} - *.lnk", "{} - *.cmd",
                       "{} - *.url", "{}*.url")] \
-        + kisa_desen + ["ArthurLegal'i Kaldır.lnk"]
+        + kisa_desen + ["ArthurLegal'i Kaldır.lnk", "Uninstall ArthurLegal.lnk"]
 
 
 ESKI_KISAYOLLAR = ("ArthurLegal - Tapu.cmd", "ArthurLegal - UYAP Tarayıcısı.cmd",
@@ -110,22 +129,22 @@ def _kisayol_listesi() -> list:
     sürümün koduyla yeniden yazar; güncelleme olmadıysa ad eski numarada kalır."""
     py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
     ad, kisa, menu, masa, s = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu(), ortak.surum()
-    ana = (pyw, f'-B "{al}" kisayol baslat', f"Claude Desktop'ı ve başlangıç panelini açar ({s})")
-    tapu = (pyw, f'-B "{al}" kisayol tapu', f"ArthurLegal Tapu arayüzü ({s})")
+    m = KISAYOL_METNI[ortak.dil()]
+    ana = (pyw, f'-B "{al}" kisayol baslat', m["ana"].format(s=s))
+    tapu = (pyw, f'-B "{al}" kisayol tapu', m["tapu"].format(s=s))
     liste = [
         (masa / f"{ad} {s}.lnk", *ana),
         (masa / f"{ad} - Tapu {s}.lnk", *tapu),
         (menu / f"{ad} {s}.lnk", *ana),
         (menu / f"{ad} - Tapu {s}.lnk", *tapu),
-        (menu / f"{ad} - Başlangıç Rehberi {s}.lnk", ortak.KOK / "rehber" / "baslangic.html", "", "Kurulum sonrası adımlar"),
-        (menu / f"{ad} - Proje Klasörleri {s}.lnk", proje.kok(), "", "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri"),
-        (menu / f"{ad} - Güncellemeleri Denetle {s}.lnk", py, f'-B "{al}" guncelle', "Güncellemeleri şimdi denetle"),
+        (menu / f"{ad} - {m['rehber']} {s}.lnk", ortak.rehber_dosyasi(), "", m["rehber_aciklama"]),
+        (menu / f"{ad} - {m['proje']} {s}.lnk", proje.kok(), "", m["proje_aciklama"]),
+        (menu / f"{ad} - {m['guncelle']} {s}.lnk", py, f'-B "{al}" guncelle', m["guncelle_aciklama"]),
     ]
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
     # olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir. Ad kısa addan ("<kısa ad> - UYAP Dashboard").
     if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
-        dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran',
-                     f"UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})")
+        dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran', m["uyap"].format(s=s))
         liste += [(masa / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard),
                   (menu / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard)]
     return liste
@@ -257,8 +276,8 @@ def _kisayol_cmd_yedegi() -> None:
         icerik = f'@echo off\r\nstart "" {komut}\r\n'
         (_menu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
         (_masaustu() / f"{ad}.cmd").write_text(icerik, encoding="ascii")
-    adres = quote(str(ortak.KOK / "rehber" / "baslangic.html").replace(chr(92), "/"), safe=":/")
-    (_menu() / f"{urun} - Başlangıç Rehberi {s}.url").write_text(
+    adres = quote(str(ortak.rehber_dosyasi()).replace(chr(92), "/"), safe=":/")
+    (_menu() / f"{urun} - {KISAYOL_METNI[ortak.dil()]['rehber']} {s}.url").write_text(
         f"[InternetShortcut]\r\nURL=file:///{adres}\r\n", encoding="ascii")
 
 
@@ -287,11 +306,15 @@ def run_anahtari(yaz: bool) -> None:
 
 
 def zip_kurulum() -> int:
-    """Zip'ten çalıştırılınca içeriği kurulum klasörüne taşır ve kurulumu oradan sürdürür."""
+    """Zip'ten çalıştırılınca içeriği kurulum klasörüne taşır ve kurulumu oradan sürdürür. Dil sorulmaz: önceki
+    kurulumun dili, yoksa Windows'un arayüz dili (ortak.sistem_dili)."""
     kaynak = ortak.KOK
+    dil = ortak.json_oku(VARSAYILAN_KOK / "veri" / "durum.json").get("dil")
+    dil = dil if dil in ortak.DILLER else ortak.sistem_dili()
     if kaynak.resolve() == VARSAYILAN_KOK.resolve():
-        return main(["--kurulum", "--kisayol"])
-    print(f"ArthurLegal {ortak.surum()} kuruluyor: {VARSAYILAN_KOK}")
+        return main(["--kurulum", "--kisayol", "--dil", dil])
+    print((f"ArthurLegal {ortak.surum()} is being installed: {VARSAYILAN_KOK}" if dil == "en"
+           else f"ArthurLegal {ortak.surum()} kuruluyor: {VARSAYILAN_KOK}"))
     for y in sorted(kaynak.rglob("*")):
         goreli = y.relative_to(kaynak)
         if goreli.parts and goreli.parts[0] == "veri":
@@ -306,7 +329,7 @@ def zip_kurulum() -> int:
     # koduyla yazılırdı. aktif.txt yoksa en yeni sürüm seçilir; kur.py onu yeniden yazar (kurulum betiği de aynı).
     (VARSAYILAN_KOK / "aktif.txt").unlink(missing_ok=True)
     sonuc = subprocess.run([str(VARSAYILAN_KOK / "runtime" / "python.exe"), "-B",
-                            str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol"])
+                            str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol", "--dil", dil])
     return sonuc.returncode
 
 
@@ -320,7 +343,10 @@ def main(argv=None) -> int:
     ap.add_argument("--kisayol", action="store_true", help="kısayolları ve oturum açılışı güncellemesini de yaz")
     ap.add_argument("--kisayol-esitle", action="store_true",
                     help="kısayollar çalışan sürümden başka bir numara taşıyorsa yeniden yaz (güncelleyici)")
+    ap.add_argument("--dil", choices=ortak.DILLER, help="kurulumun dili (kurulum sihirbazında seçilen)")
     args = ap.parse_args(argv)
+    if args.dil and not args.zip_kurulum:
+        ortak.durum_guncelle(dil=args.dil)
 
     if args.zip_kurulum:
         return zip_kurulum()
@@ -351,10 +377,15 @@ def main(argv=None) -> int:
         ortak.gunluk("kurulum", f"proje klasörleri yazılamadı: {e!r}")
     ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
-        print(f"Kuruldu. Claude Desktop'a {len(claude_ayari.istenen_girdiler())} sunucu eklendi.")
+        sayi, simge = len(claude_ayari.istenen_girdiler()), f"{ortak.urun_adi()} {ortak.surum()}"
+        print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
+                          f"Installed. {sayi} servers were added to Claude Desktop."))
         if not ortak.mask_python():
-            print("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.")
-        print(f"Masaüstündeki '{ortak.urun_adi()} {ortak.surum()}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.")
+            print(ortak.metin("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.",
+                              "Arthur Mask is not installed: the gate that masks client documents does not work on "
+                              "this computer."))
+        print(ortak.metin(f"Masaüstündeki '{simge}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.",
+                          f"Double-click the '{simge}' icon on the desktop: it opens Claude Desktop and shows the last step."))
     return 0
 
 

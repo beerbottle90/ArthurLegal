@@ -10,6 +10,12 @@
 Önce: python yayin/derle.py  (standart kurulum ve paket zip'i). Etiket zaten varsa (ör. sürüm notu
 elle açıldıysa) dosyalar o yayına eklenir. Büroya özel kurulumlar ve büro katmanı YÜKLENMEZ.
 
+İndirme düğmesi (README) ve kurulu bilgisayarların güncelleyicisi releases/latest/download/... adresine bakar.
+Bu yüzden yeni yayın önce TASLAK açılır, bütün dosyalar yüklenir, sonra tek adımda yayımlanıp Latest olur:
+arada düğme "Not Found" vermez. Var olan bir yayının dosyası değişirken yeni dosya önce geçici adla yüklenir,
+eskisi silinir ve yenisinin adı düzeltilir. Public depoya yalnız bu derlemenin (derleme.json'daki özetler) genel
+kurulumu gider; UYAP'lı ya da başka bir derlemeden kalan kurulum dosyası yüklenmez.
+
 Kurulumlar iki anahtara güvenir; liste paketin icerik.json'unda, güncellemeyle gelir:
 - günlük yayın anahtarı: %USERPROFILE%\\.arthurlegal\\imza\\yayin_anahtari.hex — yedekleyin;
 - kasa anahtarı: kâğıtta ya da USB bellekte, kasada durur; bilgisayarda kalmaz.
@@ -118,6 +124,94 @@ def indirme_linki(etiket: str, dosya: str) -> int:
     return 0
 
 
+GECICI_ONEK = "yukleniyor-"  # var olan yayında dosya değişirken yeni dosyanın geçici adı
+
+
+def yuklenecek_kurulumlar(cikti: Path, derleme: dict, public: bool) -> list:
+    """Yüklenecek kurulum dosyaları (.exe/.zip). Public depoya yalnız genel ArthurLegal-Kurulum.exe/.zip ve yalnız
+    bu derlemenin dosyaları gider: özeti derleme.json'dakiyle uyuşmayan dosya (eski ya da UYAP'lı bir deneme
+    derlemesinden kalan) ve UYAP bileşenli derleme reddedilir."""
+    kurulumlar = sorted(y.name for y in cikti.glob("ArthurLegal-Kurulum*") if y.suffix in (".exe", ".zip"))
+    if not public:
+        return kurulumlar
+    if (derleme.get("icerik") or {}).get("bilesenler", {}).get("uyap"):
+        sys.exit("Bu derlemede UYAP köprüsü var; public depoya yüklenmez. kaynaklar.json'da uyap: false ile yeniden "
+                 "derleyin.")
+    ozetler = derleme.get("kurulum") or {}
+    secilen = []
+    for ad in ("ArthurLegal-Kurulum.exe", "ArthurLegal-Kurulum.zip"):
+        if ad not in kurulumlar:
+            continue
+        if ozetler.get(ad) != ortak.sha256_dosya(cikti / ad):
+            sys.exit(f"{ad} bu derlemeden değil (derleme.json'daki özetle uyuşmuyor; eski ya da başka bir derlemeden "
+                     "kalmış olabilir). python yayin/derle.py ile yeniden derleyin.")
+        secilen.append(ad)
+    return secilen
+
+
+def taslak_bul(taban: str, jeton: str, etiket: str):
+    """Yarım kalmış bir yayımlamadan kalan taslak (etiket aramasında taslaklar görünmez)."""
+    for yayin in api("GET", f"{taban}?per_page=30", jeton) or []:
+        if yayin.get("draft") and yayin.get("tag_name") == etiket:
+            return yayin
+    return None
+
+
+def yayin_ac(taban: str, jeton: str, etiket: str, govde: str, on_surum: bool) -> tuple:
+    """(yayın, yeni_mi). Var olan yayın aynen döner; yoksa taslak açılır (ya da yarım kalan taslak kullanılır)."""
+    try:
+        return api("GET", f"{taban}/tags/{etiket}", jeton), False
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            raise
+    taslak = taslak_bul(taban, jeton, etiket)
+    if taslak:
+        return taslak, True
+    return api("POST", taban, jeton, {"tag_name": etiket, "name": f"ArthurLegal {etiket}", "draft": True,
+                                      "prerelease": on_surum, "body": govde}), True
+
+
+def dosyalari_yukle(yayin: dict, jeton: str, dosyalar: list, yeni: bool) -> None:
+    """Taslağa doğrudan yükler. Yayımlanmış yayında önce geçici adla yükler, eskiyi siler, adı düzeltir: dosya
+    adresi yalnız iki istek arasında boş kalır (eskiden yükleme boyunca, 12 MB'lık exe için dakikalarca)."""
+    yukleme = yayin["upload_url"].split("{", 1)[0]
+    varliklar = {v["name"]: v for v in yayin.get("assets", [])}
+    for ad in dosyalar:
+        if yeni:
+            if ad in varliklar:  # yarım kalan taslaktan
+                api("DELETE", varliklar[ad]["url"], jeton)
+            api("POST", f"{yukleme}?name={urllib.parse.quote(ad)}", jeton, (CIKTI / ad).read_bytes(),
+                "application/octet-stream")
+        else:
+            gecici = GECICI_ONEK + ad
+            if gecici in varliklar:
+                api("DELETE", varliklar[gecici]["url"], jeton)
+            yuklenen = api("POST", f"{yukleme}?name={urllib.parse.quote(gecici)}", jeton, (CIKTI / ad).read_bytes(),
+                           "application/octet-stream")
+            if ad in varliklar:
+                api("DELETE", varliklar[ad]["url"], jeton)
+            api("PATCH", yuklenen["url"], jeton, {"name": ad})
+        print(f"  yüklendi: {ad}")
+
+
+def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool) -> dict:
+    """Dosyaları yükler ve yayını yayımlar; yayının son hâlini döndürür."""
+    # Sıra: paket ve kurulum dosyaları önce, imzalı manifest en son. Var olan bir yayında dosyalar tek tek değişirken
+    # güncelleyici hiçbir an henüz yüklenmemiş bir paketi gösteren manifest görmez.
+    dosyalar = [d["paket"]["dosya"]] + yuklenecek_kurulumlar(CIKTI, d, public) + \
+        ["arthurlegal-manifest.sig", "arthurlegal-manifest.json"]
+    jeton = github_jetonu()
+    taban = f"https://api.github.com/repos/{depo}/releases"
+    govde = (f"Yerel kurulum {d['surum']} · Hukuk Bürosu {d['icerik']['paketler'].get('hukuk-burosu')} · "
+             f"Kurumsal {d['icerik']['paketler'].get('kurumsal')}\n\nKurulum: ArthurLegal-Kurulum.exe")
+    yayin, yeni = yayin_ac(taban, jeton, etiket, govde, on_surum)
+    dosyalari_yukle(yayin, jeton, dosyalar, yeni)
+    if yeni:  # bütün dosyalar yerinde: tek adımda yayımla (ön sürüm Latest olmaz)
+        yayin = api("PATCH", yayin["url"], jeton, {"draft": False, "prerelease": on_surum,
+                                                   "make_latest": "false" if on_surum else "true"})
+    return yayin
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="ArthurLegal yayını")
     ap.add_argument("etiket", nargs="?")
@@ -176,32 +270,7 @@ def main(argv=None) -> int:
     if args.kuru:
         return 0
 
-    dosyalar = ["arthurlegal-manifest.json", "arthurlegal-manifest.sig", d["paket"]["dosya"]]
-    # Depo private olduğu için büroya özel kurulumlar da buraya konur; .zip yolu Akıllı Uygulama
-    # Denetimi açık bilgisayarlar içindir. Public bir depoya yayımlanıyorsa büro dosyaları dışarıda kalır.
-    kurulumlar = sorted(y.name for y in CIKTI.glob("ArthurLegal-Kurulum*") if y.suffix in (".exe", ".zip"))
-    if depo == k.get("yayin_deposu"):
-        kurulumlar = [a for a in kurulumlar if a in ("ArthurLegal-Kurulum.exe", "ArthurLegal-Kurulum.zip")]
-    dosyalar += kurulumlar
-    jeton = github_jetonu()
-    taban = f"https://api.github.com/repos/{depo}/releases"
-    try:
-        yayin = api("GET", f"{taban}/tags/{args.etiket}", jeton)
-    except urllib.error.HTTPError as e:
-        if e.code != 404:
-            raise
-        yayin = api("POST", taban, jeton, {
-            "tag_name": args.etiket, "name": f"ArthurLegal {args.etiket}", "prerelease": args.on_surum,
-            "make_latest": "false" if args.on_surum else "true",
-            "body": f"Yerel kurulum {d['surum']} · Hukuk Bürosu {d['icerik']['paketler'].get('hukuk-burosu')} · "
-                    f"Kurumsal {d['icerik']['paketler'].get('kurumsal')}\n\nKurulum: ArthurLegal-Kurulum.exe"})
-    for varlik in yayin.get("assets", []):
-        if varlik["name"] in dosyalar:
-            api("DELETE", varlik["url"], jeton)
-    yukleme = yayin["upload_url"].split("{", 1)[0]
-    for ad in dosyalar:
-        api("POST", f"{yukleme}?name={urllib.parse.quote(ad)}", jeton, (CIKTI / ad).read_bytes(), "application/octet-stream")
-        print(f"  yüklendi: {ad}")
+    yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"))
     print(f"Yayın: {yayin['html_url']}")
     return 0
 

@@ -230,42 +230,54 @@ def _lisans_metni(k: dict, ad: str, yollar, adres: str = "") -> str:
     return "(Lisans metni bileşenin kendi deposundadır.)"
 
 
+LISANS_BASLIKLARI = {
+    "tr": ("1. ArthurLegal Lisansı", "2. Arthur Mask Lisansı", "3. ArthurLegal Tapu (tkgm-mcp) — MIT Lisansı",
+           "4. Üçüncü taraf bildirimleri (Apache 2.0)"),
+    "en": ("1. ArthurLegal License", "2. Arthur Mask License", "3. ArthurLegal Tapu (tkgm-mcp) — MIT License",
+           "4. Third-party notices (Apache 2.0)"),
+}
+
+
 def lisans_yaz(k: dict, hedef: Path) -> None:
-    """Lisans sayfası UTF-8 BOM ile yazılır; Inno Setup BOM'suz .txt'yi ANSI sanar ve Türkçe bozulur."""
+    """Kurulumun lisans sayfası, iki dilde: Türkçe sihirbaz LISANS.txt'yi (Türkçe önsöz), İngilizce sihirbaz
+    LICENSE.txt'yi (İngilizce önsöz) gösterir; lisans metinlerinin kendisi ikisinde de aynı İngilizce asıllardır.
+    UTF-8 BOM ile yazılır; Inno Setup BOM'suz .txt'yi ANSI sanar ve Türkçe bozulur."""
     al = depo(k, "ArthurLegal")
     tapu_klonu = depo_klonu(k, "tapu") if (BURASI / k["depolar"]["tapu"]).is_dir() else None
-    bolumler = [
-        ("1. ArthurLegal Lisansı", _lisans_metni(k, "ArthurLegal", [al / "LICENSE"])),
-        ("2. Arthur Mask Lisansı", _lisans_metni(
-            k, "Arthur Mask", [(BURASI / k["depolar"].get("arthur-mask", "")) / "LICENSE"],
-            "https://raw.githubusercontent.com/beerbottle90/arthur-mask/main/LICENSE")),
-        ("3. ArthurLegal Tapu (tkgm-mcp) — MIT Lisansı", _lisans_metni(
-            k, "Tapu", [depo(k, "tapu") / "LICENSE", tapu_klonu and tapu_klonu / "LICENSE"],
-            "https://raw.githubusercontent.com/beerbottle90/arthurlegal-mcp/master/LICENSE")),
-        ("4. Üçüncü taraf bildirimleri (Apache 2.0)", _lisans_metni(
-            k, "Apache", [en_yeni_paket(al, k["paketler"]["hukuk-burosu"]) / "LICENSE-APACHE-2.0-THIRD-PARTY.txt"])),
+    govdeler = [
+        _lisans_metni(k, "ArthurLegal", [al / "LICENSE"]),
+        _lisans_metni(k, "Arthur Mask", [(BURASI / k["depolar"].get("arthur-mask", "")) / "LICENSE"],
+                      "https://raw.githubusercontent.com/beerbottle90/arthur-mask/main/LICENSE"),
+        _lisans_metni(k, "Tapu", [depo(k, "tapu") / "LICENSE", tapu_klonu and tapu_klonu / "LICENSE"],
+                      "https://raw.githubusercontent.com/beerbottle90/arthurlegal-mcp/master/LICENSE"),
+        _lisans_metni(k, "Apache", [en_yeni_paket(al, k["paketler"]["hukuk-burosu"]) / "LICENSE-APACHE-2.0-THIRD-PARTY.txt"]),
     ]
-    metin = (BURASI / "kurulum" / "lisans_onsoz.txt").read_text(encoding="utf-8")
-    for baslik, govde in bolumler:
-        metin += f"\n\n{'═' * 70}\n{baslik}\n{'═' * 70}\n\n{govde.strip()}\n"
-    (hedef / "LISANS.txt").write_bytes(BOM + metin.replace("\r\n", "\n").replace("\n", "\r\n").encode("utf-8"))
+    for dil, onsoz, dosya in (("tr", "lisans_onsoz.txt", "LISANS.txt"), ("en", "lisans_onsoz_en.txt", "LICENSE.txt")):
+        metin = (BURASI / "kurulum" / onsoz).read_text(encoding="utf-8")
+        for baslik, govde in zip(LISANS_BASLIKLARI[dil], govdeler):
+            metin += f"\n\n{'═' * 70}\n{baslik}\n{'═' * 70}\n\n{govde.strip()}\n"
+        (hedef / dosya).write_bytes(BOM + metin.replace("\r\n", "\n").replace("\n", "\r\n").encode("utf-8"))
 
 
 def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_VARSAYILAN) -> None:
-    sablon = (BURASI / "kurulum" / "rehber.html").read_text(encoding="utf-8")
-    degerler = {
-        "{{URUN}}": html.escape(urun),
-        "{{FIRMA_SATIRI}}": html.escape(firma_ad) + " · " if firma_ad else "",
-        "{{SURUM}}": icerik["surum"],
-        "{{PAKET_HUKUK}}": icerik["paketler"].get("hukuk-burosu", "-"),
-        "{{PAKET_KURUMSAL}}": icerik["paketler"].get("kurumsal", "-"),
-        "{{ONYUKLEME_HUKUK}}": html.escape(ortak.ONYUKLEME["hukuk-burosu"]),
-        "{{ONYUKLEME_KURUMSAL}}": html.escape(ortak.ONYUKLEME["kurumsal"]),
-    }
-    for anahtar, deger in degerler.items():
-        sablon = sablon.replace(anahtar, deger)
+    """Başlangıç rehberi iki dilde: baslangic.html (Türkçe) ve baslangic-en.html (İngilizce). Kurulum, seçilen dildeki
+    sayfayı açar (ortak.rehber_dosyasi); iki sayfa birbirine bağlantı verir."""
     (hedef / "rehber").mkdir(parents=True, exist_ok=True)
-    (hedef / "rehber" / "baslangic.html").write_text(sablon, encoding="utf-8")
+    for sablon_adi, sayfa, onyukleme in (("rehber.html", "baslangic.html", ortak.ONYUKLEME),
+                                         ("rehber-en.html", "baslangic-en.html", ortak.ONYUKLEME_EN)):
+        sablon = (BURASI / "kurulum" / sablon_adi).read_text(encoding="utf-8")
+        degerler = {
+            "{{URUN}}": html.escape(urun),
+            "{{FIRMA_SATIRI}}": html.escape(firma_ad) + " · " if firma_ad else "",
+            "{{SURUM}}": icerik["surum"],
+            "{{PAKET_HUKUK}}": icerik["paketler"].get("hukuk-burosu", "-"),
+            "{{PAKET_KURUMSAL}}": icerik["paketler"].get("kurumsal", "-"),
+            "{{ONYUKLEME_HUKUK}}": html.escape(onyukleme["hukuk-burosu"]),
+            "{{ONYUKLEME_KURUMSAL}}": html.escape(onyukleme["kurumsal"]),
+        }
+        for anahtar, deger in degerler.items():
+            sablon = sablon.replace(anahtar, deger)
+        (hedef / "rehber" / sayfa).write_text(sablon, encoding="utf-8")
 
 
 def zip_yap(kaynak: Path, hedef: Path) -> None:
@@ -276,6 +288,45 @@ def zip_yap(kaynak: Path, hedef: Path) -> None:
             bilgi.compress_type = zipfile.ZIP_DEFLATED
             bilgi.external_attr = 0o644 << 16
             z.writestr(bilgi, y.read_bytes())
+
+
+# Zip yolu, Windows 11 Akıllı Uygulama Denetimi açık bilgisayarlar içindir. Denetim internetten gelen .cmd dosyasını
+# engeller ve Gezgin internet işaretini zipten çıkan dosyalara taşır; bu yüzden işaret ayıklamadan önce kaldırılır.
+ZIP_BENIOKU = (
+    "ArthurLegal kurulumu (zip)\r\n\r\n"
+    "Bu zip, kurulum dosyası (.exe) Windows tarafından engellendiğinde kullanılır: Windows 11'de\r\n"
+    "Akıllı Uygulama Denetimi açıksa \"Yine de çalıştır\" düğmesi çıkmaz ya da \"Hata 4551\" görünür.\r\n\r\n"
+    "1. Ayıklamadan önce zip dosyasına sağ tıklayın, Özellikler'i açın. Genel sekmesinin altında\r\n"
+    "   \"Bu dosya başka bir bilgisayardan geldi...\" yazıyorsa Engellemeyi Kaldır kutusunu işaretleyip\r\n"
+    "   Tamam'a tıklayın.\r\n"
+    "2. Zip dosyasına sağ tıklayın, Tümünü Ayıkla... ve Ayıkla'yı seçin (zip içinden çalıştırmayın).\r\n"
+    "3. Açılan klasörde KUR dosyasına (Windows Komut Dosyası) çift tıklayın. Yönetici yetkisi gerekmez.\r\n"
+    "4. Kurulum bitince masaüstündeki ArthurLegal simgesine çift tıklayın; Claude Desktop'ta yeni bir\r\n"
+    "   sohbet açıp hukuki sorunuzu yazın.\r\n\r\n"
+    "Bu dosyayı zip'i ayıkladıktan sonra okuyorsanız ve KUR engellenirse: ayıklanan klasörü silin,\r\n"
+    "1. adımı yapın ve zip'i yeniden ayıklayın.\r\n\r\n"
+    "Bu yolla Arthur Mask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
+    "ArthurLegal paketleri, araştırma araçları ve Tapu çalışır.\r\n\r\n"
+    "Kaldırmak için: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
+    "English: README.txt\r\n"
+)
+ZIP_README = (
+    "ArthurLegal setup (zip)\r\n\r\n"
+    "Use this zip when Windows blocks the installer (.exe): on Windows 11 with Smart App Control on,\r\n"
+    "there is no \"Run anyway\" button, or \"Error 4551\" appears.\r\n\r\n"
+    "1. Before extracting, right-click the zip file and open Properties. If the General tab says\r\n"
+    "   \"This file came from another computer...\", tick Unblock and click OK.\r\n"
+    "2. Right-click the zip file, choose Extract All... and then Extract (do not run it from inside the zip).\r\n"
+    "3. In the folder that opens, double-click KUR (Windows Command Script). No administrator rights are needed.\r\n"
+    "4. When setup finishes, double-click the ArthurLegal icon on the desktop, open a new chat in\r\n"
+    "   Claude Desktop and type your legal question.\r\n\r\n"
+    "If you are reading this after extracting the zip and KUR is blocked: delete the extracted folder,\r\n"
+    "do step 1 and extract the zip again.\r\n\r\n"
+    "Arthur Mask is not installed this way: client-document masking and the UYAP bridge do not work.\r\n"
+    "The ArthurLegal packages, the research tools and Tapu work.\r\n\r\n"
+    "To uninstall: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
+    "Türkçe: BENIOKU.txt\r\n"
+)
 
 
 def varlik_uret() -> None:
@@ -339,6 +390,7 @@ def main(argv=None) -> int:
         print(f"  ürün adı: {urun} (kısayollar, Başlat menüsü, başlangıç sayfası, programlar listesi)")
     rehber_yaz(hazirlik, firma.get("ad", ""), icerik, urun)
     shutil.copy2(BURASI / "varlik" / "rehber-banner.png", hazirlik / "rehber" / "banner.png")
+    shutil.copy2(BURASI / "varlik" / "rehber-banner-en.png", hazirlik / "rehber" / "banner-en.png")
     lisans_yaz(k, hazirlik)
     ayar = {"manifest_url": f"https://github.com/{k['yayin_deposu']}/releases/latest/download/arthurlegal-manifest.json",
             "yedek_depo": k["yayin_deposu"], "kanal": k.get("kanal", "kararli"),
@@ -354,19 +406,11 @@ def main(argv=None) -> int:
     # Yedek kurulum yolu: Akıllı Uygulama Denetimi açık bilgisayarlarda imzasız kurulum motoru
     # engellenir, PSF imzalı python.exe engellenmez. Aynı içerik, motor yerine Python.
     (hazirlik / "KUR.cmd").write_text(
-        '@echo off\r\nchcp 65001 >nul\r\nset PYTHONIOENCODING=utf-8\r\ntitle ArthurLegal kurulumu\r\n'
-        'echo ArthurLegal kuruluyor, lutfen bekleyin...\r\necho.\r\n'
+        '@echo off\r\nchcp 65001 >nul\r\nset PYTHONIOENCODING=utf-8\r\ntitle ArthurLegal setup / kurulumu\r\n'
+        'echo ArthurLegal is being installed, please wait... / ArthurLegal kuruluyor, lutfen bekleyin...\r\necho.\r\n'
         '"%~dp0runtime\\python.exe" -B "%~dp0bin\\al.py" kur --zip-kurulum\r\necho.\r\npause\r\n', encoding="ascii")
-    (hazirlik / "BENIOKU.txt").write_text(
-        "ArthurLegal kurulumu (zip)\r\n\r\n"
-        "Bu zip, kurulum dosyası (.exe) Windows tarafından engellendiğinde kullanılır:\r\n"
-        "\"Bir Uygulama Denetimi ilkesi bu dosyayı engelledi\" / \"Hata 4551\".\r\n\r\n"
-        "1. Zip'i sağ tıklayıp \"Tümünü ayıkla\" ile bir klasöre çıkarın (zip içinden çalıştırmayın).\r\n"
-        "2. KUR.cmd dosyasına çift tıklayın. Yönetici yetkisi gerekmez.\r\n"
-        "3. Kurulum bitince açılan rehberdeki talimatı Claude'da bir Projeye yapıştırın.\r\n\r\n"
-        "Bu yolla Arthur Mask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
-        "ArthurLegal paketleri, araştırma araçları ve Tapu çalışır.\r\n\r\n"
-        "Kaldırmak için: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n", encoding="utf-8-sig")
+    (hazirlik / "BENIOKU.txt").write_text(ZIP_BENIOKU, encoding="utf-8-sig")
+    (hazirlik / "README.txt").write_text(ZIP_README, encoding="utf-8-sig")
     kurulum_zip = CIKTI / f"{ad}.zip"
     zip_yap(hazirlik, kurulum_zip)
     print(f"  yedek kurulum: {kurulum_zip.name} ({kurulum_zip.stat().st_size // (1024 * 1024)} MB)")
@@ -377,6 +421,8 @@ def main(argv=None) -> int:
     ortak.json_yaz(CIKTI / "derleme.json", {
         "surum": surum, "icerik": {"paketler": icerik["paketler"], "bilesenler": icerik["bilesenler"]},
         "kaynak": icerik["kaynak"], "mask": mask, "anahtarlar": icerik["anahtarlar"],
+        # yayinla.py yalnız bu derlemenin kurulum dosyalarını yükler: özetler burada (exe ISCC'den sonra eklenir)
+        "kurulum": {kurulum_zip.name: sha256(kurulum_zip)},
         "paket": {"dosya": zip_adi, "sha256": sha256(CIKTI / zip_adi), "boyut": (CIKTI / zip_adi).stat().st_size}})
     print(f"  paket: {zip_adi} ({(CIKTI / zip_adi).stat().st_size // 1024} KB)")
 
@@ -396,6 +442,9 @@ def main(argv=None) -> int:
         if r.returncode:
             sys.exit(f"ISCC hata verdi ({r.returncode})")
         exe = CIKTI / f"{ad}.exe"
+        derleme = ortak.json_oku(CIKTI / "derleme.json")
+        derleme["kurulum"] = {**derleme.get("kurulum", {}), exe.name: sha256(exe)}
+        ortak.json_yaz(CIKTI / "derleme.json", derleme)
         print(f"  kurulum: {exe} ({exe.stat().st_size // (1024 * 1024)} MB, sha256 {sha256(exe)[:16]}…)")
     return 0
 

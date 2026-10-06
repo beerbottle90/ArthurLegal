@@ -28,10 +28,12 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum div{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px 12px}
 #durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
 #durum span{font-size:15px}
+.dil{text-align:right;margin:0 0 10px;font-size:14px}.dil a{color:var(--lacivert)}
 </style>
 </head>
 <body>
 <main>
+<nav class="dil" lang="en"><a href="baslangic-en.html">English</a></nav>
 <header>
   <img src="banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı">
   <div class="serit"><i style="background:#c8453b"></i><i style="background:#f29b4b"></i><i style="background:#ffe066"></i><i style="background:#3fae6a"></i><i style="background:#5ec8e5"></i><i style="background:#3b7dd8"></i><i style="background:#7b5cc4"></i><i style="background:#b45a9a"></i></div>
@@ -39,10 +41,10 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <div id="durum"></div>
 
-<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. İlk araç kullanımında çıkan izin penceresinde <b>Her zaman izin ver</b>'i seçin. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
 
 <h2>Yedek yol 1: hazır proje klasörü</h2>
-<p>Claude'da <b>Projeler → Yeni proje</b> penceresinde <b>Use a folder</b> düğmesine basın ve aşağıdaki klasörlerden birini
+<p>Claude'da <b>Projects → New project</b> penceresinde <b>Use a folder</b> düğmesine basın ve aşağıdaki klasörlerden birini
 seçin. Klasörde talimat (<code>CLAUDE.md</code>), sistem talimatı ve bütün bilgi dosyaları hazırdır; her güncellemede
 kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</code> alt klasörüne koyun.</p>
 <div id="klasorler" class="kart"><span style="color:var(--soluk)">Klasör yolları kurulumdan sonra burada görünür.</span></div>
@@ -50,9 +52,9 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <h2>Yedek yol 2: proje ve talimat</h2>
 <div class="adim a1"><div class="no">1</div><div><b>Claude Desktop açık olmalı.</b> Kapalıysa bu sayfayı açan <i>{{URUN}}</i> simgesi onu da açar.
   Yüklü değilse <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
-<div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projeler → Yeni proje</b>, ad olarak örneğin <code>{{URUN}} – Hukuk Bürosu</code>.
+<div class="adim a2"><div class="no">2</div><div><b>Yeni proje:</b> sol menüde <b>Projects → New project</b>, ad olarak örneğin <code>{{URUN}} – Hukuk Bürosu</code>.
   <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Projeler sayfasını aç</a></div></div>
-<div class="adim a3"><div class="no">3</div><div><b>Talimatı yapıştırın:</b> projede <b>Talimatlar</b> (Instructions) alanını açın, aşağıdaki metni kopyalayıp
+<div class="adim a3"><div class="no">3</div><div><b>Talimatı yapıştırın:</b> projede <b>Instructions</b> (talimatlar) alanını açın, aşağıdaki metni kopyalayıp
   yapıştırın ve kaydedin. <b>Knowledge dosyası yüklemeyin</b>; dosyalar araçlarla okunur ve güncel kalır.</div></div>
 
 <div class="kart">
@@ -67,7 +69,7 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 </div>
 
 <div class="adim a4"><div class="no">4</div><div><b>Deneyin:</b> projede yeni bir sohbet açıp bir hukuk sorusu yazın. Asistan önce
-  <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Her zaman izin ver</b> deyin.</div></div>
+  <code>arthurlegal_talimat</code> aracını çağırır. Claude araç izni sorarsa <b>Always allow</b> deyin.</div></div>
 
 <h2>Asistan talimatı yüklemezse</h2>
 <p>Nadiren model ilk soruda talimat aracını çağırmadan cevaplamaya başlayabilir. O durumda yazma kutusunun yanındaki <b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altındaki <b>hukuk-burosu</b> (ya da <b>kurumsal</b>) istemini seçin; ya da yukarıdaki proje adımını bir kez yapın.</p>
@@ -86,7 +88,7 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 
 <h2>Sorun giderme</h2>
 <div class="uyari">Araçlar görünmüyorsa Claude Desktop'u sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b> yeniden açın.
-<b>Ayarlar → Geliştirici</b> bölümünde <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> ve (kuruluysa)
+<b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code>, <code>arthur-tapu</code> ve (kuruluysa)
 <code>arthur-mask</code> çalışıyor görünmelidir. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
 <footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her çıktıyı bir avukat doğrulamalıdır.
