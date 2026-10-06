@@ -60,6 +60,13 @@ jobs:
       - name: Testler
         run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
 
+      - name: Ekran (testlerden sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0a-testlerden-sonra.png" || true
+
       - name: Derle
         run: uv run --no-project --python 3.12 python yayin/derle_macos.py
 
@@ -89,12 +96,33 @@ jobs:
           installer -pkg yayin/cikti/ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory \
             -applyChoiceChangesXML "$RUNNER_TEMP/secim.xml" -verbose
 
+      - name: Ekran (kurulumdan sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0b-kurulumdan-sonra.png" || true
+
       - name: Kurulumu denetle
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask
+
+      - name: Ekran (denetimden sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0c-denetimden-sonra.png" || true
 
       - name: Arthur Mask (iner, kurulur, Claude Desktop'a kaydolur)
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.mask }}
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask
+
+      - name: Ekran (Arthur Mask'tan sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0d-masktan-sonra.png" || true
 
       - name: Kaldır
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir
