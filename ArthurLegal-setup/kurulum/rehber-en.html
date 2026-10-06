@@ -80,16 +80,20 @@ refreshed with every update. Put your own drafts in the folder's <code>calismala
     first. On first start, print the <b>recovery key</b> and keep it safe.</li>
   <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Turkish land registry: type a parcel such as "İstanbul Kadıköy Caferağa 123 ada 45 parsel" or a place
     name in the chat. The parcel comes from the public data of TKGM Parsel Sorgu (one consent is asked at the first query).
-    The <i>{{URUN}} - Tapu</i> shortcut on the desktop opens the same parcel tool in your browser. Land-registry record text
-    never leaves this computer.</li>
-  <li><b>Project folders</b> — The <i>{{URUN}} - Project Folders</i> shortcut in the Start menu opens the ready-made folders in
-    File Explorer. If you drag files into a project by hand, that copy is not updated; the tools and "Use a folder" stay current.</li>
-  <li><b>Updates</b> — Installed in the background. To check now, use <i>{{URUN}} - Check for Updates</i> in the Start menu.</li>
+    The <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> icon on the desktop opens the same parcel
+    tool in your browser. Land-registry record text never leaves this computer.</li>
+  <li><b>Project folders</b> — <span data-os="windows">The <i>{{URUN}} - Project Folders</i> shortcut in the Start menu opens
+    the ready-made folders in File Explorer.</span><span data-os="mac"><i>Project Folders</i> in Applications &gt; {{URUN}}
+    opens the ready-made folders in Finder.</span> If you drag files into a project by hand, that copy is not updated; the
+    tools and "Use a folder" stay current.</li>
+  <li><b>Updates</b> — Installed in the background. To check now, use <span data-os="windows"><i>{{URUN}} - Check for
+    Updates</i> in the Start menu.</span><span data-os="mac"><i>Check for Updates</i> in Applications &gt; {{URUN}}.</span></li>
+  <li data-os="mac"><b>Uninstall</b> — <i>{{KALDIR}}</i> in Applications &gt; {{URUN}}.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
-<div class="uyari">If the tools do not appear, quit Claude Desktop <b>completely</b>, including the icon in the system tray, and open it
-again. Under <b>Settings → Developer</b>, <code>arthurlegal-yerel</code> and (if you chose them) <code>arthur-tapu</code> and
+<div class="uyari">If the tools do not appear, quit Claude Desktop <b>completely</b><span data-os="windows">, including the icon
+in the system tray,</span><span data-os="mac"> with <b>Cmd+Q</b></span> and open it again. Under <b>Settings → Developer</b>, <code>arthurlegal-yerel</code> and (if you chose them) <code>arthur-tapu</code> and
 <code>arthur-mask</code> should show as running. To add or remove modules, run the installer again. The first tool list also contacts the remote research server, so it can take a few seconds.</div>
 
 <footer>{{URUN}} is a legal research and drafting tool; it does not give legal advice and does not decide. The legal professional
@@ -99,8 +103,13 @@ The duty of confidentiality stays with the user.</footer>
 <script src="durum.js" onerror="void 0"></script>
 <script>
 (function () {
-  var d = window.ARTHURLEGAL_DURUM;
-  if (!d) return;
+  var d = window.ARTHURLEGAL_DURUM || {};
+  // Sentences specific to the operating system; without durum.js the browser decides.
+  var mac = d.isletim ? d.isletim === "mac" : /Mac/.test(navigator.platform || "");
+  document.querySelectorAll("[data-os]").forEach(function (el) {
+    if (el.getAttribute("data-os") !== (mac ? "mac" : "windows")) el.style.display = "none";
+  });
+  if (!window.ARTHURLEGAL_DURUM) return;
   // durum.js is written by the installed client in Turkish; known values are shown in English here.
   var claude = {"açık": "running", "kurulu": "installed", "bulunamadı": "not installed", "zaten açık": "already running",
                 "başlatıldı": "started"};
@@ -112,6 +121,9 @@ The duty of confidentiality stays with the user.</footer>
     [/^mask: indirildi, Claude Desktop kapanınca kurulacak$/, "Arthur Mask downloaded; it installs when Claude Desktop is closed"],
     [/^mask: Akıllı Uygulama Denetimi açık.*$/, "Arthur Mask skipped: Smart App Control is on"],
     [/^mask: kurulumda seçilmedi$/, "Arthur Mask was not selected in setup"],
+    [/^mask: kurulu \((.*)\); Arthur Mask Mac'te güncellemesini kendisi yapar$/, "Arthur Mask installed ($1); on a Mac it updates itself"],
+    [/^mask: Arthur Mask Mac'te yalnız Apple Silicon'da çalışır$/, "Arthur Mask runs on Apple Silicon Macs only"],
+    [/^mask: manifest'te macOS sürümü yok$/, "this release has no macOS Arthur Mask"],
     [/^mask: manifest'te yok$/, "Arthur Mask is not part of this release"],
     [/^yayında manifest yok$/, "no update manifest in the latest release"],
     [/^hata: (.*)$/, "error: $1"]
@@ -134,7 +146,8 @@ The duty of confidentiality stays with the user.</footer>
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Start";
   // The version Claude Desktop is really running; after an update it stays old until Claude Desktop is reopened.
   var calisan = !d.calisan_surum ? "not opened yet" : (d.calisan_surum === d.surum ? d.calisan_surum + " (current)"
-      : d.calisan_surum + " — quit Claude Desktop completely, including the tray icon, and reopen it to start " + d.surum);
+      : d.calisan_surum + (mac ? " — quit Claude Desktop with Cmd+Q and reopen it to start "
+                                 : " — quit Claude Desktop completely, including the tray icon, and reopen it to start ") + d.surum);
   var satirlar = [
     ["Installed", d.surum],
     ["Last update", d.son_guncelleme || "none since installation"],

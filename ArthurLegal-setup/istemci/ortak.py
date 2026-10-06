@@ -3,8 +3,8 @@
 Yalnız standart kütüphane. Kurulumun kendi Python 3.12'siyle de, Arthur Mask'in
 Python 3.11'iyle de çalışır (UYAP sunucusu Mask'in yorumlayıcısında açılır).
 
-Kurulu düzen (%LOCALAPPDATA%\\Programs\\ArthurLegal):
-    runtime\\            gömülü Python 3.12 (yalnız stdlib)
+Kurulu düzen (Windows: %LOCALAPPDATA%\\Programs\\ArthurLegal; macOS: ~/Library/Application Support/ArthurLegal):
+    runtime\\            gömülü Python 3.12 (yalnız stdlib; macOS'ta runtime/bin/python3)
     bin\\al.py           sabit başlatıcı; Claude Desktop ve kısayollar hep bunu çağırır
     surumler\\<sürüm>\\  istemci\\, paketler\\, tapu\\, uyap\\ (güncelleme yeni klasör açar)
     aktif.txt           etkin sürüm
@@ -33,6 +33,16 @@ FIRMA = KOK / "firma"
 MASK_KOK = Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Arthur Mask"
 MASK_KAYIT = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\{8F3C2B7E-4D1A-4E7B-9C55-A7D1E0B3F412}_is1"
 PENCERESIZ = 0x08000000 if sys.platform == "win32" else 0  # CREATE_NO_WINDOW
+# macOS kurulumu (.pkg): paketler, istemci ve güncelleme kanalı Windows'takiyle aynıdır; değişen yalnız işletim
+# sistemine bağlanan yerlerdir (Python yolu, Claude ayar dosyası, kısayollar, oturum açılışı, Arthur Mask).
+MAC = sys.platform == "darwin"
+
+
+def python_yolu(pencereli: bool = False) -> Path:
+    """Kurulumun kendi Python'u: Windows'ta gömülü python.exe (pencereli: pythonw.exe), macOS'ta runtime/bin/python3."""
+    if MAC:
+        return RUNTIME / "bin" / "python3"
+    return RUNTIME / ("pythonw.exe" if pencereli else "python.exe")
 
 VARSAYILAN_AYAR = {
     # Güncellemeler ArthurLegal yayınlarından iner ve Ed25519 imzasıyla doğrulanır.
@@ -217,7 +227,15 @@ def dil() -> str:
 
 
 def sistem_dili() -> str:
-    """Windows arayüz dili Türkçeyse "tr", değilse "en". Dil seçilmeden kurulan zip yolunda kullanılır."""
+    """Sistemin arayüz dili Türkçeyse "tr", değilse "en". Dil seçilmeden kurulan yollarda kullanılır (Windows zip
+    kurulumu, macOS kurulum paketi)."""
+    if MAC:
+        try:
+            r = subprocess.run(["defaults", "read", "-g", "AppleLanguages"], capture_output=True, text=True, timeout=30)
+            ilk = next((s.strip(' \t"(),') for s in r.stdout.splitlines() if s.strip(' \t"(),')), "")
+            return "tr" if ilk.lower().startswith("tr") else "en"
+        except (OSError, subprocess.SubprocessError):
+            return "tr"
     if sys.platform != "win32":
         return "tr"
     try:
@@ -310,7 +328,13 @@ CLAUDE_DESKTOP_YOLU = r"AnthropicClaude|WindowsApps\\Claude_"  # Claude Code da 
 
 
 def claude_calisiyor() -> bool:
-    """Claude Desktop açık mı (klasik veya MSIX). Claude Code süreçleri sayılmaz."""
+    """Claude Desktop açık mı (Windows: klasik veya MSIX; macOS: Claude.app). Claude Code süreçleri sayılmaz: macOS'ta
+    Claude Code'un süreci küçük harfli "claude"dır, Claude Desktop'unki "Claude"."""
+    if MAC:
+        try:
+            return subprocess.run(["pgrep", "-x", "Claude"], capture_output=True, timeout=30).returncode == 0
+        except (OSError, subprocess.SubprocessError):
+            return True  # emin olunamıyorsa açık say
     if sys.platform != "win32":
         return False
     komut = (f"@(Get-Process claude -ErrorAction SilentlyContinue | Where-Object {{ $_.Path -match '{CLAUDE_DESKTOP_YOLU}' }})"
@@ -323,12 +347,34 @@ def claude_calisiyor() -> bool:
         return True  # emin olunamıyorsa açık say: Mask kurulumu ertelenir, zarar vermez
 
 
+def mask_uygulamasi() -> Path | None:
+    """macOS'ta kurulu Arthur Mask uygulaması: önce /Applications, sonra ~/Applications."""
+    for kok in (Path("/Applications"), Path.home() / "Applications"):
+        app = kok / "Arthur Mask.app"
+        if (app / "Contents" / "Resources" / "runtime" / "bin" / "python3").exists():
+            return app
+    return None
+
+
 def mask_python() -> Path | None:
+    if MAC:
+        app = mask_uygulamasi()
+        return app / "Contents" / "Resources" / "runtime" / "bin" / "python3" if app else None
     yol = MASK_KOK / "runtime" / "python.exe"
     return yol if yol.exists() else None
 
 
 def mask_surumu() -> str | None:
+    if MAC:
+        app = mask_uygulamasi()
+        if not app:
+            return None
+        try:
+            import plistlib
+            with open(app / "Contents" / "Info.plist", "rb") as f:
+                return str(plistlib.load(f).get("CFBundleShortVersionString") or "0.0.0")
+        except (OSError, ValueError):
+            return "0.0.0"
     if sys.platform != "win32":
         return None
     try:
@@ -341,7 +387,11 @@ def mask_surumu() -> str | None:
 
 def arka_planda(args: list, ortam: dict | None = None) -> None:
     """Pencere açmadan, bu süreçten bağımsız başlatır. ``ortam`` verilmezse bu sürecinki geçer."""
-    bayrak = (0x00000008 | 0x00000200 | PENCERESIZ) if sys.platform == "win32" else 0  # DETACHED|NEW_GROUP
+    if sys.platform != "win32":  # macOS: yeni oturum, bu süreç kapanınca kapanmaz
+        subprocess.Popen([str(a) for a in args], close_fds=True, env=ortam, start_new_session=True,
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return
+    bayrak = 0x00000008 | 0x00000200 | PENCERESIZ  # DETACHED|NEW_GROUP
     subprocess.Popen([str(a) for a in args], creationflags=bayrak, close_fds=True, env=ortam,
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 

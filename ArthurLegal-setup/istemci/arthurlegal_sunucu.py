@@ -538,7 +538,7 @@ class Sunucu:
     def _guncelleme_dongusu(self):
         if os.environ.get("ARTHURLEGAL_GUNCELLEME") == "0":
             return
-        pythonw = ortak.RUNTIME / "pythonw.exe"
+        pythonw = ortak.python_yolu(pencereli=True)
         while pythonw.exists():
             aralik = float(ortak.ayar().get("denetim_araligi_saat", 6)) * 3600
             if time.time() - float(ortak.durum().get("son_denetim", 0)) > aralik:

@@ -1,0 +1,59 @@
+#!/bin/bash
+# ArthurLegal macOS kurulumunun son adımı ('son' bileşeninin betiği; derle_macos.py pakete koyar).
+# Kurulum yalnız kullanıcının ev klasörüne yapılır; betik kullanıcının yetkisiyle çalışır.
+#  1. Bilgisayarın işlemcisine uyan Python'u (Apple Silicon ya da Intel) runtime/ olarak yerine koyar.
+#  2. Seçilen modüllerin işaretlerini (secim/<kod>) kur.py'ye --moduller olarak geçirir: Claude Desktop kaydı,
+#     uygulamalar, masaüstü takma adları ve oturum açılışında güncelleme (LaunchAgent) yazılır.
+#  3. Paket seçilmediyse uyarır ve kaydı yapmaz; seçildiyse başlangıç rehberini açar.
+# Ev klasörü: $3 (kurulumun hedefi; ev klasörüne kurulumda kullanıcının ev klasörü), olmazsa $HOME.
+KOK="$HOME/Library/Application Support/ArthurLegal"
+if [ -n "$3" ] && [ "$3" != "/" ] && [ -d "$3/Library/Application Support/ArthurLegal/bin" ]; then
+  KOK="$3/Library/Application Support/ArthurLegal"
+  # Betik yönetici olarak çalıştırıldıysa kayıt ve kısayollar ev klasörünün sahibi adına yazılır.
+  SAHIP=$(/usr/bin/stat -f %Su "$3" 2>/dev/null)
+  if [ "$(id -u)" = "0" ] && [ -n "$SAHIP" ] && [ "$SAHIP" != "root" ]; then
+    exec /usr/bin/sudo -u "$SAHIP" -H /bin/bash "$0" "$@"
+  fi
+fi
+GUNLUK="$KOK/veri/gunluk/kurulum-pkg.log"
+mkdir -p "$(dirname "$GUNLUK")"
+exec >>"$GUNLUK" 2>&1
+echo "$(date '+%Y-%m-%d %H:%M:%S') postinstall: kullanıcı $(id -un) ($(id -u)), HOME=$HOME, paket=$1, hedef=$2, cilt=$3, kök=$KOK"
+if [ ! -f "$KOK/bin/al.py" ]; then
+  echo "kurulum klasörü bulunamadı: $KOK"
+  exit 1
+fi
+
+if [ "$(/usr/sbin/sysctl -n hw.optional.arm64 2>/dev/null)" = "1" ]; then MIMARI=arm64; else MIMARI=x86_64; fi
+if [ -d "$KOK/runtime-$MIMARI" ]; then
+  rm -rf "$KOK/runtime"
+  mv "$KOK/runtime-$MIMARI" "$KOK/runtime"
+fi
+rm -rf "$KOK/runtime-arm64" "$KOK/runtime-x86_64"
+echo "Python: $MIMARI ($("$KOK/runtime/bin/python3" -c 'import platform; print(platform.machine())' 2>&1))"
+
+SECIM=""
+for f in "$KOK"/secim/*; do
+  [ -e "$f" ] && SECIM="$SECIM${SECIM:+,}$(basename "$f")"
+done
+rm -rf "$KOK/secim"
+
+DIL=$(defaults read -g AppleLanguages 2>/dev/null | sed -n '2p' | tr -d ' ",' | cut -c1-2)
+[ "$DIL" = "tr" ] || DIL=en
+
+rm -f "$KOK/aktif.txt"
+"$KOK/runtime/bin/python3" -B "$KOK/bin/al.py" kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM"
+KOD=$?
+echo "kur çıkış kodu $KOD (modüller: ${SECIM:-yok}, dil: $DIL)"
+
+if [ $KOD -eq 0 ]; then
+  rm -rf "$KOK/onceki"
+  mkdir -p "$KOK/onceki"
+  for m in ${SECIM//,/ }; do : > "$KOK/onceki/$m"; done
+  # Başlangıç rehberi ve Claude Desktop (Windows'taki bitiş sayfasının iki kutusu gibi); arka planda.
+  "$KOK/runtime/bin/python3" -B "$KOK/bin/al.py" kisayol baslat >/dev/null 2>&1 &
+elif [ $KOD -eq 2 ]; then
+  if [ "$DIL" = "tr" ]; then METIN="{{PAKET_YOK_TR}}"; DUGME="Tamam"; else METIN="{{PAKET_YOK_EN}}"; DUGME="OK"; fi
+  /usr/bin/osascript -e "display dialog \"$METIN\" buttons {\"$DUGME\"} default button 1 with icon caution" >/dev/null 2>&1 &
+fi
+exit 0

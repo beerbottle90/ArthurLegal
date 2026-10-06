@@ -32,6 +32,9 @@ def claude_ac() -> str:
     """Claude Desktop'ı başlatır. Zaten açıksa öne getirmeye çalışmaz, sadece durumu döndürür."""
     if ortak.claude_calisiyor():
         return "zaten açık"
+    if ortak.MAC:
+        r = subprocess.run(["open", "-a", "Claude"], capture_output=True, timeout=60)
+        return "başlatıldı" if r.returncode == 0 else "bulunamadı"
     try:
         os.startfile("claude://")  # noqa: S606 — Claude Desktop'ın kendi protokolü
         return "başlatıldı"
@@ -77,6 +80,7 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
         "bilesenler": bilgi.get("bilesenler", {}),
         "moduller": ortak.moduller(),
         "odak": odak if odak in ortak.PAKETLER else "",
+        "isletim": "mac" if ortak.MAC else "windows",  # sayfa Mac'e özgü cümleleri buna göre gösterir
         "mask": ortak.mask_surumu() or "",
         "sunucular": sunucular,
         "claude": claude_durumu,
@@ -142,7 +146,10 @@ def uyap_ekran() -> int:
 def knowledge() -> int:
     """Proje klasörlerini açar: Claude'da 'Use a folder' ile seçilir ya da dosyalar projeye sürüklenir."""
     proje.esitle()
-    os.startfile(proje.kok())  # noqa: S606
+    if ortak.MAC:
+        subprocess.run(["open", str(proje.kok())], timeout=60)
+    else:
+        os.startfile(proje.kok())  # noqa: S606
     return 0
 
 

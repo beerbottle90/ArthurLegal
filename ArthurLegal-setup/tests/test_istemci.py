@@ -27,6 +27,9 @@ KASA_TOHUM = bytes(range(32, 64))
 YABANCI_TOHUM = bytes(range(64, 96))
 ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "ARTHURLEGAL_GUNCELLEME": "0"}
 ENV.pop("ARTHURLEGAL_KOK", None)
+MACOS = sys.platform == "darwin"
+# Windows kısayolları (.lnk), Başlat menüsü ve %APPDATA% yapılandırmaları; macOS karşılıkları MacKurulumTesti'nde.
+SADECE_WINDOWS = unittest.skipIf(MACOS, "Windows'a özgü (macOS: MacKurulumTesti)")
 
 BECERILER = """# commercial-legal - Skill Referans Kitapcigi
 ## Icindekiler
@@ -170,19 +173,23 @@ class BuroSimgesiTesti(unittest.TestCase):
         self.derle.rehber_yaz(self.kok, "Örnek Büro", icerik, "Örnek Büro Asistanı")
         sayfa = (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8")
         self.assertIn("<title>Örnek Büro Asistanı Başlangıç</title>", sayfa)
-        self.assertIn("<i>Örnek Büro Asistanı - Tapu</i>", sayfa)
+        self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", sayfa)
+        self.assertIn("<i data-os=\"mac\">Örnek Büro Asistanı Tapu</i>", sayfa, "macOS uygulamasının adı")
+        self.assertIn("<i>Örnek Büro Asistanı - Kaldır</i>", sayfa, "macOS'taki kaldırma uygulamasının adı (kur._kaldir_adi)")
         self.assertNotIn("{{", sayfa)
         self.assertIn('<a href="baslangic-en.html">English</a>', sayfa)
         self.assertIn("<b>Always allow</b>", sayfa, "Claude Desktop'un arayüzü Türkçe değil")
         en = (self.kok / "rehber" / "baslangic-en.html").read_text(encoding="utf-8")
         self.assertIn("<title>Örnek Büro Asistanı Start</title>", en)
-        self.assertIn("<i>Örnek Büro Asistanı - Tapu</i>", en)
+        self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", en)
+        self.assertIn("<i>Örnek Büro Asistanı - Uninstall</i>", en)
         self.assertIn('<a href="baslangic.html">Türkçe</a>', en)
         self.assertIn("You are the ArthurLegal Law Firm assistant.", en, "İngilizce ön yükleme talimatı")
         self.assertNotIn("{{", en)
         self.derle.rehber_yaz(self.kok, "", icerik)
-        self.assertIn("<title>ArthurLegal Başlangıç</title>",
-                      (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8"))
+        sayfa = (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8")
+        self.assertIn("<title>ArthurLegal Başlangıç</title>", sayfa)
+        self.assertIn("<i>ArthurLegal&#x27;i Kaldır</i>", sayfa)
 
     def test_zip_talimati_iki_dilde(self):
         """Akıllı Uygulama Denetimi internetten gelen .cmd'yi engeller: işaret ayıklamadan önce kaldırılır."""
@@ -241,10 +248,11 @@ class KurulumBetigiTesti(unittest.TestCase):
             self.assertEqual(secilen(), "0.0.2")
 
 
+@SADECE_WINDOWS
 class ClaudeAyariTesti(unittest.TestCase):
     def calistir(self, komut, kok, appdata, yerel):
         kod = f"import sys; sys.path.insert(0, r'{kok}/surumler/0.0.1/istemci'); import claude_ayari, json; print(json.dumps([str(y) for y in claude_ayari.{komut}()]))"
-        env = {**ENV, "APPDATA": str(appdata), "LOCALAPPDATA": str(yerel)}
+        env = {**ENV, "APPDATA": str(appdata), "LOCALAPPDATA": str(yerel), "HOME": str(kok.parent / "ev")}
         return json.loads(subprocess.run([sys.executable, "-c", kod], env=env, capture_output=True, text=True, encoding="utf-8", check=True).stdout)
 
     def test_birlestirir_yedekler_kaldirir(self):
@@ -281,6 +289,7 @@ class ClaudeAyariTesti(unittest.TestCase):
             self.assertEqual(veri["preferences"], {"x": 1})
 
 
+@SADECE_WINDOWS
 class KisayolTesti(unittest.TestCase):
     """UYAP için tek simge (UYAP Dashboard) yalnız köprü ve Arthur Mask birlikteyse; Mask'in Python'unda açılır."""
 
@@ -291,7 +300,7 @@ class KisayolTesti(unittest.TestCase):
     def calistir(self, t, kod):
         tam = f"import sys, json; sys.path.insert(0, r'{t / 'kok'}/surumler/0.0.1/istemci'); {kod}"
         env = {**ENV, "APPDATA": str(t / "Roaming"), "LOCALAPPDATA": str(t / "Local"), "USERPROFILE": str(t / "ev"),
-               "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
+               "HOME": str(t / "ev"), "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
         cikti = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True,
                                encoding="utf-8", check=True).stdout
         return json.loads(cikti.strip().splitlines()[-1])       # işleyicinin uyarı satırından sonra
@@ -639,6 +648,7 @@ class SaltOkunurTesti(unittest.TestCase):
         self.assertEqual(s.salt_okunur_isaretle(None), [])
 
 
+@SADECE_WINDOWS
 class AkilliDenetimTesti(unittest.TestCase):
     """Akıllı Uygulama Denetimi açıkken imzasız Arthur Mask kurulumu çalışmaz: güncelleyici onu indirmez."""
 
@@ -786,6 +796,37 @@ class YayimlamaTesti(unittest.TestCase):
             self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "icerik": {"bilesenler": {"uyap": "1.18.3"}}}, True)
         with self.assertRaises(SystemExit):
             self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "kurulum": {}}, True)
+
+    def test_mac_paketi_yalniz_ayni_derlemeden(self):
+        """macOS paketi GitHub Actions'ta derlenir; yayına ancak aynı sürümün ve aynı kaynakların (ArthurLegal ve Tapu
+        commit'leri) derlemesiyse ve özeti tutuyorsa girer. Sürüm notu iki kurulumu da söyler."""
+        import ortak
+        kaynak = {"ArthurLegal": {"commit": "abc1234"}, "tapu": {"commit": "def5678"}}
+        self.d["kaynak"] = kaynak
+        pkg = self.cikti / "ArthurLegal-Kurulum.pkg"
+        pkg.write_bytes(b"pkg")
+        mac = {"surum": "9.9.9", "kaynak": kaynak, "kurulum": {pkg.name: ortak.sha256_dosya(pkg)}}
+        (self.cikti / "derleme-macos.json").write_text(json.dumps(mac), encoding="utf-8")
+        self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, self.d, True), [*self.KURULUMLAR, pkg.name])
+        uzun = {**mac, "kaynak": {**kaynak, "ArthurLegal": {"commit": "abc1234f"}}}
+        (self.cikti / "derleme-macos.json").write_text(json.dumps(uzun), encoding="utf-8")
+        self.assertIn(pkg.name, self.y.yuklenecek_kurulumlar(self.cikti, self.d, True), "kısa özetin uzunluğu değişebilir")
+        for bozuk in ({"surum": "9.9.8"}, {"kaynak": {**kaynak, "tapu": {"commit": "0000000"}}},
+                      {"kurulum": {pkg.name: "0" * 64}}):
+            (self.cikti / "derleme-macos.json").write_text(json.dumps({**mac, **bozuk}), encoding="utf-8")
+            with self.subTest(bozuk=bozuk), self.assertRaises(SystemExit):
+                self.y.yuklenecek_kurulumlar(self.cikti, self.d, True)
+        (self.cikti / "derleme-macos.json").unlink()
+        with self.assertRaises(SystemExit):
+            self.y.yuklenecek_kurulumlar(self.cikti, self.d, True)
+        (self.cikti / "derleme-macos.json").write_text(json.dumps(mac), encoding="utf-8")
+        kayit, _ = self.sahte_github()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, False, public=True)
+        govde = next(v for y, u, v in kayit if y == "POST" and u == "R")["body"]
+        self.assertIn("Windows ArthurLegal-Kurulum.exe · macOS ArthurLegal-Kurulum.pkg", govde)
+        yuklenen = [u.split("=", 1)[1] for y, u, v in kayit if y == "POST" and u.startswith("U?")]
+        self.assertLess(yuklenen.index(pkg.name), yuklenen.index("arthurlegal-manifest.json"), "manifest en son")
 
 
 class GuncelleyiciTesti(unittest.TestCase):
@@ -1005,7 +1046,7 @@ class ModulTesti(unittest.TestCase):
     def calistir(self, t, kod, kontrol=True):
         tam = f"import sys, json; sys.path.insert(0, r'{t / 'kok'}/surumler/0.0.1/istemci'); {kod}"
         env = {**ENV, "APPDATA": str(t / "Roaming"), "LOCALAPPDATA": str(t / "Local"), "USERPROFILE": str(t / "ev"),
-               "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
+               "HOME": str(t / "ev"), "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
         r = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True, encoding="utf-8",
                            check=kontrol)
         return json.loads(r.stdout.strip().splitlines()[-1]) if kontrol else r
@@ -1039,6 +1080,7 @@ class ModulTesti(unittest.TestCase):
             self.assertEqual(r, 2, "paket seçilmemiş: kurulum durur")
             self.assertEqual(self.calistir(t, kod), ["adliye", "mask"], "geçersiz seçim öncekini bozmaz")
 
+    @SADECE_WINDOWS
     def test_courthouse_tapu_mask_simgeleri(self):
         """Kullanıcının istediği: masaüstünde Courthouse, Tapu ve (Arthur Mask'in kendi kurulumundan) Mask simgesi."""
         with tempfile.TemporaryDirectory() as t:
@@ -1058,6 +1100,7 @@ class ModulTesti(unittest.TestCase):
             self.assertEqual(masa, ["ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Tapu 0.0.1.lnk"],
                              "Arthur Mask simgesini Arthur Mask'in kendi kurulumu koyar")
 
+    @SADECE_WINDOWS
     def test_paket_simgeleri_ve_secimden_cikan_temizlenir(self):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
@@ -1081,6 +1124,7 @@ class ModulTesti(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in masa.iterdir()),
                              ["ArthurLegal - Academician 0.0.1.lnk", "Başka Program.lnk"])
 
+    @SADECE_WINDOWS
     def test_tapu_yalniz_secilirse_kaydedilir(self):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
@@ -1151,6 +1195,7 @@ class ModulTesti(unittest.TestCase):
             self.assertTrue((courthouse / "calismalar" / "taslak.md").exists(), "kullanıcının dosyası kalır")
             self.assertEqual(list(self.calistir(t, "import proje; print(json.dumps(proje.durum()))")), ["hukuk-burosu"])
 
+    @SADECE_WINDOWS
     def test_mask_secilmediyse_indirilmez(self):
         import guncelle
         import ortak
@@ -1223,6 +1268,256 @@ class ModulTesti(unittest.TestCase):
         import ortak
         sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["mask"]
         self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
+
+
+class MacKurulumTesti(unittest.TestCase):
+    """macOS kurulumu (.pkg, yayin/derle_macos.py): paketler, istemci ve güncelleme kanalı Windows'takiyle aynı; değişen
+    yalnız işletim sistemine bağlanan yerler (Python yolu, Claude ayar dosyası, uygulamalar ve masaüstü takma adları,
+    LaunchAgent, Arthur Mask). İşletim sisteminden bağımsız kısımlar her bilgisayarda ortak.MAC = True ile sınanır;
+    sembolik bağ ve sh isteyenler yalnız macOS'ta (GitHub Actions: .github/workflows/macos-kurulum.yml)."""
+
+    # (yol, hedef, argüman): ev klasörünün altındakiler ev klasörüne göre, öteki yollar POSIX biçiminde.
+    LISTE = ("import kur; ev = Path.home(); g = lambda p: Path(p).relative_to(ev).as_posix() "
+             "if Path(p).is_relative_to(ev) else Path(p).as_posix(); "
+             "print(json.dumps([[g(y), g(h), a] for y, h, a, _ in kur._kisayol_listesi()]))")
+
+    def calistir(self, t, kod):
+        tam = (f"import sys, json; from pathlib import Path; sys.path.insert(0, r'{t / 'kok'}/surumler/0.0.1/istemci'); "
+               f"import ortak; ortak.MAC = True; {kod}")
+        env = {**ENV, "HOME": str(t / "ev"), "USERPROFILE": str(t / "ev"), "ARTHURLEGAL_PROJE_KOKU": str(t / "projeler")}
+        r = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True, encoding="utf-8")
+        if r.returncode:
+            self.fail(r.stdout + r.stderr)
+        return json.loads(r.stdout.strip().splitlines()[-1])
+
+    def kok(self, t, *moduller):
+        sahte_kok(t / "kok")
+        dort_paket(t / "kok")
+        (t / "ev").mkdir()
+        if moduller:
+            secim_yaz(t / "kok", *moduller)
+
+    def test_simgeler_uygulamalar_ve_masaustu_takma_adlari(self):
+        """İstenen: masaüstünde Courthouse, Tapu ve Mask simgeleri. macOS'ta paket ve Tapu simgeleri ~/Applications'ta
+        uygulamadır (Launchpad, Spotlight), masaüstünde takma adları durur; adlar sürüm taşımaz."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "tapu", "mask")
+            py = ((t / "kok").resolve() / "runtime" / "bin" / "python3").as_posix()
+            liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
+            self.assertEqual(sorted(y for y in liste if not y.startswith("Applications/ArthurLegal/")),
+                             ["Applications/ArthurLegal Courthouse.app", "Applications/ArthurLegal Tapu.app",
+                              "Desktop/ArthurLegal Courthouse.app", "Desktop/ArthurLegal Tapu.app"],
+                             "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
+            hedef, arg = liste["Applications/ArthurLegal Courthouse.app"]
+            self.assertEqual(hedef, py)
+            self.assertTrue(arg.startswith("-B ") and arg.endswith("kisayol baslat adliye"), arg)
+            self.assertTrue(liste["Applications/ArthurLegal Tapu.app"][1].endswith("kisayol tapu"))
+            self.assertEqual(liste["Desktop/ArthurLegal Courthouse.app"], ("Applications/ArthurLegal Courthouse.app", ""))
+            yardimci = {y.rsplit("/", 1)[1]: h for y, (h, a) in liste.items() if y.startswith("Applications/ArthurLegal/")}
+            self.assertEqual(sorted(yardimci), ["ArthurLegal'i Kaldır.app", "Başlangıç Rehberi.app",
+                                                "Güncellemeleri Denetle.app", "Proje Klasörleri.app"])
+            self.assertEqual((yardimci["Başlangıç Rehberi.app"], yardimci["ArthurLegal'i Kaldır.app"],
+                              yardimci["Güncellemeleri Denetle.app"]), ("/usr/bin/open", "/bin/sh", py))
+            # Arthur Mask kuruluysa ve seçildiyse masaüstünde onun da takma adı olur.
+            if not Path("/Applications/Arthur Mask.app").exists():
+                self.assertNotIn("Desktop/Arthur Mask.app", liste, "Arthur Mask kurulu değil")
+            mask = t / "ev" / "Applications" / "Arthur Mask.app" / "Contents" / "Resources" / "runtime" / "bin"
+            mask.mkdir(parents=True)
+            (mask / "python3").write_bytes(b"")
+            liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
+            self.assertTrue(liste["Desktop/Arthur Mask.app"][0].endswith("Applications/Arthur Mask.app"))
+            secim_yaz(t / "kok", "adliye", "tapu")
+            self.assertNotIn("Desktop/Arthur Mask.app", [y for y, *_ in self.calistir(t, self.LISTE)], "Mask seçilmedi")
+            # Ana simge (Hukuk Bürosu), İngilizce adlar; seçilmeyen Tapu ve Courthouse yok.
+            secim_yaz(t / "kok", "hukuk-burosu", "akademisyen")
+            self.calistir(t, "ortak.durum_guncelle(dil='en'); print(1)")
+            adlar = [y for y, *_ in self.calistir(t, self.LISTE)]
+            for ad in ("Applications/ArthurLegal.app", "Desktop/ArthurLegal.app", "Applications/ArthurLegal Academician.app",
+                       "Applications/ArthurLegal/Start Guide.app", "Applications/ArthurLegal/Uninstall ArthurLegal.app"):
+                self.assertIn(ad, adlar)
+            self.assertFalse([a for a in adlar if "Tapu" in a or "Courthouse" in a])
+            durum = self.calistir(t, "import kisayol; y = kisayol.durum_yaz('kurulu'); "
+                                     "print(y.read_text(encoding='utf-8').split('=', 1)[1].strip().rstrip(';'))")
+            self.assertEqual(durum["isletim"], "mac", "başlangıç sayfası Mac'e özgü cümleleri gösterir")
+
+    def test_uygulama_yazilir_kullanicinin_uygulamasina_dokunulmaz(self):
+        import plistlib
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye")
+            kod = ("import mac, plistlib; app = mac.uygulamalar() / 'ArthurLegal Courthouse.app'; "
+                   "mac.uygulama_yaz(app, Path('/k/runtime/bin/python3'), '-B /k/bin/al.py kisayol baslat adliye', "
+                   "'Courthouse', '0.0.1', None); "
+                   "b = plistlib.loads((app / 'Contents' / 'Info.plist').read_bytes()); "
+                   "betik = (app / 'Contents' / 'MacOS' / 'arthurlegal').read_text(encoding='utf-8'); "
+                   "print(json.dumps([b, betik, mac.bizim_mi(app), mac.surumu(app), "
+                   "mac.eski_surumlu_kisayol_var([(app, 0, 0, 0)], '0.0.1'), "
+                   "mac.eski_surumlu_kisayol_var([(app, 0, 0, 0)], '0.0.2')]))")
+            bilgi, betik, bizim, surum, ayni, eski = self.calistir(t, kod)
+            self.assertTrue(bilgi["CFBundleIdentifier"].startswith("com.arthurlegal.kisayol."))
+            self.assertEqual((bilgi["CFBundleExecutable"], bilgi["CFBundleShortVersionString"], bilgi["LSUIElement"]),
+                             ("arthurlegal", "0.0.1", True), "Dock'ta simge açmaz; sürüm uygulamanın bilgisinde")
+            self.assertTrue(betik.startswith("#!/bin/sh\n"))
+            self.assertIn(" -B /k/bin/al.py kisayol baslat adliye >/dev/null 2>&1\n", betik)
+            self.assertEqual((bizim, surum, ayni, eski), (True, "0.0.1", False, True))
+            uyg = t / "ev" / "Applications"
+            if os.name == "posix":
+                self.assertTrue(os.access(uyg / "ArthurLegal Courthouse.app" / "Contents" / "MacOS" / "arthurlegal", os.X_OK))
+            # Kullanıcının aynı adlı uygulaması: üzerine yazılmaz, yanına kopya kalmaz.
+            kendi = uyg / "ArthurLegal Tapu.app" / "Contents"
+            kendi.mkdir(parents=True)
+            (kendi / "Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier": "com.ornek.tapu"}))
+            self.calistir(t, "import mac; mac.uygulama_yaz(mac.uygulamalar() / 'ArthurLegal Tapu.app', Path('/k/py'), 'x', "
+                             "'Tapu', '0.0.1', None); print(1)")
+            self.assertEqual(plistlib.loads((kendi / "Info.plist").read_bytes())["CFBundleIdentifier"], "com.ornek.tapu")
+            self.assertEqual(sorted(p.name for p in uyg.iterdir()), ["ArthurLegal Courthouse.app", "ArthurLegal Tapu.app"])
+
+    @unittest.skipUnless(MACOS, "sembolik bağ ve sh: macOS")
+    def test_kisayollar_yazilir_secimden_cikan_silinir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "tapu")
+            ev, kok = t / "ev", t / "kok"
+            masa, uyg = ev / "Desktop", ev / "Applications"
+            masa.mkdir()
+            (masa / "Başka Program.app").mkdir()                              # kullanıcının gerçek klasörü
+            os.symlink("/System/Applications/Notes.app", masa / "Notlar.app")  # kullanıcının takma adı
+            self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
+            self.assertTrue((uyg / "ArthurLegal Courthouse.app" / "Contents" / "MacOS" / "arthurlegal").exists())
+            self.assertEqual(os.readlink(masa / "ArthurLegal Courthouse.app"), str(uyg / "ArthurLegal Courthouse.app"))
+            self.assertTrue((uyg / "ArthurLegal" / "ArthurLegal'i Kaldır.app").is_dir())
+            kaldir = kok / "KALDIR.command"
+            self.assertTrue(os.access(kaldir, os.X_OK))
+            self.assertEqual(subprocess.run(["sh", "-n", str(kaldir)]).returncode, 0)
+            self.assertEqual(subprocess.run(["bash", "-n", str(BURASI / "kurulum" / "macos" / "postinstall")]).returncode, 0)
+            # Courthouse seçimden çıkar, Hukuk Bürosu girer: eski uygulama ve takma adı gider, kullanıcınınkiler kalır.
+            secim_yaz(kok, "hukuk-burosu", "tapu")
+            self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
+            self.assertFalse((uyg / "ArthurLegal Courthouse.app").exists())
+            self.assertEqual(sorted(p.name for p in masa.iterdir()),
+                             ["ArthurLegal Tapu.app", "ArthurLegal.app", "Başka Program.app", "Notlar.app"])
+            self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Başka Program.app", "Notlar.app"])
+            self.assertEqual(sorted(p.name for p in uyg.iterdir()), [])
+
+    def test_oturum_acilisi_ajani(self):
+        """Windows'taki Run anahtarının karşılığı: LaunchAgent oturum açılışında ve altı saatte bir sessiz günceller."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye")
+            kod = ("import mac, os, plistlib; os.getuid = getattr(os, 'getuid', lambda: 501); c = []; "
+                   "mac.subprocess.run = lambda a, **k: c.append(a) or type('R', (), {'returncode': 0, 'stderr': ''})(); "
+                   "mac.ajan(True, Path('/k/runtime/bin/python3'), Path('/k/bin/al.py')); "
+                   "p = plistlib.loads(mac.ajan_yolu().read_bytes()); "
+                   "mac.ajan(False, Path('/k/runtime/bin/python3'), Path('/k/bin/al.py')); "
+                   "print(json.dumps([p, c, mac.ajan_yolu().exists(), os.getuid()]))")
+            plist, komutlar, kaldi, uid = self.calistir(t, kod)
+            self.assertEqual(plist["Label"], "com.arthurlegal.guncelleme")
+            self.assertEqual((plist["ProgramArguments"][1], plist["ProgramArguments"][-2:]), ("-B", ["guncelle", "--sessiz"]))
+            self.assertEqual((plist["RunAtLoad"], plist["StartInterval"]), (True, 6 * 3600))
+            self.assertEqual([k[:2] for k in komutlar], [["launchctl", "bootout"], ["launchctl", "bootstrap"],
+                                                         ["launchctl", "bootout"]])
+            self.assertEqual(komutlar[1][2], f"gui/{uid}")
+            self.assertFalse(kaldi, "kaldırmada ajan dosyası silinir")
+
+    def test_claude_ayari_mac_yolunda(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye", "tapu")
+            kod = "import claude_ayari; print(json.dumps([str(y) for y in claude_ayari.kaydet()]))"
+            yapi = t / "ev" / "Library" / "Application Support" / "Claude" / "claude_desktop_config.json"
+            self.assertEqual([Path(y).resolve() for y in self.calistir(t, kod)], [yapi.resolve()],
+                             "Claude Desktop henüz açılmamış olsa da yazılır")
+            sunucular = json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]
+            self.assertEqual(set(sunucular), {"arthurlegal-yerel", "arthur-tapu"})
+            self.assertEqual(Path(sunucular["arthurlegal-yerel"]["command"]).resolve(),
+                             (t / "kok" / "runtime" / "bin" / "python3").resolve())
+            self.assertEqual(sunucular["arthurlegal-yerel"]["args"][-1], "sunucu")
+            secim_yaz(t / "kok", "adliye")
+            self.calistir(t, kod)
+            self.assertEqual(set(json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]), {"arthurlegal-yerel"},
+                             "seçimden çıkan Tapu'nun kaydı silinir")
+
+    def test_arthur_mask_mac_kosullari(self):
+        """Mac'te Arthur Mask'i güncelleyici ilk kez kurar: yalnız seçildiyse, Apple Silicon'da, manifestte macOS disk
+        görüntüsü varsa ve sha256'sı tutuyorsa. Kurulu Arthur Mask'in güncellemesine karışılmaz."""
+        import guncelle
+        import ortak
+        eski = (ortak.MAC, ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.VERI, guncelle.subprocess.run)
+        t = Path(tempfile.mkdtemp())
+        islemci = ["1"]
+        try:
+            def indir(url, hedef=None, **k):
+                Path(hedef).parent.mkdir(parents=True, exist_ok=True)
+                Path(hedef).write_bytes(b"bozuk")
+                return "1" * 64
+            ortak.MAC, ortak.VERI, ortak.indir = True, t, indir
+            guncelle.subprocess.run = lambda a, **k: subprocess.CompletedProcess(a, 0, stdout=islemci[0] + "\n", stderr="")
+            manifest = {"mask_macos": {"surum": "1.0.0", "url": "https://ornek.invalid/m.dmg", "sha256": "0" * 64}}
+            ortak.mask_surumu, ortak.moduller = (lambda: "1.0.0"), (lambda: ["adliye", "mask"])
+            self.assertTrue(guncelle.mask_guncelle(manifest).startswith("mask: kurulu (1.0.0)"))
+            ortak.mask_surumu, ortak.moduller = (lambda: None), (lambda: ["adliye"])
+            self.assertEqual(guncelle.mask_guncelle(manifest), "mask: kurulumda seçilmedi")
+            ortak.moduller = lambda: ["adliye", "mask"]
+            islemci[0] = "0"
+            self.assertIn("yalnız Apple Silicon", guncelle.mask_guncelle(manifest))
+            islemci[0] = "1"
+            self.assertEqual(guncelle.mask_guncelle({}), "mask: manifest'te macOS sürümü yok")
+            with self.assertRaises(guncelle.GuncellemeHatasi):
+                guncelle.mask_guncelle(manifest)
+            self.assertEqual(list((t / "indirilen").iterdir()), [], "özeti tutmayan disk görüntüsü silinir")
+        finally:
+            ortak.MAC, ortak.moduller, ortak.mask_surumu, ortak.indir, ortak.VERI, guncelle.subprocess.run = eski
+            shutil.rmtree(t, ignore_errors=True)
+
+    def test_kurulum_paketi_sihirbazi(self):
+        """Distribution.xml: modül ekranı (Özelleştir) Windows sihirbazıyla aynı metinlerle; yalnız ev klasörüne kurulum;
+        kur.py'yi çağıran 'son' bileşeni en son; Arthur Mask yalnız Apple Silicon'da seçilebilir."""
+        import xml.etree.ElementTree as ET
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import derle_macos
+        import ortak
+        ileti = derle_macos.iletiler()
+        self.assertEqual(set(ileti["tr"]), set(ileti["en"]))
+        with tempfile.TemporaryDirectory() as t:
+            yol = Path(t) / "Distribution.xml"
+            moduller = list(ortak.MODULLER)
+            derle_macos.dagitim_yaz(yol, "9.9.9", moduller)
+            kok = ET.parse(yol).getroot()
+            self.assertEqual(kok.find("options").get("customize"), "always")
+            alan = kok.find("domains")
+            self.assertEqual((alan.get("enable_currentUserHome"), alan.get("enable_localSystem"),
+                              alan.get("enable_anywhere")), ("true", "false", "false"), "yönetici şifresi istemez")
+            self.assertEqual([s.get("choice") for s in kok.find("choices-outline")], ["cekirdek", *moduller, "son"])
+            secim = {c.get("id"): c for c in kok.findall("choice")}
+            for m in moduller:
+                for dil in ("tr", "en"):
+                    self.assertIn(secim[m].get("title"), ileti[dil])
+                    self.assertIn(secim[m].get("description"), ileti[dil])
+                self.assertIn(f"onceki('{m}')", secim[m].get("start_selected"), "önceki seçim işaretli gelir")
+            self.assertEqual(secim["mask"].get("start_enabled"), "arm()")
+            self.assertTrue(all(p.get("auth") == "none" for p in kok.findall("pkg-ref") if p.text))
+            strings = Path(t) / "Localizable.strings"
+            derle_macos.strings_yaz(strings, {"A": 'tırnak " ve\nsatır'})
+            self.assertIn(strings.read_bytes()[:2], (b"\xff\xfe", b"\xfe\xff"), "UTF-16")
+            self.assertEqual(strings.read_bytes().decode("utf-16"), '"A" = "tırnak \\" ve\\nsatır";\n')
+        son = (BURASI / "kurulum" / "macos" / "postinstall").read_text(encoding="utf-8")
+        self.assertIn('kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM"', son)
+        self.assertIn("{{PAKET_YOK_TR}}", son)
+        self.assertIn("{{PAKET_YOK_EN}}", son)
+
+    def test_kaldirma_betigi(self):
+        from pathlib import PurePosixPath
+        import mac
+        metin = mac.kaldirma_betigi(PurePosixPath("/Users/a b/Library/Application Support/ArthurLegal"), 'Örnek "Büro"', "tr")
+        self.assertIn("KOK='/Users/a b/Library/Application Support/ArthurLegal'", metin)
+        self.assertIn('kur --kaldir\nrm -rf "$KOK"\n', metin)
+        self.assertIn('Örnek \\"Büro\\"', metin, "AppleScript dizgesinde tırnak kaçışlı")
+        self.assertIn("Kaldır", metin)
+        self.assertIn("Uninstall", mac.kaldirma_betigi(PurePosixPath("/k"), "ArthurLegal", "en"))
+        if MACOS:
+            self.assertEqual(subprocess.run(["sh", "-n"], input=metin, text=True).returncode, 0)
 
 
 if __name__ == "__main__":

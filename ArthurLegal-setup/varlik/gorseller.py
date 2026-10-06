@@ -91,12 +91,17 @@ def a_isareti(t: Tuval, x: int, y: int, olcek: int) -> None:
     t.rect(x + olcek, y, x + 4 * olcek - 1, y + max(1, olcek // 3) - 1, "H")
 
 
-def simge() -> Path:
+def simge_tuvali() -> Tuval:
+    """16x16 simge; Windows'ta .ico (simge), macOS'ta .icns (yayin/derle_macos.py) olarak yazılır."""
     t = Tuval(16, 16, "N")
     t.rect(0, 0, 15, 0, "n")
     a_isareti(t, 3, 0, 2)
     gokkusagi(t, 14, 15, 0, 15, 2)
-    return Path(t.ico_yaz(BURASI / "arthurlegal.ico"))
+    return t
+
+
+def simge() -> Path:
+    return Path(simge_tuvali().ico_yaz(BURASI / "arthurlegal.ico"))
 
 
 def afis(alt_yazi: str = "ACIK KAYNAK HUKUK YAPAY ZEKASI", ad: str = "banner.png") -> Path:

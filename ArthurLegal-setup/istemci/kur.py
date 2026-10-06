@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -23,18 +24,26 @@ from pathlib import Path
 from urllib.parse import quote
 
 import claude_ayari
+import mac
 import ortak
 import proje
 
 
 def claude_kurulu() -> bool:
+    if ortak.MAC:
+        return any((k / "Claude.app").exists() for k in (Path("/Applications"), Path.home() / "Applications")) \
+            or any(y.parent.exists() for y in claude_ayari.yapilandirma_yollari())
     yerel = Path(os.environ.get("LOCALAPPDATA", ""))
     return (yerel / "AnthropicClaude").exists() or any((yerel / "Packages").glob("Claude_*")) \
         or any(y.parent.exists() for y in claude_ayari.yapilandirma_yollari())
 
 
 def claude_kur() -> bool:
-    """Claude Desktop'u kullanıcı kapsamında winget ile kurmayı dener (yönetici gerekmez)."""
+    """Claude Desktop'u kullanıcı kapsamında winget ile kurmayı dener (yönetici gerekmez). macOS'ta kurulmaz:
+    başlangıç paneli kurulu olmadığını gösterir ve indirme sayfasına bağlanır."""
+    if ortak.MAC:
+        ortak.gunluk("kurulum", "Claude Desktop kurulu değil (macOS: claude.ai/download)")
+        return False
     try:
         sonuc = subprocess.run(["winget", "install", "-e", "--id", "Anthropic.Claude", "--scope", "user", "--silent",
                                 "--accept-package-agreements", "--accept-source-agreements", "--disable-interactivity"],
@@ -46,7 +55,8 @@ def claude_kur() -> bool:
     return sonuc.returncode == 0 or claude_kurulu()
 
 
-VARSAYILAN_KOK = Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "ArthurLegal"
+VARSAYILAN_KOK = (Path.home() / "Library" / "Application Support" / "ArthurLegal" if ortak.MAC
+                  else Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "ArthurLegal")
 RUN_ANAHTARI = r"Software\Microsoft\Windows\CurrentVersion\Run"
 RUN_ADI = "ArthurLegalGuncelleme"
 
@@ -56,11 +66,16 @@ def _programlar() -> Path:
 
 
 def _menu() -> Path:
-    """Başlat menüsü klasörü: ürün adı (ortak.urun_adi). Kurulum betiğindeki {group} ile aynı olmalı."""
+    """Başlat menüsü klasörü: ürün adı (ortak.urun_adi). Kurulum betiğindeki {group} ile aynı olmalı. macOS'ta
+    Uygulamalar'daki ürün klasörü (yardımcı uygulamalar)."""
+    if ortak.MAC:
+        return mac.uygulamalar() / ortak.urun_adi()
     return _programlar() / ortak.urun_adi()
 
 
 def _masaustu() -> Path:
+    if ortak.MAC:
+        return mac.masaustu()
     return Path(os.environ["USERPROFILE"]) / "Desktop"
 
 
@@ -98,7 +113,9 @@ KISAYOL_METNI = {
 def _simge() -> Path:
     """Kısayol simgesi. Büroya özel kurulumda simgenin adı içeriğinin özetini taşır (ayar.json → simge):
     Windows simgeleri dosya yoluna göre önbelleğe alır; aynı yol başka bir simgeyle kalsaydı eski resim
-    görünmeye devam ederdi."""
+    görünmeye devam ederdi. macOS'ta uygulama simgesi .icns'tir (bin/arthurlegal.icns)."""
+    if ortak.MAC:
+        return ortak.KOK / "bin" / "arthurlegal.icns"
     ad = str(ortak.ayar().get("simge") or "")
     yol = ortak.KOK / "bin" / ad
     if ad and Path(ad).name == ad and yol.is_file():
@@ -134,8 +151,10 @@ def _kisayol_listesi() -> list:
 
     Her ad sonda çalışan kodun sürümünü taşır (ortak.surum: bu dosyanın sürüm klasöründeki surum.txt):
     "<ad> 2.4.0", "<ad> - Tapu 2.4.0". Güncelleyici adları ancak yeni sürüm doğrulanıp etkin olunca, o
-    sürümün koduyla yeniden yazar; güncelleme olmadıysa ad eski numarada kalır."""
-    py, pyw, al = ortak.RUNTIME / "python.exe", ortak.RUNTIME / "pythonw.exe", ortak.AL
+    sürümün koduyla yeniden yazar; güncelleme olmadıysa ad eski numarada kalır. macOS: _mac_kisayol_listesi."""
+    if ortak.MAC:
+        return _mac_kisayol_listesi()
+    py, pyw, al = ortak.python_yolu(), ortak.python_yolu(pencereli=True), ortak.AL
     ad, kisa, menu, masa, s = ortak.urun_adi(), ortak.kisa_ad(), _menu(), _masaustu(), ortak.surum()
     m = KISAYOL_METNI[ortak.dil()]
     secili = ortak.moduller()
@@ -165,9 +184,43 @@ def _kisayol_listesi() -> list:
     return liste
 
 
+def _mac_kisayol_listesi() -> list:
+    """macOS: (yol, hedef, argüman, açıklama). Paket ve Tapu uygulamaları ~/Applications'ta (Launchpad), masaüstünde
+    takma adları (hedefi uygulamadır); yardımcılar ~/Applications/<ürün> klasöründe; Arthur Mask kuruluysa onun da
+    masaüstü takma adı. Adlar sürüm taşımaz, sürüm uygulamanın bilgisindedir (mac.py)."""
+    ad, menu, s = ortak.urun_adi(), _menu(), ortak.surum()
+    m = KISAYOL_METNI[ortak.dil()]
+    py, al, secili = ortak.python_yolu(), shlex.quote(str(ortak.AL)), ortak.moduller()
+    simgeler = []
+    if {"hukuk-burosu", "kurumsal"} & set(secili):
+        simgeler.append((f"{ad}.app", f"-B {al} kisayol baslat", m["ana"].format(s=s)))
+    for profil in ("adliye", "akademisyen"):
+        if profil in secili:
+            simgeler.append((f"{ad} {m[profil]}.app", f"-B {al} kisayol baslat {profil}",
+                             m[profil + "_aciklama"].format(s=s)))
+    if ortak.bilesen_var("tapu"):
+        simgeler.append((f"{ad} Tapu.app", f"-B {al} kisayol tapu", m["tapu"].format(s=s)))
+    uyg = mac.uygulamalar()
+    liste = [(uyg / dosya, py, arg, aciklama) for dosya, arg, aciklama in simgeler]
+    liste += [(mac.masaustu() / dosya, uyg / dosya, "", aciklama) for dosya, _, aciklama in simgeler]
+    mask = ortak.mask_uygulamasi()
+    if mask and "mask" in secili:
+        liste.append((mac.masaustu() / mask.name, mask, "", "Arthur Mask"))
+    acici = Path("/usr/bin/open")
+    liste += [
+        (menu / f"{m['rehber']}.app", acici, shlex.quote(str(ortak.rehber_dosyasi())), m["rehber_aciklama"]),
+        (menu / f"{m['proje']}.app", acici, shlex.quote(str(proje.kok())), m["proje_aciklama"]),
+        (menu / f"{m['guncelle']}.app", py, f"-B {al} guncelle --bildir", m["guncelle_aciklama"]),
+        (menu / f"{_kaldir_adi(ad)}.app", Path("/bin/sh"), shlex.quote(str(ortak.KOK / "KALDIR.command")), _kaldir_adi(ad)),
+    ]
+    return liste
+
+
 def eski_surumlu_kisayol_var() -> bool:
     """Bu kurulumun kısayollarından biri çalışan sürümden başka bir numara (ya da hiç numara) taşıyor mu?
     Güncelleme yarıda kaldıysa ya da ad yazılamadıysa güncelleyici bir sonraki denetimde düzeltir."""
+    if ortak.MAC:
+        return mac.eski_surumlu_kisayol_var(_kisayol_listesi(), ortak.surum())
     s, menu = ortak.surum(), _menu()
     kaldir = _kaldir_adi(ortak.urun_adi()) + ".lnk"
     for klasor in _kisayol_klasorleri(menu):
@@ -184,7 +237,10 @@ KALDIRMA_ANAHTARI = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\{5B7A1
 
 def programlar_listesi_yaz() -> bool:
     """Windows programlar listesindeki ad ve sürüm, çalışan kodun sürümüyle: kurulum betiği bunları yalnız
-    kurulumda yazar, sessiz güncellemeden sonra eski numara kalırdı. Girdi yoksa (zip kurulumu) bir şey yapmaz."""
+    kurulumda yazar, sessiz güncellemeden sonra eski numara kalırdı. Girdi yoksa (zip kurulumu) bir şey yapmaz.
+    macOS'ta programlar listesi yoktur (sürüm uygulamaların bilgisindedir)."""
+    if ortak.MAC:
+        return False
     try:
         import winreg
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, KALDIRMA_ANAHTARI, 0, winreg.KEY_SET_VALUE) as k:
@@ -234,7 +290,15 @@ public static class ArthurKisayol {
 
 
 def kisayollar_yaz() -> None:
-    """Simgeli .lnk kısayolları (IShellLinkW, Unicode). Add-Type engellenirse .cmd yedeğine düşer."""
+    """Simgeli .lnk kısayolları (IShellLinkW, Unicode). Add-Type engellenirse .cmd yedeğine düşer. macOS'ta
+    uygulamalar, masaüstü takma adları ve kaldırma betiği (mac.py)."""
+    if ortak.MAC:
+        liste, kaldir = _kisayol_listesi(), ortak.KOK / "KALDIR.command"
+        kaldir.write_text(mac.kaldirma_betigi(ortak.KOK, ortak.urun_adi(), ortak.dil()), encoding="utf-8")
+        kaldir.chmod(0o755)
+        mac.kisayollar_yaz(liste, _menu(), _simge(), ortak.surum())
+        mac.eski_kisayollari_temizle(liste, _menu(), ortak.urun_adi())
+        return
     menu = _menu()
     menu.mkdir(parents=True, exist_ok=True)
     ikon = _simge()
@@ -272,6 +336,9 @@ def kisayollar_yaz() -> None:
 def eski_kisayollari_temizle(menu: Path, kalacak: set) -> None:
     """Önceki sürümlerden (UYAP, .cmd, .url) ve ürün adı değiştiyse önceki adla (ArthurLegal) kalan
     kısayolları siler; boş kalan eski Başlat menüsü klasörü de gider."""
+    if ortak.MAC:
+        mac.eski_kisayollari_temizle([(y,) for y in kalacak], menu, ortak.urun_adi())
+        return
     for klasor in _kisayol_klasorleri(menu):
         for desen in _desenler(ortak.urun_adi(), ortak.kisa_ad()):
             for y in klasor.glob(desen):
@@ -298,6 +365,9 @@ def _kisayol_cmd_yedegi() -> None:
 
 
 def kisayollar_sil() -> None:
+    if ortak.MAC:
+        mac.kisayollar_sil(ortak.urun_adi(), _menu())
+        return
     menu = _menu()
     for klasor in _kisayol_klasorleri(menu):
         for desen in _desenler(ortak.urun_adi(), ortak.kisa_ad()):
@@ -309,6 +379,10 @@ def kisayollar_sil() -> None:
 
 
 def run_anahtari(yaz: bool) -> None:
+    """Oturum açılışında sessiz güncelleme: Windows'ta Run anahtarı, macOS'ta LaunchAgent."""
+    if ortak.MAC:
+        mac.ajan(yaz, ortak.python_yolu(), ortak.AL)
+        return
     try:
         import winreg
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_ANAHTARI, 0, winreg.KEY_SET_VALUE) as k:
@@ -458,7 +532,8 @@ def main(argv=None) -> int:
     ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; modüller "
                             f"{','.join(ortak.moduller())}; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
-        paket = next((y.stem for y, _, a, _ in _kisayol_listesi() if y.parent == _masaustu() and "kisayol baslat" in a),
+        paket = next((y.stem for y, _, a, _ in _kisayol_listesi()  # macOS'ta masaüstündeki takma adın adı aynı
+                      if (ortak.MAC or y.parent == _masaustu()) and "kisayol baslat" in a),
                      f"{ortak.urun_adi()} {ortak.surum()}")
         sayi, simge = len(claude_ayari.istenen_girdiler()), paket
         print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",

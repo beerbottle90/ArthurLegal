@@ -1,0 +1,105 @@
+# macOS kurulum paketi (ArthurLegal-Kurulum.pkg).
+#
+# Windows kurulumu Inno Setup'la Windows'ta derlenir. macOS paketi yalnız macOS'ta derlenebildiği için GitHub'ın
+# macOS bilgisayarında (Apple Silicon) derlenir ve aynı bilgisayarda kurulup denenir:
+#   1. İstemci testleri (macOS'a özgü olanlar dâhil)
+#   2. Paketin derlenmesi (ArthurLegal-setup/yayin/derle_macos.py): paketler bu depodan, Tapu public
+#      arthurlegal-mcp deposundan; Python Apple Silicon ve Intel için
+#   3. Kurulum: Courthouse, Tapu ve Arthur Mask seçilerek, ev klasörüne, yönetici şifresi olmadan
+#   4. Denetim (ArthurLegal-setup/tests/mac_kurulum_denetimi.py): Python, Claude Desktop kaydı, uygulamalar,
+#      masaüstü simgeleri, oturum açılışında güncelleme, yerel sunucu ve Tapu; Arthur Mask'in indirilip
+#      kurulması; kaldırma
+# Paket ve derleme-macos.json işin çıktısıdır (Artifacts). Yayına yayin/yayinla.py ile girer, yalnız Windows
+# derlemesiyle aynı sürümden ve aynı commit'ten derlendiyse.
+
+name: macOS kurulumu
+
+on:
+  push:
+    branches: [main, "kurulum/**"]
+    paths:
+      - "ArthurLegal-setup/**"
+      - "ArthurLegal-*-Public-Release/**"
+      - ".github/workflows/macos-kurulum.yml"
+  workflow_dispatch:
+    inputs:
+      mask:
+        description: "Arthur Mask'i de indir, kur ve dene (~1,2 GB)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macos-kurulum-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  derle:
+    name: Derle, kur, denetle
+    runs-on: macos-15
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: ArthurLegal-setup
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tapu kaynağı (public arthurlegal-mcp)
+        working-directory: .
+        run: git clone --quiet https://github.com/beerbottle90/arthurlegal-mcp.git "$GITHUB_WORKSPACE/../arthurlegal-mcp"
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Testler
+        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
+
+      - name: Derle
+        run: uv run --no-project --python 3.12 python yayin/derle_macos.py
+
+      - name: Paketi sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArthurLegal-Kurulum-macos-${{ github.sha }}
+          path: |
+            ArthurLegal-setup/yayin/cikti/ArthurLegal-Kurulum.pkg
+            ArthurLegal-setup/yayin/cikti/derleme-macos.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Kur (Courthouse, Tapu, Arthur Mask; yönetici şifresi olmadan)
+        run: |
+          cat > "$RUNNER_TEMP/secim.xml" <<'XML'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><array>
+            <dict><key>choiceIdentifier</key><string>adliye</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
+            <dict><key>choiceIdentifier</key><string>tapu</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
+            <dict><key>choiceIdentifier</key><string>mask</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
+          </array></plist>
+          XML
+          installer -pkg yayin/cikti/ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory \
+            -showChoicesAfterApplyingChangesXML "$RUNNER_TEMP/secim.xml"
+          installer -pkg yayin/cikti/ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory \
+            -applyChoiceChangesXML "$RUNNER_TEMP/secim.xml" -verbose
+
+      - name: Kurulumu denetle
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask
+
+      - name: Arthur Mask (iner, kurulur, Claude Desktop'a kaydolur)
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.mask }}
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask
+
+      - name: Kaldır
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir
+
+      - name: Günlükler
+        if: ${{ always() }}
+        working-directory: .
+        run: |
+          KOK="$HOME/Library/Application Support/ArthurLegal"
+          ls -la "$KOK" "$HOME/Applications" "$HOME/Desktop" 2>&1 || true
+          for f in "$KOK"/veri/gunluk/*.log; do echo "== $f"; tail -n 80 "$f"; done 2>/dev/null || true
+          echo "== /var/log/install.log (ArthurLegal)"
+          grep -i "arthurlegal\|postinstall\|preinstall" /var/log/install.log | tail -n 80 || true

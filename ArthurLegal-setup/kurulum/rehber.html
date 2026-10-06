@@ -80,14 +80,21 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
     İlk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
   <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
     parsel TKGM Parsel Sorgu'nun herkese açık verisinden gelir (ilk sorguda bir kez onay istenir). Masaüstündeki
-    <i>{{URUN}} - Tapu</i> kısayolu aynı işi yapan parsel arayüzünü açar. Tapu kaydı metni bu bilgisayardan çıkmaz.</li>
-  <li><b>Proje klasörleri</b> — Başlat menüsündeki <i>{{URUN}} - Proje Klasörleri</i> kısayolu hazır klasörleri Gezgin'de
-    açar. Dosyaları bir projeye elle sürüklerseniz o kopya güncellenmez; güncel kalan yollar araçlar ve "Use a folder"dır.</li>
-  <li><b>Güncelleme</b> — Arka planda kurulur. Elle denetlemek için Başlat menüsünde <i>{{URUN}} - Güncellemeleri Denetle</i>.</li>
+    <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> simgesi aynı işi yapan parsel arayüzünü açar.
+    Tapu kaydı metni bu bilgisayardan çıkmaz.</li>
+  <li><b>Proje klasörleri</b> — <span data-os="windows">Başlat menüsündeki <i>{{URUN}} - Proje Klasörleri</i> kısayolu hazır
+    klasörleri Gezgin'de açar.</span><span data-os="mac">Uygulamalar &gt; {{URUN}} klasöründeki <i>Proje Klasörleri</i> hazır
+    klasörleri Finder'da açar.</span> Dosyaları bir projeye elle sürüklerseniz o kopya güncellenmez; güncel kalan yollar
+    araçlar ve "Use a folder"dır.</li>
+  <li><b>Güncelleme</b> — Arka planda kurulur. Elle denetlemek için <span data-os="windows">Başlat menüsünde
+    <i>{{URUN}} - Güncellemeleri Denetle</i>.</span><span data-os="mac">Uygulamalar &gt; {{URUN}} klasöründe
+    <i>Güncellemeleri Denetle</i>.</span></li>
+  <li data-os="mac"><b>Kaldırma</b> — Uygulamalar &gt; {{URUN}} klasöründe <i>{{KALDIR}}</i>.</li>
 </ul>
 
 <h2>Sorun giderme</h2>
-<div class="uyari">Araçlar görünmüyorsa Claude Desktop'u sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b> yeniden açın.
+<div class="uyari">Araçlar görünmüyorsa Claude Desktop'u <span data-os="windows">sistem tepsisindeki simge dâhil
+<b>tamamen kapatıp</b></span><span data-os="mac"><b>Cmd+Q</b> ile tamamen kapatıp</span> yeniden açın.
 <b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code> ile
 <code>arthur-mask</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
@@ -98,8 +105,13 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
 <script src="durum.js" onerror="void 0"></script>
 <script>
 (function () {
-  var d = window.ARTHURLEGAL_DURUM;
-  if (!d) return;
+  var d = window.ARTHURLEGAL_DURUM || {};
+  // İşletim sistemine özgü cümleler: durum.js yoksa tarayıcıya bakılır.
+  var mac = d.isletim ? d.isletim === "mac" : /Mac/.test(navigator.platform || "");
+  document.querySelectorAll("[data-os]").forEach(function (el) {
+    if (el.getAttribute("data-os") !== (mac ? "mac" : "windows")) el.style.display = "none";
+  });
+  if (!window.ARTHURLEGAL_DURUM) return;
   var ad = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse", "akademisyen": "Akademisyen"};
   // Seçilmeyen modüllerin bölümleri gizlenir; Courthouse ya da Akademisyen simgesi o paketin kartını öne çıkarır.
   if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
@@ -110,7 +122,8 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Başlangıç";
   // Claude Desktop'ın gerçekte çalıştırdığı sürüm; güncelleme kurulu ama Claude yeniden açılmadıysa eski numara.
   var calisan = !d.calisan_surum ? "henüz açılmadı" : (d.calisan_surum === d.surum ? d.calisan_surum + " (güncel)"
-      : d.calisan_surum + " — Claude Desktop'u sistem tepsisindeki simge dâhil kapatıp açın; " + d.surum + " devreye girsin");
+      : d.calisan_surum + (mac ? " — Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; "
+                                 : " — Claude Desktop'u sistem tepsisindeki simge dâhil kapatıp açın; ") + d.surum + " devreye girsin");
   var satirlar = [
     ["Kurulum", d.surum],
     ["Son güncelleme", d.son_guncelleme || "yok (kurulumdan beri)"],

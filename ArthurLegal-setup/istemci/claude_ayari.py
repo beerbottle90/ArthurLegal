@@ -1,8 +1,9 @@
 """Claude Desktop yapılandırmasına ArthurLegal sunucularını ekler ve kaldırır.
 
-Arthur Mask'in claude_ayari.py'si örnek alındı: klasik (%APPDATA%\\Claude) ve Microsoft
-Store/MSIX (Packages\\Claude_*\\LocalCache\\Roaming\\Claude) yapılandırmalarının hepsine
-yazar, Claude'un kendi alanlarına (preferences vb.) dokunmaz, değiştirmeden önce yedek alır.
+Arthur Mask'in claude_ayari.py'si örnek alındı: Windows'ta klasik (%APPDATA%\\Claude) ve Microsoft
+Store/MSIX (Packages\\Claude_*\\LocalCache\\Roaming\\Claude) yapılandırmalarının hepsine, macOS'ta
+~/Library/Application Support/Claude'a yazar; Claude'un kendi alanlarına (preferences vb.) dokunmaz,
+değiştirmeden önce yedek alır.
 `arthur-mask` girdisini Arthur Mask'in kendi kurulumu yönetir; burada ona dokunulmaz.
 """
 from __future__ import annotations
@@ -21,6 +22,8 @@ YEDEK_ONEKI = "claude_desktop_config.arthurlegal-yedek-"
 
 
 def yapilandirma_yollari() -> list:
+    if ortak.MAC:  # Claude Desktop (macOS): tek yapılandırma dosyası
+        return [Path.home() / "Library" / "Application Support" / "Claude" / "claude_desktop_config.json"]
     yollar = []
     if os.environ.get("APPDATA"):
         yollar.append(Path(os.environ["APPDATA"]) / "Claude" / "claude_desktop_config.json")
@@ -31,7 +34,7 @@ def yapilandirma_yollari() -> list:
 
 
 def istenen_girdiler() -> dict:
-    py = str(ortak.RUNTIME / "python.exe")
+    py = str(ortak.python_yolu())
     al = str(ortak.AL)
     env = {"PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1"}
     girdiler = {"arthurlegal-yerel": {"command": py, "args": ["-B", al, "sunucu"], "env": dict(env)}}

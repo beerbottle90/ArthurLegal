@@ -127,10 +127,22 @@ def indirme_linki(etiket: str, dosya: str) -> int:
 GECICI_ONEK = "yukleniyor-"  # var olan yayında dosya değişirken yeni dosyanın geçici adı
 
 
+def _commitler(derleme: dict) -> dict:
+    return {ad: (v or {}).get("commit") or "" for ad, v in (derleme.get("kaynak") or {}).items()}
+
+
+def ayni_kaynaklar(a: dict, b: dict) -> bool:
+    """İki derleme aynı depolardan, aynı commit'lerden mi? Kısa özetin uzunluğu deponun büyüklüğüne göre değişir
+    (GitHub Actions'taki sığ klonda daha kısa olabilir): biri ötekinin başıysa aynı commit sayılır."""
+    ca, cb = _commitler(a), _commitler(b)
+    return bool(ca) and ca.keys() == cb.keys() and all(
+        len(min(ca[ad], cb[ad], key=len)) >= 7 and (ca[ad].startswith(cb[ad]) or cb[ad].startswith(ca[ad])) for ad in ca)
+
+
 def yuklenecek_kurulumlar(cikti: Path, derleme: dict, public: bool) -> list:
-    """Yüklenecek kurulum dosyaları (.exe/.zip). Public depoya yalnız genel ArthurLegal-Kurulum.exe/.zip ve yalnız
-    bu derlemenin dosyaları gider: özeti derleme.json'dakiyle uyuşmayan dosya (eski ya da UYAP'lı bir deneme
-    derlemesinden kalan) ve UYAP bileşenli derleme reddedilir."""
+    """Yüklenecek kurulum dosyaları (.exe/.zip; varsa macOS'un .pkg'si). Public depoya yalnız genel
+    ArthurLegal-Kurulum.exe/.zip/.pkg ve yalnız bu derlemenin dosyaları gider: özeti derleme.json'dakiyle uyuşmayan
+    dosya (eski ya da UYAP'lı bir deneme derlemesinden kalan) ve UYAP bileşenli derleme reddedilir."""
     kurulumlar = sorted(y.name for y in cikti.glob("ArthurLegal-Kurulum*") if y.suffix in (".exe", ".zip"))
     if not public:
         return kurulumlar
@@ -146,6 +158,18 @@ def yuklenecek_kurulumlar(cikti: Path, derleme: dict, public: bool) -> list:
             sys.exit(f"{ad} bu derlemeden değil (derleme.json'daki özetle uyuşmuyor; eski ya da başka bir derlemeden "
                      "kalmış olabilir). python yayin/derle.py ile yeniden derleyin.")
         secilen.append(ad)
+    # macOS kurulum paketi (derle_macos.py, GitHub Actions'ta): aynı sürümün ve aynı kaynakların (ArthurLegal ve Tapu
+    # commit'leri) derlemesi olmalı; iki kurulum aynı paketleri taşır.
+    pkg = cikti / "ArthurLegal-Kurulum.pkg"
+    if pkg.exists():
+        mac = ortak.json_oku(cikti / "derleme-macos.json")
+        if mac.get("surum") != derleme.get("surum") or not ayni_kaynaklar(mac, derleme):
+            sys.exit("ArthurLegal-Kurulum.pkg bu derlemenin sürümünden ya da kaynaklarından değil (derleme-macos.json: "
+                     f"{mac.get('surum')} {_commitler(mac)}; derleme.json: {derleme.get('surum')} {_commitler(derleme)}). "
+                     "macOS paketini aynı commit'ten yeniden derleyin.")
+        if (mac.get("kurulum") or {}).get(pkg.name) != ortak.sha256_dosya(pkg):
+            sys.exit("ArthurLegal-Kurulum.pkg özeti derleme-macos.json'dakiyle uyuşmuyor.")
+        secilen.append(pkg.name)
     return secilen
 
 
@@ -205,7 +229,9 @@ def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool) -> di
     # Sürüm notu derlemedeki her paketi sayar (2.5.0'dan beri dördü de kurulumun modülüdür).
     adlar = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse", "akademisyen": "Akademisyen"}
     paketler = " · ".join(f"{adlar.get(p, p)} {s}" for p, s in d["icerik"]["paketler"].items())
-    govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: ArthurLegal-Kurulum.exe"
+    kurulum = ("Windows ArthurLegal-Kurulum.exe · macOS ArthurLegal-Kurulum.pkg" if "ArthurLegal-Kurulum.pkg" in dosyalar
+               else "ArthurLegal-Kurulum.exe")
+    govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: {kurulum}"
     yayin, yeni = yayin_ac(taban, jeton, etiket, govde, on_surum)
     dosyalari_yukle(yayin, jeton, dosyalar, yeni)
     if yeni:  # bütün dosyalar yerinde: tek adımda yayımla (ön sürüm Latest olmaz)
@@ -252,6 +278,8 @@ def main(argv=None) -> int:
         "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,
         "taban": f"https://github.com/{depo}/releases/download/{args.etiket}/",
         "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
+        # macOS: güncelleyici Arthur Mask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
+        **({"mask_macos": d["mask_macos"]} if d.get("mask_macos") else {}),
     }
     ham = json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8")
     dosya, alan = (KASA, "kasa_anahtari") if args.kasa else (ANAHTAR, "yayin_anahtari")

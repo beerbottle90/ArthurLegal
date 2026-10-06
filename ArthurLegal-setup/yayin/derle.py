@@ -131,9 +131,10 @@ def python_hazirla(k: dict, hedef: Path) -> None:
     # Varsayılan ._pth (pythonXY.zip + .) yeterli: bin\al.py hedefin klasörünü sys.path'e kendisi ekler.
 
 
-def mask_bilgisi(k: dict) -> dict:
-    """Mask sürümü ve sha256'sı yayındaki güncel dosyadan okunur (etiket sabit, dosya yenilenebiliyor)."""
-    m = dict(k["mask"])
+def mask_bilgisi(k: dict, alan: str = "mask") -> dict:
+    """Mask sürümü ve sha256'sı yayındaki güncel dosyadan okunur (etiket sabit, dosya yenilenebiliyor).
+    alan="mask_macos": macOS disk görüntüsü (ArthurMask-Kurulum.dmg); güncelleyici Mac'te ilk kurulumda indirir."""
+    m = dict(k[alan])
     try:
         with ortak.istek("https://api.github.com/repos/beerbottle90/ArthurLegal/releases/tags/arthur-mask",
                          {"Accept": "application/vnd.github+json"}, zaman=30) as r:
@@ -281,6 +282,7 @@ def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_
     """Başlangıç rehberi iki dilde: baslangic.html (Türkçe) ve baslangic-en.html (İngilizce). Kurulum, seçilen dildeki
     sayfayı açar (ortak.rehber_dosyasi); iki sayfa birbirine bağlantı verir. Derlemedeki her paket için bir kart
     yazılır; sayfa seçilmeyenleri kendisi gizler."""
+    import kur
     (hedef / "rehber").mkdir(parents=True, exist_ok=True)
     # Paket bilgisi olmayan içerik (eski derleme biçimi) iki avukat paketini gösterir.
     profiller = [p for p in ortak.PAKETLER if p in icerik.get("paketler", {})] or ["hukuk-burosu", "kurumsal"]
@@ -291,6 +293,7 @@ def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_
             "{{FIRMA_SATIRI}}": html.escape(firma_ad) + " · " if firma_ad else "",
             "{{SURUM}}": icerik["surum"],
             "{{ONYUKLEME_KARTLARI}}": onyukleme_kartlari(profiller, dil),
+            "{{KALDIR}}": html.escape(kur._kaldir_adi(urun, dil)),  # macOS'taki kaldırma uygulamasının adı
         }
         for anahtar, deger in degerler.items():
             sablon = sablon.replace(anahtar, deger)
@@ -441,7 +444,8 @@ def main(argv=None) -> int:
     mask = mask_bilgisi(k)
     ortak.json_yaz(CIKTI / "derleme.json", {
         "surum": surum, "icerik": {"paketler": icerik["paketler"], "bilesenler": icerik["bilesenler"]},
-        "kaynak": icerik["kaynak"], "mask": mask, "anahtarlar": icerik["anahtarlar"],
+        "kaynak": icerik["kaynak"], "mask": mask, "mask_macos": mask_bilgisi(k, "mask_macos"),
+        "anahtarlar": icerik["anahtarlar"],
         # yayinla.py yalnız bu derlemenin kurulum dosyalarını yükler: özetler burada (exe ISCC'den sonra eklenir)
         "kurulum": {kurulum_zip.name: sha256(kurulum_zip)},
         "paket": {"dosya": zip_adi, "sha256": sha256(CIKTI / zip_adi), "boyut": (CIKTI / zip_adi).stat().st_size}})
