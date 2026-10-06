@@ -64,16 +64,6 @@ jobs:
 
       - uses: astral-sh/setup-uv@v6
 
-      - name: Testler
-        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
-
-      - name: Ekran (testlerden sonra)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: |
-          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
-          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/0a-testlerden-sonra.png" || true
-
       - name: Derle
         run: uv run --no-project --python 3.12 python yayin/derle_macos.py
 
@@ -172,6 +162,19 @@ jobs:
           done
           cek 8-guvenlik 3
           ls -la "$E"
+
+      # Birim testleri en sonda: test sunucularının yol açabileceği macOS izin pencereleri, yukarıdaki ekran
+      # görüntülerine (kurulu ürünün davranışına) karışmasın.
+      - name: Testler
+        if: ${{ !cancelled() }}
+        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -v
+
+      - name: Ekran (testlerden sonra)
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ekran"; sleep 3
+          perl -e 'alarm 20; exec @ARGV' screencapture -x "$RUNNER_TEMP/ekran/9-testlerden-sonra.png" || true
 
       - name: Ekran görüntülerini sakla
         if: ${{ always() }}
