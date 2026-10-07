@@ -472,6 +472,24 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.6.3 — Shared guides aligned; a quality exam before every release (2026-10-07)
+
+- **Shared guides aligned.** 15 guides that had drifted apart between the Law Firm and Corporate Assistant packages now
+  have one text each: for nine of them one package's wording was adopted, with company-specific headings and examples
+  generalised; six were merged by hand. An internal test note, a headcount and a named patent attorney firm were
+  removed from the examples, and a self-referencing link was dropped from the energy market (EPDK) guide. 82 of the 87
+  guides shared between packages are now generated from one source; the other five are package-specific on purpose
+  (Arthur Mask and EPDK, and the Courthouse guides on expert witnesses, criminal procedure and e-notification).
+- **A quality exam before every release.** On a computer where it is configured, the release script first runs a
+  quality exam: the candidate package's instructions answer a fixed set of statute and case-citation questions in real
+  Claude sessions, and the result is compared with the last release that passed. If two or more answers get worse, the
+  release stops; the exam result is written into the release notes. Anyone who builds the installer themselves is not
+  affected.
+- The Serbia and Czech guides now name the version that added them as the change log does (1.2.0).
+
+Packages: Law Firm and Corporate Assistant 1.12.1; Courthouse 1.2.1 and Academician 1.1.3 are unchanged. The installer
+itself changes only its version number; installed copies pick up the new packages on their own.
+
 ## Setup 2.6.2 — Legal accuracy fixes, a case citation gate, shared guides from one source (2026-10-07)
 
 - **Legal accuracy fixes.** An article-by-article audit of the knowledge files, run on 24 and 25 September with every

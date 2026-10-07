@@ -1,4 +1,4 @@
-# Atıf — ArthurLegal Claude Law Firm Assistant v1.12.0
+# Atıf — ArthurLegal Claude Law Firm Assistant v1.12.1
 
 ## Yapı
 
@@ -7,7 +7,7 @@
 | **Author** (kod & içerik üretimi) | Claude (Anthropic) — Opus 4.7 (`claude-opus-4-7`) |
 | **Designer** (proje tasarımı & domain bilgisi) | Ertuğ Demir |
 | **Knowledge base** (temel hukuk asistanı paketi) | Anthropic — [claude-for-legal](https://github.com/anthropics/claude-for-legal) (Apache 2.0) |
-| **Kardeş paket** | ArthurLegal Claude Corporate Assistant v1.12.0 (in-house tarafı; aynı metodoloji) |
+| **Kardeş paket** | ArthurLegal Claude Corporate Assistant v1.12.1 (in-house tarafı; aynı metodoloji) |
 
 ## Türk Mevzuat & Yargı entegrasyonu
 

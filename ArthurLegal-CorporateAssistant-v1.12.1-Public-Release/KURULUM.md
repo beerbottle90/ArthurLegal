@@ -1,6 +1,6 @@
 # Claude.ai Projects – Kurulum Rehberi
 
-## ArthurLegal Corporate Assistant v1.12.0
+## ArthurLegal Corporate Assistant v1.12.1
 
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
@@ -356,6 +356,8 @@ Yeni bir sürüm geldiğinde:
 2. Claude.ai projesinde ilgili dosyaları silin → güncellenmiş halleri yeniden yükleyin
 3. `SYSTEM_PROMPT.md` değiştiyse Custom Instructions'ı güncelleyin
 
+v1.12.0'dan v1.12.1'e geçiş: Project knowledge'da şu on dört rehberi yenileyin: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/ced-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/damga-vergisi-rehberi.md`, `knowledge/references/gurcistan-hukuku-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/redline-konvansiyonlari-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`, `knowledge/references/uk-legislation-rehberi.md`, `knowledge/references/us-legislation-rehberi.md`, `knowledge/references/yunanistan-hukuku-rehberi.md`. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
 v1.11.0'dan v1.12.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 4 madde 13: karar künyesi kapısı) ve birçok rehber ile skill kitapçığı değiştiği için `knowledge/` klasörü baştan yüklenir (değişenler `CHANGELOG.md`'de); `knowledge/references/tr-atif-dogrulama-rehberi.md` yenidir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.10.1'den v1.11.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 5 eklenti tablosu). Project knowledge'da şu dosyaları yenileyin: `knowledge/skills/regulatory-legal__skills.md` (yeni `/regulatory-legal:ai-ajan-onayi`), `knowledge/references/yargi-mcp-rehberi.md` (esas numarasıyla arama), `knowledge/references/epdk-rehberi.md`, `knowledge/skills/administrative-legal__skills.md`, `knowledge/skills/litigation-legal__skills.md` ve `knowledge/skills/tax-legal__skills.md` (örneklerde yer tutucu). ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
@@ -368,4 +370,4 @@ v1.7.0'dan v1.8.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (yeni 
 
 ---
 
-*ArthurLegal Corporate Assistant v1.12.0 — https://github.com/beerbottle90/ArthurLegal*
+*ArthurLegal Corporate Assistant v1.12.1 — https://github.com/beerbottle90/ArthurLegal*

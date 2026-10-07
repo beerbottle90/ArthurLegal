@@ -5,6 +5,22 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.1] — 2026-10-07 — *Ortak Rehberler Tek Kaynakta*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti. Hukuk Bürosu ile Kurumsal'da aynı adı taşıyıp metni ayrışmış 15 rehber tek metne indirildi. İki paketteki ortak rehberlerin 82'si artık tek kaynaktan üretiliyor (`ArthurLegal-setup/ortak-rehberler/`); bir kopyada yapılan elle düzeltme testte yakalanır. Bilinçli olarak pakete özgü kalanlar: `arthur-mask-rehberi.md` ve `epdk-rehberi.md`.
+
+### Değişti
+
+1. `azerbaycan-hukuk-rehberi.md`: Kurumsal'daki metinle birleştirildi; kaynak tablosundaki öncelik notları güncellendi, örnekler yer tutucuya çevrildi (`[Müvekkil]`, `[Ana ortak / ilişkili taraf]`), çalışan sayısı ve rehber içi eski sürüm etiketleri kaldırıldı.
+2. `karsilastirmali-hukuk-rehberi.md`: sınır ötesi kaynak listesine `eqanun-mcp-rehberi.md`, `lex-scholar-rehberi.md` ve `resourcecontracts-rehberi.md` eklendi.
+3. `smk-rehberi.md`: UDRP rehberine yönlendiren bozuk cümle düzeltildi.
+4. `turkpatent-rehberi.md`, `udrp-domain-rehberi.md`: belirli bir vekil firmasının adı yerine genel ifade ("deneyimli bir marka ve patent vekili", "marka vekili ya da UDRP uzmanı").
+
+### Düzeltildi
+
+1. `epdk-rehberi.md`: rehberin kendisine giden "Detay" satırı çıkarıldı.
+2. `sirbistan-hukuku-rehberi.md`, `cek-hukuku-rehberi.md`: rehberin eklendiği sürüm, değişiklik günlüğüyle uyumlu olarak v1.2.0 yazıldı (v1.8.3 yazıyordu).
+
 ## [1.12.0] — 2026-10-07 — *Laboratuvar Düzeltmeleri: firm-operations'a 7 Skill, Karar Künyesi Kapısı, Madde Atfı Denetimi*
 
 > **Özellik sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan ve ana depoya aktarılmamış düzeltmeler bu sürümle geldi. Madde atıfları o tarihlerde `tr_mevzuat_madde_getir` ile çekildi; çekilemeyen bilgi "(doğrulanmadı)" diye işaretli. Laboratuvar 1.10.0 üzerinde çalıştığı için 1.10.1'in canlı veri uyarısı korundu; yeni metinlerdeki eski etiketler `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırına çevrildi.

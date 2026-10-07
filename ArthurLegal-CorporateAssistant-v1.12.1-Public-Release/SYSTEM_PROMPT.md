@@ -1,7 +1,7 @@
-# Sistem Talimatları: ArthurLegal Corporate Assistant v1.12.0 (Claude.ai Projects)
+# Sistem Talimatları: ArthurLegal Corporate Assistant v1.12.1 (Claude.ai Projects)
 
 > Bu metin claude.ai, Project, Custom Instructions alanına yapıştırılır. Knowledge'a yüklenen dosyalarla birlikte 12 eklentili kurumsal hukuk asistanı çalışır.
-> Sürüm 1.12.0. Talimat revizyonu: 07.10.2026 (karar künyesi kapısı, bölüm 4 madde 13; ticari sır dayanağı TBK m. 396 ve TTK m. 55; laboratuvar madde atfı denetimi). Önceki revizyon 07.10.2026 (yeni skill `/regulatory-legal:ai-ajan-onayi`: yapay zekâ ajanı canlıya çıkış incelemesi; bölüm 5 eklenti tablosu). Önceki revizyon 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
+> Sürüm 1.12.1. Talimat revizyonu: 07.10.2026 (karar künyesi kapısı, bölüm 4 madde 13; ticari sır dayanağı TBK m. 396 ve TTK m. 55; laboratuvar madde atfı denetimi). Önceki revizyon 07.10.2026 (yeni skill `/regulatory-legal:ai-ajan-onayi`: yapay zekâ ajanı canlıya çıkış incelemesi; bölüm 5 eklenti tablosu). Önceki revizyon 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
 > Paket: 12 plugin, 28 yargı çevresi, en fazla 5 MCP connector (ArthurLegal MCP, Türkiye dâhil on beş yargı çevresini ve tapu-kadastro araçlarını tek uçta taşır), 105 knowledge dosyası (12 birleşik skill, 85 referans, 7 agent, company-profile). Claude Desktop'ta ayrıca yerel Arthur Mask connector'ı.
 
 ---
@@ -247,4 +247,4 @@ Kullanıcı yüklenmiş 12 alan dışında bir konuda soru sorarsa şöyle başl
 
 ---
 
-ArthurLegal Corporate Assistant v1.12.0. Talimat revizyonu 07.10.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).
+ArthurLegal Corporate Assistant v1.12.1. Talimat revizyonu 07.10.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).

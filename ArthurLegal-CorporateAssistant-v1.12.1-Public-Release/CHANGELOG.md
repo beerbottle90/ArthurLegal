@@ -5,6 +5,21 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.1] — 2026-10-07 — *Ortak Rehberler Tek Kaynakta*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti. Hukuk Bürosu ile Kurumsal'da aynı adı taşıyıp metni ayrışmış 15 rehber tek metne indirildi. İki paketteki ortak rehberlerin 82'si artık tek kaynaktan üretiliyor (`ArthurLegal-setup/ortak-rehberler/`); bir kopyada yapılan elle düzeltme testte yakalanır. Bilinçli olarak pakete özgü kalanlar: `arthur-mask-rehberi.md` ve `epdk-rehberi.md`.
+
+### Değişti
+
+1. Hukuk Bürosu'ndaki metin alındı (şirkete özgü başlıklar genelleştirildi, sektör örnekleri yer tutucuya çevrildi): `damga-vergisi-rehberi.md`, `gurcistan-hukuku-rehberi.md`, `redline-konvansiyonlari-rehberi.md`, `reg-feed-haftalik-sablon.md`, `sirbistan-hukuku-rehberi.md`, `uk-legislation-rehberi.md`, `us-legislation-rehberi.md`, `yunanistan-hukuku-rehberi.md`.
+2. İki paketin metni birleştirildi: `azerbaycan-hukuk-rehberi.md` (görüş uyarısı Hukuk Bürosu'ndan; çalışan sayısı ve rehber içi eski sürüm etiketleri kaldırıldı), `ced-rehberi.md`, `karsilastirmali-hukuk-rehberi.md`, `turkpatent-rehberi.md`, `udrp-domain-rehberi.md`.
+3. `turkpatent-rehberi.md`, `udrp-domain-rehberi.md`: belirli bir vekil firmasının adı yerine genel ifade.
+
+### Düzeltildi
+
+1. `udrp-domain-rehberi.md`: girişe sızmış iç test notu kaldırıldı; örnek alan adları ve web sitesi yer tutucuya çevrildi.
+2. `cek-hukuku-rehberi.md`: rehberin eklendiği sürüm, değişiklik günlüğüyle uyumlu olarak v1.2.0 yazıldı (v1.8.3 yazıyordu).
+
 ## [1.12.0] — 2026-10-07 — *Laboratuvar Düzeltmeleri: Karar Künyesi Kapısı, Madde Atfı Denetimi*
 
 > **Özellik sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan ve ana depoya aktarılmamış düzeltmeler bu sürümle geldi. Madde atıfları o tarihlerde `tr_mevzuat_madde_getir` ile çekildi; çekilemeyen bilgi "(doğrulanmadı)" diye işaretli. Laboratuvar 1.10.0 üzerinde çalıştığı için 1.10.1'in canlı veri uyarısı korundu; yeni metinlerdeki eski etiketler `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırına çevrildi.
