@@ -1,9 +1,9 @@
 # ArthurLegal — Claude Academician Assistant (TR / EN)
 
-**Sürüm:** v1.1.2 · **Tarih:** 2026-10-07 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
+**Sürüm:** v1.1.3 · **Tarih:** 2026-10-07 · **Lisans:** Proprietary — Non-Commercial (bkz. [LICENSE](LICENSE))
 **Hedef ortam:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
-> **v1.1.2 — 8 plugin · 28 skill · 24 referans · 4 agent.** Tam iki dilli (TR + EN),
+> **v1.1.3 — 8 plugin · 28 skill · 24 referans · 4 agent.** Tam iki dilli (TR + EN),
 > Türkiye ve uluslararası akademik rejimleri eşit ağırlıkta kapsar.
 
 > Hukuk **akademisyeni** (araştırma görevlisi → profesör) için araştırma, yazım, atıf
@@ -106,7 +106,7 @@ Türkçe → [KURULUM.md](KURULUM.md) · English → [INSTALLATION.md](INSTALLAT
 
 # ArthurLegal — Claude Academician Assistant (English)
 
-**Version:** v1.1.2 · **Date:** 2026-10-07 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Version:** v1.1.3 · **Date:** 2026-10-07 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
 > **v1.0.0 — 8 plugins · 28 skills · 23 references · 4 agents.** Fully bilingual (TR + EN),

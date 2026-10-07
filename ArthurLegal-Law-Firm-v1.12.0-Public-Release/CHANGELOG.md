@@ -71,6 +71,11 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
      maddesi), `commercial-legal` (hukuk seçimi MÖHUK m. 24; hakem kararı ret sebepleri MÖHUK m. 62),
      `energy-finance` (birleşme-devralma Tebliğ No: 2010/4), `litigation-legal` (yalnız "(doğrulanmadı)" etiketleri).
 
+### Bakım
+
+1. Bir kopyada kalmış ya da belirli bir tesisi veya şirketi tanımlayan ayrıntılar yer tutucuya çevrildi: `azerbaycan-hukuk-rehberi.md`, `isg-dava-rehberi.md`, `reg-feed-haftalik-sablon.md`, `kap-esirket-webfetch-rehberi.md`, `halka-acik-istirak-kap-rehberi.md`, `seveso-buyuk-kaza-rehberi.md`, `epdk-rehberi.md`, `ced-rehberi.md`, `hmk-rehberi.md`, `idari-yargi-yapisi-rehberi.md`, `istac-rehberi.md`, `kanun-kisaltmalar.md`, `damga-vergisi-rehberi.md`, `administrative-legal__skills.md`, `litigation-legal__skills.md`. Bozuk KAP örnek adresi genel kalıba (`<kap-kimliği>-<şirket-kısa-adı>`) alındı.
+2. Hukuk Bürosu ile Kurumsal'daki 64 ortak rehber artık tek kaynaktan üretiliyor (`ArthurLegal-setup/ortak-rehberler/`); bir kopyada yapılan elle düzeltme testte yakalanır.
+
 ## [1.11.0] — 2026-10-07 — *Yapay Zekâ Ajanı Onayı; Esas Numarasıyla Arama Düzeltildi*
 
 > **Özellik sürümü.** Yeni skill `/regulatory-legal:ai-ajan-onayi`, bir rehber düzeltmesi ve örneklerde kişi adı temizliği. Araçlar ve kaynaklar aynı; `regulatory-legal` 9 skill'den 10'a çıktı.

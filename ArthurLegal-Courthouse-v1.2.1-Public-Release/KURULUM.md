@@ -1,7 +1,7 @@
 # Kurulum — ArthurLegal Courthouse
 
 **Hedef ortam:** Windows ve Mac'te Claude Desktop (kurulum dosyası) · web'de [Claude.ai Projects](https://claude.ai/projects) (elle kurulum)
-**Sürüm:** v1.2.0 · 2026-10-06
+**Sürüm:** v1.2.1 · 2026-10-07
 **Süre:** kurulum dosyasıyla ~5 dakika (Arthur Mask indirmesiyle ~15 dakika) · elle ~10 dakika
 
 > ⚠️ Bu paket **yargı mensupları** (mahkeme hâkimleri + kalem memurlukları) içindir. Tüm çıktılar **taslaktır** ve **hâkim / heyet onayı** gerektirir; hiçbir çıktı yargısal karar yerine geçmez.
@@ -104,7 +104,7 @@ Knowledge'a `knowledge/references/arthur-mask-rehberi.md` dosyasını da yükley
 
 Bir plugin'in tüm komutlarını görmek için yeni konuşmada sadece `/<plugin>:` yazın (örn. `/hukuk-hakim:`).
 
-## Komut haritası (v1.2.0)
+## Komut haritası (v1.2.1)
 
 | Plugin | Skill'ler |
 |---|---|
@@ -130,7 +130,9 @@ A: Önce kurum kurallarınızın harici bir yapay zekâ hizmetinin kullanılmas�
 
 ## Güncelleme notları
 
-Bu sürüm **v1.2.0**'dır. v1.1.1'den geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (12 plugin, profiller, izleyiciler, içtihat künyesi doğrulaması). Project knowledge'a yeni klasörler `knowledge/profiles/` ve `knowledge/agents/` eklenir; `knowledge/skills/` altındaki 12 dosyanın tamamı ve `knowledge/references/` altındaki yeni ve değişen dosyalar yenilenir (liste: [CHANGELOG.md](CHANGELOG.md)). Kurulum dosyasıyla kurulan bilgisayarda bunların hepsini yeni kurulum yapar.
+Bu sürüm **v1.2.1**'dir. v1.2.0'dan geçiş: Project knowledge'da şu yedi dosyayı yenileyin: `knowledge/references/connector-saglik-fallback-rehberi.md`, `knowledge/references/damga-vergisi-rehberi.md`, `knowledge/references/hmk-rehberi.md`, `knowledge/references/kanun-kisaltmalar.md`, `knowledge/skills/ceza-hakim__skills.md`, `knowledge/skills/hukuk-hakim__skills.md`; `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
+v1.1.1'den v1.2.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (12 plugin, profiller, izleyiciler, içtihat künyesi doğrulaması). Project knowledge'a yeni klasörler `knowledge/profiles/` ve `knowledge/agents/` eklenir; `knowledge/skills/` altındaki 12 dosyanın tamamı ve `knowledge/references/` altındaki yeni ve değişen dosyalar yenilenir (liste: [CHANGELOG.md](CHANGELOG.md)). Kurulum dosyasıyla kurulan bilgisayarda bunların hepsini yeni kurulum yapar.
 
 v1.1.0'dan v1.1.1'e geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (canlı veri uyarısı). v1.0.5'ten v1.1.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (kaynak listesine tapu-kadastro `tkgm_` satırı). Project knowledge'a `knowledge/references/tapu-kadastro-rehberi.md` eklenir; `knowledge/references/yargi-mcp-rehberi.md`, `knowledge/references/mevzuat-mcp-rehberi.md`, `knowledge/references/gib-ozelge-rehberi.md` ve `knowledge/references/otv-rehberi.md` yenilenir.
 

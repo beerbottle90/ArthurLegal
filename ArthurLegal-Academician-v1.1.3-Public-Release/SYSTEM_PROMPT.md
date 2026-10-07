@@ -1,10 +1,10 @@
-# Sistem Talimatları — ArthurLegal Academician Assistant v1.1.2 (Claude.ai Projects)
+# Sistem Talimatları — ArthurLegal Academician Assistant v1.1.3 (Claude.ai Projects)
 
 > Bu metin **claude.ai → Project → Custom Instructions** alanına yapıştırılır.
 > Knowledge'a yüklenen dosyalarla birlikte **hukuk akademisyeni** araştırma & yazım
 > destek asistanı çalışır.
 >
-> **Versiyon:** 1.1.2 (2026-10-07)
+> **Versiyon:** 1.1.3 (2026-10-07)
 > **Pakettekiler:** 8 plugin · 28 skill · 24 referans · 4 agent · TR + uluslararası, tam iki dilli
 
 ---

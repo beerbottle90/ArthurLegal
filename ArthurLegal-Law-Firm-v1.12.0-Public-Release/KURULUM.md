@@ -1,6 +1,6 @@
 # ArthurLegal Hukuk Bürosu Asistanı — Kurulum Rehberi
 
-**Versiyon:** 1.11.0 | **Güncelleme:** 2026-10-07
+**Versiyon:** 1.12.0 | **Güncelleme:** 2026-10-07
 
 ---
 
@@ -415,7 +415,9 @@ A: `/<plugin>:` yazın — asistan o plugin'in tüm mevcut skill'lerini listeler
 
 ## Güncelleme notları
 
-Bu versiyon **v1.11.0**'dır. v1.10.1'den geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 5 eklenti tablosu). Project knowledge'da şu dosyaları yenileyin: `knowledge/skills/regulatory-legal__skills.md` (yeni `/regulatory-legal:ai-ajan-onayi`), `knowledge/references/yargi-mcp-rehberi.md` (esas numarasıyla arama), `knowledge/skills/administrative-legal__skills.md` ve `knowledge/skills/tax-legal__skills.md` (örneklerde yer tutucu). ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+Bu versiyon **v1.12.0**'dır. v1.11.0'dan geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 4 madde 10: karar künyesi kapısı) ve birçok rehber ile skill kitapçığı değiştiği için `knowledge/` klasörü baştan yüklenir (değişenler `CHANGELOG.md`'de); `knowledge/references/tr-atif-dogrulama-rehberi.md` yenidir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
+v1.10.1'den v1.11.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 5 eklenti tablosu). Project knowledge'da şu dosyaları yenileyin: `knowledge/skills/regulatory-legal__skills.md` (yeni `/regulatory-legal:ai-ajan-onayi`), `knowledge/references/yargi-mcp-rehberi.md` (esas numarasıyla arama), `knowledge/skills/administrative-legal__skills.md` ve `knowledge/skills/tax-legal__skills.md` (örneklerde yer tutucu). ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.10.0'dan v1.10.1'e geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (canlı veri uyarısı). Değişiklikler için `CHANGELOG.md` dosyasına bakın.
 

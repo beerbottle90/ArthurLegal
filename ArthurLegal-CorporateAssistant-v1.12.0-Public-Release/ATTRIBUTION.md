@@ -1,4 +1,4 @@
-# Atıf — ArthurLegal Claude Corporate Assistant v1.11.0
+# Atıf — ArthurLegal Claude Corporate Assistant v1.12.0
 
 ## Yapı
 

@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.11.0 | **Updated:** 2026-10-07
+**Version:** 1.12.0 | **Updated:** 2026-10-07
 
 ---
 
@@ -409,7 +409,9 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.11.0**. Upgrading from 1.10.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 5 plugin table) and replace these Project knowledge files: `knowledge/skills/regulatory-legal__skills.md` (new `/regulatory-legal:ai-ajan-onayi`, an AI agent go-live review), `knowledge/references/yargi-mcp-rehberi.md` (case number search), `knowledge/skills/administrative-legal__skills.md` and `knowledge/skills/tax-legal__skills.md` (placeholders in examples). The local ArthurLegal installation refreshes package files on its own. See `CHANGELOG.md` for what changed.
+This is version **1.12.0**. Upgrading from 1.11.0: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 4, rule 10: case citation gate) and upload the `knowledge/` folder again, since many guides and skill books changed (see `CHANGELOG.md`); `knowledge/references/tr-atif-dogrulama-rehberi.md` is new. The local ArthurLegal installation refreshes package files on its own.
+
+Upgrading from 1.10.1 to 1.11.0: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 5 plugin table) and replace these Project knowledge files: `knowledge/skills/regulatory-legal__skills.md` (new `/regulatory-legal:ai-ajan-onayi`, an AI agent go-live review), `knowledge/references/yargi-mcp-rehberi.md` (case number search), `knowledge/skills/administrative-legal__skills.md` and `knowledge/skills/tax-legal__skills.md` (placeholders in examples). The local ArthurLegal installation refreshes package files on its own. See `CHANGELOG.md` for what changed.
 
 Upgrading from 1.9.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (sections 5 to 8: the `tkgm_` land-registry tools, Türkiye 0.5.0). Add `knowledge/references/tapu-kadastro-rehberi.md` to Project knowledge and replace `knowledge/references/yargi-mcp-rehberi.md` and `knowledge/references/mevzuat-mcp-rehberi.md`. Do not overwrite the `firm-profile.md` and `profiles/` files you have filled in; add the ArthurLegal Tapu (`tkgm_`) line by hand if you want it. The ArthurLegal local installer (2.1.0) refreshes the package files itself.
 

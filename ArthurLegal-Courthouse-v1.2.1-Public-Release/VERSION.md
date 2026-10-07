@@ -1,8 +1,8 @@
 # Sürüm Bilgisi
 
-**Sürüm:** 1.2.0
-**Yayın tarihi:** 2026-10-06
-**Önceki sürüm:** 1.1.1
+**Sürüm:** 1.2.1
+**Yayın tarihi:** 2026-10-07
+**Önceki sürüm:** 1.2.0
 **Lisans:** Proprietary, Non-Commercial (bkz. [LICENSE](LICENSE)); `claude-for-legal` bileşenleri Apache 2.0
 
 ## Semver özeti
@@ -12,6 +12,8 @@
 - **Patch (x.x.1):** Hata düzeltme, içerik güncelleme
 
 ## Bu sürümde
+
+**v1.2.1 — Madde atfı düzeltmeleri.** Laboratuvardaki madde atfı denetiminden 1.2.0'da eksik kalan düzeltmeler (damga vergisi nüsha kuralı, HMK m. 297 başlığı, kanun kısaltmaları, CMK m. 231/5-6, HMK m. 187 ve 190) ve OpenSanctions API anahtarının bağlantı rehberinden çıkarılması.
 
 **v1.2.0 — Adliye dalgası.** 12 plugin (istinaf daire ve kalemi, ortak araştırma, karar yayımı eklendi), 56 skill, 10 mahkeme türü profili, 7 izleyici, 36 referans. İçtihat künyesi doğrulaması ve karşı görüş taraması. ArthurLegal Windows kurulumunda (Setup 2.5.0) Courthouse modülü: tek dosya, masaüstünde Courthouse, Tapu ve Arthur Mask simgeleri. Yazılan her kanun maddesi resmî metinden çekilip başlık ve içerikle eşleştirildi.
 

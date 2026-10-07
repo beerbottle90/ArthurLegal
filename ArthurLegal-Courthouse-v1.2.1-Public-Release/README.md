@@ -25,7 +25,7 @@ Kurulumdan sonra masaüstünde üç simge olur:
 Mac'te simgeler Uygulamalar klasöründe de durur ve adlarında tire yoktur: **ArthurLegal Courthouse**,
 **ArthurLegal Tapu**.
 
-Sürüm: **Courthouse v1.2.0** (2026-10-06) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası (Mac: 2.6.0) ·
+Sürüm: **Courthouse v1.2.1** (2026-10-07) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası (Mac: 2.6.0) ·
 [sürüm notları](CHANGELOG.md) · [lisans](LICENSE)
 
 ---
@@ -207,7 +207,7 @@ installer -pkg ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory -applyCh
 ```
 </details>
 
-Bu sayfayı paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Courthouse-v1.2.0-Public-Release**
+Bu sayfayı paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#courthouse** (sürüm değişse de aynı kalır)
 
 ---
 
@@ -297,13 +297,13 @@ Kullanım rehberi: [ARTHUR-MASK.md](ARTHUR-MASK.md).
 ## Paket içeriği
 
 ```
-ArthurLegal-Courthouse-v1.2.0-Public-Release/
+ArthurLegal-Courthouse-v1.2.1-Public-Release/
 ├── README.md              ← bu sayfa
 ├── KURULUM.md             ← kurulum rehberi: kurulum dosyası ve elle kurulum, komut haritası
 ├── ARTHUR-MASK.md         ← Arthur Mask kullanım rehberi
 ├── SYSTEM_PROMPT.md       ← asistanın sistem talimatı
 ├── CHANGELOG.md           ← sürüm notları
-├── VERSION.md             ← 1.2.0
+├── VERSION.md             ← 1.2.1
 ├── ATTRIBUTION.md         ← atıf bilgisi
 ├── LICENSE                ← Proprietary — Non-Commercial
 └── knowledge/

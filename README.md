@@ -339,6 +339,10 @@ question is one workflow, not four.
 | Academician | [v1.1.3](ArthurLegal-Academician-v1.1.3-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
 | **Courthouse** | **[v1.2.1](ArthurLegal-Courthouse-v1.2.1-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
+<h3 id="courthouse">Courthouse</h3>
+
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.1](ArthurLegal-Courthouse-v1.2.1-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.1](ArthurLegal-Courthouse-v1.2.1-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
 and Turkish judicial procedure respectively, and are jurisdiction-specific by
