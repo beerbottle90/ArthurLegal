@@ -138,7 +138,7 @@ Bir sözleşmenin **uygulanacak hukuk** (governing law) ve **yetki/tahkim** kloz
 şu adımlarla incelenir (bkz. `commercial-legal:governing-law-review` skill):
 
 1. **Klozu tespit et.** Uygulanacak hukuk ne? Yetkili mahkeme/tahkim nerede?
-2. **şirket-default ile karşılaştır.** [ŞİRKET ADI] uluslararası sözleşmelerinde
+2. **[ŞİRKET ADI]-default ile karşılaştır.** [ŞİRKET ADI] uluslararası sözleşmelerinde
    yaygın tercih: İngiliz hukuku + Londra tahkimi (LCIA/ICC) **veya** Türk hukuku
    + ISTAC. Counterparty'nin tek taraflı dayattığı asimetrik venue 🟠/🔴.
 3. **İcra-edilebilirliği çapraz-kontrol et:**
@@ -232,5 +232,4 @@ ilgili rehberin "Yedek kaynaklar" bölümüne düş ve kesintiyi kullanıcıya b
 
 ---
 
-*Son güncelleme: 26.07.2026 — paket v1.4.0. Sınır-ötesi connector yönlendirme +
-MCP haritası + tanıma-tenfiz rehberi.*
+*Son güncelleme: 26.07.2026. Sınır-ötesi connector yönlendirme + MCP haritası + tanıma-tenfiz rehberi.*

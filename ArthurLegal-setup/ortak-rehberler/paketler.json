@@ -48,6 +48,54 @@
       "kurumsal": "müvekkil",
       "akademisyen": "müvekkil",
       "adliye": "taraf"
+    },
+    "TERMINAL": {
+      "hukuk-burosu": "[müvekkil terminali]",
+      "kurumsal": "[ŞİRKET ADI] Terminal"
+    },
+    "DEPOLAMA": {
+      "hukuk-burosu": "[müvekkil depolama tesisi]",
+      "kurumsal": "[ŞİRKET ADI] Depolama"
+    },
+    "TESIS_ALANI": {
+      "hukuk-burosu": "[TESİS LOKASYONU] tesislerindeki",
+      "kurumsal": "[İşletme alanındaki]"
+    },
+    "ISG_PROFIL": {
+      "hukuk-burosu": "[Büro profili → dispute-litigation](../profiles/dispute-litigation.md)",
+      "kurumsal": "[[ŞİRKET ADI] profili → litigation-legal](../skills/litigation-legal__skills.md)"
+    },
+    "KARS_KISMI": {
+      "hukuk-burosu": "kapsanmadığını söyle**. Müvekkile giden bir çıktıda kısmi araştırmayı tam\n  gibi sunmak, meslekî sorumluluk doğurur.",
+      "kurumsal": "kapsanmadığını kullanıcıya söyle**. Kısmi cevabı tam gibi sunma."
+    },
+    "MARKA_SAHIBI": {
+      "hukuk-burosu": "Müvekkilin",
+      "kurumsal": "Şirketin"
+    },
+    "WEB": {
+      "hukuk-burosu": "[müvekkil-web-sitesi]",
+      "kurumsal": "[şirket-web-sitesi]"
+    },
+    "ILETISIM": {
+      "hukuk-burosu": "[İletişim Başkanı]",
+      "kurumsal": "[İLETİŞİM YÖNETİCİSİ]"
+    },
+    "DPO": {
+      "hukuk-burosu": "[DPO / Veri Koruma Sorumlusu]",
+      "kurumsal": "[KVKK SORUMLUSU/DPO]"
+    },
+    "HUKUK_DIREKTORU": {
+      "hukuk-burosu": "[Hukuk Direktörü]",
+      "kurumsal": "[HUKUKİ DİREKTÖR 1]"
+    },
+    "CLCO": {
+      "hukuk-burosu": "[CLCO]",
+      "kurumsal": "[CLCO ADI]"
+    },
+    "MUVEKKIL": {
+      "hukuk-burosu": "Müvekkil",
+      "kurumsal": "[ŞİRKET ADI]"
     }
   },
   "rehberler": {
@@ -67,7 +115,15 @@
       "hukuk-burosu",
       "kurumsal"
     ],
+    "azerbaycan-hukuk-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
     "bae-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "ced-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -80,6 +136,10 @@
       "kurumsal"
     ],
     "courtlistener-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "damga-vergisi-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -147,6 +207,10 @@
       "hukuk-burosu",
       "kurumsal"
     ],
+    "gurcistan-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
     "halka-acik-istirak-kap-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
@@ -168,6 +232,10 @@
       "kurumsal"
     ],
     "irlanda-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "isg-dava-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -208,6 +276,10 @@
       "kurumsal"
     ],
     "kap-esirket-webfetch-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "karsilastirmali-hukuk-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -257,6 +329,14 @@
       "hukuk-burosu",
       "kurumsal"
     ],
+    "redline-konvansiyonlari-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "reg-feed-haftalik-sablon.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
     "rekabet-hukuku-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
@@ -274,6 +354,14 @@
       "kurumsal"
     ],
     "seveso-buyuk-kaza-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "sirbistan-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "smk-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -299,11 +387,27 @@
       "hukuk-burosu",
       "kurumsal"
     ],
+    "turkpatent-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "udrp-domain-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
     "uk-legislation-mcp-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
+    "uk-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
     "ukrayna-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "us-legislation-rehberi.md": [
       "hukuk-burosu",
       "kurumsal"
     ],
@@ -324,6 +428,10 @@
       "kurumsal",
       "adliye",
       "akademisyen"
+    ],
+    "yunanistan-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
     ]
   }
 }

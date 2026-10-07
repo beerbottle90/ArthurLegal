@@ -80,12 +80,12 @@ WebFetch:
   prompt: "Kanun listesini ve her birinin ID'sini ver"
 ```
 
-### [Müvekkil] için hangi kanunlar?
+### {{AL_KURUM}} için hangi kanunlar?
 
 | Azerbaycan Kanunu | e-qanun.az konu | Tipik bağlantı |
 |---|---|---|
-| Neft və qaz haqqında Qanun (1996) | Petrol ve gaz rejimi | [Ana ortak / ilişkili taraf] upstream hakları |
-| Mülki Məcəllə | Medeni Kanun | [Ana ortak / ilişkili taraf] ile sözleşmeler |
+| Neft və qaz haqqında Qanun (1996) | Petrol ve gaz rejimi | {{AL_ANA_ORTAK}} upstream hakları |
+| Mülki Məcəllə | Medeni Kanun | {{AL_ANA_ORTAK}} ile sözleşmeler |
 | Əmək Məcəlləsi | İş Kanunu | Azerbaycan'da istihdam edilen personel |
 | Mühasibat uçotu haqqında Qanun | Muhasebe | Intra-group mali raporlama |
 | Vergi Məcəlləsi | Vergi Kanunu | Transfer fiyatlandırması |
@@ -112,10 +112,10 @@ WebFetch:
 Bireysel kanun sayfaları e-qanun.az'a yönlendiriyor — referans için bu sayfadan
 ilgili kanun bulunur, tam metin e-qanun.az'dan alınır.
 
-### [Müvekkil] odağı
+### {{AL_KURUM}} odağı
 
 Bu sayfada doğrudan ilgili kanunlar:
-- **Elektrik enerjisi haqqında Qanun** — [ELEKTRİK ÜRETİM İŞTİRAKİ] / elektrik üretim faaliyetleri
+- **Elektrik enerjisi haqqında Qanun** — {{AL_SANTRAL}} / elektrik üretim faaliyetleri
 - **Qaz təchizatı haqqında Qanun** (No. 233-VIIQ, 2025) — Yeni Gaz Tedarik Kanunu
 - **Energetika resurslarından istifadənin effektivliyi haqqında Qanun** — enerji verimliliği
 - **Alternativ enerji mənbələrindən istifadə haqqında Qanun** — yenilenebilir enerji
@@ -208,7 +208,7 @@ http://www.ilo.org/dyn/natlex/natlex4.listResults?p_lang=en&p_country=AZE
 https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/{id}/AZE-{id}.pdf
 ```
 
-### [Müvekkil] odağı
+### {{AL_KURUM}} odağı
 
 Azerbaycan'da istihdam edilen personel için NATLEX'teki kritik belgeler:
 - **İş Kanunu (Əmək Məcəlləsi)** — işe alım, fesih, kıdem
@@ -273,7 +273,7 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 ## Azerbaycan hukuku kullanım disiplini
 
-1. **[Ana ortak / ilişkili taraf] intra-group sözleşmeler** (ham petrol alım-satım, royalty, hizmet
+1. **{{AL_ILISKILI_TARAF}} intra-group sözleşmeler** (ham petrol alım-satım, royalty, hizmet
    ücretleri) → Önce `governing-law` maddesini kontrol et. AZ hukuku seçildiyse
    → e-qanun.az (Medeni Kanun, Vergi Kanunu ilgili maddeleri).
 

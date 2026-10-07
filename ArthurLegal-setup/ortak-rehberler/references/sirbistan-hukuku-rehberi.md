@@ -1,4 +1,4 @@
-﻿# Sırbistan Hukuku — Kullanım Rehberi (WebFetch yöntemi)
+# Sırbistan Hukuku — Kullanım Rehberi (WebFetch yöntemi)
 
 > **Custom MCP server YOK** — Sırbistan hukuku için 3 açık erişim kaynağı WebFetch
 > ile kullanılır. Bu rehber, Claude'un `WebFetch` aracını Sırbistan mevzuatı ve
@@ -55,7 +55,7 @@ WebFetch:
 
 ---
 
-## 2. [ŞİRKET ADI] için hangi kanunlar?
+## 2. {{AL_MUVEKKIL}} için hangi kanunlar?
 
 | Konu | Sırpça Kanun Adı | paragraf.rs URL | Olası Bağlantı |
 |------|-----------------|-----------------|-----------------|
@@ -68,7 +68,7 @@ WebFetch:
 | **Rekabet** | Zakon o zaštiti konkurencije | `zakon_o_zastiti_konkurencije.html` | Piyasa davranışı |
 | **Vergi (KV)** | Zakon o porezu na dobit pravnih lica | `zakon_o_porezu_na_dobit_pravnih_lica.html` | SR kurumlar vergisi + TP |
 | **KDV** | Zakon o porezu na dodatu vrednost | `zakon_o_porezu_na_dodatu_vrednost.html` | SR KDV |
-| **Yabancı Yatırım** | Zakon o stranim ulaganjima | `zakon_o_stranim_ulaganjima.html` | [ŞİRKET ADI] → SR yatırım |
+| **Yabancı Yatırım** | Zakon o stranim ulaganjima | `zakon_o_stranim_ulaganjima.html` | {{AL_KURUM}} → SR yatırım |
 | **Yaptırım / Embargo** | Zakon o ograničavanju raspolaganja imovinom | ilgili URL | OFAC/AB ile ilişki |
 | **Çevre** | Zakon o zaštiti životne sredine | `zakon_o_zastiti_zivotne_sredine.html` | Çevre mevzuatı |
 
@@ -212,7 +212,7 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 
 ---
 
-## 8. [ŞİRKET ADI] Sırbistan hukuku kullanım disiplini
+## 8. {{AL_KURUM}} Sırbistan hukuku kullanım disiplini
 
 1. **Sırbistan governing-law sözleşmesi** → paragraf.rs'den ZOO (Borçlar Kanunu) +
    sektöre özel kanunu getir. Türk hukuku seçilmişse → SR analizi karşılaştırmalı arka plan.
@@ -223,10 +223,10 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 3. **Kişisel veri aktarımı (SR → TR)** → Zakon o zaštiti podataka o ličnosti; SR AB
    yeterlilik kararı aldığından GDPR mekanizmaları geçerli. KVKK + SR kanunu paralel.
 
-4. **Tahkim klozu — Sırbistan seated** → Zakon o arbitraži + NY Konvansiyonu + [ŞİRKET ADI]
+4. **Tahkim klozu — Sırbistan seated** → Zakon o arbitraži + NY Konvansiyonu + {{AL_KURUM}}
    Türkiye icra analizi (MÖHUK 5718 m. 60 vd. — yabancı hakem kararlarının tenfizi).
 
-5. **Dil notu:** [ŞİRKET ADI]'ın Sırp karşı taraflarıyla yazışması İngilizce ya da Türkçe.
+5. **Dil notu:** {{AL_KURUM}}'ın Sırp karşı taraflarıyla yazışması İngilizce ya da Türkçe.
    Sırpça mevzuat alıntısı → SR orijinal + EN/TR çeviri birlikte.
 
 ---

@@ -79,9 +79,9 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 ## Örnek senaryolar
 
-### Örnek 1: Ham petrol ithalat sözleşmesi ([İLİŞKİLİ TARAF] → [RAFİNERİ])
+### Örnek 1: Ham petrol ithalat sözleşmesi ({{AL_ILISKILI_TARAF}} → [RAFİNERİ])
 
-**Senaryo:** [ŞİRKET ADI] ([RAFİNERİ] adına), yurt dışındaki bir tedarikçiden 200M USD'lik ham petrol alıyor (1 yıllık çerçeve).
+**Senaryo:** {{AL_KURUM}} ([RAFİNERİ] adına), yurt dışındaki bir tedarikçiden 200M USD'lik ham petrol alıyor (1 yıllık çerçeve).
 
 **Damga analizi:**
 - Sözleşme TR'de mi düzenleniyor? → **EVET ise** damga konusu (sözleşme yeri TR — DVK m. 1)
@@ -110,7 +110,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 **Pratik:** [HALKA AÇIK İŞTİRAK] için kontrat strüktürü kritik — uzun yıllık çerçeve sözleşme yerine **bireysel sipariş bazlı** çalışma damga matrahını ürün-bazlı küçük tutarlara böler.
 
-### Örnek 3: [İşletme Yeri] Özel Endüstri Bölgesi (ÖEB) — vendor sözleşmesi
+### Örnek 3: {{AL_TESIS}} Özel Endüstri Bölgesi (ÖEB) — vendor sözleşmesi
 
 **Senaryo:** [HALKA AÇIK İŞTİRAK], [ÖZEL ENDÜSTRİ BÖLGESİ] içinde bir bakım hizmeti vendor'ı ile 5M TL'lik sözleşme.
 
@@ -118,9 +118,9 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 - 5M TL × 0,00948 = **47.400 TL** (nispi vergi — nüsha sayısı damgayı çoğaltmaz, DVK m. 5)
 - ÖEB statüsü → 4737 sayılı kanunun ek istisnaları kontrol — bazı işlemlerde teşvik var, **ama genel damga rejimi devam eder**
 
-### Örnek 4: [ELEKTRİK SANTRALİ] elektrik üretim — gün öncesi piyasası (EPİAŞ)
+### Örnek 4: {{AL_SANTRAL}} elektrik üretim — gün öncesi piyasası (EPİAŞ)
 
-**Senaryo:** [ELEKTRİK SANTRALİ], EPİAŞ üzerinden günlük elektrik satışı yapıyor. Sözleşme yapısı: çerçeve EPİAŞ üyelik + günlük teklifler.
+**Senaryo:** {{AL_SANTRAL}}, EPİAŞ üzerinden günlük elektrik satışı yapıyor. Sözleşme yapısı: çerçeve EPİAŞ üyelik + günlük teklifler.
 
 **Damga:**
 - **EPİAŞ üyelik sözleşmesi** → damga konusu (bir kez ödenir)
@@ -129,7 +129,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 ### Örnek 5: Damga optimizasyon — KEP üzerinden imza
 
-**[ŞİRKET ADI] pratiği:** Kurumsal e-imza için KEP kullanılıyor (TTK 18/3). KEP imzalı sözleşme:
+**{{AL_BURO}} pratiği:** Kurumsal e-imza için KEP kullanılıyor (TTK 18/3). KEP imzalı sözleşme:
 - DVK m. 1 ve 22 — KEP imzalı belge fiziki belge ile aynı statüde
 - Nispi vergiye tabi sözleşmelerde zaten **yalnız bir nüsha vergilenir** (DVK m. 5) — KEP tek e-nüsha üretse de fiziki çoklu nüsha üretse de damga tutarı değişmez
 - → KEP'in faydası **damga maliyeti değil**, tek nüsha/versiyon yönetimi ve arşivleme kolaylığıdır

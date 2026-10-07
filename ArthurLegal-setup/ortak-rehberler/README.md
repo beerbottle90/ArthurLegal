@@ -35,6 +35,8 @@ Paketin içindeki kopyayı elle düzeltirseniz test kırmızı yanar ve sizi kay
 
 ## Durum (07.10.2026)
 
-- 87 ortak rehberin 67'si tek kaynakta: 64'ü Hukuk Bürosu ile Kurumsal'da, 3'ü dört pakette.
-- Kalan 20 rehberde kopyalar arasında gerçek içerik farkı var. Bunlar karar bekliyor; `--benimse` hangi cümlenin
-  farklı olduğunu gösterir.
+- 87 ortak rehberin 82'si tek kaynakta: 79'u Hukuk Bürosu ile Kurumsal'da, 3'ü dört pakette.
+- Kalan 5 rehber kararla ayrı: `arthur-mask-rehberi.md` (kitle farkı: avukat / kullanıcı), `epdk-rehberi.md` (Kurumsal
+  kendine özgü elektrik üretim rehberine bağlanır), Courthouse'ta hâkim ve kalem için baştan yazılmış
+  `bilirkisilik-rehberi.md`, `cmk-rehberi.md`, `kep-etebligat-rehberi.md`. Paket denetimi bunlarda yeni ayrışmayı yine
+  yakalar.

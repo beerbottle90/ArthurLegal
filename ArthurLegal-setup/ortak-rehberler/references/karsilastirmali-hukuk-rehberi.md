@@ -66,8 +66,7 @@ Platform her araç çağrısını **100 saniyede iptal eder** ve iptal edilen ç
 - Tek bir çağrıdan aynı anda "kanunu bul + öncü kararları özetle + resmî
   URL'leri topla" **isteme**.
 - İptal olursa **aynı sorguyu tekrarlama** — böl, ve **hangi kısmın
-  kapsanmadığını söyle**. Müvekkile giden bir çıktıda kısmi araştırmayı tam
-  gibi sunmak, meslekî sorumluluk doğurur.
+  {{AL_KARS_KISMI}}
 
 **Özel araç > genel web arama.** Akademik/karşılaştırmalı hukuk literatürü için
 LexScholar gibi özel araçlar hukuk indekslerini doğrudan sorgular ve saniyeler
@@ -88,7 +87,7 @@ kaynağa bakılmış gibi **ima etme**.
 
 ## 1. Temel ilke — birincil yargı çevresi Türkiye
 
-[Müvekkil] paketinin **birincil yargı çevresi Türkiye Cumhuriyeti'dir.**
+{{AL_KURUM}} paketinin **birincil yargı çevresi Türkiye Cumhuriyeti'dir.**
 Yeni connector'lar bunu değiştirmez; yalnızca **yabancı hukuk temas eden işlerde**
 yardımcı kaynaktır.
 
@@ -139,7 +138,7 @@ Bir sözleşmenin **uygulanacak hukuk** (governing law) ve **yetki/tahkim** kloz
 şu adımlarla incelenir (bkz. `commercial-legal:governing-law-review` skill):
 
 1. **Klozu tespit et.** Uygulanacak hukuk ne? Yetkili mahkeme/tahkim nerede?
-2. **[Müvekkil]-default ile karşılaştır.** [Müvekkil] uluslararası sözleşmelerinde
+2. **{{AL_KURUM}}-default ile karşılaştır.** {{AL_KURUM}} uluslararası sözleşmelerinde
    yaygın tercih: İngiliz hukuku + Londra tahkimi (LCIA/ICC) **veya** Türk hukuku
    + ISTAC. Counterparty'nin tek taraflı dayattığı asimetrik venue 🟠/🔴.
 3. **İcra-edilebilirliği çapraz-kontrol et:**

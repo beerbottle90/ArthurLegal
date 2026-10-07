@@ -1,4 +1,4 @@
-﻿# US Legislation (GovInfo WebFetch) — Kullanım Rehberi
+# US Legislation (GovInfo WebFetch) — Kullanım Rehberi
 
 > **Resmi MCP server VAR** — *GovInfo WebFetch*, ABD Government Publishing Office (GPO)
 > tarafından işletilir. Ocak 2026'dan beri **public preview**. Bu rehber hem MCP

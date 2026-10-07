@@ -107,7 +107,7 @@ Tasarımlar için ayrı hükümler vardır (m. 73: Hizmet ilişkisi ile diğer i
 ## Coğrafi işaret
 
 - Menşe adı + mahreç adı
-- Bölgesel ürünler (örn. "[TESİS LOKASYONU] zeytinyağı" varsa)
+- Bölgesel ürünler (örn. "{{AL_TESIS}} zeytinyağı" varsa)
 
 ## Süre kontrolleri (litigation için kritik)
 
@@ -122,13 +122,13 @@ Tasarımlar için ayrı hükümler vardır (m. 73: Hizmet ilişkisi ile diğer i
 | Marka tecavüzü tazminat zamanaşımı | 2 yıl öğrenme / 10 yıl mutlak (TBK m. 72 paralel) |
 | Marka tecavüz cezası | 8 yıl (TCK m. 66 zamanaşımı) |
 
-## [Müvekkil] portföyü için kritik
+## {{AL_KURUM}} portföyü için kritik
 
-- **[Müvekkil] ana markası** — tanınmış marka statüsü (Madde 6/5 sulandırma koruması için kayıtlı olmalı; TÜRKPATENT Tanınmış Marka Listesi)
+- **{{AL_KURUM}} ana markası** — tanınmış marka statüsü (Madde 6/5 sulandırma koruması için kayıtlı olmalı; TÜRKPATENT Tanınmış Marka Listesi)
 - **[HALKA AÇIK İŞTİRAK]** — petrokimya sektöründe Türkiye'nin en büyüğü, tanınmış marka
 - **[RAFİNERİ]** — yatırım büyüklüğü itibariyle dikkat çeker
 - **[BORU HATTI PROJESİ]** — uluslararası boru hattı, çok ülkeli marka koruması
-- **[ELEKTRİK ÜRETİM İŞTİRAKİ]** (Şubat 2025) — elektrik üretim sektörü, yeni marka kategorisi
+- **{{AL_SANTRAL}}** (Şubat 2025) — elektrik üretim sektörü, yeni marka kategorisi
 
 ## Domain ve internet özelinde marka koruması
 

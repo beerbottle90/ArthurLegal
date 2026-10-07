@@ -7,7 +7,7 @@
 > **Durum:** ✅ Açık erişim — API anahtarı gerekmez. **Dil:** Yunanca (EL) birincil;
 > RAAEY ve EUR-Lex İngilizce sunar.
 >
-> **[ŞİRKET ADI] neden gerekli?** Yunanistan **TAP (Trans Adriyatik Boru Hattı)** iniş/transit
+> **{{AL_KURUM}} neden gerekli?** Yunanistan **TAP (Trans Adriyatik Boru Hattı)** iniş/transit
 > noktasıdır — TANAP'tan gelen Azerbaycan gazı TAP üzerinden Yunanistan-Arnavutluk-İtalya
 > rotasıyla Avrupa'ya ulaşır. TAP'ın Yunanistan ayağı RAAEY (eski RAE) tarafından düzenlenir.
 > Gaz piyasası erişimi, şebeke kodu, kapasite tahsisi ve AB enerji uyumu Yunan hukukunu
@@ -19,14 +19,14 @@
 
 | Kaynak | Tür | İçerik | Dil | Öncelik |
 |--------|-----|--------|-----|---------|
-| raaey.gr/energeia/en | WebFetch (sunucu HTML ✅) | Enerji düzenleme çerçevesi, TAP kararları | EN | P0 — [ŞİRKET ADI] odağı |
+| raaey.gr/energeia/en | WebFetch (sunucu HTML ✅) | Enerji düzenleme çerçevesi, TAP kararları | EN | P0 — {{AL_KURUM}} odağı |
 | search.et.gr/en | WebFetch (Resmi Gazete arama ✅) | Tüm Yunan mevzuatı (ΦΕΚ) | EL + EN arayüz | P1 — tam metin |
 | EUR-Lex | WebFetch | AB-türevli Yunan uyum mevzuatı | EL + EN | P1 — AB |
 | greeklawdigest.gr | WebFetch | İngilizce konu rehberi (full-text değil) | EN | P2 — referans |
 
 ---
 
-## 1. RAAEY — Enerji ve Su Düzenleme Kurumu (BİRİNCİL — [ŞİRKET ADI] odağı)
+## 1. RAAEY — Enerji ve Su Düzenleme Kurumu (BİRİNCİL — {{AL_KURUM}} odağı)
 
 **Kaynak Kurum:** Ρυθμιστική Αρχή Αποβλήτων, Ενέργειας & Υδάτων (RAAEY, eski RAE)
 **URL:** `https://www.raaey.gr/energeia/en`
@@ -63,9 +63,9 @@ WebFetch:
 
 ---
 
-## 3. [ŞİRKET ADI] için kritik Yunan mevzuatı
+## 3. {{AL_KURUM}} için kritik Yunan mevzuatı
 
-| Konu | Kanun | Kaynak | [ŞİRKET ADI] bağlantısı |
+| Konu | Kanun | Kaynak | {{AL_KURUM}} bağlantısı |
 |------|-------|--------|------------------|
 | **Enerji Çerçeve Kanunu** | Law 4001/2011 | et.gr / RAAEY | Gaz piyasası, şebeke erişimi |
 | **Enerji Borsası** | Law 4425/2016 | et.gr | Toptan enerji ticareti |
@@ -104,7 +104,7 @@ Bağlayıcı analizde Yunanca ΦΕΚ metni esas — kritik hükümde `[review]`.
 - **NOMOS (ticari DB) ücretli:** Kapsamlı içtihat+mevzuat için NOMOS abonelik gerekir.
 - **İçtihat sınırlı:** Yunan mahkeme kararları için yapılandırılmış ücretsiz kaynak zayıf;
   Symvoulio tis Epikrateias (Danıştay) kararları kısmen ste.gr'de.
-- **TAP odaklı kapsam:** Bu rehber [ŞİRKET ADI]'ın TAP ilgisine kalibre — genel Yunan ticari/şirket
+- **TAP odaklı kapsam:** Bu rehber {{AL_KURUM}}'ın TAP ilgisine kalibre — genel Yunan ticari/şirket
   hukuku için EUR-Lex (AB uyumu) + et.gr yeterli ama derinlik sınırlı.
 
 ---

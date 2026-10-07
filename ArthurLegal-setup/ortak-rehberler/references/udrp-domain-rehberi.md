@@ -1,6 +1,6 @@
-﻿# UDRP / Domain Takedown — Sahte Site Müdahale Rehberi
+# UDRP / Domain Takedown — Sahte Site Müdahale Rehberi
 
-> Şirketin markasını taklit eden sahte domain'ler için müdahale prosedürü. `[marka]-sahte.com` benzeri vakalar.
+> {{AL_MARKA_SAHIBI}} markasını taklit eden sahte domain'ler için müdahale prosedürü. `[marka]-sahte.com` benzeri vakalar.
 
 ## 3 paralel müdahale kanalı
 
@@ -30,7 +30,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 - [ ] **Tam ekran görüntüleri:** Tüm sayfalar (anasayfa, iletişim, ödeme, bayi başvurusu) — Adobe PDF kayıt
 - [ ] **Ödeme/iletişim bilgisi tespit:** IBAN, telefon, e-posta — sahtekarın izleri
 - [ ] **Şikayet taraması:** şikayetvar.com, sikayetonline, sosyal medya — gerçek mağdur var mı?
-- [ ] **İletişim Başkanlığı ([İLETİŞİM YÖNETİCİSİ]) ön-bilgi:** Basına çıkmış mı?
+- [ ] **İletişim Başkanlığı ({{AL_ILETISIM}}) ön-bilgi:** Basına çıkmış mı?
 
 ### ⏰ İlk 24 saat
 
@@ -54,13 +54,13 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 
 #### Cezai şikayet
 - **Cumhuriyet Başsavcılığına suç duyurusu** (TCK m. 158/1-f + SMK m. 30)
-- Yetki: **dolandırıcılık eyleminin gerçekleştiği yer** veya **[ŞİRKET ADI] merkez = İstanbul**
+- Yetki: **dolandırıcılık eyleminin gerçekleştiği yer** veya **{{AL_KURUM}} merkez = İstanbul**
 - Birim: **İstanbul Cumhuriyet Başsavcılığı Bilişim Suçları Bürosu**
 - Ekleri: whois, ekran görüntüleri, bayi olmadığı teyit yazısı, marka tescil belgesi, varsa mağdur ifadeleri
 
 #### Resmi açıklama
-- [ŞİRKET ADI] resmi web + sosyal medya: "Bu site [ŞİRKET ADI] ile bağlantılı değildir. Resmi bayilerimiz [şirket-web-sitesi]'den teyit edilebilir. Ödeme YAPMAYIN."
-- İletişim Başkanlığı ([İLETİŞİM YÖNETİCİSİ]) ile koordineli — kategorik açık mesaj
+- {{AL_KURUM}} resmi web + sosyal medya: "Bu site {{AL_KURUM}} ile bağlantılı değildir. Resmi bayilerimiz {{AL_WEB}}'den teyit edilebilir. Ödeme YAPMAYIN."
+- İletişim Başkanlığı ({{AL_ILETISIM}}) ile koordineli — kategorik açık mesaj
 
 ### ⏰ İlk 1 hafta
 
@@ -87,8 +87,8 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 
 #### Alternatif mekanizmalar
 - **Google brand abuse şikayeti** (sahte site Google Ads kullanıyorsa) — saatler içinde reklam kapanır
-- **Sosyal medya platformları** (LinkedIn, Instagram, X) — sahte [ŞİRKET ADI] profilleri kategorik takedown
-- **Apple App Store / Google Play** (sahte [ŞİRKET ADI] app var ise) — store policy ihlali şikayeti
+- **Sosyal medya platformları** (LinkedIn, Instagram, X) — sahte {{AL_KURUM}} profilleri kategorik takedown
+- **Apple App Store / Google Play** (sahte {{AL_KURUM}} app var ise) — store policy ihlali şikayeti
 
 #### Hukuki sonuç davası (SMK m. 150 tazminat)
 - Somut zarar varsa **Asliye Hukuk** veya **Fikri ve Sınai Haklar Mahkemesi**
@@ -97,9 +97,9 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 - **Cezai yol genelde daha caydırıcı** (TCK 158/1-f hapis cezası)
 
 #### KVKK ihbar
-- Sahte site [ŞİRKET ADI] adıyla kişisel veri topluyor (ad, telefon, ödeme) → **KVKK Kurulu'na re'sen inceleme talebi**
+- Sahte site {{AL_KURUM}} adıyla kişisel veri topluyor (ad, telefon, ödeme) → **KVKK Kurulu'na re'sen inceleme talebi**
 - 6698 m. 5 hukuka aykırı veri işleme
-- **[KVKK SORUMLUSU/DPO] (DPO)** üzerinden
+- **{{AL_DPO}} (DPO)** üzerinden
 
 #### Reklam Kurulu şikayet
 - **TKHK m. 77/12 — Reklam Kurulu** — yanıltıcı reklam idari para cezası + içerik durdurma
@@ -114,21 +114,21 @@ Tek bir sahte domain'le yetinmemek için:
 - **Toplu takedown** sahte ailesi varsa
 
 ### Defensive registration
-- Anahtar varyantlar [ŞİRKET ADI] adına alın (defensive):
+- Anahtar varyantlar {{AL_KURUM}} adına alın (defensive):
   - `[[marka]-sahte.com.tr]`, `.com`, `.net`, `.org`, `.eu`
   - Önemli pazarlar (Azerbaycan: `.az`, Türkiye: `.com.tr`)
 - Yıllık bütçe — küçük ama önemli koruma
 
-## [ŞİRKET ADI] koordinasyon
+## {{AL_KURUM}} koordinasyon
 
 | Aksiyon | Onay |
 |---|---|
 | Registrar abuse + 5651 m. 9 (mülga) başvurusu | Senior Legal Counsel [kuran kişi — company-profile: Kullanıcı rolü] |
 | Suç duyurusu hazırlık + savcılığa sunum | Counsel + Direktör imza [company-profile: Doğrudan amir] |
-| Resmi açıklama içeriği | Counsel + [İLETİŞİM YÖNETİCİSİ] (İletişim) + [HUKUKİ DİREKTÖR 1] onay |
-| UDRP başvurusu (dış avukatla) | [HUKUKİ DİREKTÖR 1] + [CLCO ADI] (CLCO) bilgi (tutar < 50K TL) |
-| SMK m. 150 tazminat dava açma | [CLCO ADI] onay (litigation eskalasyon matriksi) |
-| KVKK Kurulu ihbarı | DPO [KVKK SORUMLUSU/DPO] + [UYUM DİREKTÖRÜ] (Compliance) |
+| Resmi açıklama içeriği | Counsel + {{AL_ILETISIM}} (İletişim) + {{AL_HUKUK_DIREKTORU}} onay |
+| UDRP başvurusu (dış avukatla) | {{AL_HUKUK_DIREKTORU}} + {{AL_CLCO}} (CLCO) bilgi (tutar < 50K TL) |
+| SMK m. 150 tazminat dava açma | {{AL_CLCO}} onay (litigation eskalasyon matriksi) |
+| KVKK Kurulu ihbarı | DPO {{AL_DPO}} + {{AL_UYUM}} (Compliance) |
 | MASAK ihbar (büyük çaplı) | Compliance + CFO koordinasyon |
 
 ## Bağlantılı

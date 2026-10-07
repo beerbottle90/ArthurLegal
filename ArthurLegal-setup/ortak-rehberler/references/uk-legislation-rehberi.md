@@ -1,4 +1,4 @@
-﻿# UK Legislation (legislation.gov.uk) — Kullanım Rehberi (WebFetch yöntemi)
+# UK Legislation (legislation.gov.uk) — Kullanım Rehberi (WebFetch yöntemi)
 
 > **Custom MCP server YOK** — legislation.gov.uk yalnızca REST API + content
 > negotiation sunar. Bu rehber, Claude'un `WebFetch` aracını UK mevzuatıyla

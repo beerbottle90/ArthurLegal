@@ -63,7 +63,7 @@
 
 ### Önemli pratik notlar
 - Başvuru ücreti + her ek sınıf için ek ücret
-- Vekil zorunluluğu yok (gerçek kişi başvurabilir) ama büyük portföy için **Truva Patent** gibi vekil önerilir ([ŞİRKET ADI]'ın birincil vekili)
+- Vekil zorunluluğu yok (gerçek kişi başvurabilir) ama büyük portföy için deneyimli bir marka ve patent vekili önerilir
 - **Hızlandırılmış inceleme** (ek ücret) — stratejik markalar için
 
 ## YİDK itiraz pratiği

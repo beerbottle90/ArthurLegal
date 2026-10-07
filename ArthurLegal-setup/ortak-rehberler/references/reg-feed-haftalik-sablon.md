@@ -93,7 +93,7 @@
 
 ---
 
-## [ŞİRKET ADI] için özel kaynak listesi (her hafta zorunlu)
+## {{AL_KURUM}} için özel kaynak listesi (her hafta zorunlu)
 
 ### Birincil mevzuat kaynakları
 | Kaynak | URL | Periyot | Sorumluluk |
@@ -105,17 +105,17 @@
 ### Sektör düzenleyici kurum kararları (EPDK, SPK, Rekabet, KVKK, BTK kararları `tr_kurum_karari_ara` ile çekilir; aşağıdaki adresler duyuru takibi ve connector'da olmayan kurumlar içindir)
 | Kurum | URL | Etki alanı |
 |---|---|---|
-| **EPDK** | https://www.epdk.gov.tr/Detay/Icerik/3-0-39-3/son-kurul-kararlari/elektrik | Petrol, doğal gaz, elektrik ([HALKA AÇIK İŞTİRAK], [RAFİNERİ], [ELEKTRİK SANTRALİ], dağıtım) — **kritik** |
+| **EPDK** | https://www.epdk.gov.tr/Detay/Icerik/3-0-39-3/son-kurul-kararlari/elektrik | Petrol, doğal gaz, elektrik ([HALKA AÇIK İŞTİRAK], [RAFİNERİ], {{AL_SANTRAL}}, dağıtım) — **kritik** |
 | **SPK** | https://www.spk.gov.tr/Sayfa/Index/12/1 | [HALKA AÇIK İŞTİRAK] için (BIST: [BIST KOD]) |
 | **KAP** | https://www.kap.org.tr/tr/Bildirim/[BIST KOD] | [HALKA AÇIK İŞTİRAK] özel durum açıklamaları — günlük |
 | **Rekabet Kurumu** | https://www.rekabet.gov.tr/tr/Sayfa/Kurul-kararlari | Enerji + petrokimya birleşme + dikey entegrasyon |
 | **KGK** | https://www.kgk.gov.tr | [HALKA AÇIK İŞTİRAK] bağımsız denetim |
 | **KVKK Kurulu** | https://www.kvkk.gov.tr/Icerik/4232/Kurul-Kararlari | Veri ihlal kararları, sektörel rehberler |
-| **Çevre, Şehircilik ve İklim Değişikliği Bakanlığı** | https://www.csb.gov.tr | ÇED, atık, emisyon — [İşletme Yeri] tesisleri |
+| **Çevre, Şehircilik ve İklim Değişikliği Bakanlığı** | https://www.csb.gov.tr | ÇED, atık, emisyon — {{AL_TESIS}} tesisleri |
 | **ÇSGB** | https://www.csgb.gov.tr | İş izinleri (yabancı çalışan), 6331 ISG |
 | **MASAK** | https://www.masak.hmb.gov.tr | Yaptırım + AML rehberleri |
 | **TÜRKPATENT** | https://www.turkpatent.gov.tr | Marka/patent ilanları + İlanlar Bülteni |
-| **BTK** | https://www.btk.gov.tr | [TELEKOM İŞTİRAK], [ŞİRKET ADI] Fiber |
+| **BTK** | https://www.btk.gov.tr | [TELEKOM İŞTİRAK], {{AL_KURUM}} Fiber |
 | **Sanayi ve Teknoloji Bakanlığı** | https://www.sanayi.gov.tr | [ÖZEL ENDÜSTRİ BÖLGESİ] rejimi |
 
 ### Uluslararası izleme (ArthurLegal MCP (`tr_`) kapsamı dışında)
@@ -125,15 +125,15 @@
 | **AB Sanctions Map** | https://www.sanctionsmap.eu/ | AB yaptırım rejimleri |
 | **EU Lex (Energy + Climate)** | https://eur-lex.europa.eu/ | CBAM, ETS, Green Deal |
 | **UK OFSI Notice Updates** | https://www.gov.uk/government/collections/financial-sanctions-notices-and-news | UK yaptırım güncellemeleri |
-| **[ANA ORTAK] grup compliance bültenleri** | İç dağıtım | Ana ortak grup politikası |
+| **{{AL_ANA_ORTAK}} grup compliance bültenleri** | İç dağıtım | Ana ortak grup politikası |
 
-### [ŞİRKET ADI]'a özel kategorik etki alanları (her hafta dön)
-- 🔴 **EPDK kurul kararları** ([HALKA AÇIK İŞTİRAK]/[RAFİNERİ]/[ELEKTRİK SANTRALİ] lisansları, doğal gaz pazar dengesi)
+### {{AL_KURUM}}'a özel kategorik etki alanları (her hafta dön)
+- 🔴 **EPDK kurul kararları** ([HALKA AÇIK İŞTİRAK]/[RAFİNERİ]/{{AL_SANTRAL}} lisansları, doğal gaz pazar dengesi)
 - 🔴 **CBAM güncellemeleri** ([HALKA AÇIK İŞTİRAK] petrokimya ihracatı)
 - 🔴 **OFAC SDN List** + **AB 833/2014** ek listeler
 - 🟠 **TR İklim Kanunu tasarı** + **karbon vergisi rejimi**
 - 🟠 **KVKK m.9 yurt dışı aktarım** SCC + yeterlilik kararı duyuruları
 - 🟠 **[HALKA AÇIK İŞTİRAK] KAP açıklamaları** (kendi şirketimiz — içsel bilgi koordinasyonu)
-- 🟡 **6331 ISG yönetmelik değişiklikleri** ([İşletme Yeri] tesisleri)
+- 🟡 **6331 ISG yönetmelik değişiklikleri** ({{AL_TESIS}} tesisleri)
 - 🟡 **TTK + SPK Kurumsal Yönetim** güncellemeleri
 - 🟢 **TÜRKPATENT** marka itiraz bültenleri (defansif tarama)

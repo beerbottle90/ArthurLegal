@@ -1,6 +1,6 @@
 # TÜRKPATENT (Türk Patent ve Marka Kurumu) — Pratik Rehber
 
-> [Müvekkil]/[HALKA AÇIK İŞTİRAK] marka + patent + tasarım portföyünün operasyonel kanalı. Online portallar, başvuru pratiği, arama araçları, itiraz süreçleri.
+> {{AL_KURUM}}/[HALKA AÇIK İŞTİRAK] marka + patent + tasarım portföyünün operasyonel kanalı. Online portallar, başvuru pratiği, arama araçları, itiraz süreçleri.
 
 ## Kurum yapısı
 
@@ -15,7 +15,7 @@
 - **Resmi:** https://www.turkpatent.gov.tr/marka-arama
 - Nice sınıfı bazlı + tam tescil no + sahip adı
 - **TÜRKPATENT Bülten** — yayım takibi (yeni başvurular)
-- **Tanınmış Marka Listesi** — [Müvekkil]/[HALKA AÇIK İŞTİRAK] için dahil olma stratejik avantaj
+- **Tanınmış Marka Listesi** — {{AL_KURUM}}/[HALKA AÇIK İŞTİRAK] için dahil olma stratejik avantaj
 
 ### 2. Patent arama
 - TÜRKPATENT veri tabanı (sınırlı)
@@ -34,20 +34,20 @@
 
 ### 5. Madrid Protokolü
 - **WIPO Madrid eFiling** — uluslararası tek başvuru → seçilen ülkelere uzanır
-- [Müvekkil] ihracat pazarları için stratejik (AB, Orta Doğu, Bağımsız Devletler Topluluğu)
+- {{AL_KURUM}} ihracat pazarları için stratejik (AB, Orta Doğu, Bağımsız Devletler Topluluğu)
 
 ## Başvuru pratiği — marka
 
 ### Sınıflandırma (Nice 12. baskı 2024)
 - **1-34:** Mal sınıfları
 - **35-45:** Hizmet sınıfları
-- [Müvekkil] ana sınıfları:
+- {{AL_KURUM}} ana sınıfları:
   - **1:** Endüstri kimyasalları ([HALKA AÇIK İŞTİRAK] ham polimer)
   - **4:** Yakıt (akaryakıt)
   - **17:** İşlenmiş plastik ([HALKA AÇIK İŞTİRAK] yarı mamul)
   - **19:** İnşaat malzemeleri ([HALKA AÇIK İŞTİRAK] ürün uygulama)
   - **35:** Reklam, satış, dağıtım
-  - **39:** Taşıma, depolama ([müvekkil terminali], boru hattı)
+  - **39:** Taşıma, depolama ({{AL_TERMINAL}}, boru hattı)
   - **40:** İşleme hizmetleri
   - **42:** Ar-Ge, mühendislik
 
@@ -83,11 +83,11 @@
 - 2 ay içinde (doğrulanmadı)
 - BİM + Yargıtay 11. HD temyiz
 
-## [Müvekkil]/[HALKA AÇIK İŞTİRAK] için stratejik kullanım
+## {{AL_KURUM}}/[HALKA AÇIK İŞTİRAK] için stratejik kullanım
 
 ### Defensive filing
 - Ürün lansmanı öncesi geniş sınıf koruması ([HALKA AÇIK İŞTİRAK] petrokimya markaları için yapılır)
-- **Tanınmış Marka tescili** — [Müvekkil] ana logo + [HALKA AÇIK İŞTİRAK] ana logo
+- **Tanınmış Marka tescili** — {{AL_KURUM}} ana logo + [HALKA AÇIK İŞTİRAK] ana logo
 
 ### Watching service
 - **Truva Patent** üzerinden + bağımsız watching (Clarivate Compumark / Corsearch)
@@ -95,9 +95,9 @@
 - Sahte/yanıltıcı domain ile birlikte (`udrp-domain-rehberi.md`)
 
 ### Madrid Protokolü stratejisi
-- **[Müvekkil]** ana markası: tüm aktif ihracat ülkelerinde
+- **{{AL_KURUM}}** ana markası: tüm aktif ihracat ülkelerinde
 - **[HALKA AÇIK İŞTİRAK]** ürün markaları: AB + Orta Doğu (petrokimya alıcıları)
-- **[BORU HATTI PROJESİ]** + **[ELEKTRİK ÜRETİM İŞTİRAKİ]**: jurisdiction limited
+- **[BORU HATTI PROJESİ]** + **{{AL_SANTRAL}}**: jurisdiction limited
 
 ## Halka açık şirket ([HALKA AÇIK İŞTİRAK]) için ek dikkat
 

@@ -7,7 +7,7 @@
 > **Durum:** ✅ Açık erişim — API anahtarı gerekmez. **Dil:** Gürcüce (KA) birincil;
 > **İngilizce (EN) ve Rusça (RU) çeviriler** birçok kanun için mevcut.
 >
-> **[ŞİRKET ADI] neden gerekli?** Gürcistan, bölgedeki enerji işlemleri için **BTC (Bakü-Tiflis-Ceyhan ham petrol)**
+> **{{AL_KURUM}} neden gerekli?** Gürcistan, bölgedeki enerji işlemleri için **BTC (Bakü-Tiflis-Ceyhan ham petrol)**
 > ve **SCP (Güney Kafkasya Boru Hattı — gaz, TANAP besleyicisi)** boru hatlarının
 > **transit ülkesidir**.
 > Transit anlaşmaları, enerji lisansları, gümrük, çevre
@@ -20,7 +20,7 @@
 | Kaynak | Tür | İçerik | Dil | Öncelik |
 |--------|-----|--------|-----|---------|
 | matsne.gov.ge | WebFetch (sunucu HTML ✅) | Tüm Gürcü mevzuatı, konsolide sürümler | KA + EN + RU | P0 — mevzuat |
-| matsne.gov.ge `/en/` | WebFetch | İngilizce resmi çeviriler | EN | P0 — [ŞİRKET ADI] odağı |
+| matsne.gov.ge `/en/` | WebFetch | İngilizce resmi çeviriler | EN | P0 — {{AL_KURUM}} odağı |
 | RAAEY (Yunanistan'la kıyas için bkz. enerji) | — | — | — | — |
 
 ---
@@ -56,9 +56,9 @@ WebFetch:
 
 ---
 
-## 2. [ŞİRKET ADI] için kritik Gürcü mevzuatı
+## 2. {{AL_KURUM}} için kritik Gürcü mevzuatı
 
-| Konu | Kanun | matsne ID | [ŞİRKET ADI] bağlantısı |
+| Konu | Kanun | matsne ID | {{AL_KURUM}} bağlantısı |
 |------|-------|-----------|------------------|
 | **Petrol & Gaz** | Law of Georgia on Oil and Gas (1999) | `18424` | BTC/SCP transit, upstream lisans |
 | **Elektrik & Doğal Gaz** | Law on Electricity and Natural Gas | `31744` | Gaz dağıtım, SCP transit, lisans |
@@ -117,7 +117,7 @@ ADIM 3: Türk hukuku ile kıyas gerekiyorsa → EPDK rehberi
 - **İçtihat sınırlı:** matsne mevzuat odaklı; Gürcü mahkeme kararları için ayrı portal
   (supremecourt.ge) sınırlı erişim. Ticari uyuşmazlık çoğunlukla tahkim (sözleşme seçimi).
 - **Transit anlaşmaları gizli:** BTC/SCP devletlerarası anlaşmaları (host government agreement)
-  matsne'de tam yayımlanmamış olabilir — [ŞİRKET ADI] iç arşivi + dış vekil gerekir.
+  matsne'de tam yayımlanmamış olabilir — {{AL_KURUM}} iç arşivi + dış vekil gerekir.
 
 ---
 

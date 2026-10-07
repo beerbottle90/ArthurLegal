@@ -44,7 +44,8 @@
 > API üzerinden okur, **yürürlük statüsünü (`Qüvvədədir` / `Ləğv olunmuş`)
 > raporlar** ve sitenin anti-bot korumasına takılmaz. Aşağıdaki WebFetch yolu
 > yalnız MCP erişilemediğinde kullanılır — ve o hâlde **statü doğrulanmamıştır**;
-> bunu çıktıda açıkça yaz ve `[review]` flag ekle.
+> bunu çıktıda açıkça yaz ve `[review]` flag ekle. Bir görüşte yürürlükten kalkmış bir
+> aktın güncelmiş gibi görünmesi, bu paketin önlemek istediği tek hatadır.
 
 **Kaynak Kurum:** Adalet Bakanlığı (Ədliyyə Nazirliyi)
 **URL:** `https://e-qanun.az`
@@ -85,7 +86,7 @@ WebFetch:
 |---|---|---|
 | Neft və qaz haqqında Qanun (1996) | Petrol ve gaz rejimi | [ANA ORTAK] upstream hakları |
 | Mülki Məcəllə | Medeni Kanun | [ANA ORTAK] ile sözleşmeler |
-| Əmək Məcəlləsi | İş Kanunu | 200+ AZ çalışan |
+| Əmək Məcəlləsi | İş Kanunu | Azerbaycan'da istihdam edilen personel |
 | Mühasibat uçotu haqqında Qanun | Muhasebe | Intra-group mali raporlama |
 | Vergi Məcəlləsi | Vergi Kanunu | Transfer fiyatlandırması |
 | Antiinhisar Qanunu | Rekabet | Piyasa davranışı |
@@ -292,10 +293,9 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 ## Versiyon disiplini
 
-- Bu rehber **v1.2.0** (*Azerbaycan Hukuku Entegrasyonu*) ile eklendi.
-- **v1.4.0'da kapsamı daraltıldı:** mevzuat okuma yolu `eqanun-mcp-rehberi.md`'ye
+- **Kapsam daraltıldı:** mevzuat okuma yolu `eqanun-mcp-rehberi.md`'ye
   taşındı; bu rehber içtihat + İngilizce kaynaklar + WebFetch yedekleri için
-  kaldı. v1.3.1'deki "e-qanun.az anti-bot → cis-legislation.com" kısıtı, MCP
+  kaldı. Önceki "e-qanun.az anti-bot → cis-legislation.com" kısıtı, MCP
   resmî API'yi kullandığı için mevzuat tarafında geçerliliğini yitirdi.
 - Kaynaklar 2026-05-30 tarihli ön araştırmaya dayanır (GitHub + web taraması).
 - LocalDoc/allmalab HuggingFace dataset'lerinin erişilebilirliği değişebilir;
@@ -303,5 +303,5 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 ---
 
-*Son güncelleme: 26.07.2026 — v1.4.0. Azerbaycan içtihadı + EN kaynaklar +
+*Son güncelleme: 26.07.2026. Azerbaycan içtihadı + EN kaynaklar +
 WebFetch yedekleri. Mevzuat için: `eqanun-mcp-rehberi.md` (BİRİNCİL).*

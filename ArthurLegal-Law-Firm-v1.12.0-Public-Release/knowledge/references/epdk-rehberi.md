@@ -67,7 +67,6 @@
 ### [ELEKTRİK ÜRETİM İŞTİRAKİ] (yeni santral)
 - 6446 EPK kapsamında elektrik üretim lisansı
 - Şubat 2025 devir sonrası **6 adım** EPDK süreci (lisans transferi)
-- Detay: `references/epdk-rehberi.md`
 
 ### [DAĞITIM İŞTİRAKİ]
 - Devir süreci tamamlandı/tamamlanıyor (2024-2026)

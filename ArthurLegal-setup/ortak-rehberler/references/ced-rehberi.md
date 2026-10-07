@@ -1,6 +1,6 @@
-# ÇED (Çevresel Etki Değerlendirmesi) Rehberi — [İşletme Yeri] Bağlamı
+# ÇED (Çevresel Etki Değerlendirmesi) Rehberi — {{AL_TESIS}} Bağlamı
 
-> 2872 sayılı Çevre Kanunu + ÇED Yönetmeliği. [İşletme Yeri] rafineri/petrokimya kompleksinin sürekli ÇED yenileme/değişiklik süreci yakıcı stres alanı.
+> 2872 sayılı Çevre Kanunu + ÇED Yönetmeliği. {{AL_TESIS}} rafineri/petrokimya kompleksinin sürekli ÇED yenileme/değişiklik süreci yakıcı stres alanı.
 
 ## Hukuki çerçeve
 
@@ -10,7 +10,7 @@
 
 ## ÇED süreci tipleri
 
-| Tip | Kapsam | [ŞİRKET ADI] örneği |
+| Tip | Kapsam | {{AL_KURUM}} örneği |
 |---|---|---|
 | **ÇED gereklilik var/yok** | Ön inceleme | Yeni proje başlangıç |
 | **ÇED olumlu/olumsuz** | Tam ÇED süreci | [RAFİNERİ] kapasite artırımı, yeni [HALKA AÇIK İŞTİRAK] hattı |
@@ -35,8 +35,8 @@ Komisyon inceleme + bakanlık değerlendirme →
 ### Sürekli ÇED dosyaları
 - **[RAFİNERİ]:** Kapasite artırımı, yeni ünite eklemesi
 - **[HALKA AÇIK İŞTİRAK]:** Yeni petrokimya hattı (etilen, propilen genişleme)
-- **[ŞİRKET ADI] Terminal:** Kapasite genişleme, yeni rıhtım
-- **[ŞİRKET ADI] Depolama:** Yeni tank, yeni boru hattı
+- **{{AL_TERMINAL}}:** Kapasite genişleme, yeni rıhtım
+- **{{AL_DEPOLAMA}}:** Yeni tank, yeni boru hattı
 - **[ÖZEL ENDÜSTRİ BÖLGESİ] ortak altyapı:** Yol, su, atık su
 
 ### Risk faktörleri
@@ -60,7 +60,7 @@ Komisyon inceleme + bakanlık değerlendirme →
 
 ⚠️ **KRİTİK BUG TARİHÇESİ:** v1.3.0'da bu rehberde ÇED için "60 gün + BİM + Danıştay" yazılıydı — **yanlış**. v1.3.1 patch ile düzeltildi. ArthurLegal MCP (`tr_`)'den teyit edilen doğru rejim: m. 20/A → 30 gün, BİM yok, 15 gün temyiz.
 
-**[ŞİRKET ADI] pratiği:**
+**{{AL_BURO_B}} pratiği:**
 - **ÇED ret kararı geldiyse derhal 30 gün takvim başlatılır** — kaçırılırsa hak düşer, m. 11 başvurusu süreyi DURDURMAZ
 - Doğrudan Ankara İdare Mahkemesi (Bakanlık merkez) veya il İdare Mahkemesi (il müdürlüğü)
 - Yürütmenin durdurulması talebi (telafisi güç zarar = yatırım blokesi)
@@ -114,5 +114,5 @@ tr_mevzuat_ara(query="ÇED", types=["YONETMELIK"])  # ÇED Yön.
 ## Bağlantılı
 
 - [İYUK rehberi](iyuk-rehberi.md) — dava usulü
-- [İSG dava rehberi](isg-dava-rehberi.md) — [İşletme Yeri] İSG ile koordineli
-- [ŞİRKET ADI] profili → administrative-legal
+- [İSG dava rehberi](isg-dava-rehberi.md) — {{AL_TESIS}} İSG ile koordineli
+- {{AL_BURO_B}} profili → administrative-legal
