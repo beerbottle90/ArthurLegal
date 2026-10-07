@@ -22,7 +22,7 @@ KAP, BIST kotasındaki tüm şirketlerin **özel durum açıklamaları**, **mali
 |---|---|---|
 | [HALKA AÇIK İŞTİRAK] bildirim araması (sayfalı) | https://www.kap.org.tr/tr/search/[BIST KOD]/1 | ✅ Aktif — WebFetch içerik döndürür |
 | [HALKA AÇIK İŞTİRAK] bildirim araması sayfa 2 | https://www.kap.org.tr/tr/search/[BIST KOD]/2 | ✅ Aktif |
-| [HALKA AÇIK İŞTİRAK] şirket özeti (ana sayfa) | https://www.kap.org.tr/tr/sirket-bilgileri/ozet/2400-petrokimya-petrokimya-holding-a-s | ✅ HTTP 200, JS-rendered (kısmi içerik) |
+| [HALKA AÇIK İŞTİRAK] şirket özeti (ana sayfa) | https://www.kap.org.tr/tr/sirket-bilgileri/ozet/<kap-kimliği>-<şirket-kısa-adı> | ✅ HTTP 200, JS-rendered (kısmi içerik) |
 | KAP ana sayfa / navigasyon | https://www.kap.org.tr/tr/ | ✅ Aktif |
 | BIST şirketler listesi | https://www.kap.org.tr/tr/bist-sirketler | ✅ Aktif |
 | Detaylı bildirim sorgu sayfası | https://www.kap.org.tr/tr/bildirim-sorgu | ✅ Aktif |
@@ -63,7 +63,7 @@ WebFetch:
 **Örnek 3: [HALKA AÇIK İŞTİRAK] şirket özeti (kısmi — JS-rendered)**
 ```
 WebFetch:
-  url: "https://www.kap.org.tr/tr/sirket-bilgileri/ozet/2400-petrokimya-petrokimya-holding-a-s"
+  url: "https://www.kap.org.tr/tr/sirket-bilgileri/ozet/<kap-kimliği>-<şirket-kısa-adı>"
   prompt: "Sayfada görünen [HALKA AÇIK İŞTİRAK] şirket bilgilerini listele: sermaye, sektör,
            son bildirimler, yönetim kurulu bilgileri."
 ```
@@ -203,4 +203,4 @@ Sonuç → reg-feed haftalık digest'e [Müvekkil]-[HALKA AÇIK İŞTİRAK] böl
 
 ---
 
-*Son güncelleme: 22.05.2026 — KAP URL yapısı güncellendi (Next.js App Router geçişi; alt sekme URL'leri 404, JSON API WAF engeli, search endpoint aktif). [HALKA AÇIK İŞTİRAK] ID düzeltildi: 1094 → 2400. MKK doğrudan API erişimi [Müvekkil] durumunda yok.*
+*Son güncelleme: 22.05.2026 — KAP URL yapısı güncellendi (Next.js App Router geçişi; alt sekme URL'leri 404, JSON API WAF engeli, search endpoint aktif). [HALKA AÇIK İŞTİRAK] kimliği güncellendi. MKK doğrudan API erişimi [Müvekkil] durumunda yok.*

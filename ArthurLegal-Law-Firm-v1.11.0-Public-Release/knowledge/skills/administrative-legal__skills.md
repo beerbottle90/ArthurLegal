@@ -1252,7 +1252,7 @@ Danıştay 13. Daire (temyiz)
 
 [Müvekkil] vertical entegrasyon profili Rekabet dikkatinde:
 - **[büyük enerji tesisi] (üst kademe)** + **[HALKA AÇIK İŞTİRAK] (orta kademe petrokimya)** + **[Müvekkil terminali] (lojistik)** + **[Müvekkil] Enerji Ticaret (dağıtım)** = baştan sona zincir kontrolü
-- **[TESİS LOKASYONU] ÖEB** içinde dikey entegre yapı
+- **[ÖZEL ENDÜSTRİ BÖLGESİ]** içinde dikey entegre yapı
 - **EPC tedarik zinciri** (yan kuruluşlardan tedarik)
 - **Doğal gaz dağıtım** ([DAĞITIM İŞTİRAKİ] pazar payı)
 

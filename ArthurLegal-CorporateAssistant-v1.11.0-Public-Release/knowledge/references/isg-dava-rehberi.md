@@ -126,7 +126,7 @@ tr_ictihat_ara(
 - **[RAFİNERİ]:** 10 milyon ton/yıl ham petrol işleme. Yüksek riskli (Seveso II direktif kapsamı eşdeğer Türk mevzuatı).
 - **[HALKA AÇIK İŞTİRAK]:** Petrokimya, etilen + propilen üretim. Yangın/patlama riski yüksek.
 - **[ŞİRKET ADI] Depolama / [KONTEYNER TERMİNAL] Terminal:** Yakıt depolama; yangın + çevre kirlilik riski.
-- **[ÖZEL ENDÜSTRİ BÖLGESİ]:** 1.453 hektar; çoklu tesis, kazada birden fazla şirket etki.
+- **[ÖZEL ENDÜSTRİ BÖLGESİ]:** çoklu tesis, kazada birden fazla şirket etki.
 
 ### Yerel mahkemeler
 - **[İşletme Yeri] Asliye Hukuk Mahkemesi**
@@ -139,8 +139,8 @@ tr_ictihat_ara(
 - İstanbul'dan büyük büro koordineli; günlük takip için yerel
 
 ### Sendika
-- **[SEKTÖR SENDİKASI] Sendikası** — [HALKA AÇIK İŞTİRAK] ana sendikası, agresif tutum
-- **Türk [SEKTÖR SENDİKASI]** — [RAFİNERİ] ana sendikası
+- **[SEKTÖR SENDİKASI]** — [HALKA AÇIK İŞTİRAK] ana sendikası, agresif tutum
+- **[İKİNCİ SEKTÖR SENDİKASI]** — [RAFİNERİ] ana sendikası
 - TİS müzakerelerinde geçmiş İSG davaları argüman
 
 ## In-house akış (İSG kazası sonrası, ilk 72 saat)

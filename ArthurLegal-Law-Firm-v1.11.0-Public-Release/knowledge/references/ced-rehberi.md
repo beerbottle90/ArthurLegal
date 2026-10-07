@@ -16,7 +16,7 @@
 | **ÇED olumlu/olumsuz** | Tam ÇED süreci | [RAFİNERİ] kapasite artırımı, yeni [HALKA AÇIK İŞTİRAK] hattı |
 | **Proje tanıtım dosyası (PTD)** | Küçük etkili proje | Tank, ek depo |
 | **ÇED muafiyeti** | Listede yok ise | — |
-| **Kümülatif etki değerlendirmesi** | Birden fazla proje birlikte | [TESİS LOKASYONU] ÖEB içi yeni yatırımlar |
+| **Kümülatif etki değerlendirmesi** | Birden fazla proje birlikte | [ÖZEL ENDÜSTRİ BÖLGESİ] içi yeni yatırımlar |
 
 ## Süreç akışı
 
@@ -37,13 +37,13 @@ Komisyon inceleme + bakanlık değerlendirme →
 - **[HALKA AÇIK İŞTİRAK]:** Yeni petrokimya hattı (etilen, propilen genişleme)
 - **[müvekkil terminali]:** Kapasite genişleme, yeni rıhtım
 - **[müvekkil depolama tesisi]:** Yeni tank, yeni boru hattı
-- **[TESİS LOKASYONU] ÖEB ortak altyapı:** Yol, su, atık su
+- **[ÖZEL ENDÜSTRİ BÖLGESİ] ortak altyapı:** Yol, su, atık su
 
 ### Risk faktörleri
 - **STK + yerel toplum** baskısı (basın etkili)
 - **Bakanlık komisyon değerlendirmesi** öznel
 - **Halk katılımı toplantısında** ihtilaf
-- **Kümülatif etki** — [TESİS LOKASYONU] ÖEB içinde tek tek projelerin değerlendirmesi ama toplamda büyük etki
+- **Kümülatif etki** — [ÖZEL ENDÜSTRİ BÖLGESİ] içinde tek tek projelerin değerlendirmesi ama toplamda büyük etki
 
 ## ÇED ret kararına dava — ⚠️ ÖZEL REJİM: İYUK m. 20/A İVEDİ YARGILAMA USULÜ
 

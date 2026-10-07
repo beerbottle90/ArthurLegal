@@ -96,7 +96,7 @@ Transfer pricing, ham petrol alım fiyatlandırması gibi konularda [İLİŞKİL
 - **Stockholm Chamber of Commerce (SCC)** — Bağımsız Devletler Topluluğu taraflarıyla uyuşmazlıklarda sık tercih edilen tarafsız forum
 - **İlgili İkili Yatırım Antlaşması** (BIT) — investor-state tahkim seçenek
 
-### [HALKA AÇIK İŞTİRAK] halka açık — KAP açıklama
+### [HALKA AÇIK İŞTİRAK] — KAP açıklama
 [HALKA AÇIK İŞTİRAK] büyük tahkim kararı durumunda KAP özel durum açıklaması.
 
 ### [BORU HATTI PROJESİ] hükümetlerarası anlaşma

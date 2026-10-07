@@ -1,6 +1,6 @@
 # İSG Davaları Rehberi – [TESİS LOKASYONU] Rafineri & Petrokimya Bağlamı
 
-> [Müvekkil] için yakıcı dava kategorisi. [TESİS LOKASYONU] kompleksindeki ölümlü/ciddi yaralanma kazalarında üçlü-paralel risk: cezai, tazminat, idari.
+> [Müvekkil] için yakıcı dava kategorisi. [TESİS LOKASYONU] tesislerindeki ölümlü/ciddi yaralanma kazalarında üçlü-paralel risk: cezai, tazminat, idari.
 
 ## Üçlü-paralel risk yapısı
 
@@ -125,8 +125,8 @@ tr_ictihat_ara(
 ### Tesis bilgisi (kamuya açık veri)
 - **[RAFİNERİ]:** 10 milyon ton/yıl ham petrol işleme. Yüksek riskli (Seveso II direktif kapsamı eşdeğer Türk mevzuatı).
 - **[HALKA AÇIK İŞTİRAK]:** Petrokimya, etilen + propilen üretim. Yangın/patlama riski yüksek.
-- **[müvekkil depolama tesisi] / Petlim Terminal:** Yakıt depolama; yangın + çevre kirlilik riski.
-- **[TESİS LOKASYONU] ÖEB:** 1.453 hektar; çoklu tesis, kazada birden fazla şirket etki.
+- **[müvekkil depolama tesisi] / [KONTEYNER TERMİNAL] Terminal:** Yakıt depolama; yangın + çevre kirlilik riski.
+- **[ÖZEL ENDÜSTRİ BÖLGESİ]:** çoklu tesis, kazada birden fazla şirket etki.
 
 ### Yerel mahkemeler
 - **[TESİS LOKASYONU] Asliye Hukuk Mahkemesi**
@@ -139,8 +139,8 @@ tr_ictihat_ara(
 - İstanbul'dan büyük büro koordineli; günlük takip için yerel
 
 ### Sendika
-- **Petrol-İş Sendikası** — [HALKA AÇIK İŞTİRAK] ana sendikası, agresif tutum
-- **Türk Petrol-İş** — [RAFİNERİ] ana sendikası
+- **[SEKTÖR SENDİKASI]** — [HALKA AÇIK İŞTİRAK] ana sendikası, agresif tutum
+- **[İKİNCİ SEKTÖR SENDİKASI]** — [RAFİNERİ] ana sendikası
 - TİS müzakerelerinde geçmiş İSG davaları argüman
 
 ## In-house akış (İSG kazası sonrası, ilk 72 saat)

@@ -111,12 +111,12 @@
 | **Rekabet Kurumu** | https://www.rekabet.gov.tr/tr/Sayfa/Kurul-kararlari | Enerji + petrokimya birleşme + dikey entegrasyon |
 | **KGK** | https://www.kgk.gov.tr | [HALKA AÇIK İŞTİRAK] bağımsız denetim |
 | **KVKK Kurulu** | https://www.kvkk.gov.tr/Icerik/4232/Kurul-Kararlari | Veri ihlal kararları, sektörel rehberler |
-| **Çevre, Şehircilik ve İklim Değişikliği Bakanlığı** | https://www.csb.gov.tr | ÇED, atık, emisyon — [TESİS LOKASYONU] kompleksi |
+| **Çevre, Şehircilik ve İklim Değişikliği Bakanlığı** | https://www.csb.gov.tr | ÇED, atık, emisyon — [TESİS LOKASYONU] tesisleri |
 | **ÇSGB** | https://www.csgb.gov.tr | İş izinleri (yabancı çalışan), 6331 ISG |
 | **MASAK** | https://www.masak.hmb.gov.tr | Yaptırım + AML rehberleri |
 | **TÜRKPATENT** | https://www.turkpatent.gov.tr | Marka/patent ilanları + İlanlar Bülteni |
-| **BTK** | https://www.btk.gov.tr | Millenicom, [Müvekkil] Fiber |
-| **Sanayi ve Teknoloji Bakanlığı** | https://www.sanayi.gov.tr | [TESİS LOKASYONU] ÖEB rejimi |
+| **BTK** | https://www.btk.gov.tr | [TELEKOM İŞTİRAK], [Müvekkil] Fiber |
+| **Sanayi ve Teknoloji Bakanlığı** | https://www.sanayi.gov.tr | [ÖZEL ENDÜSTRİ BÖLGESİ] rejimi |
 
 ### Uluslararası izleme (ArthurLegal MCP (`tr_`) kapsamı dışında)
 | Kaynak | URL | Etki |
@@ -134,6 +134,6 @@
 - 🟠 **TR İklim Kanunu tasarı** + **karbon vergisi rejimi**
 - 🟠 **KVKK m.9 yurt dışı aktarım** SCC + yeterlilik kararı duyuruları
 - 🟠 **[HALKA AÇIK İŞTİRAK] KAP açıklamaları** (kendi şirketimiz — içsel bilgi koordinasyonu)
-- 🟡 **6331 ISG yönetmelik değişiklikleri** ([TESİS LOKASYONU] kompleksi)
+- 🟡 **6331 ISG yönetmelik değişiklikleri** ([TESİS LOKASYONU] tesisleri)
 - 🟡 **TTK + SPK Kurumsal Yönetim** güncellemeleri
 - 🟢 **TÜRKPATENT** marka itiraz bültenleri (defansif tarama)

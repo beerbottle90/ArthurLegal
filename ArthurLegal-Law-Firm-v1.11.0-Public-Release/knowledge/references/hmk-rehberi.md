@@ -56,10 +56,10 @@
 - Ticari sözleşmeler: **İstanbul Anadolu/Çağlayan ATM**
 - Tahkim: **ISTAC İstanbul** (TL anlaşmazlık) veya **ICC Paris** (uluslararası)
 
-### [TESİS LOKASYONU] ÖEB tesisleri için
+### [ÖZEL ENDÜSTRİ BÖLGESİ] tesisleri için
 İşyeri mahkemesi (iş davaları): **[TESİS LOKASYONU] İş Mahkemesi**. Bedensel zarar tazminat davası ayrıca **Asliye Hukuk** (Karşıyaka veya Bergama).
 
-### [HALKA AÇIK İŞTİRAK] halka açık özel
+### [HALKA AÇIK İŞTİRAK] özel
 Yatırımcı davaları **İstanbul ATM** (Anadolu) — ortaklık merkezi. SPK uyuşmazlıkları **Danıştay 13. Daire**.
 
 ### Tahkim seçimi

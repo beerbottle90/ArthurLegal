@@ -8,8 +8,8 @@
 > kaynakları**, **(3) MCP erişilemezse WebFetch yedekleri.**
 >
 > **Durum:** ✅ Açık erişim — API anahtarı gerekmez.
-> **[enerji şirketi] neden gerekli?** [Azerbaycanlı enerji karşı tarafı] ile işlemler (ham petrol tedarik,
-> royalty, transfer fiyatlandırması, JV), 200+ Azerbaycanlı çalışan için iş hukuku,
+> **Neden gerekli?** Azerbaycanlı karşı taraflarla işlemler (ham petrol tedarik,
+> royalty, transfer fiyatlandırması, JV), Azerbaycan'da istihdam edilen personel için iş hukuku,
 > Türk şirketi ile Azerbaycanlı taraf arasındaki sözleşmelerde uygulanacak hukuk seçimi
 > ve ortak girişim yapıları Azerbaycan hukukunu doğrudan ilgilendirir.
 
@@ -210,7 +210,7 @@ https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/{id}/AZE-{id}.pdf
 
 ### Enerji sektörü odağı
 
-200+ Azerbaycanlı çalışan için NATLEX'teki kritik belgeler:
+Azerbaycan'da istihdam edilen personel için NATLEX'teki kritik belgeler:
 - **İş Kanunu (Əmək Məcəlləsi)** — işe alım, fesih, kıdem
 - **Sosyal Sigorta Kanunu** — AZ vatandaşı çalışan sosyal güvenlik hakları
 - **Yabancı Çalışan Kanunu** — eğer AZ'da çalıştırılan TR vatandaşı varsa
@@ -273,11 +273,11 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 ## Azerbaycan hukuku kullanım disiplini
 
-1. **[Azerbaycanlı enerji karşı tarafı] ile sözleşmeler** (ham petrol alım-satım, royalty, hizmet
+1. **[Azerbaycanlı karşı taraf] ile sözleşmeler** (ham petrol alım-satım, royalty, hizmet
    ücretleri) → Önce `governing-law` maddesini kontrol et. AZ hukuku seçildiyse
    → e-qanun.az (Medeni Kanun, Vergi Kanunu ilgili maddeleri).
 
-2. **200+ Azerbaycanlı çalışan** → Azerbaycan'da istihdam edilenlerin hakları için
+2. **Azerbaycan'da istihdam edilen personel** → Azerbaycan'da istihdam edilenlerin hakları için
    NATLEX/ILO (Əmək Məcəlləsi). Türkiye'de çalışıyorlarsa Türk iş hukuku geçerli.
 
 3. **Enerji sektörü düzenlemeleri** → minenergy.gov.az/en/qanunlar (EN)
@@ -286,7 +286,7 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 4. **Anayasal haklar / mülkiyet sorunu** → CODICES (EN özetler güvenilir) →
    Gerekirse constcourt.gov.az.
 
-5. **Dil notu:** [Azerbaycanlı enerji karşı tarafı] ile yazışma → `SYSTEM_PROMPT.md`: "AZ/EN ikili dil."
+5. **Dil notu:** [Azerbaycanlı karşı taraf] ile yazışma → `SYSTEM_PROMPT.md`: "AZ/EN ikili dil."
    Azerbaycan mevzuatından alıntı kullanılıyorsa AZ orijinal + EN çevirisi birlikte.
 
 ---

@@ -112,7 +112,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 ### Örnek 3: [TESİS LOKASYONU] Özel Endüstri Bölgesi (ÖEB) — vendor sözleşmesi
 
-**Senaryo:** [HALKA AÇIK İŞTİRAK], [TESİS LOKASYONU] ÖEB'de bir bakım hizmeti vendor'ı ile 5M TL'lik sözleşme.
+**Senaryo:** [HALKA AÇIK İŞTİRAK], [ÖZEL ENDÜSTRİ BÖLGESİ] içinde bir bakım hizmeti vendor'ı ile 5M TL'lik sözleşme.
 
 **Damga:**
 - 5M TL × 0,00948 = **47.400 TL** (nispi vergi — nüsha sayısı damgayı çoğaltmaz, DVK m. 5)

@@ -28,7 +28,7 @@
 | Bayilik | (akaryakıt istasyonları varsa) |
 | Doğal gaz dağıtım | [DAĞITIM İŞTİRAKİ] |
 | Doğal gaz toptan satış | [ŞİRKET ADI] Enerji Ticaret |
-| **Elektrik üretim** | **[ELEKTRİK SANTRALİ]** (870 MW kombine çevrim, Şubat 2025) |
+| **Elektrik üretim** | **[ELEKTRİK SANTRALİ]** (kombine çevrim santrali) |
 | Boru hattı (iletim) | [BORU HATTI PROJESİ] (özel rejim) |
 
 ## [ŞİRKET ADI] EPDK dialog modeli (proaktif)
@@ -64,7 +64,7 @@
 - Üretim duruşu bildirimleri
 - Halka açık raporlama uyumu (SPK + KAP paralel)
 
-### [ELEKTRİK SANTRALİ] (yeni — Şubat 2025)
+### [ELEKTRİK SANTRALİ] (yeni santral)
 - 6446 EPK kapsamında elektrik üretim lisansı
 - Şubat 2025 devir sonrası **6 adım** EPDK süreci (lisans transferi)
 - Detay: `references/elektrik-uretim-istiraki-rehberi.md`

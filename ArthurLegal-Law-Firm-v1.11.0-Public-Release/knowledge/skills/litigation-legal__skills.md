@@ -115,7 +115,7 @@ ArthurLegal MCP (`tr_`)'den HMK ve görevli mahkeme yönetmeliklerini çek, atı
 - **Aktif husumet:** Davayı açan taraf gerçekten davacı sıfatına sahip mi?
 - **Pasif husumet:** Davalı olarak [Müvekkil] mi, yoksa bir bağlı şirket ([HALKA AÇIK İŞTİRAK], [RAFİNERİ], [Müvekkil] Enerji Ticaret, vs.)?
 - **Tüzel kişilik perdesi:** Karşı taraf ana ortaktan değil de bağlı şirketten talepte bulunabilir mi?
-- **[TESİS LOKASYONU] ÖEB özelliği:** [TESİS LOKASYONU] ÖEB içindeki tesisler ayrı tüzel kişiler — husumet doğru tespit edilmeli
+- **[ÖZEL ENDÜSTRİ BÖLGESİ] özelliği:** [ÖZEL ENDÜSTRİ BÖLGESİ] içindeki tesisler ayrı tüzel kişiler — husumet doğru tespit edilmeli
 
 Yanlış husumet → davanın reddi (taraf değişikliği, ek dava açma, zamanaşımı riski).
 
@@ -570,7 +570,7 @@ Bu talep dilekçesinin **taslağını üret** (kullanıcıdan dosya bilgisi al �
 **sektöre-özel:**
 - Şirket çalışanı tanıklık edebilir mi? → Evet; davada taraf olmayan herkes tanık olabilir (HMK m. 240/1); işveren bağımlılığı/yarar tanığa itiraz sebebi (m. 255) ve beyan hâkimce serbestçe değerlendirilir (m. 198) — m. 248 yalnız yakınlara tanıklıktan çekinme hakkı verir
 - Yabancı uyruklu üst yönetici tanıklığı → tercüman gerekli (HMK m. 263), KEP/Apostille gerekebilir
-- Sendika temsilcisi tanıklığı → Petrol-İş ile koordinasyon
+- Sendika temsilcisi tanıklığı → [SEKTÖR SENDİKASI] ile koordinasyon
 ```
 
 ### Bilirkişi (HMK m. 266)
@@ -1013,7 +1013,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 
 - [ ] **Mağdur ailesi ile İK + İletişim koordineli** — taziye + acil destek (PR ve hukuki risk dengeli)
 - [ ] **Diğer çalışan ifadeleri** — ısrarcı tanık ifadesi tutarsızlık doğurabilir, **avukat eşliğinde** verilmeli
-- [ ] **Sendika ile koordinasyon** (Petrol-İş başta) — TİS hükümleri + çalışan hakları
+- [ ] **Sendika ile koordinasyon** ([SEKTÖR SENDİKASI] başta) — TİS hükümleri + çalışan hakları
 - [ ] Mağdur ailesinin **kendi vekili yoksa**, "size avukat öneririz" deme — etik sorun + savunmada zayıflık
 
 #### 7. Belge / yazışma kontrol
@@ -1569,7 +1569,7 @@ tr_ictihat_ara(
 
 - [ ] **Basına yansıma riski:** Dava devam ederse duruşma açık, basın takibi olabilir. Sulh ise gizlilik klozu eklenebilir.
 - [ ] **Çalışan algısı (İSG davasında):** Düşük sulh = "şirket çalışana değer vermiyor" algısı; yüksek sulh = "şirket sorumluluk kabul ediyor" algısı.
-- [ ] **Sendika etkisi (Petrol-İş):** TİS müzakerelerinde geçmiş davalar argüman.
+- [ ] **Sendika etkisi ([SEKTÖR SENDİKASI]):** TİS müzakerelerinde geçmiş davalar argüman.
 - [ ] **Yatırımcı algısı ([HALKA AÇIK İŞTİRAK]):** Yüksek tutarlı sulh KAP açıklaması gerektirebilir, hisse fiyatına etki.
 - [ ] **Emsal oluşturma riski:** Bu sulhten sonra benzer davalar açılır mı? (örn. [TESİS LOKASYONU]'da bir çalışana 5M TL sulh = diğer çalışan davaları için baseline)
 - [ ] **Düzenleyici dikkat:** EPDK / Çevre Bakanlığı / SPK dikkatini çekebilir mi?

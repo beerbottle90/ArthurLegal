@@ -19,7 +19,7 @@
 | Daire | Kapsam | [Müvekkil] ilgili |
 |---|---|---|
 | **5. Daire** | Genel idari uyuşmazlık | Memur statü, ÇSGB yabancı çalışan izni (Azerbaycanlı yöneticiler) |
-| **8. Daire** | Belediye / imar / yapı | [TESİS LOKASYONU] ÖEB bağlantılı yatırımlar |
+| **8. Daire** | Belediye / imar / yapı | [ÖZEL ENDÜSTRİ BÖLGESİ] bağlantılı yatırımlar |
 | **10. Daire** | **Çevre + doğal kaynak** | **[TESİS LOKASYONU] İSG/çevre cezaları temyiz** — birincil önemli |
 | **13. Daire** | **EPDK + Rekabet + BDDK + SPK + KGK + KİK** | **[Müvekkil] için TEMEL** — enerji + finansal düzenleyici |
 | **14. Daire** | **ÇED + imar/çevre ek** | **[TESİS LOKASYONU] ÇED** — birincil |

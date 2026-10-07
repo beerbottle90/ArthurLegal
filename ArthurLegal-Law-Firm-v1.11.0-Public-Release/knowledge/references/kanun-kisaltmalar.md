@@ -45,7 +45,7 @@
 | **5346** | Yenilenebilir Enerji Kaynakları K. | 5346 |
 | **4628** | EPDK Teşkilat K. (eski Elektrik Piyasası K.; hâlâ yürürlükte) | 4628 |
 | **2872** | Çevre Kanunu | 2872 |
-| **4737** | Endüstri Bölgeleri Kanunu ([TESİS LOKASYONU] ÖEB için) | 4737 |
+| **4737** | Endüstri Bölgeleri Kanunu ([ÖZEL ENDÜSTRİ BÖLGESİ] için) | 4737 |
 | **7417** | Elektrik Piyasası K. m.7'ye depolama eklemesi (torba K.) | 7417 |
 | **7406** | Atık Yönetimi K. (2023) (doğrulanmadı — bu numarada kanun bulunamadı) | 7406 |
 | **[BORU HATTI PROJESİ] HHA** | [BORU HATTI PROJESİ] Hükümetlerarası Anlaşma + Ev Sahibi Hükümet Anlaşması | — |

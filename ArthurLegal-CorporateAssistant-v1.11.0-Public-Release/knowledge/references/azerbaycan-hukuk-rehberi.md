@@ -209,7 +209,7 @@ https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/{id}/AZE-{id}.pdf
 
 ### [ŞİRKET ADI] odağı
 
-200+ Azerbaycanlı çalışan için NATLEX'teki kritik belgeler:
+Azerbaycan'da istihdam edilen personel için NATLEX'teki kritik belgeler:
 - **İş Kanunu (Əmək Məcəlləsi)** — işe alım, fesih, kıdem
 - **Sosyal Sigorta Kanunu** — AZ vatandaşı çalışan sosyal güvenlik hakları
 - **Yabancı Çalışan Kanunu** — eğer AZ'da çalıştırılan TR vatandaşı varsa
@@ -276,7 +276,7 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
    ücretleri) → Önce `governing-law` maddesini kontrol et. AZ hukuku seçildiyse
    → e-qanun.az (Medeni Kanun, Vergi Kanunu ilgili maddeleri).
 
-2. **200+ Azerbaycanlı çalışan** → Azerbaycan'da istihdam edilenlerin hakları için
+2. **Azerbaycan'da istihdam edilen personel** → Azerbaycan'da istihdam edilenlerin hakları için
    NATLEX/ILO (Əmək Məcəlləsi). Türkiye'de çalışıyorlarsa Türk iş hukuku geçerli.
 
 3. **Enerji sektörü düzenlemeleri** → minenergy.gov.az/en/qanunlar (EN)

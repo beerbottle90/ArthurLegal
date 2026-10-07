@@ -17,7 +17,7 @@ Yönetmeliğin Ek-1'inde tehlikeli madde miktarı eşiklerine göre:
 | Kategori | Tanım | [ŞİRKET ADI] örneği |
 |---|---|---|
 | **Alt Seviye Kuruluş** | Eşik aşılmış ama üst seviyenin altında | Küçük depolama tesisi |
-| **Üst Seviye Kuruluş** | Yüksek miktarlı tehlikeli madde — büyük tesis | **[RAFİNERİ], [HALKA AÇIK İŞTİRAK] petrokimya, [ŞİRKET ADI] Terminal (Petlim), [ŞİRKET ADI] Depolama** |
+| **Üst Seviye Kuruluş** | Yüksek miktarlı tehlikeli madde — büyük tesis | **[RAFİNERİ], [HALKA AÇIK İŞTİRAK] petrokimya, [ŞİRKET ADI] Terminal ([KONTEYNER TERMİNAL]), [ŞİRKET ADI] Depolama** |
 
 Üst Seviye yükümlülükleri çok daha geniş.
 
@@ -67,7 +67,7 @@ Yönetmeliğin Ek-1'inde tehlikeli madde miktarı eşiklerine göre:
 - Üst Seviye Kuruluş (etilen, propilen, naftalin, çözücüler)
 - Tek başına BKÖP + GYS; tutarlılık [RAFİNERİ] ile koordineli
 
-### [ŞİRKET ADI] Depolama / Petlim Terminal
+### [ŞİRKET ADI] Depolama / [KONTEYNER TERMİNAL] Terminal
 - Üst Seviye (yakıt depolama)
 - Liman / boru hattı interface ek koordinasyon
 

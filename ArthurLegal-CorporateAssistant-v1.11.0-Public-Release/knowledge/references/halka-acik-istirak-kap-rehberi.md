@@ -176,7 +176,7 @@ tr_mevzuat_ara(query="içsel bilgi", types=["TEBLIGLER"], search_in="fulltext")
 tr_mevzuat_ara(query="önemli işlemler", types=["TEBLIGLER"], search_in="fulltext")
 ```
 
-KAP açıklamaları için: https://www.kap.org.tr/tr/sirket-bilgileri/ozet/2400-[halka-acik-istirak]-petrokimya-holding-a-s
+KAP açıklamaları için: https://www.kap.org.tr/tr/sirket-bilgileri/ozet/<kap-kimliği>-<şirket-kısa-adı>
 
 ---
 
