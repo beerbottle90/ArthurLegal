@@ -468,6 +468,30 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.6.1 — AI agent go-live review; Corporate Assistant and Law Firm 1.11.0, Academician 1.1.2 (2026-10-07)
+
+- **AI agent go-live review.** A new skill in the Corporate Assistant and Law Firm packages,
+  `/regulatory-legal:ai-ajan-onayi`, for the moment a business unit or a client wants to put an AI agent or AI
+  application into use. It places the agent on one of five autonomy steps, from a chat assistant to an agent that runs
+  end to end, and checks six minimum conditions: trusted sources, a named owner, least privilege, outputs traceable to
+  their source, basic monitoring and cost tracking. It then screens Turkish data protection law (including transfers
+  abroad after Law No. 7499 and the notification of standard contracts), the vendor contract and, where there is an EU
+  link, the AI Act timetable as amended by Regulation (EU) 2026/1744, and asks for a pilot before any return-on-investment
+  claim is accepted. The result is one of four decisions: suitable, suitable with conditions, limited to a pilot, not
+  suitable. It draws on the Turkish Data Protection Authority's paper on agentic AI (February 2026); every article in its
+  map was retrieved with the tools on 7 October 2026.
+- **Case-number search fixed.** The case-law guide in the Law Firm, Corporate Assistant and Academician packages taught
+  searching for a case number with a slash (`"2023/1234"`), which the Bedesten search rejects ("only letters and digits
+  are allowed"). It now uses a space (`"2024 4785"`), as the Courthouse package already did; the guide is the same in all
+  four packages.
+- **Academician treats documents as data.** Instructions found inside an uploaded article, preprint, thesis or PDF, or in
+  fetched content, are handled as data and never followed; a hidden instruction aimed at AI is reported to the user as an
+  ethics risk. The other three packages already had this rule.
+- **Names removed from examples.** Person names left in escalation and coordination examples were replaced with role
+  placeholders, in the current packages and in the archived versions.
+
+The installer itself changes only its version number; installed copies pick up the new packages on their own.
+
 ## Setup 2.6.0 — ArthurLegal on the Mac (2026-10-06)
 
 - **A Mac installer.** `ArthurLegal-Kurulum.pkg` installs the same packages and modules as the Windows installer,
