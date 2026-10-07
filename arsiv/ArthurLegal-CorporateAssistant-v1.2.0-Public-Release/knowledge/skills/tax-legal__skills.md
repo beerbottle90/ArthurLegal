@@ -959,8 +959,8 @@ mcp__claude_ai_Yarg_MCP__search_bedesten_unified(
 | Tutar | Yetkili |
 |---|---|
 | < 1M TL | Mali İşler Müdürü + Hukuk Counsel |
-| 1M - 10M TL | CFO (Hasanov) + Hukuk Direktörü |
-| 10M - 100M TL | CFO + CEO (Ibadov) |
+| 1M - 10M TL | CFO ([CFO ADI]) + Hukuk Direktörü |
+| 10M - 100M TL | CFO + CEO ([CEO ADI]) |
 | > 100M TL | CEO + YK |
 
 **Tutardan bağımsız eskalasyon:**

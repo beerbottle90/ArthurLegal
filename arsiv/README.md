@@ -9,6 +9,8 @@ they receive no updates. Current versions live at the repository root. To instal
 [download section](https://github.com/beerbottle90/ArthurLegal#indir) on the main page or the current
 package's `KURULUM.md` / `INSTALLATION.md`.
 
+**Tek istisna (07.10.2026):** eski sürümlerin örneklerinde kalan kişi adları rol yer tutucusuna çevrildi (`[CLCO ADI]`, `[CEO ADI]` gibi); başka hiçbir şey değişmedi. · **Single exception (07.10.2026):** person names left in examples of earlier versions were replaced with role placeholders; nothing else changed.
+
 | Paket · Package | Arşivdeki sürümler · Archived versions |
 |---|---|
 | Hukuk Bürosu · Law Firm | [v1.0.0](ArthurLegal-Law-Firm-v1.0.0-Public-Release/) · [v1.0.1](ArthurLegal-Law-Firm-v1.0.1-Public-Release/) · [v1.2.0](ArthurLegal-Law-Firm-v1.2.0-Public-Release/) · [v1.3.1](ArthurLegal-Law-Firm-v1.3.1-Public-Release/) · [v1.4.0](ArthurLegal-Law-Firm-v1.4.0-Public-Release/) · [v1.5.0](ArthurLegal-Law-Firm-v1.5.0-Public-Release/) · [v1.6.0](ArthurLegal-Law-Firm-v1.6.0-Public-Release/) · [v1.6.1](ArthurLegal-Law-Firm-v1.6.1-Public-Release/) · [v1.6.2](ArthurLegal-Law-Firm-v1.6.2-Public-Release/) · [v1.7.0](ArthurLegal-Law-Firm-v1.7.0-Public-Release/) · [v1.8.0](ArthurLegal-Law-Firm-v1.8.0-Public-Release/) · [v1.8.1](ArthurLegal-Law-Firm-v1.8.1-Public-Release/) · [v1.9.0](ArthurLegal-Law-Firm-v1.9.0-Public-Release/) · [v1.9.1](ArthurLegal-Law-Firm-v1.9.1-Public-Release/) · [v1.10.0](ArthurLegal-Law-Firm-v1.10.0-Public-Release/) · [v1.10.1](ArthurLegal-Law-Firm-v1.10.1-Public-Release/) |

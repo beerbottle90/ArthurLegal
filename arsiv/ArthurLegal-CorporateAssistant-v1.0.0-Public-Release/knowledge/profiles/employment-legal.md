@@ -87,7 +87,7 @@ Bkz. `commercial-legal.md`. Ek olarak:
 
 ## Eskalasyon
 
-- 🔴 İşe iade riski yüksek fesih, **üretim kompleksinde ölümlü-yaralanmalı kaza (6331 ISG)**, sendika ([Sektör Sendikası]) toplu eylem talebi, **[Halka Açık İştirak]'i etkileyebilecek olay (KAP açıklama riski)** → Hukuk, Uyum ve Kurumsal Yönetişim Başkanı ([CLCO]) + İK Başkanı (Mammadova)
+- 🔴 İşe iade riski yüksek fesih, **üretim kompleksinde ölümlü-yaralanmalı kaza (6331 ISG)**, sendika ([Sektör Sendikası]) toplu eylem talebi, **[Halka Açık İştirak]'i etkileyebilecek olay (KAP açıklama riski)** → Hukuk, Uyum ve Kurumsal Yönetişim Başkanı ([CLCO]) + İK Başkanı ([İK BAŞKANI ADI])
 - 🟠 ≥30 işçi sınıfında fesih, taciz/mobbing iddiası, KVKK çalışan veri ihlali, **yabancı yönetici çalışma izni yenileme/iptal riski** → Counsel + İK Direktörü
 - 🟡 Standart fesih, ihbar süresi hesabı, izin uyuşmazlığı, kıdem hesabı → Sözleşmeler/İK yöneticisi
 

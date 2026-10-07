@@ -79,7 +79,7 @@
 - **Compliance Direktörü [UYUM DİREKTÖRÜ]** — EPDK ile genel ilişki sahibi
 - **Regulatory Compliance Manager [REGULATORY COMPLIANCE MÜDÜRÜ]** — günlük EPDK dosyaları
 - **Senior Legal Counsel** ([HUKUKİ DİREKTÖR 1]/[HUKUKİ DİREKTÖR 2] ekipleri) — hukuki argümantasyon
-- **İlgili iş birimi başkanı** (Mirzayev rafineri/[petrokimya iştiraki]; İbrahimov doğal gaz) — operasyonel
+- **İlgili iş birimi başkanı** ([İŞ BİRİMİ BAŞKANI] rafineri/[petrokimya iştiraki]; [İŞ BİRİMİ BAŞKANI] doğal gaz) — operasyonel
 - **CLCO ([CLCO ADI])** — kritik politika kararları imzası
 
 ## TR Legal MCP

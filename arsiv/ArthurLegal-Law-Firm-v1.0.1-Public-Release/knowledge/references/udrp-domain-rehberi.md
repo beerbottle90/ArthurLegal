@@ -30,7 +30,7 @@ Sahte domain (örn. `[sirket]-akaryakit.com`) tespit edildiğinde **3 ayrı huku
 - [ ] **Tam ekran görüntüleri:** Tüm sayfalar (anasayfa, iletişim, ödeme, bayi başvurusu) — Adobe PDF kayıt
 - [ ] **Ödeme/iletişim bilgisi tespit:** IBAN, telefon, e-posta — sahtekarın izleri
 - [ ] **Şikayet taraması:** şikayetvar.com, sikayetonline, sosyal medya — gerçek mağdur var mı?
-- [ ] **İletişim Başkanlığı (Yusifov) ön-bilgi:** Basına çıkmış mı?
+- [ ] **İletişim Başkanlığı ([İLETİŞİM BAŞKANI ADI]) ön-bilgi:** Basına çıkmış mı?
 
 ### ⏰ İlk 24 saat
 
@@ -60,7 +60,7 @@ Sahte domain (örn. `[sirket]-akaryakit.com`) tespit edildiğinde **3 ayrı huku
 
 #### Resmi açıklama
 - Şirket resmi web + sosyal medya: "Bu site Şirket ile bağlantılı değildir. Resmi bayilerimiz [sirket].com.tr'den teyit edilebilir. Ödeme YAPMAYIN."
-- İletişim Başkanlığı (Yusifov) ile koordineli — kategorik açık mesaj
+- İletişim Başkanlığı ([İLETİŞİM BAŞKANI ADI]) ile koordineli — kategorik açık mesaj
 
 ### ⏰ İlk 1 hafta
 
@@ -125,7 +125,7 @@ Tek bir sahte domain'le yetinmemek için:
 |---|---|
 | Registrar abuse + 5651 m. 9 başvurusu | Senior Legal Counsel ([Kullanıcı]) |
 | Suç duyurusu hazırlık + savcılığa sunum | Counsel + [Hukuk Direktörü A] (Direktör) imza |
-| Resmi açıklama içeriği | Counsel + Yusifov (İletişim) + [Hukuk Direktörü A] onay |
+| Resmi açıklama içeriği | Counsel + [İLETİŞİM BAŞKANI ADI] (İletişim) + [Hukuk Direktörü A] onay |
 | UDRP başvurusu (dış avukatla) | [Hukuk Direktörü A] + [CLCO] (CLCO) bilgi (tutar < 50K TL) |
 | SMK m. 30 tazminat dava açma | [CLCO] onay (litigation eskalasyon matriksi) |
 | KVKK Kurulu ihbarı | DPO [DPO] + [Uyum Direktörü] (Compliance) |

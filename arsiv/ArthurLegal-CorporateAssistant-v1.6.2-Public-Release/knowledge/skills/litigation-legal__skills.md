@@ -978,8 +978,8 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | Saat | Kim haberdar olmalı | Nasıl |
 |---|---|---|
 | 0-15 dk | Tesis müdürü, ISG uzmanı, HSE Başkanı | Telefon |
-| 15-30 dk | İş Birimi Başkanı (Mirzayev — rafineri/[petrokimya iştiraki]; veya İbrahimov — doğal gaz) | Telefon |
-| 30-60 dk | **Hukuk Direktörü** (Group GC) → **Hukuk Başkanı (Ismayilbayli)** → **CEO (Ibadov)** | Telefon zinciri |
+| 15-30 dk | İş Birimi Başkanı ([İŞ BİRİMİ BAŞKANI] — rafineri/[petrokimya iştiraki]; veya [İŞ BİRİMİ BAŞKANI] — doğal gaz) | Telefon |
+| 30-60 dk | **Hukuk Direktörü** (Group GC) → **Hukuk Başkanı ([HUKUK BAŞKANI ADI])** → **CEO ([CEO ADI])** | Telefon zinciri |
 | 60-90 dk | İletişim Başkanlığı ([İLETİŞİM YÖNETİCİSİ]) — basın hazırlık | Telefon + brief |
 | 90 dk - 2 saat | Compliance + Yatırımcı İlişkileri ([HALKA AÇIK İŞTİRAK] ise) | E-posta + telefon |
 

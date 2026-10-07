@@ -992,7 +992,7 @@ ictihat_ara(
 | Tutar | Yetkili |
 |---|---|
 | < 1M TL | Mali İşler Müdürü + Hukuk Counsel |
-| 1M - 10M TL | CFO (Hasanov) + Hukuk Direktörü |
+| 1M - 10M TL | CFO ([CFO ADI]) + Hukuk Direktörü |
 | 10M - 100M TL | CFO + CEO |
 | > 100M TL | CEO + YK |
 

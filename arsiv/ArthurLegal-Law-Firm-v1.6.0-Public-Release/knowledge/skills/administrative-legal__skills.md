@@ -381,7 +381,7 @@ Yukarıda açıklanan görüşümüzün dikkate alınmasını ve [düzenleme] ta
 Tarih: GG.AA.YYYY
 
 [Müvekkil]
-[Yetkili imza — Compliance Direktörü [Uyum Direktörü] veya CLCO Shahin Ismayılbaylı]
+[Yetkili imza — Compliance Direktörü [Uyum Direktörü] veya CLCO [CLCO ADI]]
 
 Ekler:
 1. Operasyonel etki analizi
@@ -394,8 +394,8 @@ Ekler:
 - **Hukuk:** Senior Legal Counsel — hukuki argümantasyon hazırlar
 - **Compliance:** [Uyum Direktörü] + [Compliance Manager] — düzenleyici çerçeve uzmanlığı, EPDK ile ilişki
 - **İş birimi:** [İş Birimi Başkanı] veya [Doğal Gaz İş Birimi Başkanı] — operasyonel detay
-- **Mali İşler:** Hasanov ekibi (CFO) — mali etki rakamı
-- **Onay:** CLCO (Ismayılbaylı) imzalı veya yetkisi devrettiği Direktör
+- **Mali İşler:** CFO ekibi ([CFO ADI]) — mali etki rakamı
+- **Onay:** CLCO ([CLCO ADI]) imzalı veya yetkisi devrettiği Direktör
 
 ### 5. Takip
 
@@ -1282,7 +1282,7 @@ Rekabet Kurulu kararları **bağlayıcı emsal** değil ama Kurulun tutarlılı�
 
 ## müvekkil koordinasyon
 
-- **CLCO (Ismayılbaylı)** + dış rekabet avukatı 24h
+- **CLCO ([CLCO ADI])** + dış rekabet avukatı 24h
 - **CEO ([CEO])** — büyük tutar / stratejik için
 - **İletişim ([İletişim Başkanlığı])** — basın etkili olabilir
 - **halka açık iştirak ilgili ise** → KAP açıklama

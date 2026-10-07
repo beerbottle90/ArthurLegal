@@ -141,7 +141,7 @@ ictihat_ara(
 
 **İletişim Başkanlığı:** [İLETİŞİM BAŞKANI] — basın ve sosyal medya etkili olacaksa.
 
-**İlgili iş birimi:** Mirzayev (rafineri/[petrokimya iştiraki]) — operasyonel etki bilgisi.
+**İlgili iş birimi:** [İŞ BİRİMİ BAŞKANI] (rafineri/[petrokimya iştiraki]) — operasyonel etki bilgisi.
 
 ## Çıktı
 
@@ -396,8 +396,8 @@ Ekler:
 
 - **Hukuk:** Senior Legal Counsel — hukuki argümantasyon hazırlar
 - **Compliance:** [UYUM DİREKTÖRÜ] + [REGULATORY COMPLIANCE MÜDÜRÜ] — düzenleyici çerçeve uzmanlığı, EPDK ile ilişki
-- **İş birimi:** Mirzayev (rafineri/[petrokimya iştiraki]) veya İbrahimov (doğal gaz) — operasyonel detay
-- **Mali İşler:** Hasanov ekibi (CFO) — mali etki rakamı
+- **İş birimi:** [İŞ BİRİMİ BAŞKANI] (rafineri/[petrokimya iştiraki]) veya [İŞ BİRİMİ BAŞKANI] (doğal gaz) — operasyonel detay
+- **Mali İşler:** CFO ekibi ([CFO ADI]) — mali etki rakamı
 - **Onay:** CLCO ([CLCO ADI]) imzalı veya yetkisi devrettiği Direktör
 
 ### 5. Takip
@@ -425,7 +425,7 @@ Bazı görüşler **sektör koalisyonu** halinde (Türkiye Petrolleri, Tüpraş,
 - **Hedef:** [Tebliğ değişikliği / Kurul karar etkisi / Yorum alma / Lisans şart revizyonu]
 - **Kaynaklar:** Yarg MCP (Danıştay 13. [N]); Mevzuat MCP
 - **Compliance koordinasyon:** [UYUM DİREKTÖRÜ] + [REGULATORY COMPLIANCE MÜDÜRÜ] ✓/⚠
-- **İş birimi koordinasyon:** [Mirzayev/İbrahimov]
+- **İş birimi koordinasyon:** [İŞ BİRİMİ BAŞKANI]
 - **Mali etki:** [TL]
 - **Sektör koalisyon olası:** [evet/hayır]
 - **Reviewer bekleyen:** N adet
@@ -1292,7 +1292,7 @@ Rekabet Kurulu kararları **bağlayıcı emsal** değil ama Kurulun tutarlılı�
 ## [ŞİRKET ADI] koordinasyon
 
 - **CLCO ([CLCO ADI])** + dış rekabet avukatı 24h
-- **CEO (Ibadov)** — büyük tutar / stratejik için
+- **CEO ([CEO ADI])** — büyük tutar / stratejik için
 - **İletişim ([İLETİŞİM YÖNETİCİSİ])** — basın etkili olabilir
 - **[HALKA AÇIK İŞTİRAK] ilgili ise** → KAP açıklama
 - **Compliance ([UYUM DİREKTÖRÜ])** — rekabet uyumu kapsamı
