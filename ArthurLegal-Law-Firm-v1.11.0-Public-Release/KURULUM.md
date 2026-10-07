@@ -333,8 +333,10 @@ Günlük kullanım, kırmızı hat, sızıntı denetimi ve sorun giderme: [ARTHU
 
 Yaptırım taraması ve KYC için:
 1. [opensanctions.org](https://www.opensanctions.org/) → API key edinin
-2. Claude.ai → Project Settings → **Environment Variables**
-3. `OPENSANCTIONS_API_KEY` = `[API key]`
+2. Anahtarı `OPENSANCTIONS_API_KEY` ortam değişkenine koyun (Claude Code: `~/.claude/settings.json` → `env` bloğu,
+   ya da işletim sisteminin ortam değişkeni). Anahtarı pakete, proje dosyalarına veya sohbete yazmayın.
+3. API çağrısı kabuk komutu (`curl`) gerektirir, bu yüzden Claude Code'da çalışır. claude.ai Projects'te anahtarsız
+   OpenSanctions web araması kullanılır. Ayrıntı: `knowledge/references/opensanctions-rehberi.md`.
 
 ---
 
@@ -377,6 +379,8 @@ Kullanmayacağınız pratik alanların cold-start'larını atlamanız sorun değ
 |---|---|
 | `/firm-operations:new-client-intake` | Yeni müvekkil ön sohbet sonrası intake |
 | `/firm-operations:conflict-check` | Çıkar çatışması taraması |
+| `/firm-operations:masak-kontrol` → `sanctions-check` → `kvkk-aydinlatma` → `fee-agreement` → `vekalet-sablon` → `matter-open` | Yeni müvekkil zincirinin sonraki adımları (intake çıktısı sırayı verir) |
+| `/firm-operations:monthly-billing` | Aylık ücret ve tahsilat takibi |
 | `/commercial-legal:nda-review` | NDA inceleme |
 | `/litigation-legal:case-intake` | Dava dosyası açma |
 | `/criminal-defense:cmk-gorev-atama` | CMK atama yönetimi |

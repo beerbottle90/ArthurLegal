@@ -1,6 +1,6 @@
 # Corporate Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/corporate-advisory:cold-start-interview` ile doldurulur.*
+*Bu dosya `/corporate-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -49,8 +49,8 @@
 |---|---|---|
 | **GK çağrı (anonim)** | TTK m. 414 | İlan + KEP + posta; gündem hazır olmalı |
 | **GK çağrı (limited)** | TTK m. 617 | İlan ZORUNLU değil, KEP yeterli |
-| **YK karar şekli** | TTK m. 390 | Toplantı / sirküler; sirküler kararı **oybirliği** ister |
-| **Pay devri (anonim — nama yazılı)** | TTK m. 491 | YK onayı şart; esas sözleşmeden bağlanabilir |
+| **YK karar şekli** | TTK m. 390 | Toplantı / sirküler; sirküler kararda öneri **tüm üyelere** yapılmalı, onay için üye tam sayısının **çoğunluğu** yeterli (oybirliği şart değil) |
+| **Pay devri (anonim — nama yazılı)** | TTK m. 491 | Bedeli ödenmemiş paylarda YK onayı şart (kanuni sınırlama); ödenmiş paylarda ancak esas sözleşmeyle sınırlanabilir |
 | **Pay devri (limited)** | TTK m. 595 | Genel kurul onayı şart (% 50+) + noter |
 | **Sermaye artırımı** | TTK m. 456-472 | Rüçhan hakkı, taahhüt, ödeme, tescil |
 | **Birleşme** | TTK m. 134-158 | Birleşme sözleşmesi + raporlar + GK + tescil + alacaklı koruma |
@@ -69,7 +69,7 @@
 ## Küçük M&A pratiği
 
 **Tipik akış (share deal, KOBİ alış):**
-1. **NDA + LOI** (Letter of Intent) — `/commercial-advisory:draft-nda` + LOI taslağı
+1. **NDA + LOI** (Letter of Intent) — `/contract-drafting:belge-turet` (emsal NDA'dan türetme) + LOI taslağı
 2. **Diligence** — finansal (YMM) + hukuki (biz):
    - Esas sözleşme + sicil + ortak yapı
    - Aktif/pasif (gayrimenkul, kira, kredi)
@@ -92,7 +92,7 @@
 - **R&W sigortası** sınırlı — pazar küçük, prim yüksek
 - **Earn-out** tartışmalı — Türk mahkemelerinde uygulama deneyimi sınırlı
 - **Foreign investment screening** — yabancı yatırımcı için Yabancı Yatırımcı Direkt Yatırımlar K. (4875) — onay genelde formalite
-- **Rekabet Kurumu onayı** — 2010/4 sayılı Tebliğ eşikleri (2026: yıllık ciro 250M TL veya 750M TL TR + 250M dünya); eşik altında onay yok
+- **Rekabet Kurumu onayı** — 2010/4 sayılı Tebliğ eşikleri (doğrulanmadı — güncel TL eşiklerini ArthurLegal MCP'den teyit edin); eşik altında onay yok
 
 ---
 
@@ -162,7 +162,7 @@ Kurumsal işlemler **uzun vadeli** — taslakta hata ileride milyonlarca TL'lik 
 
 ## Matter workspaces
 
-Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 yıl) — kapatma `/corporate-advisory:matter-close` post-closing kontrol bittiğinde.
+Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 yıl) — kapatma `/corporate-legal:matter-workspace close <slug>` ile, post-closing kontrol bittiğinde (arşivler, silmez).
 
 ---
 
@@ -174,4 +174,4 @@ Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 
 
 ---
 
-*Re-run interview:* `/corporate-advisory:cold-start-interview --redo`
+*Re-run interview:* `/corporate-legal:cold-start-interview --redo`

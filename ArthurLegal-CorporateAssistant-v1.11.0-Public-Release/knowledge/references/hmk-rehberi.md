@@ -39,7 +39,7 @@
 - **m. 293:** Uzman görüşü (yeni; bilirkişiden ayrı)
 
 ### Karar ve kanun yolları
-- **m. 297:** Hüküm gerekçesi
+- **m. 297:** Hükmün kapsamı (gerekçe dâhil)
 - **m. 341-360:** İstinaf (BAM)
 - **m. 361-373:** Temyiz (Yargıtay); **m. 374-381:** Yargılamanın iadesi
 - **m. 400:** Delil tespit davası

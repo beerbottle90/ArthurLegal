@@ -83,7 +83,7 @@ agent çekemez, kullanıcı tarayıcıdan açıp metni yapıştırmalı. URL pat
 
 - Her iki ülke **NY Konvansiyonu tarafı**; tenfiz ayağı için `/commercial-legal:governing-law-review` Adım 5.
 - KazMunayGaz/Uzbekneftegaz **devlet şirketleri** — sözleşmede sovereign immunity feragati ve
-  devlet onay şartlarını kontrol et (PSA/JV işlerinde `/energy-finance:psa-joa-review`).
+  devlet onay şartlarını kontrol et (PSA/JV işlerinde `/energy-finance:jv-agreement-review`).
 - Yaptırım taraması: her iki ülke karşı tarafında RU bağlantılı ortak/UBO riski yüksek —
   OpenSanctions zorunlu (`yaptirim-tarama-rehberi.md`).
 

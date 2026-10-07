@@ -41,7 +41,7 @@ kullanıldığında "non-binding translation" notu düş.
 
 1. **Lisans zinciri:** license → lease dönüşüm şartları ve süreleri; Commissioner onayı
    gereken devirler (farm-in/out)
-2. **Ortaklık yapısı:** İsrail JOA pratiği AIPN modeline yakındır — `/energy-finance:psa-joa-review`
+2. **Ortaklık yapısı:** İsrail JOA pratiği AIPN modeline yakındır — `/energy-finance:jv-agreement-review`
    JOA adımını uygula (İsrail'de PSA değil **vergi-royalty rejimi** geçerli; profit split yok)
 3. **İhracat izni:** kota/iç pazar yükümlülüğü — Türkiye/AB'ye gaz ihracat senaryosunda 🟠
 4. **Güvenlik/jeopolitik FM:** bölgesel çatışma force majeure klozu — sigorta (war risk) katmanı

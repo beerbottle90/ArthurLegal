@@ -61,7 +61,7 @@
 [önceki sahibi]nden [Elektrik İştiraki] bünyesindeki çalışanlar:
 - **İş ilişkisi otomatik geçer** (TBK 428 — işyeri devri)
 - **Kıdem hakları + çalışma koşulları korunur**
-- **Bildirim:** çalışanlara 30 gün önceden işyeri devri bildirimi
+- **Bildirim:** kanunda öngörülmüş bir bildirim süresi yoktur; iş sözleşmeleri devir tarihinde kendiliğinden devralana geçer (TBK m. 428)
 - **Sendika varsa** → TİS hakları yeni işveren tarafından sürdürülür
 
 ### Adım 6: Çevre + ISG izinleri devri
@@ -110,7 +110,7 @@
 - **Karbon Vergisi / ETS** (TR İklim Kanunu taslağı TBMM'de) — doğal gaz yakıtlı elektrik üretim büyük etki
 - **AB CBAM** elektrik dahil sınırda karbon ayarlama — TR-AB hatları etkili
 - **Yenilenebilir Enerji Garanti Belgesi (YEK-G)** — [Elektrik İştiraki] doğal gaz; YEK-G alamaz ama RES + GES yatırımı entegrasyonu gündeme gelirse
-- **EPDK Kurul Kararı 11400** ve sonrası — kapasite mekanizması ödemeleri (gas fired plants için kritik)
+- **EPDK Kurul Kararı 11400** ve sonrası — kapasite mekanizması ödemeleri (gas fired plants için kritik) (doğrulanmadı)
 
 ---
 

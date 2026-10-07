@@ -50,7 +50,7 @@ Kullanıcı şunları sağlamalı (eksikse iste, varsayma):
 2. **Dava ve talep** — davacının talebi, hukuki sebep (1-2 cümle özet).
 3. **Savunma** — davalının savunması ve karşı talepleri.
 4. **Uyuşmazlık konusu** — tarafların üzerinde anlaştığı ve çekiştiği noktalar ayrı ayrı.
-5. **Deliller ve değerlendirilmesi** — her delil için: ne ispatlıyor, çekişme var mı, ispat yükü kimde (HMK m. 187). Bilirkişi raporu varsa: rapor sonucu + itirazların karşılanması.
+5. **Deliller ve değerlendirilmesi** — her delil için: ne ispatlıyor, çekişme var mı (HMK m. 187), ispat yükü kimde (HMK m. 190). Bilirkişi raporu varsa: rapor sonucu + itirazların karşılanması.
 6. **Gerekçe** — uygulanacak norm (MCP'den `[ArthurLegal TR — GG.AA.YYYY]`) + varsa emsal içtihat (`[ArthurLegal TR — kurum — Esas/Karar — GG.AA.YYYY]`) + somut olaya uygulama. **İki yönlü:** kabul gerekçesi ile ret gerekçesi ayrı ayrı kurulur; hangisinin daha güçlü olduğunu hâkim takdir eder.
 7. **Hüküm (iskelet)** — HMK m. 297/1-ç (hüküm sonucu, yargılama giderleri, avansın iadesi, kanun yolu ve süresi) ve m. 297/2 (her talep hakkında sıra numaralı, açık hüküm) unsurları: talep kalemleri tek tek, vekâlet ücreti, yargılama gideri, kanun yolu/süre. **Sonuç boş bırakılır veya seçenekli sunulur.**
 
@@ -100,7 +100,7 @@ user-invocable: true
 2. **İlk itirazlar (m. 116-117):** yetki (kesin değilse) ve tahkim itirazı — **cevap dilekçesinde** ileri sürülmüş mü (m. 117/1); süresinde değilse dinlenmez. (İş bölümü itirazı m. 116/1-c'den 7251 s. K. ile kaldırılmıştır; artık ilk itiraz değildir.)
 3. **TTK m. 5/A dava şartı arabuluculuk:** ticari davalardan konusu bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit veya istirdat davasıysa (TTK m. 5/A/1 — 7445 s. K. ile genişletilmiş hâli) dava açılmadan önce arabulucuya başvurulmuş mu. 🔴 değilse dava şartı yokluğundan ret.
 4. **Sulh ve arabuluculuk teşviki (m. 140/2):** tarafları teşvik et, tutanağa geçir.
-5. **Uyuşmazlık noktalarının tespiti (m. 140/3):** çekişmeli/çekişmesiz vakıalar ayrılır — tahkikatın sınırını çizer.
+5. **Uyuşmazlık noktalarının tespiti (m. 140/1):** çekişmeli/çekişmesiz vakıalar ayrılır — tahkikatın sınırını çizer.
 6. **Delil gösterme & sunma süresi (m. 140/5, 145):** taraflara kesin süre; sonradan delil sınırlı.
 
 ## Çıktı

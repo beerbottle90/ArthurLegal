@@ -1,6 +1,6 @@
 # Administrative Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/administrative-litigation:cold-start-interview` ile doldurulur.*
+*Bu dosya `/administrative-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -57,7 +57,7 @@
 
 **Standart yaklaşım:** `[DOLDUR — örn. Götürü matter bazlı (AAÜT × 2x) + başarı bonusu (%15)]`
 - **Yürütmenin durdurulması (m. 27)** ayrı talep — ayrı ücret kaydı önerilir
-- **Karşı yan vekalet ücreti:** İdare aleyhine hükmedilen vekalet ücreti AAÜT — vekile aittir (Av. K. m. 164/4)
+- **Karşı yan vekalet ücreti:** İdare aleyhine hükmedilen vekalet ücreti AAÜT — vekile aittir (Av. K. m. 164/5)
 
 ---
 
@@ -69,9 +69,9 @@
 | **Vergi mahkemesi davası** | **30 gün** | İYUK m. 7 | → `tax-litigation` |
 | **ÇED davası (ivedi)** | **30 gün** + doğrudan Danıştay temyiz **15 gün** | İYUK m. 20/A | Atanan ortak |
 | **Disiplin/idari para cezası** | 60 gün (tebligattan) | İYUK m. 7 | — |
-| **Üst makama başvuru** (yapılırsa) | 60 g + 60 g (gizli ret) | İYUK m. 11 | — |
+| **Üst makama başvuru** (yapılırsa) | 60 g + 30 g (gizli ret) | İYUK m. 11 | — |
 | **Yürütmenin durdurulması** | Dava açılışta veya sonra | İYUK m. 27 | Atanan ortak |
-| **Karar düzeltme (BİM)** | 15 gün (tebliğden) | İYUK m. 54 | Atanan ortak |
+| **Karar düzeltme** | Yok: 2014'te kaldırıldı | İYUK m. 54 (mülga: 6545/103) | — |
 | **Temyiz (Danıştay)** | 30 gün (BİM kararı tebliğden) | İYUK m. 46 | Atanan ortak |
 
 ⚠️ **30 vs. 60 gün ayrımı KRİTİK:** 2021/7331 sayılı K. değişikliği ile vergi 30 g, idare 60 g. **Doğru süreyi kontrol et — yanlış dava yanlış süreyle reddedilir.**
@@ -93,12 +93,12 @@
 ```
 
 **Danıştay'ın ilk derece görevli olduğu istisnalar (Danıştay K. m. 24):**
-- CB Kararnameleri (m. 24/1-a)
+- CB Kararları (m. 24/1-a)
 - Bakanlıkların düzenleyici işlemleri (m. 24/1-b)
 - Ulusal ölçekli sektör kurumlarının (EPDK, BDDK, SPK, Rekabet) **düzenleyici** işlemleri (m. 24/1-c)
 - Belirtilen önemli idari işlemler
 
-**Danıştay K. m. 30:** Belirli kamu personel davaları (yüksek yargı vb.) doğrudan Danıştay'da.
+**Danıştay K. m. 30** mülgadır (6110/14); bu maddeye dayanan "belirli kamu personel davaları doğrudan Danıştay'da" kuralı için güncel dayanak doğrulanmadı.
 
 Detay: `references/idari-yargi-yapisi-rehberi.md`
 
@@ -201,4 +201,4 @@ Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-sl
 
 ---
 
-*Re-run interview:* `/administrative-litigation:cold-start-interview --redo`
+*Re-run interview:* `/administrative-legal:cold-start-interview --redo`

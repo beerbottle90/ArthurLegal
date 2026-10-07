@@ -1,6 +1,6 @@
 # Tax Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/tax-litigation:cold-start-interview` ile doldurulur.*
+*Bu dosya `/tax-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -67,8 +67,8 @@
 | Konu | Süre | Madde |
 |---|---|---|
 | **Vergi mahkemesi dava açma** | **30 gün** (tebligattan) | İYUK m. 7 |
-| Uzlaşma talebi (tarhiyat öncesi) | İhbarname tebliğinden 30 g | VUK m. ek 1 |
-| Tarhiyat sonrası uzlaşma | İhbarname tebliğinden 30 g | VUK m. ek 11 |
+| Uzlaşma talebi (tarhiyat öncesi) | İnceleme başlangıcından son inceleme tutanağına kadar | VUK m. ek 11; Tarhiyat Öncesi Uzlaşma Yön. m. 9 (doğrulanmadı) |
+| Tarhiyat sonrası uzlaşma | İhbarname tebliğinden 30 g | VUK m. ek 1 |
 | Vergi mahkemesi kararına istinaf (BİM Vergi) | 30 g | İYUK m. 45 |
 | BİM kararına temyiz (Danıştay vergi dairesi) | 30 g | İYUK m. 46 |
 | **Yürütmenin durdurulması** (talep edilirse) | Dava açılışta | İYUK m. 27 |
@@ -87,10 +87,15 @@
 | Tarhiyat zayıf hukuki dayanağa sahip | **Dava** — %50+ başarı şansı |
 | Tarhiyat tutarı küçük (< AAÜT * 2) | Uzlaşma — dava maliyeti aşar |
 | Mükellef gelecekte de aynı pozisyonu sürdürecek | **Dava** — emsal değeri |
-| Süre çok dar (uzlaşmaya gitmek vergi mh. süresini geciktirir mi?) | **Önce dava, paralel uzlaşma değil** — süre kaçırma riski |
+| Süre çok dar (uzlaşmaya gitmek vergi mh. süresini geciktirir mi?) | Uzlaşma talebi dava hakkını düşürmez: uzlaşılamazsa süre bitmiş veya 15 günden az kalmışsa tutanağın tebliğinden itibaren 15 gün olur (VUK m. ek 7). Uzlaşmadan önce açılan dava, uzlaşma sonuçlanana kadar incelenmez |
 | Cezalı tarhiyat — sadece ceza dava edilebilir | Ceza dava |
 
-⚠️ **VUK m. ek 11/2:** Uzlaşma vaki olmazsa **dava açma süresi yeniden başlamaz** — orijinal 30 g devam eder. Uzlaşma için süre durdurma yok.
+⚠️ **VUK m. ek 7:** Süresinde uzlaşma isteyen, o ceza için **ancak uzlaşma vaki olmazsa** dava açabilir. Uzlaşma vaki olmazsa dava,
+tutanağın tebliğinden itibaren genel hükümlere göre açılır; dava açma süresi bitmiş veya 15 günden az kalmışsa süre tebliğden
+itibaren **15 gün** olur. Tarhiyat öncesi uzlaşma sağlanamazsa tarhiyat sonrası uzlaşma istenemez (VUK m. ek 11).
+
+⚠️ **7524 sayılı Kanun (28.07.2024) sonrası:** uzlaşma yalnız **cezalar** için yapılır (vergi ziyaı cezası; 2026 için 40.000 TL'yi
+aşan usulsüzlük ve özel usulsüzlük cezaları). Verginin aslı uzlaşma konusu değildir (VUK m. ek 1, ek 11).
 
 ---
 
@@ -191,4 +196,4 @@ Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal-law-
 
 ---
 
-*Re-run interview:* `/tax-litigation:cold-start-interview --redo`
+*Re-run interview:* `/tax-legal:cold-start-interview --redo`

@@ -90,14 +90,14 @@ Bu pakette yeni olarak (Corporate paketinde olmayan) 9 hukuk bürosu spesifik re
 | Referans | Konu | Kanun dayanağı |
 |---|---|---|
 | `aaut-rehberi.md` | Avukatlık Asgari Ücret Tarifesi | Av. K. m. 164-168 |
-| `vekalet-uyap-rehberi.md` | Vekalet türleri + UYAP sunum | Av. K. m. 32/35/41 + HMK m. 74 |
+| `vekalet-uyap-rehberi.md` | Vekalet türleri + UYAP sunum | Av. K. m. 41/56/171/174 + HMK m. 74-77 + TBK m. 512 + CMK m. 149-150 |
 | `mesleki-sir-rehberi.md` | Avukatlık mesleki sır | Av. K. m. 36 + TBB MK m. 36-37 + CMK m. 154 + HMK m. 249 |
 | `conflict-check-rehberi.md` | Çıkar çatışması yasaklılık | Av. K. m. 38 + TBB MK m. 35-36 |
 | `cmk-gorevli-rehberi.md` | CMK görevli atama yönetimi | CMK m. 91/100/102/130/147/150-156/268 + Av. K. m. 35 |
 | `baro-islemleri-rehberi.md` | Baro koordinasyonu | Av. K. m. 17-67 + m. 134-158 |
-| `ucret-sozlesmesi-rehberi.md` | Avukatlık ücret sözleşmesi | Av. K. m. 163-166 + DVK Tablo I + GVK m. 94 |
+| `ucret-sozlesmesi-rehberi.md` | Avukatlık ücret sözleşmesi | Av. K. m. 41/163-168/171/174 + VUK m. 236 + GVK m. 94 + DVK m. 24 |
 | `kep-etebligat-rehberi.md` | KEP + e-Tebligat | 5070 sayılı K. + TBK m. 117 + 7201 sayılı K. m. 7/A |
-| `masak-kimlik-tespit-rehberi.md` | MASAK Tebliğ 5 yükümlülükleri | 5549 sayılı K. + MASAK Tebliğ Sıra No. 5 + TCK m. 282/4 |
+| `masak-kimlik-tespit-rehberi.md` | Avukatın MASAK yükümlülükleri (kapsam, kimlik tespiti, gerçek faydalanıcı, şüpheli işlem) | 5549 sayılı K. m. 2-4, 8, 13-14 + Tedbirler Yönetmeliği m. 4-7, 17/A, 22, 26/A, 28-29 + TCK m. 282 |
 
 ## Arthur Mask kurulum dosyası (v1.8.0)
 
@@ -150,3 +150,23 @@ Apache 2.0 geçerlidir.
 Bu paket halka açık sürümünde **gerçek kişi/şirket/müvekkil verisi içermez**. Tüm gerçek-kişi isimleri rol-bazlı yer-tutucularla (`[Yönetici Ortak]`, `[Kıdemli Ortak A]`, `[Müvekkil takma adı]`, `[KOBİ Üretici]` vb.) değiştirilmiştir. Büro örneği (`ArthurLegal Hukuk Bürosu`) tamamen kurgusaldır.
 
 ⚠️ **Avukatlık K. m. 36 hatırlatma:** Paketi kendi büronuza uyarladığınızda doldurduğunuz **gerçek müvekkil verileri** sizin ve büronuzun **mesleki sır + KVKK sorumluluğundadır**. Matter klasörlerini **cross-matter izoleli** tutmak zorundasınız (Müvekkil A'nın bilgisi Müvekkil B'nin dosyasına asla sızmamalı). Paylaşmadan önce gözden geçirin.
+## Üst kaynak sürüm izi ve değişiklik bildirimi (Apache-2.0 md. 4)
+
+| Alan | Değer |
+|---|---|
+| Üst kaynak | [anthropics/claude-for-legal](https://github.com/anthropics/claude-for-legal), Apache-2.0 (kök `LICENSE`; üst kaynakta `NOTICE` dosyası yok) |
+| Türetme | Mayıs 2026. Türetilen kesin commit belgelenmemiştir (arthurlegal-ai-roundtable, rapor 01). |
+| Son karşılaştırma | `4a6c651889c97cc9140580363c73e0eb17379c2b` (üst kaynak main, 2026-07-23; 2026-09-23 itibarıyla ilerlememiş) |
+| Lisans metni | `LICENSE-APACHE-2.0-THIRD-PARTY.txt` |
+
+Üst kaynaktan uyarlanıp **değiştirilen** dosyalar (her birinin başında değişiklik bildirimi vardır):
+
+- `knowledge/skills/commercial-legal__skills.md`
+- `knowledge/skills/corporate-legal__skills.md`
+- `knowledge/skills/employment-legal__skills.md`
+- `knowledge/skills/ip-legal__skills.md`
+- `knowledge/skills/litigation-legal__skills.md`
+- `knowledge/skills/privacy-legal__skills.md`
+- `knowledge/skills/regulatory-legal__skills.md`
+
+Değişikliklerin niteliği: Türkçeye çeviri, Türk hukukuna uyarlama, ArthurLegal MCP araç yönlendirmesi, yeni skill'ler ve tek kitapçık biçimine dönüştürme. Diğer bütün dosyalar ArthurLegal'e özgüdür.

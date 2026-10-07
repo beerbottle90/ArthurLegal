@@ -80,7 +80,7 @@
 
 ### YİDK kararına karşı dava
 - **Ankara Fikri ve Sınai Haklar Hukuk Mahkemesi** (yetkili)
-- 2 ay içinde
+- 2 ay içinde (doğrulanmadı)
 - BİM + Yargıtay 11. HD temyiz
 
 ## [Müvekkil]/[HALKA AÇIK İŞTİRAK] için stratejik kullanım

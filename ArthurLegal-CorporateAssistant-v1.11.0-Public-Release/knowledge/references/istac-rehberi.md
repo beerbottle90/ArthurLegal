@@ -55,17 +55,17 @@ English. The applicable law shall be [Turkish law / English law / other].
 | Karar diliyle sözleşme dili farklı | İnfaz aşamasında çeviri/tercüme yükümlülük |
 | "Türk mahkemeleri kesin yetkili" + tahkim klozu | Bir taraf tahkimi başlatamaz; kloz iptal edilebilir |
 
-## Tahkim itirazı (HMK m. 116/c)
+## Tahkim itirazı (HMK m. 116/b)
 
 Eğer karşı taraf **geçerli bir tahkim klozu varken mahkemede dava açtıysa**, [ŞİRKET ADI]'ın ilk cevap dilekçesinde:
 
 ```markdown
 USUL İTİRAZI: Davaya konu sözleşme [...] m. [...] uyarınca tahkim klozu
 içermektedir. Bu klozdan doğan uyuşmazlık [ISTAC/ICC] tahkimine tabi olup,
-mahkemenin görevsizliğinin tespiti talep edilir. (HMK m. 116/c)
+mahkemenin görevsizliğinin tespiti talep edilir. (HMK m. 116/b)
 ```
 
-⚠️ Bu itiraz **ilk cevap dilekçesinde** sunulmazsa tahkim hakkı düşer (HMK m. 412/3). Çok kritik süre.
+⚠️ Bu itiraz **ilk cevap dilekçesinde** sunulmazsa tahkim hakkı düşer (HMK m. 117). Çok kritik süre.
 
 ## ArthurLegal MCP (`tr_`) — tahkim emsal
 

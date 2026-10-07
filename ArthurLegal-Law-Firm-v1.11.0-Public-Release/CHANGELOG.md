@@ -5,6 +5,72 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.0] — 2026-10-07 — *Laboratuvar Düzeltmeleri: firm-operations'a 7 Skill, Karar Künyesi Kapısı, Madde Atfı Denetimi*
+
+> **Özellik sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan ve ana depoya aktarılmamış düzeltmeler bu sürümle geldi. Madde atıfları o tarihlerde `tr_mevzuat_madde_getir` ile çekildi; çekilemeyen bilgi "(doğrulanmadı)" diye işaretli. Laboratuvar 1.10.0 üzerinde çalıştığı için 1.10.1'in canlı veri uyarısı korundu; yeni metinlerdeki eski etiketler `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırına çevrildi.
+
+### Eklendi
+
+1. `firm-operations__skills.md`: `masak-kontrol`, `sanctions-check`, `kvkk-aydinlatma`, `fee-agreement`,
+   `vekalet-sablon`, `matter-open`, `monthly-billing`. Profilde ve rehberlerde bu komutlara verilen 9 atıf artık
+   gerçek bir skill'e gidiyor (önce boş dönüyordu). Toplam skill: 3 → 10.
+2. **Karar künyesi doğrulama:** `tr-atif-dogrulama-rehberi.md` ve `/legal-research:tr-atif-dogrulama`; SYSTEM_PROMPT
+   bölüm 4 madde 10 "Karar künyesi kapısı" (madde doğrulama kapısının içtihat karşılığı). Yöntem canlı uçta denendi:
+   Bedesten sorgusu "/" kabul etmiyor, esasın sıra kısmı daire ve tarih süzgeciyle aranır; esas, karar ve tarih üçü
+   birlikte eşleşmelidir; AYM norm denetimi kararı numarayla değil konuyla bulunur.
+
+### Güvenlik
+
+1. OpenSanctions API anahtarı paketten çıkarıldı (`opensanctions-rehberi.md`, `karsilastirmali-hukuk-rehberi.md`);
+   anahtar `OPENSANCTIONS_API_KEY` ortam değişkeninden okunur. Önceki sürümlerde yayımlanan anahtar iptal
+   edilmelidir. Kullanım kalıbı curl'e alındı (WebFetch POST ve Authorization başlığı gönderemez); skor 0-1 ölçeğinde.
+
+### Düzeltildi
+
+1. **MASAK:** dayanak olarak gösterilen "MASAK Tebliğ Sıra No. 5" basitleştirilmiş tedbirler tebliğidir. Avukat
+   yükümlülüğü 5549 m. 2/1-d ve Tedbirler Yönetmeliği m. 4/1-ş'dedir ve yalnız sayılan finansal işlemleri kapsar.
+   Muhafaza süresi 5 değil **8 yıl** (5549 m. 8). Gerçek faydalanıcı ölçütü "%25 ve üzeri" değil, %25'i **aşan** pay.
+   Açıklama yasağının cezası TCK m. 282/4'te değil, 5549 m. 14/1'de. TCK m. 282 ceza aralıkları metne göre düzeltildi.
+2. **Vekâlet:** Av. K. m. 32 mülga; m. 35 müdafilik kuralı içermiyor; HMK m. 74 listesi metinle birebir yapıldı;
+   çekilmede 15 gün "önceden bildirim" değil, tebliğden itibaren görevin devamı (m. 41/1); azilde ücretin tamamı
+   ödenir (m. 174/2).
+3. **Ücret sözleşmesi:** yazılı şekil geçerlilik şartı değil (m. 163/1); yazılı sözleşme yoksa para ile ölçülebilen
+   işte %10-20 (m. 164/4); %25'i aşan sözleşme tavan miktarında geçerli (m. 163/2); karşı taraf vekâlet ücreti
+   m. 164/5'te ve "aksi kararlaştırılmadıkça" istisnası yok; tevkifatı yalnız GVK m. 94'te sayılan ödeyiciler yapar;
+   "damgasız sözleşme delil olmaz" kuralı DVK m. 24'te yok. Damga oranı (binde 9,48, DVK (1) sayılı tablo I/A-1)
+   doğrulandı; nispi vergide her nüsha değil **tek nüsha** vergilenir (DVK m. 5). KDV ve tevkifat oranları
+   doğrulanmadı olarak işaretlendi. Aynı düzeltmeler `aaut-rehberi.md`'ye de işlendi; `administrative-litigation`
+   profilinde karşı taraf vekâlet ücreti atfı m. 164/4'ten m. 164/5'e alındı.
+4. **Conflict check:** Av. K. m. 38 için verilen tırnak içi metin kanunda yoktu; bentler (a-f) ve büro çapındaki
+   kapsam (m. 38/2) metne göre yazıldı. `conflict-check` tablosundaki bent atıfları düzeltildi.
+5. **KVKK ihlal bildirimi:** Kanun "en kısa sürede" der (m. 12/5); "72 saat" Kurul kararına dayanır, künyesi doğrulanmadı.
+6. Eski eklenti adları: 8 profil dosyasında var olmayan `/dispute-litigation:`, `/commercial-advisory:` vb. komutlara
+   giden 21 atıf güncel komutlara taşındı; `firm-operations` profilinde skill olmayan 4 kalem işaretlendi.
+7. **Madde atıfı denetimi (rehber ve profiller):** 32 dosyada metinle çelişen atıflar düzeltildi.
+   Bulunanlar: mülga maddelere atıf (İYUK m. 54 ve Danıştay K. m. 30; İş K. m. 77; 2872 m. 21-22; 5651 m. 9 AYM'ce
+   iptal), uydurma tırnak içi kanun metinleri, yanlış süreler (damga beyanı: Bakanlıkça belirlenenlerde aylık,
+   diğerlerinde 15 gün, DVK m. 22; ÇED para cezası davası 30 gün, 2872 m. 25; İYUK m. 11'de cevapsız kalma süresi 30
+   gün), damgada "her nüsha ayrı" kuralının tersi (DVK m. 5) ve azami tutar (DVK m. 14), var olmayan kanun numaraları
+   (kanun kısaltmaları tablosunda 7257 ve 6537), yürürlükten kalkan SPK Tebliği II-23.1 → II-23.3. Doğrulanamayan
+   kesin iddialar "(doğrulanmadı)" diye işaretlendi.
+   Law-Firm'e özgü: `conflict-check-rehberi` (Av. K. m. 38 uydurma alıntı), `cmk-gorevli-rehberi` (Av. K. m. 35;
+   gözaltı 24 saat), `mesleki-sir-rehberi` (Av. K. m. 36 ve CMK m. 154 alıntıları), `baro-islemleri-rehberi` (TBB
+   Genel Kurulu iki yılda bir, m. 115), `dispute-litigation` (Av. K. m. 38 başlığı: işin reddi), `tax-litigation` (VUK ek m. 1
+   ve ek m. 11 yer değiştirmişti; uzlaşılamazsa süre VUK ek m. 7'ye göre gerekirse 15 güne uzar, "süre yeniden
+   başlamaz" notu yanlıştı; 7524 sonrası uzlaşma yalnız cezalarda).
+8. SYSTEM_PROMPT bölüm 4 madde 5: "privilege" yerine gösterilen ticari sır dayanağı TBK m. 6 ve TTK m. 18 değil,
+   TBK m. 396 ve TTK m. 55.
+9. **Skill kitapçıkları denetimi (25.09.2026):** 7 kitapçıkta metinle çelişen atıflar düzeltildi.
+   - `tax-legal`: vergi uzlaşması 7524 sonrası hukuka göre yeniden yazıldı (uzlaşma yalnız cezalarda; uzlaşılamazsa
+     dava süresi VUK ek m. 7'ye göre gerekirse 15 güne uzar; mülga VUK ek m. 4 atfı kaldırıldı); özelge dayanağı VUK
+     m. 413; KDVK'da ihracat istisnası m. 11, iade m. 32.
+   - `administrative-legal`: İYUK m. 16/3 (savunma süresi ve uzatma), m. 50/3 ve 50/5 (bozmaya uyma/ısrar, İDDK);
+     idari para cezasında genel dava süresi 60 gün (İYUK m. 7), çevre cezasında 30 gün (2872 m. 25); dayanak kanun
+     idari yargıyı göstermiyorsa yol Kabahatler K. m. 27 (sulh ceza, 15 gün); KİK kararı 20 gün (4734 m. 56).
+   - `advocacy-legal` (dava türleri İYUK m. 2), `criminal-defense` (zorunlu müdafilik CMK m. 150/2-3; m. 156 usul
+     maddesi), `commercial-legal` (hukuk seçimi MÖHUK m. 24; hakem kararı ret sebepleri MÖHUK m. 62),
+     `energy-finance` (birleşme-devralma Tebliğ No: 2010/4), `litigation-legal` (yalnız "(doğrulanmadı)" etiketleri).
+
 ## [1.11.0] — 2026-10-07 — *Yapay Zekâ Ajanı Onayı; Esas Numarasıyla Arama Düzeltildi*
 
 > **Özellik sürümü.** Yeni skill `/regulatory-legal:ai-ajan-onayi`, bir rehber düzeltmesi ve örneklerde kişi adı temizliği. Araçlar ve kaynaklar aynı; `regulatory-legal` 9 skill'den 10'a çıktı.
@@ -843,5 +909,5 @@ Tüm kişisel veri ve kurum-spesifik içerik temizlenmiş, generic hukuk bürosu
 ---
 
 [1.2.0]: ./VERSION.md
-[1.0.1]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-Law-Firm-v1.0.1-Public-Release
-[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-Law-Firm-v1.0.0-Public-Release
+[1.0.1]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.1-Public-Release
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.0-Public-Release

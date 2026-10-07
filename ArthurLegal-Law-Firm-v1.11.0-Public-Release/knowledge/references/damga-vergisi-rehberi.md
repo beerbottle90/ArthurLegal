@@ -14,9 +14,9 @@
 
 ## Önemli özelliği
 
-- **Her nüsha ayrı vergiye tabi.** İki nüsha imzalanırsa damga × 2.
+- **Nispi vergiye tabi kâğıtlarda (sözleşmeler dahil) yalnız bir nüsha vergilenir; maktu vergiye tabi kâğıtlarda her nüsha ayrı vergilenir** (DVK m. 5, 6728 s.K. değişikliği).
 - **Sözleşmenin TR'de düzenlenmesi yeterli** — bedel yabancı paradaysa kur ile çevrilir.
-- **Tarafların eşit paylaşımı varsayılır** (DVK m. 24) — sözleşmede aksine hüküm yoksa.
+- **Taraflar vergi dairesine karşı müteselsilen sorumludur** (DVK m. 24); sözleşmede aksine hüküm yoksa uygulamada bedel genelde eşit paylaşılır.
 - **E-imza / KEP'le imzalanan da damga konusu** — fiziki nüsha şart değil.
 
 ## İstisnalar (kontrol edilmesi gerekenler)
@@ -45,9 +45,9 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 
 1. Sözleşme bedeli netleştir (KDV hariç tutar — DVK matrahı KDV'yi içermez)
 2. Yıllık mı toplam mı belirsizse: süresiz/uzun süreli sözleşme = yıllık matrah × 9,48
-3. Nüsha sayısı × damga = toplam damga maliyeti
+3. Nispi vergide nüsha sayısı damgayı çoğaltmaz (DVK m. 5); toplam damga = tek nüsha damga
 4. Taraflar arası paylaşımı sözleşmede ara — yoksa varsayılan 50/50
-5. Beyan ve ödeme: sözleşme imza tarihinden 30 gün içinde (DVK m. 22)
+5. Beyan ve ödeme (DVK m. 22): Bakanlıkça belirlenen mükelleflerde bir ay içinde düzenlenen kâğıtlar ertesi ayın 20'sine kadar beyan edilir, 26'sına kadar ödenir; diğer hâllerde kâğıdın düzenlendiği tarihi izleyen 15 gün içinde
 
 ## Çıktı şablonu
 
@@ -87,12 +87,11 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 - Sözleşme TR'de mi düzenleniyor? → **EVET ise** damga konusu (sözleşme yeri TR — DVK m. 1)
 - Yabancı para → günün TCMB kuruyla TL'ye çevrilir
 - 200M USD × 35 TL/USD (örnek) = 7 milyar TL
-- 7M TL × 0,00948 = **66.360.000 TL damga** (tek nüsha)
-- 2 nüsha → **132.720.000 TL**
-- DVK m. 14 — azami had var (her yıl güncel — 2026 için ArthurLegal MCP (`tr_`)'den teyit)
+- 7 milyar TL × 0,00948 = 66.360.000 TL hesaplanır; **ama** kâğıt başına vergi DVK m. 14'teki azami tutarı aşamaz, yani ödenecek damga o yılın azami tutarıdır (2023 için 10.732.371,80 TL; tutar her yıl yeniden değerleme oranıyla artar, güncel tutar doğrulanmadı — ArthurLegal MCP (`tr_`) ile teyit)
+- Nispi vergide nüsha sayısı damgayı çoğaltmaz (DVK m. 5)
 
 **Pratik:** Bu büyüklükte damga eskalasyon eşiğini aşar — Hukuk Direktörü + Counsel + CFO koordinasyonu zorunlu. Alternatifler:
-- **Sözleşmeyi yurt dışında düzenle** (örn. Cenevre'de imza) → damga doğmaz
+- **Sözleşmeyi yurt dışında düzenle** (örn. Cenevre'de imza) → TR'de ibraz edilmedikçe/hükmünden yararlanılmadıkça damga doğmaz (DVK m. 1)
 - **İlişkili taraf işlemi tanımı** + transfer pricing belgesi → vergi inceleme dosyasını da kapsa
 - **İmzayla ifadeyi farklı tut** — DVK yorumu için danışman
 
@@ -116,8 +115,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 **Senaryo:** [HALKA AÇIK İŞTİRAK], [TESİS LOKASYONU] ÖEB'de bir bakım hizmeti vendor'ı ile 5M TL'lik sözleşme.
 
 **Damga:**
-- 5M TL × 0,00948 = **47.400 TL** (tek nüsha)
-- 2 nüsha → 94.800 TL
+- 5M TL × 0,00948 = **47.400 TL** (nispi vergi — nüsha sayısı damgayı çoğaltmaz, DVK m. 5)
 - ÖEB statüsü → 4737 sayılı kanunun ek istisnaları kontrol — bazı işlemlerde teşvik var, **ama genel damga rejimi devam eder**
 
 ### Örnek 4: [ELEKTRİK ÜRETİM İŞTİRAKİ] elektrik üretim — gün öncesi piyasası (EPİAŞ)
@@ -133,8 +131,8 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 **büro pratiği:** Kurumsal e-imza için KEP kullanılıyor (TTK 18/3). KEP imzalı sözleşme:
 - DVK m. 1 ve 22 — KEP imzalı belge fiziki belge ile aynı statüde
-- **Tek bir e-nüsha damgaya tabi** — fiziki nüsha sayısı arttırılamaz
-- → **KEP imza damga maliyetini düşürür** (2 fiziki nüsha yerine 1 e-nüsha)
+- Nispi vergiye tabi sözleşmelerde zaten **yalnız bir nüsha vergilenir** (DVK m. 5) — KEP tek e-nüsha üretse de fiziki çoklu nüsha üretse de damga tutarı değişmez
+- → KEP'in faydası **damga maliyeti değil**, tek nüsha/versiyon yönetimi ve arşivleme kolaylığıdır
 
 ---
 

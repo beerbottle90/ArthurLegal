@@ -7,28 +7,29 @@
 ## Hukuki dayanak
 
 - **1136 sayılı Avukatlık Kanunu m. 38** — Yasaklılık
-- **TBB Meslek Kuralları m. 35** — Müvekkil menfaatine aykırı iş
-- **TBB Meslek Kuralları m. 36** — Eski müvekkilin bilgilerinin kullanımı
-- **Av. K. m. 35** — Müdafiilik (ceza özel)
+- **TBB Meslek Kuralları m. 35** — Müvekkil menfaatine aykırı iş (doğrulanmadı)
+- **TBB Meslek Kuralları m. 36** — Eski müvekkilin bilgilerinin kullanımı (doğrulanmadı)
+- **Av. K. m. 35** — Yalnız avukatların yapabileceği işler (avukatlık tekeli)
 
 ---
 
-## Av. K. m. 38 — Yasaklılık metni
+## Av. K. m. 38 — İşin reddi zorunluluğu (metin)
 
 > "Avukat:
 >
-> a) Aynı işte menfaati zıt bir tarafa vekalet eden,
-> b) Hakem, hakim, savcı, savcı yardımcısı, jüri üyesi, müdür, kâtip, zabıt kâtibi, mübaşir, posta memuru, polis veya başka bir kamu görevlisi sıfatıyla bilgi sahibi olduğu bir işte vekâlet alamaz,
-> c) Bir işte iki tarafın da vekili olamaz,
-> d) Daha önce hakim, hakem veya tahkim heyeti üyesi sıfatıyla baktığı işte vekalet üstlenemez,
+> a) Kendisine yapılan teklifi yolsuz veya haksız görür yahut sonradan yolsuz veya haksız olduğu kanısına varırsa,
+> b) Aynı işte menfaati zıt bir tarafa avukatlık etmiş veya mütalaa vermiş olursa,
+> c) Evvelce hâkim, hakem, Cumhuriyet savcısı, bilirkişi veya memur olarak o işte görev yapmış olursa,
+> d) Kendisinin düzenlediği bir senet veya sözleşmenin hükümsüzlüğünü ileri sürmek durumu ortaya çıkmışsa,
+> f) Görmesi istenilen iş, Türkiye Barolar Birliği tarafından tespit edilen mesleki dayanışma ve düzen gereklerine uygun değilse,
 >
-> Bu yasaklara aykırı iş kabulü baro tarafından kaldırılır ve avukat disiplin işlemine tabi tutulur."
+> Teklifi reddetmek zorunluğundadır. Bu zorunluluk, avukatların ortaklarını ve yanlarında çalıştırdıkları avukatları da kapsar." (e bendi Anayasa Mahkemesi kararıyla iptal edilmiştir)
 
 ---
 
 ## Çatışma tipleri — pratik sınıflandırma
 
-### 1. **Doğrudan eşzamanlı çatışma** (m. 38/c)
+### 1. **Doğrudan eşzamanlı çatışma** (m. 38/b)
 
 **Senaryo:** Aynı dava/sözleşmede iki tarafı temsil
 **Karar:** ⛔ **MUTLAK YASAK** — istisnası yok
@@ -47,7 +48,7 @@
 - 5 yıl önce A bireyi için boşanma davası açtık, şimdi A'nın eski eşi B bizimle başka bir matter için iletişime geçti → A'nın boşanma bilgisi B'nin yeni matter'ında alakasız → ✓
 - A'ya 10 yıl önce sözleşme yazdık, A'nın aleyhine yeni bir dava → eski sözleşme alakasız mı? **Dikkatli incele**
 
-### 3. **Grup içi çatışma** (m. 38/a — "aynı iş")
+### 3. **Grup içi çatışma** (m. 38/b kıyasen — "aynı iş")
 
 **Senaryo:** Müvekkilin grubuna bağlı bir başka şirket bizimle başka bir matter'da
 **Karar:** 🟠 İnceleme — grup yapısı bağlılığı, bilgi paylaşımı sınırı
@@ -63,7 +64,7 @@
 - Yazılı taahhüt + matter erişim sistemi engeli
 - Karşı yan büro bilgilendirilir
 
-### 5. **Kamu görevliyken görülen iş** (m. 38/b)
+### 5. **Kamu görevliyken görülen iş** (m. 38/c)
 
 **Senaryo:** Eski hakim/savcı/müfettiş avukat olmuş, eskiden baktığı dosya tekrar gündeme geldi
 **Karar:** ⛔ **MUTLAK YASAK** — sadece o avukat değil, **büro bütün olarak** yasaklı (TBB içtihadı tartışmalı)
@@ -214,7 +215,7 @@ Conflict check yazılımı şu alanları tutar:
 
 Av. K. m. 38 ihlali → **disiplin işlemi otomatik:**
 - Uyarı → kınama → para cezası → geçici meslekten çıkarma → meslekten çıkarma (m. 134-158)
-- + **müvekkilin tazminat davası** (Av. K. m. 41 + TBK m. 502 vd.)
+- + **müvekkilin tazminat davası** (TBK m. 502 vd. — vekâlet sorumluluğu)
 - + (kötü niyetli ise) **TCK m. 257 görevi kötüye kullanma** soruşturması
 
 ⚠️ **"Bilmiyordum" savunması zayıf** — conflict-check yapma yükümlülüğü avukatındır.

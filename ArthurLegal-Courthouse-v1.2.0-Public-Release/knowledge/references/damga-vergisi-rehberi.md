@@ -14,9 +14,9 @@
 
 ## Önemli özelliği
 
-- **Her nüsha ayrı vergiye tabi.** İki nüsha imzalanırsa damga × 2.
+- **Nispi vergiye tabi kâğıtlarda (sözleşmeler dahil) yalnız bir nüsha vergilenir; maktu vergiye tabi kâğıtlarda her nüsha ayrı vergilenir** (DVK m. 5, 6728 s.K. değişikliği).
 - **Sözleşmenin TR'de düzenlenmesi yeterli** — bedel yabancı paradaysa kur ile çevrilir.
-- **Tarafların eşit paylaşımı varsayılır** (DVK m. 24) — sözleşmede aksine hüküm yoksa.
+- **Taraflar vergi dairesine karşı müteselsilen sorumludur** (DVK m. 24); sözleşmede aksine hüküm yoksa uygulamada bedel genelde eşit paylaşılır.
 - **E-imza / KEP'le imzalanan da damga konusu** — fiziki nüsha şart değil.
 
 ## İstisnalar (kontrol edilmesi gerekenler)
@@ -45,9 +45,9 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 
 1. Sözleşme bedeli netleştir (KDV hariç tutar — DVK matrahı KDV'yi içermez)
 2. Yıllık mı toplam mı belirsizse: süresiz/uzun süreli sözleşme = yıllık matrah × 9,48
-3. Nüsha sayısı × damga = toplam damga maliyeti
+3. Nispi vergide nüsha sayısı damgayı çoğaltmaz (DVK m. 5); toplam damga = tek nüsha damga
 4. Taraflar arası paylaşımı sözleşmede ara — yoksa varsayılan 50/50
-5. Beyan ve ödeme: sözleşme imza tarihinden 30 gün içinde (DVK m. 22)
+5. Beyan ve ödeme (DVK m. 22): Bakanlıkça belirlenen mükelleflerde bir ay içinde düzenlenen kâğıtlar ertesi ayın 20'sine kadar beyan edilir, 26'sına kadar ödenir; diğer hâllerde kâğıdın düzenlendiği tarihi izleyen 15 gün içinde
 
 ## Çıktı şablonu
 

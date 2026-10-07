@@ -1,5 +1,7 @@
 # privacy-legal - Skill Referans Kitapcigi
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+
 > Alan: KVKK/GDPR - DSAR, DPIA, DPA review
 > Toplam skill: 9
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
@@ -2442,13 +2444,13 @@ reconciled with stated commitments or lawful basis, say so.
 influencing decisions about individuals:
 
 > "This activity involves AI decision-making. An AI impact assessment is likely
-> required in addition to a PIA. Use `/ai-governance-legal:aia-generation [activity]`
+> required in addition to a PIA. Use `/ai-governance-legal:aia-generation [activity]` (ArthurLegal'de hazırlanıyor: Faz 1 İş 5; o zamana kadar AI etki değerlendirmesini bu PIA içinde ayrı bir bölüm olarak yürüt)
 > to run that in parallel — they're not substitutes."
 
 **Product counsel handoff:** If this is a new product feature or launch:
 
 > "If this is part of a product launch, loop in product counsel.
-> Use `/product-legal:launch-review` — it will detect the privacy component
+> Use `/product-legal:launch-review` (ArthurLegal'de hazırlanıyor; o zamana kadar ürün hukukçusuyla doğrudan koordine et) — it will detect the privacy component
 > and route to this plugin."
 
 Only flag handoffs that are actually relevant. Don't append both as boilerplate.

@@ -1,6 +1,6 @@
 # Commercial Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/commercial-advisory:cold-start-interview` ile doldurulur.*
+*Bu dosya `/commercial-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -86,12 +86,12 @@ Bu sınıflandırma **draft/review yaklaşımını belirler:**
 - **TBK m. 115 — Sorumsuzluk şartı:** Ağır kusur ile sebep olunan zarar için **kesin hükümsüzdür**. NDA/sözleşmelerde "her türlü sorumluluğun reddi" maddeleri TBK 115'e takılır — yumuşat.
 - **TBK m. 21 — Genel işlem koşulları:** Şaşırtıcı klozlar yazılmamış sayılır. Yeni karşı yan / tüketici karşısında dikkatli ol.
 - **TBK m. 27 — Kesin hükümsüzlük:** Kanuna, ahlaka, kişilik haklarına aykırı sözleşme şartı.
-- **TBK m. 169-170 — İade ve uyarma:** Sözleşme öncesi/sonrası bilgi verme yükümlülüğü.
+- **TBK m. 117, 125 — İade ve uyarma:** Temerrüt için ihtar (uyarma) şartı; sözleşmeden dönmede karşılıklı ifa edilenlerin iadesi.
 
 ### TTK ticari sözleşme dinamikleri
 
 - **TTK m. 18-20 — Tacir vasfı:** Tacir, basiretli iş adamı; sözleşme yorumunda standart yüksek.
-- **TTK m. 21-22 — Ticari iş + faiz:** Ticari işlerde temerrüt faizi yüksek (TBK genel faizinin üstünde)
+- **TTK m. 8-9 — Ticari iş + faiz:** Ticari işlerde temerrüt faizi yüksek (TBK genel faizinin üstünde)
 - **TTK m. 18/3 — Yazılı şekil:** Tacirler arası bazı sözleşmelerde KEP/yazılı şekil önerilir (delil)
 - **TTK m. 5/A — Zorunlu arabuluculuk:** Para alacağı ticari uyuşmazlıklarda dava şartı; bu plugin **dava değil sözleşme** üretir ama **uyuşmazlık çözüm klozu** yazarken hatırlatır.
 
@@ -104,7 +104,7 @@ Sözleşme imzalanması → damga vergisi doğar. Tipik oranlar:
 - **Bağışlama (ivazsız):** Vergi yok (genelde)
 - **Yıllık damga tavan:** TL üst sınır var (her yıl güncellenir)
 
-⚠️ **Damga vergisini ödemeyen taraf** sözleşme delil olarak ileri sürmek istediğinde **damga vergisinin 4 katı ceza + vergi** ödemek zorunda — yani **sözleşmeyi imzalayan herkes** kendi nüsha damgasını ödemeli. Maliye sıkı kontrol etmez ama dava açıldığında çıkar.
+⚠️ **Damga vergisini ödemeyen taraf** sözleşme delil olarak ileri sürmek istediğinde **damga vergisi aslı + bir katı vergi ziyaı cezası** ödemek zorunda — yani **sözleşmeyi imzalayan herkes** kendi nüsha damgasını ödemeli. Maliye sıkı kontrol etmez ama dava açıldığında çıkar.
 
 Detay: `references/damga-vergisi-rehberi.md`
 
@@ -194,7 +194,7 @@ Sözleşme yazımında **risk-getiri** dengesinin sahibi **müvekkil**. Avukat:
 
 Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
 
-Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sadece müteakip ihtilaf doğarsa yeniden açılır). Matter kapatma zamanlamasını skill `/commercial-advisory:matter-close` ile.
+Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sadece müteakip ihtilaf doğarsa yeniden açılır). Matter kapatma zamanlamasını `/commercial-legal:matter-workspace close <slug>` ile (arşivler, silmez).
 
 ---
 
@@ -206,4 +206,4 @@ Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sad
 
 ---
 
-*Re-run interview:* `/commercial-advisory:cold-start-interview --redo`
+*Re-run interview:* `/commercial-legal:cold-start-interview --redo`

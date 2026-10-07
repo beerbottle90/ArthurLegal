@@ -7,7 +7,7 @@
 ### Süre (hak düşürücü)
 - **m. 7/1:** İlk derece dava süresi (özel kanun aksini belirtmedikçe)
   - **İdare mahkemelerinde: 60 GÜN**
-  - **Vergi mahkemelerinde: 30 GÜN** (2021 değişikliği — 7331 sayılı K.)
+  - **Vergi mahkemelerinde: 30 GÜN**
 - **m. 11:** Üst makama başvuru (opsiyonel; süreyi durdurur — ivedi yargılama rejiminde uygulanmaz)
 - **m. 20/A — İVEDİ YARGILAMA USULÜ:** ÇED, kamu ihale Danıştay (m. 24), özelleştirme uygulamaları gibi belirli uyuşmazlıklarda **özel hızlı rejim**:
   - Dava süresi: **30 gün**
@@ -39,9 +39,9 @@ Her aşamada (ilk derece, istinaf, temyiz) talep edilebilir.
 - **m. 49:** Danıştay temyiz incelemesi: a) görev/yetki dışı, b) hukuka aykırı, c) usul hatası
 - **m. 50:** Bozma → mahkemeye dön → uyma/ısrar → İDDK
 - **m. 53:** Yargılamanın yenilenmesi
-- **m. 54:** Kanun yararına temyiz (savcı talep edebilir)
+- **m. 51:** Kanun yararına temyiz (savcı talep edebilir)
 
-### Yargılama gideri (m. 31, 35)
+### Yargılama gideri (m. 31)
 - Harç + tebligat + bilirkişi + tanık
 - Vekalet ücreti AAÜT (Türkiye Barolar Birliği)
 
@@ -57,7 +57,7 @@ TEMYİZ:      Danıştay (ilgili daire — m. 46)
              └─ İDDK (m. 50) — ısrar/çelişki
 ```
 
-### Danıştay'ın İLK DERECE görevli olduğu istisnalar (Danıştay K. m. 24 + 30)
+### Danıştay'ın İLK DERECE görevli olduğu istisnalar (Danıştay K. m. 24)
 
 DAR alan:
 - CB Kararları + CB ile yürürlüğe konulan düzenleyici işlemler

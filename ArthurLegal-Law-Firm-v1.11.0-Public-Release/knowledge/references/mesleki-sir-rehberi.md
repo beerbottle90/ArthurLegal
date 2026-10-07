@@ -19,7 +19,7 @@
 
 ## Avukatlık K. m. 36 metni (özet)
 
-> "Avukat, yapılan iş ve işverenler hakkında öğrendiği şeyleri sır olarak saklamakla yükümlüdür."
+> "Avukatların, kendilerine tevdi edilen veya gerek avukatlık görevi, gerekse, Türkiye Barolar Birliği ve barolar organlarındaki görevleri dolayısiyle öğrendikleri hususları açığa vurmaları yasaktır."
 
 **Kapsam:**
 - Müvekkilin **tüm verdiği bilgiler** (sözlü + yazılı)
@@ -57,7 +57,7 @@ Avukat müvekkilin menfaatine aykırı eylemde bulunamaz. Eski müvekkilin bilgi
 
 ## CMK m. 154 — Müdafi-şüpheli görüşmesi
 
-> "Şüpheli veya sanık, vekili ile her zaman ve konuşulanları başkalarının duyamayacağı bir ortamda görüşebilir. Bu kişilerin müdafi ile yazışmaları denetime tabi tutulamaz."
+> "Şüpheli veya sanık, vekâletname aranmaksızın müdafii ile her zaman ve konuşulanları başkalarının duyamayacağı bir ortamda görüşebilir. Bu kişilerin müdafii ile yazışmaları denetime tâbi tutulamaz."
 
 **Pratik:**
 - Cezaevi görüşme odası mahremiyetine dikkat (kayıt yasak — sistem zaman zaman teknik hataya düşer; konuşmadan önce kontrol)
@@ -98,7 +98,7 @@ Avukat, müvekkili lehine veya aleyhine **tanıklık yapmaktan çekinebilir** (z
 1. Hemen alıcıyı bilgilendir: "Bu yanlış gönderildi, lütfen sil + okuyup geri yazma"
 2. Matter sahibini bilgilendir
 3. Yönetici Ortak'a olay raporu
-4. **KVKK ihlal bildirimi**: 72 saat içinde KVKK Kurulu'na (kişisel veri ihlali — KVKK m. 12/5)
+4. **KVKK ihlal bildirimi**: 72 saat içinde (doğrulanmadı) KVKK Kurulu'na (kişisel veri ihlali — KVKK m. 12/5)
 5. Müvekkili bilgilendir
 6. Büro içi süreç revize (kanal kontrol, otomatik şifreleme)
 
@@ -115,7 +115,7 @@ Avukat, müvekkili lehine veya aleyhine **tanıklık yapmaktan çekinebilir** (z
 ### Senaryo 5 — Devam eden suç
 
 **Olay:** Müvekkil yeni bir suç işlemeyi planlıyor (örn. başka bir kişiyi öldürmek).
-**Doğru:** TBB MK m. 36 istisnası — **mağdurun korunması** için gizliliği kırma yetkisi. **Ortaklar Kurulu + Baro Hukuk Müşavirliği** danışma + ceza yargılamasına haber verme.
+**Doğru:** TBB MK m. 36 istisnası (doğrulanmadı) — **mağdurun korunması** için gizliliği kırma yetkisi. **Ortaklar Kurulu + Baro Hukuk Müşavirliği** danışma + ceza yargılamasına haber verme.
 **Sınır:** Sadece **gelecek + somut + ciddi** suç için. **Geçmiş** suçun itirafı kapsamda değil.
 
 ---
@@ -162,8 +162,8 @@ Büro **veri sorumlusu** sıfatıyla:
 - VERBİS sicili (eşik üzeri büro için)
 - Müvekkil aydınlatma metni (intake'te imzaya sunulur)
 - Müvekkil veri envanteri (matter klasörleri içinde)
-- Veri saklama süresi politikası (matter kapanışından 10 yıl arşiv, sonra imha — Av. K. m. 41 zamanaşımı kuralları ile uyumlu)
-- İhlal bildirim süreci (KVKK m. 12/5 — 72 saat)
+- Veri saklama süresi politikası (matter kapanışından 10 yıl arşiv, sonra imha — genel zamanaşımı süreleriyle uyumlu)
+- İhlal bildirim süreci (KVKK m. 12/5 — 72 saat, doğrulanmadı)
 
 Detay: `kvkk-m11-cevap-sablonu.md` + büro VERBİS dökümanı (büro-spesifik).
 
@@ -183,7 +183,7 @@ Detay: `kvkk-m11-cevap-sablonu.md` + büro VERBİS dökümanı (büro-spesifik).
 1. **Olay tespit** — hangi bilgi, kimden, kime, ne zaman
 2. **Acil kontrol** — sızıntı durduruldu mu? Alıcı silebilir mi?
 3. **Müvekkili bilgilendir** — yazılı + olay raporu
-4. **KVKK ihlal bildirimi** (72 saat — m. 12/5)
+4. **KVKK ihlal bildirimi** (72 saat, doğrulanmadı — m. 12/5)
 5. **Baro Hukuk Müşavirliği** danışma (disiplin riski değerlendirme)
 6. **Düzeltme aksiyonu** — süreç revize, ek kontroller
 7. **Belgeleme** — gelecek matter'da emsal

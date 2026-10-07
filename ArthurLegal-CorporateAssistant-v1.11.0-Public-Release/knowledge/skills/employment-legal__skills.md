@@ -1,5 +1,7 @@
 # employment-legal - Skill Referans Kitapcigi
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+
 > Alan: Is hukuku - ise iade, sorusturma, politika
 > Toplam skill: 20
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.

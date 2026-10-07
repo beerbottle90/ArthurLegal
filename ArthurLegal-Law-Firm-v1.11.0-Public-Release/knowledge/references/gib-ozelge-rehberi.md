@@ -4,8 +4,8 @@
 
 ## Yasal çerçeve
 
-- **VUK m. 369** — Mukteza talep hakkı
-- **395 Sıra No.lu VUK Genel Tebliği** — Özelge format ve usulleri
+- **VUK m. 413** — Mukteza (özelge) talep hakkı
+- **Mükelleflerin İzahat Taleplerinin Cevaplandırılmasına Dair Yönetmelik** — Özelge format ve usulleri
 - **Özelge "mükellef kişiye özel" bağlayıcıdır** — başka mükellef bunu doğrudan kullanamaz ama emsal referans olabilir
 
 ## Özelge'nin avantajları
@@ -27,7 +27,7 @@
    - Büyük şirket → İstanbul/Ankara Vergi Dairesi Başkanlığı veya GİB Genel Müdürlüğü
    - Genelde belirsizliğin önemine göre
 
-2. **Dilekçe formatı (Tebliğ 395):**
+2. **Dilekçe formatı (İzahat Yönetmeliği):**
    - Mükellef bilgileri (VKN, ünvan, adres)
    - Konu (kısa)
    - Fiili durum (ayrıntılı)
@@ -67,7 +67,7 @@ GİB özelge veri tabanı 18.000+ özelge — büyük ihtimal benzer konu var. E
 ## ArthurLegal MCP (`tr_`)
 
 ```
-tr_mevzuat_ara(number="213", types=["KANUN"])  # VUK m. 369
+tr_mevzuat_ara(number="213", types=["KANUN"])  # VUK m. 413
 ```
 
 ## Bağlantılı

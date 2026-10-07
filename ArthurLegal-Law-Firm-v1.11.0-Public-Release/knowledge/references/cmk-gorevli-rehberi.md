@@ -1,13 +1,13 @@
 # CMK Görevli Atama Rehberi
 
-> CMK 5271 + Avukatlık K. m. 35 — Zorunlu müdafiilik atamaları, baro CMK servisi, 48 saat sınırı, ödeme takibi.
+> CMK 5271 (m. 150-156) + Avukatlık K. m. 35 (avukatlık tekeli) — Zorunlu müdafiilik atamaları, baro CMK servisi, 24 saat sınırı, ödeme takibi.
 
 ---
 
 ## Hukuki dayanak
 
 - **5271 sayılı CMK m. 150-156** — Müdafi atama
-- **1136 sayılı Av. K. m. 35** — Müdafiilik
+- **1136 sayılı Av. K. m. 35** — Yalnız avukatların yapabileceği işler (avukatlık tekeli; müdafi atama usulü CMK m. 150-156'dadır)
 - **Adalet Bakanlığı CMK Yönetmeliği** — atama ve ödeme usulü
 - **TBB CMK Tarifesi** — yıllık ücret tarifesi (RG'de yayımlanır)
 
@@ -228,7 +228,7 @@ CMK m. 233-242:
 ## Yaygın hatalar
 
 1. **Susma hakkını hatırlatmama** → ifade kanıt değerini düşürür (CMK m. 147)
-2. **48 saat sınırını kaçırma** → resen salıverme + müdafii hatası iddia riski
+2. **24 saat sınırını kaçırma** → resen salıverme + müdafii hatası iddia riski
 3. **Tutukluluk itirazını iki haftalık süre içinde yapmama** (m. 268/1) → süre kaybı + müvekkilin daha uzun tutuk kalması
 4. **CMK ödeme cetvelini geç verme** → ödeme gecikir
 5. **Atamayı sürekli reddetme** → baro CMK servisinden çıkarılma (gönüllü statüsü kayıp)

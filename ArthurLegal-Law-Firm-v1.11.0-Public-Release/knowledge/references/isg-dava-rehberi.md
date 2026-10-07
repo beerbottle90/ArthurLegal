@@ -23,7 +23,7 @@ Bir İSG kazası genelde **3 paralel dava süreci** doğurur — her biri ayrı 
 - **TCK m. 85** — Taksirle öldürme (1-6 yıl hapis)
 - **TCK m. 89** — Taksirle yaralama (3 ay - 1 yıl + ağırlatıcı sebepler)
 - **TCK m. 257** — Görevi kötüye kullanma (memur sıfatlı için)
-- **6331 sayılı İSG Kanunu m. 30, 31, 32** — İşveren ceza sorumluluğu
+- **6331 sayılı İSG Kanunu m. 26** — İşveren idari para cezası sorumluluğu
 - **TCK m. 22/4** — Bilinçli taksir = ağırlatıcı
 
 ### Olası sanık
@@ -31,7 +31,7 @@ Bir İSG kazası genelde **3 paralel dava süreci** doğurur — her biri ayrı 
 - İş güvenliği uzmanı (A sınıfı uzman zorunlu — büyük tesis)
 - Vardiya amiri
 - Yönetici sıfatıyla CEO/COO (büyük olaylar)
-- Şirket tüzel kişiliği (CMK m. 138 — tüzel kişiye güvenlik tedbiri)
+- Şirket tüzel kişiliği (TCK m. 60 — tüzel kişiye güvenlik tedbiri)
 
 ### Süreç
 1. **Savcılık soruşturma açar** — 6 ay (uzatılabilir 2 ay daha)
@@ -62,9 +62,9 @@ tr_ictihat_ara(
 - **TBK m. 49** — Haksız fiil tazminatı (genel)
 - **TBK m. 50-52** — Tazminat hesaplanması
 - **TBK m. 53** — Destek tazminatı (ölüm halinde aile)
-- **TBK m. 54-56** — Bedensel zarar
-- **TBK m. 56-58** — Manevi tazminat
-- **4857 İş K. m. 77** — İşverenin iş güvenliği yükümlülüğü
+- **TBK m. 54-55** — Bedensel zarar
+- **TBK m. 56, 58** — Manevi tazminat
+- **6331 İSG K. m. 4** — İşverenin iş güvenliği yükümlülüğü
 - **5510 SGK Kanunu m. 13** — İş kazası tanımı
 
 ### Mağdur taraf
@@ -99,7 +99,7 @@ tr_ictihat_ara(
 ## 3. Çevre Bakanlığı idari ceza
 
 ### Hukuki temel
-- **2872 sayılı Çevre Kanunu m. 20-22** — Hava, su, toprak kirlilik cezaları
+- **2872 sayılı Çevre Kanunu m. 20** — Hava, su, toprak kirlilik cezaları
 - **ÇED Yönetmeliği** — kaza sonrası ÇED inceleme zorunlu
 - Tutarlar yıllık güncellenir (2026: kademe kademe milyonlarca TL'ye kadar)
 

@@ -1,6 +1,6 @@
 # IP Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/ip-advisory:cold-start-interview` ile doldurulur.*
+*Bu dosya `/ip-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -80,7 +80,7 @@
 | **YİDK itiraz** | m. 20-21 | Karara karşı bildirimden itibaren 2 ay (m. 20/2) |
 | **Kurum (YİDK) kararına karşı dava** | m. 156/2 | Ankara FSH Hukuk Mh.; dava süresi maddeden çekilerek teyit edilir |
 | **Tasarım tescili** | m. 55-81 | Yenilik + ayırt edicilik; başvuru → yayım → tescil (~6 ay) |
-| **Patent başvurusu, araştırma, inceleme, itiraz** | m. 90-100 | TÜRKPATENT veya EPO (Avrupa); inceleme 3-5 yıl |
+| **Patent başvurusu, araştırma, inceleme, itiraz** | m. 90-100 | TÜRKPATENT veya EPO (Avrupa); inceleme 3-5 yıl (doğrulanmadı) |
 | **Patent ve faydalı model koruma süresi** | m. 101 | Patent 20 yıl, faydalı model 10 yıl; uzatılamaz |
 | **Faydalı model** | m. 142-145 | Daha hızlı, daha zayıf koruma |
 | **Çalışan buluşları** | m. 113-122 | Emredici (m. 117); işverenin hak talebi 4 ay (m. 115/1); önalım hakkı çalışanındır (m. 120). `smk-rehberi.md` Çalışan buluşları bölümü |
@@ -90,14 +90,14 @@
 ### 5846 sayılı FSEK (Fikir ve Sanat Eserleri K.)
 
 - Telif hakkı **otomatik** doğar — tescil değil, **eser olma** şartı (özgünlük + somutluk)
-- Tescil **isteğe bağlı** (FSEK m. 13-A — Telif Hakları Genel Müdürlüğü)
+- Tescil **isteğe bağlı** (FSEK m. 13 — Telif Hakları Genel Müdürlüğü)
 - Süre: yazar yaşam + 70 yıl
 - Bilgisayar yazılımı = eser (FSEK m. 2/1)
 - Açık kaynak lisansı **FSEK altında geçerli** ama lisans şartları üst hukuk
 
 ### 5651 sayılı İnternet K.
 
-- Hosting'e ihtarname → 24 saat içinde kaldırma yükümlülüğü (m. 9)
+- Hosting'e ihtarname → içeriğin çıkarılması/erişimin engellenmesi (m. 9 iptal edilmiştir — AYM 11.10.2023, E. 2020/76, K. 2023/172; özel hayat ihlalinde m. 9/A yolu geçerlidir)
 - Sulh ceza hakimi kararı → erişimin engellenmesi
 - **Hata düzeltme + cevap hakkı** (5187 sayılı Basın K. m. 14)
 
@@ -202,4 +202,4 @@ Cross-matter OFF zorunlu. IP matter'ları **çok uzun ömürlü** (10+ yıl yeni
 
 ---
 
-*Re-run interview:* `/ip-advisory:cold-start-interview --redo`
+*Re-run interview:* `/ip-legal:cold-start-interview --redo`

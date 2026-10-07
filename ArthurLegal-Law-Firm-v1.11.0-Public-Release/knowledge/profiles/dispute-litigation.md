@@ -1,6 +1,6 @@
 # Dispute Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/dispute-litigation:cold-start-interview` ile doldurulur. TR overlay
+*Bu dosya `/litigation-legal:cold-start-interview` ile doldurulur. TR overlay
 yüklü ise `tr-overlay/profiles/dispute-litigation.md` bu dosyanın üzerine
 kopyalanmıştır ve `[DOLDUR]` alanları kısmen önceden işlenmiştir.*
 
@@ -120,7 +120,7 @@ Pratiğimiz:
 - Anlaşmama → son tutanak dava dilekçesine eklenir; eklenmemişse 1 haftalık kesin süre, sunulmazsa usulden ret; hiç başvurulmamışsa doğrudan usulden ret (**HUAK m. 18/A/2**)
 - **İhtiyati tedbir (HMK m. 389 vd.) / ihtiyati haciz (İİK m. 257 vd.)** arabuluculuktan önce talep edilebilir (dava açma süresi arabuluculukta işlemez — HUAK m. 18/A/16), ana dava arabuluculuk sonrası
 
-**Skill `/dispute-litigation:case-intake` bunu otomatik kontrol eder** — ticari + alacak/tazminat sinyali görürse arabuluculuk öncesi flag çıkarır.
+**Skill `/litigation-legal:case-intake` bunu otomatik kontrol eder** — ticari + alacak/tazminat sinyali görürse arabuluculuk öncesi flag çıkarır.
 
 ---
 
@@ -158,7 +158,7 @@ Tribunal: [...] | Case No: [...] | Date: DD.MM.YYYY
 **Türk hukuku özellikleri:**
 - **Avukatlık K. m. 36** — avukatın iş ile ilgili öğrendikleri sır olarak korunur. **Tam koruma** — büro olarak bu plugin'in birincil guardrail'idir.
 - **CMK m. 153** — müdafiin soruşturma dosyasını inceleme yetkisi ve hâkim kararıyla kısıtlanması (ceza dosyaları için `criminal-defense` plugin'ine yönlendir).
-- **TBB Meslek Kuralları m. 36-37** — mesleki sırrın korunması, istisnaları.
+- **TBB Meslek Kuralları m. 36-37** (doğrulanmadı) — mesleki sırrın korunması, istisnaları.
 
 ### ⚠️ İnceleyen notu (reviewer note)
 
@@ -264,13 +264,13 @@ Bu plugin için **matter workspaces ENABLED varsayılan** — çünkü litigatio
 Skill aktif matter context'inde çalışır. Skill bu CLAUDE.md'yi (practice-level) + matter'ın `matter.md`'sini (dava-spesifik) okur. Çıktılar matter klasörüne yazılır:
 `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
 
-Matter komutları: `/dispute-litigation:matter-workspace new | list | switch | close | none`
+Dosya açma: `/litigation-legal:case-intake`; büro kaydı: `/firm-operations:matter-open`. `litigation-legal` eklentisinde ayrı bir `matter-workspace` komutu yok; aktif dosya klasörü elle seçilir.
 
 ---
 
 ## Türk hukuku — özel guardrails
 
-### Av. K. m. 38 — Yasaklılık (conflict check tetikleyici)
+### Av. K. m. 38 — İşin reddi zorunluluğu (conflict check tetikleyici)
 
 Yeni bir matter açılırken veya mevcut matter'da **karşı yanın gerçek kimliği netleştiğinde** (örn. ortak şirket, holding bağlantısı), **`/firm-operations:conflict-check`** zorunlu çalıştırılır. Sonuç:
 - **⛔ Conflict bulundu** — matter ret veya ortaklar kurulu kararıyla yazılı feragat
@@ -320,4 +320,4 @@ closing_action: "Sulh anlaşması veya tahkim ön-protokol taslakları için bu 
 
 ---
 
-*Re-run interview:* `/dispute-litigation:cold-start-interview --redo`
+*Re-run interview:* `/litigation-legal:cold-start-interview --redo`

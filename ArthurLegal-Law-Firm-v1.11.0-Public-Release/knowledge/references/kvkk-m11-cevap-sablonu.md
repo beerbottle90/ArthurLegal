@@ -21,7 +21,7 @@ Başvuru geldiğinde:
    h) otomatik karar analiz aleyhine itiraz
    i) zarar halinde tazmin
 4. m. 28 istisnaları kontrol (savunma hakkı, suç önleme, yargı süreci vs.)
-5. m. 13/3 — 30 gün içinde cevap; kompleks ise gerekçeli süre uzatma
+5. m. 13/2 — 30 gün içinde cevap
 6. Reddedilirse → 30 gün içinde Kurula şikayet hakkı bilgisi
 ```
 

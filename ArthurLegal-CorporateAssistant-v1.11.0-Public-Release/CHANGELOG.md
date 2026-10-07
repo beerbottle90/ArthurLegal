@@ -5,6 +5,36 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.0] — 2026-10-07 — *Laboratuvar Düzeltmeleri: Karar Künyesi Kapısı, Madde Atfı Denetimi*
+
+> **Özellik sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan ve ana depoya aktarılmamış düzeltmeler bu sürümle geldi. Madde atıfları o tarihlerde `tr_mevzuat_madde_getir` ile çekildi; çekilemeyen bilgi "(doğrulanmadı)" diye işaretli. Laboratuvar 1.10.0 üzerinde çalıştığı için 1.10.1'in canlı veri uyarısı korundu; yeni metinlerdeki eski etiketler `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırına çevrildi.
+
+### Eklendi
+
+1. **Karar künyesi doğrulama:** `tr-atif-dogrulama-rehberi.md` (Law-Firm ile bayt eşit) ve
+   `/legal-research:tr-atif-dogrulama`; SYSTEM_PROMPT bölüm 4 madde 13 "Karar künyesi kapısı".
+
+### Güvenlik
+
+1. OpenSanctions API anahtarı paketten çıkarıldı (`opensanctions-rehberi.md`, `karsilastirmali-hukuk-rehberi.md`);
+   anahtar `OPENSANCTIONS_API_KEY` ortam değişkeninden okunur. Önceki sürümlerde yayımlanan anahtar iptal edilmelidir.
+
+### Düzeltildi
+
+1. **Madde atıfı denetimi:** 20 rehberde metinle çelişen atıflar düzeltildi.
+   Bulunanlar: mülga maddelere atıf (İYUK m. 54 ve Danıştay K. m. 30; İş K. m. 77; 2872 m. 21-22; 5651 m. 9 AYM'ce
+   iptal), uydurma tırnak içi kanun metinleri, yanlış süreler (damga beyanı: Bakanlıkça belirlenenlerde aylık,
+   diğerlerinde 15 gün, DVK m. 22; ÇED para cezası davası 30 gün, 2872 m. 25; İYUK m. 11'de cevapsız kalma süresi 30
+   gün), damgada "her nüsha ayrı" kuralının tersi (DVK m. 5) ve azami tutar (DVK m. 14), var olmayan kanun numaraları
+   (kanun kısaltmaları tablosunda 7257 ve 6537), yürürlükten kalkan SPK Tebliği II-23.1 → II-23.3. Doğrulanamayan
+   kesin iddialar "(doğrulanmadı)" diye işaretlendi.
+2. SYSTEM_PROMPT: ticari sır dayanağı (bölüm 4 madde 5 ve gizlilik sınırı) TBK m. 396 ve TTK m. 55 olarak düzeltildi.
+3. **Skill kitapçıkları denetimi (25.09.2026):** `tax-legal` (vergi uzlaşması 7524 sonrası: yalnız cezalarda;
+   uzlaşılamazsa dava süresi VUK ek m. 7'ye göre gerekirse 15 güne uzar; özelge dayanağı VUK m. 413; KDVK m. 11 ve
+   m. 32), `administrative-legal` (İYUK m. 16/3, m. 50/3 ve 50/5; idari para cezasında 60/30 gün ve Kabahatler K.
+   m. 27 yolu; KİK 20 gün), `commercial-legal` (MÖHUK m. 24 ve m. 62), `energy-finance` (Tebliğ No: 2010/4),
+   `litigation-legal` (yalnız "(doğrulanmadı)" etiketleri).
+
 ## [1.11.0] — 2026-10-07 — *Yapay Zekâ Ajanı Onayı; Esas Numarasıyla Arama Düzeltildi*
 
 > **Özellik sürümü.** Yeni skill `/regulatory-legal:ai-ajan-onayi`, bir rehber düzeltmesi ve örneklerde kişi adı temizliği. Araçlar ve kaynaklar aynı; `regulatory-legal` 9 skill'den 10'a çıktı.
@@ -853,4 +883,4 @@ Araştırmaları.
 ---
 
 [1.0.1]: ./VERSION.md
-[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release

@@ -4,8 +4,8 @@
 
 ## Yasal çerçeve
 
-- **2872 sayılı Çevre Kanunu** m. 10/A (büyük endüstriyel kaza önleme)
-- **Büyük Endüstriyel Kazaların Önlenmesi ve Etkilerinin Azaltılması Hakkında Yönetmelik** (RG 02.08.2019/30850 + sonraki revizyonlar)
+- **2872 sayılı Çevre Kanunu** (büyük endüstriyel kaza önleme yönetmeliğinin dayanağı)
+- **Büyük Endüstriyel Kazaların Önlenmesi ve Etkilerinin Azaltılması Hakkında Yönetmelik** (RG 02.03.2019/30702 + sonraki revizyonlar)
 - **AB Seveso III Direktifi 2012/18/EU** ile uyumlu Türk mevzuatı
 - **6331 İSG K.** ile paralel uygulanır (iş güvenliği boyutu)
 - **5015 Petrol Piyasası K. + 4646 Doğal Gaz** ile sektörel paralel rejim

@@ -156,7 +156,7 @@ Rapor formatı litigation-legal'daki ile aynı.
 name: gib-ozelge-request
 description: >
   GİB (Gelir İdaresi Başkanlığı) özelge (mukteza) talep dilekçesi hazırlama: VUK m.
-  369 + Genel Tebliğ formatı, benzer özelgeleri ArthurLegal MCP (`tr_`)'den çekme, talep dilekçesi
+  413 + Genel Tebliğ formatı, benzer özelgeleri ArthurLegal MCP (`tr_`)'den çekme, talep dilekçesi
   taslağı, beklenen cevap süresi (6-9 ay) ve risk yönetimi.
 user-invocable: true
 ---
@@ -165,7 +165,7 @@ user-invocable: true
 
 ## Amaç
 
-Vergi mevzuatında belirsiz bir konuda **bağlayıcı yorum** almak için GİB'den özelge talep edilir (VUK m. 369 + 395 Sıra No.lu VUK Genel Tebliği).
+Vergi mevzuatında belirsiz bir konuda **bağlayıcı yorum** almak için GİB'den özelge talep edilir (VUK m. 413 — mükelleflerin izahat talebi; 395 Sıra No.lu VUK Genel Tebliği (doğrulanmadı)).
 
 **Önemli:**
 - GİB özelgesi **sadece talep eden mükellefi** bağlar (kişiye özel)
@@ -337,8 +337,8 @@ user-invocable: true
 ## KDV iadesi (KDVK m. 32 + 9)
 
 ### Genel rejim
-- **m. 32 — İhracat istisnası:** Mal/hizmet ihracatı KDV'den müstesna
-- **m. 9 — KDV iadesi:** İndirim hakkı oluşmayan KDV iade alınır
+- **m. 11 — İhracat istisnası:** Mal/hizmet ihracatı KDV'den müstesna
+- **m. 32 — KDV iadesi:** İstisna kapsamında indirim hakkı oluşmayan KDV iade alınır
 - İhracatçı KDV'yi mahsuben veya nakden iade alır
 
 ### Süreç
@@ -766,7 +766,7 @@ TP genellikle **yıllık dokümantasyon dönemi** (kurumlar vergisi beyanname ö
 | [Müvekkil] | Yönetim hizmeti | [...] | USD | yıllık |
 | Bağlı şirket X | Intra-group hizmet | [...] | TL | [...] |
 
-**Eşik kontrolü:** Bir ilişkili işlem ≥ 50.000 TL ise dokümantasyon zorunlu (Kurumlar Vergisi Genel Tebliği).
+**Eşik kontrolü:** Bir ilişkili işlem ≥ 50.000 TL ise dokümantasyon zorunlu (Kurumlar Vergisi Genel Tebliği — tutar doğrulanmadı).
 
 ### 2. Yöntem seçimi (5 yöntem)
 
@@ -899,9 +899,10 @@ Her intra-group işlem için:
 name: uzlasma-eval
 description: >
   Maliye uzlaşma teklifi geldi veya uzlaşma talebi verilecek — değerlendirme:
-  tarhiyat öncesi (VUK Ek m. 11, cezada %50'ye kadar indirim) vs. tarhiyat sonrası
-  (Ek m. 1, cezada %75'e kadar indirim) karar; kabul edilebilir vergi/ceza aralığı;
-  Danıştay dava alternatifiyle maliyet karşılaştırma; [Müvekkil] onay zinciri.
+  tarhiyat öncesi (VUK Ek m. 11, cezada %50'ye kadar indirim (doğrulanmadı)) vs. tarhiyat sonrası
+  (Ek m. 1, cezada %75'e kadar indirim (doğrulanmadı)) karar; kabul edilebilir ceza aralığı
+  (vergi aslı 7524 s.K. sonrası uzlaşma kapsamı dışında); Danıştay dava alternatifiyle maliyet
+  karşılaştırma; [Müvekkil] onay zinciri.
 user-invocable: true
 ---
 
@@ -924,12 +925,12 @@ user-invocable: true
 | Özellik | Tarhiyat öncesi (Ek m. 11) | Tarhiyat sonrası (Ek m. 1) |
 |---|---|---|
 | **Süre** | İnceleme raporu sonrası, tarhiyat öncesi | Tarhiyat tebliğinden 30 gün |
-| **Cezada indirim potansiyeli** | %50'ye kadar | **%75'e kadar** |
+| **Cezada indirim potansiyeli** | %50'ye kadar (doğrulanmadı) | **%75'e kadar (doğrulanmadı)** |
 | **Pazarlık esnekliği** | Yüksek (henüz tarhiyat yapılmadı) | Düşük (tutar kesinleşmiş) |
 | **Risk** | Maliye agresif tutum sergileyebilir | Sonraki dava süresi kaçırılabilir |
 | **Strateji** | Hızlı çözüm istiyorsa | Pazarlık + dava seçeneği aksamadan ise |
 
-⚠️ **KRİTİK:** Tarhiyat sonrası uzlaşma için başvuru = dava süresi durmaz. Uzlaşma sağlanmazsa "uzlaşmama tutanağı" tarihinden itibaren dava süresi devam eder ama **30 gün hesabı tebliğden başlar, uzlaşma için harcanan gün bu süreden düşülür** (VUK Ek m. 4). Çok az süre kalabilir.
+⚠️ **KRİTİK:** Uzlaşma talep edilmişse, uzlaşma vaki olmadıkça o ceza için dava açılamaz (VUK ek m. 7/1). Uzlaşma sağlanamazsa, kesilen cezaya karşı dava **"uzlaşmanın vaki olmadığına dair tutanağın" tebliğinden itibaren genel hükümlere göre** açılır; dava açma süresi bitmiş veya 15 günden az kalmışsa süre tutanağın tebliğinden itibaren **15 gün** olarak uzar (VUK ek m. 7/4). Ayrıca tarhiyat öncesi uzlaşma temin edilemez veya sağlanamazsa, aynı ceza için tarhiyat sonrası uzlaşma talep edilemez (VUK ek m. 11/3).
 
 ## Adımlar
 
@@ -952,21 +953,21 @@ user-invocable: true
 ### 3. Uzlaşma indirim hesabı
 
 **Tarhiyat öncesi (Ek m. 11):**
-- Vergi: pazarlığa açık (genelde %0-30 indirim)
-- Ceza: %50'ye kadar indirim
+- Vergi aslı: uzlaşma kapsamı DIŞINDA (7524 s.K. m. 14 ile "vergi" ibaresi ek m. 11'den çıkarıldı; uzlaşma yalnız vergi ziyaı cezası ile eşiği aşan usulsüzlük/özel usulsüzlük cezaları için yapılır)
+- Ceza: %50'ye kadar indirim (doğrulanmadı)
 - Gecikme zammı: durdurulur (uzlaşma tarihine kadar)
 
 **Tarhiyat sonrası (Ek m. 1):**
-- Vergi: pazarlığa açık (daha az esneklik)
-- Ceza: **%75 indirim** (resmi tarife)
+- Vergi aslı: uzlaşma kapsamı DIŞINDA (7524 s.K. m. 14 ile "vergi" ibaresi ek m. 1'den çıkarıldı; aynı kapsam sınırı geçerli)
+- Ceza: **%75 indirim** (doğrulanmadı)
 - Gecikme zammı: uzlaşmaya kadar işler
 
 ### 4. Dava alternatifi maliyet karşılaştırma
 
 | Senaryo | Maliyet |
 |---|---|
-| Uzlaşma (Ek m. 11 ile) | Vergi pazarlık × X% + Ceza %50 + zaman ~1-3 ay |
-| Uzlaşma (Ek m. 1 ile) | Vergi pazarlık × X% + Ceza %25 + zaman ~3-6 ay |
+| Uzlaşma (Ek m. 11 ile) | Vergi aslı tam tahsil (uzlaşma kapsamı dışı) + Ceza %50 (doğrulanmadı) + zaman ~1-3 ay |
+| Uzlaşma (Ek m. 1 ile) | Vergi aslı tam tahsil (uzlaşma kapsamı dışı) + Ceza %25 (doğrulanmadı) + zaman ~3-6 ay |
 | Danıştay dava (kazanırsa) | %0 + faiz iade (geç) + vekalet ücreti karşı tarafa |
 | Danıştay dava (kaybederse) | %100 vergi + %100 ceza + gecikme + dava masrafı + vekalet |
 | Karma — uzlaş + dava | [kombinasyon] |
@@ -1147,7 +1148,7 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 
 **Option 1: Tarhiyat öncesi uzlaşma (VUK Ek m. 11)**
 - Daha avantajlı zamanlama
-- Cezada %50'ye kadar indirim
+- Cezada %50'ye kadar indirim (doğrulanmadı) — yalnız ceza; vergi aslı uzlaşma kapsamı dışında (7524 s.K.)
 - Pazarlık alanı geniş
 - Sonra "kabul ediyorum" yazısı
 
@@ -1170,9 +1171,9 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 
 ⚠️ **30 GÜN SÜRE BAŞLADI** (İYUK m. 7). Aksiyon:
 
-- [ ] **Tarhiyat sonrası uzlaşma (VUK Ek m. 1)** — 30 gün içinde başvur (cezada %75'e kadar indirim)
+- [ ] **Tarhiyat sonrası uzlaşma (VUK Ek m. 1)** — 30 gün içinde başvur (cezada %75'e kadar indirim (doğrulanmadı); yalnız ceza için, vergi aslı uzlaşma kapsamı dışında — 7524 s.K.)
 - [ ] **Veya dava** — 30 gün içinde Danıştay'a → `/tax-legal:tax-litigation-prep`
-- [ ] **Veya ikisi** — uzlaşma başvur, görüşme tamamlanırsa kabul/red; uzlaşılmazsa tarhiyat kesinleşir ve sonrasında dava süresi kalmaz! Bu nedenle uzlaşmaya gidersen dava süresi kaçırma riski VAR.
+- [ ] **Veya ikisi** — uzlaşma başvur; uzlaşma vaki olmadıkça o ceza için dava açılamaz (VUK ek m. 7/1). Uzlaşılmazsa dava, tutanağın tebliğinden itibaren genel hükümlere göre açılır; süre bitmiş veya 15 günden az kalmışsa tutanağın tebliğinden itibaren 15 gün olarak uzar (VUK ek m. 7/4) — yine de süre kısalabileceğinden derhal aksiyon al.
 
 ### ArthurLegal MCP (`tr_`) — emsal arama
 

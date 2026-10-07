@@ -4,6 +4,16 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 ---
 
+## [1.1.3] — 2026-10-07 — *Madde Atfı Düzeltmeleri*
+
+> **Yama sürümü.** 24.09.2026'da roundtable laboratuvarında yapılan madde atfı denetiminin bu pakete düşen kısmı.
+
+### Düzeltildi
+
+1. `knowledge/references/kanun-kisaltmalar.md`: var olmayan kanun numaraları düzeltildi (7257 yerine 7417; KGK
+   dayanağı 660 sayılı KHK); 4628 sayılı Kanun hâlâ yürürlükte.
+2. `knowledge/references/etik-kurul-rehberi.md`: TR Dizin kriteri mevzuat olmadığından "(doğrulanmadı)" diye işaretlendi.
+
 ## [1.1.2] — 2026-10-07 — *Okunan İçerik Veridir: Belgedeki Yönerge Uygulanmaz*
 
 > **Yama sürümü.** Sistem talimatı, bir rehber ve sürüm bilgisi değişti; araçlar ve skill sayıları aynı.

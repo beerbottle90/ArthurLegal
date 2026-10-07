@@ -1,6 +1,6 @@
 # Employment Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/employment-advisory:cold-start-interview` ile doldurulur.*
+*Bu dosya `/employment-legal:cold-start-interview` ile doldurulur.*
 
 ---
 
@@ -100,7 +100,7 @@
 
 ### Fesih sebepleri (4857)
 
-- **İşveren haklı fesih (m. 25):** Disiplinsizlik, sağlık, zorlayıcı sebep, devamsızlık (4 gün) — kıdem yok
+- **İşveren haklı fesih (m. 25):** Disiplinsizlik, sağlık, zorlayıcı sebep, devamsızlık (ardı ardına 2 gün / ayda 3 gün) — kıdem yok
 - **İşçi haklı fesih (m. 24):** İşveren ihlali — kıdem var, ihbar yok
 - **Geçersiz fesih iddiası** → işe iade davası (m. 18)
 
@@ -210,4 +210,4 @@ Cross-matter OFF zorunlu. **Conflict check ekstra sıkı** (işveren-işçi tara
 
 ---
 
-*Re-run interview:* `/employment-advisory:cold-start-interview --redo`
+*Re-run interview:* `/employment-legal:cold-start-interview --redo`

@@ -30,7 +30,7 @@
 3. **TBB Avukatlık Bürosu staj eğitimi** — online + sınıf
 4. **Staj sonu sınavı** — TBB tarafından
 5. **TBB Ruhsat** — sınav başarılı + sicil temiz
-6. **Baro levhasına kayıt** — asıl baroda (Av. K. m. 17)
+6. **Baro levhasına kayıt** — asıl baroda (Av. K. m. 9)
 7. **Bağlı kayıt** (varsa) — başka barolarda (sadece duruşma için yeterli, ayrı tam üyelik gerek yok)
 
 ---
@@ -42,7 +42,7 @@
 | **Asıl üye** | Tam üye, GK oy hakkı, organa seçilebilir, baro hizmetlerinden istifade |
 | **Bağlı üye** | Asıl barosu başka, bu baronun coğrafyasında duruşmaya katılabilir |
 | **Stajyer** | Staj devam ediyor, stajyer kütüğü |
-| **Onursal** | Emeklilik sonrası (Av. K. m. 36/2) |
+| **Onursal** | Emeklilik sonrası (doğrulanmadı — m. 36 sır saklama hükmüdür, konuyla ilgisizdir) |
 | **Müsteşar / Hukuk Müşaviri** (kamu görevi) | Sicili dondurulmuş — avukatlık icra edilmez |
 
 ### Levha değişikliği
@@ -96,7 +96,7 @@ Bir başka büroya geçiş, ofis bayilik, profesyonel sigorta gibi durumlarda **
 
 ## Avukatlık Ortaklığı (büro) sicili
 
-Av. K. m. 44/A-44/G:
+Av. K. m. 44:
 - **Avukatlık Ortaklığı**: 2+ avukat (asıl üye baroya bağlı) ortaklaşa
 - **TBB Avukatlık Ortaklıkları Sicili** kayıt zorunlu
 - **Yıllık beyan** TBB'ye sunulur (ortak değişikliği, faaliyet adresi, vd.)
@@ -142,7 +142,7 @@ Detay: `cmk-gorevli-rehberi.md`
 - **Av. K. m. 38 ihlal** (çatışma)
 - **Av. K. m. 164 ihlal** (ücret sözleşmesi düzensizlik)
 - **Yetersiz takip / ihmal** (matter takipsizliği — TBK m. 502 vd.)
-- **Reklam yasağı ihlali** (Av. K. m. 55-57 — sınırlı reklam)
+- **Reklam yasağı ihlali** (Av. K. m. 55 — sınırlı reklam)
 - **Mesleki onuru zedeleyici davranış**
 
 ### Süreç
@@ -180,7 +180,7 @@ Detay: `cmk-gorevli-rehberi.md`
 
 ### TBB GK
 
-- Her **3 yıl** (Av. K. m. 117)
+- Her **2 yıl** (baro seçim yılı Aralık ayında Ankara'da olağan toplantı — Av. K. m. 115)
 - Delegeler (her baronun seçtiği üye sayısına göre)
 - TBB Başkan ve Genel Sekreterlik seçimi
 - Meslek kuralları kararı

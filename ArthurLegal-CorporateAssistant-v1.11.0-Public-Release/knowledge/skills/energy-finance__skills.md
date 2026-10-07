@@ -349,7 +349,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 - Seveso/Büyük Endüstriyel Kaza statüsü? (Rehber: `references/seveso-buyuk-kaza-rehberi.md`)
 
 **Rekabet:**
-- İşlem rekabet eşiği aşıyor mu? (Rekabet Kurumu 4054/2010/4 kararı)
+- İşlem rekabet eşiği aşıyor mu? (Rekabet Kurulundan İzin Alınması Gereken Birleşme ve Devralmalar Hakkında Tebliğ, Tebliğ No: 2010/4)
 - Dikey entegrasyon riski — [ŞİRKET ADI] TR halihazırdaki pazar payı + hedef = eşik?
 - Avrupa Komisyonu AB Birleşme Tüzüğü (ECMR) — AB cirosu eşiği kontrolü
 

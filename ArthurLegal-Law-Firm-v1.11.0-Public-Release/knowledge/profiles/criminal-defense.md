@@ -169,7 +169,7 @@ Aynı olayda hem sanık hem mağdur müvekkili **EŞZAMANLI** alamayız — net 
 
 ### "Suç işleniyor" durumu
 
-Müvekkil ileride suç işlemeyi planlıyorsa: **mesleki sır istisnası** (TBB Meslek Kuralları m. 36) — suç önleme amaçlı **mağdurun korunması** için gizliliği kırma yetkisi vardır. Bu nadir durumda **Ortaklar Kurulu + Baro Hukuk Müşavirliği** danışma.
+Müvekkil ileride suç işlemeyi planlıyorsa: **mesleki sır istisnası** (TBB Meslek Kuralları m. 36, doğrulanmadı) — suç önleme amaçlı **mağdurun korunması** için gizliliği kırma yetkisi vardır. Bu nadir durumda **Ortaklar Kurulu + Baro Hukuk Müşavirliği** danışma.
 
 ### Tutukluluk süreleri (CMK m. 102)
 

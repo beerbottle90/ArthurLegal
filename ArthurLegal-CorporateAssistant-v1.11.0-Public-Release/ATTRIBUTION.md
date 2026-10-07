@@ -130,3 +130,23 @@ Apache 2.0 geçerlidir.
 Bu paket halka açık sürümünde **gerçek kişi/şirket verisi içermez**. `knowledge/company-profile.md` tamamen `[DOLDUR]` yer-tutucularından oluşan bir şablondur.
 
 Paketi kendi kurumunuza uyarladığınızda doldurduğunuz gerçek veriler **sizin kontrolünüzdedir** — public repoya commit etmeden önce gözden geçirin.
+## Üst kaynak sürüm izi ve değişiklik bildirimi (Apache-2.0 md. 4)
+
+| Alan | Değer |
+|---|---|
+| Üst kaynak | [anthropics/claude-for-legal](https://github.com/anthropics/claude-for-legal), Apache-2.0 (kök `LICENSE`; üst kaynakta `NOTICE` dosyası yok) |
+| Türetme | Mayıs 2026. Türetilen kesin commit belgelenmemiştir (arthurlegal-ai-roundtable, rapor 01). |
+| Son karşılaştırma | `4a6c651889c97cc9140580363c73e0eb17379c2b` (üst kaynak main, 2026-07-23; 2026-09-23 itibarıyla ilerlememiş) |
+| Lisans metni | `LICENSE-APACHE-2.0-THIRD-PARTY.txt` |
+
+Üst kaynaktan uyarlanıp **değiştirilen** dosyalar (her birinin başında değişiklik bildirimi vardır):
+
+- `knowledge/skills/commercial-legal__skills.md`
+- `knowledge/skills/corporate-legal__skills.md`
+- `knowledge/skills/employment-legal__skills.md`
+- `knowledge/skills/ip-legal__skills.md`
+- `knowledge/skills/litigation-legal__skills.md`
+- `knowledge/skills/privacy-legal__skills.md`
+- `knowledge/skills/regulatory-legal__skills.md`
+
+Değişikliklerin niteliği: Türkçeye çeviri, Türk hukukuna uyarlama, ArthurLegal MCP araç yönlendirmesi, yeni skill'ler ve tek kitapçık biçimine dönüştürme. Diğer bütün dosyalar ArthurLegal'e özgüdür.

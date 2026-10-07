@@ -7,7 +7,7 @@
 **Katılımcıdan veri toplayan** her çalışma etik kurul izni gerektirir.
 Salt mevzuat / içtihat / doktrin analizi (klasik hukuk dogmatiği) **gerektirmez**.
 
-TR Dizin Dergi Değerlendirme Kriterleri m. 8: sosyal bilimler dâhil, etik kurul kararı
+TR Dizin Dergi Değerlendirme Kriterleri m. 8 (doğrulanmadı): sosyal bilimler dâhil, etik kurul kararı
 gerektiren tüm çalışmalarda izin alınmalı; **kurul adı, tarih ve karar sayısı** makalede
 belirtilmeli ve belgelenmelidir.
 

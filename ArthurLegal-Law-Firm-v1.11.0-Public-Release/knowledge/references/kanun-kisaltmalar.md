@@ -43,11 +43,11 @@
 | **5015** | Petrol Piyasası Kanunu | 5015 |
 | **4646** | Doğal Gaz Piyasası Kanunu | 4646 |
 | **5346** | Yenilenebilir Enerji Kaynakları K. | 5346 |
-| **4628** | Eski Elektrik Piyasası K. (yürürlükten kalktı, referans) | 4628 |
+| **4628** | EPDK Teşkilat K. (eski Elektrik Piyasası K.; hâlâ yürürlükte) | 4628 |
 | **2872** | Çevre Kanunu | 2872 |
 | **4737** | Endüstri Bölgeleri Kanunu ([TESİS LOKASYONU] ÖEB için) | 4737 |
-| **7257** | Elektrik Piyasası K. (depolama eklemesi) | 7257 |
-| **7406** | Atık Yönetimi K. (2023) | 7406 |
+| **7417** | Elektrik Piyasası K. m.7'ye depolama eklemesi (torba K.) | 7417 |
+| **7406** | Atık Yönetimi K. (2023) (doğrulanmadı — bu numarada kanun bulunamadı) | 7406 |
 | **[BORU HATTI PROJESİ] HHA** | [BORU HATTI PROJESİ] Hükümetlerarası Anlaşma + Ev Sahibi Hükümet Anlaşması | — |
 
 ## Sermaye piyasası + bağımsız denetim ([HALKA AÇIK İŞTİRAK] için)
@@ -56,7 +56,7 @@
 |---|---|---|
 | **SPK / 6362** | Sermaye Piyasası Kanunu | 6362 |
 | **6102 TTK m. 1524-1526** | Bilgilendirme ve şeffaflık | 6102 |
-| **6537 BD-K** | Kamu Gözetimi K. (KGK) | 6537 |
+| **KHK/660** | Kamu Gözetimi K. (KGK) | 660 |
 | **SPK Tebliğ II-15.1** | Özel Durum Açıklamaları | — |
 | **SPK Tebliğ VI-104.1** | İçsel Bilgiler | — |
 | **SPK Tebliğ II-23.1** | Önemli İşlemler | — |

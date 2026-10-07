@@ -225,7 +225,7 @@ Kısa özet + güncellenen `CLAUDE.md` alanları listesi + "Artık `/advocacy-le
 ---
 name: kamu-hukuku-dilekce
 description: >
-  Kamu (idari/anayasa) hukuku dilekçesi ÜRETİMİ — idari dava dilekçesi (İYUK m.3:
+  Kamu (idari/anayasa) hukuku dilekçesi ÜRETİMİ — idari dava dilekçesi (İYUK m.2:
   iptal + tam yargı), yürütmenin durdurulması (m.27), istinaf BİM (m.45), temyiz
   Danıştay (m.46), AYM bireysel başvuru (6216, 30 gün). Süre haritası (m.7: 60/30,
   ÇED 30 m.20/A), görevli mahkeme (İdare Mah./Danıştay ilk derece). Örnek senaryolar:
@@ -457,7 +457,7 @@ Konusu **bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit v
 | Ticari satım/eser/hizmet | 5 yıl (eser m.147) / 10 yıl | TBK m.147/146 |
 | Haksız fiil tazminatı | 2 yıl (öğrenme) / 10 yıl (mutlak) | TBK m.72 |
 | İş alacağı (kıdem/ihbar/ücret) | 5 yıl | 4857 / TBK |
-| Ecrimisil | 5 yıl geriye | Yargıtay içtihadı |
+| Ecrimisil | 5 yıl geriye (doğrulanmadı) | Yargıtay içtihadı |
 
 Kullanıcı zamanaşımı tarihi verdiyse **önce doğrula** (no silent supplement).
 

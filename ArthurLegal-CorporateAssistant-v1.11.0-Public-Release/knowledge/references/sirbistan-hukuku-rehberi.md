@@ -224,7 +224,7 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
    yeterlilik kararı aldığından GDPR mekanizmaları geçerli. KVKK + SR kanunu paralel.
 
 4. **Tahkim klozu — Sırbistan seated** → Zakon o arbitraži + NY Konvansiyonu + [ŞİRKET ADI]
-   Türkiye icra analizi (MÖHUK 5718 m. 54).
+   Türkiye icra analizi (MÖHUK 5718 m. 60 vd. — yabancı hakem kararlarının tenfizi).
 
 5. **Dil notu:** [ŞİRKET ADI]'ın Sırp karşı taraflarıyla yazışması İngilizce ya da Türkçe.
    Sırpça mevzuat alıntısı → SR orijinal + EN/TR çeviri birlikte.

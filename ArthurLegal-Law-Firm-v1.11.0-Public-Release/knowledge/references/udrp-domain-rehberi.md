@@ -9,7 +9,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 ### 1. Marka tecavüzü (SMK)
 - **SMK m. 7/3** — alan adında ticari amaçla marka kullanımı
 - **SMK m. 29-30** — tecavüz halleri + dava türleri
-- **SMK m. 149-150** — cezai sorumluluk
+- **SMK m. 149-150** — tazminat ve hukuki talepler
 
 ### 2. Tüketici yanıltma + haksız rekabet
 - **TTK m. 54-63** — haksız rekabet
@@ -45,7 +45,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 - **CloudFlare** (eğer arkasında):  abuse formu
 
 **Kanal 2 — Hukuki süreç:**
-- **5651 m. 9 başvurusu** — Sulh Ceza Hakimliği'ne URL bazlı erişim engelleme
+- **5651 m. 9 (mülga — AYM 11/10/2023, E. 2020/76 K. 2023/172; bu maddeye dayanılamaz, güncel dayanak teyit edilmeli)** — önceki uygulama: Sulh Ceza Hakimliği'ne URL bazlı erişim engelleme
   - Kişilik hakkı + ticari itibar ihlali argümanı
   - **24 saat içinde karar**
   - Hâkim kararı sonrası BTK 4 saatte erişimi engeller
@@ -53,7 +53,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
   - BTK + savcılık → **4 saat** içinde engelleme
 
 #### Cezai şikayet
-- **Cumhuriyet Başsavcılığına suç duyurusu** (TCK m. 158/1-f + SMK m. 149)
+- **Cumhuriyet Başsavcılığına suç duyurusu** (TCK m. 158/1-f + SMK m. 30)
 - Yetki: **dolandırıcılık eyleminin gerçekleştiği yer** veya **[Müvekkil] merkez = İstanbul**
 - Birim: **İstanbul Cumhuriyet Başsavcılığı Bilişim Suçları Bürosu**
 - Ekleri: whois, ekran görüntüleri, bayi olmadığı teyit yazısı, marka tescil belgesi, varsa mağdur ifadeleri
@@ -90,7 +90,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 - **Sosyal medya platformları** (LinkedIn, Instagram, X) — sahte [Müvekkil] profilleri kategorik takedown
 - **Apple App Store / Google Play** (sahte [Müvekkil] app var ise) — store policy ihlali şikayeti
 
-#### Hukuki sonuç davası (SMK m. 30 tazminat)
+#### Hukuki sonuç davası (SMK m. 150 tazminat)
 - Somut zarar varsa **Asliye Hukuk** veya **Fikri ve Sınai Haklar Mahkemesi**
 - Cost-benefit analizi: dava maliyeti vs. tazminat olasılığı
 - Sahtekarın kim olduğu çoğu zaman belirsiz — tazminat tahsil edilemez
@@ -123,11 +123,11 @@ Tek bir sahte domain'le yetinmemek için:
 
 | Aksiyon | Onay |
 |---|---|
-| Registrar abuse + 5651 m. 9 başvurusu | Senior Legal Counsel [kuran kişi — company-profile: Kullanıcı rolü] |
+| Registrar abuse + 5651 m. 9 (mülga) başvurusu | Senior Legal Counsel [kuran kişi — company-profile: Kullanıcı rolü] |
 | Suç duyurusu hazırlık + savcılığa sunum | Counsel + Direktör imza [company-profile: Doğrudan amir] |
 | Resmi açıklama içeriği | Counsel + [İletişim Başkanı] (İletişim) + [Hukuk Direktörü] onay |
 | UDRP başvurusu (dış avukatla) | [Hukuk Direktörü] + [CLCO] (CLCO) bilgi (tutar < 50K TL) |
-| SMK m. 30 tazminat dava açma | [CLCO] onay (litigation eskalasyon matriksi) |
+| SMK m. 150 tazminat dava açma | [CLCO] onay (litigation eskalasyon matriksi) |
 | KVKK Kurulu ihbarı | DPO [DPO / Veri Koruma Sorumlusu] + [Uyum Direktörü] (Compliance) |
 | MASAK ihbar (büyük çaplı) | Compliance + CFO koordinasyon |
 

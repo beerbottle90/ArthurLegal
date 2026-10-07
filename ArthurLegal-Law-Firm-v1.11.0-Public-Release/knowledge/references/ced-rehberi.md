@@ -4,7 +4,7 @@
 
 ## Hukuki çerçeve
 
-- **2872 sayılı Çevre Kanunu** — m. 10 ÇED zorunluluğu, m. 20-22 idari para cezaları
+- **2872 sayılı Çevre Kanunu** — m. 10 ÇED zorunluluğu, m. 20 idari para cezaları
 - **ÇED Yönetmeliği** (yıllık güncellenir, Çevre Bakanlığı tebliği)
 - **ÇED Genel Müdürlüğü** — Çevre, Şehircilik ve İklim Değişikliği Bakanlığı
 
@@ -51,11 +51,11 @@ Komisyon inceleme + bakanlık değerlendirme →
 
 | Kalem | ÇED ret kararı (m. 20/A) | Çevre idari para cezası (genel rejim) |
 |---|---|---|
-| **Dava açma süresi** | **30 gün** (hak düşürücü) | **60 gün** |
+| **Dava açma süresi** | **30 gün** (hak düşürücü) | **30 gün** (2872 m. 25 — özel süre) |
 | İYUK m. 11 üst makama başvuru | **UYGULANMAZ** (süre durmaz) | Uygulanır |
 | İstinaf (BİM) | **YOK — atlanır** | Var (30 gün) |
 | Temyiz | **Doğrudan Danıştay (15 gün)** | Danıştay (BİM kararına 30 gün) |
-| Temyiz dairesi | Danıştay **14. Daire** (ÇED) veya **10. Daire** veya **6. Daire** (imar/çevre işbölümüne göre) | Danıştay 10. Daire |
+| Temyiz dairesi (doğrulanmadı) | Danıştay **14. Daire** (ÇED) veya **10. Daire** veya **6. Daire** (imar/çevre işbölümüne göre) | Danıştay 10. Daire |
 | Yürütmenin durdurulması | Talep edilebilir | Talep edilebilir |
 
 ⚠️ **KRİTİK BUG TARİHÇESİ:** v1.3.0'da bu rehberde ÇED için "60 gün + BİM + Danıştay" yazılıydı — **yanlış**. v1.3.1 patch ile düzeltildi. ArthurLegal MCP (`tr_`)'den teyit edilen doğru rejim: m. 20/A → 30 gün, BİM yok, 15 gün temyiz.
@@ -81,7 +81,7 @@ tr_mevzuat_icinde_ara(mevzuat_id="<tr_mevzuat_ara sonucundaki mevzuat_id>", quer
 
 ## Paralel idari ceza
 
-Çevre Bakanlığı **idari para cezası** (2872 m. 20-22) ayrı süreçtir:
+Çevre Bakanlığı **idari para cezası** (2872 m. 20) ayrı süreçtir:
 - Çevre denetiminden çıkar (planlı veya şikayet üzerine)
 - Ceza kararı tebliğden 30 gün → İdare Mah. dava (`idari-para-cezasi-itiraz`)
 - ÇED ret + idari ceza birlikte → koordine savunma

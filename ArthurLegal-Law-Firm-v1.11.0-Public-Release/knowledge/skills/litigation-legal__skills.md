@@ -1,5 +1,7 @@
 # litigation-legal - Skill Referans Kitapcigi
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+
 > Alan: Dava yonetimi - HMK, ISG runbook, dis vekil
 > Toplam skill: 7
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
@@ -59,7 +61,7 @@ user-invocable: true
 
 Practice-level CLAUDE.md `## Matter workspaces` bölümünü kontrol et. Litigation için matter workspaces **default ON**. Aktif matter yoksa:
 
-> Bu yeni bir dava mı? `/litigation-legal:matter-workspace new <dosya-slug>` ile dosya aç (önerilen) veya `practice-level` cevapla. Aktif dosyada çalışırken dosya-spesifik `matter.md` öncelik kazanır.
+> Bu yeni bir dava mı? `/litigation-legal:case-intake` ile dosya aç (önerilen) veya `practice-level` cevapla. Aktif dosyada çalışırken dosya-spesifik `matter.md` öncelik kazanır.
 
 ## Destination check
 
@@ -286,7 +288,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 ## Hatalar / kenar durumlar
 
 - **Kullanıcı sadece "yeni dava geldi" der, dosya yüklemez** → Sor: "Dilekçe metni veya ihtarnameyi yapıştırır mısın? Veya bir özet ver."
-- **Karşı taraf vekili tanıdık ama dosya tanımıyor** → "Bu vekille daha önce yaşadığımız başka davalar var mı? `/litigation-legal:matter-workspace list` ile bakayım?"
+- **Karşı taraf vekili tanıdık ama dosya tanımıyor** → "Bu vekille daha önce yaşadığımız başka davalar var mı? `/litigation-legal:case-intake list` ile bakayım?"
 - **Zamanaşımı çok yakın** → 🔴 + büyük uyarı: "⚠️ Zamanaşımı [X] gün içinde doluyor. Bu dava açma kararı **bu hafta** verilmeli."
 - **Tahkim klozu var ama mahkemede dava açıldı** → 🟠 + "Tahkim itirazı (HMK m. 116/1-b) cevap dilekçesinde sunulmalı (m. 117/1); aksi halde itiraz dinlenemez."
 
@@ -437,7 +439,7 @@ user-invocable: true
 
 Matter workspaces ON. Bu skill aktif bir matter'da çalışır:
 
-> Hangi dosya için delil topluyoruz? Aktif matter: [slug] veya yeni `/litigation-legal:matter-workspace new`?
+> Hangi dosya için delil topluyoruz? Aktif matter: [slug] veya yeni `/litigation-legal:case-intake new`?
 
 ## Destination check
 
@@ -533,7 +535,7 @@ Hukuk, Uyum ve Kurumsal Yönetişim Başkanlığı
 
 | Delil tipi | HMK madde | Kullanım | [Müvekkil]-spesifik |
 |---|---|---|---|
-| **Belge (yazılı delil)** | m. 199-224 | Sözleşme, ihtarname, e-posta (KEP), fatura, raporlar | KEP kaydı/delili **senet hükmünde**, aksi ispat edilinceye kadar kesin delil (KEP Yönetmeliği m. 15/1; HMK m. 205/2) — TTK m. 18/3 yalnız tacirler arası ihtar şekli |
+| **Belge (yazılı delil)** | m. 199-224 | Sözleşme, ihtarname, e-posta (KEP), fatura, raporlar | KEP kaydı/delili **senet hükmünde**, aksi ispat edilinceye kadar kesin delil (KEP Yönetmeliği m. 15/1 — doğrulanmadı; HMK m. 205/2) — TTK m. 18/3 yalnız tacirler arası ihtar şekli |
 | **Tanık** | m. 240-265 | Olaya tanıklık eden gerçek kişi | İSG kazasında işçi/teknisyen kritik |
 | **Bilirkişi** | m. 266-287 | Teknik/uzmanlık gerektiren mesele | Rafineri/petrokimya teknik konular, çevre etkisi, vergi hesabı |
 | **Keşif** | m. 288-292 | Mahkemenin yerinde inceleme | [TESİS LOKASYONU] tesisi kaza sonrası keşif |
@@ -1541,10 +1543,10 @@ tr_ictihat_ara(
 | Kalem | Hesap |
 |---|---|
 | **Maddi zarar** (tedavi, kayıp ücret) | Belgeli, kesin |
-| **Manevi tazminat** | Yargıtay HGK eğilim (genelde 50K-500K TL arası ölümlü kazada; ağırlık takdiri) |
+| **Manevi tazminat** | Yargıtay HGK eğilim (genelde 50K-500K TL arası ölümlü kazada; ağırlık takdiri) (doğrulanmadı) |
 | **Destek tazminatı (TBK m. 53)** | Yaşam süresi × destek oranı × pasif sermaye katsayısı (Yargıtay HGK 2017/123 metod) |
 | **Faiz** | Yasal faiz (TBK + 3095 — değişken) |
-| **Vekalet ücreti** | AAÜT (Türkiye Barolar Birliği) — genelde davacı vekiline %12-15 |
+| **Vekalet ücreti** | AAÜT (Türkiye Barolar Birliği) — genelde davacı vekiline %12-15 (doğrulanmadı) |
 | **Yargılama gideri** | Bilirkişi, tanık masrafı |
 
 **Toplam beklenen maruziyet:** [TL]
@@ -1554,7 +1556,7 @@ tr_ictihat_ara(
 | Kalem | Sulh yaparsak | Dava devam ederse |
 |---|---|---|
 | Karşı tarafa ödeme | [sulh tutarı] | [muhtemel karar tutarı] |
-| Karşı taraf vekalet (AAÜT) | dahil / hariç | %12-15 × karar tutarı |
+| Karşı taraf vekalet (AAÜT) | dahil / hariç | %12-15 × karar tutarı (doğrulanmadı) |
 | Dış vekil ücreti (bizim) | [bittiği tutar] | [tahmin: + N saat × saat ücreti] |
 | Yargılama masrafı | yok | [bilirkişi, harç, posta] |
 | Damga vergisi (DVK Tablo I) | sulh tutarı × ‰9,48 | yok (adli yargı ilamı (1) sayılı tabloda yer almaz — DVK m. 1; hakem kararı ise tabidir: (1) sayılı tablo II-1) |

@@ -7,14 +7,18 @@
 
 ## Hukuki dayanak
 
-- **1136 sayılı Avukatlık Kanunu m. 164-168**
-  - m. 164: Ücret sözleşmesi yapılmazsa AAÜT uygulanır
-  - m. 164/2: Başarı bonusu (success fee) sınırı **%25**
-  - m. 164/3: Karşı yan vekalet ücreti AAÜT üzerinden hükmedilir
-  - m. 164/4: Karşı yan vekalet ücreti **vekile aittir** (sözleşmede aksi yoksa)
-  - m. 168: Asgari Ücret Tarifesi yıllık günceller
+- **AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 164-168** (24.09.2026'da `tr_mevzuat_madde_getir` ile doğrulandı)
+  - m. 164/2: Yüzde ücret (başarıya bağlı) sınırı **%25**
+  - m. 164/3: Dava konusu para dışındaki mal ve haklardan bir kısmı aynen avukata bırakılamaz
+  - m. 164/4: AAÜT altında ücret kararlaştırılamaz; ücretsiz dava baro yönetim kuruluna bildirilir; ücret
+    kararlaştırılmamışsa veya yazılı sözleşme yoksa para ile ölçülebilen işte müddeabihin %10-20'si (AAÜT altında
+    olmamak üzere), ölçülemeyen işte AAÜT
+  - m. 164/5: Kararla karşı tarafa yüklenen vekâlet ücreti **avukata aittir**; takas, mahsup ve haciz yasağı
+  - m. 168: Tarife her yıl hazırlanır (barolar Eylül'de önerir, TBB Ekim sonuna kadar Adalet Bakanlığına gönderir);
+    ücretin takdirinde, hukuki yardımın tamamlandığı veya hükmün verildiği tarihte yürürlükte olan tarife esas alınır
 
-- **AAÜT 2026** (varsayımsal güncel) — Resmi Gazete `[sayı/tarih — DOLDUR — TBB her Ocak yayımlar]`
+- **Güncel tarife:** AVUKATLIK ASGARİ ÜCRET TARİFESİ GENEL HÜKÜMLER (Tebliğ No. 42687, RG 04.11.2025/33067) —
+  24.09.2026 itibarıyla son kayıt. Kalemleri bu rehberde doğrulanmadı.
 
 ---
 
@@ -37,7 +41,7 @@
 | Yargıtay / Danıştay | İlk derece × katsayı |
 | AYM bireysel başvuru | TL alt + uyuşmazlık değeri |
 
-⚠️ **Yıllık güncelleme:** TBB her yıl Ocak ayında yeni tarifeyi RG'de yayımlar. **2026 değerlerini RG'den teyit et — ArthurLegal MCP (`tr_`) veya RG fetch.**
+⚠️ **Yıllık güncelleme:** Tarife Av. K. m. 168'deki takvimle her yıl yenilenir; son tarife RG 04.11.2025/33067'de yayımlandı. **Güncel değerleri RG'den teyit et — ArthurLegal MCP (`tr_mevzuat_ara`, "Avukatlık Asgari Ücret Tarifesi").**
 
 ### 2. Danışmanlık ve müşavirlik
 
@@ -57,7 +61,7 @@
 - **Maktu davalar** (örn. boşanma): tarife sabit
 - **Nispi davalar** (alacak/tazminat): değer üzerinden % oran
 
-**Önemli:** Av. K. m. 164/4 — bu vekalet ücreti **vekile aittir**, müvekkile değil (sözleşmede aksi yazılmadıkça).
+**Önemli:** Av. K. m. 164/5 — bu vekalet ücreti **avukata aittir**, müvekkile değil; iş sahibinin borcu nedeniyle takas ve mahsup edilemez, haczedilemez. Metinde "sözleşmede aksi yazılmadıkça" istisnası yoktur.
 
 ---
 
@@ -75,14 +79,14 @@ Müvekkille **yazılı sözleşme** yapılırsa AAÜT üst sınır değil, **alt
 ### Düşük AAÜT × katsayı durumları
 
 - Ücretsiz baro CMK görevlisi (Adalet Bakanlığı tarifesi ayrı)
-- Sosyal adalet — yoksul müvekkil (avukatın isteği ile feragat — Av. K. m. 168)
+- Ücretsiz iş / adli yardım — AAÜT altında ücret kararlaştırılamaz; ücretsiz dava alınırsa durum baro yönetim kuruluna bildirilir (Av. K. m. 164/4)
 - Stajyer matter'ları (mentor avukat sorumluluğunda)
 
 ### AAÜT × katsayı üst sınır?
 
-- Yok — başarı bonusu %25 sınırı dışında, ana ücret sözleşme özgürlüğü
-- Ancak **fahiş ücret** Yargıtay tarafından **TBK m. 27 kesin hükümsüzlük** kapsamında düşürülebilir
-- Pratik: AAÜT × 5-10 ortalama; AAÜT × 50 fahiş kategori
+- Kanundaki tavan yüzde ücret içindir: %25 (Av. K. m. 164/2); tavanı aşan sözleşme tavan miktarında geçerlidir (m. 163/2)
+- Diğer ücretlerde sözleşme serbestliği (m. 163/1). Yüksek ücretin mahkemece indirilip indirilemeyeceği ve dayanağı (ör. TBK m. 27) bu rehberde **doğrulanmadı**
+- Piyasa ölçüleri ("AAÜT × 5-10 ortalama" gibi) doğrulanmamış varsayımdır
 
 ---
 
@@ -101,16 +105,16 @@ Müvekkilimiz karşı yan vekiline AAÜT × bağlanan oran ödemekle yükümlü.
 
 ### Mahsup tartışması
 
-Bazı ücret sözleşmelerinde "karşı yandan tahsil edilen vekalet ücreti müvekkil ücretine mahsup edilir" yazılır — bu durumda vekil zarar eder. **Açıkça** sözleşmede belirt.
+Bazı ücret sözleşmelerinde "karşı yandan tahsil edilen vekalet ücreti müvekkil ücretine mahsup edilir" yazılır. Kanun bu ücretin iş sahibinin borcu nedeniyle **takas ve mahsup edilemeyeceğini** söyler (Av. K. m. 164/5); böyle bir klozun geçerliliği içtihatla doğrulanmalı (bu rehberde doğrulanmadı). **Açıkça** sözleşmede belirt.
 
 ---
 
 ## Vergi açısından AAÜT
 
-- **KDV:** Vekalet ücreti %20 KDV'ye tabi (avukatlık hizmeti)
-- **Stopaj:** Müvekkil gerçek kişi/şirket ise %20 stopaj (GVK m. 94)
-- **Damga:** Sözleşme imzalanırsa binde 9,48 (DVK Tablo I)
-- **Karşı yan vekalet ücreti** vekile aittir → vekilin matrahına gelir kaydı
+- **KDV:** avukatlık hizmeti KDV'ye tabidir; **oran** bu rehberde doğrulanmadı
+- **Tevkifat:** yalnız GVK m. 94'te sayılan ödeyiciler yapar (ör. ticaret şirketleri, kamu idareleri, gerçek gelirini beyan eden ticaret ve serbest meslek erbabı); olağan bireysel müvekkil yapmaz. **Oran** doğrulanmadı
+- **Damga:** belli para içeren sözleşmede binde 9,48 (DVK (1) sayılı tablo I/A-1); nispi vergide tek nüsha vergilenir (DVK m. 5)
+- **Karşı yan vekalet ücreti** avukata aittir (Av. K. m. 164/5); vergisel sonucu bu rehberde doğrulanmadı
 
 ---
 

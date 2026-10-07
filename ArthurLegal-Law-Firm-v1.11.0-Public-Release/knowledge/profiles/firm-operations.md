@@ -31,11 +31,11 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
 | **Pre-matter** | `fee-agreement` | Ücret sözleşmesi taslağı |
 | **Pre-matter** | `vekalet-sablon` | Vekalet (genel/özel/sınırlı) taslağı |
 | **Pre-matter** | `matter-open` | Matter klasörü açma + Drive/iManage kayıt + UYAP kontrol |
-| **Operations** | `baro-islem` | Baro işlemleri (CMK ödemesi, aidat, levha) |
+| **Operations** | `baro-islem` | Baro işlemleri (CMK ödemesi, aidat, levha). *Hazırlanıyor; henüz skill değil.* |
 | **Operations** | `monthly-billing` | Aylık matter bazlı fatura |
-| **Operations** | `aaut-check` | Vekalet ücreti AAÜT eşik kontrolü |
-| **Closing** | `matter-close` | Matter kapatma + dosya arşiv + müvekkil tebligat |
-| **Closing** | `disengagement-letter` | Avukatlık ilişkisi sonlandırma mektubu |
+| **Operations** | `aaut-check` | Vekalet ücreti AAÜT eşik kontrolü. *Ayrı skill değil; `fee-agreement` ve `monthly-billing` içinde yapılır.* |
+| **Closing** | `matter-close` | Matter kapatma + dosya arşiv + müvekkil tebligat. *Hazırlanıyor; henüz skill değil.* |
+| **Closing** | `disengagement-letter` | Avukatlık ilişkisi sonlandırma mektubu. *Hazırlanıyor; henüz skill değil.* |
 
 ---
 
@@ -85,10 +85,9 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
     - Drive/iManage paylaşım ayarı
     - UYAP'a vekalet sunumu (dava matter'larında)
    ↓
-11. İlgili plugin'in cold-start (matter-spesifik)
-    - /dispute-litigation:case-intake
-    - /commercial-advisory:contract-intake
-    - vd.
+11. İlgili plugin'e devir (matter-spesifik)
+    - dava: /litigation-legal:case-intake
+    - diğer işler: ilgili plugin'in skill listesi (profil boşsa önce o plugin'in cold-start-interview'u)
 ```
 
 ---
@@ -103,9 +102,17 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
 | Ortak değişimi (yeni ortak alındı) | **Yeni ortağın eski büro/in-house geçmişi** taraması |
 | Müvekkil yapısı değişti (M&A, pay devri) | **Yeniden tarama** — eski müvekkil yeni grup içine girdi mi |
 
-### Av. K. m. 38 — yasaklılık çerçevesi
+### Av. K. m. 38 — işin reddi zorunluluğu
 
-> "Aynı işte menfaati zıt bir tarafa vekalet eden veya hakem, hakim, savcı, savcı yardımcısı, jüri üyesi, müdür, kâtip, zabıt kâtibi, mübaşir, posta memuru, polis veya başka bir kamu görevlisi sıfatıyla bilgi sahibi olduğu bir işte vekâlet alamaz."
+Dayanak: AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 38 (metin 24.09.2026'da `tr_mevzuat_madde_getir` ile doğrulandı). Avukat şu hâllerde teklifi reddetmek zorundadır:
+
+- (a) teklifi yolsuz veya haksız görür ya da sonradan böyle olduğu kanısına varırsa,
+- (b) aynı işte menfaati zıt bir tarafa avukatlık etmiş veya mütalaa vermişse,
+- (c) evvelce hâkim, hakem, Cumhuriyet savcısı, bilirkişi veya memur olarak o işte görev yapmışsa,
+- (d) kendi düzenlediği bir senet veya sözleşmenin hükümsüzlüğünü ileri sürmek durumu ortaya çıkmışsa,
+- (f) görmesi istenen iş TBB'nin tespit ettiği mesleki dayanışma ve düzen gereklerine uygun değilse.
+
+(e) bendi Anayasa Mahkemesince iptal edilmiştir. Bu zorunluluk avukatın **ortaklarını ve yanında çalışan avukatları da** kapsar (m. 38/2); çatışma taraması bu yüzden büro çapında yapılır.
 
 **Tetikleyiciler:**
 - **Eski müvekkille yeni iş** — eski matter ne kadar bağlı?
@@ -114,6 +121,8 @@ Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ..
 - **Kamu görevliyken gördüğümüz işler** (eski hakim/savcı/müfettiş)
 
 ### TBB Meslek Kuralları m. 35-36
+
+*Metin mevzuat.gov.tr'de bulunmadığı için bu araçla doğrulanamadı; aşağıdaki özet kaynağıyla karşılaştırılmadan atıf olarak kullanılmaz.*
 
 - m. 35: **Mevcut müvekkilin menfaatine aykırı iş** kabul edilemez
 - m. 36: **Eski müvekkilin bilgilerini** yeni müvekkil yararına kullanamaz; **eski müvekkilin yazılı rızası** ile çatışmayan işler kabul edilebilir
@@ -130,22 +139,27 @@ Detay: `references/conflict-check-rehberi.md`
 
 ---
 
-## MASAK Tebliğ Sıra No. 5
+## MASAK — 5549 sayılı Kanun ve Tedbirler Yönetmeliği
 
-Avukatlık mesleki faaliyetlerinde **belirli yüksek-risk işler** için:
-- **Kimlik tespit yükümlülüğü** (gerçek kişi: TC kimlik; tüzel kişi: sicil + gerçek faydalanıcı)
-- **Şüpheli işlem bildirim yükümlülüğü** (MASAK'a)
+Dayanak (24.09.2026'da `tr_mevzuat_madde_getir` ile doğrulandı): SUÇ GELİRLERİNİN AKLANMASININ ÖNLENMESİ HAKKINDA KANUN (Kanun No. 5549, RG 18.10.2006/26323) m. 2, m. 3, m. 4, m. 8 ve SUÇ GELİRLERİNİN AKLANMASININ VE TERÖRÜN FİNANSMANININ ÖNLENMESİNE DAİR TEDBİRLER HAKKINDA YÖNETMELİK (Cumhurbaşkanlığı / Bakanlar Kurulu Yönetmeliği No. 200713012, RG sayı 26751) m. 4, m. 5, m. 17/A, m. 28.
 
-**Yüksek-risk işler (Tebliğ 5):**
-- Gayrimenkul alım-satım (avukatın aracı sıfatıyla iş yapması)
-- Şirket kuruluş + ortaklık yapısı düzenleme
-- Banka hesabı açılışı + yönetimi (müvekkil adına)
-- Müvekkilin parası ile alım-satım
-- Belirli tutar üzeri nakit işlem (matter ücreti vd.)
+> Bu bölüm eskiden "MASAK Tebliğ Sıra No. 5"e dayanıyordu. O Tebliğin (RG 09.04.2008/26842) konusu **basitleştirilmiş tedbirlerdir**; avukat yükümlülüğünü düzenlemez.
 
-**Pratik:**
-- Her yeni müvekkil intake → kimlik tespit fotoğrafı / kopya + matter dosyasında saklama (5 yıl)
-- Şüpheli işlem sinyali → büronun MASAK Görevlisi (Yönetici Ortak veya atanmış) bildirim kararı
+Serbest avukat **yalnız** şu işlere ilişkin **finansal işlemlerin gerçekleştirilmesiyle** sınırlı olarak yükümlüdür (5549 m. 2/1-d; Yön. m. 4/1-ş):
+- taşınmaz alım satımı
+- sınırlı ayni hak kurulması ve kaldırılması
+- şirket, vakıf ve dernek kurulması, birleştirilmesi, idaresi, devredilmesi ve tasfiyesi
+- banka, menkul kıymet ve her türlü hesap ile bu hesaplardaki varlıkların idaresi
+
+Av. K. m. 35'in birinci ve üçüncü fıkrası ile alternatif uyuşmazlık çözüm yolları kapsamındaki mesleki faaliyetler sırasında edinilen bilgiler **hariçtir**. Dava vekilliği ve mütalaa bu yüzden çoğunlukla kapsam dışıdır.
+
+Kapsamdaki işte:
+- **Kimlik tespiti** iş ilişkisi kurulmadan önce, sürekli iş ilişkisinde tutar gözetmeksizin (Yön. m. 5)
+- **Gerçek faydalanıcı:** tüzel kişiliğin %25'ini **aşan** hisseye sahip gerçek kişi ortaklar; yoksa nihai kontrol eden kişi; o da yoksa en üst düzey icra yetkilisi (Yön. m. 17/A)
+- **Şüpheli işlem bildirimi:** şüphenin oluştuğu tarihten itibaren en geç on iş günü içinde (Yön. m. 28/2); bildirim müvekkil dahil kimseye açıklanamaz (5549 m. 4/2)
+- **Muhafaza:** kimlik tespiti belgeleri son işlem tarihinden itibaren **sekiz yıl** (5549 m. 8)
+
+Uygulama: `/firm-operations:masak-kontrol`.
 
 Detay: `references/masak-kimlik-tespit-rehberi.md`
 
@@ -153,20 +167,24 @@ Detay: `references/masak-kimlik-tespit-rehberi.md`
 
 ## Ücret sözleşmesi (Av. K. m. 163-166)
 
-**Sözleşme şart:**
-- **Yazılı** olmalı (Av. K. m. 163) — yoksa AAÜT tarifesi uygulanır
-- **Damga vergisi:** binde 9,48 (DVK Tablo I)
-- **KDV:** %20 (avukatlık hizmeti)
-- **Stopaj:** Müvekkil gerçek kişi/şirket ise **%20 gelir vergisi stopajı** (GVK m. 94)
+Dayanak: AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 163, m. 164 (24.09.2026'da doğrulandı).
 
-**Başarı bonusu (success fee):**
-- Av. K. m. 164/2: **Uyuşmazlığa konu değerin %25'ini geçemez**
-- "Uyuşmazlığa konu değer" — para alacağında net; tespit/inşai davada AAÜT × katsayı
+**Şekil:**
+- Kanun yazılı şekli geçerlilik şartı yapmaz; yazılı olmayan anlaşma genel hükümlere göre ispatlanır (Av. K. m. 163/1). Yine de **yazılı yap**: ücret kararlaştırılmamışsa veya yazılı sözleşme yoksa, para ile ölçülebilen işlerde AAÜT altında kalmamak üzere müddeabihin %10-20'si arasında ücret belirlenir; para ile ölçülemeyen işlerde AAÜT uygulanır (m. 164/4).
+- **Damga vergisi:** belli parayı ihtiva eden sözleşmede binde 9,48; nispi vergide yalnız bir nüsha vergilenir (DAMGA VERGİSİ KANUNU (Kanun No. 488, RG sayı 11751) m. 5 ve (1) sayılı tablo I/A-1; 24.09.2026'da doğrulandı).
+- **KDV ve tevkifat oranları** bu pakette doğrulanmadı; her sözleşmede güncel kaynaktan kontrol edilir.
+- **Tevkifat:** GVK m. 94'te sayılan ödeyiciler yapar (ör. ticaret şirketleri, kamu idareleri, gerçek gelirini beyan eden ticaret ve serbest meslek erbabı). Olağan bireysel müvekkil tevkifat yapmaz.
 
-**Karşı yan vekalet ücreti (Av. K. m. 164/4):**
-- Karşı yan aleyhine hükmedilen vekalet ücreti **vekile aittir** (sözleşmede aksi yazılmadıkça)
-- Aksi sözleşmede yazılırsa vekile katsayı eklenebilir veya müvekkille paylaşılır
-- **Açıkça** sözleşmede belirt — sonradan çatışma olmasın
+**Yüzde ücret (başarıya bağlı):**
+- Dava veya hükmolunacak şeyin değeri yahut paranın belli bir yüzdesi, **%25'i aşmamak üzere** kararlaştırılabilir (Av. K. m. 164/2).
+- Tavanı aşan sözleşme tavan miktarında geçerlidir (m. 163/2).
+
+**Karşı taraf vekâlet ücreti (Av. K. m. 164/5):**
+- Kararla karşı tarafa yüklenen vekâlet ücreti **avukata aittir**; iş sahibinin borcu nedeniyle takas ve mahsup edilemez, haczedilemez.
+- Kanun metni "sözleşmede aksi yazılmadıkça" istisnası içermez. Farklı bir paylaşım yazılacaksa geçerliliği içtihatla doğrulanmalı (doğrulanmadı).
+- Sözleşmede **açıkça** belirt.
+
+Uygulama: `/firm-operations:fee-agreement`.
 
 Detay: `references/ucret-sozlesmesi-rehberi.md` + `references/aaut-rehberi.md`
 
@@ -174,18 +192,24 @@ Detay: `references/ucret-sozlesmesi-rehberi.md` + `references/aaut-rehberi.md`
 
 ## Vekalet türleri
 
-| Tip | Kapsam | Noter şart? |
+Dayanak: HUKUK MUHAKEMELERİ KANUNU (Kanun No. 6100, RG sayı 27836) m. 74, m. 76, m. 77; AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 41, m. 56, m. 174; TÜRK BORÇLAR KANUNU (Kanun No. 6098, RG sayı 27836) m. 512 (24.09.2026'da doğrulandı).
+
+| Tip | Kapsam | Şekil |
 |---|---|---|
-| **Genel vekalet** | Tüm dava ve işler | Noter onaylı (Av. K. m. 32) |
-| **Özel vekalet** | Belirli matter (örn. boşanma, satım sözleşmesi imza) | Noter onaylı |
-| **Sınırlı (özel) yetkili** | Yetki sınırlı (örn. sulh, ibra, ferağ — özel olarak belirt) | Noter onaylı + **özel yetkili madde** açık yazılmalı |
-| **Baro onaylı vekalet** | Sadece bazı baro içi işlemler | Noterli olmasa da geçerli |
+| **Genel vekalet** | Tüm dava ve işler | Tek tip vekâletname (Av. K. m. 56/6); dosyaya noter onaylı/düzenlenmiş aslı veya avukat onaylı örneği ibraz edilir (HMK m. 76/1) |
+| **Özel vekalet** | Belirli iş | Aynı |
+| **Özel yetkili** | HMK m. 74'teki işlemler (sulh, ibra, feragat, kabul, tevkil vb.) | Yetki **açıkça** yazılmalı (HMK m. 74) |
+| **Yetki belgesi** | Avukatın tevkil yetkili tüm vekâletnamelerini kapsar | Vekâletname hükmünde (Av. K. m. 56/5) |
 
-**Av. K. m. 35 müdafiilik:** Ceza dosyalarında noter vekaleti şart değil; **müvekkilin yazılı talep** veya **baro CMK atama yazısı** yeterli.
+- Av. K. m. 32 **mülgadır** (30/1/1979 - 2178/8); vekâletname şekline dayanak değildir.
+- Av. K. m. 35 "yalnız avukatların yapabileceği işler"dir; müdafilikte vekâletname kuralı içermez. Ceza dosyasında müdafi seçimi ve görevlendirilmesi CMK m. 149-150'dedir; seçilmiş müdafinin vekâletname ibraz zamanı bu pakette doğrulanmadı.
 
-**Azil + istifa:**
-- Müvekkil **azil** edebilir (her zaman) — yazılı + UYAP'a bildirim
-- Avukat **istifa** edebilir — müvekkili 15 gün önce yazılı bilgilendir + dava tarafsız bırakılmayacak şekilde
+**Azil + çekilme:**
+- Vekâlet veren de vekil de sözleşmeyi her zaman tek taraflı sona erdirebilir; uygun olmayan zamanda sona erdiren zararı giderir (TBK m. 512).
+- Azilde ücretin tamamı ödenir; kusur veya ihmal nedeniyle azilde ödenmez (Av. K. m. 174/2).
+- Avukat çekilirse vekâlet görevi, durumun müvekkile **tebliğinden itibaren 15 gün** devam eder (Av. K. m. 41/1).
+
+Uygulama: `/firm-operations:vekalet-sablon`.
 
 Detay: `references/vekalet-uyap-rehberi.md`
 
@@ -220,15 +244,14 @@ Detay: `references/baro-islemleri-rehberi.md`
    - Ücret modeline göre fatura tutarı:
      · Saatlik → süre × oran
      · Sabit (retainer) → aylık sabit
-     · Başarı bonusu (matter kapanmışsa) → uyuşmazlığa konu değer × % (Av. K. m. 164 sınırı)
-   - KDV (%20) + Stopaj uyarısı (%20)
-   - Damga (binde 9,48 — fatura için DEĞİL, sözleşme için; yine fatura altında not)
+     · Yüzde ücret (şart gerçekleşmişse) → değer × % (Av. K. m. 164/2: en çok %25)
+   - Serbest meslek makbuzu (VUK m. 236) + tevkifat kontrolü (GVK m. 94; oranlar doğrulanmadı)
    ↓
 3. Müvekkile fatura sunumu (KEP veya posta)
    ↓
 4. Ödeme takibi (Office Manager)
    ↓
-5. Geç ödeme — temerrüt faizi (TBK m. 120 + TTK m. 1530 ticari)
+5. Geç ödeme — temerrüt (TBK m. 117) ve faiz (TBK m. 120; 3095 m. 1-2). TTK m. 1530'un avukatlık ücretine uygulanıp uygulanmadığı doğrulanmadı.
 ```
 
 ---
@@ -241,7 +264,7 @@ Detay: `references/baro-islemleri-rehberi.md`
 | Yeni müvekkil kabulü (🟠 incelemeli) | **Ortaklar Kurulu** |
 | Conflict bulundu — yine de kabul | **Ortaklar Kurulu + yazılı feragat** |
 | MASAK şüpheli işlem bildirimi | **MASAK Görevlisi + Yönetici Ortak** |
-| KVKK ihlal şüphesi (büro) | Yönetici Ortak + (gerekirse) KVKK Kurulu bildirim 72 saat |
+| KVKK ihlal şüphesi (büro) | Yönetici Ortak + ilgiliye ve Kurula **en kısa sürede** bildirim (KVKK m. 12/5; "72 saat" bir Kurul kararına dayanır, künyesi doğrulanmadı) |
 | Sanctions hit (OFAC/AB/BM) | **Yönetici Ortak + Ortaklar Kurulu + ret kararı** |
 | Ücret sözleşmesi imza | Atanan ortak + Yönetici Ortak |
 | Disengagement (avukatlık ilişkisini sonlandırma) | Atanan ortak + Yönetici Ortak |
@@ -273,11 +296,12 @@ KARAR: ✓ KABUL / 🟠 ORTAKLAR KURULU / ⛔ RET
 
 ### Atıf disiplini
 
-- `[ArthurLegal TR — Av. K. m. X / TBB MK m. X / DVK Tablo I / GVK m. 94 — GG.AA.YYYY]`
+- Madde atfı: `tr_mevzuat_madde_getir` yanıtındaki `citation` alanı birebir (ör. `AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 164`). Çekilemeyen madde "doğrulanmadı" diye işaretlenir.
 - `[OpenSanctions API — match skoru — GG.AA.YYYY]`
-- `[MASAK Tebliğ Sıra No. 5 — bölüm]`
-- `[AAÜT — 2026 baskı — TBB onay]`
-- `[KVKK m. X — Kurul kararı — GG.AA.YYYY]`
+- `[5549 m. X / Tedbirler Yön. m. X — GG.AA.YYYY]`
+- `[AAÜT — RG tarih/sayı]` (24.09.2026 itibarıyla son kayıt: RG 04.11.2025/33067)
+- `[KVKK m. X — Kurul kararı künyesi — GG.AA.YYYY]`
+- TBB Meslek Kuralları mevzuat.gov.tr'de yok; atıf yapılacaksa kaynağı ayrıca gösterilir.
 
 ---
 

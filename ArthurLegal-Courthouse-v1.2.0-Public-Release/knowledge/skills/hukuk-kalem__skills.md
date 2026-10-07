@@ -39,7 +39,7 @@ Dava dosyası açıldığında kalemin hazırladığı ilk işlem zincirini eksi
 2. **Harç & gider avansı (m. 120):** başvuru + peşin harç yatırılmış mı; gider avansı tarifesi. Eksikse muhtıra. → `harc-gider-rehberi.md`.
 3. **Tensip maddeleri (kalıp):**
    - Dilekçenin davalıya tebliği, **2 hafta** cevap süresi (m. 127)
-   - Delil avansı ve delillerin sunulması (m. 121, 129)
+   - Delil avansı (m. 324) ve delillerin sunulması (m. 121, 129)
    - Ön inceleme duruşma günü tayini
    - Varsa tedbir taleplerinin ayrı değerlendirilmesi
 4. **Tebligat çıkışları:** kime, hangi adrese, hangi usulle (aşağıdaki `tebligat` skill'i).

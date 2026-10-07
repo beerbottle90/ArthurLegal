@@ -115,8 +115,8 @@ Tasarımlar için ayrı hükümler vardır (m. 73: Hizmet ilişkisi ile diğer i
 |---|---|
 | Marka tescil yayımına itiraz | 2 ay, yayımdan (m. 18/1) |
 | Marka tescil kararına itiraz | 2 ay, kararın bildiriminden (m. 20/2; itirazın incelenmesi m. 21) |
-| Patent araştırma raporu yayım | başvurudan 12 ay |
-| Patent inceleme talebi | araştırma yayımından 3 ay |
+| Patent araştırma talebi | başvurudan 12 ay |
+| Patent inceleme talebi | araştırma raporu bildiriminden 3 ay |
 | Marka yenileme | 10 yıl + 6 ay grace |
 | Patent yıllık ücret | yıldönümü, 6 ay grace |
 | Marka tecavüzü tazminat zamanaşımı | 2 yıl öğrenme / 10 yıl mutlak (TBK m. 72 paralel) |

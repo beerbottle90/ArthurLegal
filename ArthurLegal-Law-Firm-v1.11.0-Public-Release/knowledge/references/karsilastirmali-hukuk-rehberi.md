@@ -26,7 +26,7 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 | 🇦🇿 AZ | ~~e-qanun.az WebFetch~~ | ⬆️ **MCP'ye taşındı** | **e-qanun MCP** (resmî `api.e-qanun.az`, statülü) → `eqanun-mcp-rehberi.md`. WebFetch yedeği hâlâ anti-bot ⚠️ → cis-legislation.com |
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
 | 🇷🇸 SR | paragraf.rs | ✅ | — |
-| 🌍 OpenSanctions | api.opensanctions.org | ✅ key gömülü | `Authorization: Apikey a1c019122d0de8880772f7282c0ae03d` |
+| 🌍 OpenSanctions | api.opensanctions.org | 🔑 ortam değişkeni `OPENSANCTIONS_API_KEY` | `Authorization: ApiKey $OPENSANCTIONS_API_KEY` (yalnız kabuk komutuyla, ör. curl; anahtar pakette yok) |
 | 🇹🇷 KAP | kap.org.tr | ✅ | — |
 | 🇹🇷 e-şirket | e-sirket.mkk.com.tr | ⚠️ JS SPA | Halka açıklar → KAP; tescil → ticaretsicil.gov.tr |
 
@@ -94,7 +94,7 @@ yardımcı kaynaktır.
 
 - ABD doktrinini (work-product, attorney-client privilege, discovery) Türk
   hukukuna **uygulamadan önce karşılığını kontrol et** — çoğunlukla yoktur veya
-  farklıdır. "Privilege" yerine Avukatlık K. m. 36 + TBK m. 6 + TTK m. 18 ticari
+  farklıdır. "Privilege" yerine Avukatlık K. m. 36 + TBK m. 396 + TTK m. 55 ticari
   sır rejimi geçerlidir.
 - İngiliz/ABD içtihatı bir Türk mahkemesi önündeki uyuşmazlıkta **bağlayıcı
   değildir.** En fazla mukayeseli yorum / ikna edici değerdir.

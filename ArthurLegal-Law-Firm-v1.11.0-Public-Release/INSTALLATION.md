@@ -326,8 +326,11 @@ Everyday use, red line, leak check and troubleshooting: [ARTHUR-MASK-EN.md](ARTH
 
 For sanctions screening and KYC:
 1. Get an API key at [opensanctions.org](https://www.opensanctions.org/)
-2. Claude.ai → Project Settings → **Environment Variables**
-3. Set `OPENSANCTIONS_API_KEY` = `[your API key]`
+2. Put the key in the `OPENSANCTIONS_API_KEY` environment variable (Claude Code: the `env` block of
+   `~/.claude/settings.json`, or an operating-system environment variable). Never write the key into the package,
+   project files or the chat.
+3. The API call needs a shell command (`curl`), so it works in Claude Code. In claude.ai Projects, use the keyless
+   OpenSanctions web search instead. Details: `knowledge/references/opensanctions-rehberi.md`.
 
 ---
 
@@ -370,6 +373,8 @@ You can skip cold-starts for practice areas you don't use.
 |---|---|
 | `/firm-operations:new-client-intake` | New client intake workflow |
 | `/firm-operations:conflict-check` | Conflict of interest check |
+| `/firm-operations:masak-kontrol` → `sanctions-check` → `kvkk-aydinlatma` → `fee-agreement` → `vekalet-sablon` → `matter-open` | Next steps of the new-client chain (the intake output lists the order) |
+| `/firm-operations:monthly-billing` | Monthly fees and collections |
 | `/commercial-legal:nda-review` | NDA review |
 | `/litigation-legal:case-intake` | Open a new litigation file |
 | `/criminal-defense:cmk-gorev-atama` | CMK assignment management |

@@ -1,5 +1,7 @@
 # ip-legal - Skill Referans Kitapcigi
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+
 > Alan: Fikri sinai haklar - marka, patent, OSS, takedown
 > Toplam skill: 12
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
@@ -2587,7 +2589,7 @@ patent mode uses the same format with "accused product" substituted for
 ### Handoff to the full claim chart
 
 For a detailed element-by-element claim chart suitable for infringement or
-invalidity contentions, run `/litigation-legal:claim-chart`. This triage's
+invalidity contentions, prepare a full claim chart with patent counsel (ArthurLegal'de ayrı bir claim-chart skill'i yok). This triage's
 claim chart is a first pass to identify the strongest and weakest mappings;
 the litigation claim chart builds the full chart with pin cites, claim
 construction flags, dependent claims, and the verification workflow that

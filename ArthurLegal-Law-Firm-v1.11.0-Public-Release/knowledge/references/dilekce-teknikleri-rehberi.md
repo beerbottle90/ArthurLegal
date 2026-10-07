@@ -22,7 +22,7 @@
 | **Konu** (talep özeti) | ✅ m. 119/1-d (konu + malvarlığı davalarında dava değeri) | ✅ m. 3/2-b (dava konusu) + m. 3/2-c (işlemin yazılı bildirim tarihi) | ✅ dilekçe konusu |
 | **Açıklamalar / vakıalar** | ✅ m. 119/1-e (dayanılan vakıalar, sıra no'lu) | ✅ m. 3/2-b (davanın konu ve sebepleri) | ✅ olayların anlatımı |
 | Her vakıanın hangi delille ispatı | ✅ m. 119/1-f | uygulamada | uygulamada |
-| **Hukuki sebepler** | ✅ m. 119/1-g | ✅ m. 3/2-ç (hukuki sebepler) | ✅ ilgili TCK/CMK maddeleri |
+| **Hukuki sebepler** | ✅ m. 119/1-g | ✅ m. 3/2-b (sebepleri) | ✅ ilgili TCK/CMK maddeleri |
 | **Deliller** | ✅ m. 119/1-f | ✅ m. 3/2-b (dayanılan deliller) + m. 3/3 (ekler) | ✅ delil listesi |
 | **Sonuç ve talep (netice-i talep)** | ✅ m. 119/1-ğ | ✅ uygulamada (m. 3'te ayrı bent yok; vergi ve tam yargı davalarında uyuşmazlık konusu miktar m. 3/2-d) | ✅ açık talep |
 | İmza | ✅ m. 119/1-h (taraf/vekil) | ✅ m. 3/1 (imzalı dilekçe) | ✅ |
@@ -126,7 +126,7 @@ tr_ictihat_ara(
 - ❌ **Süre kaçırma** — HMK'da kanun yolu süreleri tebliğden 2 hafta (istinaf m. 345); İYUK ilk derece **60 gün** / vergi **30 gün** (m. 7), istinaf-temyiz **30 gün** (m. 45-46); ivedi yargılamada **30/15 gün** (m. 20/A). CMK istinaf ve temyiz **iki hafta** (m. 273, 291 — gerekçeli hükmün tebliğinden; 7499 s.K.). **Her zaman tebliğ/öğrenme tarihinden hesapla.**
 - ❌ **Görev/yetki hatası** — bireysel idari işlemi (EPDK kurul kararı, idari ceza) doğrudan Danıştay'a açmak; tahkim klozu varken mahkemede dava açmak (HMK m. 116/1-b); yanlış yer mahkemesi. Yanlış mahkeme → gönderme ama süre koruması sınırlı.
 - ❌ **Taraf teşkili / husumet** — davalıyı yanlış göstermek (idari davada **davalı idare** doğru tüzel kişilik olmalı; iş kazasında işveren + varsa müteselsil sorumlular). Husumetten ret riski.
-- ❌ **Talep sonucu netliğinde belirsizlik** — "fazlaya ilişkin haklar saklı" demeden tüm tutarı talep etmek; faiz türü/başlangıcını yazmamak; terditli talebi unutmak (sonradan ıslah gerektirir). HMK m. 107 (belirsiz alacak davası) 7589 s.K. ile 31.07.2026'dan itibaren **mülga**; alacak tam belirlenemiyorsa **kısmi dava (HMK m. 109)** açılır — talep, aynı davada bir defaya mahsus, iddianın genişletilmesi yasağına tabi olmaksızın tahkikat sonuna kadar artırılabilir; artırılan kısım için zamanaşımı dava tarihinden kesilmiş sayılır (m. 109/4).
+- ❌ **Talep sonucu netliğinde belirsizlik** — "fazlaya ilişkin haklar saklı" demeden tüm tutarı talep etmek; faiz türü/başlangıcını yazmamak; terditli talebi unutmak (sonradan ıslah gerektirir). HMK m. 107 (belirsiz alacak davası) 7589 s.K. ile 31.07.2026'dan itibaren (doğrulanmadı) **mülga**; alacak tam belirlenemiyorsa **kısmi dava (HMK m. 109)** açılır — talep, aynı davada bir defaya mahsus, iddianın genişletilmesi yasağına tabi olmaksızın tahkikat sonuna kadar artırılabilir; artırılan kısım için zamanaşımı dava tarihinden kesilmiş sayılır (m. 109/4).
 - ❌ **Vakıa-delil bağını kurmamak** — m. 119/1-f gereği her vakıanın hangi delille ispatlanacağı gösterilmeli; "her türlü delil" tek başına yetersiz.
 - ❌ **Yürütmenin durdurulmasını istememek** (idari) — işlem uygulanmaya devam eder; İYUK m. 27, ayrı ve gerekçeli talep.
 - ❌ **Harç/gider avansı eksiği** — dava açılmamış sayılma veya işlemden kaldırma riski.

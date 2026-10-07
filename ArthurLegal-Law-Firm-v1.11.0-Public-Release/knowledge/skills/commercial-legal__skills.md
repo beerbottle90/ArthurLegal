@@ -1,5 +1,7 @@
 # commercial-legal - Skill Referans Kitapcigi
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+
 > Alan: Ticari sozlesmeler - NDA, MSA, SaaS, vendor
 > Toplam skill: 13
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
@@ -1389,7 +1391,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 - Fransız hukuku → `france-legislation-rehberi.md` → Légifrance
 - İsviçre hukuku → `switzerland-caselaw-rehberi.md` → OpenCaseLaw.ch MCP + Fedlex
 - AB hukuku → `eu-legislation-rehberi.md` → EUR-Lex CELEX
-- Türk hukuku → ArthurLegal MCP (`tr_`) (TBK m.24 governing law seçimi, MÖHUK m.24)
+- Türk hukuku → ArthurLegal MCP (`tr_`) (MÖHUK m.24 — hukuk seçimi)
 
 **Tahkim seat** ayrıca kontrol et: seat ülkesinin tahkim mevzuatı arbitral prosedürü yönetir.
 - İsviçre seat → IPRG m.176-194 (OpenCaseLaw.ch)
@@ -1411,7 +1413,7 @@ Tenfiz şartları (m.54):
 5. **Kesinleşme** — karar kesinleşmiş mi?
 
 ### 5b. Yabancı hakem kararı — NY Konvansiyonu + MÖHUK m.60-62
-NY Konvansiyonu Madde V ret gerekçeleri (m.61 kapıları):
+NY Konvansiyonu Madde V ret gerekçeleri (m.62 kapıları):
 - Tahkim sözleşmesinin geçersizliği
 - Usul ihlali / haber verilmeme
 - Hakem yetkisi aşımı

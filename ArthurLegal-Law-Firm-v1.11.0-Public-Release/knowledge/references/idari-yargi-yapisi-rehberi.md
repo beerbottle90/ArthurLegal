@@ -40,7 +40,7 @@
 
 ## Danıştay ilk derece görevli olduğu istisnalar
 
-**Danıştay K. m. 24 + m. 30:**
+**Danıştay K. m. 24:**
 - CB Kararları
 - CB Kararı ile yürürlüğe konulan düzenleyici işlemler (Bakanlar Kurulu kararı muadili)
 - Bakanlık ve kamu kurumu müsteşarları müşterek kararnameleri

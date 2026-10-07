@@ -102,7 +102,7 @@ Baro CMK servisinden telefon/SMS atama mesajı geldiğinde.
 - Suçlama (TCK m. X)
 - Yer: karakol / cezaevi / mahkeme
 - Zaman: ifade saati / duruşma saati
-- Atama tipi: m. 150 zorunlu / m. 156 isteğe bağlı / talimat müdafiliği
+- Atama tipi: m. 150/2-3 zorunlu / m. 150/1 isteğe bağlı / talimat müdafiliği
 
 ### 2. **Gözaltı süresi hesabı (CMK m. 91 — kural 24 saat; toplu suçta en çok 4 gün)**
 
@@ -190,7 +190,7 @@ Teslim: Baronun CMK servisine. Ödeme 30-60 g.
 # CMK Görev Atama — [Atama no]
 
 ## ⚠️ İnceleyen notu
-- Atama tipi: m. 150 zorunlu / m. 156 isteğe bağlı
+- Atama tipi: m. 150/2-3 zorunlu / m. 150/1 isteğe bağlı
 - Suçlama: TCK m. [X]
 - 48 saat sınırı: T+[N] — kalan [...]
 - Müvekkil durumu: gözaltında / serbest
@@ -212,7 +212,7 @@ Yer: [karakol / cezaevi]
 
 ## Sonraki adımlar
 - [Karakol görüşmesine N dakika içinde git]
-- (Tutuklama olursa) /criminal-defense:matter-workspace new + CMK ödeme planla
+- (Tutuklama olursa) dosyayı büroda aç (`/firm-operations:new-client-intake`) + CMK ödeme planla
 ```
 
 ## Hatalar

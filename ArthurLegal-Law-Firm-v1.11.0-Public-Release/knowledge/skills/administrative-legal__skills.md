@@ -459,7 +459,7 @@ Bazı görüşler **sektör koalisyonu** halinde (Türkiye Petrolleri, Tüpraş,
 name: idari-dava-prep
 description: >
   İdari işleme karşı dava açılacak — KRİTİK İLK ADIM görevli mahkeme tespiti
-  (İdare Mahkemesi mi, Danıştay mı ilk derece?), İYUK m. 7 (30 gün hak düşürücü)
+  (İdare Mahkemesi mi, Danıştay mı ilk derece?), İYUK m. 7 (60/30 gün hak düşürücü)
   süre kontrolü, dava dilekçesi taslağı, yürütmenin durdurulması (m. 27),
   yetkili yer (HMK/İYUK), emsal kararlar (ArthurLegal MCP (`tr_`)). 3 dereceli idari yargı
   yapısına göre.
@@ -492,7 +492,7 @@ Kalan < 5 gün → 🔴 ACİL. Dış vekille derhal koordinasyon.
 
 Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **Danıştay genelde TEMYİZ mercii**, sadece dar istisnalarda ilk derece.
 
-### Danıştay ilk derece görevli mi? (Danıştay K. m. 24 + 30)
+### Danıştay ilk derece görevli mi? (Danıştay K. m. 24)
 
 İdari işlem bir aşağıdakilerden biri mi?
 - [ ] **Cumhurbaşkanı Kararı** (tek karar, atama, vs.)
@@ -733,7 +733,9 @@ user-invocable: true
 
 ## ⏰ Süre
 
-İdari para cezası tebliğinden **30 gün** (İYUK m. 7). Hak düşürücü.
+İdari para cezası tebliğinden, özel kanunda ayrı süre yoksa **60 gün** (İYUK m. 7 — idare mahkemesi genel kuralı); **Çevre Kanunu idari yaptırımlarında 30 gün** (2872 m. 25 özel hükmü). Kurum bazında özel süre kontrolü şart. Hak düşürücü.
+
+⚠️ **Önce yol:** Dayanak kanun idari yargıyı göstermiyorsa idari para cezasına karşı yol iptal davası değil, Kabahatler K. m. 27'ye göre tebliğden itibaren **15 gün** içinde sulh ceza hâkimliğine başvurudur. KVKK Kurul cezalarında 2024'ten beri idare mahkemesi (6698 m. 18/3).
 
 ## Tetik
 
@@ -748,7 +750,7 @@ user-invocable: true
 ## Önemli: Tahsil + ceza ayrı
 
 İdari para cezası kararı iki ayrı süreç:
-1. **İptal davası** (İYUK m. 7 — 30 gün) → İdare Mahkemesi
+1. **İptal davası** (İYUK m. 7 — 60 gün genel / 2872 m. 25 — çevre cezasında 30 gün) → İdare Mahkemesi
 2. **Tahsil** (AATUHK 6183) → Vergi Dairesi tarafından
 
 **Tahsil paralel başlar.** İptal davasında **yürütmenin durdurulması (İYUK m. 27)** alınmazsa, dava sürerken para tahsil edilebilir.
@@ -764,7 +766,7 @@ user-invocable: true
 | Rekabet Kurulu | Ankara İdare Mah. |
 | BDDK | Ankara İdare Mah. |
 | SPK | Ankara İdare Mah. |
-| ÇSGB (İSG cezası) | İlgili il İdare Mah. ([tesis yeri] için ilgili il) |
+| ÇSGB (İSG cezası) | İlgili il İdare Mah. ([tesis yeri] için ilgili il) — doğrulanmadı: 6331'de özel yol yoksa Kabahatler K. m. 27 (sulh ceza, 15 gün) |
 
 ## Adımlar
 
@@ -999,9 +1001,9 @@ EKLER:
 ## C: Danıştay bozma → mahkemeye dönüş (İYUK m. 50)
 
 Danıştay bozdu, dosya BİM'e gönderildi. İki seçenek:
-- **BİM uyar** (m. 50/2) — bozmaya uygun yeni karar verir
+- **BİM uyar** (m. 50/3) — bozmaya uygun yeni karar verir
 - **BİM ısrar eder** (m. 50/3) — bozmaya katılmaz, eski kararı tekrar verir
-  - Bu durumda ısrar kararı **İDDK'ya temyiz** edilir (m. 50/4)
+  - Bu durumda ısrar kararı **İDDK'ya temyiz** edilir (m. 50/5)
   - İDDK kararı **bağlayıcıdır** (m. 50/5)
 
 ## D: Karar kesinleşti → AYM bireysel başvuru
@@ -1092,7 +1094,7 @@ Doğrudan dava değil — **önce KİK'e şikayet**:
 
 1. **Şartname/ilana itiraz:** Şartname/ilanın yayımından **10 gün** içinde
 2. **İhale kararına itiraz:** Karar tebliğinden **10 gün** içinde
-3. KİK Kurul **20 iş günü** içinde karar verir (bazen uzar)
+3. KİK Kurul **20 gün** içinde karar verir (bazen uzar)
 4. KİK kararı olumlu/olumsuz → tatmin etmezse dava
 
 ### B. KİK Kurul kararına karşı dava

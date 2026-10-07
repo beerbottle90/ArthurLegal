@@ -10,8 +10,8 @@
 |---|---|
 | **6362 Sermaye Piyasası Kanunu** | Genel rejim |
 | **SPK Tebliğ II-15.1** | Özel Durum Açıklamaları (KAP açıklamaları) |
-| **SPK Tebliğ VI-104.1** | İçsel Bilgilerin İşlenmesi ve İçsel Bilgi Listeleri |
-| **SPK Tebliğ II-23.1** | Önemli İşlemler ve Ortaklıktan Çıkarma Hakkı |
+| **SPK Tebliğ II-15.1 m. 4, 7** | İçsel Bilgilerin İşlenmesi ve İçsel Bilgi Listeleri |
+| **SPK Tebliğ II-23.3** (II-23.1'in yerine geçti, II-23.3 m. 20) | Önemli Nitelikteki İşlemler ve Ayrılma Hakkı |
 | **SPK Tebliğ II-22.1** | Geri Alınan Paylar |
 | **BIST Düzenlemeleri** | Borsa İşlem Esasları |
 | **TTK 6102 m. 1524-1526** | Bilgilendirme + şeffaflık |
@@ -20,9 +20,9 @@
 
 ## İçsel bilgi (insider information) nedir?
 
-**SPK m. 106 + Tebliğ VI-104.1 m. 4:**
+**Tebliğ II-15.1 m. 4:**
 
-> *"Doğrudan ya da dolaylı olarak sermaye piyasası araçlarına veya bu araçları ihraç edenlere ilişkin, kamuya açıklanmadığında ilgili sermaye piyasası araçlarının değerlerini veya yatırımcıların yatırım kararlarını etkileyebilecek nitelikteki ortaklar, yöneticileri ve denetçileri ile ortaklığın ihaleler, projeler, satışlar, alımlar, sözleşmeler, finansal durumdaki değişiklikler gibi konularda kamuya açıklanmamış bilgilerdir."*
+> *"İçsel bilgi: Sermaye piyasası araçlarının değerini, fiyatını veya yatırımcıların yatırım kararlarını etkileyebilecek henüz kamuya açıklanmamış bilgi, olay ve gelişmeleri."*
 
 **Test:** Bilgi açıklansa, makul yatırımcı yatırım kararını değiştirir mi? Evetse içseldir.
 
@@ -41,7 +41,7 @@
 
 ---
 
-## İçsel bilgi listesi yönetimi (Tebliğ VI-104.1)
+## İçsel bilgi listesi yönetimi (Tebliğ II-15.1 m. 7)
 
 ### Liste tutma zorunluluğu
 
@@ -102,7 +102,7 @@ KAP açıklaması mutlaka içermeli:
 
 ---
 
-## Önemli işlemler (Tebliğ II-23.1)
+## Önemli işlemler (Tebliğ II-23.3)
 
 **Önemli işlem:** [Halka Açık İştirak]'in mali tablosu açısından materyal işlem.
 
@@ -127,7 +127,7 @@ KAP açıklaması mutlaka içermeli:
 
 - **TTK m. 199** — bağlı ortaklık raporu (yıllık)
 - **SPK Tebliğ II-17.1** — Kurumsal Yönetim İlkeleri (ilişkili taraf işlem onayı)
-- **SPK Tebliğ II-23.1 m. 9** — önemli ilişkili taraf işlemleri: özel onay rejimi
+- **Önemli ilişkili taraf işlemleri — özel onay rejimi:** dayanak tebliğ ve madde doğrulanmadı (eski atıf "II-23.1 m. 9"; II-23.1, II-23.3 m. 20 ile kaldırıldı)
 
 **Pratik:** Şirket'ten [Halka Açık İştirak]'e ham petrol satış, hizmet alımı, intra-group lisans verilmesi → her biri "ilişkili taraf işlemi" rejimi içinde yer alır + Bağımsız yönetim kurulu üyeleri + (eşik aşılırsa) bağımsız uzman görüşü + (yüksek eşik) genel kurul onayı.
 

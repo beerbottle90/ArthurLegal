@@ -5,6 +5,29 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.2.1] — 2026-10-07 — *Madde Atfı Düzeltmeleri; OpenSanctions Anahtarı Çıkarıldı*
+
+> **Yama sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan madde atfı denetiminden, 1.2.0'da hâlâ
+> eksik olan düzeltmeler bu sürümle geldi. Laboratuvarın aynı denetimde önerdiği ÇED, özelge, harç, idari yargı yapısı,
+> İYUK, VUK, hukuk kalemi ve idari kalem düzeltmeleri 1.2.0'da daha ayrıntılı biçimde zaten vardı; o metinler korundu.
+
+### Güvenlik
+
+1. `knowledge/references/connector-saglik-fallback-rehberi.md`: OpenSanctions satırındaki API anahtarı çıkarıldı;
+   anahtar `OPENSANCTIONS_API_KEY` ortam değişkeninden okunur.
+
+### Düzeltildi
+
+1. `knowledge/references/damga-vergisi-rehberi.md`: nispi vergiye tabi kâğıtlarda yalnız bir nüsha vergilenir, maktu
+   vergide her nüsha ayrı (DVK m. 5); taraflar vergi dairesine karşı müteselsilen sorumludur (DVK m. 24); beyan ve
+   ödeme süresi DVK m. 22'ye göre yazıldı.
+2. `knowledge/references/hmk-rehberi.md`: HMK m. 297 başlığı (hükmün kapsamı, gerekçe dâhil).
+3. `knowledge/references/kanun-kisaltmalar.md`: 4628 sayılı Kanun hâlâ yürürlükte; depolama eklemesi 7417 sayılı
+   Kanunla (7257 değil); KGK dayanağı 660 sayılı KHK (6537 değil); 7406 numarasında kanun bulunamadı, işaretlendi.
+4. `knowledge/skills/ceza-hakim__skills.md`: HAGB şartları CMK m. 231/5-6.
+5. `knowledge/skills/hukuk-hakim__skills.md`: çekişmeli vakıa HMK m. 187, ispat yükü m. 190, uyuşmazlık noktalarının
+   tespiti m. 140/1.
+
 ## [1.2.0] — 2026-10-06 — *Adliye Dalgası: İstinaf, Ortak Araştırma ve Karar Yayımı; Mahkeme Profilleri ve İzleyiciler*
 
 > **Özellik sürümü.** 8 plugin 12'ye, 28 skill 56'ya çıktı. Mahkeme türüne göre 10 profil, 7 izleyici ve 11 yeni

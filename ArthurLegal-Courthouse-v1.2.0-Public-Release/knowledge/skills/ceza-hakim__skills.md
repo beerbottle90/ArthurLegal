@@ -142,7 +142,7 @@ user-invocable: true
 
 HAGB, kurulan hükmün açıklanmasının geri bırakılmasıdır; uygulanıp uygulanmaması ölçütlere bağlıdır, takdir hâkim/heyettedir. (7589 s.K. ile yeniden düzenlenen m. 231/6'da sanığın kabulü koşulu yer almaz.)
 
-## Şartlar (m. 231/6)
+## Şartlar (m. 231/5-6)
 
 1. **Ceza sınırı:** hükmolunan hapis **2 yıl veya daha az** ya da adli para cezası.
 2. **Sabıka:** sanık daha önce kasıtlı suçtan mahkûm olmamış.

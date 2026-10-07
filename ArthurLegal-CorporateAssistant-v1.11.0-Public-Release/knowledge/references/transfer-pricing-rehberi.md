@@ -6,7 +6,7 @@
 
 ### Türk hukuku
 - **KVK m. 13 — Örtülü Kazanç Dağıtımı:**
-  - İlişkili kişi (m. 12) tanımı geniş: ortak, ortağın eşi/akrabaları, ana ortak, hâkim ortak, yönetici, %25 üstü hisseli şirket, vd.
+  - İlişkili kişi (m. 13/2) tanımı geniş: ortak, ortağın eşi/akrabaları, ana ortak, hâkim ortak, yönetici, en az %10 ortaklık, oy veya kâr payı hakkı olan kişi (oranı Cumhurbaşkanı %1-25 arasında değiştirebilir, m. 13/9), vd.
   - **Emsallere uygun fiyat ilkesi** (arm's length)
   - 5 yöntem (KKF, Maliyet Artı, Yeniden Satış, Kâr Bölüşümü, TNMM)
   - Yıllık TP dokümantasyon zorunlu
