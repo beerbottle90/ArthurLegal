@@ -147,9 +147,15 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 67 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
+python -m unittest discover -s tests   # 82 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
 python yayin/yayinla.py v2.6.1         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
+
+**Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta
+([`paket-denetimi.yml`](../.github/workflows/paket-denetimi.yml)) ve yukarıdaki testlerle birlikte çalışır; pakette
+tanımlı olmayan skill'e atfı, klasör adıyla uyuşmayan sürümü, gerçek dosya sayısını tutmayan sayımı ve paketler
+arasında yeni ayrışmayı yakalar, bilinen eski sorunlar `tests/paket_denetimi_taban.json`'da durduğu için yalnız
+yenileri testi kırar (rapor: `python yayin/paket_denetimi.py --ayrinti`).
 
 **macOS paketi** yalnız macOS'ta derlenir (`pkgbuild`, `productbuild`, `iconutil`, [uv](https://docs.astral.sh/uv/)):
 `python yayin/derle_macos.py` → `yayin/cikti/ArthurLegal-Kurulum.pkg` ve `derleme-macos.json`. Bunu GitHub Actions

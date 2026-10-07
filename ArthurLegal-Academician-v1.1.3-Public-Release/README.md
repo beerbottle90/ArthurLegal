@@ -109,7 +109,7 @@ Türkçe → [KURULUM.md](KURULUM.md) · English → [INSTALLATION.md](INSTALLAT
 **Version:** v1.1.3 · **Date:** 2026-10-07 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web)
 
-> **v1.0.0 — 8 plugins · 28 skills · 23 references · 4 agents.** Fully bilingual (TR + EN),
+> **v1.1.3 — 8 plugins · 28 skills · 24 references · 4 agents.** Fully bilingual (TR + EN),
 > covering Turkish and international academic regimes at equal depth.
 
 > A research, writing, citation-verification, publication-ethics, thesis-supervision and

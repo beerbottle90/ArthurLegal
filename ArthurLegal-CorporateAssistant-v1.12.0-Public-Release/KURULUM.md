@@ -5,13 +5,13 @@
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
 
-**İçerik:** 12 birleşik skill dosyası · 84 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
+**İçerik:** 12 birleşik skill dosyası · 85 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
 **MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 14 yargı çevresi + tapu-kadastro, 121 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
 (ArthurLegal dışındakiler isteğe bağlıdır · ayrıca OpenSanctions REST API)
 **Yerel gizlilik kapısı:** Arthur Mask (isteğe bağlı, önerilir; Windows 10/11 64 bit + Claude Desktop, Adım 5)
 
-> **22 yargı çevresi** = 12 ulusal (TR · CH · US · AZ · UK · DE · FR · IT ·
-> JP · RU · CN · RS) + 2 supranasyonel hukuk düzeni (AB/CJEU · ECHR).
+> **28 yargı çevresinin** tam listesi ve her birinin kaynak yolu sistem talimatının bölüm 6'daki kaynak
+> tablosundadır; Türkiye dâhil on beşi ArthurLegal MCP'den tek uçta gelir.
 
 ---
 

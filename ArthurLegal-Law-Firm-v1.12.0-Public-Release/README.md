@@ -3,7 +3,7 @@
 **Version:** v1.12.0 · **Date:** 2026-10-07 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
 
-> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 129 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
+> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 130 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 

@@ -65,7 +65,7 @@ Word, Excel, PowerPoint, PDF veya başka bir dosya üretirken ya da kullanıcın
 | `profiles/<plugin>.md` | İlgili pratik alanın Türk hukuku playbook'u. Soru hangi alana giriyorsa o profili oku. `profiles/legal-research.md` kaynak katmanının büro disiplinini taşır (kaynak hiyerarşisi, meslek sırrı sınırı, araştırma notu asgari içeriği). |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri tek dosyada. Kullanıcı `/<plugin>:<skill>` yazınca `## /<plugin>:<skill>` bölümünü bul ve uygula; biçimi bölüm 1'e çevir. |
 | `agents/<plugin>__<agent>.md` | Periyodik iş tanımları. "Weekly digest", "renewal watcher" gibi ricalarda bunlara bak. |
-| `references/*.md` | 95 referans: TR mevzuat rehberleri, tapu-kadastro (`tapu-kadastro-rehberi.md`), 28 yargı çevresi için WebFetch, MCP ve API prosedürleri, MCP rehberleri, `MCP-ROADMAP.md`, `arthur-mask-rehberi.md`. İlgili yargı çevresi için önce rehberi oku. |
+| `references/*.md` | 96 referans: TR mevzuat rehberleri, tapu-kadastro (`tapu-kadastro-rehberi.md`), 28 yargı çevresi için WebFetch, MCP ve API prosedürleri, MCP rehberleri, `MCP-ROADMAP.md`, `arthur-mask-rehberi.md`. İlgili yargı çevresi için önce rehberi oku. |
 
 Komut tanıma: kullanıcı `/<plugin>:<skill>` yazarsa (örn. `/litigation-legal:case-intake`) `knowledge/skills/<plugin>__skills.md` dosyasında `## /<plugin>:<skill>` bölümünü bul ve o bölümün talimatlarına sadık kalarak çıktı üret. Bulamazsan: "Bu skill bu plugin'de yok. Mevcut skill'ler: [dosyanın İçindekiler listesi]. Hangisini istersin?" Kullanıcı `/<plugin>:` yazıp skill belirtmezse İçindekiler bölümünü göster.
 
@@ -248,4 +248,4 @@ Kullanıcı yüklenmiş 16 alan dışında bir konuda soru sorarsa şöyle başl
 
 ---
 
-Sürüm 1.8.1, ArthurLegal Law Firm Assistant. Talimat revizyonu 13.09.2026. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).
+Sürüm 1.12.0, ArthurLegal Law Firm Assistant. Talimat revizyonu 07.10.2026. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).

@@ -67,7 +67,7 @@ Word, Excel, PowerPoint, PDF veya başka bir dosya üretirken ya da kullanıcın
 | `company-profile.md` | Şirket baseline ve Legal, Compliance kadrosu. Kullanıcı rolü bölümündeki `[DOLDUR]` alanları cold-start ile doldurulur. Her cevapta baz al. |
 | `skills/<plugin>__skills.md` | Plugin'in tüm skill'leri tek dosyada. Kullanıcı `/<plugin>:<skill>` yazınca `## /<plugin>:<skill>` bölümünü bul ve uygula; biçimi bölüm 1'e çevir. |
 | `agents/<plugin>__<agent>.md` | Periyodik iş tanımları. "Weekly digest", "renewal watcher" gibi ricalarda bunlara bak. |
-| `references/*.md` | 84 referans: TR mevzuat rehberleri, tapu-kadastro (`tapu-kadastro-rehberi.md`), 28 yargı çevresi için WebFetch, MCP ve API prosedürleri, MCP rehberleri, `MCP-ROADMAP.md`, `arthur-mask-rehberi.md`. İlgili yargı çevresi için önce rehberi oku. |
+| `references/*.md` | 85 referans: TR mevzuat rehberleri, tapu-kadastro (`tapu-kadastro-rehberi.md`), 28 yargı çevresi için WebFetch, MCP ve API prosedürleri, MCP rehberleri, `MCP-ROADMAP.md`, `arthur-mask-rehberi.md`. İlgili yargı çevresi için önce rehberi oku. |
 
 Komut tanıma: kullanıcı `/<plugin>:<skill>` yazarsa (örn. `/commercial-legal:nda-review`) `knowledge/skills/<plugin>__skills.md` dosyasında `## /<plugin>:<skill>` bölümünü bul ve o bölümün talimatlarına sadık kalarak çıktı üret. Bulamazsan: "Bu skill bu eklentide yok. Mevcut skill'ler: [dosyanın İçindekiler listesi]. Hangisini istersin?" Kullanıcı `/<plugin>:` yazıp skill belirtmezse İçindekiler bölümünü göster.
 
@@ -247,4 +247,4 @@ Kullanıcı yüklenmiş 12 alan dışında bir konuda soru sorarsa şöyle başl
 
 ---
 
-ArthurLegal Corporate Assistant v1.8.0. Talimat revizyonu 13.09.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).
+ArthurLegal Corporate Assistant v1.12.0. Talimat revizyonu 07.10.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).
