@@ -90,7 +90,7 @@
 - **Tanınmış Marka tescili** — {{AL_KURUM}} ana logo + [HALKA AÇIK İŞTİRAK] ana logo
 
 ### Watching service
-- **Truva Patent** üzerinden + bağımsız watching (Clarivate Compumark / Corsearch)
+- Marka vekili üzerinden + bağımsız watching (Clarivate Compumark / Corsearch)
 - Aylık bültende benzer marka taraması
 - Sahte/yanıltıcı domain ile birlikte (`udrp-domain-rehberi.md`)
 
