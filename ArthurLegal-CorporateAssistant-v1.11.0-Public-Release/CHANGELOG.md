@@ -5,6 +5,20 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.11.0] — 2026-10-07 — *Yapay Zekâ Ajanı Onayı; Esas Numarasıyla Arama Düzeltildi*
+
+> **Özellik sürümü.** Yeni skill `/regulatory-legal:ai-ajan-onayi`, bir rehber düzeltmesi ve örneklerde kişi adı temizliği. Araçlar ve kaynaklar aynı; `regulatory-legal` 9 skill'den 10'a çıktı.
+
+### Eklendi
+
+1. `knowledge/skills/regulatory-legal__skills.md`: `/regulatory-legal:ai-ajan-onayi`, yapay zekâ ajanı ya da uygulaması canlıya çıkmadan önce hukuk onayı incelemesi. Ajanı sohbet asistanından kendi başına çalışan ajana uzanan beş özerklik basamağından birine yerleştirir ve altı asgari şartı denetler: güvenilir kaynak, belli sahip, en az yetki, kaynağa izlenebilir çıktı, temel izleme, maliyet takibi. KVKK taraması rol, ilke ve işleme şartı, 7499 sonrası yurt dışına aktarım ve standart sözleşme bildirimi, aydınlatma, otomatik sonuca itiraz ve veri güvenliğini kapsar. Tedarikçi sözleşmesinde model eğitimi, alt işleyenler ve sorumluluk sınırı (TBK m. 115 ve 116) incelenir; AB bağlantısı varsa Regulation (EU) 2024/1689'un 2026/1744 sonrası takvimi uygulanır. Getiri iddiası pilotla sınanır. Sonuç: Uygun, Şartlı uygun, Pilotla sınırlı ya da Uygun değil. Skill, KVKK Kurumunun "Etken Yapay Zekâ (Agentic AI)" (Şubat 2026) belgesindeki insan gözetimi, roller, doğruluk ve girdi manipülasyonu başlıklarına dayanır; madde haritası 07.10.2026'da araçla çekildi.
+2. `SYSTEM_PROMPT.md` bölüm 5 eklenti tablosu: `regulatory-legal` satırına yeni skill.
+
+### Düzeltildi
+
+1. `knowledge/references/yargi-mcp-rehberi.md`: esas numarasıyla arama tarifi. Numara yıl ile sıra numarası arasında boşlukla yazılır (`"2024 4785"`); eğik çizgili biçim Bedesten'de "Sadece harf ve rakam içeren aramalar yapılabilir" hatası verir ve sonuç dönmez. Atıf kalıplarındaki örnek numaralar yer tutucuya çevrildi. Düzeltme Courthouse 1.2.0'da vardı; rehber artık dört pakette aynı.
+2. Eskalasyon ve koordinasyon örneklerinde kalan kişi adları rol yer tutucusuna çevrildi ([CEO ADI], [CFO ADI], [HUKUK BAŞKANI ADI], [İŞ BİRİMİ BAŞKANI]): `knowledge/references/epdk-rehberi.md`, `knowledge/skills/administrative-legal__skills.md`, `knowledge/skills/litigation-legal__skills.md`, `knowledge/skills/tax-legal__skills.md`.
+
 ## [1.10.1] — 2026-09-27 — *Canlı Veri Uyarısı: Çekilemeyen Bilgi Açıkça Yazılır*
 
 > **Yama sürümü.** Yalnız talimat ve etiket metni değişti; araçlar, skill sayıları ve kaynaklar aynı.

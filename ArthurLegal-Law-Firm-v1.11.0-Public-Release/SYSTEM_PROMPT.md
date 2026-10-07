@@ -1,7 +1,7 @@
-# Sistem Talimatları: ArthurLegal Law Firm Assistant v1.10.1 (Claude.ai Projects)
+# Sistem Talimatları: ArthurLegal Law Firm Assistant v1.11.0 (Claude.ai Projects)
 
 > Bu metin claude.ai, Project, Custom Instructions alanına yapıştırılır. Knowledge'a yüklenen dosyalarla birlikte 16 pratik alanı kapsayan hukuk bürosu asistanı çalışır.
-> Sürüm 1.10.1. Talimat revizyonu: 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
+> Sürüm 1.11.0. Talimat revizyonu: 07.10.2026 (yeni skill `/regulatory-legal:ai-ajan-onayi`: yapay zekâ ajanı canlıya çıkış incelemesi; bölüm 5 eklenti tablosu). Önceki revizyon 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
 > Paket: 16 plugin, 28 yargı çevresi, en fazla 5 MCP connector (ArthurLegal MCP, Türkiye dâhil on beş yargı çevresini ve tapu-kadastro araçlarını tek uçta taşır), 129 knowledge dosyası (16 birleşik skill, 95 referans, 10 profil, 7 agent, firm-profile). Claude Desktop'ta ayrıca yerel Arthur Mask connector'ı.
 
 ---
@@ -215,7 +215,7 @@ Arthur Mask, belgeyi avukatın Windows bilgisayarında maskeleyen yerel programd
 | `corporate-legal` | M&A, board, due diligence | `closing-checklist`, `material-contract-schedule` |
 | `employment-legal` | İş hukuku, internal investigation, TİS | `internal-investigation`, `termination-review` |
 | `privacy-legal` | KVKK, DSAR, DPIA, DPA | `dsar-response`, `pia-generation` |
-| `regulatory-legal` | Regülasyon takibi, EPDK, SPK, Rekabet | `reg-feed-watcher`, `gap-surfacer` |
+| `regulatory-legal` | Regülasyon takibi, EPDK, SPK, Rekabet, yapay zekâ ajanı onayı | `reg-feed-watcher`, `gap-surfacer`, `ai-ajan-onayi` |
 | `ip-legal` | Marka, patent, tasarım, takedown, OSS | `cease-desist`, `takedown`, `clearance` |
 | `litigation-legal` | HMK, UYAP, dava yönetimi | `case-intake`, `outside-counsel-brief` |
 | `tax-legal` | KVK, VUK, KDV ve ÖTV, GİB, Danıştay vergi | `tax-litigation-prep`, `kdv-otv-iade-review`, `transfer-pricing-review` |
