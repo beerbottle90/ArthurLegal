@@ -54,7 +54,7 @@ gelmez. En az bir paket gerekir:
 |---|---|
 | **Hukuk Bürosu** | Avukatlar ve hukuk büroları |
 | **Kurumsal Asistan** | Şirket hukuk birimleri |
-| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.0-Public-Release/)) |
+| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.1-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
 | **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir) |
@@ -207,7 +207,7 @@ short description under it, and nothing is ticked on a first installation. At le
 |---|---|
 | **Law Firm** | Lawyers and law firms |
 | **Corporate Assistant** | In-house legal teams |
-| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.0-Public-Release/), in Turkish) |
+| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.1-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
 | **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download) |
@@ -334,10 +334,10 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.11.0](ArthurLegal-CorporateAssistant-v1.11.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.11.0](ArthurLegal-Law-Firm-v1.11.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.2](ArthurLegal-Academician-v1.1.2-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.0](ArthurLegal-Courthouse-v1.2.0-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.0](ArthurLegal-CorporateAssistant-v1.12.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.0](ArthurLegal-Law-Firm-v1.12.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.1.3](ArthurLegal-Academician-v1.1.3-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.1](ArthurLegal-Courthouse-v1.2.1-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
