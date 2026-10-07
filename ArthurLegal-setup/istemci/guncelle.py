@@ -7,7 +7,8 @@ Oturum açılışında (HKCU Run) ve yerel sunucu açıkken 6 saatte bir çalı�
 2. Manifest'teki paket sürümü etkin sürümden yeniyse zip indirilir, sha256 doğrulanır, yeni
    bir surumler\\<sürüm> klasörüne açılır ve aktif.txt tek adımda değiştirilir. Çalışan
    sunucular eski klasörle devam eder; yeni sürüm Claude Desktop'ın bir sonraki açılışında
-   devreye girer. Bir önceki sürüm geri dönüş için saklanır.
+   devreye girer. Bir önceki sürüm geri dönüş için saklanır. Yerel derlemeyle kurulmuş, pakette
+   olmayan UYAP köprüsü yeni sürüme kopyalanır.
 3. Arthur Mask kurulu sürümden yeniyse (≈1 GB) arka planda indirilir, Claude Desktop kapalıyken
    sessiz kurulur. Windows 11 Akıllı Uygulama Denetimi açıksa indirilmez: imzasız kurulum orada hiç çalışmaz.
    Kurulu değilse yalnız kurulumda seçildiyse (ortak.moduller) indirilir.
@@ -119,6 +120,21 @@ def _guvenli_ac(zip_yolu: Path, hedef: Path) -> None:
         z.extractall(hedef)
 
 
+# Yerel derlemeyle kurulup genel pakette bulunmayan bileşenler (UYAP köprüsü) güncellemede yeni sürüme kopyalanır:
+# GitHub'daki paket UYAP içermez; köprüsü olmayan sürümde Claude Desktop kaydı UYAP bağlantısını siler
+# (claude_ayari.kaydet). Paket kendi köprüsünü getiriyorsa (büro derlemesi) eskisi taşınmaz.
+YEREL_BILESENLER = ("uyap",)
+
+
+def yerel_bilesenleri_tasi(eski: Path, yeni: Path) -> list:
+    tasinan = []
+    for ad in YEREL_BILESENLER:
+        if (eski / ad / "server.py").exists() and not (yeni / ad).exists():
+            shutil.copytree(eski / ad, yeni / ad, ignore=shutil.ignore_patterns("__pycache__"))
+            tasinan.append(ad)
+    return tasinan
+
+
 def paket_guncelle(manifest: dict, indirici) -> bool:
     yeni, etkin = manifest["surum"], ortak.aktif() or (ortak.surumler() or ["0"])[-1]
     if ortak.surum_demeti(yeni) <= ortak.surum_demeti(etkin):
@@ -136,13 +152,14 @@ def paket_guncelle(manifest: dict, indirici) -> bool:
     if (gecici / "surum.txt").read_text(encoding="utf-8").strip() != yeni or not (gecici / "istemci" / "arthurlegal_sunucu.py").exists():
         shutil.rmtree(gecici, ignore_errors=True)
         raise GuncellemeHatasi("paket içeriği beklenen sürümle uyuşmuyor")
+    tasinan = yerel_bilesenleri_tasi(surumler / etkin, gecici)
     shutil.rmtree(surumler / yeni, ignore_errors=True)
     os.replace(gecici, surumler / yeni)
     ortak.aktif_yaz(yeni)
     indirilen.unlink(missing_ok=True)
     for eski in ortak.surumler()[:-2]:  # etkin + bir önceki kalır
         shutil.rmtree(surumler / eski, ignore_errors=True)
-    ortak.gunluk("guncelle", f"paket {etkin} -> {yeni}")
+    ortak.gunluk("guncelle", f"paket {etkin} -> {yeni}" + (f"; yerel bileşen taşındı: {', '.join(tasinan)}" if tasinan else ""))
     return True
 
 

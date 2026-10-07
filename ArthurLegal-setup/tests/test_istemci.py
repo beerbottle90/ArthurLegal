@@ -830,10 +830,13 @@ class YayimlamaTesti(unittest.TestCase):
 
 
 class GuncelleyiciTesti(unittest.TestCase):
-    def hazirla(self, t: Path, kurcala=None, tohum=TEST_TOHUM, anahtarlar=None):
+    def hazirla(self, t: Path, kurcala=None, tohum=TEST_TOHUM, anahtarlar=None, eski_uyap=False, yeni_uyap=False):
         yayin = t / "yayin"
         yayin.mkdir()
         paket_yaz(t / "yeni", "0.0.2")
+        if yeni_uyap:  # paket kendi köprüsünü getiriyor (büro derlemesi)
+            (t / "yeni" / "uyap").mkdir()
+            (t / "yeni" / "uyap" / "server.py").write_text("# yeni", encoding="utf-8")
         with zipfile.ZipFile(yayin / "arthurlegal-paket-0.0.2.zip", "w") as z:
             for y in (t / "yeni").rglob("*"):
                 z.write(y, y.relative_to(t / "yeni").as_posix())
@@ -859,6 +862,11 @@ class GuncelleyiciTesti(unittest.TestCase):
         self.addCleanup(httpd.server_close)
         self.addCleanup(httpd.shutdown)
         sahte_kok(t / "kok", manifest=url + "/arthurlegal-manifest.json", anahtarlar=anahtarlar)
+        if eski_uyap:  # yerel derlemeyle kurulmuş köprü
+            uyap = t / "kok" / "surumler" / "0.0.1" / "uyap"
+            (uyap / "araclar").mkdir(parents=True)
+            (uyap / "server.py").write_text("# eski", encoding="utf-8")
+            (uyap / "araclar" / "tarayici_uyap.ps1").write_text("", encoding="utf-8")
         r = subprocess.run([sys.executable, "-B", str(t / "kok" / "bin" / "al.py"), "guncelle", "--mask-yok"],
                            env=ENV, capture_output=True, text=True, encoding="utf-8", timeout=120)
         aktif = (t / "kok" / "aktif.txt").read_text(encoding="utf-8") if (t / "kok" / "aktif.txt").exists() else ""
@@ -873,6 +881,28 @@ class GuncelleyiciTesti(unittest.TestCase):
             self.assertTrue((Path(t) / "kok" / "surumler" / "0.0.1").exists(), "önceki sürüm geri dönüş için kalmalı")
             durum = json.loads((Path(t) / "kok" / "veri" / "durum.json").read_text(encoding="utf-8"))
             self.assertEqual((durum["son_guncelleme"]["onceki"], durum["son_guncelleme"]["yeni"]), ("0.0.1", "0.0.2"))
+            self.assertFalse((Path(t) / "kok" / "surumler" / "0.0.2" / "uyap").exists(), "köprü yoktu, gelmemeli")
+
+    def test_yerel_uyap_koprusu_yeni_surume_tasinir(self):
+        """GitHub'daki paket UYAP içermez: yerel derlemeyle kurulan köprü güncellemede kaybolmamalı."""
+        with tempfile.TemporaryDirectory() as t:
+            r, aktif = self.hazirla(Path(t), eski_uyap=True)
+            self.assertEqual(aktif, "0.0.2", r.stdout + r.stderr)
+            yeni = Path(t) / "kok" / "surumler" / "0.0.2" / "uyap"
+            self.assertEqual((yeni / "server.py").read_text(encoding="utf-8"), "# eski")
+            self.assertTrue((yeni / "araclar" / "tarayici_uyap.ps1").exists())
+            self.assertTrue((Path(t) / "kok" / "surumler" / "0.0.1" / "uyap" / "server.py").exists(),
+                            "geri dönüş sürümünün köprüsü yerinde kalmalı")
+            gunluk = (Path(t) / "kok" / "veri" / "gunluk" / "guncelle.log").read_text(encoding="utf-8")
+            self.assertIn("yerel bileşen taşındı: uyap", gunluk)
+
+    def test_paketin_kendi_uyap_koprusu_eskisinin_yerine_gecer(self):
+        with tempfile.TemporaryDirectory() as t:
+            r, aktif = self.hazirla(Path(t), eski_uyap=True, yeni_uyap=True)
+            self.assertEqual(aktif, "0.0.2", r.stdout + r.stderr)
+            yeni = Path(t) / "kok" / "surumler" / "0.0.2" / "uyap"
+            self.assertEqual((yeni / "server.py").read_text(encoding="utf-8"), "# yeni")
+            self.assertFalse((yeni / "araclar").exists(), "eski köprünün dosyaları karışmamalı")
 
     def test_kurcalanmis_manifest_reddedilir(self):
         with tempfile.TemporaryDirectory() as t:
