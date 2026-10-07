@@ -6,6 +6,10 @@
     python yayin/yayinla.py v2.0.0 --on-surum     pre-release: avukatların güncelleyicisi görmez
     python yayin/yayinla.py v2.0.0                latest olarak yayımla: kurulu bilgisayarlar 6 saat içinde alır
     python yayin/yayinla.py v2.0.0 --kasa         günlük anahtar kayıpsa kasadaki yedekle imzala
+    python yayin/yayinla.py v2.0.0 --sinavsiz     sürüm sınavını bilerek atla
+
+Sürüm sınavı (Katman 2): %USERPROFILE%/.arthurlegal/sinav.json varsa yayından önce bir kalite sınavı çalışır ve
+kalite önceki sürüme göre düştüyse yayın durur (bkz. surum_sinavi). Ayar yoksa sınavsız devam edilir.
 
 Önce: python yayin/derle.py  (standart kurulum ve paket zip'i). Etiket zaten varsa (ör. sürüm notu
 elle açıldıysa) dosyalar o yayına eklenir. Büroya özel kurulumlar ve büro katmanı YÜKLENMEZ.
@@ -44,6 +48,7 @@ import ortak  # noqa: E402
 
 ANAHTAR = Path.home() / ".arthurlegal" / "imza" / "yayin_anahtari.hex"
 KASA = ANAHTAR.with_name("kasa_anahtari.hex")
+SINAV_AYARI = Path.home() / ".arthurlegal" / "sinav.json"
 
 
 def kaynaklar() -> dict:
@@ -218,7 +223,40 @@ def dosyalari_yukle(yayin: dict, jeton: str, dosyalar: list, yeni: bool) -> None
         print(f"  yüklendi: {ad}")
 
 
-def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool) -> dict:
+def surum_sinavi(etiket: str, kabul: str | None, ayar_yolu: Path = SINAV_AYARI) -> str | None:
+    """Yayından önce kalite sınavı (sürüm sınavı, Katman 2). Özet satırını döndürür; ayar yoksa None.
+
+    Ayar bu bilgisayara özeldir ve depoya girmez: %USERPROFILE%/.arthurlegal/sinav.json →
+    {"komut": ["python", ".../surum_sinavi.py", "--aday", "{kok}", "--etiket", "{etiket}"]}.
+    {kok} bu deponun kökü, {etiket} yayın etiketidir. Komut 0 dönerse sınav geçer; 1 dönerse kalite düşmüştür ve
+    yayın durur (bilerek geçmek için --sinav-kabul NEDEN); başka bir çıkış hatadır (sınavsız yayın: --sinavsiz).
+    Komutun "SINAV:" ile başlayan son satırı yayın notuna eklenir. Ayar yoksa sınavsız devam edilir: kendi
+    derleyenlerin akışı değişmez."""
+    if not ayar_yolu.exists():
+        print(f"Sürüm sınavı tanımlı değil ({ayar_yolu} yok); sınavsız devam ediliyor.")
+        return None
+    ayar = json.loads(ayar_yolu.read_text(encoding="utf-8"))
+    komut = [str(p).replace("{kok}", str(BURASI.parent)).replace("{etiket}", etiket) for p in ayar["komut"]]
+    print("Sürüm sınavı çalışıyor (gerçek Claude oturumları; birkaç dakika sürer):\n  " + " ".join(komut))
+    ozet = ""
+    with subprocess.Popen(komut, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8",
+                          errors="replace") as p:
+        for satir in p.stdout:
+            print(satir, end="")
+            if satir.startswith("SINAV:"):
+                ozet = satir[len("SINAV:"):].strip()
+    if p.returncode == 0:
+        return ozet or "geçti"
+    if p.returncode == 1:
+        if kabul:
+            print(f"Kalite düşüşü bilerek kabul edildi: {kabul}")
+            return f"{ozet} · düşüş kabul edildi: {kabul}"
+        sys.exit("Sürüm sınavında kalite düştü; yayın durdu. Nedenini inceleyin ya da bilerek geçmek için: "
+                 "--sinav-kabul \"<neden>\"")
+    sys.exit(f"Sürüm sınavı çalışmadı (çıkış {p.returncode}); yayın durdu. Sınavsız yayın için: --sinavsiz")
+
+
+def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav: str | None = None) -> dict:
     """Dosyaları yükler ve yayını yayımlar; yayının son hâlini döndürür."""
     # Sıra: paket ve kurulum dosyaları önce, imzalı manifest en son. Var olan bir yayında dosyalar tek tek değişirken
     # güncelleyici hiçbir an henüz yüklenmemiş bir paketi gösteren manifest görmez.
@@ -232,6 +270,8 @@ def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool) -> di
     kurulum = ("Windows ArthurLegal-Kurulum.exe · macOS ArthurLegal-Kurulum.pkg" if "ArthurLegal-Kurulum.pkg" in dosyalar
                else "ArthurLegal-Kurulum.exe")
     govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: {kurulum}"
+    if sinav:
+        govde += f"\n\nSürüm sınavı: {sinav}"
     yayin, yeni = yayin_ac(taban, jeton, etiket, govde, on_surum)
     dosyalari_yukle(yayin, jeton, dosyalar, yeni)
     if yeni:  # bütün dosyalar yerinde: tek adımda yayımla (ön sürüm Latest olmaz)
@@ -250,6 +290,8 @@ def main(argv=None) -> int:
     ap.add_argument("--kuru", action="store_true")
     ap.add_argument("--on-surum", action="store_true")
     ap.add_argument("--kasa", action="store_true", help="günlük anahtar kayıpsa kasadaki yedek anahtarla imzala")
+    ap.add_argument("--sinavsiz", action="store_true", help="sürüm sınavını atla (bilinçli; yayın notunda görünmez)")
+    ap.add_argument("--sinav-kabul", metavar="NEDEN", help="sınavdaki kalite düşüşünü bilerek kabul et ve yayımla")
     args = ap.parse_args(argv)
     if args.anahtar_uret or args.kasa_anahtari_uret:
         return anahtar_uret(kasa=args.kasa_anahtari_uret)
@@ -274,6 +316,7 @@ def main(argv=None) -> int:
     if not d:
         sys.exit("Önce derleyin: python yayin/derle.py")
     depo = k.get("dagitim_deposu") or k["yayin_deposu"]
+    sinav = None if (args.kuru or args.sinavsiz) else surum_sinavi(args.etiket, args.sinav_kabul)
     manifest = {
         "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,
         "taban": f"https://github.com/{depo}/releases/download/{args.etiket}/",
@@ -300,7 +343,7 @@ def main(argv=None) -> int:
     if args.kuru:
         return 0
 
-    yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"))
+    yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"), sinav=sinav)
     print(f"Yayın: {yayin['html_url']}")
     return 0
 
