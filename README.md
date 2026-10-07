@@ -472,6 +472,35 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 2.6.2 — Legal accuracy fixes, a case citation gate, shared guides from one source (2026-10-07)
+
+- **Legal accuracy fixes.** An article-by-article audit of the knowledge files, run on 24 and 25 September with every
+  article retrieved through the tools, reaches the packages: repealed or misnumbered articles, invented quotations and
+  wrong time limits are corrected across the Law Firm, Corporate Assistant, Courthouse and Academician packages. Among
+  them: the anti-money-laundering record-keeping period (eight years, Law No. 5549 Art. 8), tax settlement after Law
+  No. 7524, attorney engagement, withdrawal and fee rules, stamp duty on proportional-duty contracts (one copy is taxed),
+  the trade-secret basis (TBK Art. 396, TTK Art. 55) and civil, criminal and administrative procedure references.
+  Statements that could not be verified are marked "(doğrulanmadı)".
+- **Case citation gate.** Next to the article verification gate, every Turkish court decision cited (court or chamber,
+  docket number, decision number, date) must be found with the tools in the same conversation and match on all three;
+  a new guide explains the search method (`tr-atif-dogrulama-rehberi.md`, `/legal-research:tr-atif-dogrulama`).
+- **Seven firm-operations skills** in the Law Firm package: AML check, sanctions check, data protection notice, fee
+  agreement, power of attorney template, matter opening and monthly billing. All 47 broken skill references in the
+  Law Firm and Corporate Assistant packages now lead to real skills.
+- **No API key in the packages.** The sanctions-screening guide reads its key from the `OPENSANCTIONS_API_KEY`
+  environment variable.
+- **Company context generalised.** Remaining names and identifying details in examples were replaced with
+  placeholders.
+- **Shared guides from one source.** 67 guides that appear in more than one package are generated from a single
+  source (`ArthurLegal-setup/ortak-rehberler/`): a fix made there reaches every package, and an edit made to only one
+  copy fails the tests.
+- **Package checks on every push.** A GitHub Actions job checks broken skill references, version and count
+  consistency, and new divergence between shared files.
+- **A permanent Courthouse link:** https://github.com/beerbottle90/ArthurLegal#courthouse
+
+Packages: Law Firm and Corporate Assistant 1.12.0, Courthouse 1.2.1, Academician 1.1.3. The installer itself changes
+only its version number; installed copies pick up the new packages on their own.
+
 ## Setup 2.6.1 — AI agent go-live review; Corporate Assistant and Law Firm 1.11.0, Academician 1.1.2 (2026-10-07)
 
 - **AI agent go-live review.** A new skill in the Corporate Assistant and Law Firm packages,
