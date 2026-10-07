@@ -334,8 +334,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.0](ArthurLegal-CorporateAssistant-v1.12.0-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.0](ArthurLegal-Law-Firm-v1.12.0-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.1](ArthurLegal-CorporateAssistant-v1.12.1-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.1](ArthurLegal-Law-Firm-v1.12.1-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
 | Academician | [v1.1.3](ArthurLegal-Academician-v1.1.3-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
 | **Courthouse** | **[v1.2.1](ArthurLegal-Courthouse-v1.2.1-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
