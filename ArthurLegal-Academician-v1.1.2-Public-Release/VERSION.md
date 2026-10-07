@@ -1,8 +1,8 @@
 # VERSION
 
 **Paket:** ArthurLegal Academician Assistant
-**Sürüm:** 1.1.1
-**Tarih:** 2026-09-27
+**Sürüm:** 1.1.2
+**Tarih:** 2026-10-07
 **Hedef ortam:** Claude.ai Projects (web)
 **Lisans:** ArthurLegal Proprietary Non-Commercial License (bkz. `LICENSE`)
 
@@ -14,7 +14,7 @@
 |---|---|
 | Plugin | 8 |
 | Skill | 28 |
-| Referans | 23 |
+| Referans | 24 |
 | Agent | 4 |
 | Profil dosyası | 1 (`akademisyen-profili.md`) |
 
