@@ -1,0 +1,329 @@
+{
+  "aciklama": "Birden çok pakete giren rehberlerin tek kaynağı (references/). Pakete göre değişen yer tutucular kaynakta {{AL_DEGISKEN}} biçimindedir; değerleri aşağıdadır. Değişkenler yalnız yer tutucu ve hitap içindir; içerik farkı değişkene dönüşmez. Kullanım: ArthurLegal-setup/yayin/ortak_uret.py",
+  "paketler": {
+    "hukuk-burosu": "ArthurLegal-Law-Firm-v*-Public-Release",
+    "kurumsal": "ArthurLegal-CorporateAssistant-v*-Public-Release",
+    "adliye": "ArthurLegal-Courthouse-v*-Public-Release",
+    "akademisyen": "ArthurLegal-Academician-v*-Public-Release"
+  },
+  "degiskenler": {
+    "KURUM": {
+      "hukuk-burosu": "[Müvekkil]",
+      "kurumsal": "[ŞİRKET ADI]"
+    },
+    "BURO": {
+      "hukuk-burosu": "büro",
+      "kurumsal": "[ŞİRKET ADI]"
+    },
+    "BURO_B": {
+      "hukuk-burosu": "Büro",
+      "kurumsal": "[ŞİRKET ADI]"
+    },
+    "PROFIL": {
+      "hukuk-burosu": "`firm-profile.md`",
+      "kurumsal": "`company-profile.md`"
+    },
+    "TESIS": {
+      "hukuk-burosu": "[TESİS LOKASYONU]",
+      "kurumsal": "[İşletme Yeri]"
+    },
+    "SANTRAL": {
+      "hukuk-burosu": "[ELEKTRİK ÜRETİM İŞTİRAKİ]",
+      "kurumsal": "[ELEKTRİK SANTRALİ]"
+    },
+    "ANA_ORTAK": {
+      "hukuk-burosu": "[Ana ortak / ilişkili taraf]",
+      "kurumsal": "[ANA ORTAK]"
+    },
+    "ILISKILI_TARAF": {
+      "hukuk-burosu": "[Ana ortak / ilişkili taraf]",
+      "kurumsal": "[İLİŞKİLİ TARAF]"
+    },
+    "UYUM": {
+      "hukuk-burosu": "[Uyum Direktörü]",
+      "kurumsal": "[UYUM DİREKTÖRÜ]"
+    },
+    "TARAF": {
+      "hukuk-burosu": "müvekkil",
+      "kurumsal": "müvekkil",
+      "akademisyen": "müvekkil",
+      "adliye": "taraf"
+    }
+  },
+  "rehberler": {
+    "MCP-ROADMAP.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "abd-atif-dogrulama-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "at-ris-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "avusturya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "bae-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "cek-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "cin-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "courtlistener-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "de-eli-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "echr-hudoc-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "edgar-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "eqanun-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "es-boe-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "eu-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "eurlex-cellar-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "excel-output.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "fi-finlex-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "finlandiya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "france-dila-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "france-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "germany-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "gib-ozelge-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "gleif-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "gsheets-output.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "halka-acik-istirak-kap-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "hmk-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "hollanda-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "idari-yargi-yapisi-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "ie-statutebook-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "irlanda-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "ispanya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "israil-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "istac-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "isvicre-emtia-ticareti-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "italy-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "iyuk-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "japan-egov-api-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "japan-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "kanun-kisaltmalar.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "kap-esirket-webfetch-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "kvkk-m11-cevap-sablonu.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "lex-scholar-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "mevzuat-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal",
+      "adliye",
+      "akademisyen"
+    ],
+    "nl-rechtspraak-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "opensanctions-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "orta-asya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "oss-source-catalog.json": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "otv-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "pii-redaksiyon-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "pl-sejm-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "polonya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "rekabet-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "resourcecontracts-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "romanya-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "russia-legislation-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "seveso-buyuk-kaza-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "source-catalog.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "switzerland-caselaw-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "tapu-kadastro-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal",
+      "adliye",
+      "akademisyen"
+    ],
+    "tr-atif-dogrulama-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "transfer-pricing-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "uk-legislation-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "ukrayna-hukuku-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "uyap-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "vuk-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "yaptirim-tarama-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal"
+    ],
+    "yargi-mcp-rehberi.md": [
+      "hukuk-burosu",
+      "kurumsal",
+      "adliye",
+      "akademisyen"
+    ]
+  }
+}

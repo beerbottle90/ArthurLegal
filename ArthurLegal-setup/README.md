@@ -147,7 +147,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 61 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
+python -m unittest discover -s tests   # 67 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
 python yayin/yayinla.py v2.6.1         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
@@ -157,6 +157,8 @@ yapar ([`macos-kurulum.yml`](../.github/workflows/macos-kurulum.yml)): her derle
 kurar (Courthouse, Tapu ve Arthur Mask seçili), `tests/mac_kurulum_denetimi.py` ile denetler, kaldırır ve paketi iş
 çıktısı olarak saklar. Yayında `.pkg`'yi `yayin/cikti`'ye koymak yeter: `yayinla.py` onu yalnız Windows derlemesiyle
 aynı sürümün ve aynı commit'lerin (ArthurLegal, Tapu) derlemesiyse yükler.
+
+**Ortak rehberler.** Birden çok pakete giren rehberlerin tek kaynağı [`ortak-rehberler/`](ortak-rehberler/README.md)'dadır; paketlerdeki kopyalar `python yayin/ortak_uret.py` ile oradan üretilir. Paketin içindeki kopyayı elle düzeltmek `tests/test_ortak.py`'de yakalanır.
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
 (`--calisma-agaci` ile tersi). `kurulum/ArthurLegal.iss` ve lisans metni **UTF-8 BOM** ile
