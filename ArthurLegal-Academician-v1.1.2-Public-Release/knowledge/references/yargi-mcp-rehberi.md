@@ -51,7 +51,7 @@ Mahkeme: `courts` varsayılanı Yargıtay ve Danıştay. İstinaf için `ISTINAF
 
 Daire: `chamber` kod alır: Yargıtay hukuk `H1` ile `H23`, ceza `C1` ile `C23`, `HGK`, `CGK`, `BGK`; Danıştay `D1` ile `D17`, `IDDK`, `VDDK`, `IBK`. Tam Türkçe ad da kabul edilir. Genel kurul kararı tek daire kararından ağırdır.
 
-Dosya numarası: ayrı `esas_no` filtresi yoktur; numarayı tırnak içinde `query`'ye yaz (`"2023/1234"`) ve `courts` ile daralt.
+Dosya numarası: ayrı `esas_no` filtresi yoktur. Numarayı yıl ile sıra numarası arasında **boşlukla**, tırnak içinde `query`'ye yaz (`"2024 4785"`) ve `courts` ile, biliniyorsa `chamber` ile daralt. Eğik çizgili biçim (`2024/4785`) Bedesten'de "Sadece harf ve rakam içeren aramalar yapılabilir" hatası verir ve sonuç dönmez. Dönen kararın esas ve karar numarasını `tr_ictihat_getir` ile açtığın metinde kontrol et; aynı sayı dizisi başka bir kararda da geçebilir.
 
 Tarih: `date_from` ve `date_to` ISO `YYYY-MM-DD`, karar tarihine göre. Bedesten tek taraflı tarih aralığını sessizce yok sayar: 20.09.2026'da ölçüldü, `+"işe iade"` için yalnız `date_from="2025-01-01"` verildiğinde 1.048 yerine süzgeçsiz 52.993 karar dönüyordu ve hiçbir uyarı gelmiyordu. `tr_ictihat_semantik_ara` yalnız `date_from` aldığı için tarih süzgeci o araçta hiç çalışmamıştı. Sunucu 0.4.0'dan itibaren eksik ucu kendisi doldurur. Kural: tarih süzgeci kullandığında dönen kararların `karar_tarihi` alanına bak; aralık dışı karar görürsen süzgeç uygulanmamıştır, iki ucu da vererek yeniden ara ve "en güncel içtihat" sonucuna o kontrolü yapmadan varma. BTK ve GİB tarih süzgeçleri tek uçla doğru çalışır (aynı gün ölçüldü). Sayfalama `page`; `page_size` en çok 10 (Bedesten sınırı).
 
@@ -76,7 +76,7 @@ Bu tablonun söylediği şey: bir kararın METNİNE dair soru her kurumda aynı 
 
 1. BDDK ve BTK: canlı arama yalnız başlıktadır; başlıkta geçmeyen içerik arşive sorulur. Ölçüldü (20.09.2026): "idari para cezası" 419 BTK kararının metninde geçer, yalnız 9'unun başlığında geçer; "dolaylı pay sahipliği" 60 BDDK kararının metninde geçer, hiçbirinin başlığında geçmez. Bu soruları `tr_semantik_ara(kurum="btk" | "bddk", …)` ile sor. İki kurumun karar metinleri arşive 20.09.2026'da eklendi; o tarihten önce arşiv bu kurumlarda yalnız başlıkları arıyordu.
 2. Rekabet: tersine, metin araması canlı taraftadır (`tr_kurum_karari_ara(kurum="rekabet", query=…)` karar PDF'inin içinde arar). Yerel arşiv Rekabet kararlarının yalnız başlığını taşır; `tr_semantik_ara(kurum="rekabet")` başlıkta kavramsal arama yapar, gerekçede değil. Gerekçeye dair bir sonucu "arşivde yok" diye kapatma; canlı aramayı dene.
-3. KVKK, SPK ve Sigorta Tahkim: başlıklar bilgi taşımaz ("KVKK Kurul Kararı 2021/1111", bülten bölüm adı, K numarası); soru her zaman metne sorulur, `tr_semantik_ara` ve `tr_spk_bulten_icinde_ara` bunun içindir.
+3. KVKK, SPK ve Sigorta Tahkim: başlıklar bilgi taşımaz ("KVKK Kurul Kararı <yıl/sıra>", bülten bölüm adı, K numarası); soru her zaman metne sorulur, `tr_semantik_ara` ve `tr_spk_bulten_icinde_ara` bunun içindir.
 4. EPDK: `market` ve `category` en güçlü süzgeçtir; metni indekslenmemiş kararlar için `tr_kurum_karari_getir` ile belgeyi aç.
 5. Kurum zaten konudur: `kurum="epdk"` enerji, `kurum="kvkk"` kişisel veri demektir. Resmî Gazete ve mevzuattaki `konu` süzgeci (enerji, rekabet, vergi, icra) kurum kararlarında yoktur ve gerekmez; ölçüldü, kurum kararı başlıklarında bu dört konunun kelimeleri kurumun kendi alanı dışında yüzde 2'nin altında geçiyor.
 
@@ -168,15 +168,15 @@ tr_ictihat_semantik_ara(query="kira sözleşmesinde ihtiyaç sebebiyle tahliyede
 Kararı yalnız o oturumda fiilen çektiysen etiketle; alanlar virgülle ayrılır ve araç çıktısındaki `citation` alanı birebir kullanılır:
 
 ```
-[ArthurLegal TR, Yargıtay 9. Hukuk Dairesi, E. 2023/1234, K. 2024/567, 12.03.2024]
-[ArthurLegal TR, Danıştay 13. Daire, E. 2022/456, K. 2023/789, 05.06.2023]
-[ArthurLegal TR, AYM, B. No: 2021/30620, 14.09.2023]
-[ArthurLegal TR, Rekabet Kurulu, 28.02.2024 tarih ve 24-11/123-45 sayılı karar]
-[ArthurLegal TR, EPDK, 18.06.2026 tarihli ve 14681 sayılı Kurul Kararı (RG 20.06.2026/33286)]
+[ArthurLegal TR, Yargıtay <daire>, E. <yıl/sıra>, K. <yıl/sıra>, GG.AA.YYYY]
+[ArthurLegal TR, Danıştay <daire>, E. <yıl/sıra>, K. <yıl/sıra>, GG.AA.YYYY]
+[ArthurLegal TR, AYM, B. No: <yıl/sıra>, GG.AA.YYYY]
+[ArthurLegal TR, Rekabet Kurulu, GG.AA.YYYY tarih ve <sayı> sayılı karar]
+[ArthurLegal TR, EPDK, GG.AA.YYYY tarihli ve <sayı> sayılı Kurul Kararı (RG GG.AA.YYYY/<sayı>)]
 [ArthurLegal TR, GİB, GG.AA.YYYY tarih ve <no> sayılı özelge]
 ```
 
-Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Çekmediğin kararı çekmiş gibi gösterme; çekemiyorsan `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` veya `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`.
+Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Çekmediğin kararı çekmiş gibi gösterme; çekemiyorsan `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` yaz; bağlantı aracın `source_url`'si veya kaynağın resmî giriş sayfasıdır (ör. https://karararama.yargitay.gov.tr/, https://karararama.danistay.gov.tr/, https://kararlarbilgibankasi.anayasa.gov.tr/). Köşeli parantez içindeki yer tutucular örnektir; gerçek künye yalnız araç çıktısından alınır.
 
 ## 7. Disiplin
 

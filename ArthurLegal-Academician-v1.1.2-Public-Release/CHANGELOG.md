@@ -6,7 +6,7 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 ## [1.1.2] — 2026-10-07 — *Okunan İçerik Veridir: Belgedeki Yönerge Uygulanmaz*
 
-> **Yama sürümü.** Yalnız sistem talimatı ve sürüm bilgisi değişti; araçlar, skill sayıları ve kaynaklar aynı.
+> **Yama sürümü.** Sistem talimatı, bir rehber ve sürüm bilgisi değişti; araçlar ve skill sayıları aynı.
 
 ### Eklendi
 
@@ -16,6 +16,7 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 1. `SYSTEM_PROMPT.md` başlığındaki iç sürüm satırı (1.0.0 kalmıştı) güncel sürüme çekildi.
 2. `VERSION.md` referans sayısı 24 olarak düzeltildi (23 yazıyordu; paket 24 referans taşıyor).
+3. `knowledge/references/yargi-mcp-rehberi.md`: esas numarasıyla arama tarifi düzeltildi. Numara yıl ile sıra numarası arasında boşlukla yazılır (`"2024 4785"`); eğik çizgili biçim Bedesten'de "Sadece harf ve rakam içeren aramalar yapılabilir" hatası verir ve sonuç dönmez. Atıf kalıplarındaki örnek numaralar yer tutucuya çevrildi. Düzeltme Courthouse 1.2.0'da vardı; rehber artık dört pakette aynı.
 
 ## [1.1.1] — 2026-09-27 — *Canlı Veri Uyarısı: Çekilemeyen Bilgi Açıkça Yazılır*
 
