@@ -9,7 +9,7 @@ they receive no updates. Current versions live at the repository root. To instal
 [download section](https://github.com/beerbottle90/ArthurLegal#indir) on the main page or the current
 package's `KURULUM.md` / `INSTALLATION.md`.
 
-**Tek istisna (07.10.2026):** eski sürümlerin örneklerinde kalan kişi adları rol yer tutucusuna çevrildi (`[CLCO ADI]`, `[CEO ADI]` gibi); başka hiçbir şey değişmedi. · **Single exception (07.10.2026):** person names left in examples of earlier versions were replaced with role placeholders; nothing else changed.
+**İki istisna (07.10.2026):** eski sürümlerin örneklerinde kalan kişi adları rol yer tutucusuna çevrildi (`[CLCO ADI]`, `[CEO ADI]` gibi) ve bir marka ve patent vekili firmasının adı genel ifadeyle değiştirildi; başka hiçbir şey değişmedi. · **Two exceptions (07.10.2026):** person names left in examples of earlier versions were replaced with role placeholders, and the name of a trademark and patent attorney firm was replaced with a generic phrase; nothing else changed.
 
 | Paket · Package | Arşivdeki sürümler · Archived versions |
 |---|---|

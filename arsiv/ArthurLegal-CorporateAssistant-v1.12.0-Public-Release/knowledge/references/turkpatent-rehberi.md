@@ -63,7 +63,7 @@
 
 ### Önemli pratik notlar
 - Başvuru ücreti + her ek sınıf için ek ücret
-- Vekil zorunluluğu yok (gerçek kişi başvurabilir) ama büyük portföy için **Truva Patent** gibi vekil önerilir ([ŞİRKET ADI]'ın birincil vekili)
+- Vekil zorunluluğu yok (gerçek kişi başvurabilir) ama büyük portföy için deneyimli bir marka ve patent vekili önerilir
 - **Hızlandırılmış inceleme** (ek ücret) — stratejik markalar için
 
 ## YİDK itiraz pratiği
@@ -90,7 +90,7 @@
 - **Tanınmış Marka tescili** — [ŞİRKET ADI] ana logo + [HALKA AÇIK İŞTİRAK] ana logo
 
 ### Watching service
-- **Truva Patent** üzerinden + bağımsız watching (Clarivate Compumark / Corsearch)
+- Marka vekili üzerinden + bağımsız watching (Clarivate Compumark / Corsearch)
 - Aylık bültende benzer marka taraması
 - Sahte/yanıltıcı domain ile birlikte (`udrp-domain-rehberi.md`)
 

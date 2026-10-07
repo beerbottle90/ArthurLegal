@@ -69,7 +69,7 @@ Sahte domain (örn. `sahte-domain-ornegi.com`) tespit edildiğinde **3 ayrı huk
 - **WIPO Arbitration and Mediation Center** (en yaygın) veya FORUM, ADNDRC
 - Süre: **2-3 ay** içinde transfer/iptal
 - Maliyet: ~**1.500 USD** (tek hakem; üç hakem ~4.000 USD)
-- Dış marka vekili sunar (Truva Patent veya UDRP uzmanı)
+- Dış marka vekili ya da UDRP uzmanı sunar
 
 **UDRP testi (3 koşul):**
 1. Domain marka ile aynı veya karıştırılır
