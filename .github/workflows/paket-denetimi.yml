@@ -1,0 +1,50 @@
+# Paket denetimi (sürüm sınavı, Katman 1).
+#
+# Paketlere ya da denetime dokunan her push'ta (bütün dallar) ve PR'da GitHub'ın Linux bilgisayarında çalışır;
+# ağa çıkmaz, API anahtarı istemez, birkaç saniyede biter. ArthurLegal-setup/yayin/paket_denetimi.py depo
+# kökündeki ArthurLegal-*-v*-Public-Release paketlerini denetler (arsiv/ hariç):
+#   1. Kırık skill atfı: .md dosyalarındaki /eklenti:komut o pakette tanımlı bir skill'e gidiyor mu
+#      (eski eklenti adıyla yazılan atıf da kırıktır; "hazırlanıyor" notlu atıf planlı sayılır)
+#   2. Sürüm: klasör adındaki sürüm VERSION, SYSTEM_PROMPT, README, KURULUM, INSTALLATION, CHANGELOG ve
+#      ATTRIBUTION'da aynı mı; aynı paketin iki klasörü kalmış mı
+#   3. Sayım: kitapçıklarda "Toplam skill", İçindekiler ve gövde aynı mı; başlıklardaki plugin, skill,
+#      referans, agent, profil ve knowledge dosyası sayıları gerçek mi
+#   4. Yeni ayrışma: paketler arasında birbirinin aynısı olan bir dosya yalnız bir pakette değişti mi
+# Bilinen eski sorunlar ArthurLegal-setup/tests/paket_denetimi_taban.json'dadır; iş yalnız yeni bir sorunda
+# kırmızı biter. Ayrıntılı rapor: python ArthurLegal-setup/yayin/paket_denetimi.py --ayrinti
+
+name: Paket denetimi
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "ArthurLegal-*-Public-Release/**"
+      - "ArthurLegal-setup/yayin/paket_denetimi.py"
+      - "ArthurLegal-setup/tests/**"
+      - ".github/workflows/paket-denetimi.yml"
+  pull_request:
+    paths:
+      - "ArthurLegal-*-Public-Release/**"
+      - "ArthurLegal-setup/yayin/paket_denetimi.py"
+      - "ArthurLegal-setup/tests/**"
+      - ".github/workflows/paket-denetimi.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  denetle:
+    name: Paketleri denetle
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Depo kökünden çalışır; test, depo kökünü kendi konumundan bulur
+      - name: Paket denetimi
+        run: python -m unittest ArthurLegal-setup/tests/test_paketler.py -v
