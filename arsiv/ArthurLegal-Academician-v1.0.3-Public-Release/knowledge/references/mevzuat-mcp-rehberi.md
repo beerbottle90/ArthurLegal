@@ -201,6 +201,6 @@ Teslim edilecek her çıktıda (not, sözleşme, protokol, ihtarname, dilekçe, 
 
 Knowledge dosyalarındaki madde haritaları (`smk-rehberi.md`, `hmk-rehberi.md` ve benzerleri) ve skill şablonlarındaki örnek atıflar yalnız neyin çekileceğini gösterir; doğrulama yerine geçmez.
 
-Örnek hata: bir iş ve fikri haklar protokolünün 5.5 klozunda "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120'nin başlığı "Çalışanın önalım hakkı"dır; hak, işveren iflas ettiğinde ve iflas idaresi buluşu işletmeden ayrı devretmek istediğinde çalışana tanınır. Madde çekilseydi başlık hatayı tek bakışta gösterirdi.
+Örnek hata: bir buluş klozunda hakkı işverene bağlayıp "SMK m. 120" yazmak. SMK m. 120'nin başlığı "Çalışanın önalım hakkı"dır; hak, işveren iflas ettiğinde ve iflas idaresi, işverenin tam hak talebinde bulunduğu buluşu işletmeden ayrı devretmek istediğinde çalışana tanınır. Madde çekilseydi başlık hatayı tek bakışta gösterirdi.
 
 *Son güncelleme: 22.09.2026. Madde doğrulama kapısı (bölüm 9) ve tek çağrılı madde okuma (`tr_mevzuat_madde_getir(number=…, madde_no=…)`, şemada görünüyorsa) eklendi. Önceki doğrulama: 20.09.2026. Parametreler arthur-tr-hukuk-mcp (eski adı ArthurLegalTR) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten çağrılarıyla doğrulandı; `konu` ölçümleri arthurlegal-1.9.1-jev-edition deposundaki sınav kümelerine dayanır.*

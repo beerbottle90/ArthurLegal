@@ -109,8 +109,9 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ## [1.9.1] — 2026-09-22 — *Madde Doğrulama Kapısı; Yanlış Madde Atıfları Düzeltildi*
 
-> **Düzeltme sürümü.** Bir iş ve fikri haklar protokolünün 5.5 klozuna "SMK m. 120, ŞİRKET'in önalım hakkı" yazıldı. SMK m. 120
-> "Çalışanın önalım hakkı"dır: işveren iflas eder ve iflas idaresi buluşu işletmeden ayrı devretmek isterse hak çalışanındır.
+> **Düzeltme sürümü.** Belge gövdesinde bir buluş hakkı işverene bağlanıp "SMK m. 120" diye atıf yapılabiliyordu. SMK m. 120
+> "Çalışanın önalım hakkı"dır: işveren iflas eder ve iflas idaresi, işverenin tam hak talebinde bulunduğu buluşu işletmeden
+> ayrı devretmek isterse hak çalışanındır.
 > Kök neden: belge gövdesine yazılan madde numaraları atıf disiplininin dışında kalıyordu, bir maddeyi okumak iki çağrı ve
 > büyük bir madde ağacı gerektiriyordu ve bilgi dosyalarındaki bazı madde haritaları yanlıştı. Talimat metni değişti.
 
