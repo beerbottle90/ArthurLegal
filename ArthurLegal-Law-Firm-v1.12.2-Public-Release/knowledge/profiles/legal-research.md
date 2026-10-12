@@ -16,7 +16,7 @@ alanları `/firm-operations:cold-start-interview` ile doldurulabilir.*
 `firm-profile.md` oku. Bu eklentiye özel:
 
 **Kurulu MCP sunucuları:** `[DOLDUR — hangileri connector olarak eklendi?]`
-**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil on beş yargı çevresi ve tapu-kadastro (`tkgm_`), 121 araç
+**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil on beş yargı çevresi ve tapu-kadastro (`tkgm_`), 123 araç
 tek connector'da (`az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `scholar_`
 `contracts_`). Kurulu değilse `[DOLDUR — "kurulu değil"]` yaz; o hâlde AZ
 mevzuatı WebFetch yoluna düşer ve **yürürlük statüsü doğrulanmaz**.

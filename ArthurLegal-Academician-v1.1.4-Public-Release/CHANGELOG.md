@@ -4,6 +4,14 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 ---
 
+## [1.1.4] — 2026-10-12 — *Madde Atfı Örneği Genel Dille*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Değişti
+1. `mevzuat-mcp-rehberi.md` bölüm 9: örnek hata belirli bir belge yerine genel bir buluş klozu üzerinden anlatılıyor; örneğe SMK m. 120'nin "tam hak talebi" şartı eklendi (6769 m. 120/1, canlı metinle teyitli).
+2. Bu değişiklik günlüğündeki eski bir giriş aynı örneği artık genel dille anlatıyor.
+
 ## [1.1.3] — 2026-10-07 — *Madde Atfı Düzeltmeleri*
 
 > **Yama sürümü.** 24.09.2026'da roundtable laboratuvarında yapılan madde atfı denetiminin bu pakete düşen kısmı.

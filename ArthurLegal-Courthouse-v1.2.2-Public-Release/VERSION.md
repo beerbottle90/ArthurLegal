@@ -1,8 +1,8 @@
 # Sürüm Bilgisi
 
-**Sürüm:** 1.2.1
-**Yayın tarihi:** 2026-10-07
-**Önceki sürüm:** 1.2.0
+**Sürüm:** 1.2.2
+**Yayın tarihi:** 2026-10-12
+**Önceki sürüm:** 1.2.1
 **Lisans:** Proprietary, Non-Commercial (bkz. [LICENSE](LICENSE)); `claude-for-legal` bileşenleri Apache 2.0
 
 ## Semver özeti
@@ -12,6 +12,8 @@
 - **Patch (x.x.1):** Hata düzeltme, içerik güncelleme
 
 ## Bu sürümde
+
+**v1.2.2 — Madde atfı örneği genel dille.** `mevzuat-mcp-rehberi.md`'deki örnek hata belirli bir belge yerine genel bir buluş klozu üzerinden anlatılıyor; SMK m. 120'nin "tam hak talebi" şartı eklendi.
 
 **v1.2.1 — Madde atfı düzeltmeleri.** Laboratuvardaki madde atfı denetiminden 1.2.0'da eksik kalan düzeltmeler (damga vergisi nüsha kuralı, HMK m. 297 başlığı, kanun kısaltmaları, CMK m. 231/5-6, HMK m. 187 ve 190) ve OpenSanctions API anahtarının bağlantı rehberinden çıkarılması.
 

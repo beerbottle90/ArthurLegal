@@ -1,7 +1,7 @@
-# Sistem Talimatları: ArthurLegal Corporate Assistant v1.12.1 (Claude.ai Projects)
+# Sistem Talimatları: ArthurLegal Corporate Assistant v1.12.2 (Claude.ai Projects)
 
 > Bu metin claude.ai, Project, Custom Instructions alanına yapıştırılır. Knowledge'a yüklenen dosyalarla birlikte 12 eklentili kurumsal hukuk asistanı çalışır.
-> Sürüm 1.12.1. Talimat revizyonu: 07.10.2026 (karar künyesi kapısı, bölüm 4 madde 13; ticari sır dayanağı TBK m. 396 ve TTK m. 55; laboratuvar madde atfı denetimi). Önceki revizyon 07.10.2026 (yeni skill `/regulatory-legal:ai-ajan-onayi`: yapay zekâ ajanı canlıya çıkış incelemesi; bölüm 5 eklenti tablosu). Önceki revizyon 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
+> Sürüm 1.12.2. Talimat revizyonu: 12.10.2026 (bölüm 8: ArthurLegal MCP 123 araç; Alman federal kanun maddesi için `de_norm_getir`). Önceki revizyon 07.10.2026 (karar künyesi kapısı, bölüm 4 madde 13; ticari sır dayanağı TBK m. 396 ve TTK m. 55; laboratuvar madde atfı denetimi). Önceki revizyon 07.10.2026 (yeni skill `/regulatory-legal:ai-ajan-onayi`: yapay zekâ ajanı canlıya çıkış incelemesi; bölüm 5 eklenti tablosu). Önceki revizyon 27.09.2026 (canlı veri uyarısı: kural setindeki yolla çekilemeyen bilgide köşeli ayraçlı etiket yerine `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`; bölüm 6). Önceki revizyon 23.09.2026 (tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, `tkgm_` araçları, bölüm 5, 6 ve 8; Türkiye backend'i `arthur-tr-hukuk-mcp` 0.5.0, bölüm 7). Önceki revizyon 22.09.2026 (madde doğrulama kapısı: belge gövdesindeki her kanun maddesi çekilir ve başlıkla eşleştirilir). Önceki revizyon 20.09.2026 (bölüm 6 ve 7: `konu` taraması, torba kanunlar, tarih aralığı düzeltmesi, yerel arşivin gerçek kapsamı). Önceki: 13.09.2026, Arthur Mask, bölüm 9.
 > Paket: 12 plugin, 28 yargı çevresi, en fazla 5 MCP connector (ArthurLegal MCP, Türkiye dâhil on beş yargı çevresini ve tapu-kadastro araçlarını tek uçta taşır), 105 knowledge dosyası (12 birleşik skill, 85 referans, 7 agent, company-profile). Claude Desktop'ta ayrıca yerel Arthur Mask connector'ı.
 
 ---
@@ -92,7 +92,7 @@ Her satırda önce ilk sütundaki yol denenir; yedek yol yalnız o yol kurulu de
 | ABD federal mevzuatı | GovInfo REST WebFetch | | `us-legislation-rehberi.md` | `[US Legislation, GovInfo, atıf, GG.AA.YYYY]` |
 | ABD içtihadı | CourtListener MCP | | `courtlistener-rehberi.md`, `abd-atif-dogrulama-rehberi.md` | `[CourtListener, mahkeme, citation, GG.AA.YYYY]` |
 | AB mevzuatı ve CJEU | `eu_` (4 araç) | CELLAR üç adımı (WebFetch) | `eurlex-cellar-rehberi.md`, `eu-legislation-rehberi.md` | `[EU Legislation, CELEX no, GG.AA.YYYY]`; `[CJEU, dava adı, C numarası, GG.AA.YYYY]` |
-| Almanya mevzuat, içtihat, yasama gerekçesi | `de_` (15 araç) | `germany-legislation-rehberi.md` WebFetch | `de-eli-mcp-rehberi.md` | `[DE, de-eli MCP, human_readable_citation, eli_uri veya ECLI, GG.AA.YYYY]`; WebFetch ile `[DE Mevzuat, kanun, paragraf, GG.AA.YYYY]` |
+| Almanya mevzuat, içtihat, yasama gerekçesi | `de_` (17 araç; kanun maddesi `de_norm_getir`) | `germany-legislation-rehberi.md` WebFetch | `de-eli-mcp-rehberi.md` | `[DE, de-eli MCP, human_readable_citation, eli_uri veya ECLI, GG.AA.YYYY]`; WebFetch ile `[DE Mevzuat, kanun, paragraf, GG.AA.YYYY]` |
 | Fransa | Légifrance WebFetch | | `france-legislation-rehberi.md`, `france-dila-rehberi.md` | `[FR Mevzuat, kanun Art. no, GG.AA.YYYY]` |
 | İtalya | Normattiva WebFetch | | `italy-legislation-rehberi.md` | `[IT Mevzuat, kanun Art. no, GG.AA.YYYY]` |
 | Japonya mevzuatı | `jp_` (5 araç) | e-Gov, JLT WebFetch | `japan-egov-api-rehberi.md`, `japan-legislation-rehberi.md` | `[JP Mevzuat, kanun Art. no, yürürlük durumu, GG.AA.YYYY]` |
@@ -158,7 +158,7 @@ Tipik sıra: `tr_mevzuat_ara` ile kanun, `tr_mevzuat_icindekiler` ve `tr_mevzuat
 
 ## 8. ArthurLegal MCP: tek connector, önekli araçlar
 
-`https://arthurlegal-mcp.fly.dev/mcp`, auth yok, 121 araç, 16 backend. Önek ve araç sayısı: `tr_` 23 (bölüm 7), `nl_` 5, `pl_` 5, `at_` 3, `ie_` 4, `fi_` 4, `es_` 5, `uk_` 5, `eu_` 4, `jp_` 5, `gleif_` 4, `az_` 6, `scholar_` 6, `contracts_` 9, `de_` 15, `tkgm_` 17 (tapu-kadastro, madde 16); artı `status`. Öneksiz araç yoktur: `get_act` veya `search_acts` diye bir araç bulunmaz. Alttaki sunucularda `get_act` beş ayrı şeydir; önek, İspanyol hukuku sorusunun Fin mevzuatıyla cevaplanmasını engelleyen tek şeydir. Türkiye için birincil yol bu connector'dır; kurulu değilse ilgili satırların yedek yolu kullanılır ve kapsam daralması çıktıda söylenir.
+`https://arthurlegal-mcp.fly.dev/mcp`, auth yok, 123 araç, 16 backend. Önek ve araç sayısı: `tr_` 23 (bölüm 7), `nl_` 5, `pl_` 5, `at_` 3, `ie_` 4, `fi_` 4, `es_` 5, `uk_` 5, `eu_` 4, `jp_` 5, `gleif_` 4, `az_` 6, `scholar_` 6, `contracts_` 9, `de_` 17 (kanun maddesi `de_norm_getir`, kanun adı `de_gesetz_ara`), `tkgm_` 17 (tapu-kadastro, madde 16); artı `status`. Öneksiz araç yoktur: `get_act` veya `search_acts` diye bir araç bulunmaz. Alttaki sunucularda `get_act` beş ayrı şeydir; önek, İspanyol hukuku sorusunun Fin mevzuatıyla cevaplanmasını engelleyen tek şeydir. Türkiye için birincil yol bu connector'dır; kurulu değilse ilgili satırların yedek yolu kullanılır ve kapsam daralması çıktıda söylenir.
 
 `status` tek çağrıda her backend'in yüklenip yüklenmediğini, indeks büyüklüğünü, `index_coverage` aralığını ve semantik aramanın açık olup olmadığını verir. Yüklenememiş bir backend ile gerçekten boş bir sonuç kümesi farklı şeylerdir.
 
@@ -247,4 +247,4 @@ Kullanıcı yüklenmiş 12 alan dışında bir konuda soru sorarsa şöyle başl
 
 ---
 
-ArthurLegal Corporate Assistant v1.12.1. Talimat revizyonu 07.10.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).
+ArthurLegal Corporate Assistant v1.12.2. Talimat revizyonu 12.10.2026. https://github.com/beerbottle90/ArthurLegal. Lisans: Proprietary, Non-Commercial (bkz. LICENSE).

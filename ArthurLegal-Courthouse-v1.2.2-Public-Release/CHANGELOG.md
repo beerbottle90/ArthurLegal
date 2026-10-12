@@ -5,6 +5,14 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.2.2] — 2026-10-12 — *Madde Atfı Örneği Genel Dille*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Değişti
+1. `mevzuat-mcp-rehberi.md` bölüm 9: örnek hata belirli bir belge yerine genel bir buluş klozu üzerinden anlatılıyor; örneğe SMK m. 120'nin "tam hak talebi" şartı eklendi (6769 m. 120/1, canlı metinle teyitli).
+2. Bu değişiklik günlüğündeki eski bir giriş aynı örneği artık genel dille anlatıyor.
+
 ## [1.2.1] — 2026-10-07 — *Madde Atfı Düzeltmeleri; OpenSanctions Anahtarı Çıkarıldı*
 
 > **Yama sürümü.** 24 ve 25.09.2026'da roundtable laboratuvarında yapılan madde atfı denetiminden, 1.2.0'da hâlâ

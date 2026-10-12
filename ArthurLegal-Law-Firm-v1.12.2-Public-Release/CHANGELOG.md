@@ -5,6 +5,15 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.2] — 2026-10-12 — *Madde Atfı Örneği Genel Dille; Connector Araç Sayısı*
+
+> **Bakım sürümü.** Sistem talimatında bölüm 8'deki araç sayısı ve sürüm satırları değişti; bir rehberdeki örnek hata genel dille anlatılıyor.
+
+### Değişti
+1. `mevzuat-mcp-rehberi.md` bölüm 9: örnek hata belirli bir belge yerine genel bir buluş klozu üzerinden anlatılıyor; örneğe SMK m. 120'nin "tam hak talebi" şartı eklendi (6769 m. 120/1, canlı metinle teyitli).
+2. `SYSTEM_PROMPT.md` bölüm 8 ve kurulum belgeleri: ArthurLegal MCP 123 araç; `de_` 17 (Alman federal kanun maddesi `de_norm_getir`, kanun adı `de_gesetz_ara`). `knowledge/profiles/legal-research.md`'deki sayı da 123.
+3. Bu değişiklik günlüğündeki eski bir giriş aynı örneği artık genel dille anlatıyor.
+
 ## [1.12.1] — 2026-10-07 — *Ortak Rehberler Tek Kaynakta*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti. Hukuk Bürosu ile Kurumsal'da aynı adı taşıyıp metni ayrışmış 15 rehber tek metne indirildi. İki paketteki ortak rehberlerin 82'si artık tek kaynaktan üretiliyor (`ArthurLegal-setup/ortak-rehberler/`); bir kopyada yapılan elle düzeltme testte yakalanır. Bilinçli olarak pakete özgü kalanlar: `arthur-mask-rehberi.md` ve `epdk-rehberi.md`.

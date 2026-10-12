@@ -1,12 +1,12 @@
 # Claude.ai Projects – Kurulum Rehberi
 
-## ArthurLegal Corporate Assistant v1.12.1
+## ArthurLegal Corporate Assistant v1.12.2
 
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
 
 **İçerik:** 12 birleşik skill dosyası · 85 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
-**MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 14 yargı çevresi + tapu-kadastro, 121 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
+**MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 14 yargı çevresi + tapu-kadastro, 123 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
 (ArthurLegal dışındakiler isteğe bağlıdır · ayrıca OpenSanctions REST API)
 **Yerel gizlilik kapısı:** Arthur Mask (isteğe bağlı, önerilir; Windows 10/11 64 bit + Claude Desktop, Adım 5)
 
@@ -73,7 +73,7 @@ Project → **+ Add content** → **Files** ekranını açık tutun.
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** — kimlik doğrulama yok |
 
-Tek uç, 16 backend, 121 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
+Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
 
 | Önek | Kapsam |
 |---|---|
@@ -327,7 +327,7 @@ Her plugin için `knowledge/skills/<plugin>__skills.md` dosyasını açıp `## I
 | Özellik | Claude Code | Claude.ai Projects |
 |---|---|---|
 | `/<plugin>:<skill>` slash command | ✓ resmi | ⚠ simüle (system prompt anlar) |
-| **ArthurLegal MCP** (Türkiye + 14 yargı çevresi + tapu-kadastro, 121 araç) | ✓ `.mcp.json` | ✓ tek custom connector (auth yok) |
+| **ArthurLegal MCP** (Türkiye + 14 yargı çevresi + tapu-kadastro, 123 araç) | ✓ `.mcp.json` | ✓ tek custom connector (auth yok) |
 | **TR Legal MCP** (isteğe bağlı: AİHM, KİK, Sayıştay…) | ✓ `.mcp.json` | ✓ custom connector (OAuth) |
 | **OpenCaseLaw.ch MCP** | ✓ `.mcp.json` | ✓ custom connector |
 | Araç çağrısı zaman aşımı | uzun | **100 saniye — sabit** |
@@ -356,6 +356,8 @@ Yeni bir sürüm geldiğinde:
 2. Claude.ai projesinde ilgili dosyaları silin → güncellenmiş halleri yeniden yükleyin
 3. `SYSTEM_PROMPT.md` değiştiyse Custom Instructions'ı güncelleyin
 
+v1.12.1'den v1.12.2'ye geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 8: connector araç sayısı) ve Project knowledge'da `knowledge/references/mevzuat-mcp-rehberi.md` yenilenir.
+
 v1.12.0'dan v1.12.1'e geçiş: Project knowledge'da şu on dört rehberi yenileyin: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/ced-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/damga-vergisi-rehberi.md`, `knowledge/references/gurcistan-hukuku-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/redline-konvansiyonlari-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`, `knowledge/references/uk-legislation-rehberi.md`, `knowledge/references/us-legislation-rehberi.md`, `knowledge/references/yunanistan-hukuku-rehberi.md`. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.11.0'dan v1.12.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 4 madde 13: karar künyesi kapısı) ve birçok rehber ile skill kitapçığı değiştiği için `knowledge/` klasörü baştan yüklenir (değişenler `CHANGELOG.md`'de); `knowledge/references/tr-atif-dogrulama-rehberi.md` yenidir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
@@ -370,4 +372,4 @@ v1.7.0'dan v1.8.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (yeni 
 
 ---
 
-*ArthurLegal Corporate Assistant v1.12.1 — https://github.com/beerbottle90/ArthurLegal*
+*ArthurLegal Corporate Assistant v1.12.2 — https://github.com/beerbottle90/ArthurLegal*

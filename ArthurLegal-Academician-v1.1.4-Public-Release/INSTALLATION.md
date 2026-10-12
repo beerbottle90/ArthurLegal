@@ -1,4 +1,4 @@
-# Installation — ArthurLegal Academician Assistant v1.1.3
+# Installation — ArthurLegal Academician Assistant v1.1.4
 
 > English installation guide. Türkçe → [KURULUM.md](KURULUM.md)
 >

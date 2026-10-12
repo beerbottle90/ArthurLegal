@@ -334,14 +334,14 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.1](ArthurLegal-CorporateAssistant-v1.12.2-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.1](ArthurLegal-Law-Firm-v1.12.2-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.3](ArthurLegal-Academician-v1.1.4-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.1](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.2](ArthurLegal-CorporateAssistant-v1.12.2-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.2](ArthurLegal-Law-Firm-v1.12.2-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.1.4](ArthurLegal-Academician-v1.1.4-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.2](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
-Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.1](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.1](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.2](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.2](ArthurLegal-Courthouse-v1.2.2-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -471,6 +471,14 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.6.4 — A worked example rewritten in general terms; the research connector's tool count (2026-10-12)
+
+- **One worked example, rewritten.** The statute guide's example of a wrong article reference now uses a general invention clause instead of one particular document, and states the condition the example used to leave out: the employee's right of first refusal under the Industrial Property Code (Law No. 6769 Art. 120) covers an invention the employer has claimed in full. The same wording replaces the old example in the change logs and in the archived packages; the git history and earlier release files are unchanged.
+- **Research connector: 123 tools.** The Law Firm and Corporate Assistant instructions now count 123 tools on the ArthurLegal research connector and name the two German tools added in October: `de_norm_getir` returns one section of a federal statute (BGB, StGB, GG ...) from gesetze-im-internet.de, `de_gesetz_ara` finds the statute by name.
+- **Updates keep locally built components.** When a computer's installation includes a component that a local build added, the updater now carries it over to the new version instead of dropping it.
+
+Packages: Law Firm and Corporate Assistant 1.12.2, Courthouse 1.2.2, Academician 1.1.4. Installed copies pick up the new packages on their own.
 
 ## Setup 2.6.3 — Shared guides aligned; a quality exam before every release (2026-10-07)
 

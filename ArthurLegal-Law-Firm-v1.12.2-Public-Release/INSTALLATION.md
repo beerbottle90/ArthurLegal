@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.12.1 | **Updated:** 2026-10-07
+**Version:** 1.12.2 | **Updated:** 2026-10-12
 
 ---
 
@@ -9,7 +9,7 @@
 | Requirement | Details |
 |---|---|
 | Claude.ai account | Pro or Team plan (required for Projects feature) |
-| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 14 jurisdictions + land registry, 121 tools, no auth (Step 4) |
+| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 14 jurisdictions + land registry, 123 tools, no auth (Step 4) |
 | TR Legal MCP | yargi-mcp-pro connector — only for ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK (optional — Step 4b) |
 | Arthur Mask | Local privacy gate that masks documents on your computer; Windows 10/11 64-bit + Claude Desktop (recommended, optional — Step 5) |
 | OpenSanctions API key | For sanctions screening (optional) |
@@ -162,7 +162,7 @@ Project → **Customize** → **Connectors** → **+ Add custom connector**
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** |
 
-One endpoint, 16 backends, 121 tools. Türkiye is inside this connector under the `tr_`
+One endpoint, 16 backends, 123 tools. Türkiye is inside this connector under the `tr_`
 prefix (23 tools) and the Turkish land registry under `tkgm_` (17 tools) — no separate Turkish-law or
 land-registry connector is needed. The first live land-registry query in a chat shows a one-time consent card;
 see `knowledge/references/tapu-kadastro-rehberi.md`.
@@ -409,7 +409,9 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.12.1**. Upgrading from 1.12.0: replace these eight guides in Project knowledge: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/epdk-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/smk-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
+This is version **1.12.2**. Upgrading from 1.12.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 8: connector tool count) and replace `knowledge/references/mevzuat-mcp-rehberi.md` and `knowledge/profiles/legal-research.md` in Project knowledge.
+
+Upgrading from 1.12.0 to 1.12.1: replace these eight guides in Project knowledge: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/epdk-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/smk-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
 
 Upgrading from 1.11.0 to 1.12.0: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 4, rule 10: case citation gate) and upload the `knowledge/` folder again, since many guides and skill books changed (see `CHANGELOG.md`); `knowledge/references/tr-atif-dogrulama-rehberi.md` is new. The local ArthurLegal installation refreshes package files on its own.
 

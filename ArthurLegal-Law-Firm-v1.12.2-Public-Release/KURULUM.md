@@ -1,6 +1,6 @@
 # ArthurLegal Hukuk Bürosu Asistanı — Kurulum Rehberi
 
-**Versiyon:** 1.12.1 | **Güncelleme:** 2026-10-07
+**Versiyon:** 1.12.2 | **Güncelleme:** 2026-10-12
 
 ---
 
@@ -169,7 +169,7 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** — kimlik doğrulama yok |
 
-Tek uç, 16 backend, 121 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
+Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
 
 | Önek | Kapsam |
 |---|---|
@@ -415,7 +415,9 @@ A: `/<plugin>:` yazın — asistan o plugin'in tüm mevcut skill'lerini listeler
 
 ## Güncelleme notları
 
-Bu versiyon **v1.12.1**'dir. v1.12.0'dan geçiş: Project knowledge'da şu sekiz rehberi yenileyin: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/epdk-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/smk-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+Bu versiyon **v1.12.2**'dir. v1.12.1'den geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 8: connector araç sayısı) ve Project knowledge'da `knowledge/references/mevzuat-mcp-rehberi.md` ile `knowledge/profiles/legal-research.md` yenilenir.
+
+v1.12.0'dan v1.12.1'e geçiş: Project knowledge'da şu sekiz rehberi yenileyin: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/epdk-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/smk-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.11.0'dan v1.12.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 4 madde 10: karar künyesi kapısı) ve birçok rehber ile skill kitapçığı değiştiği için `knowledge/` klasörü baştan yüklenir (değişenler `CHANGELOG.md`'de); `knowledge/references/tr-atif-dogrulama-rehberi.md` yenidir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
