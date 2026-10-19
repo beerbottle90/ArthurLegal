@@ -245,7 +245,7 @@ Müvekkil portföyünüz o yargı çevresine temas ediyorsa ekleyin.
 
 | Connector | URL | Auth | Kapsam |
 |---|---|---|---|
-| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | Yok | İsviçre içtihadı — 972K+ BGer/BVGer/26 kanton kararı (33 araç, CC0) |
+| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | Yok | İsviçre içtihadı — 1.050.000+ BGer/BVGer/26 kanton kararı (42 araç, CC0) |
 
 > ⚠️ **Citation verification zorunludur.** Bir ABD kararına atıf yapılacaksa önce
 > CourtListener'da doğrulanır (karar var mı, citation doğru mu, overrule edilmiş

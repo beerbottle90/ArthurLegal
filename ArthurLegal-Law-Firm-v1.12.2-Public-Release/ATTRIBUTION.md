@@ -34,9 +34,9 @@ HSK) için kullanılır.
 
 Dördü de self-hosted MCP sunucusudur; public upstream
 API'leri sarar. Kaynakları:
-[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api) ·
-[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api) ·
-[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api)
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api) ·
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/lex-scholar-api) ·
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/resourcecontracts-api)
 · [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp).
 
 - **e-qanun MCP** — upstream `api.e-qanun.az`, Azerbaycan Cumhuriyeti **Adalet

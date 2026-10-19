@@ -1,8 +1,8 @@
 # İsviçre Hukuku & İçtihadı — Kullanım Rehberi (v1.7.0)
 
-> **Erişim tipi:** OpenCaseLaw.ch MCP (33 araç, auth yok) + Fedlex WebFetch
+> **Erişim tipi:** OpenCaseLaw.ch MCP (42 araç, auth yok) + Fedlex WebFetch
 > **Auth:** Yok — tüm kaynaklar tamamen açık
-> **Kapsam:** 972.000+ İsviçre federal + kanton kararı; tüm federal mevzuat
+> **Kapsam:** 1.050.000+ İsviçre federal + kanton kararı; tüm federal mevzuat
 > **[ŞİRKET ADI] bağlamı:** ICC/Swiss arbitration, İsviçre holdingler, Swiss OR sözleşmeleri
 
 ---
@@ -74,7 +74,7 @@ Endpoint canlı (08.06.2026 ✅).
 > **Alternatif (Claude Code, self-host):** `Ansvar-Systems/switzerland-law-mcp` — 4.873
 > İsviçre federal kanunu, SPARQL census tabanlı, DE/FR/IT. Python self-host.
 >
-> **Kapsama mantığı:** OpenCaseLaw.ch = **içtihat** (972K karar) · fedlex-connector =
+> **Kapsama mantığı:** OpenCaseLaw.ch = **içtihat** (1.050.000+ karar) · fedlex-connector =
 > **mevzuat** (SR/RS). İkisi birlikte İsviçre hukukunu tam kapsar.
 
 ```

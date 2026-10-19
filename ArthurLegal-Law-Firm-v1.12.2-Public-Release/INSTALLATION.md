@@ -239,7 +239,7 @@ Add these where your client portfolio touches the jurisdiction.
 
 | Connector | URL | Auth | Coverage |
 |---|---|---|---|
-| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | None | Swiss case law — 972K+ federal and cantonal decisions (33 tools, CC0) |
+| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | None | Swiss case law — 1,050,000+ federal and cantonal decisions (42 tools, CC0) |
 
 > ⚠️ **Citation verification is mandatory.** Before citing any US decision, verify
 > it in CourtListener — does the case exist, is the citation correct, has it been

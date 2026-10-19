@@ -19,7 +19,7 @@
 |---|---|---|
 | `tr_ictihat_ara` | Yargıtay, Danıştay, yerel hukuk, istinaf hukuk ve KYB kararlarında arama (Bedesten) | `query` (Bedesten diyalekti), `courts` (`YARGITAYKARARI`, `DANISTAYKARAR`, `YERELHUKUK`, `ISTINAFHUKUK`, `KYB`; varsayılan ilk ikisi), `chamber` (daire kodu), `date_from`, `date_to` (ISO; bölüm 3), `page`, `page_size` (en çok 10), `sort` |
 | `tr_ictihat_getir` | Bir kararın tam metni, sayfalı | `document_id` (aramadan), `page`, `page_chars` |
-| `tr_ictihat_semantik_ara` | Anahtar kelimeyle bulunan ilk kararları (en çok 10) çekip doğal dil sorusuna göre anlamsal sıralar | `query` (doğal dil cümle), `initial_keyword` (Bedesten'e gidecek 1 ile 3 terim), `courts`, `chamber`, `date_from`, `max_docs` (varsayılan 5; karar başına 4 saniye) |
+| `tr_ictihat_semantik_ara` | Anahtar kelimeyle bulunan ilk kararları (en çok 10) çekip doğal dil sorusuna göre anlamsal sıralar | `query` (doğal dil cümle), `initial_keyword` (Bedesten'e gidecek 1 ile 3 terim), `courts`, `chamber`, `date_from`, `date_to`, `max_docs` (varsayılan 5; karar başına 4 saniye) |
 | `tr_aym_ara` | Anayasa Mahkemesi norm denetimi veya bireysel başvuru | `query` (düz kelime), `kind` (`norm` veya `bireysel`), `page`, `page_size` |
 | `tr_aym_getir` | AYM karar tam metni | `id` (aramadan, UUID), `kind`, `page` |
 | `tr_uyusmazlik_ara` | Uyuşmazlık Mahkemesi kararları (adli, idari görev uyuşmazlığı) | `query`, `scope` (`All`, `EsasNo`, `KararNo`), `page` |

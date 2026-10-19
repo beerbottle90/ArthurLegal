@@ -184,7 +184,7 @@ OpenSanctions API erişilemezse (servis kesintisi, kota aşımı, ağ engeli), m
 | EU Sanctions Map | https://www.sanctionsmap.eu/ | Manuel + XML feed |
 | UK OFSI Search | https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets | Manuel |
 | BM Consolidated List | https://www.un.org/securitycouncil/content/un-sc-consolidated-list | Manuel + XML |
-| MASAK (TR donan varlık) | https://www.masak.hmb.gov.tr | Manuel |
+| MASAK (TR donan varlık) | https://masak.hmb.gov.tr | Manuel |
 | **ArthurLegal MCP (`tr_`) — KVKK Kurulu** | (MCP) | TR enforcement actions |
 
 Detay: `yaptirim-tarama-rehberi.md` Adım 2.

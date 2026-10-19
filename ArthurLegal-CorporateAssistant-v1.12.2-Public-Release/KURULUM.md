@@ -146,7 +146,7 @@ Swiss OR sözleşmeleri, ICC/Swiss tahkim kararları için.
 3. **URL:** `https://mcp.opencaselaw.ch/sse`
 4. Auth bölümünü **boş bırak** (auth yok)
 
-**Kapsam:** 972K+ BGer/BVGer/26 kanton kararı, Fedlex mevzuat entegrasyonu (CC0).
+**Kapsam:** 1.050.000+ BGer/BVGer/26 kanton kararı, Fedlex mevzuat entegrasyonu (CC0).
 
 ### 4b-2 · CourtListener — ABD İçtihadı
 

@@ -913,4 +913,4 @@ Araştırmaları.
 ---
 
 [1.0.1]: ./VERSION.md
-[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-CorporateAssistant-v1.0.0-Public-Release
