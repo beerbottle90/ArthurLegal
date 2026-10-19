@@ -121,7 +121,7 @@ narrows, the assistant states it in the output.
 The Turkish backend ([`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp), MIT) reuses endpoint knowledge from [saidsurucu](https://github.com/saidsurucu)'s open-source yargi-mcp and mevzuat-mcp; sources whose official endpoints do not answer reliably (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) are left out rather than shipped as stubs.
 **ArthurLegal MCP is auth-free** — anyone with the URL can call every tool, so no
 company secret, negotiating position or confidential draft goes into a query.
-Every tool carries its jurisdiction as a prefix, because `get_act` means five
+Every tool carries its jurisdiction as a prefix, because `get_act` means six
 different things across the underlying servers. The `status` tool reports each
 jurisdiction's index size and `index_coverage`: a statute outside that range is
 not found, and the search returns its nearest neighbour rather than saying so.

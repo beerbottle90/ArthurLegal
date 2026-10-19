@@ -131,7 +131,7 @@ narrows, the assistant states it in the output.
 
 > **ArthurLegal MCP is auth-free** — anyone with the URL can call every tool, so
 > no client name, matter number or confidential draft goes into a query. Every
-> tool carries its jurisdiction as a prefix, because `get_act` means five
+> tool carries its jurisdiction as a prefix, because `get_act` means six
 > different things across the underlying servers. The `status` tool reports each
 > jurisdiction's index size and `index_coverage`: a statute outside that range is
 > not found, and the search returns its nearest neighbour rather than saying so.
@@ -222,7 +222,7 @@ ArthurLegal-Law-Firm-v1.12.2-Public-Release/
     ├── profiles/           ← 10 practice-area profiles (incl. legal-research)
     ├── skills/             ← 16 consolidated skill files
     ├── agents/             ← 7 automation agent definitions
-    └── references/         ← 94 references: legislation + international jurisdictions + MCP guides + Arthur Mask
+    └── references/         ← 96 references: legislation + international jurisdictions + MCP guides + Arthur Mask
 ```
 
 > **Note on language:** the knowledge layer and `SYSTEM_PROMPT.md` are written in

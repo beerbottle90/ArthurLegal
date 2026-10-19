@@ -928,8 +928,8 @@ address again.
 
 Every tool now carries its jurisdiction as a prefix (`az_` `at_` `de_` `nl_`
 `pl_` `es_` `fi_` `ie_` `scholar_` `contracts_`). This is not cosmetic: across
-the underlying servers `get_act` means five different things and
-`search_legislation` three, so without prefixes a Spanish question could be
+the underlying servers `get_act` means six different things and
+`search_legislation` four, so without prefixes a Spanish question could be
 answered with Finnish law. The nine per-server `server_status` tools collapse
 into one `status`, which reports each jurisdiction's index size, date coverage
 and whether semantic search is live.

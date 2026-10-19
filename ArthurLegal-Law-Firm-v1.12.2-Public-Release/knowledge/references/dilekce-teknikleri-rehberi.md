@@ -111,7 +111,7 @@ tr_mevzuat_icindekiler(mevzuat_id=<id>)
 tr_ictihat_ara(
   courts=["YARGITAYKARARI"],
   query="<konu> <madde>",
-  chamber="HGK",      # en bağlayıcı; idari için "İDDK"/ilgili Danıştay dairesi
+  chamber="HGK",      # en bağlayıcı; idari için "IDDK"/ilgili Danıştay dairesi
   date_from="2022-01-01"
 )
 → Atıf: [ArthurLegal MCP (`tr_`) — Yargıtay HGK E.YYYY/.. K.YYYY/.. — GG.AA.YYYY]

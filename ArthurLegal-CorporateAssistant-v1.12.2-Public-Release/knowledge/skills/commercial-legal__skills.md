@@ -1369,7 +1369,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 | 🇫🇮 Finlandiya | **`fi-finlex-mcp-rehberi.md`** | Osakeyhtiölaki; iki resmî dil eşit yetkili |
 | 🇪🇸 İspanya | **`es-boe-mcp-rehberi.md`** | Código Civil, LSC; LNG terminal erişimi (Ley 34/1998) |
 | 🇪🇺 AB şirketi | `eu-legislation-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
-| 🇦🇿 Azerbaycan | ArthurLegal MCP (`tr_`) + model | Azerbaycan hukuku — özel dikkat |
+| 🇦🇿 Azerbaycan | ArthurLegal MCP (`az_`) + model | Azerbaycan hukuku — özel dikkat |
 
 Çekilen kanunlara `[DE Mevzuat — ...]` / `[UK Legislation — ...]` vb. atıf koy.
 Çekemediğin hukuku `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` etiketle.

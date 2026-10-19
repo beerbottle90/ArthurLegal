@@ -57,7 +57,7 @@ source sits in rather than papering over the difference.
   Turkish land registry (live parcels from TKGM Parsel Sorgu) behind the one connector (123 tools in total): Azerbaijan (official `api.e-qanun.az` with in-force
   status verification), Austria, Germany, the Netherlands, Poland, Spain, Finland
   and Ireland, plus scholarship and contract corpora. Every tool carries its
-  jurisdiction as a prefix, because `get_act` means five different things across
+  jurisdiction as a prefix, because `get_act` means six different things across
   the underlying servers.
 - **Legislation via WebFetch** (no extra connector): UK · US (federal legislation,
   GovInfo) · EU / CJEU / ECHR · Germany · France · Italy · Japan · Russia · China ·
