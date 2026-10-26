@@ -1,6 +1,6 @@
 # ArthurLegal — Claude Corporate Legal Assistant
 
-**Version:** v1.12.3 · **Date:** 2026-10-26 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Version:** v1.12.4 · **Date:** 2026-10-27 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
 
 > **Multi-jurisdiction legal assistant package for in-house corporate legal teams**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 105 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
@@ -207,7 +207,7 @@ ArthurLegal-CorporateAssistant-v1.12.4-Public-Release/
 ├── SYSTEM_PROMPT.md       ← Claude.ai Custom Instructions text
 ├── README.md              ← This file
 ├── CHANGELOG.md           ← Release notes
-├── VERSION.md             ← 1.12.3
+├── VERSION.md             ← 1.12.4
 ├── ATTRIBUTION.md         ← Attribution
 ├── LICENSE                ← Proprietary — Non-Commercial
 └── knowledge/             ← 103 files to upload to Project Knowledge

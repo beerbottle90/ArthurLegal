@@ -5,6 +5,13 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.4] — 2026-10-27 — *5651 Değişikliği (1 Kasım 2026)*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Değişti
+1. `ip-legal` / `takedown`: 5651 sayılı Kanunun 7578 sayılı Kanunla değişen ek m. 4'ü ve yeni ek m. 5'i (yürürlük 1.11.2026). Sosyal ağ sağlayıcının 48 saatlik cevap yükümlülüğünde (ek m. 4/3) m. 9 ve 9/A sınırı 1.11.2026'da kalkıyor; telif bildirimine uygulanışı tartışmalı olarak işaretli. Günlük erişimi on milyonu aşan sosyal ağda 5651 kararlarına konu yayının yeniden yayınlanmasını önleme yükümlülüğü (ek m. 4'e eklenen 23. fıkra) ve yurt dışı oyun platformunun Türkiye temsilcisi (ek m. 5/2). Skill 1 Kasım öncesini ve sonrasını ayrı anlatır. Dayanak 7578 m. 22, 23, 27; canlı metinle teyitli.
+
 ## [1.12.3] — 2026-10-26 — *Altı Kitapçık Türk Hukuku Esaslı; İdari Yargı, İhale ve Ceza Düzeltmeleri*
 
 > **İçerik sürümü.** Sistem talimatında bölüm 8'de bir ifade (`get_act` altı ayrı arka uçta) ve sürüm satırları değişti.

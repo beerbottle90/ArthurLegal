@@ -1,6 +1,6 @@
 # ArthurLegal Hukuk Bürosu Asistanı — Kurulum Rehberi
 
-**Versiyon:** 1.12.3 | **Güncelleme:** 2026-10-26
+**Versiyon:** 1.12.4 | **Güncelleme:** 2026-10-27
 
 ---
 
@@ -415,7 +415,9 @@ A: `/<plugin>:` yazın — asistan o plugin'in tüm mevcut skill'lerini listeler
 
 ## Güncelleme notları
 
-Bu versiyon **v1.12.3**'tür. v1.12.2'den geçiş: değişen dosya çok olduğu için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (sekiz skill kitapçığı, yedi ajan, `firm-profile.md`, üç profil ve 26 rehber; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 8'de bir ifade ve sürüm satırları değişti; yeniden yapıştırmak önerilir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+Bu versiyon **v1.12.4**'tür. v1.12.3'ten geçiş: Project knowledge'da `knowledge/skills/ip-legal__skills.md` ve `knowledge/profiles/ip-advisory.md` yenilenir. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
+v1.12.2'den v1.12.3'e geçiş: değişen dosya çok olduğu için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (sekiz skill kitapçığı, yedi ajan, `firm-profile.md`, üç profil ve 26 rehber; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 8'de bir ifade ve sürüm satırları değişti; yeniden yapıştırmak önerilir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.12.1'den v1.12.2'ye geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 8: connector araç sayısı) ve Project knowledge'da `knowledge/references/mevzuat-mcp-rehberi.md` ile `knowledge/profiles/legal-research.md` yenilenir.
 

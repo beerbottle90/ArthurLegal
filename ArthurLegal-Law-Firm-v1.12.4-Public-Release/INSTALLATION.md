@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.12.3 | **Updated:** 2026-10-26
+**Version:** 1.12.4 | **Updated:** 2026-10-27
 
 ---
 
@@ -409,7 +409,9 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.12.3**. Upgrading from 1.12.2: many files changed, so upload this version's `knowledge/` folder to Project knowledge afresh (eight skill books, seven agents, `firm-profile.md`, three profiles and 26 guides; the list is in `CHANGELOG.md`). One phrase in section 8 and the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is recommended. The local ArthurLegal installation refreshes package files on its own.
+This is version **1.12.4**. Upgrading from 1.12.3: replace `knowledge/skills/ip-legal__skills.md` and `knowledge/profiles/ip-advisory.md` in Project knowledge. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
+
+Upgrading from 1.12.2 to 1.12.3: many files changed, so upload this version's `knowledge/` folder to Project knowledge afresh (eight skill books, seven agents, `firm-profile.md`, three profiles and 26 guides; the list is in `CHANGELOG.md`). One phrase in section 8 and the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is recommended. The local ArthurLegal installation refreshes package files on its own.
 
 Upgrading from 1.12.1 to 1.12.2: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 8: connector tool count) and replace `knowledge/references/mevzuat-mcp-rehberi.md` and `knowledge/profiles/legal-research.md` in Project knowledge.
 

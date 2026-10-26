@@ -334,8 +334,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.3](ArthurLegal-CorporateAssistant-v1.12.4-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.3](ArthurLegal-Law-Firm-v1.12.4-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.4](ArthurLegal-CorporateAssistant-v1.12.4-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.4](ArthurLegal-Law-Firm-v1.12.4-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
 | Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
 | **Courthouse** | **[v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
@@ -471,6 +471,12 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.6.6 — The internet law amendment of 1 November 2026 (2026-10-27)
+
+- **Takedown skill updated for the amendment.** From 1 November 2026, Law No. 7578 amends additional Art. 4 of the Internet Law (No. 5651) and adds additional Art. 5. Social networks with more than one million daily users from Türkiye must answer every application within 48 hours, no longer only those about personal-rights and privacy content; whether this covers copyright notices is flagged as unsettled. Networks above ten million must keep content removed under Law No. 5651 from being posted again, and foreign game platforms above 100,000 daily users must appoint a representative in Türkiye. The skill describes the rules before and after 1 November separately.
+
+Packages: Law Firm and Corporate Assistant 1.12.4; Courthouse 1.2.3 and Academician 1.1.5 are unchanged. Installed copies pick up the new packages on their own.
 
 ## Setup 2.6.5 — Six skill books rewritten for Turkish law; fixes in administrative, tender and criminal law (2026-10-26)
 
