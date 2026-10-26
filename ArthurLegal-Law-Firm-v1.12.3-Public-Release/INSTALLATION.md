@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.12.2 | **Updated:** 2026-10-12
+**Version:** 1.12.3 | **Updated:** 2026-10-26
 
 ---
 
@@ -409,7 +409,9 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.12.2**. Upgrading from 1.12.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 8: connector tool count) and replace `knowledge/references/mevzuat-mcp-rehberi.md` and `knowledge/profiles/legal-research.md` in Project knowledge.
+This is version **1.12.3**. Upgrading from 1.12.2: many files changed, so upload this version's `knowledge/` folder to Project knowledge afresh (eight skill books, seven agents, `firm-profile.md`, three profiles and 26 guides; the list is in `CHANGELOG.md`). One phrase in section 8 and the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is recommended. The local ArthurLegal installation refreshes package files on its own.
+
+Upgrading from 1.12.1 to 1.12.2: paste `SYSTEM_PROMPT.md` into Custom Instructions again (section 8: connector tool count) and replace `knowledge/references/mevzuat-mcp-rehberi.md` and `knowledge/profiles/legal-research.md` in Project knowledge.
 
 Upgrading from 1.12.0 to 1.12.1: replace these eight guides in Project knowledge: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/epdk-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/smk-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
 

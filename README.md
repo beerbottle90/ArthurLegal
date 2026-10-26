@@ -334,14 +334,14 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.2](ArthurLegal-CorporateAssistant-v1.12.3-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.2](ArthurLegal-Law-Firm-v1.12.3-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
-| Academician | [v1.1.4](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.2](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.3](ArthurLegal-CorporateAssistant-v1.12.3-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.3](ArthurLegal-Law-Firm-v1.12.3-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
-Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.2](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.2](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -471,6 +471,15 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.6.5 — Six skill books rewritten for Turkish law; fixes in administrative, tender and criminal law (2026-10-26)
+
+- **Six skill books now start from Turkish law.** The employment, data protection, commercial contracts, corporate, intellectual property and regulatory books came from a US-centred upstream and were still largely in English. They are rewritten in Turkish around Turkish statutes (Labour Law, Personal Data Protection Law, Code of Obligations, Commercial Code, Industrial Property Code, Copyright Law and others). Every statute reference was checked against the live text on mevzuat.gov.tr (about 1,250 references); where the text could not be fetched, the book says so instead of guessing, and unsettled points are flagged for a case-law check. Other jurisdictions are reached only through the ArthurLegal research connector. Command names are unchanged.
+- **Administrative and tax court routes corrected.** Time limits (60 days for administrative courts and the Council of State, 30 for tax courts), the court of first instance in tax cases, expedited public-procurement cases without appeal on the facts, and the two-step procurement complaint (to the contracting authority first, then to the Public Procurement Authority).
+- **Criminal and workplace safety figures updated.** Penalties under Turkish Criminal Code Art. 85 and the amended Art. 89 (Law No. 7571), and conscious negligence under Art. 22/3.
+- **The data-subject reply template** separates the Art. 28/1 and 28/2 exemptions of the Personal Data Protection Law and states the complaint period correctly (30 days from the reply, at most 60 days from the request).
+
+Packages: Law Firm and Corporate Assistant 1.12.3, Courthouse 1.2.3, Academician 1.1.5. Installed copies pick up the new packages on their own.
 
 ## Setup 2.6.4 — A worked example rewritten in general terms; the research connector's tool count (2026-10-12)
 

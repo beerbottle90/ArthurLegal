@@ -1,6 +1,6 @@
 # Claude.ai Projects – Kurulum Rehberi
 
-## ArthurLegal Corporate Assistant v1.12.2
+## ArthurLegal Corporate Assistant v1.12.3
 
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
@@ -356,6 +356,8 @@ Yeni bir sürüm geldiğinde:
 2. Claude.ai projesinde ilgili dosyaları silin → güncellenmiş halleri yeniden yükleyin
 3. `SYSTEM_PROMPT.md` değiştiyse Custom Instructions'ı güncelleyin
 
+v1.12.2'den v1.12.3'e geçiş: değişen dosya çok olduğu için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (sekiz skill kitapçığı, yedi ajan, `company-profile.md` ve 25 rehber; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 8'de bir ifade ve sürüm satırları değişti; yeniden yapıştırmak önerilir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
 v1.12.1'den v1.12.2'ye geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (bölüm 8: connector araç sayısı) ve Project knowledge'da `knowledge/references/mevzuat-mcp-rehberi.md` yenilenir.
 
 v1.12.0'dan v1.12.1'e geçiş: Project knowledge'da şu on dört rehberi yenileyin: `knowledge/references/azerbaycan-hukuk-rehberi.md`, `knowledge/references/ced-rehberi.md`, `knowledge/references/cek-hukuku-rehberi.md`, `knowledge/references/damga-vergisi-rehberi.md`, `knowledge/references/gurcistan-hukuku-rehberi.md`, `knowledge/references/karsilastirmali-hukuk-rehberi.md`, `knowledge/references/redline-konvansiyonlari-rehberi.md`, `knowledge/references/reg-feed-haftalik-sablon.md`, `knowledge/references/sirbistan-hukuku-rehberi.md`, `knowledge/references/turkpatent-rehberi.md`, `knowledge/references/udrp-domain-rehberi.md`, `knowledge/references/uk-legislation-rehberi.md`, `knowledge/references/us-legislation-rehberi.md`, `knowledge/references/yunanistan-hukuku-rehberi.md`. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
@@ -372,4 +374,4 @@ v1.7.0'dan v1.8.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (yeni 
 
 ---
 
-*ArthurLegal Corporate Assistant v1.12.2 — https://github.com/beerbottle90/ArthurLegal*
+*ArthurLegal Corporate Assistant v1.12.3 — https://github.com/beerbottle90/ArthurLegal*

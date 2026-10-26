@@ -1,8 +1,8 @@
 # VERSION
 
 **Paket:** ArthurLegal Academician Assistant
-**Sürüm:** 1.1.4
-**Tarih:** 2026-10-12
+**Sürüm:** 1.1.5
+**Tarih:** 2026-10-26
 **Hedef ortam:** Claude.ai Projects (web)
 **Lisans:** ArthurLegal Proprietary Non-Commercial License (bkz. `LICENSE`)
 

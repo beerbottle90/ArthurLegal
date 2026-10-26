@@ -1,6 +1,6 @@
 # ArthurLegal — Claude Law Firm Assistant
 
-**Version:** v1.12.2 · **Date:** 2026-10-12 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Version:** v1.12.3 · **Date:** 2026-10-26 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
 
 > **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 130 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
@@ -38,7 +38,7 @@ carries its source and retrieval date (`[Legislation MCP — date]`, `[Case Law 
 — institution — date]`, `[model knowledge — verify]`), and unretrieved text is
 never presented as retrieved.
 
-Version history and the full v1.0.1 → v1.12.2 progression: [CHANGELOG.md](CHANGELOG.md).
+Version history and the full v1.0.1 → v1.12.3 progression: [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

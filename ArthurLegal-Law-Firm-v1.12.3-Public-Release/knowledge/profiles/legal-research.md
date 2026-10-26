@@ -154,5 +154,5 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
 
 ---
 
-*ArthurLegal Law Firm Assistant v1.12.2 — kaynak katmanı profili.
+*ArthurLegal Law Firm Assistant v1.12.3 — kaynak katmanı profili.
 Companion skill: `skills/legal-research__skills.md`.*

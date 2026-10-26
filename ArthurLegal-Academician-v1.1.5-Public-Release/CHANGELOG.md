@@ -4,6 +4,13 @@ Bu paketteki tüm önemli değişiklikler burada belgelenir.
 
 ---
 
+## [1.1.5] — 2026-10-26 — *Araç Rehberinde Tarih Süzgeci*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Düzeltildi
+1. `yargi-mcp-rehberi.md`: `tr_ictihat_semantik_ara` tarih aralığının iki ucunu da alır (`date_from`, `date_to`).
+
 ## [1.1.4] — 2026-10-12 — *Madde Atfı Örneği Genel Dille*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.

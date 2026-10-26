@@ -5,6 +5,15 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.2.3] — 2026-10-26 — *ÖTV Davasında Yargı Yolu; Bakım*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Düzeltildi
+1. `otv-rehberi.md`: ÖTV mahsup ve iade reddine karşı dava ilk derecede vergi mahkemesinde açılır; Danıştay temyiz aşamasıdır (bölüm başlığı "Dava hazırlığı (vergi mahkemesi)").
+2. `yargi-mcp-rehberi.md` ve `yargi-arastirma` skill'i: `tr_ictihat_semantik_ara` tarih aralığının iki ucunu da alır (`date_from`, `date_to`).
+3. Sistem talimatı altbilgisindeki sürüm tarihi.
+
 ## [1.2.2] — 2026-10-12 — *Madde Atfı Örneği Genel Dille*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.

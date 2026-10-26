@@ -5,6 +5,23 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.3] — 2026-10-26 — *Altı Kitapçık Türk Hukuku Esaslı; İdari Yargı, İhale ve Ceza Düzeltmeleri*
+
+> **İçerik sürümü.** Sistem talimatında bölüm 8'de bir ifade (`get_act` altı ayrı arka uçta) ve sürüm satırları değişti.
+
+### Değişti
+1. ABD kaynaklı altı skill kitapçığı Türk hukuku esaslı Türkçe yeniden yazıldı: `employment-legal`, `privacy-legal`, `commercial-legal`, `corporate-legal`, `ip-legal`, `regulatory-legal` (komut adları aynı; zaten Türkçe olan `governing-law-review` ve `ai-ajan-onayi` aynen kaldı). Her madde atfı mevzuat.gov.tr'den canlı çekilen metinle doğrulandı (yaklaşık 1.250 kayıt); çekilemeyen yerde UYARI satırı var, yargısı tartışmalı noktalar "tartışmalı — içtihadı kontrol et" diye işaretli, değişen tutarlar ve karar numaraları ezberden yazılmadı. Yabancı yargı çevreleri yalnız ArthurLegal MCP önekleriyle (eu_, uk_, de_, nl_, pl_, at_, ie_, fi_, es_, jp_, az_). Bu eklentilerin yedi ajan dosyası da Türkçe.
+2. `kvkk-m11-cevap-sablonu.md`: ret istisnaları KVKK m. 28/1 ile m. 28/2 ayrımına göre (suç önleme, alenileştirme, kamu denetimi ve Devletin mali çıkarı m. 28/2'dedir; zararın giderilmesi hakkı saklı); m. 28'de olmayan "mesleki sır" istisnası çıkarıldı; Kurula şikâyet süresi m. 14/1'e göre (cevabı öğrenmeden 30 gün, her hâlde başvurudan 60 gün).
+3. `udrp-domain-rehberi.md`: 5651 m. 9'un AYM iptali, maddenin ilk anıldığı satırda da belirtiliyor.
+4. `profiles/employment-advisory.md`: işe iade için arabuluculuk süresi "bir ay" (İş K. m. 20/1); `profiles/firm-operations.md`: eklenti sayısı 15; `profiles/legal-research.md` altbilgisi güncel sürümde.
+
+### Düzeltildi
+1. İdari yargı (İYUK): dava süresi idare mahkemesinde ve Danıştay'da 60, vergi mahkemesinde 30 gün (m. 7; 4054 m. 55'te özel süre yok); yanlış yargı yerine açılan dava gönderilir (m. 15/1-a), adli yargıdan dönen davada süre (m. 9); KİK davalarında ivedi yargılama, istinaf yok, 15 gün temyiz (m. 20/A, 45/8); vergi davası ilk derecede vergi mahkemesinde, kanun yolu parasal sınırlara bağlı (2576 m. 6; İYUK m. 37, 45/1, 46, ek m. 1); tarhiyata karşı dava tahsili kendiliğinden durdurur (m. 27/4). Etkilenen: `administrative-legal`, `tax-legal`, `idari-yargi-yapisi-rehberi.md`, `otv-rehberi.md`.
+2. Kamu ihalesi: önce idareye şikâyet, sonra KİK'e itirazen şikâyet (4734 m. 54-56); iki ayrı dilekçe şablonu.
+3. TCK m. 85 cezaları (85/1: 2-6 yıl, 85/2: 2-15 yıl); `isg-dava-rehberi.md`'de TCK m. 89'un 7571 s.K. sonrası cezaları (89/1: 4 ay-2 yıl, 89/4: 9 ay-5 yıl) ve bilinçli taksir m. 22/3.
+4. Ticari sır dayanağı TBK m. 396/4 ve TTK m. 55/1-d (`firm-profile.md`).
+5. Haftalık denetimin mekanik düzeltmeleri: OpenCaseLaw.ch sayıları (42 araç, 1.050.000+ karar), `get_act` altı arka uçta, arthurlegal-mcp bağlantıları `master` dalına, MASAK adresi, UK rehberi örneği, damga vergisi örnek hesabı, dilekçe rehberinde daire kodu, eski sürüm bağlantıları `arsiv/` altına, `commercial-legal`'de olmayan komut adları.
+
 ## [1.12.2] — 2026-10-12 — *Madde Atfı Örneği Genel Dille; Connector Araç Sayısı*
 
 > **Bakım sürümü.** Sistem talimatında bölüm 8'deki araç sayısı ve sürüm satırları değişti; bir rehberdeki örnek hata genel dille anlatılıyor.

@@ -1,8 +1,8 @@
 # Sürüm Bilgisi
 
-**Sürüm:** 1.2.2
-**Yayın tarihi:** 2026-10-12
-**Önceki sürüm:** 1.2.1
+**Sürüm:** 1.2.3
+**Yayın tarihi:** 2026-10-26
+**Önceki sürüm:** 1.2.2
 **Lisans:** Proprietary, Non-Commercial (bkz. [LICENSE](LICENSE)); `claude-for-legal` bileşenleri Apache 2.0
 
 ## Semver özeti
@@ -12,6 +12,8 @@
 - **Patch (x.x.1):** Hata düzeltme, içerik güncelleme
 
 ## Bu sürümde
+
+**v1.2.3 — ÖTV davasında yargı yolu.** `otv-rehberi.md`'de ÖTV mahsup ve iade reddine karşı dava ilk derecede vergi mahkemesinde; Danıştay temyiz aşamasıdır. `tr_ictihat_semantik_ara` tarih aralığının iki ucunu da alır.
 
 **v1.2.2 — Madde atfı örneği genel dille.** `mevzuat-mcp-rehberi.md`'deki örnek hata belirli bir belge yerine genel bir buluş klozu üzerinden anlatılıyor; SMK m. 120'nin "tam hak talebi" şartı eklendi.
 
