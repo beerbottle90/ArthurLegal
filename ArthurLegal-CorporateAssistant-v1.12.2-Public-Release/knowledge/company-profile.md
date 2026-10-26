@@ -180,5 +180,5 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 ---
 
-*Bu şablon ArthurLegal Corporate Assistant v1.2.0 ile birlikte dağıtılmaktadır.*
+*Bu şablon ArthurLegal Corporate Assistant v1.12.2 ile birlikte dağıtılmaktadır.*
 *Gerçek şirket verileri bu repo'da saklanmaz — yerel olarak doldurun ve güvende tutun.*
