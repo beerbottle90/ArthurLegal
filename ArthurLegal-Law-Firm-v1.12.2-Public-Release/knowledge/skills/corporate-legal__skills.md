@@ -1,8 +1,6 @@
 # corporate-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentinin skill'lerini tek dosyada toplar; ArthurLegal başlık ve içindekiler eklemiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
->
-> ⚠️ **Türk hukukuna uyarlanmadı.** Skill metinleri özgün İngilizce hâliyle ABD hukukuna dayanır. Türk hukuku sorusunda buradaki kural, süre ve dayanakları doğrudan kullanmayın; Türk mevzuatını `tr_mevzuat_madde_getir` ile doğrulayın.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10); yabancı yargı çevreleri için yalnız ArthurLegal MCP araçlarına yönlendirir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
 
 > Alan: Kurumsal ve M&A - due diligence, board, entity
 > Toplam skill: 13
@@ -10,19 +8,19 @@
 
 ## Icindekiler
 
-- /corporate-legal:ai-tool-handoff (133 satir)
-- /corporate-legal:board-minutes (248 satir)
-- /corporate-legal:closing-checklist (207 satir)
-- /corporate-legal:cold-start-interview (500 satir)
-- /corporate-legal:customize (102 satir)
-- /corporate-legal:deal-team-summary (126 satir)
-- /corporate-legal:diligence-issue-extraction (199 satir)
-- /corporate-legal:entity-compliance (459 satir)
-- /corporate-legal:integration-management (553 satir)
-- /corporate-legal:material-contract-schedule (148 satir)
-- /corporate-legal:matter-workspace (185 satir)
-- /corporate-legal:tabular-review (235 satir)
-- /corporate-legal:written-consent (323 satir)
+- /corporate-legal:ai-tool-handoff (112 satir)
+- /corporate-legal:board-minutes (168 satir)
+- /corporate-legal:closing-checklist (219 satir)
+- /corporate-legal:cold-start-interview (207 satir)
+- /corporate-legal:customize (51 satir)
+- /corporate-legal:deal-team-summary (116 satir)
+- /corporate-legal:diligence-issue-extraction (186 satir)
+- /corporate-legal:entity-compliance (230 satir)
+- /corporate-legal:integration-management (294 satir)
+- /corporate-legal:material-contract-schedule (132 satir)
+- /corporate-legal:matter-workspace (136 satir)
+- /corporate-legal:tabular-review (193 satir)
+- /corporate-legal:written-consent (193 satir)
 
 ---
 
@@ -53,141 +51,122 @@ Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi
 
 ---
 
+---
+
 ## /corporate-legal:ai-tool-handoff
 
 ---
 name: ai-tool-handoff
 description: >
-  Detects when Luminance, Kira, or a similar bulk-review tool is in use,
-  hands off the high-volume clause extraction to it, and QAs its output
-  per the trust level in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. Use when user says "send to Luminance",
-  "bulk review", "AI extraction", or when diligence-issue-extraction hits
-  a high-volume category.
+  Luminance, Kira ya da benzeri bir toplu inceleme aracı kullanıldığını tespit
+  eder, yüksek hacimli kloz çıkarımını ona devreder ve dönen çıktıyı
+  `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`'deki
+  güven düzeyine göre kalite kontrolünden geçirir; ardından Türk hukuku
+  yargı katmanını (işlem yapısına göre CoC/devir gerçekten tetikleniyor mu —
+  TBK m. 205, TTK m. 153) uygular. "Luminance'a gönder", "toplu inceleme",
+  "yapay zekâ çıkarımı" denildiğinde ya da diligence-issue-extraction yüksek
+  hacimli bir kategoriye geldiğinde kullan.
 ---
 
-# AI Tool Handoff
+# /ai-tool-handoff — Toplu İnceleme Aracına Devir
 
-## Matter context
+## Matter bağlamı
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Amaç
 
-## Purpose
+Luminance ve Kira tek bir işte iyidir: 500 sözleşmeyi okuyup her kontrol değişikliği klozunu bulmak. Yargıda zayıftır: belirli bir CoC hükmünün bu işlem yapısında gerçekten tetiklenip tetiklenmediğine karar vermek. Bu skill toplu çıkarımı doğru araca verir, dönen sonuca kalite kontrolü ve yargı katmanını uygular.
 
-Luminance and Kira are good at one thing: reading 500 contracts and finding every change-of-control clause. They're less good at judgment — deciding whether a particular CoC provision is actually triggered by this deal structure.
+**Devretmeden önce:** `/corporate-legal:tabular-review`'i dene. Ortamın kaldırabildiği işte (birkaç yüz belge, tanımlı sütun şeması) yerel tablolu inceleme daha hızlı kurulur, belge başı maliyeti yoktur ve iş ürünü yerelde kalır. Korpus gerçekten çok büyükse, ekibin lisansı ve iş akışı zaten varsa ya da matter doğrulanmış bir köken zinciri olan araç gerektiriyorsa devret.
 
-This skill hands off the bulk extraction to the right tool, then runs the QA layer on what comes back.
+## Bağlam
 
-**Before you hand off:** try `tabular-review` first (`/corporate-legal:tabular-review`). For anything the user's environment can handle — a few hundred documents, a defined column schema — native tabular review is faster to set up, has no per-document cost, and keeps the work product local. Hand off to Luminance/Kira when the corpus is genuinely too large, the team already has a license and workflow, or the matter requires a tool with a validated provenance chain.
+CLAUDE.md → `## M&A` YZ toplu inceleme aracı ayarı (`AI-assisted review`): kullanılan araç (Luminance / Kira / yok), ne için kullanıldığı (hangi kloz türleri), güven düzeyi (olduğu gibi kullan / örneklem kontrolü / tam yeniden inceleme), devir süreci (kim yükler, kim kontrol eder). CLAUDE.md araç yok diyorsa bu skill işlem yapmaz; her şey doğrudan diligence-issue-extraction'dan geçer.
 
-## Load context
+## Ne zaman devret
 
-`~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → AI-assisted review:
-- Tool in use (Luminance / Kira / none)
-- What it's used for (which clause types)
-- Trust level (use as-is / spot-check / full re-review)
-- Handoff process (who loads, who QAs)
+Hepsi birlikte varsa: kategoride 50'den fazla belge (altında okumak daha hızlı); çıkarım hedefi aracın iyi olduğu kloz türü (CoC, devir, münhasırlık, MFN, fesih, otomatik yenileme); belgeler makul ölçüde tek tip (aynı kâğıt üzerinde müşteri sözleşmeleri — sözleşme, mektup ve YK kararı karışımı değil).
 
-If `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` says no AI tool → this skill is a no-op. Everything goes through diligence-issue-extraction directly.
+Devretme: özel ya da yoğun müzakere edilmiş belgeler; yan mektuplar ve tadiller (ana sözleşmeyle etkileşimi araç kaçırır); sorunun "bu kloz var mı" değil "bu işlem için ne anlama geliyor" olduğu her şey.
 
-## When to hand off
+**Türkçe belgeler.** Aracın Türkçe metinde (özellikle taranmış, OCR'lı belgelerde ve Türkçe karakterlerde) başarısı bu ekipte ölçülmediyse "olduğu gibi kullan" güven düzeyini uygulama; en az örneklem kontrolü öner ve CLAUDE.md'ye not düşmeyi teklif et.
 
-Hand off when all of:
-- Category has >50 documents (below that, faster to just read them)
-- Extraction target is a clause type the tool is good at (CoC, assignment, exclusivity, MFN, termination, auto-renewal)
-- Documents are reasonably uniform (all customer contracts on similar paper — not a mix of contracts, letters, and board minutes)
+**Kişisel veri ve gizlilik.** Kişisel veri içeren belgeleri üçüncü taraf platforma yüklemek, platformla veri işleyen ilişkisini ve aktarım kurallarını (KVKK m. 8) gündeme getirir — yurt içi hizmet sağlayıcıya iletimin nitelendirilmesi **tartışmalı**; platform sunucusu yurt dışındaysa veri işleyenleri de kapsayan yurt dışına aktarım kuralları uygulanır (KVKK m. 9: yeterlilik kararı ya da uygun güvenceler, standart sözleşmenin 5 iş günü içinde Kurula bildirimi). Hangi işleme ve aktarım şartının uygulanacağı olaya bağlıdır — yüklemeden önce `/privacy-legal:dpa-review` ile platform sözleşmesini kontrol ettir; gerekirse çalışan dosyaları gibi kişisel veri yoğun klasörleri partiden çıkar ya da maskele. Müvekkil sırrı için de aynı dikkat: platformun hizmet koşulları gizliliği nasıl düzenliyor?
 
-Don't hand off:
-- Bespoke or heavily negotiated documents
-- Side letters and amendments (context-dependent, tools miss the interaction with the main agreement)
-- Anything where the question is "what does this mean for the deal" not "does this clause exist"
+## Devir
 
-## The handoff
+### Adım 1: Partiyi hazırla
 
-### Step 1: Prepare the batch
+VDR envanterinden belgeleri seç; CLAUDE.md'ye göre çıkarım hedeflerini belirt; çıktının süzülebilmesi için önemlilik eşiğini not et.
 
-- Identify documents for the batch (from VDR inventory)
-- Specify extraction targets per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` (which clause types)
-- Note the materiality threshold so tool output can be filtered
+### Adım 2: Yükle (ya da yükleyene talimat ver)
 
-### Step 2: Load (or instruct the loader)
-
-Per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` — who loads. If it's you, generate the load instructions. If it's someone else, generate the request:
+CLAUDE.md kimin yüklediğini söyler. Sen isen yükleme talimatını üret; başkasıysa talebi:
 
 ```markdown
-## [Tool] Load Request — [Deal code] — [Category]
+## [Araç] Yükleme Talebi — [işlem kodu] — [kategori]
 
-**Documents:** [N] docs from VDR folder [path]
-**Load to:** [Tool workspace/matter]
-**Extraction targets:**
-- Change of control / assignment
-- Exclusivity
-- [etc. per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
-
-**Filter output:** Flag only where extraction target is present — no need for "no CoC clause found" for every doc.
-
-**Return by:** [date]
+**Belgeler:** VDR klasörü [yol]'dan [N] belge
+**Yüklenecek yer:** [araç çalışma alanı / matter]
+**Çıkarım hedefleri:**
+- Kontrol değişikliği / devir (birleşme, bölünme, tür değiştirmeye atıflar dahil)
+- Münhasırlık
+- [CLAUDE.md'ye göre diğerleri]
+**Çıktı süzgeci:** yalnız hedefin bulunduğu belgeleri işaretle — her belge için "CoC yok" satırı gerekmez.
+**Dönüş tarihi:** [tarih]
 ```
 
-### Step 3: QA the output
+### Adım 3: Kalite kontrolü
 
-When the tool returns results, apply the trust level:
+Araç sonuç döndürünce güven düzeyini uygula:
+- **"Olduğu gibi kullan":** doğrudan bulgulara al. (Yalnız CLAUDE.md böyle diyorsa — nadirdir.)
+- **"%X örneklem kontrolü":** işaretlenen belgelerin %X'ini rastgele seç; her birinde gerçek klozu oku ve aracın çıkarımıyla karşılaştır. Hata oranı düşükse partiyi kabul et; hata varsa örneklemi genişlet.
+- **"İşaretlenenlerin tamamını insan okur":** araç evreni daraltır (500 belge → CoC'li 80); insan 80'in hepsini okur. Araç temiz 420'yi okuma zamanını kazandırmıştır.
 
-**"Use as-is":** Ingest directly into diligence findings. (Only if `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` says this — it's rare.)
+### Adım 4: Yargı katmanı
 
-**"Spot-check X%":** Randomly sample X% of flagged documents. For each, read the actual clause and compare to the tool's extraction. If error rate is low, accept the batch. If errors found, widen the sample.
+Araç klozları buldu; şimdi her CoC/devir hükmü için sor: **bu işlem onu gerçekten tetikliyor mu?**
+- **İşlem yapısı:** pay devrinde sözleşmenin tarafı değişmez — yalnız CoC klozu tetiklenir, devir yasağı tetiklenmez. Malvarlığı/işletme devrinde sözleşmenin devri karşı tarafın katılımını ya da izni/onayını gerektirir (TBK m. 205) — devir hükmü sessiz olsa bile. Birleşmede tescille aktif ve pasif kendiliğinden geçer (TTK m. 153/1); sözleşmedeki devir yasağının birleşmeye uygulanması **tartışmalı — içtihadı kontrol et**, metin birleşmeyi açıkça anıyorsa ona göre.
+- **"Kontrol" tanımı:** pay çoğunluğu mu, YK çoğunluğunu seçme hakkı mı, dolaylı kontrol mü, başka bir şey mi? Üst şirket düzeyindeki işlem dolaylı kontrolü değiştiriyor mu?
+- **İstisna:** grup içi yeniden yapılanma, halka arz ya da bu tür işlem için bir istisna var mı?
+- **Uygulanacak hukuk:** sözleşme yabancı hukuka tabiyse yorumu o hukuka göre çek (`uk_`, `de_`, `eu_`, `nl_` …) ya da `/commercial-legal:governing-law-review`.
 
-**"Full human review of flagged":** Tool narrows the universe (500 docs → 80 with CoC clauses). Human reads all 80. Tool saved the time of reading the 420 clean ones.
+Bu, aracın yapamadığı kısımdır. Sonuç büro formatında due diligence bulgularına gider.
 
-### Step 4: Judgment layer
+## Çıktı
 
-The tool found the clauses. Now apply judgment:
-
-For each flagged CoC provision: is it actually triggered by this deal?
-- Stock sale vs. asset sale vs. merger — different triggers
-- "Change of control" defined how in the contract — majority ownership? board control? something else?
-- Is there a carve-out for this type of transaction?
-
-This is the part the tool can't do. Output goes to diligence findings in house format.
-
-## Output
-
-> The QA summary below is derived from VDR documents that are privileged, confidential, or both. It inherits the sources' privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Store with the matter's privileged files.
+> Aşağıdaki kalite kontrol özeti gizli VDR belgelerinden türetilmiştir ve onların gizlilik statüsünü devralır; dağıtımı işlem ekibiyle sınırla (Av. K. m. 36 dağıtılan belgeyi korumaz).
 
 ```markdown
-## AI Tool Handoff Summary — [Category]
+## Toplu İnceleme Devri Özeti — [kategori]
 
-**Tool:** [Luminance / Kira]
-**Documents processed:** [N]
-**Extraction targets:** [clause types]
+**Araç:** [Luminance / Kira]   **İşlenen belge:** [N]   **Hedefler:** [kloz türleri]
+**İşlem yapısı:** [pay devri / malvarlığı devri / birleşme]
 
-### QA
+### Kalite kontrolü
+**Güven düzeyi:** [CLAUDE.md'ye göre]
+**Örneklem:** [N] belge   **Hata oranı:** %[X] — [Kabul / Örneklem genişletildi / Tam yeniden inceleme]
 
-**Trust level:** [per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
-**Sample size:** [N] docs spot-checked
-**Error rate:** [X]% — [Accepted / Widened sample / Full re-review triggered]
-
-### Results
-
-| Clause type | Docs flagged | After judgment layer | Material |
+### Sonuçlar
+| Kloz türü | İşaretlenen | Yargı katmanı sonrası | Önemli |
 |---|---|---|---|
-| Change of control | [N] | [N actually triggered by deal structure] | [N above threshold] |
-| Assignment | [N] | [N] | [N] |
+| Kontrol değişikliği | [N] | [N — bu yapıda gerçekten tetiklenen] | [N — eşik üstü] |
+| Devir | [N] | [N] | [N] |
 
-**→ [N] findings added to diligence issues**
-**→ [N] consents added to closing checklist**
+**→ due diligence bulgularına [N] sorun eklendi**
+**→ kapanış listesine [N] onay eklendi**
 ```
 
-## Close with the next-steps decision tree
+## Kapanış
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu çıktıya göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- It doesn't run Luminance or Kira — it manages the handoff and QA. A human (or the tool's own interface) runs the extraction.
-- It doesn't replace the tool's output with its own judgment entirely — if `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` says spot-check 10%, check 10%, not 100%.
-- It doesn't decide the trust level — that's in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`, set at cold-start based on the team's experience with the tool.
+- Luminance ya da Kira'yı çalıştırmaz — devri ve kalite kontrolünü yönetir; çıkarımı insan ya da aracın kendi arayüzü yapar.
+- Aracın çıktısını tamamen kendi yargısıyla değiştirmez — CLAUDE.md %10 diyorsa %10 kontrol eder, %100 değil.
+- Güven düzeyine karar vermez — o, cold-start'ta ekibin araç deneyimine göre CLAUDE.md'ye yazılmıştır.
 
 ---
 
@@ -196,251 +175,171 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: board-minutes
 description: >
-  Drafts board or committee meeting minutes in your house format. Auto-detects
-  upcoming board and committee meetings from your calendar, asks for the agenda
-  and any slides or pre-read materials, and produces a complete draft in the
-  format learned from your seed minutes. Also handles written consents in lieu
-  of meetings. Trigger: "board minutes", "draft minutes", "upcoming board
-  meeting", "committee minutes", "written consent", or calendar detection of
-  an upcoming board or committee event.
+  Yönetim kurulu kararı, YK/komite toplantı tutanağı, genel kurul toplantı tutanağı
+  ve limited şirkette müdürler kurulu / ortaklar genel kurulu kararlarını ev
+  formatında taslaklar. Takvimden yaklaşan YK, komite ve genel kurul toplantılarını
+  bulur, gündem ve sunumları ister; TTK'ya göre nisabı (m. 390, 418, 620, 624),
+  müzakereye katılma yasağını (m. 393), Bakanlık temsilcisi gerekliliğini (m. 407/3 ve
+  Yönetmelik m. 32), tutanak içeriğini ve tescil adımlarını (m. 422) kontrol eder.
+  Toplantısız karar için written-consent'e yönlendirir. Tetikleyiciler: "yönetim kurulu
+  kararı", "YK tutanağı", "genel kurul tutanağı", "komite tutanağı", "board minutes",
+  "yaklaşan YK toplantısı" ya da takvimde YK/GK toplantısı görülmesi.
 ---
 
-# Board Minutes
+# Yönetim Kurulu ve Genel Kurul Tutanakları
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+`## Matter workspaces` bölümüne bak (uygulama düzeyi CLAUDE.md). `Enabled` `✗` ise (şirket içi kullanıcıda varsayılan) bu paragrafı atla; matter katmanı görünmez. Açık ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Amaç
 
-## Purpose
+Tutanak ve karar şirketin hukuki kaydıdır; finansman, denetim, sicil işlemi ve M&A veri odasında incelenir. Türk hukukunda şekil geçerlilik meselesidir: YK kararlarının geçerliliği yazılıp imzalanmalarına bağlıdır (TTK m. 390/5); YK karar defteri ve genel kurul toplantı ve müzakere defteri ticari defterdir (m. 64/4) ve bunların tutulması YK'nın devredilemez görevidir (m. 375/1-f). Genel kurul tutanağı toplantı başkanlığınca ve (temsilci bulunan toplantıda) Bakanlık temsilcisince imzalanmazsa geçersizdir (m. 422/1). Bu skill taslağı ev formatında hazırlar; avukat inceler ve düzeltir.
 
-Board minutes are a legal record. They need to be accurate, complete, and in a format that will hold up under scrutiny — whether that's a financing due diligence review, a regulatory inquiry, or an M&A data room. This skill drafts them in your house format so you spend your time reviewing and correcting, not formatting and re-typing.
+**Kapsam:** AŞ YK toplantı kararı ve komite tutanağı · AŞ olağan/olağanüstü genel kurul tutanağı · Ltd. müdürler kurulu kararı · Ltd. genel kurul tutanağı. Toplantısız (elden dolaştırma) karar → `/corporate-legal:written-consent`.
 
-## Load context
+## Bağlamı yükle
 
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Board & Secretary` section:
-  - Minutes format (long-form narrative / action minutes / hybrid)
-  - Minutes template extracted from seed documents (structure, resolution language, header format)
-  - Board composition and committees
-  - Written consents — what they're used for and any limits
-- If `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` has no minutes format: run cold-start first. Do not proceed with a generic format.
+`~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Board & Secretary`: tutanak biçimi (uzun anlatı / yalnız karar / karma), `**Minutes template:**` (örnek tutanaklardan çıkarılan yapı, karar dili, başlık), YK ve komite yapısı, karar defteri türü (fiziki / elektronik), elden dolaştırma kullanımı. Biçim kayıtlı değilse önce `/corporate-legal:cold-start-interview --module board` çalıştır; genel şablonla devam etme.
 
----
+## ⏰ ÖN-KONTROL — Süre ve takvim
 
-## Step 1: Identify the meeting
+Her çalıştırmada organa göre kontrol et; kalan süre 5 günden azsa 🔴 işaretle:
 
-### Calendar detection
+- **Olağan genel kurul:** her faaliyet dönemi sonundan itibaren üç ay içinde (AŞ m. 409/1; Ltd. hesap döneminin sona ermesinden itibaren üç ay, m. 617/1).
+- **Çağrı:** AŞ'de esas sözleşmedeki şekilde, internet sitesinde ve Türkiye Ticaret Sicili Gazetesinde ilanla, ilan ve toplantı günleri hariç en az iki hafta önce; pay defterinde kayıtlı ve adres bildirmiş pay sahiplerine iadeli taahhütlü mektup (m. 414/1). Ltd.'de en az on beş gün önce; şirket sözleşmesi uzatabilir ya da on güne kadar kısaltabilir (m. 617/2). Halka açık ortaklıkta internet sitesi ve KAP ilanıyla en az üç hafta önce (SerPK m. 29/1).
+- **İnceleme:** finansal tablolar, faaliyet raporu, denetleme raporları ve kâr dağıtım önerisi toplantıdan en az on beş gün önce merkez ve şubelerde hazır bulundurulur (m. 437/1).
+- **Toplantı sonrası:** YK, GK tutanağının noterce onaylı suretini derhâl ticaret sicili müdürlüğüne verir, tescil ve ilana tabi hususları tescil ve ilan ettirir; tutanak hemen internet sitesine konur (m. 422/2).
+- **İptal riski:** kanun, esas sözleşme ya da dürüstlük kuralına aykırı GK kararına karşı m. 446'da sayılan kişiler karar tarihinden itibaren üç ay içinde iptal davası açabilir (m. 445). Tutanaktaki oy sayıları ve karşı oylar bu yüzden eksiksiz olmalı.
 
-If the calendar connector is authorized, search for upcoming events matching board and committee keywords:
+## Destination check
 
-**Search terms:** "Board of Directors", "Board Meeting", "Audit Committee", "Compensation Committee", "Comp Committee", "Nominating", "Nom/Gov", "Governance Committee", "Special Committee", "Board of Directors — [Company]"
+- **Tutanak / karar metni** (sicile, deftere, veri odasına gidecek) → şirket kaydıdır; üst başlık konmaz.
+- **Taslak notları, yer tutucu listesi, kontrol listesi** → `## Outputs`'taki üst başlık (role göre değişir; bkz. `## Who's using this`).
+- **Müvekkile / yönetime kapak notu** → kısa özet; üst başlık taşır.
 
-**Time window:** Look 30 days forward. If no upcoming meeting is found, look 14 days back (minutes are often drafted after the fact).
+## Adım 1 — Toplantıyı belirle
 
-Present what you find:
+**Takvim taraması** (bağlantı varsa): "Yönetim Kurulu", "YK Toplantısı", "Genel Kurul", "Olağan Genel Kurul", "Olağanüstü Genel Kurul", "Denetimden Sorumlu Komite", "Riskin Erken Saptanması Komitesi", "Kurumsal Yönetim Komitesi", "Müdürler Kurulu", "Ortaklar Kurulu"; çift dilli şirkette "Board Meeting", "Audit Committee". 30 gün ileri; bulunamazsa 14 gün geri (tutanak çoğu zaman sonradan yazılır). Bulduklarını listele, hangisi olduğunu sor. Bağlantı yoksa doğrudan sor: hangi organ, hangi tarih.
 
-> I found the following board or committee meetings on your calendar:
+**Teyit edilecek bilgiler:**
+- Organ: AŞ YK / komite (adı) / AŞ GK (olağan, olağanüstü) / Ltd. müdürler kurulu / Ltd. GK
+- Tarih, saat, yer: GK esas sözleşmede aksi yoksa şirket merkezinin bulunduğu yerde toplanır (m. 409/3)
+- Fiziki mi, elektronik mi: YK ve müdürler kurulunun tamamen ya da kısmen elektronik ortamda toplanması şirket sözleşmesinde ya da esas sözleşmede düzenlenmiş olmasına bağlıdır; nisaplar aynen uygulanır (m. 1527/1). AŞ GK'ya elektronik katılım fizikî katılımın tüm sonuçlarını doğurur (m. 1527/5).
+- Çağrı: usulüne uygun mu? Çağrısız GK: bütün payların sahipleri ya da temsilcileri itiraz etmeden toplanabilir; toplantı nisabı sürdükçe karar alır; gündeme ancak oybirliğiyle madde eklenir (m. 416).
+
+## Adım 2 — Katılım ve nisap
+
+**AŞ yönetim kurulu**
+- Esas sözleşmede ağırlaştırıcı hüküm yoksa YK üye tam sayısının çoğunluğuyla toplanır, toplantıda hazır bulunanların çoğunluğuyla karar alır; elektronik toplantıda da aynı (m. 390/1).
+- Üyeler birbirini temsilen oy veremez, vekille katılamaz (m. 390/2). Tüzel kişi üye adına yalnız tescil edilmiş gerçek kişi katılıp oy kullanır (m. 359/2).
+- Oylar eşitse konu gelecek toplantıya kalır; ikincide de eşitlikse öneri reddedilmiş sayılır (m. 390/3).
+- **Müzakereye katılma yasağı:** üyenin (ya da eşinin, alt-üst soyunun, üçüncü derece dâhil kan ve kayın hısımlarının) şirket dışı kişisel menfaati şirket menfaatiyle çatışıyorsa üye müzakereye katılamaz; tereddütte kararı YK verir, bu oylamaya ilgili üye katılamaz; katılmama sebebi ve ilgili işlemler karara yazılır (m. 393/1, 393/3). Nisap hesabını buna göre yap ve avukata işaretle.
+- YK üyesinin şirketle kendisi ya da başkası adına işlem yapması **genel kurul izni** gerektirir (m. 395/1); YK kararı bunun yerine geçmez.
+
+**AŞ genel kurul**
+- Hazır bulunanlar listesi: katılabilecekler listesi YK başkanınca imzalanıp toplantı yerinde bulundurulur; katılanların imzaladığı liste "hazır bulunanlar listesi"dir (m. 417/3-4).
+- Kanun ya da esas sözleşmede daha ağır nisap yoksa sermayenin en az dörtte birini karşılayan payların sahipleri ya da temsilcileriyle toplanır; nisap toplantı boyunca korunur; ilk toplantıda sağlanamazsa ikinci toplantıda nisap aranmaz; kararlar hazır bulunan oyların çoğunluğuyla verilir (m. 418). Ağırlaştırılmış nisap gerektiren kararı (esas sözleşme değişikliği vb.) kanun ve esas sözleşmeden ayrıca kontrol et.
+- Murahhas üyeler ve en az bir YK üyesi hazır bulunur; denetçi hazır bulunur (m. 407/2).
+- **Bakanlık temsilcisi:** Bakanlık izniyle kurulan şirketlerin (m. 333) bütün GK'larında; diğer şirketlerde gündeminde sermaye artırımı/azaltımı, kayıtlı sermaye sistemine geçiş/çıkış ya da tavan artırımı, faaliyet konusu değişikliği, birleşme, bölünme veya tür değişikliği bulunan toplantılarda; elektronik GK uygulayan şirketlerde ve yurt dışındaki toplantılarda zorunludur. Zorunlu olduğu toplantıda temsilcinin yokluğunda alınan kararlar geçerli değildir (m. 407/3; Yönetmelik m. 32/1, 32/4). Gündemi buna göre tara.
+
+**Limited şirket**
+- Müdürler kurulu: çoğunlukla karar alır; eşitlikte başkanın oyu üstündür; şirket sözleşmesi farklı düzenleyebilir (m. 624/3).
+- Genel kurul: kararlar toplantıda temsil edilen oyların salt çoğunluğuyla (m. 620); m. 621'deki önemli kararlar (işletme konusu ve merkez değişikliği, sermaye artırımı, pay devrinin sınırlandırılması, fesih vb.) temsil edilen oyların en az üçte ikisi ve oy hakkı bulunan esas sermayenin salt çoğunluğuyla. Oy hakkı itibarî değere göre hesaplanır (m. 618/1); müdürlerin ibrasında yönetime katılmış olanlar oy kullanamaz (m. 619/1). AŞ'nin çağrı, gündem, çağrısız GK ve tutanak hükümleri kıyasen uygulanır, Bakanlık temsilcisine ilişkin olanlar hariç (m. 617/3).
+
+**Nisap yoksa dur.** Geçerli toplantı yapılmış izlenimi veren tutanak üretme. Durumu avukata yaz; çözüm yolu (yeniden toplantı, YK için elden dolaştırma, sonraki GK) esas sözleşmeye ve işlemin niteliğine bağlıdır.
+
+**Diğer katılımcılar:** yöneticiler, dış avukat, denetçi, danışmanlar (yalnız belirli gündem maddesine katıldıysa bunu yaz). Toplantı başkanı ve tutanak yazmanı: GK'yı esas sözleşmede aksi yoksa genel kurulca seçilen başkan yönetir; başkan tutanak yazmanını ve gerekirse oy toplama memurunu belirler (m. 419/1).
+
+## Adım 3 — Materyaller
+
+> Toplantının gündemini ve ön okuma materyallerini paylaşabilir misiniz? Kaba bir gündem de yeter. YK sunumu, finansal tablo, faaliyet raporu taslağı varsa yükleyin; gündem maddesi özetlerini bunlardan çıkarırım. Materyal yoksa gündem maddelerini söyleyin, her biri için yer tutucu koyarım.
+
+Çıkar: sıralı gündem maddeleri; önerilen kararlar ("onaylanmasına", "seçilmesine", "yetkilendirilmesine", "ibra edilmesine"); ekler (sunum, finansal tablo, değerleme, sözleşme taslağı); beklenen oylamalar. **GK'da gündemde bulunmayan konu müzakere edilemez ve karara bağlanamaz** (kanuni istisnalar saklı); YK üyelerinin görevden alınması ve yenilerinin seçimi yılsonu finansal tablolarının müzakeresiyle ilgili sayılır (m. 413/2-3). Gündem dışı karar varsa işaretle.
+
+## Adım 4 — Taslak
+
+Ev formatını kullan (`**Minutes template:**`); örnek tutanakların yapısını, başlığını, karar dilini ve tartışma derinliğini birebir izle. Aşağıdaki iskeletler yalnız varsayılandır.
+
+**AŞ YK kararı (toplantılı):**
+```
+[Müvekkil] (ticaret unvanı)
+YÖNETİM KURULU KARARI
+Karar Tarihi: [GG.AA.YYYY]   Karar No: [YYYY/NN]
+Toplantı yeri / şekli: [şirket merkezi / elektronik ortam — esas sözleşme m. [..]]
+Toplantıya katılanlar: [ad soyad — sıfat]   Katılmayanlar: [..]
+Nisap: Üye tam sayısı [N]; hazır bulunan [N] (TTK m. 390/1)
+
+Gündem:
+1. [..]
+
+Şirket yönetim kurulu yukarıdaki tarihte toplanarak aşağıdaki kararları almıştır:
+1. [Kesin karar metni — kim, ne, hangi tutar, hangi belge (Ek-1)] hususunun
+   [oybirliği / oyçokluğu ([N] kabul, [N] ret)] ile kabulüne.
+   [Müzakereye katılmayan üye ve sebebi — TTK m. 393/3]
+2. [..]
+
+[İmza blokları — toplantıya katılan üyeler]
+```
+
+**AŞ GK tutanağı:** başlık ("[Müvekkil] (ticaret unvanı) [YIL] YILINA AİT OLAĞAN GENEL KURUL TOPLANTI TUTANAĞI"); toplantı tarihi, yeri, Bakanlık temsilcisinin adı ve görevlendirme yazısı (varsa); çağrının nasıl yapıldığı; hazır bulunanlar listesine göre nisap; başkanlık oluşturulması; her gündem maddesi için görüşme özeti, sorulan sorular ve verilen cevaplar, karar ve **olumlu ve olumsuz oy sayıları**; karşı oy ve muhalefet şerhleri. Tutanak; pay sahiplerini ya da temsilcilerini, paylarını, gruplarını, sayılarını ve itibarî değerlerini de içerir (m. 422/1). Olağan GK gündeminde tipik başlıklar: organların seçimi, finansal tablolar, YK yıllık raporu, kârın kullanım şekli ve dağıtılacak kâr payı oranları, YK üyelerinin ibrası (m. 409/1). İmza: toplantı başkanlığı ve toplantıda bulunuyorsa Bakanlık temsilcisi (m. 422/1; temsilcinin zorunlu olduğu toplantılar Yönetmelik m. 32).
+
+**Ltd.:** müdürler kurulu kararında AŞ YK iskeletini kullan, nisap satırını m. 624/3'e ve şirket sözleşmesine göre yaz; GK tutanağında Bakanlık temsilcisi satırını çıkar (m. 617/3).
+
+**Yazım notları**
+- **Tartışma derinliği:** *uzun anlatı* — sunulan bilgi, sorulan sorular, kurulun gözettiği etkenler; kişiye söz atfı yalnız hukuken önemliyse. *Yalnız karar* — "konu görüşüldü" ve karar. *Karma* — önemli maddelerde anlatı, rutinde yalnız karar. Seed tutanaklara uy.
+- Materyal varsa özetleri sunumlardan çıkar ("kurul [konu] hakkındaki sunumu inceledi"). Materyal yoksa `[YER TUTUCU — görüşme özeti]` yaz ve işaretle; **görüşme içeriği uydurma**.
+- **Karar dili ev üslubudur** ("... kabulüne", "... onaylanmasına karar verildi", "... yetkili kılınmasına"); bir tutanak içinde değiştirme.
+- **Ekler** sırayla numaralanır (Ek-1, Ek-2): sunum, finansal tablolar, değerleme raporu, hazır bulunanlar listesi, vekâletnameler.
+- **Tescil gerektiren kararlar** ayrı işaretlenir: temsile yetkili kişiler ve temsil şekli (noter onaylı suret sicile, m. 373/1); denetçi seçimi (m. 399/1); GK iç yönergesi (m. 419/2); GK tutanağındaki tescile tabi hususlar (m. 422/2).
+
+## Adım 4.5 — Sonuç doğuran eylem kapısı (tutanağı kesinleştirme)
+
+`## Who's using this` → Role **avukat değilse**:
+
+> İmzalanan tutanak ve deftere geçen karar, kurulun ne karar verdiğinin resmî kaydıdır; işlemlerin yetkilendirildiğinin birincil delilidir. Bunu bir avukatla gözden geçirdiniz mi? Evetse devam ederim. Hayırsa avukata götürmeniz için kısa brif:
+> - Ne karara bağlandı (kararlar, oylar, kimler hazırdı)
+> - Taslak neyi yakaladı, neler hâlâ yer tutucu
+> - Açık sorular (nisap, müzakereye katılma yasağı, Bakanlık temsilcisi, gündem dışı madde)
+> - Ne ters gidebilir (geçersiz karar, iptal davası, eksik oy sayısı, tescil gecikmesi)
+> - Avukata sorulacaklar (tartışma derinliği doğru mu; hangi kararlar tescil ve ilan gerektiriyor)
 >
-> 1. **[Meeting name]** — [Date], [Time], [Location/Virtual]
-> 2. **[Meeting name]** — [Date], [Time], [Location/Virtual]
->
-> Which one are these minutes for? Or is it a different meeting not on here?
+> Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz.
 
-If the calendar connector is not authorized or returns nothing: ask directly — what meeting, what date, what type (full board / which committee)?
+Açık "evet" olmadan imzaya hazır sürüm üretme; avukat incelemesi için TASLAK işaretli metin serbest.
 
-### Meeting metadata to confirm
+## Adım 5 — Çıktı ve kontrol listesi
 
-Once the meeting is identified, confirm or fill in:
-
-- **Meeting type:** Full Board of Directors / [Committee name]
-- **Date and time**
-- **Location or platform** (in-person address / Zoom / Teams / telephonic)
-- **Called by / Notice:** Was proper notice given? (Yes / waived — waiver of notice is a common exhibit)
-
----
-
-## Step 2: Attendance
-
-Ask for the attendee list, or offer to pull from the calendar invite if the connector is authorized.
-
-**Directors present:**
-- Pull from board composition in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` as the starting point
-- Ask who was actually present, who was absent, and whether any absent directors had advance notice
-
-**Management present:**
-- Who from management attended? (CFO, CAO, CTO, etc.)
-- Note: management attendees are typically listed separately from directors
-
-**Guests:**
-- Outside counsel present? (Name and firm)
-- Investment bankers, auditors, or other advisors?
-- Any guests who attended for specific agenda items only (note their attendance as limited to that item)
-
-**Chair:**
-- Who chaired the meeting?
-- Who acted as secretary?
-
-**Quorum:**
-
-- Check the charter and bylaws for the quorum requirement. If the charter is silent, research the applicable state corporate law for the default rule for this entity type. Record what you confirmed (source and pinpoint) in the drafting notes.
-- Confirm quorum was present. If not: stop and flag before drafting. Do not produce minutes that imply a valid meeting occurred. Surface the question to outside counsel — the remediation path (ratification, re-meeting, written consent, other) depends on the state of incorporation and the nature of the action.
-
----
-
-## Step 3: Materials
-
-Ask for the meeting materials. These are the source for the agenda items and any resolutions.
-
-> Can you share the agenda and any pre-read materials for this meeting? Even a rough agenda is enough to structure the minutes. If there were board slides or a management presentation, upload those too — I'll use them to fill in the agenda item summaries.
->
-> If materials weren't distributed in advance, tell me the agenda items and I'll draft placeholders for each.
-
-**From the agenda and slides, extract:**
-- Agenda items in order
-- Any resolutions proposed (look for board approval language: "approve," "authorize," "ratify," "adopt," "elect")
-- Any exhibits referenced (management presentations, financial reports, legal memos, valuations)
-- Any votes expected
-
-**If no materials:** Ask for the agenda items verbally and proceed with placeholders for discussion content.
-
----
-
-## Step 4: Draft the minutes
-
-Use the house format from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. Do not default to a generic format. The seed minutes are the template — replicate the structure, the header, the resolution language, the level of discussion detail.
-
-### Standard structure (adapt to house format)
-
-**Header block:**
-```
-MINUTES OF [MEETING TYPE] OF THE BOARD OF DIRECTORS
-[OR: MINUTES OF THE [COMMITTEE NAME] OF THE BOARD OF DIRECTORS]
-OF [COMPANY NAME]
-
-[Date]
-[Location / Telephonic / Video Conference]
-```
-
-**Opening:**
-- Meeting called to order by [Chair name] at [time]
-- Notice: [proper notice given / notice waived — attach waiver as exhibit if applicable]
-- Quorum confirmed: [N of M directors present]
-- Secretary: [name]
-
-**Attendees:**
-- Directors present: [list]
-- Directors absent: [list, if any]
-- Also present: [management, outside counsel, guests — with roles]
-
-**Previous minutes:**
-Standard language: approval of minutes from prior meeting. Pull date of prior meeting from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` board calendar if available, otherwise leave as [DATE OF PRIOR MEETING].
-
-**Agenda items — one section per item:**
+Tam taslağı üret. Tutanağın kendisi şirket kaydıdır, üst başlık almaz; taslak notları ve aşağıdaki liste alır:
 
 ```
-[AGENDA ITEM TITLE]
-
-[Chair/presenter name] [presented / reported on / led a discussion of] [topic].
-
-[Discussion summary — see drafting notes below]
-
-[If resolution follows:]
-Upon motion duly made and seconded, the following resolution was adopted [by unanimous vote / by a vote of N for, N against, N abstaining]:
-
-RESOLVED, that [resolution text in house language from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`].
+[ÜST BAŞLIK — ## Outputs; role göre]
+İMZA ÖNCESİ KONTROL
+□ Katılan/katılmayan üyeler fiilî katılımla örtüşüyor
+□ Toplantı ve karar nisabı doğru (m. 390/1, 418, 620-621, 624/3; esas sözleşme)
+□ Karar metni onaylanan şeyle birebir aynı
+□ Oy sayıları, karşı oylar ve muhalefet şerhleri yazıldı
+□ Müzakereye katılma yasağı ve sebebi karara yazıldı (m. 393/3)
+□ GK: hazır bulunanlar listesi ekli; gündem dışı karar yok; Bakanlık temsilcisi gerekliyse hazırdı
+□ Ekler numaralandı ve atıfta bulunuldu
+□ Karar defterine yazım / yapıştırma yapılacak; defter onay durumu (fiziki / elektronik)
+□ Tescil-ilan ve internet sitesi adımları planlandı (m. 373/1, 422/2)
+□ Kapanış saati ve imza blokları dolduruldu
 ```
 
-**Adjournment:**
-Standard language: meeting adjourned at [time], there being no further business.
+Yer tutucu bölümleri ayrıca listele. Taslağın başına (kesinleşmeden önce çıkarılacak) not koy:
 
-**Signature block:**
-Secretary signature line. Some formats include a chair countersignature.
+> **⚠️ İnceleyen notu:** Bu metin avukat incelemesi için taslaktır, kesinleşmiş karar ya da tutanak değildir. İmzalanan tutanak şirket organının işleminin resmî kaydıdır ve hukuki sonuç doğurur; avukat inceleyip düzeltmeden ve sorumluluğu üstlenmeden imzaya sunmayın.
 
----
+## Toplantısız kararlar
 
-### Drafting notes
+YK'nın elden dolaştırma yoluyla kararı (m. 390/4), Ltd. GK'nın yazılı onayla kararı (m. 617/4) ve tek pay sahipli/tek ortaklı şirketin yazılı kararı → `/corporate-legal:written-consent`.
 
-**Discussion summaries:** The hardest part of minutes is deciding how much discussion to capture. Follow the house format from seed documents exactly:
+## Bu skill ne yapmaz
 
-- *Long-form narrative:* Summarise the substance of the discussion — what questions were raised, what information was presented, what factors the board considered. Do not quote individuals unless the specific attribution matters legally.
-- *Action minutes:* Note only what was presented and what action was taken. No discussion content beyond "the board discussed the matter."
-- *Hybrid:* Full narrative for major items (acquisitions, financials, significant approvals), action-only for routine items.
-
-When materials were provided: pull summary content from the slides and management presentation. The board "received and reviewed" a presentation — summarize what the presentation covered.
-
-When no materials: insert `[PLACEHOLDER — summarize discussion here]` and flag it clearly. Do not fabricate discussion content.
-
-**Resolutions:** Use the exact resolution language from the seed minutes — "RESOLVED, THAT" vs. "BE IT RESOLVED" vs. "RESOLVED" alone. The language is house style, not interchangeable.
-
-**Exhibit references:** Number exhibits in the order they appear (Exhibit A, B, C). Common exhibits: management presentation, financial statements, valuation reports, legal opinions, waivers of notice, consents.
-
----
-
-## Step 4.5: Consequential-action gate (adopt minutes)
-
-**Before adopting minutes as final:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
-
-> Adopting minutes makes them the official record of what the board decided — they're the primary evidence of authorization for the actions taken at the meeting. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> - What was decided (resolutions, votes, who was present)
-> - What the draft captures and what is still a placeholder
-> - Open questions (any flagged attendance, quorum, or conflict notes)
-> - What could go wrong (misstated resolutions, missing disclosures, quorum defects, privilege leakage in discussion summaries)
-> - What to ask the attorney (is the discussion depth right for this board's practice; are exec-session notes properly segregated; do any items need more documentation)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
-
-Do not produce the final adoption-ready version past this gate without an explicit yes. A marked-DRAFT for attorney review is fine.
-
----
-
-## Step 5: Output and review prompts
-
-Produce the full draft. The minutes themselves are a corporate record, not privileged; do not apply the work-product header to the minutes as circulated. The drafting notes, placeholder flags, and review checklist below are work product — prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`):
-
-```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-```
-
-After the draft, add a review checklist:
-
-```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-
-REVIEW CHECKLIST — please verify before circulating:
-
-□ All directors confirmed present/absent (check against actual attendance)
-□ Quorum confirmed correct
-□ Resolution language matches what was actually approved (check wording carefully)
-□ Votes recorded correctly — any abstentions or dissents to note?
-□ Exhibits numbered and referenced correctly
-□ Any executive sessions held? (Add separate executive session note if so)
-□ Any conflicts of interest disclosed? (Director recusal to note if applicable)
-□ Time of adjournment to fill in
-□ Outside counsel reviewed? (If required by your process)
-```
-
-Flag any sections where content is a placeholder and needs the attorney's input before the minutes are accurate.
-
-Add as a final pre-adoption note on the draft, stripped before adoption:
-
-> This is a draft for attorney review, not adopted minutes. Adopted minutes are the official record of board action and carry legal consequences — a licensed attorney reviews, edits, and takes professional responsibility before adoption. Do not adopt this draft unreviewed.
-
----
-
-## Written consents
-
-For drafting written consents in lieu of a meeting, use `/corporate-legal:written-consent`. That skill handles precedent search, state-law confirmation, and the scope warning for major one-off actions.
-
----
-
-## What this skill does not do
-
-- It does not attend the meeting or capture real-time discussion — it drafts from materials and attorney input.
-- It does not determine whether a resolution is legally valid or sufficient — it drafts in house format; legal judgment on adequacy is the attorney's call.
-- It does not finalize minutes — the draft requires attorney review before circulation.
-- It does not distribute minutes — output is for the attorney to review, edit, and circulate via their own process.
+- Toplantıya katılmaz, anlık görüşmeyi yakalamaz; materyallerden ve avukat girdisinden yazar.
+- Kararın hukuken geçerli ya da yeterli olduğuna karar vermez; nisap ve şekil işaretleri avukatın değerlendirmesi içindir.
+- Tutanağı kesinleştirmez, deftere işlemez, sicile başvurmaz, dağıtmaz.
 
 ---
 
@@ -449,210 +348,222 @@ For drafting written consents in lieu of a meeting, use `/corporate-legal:writte
 ---
 name: closing-checklist
 description: >
-  What's blocking close — maintain the closing checklist with status, critical
-  path, and days to close. Self-updating: ingests new items from diligence
-  findings and schedule builds, tracks status, surfaces what's blocking. Use
-  when user says "closing checklist", "what's left to close", "checklist
-  status", "add to the checklist", or on a scheduled status pull.
-argument-hint: "[optional: item ID + status update]"
+  Kapanışı ne engelliyor — kapanış kontrol listesini durum, kritik yol ve
+  kapanışa kalan günle tutar. Kendini günceller: due diligence bulgularından ve
+  ek çalışmalarından yeni kalemleri alır, durumu izler, engelleri gösterir.
+  Türk hukukundaki kapanış kalemlerini (Rekabet Kurulu izni — 4054 m. 7 ve
+  2010/4 sayılı Tebliğ, pay devri onayları ve şekli — TTK m. 490-494, 595,
+  pay defteri ve ticaret sicili tescili) kaynaklarıyla yazar. "Kapanış kontrol
+  listesi", "kapanışa ne kaldı", "liste durumu", "listeye ekle" denildiğinde
+  ya da zamanlanmış durum raporunda kullan.
+argument-hint: "[isteğe bağlı: kalem kimliği + durum güncellemesi]"
 ---
 
-# /closing-checklist
+# /closing-checklist — Kapanış Kontrol Listesi
 
-1. Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml` and use the modes below.
-2. If status update provided: Mode 3 (update item).
-3. Otherwise Mode 4: blocking items, critical path, days to close.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml` oku; aşağıdaki modları kullan.
+2. Durum güncellemesi verildiyse: Mode 3.
+3. Yoksa Mode 4: engelleyici kalemler, kritik yol, kapanışa kalan gün.
 
----
+## Matter bağlamı
 
-## Matter context
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Amaç
 
----
+İşlem, liste bittiğinde kapanır: listedeki her şey yapılmış, hiçbir şey eksik değil. Bu skill listeyi tutar, due diligence'tan gelen kalemleri ekler ve ekibe neyin engellediğini söyler.
 
-## Purpose
+## Liste
 
-Deals close when the checklist is done. Everything on it, done. Nothing missing. This skill maintains the list, ingests new items as they surface from diligence, and tells the team what's blocking.
-
-## The checklist
-
-Lives at `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml`. Structure:
+`~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml`. Anahtarlar İngilizce kalır (integration-management ve dataroom-watcher bu dosyayı okur); kalem metinleri Türkçe.
 
 ```yaml
-deal_code: "Project Falcon"
-target_close: [DATE]
-signing_date: [DATE]
-last_updated: [DATE]
+deal_code: "Proje Şahin"
+target_close: [TARİH]
+signing_date: [TARİH]
+last_updated: [TARİH]
 
 conditions_precedent:
   - id: CP-001
-    item: "HSR waiting period expiration"
+    item: "Rekabet Kurulu izni"
     category: "Regulatory"
-    responsible: "Buyer counsel"
+    responsible: "Alıcı avukatı"
     due: 2026-04-15
-    status: "Filed 2026-03-01, waiting period runs"
+    status: "Bildirim 2026-03-01; bildirimin tam sayıldığı tarih teyit edilecek"
     blocking: true
-    source: "Purchase Agreement §7.1(a)"
+    source: "SPA m. 7.1(a); 4054 m. 7; Tebliğ 2010/4 m. 7, 10"
 
   - id: CP-002
-    item: "Acme Corp consent to assignment"
+    item: "[Karşı taraf] onayı — çerçeve sözleşme CoC"
     category: "Third-party consents"
-    responsible: "Target — Jane Doe"
+    responsible: "Hedef — [ad]"
     due: 2026-04-20
-    status: "Request sent 2026-03-10, no response"
+    status: "Talep 2026-03-10 gönderildi, cevap yok"
     blocking: true
-    source: "Schedule 3.12(a)(4); Acme MSA §14.2"
+    source: "Ek 3.12(a)(4); [Karşı taraf] sözleşmesi m. 14.2"
 
 closing_deliverables:
   - id: CD-001
-    item: "Certificate of good standing — Target (DE)"
+    item: "Ticaret sicili kayıt örneği / sicil tasdiknamesi — Hedef"
     category: "Corporate"
-    responsible: "Target counsel"
+    responsible: "Satıcı avukatı"
     due: 2026-04-28
-    status: "Not started"
+    status: "Başlanmadı"
     blocking: true
-    source: "Purchase Agreement §2.3(b)(iv)"
+    source: "SPA m. 2.3(b)(iv); TTK m. 35/2"
 
-  # ... etc
+  - id: CD-002
+    item: "Pay devri — AŞ: ciro + teslim / Ltd.: noter onaylı devir sözleşmesi"
+    category: "Corporate"
+    responsible: "Satıcı avukatı"
+    due: 2026-04-30
+    status: "Taslak hazır"
+    blocking: true
+    source: "SPA m. 2.2; TTK m. 490/2 (AŞ) ya da m. 595/1 (Ltd.)"
+  # ... vb.
 ```
 
-## Modes
+ABD'deki "good standing" belgesinin karşılığı yoktur; yerine güncel sicil kaydı/tasdiknamesi, TTSG ilanları, vergi ve SGK "borcu yoktur" yazıları ve imza sirküleri istenir — sözleşmede hangisi yazıyorsa o.
 
-### Mode 1: Initialize from the purchase agreement
+## Modlar
 
-Read the signed (or near-final) purchase agreement. Extract:
+### Mode 1: Satın alma sözleşmesinden kur
 
-- Every condition precedent (location varies by agreement — read the actual section headings)
-- Every closing deliverable (closing deliverables schedule or corresponding section)
-- Every covenant with a pre-closing deadline
+İmzalanmış (ya da son hâline yakın) sözleşmeyi oku ve çıkar: her ön koşul (yeri sözleşmeye göre değişir — gerçek başlıkları oku), her kapanış teslimi, kapanış öncesi süreli her taahhüt. Her biri sözleşme maddesine atıflı bir kalem olur.
 
-Each becomes a checklist item with a source cite to the agreement section.
+**Şirket onayları ve şekil — yapıya göre:**
 
-**Research obligations before populating regulatory/approval items.** Antitrust, foreign-investment, and sector-specific approvals (for example, HSR-style filings, CFIUS, industry regulators) have jurisdiction-specific mechanics, thresholds, and timing windows that change. Extract the name of each regulatory condition from the PA, then research the currently operative mechanics (who files, when, what triggers a second request, what the waiting period is). Cite primary sources and verify currency. Do not populate a timing assumption from memory.
+| Yapı | Kalem | Dayanak |
+|---|---|---|
+| AŞ pay devri | Esas sözleşmede devir sınırlaması varsa şirketin onayı (uygulamada YK kararı); borsaya kote olmayan payda red sebepleri sınırlı; 3 ay içinde reddedilmezse onay verilmiş sayılır | TTK m. 492-494 |
+| AŞ pay devri | Bedeli tamamen ödenmemiş nama yazılı paylar için şirket onayı | TTK m. 491 |
+| AŞ pay devri | Nama yazılı pay senedinde ciro + zilyetliğin geçirilmesi; hamiline senette MKK bildirimi | TTK m. 490/2, 489 |
+| AŞ pay devri | Pay defterine kayıt — devralan ancak usulüne uygun devir ispat edilince yazılır | TTK m. 499/2 |
+| Ltd. pay devri | Yazılı devir sözleşmesi, imzalar noter onaylı; ortaklar genel kurulu onayı (sözleşmede aksi yoksa); onayla geçerlilik | TTK m. 595/1-2, 616/1-g, 620 |
+| Ltd. pay devri | Pay defteri kaydı; müdürlerin ticaret siciline tescil başvurusu (30 gün içinde yapılmazsa ayrılan ortak silinmeyi isteyebilir) | TTK m. 594, 598 |
+| Malvarlığı / işletme devri | Önemli miktarda şirket varlığının toptan satışı için AŞ genel kurulu; ticari işletme devri sözleşmesi yazılı, tescil ve ilan; sözleşme devirleri | TTK m. 408/2-f, 11/3; TBK m. 205 |
+| Birleşme | Birleşme sözleşmesi yazılı, yönetim organlarınca imza, genel kurul onayı; nisaplar (AŞ: esas/çıkarılmış sermayenin çoğunluğunu temsil şartıyla mevcut oyların 3/4'ü; Ltd.: sermayenin en az 3/4'ünü temsil eden tüm ortakların 3/4'ü); tescil başvurusu; tescille geçerlilik | TTK m. 145, 151, 152, 153 |
 
-**Material-adverse-effect / material-adverse-change closing conditions.** Pull the defined term from the PA — MAC/MAE framing is negotiated, not a standard. Research the governing-law interpretation of the specific language used (Delaware, New York, and other jurisdictions treat carve-outs and quantitative tests differently) before flagging an event as a potential MAC trigger.
+Tescil edilen hususlar TTSG'de ilanı izleyen iş gününden itibaren üçüncü kişilere karşı sonuç doğurur (TTK m. 36/1) — kapanış tarihini ve "yürürlük" beyanlarını buna göre kur.
 
-**Consent-requirement extraction from material contracts** depends on governing-law default rules and the specific anti-assignment language in each contract. Research the applicable rule per contract rather than assuming a default.
+**Düzenleyici kalemlerden önce araştır.** Rekabet, sektör ve yabancı yatırım onaylarının mekaniği, eşikleri ve süreleri değişir. Koşulun adını sözleşmeden al, işleyen kuralı birincil kaynaktan çek, güncelliğini doğrula; süreyi hafızadan doldurma.
+- **Rekabet:** kontrolde kalıcı değişiklik yaratan işlem birleşme/devralma sayılır (Tebliğ 2010/4 m. 5); izne tabiyet ciro eşiklerine bağlıdır (m. 7 — **güncel eşikleri Tebliğ'den teyit et**; teknoloji teşebbüsü istisnası m. 7/2). İzne tabi işlem karar verilmeden hukuken geçerlilik kazanamaz (Tebliğ m. 10/4); Kurul ön incelemeyi bildirimden itibaren 15 günde yapar, nihai incelemeye alırsa işlem askıdadır; süresinde cevap yoksa bildirimden 30 gün sonra geçerlilik kazanır (4054 m. 10). Bildirim, eksiksiz bilgiler Kurul kayıtlarına girdiğinde yapılmış sayılır (Tebliğ m. 11) — süre hesabını buna göre yap. İzinsiz kapanış: idari para cezası (4054 m. 16/1-b; alt sınır yıllık güncellenir — teyit et) ve m. 11 tedbirleri. Emsal için `tr_kurum_karari_ara(kurum="rekabet", decision_type="birlesme_devralma", query="[pazar / taraf]")` — dönen künyeyi birebir kullan.
+- **Sektör:** EPDK, BDDK, SPK, BTK, sigortacılık onayları → `tr_mevzuat_ara` + `tr_kurum_karari_ara`; çekemediğinde "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/".
+- **Halka açık hedef:** önemli nitelikte işlem usulü ve ayrılma hakkı (6362 m. 23-24), yönetim kontrolü edinilirse pay alım teklifi (m. 26); KAP açıklama takvimi.
+- **Yabancı unsur:** AB birleşme kontrolü `eu_search_eu_law(query="Council Regulation 139/2004 control of concentrations")`; diğer ülkeler için `uk_`, `de_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_`; listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-### Mode 2: Ingest from diligence (the "self-updating" part)
+**MAC / esaslı olumsuz değişiklik koşulu.** Tanımı sözleşmeden al — müzakere edilmiş bir metindir, standart değildir. Türk hukukunda kanuni MAC tanımı yoktur; aşırı ifa güçlüğü (TBK m. 138: öngörülemeyen olağanüstü durumda uyarlama, olmazsa dönme/fesih) ayrı bir kurumdur ve sözleşmedeki MAC klozuyla ilişkisi **tartışmalı — içtihadı kontrol et**. Sözleşme yabancı hukuka tabiyse o hukukun yorumunu araçla çek; bir olayı MAC tetikleyicisi diye işaretlemeden önce yap.
 
-Mode 2 is triggered when an upstream skill produces a finding with a pre-closing action. The upstream skills and output types this mode ingests:
+**Önemli sözleşmelerden onay çıkarımı** yapıya ve her sözleşmenin metnine bağlıdır: pay devrinde taraf değişmez (yalnız CoC), malvarlığı devrinde sözleşme devri karşı tarafın katılımını gerektirir (TBK m. 205), birleşmede külli halefiyet (TTK m. 153/1) ile devir yasağı ilişkisi tartışmalıdır. Varsayılan kural varsayma; sözleşme başına kuralı yaz.
 
-- **`diligence-issue-extraction` findings** — any finding flagged for a closing action (consent, shareholder vote, board resolution, regulatory filing, release, escrow mechanic, pay-off letter). Not just "consents" — see the extraction skill's Handoffs section for the full list.
-- **`material-contract-schedule` CoC / assignment items** — change-of-control provisions, anti-assignment clauses, MFN triggers surfaced during schedule build.
-- **`deal-team-summary` output** — the exec-tier brief aggregates extraction findings and sometimes surfaces a closing-action item that a mechanical read of the individual extraction memos would miss (e.g., a §280G cleansing vote rolled up across multiple employment agreements, or a composite consent package). Mode 2 reads the latest deal-team-summary in the deal folder and reconciles its closing-action items against the checklist. Anything flagged by deal-team-summary as requiring pre-closing action that is not already on the checklist is appended.
+### Mode 2: Due diligence'tan al ("kendini güncelleyen" kısım)
 
-The handoff schema covers the full range of pre-closing actions, not just consents:
+Üst skill kapanış öncesi eylem gerektiren bir bulgu ürettiğinde tetiklenir:
+- **`diligence-issue-extraction` bulguları** — kapanış eylemi işaretli her bulgu (onay, genel kurul/YK kararı, düzenleyici bildirim, ibra, emanet, borç kapama). Yalnız "onay" değil — o skill'in Aktarımlar bölümüne bak.
+- **`material-contract-schedule` CoC / devir kalemleri** ve onay takip tablosu.
+- **`deal-team-summary` çıktısı** — üst düzey brifing, tek tek notların gözden kaçırdığı bir kapanış kalemini gösterebilir (ör. birden çok yönetici sözleşmesinden toplanan CoC ikramiye ibraları, birleşik onay paketi). Klasördeki en son brifingi oku, kapanış kalemlerini listeyle uzlaştır; listede olmayanı ekle.
+
+Aktarım şeması (anahtarlar İngilizce kalır):
 
 ```yaml
 handoff:
-  # Required fields
-  item: "[Counterparty or action, one line]"
+  # Zorunlu
+  item: "[Karşı taraf ya da eylem, tek satır]"
   category: "[Third-party consents | Shareholder / board action | Regulatory filing | Release / termination | Escrow / holdback | Closing deliverable]"
-  source: "[Contract name / statutory section / VDR path + Bates]"
-  blocking: true  # unless the agreement has a materiality qualifier
-  severity: "[🔴 / 🟠 / 🟡 / 🟢 — carried from upstream, see severity-floor rule in CLAUDE.md]"
+  source: "[Sözleşme adı / kanun maddesi / VDR yolu]"
+  blocking: true  # sözleşmede önemlilik kaydı yoksa
+  severity: "[🔴 / 🟠 / 🟡 / 🟢 — üst skill'den taşınır; CLAUDE.md'deki severity floor kuralı]"
 
-  # Consent / third-party action fields
-  counterparty: "[e.g., Dunmore Holdings LLC]"
-  guarantor: "[e.g., Buyer parent guaranty required, or N/A]"
-  conditions: "[any substantive condition the counterparty attached — e.g., 'replacement guaranty from buyer parent required before consent effective']"
-  notice_deadline: "[e.g., 30 days prior to closing, or specific date]"
+  # Karşı taraf işlemi
+  counterparty: "[ör. Delta Lojistik A.Ş.]"
+  guarantor: "[ör. alıcı ana şirket garantisi gerekli | Yok]"
+  conditions: "[karşı tarafın koştuğu şart — ör. 'onay, alıcı ana şirketin yeni garantisiyle yürürlüğe girer']"
+  notice_deadline: "[ör. kapanıştan 30 gün önce | belirli tarih]"
 
-  # Corporate action fields
-  approval_body: "[Shareholders | Board | Committee | Regulator]"
-  approval_threshold: "[e.g., 75% disinterested stockholder vote for §280G cleansing]"
-  statutory_or_charter_source: "[e.g., IRC §280G(b)(5)(B); Charter Art. IV §2]"
+  # Şirket işlemi
+  approval_body: "[Genel kurul | Ortaklar genel kurulu | YK | Müdürler | Düzenleyici]"
+  approval_threshold: "[ör. Ltd. pay devri onayı: temsil edilen oyların salt çoğunluğu, sözleşmede aksi yoksa]"
+  statutory_or_charter_source: "[ör. TTK m. 595/2, 620; Şirket sözleşmesi m. 8]"
 
-  # Timing
-  estimated_time_to_complete: "[e.g., 30 days]"
-  must_occur_before: "[e.g., closing | signing | end of hiatus period]"
+  # Zamanlama
+  estimated_time_to_complete: "[ör. 30 gün]"
+  must_occur_before: "[ör. kapanış | imza | Rekabet izni]"
 ```
 
-Preserve every field the upstream skill populated. A "Dunmore consent required, with replacement guaranty condition and 30-day notice" should surface on the checklist with all three elements (consent, guarantor, notice), not collapse to "Dunmore consent to change of control." When the upstream skill provides a severity, carry it — see the cross-skill severity floor rule in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`.
+Üst skill'in doldurduğu her alanı koru. "Delta onayı gerekli; yeni garanti şartı ve 30 gün bildirim" listede üç unsuruyla görünür, "Delta CoC onayı"na indirgenmez. Ciddiyeti taşı (CLAUDE.md severity floor kuralı). Tekilleştirmeyi serbest metin adına göre değil (karşı taraf + eylem türü) çiftine göre yap — Delta onayı ile Delta ibrası ayrı kalemlerdir. Birleştirirken üzerine yazma, alanları birleştir.
 
-Append to the checklist. De-dupe on (counterparty + action type), not on the freeform item name — a Dunmore consent and a Dunmore release are different items even though both name Dunmore. When de-duping, merge fields rather than overwrite: if one handoff populated `guarantor` and a later handoff populated `notice_deadline`, the checklist row carries both.
+### Mode 3: Durum güncellemesi
 
-### Mode 3: Status update
-
-User (or dataroom-watcher agent) provides a status update. Find the item, update status and last-updated.
+Kullanıcı (ya da dataroom-watcher ajanı) güncelleme verir; kalemi bul, `status` ve `last_updated`'i güncelle.
 
 ```
 /corporate-legal:closing-checklist
-CP-002: Acme responded, consent form attached, needs countersignature
+CP-002: [Karşı taraf] cevap verdi, onay formu ekte, karşı imza gerekiyor
 ```
 
-### Mode 4: What's blocking
+### Mode 4: Ne engelliyor
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — CLAUDE.md ## Outputs; role göre değişir, bkz. ## Who's using this]
 
-> This status report is derived from the purchase agreement, diligence findings, and internal deal records. It inherits their privilege and confidentiality status — distribution beyond the privilege circle (counterparty, broader business teams) can waive privilege. Confirm the distribution list before sending.
+> Bu rapor satın alma sözleşmesi, due diligence bulguları ve iç işlem kayıtlarından türetilmiştir ve onların gizlilik statüsünü devralır. Dağıtım listesini (karşı taraf, geniş iş ekipleri) göndermeden önce teyit et.
 
-## Closing Checklist Status — [Deal code] — [date]
+## Kapanış Durumu — [işlem kodu] — [tarih]
 
-**Target close:** [date] ([N] days out)
-**Items:** [N] total — [N] done, [N] in progress, [N] not started
+**Hedef kapanış:** [tarih] ([N] gün)
+**Kalemler:** [N] toplam — [N] tamam, [N] sürüyor, [N] başlanmadı
 
-### 🔴 Blocking and at risk
-
-| ID | Item | Due | Status | Days to due |
+### 🔴 Engelleyici ve riskte
+| ID | Kalem | Son gün | Durum | Kalan gün |
 |---|---|---|---|---|
-| [CP-XXX] | [item] | [date] | [status] | **[N]** |
+| [CP-XXX] | [kalem] | [tarih] | [durum] | **[N]** |
 
-### 🟡 Blocking, on track
+### 🟡 Engelleyici, yolunda
+[aynı tablo]
 
-[same table]
+### ✅ Tamamlanan
+[N] kalem — [kısa liste]
 
-### ✅ Complete
+### Engelleyici değil (kapanış sonrası, bilgi)
+[N] kalem
 
-[N] items — [collapsed list]
-
-### Not blocking (post-closing, informational)
-
-[N] items
-
----
-
-**Critical path:** [The item(s) that, if they slip, push the close date]
+**Kritik yol:** [kayarsa kapanış tarihini iten kalem(ler)]
 ```
 
-## Critical path analysis
+## Kritik yol
 
-Not all blocking items are equal. A consent that takes 30 days to get is critical path. A good-standing certificate that takes 2 days is not, even though both are blocking.
+Her engelleyici eşit değildir: 30 günde alınan onay kritik yoldadır; 2 günde çıkan sicil kaydı değildir, ikisi de engelleyici olsa bile. Her engelleyici için tamamlanma süresini tahmin et; `(son gün − bugün) < tahmini süre` olanlar riskte, her raporun en üstünde. Noter, sicil ve TTSG ilan sürelerini ve resmî/dini tatilleri tahmine kat.
 
-For each blocking item, estimate time-to-complete. The ones where `(due date - today) < estimated time` are at risk. Those go at the top of every status report.
+Liste yaklaşık 10 kalemi aşarsa ya da istenirse panoyu öner (`## Outputs → Dashboard offer for data-heavy outputs`): duruma göre sayılar (tamam / sürüyor / başlanmadı / riskte), iş akışına göre kritik yol, kalem-sorumlu-son gün-kalan gün tablosu.
 
-If the checklist has more than ~10 items, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by status (done / in progress / not started / at risk), a critical-path view grouped by workstream, and a sortable grid with item, owner, due date, and days-to-due.
+## dataroom-watcher ajanı
 
-## Integration: dataroom-watcher agent
+Ajan listeyi günlük kontrol eder, bağlıysa e-posta/Slack'ten durum güncellemelerini çeker ve "ne engelliyor" raporunu işlem kanalına gönderir. Mode 4 ajanın çıktısıdır.
 
-The agent checks the checklist daily, pulls any status updates from email/Slack if connected, and posts the "what's blocking" report to the deal team channel. Mode 4 is the agent's output.
+## Sonuçlu eylem kapısı (kapanışı teyit)
 
-## Consequential-action gate (certify closing)
+**"Kapanışa hazır / tüm ön koşullar sağlandı" teyidi ya da kapanış notu üretmeden önce** CLAUDE.md `## Who's using this` oku. Rol **avukat değilse**:
 
-**Before producing a "ready to close / all CPs satisfied" certification or closing memo:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
-
-> Certifying that closing conditions have been satisfied (or producing a closing memo asserting this) has legal consequences — it's the signal that drives funds flow and post-closing obligations. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Ön koşulların sağlandığını teyit etmenin hukuki sonucu var — para akışını ve kapanış sonrası yükümlülükleri bu sinyal başlatır. Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz özet:
+> - Durumuyla tam ön koşul listesi (tamam, sürüyor, başlanmadı)
+> - Tamamlanma delili zayıf ya da eksik kalemler
+> - Zamanında kapanmayacak kalemler için gereken feragat ya da yan mektuplar
+> - Açık sorular (bekleyen onaylar, MAC / beyanların kapanışta yinelenmesi riski)
+> - Avukata sorulacaklar (kapanmış sayılabilir mi; atlanmaması gereken koşul var mı; istisna ekine ne girmeli)
 >
-> - The full CP list with status (what's done, what's in progress, what's not started)
-> - Anything where evidence of completion is weak or missing
-> - Any waivers or side letters needed for items that won't close in time
-> - Open questions (counterparty consents still pending, any MAC/bring-down risk)
-> - What to ask the attorney (is this ready to call closed; are any conditions being walked past that shouldn't be; what needs to go on a schedule of exceptions)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+> Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
 
-Do not produce a final "ready to close" certification past this gate without an explicit yes. Status tracking and "what's blocking" reports do not require the gate.
+Açık "evet" olmadan nihai "kapanışa hazır" teyidi üretme. Durum takibi ve "ne engelliyor" raporları kapı gerektirmez.
 
----
+## Kapanış
 
-## What this skill does not do
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu rapora göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
-- It doesn't obtain consents, file forms, or draft documents. It tracks that they need to happen.
-- It doesn't decide what's blocking — the purchase agreement decides that. This skill reads the agreement.
-- It doesn't close the deal. It tells you when you can.
+## Bu skill ne yapmaz
+
+- Onay almaz, bildirim yapmaz, belge taslaklamaz; yapılması gerektiğini izler.
+- Neyin engelleyici olduğuna karar vermez — onu satın alma sözleşmesi söyler; bu skill sözleşmeyi okur.
+- İşlemi kapatmaz; ne zaman kapatabileceğinizi söyler.
 
 ---
 
@@ -661,503 +572,210 @@ Do not produce a final "ready to close" certification past this gate without an 
 ---
 name: cold-start-interview
 description: >
-  House cold-start interview (request list + prior memo), or --new-deal for
-  deal-specific context. Modular: identifies which practice areas apply (M&A,
-  Board & Secretary, Public Company, Entity Management), then asks targeted
-  questions for each active module and writes only the relevant sections to the
-  plugin config. Use on fresh install, when CLAUDE.md still has [PLACEHOLDER]
-  markers, when starting a new deal, or to re-check integrations or refresh a
-  module.
+  Kurumsal pratiğin ilk kurulum görüşmesi ya da `--new-deal` ile işleme özgü bağlam.
+  Modülerdir: hangi alanların canlı olduğunu belirler (M&A, Yönetim Kurulu ve Sekretarya,
+  Halka Açık Şirket, Şirket Yönetimi) ve yalnız etkin modüllerin sorularını sorup profil
+  dosyasına yalnız ilgili bölümleri yazar. Türk pratiğine göre kurulur: büro / şirket içi,
+  şirket türü (AŞ, Ltd., halka açık AŞ, yabancı şirket şubesi), grup yapısı, YK karar ve
+  GK tutanak formatı, elden dolaştırma emsalleri, şirket uyum takvimi. Yeni kurulumda,
+  CLAUDE.md'de hâlâ [PLACEHOLDER] varsa, yeni bir işlem başlarken ya da bağlantıları
+  yeniden kontrol etmek veya bir modülü tazelemek için kullan.
 argument-hint: "[--redo | --new-deal | --check-integrations | --module [m&a | board | public | entities]]"
 ---
 
 # /cold-start-interview
 
-1. Check `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If `--new-deal`, skip to per-deal setup. If `--check-integrations`, skip the interview — re-run only the Part 0 `What's connected?` check and rewrite the `## Available integrations` table in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. When probing: only report ✓ if an MCP tool call actually succeeded. Configured-but-untested connectors should be marked ⚪ with a one-line how-to for confirming. Never report ✓ based on `.mcp.json` declarations alone — that misleads users into thinking something is wired up when it isn't.
-2. Run the interview below (Part 0 first — role + integrations — then modules).
-3. Seed docs: diligence request list + one prior issues memo.
-4. Extract: categories, thresholds, memo format, AI tool config.
-5. Migration: if a populated CLAUDE.md (no `[PLACEHOLDER]` markers) exists at `~/.claude/plugins/cache/claude-for-legal/corporate-legal/*/CLAUDE.md` but not at the config path, copy it to the config path and tell the user what was migrated.
-6. Write `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` (create parent directories as needed). For `--new-deal`, write `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md`.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` dosyasına bak. `--new-deal` ise doğrudan işlem kurulumuna geç. `--check-integrations` ise görüşme yapma; yalnız Bölüm 0'daki bağlantı kontrolünü yap ve `## Available integrations` tablosunu yeniden yaz — ✓ yalnız gerçek bir MCP çağrısı başarılı döndüyse; yapılandırılmış ama denenmemiş bağlantı ⚪ ve tek satır teyit yolu. `.mcp.json` beyanına bakarak ✓ verme.
+2. Görüşmeyi yürüt (önce Bölüm 0 — rol ve bağlantılar — sonra modüller).
+3. Seed belgeler: etkin modüle göre (M&A: talep listesi + önceki bulgu raporu; Board: YK kararları ve GK tutanakları; Entities: şirket listesi/organizasyon şeması).
+4. Çıkar: kategoriler, önemlilik eşikleri, rapor formatı, karar/tutanak formatı, YZ aracı ayarı.
+5. **Taşıma:** eski önbellek yolunda (`~/.claude/plugins/cache/claude-for-legal/corporate-legal/*/CLAUDE.md`) `[PLACEHOLDER]` içermeyen bir CLAUDE.md varsa ve ayar yolunda yoksa ayar yoluna kopyala; neyin taşındığını söyle.
+6. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` yaz (üst klasörleri oluştur). `--new-deal` için `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` yaz.
 
----
+**Bölüm ve anahtar adlarını çevirme.** `## Company profile`, `## Who's using this`, `## Available integrations`, `## Outputs`, `## M&A`, `## Board & Secretary`, `## Public Company`, `## Entity Management`, `## Matter workspaces`, `*Active modules:*`, `**Practice setting:**`, `**Escalation:**`, `**Minutes template:**`, `**Consents repository:**`, `**Consent format:**`, `deal-context.md`, `compliance-tracker.yaml`, `closing-checklist.yaml` adları aynen kalır; diğer skill'ler bunları birebir okur. İçerik Türkçe yazılır.
 
-## Purpose
+## Kurulum durumu
 
-Corporate counsel roles vary more than almost any other in-house function. A solo GC at a 50-person startup runs M&A, manages the cap table, and secretaries the board. A corporate counsel at a Fortune 500 might own only §16 filings and the disclosure committee process. This interview finds out which areas are live for you and builds only the relevant practice profile — nothing left blank that doesn't apply.
+- Dosya **yok** → görüşmeye başla.
+- **`<!-- SETUP PAUSED AT: -->` var** → selamla, o bölümden devam öner.
+- **`[PLACEHOLDER]` var, duraklatma notu yok** → baştan ya da yer tutucuların başladığı yerden devam öner.
+- **Dolu** → `--redo` ya da `--module [ad]` yoksa çalıştırma.
 
-## Cold-start check
+Bölüm iskeleti `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` şablonundadır. Bayraklar: `--redo` (tam yeniden görüşme), `--module [m&a | board | public | entities]` (tek modül ekle/tazele), `--new-deal` (yalnız işlem bağlamı; M&A modülü), `--full` (hızlı kurulumu genişlet).
 
-Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`:
-- **Does not exist** → start the interview.
-- **Contains `<!-- SETUP PAUSED AT: -->`** → greet the user and offer to resume from that section.
-- **Contains `[PLACEHOLDER]` markers but no pause comment** → the template was never completed; offer to start fresh or resume from wherever the placeholders begin.
-- **Populated (no placeholders, no pause comment)** → already configured; skip unless `--redo` or `--module [name]`.
+## Ortak profil
 
-The template structure lives at `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` — use it as the section scaffold. Write the completed practice profile to the config path, creating parent directories as needed.
+`~/.claude/plugins/config/claude-for-legal/firm-profile.md` varsa oku ve tek satırla teyit et: "Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu? ('güncelle' derseniz ortak profili değiştiririm.)" Teyitte ortak soruları (pratik ortamı, ad, sektör, ne sattığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri) atla. Yoksa ilk kurulan eklenti budur: bu soruları sor, paketteki `knowledge/firm-profile.md` şablonuna göre yaz, söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak." Modül soruları eklentiye özeldir.
 
-If a CLAUDE.md exists at the old cache path `~/.claude/plugins/cache/claude-for-legal/corporate-legal/*/CLAUDE.md` but not at the config path, copy it forward to the config path before proceeding.
+**Kurulum kapsamı:** çalışma klasörü ev dizini değil bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Onay al. Ev dizinindeysen sessizce geç.
 
-- `--redo` — full re-interview, overwrites all sections
-- `--module [m&a | board | public | entities]` — add or refresh a single module
-- `--new-deal` — skip house setup, go straight to per-deal context (M&A module only)
+## Başlamadan önce
 
----
-
-## Check for the shared company profile
-
-Look for `~/.claude/plugins/config/claude-for-legal/firm-profile.md`.
-
-- **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
-- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/firm-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
-
-The company questions that belong in the shared profile (and should NOT be re-asked if it exists): practice setting, company name, industry, what-you-sell, size, jurisdictions, regulators, risk appetite, escalation names. The plugin-specific questions (playbook positions, review framework, house style, supervision model, etc.) stay per-plugin.
-
-## Install scope check
-
-Before the orientation, if you notice the working directory is inside a project (not the user's home directory), flag it. Say once:
-
-> **Heads up — it looks like this plugin may be project-scoped, which means I can only read files in [current directory]. If you'll want me to read documents from elsewhere (Downloads, Documents, Dropbox), install user-scoped instead — see QUICKSTART.md. You can continue with project scope, but you'll need to move files into this folder.**
-
-Ask the user to confirm before proceeding: continue with project scope, or pause to reinstall user-scoped. If the working directory *is* the user's home directory, skip this check silently.
-
-## Before the interview starts
-
-Before asking anything else, show the fork-first preamble — 3-4 short lines, no longer:
-
-> **`corporate-legal` is for people who support M&A deals, board and corporate governance, public company compliance, and entity management.** Not your area? `/legal-builder-hub:related-skills-surfacer`.
+> **`corporate-legal`**, M&A işlemleri, yönetim kurulu ve genel kurul işleri, halka açık şirket uyumu ve grup şirketlerinin yönetimiyle uğraşanlar içindir.
 >
-> **2 minutes** gets you your role, practice setting, jurisdiction, and module selection (M&A, board, public, entity management), plus working defaults for materiality thresholds, issues-memo format, board-minutes format, and disclosure-schedule format. **15 minutes** adds your real materiality thresholds, house consent and minutes formats from seed documents, your entity list and compliance cadence, deal-team briefing cadence, and escalation matrix.
+> **2 dakika:** rol, pratik ortamı, şirket türü ve modül seçimi; önemlilik eşiği, bulgu raporu, YK karar formatı ve açıklama listesi için çalışan varsayılanlar. **15 dakika:** gerçek önemlilik eşikleriniz, örnek kararlardan ev formatınız, şirket listeniz ve uyum takviminiz, işlem ekibi bilgilendirme sıklığı, eskalasyon matrisi.
 >
-> Quick or full? (Upgrade any time with `/corporate-legal:cold-start-interview --full`.)
+> Hızlı mı, tam mı? (Sonra `/corporate-legal:cold-start-interview --full` ile genişletebilirsiniz.)
 
-Wait for the user's pick before showing anything else.
+Seçimi bekle. **Hızlı yol:** yalnız Bölüm 0 ve modül seçimi; diğer her alana `[DEFAULT]`. Kapanış: "Tamam, komutları kullanabilirsiniz. Önemlilik eşiği, açıklama listesi ve karar formatında makul varsayımlar kullandım; bir çıktı yanlış gelirse çoğunlukla ayarlanacak bir varsayımdır ve çıktı hangisi olduğunu söyler. Tam görüşme `--full`, tek bölüm `--redo <bölüm>`."
 
-<!-- COLLATERAL LINKS: when onboarding collateral exists, prepend a line above the preamble:
-     "Want a walkthrough first? [Watch the 3-minute intro](URL) or [read the getting-started guide](URL), then come back and run /corporate-legal:cold-start-interview." -->
+**Seçimden sonra** tek paragraf: "Bu eklenti profilinizi (önemlilik eşikleri, karar ve tutanak formatı), işlem klasörlerini (inceleme tabloları, kapanış listesi, açıklama listeleri) ve şirket uyum takvimini tutar. Cevaplarınızı her skill'in okuduğu düz bir metin dosyasına yazar; her şey sonradan değiştirilebilir." Ardından: "Kurulum yalnız sizin yazdıklarınızdan ve açıkça paylaştığınız belgelerden profil kurar; kişisel Claude geçmişinizi, başka sohbetleri ya da ev dizininizdeki CLAUDE.md'yi okumaz. Sohbette daha önce geçen bir bilgiyi kullanmadan önce sorarım."
 
-## After the user picks quick or full
+## Görüşme temposu
 
-Once the user has chosen, orient them before the first interview question:
+- **Cevap bir yerde yazılıdır varsay.** Şirket tanıtımı, yetki devri/iç yönerge, imza sirküleri, organizasyon şeması, esas sözleşme için önce belge iste: "Yapıştırın, dosya yolu verin ya da kısa hâlini söyleyin."
+- **Bir turda 2-3 cevaplanabilir soru** (alt sorular sayılır); ekranı kaydırmadan cevaplanmalı.
+- **Uzun cevapta bekle:** "Bu soru yazılı cevap istiyor — bekliyorum." Yüklemede: "Yapıştırın, yol verin ya da 'şimdilik geç' deyin; geçerseniz profilde boşluğu işaretlerim." Seed belge atlanırsa çıktılar genel şablonla gelir; bunu söyle.
+- **Yazmadan önce açıkları say:** "Profili yazmadan önce açık kalanlar: [liste — özellikle etkin modüllerin seed belgeleri]. Şimdi mi, yer tutucu mu?" Sessiz boşluk bırakma.
+- **Duraklat/devam:** "dur" denirse kısmi profili `<!-- SETUP PAUSED AT: [bölüm] — devam için /corporate-legal:cold-start-interview -->` notuyla ve cevapsız alanlarda `[PENDING]` ile yaz. Dönüşte: "Hoş geldiniz, [bölüm]de kalmıştınız. Devam mı, baştan mı?" Cevaplanmış soruyu tekrar sorma.
+- **Kullanıcının söylediği hukuki olguyu doğrula.** Madde, süre, nisap, eşik söylenirse `tr_mevzuat_madde_getir` ile çek ve karşılaştır; çelişirse: "[X] dediniz; madde metni [Y] diyor — profile hangisi girsin? `[premise flagged — verify]`" Örnekler: "Sirküler YK kararı oybirliği ister" — m. 390/4 en az üye tam sayısının çoğunluğunun yazılı onayını yeterli sayar; esas sözleşmede farklı hüküm varsa ayrıca not et. "Limited şirkette olağan GK'yı yıl içinde istediğimiz zaman yaparız" — hesap döneminin sona ermesinden itibaren üç ay içinde yapılır (m. 617/1). Değişen tutar ve eşikleri (bağımsız denetim eşikleri, Rekabet Kurulu izin eşikleri, idari para cezaları) profile sabit yazma: "güncel eşiği teyit et — dönemsel güncellenir".
 
-> "This plugin maintains your practice profile (materiality thresholds, consent style, board format), per-deal folders with diligence grids, closing checklists, disclosure schedules, and a compliance calendar. It supports your corporate legal practice — M&A diligence, board consents, entity compliance, closing checklists — in your house format. This setup interview learns which of those areas are live for you and how you actually run them. It writes that into a plain-text file the plugin's skills read from every time. Everything you answer can be changed later. Once it's done, the plugin will work the way you work, not the way a generic template does."
+## Bölüm 0 — Kim kullanıyor, ne bağlı, pratik ortamı
+
+### Kim kullanıyor?
+
+> Eklentiyi günlük kim kullanacak? (Her rapor, karar ve tutanak taslağındaki üst başlığı belirler.)
+> 1. **Avukat ya da avukat gözetiminde çalışan** (stajyer avukat, hukuk operasyonu, şirket sekreteryası)
+> 2. **Avukata erişimi olan, avukat olmayan** (kurucu, CFO, yatırım ekibi, şirket sekreteri)
+> 3. **Düzenli avukat erişimi olmayan**
+
+2 ya da 3 ise bir kez söyle: "Tüm özellikleri kullanabilirsiniz; iki şey değişir: (1) çıktıları hüküm değil, avukatla konuşmanız için araştırma olarak çerçevelerim; (2) hukuki sonucu olan adımlardan önce (kararı imzaya sunma, tutanağı kesinleştirme, sicile başvuru, imza/kapanış) avukatla görüşüp görüşmediğinizi sorar, görüşmeyi hızlandıracak kısa bir brif hazırlarım. Bu bir feragat metni değil; doğru anda birkaç saatlik avukat görüşü genellikle hatadan ucuzdur." 3 ise ekle: "Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz; barolar adli yardım hizmeti de yürütür, koşullarını baroya sorun."
+
+### Ne bağlı?
+
+Yapılandırılmış ile **çalışan** bağlantıyı karıştırma.
+- **ArthurLegal MCP (`tr_`)** — dene: `tr_mevzuat_madde_getir(number="6102", madde_no="390")`. Cevap geldiyse ✓.
+- **Tüzel kişi/LEI (`gleif_`)** — yabancı ana şirket ya da bağlı şirket varsa: `gleif_autocomplete` ile dene.
+- **Yabancı ülke araçları** (`uk_`, `de_`, `nl_`, `eu_` …) — yalnız yabancı bağlı şirket varsa; önce `status`.
+- **Veri odası (Intralinks, Datasite, Box), YK portalı, belge deposu, takvim, Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪.
+
+Raporla: ✓ bağlı (denendi) · ⚪ yapılandırılmış, doğrulanmadı — MCP ayarlarından teyit edin · ✗ yok — [özellik] [manuel yönteme] düşer, nasıl bağlanır (ör. "Box bağlı değil. Cowork: Ayarlar → Bağlayıcılar → Box. Claude Code: `/mcp`. Belgeleri yapıştırarak da çalışır."), sonra `--check-integrations`. "Hepsine gerek yok; çekirdek özellikler dosya erişimiyle çalışır." ArthurLegal MCP ✗ ise: "Her madde ve karar atfı 'doğrulanmadı' işaretlenir ve UYARI satırı taşır."
+
+### Pratik ortamı
+
+> Hangisi size uyuyor? (Her skill'in eskalasyon dilini belirler.)
+> - **Hukuk bürosu (müvekkil şirketlere kurumsal danışmanlık)** — onay zinciri değil danışma tetikleri sorarım.
+> - **Şirket içi hukuk** — eskalasyon matrisi, hukuk müşaviri/genel müdür, ne zaman YK'ya gider.
+> - **Tek avukat / küçük büro** — "dış avukata ya da meslektaşa ne zaman danışırsınız".
+> - **Kamu / klinik** — denetim modeli ve imza zinciri.
+> - **Hiçbiri** — kendi anlatımınızla yazın; kutuya zorlamam, doldurulan/uyarlanan/boş bırakılan alanları işaretlerim.
+
+Dallanma ve kayıt (`## Company profile` altında `**Practice setting:**`):
+- **Büro (her tür):** `## Matter workspaces` → `Enabled: ✓`, `Cross-matter context: off`. `**Escalation:**` satırı onay seviyeleri değil danışma tetikleridir. Profile **çıkar çatışması notu** yaz: aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat ve kendi düzenlediği senet veya sözleşmenin hükümsüzlüğünü ileri sürmek durumunda kalan avukat işi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Kurumsal işte tipik risk: aynı aile şirketinde pay sahipleri arası uyuşmazlık, büronun daha önce hazırladığı esas sözleşme ya da pay devri sözleşmesine karşı geçersizlik iddiası. Her yeni matter'da kontrolün yapıldığını sor (Hukuk Bürosu paketinde `/firm-operations:conflict-check`).
+- **Şirket içi:** `Enabled: ✗` (tek müvekkil; matter katmanı görünmez). `**Escalation:**` onay zinciridir.
+- **Kamu / klinik:** işi kim gözden geçirir, imza zinciri.
+
+**Hemen yaz:** `## Who's using this`, `## Available integrations` ve `## Outputs` bölümlerini profilin ilk bölümünden hemen sonra yaz.
+
+## Bölüm 0.5 — Modül seçimi
+
+> Hangileri düzenli işiniz? (Profilde hangi bölümlerin kurulacağını ve hangi skill'lerin açılacağını belirler; yalnız M&A seçerseniz diğer görüşmeler atlanır.)
+> 1. **M&A** — pay/şirket alımı-satımı, yatırım, birleşme, bölünme, iş kolu devri
+> 2. **Board & Secretary** — YK toplantı hazırlığı, YK kararları, GK tutanakları, elden dolaştırma kararları, komiteler
+> 3. **Public Company** — halka açık ortaklık: KAP açıklamaları, SPK finansal raporlama, kurumsal yönetim
+> 4. **Entity Management** — grup şirketleri, şirket uyum takvimi, pay defteri, tescil-ilan
 >
-> Then: "Ready? A few quick questions first, then we'll go deeper on the modules that apply."
+> Numaraları söyleyin. Sonra `--module [ad]` ile ekleyebilirsiniz.
 
-**Why this matters.** Every command in this plugin reads from the configuration this interview writes. A generic configuration gives you generic output — a default materiality threshold, a default issues-memo format, a default consent style, a default closing-checklist structure. Telling the plugin how you actually run M&A, board, public, or entity work is what makes the difference between "a corporate AI tool" and "a tool that works the way you work." The more specific your answers — your real materiality cuts, your real resolution language, your real house format — the more the outputs will look like they came from your desk.
+Etkin modülleri profilin başındaki `*Active modules:*` satırına yaz; yalnız onların bölümüne geç.
 
-**Fresh professional profile.** Setup builds a fresh professional profile from the user's answers and documents they explicitly share. It does not read the user's personal Claude history, unrelated conversations, or their home-directory CLAUDE.md. If something relevant surfaces in the current conversation context (e.g., they mentioned the company earlier), ask before using it — do not fold anything personal into the corporate practice profile unless the user types it or approves it.
+## Bölüm 1 — Şirket profili (her zaman, 2 dk)
 
-Corollary: the interview's inputs are the user's typed answers and documents they explicitly share. Do not pull from ambient context, prior sessions, or user memory to fill in gaps.
+Önce: "Yetki devri iç yönergesi (m. 367), imza sirküleri, onay matrisi ya da önceki bir kurumsal yönetim notu var mı? Paylaşırsanız onay seviyelerini ve eskalasyonu oradan çıkarırım." Varsa oku, bulduğunu teyit et, ilgili soruları atla.
 
-## Interview pacing
+Yoksa:
+- **Ne iş yapıyor?** Web sitesi, faaliyet raporu ya da KAP sayfası bağlantısı yeter; ya da tek cümle: ne satıyor, kime, nasıl.
+- **Kim?** Ticaret unvanı ([Müvekkil]), şirket türü (AŞ / Ltd. / halka açık AŞ / yabancı şirket şubesi), sicil müdürlüğü, sektör ve düzenleyici (BDDK, EPDK, SPK, BTK, Rekabet), hesap dönemi.
+- **Grup:** ana şirket ve bağlı şirketler; yabancı ana şirket varsa LEI'yi `gleif_search_entities` / `gleif_get_group_structure` ile teyit et; aile şirketi mi, kurumsal yatırımcı var mı, pay sahipleri sözleşmesi var mı.
+- **Hukuk ekibi:** yalnız siz mi, ekip mi?
+- **Eskalasyon:** "Bir inceleme yetkinizi aşan bir şey bulduğunda — yeni bir bulgu, önemlilik kararı, menfaat çatışmalı YK kararı, açıklama listesinde takdir gerektiren kalem — kime gider? İsim ya da rol (hukuk müşaviri, yönetici ortak, işlem lideri) ya da 'kendim karar veririm'." (Bunu `/corporate-legal:diligence-issue-extraction`, `/corporate-legal:material-contract-schedule`, `/corporate-legal:written-consent` ve diğerleri kullanır.)
 
-- **Assume the answer exists somewhere.** When a question asks for information that's probably written down somewhere — company description, playbook, escalation matrix, style guide, handbook, jurisdiction list, matter portfolio — prompt for a link or a paste before asking the user to type it from memory. "Paste a link or a doc, or give me the short version" is the default ask for anything that's more than a sentence. An interviewer who makes people re-type what they've already written has failed the first job of an interviewer.
-- **Batch size — count subparts.** "Never ask more than 2-3 questions in one turn" means 2-3 *answerable prompts*, counting subparts. One question with 5 subparts is 5 questions. The test: can the user answer without scrolling? If the questions don't fit on one screen, it's too many. Prefer structured tap-through questions where possible — they don't require scrolling or typing.
+Yetki belgesi yüklenmediyse sonunda öner: "Bunları paylaşılabilir ayrı bir yetki ve eskalasyon notu olarak da yazayım mı?" `## Company profile`'a yaz.
 
-**Pause for real answers.** Some questions are quick (entity type, exchange, fiscal year end). Others need the user to type, describe, or upload (prior issues memo, board minutes, consent precedent, org chart). When a question needs more than a quick tap:
+## Bölüm 2M — M&A (etkinse, 4-6 dk)
 
-- **Ask and wait.** Say explicitly: "This one needs a typed answer — I'll wait." Do not move to the next question until the user responds.
-- **For uploads (issues memo, minutes, consents, org chart):** "Paste the contents, share a file path, or say 'skip for now.' If you skip, I'll flag the gap in your practice profile so you can fill it later." Then actually wait. These seed documents drive format extraction — skipping silently means every future output will be in a generic template instead of house format.
-- **Before writing the practice profile:** review the interview and list any questions that were skipped or answered with placeholders — especially the seed documents per active module. Say: "Before I write your practice profile, here's what's still open: [list]. Want to fill any of these now, or leave them as placeholders?" Then wait.
-- **Never** write a practice profile with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past.
-- **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/corporate-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /corporate-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
+- **Duruş:** alıcı, satıcı, ikisi? (Ev varsayılanıdır; işlemdeki taraf `--new-deal`'de belirlenir.) Seri alıcı mısınız, her işlem baştan mı? İşlemi kim yürütür — kurumsal gelişim, hukuk, dış büro?
+- **İnceleme yapısı:** önce "Standart talep listeniz ya da kapanmış bir işlemin bulgu raporu var mı?" Varsa kategori yapısını, önemlilik eşiklerini, ciddiyet ölçeğini, bulgu biçimini, muhatabı çıkar. Yoksa sor: talep listesi işleve mi belge türüne mi göre; sözleşme incelemesinde önemlilik eşiği (tümü mü, [tutar ve para birimi] üstü mü, gelire göre ilk N mi) — bunu `/corporate-legal:diligence-issue-extraction` ve `/corporate-legal:material-contract-schedule` kullanır; veri odası; YZ toplu inceleme aracı (Luminance, Kira vb.) ve güven düzeyi.
+- **Türk pratiği soruları:** pay devri mi malvarlığı devri mi tercih; Rekabet Kurulu izni değerlendirmesini kim yapar (eşikleri profile sabit yazma; `tr_kurum_karari_ara` ile Rekabet kararlarına bakılabilir); yabancı yatırımcı taraf oluyor mu.
+- **Satıcı tarafı (varsa):** veri odasına neyin gireceğine kim karar verir; alıcının bulacaklarını öngören bir açıklama notu hazırlanıyor mu; iş tarafında kimle koordine edilir. Satıcı tarafı, alıcı tarafının tersi değildir: gelen belge incelemesi değil, dışarı giden bilginin yönetimidir.
+- **Kapanış ve bilgilendirme:** kapanış listesi nerede (Excel, `closing-checklist.yaml`, işlem aracı), kim günceller; işlem ekibi ne sıklıkla, hangi kanaldan bilgilendirilir; iş tarafı neyi gerçekten okur.
 
----
+Seed belge yoksa öner: "Söylediklerinize göre başlangıç talep listesi ve bulgu raporu iskeleti yazayım mı?" `## M&A`'ya yaz.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+## Bölüm 2B — Board & Secretary (etkinse, 3-4 dk)
 
-## The interview
+- **Rol:** YK sekreteri, hukuk müşaviri, dış büro olarak karar hazırlayan?
+- **Organlar:** YK üye sayısı ve yapısı (tüzel kişi üye ve adına tescilli gerçek kişi, m. 359/2; halka açıksa bağımsız üyeler); komiteler (denetimden sorumlu, riskin erken saptanması, kurumsal yönetim, diğer); Ltd. ise müdürler ve müdürler kurulu başkanı (m. 624/1).
+- **Takvim:** yılda kaç YK toplantısı, hangi aylar; olağan GK genellikle hangi ay (son sınır dönem sonundan itibaren 3 ay, m. 409/1).
+- **Araçlar:** YK portalı ya da e-posta; elektronik toplantı/oy esas sözleşmede öngörülmüş mü (m. 1527/1); GK iç yönergesi tescilli mi (m. 419/2).
+- **Defterler:** YK karar defteri ve GK toplantı ve müzakere defteri fiziki mi, elektronik mi (m. 64/3-4); kim tutar?
+- **Tutanak/karar biçimi:** uzun anlatı, yalnız karar, karma? Ne kadar sürede yazılır, nasıl onaylanır (dolaştırma, sonraki toplantı)?
+- **Elden dolaştırma:** rutin olarak hangi işler için (imza yetkisi, banka, müdür atama, GK çağrısı)? Toplantı şartı koyan esas sözleşme hükmü ya da iç kural var mı?
 
-### Opening
+**Seed kararlar ve tutanaklar (board-minutes için gerekli):**
 
-> Before I ask about your specific workflows, I want to understand which areas of corporate work are actually live for you. That way I only set up what you need and skip the rest.
+> Kapanmış toplantılardan 5-6 YK kararı ve en az bir GK tutanağı yükleyin; komite tutanağınız varsa onu da. Bunlar ev formatınızı öğretir: başlık, katılım ve nisap kaydı, tartışma derinliği, karar dili, ek numaralandırma, imza blokları. Şimdi yoksa sonra `--module board` ile eklenir; board-minutes eksikse ister.
 
-**Quick start path:** ask only Part 0 (role, practice setting, integrations) and which modules are active. Write the config with `[DEFAULT]` markers on everything else. Close with: "Done. You can start using the commands now. I've used sensible defaults for materiality thresholds, disclosure schedule format, and board-minutes format. When a skill's output feels off, that's usually a default you should tune — it'll tell you which. Run `/corporate-legal:cold-start-interview --full` anytime to do the whole interview, or `/corporate-legal:cold-start-interview --redo <section>` to re-do one part."
+Çıkar ve `## Board & Secretary` → `**Minutes template:**` bloğuna yaz: yapı ve sıra; başlık; katılım/nisap kaydı; tartışma derinliği; karar dili ("... kabulüne", "... onaylanmasına karar verildi"); ek atfı; imza bloğu; her tutanakta tekrarlanan kalıp cümleler.
 
-**Full setup path:** the existing interview flow below.
+**Emsal kararlar deposu (written-consent için gerekli):**
 
----
+> İmzalanmış elden dolaştırma kararlarının durduğu bir klasör var mı? (written-consent en yakın emsali orada arar.) Varsa yolunu söyleyin. Yoksa 3-5 örnek karar yükleyin; biçimi öğrenirim, emsal araması depo kurulunca açılır.
 
-### Part 0: Who's using this, and what's connected
+Çıkar: karar dili, gerekçe yapısı, yetkilendirme kalıbı, onay/imza bloğu, deftere geçirme notu. `**Consents repository:**` ve `**Consent format:**` satırlarına yaz.
 
-Three quick questions before we get into corporate specifics. These shape how the plugin works, not what it can do.
+**Yıllık döngü:** olağan GK gündemi (finansal tablolar, faaliyet raporu, ibra, YK seçimi ve ücretler, kâr dağıtımı, denetçi seçimi — m. 409/1, 408/2), YK görev süresi bitişleri (m. 362/1), bağlılık raporu (m. 199/1). `## Board & Secretary`'ye yaz.
 
-#### Who's using this?
+## Bölüm 2P — Public Company (etkinse, 3-4 dk)
 
-> Who'll be using this plugin day to day? (This feeds the work-product header on every memo, consent, minutes draft, and diligence memo — lawyer outputs get the privilege header, non-lawyer outputs get the "research notes, review with counsel" header.)
+- Borsa İstanbul pazarı; hesap dönemi; ara dönem finansal rapor takvimi (SerPK m. 14 çerçevesinde SPK düzenlemesine göre — tarihleri SPK düzenlemesinden teyit et).
+- **Özel durum açıklamaları (SerPK m. 15):** KAP açıklamasını kim hazırlar, kim onaylar; erteleme kararı süreci; hukuk ne zaman devreye girer.
+- **Kurumsal yönetim (SerPK m. 17):** bağımsız üyeler, komiteler, ilişkili taraf işlemlerinde bağımsız üye onayı süreci (m. 17/3).
+- **İçeriden bilgi ve işlem yasakları:** içsel bilgiye erişenler listesi, yönetici işlem bildirimleri, kapalı dönemler — ilgili SPK düzenlemesini `tr_kurum_karari_ara` (spk) ve `tr_spk_bulten_icinde_ara` ile teyit et; kuralı profile ezberden yazma.
+- **GK:** çağrı en az üç hafta önce internet sitesi ve KAP ile (SerPK m. 29/1); elektronik GK.
+
+`## Public Company`'ye yaz.
+
+## Bölüm 2E — Entity Management (etkinse, 2-3 dk)
+
+> Organizasyon şeması ya da şirket listesi varsa (kaba bir tablo da olur) yükleyin; unvanları, türleri, ülkeleri, pay oranlarını ve faaliyetsiz şirketleri çıkarırım. (entity-compliance uyum takvimini bu listeden kurar.)
+
+Yükleme yoksa sor: kaç aktif şirket; ülkeler (yalnız Türkiye mi); her şirketin türü ve sicil müdürlüğü, MERSİS numarası; hesap dönemi; bağımsız denetime tabi mi (eşikler Cumhurbaşkanı kararıyla belirlenir, m. 397/4 — güncel eşiği teyit et); defterler fiziki mi elektronik mi; pay defterini kim tutar (m. 499, 594); rutin işleri kim yürütür (mali müşavir, şirket içi, dış büro); yurt dışı şirketlerde yerel ajan; şube varsa ticari mümessil (m. 40/4); grup içi sözleşmeler (hizmet, lisans, borç).
+
+`## Entity Management`'a şirket tablosuyla yaz: | Unvan | Tür | Ülke/sicil | MERSİS | Pay sahibi ve oran | Hesap dönemi | Denetim | Durum |.
+
+## Profili yazma — Outputs
+
+`## Outputs` üst başlığı role göre:
+- Rol avukatsa: `GİZLİDİR — AVUKATLIK K. m. 36 KAPSAMINDA — DAHİLİ` (avukatın görevi dolayısıyla öğrendiklerini açığa vurma yasağı, Av. K. m. 36).
+- Rol avukat değilse: `ARAŞTIRMA NOTU — HUKUKİ GÖRÜŞ DEĞİLDİR — İŞLEM ÖNCESİ AVUKATLA GÖZDEN GEÇİRİN`
+Sicile, deftere ya da karşı tarafa gidecek karar, tutanak ve açıklama listelerinden başlık çıkarılır. Başlık tek başına koruma yaratmaz.
+
+## Yazdıktan sonra
+
+> **Neler yapabildiğimi görmek ister misiniz?** Veri odasından bulgu çıkarma (`/corporate-legal:diligence-issue-extraction`), önemli sözleşmeler listesi (`/corporate-legal:material-contract-schedule`), elden dolaştırma kararı (`/corporate-legal:written-consent`), YK kararı ve GK tutanağı (`/corporate-legal:board-minutes`), şirket uyum takvimi (`/corporate-legal:entity-compliance`), kapanış listesi (`/corporate-legal:closing-checklist`), kapanış sonrası entegrasyon (`/corporate-legal:integration-management`). **Önerim:** canlı işlem varsa `/corporate-legal:closing-checklist`; yoksa yaklaşan olağan GK için `/corporate-legal:entity-compliance --report`.
+
+Kullanıcı somut bir iş söylediyse listeyi atla. Sonra etkin modülleri ve kontrol edilecekleri göster: zayıf/belirsiz cevaplar; M&A etkin ve seed yoksa "talep listesi ve bulgu raporunu gönderince bölümü güncellerim"; M&A etkinse "yeni işlemde `--new-deal`"; Board etkinse written-consent ve board-minutes hazır; Entities etkinse `/corporate-legal:entity-compliance --init`; Public etkinse "bu modülün skill'leri sonraki sürümde; profil bölümü hazır". ArthurLegal MCP bağlı değilse: "Bağlarsanız madde atıflarını canlı doğrularım."
+
+**Kapanış:**
+> "Profiliniz `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` dosyasında — düz metin, doğrudan düzenleyebilirsiniz. Tam yeniden görüşme `--redo`, tek modül `--module [m&a | board | public | entities]`, bağlantı kontrolü `--check-integrations`, tek değişiklik `/corporate-legal:customize`. En sık ayarlananlar: M&A önemlilik eşikleri, açıklama listesi ve bulgu raporu biçimi, şirket takvimi sıklığı.
 >
-> 1. **Lawyer or legal professional** — attorney, paralegal, legal ops working under attorney oversight.
-> 2. **Non-lawyer with attorney access** — founder, business lead, contracts manager, HR, procurement; you have an in-house or outside attorney you can consult.
-> 3. **Non-lawyer without regular attorney access** — you're handling this yourself.
+> **Profiliniz öğrenir.** Bir çıktı yanlış gelirse çoğunlukla ayarlanacak bir duruştur; çıktı hangisi olduğunu söyler. On dakikalık kurulum çalışan bir profil verir; bir aylık kullanım sizin yazmış gibi okunan bir profil."
 
-If the answer is 2 or 3, say this once (don't repeat it on every output):
+## İşlem kurulumu (`--new-deal`, yalnız M&A)
 
-> You can use every feature here — research, review, drafting, tracking. Two things change in how I work:
->
-> 1. **I'll frame outputs as research for attorney review, not as verdicts.** Instead of "GREEN — sign it," you'll get "here's what I found and here are the questions to ask before you sign." That's more useful than a green light you can't be sure of.
-> 2. **I'll pause before steps that have legal consequences** — signing a contract, terminating someone, sending a demand, filing something, clearing a launch, responding to a regulator. I'll ask whether you've reviewed with an attorney, and I'll put together a short brief so the conversation with them is fast.
->
-> This isn't a disclaimer. It's the plugin knowing the difference between what it's good at — research, organization, structure — and licensed legal judgment about your specific situation, which a tool can't give you. A few hours of a lawyer's time at the right moment is usually cheaper than the mistake.
+Ev yaklaşımı profilde kalır; yalnız işleme özgü bağlamı sor: işlem kod adı · bu işlemdeki taraf (alıcı/satıcı) · hedef ya da alıcı · işlem yapısı (pay devri, malvarlığı devri, birleşme, sermaye artırımıyla giriş) · veri odası yeri · işlem lideri · imza ve kapanış tarihleri · işleme özgü eşik farkı · dış büro ve sorumlu avukat · Rekabet Kurulu izni ya da sektör düzenleyicisi onayı gerekiyor mu (değerlendirme avukatta; eşik yazma) · büroda çatışma kontrolü yapıldı mı (Hukuk Bürosu paketinde `/firm-operations:conflict-check`). `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code-name]/deal-context.md` yaz. Skill'ler profili (ev) ve `deal-context.md`'yi (işlem) okur; çelişkide `deal-context.md` önce gelir. Matter çalışma alanı açıksa ilgili matter'ın `matter.md`'sine deal kodunu yaz.
 
-If the answer is 3, add:
+## Profil kalite kontrolü ve kaçınılacaklar
 
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) — most offer a lawyer referral service as the fastest starting point. Many offer free or low-cost initial consultations. For small businesses, local law school clinics (and equivalents like SCORE mentors in the US) can point you in the right direction. For individuals, legal aid organizations cover many practice areas.
+Bitirmeden yazılanı yeniden oku: yer tutucu kalan bölüm (sor), seed belgesi olmayan etkin modül (not et), `*Active modules:*` satırı tam mı.
 
-#### What's connected?
-
-> This plugin can work with: VDR (Intralinks, Datasite, Box), board portal (Diligent, BoardEffect), document storage, and Slack. Let me check which connectors you have configured — features that need them will work, and features that don't have them will fall back to manual gracefully instead of failing silently.
-
-**Check what's actually connected, not what's configured.** A connector listed in `.mcp.json` is *available*. A connector that's actually responding is *connected*. These are different, and confusing them destroys trust. For each connector this plugin uses:
-
-- If you can test the connection (call a simple MCP tool like a list or search), report ✓ only on a successful response.
-- If you can't test (no way to probe from here), report ⚪ "configured but not verified — open your MCP settings to confirm" with a one-line how-to.
-- Never report ✓ based on configuration alone.
-
-For connectors that show as not connected, tell the user how to connect. Example phrasing: "Box isn't connected. In Claude Cowork: Settings → Connectors → Add → Box → sign in. In Claude Code: add the Box MCP to your config or via `/mcp`. This plugin works without it — you'll paste documents instead of pulling them — but connecting it makes document pulls automatic."
-
-Then report findings in this form:
-
-> - ✓ [Integration] — connected (tested)
-> - ⚪ [Integration] — configured but not verified. Open your MCP settings to confirm.
-> - ✗ [Integration] — not found. [Feature] will fall back to [manual alternative]. [How to connect.] If you set this up later, re-run `/corporate-legal:cold-start-interview --check-integrations`.
->
-> You don't need all of these. Core features work with file access alone.
-
-#### Practice setting
-
-Ask once, early, so Part 1 (company profile) and every module's escalation question branch correctly:
-
-> Practice setting? (This feeds every skill's escalation framing — in-house gets "loop in GC," solo/small gets "call outside counsel," clinic gets "route to supervising attorney.")
->
-> - **Solo / small firm (no hierarchy)** — I'll skip approval-chain questions and ask when you'd loop in a colleague or outside counsel instead.
-> - **Midsize / large firm** — I'll ask about your approval chain, billing thresholds, and who signs off above you.
-> - **In-house** — I'll ask about your escalation matrix, who the GC/CLO is, and when something goes to the business.
-> - **Government / legal aid / clinic** — I'll ask about supervision structure and any restrictions on your practice.
-> - **My practice doesn't fit any of these** — say so. I'll adapt.
-
-**Practices that don't fit the boxes.** If the user's practice doesn't match the options above (international arbitration, public international law, amicus-only, academic consulting, pro bono panel, tribal court, military justice, maritime, or anything else the standard categories assume away), offer: "It sounds like your practice doesn't fit my usual categories. Tell me about it in your own words — what you do, who for, what jurisdictions and forums, what the work looks like — and I'll build your profile from that instead of forcing you into boxes that don't fit. I'll skip or adapt the questions that don't apply." Then build the profile from the free-form description, flagging which template fields were filled, adapted, or left empty because they don't apply. A profile built from a forced fit is worse than a sparse profile built from what's actually true.
-
-Branching notes:
-
-- **Solo or small firm without a hierarchy:** skip or reframe internal escalation-chain questions. Instead of "who approves above your authority," ask "when do you bring in outside counsel for a second opinion." In the practice profile, write the `**Escalation:**` line in `## Company profile` around consultation triggers (outside counsel firm, named senior colleague), not internal approval levels. In the M&A module, the "deal lead" question still applies.
-- **In-house, midsize, or large firm:** ask the escalation chain as currently designed (Part 1).
-- **Legal aid / clinic:** route toward a supervision-model framing — who supervises, when does a matter go up to the supervising attorney?
-- **Government:** adapt — approval chain inside the agency/office.
-
-Record this on a `**Practice setting:**` line in `## Company profile`.
-
-#### Write to the config
-
-Write `## Who's using this`, `## Available integrations`, and `## Outputs` sections immediately after the first section of the config, per the template. These drive work-product header choice and feature-fallback behavior across every skill in this plugin.
-
----
-
-### Part 0.5: Module selection (1–2 min)
-
-Ask which of the following apply. More than one is common. All four is not unusual for a GC.
-
-> Which of these are part of your regular work? (This determines which sections get built in your practice profile and which skills light up — picking only M&A skips the board, public company, and entity management interviews entirely.)
->
-> 1. **M&A** — deals: buying, selling, investing, or divesting business units
-> 2. **Board & Secretary** — board meeting prep, minutes, resolutions, committee management
-> 3. **Public Company** — SEC reporting, disclosure committee, §16 filings, insider trading
-> 4. **Entity Management** — subsidiary management, registered agents, cap table, annual filings
->
-> Tell me the numbers that apply. You can always add a module later with `/corporate-legal:cold-start-interview --module [name]`.
-
-Record active modules. Proceed to the section for each active module only. Skip the rest entirely.
-
----
-
-### Part 1: Company profile (2 min, always)
-
-These questions apply regardless of which modules are active.
-
-> Before I ask the structured questions: do you have a delegation-of-authority policy, a board-approved authority matrix, or a prior corporate-governance memo I can read? Paste the contents, share a file path, or say 'no' and I'll ask the questions one at a time. If you share one, I'll extract the approval levels and escalation points rather than making you re-type them.
-
-If the user uploads: read it, extract company identity, legal-team size, and escalation/authority structure, confirm what you found, and skip the corresponding detailed questions.
-
-If not:
-
-> **What does [your company] do?** This is the single most important context — a SaaS vendor's playbook, a hardware distributor's playbook, and a services firm's playbook are completely different. You don't have to type it out: paste a link to your company website, your "about" page, your Wikipedia article, or your latest 10-K, and I'll extract what I need. Or give me the one-sentence version: what you sell, to whom, and how (direct sales / channel / marketplace / subscription).
-
-- What's the company name (or the name you want to use in outputs)?
-- What industry are you in?
-- Private, public, or a subsidiary of a public company?
-- Primary jurisdiction of incorporation?
-- How big is the legal team — just you, or a team?
-- "When a review finds something that needs someone more senior to sign off — a novel issue in diligence, a materiality threshold decision, a consent matter with director conflicts, a schedule item that needs judgment, or a decision that's above your authority — who does that go to? Give me a name or a role (the GC, your partner, the deal lead), or say 'I decide myself.' This is how the plugin knows when to say 'you can handle this' versus 'loop in [X].' (This feeds /diligence-issue-extraction, /material-contract-schedule, /written-consent, and every other skill's escalation routing.)"
-
-**If the user didn't upload a delegation of authority:** at the end of this section, offer: "Want me to write your escalation and authority lines up as a standalone delegation-of-authority note you can share and maintain? Same content I just captured, in a format you can circulate."
-
-Write to `## Company profile` in the config.
-
----
-
-### Part 2M: M&A module (4–6 min, if active)
-
-#### 2M-a: Deal posture
-
-- Buy-side, sell-side, or both? Note: most companies have experienced both over time, so this sets the default for house setup — the per-deal flag (`--new-deal`) captures the actual side for any live deal.
-- Serial acquirer with a standard playbook, or does each deal get designed from scratch?
-- Who runs deals on your end — corp dev, legal, outside counsel as lead, or a mix?
-
-#### 2M-b: Diligence structure
-
-> Before the questions: do you have a standard diligence request list or a prior issues memo I can read? Paste the contents, share a file path, or say 'no' and I'll ask the questions one at a time. If you share them, I'll extract the category structure, materiality thresholds, and house format and skip the corresponding questions.
-
-If not:
-
-- Do you have a standard diligence request list? How is it organized — by function (legal/finance/HR) or by document type?
-- What's your materiality threshold for contract review? (All contracts? Above $X? Top N by revenue?) (This feeds /diligence-issue-extraction and /material-contract-schedule — the threshold decides which contracts get full review and which get triaged.)
-- What's your usual VDR — Intralinks, Datasite, Box, SharePoint, something else?
-- Do you use AI-assisted review tools — Luminance, Kira, anything else? For what specifically?
-
-**If the user didn't upload a request list or prior issues memo:** at the end of this module, offer: "Want me to draft a starter diligence request list and issues-memo skeleton in your format? I'll base them on what you told me about materiality and category structure. You can edit and reuse on the next deal."
-
-#### 2M-c: Issues memo format
-
-> Two things I need:
->
-> 1. Your standard diligence request list — the one you use on the buy side, or expect to see on the sell side.
-> 2. One prior deal's issues memo — a closed deal, nothing live. I want to see how you structure findings: what you call things, how you categorize issues, what severity scheme you use, what depth you write at.
->
-> These two documents become the backbone. Your categories, your format, your standards — not a generic template. (These feed /diligence-issue-extraction — the skill reuses your section structure, severity scheme, and finding template on every future deal.)
-
-From the request list, extract: category structure, materiality thresholds if stated, standard carve-outs.
-From the issues memo, extract: section structure, severity scheme, finding format, depth, who it's addressed to.
-
-#### 2M-d: Sell-side specifics (if sell-side is active)
-
-If the attorney works sell-side at all, ask these additional questions:
-
-- When you're preparing a data room, who decides what goes in?
-- Do you prepare a disclosure memo or issues log anticipating what the buyer will flag?
-- Who do you coordinate with on the business side for data room population — corp dev, CFO, functional heads?
-
-Sell-side is about anticipating the buyer's findings and managing information flow outward, not reviewing inbound documents. This shapes how the diligence-issue-extraction skill behaves when sell-side context is set.
-
-#### 2M-e: Closing checklist and deal team briefing
-
-- Where does the closing checklist live — Excel, Smartsheet, a deal management tool?
-- Who owns updates to it?
-- How do you brief the deal team — daily, weekly, milestone-based? Email, Slack, call?
-- What does the business side actually read versus what's for the file?
-
-Write to `## M&A` in the config.
-
----
-
-### Part 2B: Board & Secretary module (3–4 min, if active)
-
-- What's your formal role — corporate secretary, assistant secretary, or do you act in an advisory capacity without the formal title?
-- How big is the board, and what's the composition — mostly independent directors, insider-heavy, classified board?
-- Which committees exist? (Audit, Compensation, Nom/Gov, Strategy, anything else?)
-- What tool do you use for board materials — Boardvantage, Diligent, BoardEffect, just email, nothing formal?
-- How many regular board meetings per year, and roughly what months?
-
-**Minutes:**
-- Long-form narrative minutes, action minutes, or something in between?
-- How quickly do you turn minutes around after a meeting?
-- How do they get approved — circulated for written comments, or ratified at the next meeting?
-
-**Written consents:**
-- Do you routinely use written consents in lieu of meetings? For what types of board or committee action — routine officer appointments, equity grants, annual actions, or more broadly?
-- Any limits on what can be approved by consent versus requiring a meeting (charter restrictions, committee charters, or just practice)?
-
-**Seed minutes (required for board-minutes skill):**
-
-> Upload 5–6 prior board or committee minutes. Closed meetings only, nothing currently active. These teach the skill your house format — how minutes are structured, what level of discussion detail you capture, how resolutions are worded, how attendance is recorded. One full-board set and one committee set if you have both formats. (This feeds the board-minutes skill — every future minutes draft is built from your extracted structure, discussion depth, and resolution language.)
->
-> If you don't have shareable minutes right now, you can add them later with `/corporate-legal:cold-start-interview --module board`. The board-minutes skill will prompt you for them if they're missing.
-
-From the seed minutes, extract:
-- Overall structure and section order
-- Header format (company name, meeting type, date, location)
-- Attendance recording format (directors present/absent, management, guests)
-- Discussion depth — long-form narrative, action minutes, or hybrid
-- Resolution language (exact phrasing: "RESOLVED, THAT" / "BE IT RESOLVED" / other)
-- Exhibit referencing convention
-- Signature block format
-- Any standard recitals or boilerplate that appears in every set
-
-Write extracted format as a `**Minutes template:**` block in `## Board & Secretary` in the config.
-
-**Consents repository (required for written-consent skill):**
-
-> Do you have a folder or repository where executed written consents are stored? (This feeds /written-consent — the skill searches the repository for the closest prior consent and uses it as the substantive starting point, not just for format but for specific resolution language already approved for that type of action.)
->
-> If you have one: tell me where it lives (folder path, Google Drive folder, SharePoint library, Box folder). The skill will search it at runtime.
->
-> If you don't have a centralized repository: upload 3–5 prior consents now for format learning. The skill will still work — it just won't have precedent search capability until a repository is set up.
-
-From the repository or seed consents, extract:
-- House resolution language (exact phrasing: "RESOLVED, THAT" / "BE IT RESOLVED" / other)
-- Recital structure (WHEREAS / NOW, THEREFORE depth and style)
-- Authorisation language (officer delegation language at the end)
-- Counterparts and electronic signature language (if present)
-- Signature block format
-
-Write to `## Board & Secretary` → `**Consents repository:**` and `**Consent format:**` in the config.
-
-**Annual governance cycle:**
-- What annual items do you manage? (Director elections, auditor ratification, equity plan approvals, say-on-pay if public, annual board self-assessment — whatever applies to you.)
-
-Write to `## Board & Secretary` in the config.
-
----
-
-### Part 2P: Public Company module (3–4 min, if active)
-
-- What exchange are you on — NYSE, Nasdaq, other?
-- What's your fiscal year end?
-- What's your filer status — large accelerated, accelerated, or non-accelerated?
-
-**Disclosure committee:**
-- Do you have a formal disclosure committee? Who's on it — CFO, CAO, IR, Legal, others?
-- How often does it meet — quarterly pre-earnings, or as needed?
-
-**§16 reporting:**
-- Who tracks §16 filer transactions — you, outside counsel, IR, or a combination?
-- What's your internal target for getting Form 4 filed? (SEC requires 2 business days; internal targets are often tighter.)
-- Does your insider trading policy require pre-clearance? Who approves?
-
-**Insider trading policy:**
-- When are your trading windows open relative to earnings?
-- Who is covered by pre-clearance requirements — all officers and directors, or a broader list?
-- What's the process for a blackout exception if one is ever needed?
-
-**Earnings call:**
-- What's legal's role in earnings call prep — reviewing scripts, preparing Q&A, something else, or no direct role?
-- How far in advance of the call are you typically involved?
-
-Write to `## Public Company` in the config.
-
----
-
-### Part 2E: Entity Management module (2–3 min, if active)
-
-> If you have an org chart or entity list — even a rough one, even a spreadsheet — upload it now. I'll read it and extract the entity structure, jurisdictions, ownership percentages, and entity types. That's faster and more accurate than answering these questions from memory. (This feeds /entity-compliance — the skill initializes the compliance calendar from this list and surfaces annual-report and registered-agent deadlines.)
->
-> If you don't have one handy, answer the questions below and I'll build a starter entity table from your answers.
-
-**From uploaded org chart or entity list, extract:**
-- Entity names and entity types (Corp, LLC, Ltd, branch, etc.)
-- Jurisdiction of formation for each
-- Ownership chain and percentages
-- Any entities flagged as dormant or inactive
-
-**If no upload, ask:**
-
-- How many active legal entities are you managing, roughly?
-- What are the key jurisdictions — just Delaware, or a meaningful multi-jurisdiction footprint?
-- Who's your registered agent — CT Corp, National Registered Agents, in-house, or varies by jurisdiction?
-- Do you use an entity management system — Athena, Kira, Blueprint — or are you working off a spreadsheet?
-- What's your cap table situation — Carta, Shareworks, Ledgr, or still manual? (Or not applicable if wholly owned with no external equity.)
-- Who owns routine filing work — annual reports, foreign qualifications, registered agent renewals? Legal, legal ops, or does the registered agent handle it automatically?
-- Do your subsidiaries have their own governance cadence, or are they effectively dormant holding companies?
-- Do you have intercompany agreements in place — services agreements, IP licenses, loans?
-
-Write to `## Entity Management` in the config.
-
----
-
-### After writing
-
-**Show what this plugin can do.** Before closing, offer:
-
-> **Want to see what I can help with?**
-
-If yes, show this tailored list (not a generic template — these are the concrete things this plugin does best):
-
-> **Here's what I'm good at in corporate and M&A practice:**
->
-> - **Extract diligence issues from the VDR** — e.g., "Point at a VDR folder and get findings categorized per your house materiality thresholds." Try: `/corporate-legal:diligence-issue-extraction`
-> - **Build the material contracts schedule** — e.g., "From diligence findings, build the disclosure schedule in the purchase agreement's format." Try: `/corporate-legal:material-contract-schedule`
-> - **Draft a board or committee written consent** — e.g., "Precedent search from your consents repository, then drafted in house format." Try: `/corporate-legal:written-consent`
-> - **Entity compliance tracker** — e.g., "See what filings are due in the next 30 / 60 / 90 days across your subsidiaries." Try: `/corporate-legal:entity-compliance`
-> - **Closing checklist status** — e.g., "What's left to close — conditions, documents, consents, filings — with critical path." Try: `/corporate-legal:closing-checklist`
-> - **Post-closing integration** — e.g., "Phased workplan, consent tracking, contract assignment at scale for a just-closed deal." Try: `/corporate-legal:integration-management`
->
-> **My suggestion for your first one:** If you have an active deal, run `/corporate-legal:closing-checklist` — it shows immediately where the plugin fits in your workflow. Or tell me what's on your plate and I'll pick.
-
-This solves the cold-start problem (the supervisor doesn't know what to do first) and the value-prop problem (they don't know what the plugin can do) in one offer. Make the list specific. Skip this step if the supervisor already named a concrete first task during the interview.
-
-
-**Research connector prompt.** Before showing the active modules, say:
-
-> "Before your first diligence extraction or consent: connect a research tool. Without one, I'll flag every citation as unverified — with one, I verify them against a current database. In Cowork: Settings → Connectors. In Claude Code: authorize when a skill prompts you."
-
-Then show the active modules and the populated sections:
-
-> Here's what I've captured: [list active modules]. Practice Profile is written. A few things to check:
-> - [Flag any thin or ambiguous answers worth revisiting]
-> - [If M&A active and no seed docs provided: "Ping me with your request list and a prior issues memo when you have them — I'll update the diligence structure and memo format sections."]
-> - [If M&A active: "When a deal comes in, run `/corporate-legal:cold-start-interview --new-deal` to set up deal-specific context on top of the house approach. M&A skills available now: diligence extraction, deal team summaries, material contracts schedule, closing checklist, and post-closing integration."]
-> - [If Board & Secretary active: "Board skills available now: `/corporate-legal:written-consent` for written consents, and the board-minutes skill for drafting minutes in your house format."]
-> - [If Entity Management active: "Entity skill available now: `/corporate-legal:entity-compliance` initializes a compliance tracker from your entity list and surfaces what's due."]
-> - [If Public Company active: "Public Company skills are coming in a future release — the practice profile section is ready to populate when they ship."]
-
-Close with a note on changeability:
-
-> "Your practice profile is at `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` — it's a plain text file you can read and edit directly. Anything you answered can be changed:
->
-> - Edit the file directly for a quick change (a new threshold, a jurisdiction added, a committee renamed)
-> - Run `/corporate-legal:cold-start-interview --redo` for a full re-interview
-> - Run `/corporate-legal:cold-start-interview --module [m&a | board | public | entities]` to add or refresh one module
-> - Run `/corporate-legal:cold-start-interview --check-integrations` to re-check what's connected
->
-> The sections most often adjusted after first setup are the M&A materiality thresholds, the disclosure schedule format / issues memo template, and the entity tracker cadence."
-
-## Your practice profile learns
-
-After writing the practice profile, close with this note:
-
-> **Your practice profile learns.** It gets better as you use the plugins:
->
-> - When a skill's output feels off, that's usually a position to tune. The output will tell you which one.
-> - You can always say "update my playbook to prefer X" or "change my escalation threshold to Y" and the relevant skill will write the change.
-> - Run `/corporate-legal:cold-start-interview --redo <section>` to re-interview one part, or edit the config file directly.
->
-> Ten minutes of setup gets you a working profile. A month of use gets you one that reads like you wrote it yourself.
-
----
-
-## Per-deal setup (`--new-deal`, M&A module only)
-
-When a live deal starts, run a lighter interview focused only on deal-specific context. House approach stays from the plugin config.
-
-Ask:
-- Deal code name
-- Side for this deal (buy-side or sell-side — may differ from the house default)
-- Target or acquirer name
-- VDR location (folder path or URL)
-- Deal lead name
-- Signing date and close date (if known)
-- Any deal-specific threshold differences (a $50M deal may review smaller contracts than a $1B deal)
-- Outside counsel firm and lead contact for this deal
-
-Write to `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code-name]/deal-context.md`. Skills read both the plugin config (house) and `deal-context.md` (this deal), with deal-context.md taking precedence on conflicts.
-
----
-
-## Practice Profile quality check
-
-Before finishing, re-read what was written. Flag:
-- Any section still showing a placeholder because the answer was skipped or vague — ask again
-- Any active module where no seed document was provided — note it and ask the user to provide one when available
-- The `*Active modules:*` line at the top of the plugin config — update it to list exactly which modules are on
-
----
-
-## Failure modes
-
-- **Don't assume all modules are active.** Ask first, interview only for what's live. A deal-only attorney doesn't need public company governance setup.
-- **Don't hard-code buy-side.** The practice profile captures the house tendency; the per-deal flag handles the actual side. Write the house practice profile to be side-agnostic; posture is set per deal at `--new-deal`.
-- **Don't write generic placeholders.** If the answer was vague ("standard materiality thresholds"), ask what that means in numbers. The practice profile is only useful if thresholds are actual thresholds.
-- **Sell-side posture is not buy-side reversed.** On sell-side you're anticipating the buyer's findings and managing outward information flow, not reviewing inbound documents. Flag this distinction if sell-side is active.
-- **Don't request seed documents for inactive modules.** Only ask for the request list and issues memo if M&A is active. A board-only attorney doesn't need to provide diligence documents.
+- **Tüm modülleri etkin varsayma;** önce sor.
+- **Alıcı tarafını sabitleme;** ev profili taraftan bağımsız, taraf `--new-deal`'de.
+- **Genel yer tutucu yazma;** "standart eşikler" denirse sayıyı ve para birimini iste.
+- **Satıcı tarafı alıcı tarafının tersi değildir;** satıcı tarafı etkinse bu ayrımı işaretle.
+- **Etkin olmayan modül için seed isteme.**
+- Var olmayan skill vaat etme; profil doluysa her oturumda çalıştırma.
 
 ---
 
@@ -1166,105 +784,54 @@ Before finishing, re-read what was written. Flag:
 ---
 name: customize
 description: >
-  Guided customization of your corporate practice profile — change one thing
-  without re-running the whole cold-start interview. Adjust risk posture,
-  escalation contacts, active modules (M&A / Board / Public Company / Entity
-  Management), materiality thresholds, disclosure schedule format, consent
-  precedents, or matter workspace paths. Use when the user says "change my
-  [thing]", "update my profile", "edit my config", or "customize".
-argument-hint: "[section name, or describe what you want to change]"
+  Kurumsal pratik profilinde tek bir şeyi, kurulum görüşmesini baştan yapmadan
+  değiştirir: risk iştahı, eskalasyon kişileri, etkin modüller (M&A / Yönetim Kurulu ve
+  Sekretarya / Halka Açık Şirket / Şirket Yönetimi), önemlilik eşikleri, açıklama listesi
+  biçimi, YK karar ve GK tutanak formatı, elden dolaştırma emsalleri, şirket tablosu ve
+  uyum takvimi, matter klasörleri. Kullanıcı "şunu değiştir", "profilimi güncelle",
+  "ayarı değiştir" ya da "customize" dediğinde kullan.
+argument-hint: "[bölüm adı ya da değiştirmek istediğiniz şey]"
 ---
 
 # /customize
 
-## When this runs
+## Ne yapar
 
-The user typed `/corporate-legal:customize`. They want to change something
-in their practice profile — a risk posture, an escalation contact, a module
-toggle, an output format — without re-running the whole cold-start interview
-and without hand-editing YAML.
+1. **Profili oku:** `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` ve bir üst düzeydeki ortak `~/.claude/plugins/config/claude-for-legal/firm-profile.md`. Eklenti profili yoksa ya da `[PLACEHOLDER]` içeriyorsa: "Kurulum henüz yapılmamış. Önce `/corporate-legal:cold-start-interview` çalıştırın — customize var olan profili ayarlamak içindir."
 
-## What to do
+2. **Haritayı göster** — her grup için güncel değerin tek satırlık özeti:
+   - **Şirket / kimlik** — ad, sektör, ülkeler, şirket türü, halka açık mı, pratik ortamı *(ortak profil — tüm eklentilere yansır)*
+   - **Active modules** — M&A, Board & Secretary, Public Company, Entity Management hangileri açık; açıp kapatmak hangi skill'in kurulum isteyeceğini değiştirir
+   - **Risk iştahı** — temkinli / orta / atak; inceleme önemliliğine ve açıklama listesi kapsamına etkisi
+   - **Kişiler** — işlem ekibi, YK sekreteri, şirket uyumu sorumlusu, mali müşavir, eskalasyon zinciri (`**Escalation:**`)
+   - **M&A** — önemlilik eşikleri (sözleşme bedeli, çalışan sayısı, gelir; para birimiyle), güvenilen veri odaları, YZ toplu inceleme güven düzeyi (Luminance / Kira), işlem ekibi bilgilendirme sıklığı
+   - **Board & Secretary** — `**Minutes template:**`, `**Consents repository:**`, `**Consent format:**`, karar defteri türü (fiziki / elektronik), komiteler, elden dolaştırma kapsamı
+   - **Public Company** — KAP açıklama süreci, SPK finansal raporlama takvimi, kurumsal yönetim komiteleri
+   - **Entity Management** — şirket tablosu, mali müşavir / yerel ajan, ülkeler, `compliance-tracker.yaml` rapor sıklığı
+   - **İş akışı** — matter klasörleri, `closing-checklist.yaml` yeri, dataroom-watcher sıklığı
+   - **Entegrasyonlar** — ArthurLegal MCP, `gleif_`, Box / Intralinks / Datasite, takvim, Slack ve geri dönüş yolları
 
-1. **Read the config.** Read
-   `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/firm-profile.md` one
-   level up). If the plugin config does not exist or still contains
-   `[PLACEHOLDER]` values, say:
+3. **Sor:** "Neyi ayarlamak istersiniz? Bir bölüm seçin ya da değişikliği kendi sözlerinizle anlatın."
 
-   > You haven't run setup yet. Run `/corporate-legal:cold-start-interview`
-   > first — customize is for adjusting a profile you already have.
+4. **Değiştir:** güncel değeri göster, yenisini al, aşağı akış etkisini söyle, onay al, yaz. Örnekler:
+   - *Önemlilik eşiği 5 milyon TL → 10 milyon TL:* "`/diligence-issue-extraction` ve `/material-contract-schedule` artık 10 milyon TL'yi eşik alır; kayıtlı bulgular olduğu gibi kalır, geriye dönük uygulamak için yeniden çalıştırın."
+   - *Public Company modülünü açma:* "O alanda bir şey çalıştırdığınızda KAP süreci ve SPK takvimini sorarım."
+   - *YZ toplu inceleme güveni "her satırı kontrol et" → "%10 örneklem":* "`/ai-tool-handoff` artık çıkarımların %10'unu kontrol eder."
+   - *Karar defteri fiziki → elektronik:* "entity-compliance YK karar defteri kapanış onayı kalemini takvimden düşürür (elektronik defterde açılış ve kapanış onayı aranmaz, TTK m. 64/3); written-consent onayların deftere geçirilmesini e-defter pratiğine göre not eder."
 
-2. **Show the customizable map.** List what's in the profile, grouped, with a
-   one-line summary of the current value:
+   Kullanıcı yeni bir kanun maddesi, nisap, süre ya da eşik söylerse yazmadan önce `tr_mevzuat_madde_getir` ile doğrula; çelişki varsa göster ve hangisinin gireceğini sor. Dönemsel değişen eşikleri (bağımsız denetim eşikleri, Rekabet Kurulu izin eşikleri, idari para cezaları) sabit yazma.
 
-   - **Company / who you are** — name, industry, jurisdictions, stage, public
-     vs. private, practice setting *(shared across all 12 plugins — changes
-     flow through `firm-profile.md`)*
-   - **Active modules** — which of M&A, Board & Secretary, Public Company,
-     Entity Management are on. Turning a module on/off changes which skills
-     prompt for setup.
-   - **Risk posture** — conservative / middle / aggressive, what each means
-     for diligence materiality and disclosure schedule scope
-   - **People** — deal team, board secretary, entity management owner,
-     escalation chain
-   - **M&A module** — materiality thresholds (contract value, headcount,
-     revenue), data room platforms trusted, AI bulk-review trust level
-     (Luminance / Kira), deal-team briefing cadence
-   - **Board & Secretary module** — house consent format, signatory
-     preferences, committee structure
-   - **Public Company module** — reporting calendar, disclosure controls,
-     10-K/10-Q review timing
-   - **Entity Management module** — entity table, registered agent, filing
-     jurisdictions, annual report calendar
-   - **Workflow** — matter workspaces (deal rooms), closing checklist
-     location, VDR watcher cadence
-   - **Integrations** — Box / Intralinks / Datasite / CT Corp / Slack status,
-     fallbacks
+5. **Ortak profil değişikliği** (ad, sektör, ülkeler, pratik ortamı, şirket türü): `firm-profile.md` dosyasına yaz ve söyle: "Bu değişiklik tüm eklentileri etkiler." Pratik ortamı büro ↔ şirket içi değişiyorsa `## Matter workspaces` → `Enabled` değerinin de değişmesi gerektiğini hatırlat.
 
-3. **Ask what they want to change.**
+6. **Kapat:** "Tamam, bir sonraki çıktı değişikliği yansıtır. Başka bir şey var mı? `/corporate-legal:customize` her zaman çalışır."
 
-   > What would you like to adjust? Pick a section, or describe the change in
-   > your own words.
+## Korkuluklar
 
-4. **Make the change.** Show the current value, ask for the new value, explain
-   what changes downstream, confirm, write it to the config.
-
-   Examples:
-   - *Materiality threshold $250K → $500K:* "`/diligence-issue-extraction`
-     and `/material-contract-schedule` will now treat $500K as the cutoff.
-     Existing findings stay as logged; re-run if you want the new threshold
-     applied retroactively."
-   - *Turning on the Public Company module:* "I'll prompt you for reporting
-     calendar and disclosure controls next time you run anything in that
-     area."
-   - *AI bulk-review trust "check every row" → "spot-check 10%":* "`/ai-tool-
-     handoff` will QA a 10% sample rather than every extraction."
-
-5. **For shared-profile changes** (company name, industry, jurisdictions,
-   practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/firm-profile.md` and note:
-
-   > This change affects all 12 plugins — any plugin that reads your
-   > jurisdiction footprint now sees [new value].
-
-6. **Close.**
-
-   > Done. Your next output will reflect the change. Anything else? You can
-   > run `/corporate-legal:customize` anytime.
-
-## Guardrails
-
-- **Never delete a section.** If the user wants to "remove" something, set it
-  to `[Not configured]` and explain what that means for the plugin's behavior.
-- **Flag internal inconsistency.** If the change would make the profile
-  inconsistent (e.g., Public Company module off + "SEC counsel" in
-  escalation; or aggressive risk posture + $25K materiality threshold), flag
-  the tension.
-- **Flag guardrail degradation.** The `[review]` flag, source attribution
-  tags on retrieved documents, and `[verify]` tags on cited authorities are
-  load-bearing — explain the trade-off before removing.
-- **One change at a time.** Don't re-ask the whole interview.
+- **Bölüm silme.** "Kaldır" denirse `[Not configured]` yaz ve eklentinin davranışına etkisini anlat.
+- **İç tutarsızlığı işaretle** — ör. Public Company modülü kapalı ama şirket halka açık; "atak" risk iştahı + çok düşük önemlilik eşiği; Ltd. şirket için GK'da Bakanlık temsilcisi adımı (Ltd.'de uygulanmaz, TTK m. 617/3); "sirküler karar oybirliğiyle" ev kuralı ile kanunun çoğunluk kuralı (m. 390/4) — ev kuralı esas sözleşmeden geliyorsa kaynağını yaz. Gerilimi göster, hangisini istediğini sor.
+- **Korkuluk zayıflatmayı işaretle.** `[review]` bayrağı, üst başlık, kaynak etiketleri ve doğrulanmamış atıflardaki UYARI satırı yük taşır; kapatılmak istenirse neyi koruduğunu anlat ve bedeli anladığını teyit ettir.
+- **Bölüm ve anahtar adlarını çevirme** — diğer skill'ler `## Board & Secretary`, `## Entity Management`, `*Active modules:*` gibi adları birebir okur.
+- **Tek seferde tek değişiklik** — görüşmeyi baştan sorma.
 
 ---
 
@@ -1273,129 +840,119 @@ and without hand-editing YAML.
 ---
 name: deal-team-summary
 description: >
-  Aggregate diligence findings into a deal team briefing at the right altitude
-  for the audience — exec summary for leadership, working summary for the team.
-  Use when user says "brief the deal team", "what's the state of diligence",
-  "summarize findings for [audience]", "deal update", or on the briefing cadence.
+  Due diligence bulgularını okuyucuya uygun yükseklikte bir işlem ekibi
+  brifingine toplar — yönetim/YK için yönetici özeti, işlem lideri için açık
+  sorunlar ve kararlar, çalışma ekibi için tam ayrıntı. "İşlem ekibini
+  bilgilendir", "due diligence ne durumda", "[kitle] için bulguları özetle",
+  "işlem güncellemesi" denildiğinde ya da brifing takviminde kullan.
 ---
 
-# Deal Team Summary
+# /deal-team-summary — İşlem Ekibi Brifingi
 
-## Matter context
+## Matter bağlamı
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Amaç
 
-## Purpose
+İşlem lideri 200 bulgu okumaz; önemli olanı, son brifingten beri değişeni ve karar bekleyeni okur. Bu skill due diligence çıktısını okuyucunun seviyesine sıkıştırır.
 
-The deal lead doesn't read 200 findings. They read: what's material, what changed since last brief, what needs a decision. This skill compresses the diligence output to the right level for the reader.
+## Bağlam
 
-## Load context
+- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## M&A` işlem ekibi bilgilendirmesi (`Deal team briefing`: takvim, kanal, iş tarafının ne okuduğu)
+- `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` → işlem lideri, takvim, işlem yapısı; `firm-profile.md` → sorumlu ortak, müvekkil bilgisi
+- `diligence-issue-extraction` çıktısındaki güncel bulgular; varsa `closing-checklist.yaml` (kapanış kalemlerinin durumu)
 
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → Deal team briefing (cadence, format, what the business reads)
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` → deal lead, timeline
-- Current findings from diligence-issue-extraction output
+## Kitle katmanları
 
-## Audience tiers
+CLAUDE.md'deki "iş tarafı neyi okur, ne dosya için" ayrımına göre; yoksa varsayılan:
 
-Per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` — what the business reads vs. what's for the file. Default tiers:
-
-| Audience | Gets | Doesn't get |
+| Kitle | Alır | Almaz |
 |---|---|---|
-| **Board / exec sponsor** | Top 3-5 material issues, price/structure impact, decision items | Category detail, green findings, process |
-| **Deal lead** | All reds, all yellows, progress, decision items, next steps | Green finding detail |
-| **Working team** | Everything — full findings, status by category, gaps | Nothing withheld |
+| **YK / yönetici sponsor** ([Müvekkil] tarafı) | En önemli 3-5 sorun, bedel/yapı etkisi, karar kalemleri | Kategori ayrıntısı, yeşil bulgular, süreç |
+| **İşlem lideri** (sorumlu ortak) | Tüm kırmızı ve sarılar, ilerleme, kararlar, sonraki adımlar | Yeşil bulgu ayrıntısı |
+| **Çalışma ekibi** | Her şey — tam bulgular, kategori durumu, boşluklar | Hiçbir şey saklanmaz |
 
-Ask which tier if not obvious.
+Belli değilse hangi katman olduğunu sor.
 
-## The summary
+**Dağıtım.** Brifing gizli due diligence bulgularını toplar ve onların gizlilik statüsünü devralır. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) ABD tipi geniş bir belge koruması ("privilege") değildir; avukatı bağlar, müvekkilin geniş iş ekiplerine ya da danışmanlarına dağıtılan brifing gizliliğini fiilen kaybeder. Göndermeden önce dağıtım listesinin işlem ekibiyle örtüştüğünü teyit et; YK katmanı için ayrı, arındırılmış sürüm öner. Aile şirketinde paydaşlar arasında çıkar ayrılığı varsa (profildeki `Aile çatışması` notu) brifingin kime gittiğini sorumlu ortağa sor.
 
-### Exec tier
+## Brifing
+
+### Yönetici katmanı
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — CLAUDE.md ## Outputs; role göre değişir, bkz. ## Who's using this]
 
-> This brief aggregates privileged diligence findings and inherits the sources' privilege and confidentiality status. Distribution beyond the privilege circle (including to broader business teams) can waive privilege — confirm the distribution list matches the privilege circle before sending.
+# [işlem kodu] — Due Diligence Brifingi — [tarih]
 
-# [Deal code] — Diligence Brief — [date]
+**Durum:** [Yolunda / Sorunlar belirlendi / Önemli bulgular]
+**Kapsam:** VDR'nin %[X]'i incelendi
+**İşlem yapısı:** [pay devri / malvarlığı devri / birleşme]
 
-**Status:** [On track / Issues identified / Material findings]
-**Coverage:** [X]% of VDR reviewed
+## Önemli bulgular
+[En çok 3-5. Her biri tek paragraf: ne, işlem için neden önemli, ne yapıyoruz.]
 
-## Material findings
+## Gereken kararlar
+- [ ] [Somut karar — bedel düzeltmesi, tazmin/emanet talebi, işlemden çekilme eşiği] — [kim karar verir] — [ne zamana kadar]
 
-[3-5 max. One paragraph each. What it is, why it matters to the deal, what
-we're doing about it.]
-
-## Decisions needed
-
-- [ ] [Specific decision — price adjustment, indemnity ask, walk-away trigger]
-  — [who decides] — [by when]
-
-## Since last brief
-
-[What changed. New findings, findings resolved, coverage progress.]
+## Son brifingten beri
+[Değişenler: yeni bulgular, çözülenler, kapsam ilerlemesi.]
 ```
 
-### Deal lead tier
+### İşlem lideri katmanı
 
-Same as above plus:
+Yukarıdakine ek olarak:
 
 ```markdown
-## All open issues by category
+## Kategoriye göre açık sorunlar
+### 🔴 Kırmızı
+[Bulgu başlığı + tek satır — tam bulguya bağlantı]
+### 🟡 Sarı
+[aynı]
 
-### 🔴 Red
-[Finding title + one-line — link to full finding for detail]
-
-### 🟡 Yellow
-[same]
-
-## Progress
-
-| Category | Docs reviewed | Coverage | Reds | Yellows | Status |
+## İlerleme
+| Kategori | İncelenen | Kapsam | Kırmızı | Sarı | Durum |
 |---|---|---|---|---|---|
-| [name] | [N/M] | [%] | [N] | [N] | [Complete / In progress / Blocked] |
+| [ad] | [N/M] | [%] | [N] | [N] | [Tamam / Sürüyor / Engelli] |
 
-## Gaps and follow-ups
+## Kapanış yolu
+[Rekabet izni, pay devri onayları, kritik karşı taraf onayları — closing-checklist Mode 4'ten kritik yol]
 
-- [Supplemental request items outstanding]
-- [Questions to management]
+## Boşluklar ve takip
+- [Bekleyen ek talep kalemleri]
+- [Yönetime sorular]
 
-## Next 72 hours
-
-[What's getting reviewed, what briefings are scheduled]
+## Önümüzdeki 72 saat
+[Ne inceleniyor, hangi görüşmeler planlı]
 ```
 
-### Working team tier
+### Çalışma ekibi katmanı
 
-Full finding detail. Same structure as above but every finding gets its full house-format block, not a one-liner.
+Tam bulgu ayrıntısı: aynı yapı, ama her bulgu tek satır yerine büro formatındaki tam bloğuyla (dayanak etiketleri ve tartışmalı notlar dahil).
 
-## Deltas
+## Farklar
 
-If this is a recurring brief (per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` cadence), lead with what changed:
+Brifing tekrarlayan ise (CLAUDE.md takvimi) değişenle başla: son brifingten beri yeni bulgular, ciddiyeti yükselen/düşenler, çözülenler (onay alındı, sorun açıklandı), kapsam hareketi. İşlem liderleri durumdan çok harekete bakar: "hâlâ 12 sarı" yerine "2 yeni sarı, 3 çözüldü".
 
-- New findings since last brief
-- Findings upgraded/downgraded in severity
-- Findings resolved (consent obtained, issue clarified away)
-- Coverage movement
+## Kaynak disiplini
 
-Deal leads care more about movement than state. "Still 12 yellows" is less useful than "2 new yellows, 3 resolved."
+Brifing yeni hukuki tespit üretmez; bulgulardaki etiketleri (`[ArthurLegal TR — 6102 m. X — GG.AA.YYYY]`, `[kullanıcı verdi]`, `[model bilgisi — doğrula]`) taşır, silmez. Yönetici katmanında madde numarasını sadeleştirebilirsin ama `doğrula` etiketli bir dayanağa dayanan bulguyu "doğrulanmadı" notuyla ver. Tartışmalı işaretli noktalar (ör. birleşmede devir yasağının uygulanması) karar kalemi olarak görünür, kesin sonuç gibi değil.
 
-## Handoffs
+## Aktarımlar
 
-- **From diligence-issue-extraction:** This skill reads the accumulated findings.
-- **To closing-checklist:** Any "decision needed" items that resolve into closing conditions go on the checklist.
+- **diligence-issue-extraction'dan:** biriken bulgular okunur.
+- **closing-checklist'e:** kapanış koşuluna dönüşen her "gereken karar" kalemi listeye gider (closing-checklist Mode 2 son brifingi okur).
 
-## Close with the next-steps decision tree
+## Kapanış
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu brifinge göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- It doesn't make the materiality call — it reports the calls that were made at extraction time.
-- It doesn't decide what the deal team does about a finding — it surfaces the decision.
-- It doesn't distribute the brief — drafts it, human sends.
+- Önemlilik kararı vermez — çıkarım sırasında verilen kararları raporlar.
+- Ekibin bulguyla ne yapacağına karar vermez — kararı görünür kılar.
+- Brifingi dağıtmaz — taslaklar, insan gönderir.
 
 ---
 
@@ -1404,202 +961,189 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: diligence-issue-extraction
 description: >
-  Read VDR documents and extract issues per house categories and materiality
-  thresholds, producing findings in house memo format. Use when user says
-  "review the data room", "extract issues from [folder]", "diligence review",
-  "what's in the VDR", or points at VDR documents.
-argument-hint: "[VDR folder path or category name]"
+  Sanal veri odasındaki (VDR) belgeleri büronun kategori ve önemlilik
+  eşiklerine göre okur; Türk hukuku merceğiyle (TTK pay devri, birleşme ve
+  ticaret sicili hükümleri, TBK sözleşme/işletme devri, İş K. m. 6, 4054 m. 7,
+  KVKK) sorunları çıkarır ve bulguları büronun not formatında yazar. "Veri
+  odasını incele", "[klasör]'den sorunları çıkar", "due diligence incelemesi",
+  "VDR'de ne var" denildiğinde ya da VDR belgeleri gösterildiğinde kullan.
+argument-hint: "[VDR klasör yolu ya da kategori adı]"
 ---
 
-# /diligence-issue-extraction
+# /diligence-issue-extraction — Due Diligence Sorun Çıkarımı
 
-1. Load `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` + `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md`.
-2. Use the workflow below.
-3. Check `ai-tool-handoff` — if category is bulk and tool is configured, hand off first.
-4. Read docs, apply materiality filter, extract per category.
-5. Findings in house memo format. Hand off consents to closing checklist.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`, `firm-profile.md` ve `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` yükle (çakışmada deal-context.md önce gelir). [Müvekkil] alıcı mı satıcı mı — deal-context.md'den al; satıcı tarafında amaç alıcının bulacaklarını önceden görmek ve açıklama notunu beslemektir.
+2. Kategori yüksek hacimliyse ve araç tanımlıysa önce `ai-tool-handoff`'a bak.
+3. Belgeleri oku, önemlilik süzgecini uygula, kategoriye göre çıkar.
+4. Bulguları büro formatında yaz; kapanış öncesi eylem gerektirenleri closing-checklist'e aktar.
 
----
+## Matter bağlamı
 
-## Matter context
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Amaç
 
----
+VDR'de 2.000 belge var; işlem için önemli olan 30'u bunların içinde. Bu skill belgeleri CLAUDE.md `## M&A` bölümündeki inceleme yapısı (kategoriler, önemlilik eşikleri — `Diligence structure`) ve bulgu raporu formatı (şablon, ciddiyet şeması — `Issues memo format`) ile okur, sorunları çıkarır, büro formatında yazar. deal-context.md yoksa hangi işlem için çalıştığını sor.
 
-## Purpose
+## Önce işlem yapısını sabitle
 
-The VDR has 2,000 documents. Somewhere in there are the 30 that matter for the deal. This skill reads documents against the diligence categories and materiality thresholds from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`, extracts issues, and writes them in house memo format.
+Türk hukukunda sonuçların çoğu yapıya bağlıdır; deal-context.md'de yoksa sor ve notun başına yaz.
 
-## Load context
-
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → Diligence structure (categories, materiality thresholds)
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → Issues memo format (how findings are stated)
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` → deal-specific thresholds, VDR location
-
-If deal-context.md doesn't exist, ask which deal this is for.
-
-## Workflow
-
-### Step 1: Inventory the VDR
-
-If VDR MCP (Box/Intralinks/Datasite) is connected, pull the index. Map VDR folders to diligence request list categories. Note gaps — request list categories with no corresponding VDR content.
-
-```markdown
-## VDR Inventory: [Deal code]
-
-| Request category | VDR folder | Docs | Status |
+| Yapı | Sözleşmeler | Borçlar | Çalışanlar |
 |---|---|---|---|
-| Corporate & Organizational | /01-Corporate | 45 | Reviewed |
-| Material Contracts | /02-Contracts | 312 | In progress |
-| IP | /03-IP | 89 | Not started |
-| [etc.] | | | |
+| **Pay devri** (AŞ / Ltd.) | Sözleşmenin tarafı değişmez; yalnız sözleşmedeki kontrol değişikliği (CoC) klozu tetiklenir | Geçmiş borçların tamamı şirkette kalır → tazmin, emanet (escrow), bedel tutma. Ltd. payında devreden ve devralan, devir öncesi amme alacaklarından (şirketten tahsil edilemeyen kısım, sermaye payı oranında) müteselsil sorumlu (6183 m. 35) | İşveren değişmez |
+| **Malvarlığı / işletme devri** | Her sözleşme ayrıca devredilir: üç taraflı anlaşma ya da karşı tarafın önceden izni/sonradan onayı; geçerlilik devredilen sözleşmenin şekline bağlı (TBK m. 205). Ticari işletme bütün hâlinde devredilebilir; sözleşme yazılı, tescil ve ilan edilir (TTK m. 11/3) | Aktif ve pasifleriyle devralan, alacaklılara bildirim/ilan tarihinden itibaren sorumlu; önceki borçlu 2 yıl müteselsil (TBK m. 202). Yalnız seçili varlıkların devrinde m. 202'nin uygulanması **tartışmalı — içtihadı kontrol et** | İşyeri devrinde iş sözleşmeleri hak ve borçlarıyla devralana geçer; devreden 2 yıl müteselsil (İş K. m. 6; TBK m. 428) |
+| **Birleşme** | Tescil anında devrolunan şirketin bütün aktif ve pasifi kendiliğinden devralana geçer (TTK m. 153/1). Sözleşmedeki devir yasağının birleşmeye uygulanıp uygulanmadığı **tartışmalı — içtihadı kontrol et** | Alacaklılar birleşmenin geçerlilik kazanmasından itibaren 3 ay içinde teminat isteyebilir (TTK m. 157) | TTK m. 178 (m. 158/4 yollamasıyla): işçi itiraz edebilir; eski ve yeni işveren müteselsil. İş K. m. 6/4: birleşmede m. 6'daki birlikte sorumluluk uygulanmaz |
+| **Bölünme** (tam / kısmi, TTK m. 159) | Bölünme belgesindeki malvarlığı bölümüne göre | Alacaklı koruması ve borç dağılımı için bölünme hükümlerini ayrıca çek | TTK m. 178 |
 
-**Gaps:** [Request categories with no VDR content — follow-up request needed]
-```
+Halka açık hedefte ayrıca: önemli nitelikte işlem ve ayrılma hakkı (6362 m. 23, 24), yönetim kontrolü edinilirse pay alım teklifi zorunluluğu (6362 m. 26); KAP açıklamalarını ve `tr_spk_bulten_icinde_ara` ile SPK bültenlerini tara.
 
-### Step 2: Apply materiality filter
+## Akış
 
-Per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` / deal-context thresholds. Don't review everything if the threshold says contracts >$X.
+### Adım 1: VDR envanteri
 
-For contracts specifically: sort by stated value (if in filename/metadata) or by counterparty significance. Review top-down until you hit the threshold or the category is exhausted.
-
-### Step 3: Extract issues
-
-For each document read, check against the standard diligence concerns for its category:
-
-**Material contracts — standard extraction set:**
-- Change of control provision (triggered by this deal? consent required?)
-- Assignment restriction (can the contract move to buyer?)
-- Exclusivity / non-compete (restricts buyer's business?)
-- MFN (most favored nation — pricing constraints)
-- Termination rights (can counterparty walk because of the deal?)
-- Unusual indemnities or liability exposure
-- **Governing law / dispute resolution** — flag any contract governed by a
-  non-Turkish law (English law, US/NY law) or carrying a foreign forum /
-  foreign arbitration seat. For a Turkish target this affects enforceability
-  and whether a foreign judgment/award needs Turkish recognition-enforcement
-  (MÖHUK 5718; New York Convention). When the governing-law statute or case
-  needs verification, use the cross-border connectors — UK Legislation
-  (`references/uk-legislation-rehberi.md`), GovInfo
-  (`references/us-legislation-rehberi.md`), CourtListener
-  (`references/courtlistener-rehberi.md`) — and route the call per
-  `references/karsilastirmali-hukuk-rehberi.md`.
-
-**Corporate — standard extraction set:**
-- Cap table accuracy, outstanding options/warrants
-- Board consent requirements for the transaction
-- Stockholder agreement restrictions (drags, tags, ROFR)
-- Subsidiary structure and intercompany arrangements
-
-**IP — standard extraction set:**
-- Ownership chain (assignments from founders/employees in place?)
-- Open source in the product (copyleft risk)
-- Key IP licensed vs. owned
-- Pending or threatened IP litigation
-
-**Employment — standard extraction set:**
-- Change-of-control severance triggers (parachute cost)
-- Key employee retention risk
-- Pending employment litigation
-- Classification risk (contractors who look like employees)
-
-**Litigation — standard extraction set:**
-- Pending matters and reserves
-- Threatened claims
-- Regulatory inquiries
-- Pattern litigation (consumer class actions, etc.)
-
-### Step 4: State each finding
-
-> **Source attribution.** Where a finding references a statute, regulation, case, or regulator action — e.g., a change-of-control provision analyzed under an applicable law, an IP ownership gap cited against a specific doctrine, a pending litigation matter with a case citation — tag the citation with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the VDR, deal-team memos, or outside-counsel feedback. Document-source citations (VDR path, Bates, filename) retain their native reference. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
->
-> **When disagreeing with a user's cited statute, quote the text or decline to characterize it.** If the user (or a deal-team note, or a sell-side disclosure) cites a statute for a proposition you don't think is correct, and you don't have the statute text available from a connected research tool or the VDR, do not invent a description of what the statute says. Say instead: "That section doesn't match what I'd expect a [bulk-sales notice / successor-liability / whatever] requirement to say — I'd need to pull the actual text to tell you what it actually covers. `[statute unretrieved — verify]`" Then either (a) retrieve the text via the configured research tool and quote it, (b) ask the user to paste the text, or (c) flag for outside counsel. A confident wrong description of a real statute is worse than "I don't know" — a deal-team memo citing a fabricated subchapter is harder to un-believe than a gap. Applies in every skill that characterizes a statute, not just issue extraction.
->
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a legal basis the finding needs (e.g., the rule governing a change-of-control consent requirement, an IP assignment doctrine, an employment classification test), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / doctrine]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
-
-Per the finding template in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the seed memo used this:
-
-```
-Issue #N: [Title]
-Category: [request list category]
-Severity: [level per house scheme]
-Documents: [VDR path + doc name]
-Finding: [what the document says and why it matters]
-Recommendation: [price adjustment / indemnity / consent required / rep & warranty / walk]
-```
-
-...then use exactly that. If the seed memo was bullets, write bullets.
-
-**Severity calibration** (if house scheme is R/Y/G):
-- 🔴 **Red:** Affects deal value or structure. Change of control requiring major customer consent. Undisclosed material litigation. IP ownership gap.
-- 🟡 **Yellow:** Needs attention, solvable. Consent required but likely obtainable. Open source requiring remediation. Employment classification risk.
-- 🟢 **Green:** Noted for file. Consistent with reps. No action needed beyond the rep.
-
-### Step 5: Assemble per category
-
-Group findings by request list category. Within category, sort by severity.
+VDR MCP'si (Box / Intralinks / Datasite) bağlıysa dizini çek; değilse kullanıcıdan dizin dökümü iste. Klasörleri talep listesi kategorilerine eşle; karşılığı olmayan kategorileri yaz.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+## VDR Envanteri: [işlem kodu]
 
-> This output is derived from VDR materials that are privileged, confidential, or both. It inherits the source's privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Store with the matter's privileged files and make distribution decisions deliberately.
+| Talep kategorisi | VDR klasörü | Belge | Durum |
+|---|---|---|---|
+| Şirket ve ortaklık yapısı | /01-Sirket | 45 | İncelendi |
+| Önemli sözleşmeler | /02-Sozlesmeler | 312 | Sürüyor |
+| Fikrî ve sınai haklar | /03-FSMH | 89 | Başlanmadı |
 
-# Diligence Issues: [Deal code] — [Category]
-
-**Documents reviewed:** [N] of [M] in category
-**Coverage:** [All | >$X threshold | Top N]
-**Findings:** [N]🔴 [N]🟡 [N]🟢
-
----
-
-### Bottom line
-
-[🔴 N blocking · 🟠 N high · 🟡 N medium] — [the one thing the deal team needs to know]
-
----
-
-[Each finding in house format]
-
----
-
-## Gaps
-
-- [Request list item with no responsive document]
-- [Document referenced but not in VDR]
+**Boşluklar:** [VDR'de karşılığı olmayan kategoriler — ek talep gerekli]
 ```
 
-## Handoffs
+**Kişisel veri.** VDR'de çalışan dosyaları, bordro ya da müşteri listeleri varsa: kişisel veri ancak kanuni usule ve ilkelere (hukuka uygunluk, belirli amaç, amaçla bağlantılı, sınırlı ve ölçülü olma) uygun işlenir (KVKK m. 4); açık rıza dışındaki işleme şartları m. 5/2'de sayılıdır; aktarım m. 8'e, VDR sunucusu ya da alıcı ekibi yurt dışındaysa m. 9'a tabidir. Hangi şarta dayanılacağı olaya bağlıdır — burada karar verme; maskeleme ya da anonim özet iste, `/privacy-legal:use-case-triage` veya `/privacy-legal:pia-generation`'a yönlendir. Bulgu metnine gereksiz kişisel veri (TCKN, sağlık bilgisi, kişi bazlı ücret) taşıma.
 
-- **To ai-tool-handoff:** If Luminance/Kira is in use per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`, hand bulk contract review there. This skill handles the nuanced documents (side letters, amendments, anything the AI tool struggles with).
-- **To deal-team-summary:** Aggregated findings feed the deal team brief.
-- **To material-contract-schedule:** Contract-level extractions feed the disclosure schedule.
-- **To closing-checklist:** Any finding that implies a discrete pre-closing action becomes a checklist item. The handoff is not limited to third-party consents — it also covers:
-  - **Shareholder vote / other closing action** — §280G cleansing votes, required stockholder consents, required board resolutions, appraisal-rights notice periods, conversion mechanics, or any other corporate approval the deal needs to close. Characterize the action, the approval threshold, the statutory or charter source, and the timing constraint.
-  - **Regulatory filings and approvals** — HSR, CFIUS, foreign-investment review, sector-specific approvals flagged during extraction.
-  - **Consents from counterparties** — change-of-control, anti-assignment, MFN-triggering consents.
-  - **Releases, terminations, or pay-offs** — employment releases tied to change-of-control, payoff letters, lien releases.
-  - **Escrow / holdback mechanics** — if extraction surfaces an indemnity escrow, R&W insurance deliverable, or holdback tied to a specific issue.
-  Every finding with a pre-closing action tag should reach closing-checklist, not just the ones labeled "consent." If a finding sits in the gray zone (might need a closing action, might be a post-closing covenant), hand it off with a flag — closing-checklist can drop it if the purchase agreement says otherwise. Under-handoff is a one-way door; over-handoff is corrected in review.
+### Adım 2: Önemlilik süzgeci
 
+Eşik CLAUDE.md'den, işleme özgü fark deal-context.md'den gelir. Eşik "yıllık bedeli X TL üstü" diyorsa her şeyi okuma: sözleşmeleri beyan edilen bedele (dosya adı / meta veri) ya da karşı tarafın önemine göre sırala, eşiğe ya da kategori sonuna kadar yukarıdan aşağı incele. Döviz cinsinden bedelde kur ve tarih yaz.
 
-**Successor liability.** Flag: pending or threatened tort/products-liability claims, environmental matters and cleanup obligations, bulk-sale/fraudulent-transfer exposure (is the seller retaining enough assets to pay its remaining creditors?), seller's post-closing dissolution plan (if seller dissolves, plaintiffs chase the buyer), and whether the purchase agreement has an assumed/excluded-liabilities schedule that actually covers the known exposures. Even in asset deals, the "de facto merger," "mere continuation," and "product line" doctrines can transfer liability — this is the analysis that surprises buy-side clients who think they're buying assets clean.
+### Adım 3: Sorunları çıkar
 
-## Batch processing
+**Önemli sözleşmeler:**
+- **Kontrol değişikliği:** bu işlem tetikliyor mu; onay mı, fesih hakkı mı, yalnız bildirim mi? "Kontrol" nasıl tanımlı (pay çoğunluğu, YK çoğunluğunu seçme, dolaylı kontrol)? Kanunda genel bir CoC kuralı yok — sözleşmeyi oku.
+- **Devir yasağı / onay şartı:** malvarlığı devrinde sözleşme alıcıya geçebilir mi (TBK m. 205)? Alacak devri yasağı var mı (TBK m. 183)?
+- **Münhasırlık, rekabet yasağı, en çok kayrılan müşteri (MFN):** alıcının mevcut işini kısıtlıyor mu? Rekabet hukuku şüphesinde `tr_kurum_karari_ara(kurum="rekabet", query=...)`.
+- **İşlem nedeniyle fesih hakkı** ve fesih ihbarının şekli: tacirler arasında noter, taahhütlü mektup, telgraf ya da güvenli e-imzalı KEP (TTK m. 18/3).
+- **Olağandışı yükler:** sınırsız sorumluluk, tazmin, cezai şart, şirket kefaleti/garantisi.
+- **Kira:** kiracı kira ilişkisini kiraya verenin yazılı rızası olmadan devredemez; işyeri kirasında kiraya veren haklı sebep olmadıkça rızadan kaçınamaz; devreden işyeri kiracısı sözleşme bitimine kadar, en fazla 2 yıl müteselsil sorumlu kalır (TBK m. 323; maddenin dipnotundaki 8 yıllık uygulanmama dönemi 1/7/2020'de doldu). Pay devrinde kiracı değişmez — CoC klozuna bak.
+- **Kamu ihale sözleşmeleri:** zorunlu hâllerde ihale yetkilisinin yazılı izniyle devredilir; izinsiz devirde fesih ve yaptırım (4735 m. 16) → malvarlığı devrinde 🔴 adayı.
+- **Uygulanacak hukuk / uyuşmazlık çözümü:** yabancı hukuk, yabancı mahkeme ya da yabancı tahkim yeri → tanıma-tenfiz (MÖHUK, New York Sözleşmesi) etkisi; analiz `/commercial-legal:governing-law-review`'da. Yabancı kural ezberden yazılmaz: `uk_search_legislation`, `de_gesetz_ara` / `de_norm_getir`, `eu_search_eu_law`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_`; ABD için yalnız kuruluysa CourtListener (`references/courtlistener-rehberi.md`); listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-For large categories (300 contracts), process in batches. After each batch, update the running issues list and flag anything 🔴 immediately — don't wait for the full category to surface a deal-affecting issue.
+**Şirket ve ortaklık yapısı:**
+- **Pay sahipliği zinciri:** esas sözleşme ve değişiklikleri, ticaret sicili kayıtları ve TTSG ilanları (sicil herkese açıktır, onaylı suret alınabilir — TTK m. 35), pay defteri. Şirketle ilişkide yalnız pay defterinde kayıtlı kişi pay sahibi sayılır (AŞ, TTK m. 499/4; Ltd. pay defteri m. 594). Defter, sicil ve TTSG arasındaki tutarsızlık 🔴 adayıdır.
+- **AŞ pay devri sınırlamaları:** bedeli tamamen ödenmemiş nama yazılı paylar ancak şirketin onayıyla devredilir (m. 491); esas sözleşme devri şirket onayına bağlayabilir (m. 492); borsaya kote olmayan paylarda red ancak esas sözleşmedeki önemli sebeple ya da payları gerçek değerle devralma önerisiyle (m. 493); onay verilmedikçe mülkiyet ve haklar devredende kalır, istem 3 ay içinde reddedilmezse onay verilmiş sayılır (m. 494). Nama yazılı pay senedinde devir ciro ve zilyetliğin geçirilmesiyle (m. 490/2); hamiline yazılı pay senedinde devir MKK'ya bildirimle hüküm ifade eder (m. 489). Borsaya kote paylar: m. 495.
+- **Ltd. pay devri:** devir ve devir borcu doğuran işlem yazılı yapılır, imzalar noterce onanır; şirket sözleşmesinde aksi yoksa ortaklar genel kurulunun onayı şarttır ve devir bu onayla geçerli olur; başvurudan itibaren 3 ay içinde reddedilmezse onay verilmiş sayılır (m. 595). Onay genel kurulun devredilemez yetkisidir (m. 616/1-g); karar, sözleşmede aksi yoksa temsil edilen oyların salt çoğunluğuyla alınır (m. 620); geçişin tescili için müdürler sicile başvurur (m. 598). Geçmiş bir devirde noter onayı ya da genel kurul onayı eksikse zincir kırıktır → 🔴.
+- **Pay sahipleri sözleşmesi** (önalım, birlikte satma / satmaya zorlama, oy anlaşması): esas sözleşmede mi, ayrı sözleşmede mi? Ayrı sözleşme kural olarak yalnız taraflarını bağlar; AŞ esas sözleşmesine konan bu tür kayıtların şirkete ve üçüncü kişilere karşı etkisi **tartışmalı — içtihadı kontrol et**. Ltd.'de önerilmeye muhatap olma, önalım, geri alım ve alım hakları pay senedinde açıkça belirtilmelidir (m. 593/2).
+- **İşlemin gerektirdiği şirket onayları:** önemli miktarda şirket varlığının toptan satışı AŞ genel kurulunun devredilemez yetkisidir (m. 408/2-f); birleşme sözleşmesinin onay nisapları m. 151'de.
+- **İlişkili taraf işlemleri:** YK üyesi genel kurul izni olmadan şirketle işlem yapamaz, şirket işlemin batıl olduğunu ileri sürebilir (m. 395/1); pay sahibi olmayan üyelere ve yakınlarına nakit borç ve teminat yasağı (m. 395/2).
+- **Sermaye kaybı / borca batıklık:** son yıllık bilançoda sermaye ile kanuni yedek akçeler toplamının yarısı zarar sebebiyle karşılıksızsa YK genel kurulu hemen çağırır; üçte ikisi karşılıksızsa ve genel kurul sermayenin üçte biriyle yetinme ya da tamamlama kararı vermezse şirket kendiliğinden sona erer; borca batıklık şüphesinde ara bilanço ve mahkemeye bildirim (m. 376). Finansal tablolarla birlikte oku.
+- **Grup yapısı:** iştirakler ve grup içi sözleşmeler; yabancı iştirak için `gleif_search_entities` / `gleif_get_group_structure` (LEI ve grup ilişkisi) — sonuç sicil kaydının yerine geçmez.
 
-## Close with the next-steps decision tree
+**Fikrî ve sınai haklar:**
+- Sahiplik zinciri (kurucu, çalışan, yüklenici devirleri). Sınai mülkiyet hakkının devri yazılı ve noter onaylı olmalı; sicile kaydedilmeyen işlemden doğan haklar iyiniyetli üçüncü kişilere karşı ileri sürülemez (SMK m. 148/4-5). Telif (yazılım dahil) için FSEK'teki devir şekil şartlarını `tr_mevzuat_madde_getir(number="5846", ...)` ile çek; ayrıntı `/ip-legal:ip-clause-review`.
+- Üründe açık kaynak (copyleft) → `/ip-legal:oss-review`. Kilit hak lisanslı mı, sahip olunan mı; lisansta devir/CoC.
+- TÜRKPATENT sicil durumu: ArthurLegal'da TÜRKPATENT aracı yok — kaydı kurumun kendi sisteminden teyit ettir. Bekleyen ya da tehdit edilen uyuşmazlıklar.
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+**İş hukuku:**
+- Kontrol değişikliğine bağlı ikramiye/tazminat (yönetici sözleşmeleri) ve maliyeti; kilit çalışan kaybı; rekabet yasağı geçerliliği → `/employment-legal:hiring-review`.
+- Yapıya göre devir sonuçları (yukarıdaki tablo). Devreden ya da devralan, iş sözleşmesini sırf işyeri devri nedeniyle feshedemez (İş K. m. 6/5).
+- Bekleyen işçilik davaları, kıdem karşılıkları, SGK prim borcu, alt işveren/muvazaa, işçi görünümlü yükleniciler → `/employment-legal:worker-classification`.
 
-If the extraction surfaced more than ~10 issues, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by severity (🔴 / 🟠 / 🟡 / 🟢), counts by house category, and a sortable grid of issues with materiality, category, and VDR source.
+**Davalar ve idari süreçler:**
+- Bekleyen dava, icra takibi, ihtiyati haciz/tedbir ve karşılıklar: satıcıdan güncel liste ve UYAP dökümü iste. `tr_ictihat_ara` yalnız yayımlanmış kararları kapsar; bekleyen dosyayı göstermez.
+- Düzenleyici soruşturma ve idari para cezaları: `tr_kurum_karari_ara(kurum="rekabet", query="\"[hedef unvanı]\"")`; aynı şekilde `epdk`, `spk`, `bddk`, `btk`, `kvkk`. KVKK kararları çoğunlukla anonimdir — boş sonuç "yok" demek değildir.
+- Örüntü uyuşmazlıklar (tüketici, ürün sorumluluğu, çevre).
 
-## What this skill does not do
+**Halefiyet ve borç taşınması (alım tarafında her zaman bak):** yukarıdaki yapı tablosuna göre hangi borcun alıcıya geçtiğini yaz. Ayrıca: bekleyen/tehdit edilen haksız fiil ve ürün sorumluluğu talepleri, çevre yükümlülükleri, satıcının kapanış sonrası tasfiye planı (satıcı dağılırsa alacaklılar alıcıya yönelir), devralınan / hariç tutulan borç listesinin bilinen riskleri gerçekten kapsayıp kapsamadığı. İşletmeler aktif ve pasiflerin karşılıklı devralınması ya da katılma yoluyla birleşirse her iki işletmenin alacaklıları alacaklarını yeni işletmeden alabilir (TBK m. 203). Vergi ve SGK borcu → `/tax-legal` skill'leri; vergi ve SGK "borcu yoktur" yazılarını talep listesine koy.
 
-- It doesn't make the materiality call on close cases. It applies the threshold; a human decides the borderline.
-- It doesn't negotiate reps and warranties. It produces the findings that inform them.
-- It doesn't replace bulk AI review. For high-volume clause extraction, hand off to Luminance/Kira per `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. This skill is for the judgment layer.
+### Adım 4: Her bulguyu yaz
+
+> **Kaynak etiketi.** Kanun, içtihat ya da kurum kararına dayanan her bulguda kaynağı etiketle: `[ArthurLegal TR — 6102 m. X — GG.AA.YYYY]`, `[ArthurLegal TR — Rekabet Kurulu kararı künyesi — GG.AA.YYYY]`, `[web — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]` (VDR, işlem ekibi notu, dış avukat görüşü). Belge kaynağında VDR yolu ve dosya adı kalır. `doğrula` etiketliler önce kontrol edilir; etiketleri silme. Karar numarası ezberden yazılmaz; araçtan dönen künye birebir kullanılır.
+>
+> **Kullanıcının atfettiği maddeye katılmıyorsan metni getir.** Kullanıcı, işlem ekibi notu ya da satıcı açıklaması bir maddeyi senin beklemediğin bir önerme için atfediyorsa maddenin ne dediğini tahminle anlatma: `tr_mevzuat_madde_getir` ile çek ve alıntıla; çekemiyorsan "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/" yaz ya da metni kullanıcıdan iste. Gerçek bir maddenin kendinden emin yanlış tarifi, "bilmiyorum"dan kötüdür.
+>
+> **Sessiz tamamlama yok.** Araç gereken dayanak için az sonuç dönerse dur: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç (`tr_ictihat_semantik_ara`, `tr_semantik_ara`), (3) web — `[web — doğrula]` etiketiyle, (4) doğrulanmamış diye işaretle ve dur." Düşük güvenli kaynağı kabul edip etmemeye avukat karar verir.
+
+CLAUDE.md'deki bulgu şablonunu birebir kullan. Seed not madde imli ise madde imli yaz. Şablon yoksa:
+
+```
+Sorun #N: [Başlık]
+Kategori: [talep listesi kategorisi]
+Ciddiyet: [büro şemasına göre]
+Belgeler: [VDR yolu + belge adı]
+Bulgu: [belge ne diyor ve işlem için neden önemli]
+Dayanak: [kaynak etiketi]
+Öneri: [bedel düzeltmesi / tazmin / onay gerekli / beyan ve tekeffül / emanet / işlemden çekil]
+Kapanış eylemi: [yok | closing-checklist kategorisi]
+```
+
+**Ciddiyet ayarı** (büro şeması yoksa):
+- 🔴 **Kırmızı:** bedeli ya da yapıyı etkiler. Büyük müşteride onaya bağlı CoC; açıklanmamış önemli dava; kırık pay zinciri; fikrî hak sahiplik boşluğu; izinsiz devredilemeyen kamu sözleşmesi.
+- 🟠 **Yüksek:** çözülebilir ama zamanlama riski taşır (onay uzun sürebilir, sicil düzeltmesi gerekir).
+- 🟡 **Sarı:** dikkat ister, çözülebilir. Alınması muhtemel onay; düzeltilebilir açık kaynak sorunu; sınıflandırma riski.
+- 🟢 **Yeşil:** dosyaya not. Beyanlarla tutarlı; beyan dışında eylem gerekmez.
+
+### Adım 5: Kategoriye göre derle
+
+Kategori içinde ciddiyete göre sırala. Başa CLAUDE.md `## Outputs` başlığını koy (role göre değişir; `## Who's using this`).
+
+> Bu çıktı gizli VDR belgelerinden türetilmiştir ve onların gizlilik statüsünü devralır. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) ABD tipi geniş bir belge koruması ("work product / privilege") değildir; avukatı bağlar, işlem ekibi dışına dağıtılan belge gizliliğini fiilen kaybeder. Dağıtımı işlem ekibiyle sınırla; başlık tek başına koruma yaratmaz.
+
+```markdown
+[ÜST BAŞLIK — CLAUDE.md ## Outputs]
+
+# Due Diligence Sorunları: [işlem kodu] — [Kategori]
+
+**İşlem yapısı:** [pay devri AŞ / pay devri Ltd. / malvarlığı-işletme devri / birleşme / bölünme]
+**İncelenen belge:** [N] / [M]   **Kapsam:** [Tümü | > X TL eşiği | İlk N]
+**Bulgular:** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+
+## ⚠️ İnceleyen notu
+- **Kaynaklar:** ArthurLegal MCP (`tr_`) — [madde sayısı]; doğrulanamayan: [liste]
+- **Tartışmalı noktalar:** [liste]
+
+## Sonuç
+[🔴 N engelleyici · 🟠 N yüksek · 🟡 N orta] — [işlem ekibinin bilmesi gereken tek şey]
+
+[Her bulgu büro formatında]
+
+## Boşluklar
+- [Karşılığı gelmemiş talep listesi kalemi]
+- [Atıf yapılan ama VDR'de olmayan belge]
+```
+
+## Aktarımlar
+
+- **ai-tool-handoff:** CLAUDE.md `## M&A` YZ toplu inceleme aracı ayarı (`AI-assisted review`) Luminance/Kira diyorsa toplu sözleşme incelemesi oraya; bu skill ince belgeleri (yan mektuplar, tadiller, aracın zorlandığı her şey) okur.
+- **deal-team-summary:** toplanan bulgular brifingi besler.
+- **material-contract-schedule:** sözleşme düzeyindeki çıkarımlar ekin girdisidir.
+- **closing-checklist:** kapanış öncesi ayrık eylem doğuran her bulgu kontrol listesine gider — yalnız "onay" etiketliler değil:
+  - **Pay sahibi / YK işlemi:** genel kurul ya da YK onayı (TTK m. 151, 408/2-f, 492-494, 595/2), pay defteri kaydı, esas sözleşme değişikliği, tescil ve ilan. Nisabı, kanun/esas sözleşme dayanağını ve zamanlama kısıtını (çağrı süreleri, 3 aylık onay süreleri) yaz.
+  - **Düzenleyici izin:** Rekabet Kurulu (4054 m. 7 ve 2010/4 sayılı Tebliğ), sektörel izinler (EPDK, BDDK, SPK, BTK, sigortacılık — kurum mevzuatından çek), halka açık hedefte SPK süreçleri.
+  - **Karşı taraf onayı:** CoC, devir yasağı, kira (TBK m. 323), kamu sözleşmesi (4735 m. 16).
+  - **İbra, fesih, borç kapama:** CoC'ye bağlı yönetici ibraları, kredi kapama (payoff) yazıları, rehin/ipotek fekki.
+  - **Emanet / bedel tutma:** belirli bir soruna bağlı escrow ya da tazmin teminatı.
+
+  Gri bölgedeki bulguyu (kapanış eylemi mi, kapanış sonrası taahhüt mü belirsiz) işaretleyerek aktar; closing-checklist sözleşmeye göre düşürebilir. Eksik aktarım geri alınamaz, fazla aktarım incelemede düzelir.
+
+## Toplu işleme
+
+Büyük kategorilerde (300 sözleşme) partiler hâlinde çalış. Her partiden sonra listeyi güncelle ve 🔴'yu hemen bildir — işlemi etkileyen sorunu kategori bitene kadar bekletme.
+
+## Kapanış
+
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu çıkarıma göre uyarla (taslakla, eskalasyon, ek olgu iste, bekle, diğer). Ağaç çıktıdır; seçimi avukat yapar. Yaklaşık 10'dan fazla sorun çıktıysa ya da istenirse panoyu öner (`## Outputs → Dashboard offer for data-heavy outputs`): ciddiyete ve kategoriye göre sayılar, önemlilik/kategori/VDR kaynağıyla sıralanabilir tablo.
+
+## Bu skill ne yapmaz
+
+- Sınırdaki önemlilik kararını vermez; eşiği uygular, sınırı insan çizer.
+- Beyan ve tekeffülleri müzakere etmez; onları besleyen bulguları üretir.
+- Toplu yapay zekâ incelemesinin yerini tutmaz; yüksek hacimli kloz çıkarımı `ai-tool-handoff` ile araca gider. Bu skill yargı katmanıdır.
 
 ---
 
@@ -1608,462 +1152,233 @@ If the extraction surfaced more than ~10 issues, or any time the user asks: offe
 ---
 name: entity-compliance
 description: >
-  Entity compliance tracker — initialize, report upcoming deadlines, update
-  status, run health audit, export to CSV. Maintains a compliance-tracker.yaml
-  built from the entity table, calculates filing deadlines by entity and
-  jurisdiction, and surfaces what's due in the next 30/60/90 days. Use when
-  user says "entity compliance", "filing deadlines", "annual reports due",
-  "entity tracker", "what filings are due", "entity health", or "good standing".
+  Şirket uyum takvimi — kurulum, yaklaşan son günler raporu, durum güncelleme, sağlık
+  denetimi, CSV dışa aktarma. Şirket tablosundan compliance-tracker.yaml kurar;
+  her şirket ve ülke için TTK takvimini hesaplar: olağan genel kurul (m. 409/1, 617/1),
+  finansal tablolar ve faaliyet raporu (m. 514), defter açılış/kapanış onayları (m. 64/3),
+  denetçi seçimi (m. 399), bağlılık raporu (m. 199), YK görev süresi (m. 362), tescil ve
+  ilan, pay edinim bildirimleri (m. 198); 30/60/90 gün içinde ne var gösterir. Yabancı
+  bağlı şirketler için ArthurLegal MCP araçlarına yönlendirir. Kullanıcı "şirket uyumu",
+  "genel kurul takvimi", "defter onayı ne zaman", "tescil son günleri", "şirket
+  takibi", "entity compliance", "good standing" dediğinde kullan.
 argument-hint: "[--init | --report [--days N] | --update [--from-report] | --sweep | --audit | --export [--format csv|table]]"
 ---
 
 # /entity-compliance
 
-1. Load `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Entity Management` (entity table, jurisdictions, registered agent).
-2. Route to the correct mode below based on flag:
-   - No flag or `--init`: Mode 1 — initialize tracker from entity table
-   - `--report`: Mode 2 — surface upcoming deadlines and overdue items
-   - `--update`: Mode 3a (manual) or 3b (--from-report upload) — update status
-   - `--sweep`: Mode 3c — walk through unknown/overdue items one by one
-   - `--audit`: Mode 4 — full health audit
-   - `--export`: Mode 5 — produce CSV or table export
-3. Read/write `~/.claude/plugins/config/claude-for-legal/corporate-legal/entities/compliance-tracker.yaml`.
-4. After any update: show summary of changes and next action.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Entity Management` yükle (şirket tablosu, ülkeler, mali müşavir / yerel sicil ajanı).
+2. Bayrağa göre mod: bayraksız ya da `--init` → Mod 1 · `--report` → Mod 2 · `--update` → Mod 3a, `--update --from-report` → 3b · `--sweep` → 3c · `--audit` → Mod 4 · `--export` → Mod 5.
+3. `~/.claude/plugins/config/claude-for-legal/corporate-legal/entities/compliance-tracker.yaml` dosyasını oku/yaz.
+4. Her güncellemeden sonra değişiklik özetini ve sıradaki eylemi göster.
 
----
+## Amaç
 
-## Purpose
+Olağan genel kurul, finansal tablolar, defter onayları, denetçi seçimi, tescil ve ilan — her şirketin kendi takvimi ve kaçırmanın kendi sonucu var. Bu skill tek bir YAML takip dosyası tutar: hangi şirkette ne, ne zaman. Dosya sizindir; Claude komutla günceller, paylaşmak gerektiğinde dışa aktarırsınız.
 
-Annual reports, franchise taxes, Statements of Information, biennial filings —
-every entity in every state has its own schedule and its own consequences for
-missing the deadline. This skill maintains a single YAML tracker that knows
-what's due, when, and for which entity. It's lightweight by design: the tracker
-is a file you own, Claude updates it on command, and you export it when you need
-to share it.
+## Önemli: son gün uyarısı
 
-## Important: deadline reference caveat
+> Aşağıdaki süreler TTK'nın canlı çekilmiş metnine dayanır, ancak esas sözleşme, özel hesap dönemi, sektör mevzuatı (banka, sigorta, enerji, halka açık) ve ikincil düzenlemeler takvimi değiştirebilir. **Son günleri mali müşavirinizin takvimi, ticaret sicili müdürlüğü ve MERSİS kaydıyla teyit edin.** Vergi ve SGK beyannameleri bu takipte yoktur; mali müşavir takviminden izlenir. İdari para cezası tutarları her yıl güncellenir; tutarı takip dosyasına sabit yazma.
 
-> The filing deadlines in this skill's reference table reflect publicly available
-> requirements as of the skill's build date. State filing requirements and due
-> dates can change. **Always confirm deadlines with your registered agent or
-> directly with the relevant Secretary of State before relying on them for
-> compliance purposes.** If you use CT Corp, National Registered Agents, or
-> another registered agent service, their compliance calendar is authoritative
-> for your specific entities — use this tracker to organize and surface their
-> data, not to replace it.
+## Şirket türü ayrımı — takvim türe göre değişir
 
-## Jurisdiction assumption
+Takvim yalnız ülkeye değil **şirket türüne** bağlıdır; bir türün son gününü diğerine kopyalama. Şirket tablosunda tür yoksa `type_unknown` işaretle ve sor.
 
-> This tracker computes deadlines against the state or country of formation / qualification recorded per entity. Filing rules, due-date mechanics, and fee structures vary materially by jurisdiction. If an entity's actual footprint differs from what's in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` (undisclosed foreign qualification, dissolved entities, jurisdictional re-domestication, international filings managed by a local agent), the output may not apply as written — confirm with the registered agent or local counsel for that jurisdiction.
+| Konu | AŞ | Ltd. | Halka açık AŞ |
+|---|---|---|---|
+| Olağan GK | Faaliyet dönemi sonundan itibaren 3 ay (m. 409/1) | Hesap dönemi sonundan itibaren 3 ay (m. 617/1) | AŞ gibi + SerPK |
+| GK çağrısı | İlan (internet sitesi + TTSG) + iadeli taahhütlü; en az 2 hafta (m. 414/1) | En az 15 gün; sözleşmeyle 10 güne inebilir (m. 617/2) | İnternet sitesi + KAP; en az 3 hafta (SerPK m. 29/1) |
+| Bakanlık temsilcisi | Gündeme göre zorunlu olabilir (m. 407/3; Yönetmelik m. 32) | Uygulanmaz (m. 617/3) | Elektronik GK uygulayanlarda zorunlu (Yönetmelik m. 32/1-b) |
+| Yönetim organı süresi | YK üyeleri en çok 3 yıl için seçilir (m. 362/1) | Yönetim ve temsil şirket sözleşmesiyle düzenlenir (m. 623/1); süreyi sözleşmeden al | AŞ gibi + bağımsız üye kuralları (SerPK m. 17/1) |
+| Pay defteri | m. 499 | m. 594 | MKK kaydı saklı (m. 499/5) |
+| Bağımsız denetim | Cumhurbaşkanınca belirlenen şirketler (m. 397/4) | AŞ hükümleri uygulanır (m. 635) | SerPK m. 14/3 |
+| İnternet sitesi | Yalnız denetime tabi olanlar (m. 1524/1, 1524/6) | Aynı | Aynı + KAP |
 
-## Entity-type disambiguation (especially Delaware)
+**Bağımsız denetim eşikleri** Cumhurbaşkanı kararıyla belirlenir ve değişir; eşik yazma. **Güncel eşikleri teyit et:** `tr_mevzuat_ara(query="bağımsız denetime tabi olacak şirketler", types=["CB_KARAR"])` ve dönen kararın son değişikliklerine bak.
 
-> The filing calendar depends on **entity type**, not just jurisdiction. Treating a "Delaware entity" as a single bucket is a common and consequential error — DE corporations, DE LLCs, and DE LPs have different filings, different deadlines, and different consequences for a miss. Confirm the entity type from the entity table before computing or reporting a deadline, and never copy a deadline from one entity-type to another in the same state.
->
-> **Delaware — the split that matters:**
->
-> - **DE Corporation (Inc., Corp.):** Annual report AND franchise tax, both due **March 1**. Franchise tax is calculated by the authorized-shares method or the assumed-par-value capital method (whichever is lower); the annual report captures director / officer information. Statutory basis: 8 Del. C. §§ 501–502 [verify current].
-> - **DE LLC:** No annual report required. Annual tax is a **flat $300**, due **June 1**. Statutory basis: 6 Del. C. § 18-1107(d) [verify current fee and date].
-> - **DE LP:** No annual report required. Annual tax is a **flat $300**, due **June 1** (parallel to the LLC rule). Statutory basis: 6 Del. C. § 17-1109 [verify current].
->
-> A DE LLC is NOT required to file a March 1 annual report — writing that deadline for an LLC carries real risk (spurious "overdue" flags that mask actual June 1 exposure, or worse, the inverse: a user who treats the March 1 corporation rule as universal and misses the June 1 LLC deadline). If the entity table records a Delaware entity without a type, flag it as `type_unknown` and ask the user to confirm before computing either deadline.
->
-> The same entity-type discipline applies in every other jurisdiction with divergent filing regimes by entity type (e.g., CA corp Statement of Information vs. CA LLC SOI cadence; TX franchise tax applies to corporations, LLCs, and LPs but with different no-tax-due thresholds). When the reference table for a jurisdiction is populated, make sure it is indexed by entity type, not just by state.
+**Yabancı şirketin Türkiye şubesi:** yerli işletme gibi tescil edilir ve Türkiye'de yerleşik tam yetkili bir ticari mümessil atanır (m. 40/4) — takipte `registered_agent` alanına mümessili yaz.
 
----
+## Ülke varsayımı
 
-## Tracker file
+Takip, her şirket için kayıtlı kuruluş ülkesine göre hesaplar. Gerçek ayak izi farklıysa (bildirilmemiş şube, tasfiye hâlindeki şirket, merkez nakli, yerel ajanın yönettiği yurt dışı şirket) çıktı aynen uygulanmayabilir.
 
-Lives at `~/.claude/plugins/config/claude-for-legal/corporate-legal/entities/compliance-tracker.yaml`. Structure:
+**Yabancı bağlı şirket ve ana şirket:** kural ezberden yazılmaz; yerel ajan/hukukçu teyidi esastır. Araçla neyi arayacağın:
+- Grup yapısı ve LEI: `gleif_search_entities(name="[tam unvan]", jurisdiction="DE")` → `gleif_get_group_structure(lei="[LEI]")` (konsolidasyon esaslı; sözleşmeyle kontrol görünmez).
+- Birleşik Krallık: `uk_search_legislation(title="Companies Act 2006", text="confirmation statement")`.
+- Almanya: `de_norm_getir(kanun="HGB", norm="325")` (yıllık hesapların açıklanması — teyit et), GmbH için `de_norm_getir(kanun="GmbHG", norm="[madde]")`.
+- Hollanda: `nl_search_legislation(query="Burgerlijk Wetboek Boek 2")`. AB düzeyi: `eu_search_eu_law(query="Directive (EU) 2017/1132 company law")`.
+- Azerbaycan, İrlanda, Polonya, Avusturya, İspanya, Finlandiya, Japonya: `az_`, `ie_`, `pl_`, `at_`, `es_`, `fi_`, `jp_` araçları.
+- Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu ya da yerel sicil ajanı görüşü alın."
+- **ABD bağlı ortaklığı (karşılaştırmalı not):** eyalet ve tür (corporation / LLC / LP) ayrımı takvimi ve vergiyi değiştirir; registered agent takvimi esastır. ArthurLegal'da ABD eyalet şirket sicili kaynağı yok.
+
+## Takip dosyası
+
+`~/.claude/plugins/config/claude-for-legal/corporate-legal/entities/compliance-tracker.yaml` — anahtarlar İngilizce kalır (diğer skill'ler birebir okur), değerler Türkçe olabilir:
 
 ```yaml
 # Entity Compliance Tracker
-# Generated: [date]
-# Last updated: [date]
-# Disclaimer: deadlines are reference only — confirm with registered agent or Secretary of State
+# Generated: [tarih] · Last updated: [tarih]
+# Disclaimer: son günler referanstır — mali müşavir, ticaret sicili ve MERSİS ile teyit edin
 
 metadata:
-  company: "[Company Name]"
-  generated: "[date]"
-  last_updated: "[date]"
-  last_audit: "[date or null]"
+  company: "[Müvekkil]"
+  generated: "[tarih]"
+  last_updated: "[tarih]"
+  last_audit: "[tarih ya da null]"
 
-custom_jurisdictions:   # manually added — US states or countries not in built-in reference table
-  []                    # populated when a new jurisdiction is encountered
+custom_jurisdictions:   # yerleşik tabloda olmayan ülkeler — elle eklenir
+  []
 
 entities:
-  - name: "[Entity Name]"
-    type: "[Corporation / LLC / LP / other]"
-    state_of_formation: "[state]"
-    formation_date: "[date or null]"
+  - name: "[Ticaret unvanı]"
+    type: "[AŞ / Ltd. / halka açık AŞ / yabancı şirket şubesi / GmbH / Ltd (UK) / diğer]"
+    state_of_formation: "[ülke — sicil müdürlüğü, ör. TR — İstanbul]"
+    formation_date: "[tarih ya da null]"
     status: "[active / dormant / dissolving]"
-    registered_agent: "[CT Corp / National / in-house / other]"
+    registered_agent: "[mali müşavir / şirket içi / ticari mümessil (m. 40/4) / yerel ajan]"
+    mersis_no: "[MERSİS numarası ya da null]"
+    fiscal_year_end: "[MM-DD — çoğunlukla 12-31; özel hesap dönemi varsa onu yaz]"
+    audit_required: "[yes / no / unknown — m. 397/4 eşiklerine göre]"
+    board_term_ends: "[YK üyeleri / müdürlerin görev süresi bitişi]"
     notes: ""
-
     jurisdictions:
-      - state: "[state]"
-        qualification: "[domestic / foreign]"
-        qualified_date: "[date or null]"
-        agent_managed: false   # set true for international entities where a local agent handles compliance
-        local_agent: "[name or null]"
+      - state: "[ülke / sicil müdürlüğü]"
+        qualification: "[domestic / foreign — şube]"
+        qualified_date: "[tescil tarihi ya da null]"
+        agent_managed: false   # yurt dışında yerel ajan yönetiyorsa true
+        local_agent: "[ad ya da null]"
         filings:
-          - type: "[Annual Report / Franchise Tax / Statement of Information / Biennial Statement / other]"
+          - type: "[aşağıdaki listeden]"
             due_date: "[YYYY-MM-DD]"
-            due_basis: "[fixed date / anniversary month / other]"
-            last_filed: "[date or null]"
-            last_fee: "[amount or null]"
+            due_basis: "[fixed: MM-DD / fiscal-year-end + 3 ay / olay + N gün / görev süresi sonu]"
+            last_filed: "[tarih ya da null]"
+            last_fee: "[tutar ya da null]"
             status: "[current / due_soon / overdue / unknown]"
-            confirmed_good_standing: "[date or null]"
+            confirmed_good_standing: "[sicil tasdiknamesi / faaliyet belgesi tarihi ya da null]"
             notes: ""
 ```
 
-Status values:
-- `current` — filed for current period, nothing due within 90 days
-- `due_soon` — due within 90 days
-- `overdue` — past due date with no filed date recorded
-- `unknown` — no information; needs manual confirmation
+Durum değerleri: `current` (dönem için yapıldı, 90 gün içinde iş yok) · `due_soon` (90 gün içinde) · `overdue` (son gün geçti, yapıldı kaydı yok) · `unknown` (bilgi yok; teyit gerekir).
 
----
+**Türkiye takvimi — `filings.type` listesi** (hesap dönemi 31.12 ise örnek tarih):
 
-## Mode 1: Initialise
+| Kalem | Kural | Örnek son gün |
+|---|---|---|
+| Yevmiye ve diğer fiziki defterlerin açılış onayı | Kullanılacağı dönemin ilk ayından önceki ayın sonuna kadar noter; pay defteri ile GK toplantı ve müzakere defteri yaprak yeterliyse onaysız devam eder (m. 64/3) | 31.12 |
+| YK karar defteri kapanış onayı (fiziki) | İzleyen faaliyet döneminin birinci ayının sonuna kadar (m. 64/3) | 31.01 |
+| Yevmiye defteri kapanış onayı (fiziki) | İzleyen faaliyet döneminin altıncı ayının sonuna kadar (m. 64/3) | 30.06 |
+| Elektronik defter | Açılışta ve yevmiye ile YK karar defterinin kapanışında noter/sicil onayı aranmaz (m. 64/3); e-defter takvimini mali müşavirle teyit et | — |
+| Finansal tablolar + YK yıllık faaliyet raporu | Bilanço gününü izleyen dönemin ilk üç ayı içinde hazırlanır ve GK'ya sunulur (m. 514); denetime tabi şirkette denetlenmemiş tablo düzenlenmemiş hükmündedir (m. 397/2) | 31.03 |
+| Bağlılık raporu (grup şirketi) | Bağlı şirketin YK'sı faaliyet yılının ilk üç ayı içinde düzenler (m. 199/1) | 31.03 |
+| GK belgelerinin incelemeye açılması | Toplantıdan en az 15 gün önce (m. 437/1) | GK − 15 gün |
+| Olağan GK | Dönem sonundan itibaren 3 ay (m. 409/1, 617/1) | 31.03 |
+| GK tutanağı tescil ve ilanı | Noter onaylı suret derhâl sicile; internet sitesine hemen (m. 422/2) | GK + derhâl |
+| Denetçi seçimi ve tescili | Denetleyeceği faaliyet dönemi bitmeden seçilir; YK gecikmeksizin tescil ve ilan ettirir (m. 399/1); dördüncü aya kadar seçilmezse istem üzerine mahkeme atar (m. 399/6) | Dönem içinde; en geç 4. ay |
+| YK / müdür görev süresi | YK en çok 3 yıl (m. 362/1); boşalan üyelik ilk GK onayına (m. 363/1) | Seçim + süre |
+| Temsil yetkisi değişikliği | Noter onaylı karar sureti tescil ve ilan için sicile (m. 373/1) | Karar + derhâl |
+| Pay edinim/elden çıkarma bildirimi (grup) | %5, 10, 20, 25, 33, 50, 67, 100 eşiklerinde işlemin tamamlanmasını izleyen 10 gün içinde şirkete ve makamlara; bildirim tescil ve ilan olunur; yapılmazsa oy dâhil haklar donar (m. 198/1-2; TSY m. 107/5-6). Yönetmelikte yükümlülük, payı edinen teşebbüsün bir şirketler topluluğuna dâhil olmasına bağlanmıştır (TSY m. 107/2) | İşlem + 10 gün |
+| İnternet sitesi (denetime tabi) | Tescilden itibaren 3 ay içinde açılır; kanunda ayrı süre yoksa içerik en geç 5 gün içinde konur ve en az 6 ay kalır (m. 1524/1, 1524/5) | — |
+| Tescil edilmiş olguda değişiklik | Her türlü değişiklik tescil edilir (TSY m. 29/1); ilan edilmeyen husus üçüncü kişiye ancak bildiği ispatlanırsa ileri sürülür (m. 36/4). Gecikmede sicil müdürlüğü 30 gün süreli davet ve idari para cezası yoluna gider (TSY m. 36/1, 36/3; m. 33/2) | Değişiklik + kanuni süre (teyit et) |
+| Belgelerin saklanması | Defterler, finansal tablolar, faaliyet raporları ve dayanak belgeler 10 yıl (m. 82/5) | — |
+| Halka açık | Finansal raporlar (SerPK m. 14), özel durum açıklamaları (m. 15), kurumsal yönetim (m. 17) — SPK düzenleme takvimini `tr_kurum_karari_ara` (spk) ve `tr_spk_bulten_icinde_ara` ile kontrol et | SPK takvimi |
+| VERBİS kaydı | Kişisel veri işleyen gerçek ve tüzel kişiler işlemeye başlamadan önce Veri Sorumluları Siciline kaydolur; Kurul objektif kriterlerle istisna getirebilir; bildirilen bilgilerdeki değişiklik derhâl bildirilir (KVKK m. 16/2, 16/4). İstisna kapsamını `tr_kurum_karari_ara` (kvkk) ile teyit et | Değişiklik + derhâl |
 
-Run when no tracker exists, or with `--rebuild` to regenerate from scratch.
+## Mod 1 — Kurulum
 
-### Step 1: Load entity table
+Takip dosyası yoksa ya da `--rebuild` ile.
 
-Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Entity Management` → Entity table. If the entity table
-is populated (from org chart upload at cold-start), use it directly. If not,
-ask the user to either run the cold-start module or provide the entity list.
+**Adım 1 — Şirket tablosunu yükle:** `## Entity Management` → şirket tablosu. Boşsa `/corporate-legal:cold-start-interview --module entities` öner ya da listeyi iste.
 
-### Step 2: For each entity × jurisdiction, confirm the filing requirements
+**Adım 2 — Her şirket × ülke için yükümlülükleri teyit et.** Önbellekteki takvime güvenme.
+1. Mali müşavirin ya da yerel ajanın güncel takvimi var mı? En güvenilir kaynak odur.
+2. Yoksa kullanıcının bildiklerini sor: hesap dönemi, denetime tabi mi, defter fiziki mi elektronik mi, son GK tarihi, YK seçim tarihi, denetçi.
+3. Bilinmeyeni `unknown` yap; tarih uydurma.
 
-For each entity, confirm the current filing schedule with the registered agent or the relevant Secretary of State. State filing schedules change (some states move from fixed dates to anniversary-based schedules and back, fee structures are revised, filing categories are reclassified). Do not rely on a cached schedule. The tracker below records the dates you confirm; update them when your registered agent sends reminders.
+Yerleşik tabloda olmayan ülke için:
 
-For each jurisdiction where the entity is registered (domestic or foreign):
+> [Ülke] için takvimim yok; şimdi kaydedelim. [Şirket] için: 1. Hangi yıllık yükümlülük (yıllık bildirim, hesapların yayımı, genel kurul)? 2. Son gün nasıl hesaplanır (sabit tarih, kuruluş ayı, hesap dönemi + N ay)? 3. Tipik ücret (yaklaşık ya da "bilinmiyor")? 4. Orada işi kim yürütüyor?
 
-1. Ask the user whether they have a current compliance report from the registered agent — that's the most authoritative source.
-2. If not, ask the user what they know (filing type, due-date basis, last filed date, typical fee). Record what they provide.
-3. For anything the user does not know, flag the entity × jurisdiction entry as `unknown` — do not populate dates from a cached reference. The user's next step is to confirm with the registered agent or Secretary of State.
+Cevabı `custom_jurisdictions` bloğuna yaz (`jurisdiction`, `jurisdiction_type`, `filings` [`type`, `due_basis`, `typical_fee`, `notes`], `added_by: "manual"`, `added_date`); o ülkedeki tüm şirketlere uygulanır. Yurt dışı şirkette sor: yerel ajan var mı (`agent_managed: true` + `local_agent`), grup düzeyinde raporlama (gerçek faydalanıcı sicili, ülke bazlı raporlama) var mı. Kuruluş ayına bağlı yükümlülükte `formation_date` yoksa `unknown`.
 
-**Capture details in the tracker rather than a reference table:**
-
-> I don't have filing requirements for [Jurisdiction] in the reference table.
-> Let me capture them so we can track this going forward.
->
-> For [Entity] in [Jurisdiction]:
-> 1. What type of filing is required? (Annual report, franchise tax, confirmation
->    statement, annual return, or something else?)
-> 2. When is it due? (Fixed date like May 1, anniversary month, or other?)
-> 3. What's the typical fee? (Approximate is fine — or "unknown".)
-> 4. Who is your registered agent or local filing agent there?
-
-Store the answer in a `custom_jurisdictions` block in the tracker:
-
-```yaml
-custom_jurisdictions:
-  - jurisdiction: "[State / Country]"
-    jurisdiction_type: "[US state / Canada province / EU member state / other]"
-    filings:
-      - type: "[filing type]"
-        due_basis: "[fixed: MM-DD / anniversary month / other description]"
-        typical_fee: "[amount or unknown]"
-        notes: "[any other relevant information — e.g., local agent required, filing in local language]"
-    added_by: "manual"
-    added_date: "[date]"
-```
-
-This custom definition is then applied to all entities in that jurisdiction.
-Future `--init` runs and entity additions will use it automatically.
-
-**International jurisdictions specifically:**
-
-International filings vary enormously by jurisdiction. Always go through the
-custom definition flow above — confirm the filing type, cadence, and fee with
-the local filing agent or registered office agent before populating the tracker.
-
-For international entities, also ask:
-- Is there a local filing agent or registered office agent handling compliance?
-  If yes, note the agent name — the tracker can flag when to follow up with them
-  rather than calculating due dates independently.
-- Is the entity required to file any group-level reports in this jurisdiction
-  (e.g., country-by-country reporting, beneficial ownership registers,
-  economic substance filings)?
-
-Flag international entities with a local agent as `agent_managed: true` in the
-tracker. The report mode will list them separately with a note to confirm status
-with the local agent rather than showing a calculated due date.
-
-For anniversary-based filings: calculate from the formation_date in the tracker.
-If formation_date is null: set status to `unknown` and flag for confirmation.
-
-### Step 3: Write the tracker
-
-Generate `~/.claude/plugins/config/claude-for-legal/corporate-legal/entities/compliance-tracker.yaml` with all entities and their
-calculated filing requirements. Set initial status:
-- `current` if last_filed is within the current filing period
-- `due_soon` if due within 90 days and no last_filed for current period
-- `overdue` if due date has passed and no last_filed for current period
-- `unknown` if formation_date is missing or state is not in reference table
-
-Show a summary after generating:
+**Adım 3 — Yaz ve özetle:**
 
 ```
-Entity compliance tracker initialized.
-
-Entities: [N]
-Total jurisdictions: [N]
-Filings tracked: [N]
-
-Status summary:
-  ✅ Current:   [N]
-  ⏰ Due soon:  [N] (next 90 days)
-  🔴 Overdue:   [N]
-  ❓ Unknown:   [N] (confirm with registered agent)
-
-Run /corporate-legal:entity-compliance --report to see what's due.
+Şirket uyum takibi kuruldu.
+Şirket: [N] · Ülke/sicil: [N] · İzlenen kalem: [N]
+  ✅ Güncel: [N]   ⏰ Yaklaşan: [N] (90 gün)   🔴 Gecikmiş: [N]   ❓ Bilinmiyor: [N]
+Ne var görmek için: /corporate-legal:entity-compliance --report
 ```
 
----
+## Mod 2 — Rapor
 
-## Mode 2: Report
-
-Surfaces upcoming deadlines and flags overdue items. Default: next 90 days.
+`/corporate-legal:entity-compliance --report [--days 30|60|90|180]` (varsayılan 90).
 
 ```
-/corporate-legal:entity-compliance --report [--days 30|60|90|180]
+ŞİRKET UYUM RAPORU — [tarih] — [Müvekkil]
+🔴 GECİKMİŞ ([N]):   [Şirket] / [ülke] / [kalem] — son gün [tarih] (dayanak)
+⏰ [N] GÜN İÇİNDE ([N]):   [Şirket] / [ülke] / [kalem] — son gün [tarih]  [sorumlu]
+✅ SON 90 GÜNDE YAPILAN ([N]):   [Şirket] / [kalem] — [tarih]
+❓ BİLİNMEYEN ([N]):   [Şirket] / [kalem] — bilgi yok; mali müşavir/sicil ile teyit
+🌐 YEREL AJANDA ([N]):   [Şirket] / [ülke] — [ajan]; durumu doğrudan teyit edin
+SİCİL TEYİDİ:
+  Son tasdikname/faaliyet belgesi: [tarih] · 12 aydan eski: [liste]
 ```
 
-Output format:
+Takip 10'dan fazla şirket içeriyorsa ya da istenirse pano öner (CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`): duruma göre sayılar, sicil teyidi durumu, sıralanabilir şirket tablosu.
+
+## Mod 3 — Güncelleme
+
+### Sonuç doğuran eylem kapısı (tescil başvurusu, defter onayı, GK)
+
+Başvuruya yönlendirmeden ya da `last_filed` kaydetmeden önce `## Who's using this` → Role **avukat değilse**:
+
+> Ticaret siciline tescil başvurusu, defter onayı ya da genel kurul işlemi şirketin resmî beyanıdır; yanlış veya geç işlem idari para cezası, kararın üçüncü kişilere karşı ileri sürülememesi ya da iptal riski doğurur. Avukatla (ya da mali müşavirle) gözden geçirdiniz mi? Hayırsa brif: şirket, kalem, son gün · takipteki son kayıt · açık sorular (yetkililer ve temsil şekli güncel mi, merkez/adres değişti mi, esas sözleşme değişikliği var mı) · ne ters gidebilir · sorulacaklar (bu yıl gerçekten gerekli mi, kim imzalar). Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz.
+
+Açık "evet" olmadan yeni `last_filed` kaydetme. Okuma ve rapor kapı gerektirmez.
+
+**3a — Elle:** "[Şirket] olağan genel kurulu 25.03'te yapıldı, tutanak 28.03'te sicile verildi." → `last_filed`, `status: current`, `metadata.last_updated`; tutanak tescili için ayrı kalem aç.
+
+**3b — Rapordan (`--from-report`):** mali müşavir takvimi, sicil tasdiknamesi, TTSG ilanı, MERSİS çıktısı ya da yurt dışı ajan raporu (PDF, CSV, Excel). Her şirket için kalem, son gün, yapılma tarihi, sicil teyidi, uyarıları çıkar; unvana göre eşleştir, yakın eşleşmeyi sor ("ABC Holding A.Ş." / "ABC HOLDİNG ANONİM ŞİRKETİ"). Sonuç: eşleşen / raporda olup takipte olmayan / takipte olup raporda olmayan.
+
+**3c — Tarama (`--sweep`):** `unknown` ve `overdue` kalemleri tek tek sor: "[Şirket] / [kalem] — [durum]. Yapıldı mı? Ne zaman?" Her cevaptan sonra yaz, sonda özet ver.
+
+## Mod 4 — Sağlık denetimi (`--audit`)
+
+- **Uyum:** gecikmiş ve bilinmeyen kalemler.
+- **Faaliyetsiz şirketler:** `dormant` olanlar — tasfiye adayı mı? Taşıma maliyeti ve süren yükümlülükler (GK, defter, mali müşavir). 5 yıldan uzun süredir faaliyetsizse tasfiye adayı olarak işaretle. `formation_date` eksikse veri boşluğu.
+- **Sermaye kaybı:** son yıllık bilançoda sermaye ile kanuni yedek akçeler toplamının yarısı zarar nedeniyle karşılıksız kaldıysa YK GK'yı hemen toplantıya çağırır; üçte ikisi karşılıksızsa ve GK sermayenin üçte biriyle yetinme ya da tamamlama kararı vermezse şirket kendiliğinden sona erer; borca batıklık şüphesinde ara bilanço ve gerekirse mahkemeye bildirim (m. 376). Finans verisi yoksa soruyu işaretle.
+- **Yönetim organı:** görev süresi dolmuş ya da 90 gün içinde dolacak YK üyeleri/müdürler (m. 362/1); tescilli temsil yetkisi güncel mi (m. 373).
+- **Denetim:** denetime tabi şirkette dönem için denetçi seçilmiş ve tescil edilmiş mi (m. 399/1, 399/6); denetçi olamayacak kişi kuralları (m. 400) için denetçinin şirkete başka hizmet verip vermediği.
+- **Sicil teyidi:** tasdikname/faaliyet belgesi hiç yok ya da 12 aydan eski — işlem veya finansman öncesi yenile.
+- **Grup:** pay edinim bildirimleri (m. 198) ve bağlılık raporu (m. 199) eksik mi; şirketler arası sözleşmeler (hizmet, lisans, borç) var mı; yabancı ana şirketin LEI ve grup yapısı `gleif_get_group_structure` ile tabloyla tutarlı mı.
+- **Şube:** yabancı şirket şubesinde ticari mümessil tescilli mi (m. 40/4).
 
 ```
-ENTITY COMPLIANCE REPORT — [date]
-[Company Name]
-
-🔴 OVERDUE ([N]):
-  [Entity] / [State] / [Filing type] — was due [date]
-
-⏰ DUE WITHIN [N] DAYS ([N]):
-  [Entity] / [State] / [Filing type] — due [date]  [registered agent]
-  [Entity] / [State] / [Filing type] — due [date]
-
-✅ RECENTLY FILED ([N] in last 90 days):
-  [Entity] / [State] / [Filing type] — filed [date]
-
-❓ UNKNOWN STATUS ([N]):
-  [Entity] / [State] / [Filing type] — no information; confirm with registered agent
-
-🌐 AGENT-MANAGED ([N]):
-  [Entity] / [Country] / [Filing type] — managed by [local agent]; confirm status directly
-  [Entity] / [Country] — no local agent recorded; add one with --update
-
-GOOD STANDING:
-  Last confirmed: [date]
-  Entities with confirmed good standing: [N] of [total]
-  Entities not confirmed in last 12 months: [list]
+ŞİRKET SAĞLIK DENETİMİ — [tarih]
+UYUM: gecikmiş [N] · bilinmeyen [N] → --sweep
+FAALİYETSİZ ([N]): [liste, yaş] · tasfiye adayı: [liste]
+SERMAYE KAYBI / BORCA BATIKLIK: [işaretler ya da "veri yok"]
+YÖNETİM ORGANI: süresi dolan [liste] · temsil tescili eski [liste]
+DENETİM: denetçi seçilmemiş/tescilsiz [liste]
+SİCİL TEYİDİ: kayıt yok [N] · 12 aydan eski [N]
+GRUP: bildirim/bağlılık raporu eksik [liste]
+ÖNERİLEN EYLEMLER: 1. [en öncelikli] 2. [..]
 ```
 
-If the tracker covers more than ~10 entities, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by filing status (overdue / due soon / filed / unknown), counts by good-standing state, and a sortable entity table with jurisdiction, filing type, and next due date.
+## Mod 5 — Dışa aktarma
 
----
+`/corporate-legal:entity-compliance --export [--format csv|table]` (varsayılan CSV). Sütunlar:
+`Entity Name, Entity Type, State of Formation, MERSIS No, Formation Date, Status, Registered Agent, Jurisdiction, Qualification Type, Filing Type, Due Date, Last Filed, Last Fee, Good Standing Confirmed, Notes`
+Her ülke × kalem bir satır. `--format table`: yalnız sonraki 90 günü gösteren markdown tablo.
 
-## Mode 3: Update
+**Formül enjeksiyonu savunması:** Excel/Sheets/CSV'ye yazmadan önce belge, araç sonucu ya da yapıştırmadan gelen her metin hücresinde `=`, `+`, `-`, `@`, sekme ya da satır başı ile başlayan değerin önüne tek tırnak koy (`'=SUM(A1:A10)`). CSV'de virgül, çift tırnak ve satır sonunu RFC 4180'e göre tırnakla. Kendi yazdığın başlıklar ve hesapladığın değerler güvenlidir. İsteğe bağlı değildir.
 
-Updates one or more entities in the tracker. Three sub-modes:
+## Bu skill ne yapmaz
 
-### Consequential-action gate (file SOI / annual report)
-
-**Before directing or confirming a filing:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
-
-> Filing a Statement of Information, annual report, or franchise tax return with a Secretary of State has legal consequences — it's a formal representation from the entity, it carries fees, and missed or incorrect filings can cause loss of good standing or franchise-tax defaults. Have you reviewed this with an attorney (or a qualified registered agent) before filing? If yes, proceed to record the filing. If no, here's a brief to bring to them:
->
-> - Entity, jurisdiction, filing type, and due date
-> - What the tracker says about the last filing (date, fee, officer/director information last reported)
-> - Open questions (is the officer/director information still accurate; has the registered agent changed; has the principal office changed)
-> - What could go wrong (out-of-date officer information, missed deadline triggering franchise tax or dissolution, fee calculation error)
-> - What to ask the attorney (is a filing actually needed this year; are there any charter amendments or officer changes that need to be reflected; who should sign)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
-
-Do not record a new `last_filed` date past this gate without an explicit yes. Tracker reads, deadline reports, and "what's due soon" output do not require the gate.
-
-### 3a: Manual update
-
-```
-/corporate-legal:entity-compliance --update
-```
-
-Attorney tells Claude what was filed:
-> "We filed the Delaware annual report for [Entity] on March 1. Fee was $450."
-
-Claude updates:
-- `last_filed` → March 1 date
-- `last_fee` → $450
-- `status` → `current`
-- `last_updated` in metadata
-
-### 3b: Registered agent report upload
-
-```
-/corporate-legal:entity-compliance --update --from-report
-```
-
-User uploads a CT Corp, National Registered Agents, or similar compliance
-report (PDF, CSV, or Excel). Claude reads it and updates matching entities:
-
-From the report, extract for each entity:
-- Filing type and due date
-- Last filed date (if present)
-- Good standing status and date confirmed
-- Any flags or warnings from the agent
-
-Match report entities to tracker entities by name (flag near-matches for
-confirmation — "Acme Holdings LLC" vs. "Acme Holdings, LLC" are probably
-the same entity).
-
-After processing:
-```
-Updated [N] entities from report.
-
-Matched: [N]
-Unmatched (in report, not in tracker): [list — may need to add to entity table]
-Not in report (in tracker, no update): [list — status unchanged]
-```
-
-### 3c: Bulk status sweep
-
-```
-/corporate-legal:entity-compliance --sweep
-```
-
-Walks through each entity with `unknown` or `overdue` status and asks for
-current information one at a time:
-
-> [Entity] / [State] / [Filing type] — currently showing as [status].
-> Has this been filed? If yes, when and what was the fee?
-
-Updates tracker after each confirmation. Produces a completion summary.
-
----
-
-## Mode 4: Health audit
-
-```
-/corporate-legal:entity-compliance --audit
-```
-
-Broader review beyond just filing status. Surfaces:
-
-**Filing compliance:**
-- Overdue items (from report mode)
-- Unknown status items
-
-**Entity health:**
-- Entities marked as `dormant` — flag for review: should these be dissolved?
-  Carrying dormant entities costs money (annual fees, registered agent fees)
-  and creates ongoing compliance obligations.
-- Entities with formation_date older than 5 years and status `dormant` — flag
-  as dissolution candidates.
-- Entities missing formation_date — flag as data gap.
-
-**Good standing gaps:**
-- Entities with no `confirmed_good_standing` date — unknown whether in good
-  standing; risk if a transaction requires a certificate on short notice.
-- Entities with `confirmed_good_standing` older than 12 months — stale; worth
-  refreshing, especially if M&A or financing is anticipated.
-
-**Foreign qualification gaps:**
-- Based on `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` entity table: are there states in the company's
-  operational footprint (offices, employees) where entities are not foreign
-  qualified? This requires the attorney to confirm operational presence —
-  Claude can flag the question but cannot determine presence independently.
-
-**Intercompany agreement gaps:**
-- From `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`: if intercompany agreements are marked as partial or no,
-  flag which entity relationships likely need agreements (parent-subsidiary
-  services, IP licenses, loans).
-
-Output format:
-
-```
-ENTITY HEALTH AUDIT — [date]
-
-FILING COMPLIANCE
-  Overdue: [N]
-  Unknown status: [N]
-  Action: run --sweep to confirm unknown items
-
-DORMANT ENTITIES ([N])
-  [List of dormant entities with age and annual carrying cost if known]
-  Dissolution candidates (>5 years dormant): [list]
-
-GOOD STANDING
-  No record: [N] entities
-  Stale (>12 months): [N] entities
-  Consider refreshing before: [any upcoming transactions or contract renewals if known]
-
-POTENTIAL GAPS
-  Foreign qualification: [flag question — confirm operational presence in:]
-    [list of states from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` footprint not in tracker as qualified]
-  Intercompany agreements: [status from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
-
-RECOMMENDED ACTIONS
-  1. [Highest priority action]
-  2. [etc.]
-```
-
----
-
-## Mode 5: Export
-
-```
-/corporate-legal:entity-compliance --export [--format csv|table]
-```
-
-Produces a flat export suitable for sharing with finance, legal ops, or
-outside registered agent. Default: CSV.
-
-CSV columns:
-`Entity Name, Entity Type, State of Formation, Formation Date, Status,
-Registered Agent, Jurisdiction, Qualification Type, Filing Type, Due Date,
-Last Filed, Last Fee, Good Standing Confirmed, Notes`
-
-One row per filing per jurisdiction. Multiple rows per entity (one per
-jurisdiction × filing type combination).
-
-If `--format table`: produce a markdown table suitable for pasting into
-a report or Slack message, showing only the next 90 days of filings.
-
----
-
-## What this skill does not do
-
-- It does not file anything. Output is a tracker and a to-do list; filing
-  is done by the attorney, outside counsel, or registered agent.
-- It does not pull good standing certificates. It tracks when certificates
-  were last confirmed; obtaining them is manual or via registered agent.
-- It does not determine whether foreign qualification is required in a given
-  state. That analysis depends on facts about business activity that the
-  attorney must confirm.
-- It does not replace a registered agent service for companies with complex
-  multi-entity structures. CT Corp, National Registered Agents, and similar
-  services have dedicated compliance teams and direct state relationships.
-  This skill is best suited for smaller organizations without agent support,
-  or as a lightweight layer on top of agent data for organizations that do
-  have support.
-- The filing deadline reference table is not legal advice and may not reflect
-  current requirements. Confirm all deadlines before relying on them.
-
-
-## Formula injection defense
-
-Before writing any cell in Excel, Sheets, or CSV output, neutralize formula injection. Counterparty-sourced text (contract quotes, party names, registered agent data, CLM exports) is attacker-controlled. A cell starting with `=`, `+`, `-`, `@`, `	`, `
-`, or `
-` will be interpreted as a formula or break the row structure.
-
-- **Prefix with a single quote:** `'=SUM(A1:A10)` → `=SUM(A1:A10)` (displayed as text, not executed)
-- **Applies to every cell that contains text sourced from a document, a tool result, or a user paste.** Column headers you control and computed values you produce are safe.
-- **CSV: also escape embedded commas, double quotes, newlines** (RFC 4180 quoting).
-- This is not optional. A spreadsheet your user opens in Excel that triggers a macro or exfiltrates data via DDE is a supply-chain attack on your user.
+- Başvuru yapmaz, deftere onay almaz, genel kurul toplamaz; çıktı takip ve yapılacaklar listesidir.
+- Sicil tasdiknamesi ya da faaliyet belgesi almaz; son teyit tarihini izler.
+- Bir şirketin bağımsız denetime tabi olup olmadığına ya da şube açılması gerekip gerekmediğine karar vermez; olgulara bağlıdır, avukat ve mali müşavir teyit eder.
+- Vergi, SGK ve sektör düzenleyicisi (BDDK, EPDK, SPK) takvimlerinin yerini tutmaz.
+- Takvim tablosu hukuki görüş değildir; güncel olmayabilir. Güvenmeden önce teyit edin.
 
 ---
 
@@ -2072,97 +1387,72 @@ Before writing any cell in Excel, Sheets, or CSV output, neutralize formula inje
 ---
 name: integration-management
 description: >
-  Post-closing M&A integration tracker — phased workplan, consent tracking,
-  contract assignment at scale, weekly status reports. Initializes from whatever
-  deal artifacts are available (purchase agreement, deal summary, closing
-  checklist) and connects to deal-context.md and closing-checklist.yaml from the
-  M&A cold-start. Use when user says "integration", "post-close", "post-closing",
-  "consents outstanding", "contract assignment", "integration status", or
-  "what's left on the deal".
+  Kapanış sonrası M&A entegrasyon takibi — evreli iş planı, onay takibi, toplu
+  sözleşme devri, haftalık durum raporu. Eldeki işlem belgelerinden (satın alma
+  sözleşmesi, işlem özeti, kapanış listesi) başlar; M&A cold-start'ın
+  deal-context.md ve closing-checklist.yaml dosyalarına bağlanır. Türk hukukundaki
+  kapanış sonrası kalemleri (ticaret sicili tescil/ilan, pay defteri, SGK işyeri
+  bildirgesi — 5510 m. 11, işyeri devri — İş K. m. 6, sözleşme devri — TBK m.
+  205, SMK m. 148 sicil kaydı, birleşmede alacaklıya çağrı — TTK m. 157) iş
+  planına yerleştirir. "Entegrasyon", "kapanış sonrası", "bekleyen onaylar",
+  "sözleşme devri", "entegrasyon durumu", "işlemde ne kaldı" denildiğinde kullan.
 argument-hint: "[--init | --contracts | --report | --update | --export [--format csv|table] [--section all|consents|contracts|workplan]] [--deal [code]]"
 ---
 
-# /integration-management
+# /integration-management — Kapanış Sonrası Entegrasyon
 
-1. Load `deal-context.md` for deal code, target, close date, deal lead.
-2. Load `integration-tracker.yaml` if it exists (or create on --init).
-3. Use the workflow below.
-4. Route by flag:
-   - `--init`: Mode 1 — read PA, build phased workplan, consent tracker
-   - `--contracts`: Mode 2 — import contract list (repository or upload), tier and classify
-   - `--report`: Mode 3 — generate status report
-   - `--update`: Mode 4 — manual update or parse uploaded status document
-   - `--export`: Mode 5 — CSV or table export
-5. Read/write `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/integration-tracker.yaml`.
-6. After any write: show summary of changes and surface any new flags.
+1. `deal-context.md`'yi ve `firm-profile.md`'i yükle (işlem kodu, [Müvekkil] ve hedef, kapanış tarihi, işlem lideri, işlem yapısı).
+2. `integration-tracker.yaml` varsa yükle (`--init`'te oluştur).
+3. Bayrağa göre: `--init` Mode 1 (iş planı + onay takibi), `--contracts` Mode 2 (sözleşme listesi, katman), `--report` Mode 3 (durum raporu), `--update` Mode 4 (güncelleme), `--export` Mode 5 (CSV/tablo).
+4. `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/integration-tracker.yaml` oku/yaz.
+5. Her yazmadan sonra değişiklik özetini ve yeni işaretleri göster.
 
----
+## Matter bağlamı
 
-## Matter context
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Amaç
 
----
+İşlem kapanır, hukuki dağınıklık kalır. Bu skill kapanış sonrası entegrasyonun hukuk iş akışını yönetir — iş entegrasyonunu, BT sistemlerini, İK organizasyonunu değil: onaylar, sözleşme devirleri, şirket yapısının sadeleştirilmesi, sınai mülkiyet sicil kayıtları, satın alma sözleşmesinden (SPA/APA) doğan yükümlülükler. Neyin bittiğini, neyin vadesinin geldiğini, neyin engelli olduğunu ve neyin karar beklediğini izler.
 
-## Purpose
+## Takip dosyası
 
-Outside counsel closes the deal. Legal inherits the mess. This skill is the
-program management layer for post-closing integration — not the business
-integration, not IT systems, not HR org design. The legal workstream: consents,
-contract assignments, entity rationalization, IP recordals, PA obligations.
-It tracks what's done, what's due, what's blocked, and what needs a decision.
-
----
-
-## Tracker file
-
-Lives at `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/integration-tracker.yaml`. Read `deal-context.md` for
-the deal code, target name, close date, and deal lead. Inherit any post-close
-items from `closing-checklist.yaml` if it exists.
+`deals/[code]/integration-tracker.yaml`. `closing-checklist.yaml` varsa kapanış sonrası kalemleri devral. Anahtarlar ve durum değerleri İngilizce kalır (dışa aktarım ve diğer skill'ler okur); açıklamalar Türkçe.
 
 ```yaml
-# integration-tracker.yaml
-
 metadata:
-  deal_code: "[code]"
-  target: "[company name]"
+  deal_code: "[kod]"
+  target: "[unvan]"
+  structure: "[share_deal_as / share_deal_ltd / asset_deal / merger / demerger]"
   close_date: "[YYYY-MM-DD]"
-  deal_lead: "[name]"
-  outside_counsel: "[firm and lead attorney]"
-  last_updated: "[date]"
-  last_status_report: "[date or null]"
+  deal_lead: "[ad]"
+  outside_counsel: "[büro ve sorumlu avukat]"
+  last_updated: "[tarih]"
+  last_status_report: "[tarih ya da null]"
 
 pa_dates:
-  required_consents_deadline: "[YYYY-MM-DD — extract from PA]"
-  rep_survival_expires: "[YYYY-MM-DD]"
-  escrow_release: "[YYYY-MM-DD or null]"
+  required_consents_deadline: "[YYYY-MM-DD — sözleşmeden]"
+  rep_survival_expires: "[YYYY-MM-DD — her beyan türü ayrı]"
+  escrow_release: "[YYYY-MM-DD ya da null]"
   earnout_milestones:
-    - description: "[milestone]"
+    - description: "[kilometre taşı]"
       measurement_date: "[YYYY-MM-DD]"
       payment_date: "[YYYY-MM-DD]"
-      owner: "finance"   # always finance — legal tracks date only
+      owner: "finance"   # her zaman finans — hukuk yalnız tarihi izler
 
 workplan:
-  day_1:
-    target_date: "[close_date + 7 days]"
-    items: []
-  day_30:
-    target_date: "[close_date + 30 days]"
-    items: []
-  day_90:
-    target_date: "[close_date + 90 days]"
-    items: []
-  day_180:
-    target_date: "[close_date + 180 days]"
-    items: []
+  day_1:   { target_date: "[close_date + 7 gün]",   items: [] }
+  day_30:  { target_date: "[close_date + 30 gün]",  items: [] }
+  day_90:  { target_date: "[close_date + 90 gün]",  items: [] }
+  day_180: { target_date: "[close_date + 180 gün]", items: [] }
 
 required_consents: []
 desired_consents: []
 
 contracts:
   source: "[repository / manual-upload / disclosure-schedule]"
-  repository_path: "[path or null]"
-  last_imported: "[date]"
+  repository_path: "[yol ya da null]"
+  last_imported: "[tarih]"
   total: 0
   tier_1: []
   tier_2: []
@@ -2170,458 +1460,224 @@ contracts:
   tier_4: []
 ```
 
-**Workplan item structure:**
-```yaml
-- id: "W-001"
-  description: "[action item]"
-  phase: "[day_1 / day_30 / day_90 / day_180]"
-  owner: "[legal-owns / legal-supports]"
-  workstream: "[legal / hr / it / finance / real-estate / other]"
-  priority: "[critical / high / medium / low]"
-  deadline: "[YYYY-MM-DD or null]"
-  deadline_basis: "[pa-obligation / regulatory / best-practice]"
-  status: "[not_started / in_progress / complete / blocked / deferred]"
-  blocker: "[description or null]"
-  depends_on: "[item id or null]"
-  notes: ""
-```
+**İş planı kalemi:** `id` (W-001), `description`, `phase` (day_1/day_30/day_90/day_180), `owner` (legal-owns / legal-supports), `workstream` (legal / hr / it / finance / real-estate / other), `priority` (critical / high / medium / low), `deadline`, `deadline_basis` (pa-obligation / regulatory / best-practice), `status` (not_started / in_progress / complete / blocked / deferred), `blocker`, `depends_on`, `notes`.
 
-**Consent entry structure:**
-```yaml
-- id: "CON-001"
-  counterparty: "[name]"
-  contract_type: "[customer / vendor / lease / IP-license / financial / other]"
-  required_consent: true        # true = named in PA Required Consents schedule
-  pa_deadline: "[YYYY-MM-DD]"   # only for required_consent: true
-  status: "[not_started / outreach_sent / in_negotiation / obtained / waived / refused]"
-  assigned_to: "[name or null]"
-  outreach_date: "[date or null]"
-  obtained_date: "[date or null]"
-  notes: ""
-```
+**Onay kaydı:** `id` (CON-001), `counterparty`, `contract_type` (customer / vendor / lease / IP-license / financial / public / other), `required_consent` (true = sözleşmenin Gerekli Onaylar ekinde), `pa_deadline` (yalnız true için), `status` (not_started / outreach_sent / in_negotiation / obtained / waived / refused), `assigned_to`, `outreach_date`, `obtained_date`, `notes`.
 
-**Contract entry structure:**
-```yaml
-- id: "C-001"
-  name: "[contract name or filename]"
-  counterparty: "[party name]"
-  contract_type: "[MSA / SaaS / lease / IP-license / employment / NDA / other]"
-  annual_value: "[amount or unknown]"
-  assignment_mechanism: "[auto-assign / consent-required / coc-provision / silent]"
-  tier: 1   # 1=Required Consent, 2=material+consent-required, 3=CoC, 4=auto-assign
-  required_consent: false
-  pa_deadline: "[YYYY-MM-DD or null]"
-  status: "[not_reviewed / no_action / consent_pending / outreach_sent / in_negotiation / consent_obtained / assignment_complete / waived / refused / coc_triggered]"
-  assigned_to: "[name or null]"
-  notes: ""
-  last_updated: "[date]"
-```
+**Sözleşme kaydı:** `id` (C-001), `name`, `counterparty`, `contract_type`, `annual_value` (tutar + para birimi ya da unknown), `assignment_mechanism` (auto-assign / consent-required / coc-provision / silent / not_reviewed), `tier` (1-4), `required_consent`, `pa_deadline`, `status` (not_reviewed / no_action / consent_pending / outreach_sent / in_negotiation / consent_obtained / assignment_complete / waived / refused / coc_triggered), `assigned_to`, `notes`, `last_updated`.
 
----
+## Mode 1: Başlat (`--init`)
 
-## Mode 1: Initialize
+### Adım 1: İşlem bağlamı
 
-```
-/corporate-legal:integration-management --init [--deal [code]]
-```
+`deals/[code]/deal-context.md`'yi oku; yoksa işlem kodu, hedef, **işlem yapısı**, kapanış tarihi, işlem lideri ve dış avukatı sor ve yaz. `closing-checklist.yaml` varsa kapanış sonrası işaretli kalemleri Day 1 ya da Day 30'a durumlarıyla al.
 
-### Step 1: Load deal context
+### Adım 2: İşlem girdileri
 
-Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md`. If not found: ask for deal code name,
-target company, close date, deal lead, and outside counsel. Write to
-deal-context.md if it doesn't exist.
+**Tam satın alma sözleşmesi en eksiksiz takibi üretir**: Gerekli Onaylar eki ve kapanış sonrası taahhütler kesin süre ve yükümlülüklerin kaynağıdır. Ama skill eldekiyle başlar; kısmi girdi boş sayfa yerine avukatın dolduracağı bir iskelet üretir.
 
-Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml` if it exists. Any items marked as
-post-closing become Day 1 or Day 30 workplan items (inherit status from
-closing-checklist).
+> Hangi işlem belgeleri elinizde? **İdeal:** satın alma sözleşmesi — kapanış sonrası taahhütleri, Gerekli Onaylar ekini, beyanların geçerlilik sürelerini, emanet ve kazanç payı (earn-out) hükümlerini okurum. **Yararlı:** işlem özeti/term sheet, dış avukatın kapanış sonrası yapılacaklar listesi, mevcut iş planı, M&A cold-start'ın ürettiği `closing-checklist.yaml` (otomatik devralırım), yalnız Gerekli Onaylar listesi. **Hiçbiri yoksa:** kim, ne zaman devralındı, başlıca açık işler ne — sade anlatın, standart Day 1/30/90/180 iskeletini kurarım.
 
-### Step 2: Read deal inputs
-
-**A full purchase agreement produces the most complete tracker.** The PA's Required
-Consents schedule and post-closing covenants section are the authoritative source
-for hard deadlines and legal obligations. But the skill can initialize usefully
-from whatever is available — partial inputs produce a starter tracker the attorney
-fills in rather than an empty page.
-
-> What deal artifacts do you have available? Share whatever exists:
->
-> **Ideal:** The purchase agreement (upload or connected document path). I'll read
-> the post-closing covenants, Required Consents schedule, survival periods, escrow
-> terms, and earn-out provisions.
->
-> **Also useful — share any combination of:**
-> - Deal summary or term sheet (gives me the key economics and timeline)
-> - Integration to-do list or post-close checklist from outside counsel
-> - Existing workplan or integration tracker (I'll import and continue from it)
-> - Closing checklist — if generated by the M&A cold-start skill, I'll inherit it
->   automatically from `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/closing-checklist.yaml`
-> - Required Consents list alone (if the PA is held by outside counsel)
->
-> **If you have nothing written down:** Tell me the deal in plain terms — who was
-> acquired, when it closed, what the main open items are — and I'll build a
-> starter tracker from the standard Day 1/30/90/180 workplan that you edit.
-
-**What changes based on what's provided:**
-
-| Input | What you get |
+| Girdi | Sonuç |
 |---|---|
-| Full PA | Complete workplan + Required Consents with deadlines + PA dates |
-| PA + contract list | Full tracker + contract assignment tier list |
-| Deal summary / to-do list | Standard workplan skeleton, Required Consents as placeholders |
-| Nothing | Standard workplan scaffold; attorney fills in consents and contract lists |
+| Tam sözleşme | Tam iş planı + süreli Gerekli Onaylar + sözleşme tarihleri |
+| Sözleşme + sözleşme listesi | Tam takip + devir katman listesi |
+| İşlem özeti / yapılacaklar | Standart iskelet, onaylar yer tutucu |
+| Hiçbiri | Standart iskelet; onay ve sözleşmeleri avukat doldurur |
 
-The tracker is designed to be built out progressively — a skeleton today, filled
-in as more information becomes available.
+**Sözleşmeden çıkar:** Gerekli Onaylar (karşı taraf, tür, süre → `required_consent: true`), kapanış sonrası yükümlülükler (evreye yerleştir, `pa-obligation`), Gerekli Onaylar son günü, beyanların geçerlilik süreleri (genel, temel, vergi beyanları genelde farklıdır — her birini ayrı kaydet, varsayılan uydurma), emanet çözülme tarihleri, kazanç payı ölçüm ve ödeme tarihleri (`owner: finance`).
 
-**From the PA extract:**
+**Beyan süreleri ve zamanaşımı:** zamanaşımı süreleri sözleşmeyle değiştirilemez (TBK m. 148); sözleşmedeki tazmin bildirim/talep sürelerinin bu kuralla ilişkisi **tartışmalı — içtihadı kontrol et**. Sözleşme yabancı hukuka tabiyse o hukuka göre değerlendir. Takipte yalnız sözleşmedeki tarihleri yaz, nitelendirmeyi avukata bırak.
 
-*Required Consents schedule:*
-- For each consent: counterparty name, contract type, and the contractual
-  deadline. Set as required_consent: true with pa_deadline populated.
+### Adım 3: Evreli iş planı
 
-*Post-closing obligations:*
-- Map each obligation to a workplan item. Assign to the correct phase based
-  on the deadline. Tag as pa-obligation in deadline_basis.
+Standart kalemleri üret, sözleşme yükümlülüklerini ekle, kapanış listesinden gelenleri doldurulmuş al. Yapıya uymayan kalemi atla (ör. pay devrinde işyeri devri bildirimi yok).
 
-*Key dates:*
-- Required Consents deadline — extract from the PA
-- Rep and warranty survival expiry — pull the specific survival periods from the PA.
-  General, fundamental, and tax reps typically have different survival periods; pull
-  each one the PA defines and record them separately. Do not assume a default.
-- Escrow release date(s) — extract from the PA
-- Any earn-out measurement and payment dates — add to pa_dates.earnout_milestones,
-  owner always set to "finance"
+**Day 1 — hukuk yürütür:**
+- Pay defteri kaydı: AŞ'de devralan, usulüne uygun devir ispat edilince yazılır (TTK m. 499); Ltd.'de pay defteri (m. 594) ve müdürlerin tescil başvurusu (m. 598) [critical]
+- YK / müdür değişikliği, temsil yetkisi, imza sirküleri: genel kurul/YK kararı, ticaret siciline tescil ve TTSG ilanı — tescil edilen husus ilanı izleyen iş gününden itibaren üçüncü kişilere karşı sonuç doğurur (TTK m. 36/1); tescili zorunlu hususta sicil müdürü davet eder, idari para cezası riski var (m. 33 — tutar yıllık güncellenir, teyit et) [critical]
+- Banka imza yetkililerinin güncellenmesi: yeni imza sirküleri ve tescil/ilan suretiyle bankalara bildirim [critical]
+- Unvan değişikliği (varsa): esas sözleşme değişikliği, tescil, ilan; unvan ticari belgelerde ve internet sitesinde (m. 39/2) [high]
+- Kapanışta ertelenen fikrî hak devirlerinin imzası: sınai mülkiyet hakkı devri yazılı ve noter onaylı (SMK m. 148/4); telif devri için FSEK şekil şartını çek [critical]
+- Alan adı ve sosyal medya hesaplarının devri [high]
+- Yönetici sorumluluk sigortası: eski yöneticiler için uzatılmış bildirim/teminat süresinin bağlandığını teyit et [critical]
+- MERSİS kayıtlarının güncelliği [high]
 
-### Step 3: Build the phased workplan
+**Day 1 — hukuk destekler:**
+- Çalışan duyurusu (İK yürütür, hukuk inceler). İşyeri devrinde iş sözleşmeleri hak ve borçlarıyla devralana geçer, kıdem devreden yanındaki başlangıçtan hesaplanır, devir tek başına fesih sebebi değildir (İş K. m. 6; TBK m. 428). Birleşme/bölünmede TTK m. 178 (işçinin itiraz hakkı) — ayrıntı `/employment-legal`.
+- SGK: işyerinin başka işverene devrinde devralma tarihini takip eden 10 gün içinde işyeri bildirgesi; şirket birleşmesi/tür değişikliğinde tescil ilanını takip eden 10 gün (5510 m. 11 — metin hâlâ 6762 sayılı eski TTK'ya atıf yapar) (İK/muhasebe yürütür, hukuk teyit eder).
+- Müşteri bildirimleri (iş birimi yürütür, hukuk doğruluğu inceler).
+- Kişisel veri: veri sorumlusu değişiyorsa aydınlatma metinleri ve VERBİS kaydı → `/privacy-legal`.
 
-Generate standard workplan items for each phase. Add PA obligations extracted
-in Step 2. Items inherited from the closing checklist are pre-populated.
+**Day 30 — hukuk yürütür:**
+- Gerekli Onaylar ilk dalgası: tüm karşı taraflarla temas, temas kaydı [critical]
+- Sınai mülkiyet devir/lisanslarının TÜRKPATENT siciline kaydı — kaydedilmeyen işlem iyiniyetli üçüncü kişiye karşı ileri sürülemez (SMK m. 148/5). ArthurLegal'da TÜRKPATENT aracı yok; durumu kurumun sisteminden teyit et [high]
+- Yabancı sicillerdeki fikrî haklar: ülkesine göre yerel avukat [medium]
+- Önemli sözleşmeler: katman 1 ve 2 devir analizini bitir [high]
+- Sigorta poliçelerinde sigortalı/lehtar değişikliği [high]
 
-**Day 1 — legal-owns:**
-- Entity name change filing (if acquired entity is being renamed) [priority: critical]
-- Bank account signatory updates — notify bank with closing documentation [priority: critical]
-- Registered agent notification of ownership change [priority: high]
-- Key IP assignment execution — if any IP assignments were deferred from closing [priority: critical]
-- Domain name and social media account transfer [priority: high]
-- D&O insurance — confirm tail policy is bound for acquired entity directors [priority: critical]
-- Secretary of State ownership notifications where required by state law [priority: high]
+**Day 30 — hukuk destekler:**
+- Veri taşıma: yurt dışı sunucu ya da grup içi aktarım varsa KVKK m. 9 (yeterlilik kararı, uygun güvenceler, standart sözleşmenin 5 iş günü içinde Kurula bildirimi) → `/privacy-legal:dpa-review`
+- Kira sözleşmeleri: malvarlığı devrinde kira ilişkisinin devri kiraya verenin yazılı rızasına bağlı; işyerinde haklı sebep olmadıkça reddedilemez (TBK m. 323) (tesis yönetimi yürütür, hukuk danışır)
 
-**Day 1 — legal-supports:**
-- Employee announcement and communications (HR owns, legal reviews) [priority: critical]
-- Benefits day-1 coverage confirmation (HR owns, legal advises on COBRA and plan terms)
-- Customer communication letters (business owns, legal reviews for accuracy)
+**Day 90 — hukuk yürütür:**
+- Gerekli Onaylar son günü: hepsi alınmış ya da eskale edilmiş olmalı [critical, deadline: pa_dates.required_consents_deadline]
+- Şirket yapısı kararı: ayrı tut / birleştir / tasfiye et / tür değiştir (birleşme TTK m. 134 vd.; tür değiştirme m. 180 vd.) [high]
+- İkinci onay dalgası [high]
+- Katman 3 (CoC) sözleşmelerin çözümü [critical]
 
-**Day 30 — legal-owns:**
-- Required Consents initial push — contact all counterparties, document outreach [priority: critical]
-- IP assignment recordal at USPTO (patents, trademarks) [priority: high]
-- Copyright assignment filing [priority: medium]
-- Trademark assignment recording [priority: high]
-- Material contract review — complete tier 1 and tier 2 contract assignment analysis [priority: high]
-- Insurance tail policy final confirmation [priority: high]
+**Day 90 — hukuk destekler:**
+- İK uyumlaştırma (çalışma koşulu değişikliği, TİS, yan haklar) → `/employment-legal`
 
-**Day 30 — legal-supports:**
-- Data migration privacy review (IT owns, legal advises on data transfer mechanisms)
-- Real estate lease review for assignment provisions (facilities owns, legal advises)
+**Day 180 — hukuk yürütür:**
+- Birleşme (karar verildiyse): yazılı birleşme sözleşmesi, genel kurul onayı ve nisaplar (TTK m. 145, 151), tescil (m. 152) — tescille aktif ve pasif devralana geçer (m. 153); alacaklılara TTSG'de yedişer gün arayla üç ilan + internet sitesi ilanı, alacaklılar 3 ay içinde teminat isteyebilir (m. 157) [high]
+- Tasfiye (karar verildiyse) [high]
+- Sözleşme devirleri: devralanın adına geçmesi gereken sözleşmeler — üç taraflı devir ya da karşı tarafın izni/onayı, devredilen sözleşmenin şekliyle (TBK m. 205) [high]
+- Beyan sürelerinin takibi: yaklaşan bitişi not et [medium]
 
-**Day 90 — legal-owns:**
-- Required Consents deadline — all Required Consents must be obtained or escalated [priority: critical, deadline: pa_dates.required_consents_deadline]
-- Entity rationalization decision — recommend keep separate / merge / dissolve [priority: high]
-- Benefits plan assumption or termination documentation [priority: high]
-- Secondary consent push — remaining outstanding consents [priority: high]
-- Tier 3 change of control contract resolution [priority: critical]
-
-**Day 90 — legal-supports:**
-- Full HR harmonization documentation (HR owns, legal advises on employment law)
-
-**Day 180 — legal-owns:**
-- Entity merger filing — if rationalization decision is to merge [priority: high]
-- Entity dissolution filing — if rationalization decision is to wind down [priority: high]
-- Full contract novation — contracts requiring acquiror's name [priority: high]
-- Rep survival tracking — note upcoming expiry date [priority: medium]
-
-Show summary after generating:
+Özet:
 
 ```
-Integration tracker initialized — [Deal code] / [Target]
-
-Close date: [date]
-Required Consents deadline: [date] ([N] days from today)
-Rep survival expires: [date]
-
-Workplan items: [N] ([N] legal-owns, [N] legal-supports)
-Required Consents: [N] (from PA schedule)
-Desired Consents: [N] (from diligence — no PA deadline)
-
-Contract assignment: not yet imported — run --contracts to populate
-
-Next step: run /corporate-legal:integration-management --contracts to import the
-contract list, then --report to see your first status summary.
+Entegrasyon takibi başlatıldı — [işlem kodu] / [hedef] ([yapı])
+Kapanış: [tarih]
+Gerekli Onaylar son günü: [tarih] (bugünden [N] gün)
+Beyan süreleri: [tür — tarih, ...]
+İş planı kalemleri: [N] ([N] hukuk yürütür, [N] hukuk destekler)
+Gerekli Onaylar: [N] (sözleşme ekinden)
+İstenen onaylar: [N] (due diligence'tan — sözleşme süresi yok)
+Sözleşme devri: henüz alınmadı — --contracts çalıştırın
+Sonraki adım: /corporate-legal:integration-management --contracts, sonra --report
 ```
 
----
+## Mode 2: Sözleşme devri (`--contracts`)
 
-## Mode 2: Contract Assignment
+Ana başlatmadan ayrı çalışır; sözleşme listesi değiştikçe yeniden çalıştırılır.
 
-```
-/corporate-legal:integration-management --contracts [--deal [code]]
-```
+### Adım 1: Sözleşme listesi
 
-This is the dedicated contract assignment initialization. Separate from the
-main init so it can be run independently and re-run when the contract list
-changes.
+- **Yol A — bağlı depo** (Drive, Box, SharePoint ya da kapanış sonrası erişilebilen VDR): klasörü al; her belge için dosya adı ve yolu, karşı taraf, sözleşme türü, devir klozu metni, varsa CoC klozu metni, belirtilmişse yıllık bedel.
+- **Yol B — liste yükleme:** sözleşmenin Önemli Sözleşmeler eki, sözleşme yönetim sistemi dökümü (CSV/Excel) ya da elle hazırlanmış liste. Asgari sütunlar: Sözleşme adı, Karşı taraf. Devir klozu metni yoksa `assignment_mechanism: not_reviewed` ve takip işareti.
+- **Yol C — açıklama eki:** hiçbiri yoksa `--init`'te yüklenen sözleşmenin Önemli Sözleşmeler ekinden asgari liste; devir klozları elle incelenir.
 
-### Step 1: Get the contract list
+### Adım 2: Devir mekanizması
 
-Two paths — use whichever applies:
-
-**Path A: Connected repository**
-
-> Is your contract repository connected? (Google Drive, Box, SharePoint,
-> or a VDR that's still accessible post-close?)
->
-> If yes: give me the folder path or folder name for the acquired company's
-> contracts. I'll pull a list of what's there and read each contract for the
-> assignment clause and counterparty.
-
-Search the connected repository. For each document found:
-- Extract filename and file path
-- Read the document — identify: contract party (counterparty name), contract
-  type (from header or subject matter), assignment clause text, change of
-  control clause text if present, and annual value if stated.
-
-**Path B: Manual list upload**
-
-> Upload a contract list. This can be:
-> - The Material Contracts schedule from the PA disclosure schedules
-> - A CSV or Excel export from their contract management system
-> - A manually prepared list
->
-> Minimum required columns: Contract Name, Counterparty. Helpful but optional:
-> Contract Type, Annual Value, Assignment Clause text.
-
-Read the uploaded list. For contracts where no assignment clause text is
-provided, set assignment_mechanism to "not_reviewed" and flag for follow-up.
-
-**Path C: Disclosure schedule**
-
-If neither repository nor list is available, read the Material Contracts
-schedule from the PA disclosure schedules (from the PA uploaded in --init).
-This gives the minimum required list — parties and contract types. Assignment
-clauses will need manual review.
-
-### Step 2: Determine assignment mechanism
-
-For each contract, classify the assignment mechanism:
-
-| Mechanism | Definition | Tier |
+| Mekanizma | Tanım | Katman |
 |---|---|---|
-| `consent-required` | Explicit clause prohibiting assignment without counterparty consent | 1 or 2 |
-| `coc-provision` | Change of control clause giving counterparty termination or consent right triggered by the deal | 3 |
-| `auto-assign` | No restriction, or explicit permission to assign to affiliates or successors | 4 |
-| `silent` | No assignment clause — default to governing law. Research the governing-law default for contract assignment when the contract is silent and cite the controlling rule. Flag for attorney review. | 2 |
-| `not_reviewed` | Could not read or locate assignment clause | Flag for manual review |
+| `consent-required` | Karşı taraf onayı olmadan devri yasaklayan açık kloz | 1 ya da 2 |
+| `coc-provision` | İşlemle tetiklenen, karşı tarafa fesih ya da onay hakkı veren kontrol değişikliği klozu | 3 |
+| `auto-assign` | Sınırlama yok ya da bağlı şirkete/halefe devre açık izin | 4 |
+| `silent` | Devir hükmü yok — sonuç yapıya bağlı (aşağıya bak); avukat incelemesine işaretle | 2 |
+| `not_reviewed` | Devir klozu okunamadı/bulunamadı | Elle inceleme |
 
-For contracts flagged in the Required Consents PA schedule: override tier to 1
-regardless of assignment mechanism classification.
+**`silent` sözleşmede Türk hukuku varsayılanı (sözleşme Türk hukukuna tabiyse):** alacak, kanun, sözleşme ya da işin niteliği engel olmadıkça borçlunun rızası aranmadan devredilebilir (TBK m. 183) — ama sözleşmenin, yani taraf sıfatının devri karşı tarafın katılımını ya da önceden izni/sonradan onayını gerektirir (TBK m. 205). Bu yüzden malvarlığı devrinde sessiz sözleşme de onay ister. Pay devrinde taraf değişmez, devir gerekmez. Birleşmede tescille külli halefiyet doğar (TTK m. 153/1); sözleşmedeki devir yasağının buna uygulanması **tartışmalı**. Yabancı hukuka tabi sözleşmede varsayılanı araçla çek (`uk_`, `de_`, `eu_` …) ya da yerel avukata işaretle. Özel rejimler: kira (TBK m. 323), kamu ihale sözleşmesi (4735 m. 16 — izinsiz devirde fesih).
 
-### Step 3: Tier assignment
+Sözleşmenin Gerekli Onaylar ekindeki sözleşmeler mekanizmadan bağımsız katman 1'dir.
 
-```
-Tier 1 — Required Consents: [N] contracts
-  Named in PA schedule, hard deadline [date], must obtain consent
-
-Tier 2 — Material, consent required: [N] contracts
-  Assignment restriction present, not in PA schedule
-  Recommended timeline: obtain within Day 90
-
-Tier 3 — Change of control provisions: [N] contracts ⚠️
-  Counterparty has termination or consent right triggered by close
-  ACTION REQUIRED: contact counterparty immediately — CoC may already be triggered
-
-Tier 4 — Auto-assign / no action: [N] contracts
-  Assigns automatically or by affiliate/successor provision
-  Tracking only — no outreach needed
-
-Not reviewed: [N] contracts
-  Could not determine assignment mechanism — manual review required
-```
-
-Show tier 3 separately and prominently. A change of control clause may have
-already triggered on the close date — counterparty may have a right to terminate
-that is running right now.
-
-### Step 4: Generate status entries
-
-For each contract, create a tracker entry with:
-- All extracted fields (counterparty, type, value, mechanism, tier)
-- Initial status: tier 4 → `no_action`; tier 3 → `coc_triggered`; tiers 1/2 → `consent_pending`; not_reviewed → `not_reviewed`
-- pa_deadline populated for tier 1 from Required Consents schedule
-
----
-
-## Mode 3: Status Report
+### Adım 3: Katmanlar
 
 ```
-/corporate-legal:integration-management --report [--deal [code]]
+Katman 1 — Gerekli Onaylar: [N]   Sözleşme ekinde, kesin süre [tarih], onay şart
+Katman 2 — Önemli, onay gerekli: [N]   Devir sınırlaması var, ekte değil; Day 90 içinde al
+Katman 3 — Kontrol değişikliği: [N] ⚠️   Kapanışla tetiklenmiş olabilir — karşı tarafla HEMEN temas
+Katman 4 — Kendiliğinden / işlem yok: [N]   Yalnız takip
+İncelenmedi: [N]   Mekanizma belirlenemedi — elle inceleme
 ```
 
-Reads current tracker state. Produces:
+Katman 3'ü ayrı ve belirgin göster: CoC kapanış gününde tetiklenmiş olabilir; karşı tarafın fesih hakkı şu anda işliyor olabilir. Karşı taraf fesih ya da dönme ihbarı gönderirse tacirler arasında şeklini kontrol et (noter, taahhütlü mektup, telgraf ya da güvenli e-imzalı KEP — TTK m. 18/3).
+
+### Adım 4: Kayıtlar
+
+Her sözleşme için tüm alanlarla kayıt. Başlangıç durumu: katman 4 → `no_action`; katman 3 → `coc_triggered`; katman 1/2 → `consent_pending`; incelenmeyen → `not_reviewed`. Katman 1'de `pa_deadline` Gerekli Onaylar ekinden.
+
+## Mode 3: Durum raporu (`--report`)
+
+Takibin güncel hâlini okur:
 
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — CLAUDE.md ## Outputs; role göre değişir, bkz. ## Who's using this]
 
-> This status report is derived from the purchase agreement, diligence findings, and post-closing integration records. It inherits their privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Confirm the recipient list before sending.
+> Bu rapor satın alma sözleşmesi, due diligence bulguları ve entegrasyon kayıtlarından türetilmiştir ve onların gizlilik statüsünü devralır. Alıcı listesini göndermeden önce teyit et.
 
-INTEGRATION STATUS — [Deal code] / [Target]
-[Date] — Day [N] post-close
-
+ENTEGRASYON DURUMU — [işlem kodu] / [hedef]
+[Tarih] — Kapanıştan sonra [N]. gün
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EXECUTIVE SUMMARY
-[2-3 sentence paragraph: overall status, biggest risk, key win since last report]
-
+YÖNETİCİ ÖZETİ
+[2-3 cümle: genel durum, en büyük risk, son rapordan beri kazanım]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-REQUIRED CONSENTS  [deadline: DATE — N days remaining]
-  Obtained:        [N] of [total]  ████████░░  [%]
-  In negotiation:  [N]
-  Outreach sent:   [N]
-  Not started:     [N]
-  Refused:         [N] ⚠️
-
-⚠️ AT RISK: [counterparty] — deadline in [N] days, no response to outreach
-⚠️ REFUSED: [counterparty] — PA obligation not met; escalate to outside counsel
-
+GEREKLİ ONAYLAR  [son gün: TARİH — N gün kaldı]
+  Alındı: [N]/[toplam] ████████░░ [%]   Müzakerede: [N]   Temas edildi: [N]
+  Başlanmadı: [N]   Reddedildi: [N] ⚠️
+⚠️ RİSKTE: [karşı taraf] — son güne [N] gün, temasa cevap yok
+⚠️ REDDEDİLDİ: [karşı taraf] — sözleşme yükümlülüğü karşılanmadı; dış avukata eskale et
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-CONTRACT ASSIGNMENT
-  Tier 1 (Required Consents):   [N] complete / [N] in progress / [N] pending
-  Tier 2 (Material contracts):  [N] complete / [N] in progress / [N] pending
-  Tier 3 (CoC provisions):      [N] resolved / [N] outstanding ⚠️
-  Tier 4 (Auto-assign):         [N] — no action required
-
+SÖZLEŞME DEVRİ
+  Katman 1: [N] tamam / [N] sürüyor / [N] bekliyor
+  Katman 2: [N] tamam / [N] sürüyor / [N] bekliyor
+  Katman 3 (CoC): [N] çözüldü / [N] açık ⚠️
+  Katman 4: [N] — işlem gerekmez
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-WORKPLAN — LEGAL OWNS
-  🔴 OVERDUE ([N]):
-    [item] — was due [date]
-
-  ⏰ DUE THIS WEEK ([N]):
-    [item] — due [date]
-
-  ✅ COMPLETED SINCE LAST REPORT ([N]):
-    [item] — completed [date]
-
+İŞ PLANI — HUKUK YÜRÜTÜR
+  🔴 GECİKMİŞ ([N]): [kalem] — son gün [tarih]
+  ⏰ BU HAFTA ([N]): [kalem] — [tarih]
+  ✅ SON RAPORDAN BERİ TAMAMLANAN ([N]): [kalem] — [tarih]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-BLOCKERS & DECISIONS NEEDED
-  [item] — blocked on: [description] — owner: [name]
-  [item] — decision needed: [description] — recommend: [option]
-
+ENGELLER VE KARARLAR
+  [kalem] — engel: [açıklama] — sorumlu: [ad]
+  [kalem] — karar gerekli: [açıklama] — öneri: [seçenek]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-KEY DATES COMING UP
-  [date] — [milestone / deadline]
-  [date] — Rep survival expires — confirm no pending indemnification claims
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YAKLAŞAN TARİHLER
+  [tarih] — [kilometre taşı / son gün]
+  [tarih] — Beyan süresi doluyor — bekleyen tazmin talebi olmadığını teyit et
 ```
 
----
+## Mode 4: Güncelleme (`--update`)
 
-## Mode 4: Update
+**Elle:** avukat neyin değiştiğini söyler.
+> "[Karşı taraf] onayı geldi; alındı yap, sorumlu [ad], tarih bugün."
+> "Şirket yapısı kararı birleşme; durumu güncelle, birleşme tescilini Day 180'e ekle."
+> "[Karşı taraf] onayı reddetti; işaretle, bunun tazmin talebi doğurup doğurmadığı için dış avukat gerektiğini not et."
+
+İlgili kaydı güncelle, bağımlı durumları yeniden hesapla (ör. tüm katman 1 onayları alındıysa sözleşme yükümlülüğünü karşılandı işaretle), değişeni göster.
+
+**Yükleme:** iş akışı sahibinin ya da dış avukatın durum belgesini oku; kalemleri karşı taraf adına ya da iş planı açıklamasına göre eşle; eşleşmeyen kalemi yeni kalem adayı olarak işaretle.
 
 ```
-/corporate-legal:integration-management --update [--deal [code]]
+[N] kalem güncellendi.
+Değişiklikler:
+  CON-003 [Karşı taraf]: not_started → obtained
+  W-014 Şirket yapısı kararı: in_progress → complete
+Yeni işaretler:
+  CON-007 [Karşı taraf]: refused — sözleşme yükümlülüğü karşılanmamış olabilir; tazmin talebi için dış avukat incelemesi ⚠️
 ```
 
-**Manual update:** Attorney tells Claude what changed.
-
-> "We got the Salesforce consent. Mark it obtained, assigned to [name], date today."
-> "The entity rationalization decision is to merge. Update status and add the merger
-> filing to Day 180."
-> "[Counterparty] refused consent. Flag it and note we need outside counsel on
-> whether this triggers a PA indemnification claim."
-
-Claude updates the relevant tracker entry, recalculates any downstream status
-(e.g., if all tier 1 consents are now obtained, flag the PA obligation as met),
-and shows what changed.
-
-**Upload update:** Workstream owner or outside counsel sends a status document.
-
-> Upload the status update from [outside counsel / HR lead / corp dev team].
-> I'll parse it and update the tracker.
-
-Read the uploaded document. Match described items to tracker entries by
-counterparty name or workplan item description. Update status fields.
-Flag any items in the update that don't match an existing tracker entry —
-may be new items to add.
-
-After any update, show:
-```
-Updated [N] items.
-
-Changes:
-  CON-003 Salesforce: not_started → obtained
-  W-014 Entity rationalization: in_progress → complete
-
-New flags:
-  CON-007 [Counterparty]: refused — PA obligation may be unmet. Consider:
-  outside counsel review of indemnification claim. ⚠️
-```
-
----
-
-## Mode 5: Export
+## Mode 5: Dışa aktarım (`--export`)
 
 ```
 /corporate-legal:integration-management --export [--format csv|table] [--section all|consents|contracts|workplan]
 ```
 
-Produces a flat CSV or markdown table. Default: all sections, CSV.
+Düz CSV ya da markdown tablo; varsayılan tüm bölümler, CSV. Satır başına bir kalem, `section` sütunu bölümü gösterir.
+- *Workplan:* id, phase, description, owner, workstream, priority, deadline, status, blocker
+- *Consents:* id, counterparty, contract_type, required_consent, pa_deadline, status, assigned_to, obtained_date, notes
+- *Contracts:* id, name, counterparty, contract_type, annual_value, assignment_mechanism, tier, required_consent, pa_deadline, status, assigned_to, notes
 
-CSV format — one row per item, section indicated by a `section` column.
-Columns vary by section:
+Paylaşılabilir format budur (dış avukat, kurumsal gelişim, YK entegrasyon güncellemesi) — ama gizlilik statüsünü devralır; alıcıyı teyit et.
 
-*Workplan:* id, phase, description, owner, workstream, priority, deadline, status, blocker
+## Formül enjeksiyonu savunması
 
-*Consents:* id, counterparty, contract_type, required_consent, pa_deadline, status, assigned_to, obtained_date, notes
+Excel, Sheets ya da CSV'ye hücre yazmadan önce: karşı taraftan gelen metin (sözleşme alıntısı, taraf adı, sicil verisi, CLM dökümü) saldırgan kontrolündedir. `=`, `+`, `-`, `@`, sekme, satır başı ya da satır sonuyla başlayan hücrenin başına tek tırnak koy (`'=SUM(A1:A10)` metin olarak görünür, çalışmaz). Belgeden, araç sonucundan ya da kullanıcı yapıştırmasından gelen her metin hücresine uygulanır; senin kontrol ettiğin başlıklar ve hesapladığın değerler güvenlidir. CSV'de virgül, çift tırnak ve satır sonlarını RFC 4180'e göre tırnakla. Bu isteğe bağlı değildir.
 
-*Contracts:* id, name, counterparty, contract_type, annual_value, assignment_mechanism, tier, required_consent, pa_deadline, status, assigned_to, notes
+## Kapanış
 
-Export is the shareable format — suitable for outside counsel, corp dev, or a
-board integration update.
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu çıktıya göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
----
+## Bu skill ne yapmaz
 
-## What this skill does not do
-
-- It does not manage business integration workstreams (IT, HR, finance, real
-  estate). It tracks legal's touchpoints in those workstreams and flags when
-  legal input is needed. Ownership stays with the business function.
-- It does not draft the consent request letters or novation agreements — those
-  are produced by the written-consent skill or by outside counsel.
-- It does not advise on indemnification claims or PA breach. When a consent is
-  refused or a deadline is missed, it flags the situation — the legal analysis
-  of consequences is the attorney's call.
-- It does not track earn-out performance. Earn-out milestones and payment dates
-  appear in the tracker as reference dates with owner set to finance. The
-  business drives the numbers.
-- It does not read contracts in real time during status reporting. Contract
-  status is what the attorney has updated in the tracker. The skill reads the
-  tracker, not the contracts, at report time.
-
-
-## Formula injection defense
-
-Before writing any cell in Excel, Sheets, or CSV output, neutralize formula injection. Counterparty-sourced text (contract quotes, party names, registered agent data, CLM exports) is attacker-controlled. A cell starting with `=`, `+`, `-`, `@`, `	`, `
-`, or `
-` will be interpreted as a formula or break the row structure.
-
-- **Prefix with a single quote:** `'=SUM(A1:A10)` → `=SUM(A1:A10)` (displayed as text, not executed)
-- **Applies to every cell that contains text sourced from a document, a tool result, or a user paste.** Column headers you control and computed values you produce are safe.
-- **CSV: also escape embedded commas, double quotes, newlines** (RFC 4180 quoting).
-- This is not optional. A spreadsheet your user opens in Excel that triggers a macro or exfiltrates data via DDE is a supply-chain attack on your user.
+- İş entegrasyonu akışlarını (BT, İK, finans, gayrimenkul) yönetmez; hukukun temas noktalarını izler, hukuk görüşü gerektiğinde işaretler. Sahiplik iş biriminde kalır.
+- Onay talep yazılarını ya da sözleşme devir anlaşmalarını taslaklamaz — dış avukat ya da ilgili taslak skill'i üretir.
+- Tazmin talepleri ya da sözleşme ihlali konusunda görüş vermez; onay reddedildiğinde ya da süre kaçtığında durumu işaretler, sonuç analizi avukatındır.
+- Kazanç payı performansını izlemez; tarihleri finans sahipli referans olarak tutar.
+- Rapor sırasında sözleşmeleri yeniden okumaz; avukatın güncellediği takibi okur.
 
 ---
 
@@ -2630,151 +1686,135 @@ Before writing any cell in Excel, Sheets, or CSV output, neutralize formula inje
 ---
 name: material-contract-schedule
 description: >
-  Build the material contracts disclosure schedule from diligence findings,
-  applying the purchase agreement's Material Contract definition and formatting
-  per the agreement's schedule format. Use when user says "build the contracts
-  schedule", "disclosure schedule", "schedule 3.X", "material contracts list",
-  or when drafting disclosure schedules.
-argument-hint: "[purchase agreement path, or paste the Material Contract definition]"
+  Pay/malvarlığı devir sözleşmesindeki (SPA/APA) "Önemli Sözleşme" tanımını
+  due diligence bulgularına uygulayarak önemli sözleşmeler ekini kurar ve
+  sözleşmenin ek formatına göre biçimlendirir; onay gerektirenleri (TBK m. 205,
+  m. 323, 4735 m. 16, sözleşmedeki CoC) ayrı iç takip tablosuyla
+  closing-checklist'e aktarır. "Sözleşmeler ekini kur", "açıklama eki",
+  "Ek 3.X", "önemli sözleşmeler listesi" denildiğinde ya da açıklama ekleri
+  taslaklanırken kullan.
+argument-hint: "[satın alma sözleşmesi yolu ya da Önemli Sözleşme tanımını yapıştırın]"
 ---
 
-# /material-contract-schedule
+# /material-contract-schedule — Önemli Sözleşmeler Eki
 
-1. Load purchase agreement → Material Contract definition + schedule format.
-2. Use the workflow below.
-3. Apply definition to diligence findings. Flag edge cases.
-4. Format per agreement. Consent overlay feeds closing checklist.
+1. Satın alma sözleşmesini yükle → "Önemli Sözleşme" tanımı + ek formatı.
+2. Tanımı due diligence bulgularına uygula; sınır vakaları işaretle.
+3. Sözleşmenin formatına göre biçimlendir.
+4. Onay takip tablosu closing-checklist'i besler.
 
----
+## Matter bağlamı
 
-## Matter context
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Amaç
 
----
+Satın alma sözleşmesinde bir beyan var: "Ek 3.X tüm Önemli Sözleşmeleri listeler." Bu skill o eki due diligence bulgularından kurar — sözleşmenin tanımına göre hangi sözleşmeler önemli, sözleşmenin istediği formatta. Türk hukukunda açıklama eki kanuni bir kurum değildir; içerik ve sonuç (beyan ve tekeffül ihlali, tazmin) tamamen satın alma sözleşmesine bağlıdır. Sözleşme yabancı hukuka tabiyse yorum o hukuka göre yapılır → `/commercial-legal:governing-law-review`.
 
-## Purpose
+## Bağlam
 
-The purchase agreement has a rep: "Schedule 3.X lists all Material Contracts." This skill builds that schedule from the diligence findings — which contracts are material per the agreement's definition, in the format the agreement requires.
+- Satın alma sözleşmesi taslağı — "Önemli Sözleşme" tanımı ve ek formatı (İngilizce ya da iki dilli sözleşmede tanımlı terimi aynen kullan)
+- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → önemlilik eşikleri (sözleşme tanımından farklı olabilir — **sözleşmenin tanımı geçerlidir**)
+- `diligence-issue-extraction` ve varsa `tabular-review` çıktısı — sözleşme düzeyinde veri
+- `deals/[code]/deal-context.md` → işlem yapısı; [Müvekkil] satıcıysa ek onun beyanıdır (eksik ek = beyan ihlali riski), alıcıysa ekin eksiksizliğini due diligence'la karşılaştır
 
-## Load context
+## Akış
 
-- Purchase agreement draft — for the definition of "Material Contract" and the schedule format
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → materiality thresholds (may differ from the agreement definition — use the agreement's)
-- Diligence findings from diligence-issue-extraction — contract-level data
+### Adım 1: Tanımı al
 
-## Workflow
+Tanımı sözleşmeden çek; tanım belirleyicidir. İşlem yapısı (pay devri / malvarlığı devri / birleşme) bir kolun yorumunu değiştirebilir: pay devrinde "devri onaya bağlı sözleşme" kolu çoğu zaman CoC klozuyla birlikte okunur; malvarlığı devrinde her sözleşmenin devri karşı tarafın katılımını gerektirir (TBK m. 205). Düzenlenmiş sektör ya da kamu sözleşmesi varsa onay kuralları sözleşmenin dışında da yaşar:
 
-### Step 1: Get the definition
-
-Pull the definition of "Material Contract" from the purchase agreement — the PA definition controls. Deal-structure differences (stock vs. asset vs. merger) can change how a prong is interpreted, and regulated-industry overlays (healthcare, defense, financial services, telecom, government contracting) can add consent requirements that live outside the PA. If the deal involves any of those overlays, research the applicable anti-assignment or novation rules (for example, federal contracts, government contracting novation, sector-specific consent statutes) and cite the controlling rule.
-
-Common prong categories to look for in the PA definition — these are not a substitute for reading the PA, and the list the PA uses controls:
-
-- Dollar-value threshold (annual or aggregate)
-- Term length
-- Change-of-control or anti-assignment provision
-- Exclusivity or non-compete
-- Top N customer or supplier contracts
-- Real property leases
-- IP licenses (in-bound and out-bound)
-- Related-party agreements
-- Government contracts
-- Contracts outside the ordinary course
-
-The PA's definition is the test. Apply it mechanically — every contract that meets any prong in the PA's definition goes on the schedule.
-
-### Step 2: Apply the definition to the findings
-
-For each contract reviewed in diligence:
-
-| Contract | Meets prong(s) | Include |
+| Katman | Kural | Dayanak |
 |---|---|---|
-| [name] | [$X+ annual value; CoC provision] | Yes |
-| [name] | [none] | No |
+| Kamu ihale sözleşmesi | Zorunlu hâllerde ihale yetkilisinin yazılı izniyle devir; devralanda ilk ihaledeki şartlar aranır; izinsiz devirde fesih ve yaptırım | 4735 m. 16 |
+| İşyeri kirası | Kira ilişkisinin devri kiraya verenin yazılı rızasına bağlı; işyerinde haklı sebep olmadıkça rıza reddedilemez; devreden en fazla 2 yıl müteselsil | TBK m. 323 |
+| Sınai mülkiyet lisansı/devri | Hukuki işlem yazılı; devir noter onaylı; sicile kaydedilmeyen işlem iyiniyetli üçüncü kişiye karşı ileri sürülemez | SMK m. 148/4-5 |
+| Lisanslı faaliyet (enerji, bankacılık, sermaye piyasası, elektronik haberleşme, sigorta) | Pay devri ya da kontrol değişikliği için kurum onayı gerekebilir — ezberden yazma, kurum mevzuatını çek | `tr_mevzuat_ara`, `tr_kurum_karari_ara(kurum="epdk"/"bddk"/"spk"/"btk")` |
 
-**Edge cases to flag for human decision:**
-- Contract is $X-1 (just under threshold) but important to the business
-- Contract meets a prong but is being terminated anyway
-- Oral agreements or side letters that may or may not count
+Tanımda sık görülen kollar — sözleşmeyi okumanın yerini tutmaz, sözleşmedeki liste geçerlidir: parasal eşik (yıllık / toplam), süre, CoC ya da devir yasağı, münhasırlık / rekabet yasağı, ilk N müşteri / tedarikçi, taşınmaz kiraları, fikrî hak lisansları (gelen / giden), ilişkili taraf sözleşmeleri, kamu sözleşmeleri, olağan iş akışı dışındaki sözleşmeler. Tanımı mekanik uygula: herhangi bir kolu karşılayan her sözleşme eke girer.
 
-### Step 3: Gather schedule data
+### Adım 2: Tanımı bulgulara uygula
 
-For each included contract, the schedule typically needs:
+| Sözleşme | Karşıladığı kol(lar) | Eke girer |
+|---|---|---|
+| [ad] | [yıllık X TL üstü; CoC m. 12.2] | Evet |
+| [ad] | [yok] | Hayır |
 
-| Field | Source |
+**İnsan kararına işaretle:** eşiğin hemen altında ama iş için önemli; bir kolu karşılıyor ama zaten feshediliyor; sözlü anlaşma ya da yan mektup; dövizli bedelin TL karşılığı kura göre eşiğin iki yanına düşüyor (sözleşmenin kur ve tarih kuralını uygula, yoksa sor).
+
+### Adım 3: Ek verisini topla
+
+| Alan | Kaynak |
 |---|---|
-| Counterparty name | Contract |
-| Contract title/type | Contract |
-| Date | Contract |
-| Term / expiration | Contract |
-| Annual/total value | Contract or management data |
-| Which materiality prong it meets | Step 2 analysis |
-| Consent required for the deal | Diligence finding |
-| VDR reference | Diligence inventory |
+| Karşı taraf unvanı | Sözleşme (ticaret sicili kaydıyla teyit edilmiş unvan) |
+| Sözleşme adı / türü | Sözleşme |
+| Tarih | Sözleşme |
+| Süre / bitiş | Sözleşme |
+| Yıllık / toplam bedel ve para birimi | Sözleşme ya da yönetim verisi |
+| Karşıladığı önemlilik kolu | Adım 2 |
+| İşlem için onay gerekli mi | Due diligence bulgusu |
+| VDR atfı | Due diligence envanteri |
 
-Pull from existing diligence extractions. If a field is missing, flag it — don't guess.
+Mevcut çıkarımlardan al. Eksik alanı işaretle — tahmin etme.
 
-### Step 4: Format per the agreement
+### Adım 4: Sözleşmenin formatına göre biçimlendir
 
-Disclosure schedules have a format — usually a numbered list or a table, sometimes with sub-parts by contract type. Match the format of the other schedules in the draft agreement.
+Taslaktaki diğer eklerin biçimine uy (numaralı liste ya da tablo, sözleşme türüne göre alt bölümler).
 
 ```markdown
-## Schedule 3.[X] — Material Contracts
+## Ek 3.[X] — Önemli Sözleşmeler
 
-The following are the Material Contracts as of the date hereof:
+İşbu tarih itibarıyla Önemli Sözleşmeler aşağıdadır:
 
-### (a) Customer Contracts
+### (a) Müşteri Sözleşmeleri
 
-1. [Agreement Title], dated [date], between [Target] and [Counterparty].
-   [Brief description if the format calls for it.]
-   [VDR: path]
+1. [Hedef] ile [Karşı taraf] arasında [tarih] tarihli [Sözleşme Adı].
+   [Format gerektiriyorsa kısa açıklama.]
+   [VDR: yol]
 
-2. [...]
-
-### (b) Supplier Contracts
-
-[...]
-
-### (c) Real Property
-
-[...]
-
-[etc. — sub-parts per the agreement's definition structure]
+### (b) Tedarikçi Sözleşmeleri
+### (c) Taşınmaz Kiraları
+### (d) Fikrî Hak Lisansları
+[sözleşmedeki tanım yapısına göre alt bölümler]
 ```
 
-### Step 5: Consent tracking overlay
+Sözleşme İngilizce ya da iki dilliyse eki de aynı dilde/düzende kur; Türkçe karşılığı yalnız format gerektiriyorsa ekle.
 
-Separately (not in the schedule itself — this is internal), track which scheduled contracts require consent.
+### Adım 5: Onay takip tablosu
 
-> The consent overlay and any pre-delivery working draft of the schedule are derived from privileged diligence materials and inherit their privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. The schedule itself, once delivered as an exhibit to the executed PA, is a deal document and is not privileged; strip any internal annotations before delivery.
+Ekin içinde değil, ayrı ve dahili olarak: hangi listelenmiş sözleşme onay gerektiriyor.
 
+> Onay tablosu ve ekin teslim öncesi çalışma taslağı gizli due diligence malzemesinden türetilmiştir ve onun gizlilik statüsünü devralır; dağıtımı işlem ekibiyle sınırla (Av. K. m. 36 dağıtılan belgeyi korumaz). İmzalanan sözleşmeye eklenen ek ise işlem belgesidir, karşı tarafla paylaşılır — teslimden önce iç notları sil.
 
-| Schedule # | Counterparty | Consent required | Status | Owner | Due |
-|---|---|---|---|---|---|
-| 3.X(a)(1) | [name] | Yes — CoC §12.2 | Requested | [name] | [date] |
+| Ek no | Karşı taraf | Onay gerekli | Dayanak | Durum | Sorumlu | Son gün |
+|---|---|---|---|---|---|---|
+| 3.X(a)(1) | [ad] | Evet — CoC | Sözleşme m. 12.2 | Talep edildi | [ad] | [tarih] |
+| 3.X(c)(2) | [ad] | Evet — kira devri | TBK m. 323; kira m. 9 | Hazırlanıyor | [ad] | [tarih] |
 
-This feeds closing-checklist.
+Bu tablo closing-checklist'i besler (Mode 2 aktarım şeması: `counterparty`, `conditions`, `notice_deadline` alanlarını doldur).
 
-## Cross-check
+## Çapraz kontrol
 
-Before delivering:
+Teslimden önce:
+- Bir kolu karşılayan her sözleşme ekte (eksiksizlik).
+- Ekte, hiçbir kolu karşılamayan sözleşme yok (aşırı açıklama yok — bu bir beyandır, veri yığını değil).
+- Ek diğer beyanlarla tutarlı (ekteki bir sözleşme rehin/teminat doğuruyorsa teminatlar ekinde de görünmeli).
+- Her kaydın VDR atfı var; alıcı avukatı belgeyi bulabilmeli.
 
-- Every contract that met a prong is on the schedule (completeness)
-- No contract is on the schedule that doesn't meet a prong (no over-disclosure — it's a rep, not a data dump)
-- Schedule is consistent with the other reps (a contract on Schedule 3.X that creates a lien should also be on the liens schedule)
-- Every entry has a VDR cite so buyer's counsel can find the underlying doc
+## Aktarımlar
 
-## Handoffs
+- **diligence-issue-extraction'dan:** sözleşme düzeyindeki bulgular girdidir.
+- **closing-checklist'e:** onay kalemleri kontrol listesine gider.
 
-- **From diligence-issue-extraction:** Contract-level findings are the input.
-- **To closing-checklist:** Consent items go on the checklist.
+## Kapanış
 
-## What this skill does not do
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu eke göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
-- It doesn't decide the materiality definition — that's in the purchase agreement.
-- It doesn't obtain consents — it tracks which ones are needed.
-- It doesn't draft the rep — it populates the schedule the rep references.
+## Bu skill ne yapmaz
+
+- Önemlilik tanımını belirlemez — o satın alma sözleşmesindedir.
+- Onay almaz — hangilerinin gerektiğini izler.
+- Beyanı taslaklamaz — beyanın atıf yaptığı eki doldurur.
 
 ---
 
@@ -2783,188 +1823,139 @@ Before delivering:
 ---
 name: matter-workspace
 description: >
-  Manage matter workspaces — create, list, switch, close, or detach the active
-  matter so multi-client practitioners keep one client's context separate from
-  every other. Read by any substantive skill that needs to know what matter it's
-  working in. Use when user says "new matter", "switch matter", "list matters",
-  "close matter", or wants to work at practice-level only.
+  Matter çalışma alanlarını yönet — new, list, switch, close ya da none (yalnız
+  uygulama düzeyi). Bir müvekkil şirketin ya da işlemin bağlamının (pay sahibi yapısı,
+  işlem pozisyonu, veri odası bulguları, aile içi uyuşmazlık bilgisi) diğerine
+  sızmamasını sağlar. Çok müvekkilli avukat matter oluşturmak, aktif matter'ı
+  değiştirmek, listelemek, arşivlemek ya da uygulama düzeyine dönmek istediğinde ya da
+  başka bir skill hangi matter'da çalıştığını bilmek istediğinde kullan.
 argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
 
-Practitioners work across multiple clients and matters. A matter workspace keeps one client or engagement's context separate from every other. This skill manages those workspaces.
+Avukat birçok müvekkil şirket ve işlem üzerinde çalışır. Kurumsal işte bir müvekkilin satış hazırlığı, başka bir dosyada alıcı adayı olan müvekkilin ilgisini çeker; aile şirketinde bir pay sahibinin bilgisi diğerinin dosyasına geçmemelidir. Matter çalışma alanı her dosyanın bağlamını ayrı tutar; bu skill o alanları yöneten ince dosya katmanıdır.
 
-## Subcommands
+## Alt komutlar
 
-- `/corporate-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`
-- `/corporate-legal:matter-workspace list` — list matters with status and active flag
-- `/corporate-legal:matter-workspace switch <slug>` — set the active matter
-- `/corporate-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/_archived/`, never delete)
-- `/corporate-legal:matter-workspace none` — detach from any active matter, work at practice-level only
+- `/corporate-legal:matter-workspace new <slug>` — yeni matter, kısa ön görüşme, `matter.md`
+- `/corporate-legal:matter-workspace list` — durum ve aktiflik işaretiyle liste
+- `/corporate-legal:matter-workspace switch <slug>` — aktif matter'ı değiştir
+- `/corporate-legal:matter-workspace close <slug>` — arşivle (`~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/_archived/` altına taşı; asla silme)
+- `/corporate-legal:matter-workspace none` — aktif matter'dan ayrıl, yalnız uygulama düzeyinde çalış
 
-## Instructions
+## Talimat
 
-1. Read `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: "Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/corporate-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all." Don't error — the disabled state is the expected one for in-house users.
-2. Use the workflow below.
-3. Dispatch on the first token of `$ARGUMENTS`:
-   - `new` → run the intake interview, write `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<slug>/matter.md`, seed `history.md` and `notes.md`.
-   - `list` → enumerate `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/*/matter.md`, print a table, mark the active matter.
-   - `switch` → update the `Active matter:` line in the practice-level CLAUDE.md.
-   - `close` → move `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<slug>/` to `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/_archived/<slug>/`, log the close date in `history.md`.
-   - `none` → set `Active matter:` to `none — practice-level context only`.
-4. Show the user what changed and confirm before writing.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` dosyasını oku; `## Matter workspaces` bölümünü bul. `Enabled` `✗` ise hata verme, şunu söyle: "Matter çalışma alanları kapalı — tek müvekkilli şirket içi kullanım olarak kurulmuşsunuz; eklenti uygulama düzeyindeki bağlamla çalışır. Gerçekten birden fazla müvekkil için çalışıyorsanız `/corporate-legal:cold-start-interview --redo` ile büro ortamını seçin. Aksi hâlde `/matter-workspace`'e ihtiyacınız yok." Kapalı durum şirket içi kullanıcı için beklenen durumdur.
+2. `$ARGUMENTS`'ın ilk kelimesine göre aşağıdaki alt komut mantığına dallan.
+3. Yazmadan önce neyin değişeceğini göster ve onay al.
 
-## Notes
+**Anahtarları çevirme:** `## Matter workspaces`, `Enabled`, `Active matter:`, `Cross-matter context` ve `none — practice-level context only` şablondaki gibi kalır; diğer skill'ler ve ajanlar bunları birebir okur.
 
-- The skill never reads across matters unless `Cross-matter context` is `on` in the practice-level CLAUDE.md.
-- Archiving is not deletion — closed matters remain readable for retention/conflicts purposes.
-- Slugs are lowercase with hyphens. If a slug is reused across archived and active, the archived one is preserved under `_archived/<slug>/`.
-
----
-
-Multi-client practitioners (private practice — solo, small firm, large firm) work across many matters. Context from one must not leak into another. This skill is the thin file-management layer that makes that true.
-
-**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; `/corporate-legal:matter-workspace` explains the disabled state and suggests `/corporate-legal:cold-start-interview --redo` for users who actually need matter isolation.
-
-## Storage layout
-
-All matter data lives under:
+## Klasör yapısı
 
 ```
 ~/.claude/plugins/config/claude-for-legal/corporate-legal/
-├── CLAUDE.md                       # practice-level practice profile
+├── CLAUDE.md                       # uygulama düzeyi profil (Active matter: satırı burada)
+├── deals/<code>/deal-context.md    # --new-deal ile yazılan işlem bağlamı (M&A)
 └── matters/
     ├── <slug>/
-    │   ├── matter.md               # client, counterparty, matter type, key facts, overrides
-    │   ├── history.md              # dated log of events, decisions, drafts, reviews
-    │   ├── notes.md                # free-form working notes
-    │   └── outputs/                # skill outputs for this matter (optional subfolder)
+    │   ├── matter.md               # müvekkil, karşı taraf, tür, olgular, matter'a özel sapmalar
+    │   ├── history.md              # tarihli olay günlüğü (yalnız ekleme)
+    │   ├── notes.md                # serbest çalışma notları
+    │   └── outputs/                # skill çıktıları (isteğe bağlı)
     └── _archived/
-        └── <slug>/                 # closed matters — readable but not active
+        └── <slug>/                 # kapalı matter'lar — okunur ama aktif değil
 ```
 
-Slugs are lowercase with hyphens. Examples: `acme-msa-2026`, `zenith-renewal`, `vendor-xyz-nda`.
+Slug küçük harf ve tireli, Türkçe karakter yok: `abc-pay-alimi-2026`, `xyz-olagan-gk-2026`, `def-birlesme`. Müvekkilin gerçek adı yerine takma ad kullanılabilir.
 
-## Active matter is in the practice CLAUDE.md
+**Tek doğru kaynak:** aktif matter yalnız uygulama CLAUDE.md'sindeki `Active matter:` satırıdır; ayrı durum dosyası yok.
 
-The `Active matter:` line under `## Matter workspaces` in the practice-level CLAUDE.md is the single source of truth. Switching a matter edits that line. No separate state file.
-
-## Subcommand logic
+## Alt komut mantığı
 
 ### `new <slug>`
 
-1. Confirm slug is not already present in `matters/<slug>/` or `matters/_archived/<slug>/`. If reused, ask the user to pick a different slug.
-2. Run the intake interview:
-   - **Client** (the party we represent, or the internal business unit if in-house)
-   - **Counterparty** (the other side — may be multiple)
-   - **Matter type** (read the plugin's practice profile for typical categories; for corporate-legal: M&A buy-side | M&A sell-side | financing | board matter | entity reorg | integration project | other)
-   - **Confidentiality level** (standard | heightened | clean-team — heightened prompts extra care in cross-matter settings)
-   - **Key facts** (2–5 sentences: what this matter is about, who the stakeholders are, what's at stake)
-   - **Matter-specific overrides to the practice playbook** (e.g., "client requires 24-month LoL cap not 12", "counterparty is a strategic partner — relationship-preserving tone")
-   - **Related matters** (slugs of any connected matters)
-3. Write `matters/<slug>/matter.md` using the template below.
-4. Seed `matters/<slug>/history.md` with a single "Opened" entry.
-5. Create an empty `matters/<slug>/notes.md`.
-6. Do **not** auto-switch to the new matter. Ask: "Want to switch to `<slug>` now? (`/corporate-legal:matter-workspace switch <slug>`)"
+1. Slug `matters/<slug>/` ya da `matters/_archived/<slug>/` altında varsa başka slug iste.
+2. **Çıkar çatışması kapısı** (büroda): Avukat; aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermişse ve kendi düzenlediği bir senet ya da sözleşmenin hükümsüzlüğünü ileri sürmek durumu ortaya çıkmışsa işi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Kurumsal işte sık görülen hâller: aynı şirketin pay sahipleri arasında uyuşmazlık (büro daha önce şirkete ya da bir pay sahibine danışmanlık verdiyse), büronun hazırladığı esas sözleşme, pay devri ya da pay sahipleri sözleşmesine karşı geçersizlik ileri sürülecekse, aynı satış sürecinde birden fazla alıcı adayı (m. 38 kapsamına girip girmediği olaya göre değerlendirilir — avukata işaretle). Sor: "Bu matter için çatışma kontrolü yapıldı mı?" (Hukuk Bürosu paketinde `/firm-operations:conflict-check`.) Bu skill çatışma kontrolünü kendisi yapmaz ve bu amaçla başka matter'ların dosyalarını okumaz; cevap "hayır" ise `matter.md`'ye `Çatışma kontrolü: YAPILMADI` yaz ve avukata hatırlat.
+3. Ön görüşme:
+   - **Müvekkil** — temsil ettiğimiz şirket ya da pay sahibi (şirket içinde: iş birimi veya grup şirketi); şirket türü (AŞ / Ltd. / halka açık AŞ / yabancı)
+   - **Karşı taraf** — birden fazla olabilir (alıcı/satıcı, yatırımcı, diğer pay sahipleri); yabancıysa LEI ve grup yapısı için `gleif_search_entities` / `gleif_get_group_structure`
+   - **Matter türü** — M&A alıcı | M&A satıcı | yatırım/finansman | YK/GK işi | esas sözleşme değişikliği | pay devri | birleşme/bölünme/tür değişikliği | grup yeniden yapılanması | entegrasyon | şirket uyumu | diğer
+   - **Gizlilik düzeyi** — standart | yüksek | kapalı ekip (clean team; ör. rakipler arası işlemde rekabet açısından hassas bilgi)
+   - **Kritik tarihler** — GK tarihi ve çağrı son günü, imza ve kapanış hedefi, düzenleyici onay (Rekabet Kurulu, sektör kurumu) beklentisi, tescil son günü
+   - **Ana olgular** — 2-5 cümle: konu, paydaşlar, ne söz konusu, varsayılan yaklaşımdan farkı
+   - **Matter'a özel sapmalar** — ör. "önemlilik eşiği bu işlemde 2 milyon TL", "müvekkil aile şirketi — pay sahiplerine giden notlarda ayrı dil", "esas sözleşmede YK nisabı ağırlaştırılmış"
+   - **İlgili matter'lar ve deal kodu** — bağlantılı slug'lar; M&A ise `deals/<code>/deal-context.md` kodu
+4. `matters/<slug>/matter.md` yaz (şablon aşağıda); `history.md`'ye tek "Açıldı" girdisi; boş `notes.md`.
+5. Kendiliğinden geçiş yapma. Sor: "`<slug>`'a şimdi geçelim mi? (`/corporate-legal:matter-workspace switch <slug>`)"
 
 ### `list`
 
-Enumerate `matters/*/matter.md`. Read each file's front-matter or first few lines to extract status. Print a table:
-
-| Slug | Client | Matter type | Status | Opened | Active |
-|---|---|---|---|---|---|
-
-Mark the currently-active matter with `*`. Include `_archived/*` under a separate "Archived" heading if any exist.
+`matters/*/matter.md` dosyalarının ilk satırlarından durumu çıkar; tablo: Slug | Müvekkil | Matter türü | Durum | Açılış | Aktif. Aktif olanı `*` ile işaretle; `_archived/*` varsa ayrı "Arşiv" başlığı altında göster.
 
 ### `switch <slug>`
 
-1. Confirm `matters/<slug>/matter.md` exists. If not, offer `/corporate-legal:matter-workspace new <slug>`.
-2. Edit the `Active matter:` line in the practice-level CLAUDE.md to `Active matter: <slug>`.
-3. Show the user the matter.md summary so they can confirm they're on the right matter.
+`matters/<slug>/matter.md` yoksa `new <slug>` öner. Varsa `Active matter: <slug>` yap ve doğru matter'da olduğunu teyit etmesi için `matter.md` özetini (müvekkil, tür, kritik tarihler) göster.
 
-### `close <slug>`
+### `close <slug>` ve `none`
 
-1. Confirm `matters/<slug>/` exists.
-2. Append a "Closed" entry to `matters/<slug>/history.md` with today's date.
-3. Move `matters/<slug>/` → `matters/_archived/<slug>/`.
-4. If the closed matter was the active matter, set `Active matter:` to `none — practice-level context only`.
+`close`: `history.md`'ye bugünün tarihiyle "Kapandı" girdisi ekle, `matters/<slug>/` → `matters/_archived/<slug>/` taşı; kapanan aktif matter'sa `Active matter:` satırını `none — practice-level context only` yap. M&A matter'ları uzun ömürlüdür; kapanış sonrası kontroller (bedel düzeltmesi, tazmin talepleri, entegrasyon) bitmeden kapatmayı önerme. `none`: yalnız bu satırı değiştirir; kullanıcıya teyit ettir.
 
-### `none`
-
-Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level context only`. Confirm with the user.
-
-## `matter.md` template
+## `matter.md` şablonu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[ÜST BAŞLIK — uygulama CLAUDE.md ## Outputs; role göre değişir, bkz. ## Who's using this]
 
-# Matter: [Client] — [short description]
+# Matter: [Müvekkil/takma ad] — [kısa tarif]
 
-**Slug:** [slug]
-**Opened:** [YYYY-MM-DD]
-**Status:** active
-**Confidentiality:** [standard / heightened / clean-team]
+**Slug:** [slug] · **Açılış:** [YYYY-AA-GG] · **Durum:** aktif
+**Gizlilik:** [standart / yüksek / kapalı ekip]
+**Çatışma kontrolü:** [YAPILDI — tarih / YAPILMADI]
+**Deal kodu:** [code / —]
 
----
+## Taraflar
+**Müvekkil:** [ad] — [AŞ / Ltd. / halka açık AŞ / yabancı] — [rolü: alıcı / satıcı / şirket / pay sahibi]
+**Karşı taraf:** [ad(lar)] — [rol; yabancıysa LEI]
 
-## Parties
+## Matter türü
+[tür — tek satır gerekçe]
 
-**Client:** [name]
-**Counterparty:** [name(s)]
+## Kritik tarihler
+- [GK / çağrı son günü; imza; kapanış; düzenleyici onay; tescil]
 
-## Matter type
-
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
-
-## Key facts
-
-[2–5 sentences. What this matter is about. Who the stakeholders are. What's at stake. What makes it different from the default playbook.]
+## Ana olgular
+[2-5 cümle; varsayılan yaklaşımdan farkı]
 
 ## Matter-specific overrides
+- [ör. "M&A materiality: 2 milyon TL (ev standardı 5 milyon TL)."]
+- [ör. "Board: esas sözleşme m. [..] — YK toplantı nisabı üye tam sayısının üçte ikisi."]
 
-*Any deviation from the practice-level playbook that applies to this matter and only this matter.*
+## İlgili matter'lar
+- [slug — neden ilgili]
 
-- [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
-- [e.g., "Governing law: must be English law, not Delaware."]
-
-## Related matters
-
-- [slug — one line why related]
-
-## Notes on confidentiality
-
-[If heightened or clean-team, describe why. Who may see matter files. Whether cross-matter context is permissible even if globally on.]
+## Gizlilik notu
+[Yüksek / kapalı ekipse nedeni; dosyaları kim görebilir; genel ayar açık olsa bile çapraz bağlama izin var mı]
 ```
 
-## `history.md` seed
+Esaslı skill'ler matter'a özel sapmaları bu başlıktan okuyup profil duruşunun önüne koyar; başlığı çevirme.
 
-```markdown
-# History: [Client] — [short description]
+## `history.md` başlangıcı
 
-Append-only event log. Most recent at top.
+`# Geçmiş: [Müvekkil] — [kısa tarif]` başlığı, "Yalnız ekleme yapılan olay günlüğü; en yeni üstte." notu ve tek girdi: `## [YYYY-AA-GG] — Matter açıldı` — "Ön görüşme tamamlandı. Slug: `[slug]`. Durum: aktif." artı `matter.md` dışında saklanmaya değer ilk bağlam (ör. "Alıcı adayının niyet mektubu geldi.").
 
----
+## Çapraz matter bağlamı
 
-## [YYYY-MM-DD] — Matter opened
+Uygulama CLAUDE.md'sinde `Cross-matter context:` bayrağı vardır. `off` iken (varsayılan) A matter'ında çalışan bir skill başka hiçbir `matters/B/` klasörünü **okumaz**. Bayrağın varlık nedeni bu gizlilik güvencesidir; avukatın görevi dolayısıyla öğrendiklerini açığa vurma yasağını (Av. K. m. 36) ve zıt menfaatli taraflardan doğan çatışma riskini (m. 38) destekler.
 
-Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
-```
+`on` iken bile yalnız kullanıcı açıkça isterse ("son beş pay alım işleminde tazmin tavanlarını karşılaştır") çapraz okunur; varsayılan yine yalnız aktif matter'dır. Kıyas çıktısında müvekkil adlarını ve işlem bedellerini anonimleştirmeyi öner.
 
-## Cross-matter context
+## Bu skill ne yapmaz
 
-The practice-level CLAUDE.md has a `Cross-matter context:` flag. When it's `off` (the default), a skill working in matter A **never reads** files in `matters/B/` for any other `B`. Period. This is the confidentiality guarantee the setting exists to provide.
-
-When it's `on`, a skill may read files across matter folders only when the user explicitly asks it to (e.g., "compare our position on liability caps across the last five vendor matters"). Even when `on`, the default is to load only the active matter unless the user asks for a cross-matter view.
-
-## What this skill does not do
-
-- **Run a conflicts check.** Conflicts are the practitioner's/firm's job; the intake captures what the user declares.
-- **Enforce retention.** Closing archives a matter; it does not delete. Retention policy is out of scope.
-- **Auto-route outputs.** The substantive skill decides where to write; this skill tells it *which folder* is active, not what to put in it.
-- **Decide whether cross-matter is appropriate.** It reads the flag and obeys.
+- **Çatışma kontrolü yapmaz** — yalnız yapılıp yapılmadığını sorar ve kaydeder.
+- **Saklama politikası uygulamaz** — kapatmak arşivlemektir, silmek değil; saklama süresi büronun politikasıdır.
+- **Çıktıları yönlendirmez** — esaslı skill nereye yazacağına karar verir; bu skill yalnız hangi klasörün aktif olduğunu söyler.
+- **Çapraz bağlamın uygun olup olmadığına karar vermez** — bayrağı okur ve uyar.
 
 ---
 
@@ -2973,238 +1964,196 @@ When it's `on`, a skill may read files across matter folders only when the user 
 ---
 name: tabular-review
 description: >
-  Tabular review — one row per document, one column per data point, every cell
-  cited to source. Built for M&A diligence ("review these 200 target contracts
-  for change-of-control, assignment, and MAC clauses") but works for any batch
-  review that needs a spreadsheet out the other end. Use when user says "tabular
-  review", "review grid", "build a grid", "extract these fields from these
-  contracts", "review these documents for X, Y, Z", "give me a spreadsheet of",
-  "batch review", or points at a folder of documents and asks to compare them.
+  Tablolu inceleme — her belgeye bir satır, her veri noktasına bir sütun, her
+  hücre kaynağa atıflı. M&A due diligence için kuruldu ("bu 200 hedef
+  sözleşmede kontrol değişikliği, devir ve MAC klozlarını çıkar") ama sonunda
+  tablo isteyen her toplu incelemede çalışır. "Tablolu inceleme", "inceleme
+  tablosu", "grid kur", "bu sözleşmelerden şu alanları çıkar", "bu belgeleri X,
+  Y, Z için incele", "bana tablo ver", "toplu inceleme" denildiğinde ya da bir
+  belge klasörü gösterilip karşılaştırma istendiğinde kullan.
 ---
 
-# /tabular-review
+# /tabular-review — Tablolu İnceleme
 
-1. Load `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → diligence structure, thresholds, house format.
-2. Confirm: what documents, what columns, where does the output go.
-3. Build the typed schema. Write `.review-schema.yaml`. Confirm with the user.
-4. Sample run (3–5 docs). Adjust schema. Confirm.
-5. Fan out — one sub-agent per document, parallel. Each cell: value + state + verbatim quote + location.
-6. Normalization pass. Flag outliers and inconsistencies.
-7. Output: `.xlsx` or Google Sheets (ask which), plus `.csv` + `_sources.csv` + markdown always. Work-product header.
-8. Summary: verification workload (counts of not_present / unclear / needs_review per column), flagged columns, where the files are, reminder that every cell is a lead not a finding.
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` yükle → `## M&A` inceleme yapısı (`Diligence structure`), eşikler, büro formatı.
+2. Teyit et: hangi belgeler, hangi sütunlar, çıktı nereye.
+3. Tipli şemayı kur, `.review-schema.yaml` olarak yaz, kullanıcıya onaylat.
+4. Örnek çalıştırma (3–5 belge). Şemayı düzelt, onaylat.
+5. Dağıt — belge başına bir alt ajan, paralel. Her hücre: değer + durum + birebir alıntı + yer.
+6. Normalleştirme geçişi. Aykırı ve tutarsız değerleri işaretle.
+7. Çıktı: `.xlsx` ya da Google Sheets (sor), ayrıca her zaman `.csv` + `_sources.csv` + markdown. Üst başlık.
+8. Özet: doğrulama yükü (sütun başına not_present / unclear / needs_review), işaretli sütunlar, dosya yerleri, "her hücre bulgu değil ipucudur" hatırlatması.
 
 ```
 /corporate-legal:tabular-review
-/corporate-legal:tabular-review --schema .review-schema.yaml --docs ./vdr/02-Contracts/
+/corporate-legal:tabular-review --schema .review-schema.yaml --docs ./vdr/02-Sozlesmeler/
 /corporate-legal:tabular-review --template ma-diligence
 ```
 
-**`--schema <path>`:** Use an existing schema file instead of building one. Useful for re-runs and incremental additions.
+`--schema <yol>` mevcut şemayı kullanır (yeniden çalıştırma, ekleme). `--template <ad>` `references/` altındaki şablondan başlar (şimdilik `ma-diligence`). `--docs <yol>` yerel klasör, Drive klasör kimliği ya da VDR yolu; yoksa sorar. `--output <xlsx|gsheets|csv>` yoksa sorar. `--sample <n>` örnek boyutu (varsayılan 5).
 
-**`--template <name>`:** Start from a template in `references/`. Currently: `ma-diligence`.
+## Matter bağlamı
 
-**`--docs <path>`:** Document source. A local folder, a Drive folder ID, or a VDR path. If omitted, asks.
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**`--output <xlsx|gsheets|csv>`:** Output format. If omitted, asks.
+## Amaç
 
-**`--sample <n>`:** Sample size for the schema check. Default 5.
+Elinde bir yığın belge ve her birine tutarlı biçimde sorulacak bir soru listesi var: due diligence talep listesi, tedarikçi sözleşmesi denetimi, kira portföyü. Çıktı bir tablodur: satırlar belge, sütunlar veri noktası, her hücre kaynaktaki kelimelere kadar izlenebilir.
 
----
+Bu sorun avcılığı değildir: `diligence-issue-extraction` 2.000 belgedeki 30 sorunu bulur; bu skill aynı 15 soruyu 2.000 belgenin hepsine sorar. Bu, belgeyi okumanın yerini de tutmaz: her hücre **doğrulanması gereken bir ipucudur**. Çıktı doğrulamayı hızlandırmak için tasarlanır, atlamak için değil.
 
-## Matter context
+Bağlam: CLAUDE.md, belirli işlemde `deals/[code]/deal-context.md` (işlem yapısı sütunların yorumunu değiştirir: pay devrinde devir klozu değil CoC klozu önemlidir), varsa mevcut `.review-schema.yaml`.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Sütun tipleri
 
----
+Tablonun değeri, C sütununun 1. satırda ve 200. satırda aynı şeyi ifade etmesidir. Serbest metin kayar; tip tutar.
 
-## Purpose
-
-You have a pile of documents and a list of questions you need answered consistently across every one. A diligence request list. A vendor contract audit. A lease portfolio review. The output is a table: document rows, data-point columns, and every cell traceable to the exact words in the source.
-
-This is not issue spotting. `diligence-issue-extraction` finds the 30 problems hiding in 2,000 documents. This skill answers the same 15 questions about all 2,000 documents. Both are legitimate; they answer different questions.
-
-This is also not a replacement for a human reading the document. Every cell this skill produces is a **lead that needs verification**, not a finding. The output is designed to make verification fast, not to skip it.
-
-## Load context
-
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → diligence structure, materiality thresholds, house format preferences
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/deals/[code]/deal-context.md` if working a specific deal
-- An existing schema file if the user has one (`.review-schema.yaml`)
-
-## The column type system
-
-The thing that makes a tabular review useful is that Column C means the same thing in row 1 as in row 200. Free text drifts. Types hold.
-
-Every column has a **type** that constrains the answer format:
-
-| Type | What it returns | Use for |
+| Tip | Döndürdüğü | Kullanım |
 |---|---|---|
-| `verbatim` | Exact quote from the document, character-for-character | Defined terms, operative clause language, anything where the words matter |
-| `classify` | One value from a fixed list you define | Yes/No, present/absent, clause variants (e.g., "sole consent" / "consent not unreasonably withheld" / "silent") |
-| `date` | ISO date | Effective date, expiration, termination notice deadline |
-| `duration` | Number + unit | Term length, notice period, survival period |
-| `currency` | Number + currency code | Caps, thresholds, fees, purchase price references |
-| `number` | Bare number | Counts, percentages, page references |
-| `free` | Short free text summary | Use sparingly — this is the type that drifts. Only when the others genuinely don't fit. |
+| `verbatim` | Belgeden karakteri karakterine alıntı | Tanımlı terimler, işletici kloz metni, kelimelerin önemli olduğu her yer |
+| `classify` | Sabit listeden tek değer | Evet/Hayır, var/yok, kloz varyantları |
+| `date` | ISO tarih | Yürürlük, bitiş, fesih bildirimi son günü |
+| `duration` | Sayı + birim | Süre, bildirim süresi, beyanların geçerlilik süresi |
+| `currency` | Sayı + para birimi kodu | Tavan, eşik, bedel (TRY, EUR, USD…) |
+| `number` | Yalın sayı | Adet, yüzde, sayfa |
+| `free` | Kısa serbest özet | Az kullan — kayan tip budur |
 
-**The verbatim rule:** Every non-`verbatim` column also captures the exact source quote that supports the answer, as a companion field. The answer in the cell is the interpretation; the quote is the evidence. A `classify` cell that says "consent not unreasonably withheld" is useless without the sentence it came from, because the reviewer's job is to check whether that's the right read.
+**Birebir kuralı:** `verbatim` dışındaki her sütun, cevabı destekleyen kaynak alıntısını yan alan olarak taşır. Hücredeki cevap yorumdur; alıntı delildir. "consent_not_unreasonably_withheld" diyen bir hücre, geldiği cümle olmadan işe yaramaz.
 
-## The three states of "not found"
+## "Bulunamadı"nın üç durumu
 
-A blank cell hides information. Force one of three explicit states whenever you can't produce a positive answer:
+Boş hücre bilgi saklar. Olumlu cevap üretemiyorsan üç açık durumdan birini kullan:
 
-| State | Meaning | When to use |
-|---|---|---|
-| `not_present` | The document was read and the clause is not there | You are confident the subject matter isn't addressed |
-| `unclear` | Something is there but you can't classify it confidently | Ambiguous drafting, partial clause, conflicting provisions |
-| `needs_review` | You found something but a human must make the call | Edge case, unusual drafting, the answer depends on a judgment the schema doesn't capture |
+| Durum | Anlamı |
+|---|---|
+| `not_present` | Belge okundu, hüküm yok |
+| `unclear` | Bir şey var ama güvenle sınıflanamıyor (belirsiz, kısmi ya da çelişen hükümler) |
+| `needs_review` | Bir şey bulundu ama kararı insan vermeli (sıra dışı metin, şemanın yakalamadığı takdir) |
 
-These are three different pieces of information. A deal team handles "the contract is silent on assignment" very differently from "the assignment clause is ambiguous." Collapsing them into one blank cell loses the distinction.
+"Sözleşme devir konusunda sessiz" ile "devir klozu belirsiz" işlem ekibi için bambaşka işlerdir; tek boş hücrede birleştirme.
 
-## Workflow
+## Akış
 
-### Step 0: What and where
+### Adım 0: Ne ve nerede
 
-Confirm:
-1. **Documents.** Where are they? VDR MCP (Box, Datasite, iManage), local folder, Google Drive folder, or a list of files. How many? If >200, warn that this will take a while and offer to start with a materiality-filtered subset.
-2. **Schema.** What columns? Two paths:
-   - User picks a template from `references/` (M&A diligence standard is the default)
-   - User describes columns in natural language and you structure them into the typed schema
-3. **Output.** Excel (`.xlsx`) or Google Sheets — ask which the team works in. CSV and markdown always written as fallbacks. Output goes to the deal folder, Drive, or wherever the user says.
+1. **Belgeler:** VDR MCP'si (Box, Datasite, iManage), yerel klasör, Drive ya da dosya listesi. Kaç adet? 200'ü aşarsa uyar ve önemlilik süzgeçli alt küme öner.
+2. **Şema:** `references/` şablonu (varsayılan M&A due diligence) ya da kullanıcının doğal dilde tarif ettiği sütunlar → tipli şema.
+3. **Çıktı:** Excel mi Google Sheets mi — sor, tahmin etme. CSV ve markdown her zaman yazılır.
 
-### Step 1: Build and confirm the schema
+### Adım 1: Şemayı kur ve onaylat
 
-Turn the user's column list into a structured schema. For each column: a stable `id`, a human `label`, a `type`, a `prompt` (the question a reviewer reading the document would ask), and for `classify` columns an `options` list.
-
-Write it to `.review-schema.yaml` next to the output. This file is the reusable artifact — the user can edit it, add a column, re-run against new documents. Show it to the user and confirm before fanning out.
+Her sütun için kalıcı `id`, insan okunur `label`, `type`, `prompt` (belgeyi okuyan incelemecinin soracağı soru) ve `classify` için `options`. `id` ve `options` değerleri İngilizce kalır (başka skill'ler ve dışa aktarımlar bunları okur); `label` ve `prompt` Türkçe olur.
 
 ```yaml
 schema:
-  name: "M&A Diligence — Project [Code]"
-  created: 2026-05-07
+  name: "M&A Due Diligence — Proje [Kod]"
+  created: 2026-10-26
   columns:
     - id: counterparty
-      label: "Counterparty"
+      label: "Karşı taraf"
       type: verbatim
-      prompt: "Who is the contracting party other than the target?"
+      prompt: "Hedef dışındaki sözleşme tarafı kim (unvanıyla)?"
     - id: effective_date
-      label: "Effective Date"
+      label: "Yürürlük tarihi"
       type: date
-      prompt: "When did the agreement become effective?"
+      prompt: "Sözleşme hangi tarihte yürürlüğe girdi?"
     - id: change_of_control
-      label: "Change of Control"
+      label: "Kontrol değişikliği"
       type: classify
-      options: [silent, consent_required, consent_not_unreasonably_withheld, automatic_termination, notice_only]
-      prompt: "Does the agreement address a change of control of the target? What does it require?"
+      options: [silent, consent_required, consent_not_unreasonably_withheld, automatic_termination, termination_right, notice_only]
+      prompt: "Sözleşme hedefin kontrolünün değişmesini düzenliyor mu? Ne gerektiriyor?"
     - id: assignment
-      label: "Assignment Restrictions"
+      label: "Devir sınırlaması"
       type: classify
       options: [silent, consent_required, consent_not_unreasonably_withheld, freely_assignable, assignable_to_affiliates]
-      prompt: "Can the target assign this agreement? What restrictions apply?"
-    # ... more columns
+      prompt: "Hedef bu sözleşmeyi devredebilir mi? Hangi sınırlama var?"
+    - id: merger_reference
+      label: "Birleşme/bölünmeye atıf"
+      type: classify
+      options: [silent, treated_as_assignment, permitted, termination_right]
+      prompt: "Devir/CoC hükmü birleşme, bölünme ya da tür değiştirmeyi açıkça anıyor mu?"
+    - id: governing_law
+      label: "Uygulanacak hukuk"
+      type: verbatim
+      prompt: "Sözleşmeye hangi hukuk uygulanır?"
+    - id: dispute_forum
+      label: "Uyuşmazlık yeri"
+      type: classify
+      options: [turkish_courts, turkish_arbitration, foreign_courts, foreign_arbitration, silent]
+      prompt: "Uyuşmazlıklar hangi mahkemede ya da tahkimde çözülür?"
+    # ... diğer sütunlar
 ```
 
-### Step 2: Sample run
+`merger_reference` sütununu birleşme/bölünme yapısında ekle: sözleşmedeki devir yasağının külli halefiyete (TTK m. 153/1) uygulanıp uygulanmadığı **tartışmalı** olduğundan açık metin önemlidir. Kira için `lease_assignment` (TBK m. 323), kamu sözleşmeleri için `public_contract` (4735 m. 16) sütunlarını düşün. Şemayı çıktının yanına yaz; kullanıcı düzenleyip yeni belgelerle yeniden çalıştırabilir. Dağıtmadan önce göster ve onay al.
 
-Do not fan out to 200 documents on an untested schema. Run 3–5 documents first. Show the user the rows. Look for:
-- Columns where most answers are `unclear` — the prompt is ambiguous, rewrite it
-- `classify` columns where answers don't fit the options — add options or change to `free`
-- `verbatim` columns returning paraphrases — reinforce that it must be character-for-character
+### Adım 2: Örnek çalıştırma
 
-Adjust the schema, re-run the sample, confirm. This saves the user from a full run that has to be thrown out.
+Denenmemiş şemayı 200 belgeye dağıtma. Önce 3–5 belge çalıştır, satırları göster. Bak:
+- Çoğu cevabı `unclear` olan sütun → istem belirsiz, yeniden yaz.
+- Seçeneklere uymayan `classify` cevapları → seçenek ekle ya da `free`'ye çevir.
+- Parafraz dönen `verbatim` sütun → karakteri karakterine kuralını pekiştir.
+- Türkçe ve yabancı dilde karışık belgeler → alıntı belgenin kendi dilinde kalır, çeviri yapılmaz; iki dilli sözleşmede hangi metnin esas olduğunu ayrı sütunda yakala.
 
-### Step 3: Fan out
+Şemayı düzelt, örneği yeniden çalıştır, onay al.
 
-One sub-agent per document, in parallel. Each sub-agent:
+### Adım 3: Dağıt
 
-1. Reads the entire document (not a RAG chunk — the whole thing).
-2. For each column, finds the relevant provision.
-3. Returns a structured row: for each column, `{value, state, quote, location}`.
-   - `value` is the typed answer (or null if `state` is not `answered`)
-   - `state` is `answered | not_present | unclear | needs_review`
-   - `quote` is the verbatim supporting text (exact, no paraphrase, no ellipsis inside a sentence — if you cut, cut at sentence boundaries and mark it)
-   - `location` is where the quote lives (section number, heading, page — whatever the document gives you)
+Belge başına bir alt ajan, paralel. Her alt ajan belgenin tamamını okur (RAG parçası değil), her sütun için ilgili hükmü bulur ve şunu döndürür: `{value, state, quote, location}` — `value` tipli cevap (`state` `answered` değilse null), `state` `answered | not_present | unclear | needs_review`, `quote` birebir destek metni, `location` madde numarası / başlık / sayfa.
 
-**The quote is not optional, and the verbatim rule is mechanical, not exhortation.** Each sub-agent must comply with all of the following before returning a cell with `state: answered`:
+**Alıntı isteğe bağlı değildir; birebir kuralı mekaniktir.** `state: answered` döndürmeden önce:
+- `quote`, kaynaktaki bitişik metnin karakteri karakterine kopyası olmalı ve belirtilen `location`'da bulunabilmeli. Başlık + beklenen kalıp metinden alıntı kurma; parafraza "birebir" deme; "bu klozlar genelde şöyledir" bilgisinden alıntı yeniden üretme; bitişik olmayan metni üç noktayla dikme. Keseceksen cümle sınırında kes ve işaretle.
+- `location`, normalleştirme geçişinin aynı yeri yeniden açabileceği kadar belirli olmalı.
+- Kesin metin bulunup kopyalanamıyorsa (kaynak kesik, OCR bozuk, hüküm ima ediliyor ama yazılı değil) durum `needs_review`, `value` null ve `notes` içinde `quote_unavailable: <sebep>`. Kurgulanmış alıntıyla `answered` asla kabul edilmez.
+- Aynı kural `verbatim` sütunlara ve diğer tiplerin yan alıntılarına aynen uygulanır.
+- Kişisel veri (çalışan adı, TCKN, ücret) yalnız sütunun gerektirdiği ölçüde alınır (KVKK m. 4/2-ç: amaçla bağlantılı, sınırlı ve ölçülü).
 
-- The `quote` MUST be a character-for-character copy of contiguous text from the source document, retrievable at the `location` the sub-agent cites. Do NOT compose a quote from a section heading plus standard boilerplate you expect to be there. Do NOT paraphrase and call it verbatim. Do NOT reconstruct a quote from memory of how such clauses "usually" read. Do NOT fill gaps in the source with ellipsis-stitching across non-contiguous text.
-- The `location` must be specific enough for the normalization pass to re-open the document and re-read the same span — a section number, heading, or page reference the reviewer can navigate to.
-- If the sub-agent cannot locate and copy the exact text (source truncated, OCR garbage, provision implied but not written, section heading visible but body not loaded), the cell state is `needs_review`, the `value` is null, and `notes` MUST contain `quote_unavailable: <reason>`. It is NEVER acceptable to set `state: answered` with a composed or reconstructed quote.
-- The same rule applies to `verbatim`-typed columns AND to the companion source quotes attached to `classify` / `date` / `duration` / `currency` / `number` / `free` cells. The supporting quote carries the same verbatim obligation as the cell value.
+### Adım 4: Normalleştir
 
-The normalization pass in Step 4 spot-checks this by re-reading the source at the cited `location` and comparing the stored `quote` character-for-character against the source text. A mismatch downgrades the cell to `needs_review`, notes `quote_mismatch`, and flags the whole column for a wider spot-check — if one sub-agent composed a quote, others in the same run may have too.
+Tabloyu sütun sütun oku; her tablolu inceleme aracının hata modu aynı klozun belgeler arasında farklı yorumlanmasıdır.
+- **`classify`:** her `answered` değer seçenek listesinde mi? Kümelenmeye bak: 180 `consent_required` / 20 `consent_not_unreasonably_withheld` muhtemelen gerçektir; 195 / 5 `freely_assignable` ise o 5'e bak.
+- **`date` / `duration` / `currency`:** biçimi eşitle; makul olmayanları (99 yıllık süre, 1 TL tavan) `needs_review` yap.
+- **`verbatim` ve tüm yan alıntılar:** rastgele örnekte (sütun başına en az 3–5 satır ya da satırların %10'u, hangisi büyükse) kaynağı belirtilen yerde yeniden aç, alıntıyı karakteri karakterine karşılaştır. Uyuşmazlıkta hücreyi `needs_review` + `quote_mismatch` yap ve tüm sütunu genişletilmiş kontrole al — bir alt ajan alıntı kurguladıysa diğerleri de kurgulamış olabilir. Uyuşmayan alıntılı `answered` hücre, `unclear`'dan ağır bir hatadır.
 
-### Step 4: Normalize
+### Adım 5: Çıktı
 
-After the fan-out, read the whole table column by column. This is the pass that catches the failure mode of every tabular review tool: the same clause interpreted inconsistently across documents.
-
-For each `classify` column:
-- Check that every `answered` value is in the options list. Outliers get re-classified or bumped to `needs_review`.
-- Check for clusters: if 180 documents say `consent_required` and 20 say `consent_not_unreasonably_withheld`, that's probably real. If 195 say `consent_required` and 5 say `freely_assignable`, look at the 5 — they're either genuinely different or misclassified.
-
-For each `date` / `duration` / `currency` column:
-- Check format consistency. Normalize.
-- Flag implausible values (a 99-year term, a $1 cap) as `needs_review`.
-
-For each `verbatim` column AND for the companion source quotes on every other column:
-- Spot-check by re-opening the source document at the cited `location` for a random sample (at least 3–5 rows per column, or 10% of rows, whichever is larger) and comparing the stored `quote` character-for-character against the source.
-- If any quote is composed, paraphrased, reconstructed, or cannot be located at the cited span: downgrade that cell to `needs_review` with `quote_mismatch` in notes, and flag the whole column — expand the spot-check to the rest of the column rather than assuming the other rows are clean. One fabricated quote is enough to justify widening the check.
-- A cell with `state: answered` and a mismatched quote is a higher-severity failure than an `unclear` or `needs_review` cell — it misrepresents the evidence trail. Downgrade aggressively.
-
-### Step 5: Output
-
-Write the table in three formats:
-
-**Markdown** (always, for in-session review):
+**Markdown** (her zaman, oturum içi inceleme):
 ```markdown
-| Document | Counterparty | Effective Date | Change of Control | Assignment | ⚠️ Flags |
+| Belge | Karşı taraf | Yürürlük | Kontrol değişikliği | Devir | ⚠️ İşaret |
 |---|---|---|---|---|---|
-| Vendor MSA — Acme | Acme Corp | 2023-04-01 | consent_required | consent_required | — |
-| Supply Agmt — Beta | Beta LLC | 2021-11-15 | ⚠️ unclear | silent | CoC ambiguous §14.2 |
+| Hizmet Sözleşmesi — Alfa | Alfa A.Ş. | 2023-04-01 | consent_required | consent_required | — |
+| Tedarik Sözleşmesi — Beta | Beta Ltd. Şti. | 2021-11-15 | ⚠️ unclear | silent | CoC belirsiz m. 14.2 |
 ```
 
-**CSV** (`.csv`, always):
-One file for the values, one companion file for the quotes and locations (`_sources.csv`). Keeps the main file clean and the evidence trail complete.
+**CSV** (her zaman): değerler için bir dosya, alıntı ve yerler için `_sources.csv`.
 
-**Excel** (`.xlsx`) or **Google Sheets** — whichever the user works in. Ask; don't guess. Both follow the same workbook structure (see `references/excel-output.md` and `references/gsheets-output.md`). For Excel: Claude in Excel (Office agent) if available, `openpyxl` fallback. For Sheets: Sheets MCP if available, Sheets API via ADC, CSV-import fallback. In the spreadsheet output:
-- Each data column is paired with a hidden source column containing the quote and location. Cell comments (Excel) or notes (Sheets) on the visible column surface the quote on hover.
-- Color code by state: white = answered, yellow = unclear or needs_review, gray = not_present.
-- A `Verified` column per data column, blank by default. The reviewer marks it. This is the verify/flag pattern that makes the table auditable — the deal team can see at a glance what a human has actually checked.
-- A `_schema` sheet with the column definitions, so the file is self-documenting.
+**Excel ya da Google Sheets** (kullanıcının çalıştığı; sor). Yapı `references/excel-output.md` ve `references/gsheets-output.md`'de. Excel: Claude in Excel varsa o, yoksa `openpyxl`; Sheets: Sheets MCP, ADC ile Sheets API ya da CSV içe aktarma. Her veri sütununun yanında alıntı + yer taşıyan gizli sütun; görünür hücrede açıklama/not olarak alıntı. Renk: beyaz = answered, sarı = unclear/needs_review, gri = not_present. Her veri sütunu için varsayılan boş `Verified` sütunu — incelemeci işaretler; insanın neyi kontrol ettiği bir bakışta görünür. Sütun tanımlarını içeren `_schema` sayfası.
 
-Prepend the work-product header from the plugin config `## Outputs` as a top row. Alongside it, include a distribution note:
+**Formül enjeksiyonu:** belgeden ya da araçtan gelen ve `=`, `+`, `-`, `@`, sekme ya da satır sonuyla başlayan her hücrenin başına tek tırnak koy; CSV'de virgül, çift tırnak ve satır sonlarını RFC 4180'e göre tırnakla.
 
-> This review is derived from source documents that may be privileged, confidential, or both. It inherits the sources' privilege and confidentiality status — distribution beyond the privilege circle can waive privilege. Store with the matter's privileged files and make distribution decisions deliberately.
+En üst satıra CLAUDE.md `## Outputs` başlığını koy ve yanına ekle:
 
-### Step 6: Summary
+> Bu inceleme gizli kaynak belgelerden türetilmiştir ve onların gizlilik statüsünü devralır. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) dağıtılan belgeyi korumaz; dağıtımı işlem ekibiyle sınırla.
 
-After the table is written, give the user a one-screen readout:
-- Document count, column count, rows completed
-- Count of `not_present`, `unclear`, `needs_review` per column — this is the verification workload
-- Any columns where the normalization pass flagged >10% of rows
-- Where the output files are
-- A reminder: every cell is a lead, not a finding. Verification required before this informs a rep, a schedule, or a memo.
+### Adım 6: Özet
 
-## Close with the next-steps decision tree
+Belge, sütun ve tamamlanan satır sayısı; sütun başına `not_present` / `unclear` / `needs_review` sayıları (doğrulama yükü budur); normalleştirmede satırların %10'undan fazlası işaretlenen sütunlar; dosyaların yeri; hatırlatma: her hücre ipucudur, beyan, ek ya da not beslemeden önce doğrulanmalıdır.
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+## Kapanış
 
-## What this skill does not do
+CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu tabloya göre uyarla. Ağaç çıktıdır; seçimi avukat yapar.
 
-- **It does not replace reading the documents.** It tells you where to look.
-- **It does not produce confidence scores.** A 0.73 is not information. The `unclear` / `needs_review` states and the verbatim quotes are the confidence signal — if the quote doesn't support the value, flag it.
-- **It does not silently skip documents.** Every document the user pointed at gets a row. A document that couldn't be read gets a row of `needs_review` with a note.
-- **It does not pretend a paraphrase is a quote.** The evidence trail is the whole point.
+## Bu skill ne yapmaz
 
-## Relationship to other skills
+- Belgeleri okumanın yerini tutmaz; nereye bakacağını söyler.
+- Güven puanı üretmez. 0,73 bilgi değildir; güven sinyali `unclear` / `needs_review` durumları ve birebir alıntılardır.
+- Belgeyi sessizce atlamaz: gösterilen her belge bir satır alır; okunamayan belge `needs_review` satırı ve notu alır.
+- Parafrazı alıntı gibi sunmaz; delil izi işin kendisidir.
 
-- `diligence-issue-extraction` finds issues; this extracts data points. If an extraction reveals an issue (a MAC clause that references a specific earnings target, a poison pill), note it and suggest running diligence-issue-extraction on that document.
-- `material-contract-schedule` builds one specific table (the disclosure schedule). It can consume this skill's output directly — the schedule is a filtered, reformatted view of a tabular review.
-- `ai-tool-handoff` hands bulk review to Luminance/Kira when the corpus is too large or the team prefers a dedicated platform. This skill is the in-house option for anything it can handle — run it first, hand off the residue.
+## Diğer skill'lerle ilişki
 
-## Output safeguards
-
-Every output gets the work-product header. Every cell gets a source citation or a flagged state. The summary explicitly says verification is required. The Excel `Verified` column makes the verification state auditable. This is not a tool that lets you skip reading; it's a tool that makes reading faster.
+- `diligence-issue-extraction` sorun bulur; bu skill veri noktası çıkarır. Çıkarım bir sorun gösterirse (belirli bir kazanç hedefine bağlı MAC tanımı, olağandışı fesih hakkı) not et ve o belge için diligence-issue-extraction öner.
+- `material-contract-schedule` tek bir tabloyu (önemli sözleşmeler eki) kurar ve bu skill'in çıktısını doğrudan kullanabilir — ek, tablolu incelemenin süzülmüş ve biçimlenmiş görünümüdür.
+- `ai-tool-handoff` korpus çok büyükse ya da ekip özel platform tercih ediyorsa toplu incelemeyi Luminance/Kira'ya verir. Önce bu skill'i çalıştır, kalanı devret.
 
 ---
 
@@ -3213,326 +2162,193 @@ Every output gets the work-product header. Every cell gets a source citation or 
 ---
 name: written-consent
 description: >
-  Draft a unanimous written consent of the board or a committee in house format,
-  with precedent search from the consents repository. Handles multi-resolution
-  consents, director conflict flags, state-law notice requirements, and signatory
-  tracking, with a built-in scope warning for major one-off actions. Use when
-  user says "written consent", "unanimous consent", "board consent", "consent
-  in lieu", "UWC", or describes an action needing board approval without a meeting.
-argument-hint: "[describe the action needing board approval]"
+  Toplantı yapılmadan alınan kararı ev formatında taslaklar: AŞ yönetim kurulunda
+  elden dolaştırma (sirküler) karar (TTK m. 390/4), limited şirket genel kurulunda
+  yazılı onayla karar (m. 617/4), tek pay sahipli AŞ / tek ortaklı Ltd. yazılı kararı
+  (m. 408/3, 616/3). Emsal kararlar deposunda en yakın örneği arar; çok maddeli kararı,
+  müzakereye katılma yasağını (m. 393), devredilemez yetki sınırlarını (m. 375, 408),
+  esas sözleşmedeki ek şartları ve onay takibini ele alır; büyük tek seferlik işlemlerde
+  kapsam uyarısı verir. Kullanıcı "sirküler karar", "elden dolaştırma", "toplantısız YK
+  kararı", "yazılı karar", "written consent", "UWC" dediğinde ya da toplantı yapmadan
+  kurul onayı gereken bir işlem anlattığında kullan.
+argument-hint: "[kurul onayı gereken işlemi anlatın]"
 ---
 
 # /written-consent
 
-1. Load `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → Board & Secretary (consents repository, resolution language, state of incorporation, board composition).
-2. Use the workflow below.
-3. Identify the action and classify (routine / review-flag).
-4. If review-flag: show outside counsel warning and confirm before proceeding.
-5. Search consents repository for closest precedent. If no repository: use seed consents from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`.
-6. Draft consent in house format using precedent as base.
-7. Output: consent draft + signatory checklist + review prompts.
-
----
+1. `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Board & Secretary` yükle (`**Consents repository:**`, `**Consent format:**`, karar dili, şirket türü, YK/müdür yapısı).
+2. İşlemi ve organı belirle; rutin / inceleme bayrağı olarak sınıflandır.
+3. İnceleme bayrağıysa dış avukat uyarısını göster, onay al.
+4. Emsal depoda en yakın kararı ara; depo yoksa seed kararları kullan.
+5. Kanun ve esas sözleşme kontrolünü yap; ev formatında taslakla.
+6. Çıktı: karar taslağı + onay takip listesi + kontrol listesi + mevzuat notu.
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/corporate-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+`## Matter workspaces` bölümüne bak. `Enabled` `✗` ise bu paragrafı atla. Açık ve aktif matter yoksa sor: "Bu hangi matter için? `/corporate-legal:matter-workspace switch <slug>` ya da `practice-level`." Aktif matter'ın `matter.md`'sini yükle; çıktıyı `~/.claude/plugins/config/claude-for-legal/corporate-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter okuma.
 
----
+## Türk hukukunda toplantısız karar — önce bunu bil
 
-## Purpose
+ABD'deki "unanimous written consent" kalıbı Türk hukukuna taşınmaz. Hangi organın, hangi şartla toplantısız karar alabileceği kanunda ayrı ayrı düzenlenmiştir:
 
-Most routine board approvals don't need a meeting. Officer appointments, equity grants, bank authorizations, contract approvals above the officer threshold, intercompany arrangements — these happen by unanimous written consent. This skill drafts them quickly in your house format, finds the prior consent that's closest to what you need, and flags the actions where you should be getting outside counsel eyes before anyone signs.
+| Organ | Dayanak | Şartlar |
+|---|---|---|
+| AŞ yönetim kurulu | TTK m. 390/4 | Hiçbir üye toplantı istememeli · bir üyenin belirli konuda **karar şeklinde yazılmış önerisi** · aynı önerinin **tüm** üyelere yapılması (geçerlilik şartı) · **en az üye tam sayısının çoğunluğunun** yazılı onayı (oybirliği şart değil) · onay kâğıtlarının karar defterine yapıştırılması ya da imzaları içeren karara dönüştürülüp deftere geçirilmesi (geçerlilik şartı) |
+| Ltd. genel kurulu | m. 617/4 | Hiçbir ortak sözlü görüşme istememeli · bir ortağın gündem maddesine ilişkin önerisine diğer ortakların yazılı onayı · aynı önerinin **tüm** ortakların onayına sunulması (geçerlilik şartı) |
+| Tek pay sahipli AŞ / tek ortaklı Ltd. | m. 408/3, 616/3 | Tek pay sahibi/ortak GK'nın tüm yetkilerine sahiptir; kararları geçerlilik için yazılı olmalı |
+| AŞ genel kurulu (çok pay sahipli) | — | Kanunda elden dolaştırma yolu yoktur; en hızlı yol çağrısız genel kuruldur (m. 416) ve o da **toplantıdır** |
+| Ltd. müdürler kurulu | m. 624/3 | Şirket sözleşmesi karar alma usulünü düzenleyebilir; sözleşmede hüküm yoksa m. 390/4'ün kıyasen uygulanması **tartışmalı — içtihadı ve şirket sözleşmesini kontrol et** |
 
-## Scope warning — read before drafting
+Her durumda: YK kararlarının geçerliliği yazılıp imza edilmelerine bağlıdır (m. 390/5).
 
-> **This skill is designed for day-to-day consents with direct precedents in your repository or seed documents.** Routine actions — officer appointments, equity grants, annual authorizations, standard contract approvals — are the right use case. The skill finds a prior consent that closely matches, adapts it to the current action, and produces a clean draft.
+**Tartışmalı noktalar (avukata işaretle):** (1) m. 617/4'te karar için ortakların tamamının mı yoksa m. 620-621 nisaplarının mı arandığı — **tartışmalı, içtihadı kontrol et** (`tr_ictihat_ara(query="limited şirket genel kurul yazılı onay 617")`); (2) esas sözleşmenin m. 390/4 onay sayısını ağırlaştırıp ağırlaştıramayacağı; (3) elektronik imzalı onayların deftere geçirilme pratiği.
+
+## Kapsam uyarısı — taslaktan önce oku
+
+> **Bu skill, emsali olan günlük kararlar içindir:** imza yetkisi ve temsil şekli güncellemesi, banka yetkilendirmesi, müdür atama, olağan GK çağrı ve gündem kararı, emsal koşullu grup içi hizmet sözleşmesi, eşik altı sözleşme onayı.
 >
-> **For major one-off actions, outside counsel review is prudent regardless of what this skill produces.** This includes: M&A transactions (asset purchases, stock purchases, mergers, investments), financing rounds, equity issuances to new investors, change-of-control provisions, dissolution or winding down, material real estate transactions, and any action that will be scrutinized in a subsequent due diligence process.
+> **Büyük tek seferlik işlemlerde dış avukat incelemesi, bu skill ne üretirse üretsin, ihtiyatlıdır:** pay/şirket alımı-satımı, birleşme, bölünme, tür değişikliği, sermaye artırımı ya da yeni yatırımcıya pay, finansman ve teminat, yönetim kontrolü değişikliği, tasfiye, önemli taşınmaz işlemi, ileride bir veri odasında inceleneceği belli her karar.
 >
-> The skill will flag automatically when the action looks like a major one-off. That flag is not a block — you can proceed. It is a prompt to think about whether a clean precedent-adapted draft is sufficient for this particular action.
+> Bayrak engel değildir; emsalden uyarlanmış temiz bir taslağın bu işlem için yeterli olup olmadığını düşünme çağrısıdır.
 
----
+## Büyük işlem + aynı gün imza = dur
 
-## Major action + urgency = stop
+İki koşul birlikte varsa: (1) işlem aşağıdaki **inceleme bayrağı** listesinde; (2) kullanıcı aynı turda imzaya bağlıyor ("bugün e-imzaya gönder", "akşam noterde", "kapanıştan önce lazım", "KAP açıklamasından önce imzalansın").
 
-A board consent for a major one-off action (M&A, financing, dissolution, capital structure change, director election tied to a financing or M&A) that the user wants signed TODAY — "send for DocuSign this afternoon," "meeting in an hour," "signing tonight," "we need this before market open" — goes through outside counsel review. Not because the plugin can't draft it — because a wrong consent on a major action is a one-way door, and the urgency pressure is exactly when mistakes happen.
+Çıktı ver ve dur:
 
-Trigger (both must be true):
-
-1. The action is in the **Review flag — major one-off** category below (M&A, financing, dissolution, capital structure change, change-of-control provision, director election tied to a financing or M&A, material real estate transaction, any action that will appear in a future financing or M&A data room).
-2. The user's ask contains an irreversibility signal — "send for DocuSign," "sign today," "board is signing this afternoon/tonight," "need this before [market open / closing / the meeting at X]," any phrasing that commits the consent to signature on the same turn.
-
-When both are true, output this and stop:
-
-> ⛔ **Major action + same-day signature — I won't mark this ready to sign.**
+> ⛔ **Büyük işlem + aynı gün imza — bunu imzaya hazır işaretlemeyeceğim.**
 >
-> This is [action type], which is a one-way door. You've asked for it to be signed today. That combination is exactly when mistakes on a board consent become hardest to unwind.
+> Bu [işlem türü]; geri dönüşü zor bir karar. Bugün imzalanmasını istiyorsunuz; kurul kararında hatanın en zor düzeltildiği an tam budur. Taslağı memnuniyetle hazırlarım ama dış avukat bakmadan imzaya hazır işaretlemem.
 >
-> I'll draft it — happily — but I won't mark it ready to sign without an outside-counsel look. If outside counsel is already engaged on this deal, hand them this draft. If not, this is the thing outside counsel is for. Your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) can point you to a lawyer referral service that can find one same-day if needed.
+> 1. **Ben taslaklarım, dış avukat inceler, sonra imza** — olağan yol. "Taslakla" deyin.
+> 2. **Dış avukat zaten bu işte ve taslak yolunu onayladı** — kim, ne zaman inceledi söyleyin; devam eder ve taslağın dış avukatta olduğunu not ederim.
+
+Açık seçim olmadan Adım 1'e geçme. Aynı gün baskısı olmayan büyük işlemde bayrak geçerlidir ama durdurmaz.
+
+## Bağlamı yükle — emsalsiz kesin duruş
+
+`## Board & Secretary` → emsal kararlar deposu yoksa **ve** bu oturumda seed karar paylaşılmamışsa (ya da `**Consent format:**` belirli bir seed'den çıkarılmış dil içermiyorsa) taslaklama. Aynen şunu yaz ve bekle:
+
+> **Emsal yok — taslaktan önce duruyorum.**
 >
-> Two ways forward:
->
-> 1. **I draft, outside counsel reviews, then signatures** — the normal path for a major corporate action. Tell me to draft and I will.
-> 2. **Outside counsel is already on this deal and cleared the draft path** — tell me who reviewed and when. I'll proceed and include a note that outside counsel has the draft.
->
-> I will not draft in "ready-to-send" form under same-day pressure without one of those two. This is not a delay — it's the only way a same-day major-action consent is defensible if anyone ever looks at the file.
+> Ev formatınız olmadan yazılan karar, kazandırdığından fazla düzeltme ister; karar dili, gerekçe derinliği, yetkilendirme kalıbı ve imza bloğu şirketinize özgüdür.
+> 1. **Önceki bir kararı yapıştırın ya da yükleyin** (bu şirketin herhangi bir sirküler kararı — içeriği değil biçimi alırım), YA DA
+> 2. **"Genel şablonla yaz, şekli ben düzeltirim"** deyin — açıkça söylemeniz gerekir; varsaymam.
 
-Do not proceed to Step 1 or any drafting under this gate without an explicit response choosing path 1 or path 2. A routine consent with no major-action trigger, or a major-action consent without the same-day signature ask, follows the normal flow below — the "Outside counsel review recommended" flag on the major-one-off category still applies but does not hard-stop.
+## Adım 1 — İşlemi belirle
 
----
+Sor: ne onaylanacak (tek cümle); destekleyici ayrıntı (atanacak kişi, banka ve yetki sınırı, karşı taraf ve bedel); yürürlük tarihi; organ (YK, Ltd. GK, tek pay sahibi); kurulda menfaat çatışması var mı.
 
-## Load context
+**Organ ve yetki kontrolü (taslaktan önce):**
+- **GK'nın devredilemez yetkisi mi?** Esas sözleşme değişikliği, YK üyelerinin seçimi/ücreti/ibrası/görevden alınması, denetçi seçimi, finansal tablolar ve kâr, fesih, önemli miktarda şirket varlığının toptan satışı GK'nındır (m. 408/2). Diğer organların devredilemez yetkilerine giren YK kararları batıldır (m. 391/1-d). Ltd.'de GK'nın devredilemez yetkileri: m. 616 (ör. müdür atama, esas sermaye payı devrinin onayı).
+- **YK'nın devredilemez görevi mi?** Üst düzey yönetim, yönetim teşkilatı, muhasebe ve finans düzeni, şube müdürleri hariç müdürlerin atanması ve görevden alınması, üst gözetim, defterler ve faaliyet raporu, borca batıklık bildirimi (m. 375/1). Bunlar YK kararıyla alınır; yönetimin devri ancak esas sözleşme hükmü ve iç yönergeyle mümkündür (m. 367/1).
+- **YK üyesiyle işlem mi?** YK üyesinin şirketle işlemi GK izni gerektirir; aksi hâlde şirket işlemin batıl olduğunu ileri sürebilir (m. 395/1). Pay sahibi olmayan üyeye ve yakınlarına nakit borç, kefalet, garanti, teminat yasağı (m. 395/2); grup şirketleri birbirine kefil olabilir (m. 395/3). YK sirküler kararı GK izninin yerine geçmez.
+- **Halka açık ortaklık + ilişkili taraf işlemi mi?** SPK'nın belirlediği nitelikteki işlemler için önceden YK kararı ve bağımsız üyelerin çoğunluğunun onayı aranır; aykırı karar geçerli sayılmaz (SerPK m. 17/3).
+- **Menfaat çatışması:** ilgili üye müzakereye katılamaz; tereddütte YK karar verir, ilgili üye o oylamaya katılamaz; katılmama sebebi karara yazılır (m. 393/1, 393/3). Elden dolaştırmada ilgili üyenin onayının sayıya katılıp katılmayacağı **tartışmalı** — onayı saymadan çoğunluğun sağlandığını göster ve avukata işaretle.
 
-- `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` → `## Board & Secretary`:
-  - Consents repository location
-  - House resolution language
-  - State of incorporation (for notice requirements)
-  - Board composition (for signatory list)
-  - Written consents — scope and any limits
+**Sınıflandır:**
 
-### No-precedent hard stop
+*Rutin — emsal büyük olasılıkla var:* temsile yetkili kişiler ve temsil şekli (karar noter onaylı suretle tescil ve ilan için sicile verilir, m. 373/1); banka hesabı ve yetki limitleri; müdür atama/görevden alma (m. 375/1-d); olağan GK çağrısı ve gündemi (gündemi çağıran belirler, m. 413/1); emsal koşullu grup içi hizmet/lisans; eşik altı sözleşme; şube açılışı (sicile tescil).
 
-If (a) no consents repository is configured in `## Board & Secretary` → Consents repository, AND (b) no seed consent document has been provided to this skill (either uploaded this session or referenced in the `## Board & Secretary` → Consent format section with extracted resolution/recital/authorisation language from a specific seed), **STOP before drafting**. Do not proceed to Step 1 intake, do not draft from a generic template, do not "get started" with a filler format.
+*İnceleme bayrağı — dış avukat ihtiyatlı:* pay ya da şirket alımı-satımı, yatırım; birleşme, bölünme, tür değişikliği; sermaye artırımı, yeni yatırımcıya pay; kredi, teminat, kefalet; YK üyesiyle ya da ilişkili tarafla işlem; önemli varlık satışı (GK yetkisi, m. 408/2-f); fesih, tasfiye, konkordato ya da borca batıklık bildirimi (m. 376/3); sermaye kaybı nedeniyle GK çağrısı (m. 376/1-2); ileride veri odasına girecek her karar.
 
-Output exactly this block and wait for a response:
+Bayraklıysa:
 
-> **No precedent available — stopping before draft.**
->
-> I don't have a precedent to match. A board consent drafted without your house format will need more correction than it saves — resolution language, recital depth, authorisation boilerplate, and signature-block conventions all carry house-specific choices that the reviewer will rewrite from scratch if I start from a generic template.
->
-> Two ways to unblock:
->
-> 1. **Paste or upload a prior consent** (any recent UWC from this company in any category — I extract the format, not the substance), OR
-> 2. **Tell me "draft from a generic template anyway — I'll adjust the formalities myself"** — only pick this if you know you'll rework the resolution language, recital style, and authorisation block by hand before circulation. Say it explicitly; I will not infer it.
->
-> Which do you want to do?
+> ⚠️ **Dış avukat incelemesi önerilir.** Bu [işlem türü] görünüyor; emsalden uyarlanmış taslak yetmeyebilir. Dağıtmadan önce dış avukat incelemesini düşünün. Yine de taslaklayayım mı?
 
-Do NOT proceed without an explicit response choosing one of those two paths. Draft attempts absent a precedent are the highest-rework-to-value output this skill can produce — the hard stop is intentional.
+## Adım 2 — Emsal ara
 
----
+**Depo bağlıysa:** işlem türüyle ara ("imza yetkisi", "banka", "müdür atama", "grup içi"); en yeniyi ya da kullanıcının seçtiğini al:
 
-## Step 1: Identify the action
+> [N] emsal buldum: 1. [konu] — [tarih] 2. [konu] — [tarih]. Hangisi en yakın? Yoksa en yenisini mi kullanayım?
 
-Ask the user what action the board needs to approve. Gather:
+Seçileni oku; karar dili, gerekçe yapısı, yetkilendirme kalıbı ve özel kayıtları çıkar; önceki işlemle bugünkü arasındaki farkları listele.
 
-- **What is being approved?** (One sentence.)
-- **Any supporting detail?** For example: the name of the officer being appointed, the grant amount and price for an equity grant, the counterparty and contract value for a contract approval.
-- **Effective date:** Today, or a specific date?
-- **Signatories:** Full board, or a specific committee? If the `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` written-consent scope says certain actions require a meeting rather than consent, flag it now.
-- **Any director conflict?** Does any director have a material interest in the action being approved? If yes: flag it. The conflicted director may still be able to sign depending on state law and the nature of the conflict, but the consent should disclose it and the user should confirm.
+**Depo yoksa:** biçimi `**Consent format:**`'tan al ve söyle: "Emsal deposu bağlı değil; biçim seed kararlarınızdan. Bu işlem türü için önceden alınmış bir karar varsa içerik için onu da paylaşın."
 
-### Action classification
+## Adım 3 — Taslak
 
-Classify the action before searching for precedent:
-
-**Routine — direct precedent likely:**
-- Officer appointment or removal
-- Equity grant (option, RSU, restricted stock) to existing plan participants
-- Bank account authorization or signatory update
-- Approval of a contract below a material threshold
-- Annual authorization resolutions (tax matters, benefits plans, etc.)
-- Intercompany loan or services agreement at arm's length terms
-- Registered agent or registered office change
-
-**Review flag — major one-off, outside counsel prudent:**
-- M&A transaction (acquisition, merger, asset purchase, investment)
-- New financing round or debt facility
-- Equity issuance to a new investor
-- Change-of-control provision or trigger
-- Approval of an agreement that itself requires board approval under the company's charter or stockholder agreements
-- Dissolution, winding down, or bankruptcy filing
-- Material real estate transaction
-- Any action that will appear as a board approval exhibit in a future financing or M&A data room
-
-If the action is in the review-flag category, show this before drafting:
-
-> ⚠️ **Outside counsel review recommended.** This looks like [action type], which is a major corporate action where a precedent-adapted draft may not be sufficient. Consider having outside counsel review before circulation. Want me to proceed with a draft anyway?
-
----
-
-## Step 2: Search for precedent
-
-### If consents repository is connected
-
-Search the repository for the closest prior consent. Search strategy:
-
-1. Search by action type keyword (e.g., "officer appointment", "equity grant", "bank authorization")
-2. Return the most recent matching consent, or ask the user to choose if multiple close matches exist:
-
-> I found [N] prior consents that look like this:
->
-> 1. [Consent title / description] — [Date]
-> 2. [Consent title / description] — [Date]
->
-> Which one is closest to what you need? Or should I use the most recent?
-
-3. Read the selected consent. Extract: resolution language, recital structure, authorization language, any specific conditions or carve-outs.
-4. Note any differences between the prior action and the current one that will need to be updated in the draft.
-
-### If no repository (seed documents only)
-
-Extract the format from the seed consents in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. Note that no precedent search is available — the draft will follow house format but without substantive precedent matching. Flag this to the user:
-
-> No consents repository is connected, so I'm working from your seed documents for format. For this action type specifically, you may want to check whether you have a prior consent to use as a substantive starting point.
-
----
-
-## Step 3: Draft the consent
-
-Use the house format. The structure below is the standard — adapt to match the precedent or seed format exactly.
+Emsalin ya da seed'in biçimini birebir izle. Varsayılan iskelet (AŞ YK, m. 390/4):
 
 ```
-UNANIMOUS WRITTEN CONSENT
-[OF THE BOARD OF DIRECTORS / OF THE [COMMITTEE NAME]]
-OF [COMPANY NAME]
+[Müvekkil] (ticaret unvanı)
+YÖNETİM KURULU KARARI
+Karar Tarihi: [GG.AA.YYYY]   Karar No: [YYYY/NN]
+Karar şekli: Toplantı yapılmaksızın, TTK m. 390/4 uyarınca elden dolaştırma yoluyla
 
-[Date]
+Öneri sahibi üye: [Ad Soyad]
+Karar şeklinde yazılmış öneri [tarih] tarihinde [yöntem] ile yönetim kurulunun tüm
+üyelerine iletilmiştir. Hiçbir üye toplantı yapılması isteminde bulunmamıştır.
 
-The undersigned, constituting all of the members of the
-[Board of Directors / [Committee]] of [Company Name], a [State] [corporation /
-limited liability company] (the "Company"), hereby adopt the following
-resolutions by written consent pursuant to [Section X of the [State] General
-Corporation Law / applicable operating agreement], in lieu of a meeting:
+Konu: [..]
+Gerekçe: [1-2 cümle — olgular ve kurulun neden karar vermesi gerektiği]
 
-[AGENDA ITEM / ACTION HEADING — if multiple resolutions]
+KARAR:
+1. [Kesin karar: kim, ne, hangi tutar ve para birimi, hangi belge — "Ek-1'deki [tarih]
+   tarihli [sözleşme adı]"];
+2. [Uygulama yetkisi: Şirketi temsile yetkili [ad/unvan]'ın bu kararın uygulanması için
+   gerekli her türlü belgeyi Şirket adına imzalamaya yetkili kılınmasına];
+3. [Gerekiyorsa: işbu kararın noter onaylı suretinin tescil ve ilan için ticaret sicili
+   müdürlüğüne verilmesine].
 
-WHEREAS, [background recital — one or two sentences stating the relevant facts
-and why the board is being asked to act]; and
+Onaylar — üye tam sayısı: [N]; gerekli asgari yazılı onay: [N'nin çoğunluğu /
+esas sözleşme m. [..]]
+[Ad Soyad] — Kabul / Ret — İmza — Tarih
+[...]
+Müzakereye katılmayan üye ve sebebi (TTK m. 393/3): [Yok / Ad — sebep]
 
-WHEREAS, [additional recital if needed]; and
-
-NOW, THEREFORE, BE IT RESOLVED, that [the specific action being approved,
-in precise language — name names, state amounts, reference the specific
-agreement or instrument where applicable];
-
-RESOLVED FURTHER, that [any related or implementing resolution — e.g., the
-specific officers authorized to sign documents, the authority granted];
-
-RESOLVED FURTHER, that the officers of the Company are, and each of them
-hereby is, authorized and directed, in the name and on behalf of the Company,
-to take all actions and to execute and deliver all documents, instruments,
-certificates and agreements as such officers may deem necessary or appropriate
-to carry out the intent and purposes of the foregoing resolutions; and
-
-RESOLVED FURTHER, that any actions previously taken by any officer of the
-Company in connection with the foregoing are hereby ratified, confirmed and
-approved in all respects.
-
-[Repeat WHEREAS / RESOLVED block for each additional action if multi-resolution consent]
-
-This Written Consent may be executed in one or more counterparts, each of
-which shall be deemed an original and all of which together shall constitute
-one and the same instrument. Electronic signatures shall be deemed original
-signatures for all purposes.
-
-[SIGNATURE BLOCKS — one per required signatory]
-
-_______________________________
-[Director Name]
-[Title, if applicable]
-Date: _______________
-
-[Repeat for each director / committee member]
+Defter kaydı: Onay imzalarını içeren bu karar yönetim kurulu karar defterine geçirilmiştir /
+onay kâğıtları deftere yapıştırılmıştır (TTK m. 390/4). Sayfa: [..]
 ```
 
-### Resolution drafting notes
+**Ltd. GK (m. 617/4):** "Öneri sahibi ortak", "öneri tüm ortakların onayına [tarih]te sunulmuştur; hiçbir ortak sözlü görüşme isteminde bulunmamıştır", gündem maddesi, karar, ortak bazında esas sermaye payı ve oy (m. 618/1) ile onay/ret. **Tek pay sahibi / tek ortak:** "[Ad], şirketin tek pay sahibi/ortağı sıfatıyla genel kurul yetkisini kullanarak aşağıdaki kararı almıştır" + imza (m. 408/3, 616/3).
 
-- **Be precise.** Vague resolutions create problems in due diligence. "Approved the transaction" is not useful. "Approved the Asset Purchase Agreement dated [date] between [Buyer] and [Company], substantially in the form attached hereto as Exhibit A" is.
-- **Name the authorized signatories.** Don't just say "officers" if a specific officer needs authority for a specific thing. Name them.
-- **Reference exhibits.** If a document is being approved, attach it as an exhibit and reference it in the resolution. The consent is only as useful as its specificity.
-- **Match the house language exactly.** "RESOLVED, THAT" vs. "BE IT RESOLVED" vs. "RESOLVED" — use whatever is in the precedent or seed documents. Do not switch formats within a consent.
+**Yazım notları:** belirsiz karar ("işlem onaylandı") veri odasında sorun çıkarır — tarafları, tutarı, belgeyi adlandır. Belirli bir yetki için "yetkililer" değil, kişi adı yaz. Onaylanan belgeyi eke koy ve atıf yap. Karar dilini emsalden al; bir kararda karıştırma.
 
----
+## Adım 4 — Kanun ve esas sözleşme kontrolü
 
-## Step 4: Confirm the consent rules for the state of incorporation
+Kanunun varsayılanını esas sözleşme ya da şirket sözleşmesi değiştirebilir. **Şirketin kendi esas sözleşmesindeki ek şartlar uygulanır; esas sözleşmeyi okumadan "hazır" deme.** Kontrol et:
+- Esas sözleşmede ağırlaştırılmış YK nisabı (m. 390/1) ya da belirli konular için toplantı şartı var mı?
+- Elektronik toplantı/oy esas sözleşmede öngörülmüş mü (m. 1527/1)?
+- İmtiyazlı pay grubunun YK'da temsil ya da onay hakkı var mı?
+- Pay sahipleri sözleşmesinde veto veya onay listesi var mı? Şirkete karşı ileri sürülebilirliği **tartışmalı** — avukata işaretle.
+- Karar defteri fiziki mi, elektronik mi (m. 64/3-4)? Onayların deftere nasıl geçirileceği buna göre belirlenir.
 
-Check the state of incorporation in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. Research the written-consent requirements for that state before drafting:
+`## Board & Secretary`'de ev duruşu varsa uygula ve dayandığın kuralı yaz. Çıktıya kısa **"Mevzuat notu"** ekle: hangi organ, hangi madde, gereken onay sayısı, esas sözleşmede bulunan/bulunamayan hüküm, açık kalan tartışmalı nokta. Madde atfını yazmadan önce `tr_mevzuat_madde_getir(number="6102", madde_no=["390","393"])` ile güncel metni çek.
 
-- Is unanimity required for a board written consent, or is a lower threshold permitted?
-- Is notice to non-signatory directors required? On what timing?
-- Is notice to non-signatory stockholders required (for stockholder consents)? On what timing?
-- What form of signature is valid (wet ink, electronic, counterparts)?
-- Does the charter or bylaws override any default rule — e.g., a higher signature threshold, a different notice window, a restriction on which actions can be taken by consent?
+## Adım 4.5 — Sonuç doğuran eylem kapısı
 
-Cite the controlling statute section and any charter/bylaw provisions relied on. Verify currency — state corporate codes are amended regularly. Flag uncertainty for attorney verification rather than stating a rule you haven't confirmed.
+`## Who's using this` → Role **avukat değilse**:
 
-If `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` records a house position on any of these questions, apply it and note the legal backstop being relied on. Add a short "State-law notice" block to the output summarizing what you confirmed (or flagged) so the user isn't left wondering.
+> Kararın imzalanması şirketi bağlar ve şirket kaydı olur. Bir avukatla gözden geçirdiniz mi? Evetse devam. Hayırsa avukata götürmeniz için brif: işlem (karar metni) · bulgular (organ, onay sayısı, esas sözleşme, işaretlenen çatışma) · açık sorular · ne ters gidebilir (batıl karar, geçersiz onay, defter kaydı eksikliği, GK izni gereken işlem, tescil yapılmaması) · avukata sorulacaklar (doğru organ ve yol bu mu; esas sözleşme bu işlemi toplantısız karara izin veriyor mu). Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz.
 
----
+Açık "evet" olmadan imzaya hazır sürüm üretme; araştırma, biçim çıkarma ve TASLAK serbest.
 
-## Step 4.5: Consequential-action gate (execute consent)
+## Adım 5 — Çıktı
 
-**Before proceeding to output:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
-
-> Executing a written consent has legal consequences — it binds the entity and becomes a corporate record. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> - What the action is (the resolution)
-> - What the analysis found (state-law notice, signature threshold, any flagged conflicts)
-> - Open questions (anything flagged for attorney verification above)
-> - What could go wrong (invalid consent, breach of fiduciary duty, signature defect, conflict not properly handled)
-> - What to ask the attorney (is this the right vehicle; are there missing recitals; does the charter/bylaws permit consent for this action)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
-
-Do not produce the final signatory-ready draft past this gate without an explicit yes. Research, format extraction, and a marked-DRAFT for attorney review are fine.
-
----
-
-## Step 5: Output
-
-Produce:
-
-1. **The consent draft** — complete, ready to review and circulate. The executed written consent itself is a corporate record, not privileged; do not apply the work-product header to the consent as circulated. The drafting notes, signatory tracker, and analysis below are work product — prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`):
-
-   ```
-   [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-   ```
-
-2. **Signatory checklist:**
+1. **Karar taslağı** — imzalanan karar şirket kaydıdır, üst başlık almaz. Aşağıdakiler `## Outputs` üst başlığını taşır.
+2. **Onay takip listesi:**
 ```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-
-SIGNATORY CHECKLIST — [Action] — [Date]
-
-Required signatories (unanimous consent required):
-□ [Director Name 1]
-□ [Director Name 2]
-□ [Director Name 3]
-[etc. — pulled from board composition in `~/.claude/plugins/config/claude-for-legal/corporate-legal/CLAUDE.md`]
-
-Conflict disclosures:
-[None / [Director Name] has a disclosed interest — confirm whether recusal or disclosure is appropriate]
-
-State law notice: [confirmed-rule-for-state-of-incorporation / confirm]
+[ÜST BAŞLIK — ## Outputs; role göre]
+ONAY TAKİBİ — [işlem] — [tarih]
+Öneri tüm üyelere/ortaklara iletildi: □ [tarih, yöntem, kanıt]
+Toplantı/sözlü görüşme istemi: □ yok
+Gerekli asgari onay: [sayı ve dayanak]
+□ [Üye/ortak 1]  □ [Üye/ortak 2]  □ [...]
+Menfaat çatışması: [Yok / Ad — müzakereye katılmadı; sebep karara yazıldı]
+Deftere geçirme: □ [tarih, sayfa]   Tescil-ilan: □ gerekli değil / □ başvuru [tarih]
 ```
+3. **Kontrol listesi:** karar işlemi kesin tanımlıyor · doğru organ ve yetki (m. 375, 408, 616) · tarih doğru · ekler ekli · yetkililer adıyla yazıldı · çatışma açıklandı · esas sözleşme kontrol edildi · büyük işlemde dış avukat inceledi.
+4. **Taslağın başına not** (imzadan önce çıkarılır):
 
-3. **Review prompts:**
-```
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+> **⚠️ İnceleyen notu:** Bu metin avukat incelemesi için taslaktır, alınmış bir karar değildir. İmzalanması şirketi bağlar ve şirket kaydı olur; avukat inceleyip gerekirse düzeltmeden ve sorumluluğu üstlenmeden imzaya göndermeyin.
 
-BEFORE CIRCULATING — check:
-□ Resolution language precisely describes the action (no vague approvals)
-□ Correct effective date
-□ All required exhibits attached and referenced
-□ Authorised signatories named correctly
-□ Any director conflicts disclosed or resolved
-□ For major actions: outside counsel has reviewed
-```
+**Karşılaştırmalı not (ABD):** ABD kalıbı ("unanimous written consent") adı üstünde oybirliğine dayanır; Türk AŞ'sinde m. 390/4 çoğunluk onayıyla yetinir ama önerinin herkese yapılmasını ve deftere geçirmeyi geçerlilik şartı sayar. ABD kalıbındaki "counterparts" ve "WHEREAS/RESOLVED" dili ev üslubunuz değilse kullanma.
 
-4. **Final note on the draft — add before circulation.** Prepend to the consent draft as a separate pre-execution note, then strip before the consent is signed:
+## Bu skill ne yapmaz
 
-> This is a draft for attorney review, not an executed consent. Executing it binds the entity and becomes a corporate record — a licensed attorney reviews, edits as needed, and takes professional responsibility before it goes out. Do not circulate for signature unreviewed.
-
----
-
-## What this skill does not do
-
-- It does not determine whether an action legally requires board approval — that judgment belongs to the attorney.
-- It does not advise on director fiduciary duties or conflict of interest resolution — it flags conflicts, the attorney handles them.
-- It does not replace outside counsel review for major transactions — the scope warning is genuine, not boilerplate.
-- It does not circulate the consent — output is for the attorney to review and send via their own process.
-- It does not track returned signatures — the signatory checklist is a starting point; signature tracking is manual or handled by your document management process.
-
----
-
+- İşlemin kurul onayı gerektirip gerektirmediğine karar vermez; avukatın işidir.
+- Özen ve bağlılık yükümü ya da menfaat çatışmasının çözümü hakkında görüş vermez; işaretler, avukat çözer.
+- Büyük işlemlerde dış avukat incelemesinin yerini tutmaz.
+- Kararı dağıtmaz, imzaları toplamaz, deftere işlemez, sicile başvurmaz; takip listesi başlangıç noktasıdır.
