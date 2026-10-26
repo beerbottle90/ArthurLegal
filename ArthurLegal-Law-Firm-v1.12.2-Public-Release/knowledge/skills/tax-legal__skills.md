@@ -49,7 +49,7 @@ name: cold-start-interview
 description: >
   Tax pratiğini bilgisayara öğret — tax modeli (Mali İşler ana / Büyük 4 ortak /
   karma), dış vergi danışmanı + vergi avukatı paneli, eskalasyon eşikleri (özellikle
-  uzlaşma yetkisi), aktif Danıştay davaları envanteri, yakıcı stres alanları
+  uzlaşma yetkisi), aktif vergi davaları envanteri, yakıcı stres alanları
   (TP / KDV iade / ÖTV). 2dk hızlı veya 10dk tam mod.
 user-invocable: true
 ---
@@ -75,7 +75,7 @@ Argümansız çağrılırsa sor:
 1. **Tax modeli:** Mali İşler ana / Büyük 4 ortak / Karma / İçeride tax ekibi var
 2. **Hukukun rolü:** Sadece dava aşamasında / planlama dahil / tüm aşamalarda
 3. **Birincil yakıcı stres:** TP / KDV iade / ÖTV / damga / karma
-4. **Aktif Danıştay dava sayısı:** yaklaşık
+4. **Aktif vergi davası sayısı:** yaklaşık
 5. **Büyük 4 firma:** PwC / Deloitte / EY / KPMG / başka
 6. **Uzlaşma onay matrisi:** Mali İşler özerk mi, hukuk dahil mi, CFO'da mı
 
@@ -92,14 +92,14 @@ Argümansız çağrılırsa sor:
 - Büyük 4 ana firma + sözleşme tipi (yıllık paket vs. iş başı)
 - Transfer pricing dokümantasyon — hazırlayan, onaylayan
 - YMM (Yeminli Mali Müşavir) — kim, hangi konularda
-- Vergi davası dış avukat (Danıştay) — Ankara mı, İstanbul mı, uzman büro mu
+- Vergi davası dış avukat — Ankara mı, İstanbul mı, uzman büro mu
 - AYM bireysel başvuru için ayrı uzman var mı
 
 ### Batch 3 — Eskalasyon ve onay matrisi
 - Özelge talebi onay
 - İdari itiraz onay
 - Tarhiyat öncesi/sonrası uzlaşma onay (tutar kademeli)
-- Danıştay dava açma onay
+- Vergi davası açma onayı
 - AYM bireysel başvuru onay
 - VUK m. 359 kaçakçılık iddiasında ceza savunma
 
@@ -135,7 +135,7 @@ Argümansız çağrılırsa sor:
 **Sonraki adım önerisi:**
 - /tax-legal:transfer-pricing-review — yıllık TP dokümantasyon dönemi
 - /tax-legal:vergi-incelemesi-response — Maliye inceleme geldi
-- /tax-legal:tax-litigation-prep — aktif Danıştay dosyaları
+- /tax-legal:tax-litigation-prep — aktif vergi davası dosyaları
 - Manuel: ~/.claude/plugins/config/claude-for-legal/tax-legal/CLAUDE.md
 ```
 
@@ -516,21 +516,22 @@ tr_kurum_karari_ara(
 ---
 name: tax-litigation-prep
 description: >
-  Danıştay vergi davası hazırlık: İYUK m. 7 (30 gün dava süresi) kontrolü, görevli
-  daire seçimi (3.=KDV/ÖTV, 4.=Kurumlar, 7.=Damga, 9.=Vergi cezası), dava dilekçesi
-  taslağı, yürütmenin durdurulması talebi (İYUK m. 27), emsal Danıştay kararları.
+  Vergi davası hazırlık: İYUK m. 7 (vergi mahkemesinde 30 gün) süre kontrolü, görevli
+  ve yetkili vergi mahkemesi, kanun yolu (BİM istinafı, Danıştay temyizi, parasal
+  sınırlar), dava dilekçesi taslağı, tahsilin durması ve yürütmenin durdurulması
+  (İYUK m. 27/4), emsal Danıştay kararları.
   Dış vergi avukatı brief'i ile entegre.
 user-invocable: true
 ---
 
-# Tax Litigation Preparation — Danıştay Vergi Davası
+# Tax Litigation Preparation — Vergi Davası (Vergi Mahkemesi → BİM → Danıştay)
 
 ## ⏰ ÖN-KONTROL — Süre
 
 Bu skill her çalıştırıldığında **ilk işlem süre hesabı**:
 
 > Vergi tarhiyat / idari para cezası tebliğ tarihi nedir?
-> İYUK m. 7 — **30 gün** içinde Danıştay'a iptal davası açılmalı.
+> İYUK m. 7 — **30 gün** içinde **vergi mahkemesinde** iptal davası açılmalı (ilk derece vergi mahkemesidir — 2576 s.K. m. 6).
 > Bu süre **hak düşürücü**dür.
 
 Eğer kalan süre < 5 gün → 🔴 ACİL — dış vekille derhal koordinasyon.
@@ -539,11 +540,21 @@ Eğer kalan süre < 5 gün → 🔴 ACİL — dış vekille derhal koordinasyon.
 
 - **Mali İşler + Hukuk değerlendirme** → "GİZLİDİR – HUKUK + MALİ İŞLER VERGİ DAVA STRATEJİ"
 - **Dış vergi avukatı brief'i** → "VERGİ DAVA BRIEF – AVUKATLIK K. m. 36 KAPSAMINDA"
-- **Danıştay'a sunulacak dilekçe taslağı** → resmi format, "TASLAK" + dış vekil onayı sonrası
+- **Vergi mahkemesine sunulacak dilekçe taslağı** → resmi format, "TASLAK" + dış vekil onayı sonrası
 
 ## Adımlar
 
-### 1. Görevli daire tespiti
+### 1. Görevli mahkeme, yetki ve kanun yolu
+
+| Aşama | Merci | Süre | Dayanak |
+|---|---|---|---|
+| İlk derece | **Vergi mahkemesi** — vergiyi tarh ve tahakkuk ettiren / cezayı kesen dairenin bulunduğu yerdeki vergi mahkemesi | Tebliğden itibaren 30 gün | İYUK m. 7/1, m. 37; 2576 s.K. m. 6 |
+| İstinaf | Bölge idare mahkemesi | Kararın tebliğinden itibaren 30 gün | İYUK m. 45/1 — konusu parasal sınırı (kanun metninde 31.000 TL) geçmeyen vergi davası kararları kesindir |
+| Temyiz | Danıştay | Kararın tebliğinden itibaren 30 gün | İYUK m. 46/1-b — yalnız konusu parasal sınırı (kanun metninde 920.000 TL) aşan vergi davalarında; ayrıca BİM'in ilk derece kararını kaldırıp yeniden karar verdiği hallerde (m. 46/2; istisnaları maddede) |
+
+**Parasal sınırlar** her yıl yeniden değerleme oranında artırılır; istinaf ve temyiz açısından **davanın açıldığı tarihteki** sınır esas alınır (İYUK ek m. 1). Güncel tutarı her dosyada teyit et.
+
+**Temyiz aşamasında Danıştay vergi dava daireleri** — ⚠️ daire iş bölümü değişebilir; aşağıdaki tablo doğrulanmadı, temyizden önce güncel iş bölümünü teyit et:
 
 | Daire | Konu |
 |---|---|
@@ -553,7 +564,7 @@ Eğer kalan süre < 5 gün → 🔴 ACİL — dış vekille derhal koordinasyon.
 | **Danıştay 9. Daire** | Vergi cezaları (her vergi türü için ceza), tarhiyat, vergi kaçakçılığı |
 | **Vergi Daireleri DDK** | Daire çelişkilerini birleştirme |
 
-**[Müvekkil] örnek:**
+**[Müvekkil] örnek (temyiz aşamasında olası daire — teyit et):**
 - [HALKA AÇIK İŞTİRAK] KDV iadesi reddi → **3. Daire**
 - [RAFİNERİ] ÖTV mahsubu reddi → **3. Daire**
 - TP tarhiyatı (KVK m. 13) → **4. Daire**
@@ -563,19 +574,17 @@ Eğer kalan süre < 5 gün → 🔴 ACİL — dış vekille derhal koordinasyon.
 ### 2. Dava dilekçesi şablonu (İYUK m. 3)
 
 ```markdown
-DANIŞTAY [X.] DAİRESİ BAŞKANLIĞINA
-ANKARA
+[İL] ( ). VERGİ MAHKEMESİ BAŞKANLIĞINA
 
 DAVACI:
 [Müvekkil] — [VKN, sicil, adres]
 Vekili: [Av. ad, baro sicil, adres, KEP]
 
 DAVALI:
-T.C. Maliye Bakanlığı / [Vergi Dairesi Başkanlığı]
-Vekili: [Bakanlık genel olarak Hazine ve Maliye Bakanlığı vekili]
+[Tarhiyatı yapan / cezayı kesen] Vergi Dairesi Müdürlüğü (ya da Başkanlığı) — [adres]
 
 DAVA KONUSU:
-[Tarihli, sayılı] tarhiyat işlemi / idari para cezası kararının iptali ile yürütmenin durdurulması talebidir.
+[Tarihli, sayılı] tarhiyat işlemi / idari para cezası kararının iptali [ve — yalnız İYUK m. 27/4 istisnalarında — yürütmenin durdurulması] talebidir.
 
 İŞLEMİN TARİFİ:
 [Maliye'nin tebliğ ettiği belge — tarih, sayı, tutar, ceza]
@@ -595,7 +604,7 @@ B. [Argüman 2] — [Emsal Danıştay kararı: `[ArthurLegal MCP (`tr_`) — dan
 
 C. [Argüman 3 — yedek]
 
-III. YÜRÜTMENİN DURDURULMASI TALEBİMİZ (İYUK m. 27)
+III. YÜRÜTMENİN DURDURULMASI TALEBİMİZ (İYUK m. 27) — [YALNIZ m. 27/4 İSTİSNALARINDA; tarhiyata karşı davada dava konusu kısmın tahsili kendiliğinden durduğundan bu bölümü çıkarın]
 
 Aşağıdaki sebeplerle yürütmenin durdurulması talep edilmektedir:
 1. [Telafisi güç zarar] — örn. tahsil edilirse şirket nakit akışı bozulur, üretim etkilenir
@@ -604,8 +613,8 @@ Aşağıdaki sebeplerle yürütmenin durdurulması talep edilmektedir:
 IV. SONUÇ VE TALEP
 
 Yukarıdaki açıklamalar ışığında:
-1. Yürütmenin durdurulmasına,
-2. [İşlemin/cezaın] iptaline,
+1. [Yalnız m. 27/4 istisnasında:] Yürütmenin durdurulmasına,
+2. [İşlemin/cezanın] iptaline,
 3. Yargılama gideri ve vekalet ücretinin davalıya yüklenmesine,
 
 karar verilmesi saygıyla arz ve talep olunur.
@@ -621,13 +630,20 @@ EKLER:
 4. [Emsal Danıştay kararları]
 ```
 
-### 3. Yürütmenin durdurulması (İYUK m. 27) — KRİTİK
+### 3. Tahsilin durması ve yürütmenin durdurulması (İYUK m. 27) — KRİTİK
 
-Davacıya **otomatik tahsil tehiri** sağlamaz. Talep edilmesi şart. Şartlar:
-- **Telafisi güç veya imkansız zararlar doğacağı**
-- **İdari işlemin uygulanması halinde açıkça hukuka aykırılığın var olduğu**
+**Kural (m. 27/4):** Vergi mahkemesinde vergi uyuşmazlığından doğan davanın açılması, tarh edilen vergi, resim, harç ve benzeri mali yükümler ile bunların zam ve cezalarının **dava konusu edilen bölümünün tahsilini kendiliğinden durdurur**. Bu davalarda ayrıca yürütmenin durdurulması istemeye gerek yoktur.
 
-İkisi de gerekli. Yüksek tutarlı tarhiyatlarda **telafisi güç zarar** kolay ispatlanır (nakit etkisi, sektör operasyonu).
+**İstisnalar — tahsil durmaz, yürütmenin durdurulması istenir (m. 27/4):**
+- İhtirazi kayıtla verilen beyannameler üzerine yapılan işlemlere karşı davalar
+- Tahsilat işlemlerine karşı açılan davalar (ör. ödeme emri)
+- m. 26/3'e göre işlemden kaldırılan ve yeniden işleme konulan dosyalar
+
+Yürütmenin durdurulması şartları (m. 27/2), ikisi birlikte:
+- **Telafisi güç veya imkânsız zararlar doğacağı**
+- **İdari işlemin açıkça hukuka aykırı olduğu**
+
+İstisna hallerinde yüksek tutarlarda **telafisi güç zarar** daha kolay gösterilir (nakit etkisi, operasyon).
 
 **Tehir-i icra (AATUHK)** — vergi tahsil aşamasına girdiyse ayrı bir paralel yol.
 
@@ -657,7 +673,7 @@ tr_ictihat_ara(
 - **Tutar > 10M TL** → CFO + Başkan + CEO eskalasyon
 - **[HALKA AÇIK İŞTİRAK] ilgili** → KAP açıklama (önemli dava — SPK Tebliğ II-15.1)
 - **Yüksek tutarlı Maliye davası** → MASAK bildirim eşiği? (UNSCR/AML kontrolleri)
-- **AYM bireysel başvuru** — Danıştay temyizi reddi sonrası mülkiyet hakkı ihlali argümanı
+- **AYM bireysel başvuru** — kanun yolları tükendikten sonra (BİM kesin kararı ya da Danıştay temyiz kararı) mülkiyet hakkı ihlali argümanı
 
 ### 6. Dış vergi avukatı brief'i
 
@@ -677,8 +693,8 @@ tr_ictihat_ara(
 ## ⚠️ İnceleyen notu
 - **Tebliğ tarihi:** GG.AA.YYYY
 - **Dava süresi sonu:** GG.AA.YYYY (kalan: N gün) 🔴 🟠 🟡
-- **Görevli daire:** Danıştay [X.] Daire
-- **Yürütmenin durdurulması talep edilecek:** evet
+- **Görevli mahkeme:** [İL] ( ). Vergi Mahkemesi — kanun yolu: [BİM istinafı / kesin] → [Danıştay temyizi: m. 46'ya göre açık mı?]
+- **Tahsil kendiliğinden durdu mu (m. 27/4):** [evet / hayır — istisna: …] · **YD talebi:** [yalnız istisnada]
 - **Kaynaklar:** ArthurLegal MCP (`tr_`) (Danıştay [N] emsal); ArthurLegal MCP (`tr_`) (VUK/KDVK m. [N])
 - **Eskalasyon zinciri:** [tetiklendi?]
 - **KAP açıklama:** [N/A / hazırlanıyor]
@@ -901,7 +917,7 @@ description: >
   Maliye uzlaşma teklifi geldi veya uzlaşma talebi verilecek — değerlendirme:
   tarhiyat öncesi (VUK Ek m. 11, cezada %50'ye kadar indirim (doğrulanmadı)) vs. tarhiyat sonrası
   (Ek m. 1, cezada %75'e kadar indirim (doğrulanmadı)) karar; kabul edilebilir ceza aralığı
-  (vergi aslı 7524 s.K. sonrası uzlaşma kapsamı dışında); Danıştay dava alternatifiyle maliyet
+  (vergi aslı 7524 s.K. sonrası uzlaşma kapsamı dışında); vergi davası alternatifiyle maliyet
   karşılaştırma; [Müvekkil] onay zinciri.
 user-invocable: true
 ---
@@ -968,8 +984,8 @@ user-invocable: true
 |---|---|
 | Uzlaşma (Ek m. 11 ile) | Vergi aslı tam tahsil (uzlaşma kapsamı dışı) + Ceza %50 (doğrulanmadı) + zaman ~1-3 ay |
 | Uzlaşma (Ek m. 1 ile) | Vergi aslı tam tahsil (uzlaşma kapsamı dışı) + Ceza %25 (doğrulanmadı) + zaman ~3-6 ay |
-| Danıştay dava (kazanırsa) | %0 + faiz iade (geç) + vekalet ücreti karşı tarafa |
-| Danıştay dava (kaybederse) | %100 vergi + %100 ceza + gecikme + dava masrafı + vekalet |
+| Vergi davası (kazanırsa) | %0 + faiz iade (geç) + vekalet ücreti karşı tarafa |
+| Vergi davası (kaybederse) | %100 vergi + %100 ceza + gecikme + dava masrafı + vekalet |
 | Karma — uzlaş + dava | [kombinasyon] |
 
 **Kazanma olasılığı tahmini:** ArthurLegal MCP (`tr_`)'den emsal kararlara bakarak.
@@ -1108,7 +1124,7 @@ Maliye inceleme başlama →
 [Tarhiyat öncesi: VUK Ek m. 11 uzlaşma şansı] →
 Tarhiyat (vergi/ceza belirlenir, tebliğ) →
 [Tarhiyat sonrası: VUK Ek m. 1 uzlaşma | İYUK m. 7 — 30 gün dava] →
-Danıştay dava
+Vergi mahkemesi → BİM istinafı → Danıştay temyizi (parasal sınırlara bağlı — İYUK m. 45/1, 46)
 ```
 
 ## Adımlar
@@ -1154,7 +1170,7 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 
 **Option 2: Tarhiyatın yapılmasını bekle, dava aç**
 - Yazılı pozisyon güçlü ise
-- Danıştay'da kazanma olasılığı yüksek ise
+- Davada kazanma olasılığı yüksek ise
 - Maliye'nin agresif yorum yaptığını ispatlayabilirsen
 
 **Option 3: Karma — bazı tespitleri kabul, bazılarına itiraz**
@@ -1172,7 +1188,7 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 ⚠️ **30 GÜN SÜRE BAŞLADI** (İYUK m. 7). Aksiyon:
 
 - [ ] **Tarhiyat sonrası uzlaşma (VUK Ek m. 1)** — 30 gün içinde başvur (cezada %75'e kadar indirim (doğrulanmadı); yalnız ceza için, vergi aslı uzlaşma kapsamı dışında — 7524 s.K.)
-- [ ] **Veya dava** — 30 gün içinde Danıştay'a → `/tax-legal:tax-litigation-prep`
+- [ ] **Veya dava** — 30 gün içinde vergi mahkemesine → `/tax-legal:tax-litigation-prep`
 - [ ] **Veya ikisi** — uzlaşma başvur; uzlaşma vaki olmadıkça o ceza için dava açılamaz (VUK ek m. 7/1). Uzlaşılmazsa dava, tutanağın tebliğinden itibaren genel hükümlere göre açılır; süre bitmiş veya 15 günden az kalmışsa tutanağın tebliğinden itibaren 15 gün olarak uzar (VUK ek m. 7/4) — yine de süre kısalabileceğinden derhal aksiyon al.
 
 ### ArthurLegal MCP (`tr_`) — emsal arama

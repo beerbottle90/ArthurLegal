@@ -206,7 +206,7 @@
 ## Privilege & gizlilik notları (Türk hukuku özellikleri)
 
 - **Avukat–müvekkil görüşme gizliliği:** 1136 sayılı Avukatlık Kanunu m. 36
-- **TBK m. 6, TTK m. 18 — ticari sır**
+- **TBK m. 396/4, TTK m. 55/1-d — iş/ticari sır**
 - **KVKK m. 28 — yargı süreci istisnası**
 
 **Önerilen üst başlık (iç memorandumlar için):**

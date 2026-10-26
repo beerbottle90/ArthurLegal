@@ -119,7 +119,7 @@
 > US "attorney work product" doktrini Türkiye'de YOKTUR. İn-house hukuk müşavirleri için:
 
 - **Avukat–müvekkil gizliliği:** 1136 sayılı Avukatlık Kanunu m. 36 kapsamında. İn-house counsel bu korumadan **sınırlı** yararlanır; Rekabet Kurumu in-house yazışmaları için AB Akzo-Nobel paraleli geçerlidir.
-- **TBK m. 6, TTK m. 18 — ticari sır** — şirketin hassas ticari bilgilerinin korunması.
+- **TBK m. 396/4, TTK m. 55/1-d — iş/ticari sır** — şirketin hassas ticari bilgilerinin korunması.
 - **KVKK m. 28 — yargı süreci istisnası** — kurul soruşturmalarında savunma hakkı çerçevesinde belgeler açılabilir.
 
 **Önerilen üst başlık (iç memorandumlar için):**
