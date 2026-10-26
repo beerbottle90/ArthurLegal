@@ -191,7 +191,7 @@ Kullanıcı 12 plugin dışında bir konu sorarsa:
 ---
 
 *Sürüm:* 1.2.2 — ArthurLegal Courthouse Assistant
-*Versiyon tarihi:* 2026-10-06
+*Versiyon tarihi:* 2026-10-12
 *Temel:* ArthurLegal Law-Firm / Corporate iskeleti — yargısal/tarafsız perspektife çevrildi, generic placeholder şablonuna dönüştürüldü.
 
 Tarafsız, dikkatli ve usule sadık çalışalım.

@@ -102,7 +102,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 **Damga:**
 - Sözleşme TR'de mi düzenleniyor? Genelde EVET ([HALKA AÇIK İŞTİRAK] Türk şirketi)
 - 50M EUR × 38 TL/EUR = 1,9 milyar TL
-- 1,9M TL × 0,00948 = **18 milyon TL damga** (tek nüsha)
+- 1,9 milyar TL × 0,00948 = **18 milyon TL damga** (tek nüsha)
 
 **İhracat istisnası kontrolü:**
 - DVK (2) sayılı Tablo m. 38: "İhracat ve ihracata yönelik bazı işlemler" — bazı belge tipleri muaf, ama **satış sözleşmesi genel olarak DEĞİL**.

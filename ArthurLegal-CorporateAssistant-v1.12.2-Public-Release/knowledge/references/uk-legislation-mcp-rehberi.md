@@ -86,9 +86,9 @@ yanıtlar. Detay bağlam: `karsilastirmali-hukuk-rehberi.md`.
 
 ```
 uk_search_legislation:
-  query: "arbitration"
+  title: "arbitration"
   type: "ukpga"
-  year: 1996
+  year: "1996"
 → Arbitration Act 1996 (ukpga/1996/23) bulunur
 
 uk_get_legislation: ukpga/1996/23

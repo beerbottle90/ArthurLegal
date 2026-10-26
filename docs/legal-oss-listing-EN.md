@@ -49,15 +49,15 @@ source sits in rather than papering over the difference.
 - **Primary-source MCP** (verbatim norm text and case law): Türkiye · Switzerland ·
   United States (case law) · Azerbaijan — via **ArthurLegal MCP** (Türkiye under the
   `tr_` prefix: courts, legislation with gerekçe, Official Gazette, eight regulators and a
-  19,498-document semantic archive; source [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp)), **OpenCaseLaw.ch** (972K+ Swiss federal and cantonal
-  decisions, 33 tools), **CourtListener** (Free Law Project — US federal and state
+  19,498-document semantic archive; source [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp)), **OpenCaseLaw.ch** (1,050,000+ Swiss federal and cantonal
+  decisions, 42 tools), **CourtListener** (Free Law Project — US federal and state
   opinions, PACER dockets, citation network, and citation verification as a defence
   against fabricated citations), **Fedlex** (Swiss federal legislation — article
   text and amendment history), and the same **ArthurLegal MCP** — fourteen more jurisdictions and the
   Turkish land registry (live parcels from TKGM Parsel Sorgu) behind the one connector (123 tools in total): Azerbaijan (official `api.e-qanun.az` with in-force
   status verification), Austria, Germany, the Netherlands, Poland, Spain, Finland
   and Ireland, plus scholarship and contract corpora. Every tool carries its
-  jurisdiction as a prefix, because `get_act` means five different things across
+  jurisdiction as a prefix, because `get_act` means six different things across
   the underlying servers.
 - **Legislation via WebFetch** (no extra connector): UK · US (federal legislation,
   GovInfo) · EU / CJEU / ECHR · Germany · France · Italy · Japan · Russia · China ·

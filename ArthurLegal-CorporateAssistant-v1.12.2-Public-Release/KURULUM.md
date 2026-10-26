@@ -36,12 +36,12 @@ Claude.ai Projects üzerinde çalışır.
 
 ## Adım 3 — Knowledge Dosyalarını Yükle
 
-`knowledge/` klasörünün altında **103 dosya** var (4 kategori):
+`knowledge/` klasörünün altında **105 dosya** var (4 kategori):
 
 ```
 knowledge/
   skills/      ← 12 dosya (birleşik skill kitapçıkları — legal-research dâhil)
-  references/  ← 83 dosya (TR mevzuat, yargı çevresi ve MCP rehberleri, arthur-mask-rehberi.md)
+  references/  ← 85 dosya (TR mevzuat, yargı çevresi ve MCP rehberleri, arthur-mask-rehberi.md)
   agents/      ← 7 dosya (periyodik ajan tanımları)
   company-profile.md
 ```
@@ -54,7 +54,7 @@ knowledge/
 Project → **+ Add content** → **Files** ekranını açık tutun.
 
 1. `knowledge/skills/` klasörünü aç → `Ctrl+A` (12 dosya) → sürükle → bekle
-2. `knowledge/references/` klasörünü aç → `Ctrl+A` (83 dosya) → sürükle → bekle
+2. `knowledge/references/` klasörünü aç → `Ctrl+A` (85 dosya) → sürükle → bekle
 3. `knowledge/agents/` klasörünü aç → `Ctrl+A` (7 dosya) → sürükle → bekle
 4. `knowledge/company-profile.md`'yi ayrıca sürükle
 
@@ -146,7 +146,7 @@ Swiss OR sözleşmeleri, ICC/Swiss tahkim kararları için.
 3. **URL:** `https://mcp.opencaselaw.ch/sse`
 4. Auth bölümünü **boş bırak** (auth yok)
 
-**Kapsam:** 972K+ BGer/BVGer/26 kanton kararı, Fedlex mevzuat entegrasyonu (CC0).
+**Kapsam:** 1.050.000+ BGer/BVGer/26 kanton kararı, Fedlex mevzuat entegrasyonu (CC0).
 
 ### 4b-2 · CourtListener — ABD İçtihadı
 

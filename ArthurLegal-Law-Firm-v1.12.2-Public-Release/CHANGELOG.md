@@ -940,5 +940,5 @@ Tüm kişisel veri ve kurum-spesifik içerik temizlenmiş, generic hukuk bürosu
 ---
 
 [1.2.0]: ./VERSION.md
-[1.0.1]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.1-Public-Release
-[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-Law-Firm-v1.0.0-Public-Release
+[1.0.1]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-Law-Firm-v1.0.1-Public-Release
+[1.0.0]: https://github.com/beerbottle90/ArthurLegal/tree/main/arsiv/ArthurLegal-Law-Firm-v1.0.0-Public-Release

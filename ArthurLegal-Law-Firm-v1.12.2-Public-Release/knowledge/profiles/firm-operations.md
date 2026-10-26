@@ -1,6 +1,6 @@
 # Firm Operations Practice Profile (Türk Hukuku — Büro işletim ekseni)
 
-*Bu dosya `/firm-operations:cold-start-interview` ile doldurulur. **Bu plugin, diğer 8 plugin'in ÜZERİNDE çalışan büro-seviye operasyon ekseni.** firm-profile.md ile birlikte tüm büronun davranış zeminini belirler.*
+*Bu dosya `/firm-operations:cold-start-interview` ile doldurulur. **Bu plugin, diğer 15 plugin'in ÜZERİNDE çalışan büro-seviye operasyon ekseni.** firm-profile.md ile birlikte tüm büronun davranış zeminini belirler.*
 
 ---
 
@@ -18,7 +18,7 @@
 
 ## Bu plugin'in farkı
 
-Diğer 8 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ...).
+Diğer 15 plugin **müvekkil matter'larında çalışır** (dispute, advisory, ...).
 `firm-operations` **büroyu çalıştırır** — müvekkil matter'ları açılmadan önceki ve sonrasındaki **tüm yatay operasyonlar:**
 
 | Aşama | Skill | Bağlam |

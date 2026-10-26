@@ -28,15 +28,15 @@ yalnız ArthurLegal MCP'nin taşımadığı kaynaklar (AİHM, KİK, Sayıştay, 
 HSK) için kullanılır.
 
 - **OpenCaseLaw.ch MCP** — `mcp.opencaselaw.ch/sse`
-  - İsviçre 972K+ karar, Fedlex mevzuatı (CC0, auth yok)
+  - İsviçre 1.050.000+ karar, Fedlex mevzuatı (CC0, auth yok)
 
 ## Kaynak katmanı MCP sunucuları (v1.7.0–v1.5.0 — self-hosted, auth yok)
 
 Dördü de self-hosted MCP sunucusudur; public upstream
 API'leri sarar. Kaynakları:
-[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/eqanun-api) ·
-[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/lex-scholar-api) ·
-[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/main/resourcecontracts-api)
+[`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api) ·
+[`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/lex-scholar-api) ·
+[`resourcecontracts-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/resourcecontracts-api)
 · [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp).
 
 - **e-qanun MCP** — upstream `api.e-qanun.az`, Azerbaycan Cumhuriyeti **Adalet

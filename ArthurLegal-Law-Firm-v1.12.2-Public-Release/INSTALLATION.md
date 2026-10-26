@@ -186,7 +186,7 @@ see `knowledge/references/tapu-kadastro-rehberi.md`.
 | `gleif_` | 🌍 Legal-entity identity + group structure (LEI) |
 | `tkgm_` | 🇹🇷 Land registry and cadastre — live parcels from TKGM Parsel Sorgu (block/parcel, coordinates, place names), parcel report, scaled sketch, legal-basis bridge; at most 30 requests a minute, one consent card per chat |
 
-> ⚠️ **Prefixes are mandatory.** `get_act` means five different things across the
+> ⚠️ **Prefixes are mandatory.** `get_act` means six different things across the
 > underlying servers; call tools by their prefixed names: `tr_ictihat_ara`, `az_get_act`.
 
 > ⚠️ **No authentication.** Anyone with the URL can call every tool. They search public
@@ -239,7 +239,7 @@ Add these where your client portfolio touches the jurisdiction.
 
 | Connector | URL | Auth | Coverage |
 |---|---|---|---|
-| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | None | Swiss case law — 972K+ federal and cantonal decisions (33 tools, CC0) |
+| `OpenCaseLaw.ch` | `https://mcp.opencaselaw.ch/sse` | None | Swiss case law — 1,050,000+ federal and cantonal decisions (42 tools, CC0) |
 
 > ⚠️ **Citation verification is mandatory.** Before citing any US decision, verify
 > it in CourtListener — does the case exist, is the citation correct, has it been

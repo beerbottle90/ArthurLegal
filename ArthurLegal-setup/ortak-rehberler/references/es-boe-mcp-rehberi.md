@@ -22,7 +22,7 @@
 | **Araç öneki** | `es_` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
-| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp` |
+| **Sunucu kaynağı** | `github.com/beerbottle90/arthurlegal-mcp/tree/master/es-boe-mcp` |
 | **Sürüm** | `es-boe-mcp` v1.0.0 — 5 araç |
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → endpoint
@@ -30,7 +30,7 @@ URL'sini gir → auth "None".
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`es_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on dört sunucuda `get_act` beş ayrı şey demek, önek doğru
+> değişmez — alttaki on dört sunucuda `get_act` altı ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -146,6 +146,6 @@ daha dar ve daha kırılgandır; o rehberdeki uyarıları uygula ve **atıfa
 
 ---
 
-*Sunucu: `github.com/beerbottle90/arthurlegal-mcp/tree/main/es-boe-mcp` · bağımlılıksız (yalnız Python standart
+*Sunucu: `github.com/beerbottle90/arthurlegal-mcp/tree/master/es-boe-mcp` · bağımlılıksız (yalnız Python standart
 kütüphanesi), auth yok. Canlı test: 30.08.2026 — 5 araç, gerçek sorgularla
 doğrulandı. Sürüm: v1.6.0 (yeni).*

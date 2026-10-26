@@ -99,7 +99,7 @@ For detailed content → [CHANGELOG.md](CHANGELOG.md).
 
 | Source | Access | Auth | Coverage |
 |---|---|---|---|
-| **OpenCaseLaw.ch** | MCP — `mcp.opencaselaw.ch/sse` | None | Switzerland — 972K+ federal and cantonal decisions + Fedlex legislation integration (CC0) — 33 tools |
+| **OpenCaseLaw.ch** | MCP — `mcp.opencaselaw.ch/sse` | None | Switzerland — 1,050,000+ federal and cantonal decisions + Fedlex legislation integration (CC0) — 42 tools |
 | **CourtListener** | MCP — official server, Anthropic connector directory | OAuth 2.0 (dynamic client registration) | **United States case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (fabricated-citation defence). Operated by Free Law Project. See `courtlistener-rehberi.md` |
 | **ArthurLegal MCP** | MCP — `arthurlegal-mcp.fly.dev/mcp` | None | **Türkiye + 14 jurisdictions and the Turkish land registry behind one connector — 123 tools.** 🇹🇷 Türkiye (`tr_`, 23 tools): Yargıtay, Danıştay, regional and local courts, KYB, Constitutional Court, Uyuşmazlık Mahkemesi, 12 legislation types with article tree and gerekçe, Official Gazette, eight regulators (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) and a 19,498-document semantic archive · 🇦🇿 Azerbaijan, in-force status verified (`az_`) · 🇦🇹 Austria (`at_`) · 🇩🇪 Germany (`de_`) · 🇳🇱 Netherlands (`nl_`) · 🇵🇱 Poland (`pl_`) · 🇪🇸 Spain (`es_`) · 🇫🇮 Finland (`fi_`) · 🇮🇪 Ireland (`ie_`) · 🇬🇧 UK (`uk_`) · 🇪🇺 EU/CJEU (`eu_`) · 🇯🇵 Japan (`jp_`) · GLEIF (`gleif_`) · 10 scholarship indexes incl. 19 Turkish law journals (`scholar_`) · 5,125 signed petroleum & mining contracts (`contracts_`) · 🇹🇷 land registry: live parcels from TKGM Parsel Sorgu with parcel report, scaled sketch and legal-basis bridge (`tkgm_`, 17 tools) |
 | **TR Legal MCP** (optional) | MCP — `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth (WorkOS) | Only for what the Turkish backend deliberately omits: ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK. Paid server by [saidsurucu](https://github.com/saidsurucu) |
@@ -121,7 +121,7 @@ narrows, the assistant states it in the output.
 The Turkish backend ([`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp), MIT) reuses endpoint knowledge from [saidsurucu](https://github.com/saidsurucu)'s open-source yargi-mcp and mevzuat-mcp; sources whose official endpoints do not answer reliably (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) are left out rather than shipped as stubs.
 **ArthurLegal MCP is auth-free** — anyone with the URL can call every tool, so no
 company secret, negotiating position or confidential draft goes into a query.
-Every tool carries its jurisdiction as a prefix, because `get_act` means five
+Every tool carries its jurisdiction as a prefix, because `get_act` means six
 different things across the underlying servers. The `status` tool reports each
 jurisdiction's index size and `index_coverage`: a statute outside that range is
 not found, and the search returns its nearest neighbour rather than saying so.

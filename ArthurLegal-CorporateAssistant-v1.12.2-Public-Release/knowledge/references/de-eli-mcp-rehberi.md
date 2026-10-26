@@ -32,7 +32,7 @@ göre değişmez.
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`de_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on dört sunucuda `get_act` beş ayrı şey demek, önek doğru
+> değişmez — alttaki on dört sunucuda `get_act` altı ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 

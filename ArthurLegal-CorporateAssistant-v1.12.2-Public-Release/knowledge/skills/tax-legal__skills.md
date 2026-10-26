@@ -1096,7 +1096,7 @@ Maliye'den **vergi inceleme başlama yazısı** veya **inceleme tutanağı** vey
 
 - **Mali İşler iç değerlendirme** → "GİZLİDİR – HUKUK + MALİ İŞLER DAHİLİ"
 - **CFO/CEO eskalasyon** → 1 sayfa exec summary
-- **Dış vergi avukatı brief'i** → "TAX BRIEF – ATM K. m. 36"
+- **Dış vergi avukatı brief'i** → "TAX BRIEF – AVUKATLIK K. m. 36"
 - **Maliye'ye sunulacak ön rapora itiraz** → resmi format
 
 ## Süreç haritası (VUK m. 134-141)

@@ -113,7 +113,7 @@
 | **KVKK Kurulu** | https://www.kvkk.gov.tr/Icerik/4232/Kurul-Kararlari | Veri ihlal kararları, sektörel rehberler |
 | **Çevre, Şehircilik ve İklim Değişikliği Bakanlığı** | https://www.csb.gov.tr | ÇED, atık, emisyon — {{AL_TESIS}} tesisleri |
 | **ÇSGB** | https://www.csgb.gov.tr | İş izinleri (yabancı çalışan), 6331 ISG |
-| **MASAK** | https://www.masak.hmb.gov.tr | Yaptırım + AML rehberleri |
+| **MASAK** | https://masak.hmb.gov.tr | Yaptırım + AML rehberleri |
 | **TÜRKPATENT** | https://www.turkpatent.gov.tr | Marka/patent ilanları + İlanlar Bülteni |
 | **BTK** | https://www.btk.gov.tr | [TELEKOM İŞTİRAK], {{AL_KURUM}} Fiber |
 | **Sanayi ve Teknoloji Bakanlığı** | https://www.sanayi.gov.tr | [ÖZEL ENDÜSTRİ BÖLGESİ] rejimi |

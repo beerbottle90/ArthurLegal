@@ -62,7 +62,7 @@ ArthurLegal Holding yaptırım taraması yapısal olarak yüksek riskli — 4 an
 - **MASAK Tebliğleri**
 - **BM resepsiyonu** — UNSCR'lerin TR'de uygulanması (CB Kararnamesi ile)
 
-**Sorgu:** https://www.masak.hmb.gov.tr (donan varlık listesi)
+**Sorgu:** https://masak.hmb.gov.tr (donan varlık listesi)
 
 ### 6. [Yurtdışı Ana Şirket] iç compliance + yurtdışı ana ortak ülke rejimi
 
