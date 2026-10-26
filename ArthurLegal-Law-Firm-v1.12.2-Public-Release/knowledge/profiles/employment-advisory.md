@@ -107,7 +107,7 @@
 ### İşe iade davası (m. 18-21)
 
 - **Şartlar:** 30+ işçi + 6 ay hizmet + belirsiz süreli sözleşme
-- **Süre:** Fesih tebliğinden **30 g içinde arabuluculuk** + arabuluculuktan **2 hafta içinde dava**
+- **Süre:** Fesih bildiriminin tebliğinden **bir ay içinde arabuluculuk** (İş K. m. 20/1) + arabuluculuktan **2 hafta içinde dava**
 - **Sonuç (kazanma):** İşe iade veya işe iade etmemenin tazminatı (4-8 ay ücret) + boşta geçen süre tazminatı (max 4 ay)
 
 ### Zamanaşımı

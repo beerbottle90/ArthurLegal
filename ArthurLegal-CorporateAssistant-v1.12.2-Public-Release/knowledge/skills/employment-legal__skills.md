@@ -1,8 +1,6 @@
 # employment-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentinin skill'lerini tek dosyada toplar; ArthurLegal başlık ve içindekiler eklemiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
->
-> ⚠️ **Türk hukukuna uyarlanmadı.** Skill metinleri özgün İngilizce hâliyle ABD hukukuna dayanır. Türk hukuku sorusunda buradaki kural, süre ve dayanakları doğrudan kullanmayın; Türk mevzuatını `tr_mevzuat_madde_getir` ile doğrulayın.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10); yabancı yargı çevreleri için yalnız ArthurLegal MCP araçlarına yönlendirir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
 
 > Alan: Is hukuku - ise iade, sorusturma, politika
 > Toplam skill: 20
@@ -10,26 +8,26 @@
 
 ## Icindekiler
 
-- /employment-legal:cold-start-interview (324 satir)
-- /employment-legal:customize (104 satir)
-- /employment-legal:expansion-kickoff (41 satir)
-- /employment-legal:expansion-update (74 satir)
-- /employment-legal:handbook-updates (107 satir)
-- /employment-legal:hiring-review (213 satir)
-- /employment-legal:internal-investigation (765 satir)
-- /employment-legal:international-expansion (361 satir)
-- /employment-legal:investigation-add (39 satir)
-- /employment-legal:investigation-memo (36 satir)
-- /employment-legal:investigation-open (36 satir)
-- /employment-legal:investigation-query (44 satir)
-- /employment-legal:investigation-summary (40 satir)
-- /employment-legal:leave-tracker (36 satir)
-- /employment-legal:log-leave (59 satir)
-- /employment-legal:matter-workspace (187 satir)
-- /employment-legal:policy-drafting (131 satir)
-- /employment-legal:termination-review (283 satir)
-- /employment-legal:wage-hour-qa (214 satir)
-- /employment-legal:worker-classification (399 satir)
+- /employment-legal:cold-start-interview (201 satir)
+- /employment-legal:customize (58 satir)
+- /employment-legal:expansion-kickoff (44 satir)
+- /employment-legal:expansion-update (69 satir)
+- /employment-legal:handbook-updates (118 satir)
+- /employment-legal:hiring-review (149 satir)
+- /employment-legal:internal-investigation (345 satir)
+- /employment-legal:international-expansion (239 satir)
+- /employment-legal:investigation-add (38 satir)
+- /employment-legal:investigation-memo (35 satir)
+- /employment-legal:investigation-open (35 satir)
+- /employment-legal:investigation-query (40 satir)
+- /employment-legal:investigation-summary (37 satir)
+- /employment-legal:leave-tracker (31 satir)
+- /employment-legal:log-leave (68 satir)
+- /employment-legal:matter-workspace (160 satir)
+- /employment-legal:policy-drafting (130 satir)
+- /employment-legal:termination-review (219 satir)
+- /employment-legal:wage-hour-qa (122 satir)
+- /employment-legal:worker-classification (200 satir)
 
 ---
 
@@ -58,332 +56,211 @@ Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi
 
 ---
 
+---
+
 ## /employment-legal:cold-start-interview
 
 ---
 name: cold-start-interview
 description: >
-  Cold-start setup — learns your jurisdictional footprint and escalation rules
-  from your handbook and termination memos. Asks which states and countries
-  have employees, reads seed documents, and builds a jurisdiction-aware
-  escalation table. Use on fresh install, when CLAUDE.md still has
-  [PLACEHOLDER] markers, or when re-running with --redo or --check-integrations.
-argument-hint: "[--redo | --check-integrations]"
+  İlk kurulum — iş hukuku pratiğinizi öğrenir: taraf modeli (işveren / işçi / ikisi),
+  işyeri ve işçi sayısı haritası (İş K. eşikleri: 30 işçi iş güvencesi, toplu işçi
+  çıkarma, 50 işçi engelli kontenjanı), TİS/sendika durumu, işe alım ve fesih tetikleri,
+  çıkar çatışması kuralı (Av. K. m. 38), eskalasyon. Personel/disiplin yönetmeliğinden ve
+  örnek fesih/savunma belgelerinden öğrenir. İlk kurulumda, CLAUDE.md'de [PLACEHOLDER]
+  kaldıysa ya da --redo / --check-integrations ile kullan.
+argument-hint: "[--redo | --full | --check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. Check `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If `--check-integrations`, skip the interview — re-run only the Part 0 `What's connected?` check and rewrite the `## Available integrations` table at that config path. When probing: only report ✓ if an MCP tool call actually succeeded. Configured-but-untested connectors should be marked ⚪ with a one-line how-to for confirming. Never report ✓ based on `.mcp.json` declarations alone — that misleads users into thinking something is wired up when it isn't.
-2. Run the interview below (Part 0 first — role + integrations — then footprint): states/countries, hiring/term review triggers, severance practice.
-3. Seed docs: handbook + 3 termination memos.
-4. Build jurisdiction-specific escalation table.
-5. If a populated CLAUDE.md (no `[PLACEHOLDER]` markers) exists at `~/.claude/plugins/cache/claude-for-legal/employment-legal/*/CLAUDE.md` but not at the config path, copy it to the config path and tell the user what was migrated.
-6. Write `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`, creating parent directories as needed.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasına bak. `--check-integrations` verildiyse görüşmeyi atla; yalnız Bölüm 0'daki "Ne bağlı?" kontrolünü çalıştır ve bu yoldaki `## Available integrations` tablosunu yeniden yaz. ✓ yalnız gerçek bir MCP çağrısı başarılı döndüyse; yapılandırılmış ama denenmemiş bağlantı ⚪ (tek satır teyit yolu ile). `.mcp.json` beyanına bakarak ✓ verme.
+2. Görüşmeyi yürüt (önce Bölüm 0 — rol, pratik ortamı, entegrasyonlar; sonra harita).
+3. Örnek belgeler: personel/disiplin yönetmeliği + örnek fesih, savunma ve sözleşme belgeleri.
+4. İşyeri/eşik tablosunu ve eskalasyon tablosunu kur.
+5. Eski önbellek yolunda (`~/.claude/plugins/cache/claude-for-legal/employment-legal/*/CLAUDE.md`) doldurulmuş (placeholder'sız) bir CLAUDE.md varsa ve ayar yolunda yoksa ayar yoluna kopyala ve kullanıcıya neyin taşındığını söyle.
+6. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasını yaz; üst klasörleri gerekirse oluştur.
 
----
+# Kurulum Görüşmesi — İş Hukuku
 
-# Cold-Start Interview: Employment Counsel
+## Amaç
 
-## Purpose
+Türk iş hukukunda doğru cevap çoğu zaman **sayıya ve tarafa** bağlıdır: işyerinde kaç işçi var, aynı işkolunda kaç işyeri var, TİS var mı, hangi tarafı temsil ediyoruz. Bu görüşme haritayı çıkarır ve her skill'in okuyacağı eşik ve eskalasyon tablosunu kurar.
 
-Employment law is jurisdictional down to the bone. The right answer in Texas is the wrong answer in California. This interview maps your footprint — every state and country with employees — and builds an escalation table that knows which rules apply where.
+## Kurulum durumu
 
-## Cold-start check
+`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`:
+- **Yok** → görüşmeye başla.
+- **`<!-- SETUP PAUSED AT: -->` içeriyor** → selamla, o bölümden devam etmeyi öner.
+- **`[PLACEHOLDER]` var, duraklatma notu yok** → şablon hiç tamamlanmamış; baştan başlamayı ya da placeholder'ların başladığı yerden devam etmeyi öner.
+- **Dolu** → kurulmuş; `--redo` yoksa atla.
 
-Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`:
-- **Does not exist** → start the interview.
-- **Contains `<!-- SETUP PAUSED AT: -->`** → greet the user and offer to resume from that section.
-- **Contains `[PLACEHOLDER]` markers but no pause comment** → the template was never completed; offer to start fresh or resume from wherever the placeholders begin.
-- **Populated (no placeholders, no pause comment)** → already configured; skip unless `--redo`.
+Bölüm iskeleti `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` şablonundadır. **Bölüm anahtarlarını çevirme:** `## Who's using this`, `## Available integrations`, `## Outputs`, `## Matter workspaces`, `Enabled`, `Active matter:`, `Cross-matter context` adlarını şablondaki gibi bırak — diğer skill'ler bu anahtarları okur. İçerik Türkçe yazılır.
 
-The template structure lives at `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` — use it as the section scaffold. Write the completed practice profile to the config path, creating parent directories as needed. If a CLAUDE.md exists at the old cache path `~/.claude/plugins/cache/claude-for-legal/employment-legal/*/CLAUDE.md` but not here, copy it forward.
+## Ortak profil
 
-## Check for the shared company profile
+`~/.claude/plugins/config/claude-for-legal/company-profile.md` dosyasına bak.
+- **Varsa:** oku ve tek satırla teyit et: "Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [iller/ülkeler]. Doğru mu? (Değiştirmek için 'güncelle' deyin.)" Teyit edilirse ortak soruları atla.
+- **Yoksa:** ilk kurulan eklenti budur. Oryantasyondan sonra ortak soruları sor ve paketteki `knowledge/company-profile.md` şablonuna göre yaz: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak."
 
-Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
+Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, büro/şirket adı, sektör, büyüklük, iller ve ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri. Eklentiye özel sorular (taraf modeli, eşik tablosu, tetikler, şablonlar) burada kalır.
 
-- **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
-- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/company-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
+## Kurulum kapsamı
 
-The company questions that belong in the shared profile (and should NOT be re-asked if it exists): practice setting, company name, industry, what-you-sell, size, jurisdictions, regulators, risk appetite, escalation names. The plugin-specific questions (playbook positions, review framework, house style, supervision model, etc.) stay per-plugin.
+Çalışma klasörü kullanıcının ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
-## Install scope check
+## Başlamadan önce
 
-Before the orientation, if you notice the working directory is inside a project (not the user's home directory), flag it. Say once:
+Kısa tut (3-4 satır), önce hızlı/tam sor:
 
-> **Heads up — it looks like this plugin may be project-scoped, which means I can only read files in [current directory]. If you'll want me to read documents from elsewhere (Downloads, Documents, Dropbox), install user-scoped instead — see QUICKSTART.md. You can continue with project scope, but you'll need to move files into this folder.**
-
-Ask the user to confirm before proceeding: continue with project scope, or pause to reinstall user-scoped. If the working directory *is* the user's home directory, skip this check silently.
-
-## Before the interview starts
-
-Open with the fork-first preamble. Keep it to 3-4 short lines. Ask quick-or-full before anything else.
-
-> **`employment-legal` is for people who handle hiring, terminations, investigations, leave, policies, worker classification, and international expansion.** Not your area? `/legal-builder-hub:related-skills-surfacer`.
+> **`employment-legal`** işe alım, fesih, iç soruşturma, izin, politika/yönetmelik, çalışan sınıflandırması ve yurt dışı genişleme işleri içindir.
 >
-> **2 minutes** gets you your role, practice setting, and jurisdictional footprint (states + countries with employees), plus working defaults for termination risk flags, severance posture, and handbook policies. **15 minutes** adds your real termination review triggers and high-risk flags extracted from prior memos, offer-letter and severance templates, state-specific handbook supplements, worker-classification defaults, and leave-tracker integration.
+> **2 dakika:** rol, pratik ortamı, taraf modeli, işyeri/işçi sayısı haritası; geri kalanı varsayılan. **15 dakika:** gerçek fesih tetikleri ve yüksek risk bayrakları, örnek belgelerden çıkarım, sözleşme/savunma/fesih şablonları, TİS ve disiplin yönetmeliği, entegrasyonlar.
 >
-> Quick or full? (Upgrade any time with `/cold-start-interview --full`.)
+> Hızlı mı, tam mı? (Sonra `/employment-legal:cold-start-interview --full` ile genişletebilirsiniz.)
 
-**Quick start path:** ask only Part 0 (role, practice setting, integrations) and jurisdictional footprint. Write the config with `[DEFAULT]` markers on everything else. Close with: "Done. You can start using the commands now. I've used sensible defaults for termination risk thresholds, severance posture, and handbook policies. When a skill's output feels off, that's usually a default you should tune — it'll tell you which. Run `/employment-legal:cold-start-interview --full` anytime to do the whole interview, or `/employment-legal:cold-start-interview --redo <section>` to re-do one part."
+**Hızlı yol:** yalnız Bölüm 0 ve Bölüm 1; diğer her alana `[DEFAULT]` yaz. Kapanış: "Tamam, komutları kullanabilirsiniz. Fesih risk eşikleri, savunma usulü ve yönetmelik konularında makul varsayımlar kullandım. Bir çıktı yanlış gelirse genellikle ayarlanması gereken bir varsayımdır — çıktı hangisi olduğunu söyler. Tam görüşme için `--full`, tek bölüm için `--redo <bölüm>`."
 
-**Full setup path:** the existing interview flow below. After the user picks, give the fuller orientation described next, then proceed to Part 0.
+**Seçimden sonra** tek paragraf oryantasyon: "Bu eklenti iş hukuku profilinizi (taraf modeli, işyeri/eşik tablosu, fesih bayrakları, yönetmelik referansları), izin kaydını ve iç soruşturma dosya yapısını tutar. Cevaplarınızı her seferinde okunan düz bir metin dosyasına yazar; her şey sonradan değiştirilebilir." Ardından: "Kurulum yalnız sizin yazdıklarınızdan ve yüklediğiniz belgelerden profil kurar; kişisel Claude geçmişinizi, başka sohbetleri ya da ev dizininizdeki CLAUDE.md'yi okumaz. Sohbette daha önce geçen bir bilgiyi kullanmadan önce sorarım."
 
-## After the user picks quick or full
+## Görüşme temposu
 
-Give the fuller orientation. One paragraph, in your own voice:
+- **Cevap bir yerde yazılıdır varsay.** Yönetmelik, eskalasyon matrisi, işyeri listesi gibi şeyler için önce bağlantı/yapıştırma iste: "Bağlantı ya da belge yapıştırın, ya da kısa hâlini söyleyin."
+- **Bir turda 2-3 cevaplanabilir soru** (alt sorular da sayılır); ekranı kaydırmadan cevaplanabilmeli.
+- **Uzun cevap gerekiyorsa bekle:** "Bu soru yazılı cevap istiyor — bekliyorum." Yüklemede: "Yapıştırın, dosya yolu verin ya da 'şimdilik geç' deyin; geçerseniz profilde boşluğu işaretlerim."
+- **Yazmadan önce açıkları say:** "Profili yazmadan önce açık kalanlar: [liste]. Şimdi doldurmak ister misiniz, placeholder olarak mı kalsın?" Sessiz boşluk bırakma; `[LIMITED DATA]` yalnız kullanıcının geçtiği belgeler içindir.
+- **Duraklat/devam:** Kullanıcı "dur", "sonra devam" derse kısmi profili `<!-- SETUP PAUSED AT: [bölüm] — devam için /employment-legal:cold-start-interview -->` notuyla ve cevapsız alanlarda `[PENDING]` ile yaz. Dönüşte: "Hoş geldiniz, [bölüm]de kalmıştınız. Devam mı, baştan mı?" Cevaplanmış soruyu tekrar sorma.
+- **Kullanıcının söylediği hukuki olguyu doğrula.** Madde numarası, eşik, süre ya da tutar söylerse `tr_mevzuat_madde_getir` ile çek ve karşılaştır. Çelişirse: "[X] dediniz; madde metni [Y] diyor — profile hangisi girsin? `[premise flagged — verify]`" Örnek: iş güvencesinde işçi sayısı, işverenin aynı işkolunda birden fazla işyeri varsa bunların toplamına göre belirlenir (İş K. m. 18). Değişen tutarları (kıdem tazminatı tavanı, asgari ücret, idari para cezaları) profile sabit yazma; "güncel tutarı teyit et — dönemsel güncellenir" notu düş.
 
-> "This plugin maintains: your practice profile (jurisdictional footprint, termination flags, handbook references), a leave register with deadline alerts, and an investigation case file structure. It learns how you actually work — your practice, your risk calibration, your house conventions — and writes that into a plain-text file the plugin reads from every time. Everything you answer can be changed later."
+## Bölüm 0 — Kim kullanıyor, ne bağlı
 
-Then the fresh-profile note:
+### Kim kullanıyor?
 
-> "Setup builds a fresh professional profile from your answers. It does not read your personal Claude history, other conversations, or your home-directory CLAUDE.md. If I notice relevant information in our conversation context — e.g., you mentioned your firm earlier — I'll ask before using it. Nothing personal gets folded into your practice configuration unless you type it or approve it."
+> Eklentiyi günlük kim kullanacak? (Her fesih notu, yönetmelik taslağı ve soruşturma özetindeki üst başlığı belirler.)
+> 1. **Avukat ya da avukat gözetiminde çalışan** (stajyer avukat, hukuk asistanı)
+> 2. **Avukata erişimi olan, avukat olmayan** (İK, kurucu, yönetici)
+> 3. **Düzenli avukat erişimi olmayan**
 
-Then: "Ready? A few quick questions first, then we'll go deeper."
+2 ya da 3 ise bir kez söyle: "Tüm özellikleri kullanabilirsiniz; iki şey değişir: (1) çıktıları hüküm değil, avukatla konuşmanız için araştırma olarak çerçevelerim; (2) hukuki sonucu olan adımlardan önce (fesih, ihtarname, dış merciye cevap, sözleşme imzası) avukatla görüşüp görüşmediğinizi sorar, görüşmeyi hızlandıracak kısa bir brif hazırlarım." 3 ise ekle: "Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz; barolar adli yardım hizmeti de yürütür, koşullarını baroya sorun."
 
-**Why this matters** (offer if the user pushes back on the time cost). Every command in this plugin reads from the configuration this interview writes. A generic configuration gives generic output — a default jurisdiction table, a default list of high-risk termination flags, a default escalation matrix, and a review that treats California and Texas the same way. Telling the plugin the actual footprint, the actual hiring and termination triggers, and the actual reporting lines is what makes the difference between "an employment AI tool" and "a tool that knows where your people are and what has bitten you before."
+### Pratik ortamı
 
-The interview's information comes only from the user's typed answers and documents they explicitly upload. Do not read `~/CLAUDE.md`, personal notes, or any ambient context to fill in practice details. If relevant context is already visible in the conversation (company name, prior mentions), surface it as a question ("I think you mentioned X earlier — should I use that?") before using it.
+> Hangisi size uyuyor? (Her skill'in eskalasyon dilini belirler.)
+> - **Hukuk bürosu — işveren tarafı / işçi tarafı / ikisi**
+> - **Kurum içi hukuk** (şirketin işveren tarafı)
+> - **Tek avukat / küçük büro**
+> - **Kamu / adli yardım / klinik**
+> - **Hiçbiri** — kendi anlatımınızla yazın, profili ona göre kurarım (kutuya zorlamam; doldurulan, uyarlanan ve boş bırakılan alanları işaretlerim).
 
-## Interview pacing
+Dallanma:
+- **Büro (her tür):** `## Matter workspaces` → `Enabled: ✓`, `Cross-matter context: off`. Eskalasyon "onay" değil "danışma" diliyle kurulur; tek avukatta üst kademe yerine "dış meslektaş / sigortacı / eskalasyon yok".
+- **İşçi ve işveren tarafı birlikte:** profile `## Çıkar çatışması` bölümü yaz — aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat teklifi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Her yeni matter'da çatışma kontrolünün yapıldığını sor.
+- **Kurum içi:** `Enabled: ✗` (tek müvekkil; matter katmanı görünmez).
+- **Kamu / klinik:** denetim modeli — işi kim gözden geçirir, müvekkil yazışmasında imza zinciri.
 
-- **Assume the answer exists somewhere.** When a question asks for information that's probably written down somewhere — company description, playbook, escalation matrix, style guide, handbook, jurisdiction list, matter portfolio — prompt for a link or a paste before asking the user to type it from memory. "Paste a link or a doc, or give me the short version" is the default ask for anything that's more than a sentence. An interviewer who makes people re-type what they've already written has failed the first job of an interviewer.
-- **Batch size — count subparts.** "Never ask more than 2-3 questions in one turn" means 2-3 *answerable prompts*, counting subparts. One question with 5 subparts is 5 questions. The test: can the user answer without scrolling? If the questions don't fit on one screen, it's too many. Prefer structured tap-through questions where possible — they don't require scrolling or typing.
+**Eskalasyon sorusu:** "Ekibinizin ortak eskalasyon matrisi ya da yetki devri belgesi varsa onu yapıştırın; temel alırım. Bir inceleme üst onay gerektiren bir şey bulduğunda — ayrımcılık/misilleme riski taşıyan fesih, büyüyen soruşturma, sınırda sınıflandırma, toplu işçi çıkarma, yetkinizi aşan karar — kime gider? İsim ya da rol (ortak, hukuk müşaviri, İK direktörü) ya da 'kendim karar veririm'." `## Practice setting` (ya da `## Who we are`) altına yaz.
 
-**Pause for real answers.** Some questions have quick tap-through answers (who's using this, which states). Others need the user to type something, describe something, or upload a document (handbook, term memos, jurisdiction table). When a question needs more than a quick tap:
+### Ne bağlı?
 
-- **Ask the question and wait.** Say explicitly: "This one needs a typed answer — I'll wait." Do not move to the next question until the user responds.
-- **For uploads:** "Paste the contents, share a file path, or say 'skip for now.' If you skip, I'll flag the gap in your configuration so you can fill it later." Then actually wait.
-- **Before writing the configuration:** review the interview. List any questions that were skipped or answered with placeholders. Say: "Before I write your configuration, here's what's still open: [list]. Want to fill any of these now, or leave them as placeholders?" Then wait for the answer.
-- **Never** write a configuration with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past. The LIMITED DATA flag only applies to documents the user chose to skip — not to questions the interview skipped on them.
-- **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/employment-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /employment-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
+Yapılandırılmış ile **çalışan** bağlantı farklıdır; karıştırma.
+- **ArthurLegal MCP (`tr_`)** — dene: `tr_mevzuat_madde_getir(number="4857", madde_no="18")` ve `tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="işe iade geçerli neden")`. Cevap geldiyse ✓.
+- **Yabancı ülke araçları** (`eu_`, `de_`, `uk_` …) — yalnız yurt dışı çalışan/genişleme varsa; önce `status`.
+- **İK/bordro sistemi, belge deposu (Google Drive, SharePoint, Box), Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+Rapor:
+> - ✓ [Bağlantı] — bağlı (denendi)
+> - ⚪ [Bağlantı] — yapılandırılmış, doğrulanmadı; MCP ayarlarınızdan teyit edin
+> - ✗ [Bağlantı] — yok; [özellik] [manuel yönteme] düşer. [Nasıl bağlanır.] Sonra bağlarsanız `--check-integrations` çalıştırın.
 
-## The interview
+ArthurLegal MCP ✗ ise: "Her madde ve karar atfı 'doğrulanmadı' işaretlenir ve UYARI satırı taşır."
 
-### Opening
+**Hemen yaz:** `## Who's using this`, `## Available integrations` ve `## Outputs` bölümlerini (şablona göre) profilin ilk bölümünden sonra yaz. `## Outputs` önerisi — avukat: "GİZLİDİR — AVUKATLIK K. m. 36 KAPSAMINDA — DAHİLİ"; avukat olmayan: "ARAŞTIRMA NOTU — AVUKATLA GÖZDEN GEÇİRİN". Başlığın koruma yaratmadığını not et.
 
-> Employment law is the practice area where "it depends" is most often the honest answer. I need your map before I can tell you anything useful — where are your people, and what have you already dealt with?
+## Bölüm 1 — Harita (2-3 dk)
 
-### Part 0: Who's using this, and what's connected
+> **Ne iş yapıyorsunuz?** Şirketseniz: ne satıyorsunuz, kime, nasıl — web sitesi bağlantısı yeter. Büroysanız: işveren müvekkilleriniz hangi sektörlerde, işçi tarafı hacminiz ne?
 
-Three quick questions before we get into employment specifics. These shape how the plugin works, not what it can do.
+> İşyeri listeniz var mı (SGK işyeri listesi, İK raporu)? Yapıştırın; yoksa tek tek sorarım. (Bu harita /wage-hour-qa, /worker-classification, /hiring-review, /termination-review ve /policy-drafting'in hepsini besler.)
 
-#### Who's using this?
+Liste yoksa:
+- İşyerleri (il/ilçe), her birinde işçi sayısı; aynı işkolunda mı?
+- TİS var mı, hangi işyerlerinde; işyeri sendika temsilcisi var mı?
+- Alt işveren ya da özel istihdam bürosu üzerinden geçici işçi kullanımı?
+- Yabancı uyruklu çalışan (çalışma izni), yurt dışında çalışan personel, yakında yurt dışı genişleme planı?
+- Kamu işvereni mi?
 
-> Who'll be using this plugin day to day? (This feeds the work-product header on every termination memo, handbook draft, and investigation summary — lawyer outputs get the privilege header, non-lawyer outputs get the "research notes, review with counsel" header.)
+Büroda bu harita müvekkil bazında `matter.md`'ye yazılır; profile yalnız büronun tipik müvekkil profili girer.
+
+### Eşik tablosu (çekirdek çıktı)
+
+| İşyeri / işveren | İşçi sayısı | Tetiklenen eşikler | TİS / sendika | Otomatik eskalasyon |
+|---|---|---|---|---|
+
+Satırları şu doğrulanmış eşiklere göre doldur:
+- **30+ işçi** (işverenin aynı işkolundaki işyerlerinin toplamı) → iş güvencesi: en az altı ay kıdemli, belirsiz süreli işçinin feshi geçerli sebebe dayanmalı (İş K. m. 18); işçi fesih bildiriminin tebliğinden itibaren bir ay içinde işe iade için arabulucuya başvurur (m. 20/1).
+- **Toplu işçi çıkarma** → 20-100 işçide en az 10, 101-300'de en az yüzde on, 301+'da en az 30 işçinin bir ay içinde çıkarılması; en az otuz gün önceden yazılı bildirim (m. 29).
+- **50+ işçi (özel sektör)** → yüzde üç engelli çalıştırma; aynı il sınırlarındaki işyerlerinin toplam işçi sayısına göre (m. 30).
+- **İşyeri sendika temsilcisi** → fesih ancak haklı nedenle ve yazılı, açık, kesin gerekçeyle (6356 s. Kanun m. 24).
+- **Yabancı çalışan** → çalışma izni olmaksızın çalıştırma yasak (6735 s. Kanun m. 6/2).
+- **Her bireysel iş uyuşmazlığı** → alacak, tazminat ve işe iade davalarında arabuluculuk dava şartı; iş kazası ve meslek hastalığı tazminatları hariç (7036 s. Kanun m. 3/1, 3/3).
+- **Yurt dışı satırı** → "[Ülke]: ArthurLegal kaynağı `eu_` / `de_` / … — ilk konuda araştır" ya da "ArthurLegal'da kaynak yok — yerel hukukçu görüşü".
+
+Hakkında hiç geçmiş olmayan işyeri için kural uydurma: `[İşyeri: N işçi, geçmiş yok — ilk konuda araştır]`. Liste yüklenmediyse sonunda öner: "Bunu güncelleyebileceğiniz ayrı bir işyeri/eşik tablosu olarak da yazayım mı?"
+
+## Bölüm 2 — Tetikler ve duruşlar (2-3 dk)
+
+> "Duruşlarınızı şimdi kurmak ister misiniz? İnceleme skill'leri (hiring-review, termination-review, policy-drafting) genel varsayım yerine sizin çizginizi bilir. 3-4 dakika. Geçerseniz varsayılan kullanılır ve kurulmamış bir duruşa gelindiğinde söylenir." Ortak playbook, fesih kontrol listesi, sözleşme şablonu varsa önce onu iste.
+
+**İşe alım:** Hukuk hangi sözleşmeyi görür (hepsi / yönetici / rekabet yasağı içeren / hiçbiri)? Standart sözleşmede: süre tipi, deneme süresi, rekabet yasağı, gizlilik, çalışan buluşları ve eser klozları (ilgili SMK/FSEK maddelerini çekmeden yazma).
+
+**Fesih:** Hangi fesihler hukuktan geçer (hepsi / performans / toplu çıkarma / üst yönetici)? Savunma usulü (yazılı istem, süre, tutanak)? İhtar kademesi? İkale (bozma sözleşmesi) ve ibraname pratiği? Arabuluculukta sulh yetkisi kimde?
+
+**Yüksek risk bayrakları** (/termination-review her fesihte bunlara bakar):
+- Şikâyet ya da işveren aleyhine idari/adli başvuru sonrası fesih (İş K. m. 18/3-c)
+- Hamilelik, doğum, aile yükümlülüğü, sendika üyeliği, cinsiyet, din gibi nedenlerle bağlantı şüphesi (m. 18/3-a, d; m. 5)
+- İşyeri sendika temsilcisi (6356 m. 24)
+- Hastalık/kaza bekleme süresinde devamsızlık nedeniyle fesih (m. 18/3-f)
+- Açık taciz veya mobbing şikâyeti olan çalışan (TBK m. 417)
+- Savunma alınmamış davranış nedenli fesih (İş K. m. 19)
+- Öğrenmeden itibaren altı iş günü geçmiş haklı fesih (m. 26)
+- Sizi daha önce ne yaktı?
+
+Şablon yüklenmediyse sonunda öner: "Bunu İK'nın okuyabileceği ayrı bir fesih kontrol listesi olarak da yazayım mı?"
+
+## Bölüm 3 — Örnek belgeler (3-4 dk)
+
+**Özlük ve izin verisi nerede?** İK/bordro sistemi var mı, hukukun okuma erişimi var mı (SGK e-Bildirge dahil)? Varsa adını yaz; yoksa "manuel" — izin takibi yerel kayıtla çalışır.
+
+> En önemli kısım bu — politikanın ne dediğini değil, ekibin fiilen nasıl çalıştığını görmek istiyorum:
+> 1. **Personel/disiplin yönetmeliği ve varsa TİS** — güncel sürüm. (/policy-drafting ve /hiring-review her taslağı bununla karşılaştırır.)
+> 2. **Son dönem iş hukuku belgeleri** — 10 iyi taban, 20 daha iyi: fesih bildirimleri, savunma istem yazıları ve tutanakları, ihtarlar, iş sözleşmeleri, ikale/ibraname, arabuluculuk tutanakları, çalışan KVKK aydınlatma metni. Mümkünse kişisel verileri maskeleyerek yükleyin.
+
+10'dan az belgeden kurulan her bölüme `[LIMITED DATA — N belge incelendi]` yaz.
+
+**Yönetmelikten:** disiplin usulü ve savunma süresi, izin kuralları, eksikler (ör. psikolojik taciz politikası yok, uzaktan çalışma kuralı yok). **Belgelerden:** fesih gerekçesi kalıpları, savunma pratiği, sözleşme ve rekabet yasağı dili, sulh/ibraname pratiği, yönetmelik ile fiili uygulama arasındaki fark.
+
+## Profili yazma
+
+Şablona göre yaz; ana bölümler: taraf modeli, çıkar çatışması kuralı (büro), işyeri/eşik tablosu, işe alım ve fesih tetikleri, yüksek risk bayrakları, eskalasyon, `## Matter workspaces`. Kaynak etiketi: `[ArthurLegal TR — 4857 m. X — GG.AA.YYYY]`.
+
+## Yazdıktan sonra
+
+> **Neler yapabildiğimi görmek ister misiniz?**
+> - **İş sözleşmesi ve rekabet yasağı incelemesi** — `/employment-legal:hiring-review`
+> - **Fesih incelemesi ve risk bayrakları** — savunma, süre, geçerli/haklı neden, arabuluculuk — `/employment-legal:termination-review`
+> - **Çalışan sınıflandırması** — işçi / serbest meslek / geçici iş ilişkisi / alt işveren — `/employment-legal:worker-classification`
+> - **İşyerine göre ücret ve çalışma süresi sorusu** — `/employment-legal:wage-hour-qa`
+> - **Yurt dışı genişleme** — Türkiye'den yurt dışına ya da yabancı işverenin Türkiye'ye girişi — `/employment-legal:expansion-kickoff`
+> - **İç soruşturma açma** — `/employment-legal:investigation-open`
 >
-> 1. **Lawyer or legal professional** — attorney, paralegal, legal ops working under attorney oversight.
-> 2. **Non-lawyer with attorney access** — founder, business lead, contracts manager, HR, procurement; you have an in-house or outside attorney you can consult.
-> 3. **Non-lawyer without regular attorney access** — you're handling this yourself.
+> **Önerim:** varsayımsal bir fesihte `/employment-legal:termination-review` — risk ayarınızın nasıl okunduğunu en iyi o gösterir. Ya da gündeminizdekini söyleyin.
 
-If the answer is 2 or 3, say this once (don't repeat it on every output):
+Kullanıcı görüşmede somut bir iş söylediyse bu listeyi atla. Uygunsa ekle: "Eşik tablonuz hazır; [işyeri] satırını bir kez kontrol edin." · "Yönetmeliğinizde psikolojik taciz politikası yok — taslak ister misiniz?" · "Manuel izin takibi: açık izinleri `/employment-legal:log-leave` ile ekleyin."
 
-> You can use every feature here — research, review, drafting, tracking. Two things change in how I work:
+**Kapanış:**
+> "Tamam. Profiliniz `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasında — düz metin, doğrudan düzenleyebilirsiniz. Tam yeniden görüşme için `--redo`, bağlantı kontrolü için `--check-integrations`, tek değişiklik için `/employment-legal:customize`. En sık ayarlananlar: **işyeri/eşik tablosu** (işçi sayısı değiştikçe), **yüksek risk bayrakları** ve **eskalasyon matrisi**.
 >
-> 1. **I'll frame outputs as research for attorney review, not as verdicts.** Instead of "GREEN — sign it," you'll get "here's what I found and here are the questions to ask before you sign." That's more useful than a green light you can't be sure of.
-> 2. **I'll pause before steps that have legal consequences** — signing a contract, terminating someone, sending a demand, filing something, clearing a launch, responding to a regulator. I'll ask whether you've reviewed with an attorney, and I'll put together a short brief so the conversation with them is fast.
->
-> This isn't a disclaimer. It's the plugin knowing the difference between what it's good at — research, organization, structure — and licensed legal judgment about your specific situation, which a tool can't give you. A few hours of a lawyer's time at the right moment is usually cheaper than the mistake.
-
-If the answer is 3, add:
-
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) — most offer a lawyer referral service as the fastest starting point. Many offer free or low-cost initial consultations. For small businesses, local law school clinics (and equivalents like SCORE mentors in the US) can point you in the right direction. For individuals, legal aid organizations cover many practice areas.
-
-#### Practice setting
-
-> Which of these best describes where you're practicing? (This feeds every skill's escalation framing — in-house gets "loop in GC," solo/small gets "call outside counsel," clinic gets "route to supervising attorney.")
->
-> - **Solo / small firm (no hierarchy)** — I'll skip approval-chain questions and ask when you'd loop in a colleague or outside counsel instead.
-> - **Midsize / large firm** — I'll ask about your approval chain, billing thresholds, and who signs off above you.
-> - **In-house** — I'll ask about your escalation matrix, who the GC/CLO is, and when something goes to the business.
-> - **Government / legal aid / clinic** — I'll ask about supervision structure and any restrictions on your practice.
-> - **My practice doesn't fit any of these** — say so. I'll adapt.
-
-**Practices that don't fit the boxes.** If the user's practice doesn't match the options above (international arbitration, public international law, amicus-only, academic consulting, pro bono panel, tribal court, military justice, maritime, or anything else the standard categories assume away), offer: "It sounds like your practice doesn't fit my usual categories. Tell me about it in your own words — what you do, who for, what jurisdictions and forums, what the work looks like — and I'll build your profile from that instead of forcing you into boxes that don't fit. I'll skip or adapt the questions that don't apply." Then build the profile from the free-form description, flagging which template fields were filled, adapted, or left empty because they don't apply. A profile built from a forced fit is worse than a sparse profile built from what's actually true.
-
-This one changes how the rest of the interview runs:
-
-- **Solo / small firm (no hierarchy):** Skip or reframe escalation-chain questions later in the interview. Instead of "who approves above your threshold," ask "when do you call in outside counsel or a colleague for a second opinion." Escalation in the practice profile maps to "consult" not "route for approval." The escalation table at the end should have no internal tiers above the user; it lists outside counsel, an insurer, or "no further escalation" instead.
-- **Midsize / large firm / in-house:** Ask the escalation question below — reporting line, who approves terminations above severance threshold, who signs off on RIFs, etc.
-- **Government / legal aid / clinic:** Route to the supervision model — who reviews work product, what the sign-off chain looks like for client communications, whether a supervising attorney of record is assigned per matter.
-
-**Escalation question (ask after the practice-setting answer, adapted to the branch above):**
-
-> If your team has a shared escalation matrix or delegation-of-authority policy set at the team or department level, that's the one I want — paste it or link it. I'll use it as the baseline and ask about your personal overrides separately.
-
-> "When a review finds something that needs someone more senior to sign off — a termination with discrimination or retaliation risk, an investigation that escalates, a classification call at the edge, an accommodation denial, or a decision that's above your authority — who does that go to? Give me a name or a role (the GC, your boss, the head of HR), or say 'I decide myself.' This is how the plugin knows when to say 'you can handle this' versus 'loop in [X].' (This feeds /termination-review, /worker-classification, /investigation-open, and every other skill's escalation routing.)"
-
-Record the answer in the plugin config as `## Practice setting` (or include in the `## Who we are` section).
-
-#### What's connected?
-
-> This plugin can work with: HRIS (Workday, BambooHR, Rippling, ADP), document storage (Google Drive, SharePoint, Box), and Slack. Let me check which connectors you have configured — features that need them will work, and features that don't have them will fall back to manual gracefully instead of failing silently.
-
-**Check what's actually connected, not what's configured.** A connector listed in `.mcp.json` is *available*. A connector that's actually responding is *connected*. These are different, and confusing them destroys trust. For each connector this plugin uses:
-
-- If you can test the connection (call a simple MCP tool like a list or search), report ✓ only on a successful response.
-- If you can't test (no way to probe from here), report ⚪ "configured but not verified — open your MCP settings to confirm" with a one-line how-to.
-- Never report ✓ based on configuration alone.
-
-For connectors that show as not connected, tell the user how to connect. Example phrasing: "Box isn't connected. In Claude Cowork: Settings → Connectors → Add → Box → sign in. In Claude Code: add the Box MCP to your config or via `/mcp`. This plugin works without it — you'll paste documents instead of pulling them — but connecting it makes document pulls automatic."
-
-Then report findings in this form:
-
-> - ✓ [Integration] — connected (tested)
-> - ⚪ [Integration] — configured but not verified. Open your MCP settings to confirm.
-> - ✗ [Integration] — not found. [Feature] will fall back to [manual alternative]. [How to connect.] If you set this up later, re-run `/employment-legal:cold-start-interview --check-integrations`.
->
-> You don't need all of these. Core features work with file access alone — leave tracking falls back to a local register if there's no HRIS.
-
-#### Write to the config CLAUDE.md
-
-Write `## Who's using this`, `## Available integrations`, and `## Outputs` sections immediately after the first section of the config-path CLAUDE.md (the plugin config) per the template in `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md`. These drive work-product header choice and feature-fallback behavior across every skill in this plugin.
-
-### Part 1: The footprint (2-3 min)
-
-> **What does [your company] do?** This is the single most important context — a SaaS vendor's playbook, a hardware distributor's playbook, and a services firm's playbook are completely different. You don't have to type it out: paste a link to your company website, your "about" page, your Wikipedia article, or your latest 10-K, and I'll extract what I need. Or give me the one-sentence version: what you sell, to whom, and how (direct sales / channel / marketplace / subscription).
-
-> Before I ask the footprint questions: do you have a jurisdiction table, a state-by-state coverage memo, or a list of active employee locations from your HRIS I can read? Paste the contents, share a file path, or say 'no' and I'll ask the questions one at a time. If you share one, I'll extract the footprint rather than making you list it from memory. (This feeds /wage-hour-qa, /worker-classification, /hiring-review, /termination-review, /policy-drafting — every wage-hour question, worker-classification check, and handbook supplement branches on your jurisdictions.)
-
-If not:
-
-- Every US state with at least one employee. All of them.
-- Every country outside the US.
-- Remote-first or office-based? (Remote-first means the footprint keeps expanding without anyone telling you.)
-- Which state has the most employees? That's your default jurisdiction when the question doesn't specify.
-
-**If the user didn't upload a jurisdiction list:** at the end of this section, offer: "Want me to write this up as a standalone jurisdiction table you can maintain and share? Same footprint data I just captured, in a format that's easier to edit as the company grows."
-
-### Part 2: The review triggers (2-3 min)
-
-> "**Do you want to build your positions now?** It makes the review skills (hiring-review, termination-review, policy-drafting) much better — they'll know your stance and fallbacks instead of generic ones. It takes about 3-4 minutes. Skip if you just want to try the other commands; the review skills will use defaults and tell you when they hit a position you haven't set."
-
-> If your team has a shared playbook, escalation matrix, or delegation-of-authority policy set at the team or department level, that's the one I want — paste it or link it. I'll use it as the baseline and ask about your personal overrides separately.
-
-> Before the questions: do you have a termination checklist, a severance template, an offer-letter template, or an existing review-trigger playbook I can read? Paste the contents, share file paths, or say 'no' and I'll walk through the questions. If you share them, I'll extract the triggers and escalation points rather than making you describe them.
-
-If not:
-
-**Hiring:** When does legal see an offer?
-- Every offer? Only exec? Only with restrictive covenants? Never?
-- What's in the standard offer letter? Restrictive covenants vary by state — non-competes are unenforceable in California, fine in Florida.
-
-**Termination:** When does legal see a termination?
-- Every term? Performance only? RIFs only?
-- What's the standard severance — formula, discretionary, none?
-- Release required? Always, or only above X severance?
-
-**The high-risk flags:** What makes a termination scary? (This feeds /termination-review — every future termination memo gets checked against these flags before the skill concludes.)
-- Recent complaint (harassment, discrimination, whistleblower)
-- Recently returned from protected leave
-- Protected class + thin documentation
-- Anything else that's bitten you before?
-
-**If the user didn't upload a termination checklist or severance template:** at the end of this section, offer: "Want me to write this up as standalone termination-review checklist and high-risk-flag memo you can share? Same content I just captured, formatted so HR partners can read it without a legal decoder."
-
-### Part 3: Seed documents (3-4 min)
-
-**Where does leave data live?**
-
-Before asking for documents, ask one infrastructure question:
-
-> Do you have an HRIS — Workday, BambooHR, Rippling, ADP, or something else — that tracks employee leave? And does legal have read access to it? (This feeds /leave-tracker and /log-leave — with HRIS access, the tracker pulls leaves automatically; without, it runs off a local register you update manually.)
-
-- If HRIS with legal read access: note the system name
-- If HRIS without legal access, or no leave tracking module: note "manual"
-- If no HRIS: note "manual"
-
-**Seed documents**
-
-> This is the most important part — I want to see how your team actually works, not just what your policies say. I need two things:
->
-> 1. **Your handbook.** Current version. I'll read it to know what you've promised employees and where the gaps are. (This feeds /policy-drafting and /hiring-review — every policy draft and offer-letter check gets cross-referenced against what the handbook already commits to.)
->
-> 2. **Recent employment documents — the more the better.** Ten is a good floor; twenty gives a much clearer picture. Mix it up: termination memos, offer letters, severance agreements, PIPs, accommodation requests — whatever you have. If you have fewer than ten, share what you can, but flag it. (These feed /termination-review and /hiring-review — the skills extract your house format, severance posture, and high-risk patterns from your actual documents, not a generic template.)
-
-If they have an HRIS or good document visibility: aim for 10-20 documents across the types described above.
-
-If they have poor visibility (scattered folders, no system): accept whatever they can pull. Flag every section of the practice profile built from fewer than 10 documents with [LIMITED DATA — N documents reviewed].
-
-**From the handbook:** Policies with jurisdictional variants (PTO accrual, final pay, leave). State supplements if any. The gaps — things the handbook doesn't cover that it should.
-
-**From the seed documents:** What got checked on terminations. What high-risk flags look like in practice. Offer letter format and standard restrictive covenant language. Severance agreement format for the termination-review skill to match. Any patterns in what the team actually approves vs. what the policies say.
-
-## Build the jurisdiction table
-
-This is the core output. For each state/country in the footprint:
-
-| Jurisdiction | Special rules | Auto-escalate |
-|---|---|---|
-| California | No non-competes. Final pay due last day (or 72hrs if employee quits w/o notice). Meal/rest break penalties. PAGA exposure. | Any termination. Any restrictive covenant. |
-| New York | Pay transparency in postings. NYC has separate rules. Final pay next regular payday. | Exec hires (pay transparency). |
-| [etc.] | | |
-
-Don't invent rules for jurisdictions they didn't name. If they have one employee in Montana and no memo ever mentioned Montana, note `[Montana: 1 employee, no history — research on first issue]`.
-
-## Writing the practice profile
-
-Per the template structure at `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md`. Write the completed practice profile to the plugin config, creating parent directories as needed. Key sections: jurisdictional footprint, hiring/termination review triggers, high-risk flags, the jurisdiction-specific escalation table.
-
-## After writing
-
-**Show what this plugin can do.** Before closing, offer:
-
-> **Want to see what I can help with?**
-
-If yes, show this tailored list (not a generic template — these are the concrete things this plugin does best):
-
-> **Here's what I'm good at in employment law practice:**
->
-> - **Review an offer letter and restrictive covenants** — e.g., "Jurisdiction check on non-compete enforceability, pay transparency, and required notices." Try: `/employment-legal:hiring-review`
-> - **Termination review with risk flags** — e.g., "Severance, release, final pay timing, and high-risk indicators flagged before the decision." Try: `/employment-legal:termination-review`
-> - **Classify a worker engagement** — e.g., "Employee / IC / temp / vendor — with misclassification gap analysis." Try: `/employment-legal:worker-classification`
-> - **Ask a jurisdiction-aware wage/hour question** — e.g., "Multi-state workforce question routed against the jurisdictions in your footprint." Try: `/employment-legal:wage-hour-qa`
-> - **Kick off international expansion** — e.g., "New country on the roadmap — plan the employment-law workstream." Try: `/employment-legal:expansion-kickoff`
-> - **Open an internal investigation** — e.g., "Create the privileged workspace, start the log, route interviews." Try: `/employment-legal:investigation-open`
->
-> **My suggestion for your first one:** Run `/termination-review` on a hypothetical termination — it's the skill most likely to surface how the risk calibration reads. Or tell me what's on your plate and I'll pick.
-
-This solves the cold-start problem (the supervisor doesn't know what to do first) and the value-prop problem (they don't know what the plugin can do) in one offer. Make the list specific. Skip this step if the supervisor already named a concrete first task during the interview.
-
-
-- "Here's your jurisdiction table. The California row is the one to double-check."
-- "What's the next termination? Let me take a look."
-- Flag handbook gaps: "Your handbook doesn't have a remote work policy and you're remote-first. Want one?"
-- Check HRIS field: "You said your HRIS is [system] — want me to run the leave tracker now to see if anything is open?"
-- If manual leave tracking: "You don't have an HRIS leave module — I'll track leaves in a register file. Use /employment-legal:log-leave to add any leaves that are currently open."
-
-**Before your first review**: connect a research tool. Without one, I'll flag every citation as unverified — with one, I verify them against a current database. In Cowork: Settings → Connectors. In Claude Code: authorize when a skill prompts you.
-
-<!-- COLLATERAL LINKS: when onboarding collateral exists, add here:
-     "Want a walkthrough? [Watch the 3-minute intro](URL) or [read the getting-started guide](URL)." -->
-
-
-### Close with the "you can change anything later" note
-
-After writing the configuration, say:
-
-> "Done. Your configuration is at `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` — a plain text file you can read and edit directly. Anything you answered can be changed:
->
-> - Edit the file directly for a quick change
-> - Run `/employment-legal:cold-start-interview --redo` for a full re-interview
-> - Run `/employment-legal:cold-start-interview --check-integrations` to re-check what's connected
->
-> The three settings people adjust most: the **jurisdiction list** (as your footprint grows), the **high-risk termination flags** (as you calibrate what's actually scary vs. what's noise), and the **escalation matrix** (as reporting lines shift)."
-
-## Your practice profile learns
-
-After writing the configuration, close with this note:
-
-> **Your practice profile learns.** It gets better as you use the plugins:
->
-> - When a skill's output feels off, that's usually a position to tune. The output will tell you which one.
-> - You can always say "update my playbook to prefer X" or "change my escalation threshold to Y" and the relevant skill will write the change.
-> - Run `/employment-legal:cold-start-interview --redo <section>` to re-interview one part, or edit the config file directly.
->
-> Ten minutes of setup gets you a working profile. A month of use gets you one that reads like you wrote it yourself.
+> **Profiliniz öğrenir.** Bir çıktı yanlış gelirse genellikle ayarlanacak bir duruştur; çıktı hangisi olduğunu söyler. 'Eskalasyon eşiğini şuna çek' demeniz yeterli. On dakikalık kurulum çalışan bir profil verir; bir aylık kullanım sizin yazmış gibi okunan bir profil."
 
 ---
 
@@ -392,107 +269,61 @@ After writing the configuration, close with this note:
 ---
 name: customize
 description: >
-  Guided customization of your employment practice profile — change one thing
-  without re-running the whole cold-start interview. Adjust jurisdictional
-  footprint, risk posture, escalation contacts, hiring review rules,
-  termination review rules, handbook positions, investigation preferences,
-  or matter workspace paths. Use when the user says "change my [thing]",
-  "add a jurisdiction", "update my profile", "edit my config", or "customize".
-argument-hint: "[section name, or describe what you want to change]"
+  İş hukuku profilinde tek bir şeyi değiştir — tüm kurulum görüşmesini yeniden
+  yapmadan. Taraf modeli, işyeri/eşik tablosu, risk duruşu, eskalasyon kişileri,
+  işe alım ve fesih kuralları, yönetmelik duruşları, soruşturma tercihleri ya da
+  matter klasörleri. Kullanıcı "şunu değiştir", "işyeri ekle", "profilimi güncelle",
+  "ayarlarımı düzenle" ya da "customize" dediğinde kullan.
+argument-hint: "[bölüm adı ya da değişikliğin tarifi]"
 ---
 
 # /customize
 
-## When this runs
+## Ne zaman çalışır
 
-The user typed `/employment-legal:customize`. They want to change something
-in their practice profile — a jurisdiction, a risk posture, an escalation
-contact, a handbook position — without re-running the whole cold-start
-interview and without hand-editing YAML.
+Kullanıcı profilindeki bir şeyi — bir işyeri, risk duruşu, eskalasyon kişisi, yönetmelik duruşu — kurulum görüşmesini baştan yapmadan ve dosyayı elle düzenlemeden değiştirmek istiyor.
 
-## What to do
+## Ne yap
 
-1. **Read the config.** Read
-   `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/company-profile.md` one
-   level up). If the plugin config does not exist or still contains
-   `[PLACEHOLDER]` values, say:
+1. **Profili oku.** `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` ve bir üst klasördeki `~/.claude/plugins/config/claude-for-legal/company-profile.md`. Eklenti profili yoksa ya da `[PLACEHOLDER]` içeriyorsa:
+   > Henüz kurulum yapılmamış. Önce `/employment-legal:cold-start-interview` çalıştırın — customize mevcut bir profili ayarlamak içindir.
 
-   > You haven't run setup yet. Run `/employment-legal:cold-start-interview`
-   > first — customize is for adjusting a profile you already have.
+2. **Haritayı göster** (her biri için tek satır mevcut değer):
+   - **Kim olduğumuz** — ad, sektör, pratik ortamı, iller/ülkeler *(tüm eklentilerle ortak — değişiklik `company-profile.md`'e yazılır)*
+   - **Taraf modeli** — işveren / işçi / ikisi; çıkar çatışması kuralı ve kontrol adımı
+   - **İşyeri/eşik tablosu** — işyerleri, işçi sayıları, tetiklenen eşikler (30 işçi iş güvencesi, toplu işçi çıkarma, 50 işçi engelli kontenjanı), TİS/sendika, yurt dışı satırları
+   - **Risk duruşu** — temkinli / orta / atak; fesih risk işaretleme, rekabet yasağı ve sulh yaklaşımına etkisi
+   - **Kişiler** — İK muhatapları, dış avukat, eskalasyon zinciri, soruşturma sorumlusu
+   - **İşe alım** — sözleşme şablonu, deneme süresi, rekabet yasağı duruşu, gizlilik/buluş klozları
+   - **Fesih** — savunma usulü ve süresi, ihtar kademesi, ikale/ibraname, arabuluculukta sulh yetkisi, yüksek risk bayrakları
+   - **Yönetmelik** — dosya yolu, TİS, gözden geçirme sıklığı
+   - **Soruşturma** — gizlilik başlığı, A/B dosya ayrımı, görüşme açılış bildirimi metni, özet şablonları
+   - **İş akışı** — matter workspaces, izin takibi sıklığı, genişleme takip dosyaları
+   - **Entegrasyonlar** — ArthurLegal MCP, İK/bordro sistemi, belge deposu, Slack; düşüş yolları
 
-2. **Show the customizable map.** List what's in the profile, grouped, with a
-   one-line summary of the current value:
+3. **Sor:** "Neyi ayarlayalım? Bir bölüm seçin ya da değişikliği kendi cümlenizle anlatın."
 
-   - **Company / who you are** — name, industry, practice setting, jurisdictions
-     *(shared across all 12 plugins — changes flow through
-     `company-profile.md`)*
-   - **Jurisdictional footprint** — states (and countries) where employees
-     work, single-state vs. multi-state, and any upcoming expansion. This
-     drives state-specific supplement logic.
-   - **Risk posture** — conservative / middle / aggressive, what each means
-     for flagging termination risk, restrictive covenant enforceability, and
-     leave accommodation
-   - **People** — HR partners, people team lead, outside counsel, escalation
-     chain, investigation sponsor
-   - **Hiring review** — offer letter template, restrictive covenants
-     posture, background check vendor, standard at-will language
-   - **Termination review** — severance framework, release language, final
-     pay timing rules per state, high-risk flags
-   - **Handbook** — handbook file path, state supplements approach, review
-     cadence
-   - **Investigation preferences** — privileged labeling, interview protocol,
-     audience-specific summary templates
-   - **Workflow** — matter workspaces, leave tracker cadence, expansion
-     project paths
-   - **Integrations** — HRIS / Slack / document storage status, fallbacks
+4. **Değişikliği yap.** Mevcut değeri göster, yenisini al, aşağı akış etkisini açıkla, onay al, yaz. Örnekler:
+   - *Yeni işyeri, toplam işçi 28 → 34 (aynı işkolu):* "İş güvencesi eşiği aşıldı (İş K. m. 18). `/termination-review` artık her davranış/verim nedenli fesihte geçerli sebep ve savunma (m. 19) kontrolü yapacak ve işe iade riskini hesaba katacak."
+   - *Taraf modeli işveren → işveren + işçi:* "Her yeni matter'da çıkar çatışması kontrolü sorulacak (Av. K. m. 38); `Cross-matter context` `off` kalmalı."
+   - *Savunma süresi yönetmelikte 3 iş günü → TİS'te 5 iş günü:* "`/investigation-open` ve `/termination-review` savunma istem yazısında TİS süresini kullanacak."
+   - *Risk duruşu orta → temkinli:* "Daha çok fesih eskalasyona gider, ikale/ibraname dili daha korumacı olur, rekabet yasağına daha sıkı bakılır."
+   - *Yeni ülke (Almanya):* "Eşik tablosuna yurt dışı satırı eklenir; kaynak `de_` araçları (ör. `de_norm_getir(kanun=\"KSchG\", norm=\"1\")`). `/expansion-kickoff Almanya` önerilir."
 
-3. **Ask what they want to change.**
+   Kullanıcı bir madde, eşik ya da süre söylüyorsa yazmadan önce `tr_mevzuat_madde_getir` ile doğrula; değişen tutarları (kıdem tazminatı tavanı, asgari ücret) sabit yazma.
 
-   > What would you like to adjust? Pick a section, or describe the change in
-   > your own words.
+5. **Ortak profil değişiklikleri** (ad, sektör, iller/ülkeler, pratik ortamı) `~/.claude/plugins/config/claude-for-legal/company-profile.md`'e yazılır:
+   > Bu değişiklik tüm eklentileri etkiler — iller/ülkeler listesini okuyan her eklenti artık [yeni değer]i görür.
 
-4. **Make the change.** Show the current value, ask for the new value, explain
-   what changes downstream, confirm, write it to the config.
+6. **Kapat:** "Tamam. Bir sonraki çıktı bunu yansıtacak. Başka bir şey var mı? `/employment-legal:customize` her zaman çalışır."
 
-   Examples:
-   - *Adding Washington to the jurisdictional footprint:* "`/wage-hour-qa`
-     and `/termination-review` will start applying WA rules. `/handbook-
-     updates` will prompt for a WA supplement. `/hiring-review` will now
-     flag non-compete attempts in WA (unenforceable)."
-   - *Severance framework 2 weeks/year → 4 weeks/year:* "`/termination-
-     review` will use the new baseline in severance calculations."
-   - *Risk posture middle → conservative:* "I'll flag more terminations for
-     escalation, recommend more protective release language, and be stricter
-     on restrictive covenants."
+## Korkuluklar
 
-5. **For shared-profile changes** (company name, industry, jurisdictions,
-   practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/company-profile.md` and note:
-
-   > This change affects all 12 plugins — any plugin that reads your
-   > jurisdiction footprint now sees [new value].
-
-6. **Close.**
-
-   > Done. Your next output will reflect the change. Anything else? You can
-   > run `/employment-legal:customize` anytime.
-
-## Guardrails
-
-- **Never delete a section.** If the user wants to "remove" a jurisdiction,
-  offer to mark it `[Not currently staffed — retain rules for re-entry]` and
-  explain that going to `[Not configured]` will drop state-specific
-  flagging.
-- **Flag internal inconsistency.** If the change would make the profile
-  inconsistent (e.g., CA in the footprint + aggressive non-compete posture;
-  or risk posture aggressive + "every termination goes to outside counsel"),
-  flag the tension.
-- **Flag guardrail degradation.** The pre-flight citation check, source
-  attribution tags, and `[verify]` tags on cited statutes are load-bearing —
-  do not remove. The `[review]` flag is load-bearing — explain the trade-off
-  before adjusting.
-- **One change at a time.** Don't re-ask the whole interview.
+- **Bölümü silme.** Bir işyeri "kaldırılmak" istenirse `[Şu an çalışan yok — yeniden açılış için kurallar saklı]` işaretini öner; `[Not configured]` yapmanın o işyerine özgü işaretlemeyi düşüreceğini açıkla.
+- **İç tutarsızlığı işaretle.** Ör. "işçi sayısı 30'un altında" + "her fesih işe iade riskiyle değerlendirilsin"; "işveren ve işçi tarafı" + `Cross-matter context: on`; "atak risk duruşu" + "her fesih dış avukata".
+- **Güvence kaybını işaretle.** Madde atıflarının `tr_mevzuat_madde_getir` ile doğrulanması, çekilemeyen veride UYARI satırı, kaynak etiketleri ve `[review]` işareti yük taşır — kaldırma; ayarlamadan önce bedelini açıkla.
+- **Bölüm anahtarlarını çevirme** (`## Outputs`, `## Matter workspaces`, `Active matter:` vb.) — diğer skill'ler bunları okur.
+- **Tek seferde tek değişiklik.** Görüşmeyi baştan sorma.
 
 ---
 
@@ -501,44 +332,47 @@ interview and without hand-editing YAML.
 ---
 name: expansion-kickoff
 description: >
-  Kick off international expansion planning for a new country — gathers intake,
-  runs EOR vs. entity framing, drafts cross-functional questions, surfaces
-  country-specific flags, and creates a persistent tracker. Use when someone
-  says "we're hiring in [country]", "expansion to [country]", or "first hire
-  in [country]".
-argument-hint: "[country name]"
+  Yeni bir ülke için uluslararası genişleme planlamasını başlat — yönü belirler
+  (Türkiye'den dışarı / dışarıdan Türkiye'ye), ön bilgiyi toplar, yapı seçeneklerini
+  çerçeveler (Türkiye'de İş K. m. 7 sınırları), vergi/finans/İK sorularını taslaklar,
+  ArthurLegal MCP ile hedef ülke mevzuatını arar ya da kaynak yoksa yerel avukata
+  yönlendirir ve kalıcı takip dosyası oluşturur. "[Ülke]de işe alıyoruz", "[ülke]ye
+  genişleme", "[ülke]de ilk çalışan" ya da "yabancı şirket Türkiye'de işe alacak"
+  denildiğinde kullan.
+argument-hint: "[ülke adı] [yön: disari | turkiye]"
 ---
 
 # /expansion-kickoff
 
-Starts an international expansion project for a new country — gathers intake,
-runs EOR vs. entity framing, drafts cross-functional questions, surfaces
-country-specific flags, and creates a persistent tracker.
+Yeni bir ülke için genişleme projesini başlatır: yön ve ön bilgi, yapı çerçevesi, paydaş soruları, ülke kaynağı ya da yerel avukat brifi, kalıcı takip dosyası.
 
-## Instructions
+## Talimat
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, escalation table.
-2. Load the `international-expansion` reference skill and run the full workflow.
-3. If a tracker file already exists for this country (`~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-[slug].yaml`),
-   flag it: "An expansion tracker for [country] already exists. Use
-   `/employment-legal:expansion-update [country]` to update it, or confirm
-   you want to start over."
-4. Create `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-[slug].yaml` on completion.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → eşik tablosu (yurt dışı satırları), eskalasyon. Matter workspace etkinse aktif matter'ı teyit et.
+2. `international-expansion` referans skill'ini yükle ve tüm akışı uygula (Adım 0 yön → Adım 6 çıktı).
+3. Takip dosyası yolu: matter workspace kapalıysa `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-<ulke-slug>.yaml`; açıksa aktif matter klasöründe aynı ad. Bu ülke için dosya zaten varsa uyar: "[Ülke] için bir genişleme takip dosyası zaten var. Güncellemek için `/employment-legal:expansion-update [ülke]` kullanın ya da baştan başlamak istediğinizi teyit edin."
+4. Hedef ülke ArthurLegal MCP kapsamında değilse (önek tablosunda yoksa) açıkça yaz: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al." Kural uydurma.
+5. Türkiye'ye ilişkin her madde atfını yazmadan önce `tr_mevzuat_madde_getir` ile çek; çekilemeyen için UYARI satırı.
+6. Bitişte takip dosyasını oluştur ve yolunu göster.
 
-## Examples
+## Örnekler
 
 ```
-/employment-legal:expansion-kickoff Germany
+/employment-legal:expansion-kickoff Almanya disari
+```
+
+```
+/employment-legal:expansion-kickoff Türkiye turkiye
+(yabancı ana şirket İstanbul'da ilk iki mühendisi işe alacak)
 ```
 
 ```
 /employment-legal:expansion-kickoff
-(skill will ask which country)
+(skill ülkeyi ve yönü soracak)
 ```
 
-> Detailed EOR vs. entity framework, cross-functional questions, briefing
-> templates, and tracker schema live in the `international-expansion`
-> reference skill — load it before doing substantive work.
+> Yapı çerçevesi, paydaş soruları, ArthurLegal önek tablosu, brif şablonu ve takip dosyası
+> şeması `international-expansion` referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -547,77 +381,72 @@ country-specific flags, and creates a persistent tracker.
 ---
 name: expansion-update
 description: >
-  Update the status of an in-progress international expansion project —
-  recalculates what is now unblocked, flags anything overdue, and surfaces
-  the next priorities. Use when work has happened since the last session and
-  the expansion tracker needs to reflect the current state.
-argument-hint: "[country name]"
+  Süren bir uluslararası genişleme projesinin durumunu güncelle — neyin önünün
+  açıldığını yeniden hesaplar, gecikenleri işaretler, sıradaki öncelikleri çıkarır;
+  çalışma izni, SGK tescili gibi süreli Türkiye kalemlerini ve yerel avukat brifini
+  izler. Son oturumdan bu yana iş ilerlediğinde ve takip dosyası güncel durumu
+  yansıtmalıyken kullan.
+argument-hint: "[ülke adı]"
 ---
 
 # /expansion-update
 
-Returns to an open expansion tracker and updates item status based on what
-has happened since the last session. Recalculates what is now unblocked,
-flags anything overdue, and surfaces the next priorities.
+Açık bir genişleme takip dosyasına döner ve son oturumdan bu yana olanlara göre kalemleri günceller: önü açılanlar, gecikenler, sıradaki öncelikler.
 
-## Instructions
+## Talimat
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasını yükle; matter workspace etkinse aktif matter'ı teyit et.
 
-2. Identify the tracker file: `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-[slug].yaml`. If it doesn't
-   exist, respond: "No expansion tracker found for [country]. Run
-   `/employment-legal:expansion-kickoff [country]` to start one."
+2. Takip dosyasını bul: `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-<ulke-slug>.yaml` (matter workspace açıksa aktif matter klasöründe). Yoksa: "[Ülke] için genişleme takip dosyası yok. Başlatmak için `/employment-legal:expansion-kickoff [ülke]` çalıştırın." Birden fazla dosya varsa ve ülke verilmediyse hangisi olduğunu sor.
 
-3. Read the tracker. Show the current state:
+3. Dosyayı oku ve durumu göster:
 
 ```
-[Country] Expansion — last updated [date]
-Open: [N] | In progress: [N] | Done: [N] | Blocked: [N]
+[Ülke] genişlemesi ([yön]) — son güncelleme [tarih]
+Açık: [N] | Devam: [N] | Tamam: [N] | Blokeli: [N]
 
-Next priorities (open items with earliest due dates or highest-dependency):
-  [item] — owner: [owner]
-  [item] — owner: [owner]
-  [item] — owner: [owner]
+Sıradaki öncelikler (en yakın son tarih ya da en çok kalemi bekleten):
+  [kalem] — sahibi: [sahip]
+  [kalem] — sahibi: [sahip]
+  [kalem] — sahibi: [sahip]
 ```
 
-4. Ask for updates in a single prompt — do not ask about each item one by one:
+4. Güncellemeleri **tek seferde** iste — kalem kalem sorma:
 
-   > Which items have moved since we last looked? Tell me what's changed
-   > (e.g., "EOR decision made — going with Deel", "outside counsel engaged —
-   > call scheduled for Thursday", "PE analysis still open, waiting on tax").
-   > You can also add new items or change due dates.
+   > Son baktığımızdan beri neler ilerledi? Değişenleri söyleyin (ör. "yapı kararı verildi — İstanbul'da şirket kuruluyor", "yerel avukat tutuldu, perşembe görüşme", "çalışma izni başvurusu yapıldı", "işyeri riski analizi vergide bekliyor"). Yeni kalem ekleyebilir, son tarih değiştirebilirsiniz.
 
-5. Apply updates to the tracker file. For any item newly marked `done`,
-   check whether it unblocks other items and flag those as now actionable.
+5. Güncellemeleri dosyaya uygula. `tamam` olan her kalem için `bagimli_oldugu` alanında onu bekleyen kalemleri bul ve "artık yapılabilir" diye işaretle. Örnek bağımlılıklar: şirket kuruluşu → SGK işyeri bildirgesi (5510 m. 11) → işe giriş bildirgeleri (5510 m. 8); çalışma izni (6735 m. 6) → yabancı çalışanın başlangıç tarihi; yerel avukat brifinin cevabı → yerel sözleşme taslağı.
 
-6. If any item has a due date that has passed and is still `open` or
-   `in-progress`, flag it:
+6. Son tarihi geçmiş ve hâlâ `acik` ya da `devam` olan kalemleri işaretle:
 
 ```
-⚠️ Overdue: [item] — was due [date], owner: [owner]
+⚠️ Gecikti: [kalem] — son tarih [tarih], sahibi: [sahip]
 ```
 
-7. Write the updated tracker. Confirm:
+   Türkiye kalemlerinde kanuni süreyi kaçırma riski varsa (ör. işyeri bildirgesi en geç sigortalı çalıştırmaya başlanan tarihte, işe giriş bildirgesi sigortalılık başlangıcından önce) 🔴 ile ayrıca işaretle ve eskalasyon tablosundaki kişiye bildirmeyi öner.
+
+7. Yeni bir yasal dayanak girilecekse yazmadan önce doğrula: Türkiye maddesi için `tr_mevzuat_madde_getir`; yabancı ülke için ilgili ArthurLegal aracı (kaynak yoksa "yerel hukukçu görüşü"). Yerel avukat cevabı geldiyse kaleme özetini ve atıflarını işle; tarihini `dayanak` alanına yaz.
+
+8. Dosyayı yaz ve teyit et:
 
 ```
-Tracker updated — [N] items closed, [N] still open.
-Next priority: [top open item].
+Takip dosyası güncellendi — [N] kalem kapandı, [N] açık.
+Sıradaki öncelik: [en üstteki açık kalem].
 ```
 
-## Examples
+## Örnekler
 
 ```
-/employment-legal:expansion-update Germany
+/employment-legal:expansion-update Almanya
 ```
 
 ```
 /employment-legal:expansion-update
-(will ask which country if multiple trackers exist)
+(birden fazla takip dosyası varsa ülkeyi sorar)
 ```
 
-> Detailed tracker schema, item-status rules, and dependency logic live in the
-> `international-expansion` reference skill — load it before doing substantive
-> work.
+> Takip dosyası şeması, durum kuralları ve bağımlılık mantığı `international-expansion`
+> referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -626,110 +455,121 @@ Next priority: [top open item].
 ---
 name: handbook-updates
 description: >
-  Diff a proposed handbook change against the current version, flag ripple
-  effects and state supplement impacts. Use when user says "update the
-  handbook", "add this to the handbook", "handbook change", or has a policy
-  ready for insertion.
+  Personel yönetmeliği / çalışan el kitabı değişikliğini mevcut sürümle
+  karşılaştırır; çapraz atıf kırılmalarını, ülke/işyeri/TİS eklerine etkisini
+  ve işçi aleyhine esaslı değişiklik riskini (İş K. m. 22: yazılı bildirim, 6
+  iş günü içinde yazılı kabul, geçmişe etkisizlik) işaretler. "El kitabını
+  güncelle", "bunu yönetmeliğe ekle", "personel yönetmeliği değişikliği"
+  denince ya da yerleştirilmeye hazır bir politika olduğunda kullan.
 ---
 
-# Handbook Updates
+# /handbook-updates — Personel Yönetmeliği Güncellemesi
 
-## Matter context
+El kitabı değişikliğinin dalga etkisi vardır: yıllık izin bölümünü değiştirirsin, fesihteki izin ücreti hesabı, izin politikası atfı ve iki işyeri eki etkilenir. Türk hukukunda bir de m. 22 boyutu vardır: personel yönetmeliği iş sözleşmesinin eki niteliğinde olabilir ve işçi aleyhine esaslı değişiklik tek taraflı yapılamaz. Bu skill dalgaları tutarsızlığa dönüşmeden bulur.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Bağlamı yükle
 
----
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → el kitabı/personel yönetmeliği yeri, ekler listesi (ülke/işyeri/TİS), güncelleme sıklığı.
 
-## Purpose
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-Handbook changes have ripple effects. Change the PTO policy and you've affected the final pay calculation, the leave policy cross-reference, and three state supplements. This skill finds the ripples before they become inconsistencies.
+## Adımlar
 
-## Load context
+### 1. Değişikliği al
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → handbook location, state supplements list, update cadence.
+- Hangi bölüm değişiyor? Yeni metin ne?
+- Neden: kanuni zorunluluk (hangi madde, hangi değişiklik), şirket kararı, temizlik?
+- Kimlere uygulanacak; yürürlük tarihi ne?
 
-## Workflow
-
-### Step 1: Get the change
-
-- What section is changing?
-- What's the new language?
-- Why? (Legal requirement, policy decision, cleanup)
-
-### Step 2: Diff against current
-
-Read the current handbook section. Show the diff:
+### 2. Mevcutla karşılaştır
 
 ```diff
-- [old language]
-+ [new language]
+- [eski metin]
++ [yeni metin]
 ```
 
-### Step 3: Find cross-references
+Değişiklik bir kanun değişikliğine dayanıyorsa ilgili maddeyi `tr_mevzuat_madde_getir` ile çek ve madde metnindeki değişiklik notunu (tarih, değiştiren kanun) yaz. Örnek: analık izni ve babalık izni süreleri 2026'da değişti (4857 m. 74 ve ek m. 2'deki değişiklik notları) — eski sürelerle kalmış bölümleri ara.
 
-Search the handbook for references to the changed section:
+### 3. Çapraz atıfları bul
 
-- Other policies that cite this one ("see the PTO policy for accrual rates")
-- Defined terms that this section uses or defines
-- State supplements that modify this section
+- Bu bölüme atıf yapan diğer politikalar ("izin süreleri için bkz. ...")
+- Bu bölümün tanımladığı ya da kullandığı tanımlı terimler
+- Bu bölümü değiştiren ekler
+- İş sözleşmesi şablonu ve teklif mektubu şablonundaki atıflar
 
-Each cross-reference: does it still make sense after the change? Flag any that break.
+Her atıf değişiklikten sonra hâlâ doğru mu? Kırılanı işaretle.
 
-### Step 4: State supplement impact
+### 4. Eklere etkisi
 
-For each state supplement in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`:
+Eklenti ayarındaki her ülke/işyeri/TİS eki için:
+- Ek, değişen bölümü değiştiriyor mu?
+- Değişiklik eki eskitiyor, yanlış ya da eksik bırakıyor mu?
+- Daha önce ek gerektirmeyen bir yerde yeni ek gerekiyor mu? (Türkiye dışı ülke için kural ezberden yazılmaz; ilgili önekle ara: `eu_`, `uk_`, `de_`, `nl_`, `az_` …; listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al.")
+- TİS'li işyerinde yeni metin TİS hükmüyle çatışıyor mu?
 
-- Does this supplement modify the section being changed?
-- Does the change make the supplement obsolete, wrong, or incomplete?
-- Does the change create a need for a *new* supplement in a state that didn't need one before?
+### 5. Söz kontrolü — İş K. m. 22
 
-### Step 5: Promise check
+Değişiklik eski sürümün verdiği bir şeyi azaltıyor mu?
 
-Is the change reducing something the old version promised?
+- Personel yönetmeliği, iş sözleşmesi ya da işyeri uygulamasıyla oluşan çalışma koşullarında **esaslı değişiklik** ancak işçiye **yazılı bildirimle** yapılabilir; işçi **6 iş günü** içinde yazılı kabul etmezse değişiklik onu bağlamaz (m. 22/1).
+- Kabul edilmezse işveren, değişikliğin geçerli nedene dayandığını ya da başka geçerli fesih nedeni olduğunu yazılı açıklayıp bildirim süresine uyarak feshedebilir; işçi m. 17–21'e göre dava açabilir (m. 22/1).
+- Taraflar anlaşarak her zaman değiştirebilir; değişiklik **geçmişe etkili** yürürlüğe konamaz (m. 22/2).
+- Neyin "esaslı" sayıldığı ve işyeri uygulamasının ne zaman çalışma koşulu hâline geldiği **tartışmalı — içtihadı kontrol et**.
+- İşçi lehine değişiklikler ve salt düzenleme/talimat niteliğindeki kurallar (TBK m. 399) için yazılı kabul gerekmez; yine de duyuru ve imza kaydı tut.
 
-If yes: that's a risk. Some states treat handbook policies as contractual. Reducing a benefit may need more than just updating the document — advance notice, consideration, or in some cases it can't be done retroactively.
+Engelleme; ama işaretle ve hangi çalışan grubunun yazılı kabulünün gerektiğini yaz.
 
-Flag this. Don't block it — but flag it.
+### 6. Yan yükümlülükler
 
-## Output
+- **KVKK:** değişiklik yeni bir kişisel veri işlemesi getiriyorsa aydınlatma metni güncellenir (6698 m. 10).
+- **İSG:** risk ya da çalışma yöntemi değişiyorsa çalışanlar bilgilendirilir, gerekiyorsa eğitim yenilenir (6331 m. 16, m. 17).
+
+### 7. ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_madde_getir(number="4857", madde_no="22")
+tr_mevzuat_madde_getir(number="6098", madde_no="399")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="işyeri uygulaması çalışma koşulu esaslı değişiklik", date_from="2022-01-01")
+```
+
+Atıf etiketleri: `[ArthurLegal TR — 4857 m. 22 — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`.
+
+## Çıktı
 
 ```markdown
-## Handbook Update: [Section name]
+## El Kitabı Güncellemesi: [Bölüm adı]
 
-### Change
-
+### Değişiklik
 [diff]
 
-### Cross-reference impact
-
-| Section | References changed section | Still accurate? | Fix needed |
+### Çapraz atıf etkisi
+| Bölüm | Değişen bölüme atıf | Hâlâ doğru mu? | Gereken düzeltme |
 |---|---|---|---|
-| [name] | [how] | ✅/⚠️ | [what] |
+| [ad] | [nasıl] | ✅/⚠️ | [ne] |
 
-### State supplement impact
-
-| State | Current supplement | After change | Action |
+### Ek etkisi
+| Ülke / işyeri / TİS | Mevcut ek | Değişiklikten sonra | Eylem |
 |---|---|---|---|
-| [state] | [what it says] | [still valid / obsolete / needs update] | [none / update / new supplement needed] |
+| [ad] | [ne diyor] | [geçerli / eskidi / güncellenmeli] | [yok / güncelle / yeni ek] |
 
-### Promise check
+### m. 22 söz kontrolü
+[Aleyhe esaslı değişiklik yok / var → yazılı bildirim + 6 iş günü yazılı kabul gereken grup; geçmişe etki yok]
 
-[If reducing a benefit: flag + jurisdictional risk note]
-
-### Ready to publish
-
-- [ ] Cross-references updated
-- [ ] State supplements updated
-- [ ] [If benefit reduction: notice/consideration addressed]
-- [ ] Version number and date updated
-- [ ] Acknowledgment process (if required)
+### Yayına hazır
+- [ ] Çapraz atıflar güncellendi
+- [ ] Ekler güncellendi
+- [ ] [Aleyhe değişiklikse: yazılı bildirim gönderildi, kabul/ret kayıtları toplandı]
+- [ ] Yürürlük tarihi ileriye dönük
+- [ ] KVKK aydınlatma / İSG bilgilendirmesi (gerekiyorsa)
+- [ ] Sürüm numarası ve tarih güncellendi
+- [ ] Tebliğ ve imza kaydı
 ```
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- Approve handbook changes. HR/legal leadership does.
-- Communicate changes to employees.
-- Track acknowledgments.
+- Değişikliği onaylamaz; İK/hukuk yönetimi onaylar.
+- Çalışanlara duyurmaz.
+- Kabul/imza takibini yürütmez.
 
 ---
 
@@ -738,216 +578,152 @@ Flag this. Don't block it — but flag it.
 ---
 name: hiring-review
 description: >
-  Review an offer letter and any restrictive covenants — jurisdiction check
-  included. Substantive rules (covenant enforceability, pay-transparency,
-  salary-history limits, exemption criteria) are researched per hire, not
-  stored. Use when the user says "review this offer", "can we use a
-  non-compete here", "check this offer letter", "hiring in [state]", or
-  attaches an offer.
-argument-hint: "[offer letter file, or describe the hire]"
+  İş teklifi ve iş sözleşmesi incelemesi (Türk hukuku) — sözleşme türü ve
+  şekli, deneme süresi, ücret ve çalışma süresi hükümleri, rekabet yasağı
+  (TBK m. 444-447), gizlilik ve ceza koşulu, işe alımda ayrımcılık yasağı,
+  aday verisinin KVKK uyumu, işe giriş zorunlulukları (SGK bildirimi, yabancı
+  çalışma izni, engelli kotası). "Bu teklifi incele", "rekabet yasağı koyabilir
+  miyiz", "iş sözleşmesine bak", "yurt dışından işe alım" denince ya da teklif
+  eklendiğinde kullan.
+argument-hint: "[teklif mektubu / iş sözleşmesi dosyası ya da işe alımı anlatın]"
 ---
 
-# /hiring-review
+# /hiring-review — İşe Alım İncelemesi
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, hiring review triggers, restrictive covenant policy.
-2. Use the workflow below.
-3. Check: jurisdiction, classification, restrictive covenants, background check compliance.
-4. Flag anything that hits the jurisdiction-specific escalation table.
+Teklif mektupları çoğunlukla kalıptır; ta ki olmayana kadar. Değer üreten yerler sözleşme türü/şekli, rekabet yasağı ve işe alım sürecinin ayrımcılık + kişisel veri boyutudur. Kural ezberden söylenmez; her madde `tr_mevzuat_madde_getir` ile çekilir.
 
----
+## Destination check
 
-## Matter context
+- **Müvekkile / İK'ya inceleme notu** → profil `## Outputs` başlığı
+- **Adaya gidecek teklif / sözleşme** → yalnız temiz metin; iç yorumlar, risk notları ve pazarlık pozisyonu çıkarılır
+- **İlan metni** → ayrımcılık kontrolünden geçmiş, aday aydınlatma metniyle birlikte
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Bağlamı yükle
 
----
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → ayak izi, işe alım inceleme tetikleyicileri, rekabet yasağı politikası, teklif şablonu yeri, `## Outputs`, `## Who's using this`.
 
-## Purpose
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-Offer letters are mostly boilerplate until they're not. The jurisdiction check
-and the restrictive-covenant check are where this skill earns its keep. The
-skill does not state the law — every jurisdiction-specific rule is researched
-and cited at the time of review.
+## Adımlar
 
-## Load context
+### 1. Yer ve uygulanacak hukuk
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, hiring review triggers, restrictive
-covenant policy, offer letter template location.
+İş nerede yapılacak — merkezin değil, kişinin bulunduğu yer. Türkiye dışında ise: tarafların seçtiği hukuk, işçinin mutad işyeri hukukunun emredici asgari koruması saklı kalmak üzere uygulanır (MÖHUK 5718 m. 27). Yabancı ülke kuralı ezberden yazılmaz: İngiltere `uk_search_legislation(query="Employment Rights Act 1996")`, Almanya `de_gesetz_ara`, Hollanda `nl_search_legislation`, İrlanda `ie_search_acts`, AB `eu_search_eu_law(query="transparent and predictable working conditions")`, Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al." Ayak izinde olmayan yeni bir ülke ise işaretle: "Bu ülkede ilk işe alım; teklif gitmeden önce araştırma gerekli."
 
-## Output header
+### 2. Sözleşme türü ve şekli (4857 s.K.)
 
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`).
+| Kontrol | Kural (metinden doğrula) | Çıpa |
+|---|---|---|
+| Şekil | Süresi 1 yıl ve daha fazla sözleşme yazılı; yazılı sözleşme yoksa en geç 2 ay içinde çalışma koşullarını gösteren yazılı belge | m. 8/2-3 |
+| Belirli süre | Objektif koşul + yazılı; esaslı neden olmadan zincirleme yapılamaz | m. 11 |
+| Kısmi / çağrı üzerine / uzaktan | Ayrımcılık yasağı, orantılı ödeme; çağrı ve uzaktan çalışmada yazılı sözleşme ve zorunlu içerik | m. 13, m. 14 |
+| Deneme süresi | En çok 2 ay (TİS ile 4 aya kadar); bu sürede bildirimsiz ve tazminatsız fesih | m. 15 |
+| Bağımsız çalışan mı? | Olgular bağımlılık gösteriyorsa iş sözleşmesidir | → `/employment-legal:worker-classification` |
 
-## Workflow
+**ABD'deki "at-will" kavramı Türk hukukunda yoktur.** Türk teklifine "her an sebepsiz feshedilebilir" dili ekleme: bildirim süreleri asgaridir ve yalnız işçi lehine artırılabilir (m. 17), 30+ işçili işyerinde 6 aydan sonra iş güvencesi vardır (m. 18). Yerine bildirim süresi, deneme süresi ve fesih hükümlerinin kanuna uygunluğunu kontrol et.
 
-### Step 1: Jurisdiction
+### 3. Ücret ve çalışma süresi hükümleri
 
-Where will this person work? Not where HQ is — where *they* are.
+- Ücret brüt mü net mi açık; asgari ücretin altında değil (m. 39 — güncel tutarı teyit et).
+- Haftalık süre ve dağılımı (m. 63); fazla çalışma için işçi onayı (m. 41).
+- "Fazla çalışma ücrete dahildir" klozu: kapsamı ve sınırı **tartışmalı — içtihadı kontrol et** → `/employment-legal:wage-hour-qa`.
+- Prim/ikramiye: takdirî mi, kazanılmış hak mı açıkça yazılmalı; belirsizlik işçi lehine yorumlanma riski taşır (yerleşik uygulama — kontrol et).
+- Yıllık izin süresi kanuni asgarinin altında olamaz (m. 53).
 
-If remote: their home state/country governs. If hybrid: usually their home
-state, but check the offer letter's choice-of-law clause (may or may not hold
-up).
+### 4. Rekabet yasağı, gizlilik, ceza koşulu
 
-Check the jurisdiction table in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` for this state/country. If it's
-not in the table — new jurisdiction — flag that: "First hire in [state]. The
-jurisdiction table doesn't cover this. Research needed before offer goes out."
+Teklif rekabet yasağı, müşteri/çalışan ayartmama, gizlilik ya da fikri hak devri içeriyorsa:
 
-### Step 2: Classification
+| Kontrol | Kural | Çıpa |
+|---|---|---|
+| Şekil ve ehliyet | Fiil ehliyetine sahip işçi, **yazılı** olarak üstlenir | TBK m. 444/1 |
+| Geçerlilik şartı | İş ilişkisi müşteri çevresi ya da üretim sırları / işverenin işleri hakkında bilgi edinme imkânı veriyor **ve** bu bilginin kullanılması işverene önemli zarar verebilecek nitelikte | TBK m. 444/2 |
+| Sınır | Yer, zaman ve iş türü bakımından işçinin ekonomik geleceğini hakkaniyete aykırı tehlikeye düşürmeyecek; süre özel durumlar dışında **2 yılı aşamaz**; hâkim aşırı yasağı sınırlayabilir, işverenin karşı edimini dikkate alır | TBK m. 445 |
+| Aykırılığın sonucu | Zararın tazmini; ceza koşulu varsa işçi ödeyerek kurtulabilir (aksi kararlaştırılmadıkça); yasağa son verilmesi ancak yazılı olarak açıkça saklı tutulmuşsa | TBK m. 446 |
+| Sona erme | İşverenin gerçek yararı kalmazsa; işveren haklı sebep olmaksızın feshederse ya da işçi işverene yüklenebilen nedenle feshederse | TBK m. 447 |
+| Ceza koşulu | Hizmet sözleşmesine yalnız işçi aleyhine konan ceza koşulu geçersiz | TBK m. 420/1 |
 
-Exempt or non-exempt? The offer should say, and the role should support it.
+TBK m. 420/1 ile m. 446/2 arasındaki ilişki (rekabet yasağına bağlanan tek taraflı ceza koşulunun geçerliliği) **tartışmalı — içtihadı kontrol et**. Profilin rekabet yasağı politikasını önce uygula (bu işe alıma yasak gerekiyor mu?), sonra kanuni sınırları. Çalışan buluşu ve fikri hak klozları için profilin "Çalışan buluşları ve fikri haklar klozları" bölümünü uygula; kloza yazılacak her madde ayrıca çekilir.
 
-| Test | Check |
-|---|---|
-| Salary basis | Paid a fixed salary regardless of hours? |
-| Salary level | Above the applicable federal and state thresholds? |
-| Duties test | Does the role actually involve the exempt duties? |
+### 5. İşe alım süreci: ayrımcılık ve aday verisi
 
-> **Research before calling exemption.** Identify the currently operative
-> salary thresholds (federal and state — several states index annually and
-> several have tiered thresholds by employer size) and the applicable duties
-> test(s) for the role. Cite primary sources. Verify currency.
+- **Eşit davranma (4857 m. 5):** dil, ırk, renk, cinsiyet, engellilik, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri sebeplerle ayrım yasak; sözleşmenin yapılmasında cinsiyet ya da gebelik nedeniyle farklı işlem yasak (biyolojik/işin niteliği zorunlulukları hariç).
+- **TİHEK (6701 m. 3, m. 6):** iş ilanı, başvuru, seçim kriterleri ve işe alım şartları dahil tüm süreçlerde ayrımcılık yasağı; başvuru gebelik, annelik ve çocuk bakımı gerekçesiyle reddedilemez (m. 6/3); yaş ve sağlık durumu da korunan temellerdendir (m. 3/2). İlan metnini bu gözle oku.
+- **KVKK (6698):** aday verisi ilkelere uygun işlenir — amaçla bağlantılı, sınırlı, ölçülü, gerekli süre kadar saklanır (m. 4/2); hukuki sebep çoğunlukla sözleşmenin kurulmasıyla doğrudan ilgili işleme (m. 5/2-c) ya da açık rıza (m. 5/1); sağlık ve ceza mahkûmiyeti verisi özel niteliklidir (m. 6/1), ancak m. 6/3'teki hâllerde (ör. istihdam ve İSG alanındaki hukuki yükümlülük, m. 6/3-f) işlenir; veri elde edilirken aydınlatma (m. 10). Referans araması, sosyal medya taraması, sabıka kaydı talebi → hukuki sebep ve ölçülülük testi; gerekirse `/privacy-legal:use-case-triage`.
 
-If the offer says exempt but the role description does not support the
-exempt duties — flag it. Misclassification is expensive.
+### 6. İşe giriş zorunlulukları
 
-### Step 3: Restrictive covenants
+| Zorunluluk | Kural | Çıpa |
+|---|---|---|
+| SGK işe giriş bildirgesi | Sigortalılık başlangıcından **önce** (inşaat, balıkçılık, tarımda en geç çalışmaya başlatıldığı gün) | 5510 m. 8/1 |
+| Yabancı işçi | Çalışma izni olmadan çalışmak ve çalıştırmak yasak (kanun/anlaşma istisnaları saklı) | 6735 m. 6/2-3 |
+| Engelli istihdamı | 50+ işçili özel sektör işyerinde %3 engelli işçi; aynı ildeki işyerleri toplanır | 4857 m. 30/1 |
+| İSG eğitimi | İşe başlamadan önce; tehlikeli/çok tehlikeli işlerde mesleki eğitim belgesi olmayan çalıştırılamaz | 6331 m. 17/1, 17/3 |
+| Kişisel veri | Çalışan aydınlatma metni | 6698 m. 10 |
 
-If the offer includes a non-compete, customer non-solicit, employee
-non-solicit, or confidentiality/IP assignment:
+Tutar içeren yükümlülükler (idari para cezaları, kota cezası) dönemsel güncellenir → güncel tutarı teyit et.
 
-> **Research enforceability before advising.** For the employee's jurisdiction,
-> identify the currently operative rules on each restrictive covenant in the
-> offer. Non-compete enforceability in particular has shifted in multiple
-> states in recent years through legislation, agency action, and litigation —
-> do not rely on prior memory of which states permit non-competes. Note:
-> - The specific type of covenant (non-compete, customer non-solicit, employee
->   non-solicit, confidentiality/trade-secret, IP assignment) — each has its
->   own rules.
-> - Any salary or income threshold that conditions enforceability.
-> - Any notice, consideration, or garden-leave requirements.
-> - Any industry-specific carve-outs (e.g., healthcare, broadcasting).
-> - Duration and geographic-scope reasonableness tests.
-> - Choice-of-law and choice-of-forum enforceability for out-of-state covenants.
-> Cite primary sources. Verify currency.
+### 7. Teklif / sözleşme metni
 
-Per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` restrictive covenant policy: does this hire even get one?
-Some companies use them selectively. Apply the house policy first, then
-research overlays from the jurisdiction.
+- Başlama tarihi, unvan, görev tanımı, çalışma yeri, ücret (brüt/net), ödeme dönemi, çalışma süresi — yazılı belgede bulunması gereken unsurlarla karşılaştır (m. 8/3).
+- Koşullar (sağlık raporu, referans, diploma, çalışma izni) açık ve KVKK'ya uygun.
+- Bildirim süreleri kanuni asgarinin altında değil (m. 17); deneme süresi m. 15'e uygun.
+- Personel yönetmeliğine atıf varsa → yönetmelik iş sözleşmesinin eki niteliğinde; sonraki aleyhe değişiklikler m. 22 rejimine tabidir (`/employment-legal:handbook-updates`).
+- Hak ve yükümlülükleri tek metinde toplayan bütünlük hükmü.
 
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's exemption thresholds, restrictive-covenant rules, pay-transparency law, or any other item you're researching, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / topic]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Tag every citation in the review with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+### 8. ArthurLegal MCP (`tr_`)
 
-### Step 4: Jurisdiction-specific requirements
-
-Check the `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` table for this jurisdiction. Common categories to
-research for each hire:
-
-- **Pay transparency** — does the jurisdiction require a salary range in the
-  posting? If so, is this offer within the posted range? Research the current
-  rule (including any recent amendments or new enforcement guidance).
-- **Ban-the-box** — does the jurisdiction or locality restrict the timing or
-  scope of criminal-history inquiries?
-- **Salary-history limits** — is the jurisdiction one that restricts asking
-  about or relying on prior salary? Research current rules and recent
-  amendments.
-- **Required offer-letter or onboarding notices** — some jurisdictions require
-  specific notices at offer or hire (wage-notice statutes, sick-leave notices,
-  etc.). Research what is currently required and whether a template exists.
-
-Cite primary sources. Verify currency.
-
-### Step 5: Offer letter content
-
-Read the letter. Check:
-
-**Employment-at-will is US-only.** "At-will" means either party can terminate without cause or notice (subject to statutory exceptions). This concept does not exist outside the US:
-
-- **US (most states):** At-will is the default. Offer letters often include "at-will" language to defeat implied-contract arguments. Check that it's present if US.
-- **Montana:** Not at-will — Wrongful Discharge from Employment Act requires cause after probation.
-- **UK:** No at-will. Employees have statutory protections from day 1 (unfair dismissal after 2 years of service, automatic unfair dismissal for protected reasons from day 1). The offer letter must contain the written statement of particulars (ERA 1996 s.1): pay, hours, notice period, holidays, pension, disciplinary/grievance procedures.
-- **EU:** No at-will. Termination requires cause, notice, and often works council consultation or collective redundancy procedures. The offer letter requirements vary by member state but notice periods and written particulars are standard.
-- **Australia:** No at-will. Fair Work Act minimum notice periods, unfair dismissal protections, NES.
-- **Canada:** No at-will. Common law reasonable notice (can be months), ESA minimums, wrongful dismissal exposure.
-- **Singapore, other APAC:** No at-will. Employment Act and contract-based protections.
-
-**Check for at-will language ONLY if the jurisdiction is US.** For non-US jurisdictions, check instead for: notice period (and whether it meets statutory minimum), the written-statement particulars the jurisdiction requires, probation period terms, and any jurisdiction-specific mandatory clauses.
-
-**Never recommend adding at-will language to a non-US offer letter.** It's legally meaningless, it can conflict with mandatory statutory terms, and it signals to the employee's lawyer that the employer didn't understand the jurisdiction.
-
-- At-will language present and not undermined elsewhere (US only — see above)
-- Contingencies clear (background check, reference, I-9 if US / right-to-work verification for the applicable jurisdiction)
-- Start date, title, salary, reporting structure stated
-- Equity terms (if any) consistent with the plan
-- Integration clause so the letter is the whole deal
-- For non-US: notice period meets statutory minimum, jurisdiction's required written-statement particulars included, probation period compliant with local rules
-
-## Output
-
-> **Jurisdiction assumption.** This review applies the rules of the employee's work jurisdiction identified in Step 1. Enforceability of restrictive covenants, exemption thresholds, pay-transparency obligations, salary-history limits, and required notices vary materially by state and locality, and several have shifted recently. If the candidate's work location changes, or the role spans jurisdictions, this review may not apply as written.
-
-```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-
-## Hiring Review: [Candidate] — [Role] — [Jurisdiction]
-
-**Overall:** [Clear to send | Changes needed | Escalate]
-
-### Jurisdiction: [State/Country]
-[Jurisdiction table entry. Any auto-escalate triggers that fire.]
-
-### Classification
-[Exempt/non-exempt call, grounded in researched thresholds and duties test.
-Any flags.]
-
-### Restrictive covenants
-[If any. Enforceability call per researched jurisdiction rules, with pinpoint
-cites and currency note. Suggested changes.]
-
-### Jurisdiction-specific requirements
-[Pay transparency, notices, salary-history rules, etc. — each researched and
-cited, or flagged as needing research.]
-
-### Offer letter
-[Any issues with the letter itself]
-
-### Action items
-- [ ] [specific change needed before sending]
+```
+tr_mevzuat_madde_getir(number="6098", madde_no=["420","444","445","446","447"])
+tr_mevzuat_madde_getir(number="4857", madde_no=["5","8","11","15","30"])
+tr_mevzuat_madde_getir(number="6698", madde_no=["4","5","6","10"])
+tr_kurum_karari_ara(kurum="kvkk", query="işe alım aday kişisel veri")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="rekabet yasağı cezai şart işçi aleyhine", date_from="2022-01-01")
 ```
 
-## Consequential-action gate (make an offer)
+Sonuç azsa sessizce doldurma; seçenekleri sun (sorguyu genişlet / başka araç / `[web — doğrula]` / dur). Atıf etiketleri: `[ArthurLegal TR — 6098 m. 444 — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`.
 
-**Before producing a "Clear to send" recommendation or a final offer letter for signature:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
+## Çıktı
 
-> Making an offer has legal consequences — the letter is a contract, and restrictive covenants, classification, and jurisdiction-specific terms are difficult to reset once sent. Have you reviewed this offer with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> - Candidate, role, jurisdiction (where they'll actually work)
-> - Classification call (exempt/non-exempt) and why
-> - Restrictive covenants in the offer and the enforceability analysis
-> - Jurisdiction-specific requirements that apply (pay transparency, wage notices, salary-history rules)
-> - Open questions and what's unresolved
-> - What could go wrong (misclassification liability, unenforceable non-compete, missing required notice, conflicting at-will language)
-> - What to ask the attorney (is this the right form for this jurisdiction; can we use our standard non-compete here; what notices need to go with the letter)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+```markdown
+[ÜST BAŞLIK — profil ## Outputs]
 
-Do not produce a "Clear to send" output past this gate without an explicit yes. A marked-DRAFT flagged for attorney review is fine.
+# İşe Alım İncelemesi: [Aday takma adı] — [Pozisyon] — [Yer]
 
----
+## ⚠️ İnceleyen notu
+- **Genel:** [Gönderilebilir / Değişiklik gerekli / Eskalasyon]
+- **Uygulanacak hukuk:** [Türk hukuku / seçim + mutad işyeri — gerekçe]
+- **Kaynaklar:** [çekilen maddeler; doğrulanamayan]
+- **Tartışmalı noktalar:** [liste]
 
-## Close with the next-steps decision tree
+## Sözleşme türü ve şekli
+## Ücret ve çalışma süresi
+## Rekabet yasağı / gizlilik / ceza koşulu
+[Geçerlilik değerlendirmesi, önerilen metin değişiklikleri]
+## Ayrımcılık ve aday verisi
+## İşe giriş zorunlulukları
+## Metin sorunları
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+### Yapılacaklar
+- [ ] [göndermeden önce somut değişiklik]
+```
 
-## What this skill does not do
+## Sonuç doğuran işlem kapısı (teklif gönderme)
 
-- Draft the offer letter — reviews it.
-- Make the hire decision — checks the paperwork.
-- State restrictive-covenant or exemption rules from memory — every
-  jurisdiction-specific call is based on researched, cited sources verified
-  for currency.
-- Research a new jurisdiction in depth on its own — flags that research is
-  needed, and uses `wage-hour-qa` or outside counsel to fill in.
+"Gönderilebilir" önerisinden ya da imzaya hazır metinden önce eklenti ayarında `## Who's using this` oku. Rol **avukat değilse**:
+
+> Teklif bir sözleşmedir; rekabet yasağı, sözleşme türü ve zorunlu işlemler gönderildikten sonra kolay düzeltilmez. Bu teklifi bir avukatla incelediniz mi? Hayırsa götüreceğiniz özet: aday, pozisyon, işin yapılacağı yer; sözleşme türü ve gerekçesi; rekabet yasağı ve geçerlilik analizi; ayrımcılık/KVKK bulguları; işe giriş zorunlulukları; açık sorular; ters gidebilecek şey (geçersiz rekabet yasağı, belirsiz süreli sayılma, eksik SGK bildirimi, izinsiz yabancı çalıştırma); sorulacaklar. Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
+
+Açık "evet" olmadan "Gönderilebilir" yazma; "TASLAK" işaretli inceleme serbest.
+
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; seçimi avukat yapar.
+
+## Bu skill ne yapmaz
+
+- Teklifi yazmaz; inceler.
+- İşe alım kararını vermez.
+- Rekabet yasağı ya da başka bir kuralı ezberden söylemez.
+- Yeni bir ülkeyi derinlemesine kendisi araştırmaz; araştırma gerektiğini işaretler ve `wage-hour-qa` ya da yerel hukukçuya yönlendirir.
 
 ---
 
@@ -956,767 +732,348 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: internal-investigation
 description: >
-  Reference: shared framework for managing internal investigations from intake
-  through final memo — privileged investigation log, document processing with
-  needle-finding, source coverage tracking, Q&A against the log, memo drafting,
-  and audience summaries. Loaded by /investigation-open, /investigation-add,
-  /investigation-query, /investigation-memo, and /investigation-summary; not
-  invoked directly.
+  Referans: iç soruşturmanın açılıştan nihai nota kadar yönetimi — soruşturma kaydı,
+  belge taraması ("iğne bulma"), kaynak kapsama takibi, kayda karşı soru-cevap,
+  soruşturma notu ve hedef kitle özetleri. Türk hukuku kontrol noktaları: savunma
+  (İş K. m. 19), altı iş günlük hak düşürücü süre (m. 26), KVKK ölçülülüğü, avukatın
+  sır saklama yükümlülüğü (Av. K. m. 36). /investigation-open, -add, -query, -memo ve
+  -summary tarafından yüklenir; doğrudan çağrılmaz.
 user-invocable: false
 ---
 
-# Internal Investigation Skill
+# İç Soruşturma — Ortak Çerçeve
 
-## Matter context
+## Matter bağlamı
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Uygulama CLAUDE.md'sinde `## Matter workspaces` bölümüne bak. `Enabled` `✗` ise (kurum içi kullanımda varsayılan) bu paragrafın gerisini atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
+
+**Soruşturma klasörü (`<SORUŞTURMA>`):** matter workspace kapalıysa `~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-<slug>/`; açıksa `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/investigation-<slug>/`.
+
+## Bağlam ve üst başlık
+
+- `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → eskalasyon tablosu, soruşturma protokolü, taraf rolü ([ŞİRKET ADI] işveren mi), `## Who's using this`, `## Outputs`.
+- `~/.claude/plugins/config/claude-for-legal/company-profile.md` → büro/şirket bilgisi.
+- Her dosya (kayıt, not, özet) `## Outputs` bölümündeki üst başlıkla açılır; başlık kullanıcı rolüne göre değişir.
+
+## ⚠️ Gizlilik — Türk hukukunda "privileged investigation" yok
+
+ABD'deki attorney-client privilege ve work product doktrininin Türk hukukunda birebir karşılığı yoktur. Koruma üç ayrı ve sınırlı dayanaktan gelir:
+
+| Dayanak | Ne korur | Ne korumaz |
+|---|---|---|
+| Av. K. m. 36 — avukat görevi dolayısıyla öğrendiklerini açığa vuramaz; tanıklığı iş sahibinin muvafakatine bağlıdır, muvafakat olsa da çekinebilir | Avukatın notları, değerlendirmesi, müvekkilden öğrendikleri | Avukat olmayan İK/yöneticinin tuttuğu notlar; sonradan avukata gönderilmesi onları korumaz |
+| İş K. m. 75/2 — işveren işçi hakkında edindiği bilgiyi dürüstlük kuralına ve hukuka uygun kullanır, gizli kalmasında işçinin haklı çıkarı olanı açıklamaz | Özlük ve soruşturma bilgisinin gereksiz paylaşımı | İşverenin bu bilgiyi kendi davasında delil olarak sunması |
+| KVKK m. 12 — veri güvenliği; öğrenilen veriyi açıklamama, amaç dışı kullanmama | Erişim, saklama, sızıntıya karşı önlem | — |
+
+**Sonuç — dosyayı ikiye ayır** (her girdide `dosya_sinifi` alanı):
+- **A — avukat çalışma ürünü** (`avukat-calisma-urunu`): avukat notları, güvenilirlik değerlendirmesi, hukuki risk analizi, soruşturma notu. Yalnız avukat ve soruşturma ekibi görür.
+- **B — işveren delil dosyası** (`isveren-delil`): savunma istem yazısı, savunma tutanağı, tanık tutanakları, olay tutanağı, fesih bildirimi taslağı. **İşe iade ya da alacak davasında mahkemeye sunulacağı varsayımıyla** tarafsız ve olgusal dil; avukat görüşü ve risk yorumu bu belgelere girmez.
+
+Başlık koymak koruma yaratmaz. Soruşturmayı İK yürütüyor, avukat yalnız danışmansa A sınıfı daralır — dosya açılmadan avukata sor; emin değilsen "tartışmalı — avukat karar versin" diye işaretle.
+
+**Dağıtım disiplini:** Dosyaları soruşturma ekibi dışına (İK geneli, iş birimi, CC zincirleri) gönderme; her dağıtımı bilinçli karar olarak kayda geçir. Kişisel veriyi amaçla bağlantılı, sınırlı ve ölçülü işle, gerekli süre kadar tut (KVKK m. 4/2).
+
+## Amaç
+
+İç soruşturma iki yerden çöker: **kapsama boşluğu** (hiç toplanmamış kaynak) ve **sentez boşluğu** (toplanmış ama bağlanmamış delil). Türk hukukunda üçüncüsü **süre ve usuldür**: savunma alınmadan ya da hak düşürücü süre geçtikten sonra yapılan fesih, sağlam bulguyu boşa çıkarır. Bu skill kaynakları izler, belge yığınını avukatı boğmadan tarar ve her an nota dönüştürülebilecek bir kayıt tutar.
+
+## ⏰ ÖN-KONTROL — Süre ve usul (her modda ilk iş)
+
+1. **Hak düşürücü süre — İş K. m. 26:** Ahlak ve iyi niyet kurallarına aykırılığa (m. 24/II, m. 25/II) dayalı derhal fesih yetkisi, karşı tarafın öğrendiği günden itibaren **altı iş günü** ve her hâlde fiilden itibaren **bir yıl** geçtikten sonra kullanılamaz; işçi olayda maddi çıkar sağladıysa bir yıllık süre uygulanmaz.
+   - Kayda öğrenme tarihini ve **kimin** öğrendiğini yaz. Tüzel kişi işverende sürenin fesih yetkisi olan kişi ya da organın öğrenmesiyle, soruşturma gerekiyorsa sonucun ona sunulmasıyla başladığı **yerleşik uygulamadır — tartışmalı, içtihadı kontrol et**:
+     `tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="altı iş günlük hak düşürücü süre soruşturma öğrenme", date_from="2020-01-01")`
+   - Kalan ≤ 2 iş günü → 🔴 ACİL; avukata hemen bildir.
+2. **Savunma — İş K. m. 19:** Fesih bildirimi yazılı yapılır, sebep açık ve kesin belirtilir. Belirsiz süreli sözleşme, işçinin davranışı veya verimiyle ilgili nedenle, iddialara karşı savunması alınmadan feshedilemez; m. 25/II'ye uygun fesih hakkı saklıdır. m. 25/II'ye dayanılacak olsa da savunma almak ispat bakımından güvenlidir (yerleşik uygulama). Savunma istem yazısı somut iddia, tarih ve süre içerir; kanunda süre yoktur, TİS/yönetmelik süresine uy — **tartışmalı, içtihadı kontrol et**.
+3. **TİS / disiplin yönetmeliği:** Disiplin kurulu veya özel usul varsa ona uy. İşyeri sendika temsilcisinin sözleşmesi haklı neden olmadıkça ve nedeni yazılı, açık ve kesin belirtilmedikçe feshedilemez; temsilci ya da sendikası bir ay içinde dava açabilir (6356 s. Kanun m. 24).
+4. **İspat yükü:** İşe iade davasında feshin geçerli sebebe dayandığını işveren ispatlar (İş K. m. 20/2). Ayrımcılık iddiasında işçi ihlal ihtimalini güçlü biçimde gösterirse yük işverene geçer (m. 5 son fıkra). Kaydı bu yükü taşıyacak biçimde tut.
+
+## KVKK ve delil kontrolü — e-posta, cihaz, kamera, log
+
+Çalışanın e-postası, mesajları, cihazı, kamera kaydı veya sistem logu incelenmeden önce sırayla sor; cevabı kayda `kvkk_kontrol` olarak yaz:
+
+1. **Önceden aydınlatma:** Kurumsal hesap/cihazların denetlenebileceği çalışana önceden bildirildi mi (KVKK m. 10 — amaç, aktarım, yöntem, hukuki sebep, haklar)? Politika metnini iste.
+2. **Hukuki sebep — KVKK m. 5/2:** özellikle (ç) hukuki yükümlülük, (e) bir hakkın tesisi, kullanılması veya korunması, (f) ilgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla meşru menfaat. Sağlık, cinsel hayat, sendika üyeliği gibi özel nitelikli veri (m. 6/1) çıkarsa m. 6/3'teki dar şartlar ve Kurulun belirlediği yeterli önlemler (m. 6/4) gerekir.
+3. **Ölçülülük — m. 4/2-ç:** yalnız kurumsal hesap/cihaz, iddia dönemiyle sınırlı tarih aralığı, iddiaya bağlı anahtar kelimeler; özel yazışma içeriğine girme. İşveren işçi verisini yalnız işe yatkınlık veya sözleşmenin ifası için zorunlu olduğu ölçüde kullanabilir (TBK m. 419).
+4. **Anayasal sınır:** özel hayatın gizliliği ve kişisel verilerin korunması (Anayasa m. 20), haberleşmenin gizliliği (m. 22).
+5. **Delil sonucu:** Hukuka aykırı elde edilen delil mahkemece bir vakıanın ispatında dikkate alınamaz (HMK m. 189/2). Hukuka aykırı kayıt ve ele geçirme ayrıca suç oluşturabilir (TCK m. 135, m. 136).
+6. **Güvenlik — KVKK m. 12:** inceleme kopyası sınırlı ekipte, erişim kayıtlı, saklama süresi belli.
+
+Orantılılık çizgisini ezberden çizme; her dosyada ara ve dönen kararın künyesini birebir kullan:
+```
+tr_aym_ara(kind="bireysel", query="işveren kurumsal e-posta yazışmaları incelenmesi özel hayat")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="kurumsal e-posta delil feshin geçerliliği")
+tr_kurum_karari_ara(kurum="kvkk", query="çalışan e-posta kamera")
+```
 
 ---
 
-## Output header
+## Mod 1 — Soruşturma aç
 
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`). Every file, log, memo, and summary produced by this skill opens with that header.
+`/employment-legal:investigation-open` ya da "soruşturma aç", "şu iddiayı soruştur" ile tetiklenir.
 
-> **Distribution discipline.** Every file this skill creates — log entries, memo drafts, audience summaries, document notes — inherits the privilege and confidentiality status of the underlying investigation. Distribution beyond the privilege circle (forwarding to non-attorneys outside the investigation team, cc'ing HR without scoping, handing to the business side) can waive privilege over the entire investigation. Store these files where privileged materials live, label per the work-product header, and make every distribution decision deliberately.
+### Adım 1 — Ön görüşme (tek blokta sor)
 
-## ⚠️ Privilege notice — read before proceeding
-
-**Marking does not create privilege.** The header above reflects the intended
-protection and is important to include — but it does not itself establish
-privilege. Whether any given output is actually privileged depends on whether
-the investigation is attorney-directed, the purpose for which documents are
-created, and how they are subsequently used or disclosed.
-
-**Before opening a matter, confirm:** Is this investigation attorney-directed?
-If it is not — if HR is running it with legal in an advisory role, or if it was
-not initiated at the direction of counsel for the purpose of obtaining legal advice —
-the privilege analysis changes materially and this skill's default labeling may
-be misleading. Flag that question to the attorney before creating any log or file.
-
-If there is any doubt about privilege applicability, the attorney should resolve it
-before investigation files are created. Improperly labeled materials can create
-problems in discovery if privilege is later challenged.
-
----
-
-## Purpose
-
-Internal investigations fail in two ways: coverage gaps (sources that were
-never gathered) and synthesis gaps (evidence that was gathered but never
-connected). This skill handles both — it tracks what has and hasn't been
-gathered, processes document dumps to surface what matters without burying
-the attorney, and maintains a structured log that can be turned into a
-privileged memo at any point.
-
-## Privilege note
-
-All files created by this skill carry the privilege marking above.
-See the notice at the top of this skill for the full caveat on what that
-marking does and does not do.
-
-## Load context
-
-Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → escalation table, any investigation protocols noted.
-
----
-
-## Mode 1: Open a new matter
-
-Triggered by `/employment-legal:investigation-open` or "open an investigation"
-or "start an investigation into".
-
-### Step 1 — Intake
-
-Ask the following in a single block:
-
-> To open the investigation log I need a few things:
+> Soruşturma kaydını açmak için birkaç bilgi gerekiyor:
 >
-> **The matter**
-> - What is the allegation or concern in plain terms?
-> - Who is the complainant (or what triggered this — complaint, tip, audit,
->   manager observation)?
-> - Who is the respondent or subject?
-> - What is the approximate timeframe the alleged conduct occurred?
-> - Is this attorney-directed? (If yes: work product protection applies.
->   If no: flag privilege risk before proceeding.)
+> **Olay**
+> - İddia ya da endişe nedir (sade dille)?
+> - Kim bildirdi / ne tetikledi (şikâyet, ihbar hattı, denetim, yönetici gözlemi)? **Hangi tarihte, kime ulaştı?** (m. 26 sayacı)
+> - Hakkında iddia bulunan kişi kim (rol, kıdem, sözleşme türü)?
+> - İddia edilen fiillerin yaklaşık dönemi?
+> - Soruşturmayı kim yönetiyor: avukat mı (büro / şirket avukatı), İK mı (avukat danışman)?
 >
-> **Investigation type** (helps me suggest the right sources checklist)
-> - HR: harassment / discrimination / retaliation
-> - Financial misconduct: expense fraud / procurement irregularities / embezzlement
-> - Executive misconduct: COI / undisclosed relationships / governance failures
-> - Whistleblower: retaliation for protected activity
-> - Other: describe briefly
+> **Tür** (kaynak listesini buna göre öneririm)
+> - İK: cinsel taciz / psikolojik taciz (mobbing) / ayrımcılık / misilleme
+> - Mali: masraf, satın alma, zimmet, güveni kötüye kullanma
+> - Üst yönetici: çıkar çatışması, rekabet, yönetim zafiyeti
+> - İhbar/bildirim sonrası aleyhe işlem
+> - Diğer
 >
-> **Representation and employer status** (surfaces parallel legal frameworks
-> that change interview procedure)
-> - Is the respondent, the complainant, or any anticipated witness represented
->   by a union or covered by a collective bargaining agreement? (If yes, flag
->   for Weingarten research — representational rights at investigatory
->   interviews may apply and change the interview protocol.)
-> - Is the company a public employer (government entity, public university,
->   state or municipal agency) or otherwise acting under color of state law?
->   (If yes, flag for Garrity research — compelled statements in public-sector
->   investigations have special use-immunity consequences and change how
->   interviews must be conducted and documented.)
+> **Paralel çerçeveler** (görüşme usulünü değiştirir)
+> - Taraflardan biri sendika üyesi ya da işyeri sendika temsilcisi mi; TİS veya disiplin yönetmeliğinde özel usul var mı?
+> - İşveren kamu kurumu mu? Hakkında iddia olan memursa 657 sayılı Devlet Memurları Kanunu disiplin rejimi uygulanır — bu skill kapsamı dışı; idari hukuk ekibine yönlendir.
+> - Olay suç olabilir mi (ör. cinsel taciz — TCK m. 105, şikâyete bağlı; hırsızlık, zimmet)? Savcılık süreci başladı mı?
+> - Yurt dışındaki ana şirkete veri gidecek mi (KVKK m. 9 — yurt dışına aktarım şartları)?
 
-If either flag fires, research the applicable rules (NLRA / state
-public-sector labor statutes for Weingarten; 5th Amendment and the Garrity
-line of cases, plus any state analogs) before conducting interviews. Cite
-primary sources. Verify currency. Do not interview until the protocol is
-adjusted.
+Paralel ceza süreci varsa: ceza soruşturmasının sonucunu beklemenin m. 26 süresine etkisi **tartışmalı — içtihadı kontrol et**; beklemeden önce avukata sor.
 
-### Step 2 — Create the matter directory and files
+### Adım 2 — Klasör ve dosyalar
 
-Create the following files:
+Aynı slug varsa üzerine yazmadan önce uyar. `<SORUŞTURMA>/` altında oluştur:
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[matter-slug]/log.yaml`:
-
+`kayit.yaml`
 ```yaml
-# [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-matter: "[matter name]"
-matter_slug: "[slug]"
-opened: "[ISO date]"
-attorney_directed: [true/false]
-allegation: "[plain-language summary]"
-complainant: "[name/role or anonymous]"
-respondent: "[name/role]"
-conduct_timeframe: "[approximate dates]"
-investigation_type: "[HR/financial/executive/whistleblower/other]"
-status: open
-last_updated: "[ISO date]"
-
-issues:
-  - "[Issue 1 — derived from allegation, e.g. 'alleged hostile work environment']"
-  - "[Issue 2 if applicable]"
-
-entries: []
-
-evidentiary_gaps: []
+# [ÜST BAŞLIK — CLAUDE.md ## Outputs; role göre değişir]
+matter: "[ad]"
+slug: "[slug]"
+acilis: "[ISO tarih]"
+yoneten: "[avukat | İK + avukat danışman]"
+iddia: "[sade özet]"
+sikayetci: "[ad/rol ya da anonim]"
+hakkinda_iddia_olan: "[ad/rol]"
+fiil_donemi: "[yaklaşık tarihler]"
+ogrenme: {tarih: "[ISO]", kim: "[kişi/organ]", m26_son_gun: "[ISO — 'tartışmalı' notuyla]"}
+savunma: {istem_tarihi: null, alinma_tarihi: null, tutanak: null}
+kvkk_kontrol: {aydinlatma: null, hukuki_sebep: null, kapsam: null}
+tur: "[ik | mali | yonetici | ihbar | diger]"
+durum: acik
+son_guncelleme: "[ISO]"
+konular:
+  - "[Konu 1 — ör. 'iş arkadaşına cinsel taciz iddiası']"
+kayitlar: []
+delil_bosluklari: []
 ```
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[matter-slug]/sources-checklist.yaml`:
-
-Generated from the investigation type. See sources checklist templates below.
-
-`~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[matter-slug]/documents-reviewed.yaml`:
-
+`incelenen-belgeler.yaml`
 ```yaml
-# [WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-matter: "[matter name]"
-total_reviewed: 0
-total_surfaced: 0
-last_updated: "[ISO date]"
-documents: []
+# [ÜST BAŞLIK]
+matter: "[ad]"
+toplam_incelenen: 0
+toplam_one_cikan: 0
+son_guncelleme: "[ISO]"
+belgeler: []
 ```
 
-### Step 3 — Sources checklist
+`kaynak-listesi.yaml` — Adım 3'teki türe uygun liste. Her satır: `{id, kaynak, durum: acik|devam|tamam|uygulanmaz, not}`.
 
-Generate the appropriate checklist based on investigation type. Present it
-to the attorney and ask: "Does this fit your matter? Let me know if any items
-are not applicable (I'll mark them N/A) or if there are additional sources
-specific to this situation."
+### Adım 3 — Kaynak listesi
 
-**HR investigation sources (harassment/discrimination/retaliation):**
-```yaml
-sources:
-  - id: 1
-    source: "Complainant interview"
-    status: open
-    notes: ""
-  - id: 2
-    source: "Respondent interview"
-    status: open
-    notes: ""
-  - id: 3
-    source: "Witness interviews — identify from complainant and respondent accounts"
-    status: open
-    notes: ""
-  - id: 4
-    source: "Email/messaging review — parties, relevant date range"
-    status: open
-    notes: ""
-  - id: 5
-    source: "HR records — respondent's performance history, prior complaints,
-             prior discipline"
-    status: open
-    notes: ""
-  - id: 6
-    source: "Prior complaints — any prior complaints against respondent in
-             HR system"
-    status: open
-    notes: ""
-  - id: 7
-    source: "Comparator data — how were similar situations handled"
-    status: open
-    notes: ""
-  - id: 8
-    source: "Relevant policies — harassment, code of conduct, reporting
-             procedures (version in effect at time of alleged conduct)"
-    status: open
-    notes: ""
-  - id: 9
-    source: "Org chart and reporting relationships at time of alleged conduct"
-    status: open
-    notes: ""
-  - id: 10
-    source: "Calendar records — any meetings or events mentioned in accounts"
-    status: open
-    notes: ""
-  - id: 11
-    source: "Upjohn warning documentation — confirm interviews were preceded
-             by Upjohn warnings and documented"
-    status: open
-    notes: ""
-```
+Türe uygun listeyi göster ve sor: "Dosyanıza uyuyor mu? Uygulanmayanları 'uygulanmaz' işaretlerim; eklemek istediğiniz kaynak var mı?" Sonra `kaynak-listesi.yaml`'a yaz.
 
-**Financial misconduct sources:**
-```yaml
-sources:
-  - id: 1
-    source: "Expense reports — subject, relevant period"
-    status: open
-    notes: ""
-  - id: 2
-    source: "Approval records — who approved the expenses or transactions"
-    status: open
-    notes: ""
-  - id: 3
-    source: "Vendor/contractor records — contracts, invoices, payment records"
-    status: open
-    notes: ""
-  - id: 4
-    source: "Financial system records — AP, GL entries for relevant accounts"
-    status: open
-    notes: ""
-  - id: 5
-    source: "Email/messaging review — subject, approvers, counterparties"
-    status: open
-    notes: ""
-  - id: 6
-    source: "Subject interview"
-    status: open
-    notes: ""
-  - id: 7
-    source: "Approver interviews"
-    status: open
-    notes: ""
-  - id: 8
-    source: "Counterparty/vendor interviews (if accessible)"
-    status: open
-    notes: ""
-  - id: 9
-    source: "Audit logs — system access logs for relevant accounts/systems"
-    status: open
-    notes: ""
-  - id: 10
-    source: "Prior audits or reviews covering the relevant period"
-    status: open
-    notes: ""
-  - id: 11
-    source: "Upjohn warning documentation"
-    status: open
-    notes: ""
-```
+**İK (taciz / mobbing / ayrımcılık / misilleme):**
+1. Şikâyetçi görüşmesi
+2. Hakkında iddia olanın savunması — yazılı istem + tutanak (İş K. m. 19)
+3. Tanık görüşmeleri — tarafların anlatımlarından belirle
+4. Kurumsal e-posta/mesaj incelemesi — **KVKK kontrolü tamamlandıktan sonra**
+5. Özlük dosyası — önceki ihtar, disiplin, performans (İş K. m. 75)
+6. Önceki şikâyetler ve ihbar hattı kayıtları
+7. Emsal uygulama — benzer olaylarda verilen kararlar (eşit davranma, m. 5)
+8. Politikalar — taciz/mobbing politikası, disiplin yönetmeliği, TİS (**olay tarihindeki sürüm**)
+9. Organizasyon şeması ve raporlama ilişkileri (olay tarihinde)
+10. Takvim kayıtları — anlatımlarda geçen toplantı/etkinlikler
+11. Şikâyetçiyi koruma tedbirleri — ne zaman, hangi önlem (TBK m. 417: işveren işçilerin psikolojik ve cinsel tacize uğramaması ve uğrayanların daha fazla zarar görmemesi için önlem almakla yükümlü)
+12. Görüşme açılış bildirimleri — her görüşmede verildi ve imzalandı mı
 
-**Executive misconduct sources:**
-```yaml
-sources:
-  - id: 1
-    source: "Subject interview"
-    status: open
-    notes: ""
-  - id: 2
-    source: "Board/compensation committee records — relevant resolutions,
-             minutes, approvals"
-    status: open
-    notes: ""
-  - id: 3
-    source: "Employment agreement and any amendments"
-    status: open
-    notes: ""
-  - id: 4
-    source: "Equity records — grants, exercises, vesting"
-    status: open
-    notes: ""
-  - id: 5
-    source: "Expense reports and approval records"
-    status: open
-    notes: ""
-  - id: 6
-    source: "Email/messaging review — subject, relevant counterparties"
-    status: open
-    notes: ""
-  - id: 7
-    source: "Conflict of interest disclosures (or absence thereof)"
-    status: open
-    notes: ""
-  - id: 8
-    source: "Outside business activity records"
-    status: open
-    notes: ""
-  - id: 9
-    source: "Witness interviews — direct reports, peers, board members"
-    status: open
-    notes: ""
-  - id: 10
-    source: "Prior complaints or concerns raised about subject"
-    status: open
-    notes: ""
-  - id: 11
-    source: "Upjohn warning documentation"
-    status: open
-    notes: ""
-```
+**Mali usulsüzlük:** masraf raporları (ilgili dönem); onay kayıtları; tedarikçi sözleşme/fatura/ödeme kayıtları; muhasebe kayıtları; e-posta (KVKK kontrolü sonrası); hakkında iddia olanın savunması; onaylayan görüşmeleri; tedarikçi görüşmeleri (erişilebilirse); sistem erişim logları; önceki denetimler; maddi çıkar tespiti (varsa m. 26'daki bir yıllık süre uygulanmaz); görüşme açılış bildirimleri.
 
-**Whistleblower sources:**
-```yaml
-sources:
-  - id: 1
-    source: "Complainant interview"
-    status: open
-    notes: ""
-  - id: 2
-    source: "Original complaint or tip — written form if exists"
-    status: open
-    notes: ""
-  - id: 3
-    source: "Records related to the underlying allegation (the thing
-             complainant blew the whistle on)"
-    status: open
-    notes: ""
-  - id: 4
-    source: "Records related to any adverse action taken against complainant
-             after the protected activity"
-    status: open
-    notes: ""
-  - id: 5
-    source: "Decision-maker interviews — who made the adverse action decision"
-    status: open
-    notes: ""
-  - id: 6
-    source: "Comparator data — treatment of similarly situated employees
-             who did not engage in protected activity"
-    status: open
-    notes: ""
-  - id: 7
-    source: "Email/messaging review — decision-makers, relevant timeframe"
-    status: open
-    notes: ""
-  - id: 8
-    source: "Timing analysis — proximity of protected activity to adverse
-             action"
-    status: open
-    notes: ""
-  - id: 9
-    source: "Respondent/decision-maker interviews"
-    status: open
-    notes: ""
-  - id: 10
-    source: "Upjohn warning documentation"
-    status: open
-    notes: ""
-```
+**Üst yönetici:** savunma/görüşme; YK ve komite kararları; iş sözleşmesi ve ekleri; prim ve pay planı kayıtları; masraf ve onaylar; e-posta (KVKK kontrolü sonrası); çıkar çatışması beyanları (ya da yokluğu); dış faaliyet ve rakiple ilişki kayıtları (TBK m. 396 — sadakat ve rekabet etmeme); tanıklar (astlar, eş düzey, YK üyeleri); önceki şikâyetler; **statü notu** — işletmenin bütününü sevk ve idare eden işveren vekili mi (İş K. m. 18 son fıkra: m. 18, 19 ve 21 uygulanmaz); görüşme açılış bildirimleri.
 
-After presenting the checklist, write it to
-`~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[slug]/sources-checklist.yaml`.
+**İhbar/bildirim sonrası aleyhe işlem:** bildiren görüşmesi; ilk bildirimin yazılı hâli; bildirilen konuya ait kayıtlar; bildirenin aleyhine sonradan yapılan işlemler; bu işlemlerin karar vericileriyle görüşme; emsal — bildirimde bulunmayan benzer çalışanlara muamele; karar vericilerin yazışmaları (KVKK kontrolü sonrası); zaman analizi — bildirim ile işlem arasındaki yakınlık (işveren aleyhine idari veya adli makamlara başvurmak fesih için geçerli sebep değildir, İş K. m. 18/3-c); görüşme açılış bildirimleri. Genel bir ihbarcı koruma düzenlemesi olup olmadığını ezberden söyleme: `tr_mevzuat_ara(query="ihbarcı", search_in="fulltext")` ile güncel durumu kontrol et.
+
+### Adım 4 — Görüşme açılış bildirimi (ABD'deki "Upjohn uyarısı" yerine)
+
+Her görüşmenin başında söylenir, tutanağa yazılır ve imzalatılır:
+- Görüşmeyi yapan kişi işverenin/şirketin avukatı (ya da İK) — çalışanın avukatı değildir.
+- Görüşmenin amacı; içerik gizli tutulmaya çalışılır ama işveren kararlarında kullanılabilir ve yargılamada delil olarak sunulabilir; bu kararı işveren verir.
+- Kişisel verilerin hangi amaçla işleneceği, kime aktarılabileceği, hukuki sebebi ve ilgili kişinin hakları (KVKK m. 10, m. 11).
+- Misilleme yasağı; görüşmenin gizli tutulması ricası.
+- Hakkında iddia olan kişiyle görüşmede: bu görüşme **m. 19 savunması mı, ön bilgi görüşmesi mi** — açıkça ayır. Savunmaysa yazılı istem ve süre verilir.
 
 ---
 
-## Mode 2: Add data
+## Mod 2 — Veri ekle
 
-Triggered by `/employment-legal:investigation-add` or "add to the [matter]
-investigation" or when the attorney pastes documents or interview notes.
+`/employment-legal:investigation-add`, "şu soruşturmaya ekle" ya da avukat görüşme notu/belge yapıştırdığında tetiklenir.
 
-### Step 1 — Identify the matter
+1. **Matter:** Birden fazla `investigation-*` klasörü varsa hangisi olduğunu sor; tek klasör varsa devam et.
+2. **Veri türü** (açık değilse sor): görüşme notu (kimin?), belge partisi, avukat notu/gözlemi, savunma istemi/tutanağı, açılış bildirimi teyidi. E-posta/cihaz/kamera partisi geldiyse ve `kvkk_kontrol` boşsa **önce KVKK kontrolünü tamamla**; tamamlanmadan işleme alma.
+3. **Çekme ölçütleri.** Belge aşağıdakilerden **herhangi birini** karşılıyorsa öne çıkarılır (bilerek biraz agresif — kaçırmaktansa yanlış pozitif):
+   1. Soruşturmanın taraflarından birinin (şikâyetçi, hakkında iddia olan, kayıtta geçen tanıklar) adını içeriyor.
+   2. Kilit fiil döneminde bir tarafça yazılmış ya da alınmış.
+   3. İddia türüne ilişkin anahtar kelime içeriyor (kelime listesi açılışta ve yeni anlatımlarla güncellenir).
+   4. Açık ya da örtülü ikrar içeriyor ("yapmamalıydım", "yazıya dökme", "bunu sil").
+   5. Kayıttaki bir anlatımla çelişiyor — çelişkiyi ve ilgili `kayit_id`'yi belirt.
+   6. Yargılamada hassas olacak dil içeriyor: ayrımcı ifade, tehdit, korunan özellik veya sendikal faaliyet tartışması, iddia kalıbına uyan mali usulsüzlük.
+   7. Anlatımlarda geçen ama belge setinde henüz görünmeyen bir belge türü (ör. görüşmede anılan toplantının davet kaydı yok) → öne çıkan belge değil, **delil boşluğu** olarak kaydet.
 
-If multiple investigation folders exist in `~/.claude/plugins/config/claude-for-legal/employment-legal/`, ask which matter this
-data belongs to. If only one, proceed.
+   Her belgenin sonucu: `one_cikti` (kayda girdi olarak eklenir) ya da `incelendi-onemsiz` (`incelenen-belgeler.yaml`'a tek satır açıklamayla).
 
-### Step 2 — Identify the data type
-
-Ask (if not clear from context):
-- Interview notes (whose interview?)
-- Document batch (emails, records, files)
-- Attorney notes or observations
-- Upjohn warning confirmation
-
-### Step 3 — Document pull criteria
-
-For any document batch, apply the following pull criteria. A document is
-surfaced if it meets ANY of the following. The criteria are intentionally
-set to pull slightly aggressively — it is better to surface a false positive
-than to miss a significant item.
-
-**Pull criteria:**
-1. Contains the name of any party to the investigation (complainant,
-   respondent, witnesses named in prior log entries)
-2. Was authored or received by a party during the key conduct timeframe
-3. Contains keywords related to the allegation type (identified at intake
-   and from prior log entries — update the keyword list as new terms emerge
-   from accounts)
-4. Contains explicit or implicit admissions ("I shouldn't have," "I know
-   how this looks," "don't put this in writing," "delete this")
-5. Contains language contradicting any account already in the log — flag
-   the specific contradiction and the log entry it conflicts with
-6. Contains language that would be sensitive in litigation: discriminatory
-   terms, threats, discussions of protected characteristics or activities,
-   financial irregularities matching the allegation pattern
-7. Is a document type that has been mentioned in prior accounts but has
-   not yet appeared in the document set (e.g., a meeting was mentioned in
-   an interview but no calendar invite has been reviewed) → log as
-   evidentiary gap, not a surfaced document
-
-**Disposition for every document reviewed:**
-- `surfaced`: meets one or more pull criteria — added to log as a log entry
-- `reviewed-nothing-significant`: reviewed, does not meet pull criteria —
-  logged in documents-reviewed.yaml with one-line description only
-
-**After processing a document batch, report:**
-
-```
-Document review complete.
-Reviewed: [N] documents
-Surfaced: [N] as potentially significant
-Logged as reviewed / nothing significant: [N]
-New evidentiary gaps identified: [N]
-
-Surfaced items:
-[list with one-line description and which pull criterion triggered]
-```
-
-This report is the answer to "what about missed needles." The pull criteria
-are documented, the surface ratio is visible, and the attorney can review
-the full document log at any time. In Q&A mode, "I have not seen any document
-on [topic] in the [N] documents reviewed" is a meaningful statement only
-because every document reviewed is logged.
-
-### Step 4 — Write log entries
-
-For each surfaced item, append to `log.yaml`:
-
-```yaml
-- entry_id: [auto-increment]
-  entry_type: [interview / document / attorney-note / gap]
-  date_of_event: "[date the event occurred — not when logged]"
-  date_logged: "[ISO datetime]"
-  source: "[witness name/role, or document filename/description]"
-  source_type: [complainant / respondent / witness / document / attorney-note]
-  issues: ["[which investigation issue(s) this entry relates to]"]
-  significance: [high / medium / background]
-  summary: "[what this entry adds to the record — 2-5 sentences]"
-  quote: "[verbatim quote if significant — otherwise empty]"
-  contradicts_entry: [entry_id or null]
-  corroborates_entry: [entry_id or null]
-  credibility_note: ""
-  pull_criterion: "[which criterion triggered — for documents]"
-  privilege: attorney-work-product
-```
-
-For evidentiary gaps:
-
-```yaml
-- gap_id: [auto-increment]
-  description: "[what document/source should exist but hasn't been found]"
-  identified_from: "[which log entry or account raised this]"
-  source_to_obtain: "[where to get it]"
-  priority: [high / medium / low]
-  status: open
-```
-
-### Step 5 — Update sources checklist
-
-If the data added corresponds to a checklist item, ask the attorney if it
-should be marked complete or in-progress. Do not auto-mark complete —
-the attorney decides when a source is adequately covered.
+   Parti sonrası rapor:
+   ```
+   Belge incelemesi tamamlandı.
+   İncelenen: [N] | Öne çıkan: [N] | Önemsiz olarak kaydedilen: [N]
+   Yeni delil boşluğu: [N]
+   Öne çıkanlar: [tek satır açıklama — tetikleyen ölçüt no]
+   ```
+   Bu rapor "kaçan iğne" sorusunun cevabıdır: ölçütler yazılı, oran görünür. Sorgu modunda "[N] belgede [konu] hakkında belge görmedim" cümlesi ancak her incelenen belge kaydedildiği için anlamlıdır.
+4. **Kayıt girdisi** — öne çıkan her öğe için `kayit.yaml`'a ekle:
+   ```yaml
+   - kayit_id: [otomatik artan]
+     kayit_turu: [gorusme | belge | avukat-notu | savunma | bosluk]
+     olay_tarihi: "[olayın tarihi — kayıt tarihi değil]"
+     kayit_tarihi: "[ISO tarih-saat]"
+     kaynak: "[kişi/rol ya da belge adı]"
+     kaynak_turu: [sikayetci | hakkinda-iddia-olan | tanik | belge | avukat-notu]
+     konular: ["[ilgili konu]"]
+     onem: [yuksek | orta | arka-plan]
+     ozet: "[kayda kattığı şey — 2-5 cümle]"
+     alinti: "[önemliyse birebir alıntı]"
+     celistigi_kayit: [kayit_id | null]
+     destekledigi_kayit: [kayit_id | null]
+     guvenilirlik_notu: ""
+     tetikleyen_olcut: "[belgeler için ölçüt no]"
+     dosya_sinifi: [avukat-calisma-urunu | isveren-delil]
+   ```
+   Delil boşluğu:
+   ```yaml
+   - bosluk_id: [otomatik artan]
+     aciklama: "[var olması gereken ama bulunamayan belge/kaynak]"
+     kaynagi: "[hangi kayıt ya da anlatım ortaya çıkardı]"
+     nereden_alinir: "[kaynak]"
+     oncelik: [yuksek | orta | dusuk]
+     durum: acik
+   ```
+5. **Kaynak listesi:** Eklenen veri bir liste kalemine karşılık geliyorsa "tamam mı, devam mı?" diye sor. Kendiliğinden `tamam` işaretlemesi **yapma** — yeterliliğe avukat karar verir.
 
 ---
 
-## Mode 3: Query the log
+## Mod 3 — Kayda soru sor
 
-Triggered by `/employment-legal:investigation-query` or any question
-phrased against the investigation (e.g., "what did [witness] say about",
-"what documents corroborate", "what do we still need", "what's the
-strongest evidence on each side").
+`/employment-legal:investigation-query` ya da soruşturmaya yöneltilen her soru ("X ne dedi", "neler destekliyor", "neyi eksik", "her konuda en güçlü delil") ile tetiklenir. Cevaplamadan önce kaydın tamamını oku; her cevapta `kayit_id` göster.
 
-Read the full log before answering. Answer types:
-
-**Factual query** ("what did X say about Y"):
-Answer from the log entries, citing entry IDs. If the log contains nothing
-on the topic: "I have not seen any information on [topic] in this
-investigation log ([N] entries reviewed). This may be worth flagging as
-a gap."
-
-**Conflict query** ("where do accounts conflict"):
-Surface all contradicts_entry links. For each conflict: state what the
-conflict is, which entries are in tension, and what (if any) documentary
-evidence bears on the conflict.
-
-**Coverage query** ("what do we still need" / "what are our gaps"):
-Read sources-checklist.yaml and evidentiary_gaps in log.yaml. Report:
-- Checklist items still open
-- Evidentiary gaps logged
-- Any accounts that reference sources not yet gathered
-
-**Strength query** ("what's the strongest evidence on each issue"):
-For each issue in the log, identify: the highest-significance log entries,
-any documentary corroboration, and any unresolved conflicts. Present
-issue by issue.
-
-**Upjohn query** ("have we documented Upjohn warnings"):
-Check checklist item and any log entries tagged as Upjohn documentation.
-Flag if not yet completed.
+- **Olgu sorusu:** İlgili girdilerden cevapla. Kayıtta yoksa: "Bu soruşturma kaydında ([N] girdi) [konu] hakkında bilgi görmedim; boşluk olarak işaretleyebilirim."
+- **Çelişki sorusu:** Tüm `celistigi_kayit` bağlarını çıkar; her biri için çelişkinin ne olduğu, hangi girdiler, varsa hangi belgenin çelişkiye ışık tuttuğu.
+- **Kapsama sorusu:** `kaynak-listesi.yaml`'daki açık kalemler, `delil_bosluklari`, anlatımlarda geçip toplanmamış kaynaklar.
+- **Güç sorusu:** Konu konu: en yüksek önemdeki girdiler, belgesel destek, çözülmemiş çelişkiler.
+- **Usul sorusu:** Savunma istendi/alındı mı (tarihleriyle), m. 26 son günü ve kalan iş günü, açılış bildirimleri tamam mı, KVKK kontrolü yapıldı mı. Eksik varsa işaretle.
 
 ---
 
-## Mode 4: Draft or update the memo
+## Mod 4 — Soruşturma notu (taslak / güncelleme)
 
-Triggered by `/employment-legal:investigation-memo` or "draft the memo"
-or "update the memo".
+`/employment-legal:investigation-memo`, "notu yaz" ya da "notu güncelle" ile tetiklenir.
 
-### If no memo exists — first draft
+**İlk taslak — ön şartlar** (eksikse uyar, avukat isterse yine yaz): her açık konu için en az bir girdi; şikâyetçi ve hakkında iddia olan girdileri; savunma durumu belli; yüksek öncelikli açık kaynaklar işaretli.
 
-Read the full log. Do not draft until the following are complete (warn if
-not):
-- At least one entry for each open issue
-- Complainant and respondent entries present
-- Sources checklist reviewed (flag any high-priority open items)
-
-Draft the memo in the following structure, following standard internal
-investigation memorandum practice:
+`<SORUŞTURMA>/not.md` dosyasına şu yapıyla yaz (A sınıfı):
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — CLAUDE.md ## Outputs]
 
----
+**İÇ SORUŞTURMA NOTU**
+Kime: [avukat doldurur] | Kimden: [avukat doldurur] | Tarih: [tarih]
+Konu: İç soruşturma — [matter] | Durum: ÖN TASLAK
 
-**MEMORANDUM**
+## Yönetici özeti
+[2-3 paragraf: iddia, kapsam ve yöntem, konu bazında bulgular (Sabit / Sabit değil / Belirsiz), önerilen işlem. En son yazılır, en başta durur.]
 
-To: [Attorney to fill in]
-From: [Attorney to fill in]
-Date: [Date]
-Re: Internal Investigation — [Matter name]
-Status: PRELIMINARY DRAFT
+## Arka plan ve kapsam
+Tetikleyen olay · İncelenen iddialar (numaralı) · Kapsam dışı olanlar ve nedeni · Fiil dönemi · Soruşturma dönemi · Öğrenme tarihi, öğrenen kişi/organ ve m. 26 son günü
 
----
+## Yöntem
+| Kişi | Rol | Tarih | Açılış bildirimi | Savunma mı? |
+|---|---|---|---|---|
+İncelenen belgeler (tür, adet, tarih aralığı; tam liste ayrı) · KVKK kontrolü özeti (aydınlatma, hukuki sebep, kapsam) · Sınırlamalar (istenip alınamayanlar)
 
-## Executive Summary
+## Bulgular — konu bazında
+### Konu 1: [iddia]
+[Delilin gösterdiği; kayıt ID'leri köşeli parantezde. Çelişkiyi düzleştirme, açıkça yaz.]
 
-[2-3 paragraphs: allegation in plain terms, investigation scope and
-methodology summary, key findings in bullet form (Sustained / Not
-Sustained / Inconclusive), recommended actions. Written last but
-appears first.]
+## Güvenilirlik değerlendirmesi
+[Yalnız bulgunun hangi anlatıma itibar edildiğine bağlı olduğu kişiler]
+İç tutarlılık · Belgesel destek / çürütme · Saik · Gözlem (yüz yüzeyse) · Değerlendirme (itibar / itibar yok / kısmen — gerekçesiyle)
 
----
+## İlgili politikalar
+[Olay tarihinde yürürlükteki sürüm; sonradan kabul edileni anma]
 
-## Background and Scope
+## Hukuki çerçeve (avukat teyit eder)
+- Olgunun eşleştiği dayanak: m. 25/II bendi (haklı fesih) / m. 18 geçerli sebep / disiplin cezası
+- Usul: savunma (m. 19); yazılı ve gerekçeli fesih bildirimi taslağı
+- Süre: m. 26 — öğrenme tarihi, son gün, risk
+- İşverenin koruma yükümlülüğü (TBK m. 417) ve alınan önlemler; cinsel taciz bildirimine rağmen gerekli önlem alınmazsa şikâyetçi işçinin derhal fesih hakkı (İş K. m. 24/II-d)
+- İspat: m. 20/2, m. 5 son fıkra; hukuka aykırı delil (HMK m. 189/2)
+- Her madde atfı `tr_mevzuat_madde_getir` ile teyit edildi mi: [evet / hayır — hangileri]
 
-**Triggering event:** [What initiated the investigation]
-
-**Allegations investigated:**
-[Each issue from the log as a numbered allegation]
-
-**Out of scope:** [Anything explicitly not investigated and why]
-
-**Investigation period:** [Dates of conduct alleged]
-**Investigation conducted:** [Date opened] to [present or close date]
-
----
-
-## Methodology
-
-**Interviews conducted:**
-| Witness | Role | Date | Notes |
-|---|---|---|---|
-[Populated from log entries with source_type = interview]
-
-**Documents reviewed:**
-[Summary of document categories reviewed, volume, date range.
-Full document log is maintained separately.]
-
-**Other sources:**
-[Any other sources from checklist — policies, HR records, etc.]
-
-**Limitations:** [Any sources requested but not obtained, any constraints]
-
----
-
-## Factual Findings
-
-*[Organized by issue — one section per allegation. Not by witness,
-not purely chronological.]*
-
-### Issue 1: [Allegation]
-
-[Narrative of what the evidence shows on this issue. Cite log entry IDs
-inline in brackets. Where accounts conflict, present the conflict directly
-— do not smooth it over. Documentary evidence presented with quotes where
-significant.]
-
-### Issue 2: [Allegation]
-
-[Same structure]
-
-[Continue for each issue]
-
----
-
-## Credibility Assessment
-
-*[Standalone section. Address only witnesses whose credibility is
-determinative — i.e., where the finding on an issue depends on which
-account is credited.]*
-
-### [Witness name/role]
-
-**Internal consistency:** [Consistent / Inconsistent — note specifics]
-**Corroboration:** [What documentary or other evidence corroborates
-or undermines the account]
-**Motive:** [Any reason to credit or discount the account]
-**Demeanor:** [Attorney's observations if interviews were in person —
-leave blank if not applicable or not observed]
-**Assessment:** [Credit / Do not credit / Partially credit — with basis]
-
----
-
-## Relevant Policies
-
-[Policies in effect at the time of alleged conduct that bear on the issues.
-Cite the version. Do not cite policies that were adopted after the conduct.]
-
----
-
-## Conclusions
-
-| Issue | Finding | Basis |
+## Sonuçlar
+| Konu | Bulgu | Dayanak (tek cümle) |
 |---|---|---|
-| [Issue 1] | Sustained / Not Sustained / Inconclusive | [One sentence] |
-| [Issue 2] | ... | ... |
+*Kanunda iç soruşturma için ispat ölçütü yok; bulgular eldeki delilin ağırlığına göre verildi. Mahkemedeki ispat yükü ve ölçüsü ayrıdır — tartışmalı, içtihadı kontrol et.*
 
-*Findings are based on a preponderance of the evidence standard.*
+## Öneriler
+Disiplin işlemi (sonuç değil dayanak) · Şikâyetçiyi koruma tedbirleri · Politika/süreç · Eğitim · Ek soruşturma · İzleme
 
----
-
-## Recommendations
-
-[Organized by action type:]
-
-**Disciplinary action:** [If any — state the basis, not just the outcome]
-**Policy or process changes:** [If any gap in policies contributed]
-**Training:** [If indicated]
-**Further investigation:** [Any threads not fully resolved]
-**Monitoring:** [Any follow-up needed]
-
----
-
-## Appendix A: Chronology of Events
-
-[Auto-generated from log entries sorted by date_of_event, not date_logged.
-Format: Date | Summary | Source (Entry ID)]
-
-## Appendix B: Documents Reviewed
-
-[Summary table from documents-reviewed.yaml]
+## Ek A — Kronoloji (olay_tarihi sırasıyla: Tarih | Özet | Kaynak [ID])
+## Ek B — İncelenen belgeler (incelenen-belgeler.yaml özeti)
 ```
 
-Write the draft to `~/.claude/plugins/config/claude-for-legal/employment-legal/investigation-[slug]/memo.md`.
-
-### If memo already exists — update
-
-Read the memo and the log. Identify log entries added since the memo was
-last drafted (compare date_logged against memo's last-updated date).
-
-Report what has changed:
-
+**Güncelleme:** Notu ve kaydı oku; notun son güncellemesinden sonra eklenen girdileri bul ve raporla:
 ```
-Since the last memo draft ([date]), the following has been added to the log:
-
-[N] new entries
-New issues: [any]
-New conflicts: [any]
-Resolved gaps: [any]
-
-Sections that need updating:
-  Factual findings: [which issues are affected]
-  Credibility: [any new credibility-relevant entries]
-  Conclusions: [any findings that should be revisited]
-  Appendix A: [N] new chronology entries
+Son taslaktan ([tarih]) bu yana: [N] yeni girdi | Yeni konu: [..] | Yeni çelişki: [..] | Kapanan boşluk: [..]
+Güncellenecek bölümler: Bulgular [konular] · Güvenilirlik [..] · Sonuçlar [..] · Ek A: [N] yeni kronoloji girdisi
 ```
-
-Ask: "Want me to update the full memo, or just the affected sections?"
-
-Apply updates. Preserve prior drafting. Mark changed sections with
-`[UPDATED: date]` until the attorney reviews.
+Sor: "Tüm notu mu, yalnız etkilenen bölümleri mi güncelleyeyim?" Önceki metni koru; değişen bölümleri avukat inceleyene kadar `[GÜNCELLENDİ: tarih]` ile işaretle.
 
 ---
 
-## Mode 5: Draft audience summary
+## Mod 5 — Hedef kitle özeti
 
-Triggered by `/employment-legal:investigation-summary` or "draft a
-summary for [audience]".
+`/employment-legal:investigation-summary` ya da "[kitle] için özet" ile tetiklenir. Sor: kitle kim, bu özet hangi kararı destekleyecek? Not yoksa önce not yazmayı öner.
 
-Ask: who is the audience and what decision or action does this summary
-support?
+- **İK özeti** (disiplin kararı için): olgusal özet (hukuki analiz yok), her iddia için bulgu, önerilen işlem. **Girmez:** güvenilirlik yöntemi, hukuki risk, avukat izlenimleri, kayıt ID'leri ve belge atıfları. Başlık: "GİZLİDİR — YALNIZ İK KULLANIMI — DAĞITILMAZ". İK özeti davada sunulabilir; B sınıfı dikkatle, olgusal yaz.
+- **Yönetim / YK özeti:** tek paragrafta iddia ve kapsam, ana bulgular, iş etkisi (genel düzeyde, hukuki analiz yok), alınan önlemler. Başlık: `## Outputs`.
+- **Dış avukat brifingi:** tam bağlam ve hukuki risk, açık iplikler, tartışmalı güvenilirlik, davada en önemli olacak belgeler, süreler (m. 26 son günü; fesih olursa işçinin fesih bildiriminin tebliğinden itibaren bir ay içinde arabulucuya başvurma hakkı — İş K. m. 20/1). Başlık: `## Outputs`.
+- **Şikâyetçiye / ilgiliye sonuç bildirimi** (istenirse): sonuç ve alınan önlemler düzeyinde; başkalarının kişisel verisini ve tanık beyanlarını açma (KVKK m. 4/2-ç, İş K. m. 75/2).
 
-**HR summary** (for HR decision on disciplinary action):
-- What happened (factual summary, no legal analysis)
-- Finding on each allegation (Sustained/Not Sustained/Inconclusive)
-- Recommended action
-- What is NOT in this summary: privilege analysis, credibility methodology,
-  legal exposure assessment, attorney mental impressions
-- Header: "Confidential — HR Use Only — Do Not Distribute"
-- Do not include entry IDs or document citations — those stay in the memo
+## Sonuçlu işlem kapısı — dış merciye yanıt
 
-**Leadership/Board summary** (for governance decision):
-- The allegation and scope in one paragraph
-- Key findings
-- Business impact / exposure (high level — no specific legal analysis)
-- What the company is doing about it
-- Header: "[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]"
+Arabuluculuk için yazılı pozisyon, karşı taraf avukatının ihtarnamesine cevap, iş müfettişi incelemesi, KVKK ilgili kişi başvurusu (m. 11) veya Kurul şikâyeti, savcılık ifadesi gibi **dış yanıt** hazırlanmadan önce `## Who's using this` bölümünü oku. Rol **avukat değilse**:
 
-**Outside counsel briefing** (handing off for litigation or deeper review):
-- Full context including legal exposure analysis
-- Open evidentiary threads
-- Credibility issues that remain contested
-- Documents that would be most significant in litigation
-- Header: "[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]"
-
----
-
-## Consequential-action gate (respond to a demand or complaint)
-
-**Before producing a summary, memo, or content intended for an external response (EEOC/DFEH/state agency charge response, plaintiff's-counsel demand letter response, regulator response, or any formal complaint reply):** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
-
-> Responding to a demand, charge, or complaint has legal consequences — positions taken here are admissions in later proceedings, waivers of defenses can be inadvertent, and privilege over the underlying investigation can be lost. Have you reviewed this response with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Bir iddiaya, başvuruya ya da ihtara verilen cevabın hukuki sonucu vardır: burada alınan pozisyon sonraki yargılamada aleyhinize kullanılabilir, savunma imkânı farkında olmadan kaybedilebilir. Bu cevabı bir avukatla gözden geçirdiniz mi? Evetse devam ediyorum. Hayırsa avukata götürmeniz için kısa bir brif hazırlarım: iddia, merci ve süre; soruşturmanın bulguları (iddia bazında, incelenen belgeler, görüşülen kişiler, açılış bildirimleri); çözülmemiş çelişkiler; önerilen cevabın neyi örtülü kabul ettiği; açık sorular; ne ters gidebilir (gizliliğin kaybı, çelişkili olgu beyanı, kaçırılan süre); avukata sorulacaklar.
 >
-> - The allegation, the forum, and the deadline
-> - What the investigation surfaced (findings by allegation; documents reviewed; witnesses interviewed; Upjohn warnings given or not)
-> - Any unresolved evidentiary threads or credibility contests
-> - What the proposed response says and what it implicitly concedes
-> - Open questions and what's unresolved
-> - What could go wrong (privilege waiver, inconsistent factual statements, missed affirmative defense)
-> - What to ask the attorney (is this the right theory; are we preserving defenses; should an outside firm take this over; what needs redaction or a privilege log)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service. Agency and demand-letter responses are a place where untrained replies regularly create more exposure than the underlying allegation did.
+> Avukat bulmak için bağlı olduğunuz ilin barosuna başvurabilirsiniz.
 
-Do not produce an external-response draft past this gate without an explicit yes. Internal memos, HR summaries, and leadership briefings used only within the organization do not trip this gate (but the privilege-formation caveat at the top of this skill still applies).
+Açık "evet" olmadan dış yanıt taslağı üretme. Kurum içi not, İK özeti ve yönetim brifingi bu kapıya takılmaz (gizlilik uyarısı yine geçerlidir).
 
----
+## Bu skill ne yapmaz
 
-## What this skill does NOT do
+- Disiplin kararı vermez — avukatın bulgularını destekler.
+- Gizlilik garantisi vermez — koruma soruşturmanın nasıl kurulduğuna bağlıdır, başlığa değil.
+- Okuyamadığı formatı işlemez — elle inceleme için işaretler.
+- Görüşme yapmaz, savunma almaz — tutanakları kaydeder; açılış bildiriminin ve savunmanın yapılıp yapılmadığını izler.
 
-- Make disciplinary decisions — it supports the attorney's findings,
-  not HR's action
-- Guarantee privilege — privilege depends on how the investigation is
-  structured, not on how the memo is labeled
-- Process documents it cannot read — if files are in formats that cannot
-  be parsed, flag them for manual review
-- Conduct interviews — it logs interview notes, it does not interview witnesses
-- Replace Upjohn warnings — it tracks whether they were given, it does not
-  give them
+## Sonraki adımlar
 
-## Close with the next-steps decision tree
-
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+CLAUDE.md `## Outputs`'taki sonraki adım ağacıyla bitir; seçenekleri üretilen işe göre uyarla (ör. savunma istem yazısı taslağı, fesih değerlendirmesi için `/employment-legal:termination-review`, avukata eskalasyon, ek delil, bekle-izle, başka bir şey). Seçimi avukat yapar.
 
 ---
 
@@ -1725,364 +1082,242 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: international-expansion
 description: >
-  Reference: implementation-planning framework for international hiring — EOR
-  vs. entity decision framing, cross-functional triggers for tax/finance/HR,
-  structured outside-counsel briefing requests, and a persistent gap tracker.
-  Loaded by /expansion-kickoff and /expansion-update; not invoked directly.
+  Referans: sınır ötesi işe alım için uygulama planı çerçevesi — iki yön: (A) Türk
+  işverenin yurt dışında işe alımı ya da personel göndermesi, (B) yabancı işverenin
+  Türkiye'de işe alımı. Yapı seçeneklerinin çerçevelenmesi (Türkiye'de ABD tarzı EOR
+  yerine İş K. m. 7 sınırları), Türkiye ilk gün yükümlülükleri (sözleşme, SGK, çalışma
+  izni, KVKK aktarımı), ArthurLegal MCP ile yabancı mevzuat araması, vergi/finans/İK
+  soruları, yerel avukat brif talebi ve kalıcı takip dosyası. /expansion-kickoff ve
+  /expansion-update tarafından yüklenir; doğrudan çağrılmaz.
 user-invocable: false
 ---
 
-# International Expansion Skill
+# Uluslararası Genişleme — Ortak Çerçeve
 
-## Matter context
+## Matter bağlamı
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Uygulama CLAUDE.md'sinde `## Matter workspaces` bölümüne bak. `Enabled` `✗` ise bu paragrafın gerisini atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Amaç
 
-## Purpose
+Sınır ötesi işe alım dağınık yürür: hukuk iş hukuku sorularını bilir ama vergi bakımından işyeri riskini bilmez; finans maliyeti bilir ama çalışma izni süresini bilmez; İK ücreti bilir ama ilk gün tescil yükümlülüklerini bilmez. Bu skill haritayı çıkarır, her paydaşa doğru soruyu taslaklar, yerel avukata brif hazırlar ve oturumlar arası süren bir takip dosyası kurar. Genişleme kararı verilmiş varsayılır; "genişlemeli miyiz?" çerçevesi değildir.
 
-International hiring gets handled sloppily at scaleups because nobody owns
-the full picture. Legal knows the employment-law questions but not the PE
-risk questions. Finance knows the cost model but not the employee-representation
-triggers. HR knows the comp benchmarks but not the Day 1 compliance requirements.
+**Kaynak kuralı.** Türkiye kuralları `tr_mevzuat_madde_getir` ile doğrulanmış maddelere dayanır; uygularken metni yeniden çek ve değişiklik dipnotlarını oku. Yabancı ülke kuralı **ezberden yazılmaz**: ArthurLegal MCP'nin ulaştığı ülkelerde araçla aranır; diğerlerinde "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al". Araç sonucu olsa bile her ülke için yerel avukat brifi gönderilir — uygulama bilgisi ve güncellik onunla teyit edilir.
 
-This skill doesn't replace any of those functions. It maps the terrain, drafts
-the right questions for each stakeholder, produces a briefing request that
-walks outside counsel through the country-specific issues, and creates a
-tracker that keeps the project moving across sessions.
+## Bağlam ve üst başlık
 
-This skill assumes expansion is decided. It is not a "should we expand?"
-framework.
+`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → eşik tablosu (yurt dışı satırları dahil), eskalasyon, önceki genişleme notları. Her çıktı `## Outputs` başlığıyla açılır.
 
-This skill does not contain country-specific employment law. The substantive
-rules change frequently and vary by role, headcount, and industry — the skill
-routes every country through an outside-counsel briefing rather than relying
-on a stored reference table.
+## Adım 0 — Yön
 
-## Load context
+> Hangi yön?
+> - **A — Türkiye'den dışarı:** [ŞİRKET ADI] yurt dışında işe alıyor ya da Türkiye'deki personelini yurt dışına gönderiyor.
+> - **B — Dışarıdan Türkiye'ye:** yabancı işveren Türkiye'de işe alıyor ya da yabancı uyruklu personel Türkiye'de çalışacak.
 
-Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, escalation table, any existing
-expansion notes.
+İkisi birlikte olabilir; her ülke-yön çifti ayrı takip dosyasıdır.
 
-## Output header
+## Adım 1 — Bilgi toplama (tek blokta sor, cevap bekle)
 
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`).
-
-## Workflow
-
-### Step 1 — Information gathering
-
-Ask all of the following in a single block:
-
-> Before I build the expansion plan I need to understand the shape of this
-> expansion. Please answer what you can — gaps in the answers are themselves
-> useful data:
+> Planı kurmadan önce genişlemenin şeklini anlamam gerekiyor; cevaplayamadıklarınız da bilgi verir:
 >
-> **The expansion**
-> - Which country?
-> - What roles are you hiring? (Job function matters — a sales rep closing
->   deals creates different legal exposure than an engineer writing code)
-> - How many hires are planned in the next 12 months?
-> - When do you need the first person to start?
+> **Genişleme** — Hangi ülke? Hangi roller (satış kapatan biri ile kod yazan mühendis farklı risk doğurur)? 12 ayda kaç kişi? İlk kişi ne zaman başlamalı? Çalışanların uyruğu (Türk, yerel, üçüncü ülke)?
 >
-> **Current state**
-> - Do you already have a legal entity in this country?
-> - Have you used an EOR provider before? Are you already considering one?
-> - Has tax or finance been looped in yet?
-> - Do you have outside employment counsel in this country?
+> **Mevcut durum** — O ülkede şirket/şube var mı? Aynı grupta orada ya da Türkiye'de şirket var mı? Aracı (EOR) ya da özel istihdam bürosu düşünülüyor mu? Vergi/finans haberdar mı? Yerel avukat var mı?
 >
-> **Strategic context**
-> - Is this a long-term strategic commitment (building a real team) or
->   testing the market (one or two hires, see how it goes)?
-> - Who is the executive sponsor making the structure decision?
+> **Yapı** — Yerel işe alım mı, Türkiye'den (ya da ana şirketten) geçici görevlendirme mi; ne kadar süre?
+>
+> **Stratejik bağlam** — Kalıcı ekip mi, pazar testi mi? Yapı kararını hangi yönetici verecek?
 
-Wait for responses before proceeding.
+## Adım 2 — Yapı seçenekleri (karar verme, çerçevele)
 
-### Step 2 — EOR vs. entity framing
+Kararı CFO ve vergi ekibinin verebileceği netlikte çerçevele.
 
-Do not make this decision. Frame it with enough precision that the CFO and
-tax counsel can make it.
-
-Work through the following factors against the intake answers and produce a
-structured framing document:
-
-**The core trade-off:**
-
-| Factor | Points toward EOR | Points toward Entity |
+| Faktör | Aracı modeli lehine | Şirket/şube lehine |
 |---|---|---|
-| Headcount in 12 months | Fewer hires | More hires |
-| Timeline to first hire | Short runway | Longer runway available |
-| Strategic commitment | Testing the market | Long-term presence |
-| Cost sensitivity | EOR markup acceptable | Scale makes entity more efficient |
-| Control needs | Low — EOR employer handles local HR | High — want direct employer relationship |
-| IP sensitivity | Lower | Higher — entity ownership cleaner |
+| 12 aylık kişi sayısı | Az | Çok |
+| İlk işe alıma kalan süre | Kısa | Uzun |
+| Stratejik bağlılık | Pazar testi | Kalıcı varlık |
+| Maliyet | Aracı payı kabul edilebilir | Ölçek şirketi verimli kılar |
+| Kontrol ihtiyacı | Düşük | Yüksek — doğrudan işveren ilişkisi |
+| Fikri hak hassasiyeti | Düşük | Yüksek — sahiplik daha temiz |
 
-Specific headcount break-even points, EOR markup ranges, setup costs, and
-timelines vary by country and provider — do not hardcode them. Route those
-questions to tax/finance and the EOR provider.
+Başa baş sayısı, aracı payı, kuruluş maliyeti ve süresi ülkeye ve sağlayıcıya göre değişir — sabit yazma; vergi/finans ve sağlayıcıya sor.
 
-**PE risk flag (route to tax counsel):**
-If roles include sales, business development, account management, or anyone
-with authority to negotiate or sign contracts on behalf of the company —
-flag this explicitly:
+### B yönü — Türkiye'de yapı seçenekleri
 
-> PE Risk: [Role type] may create a taxable permanent establishment in
-> [country] even before a legal entity exists. This is a tax question, not
-> an employment question. Tax counsel must assess before the first hire.
+| Seçenek | Ne gerektirir | Dikkat |
+|---|---|---|
+| Türkiye'de şirket/şube kurup doğrudan istihdam | Şirket kuruluşu (kurumsal ekip); işyeri bildirimi ve SGK tescili (Adım 4B) | Asıl yol; eşikler işçi sayısıyla büyür |
+| Grup şirketinden geçici devir | Türkiye'de grup şirketi varsa: devir sırasında işçinin yazılı rızası; yazılı olarak en çok altı ay, en fazla iki yenileme; devreden işverenin ücret ödeme yükümlülüğü sürer, devralan ödenmeyen ücret ve prim için birlikte sorumlu (İş K. m. 7 son fıkra) | Yalnız holding ya da aynı şirketler topluluğu içinde |
+| Özel istihdam bürosu üzerinden geçici işçi | İŞKUR izinli büro; yalnız m. 7/2'de sayılan hâllerde; (a)-(c) dışındaki hâllerde en fazla dört ay, (g) hariç toplam sekiz ayı geçmemek üzere en fazla iki yenileme; işveren özel istihdam bürosudur (İş K. m. 7) | **ABD tarzı süresiz EOR'un Türkiye'de doğrudan karşılığı yok.** Sürekli işi bu yolla gördürmek m. 7 sınırlarını aşar; gerçek işverenin kim sayılacağı riski — tartışmalı, içtihadı kontrol et |
+| Yabancı şirketin Türkiye'de tüzel kişilik/şube olmadan işçi çalıştırması | SGK işyeri tescili, bordro ve vergi uygulaması | Uygulamada sorunlu — SGK/vergi uzmanıyla teyit et; tartışmalı |
+| Serbest meslek / yüklenici | Gerçek bağımsızlık | Bağımlı çalışma varsa iş sözleşmesidir (İş K. m. 8 tanımı) → `/employment-legal:worker-classification` |
 
-**Produce the question for the CFO/tax:**
+```
+tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="geçici iş ilişkisi özel istihdam bürosu muvazaa")
+```
+Dönen kararların künyesini birebir kullan; karar numarası ezberden yazma.
 
-> Questions for your CFO and tax counsel:
-> - At [N] hires over 12 months, at what headcount does entity setup become
->   more cost-effective than EOR (accounting for EOR markup, setup costs,
->   and ongoing compliance burden)?
-> - [If PE-risk roles:] Do these role types create a taxable permanent
->   establishment in [country]? If yes, does that change the entity timeline?
-> - If we start with EOR and convert to entity later, what are the transition
->   risks for the employees already on the EOR?
-> - Who is our preferred EOR provider for this country, and have we vetted
->   their local compliance track record?
+### A yönü — Türkiye'den dışarı
 
-### Step 3 — Cross-functional triggers
+- **Yerel işe alım** (hedef ülkedeki şirket ya da aracı): hedef ülke hukuku — Adım 4A.
+- **Türkiye'den personel götürme:** İŞKUR'dan izin almadan kendi işlerinde çalıştıracakları işçileri yurt dışına götürenlere ve Kuruma onaylatılmayan her yurt dışı hizmet akdine idari para cezası öngörülür (4904 s. Kanun m. 20/1-g). İzin usulünü ilgili yönetmelikte bul: `tr_mevzuat_ara(query="yurt dışına işçi", types=["YONETMELIK"])`. Ceza tutarlarını yazma — yeniden değerleme ile güncellenir, teyit et.
+- **Sosyal güvenlik:** hedef ülkeyle ikili sosyal güvenlik sözleşmesi var mı: `tr_mevzuat_ara(query="sosyal güvenlik sözleşmesi [ülke]")`. Yoksa çifte prim riski → finans.
 
-For each function that needs to be looped in, state: what they need to do,
-and the specific questions legal should ask them. Do not just say "loop in
-finance." Draft the ask.
+### Uygulanacak hukuk ve yetki (her iki yön)
 
-**Tax counsel** (always required before first hire)
+- Taraflar hukuk seçebilir; ancak işçinin mutad işyeri hukukunun emredici hükümlerinin sağlayacağı asgari koruma saklıdır. Seçim yoksa işçinin işini mutad olarak yaptığı işyeri hukuku uygulanır; başka ülkede geçici çalışma mutad işyerini değiştirmez; devamlı birden fazla ülkede çalışmada işverenin esas işyeri hukuku; hâlin bütün şartlarına göre sözleşmeyle daha sıkı ilişkili bir hukuk varsa — işin yapıldığı yerin zorunlu uygulanan hükümleri saklı kalmak üzere — o uygulanabilir (MÖHUK m. 27). **m. 27, 4/6/2025 tarihli 7550 s. Kanunla değişti — eski metne dayanan kaynak ve şablonları kullanma.**
+- Türk mahkemesinin yetkisi: mutad işyeri Türkiye'deyse orası; işçinin işverene karşı davasında işverenin ya da işçinin Türkiye'deki yerleşim yeri veya mutad meskeni mahkemesi de yetkilidir (MÖHUK m. 44).
 
-What they need to do: PE risk analysis, determine whether entity is required
-for tax purposes, advise on equity tax treatment in this jurisdiction.
+### Vergi bakımından işyeri riski (vergi ekibine)
 
-Questions legal should ask:
-- Does hiring a [role type] in [country] create a permanent establishment or
-  taxable nexus before we have an entity?
-- What is our exposure window if we start hiring before the PE question is
-  resolved?
-- How are our equity awards (RSUs/options) taxed in [country]? Do we need
-  local tax counsel to advise employees at grant and vesting?
-- If we set up an entity, what intercompany services agreement is needed
-  between the subsidiary and the US parent?
+Satış, iş geliştirme, müşteri yönetimi ya da şirket adına sözleşme müzakere/imza yetkisi olan roller varsa açıkça işaretle:
 
-**Finance / Payroll** (required before first paycheck)
+> **İşyeri riski:** [rol], [ülke]de şirket kurulmadan vergi bakımından işyeri ya da daimi temsilci doğurabilir. Bu iş hukuku değil vergi sorusudur; ilk işe alımdan önce vergi ekibi değerlendirmeli (`tax-legal` eklentisi), çifte vergilendirmeyi önleme anlaşması kontrol edilmeli.
 
-What they need to do: identify local payroll provider (or confirm EOR handles
-it), budget mandatory employer contributions, set up local banking if entity.
+## Adım 3 — Paydaşlar: ne yapacaklar, hukuk ne soracak
 
-Questions legal should ask:
-- Have we identified a local payroll provider? (If EOR: confirm EOR handles
-  payroll including local social contributions)
-- What are the mandatory employer contributions in [country] — pension,
-  social insurance, healthcare — and are these budgeted in the comp model?
-- How will equity grants be administered for employees in [country]? Has
-  anyone modeled the employer-side tax withholding obligations at vesting?
+"Finansa haber verin" deme; soruyu taslakla.
 
-**HR / Total Rewards** (required before offer is made)
+**CFO / vergi** (ilk işe alımdan önce zorunlu) — yapı ekonomisi, işyeri analizi, pay/opsiyon vergisi.
+- 12 ayda [N] kişide, aracı payı, kuruluş maliyeti ve uyum yükü hesaba katıldığında hangi sayıda şirket kurmak daha ekonomik? Aracıdan şirkete geçişte mevcut çalışanların devri nasıl olur (B yönünde m. 7 süre sınırları)? Sağlayıcının yerel uyum geçmişi incelendi mi?
+- [Rol] [ülke]de şirket kurulmadan işyeri ya da vergisel bağ doğurur mu; doğurursa şirket takvimi değişir mi? Soru çözülmeden işe alırsak risk penceresi ne?
+- Pay/opsiyon planımız [ülke]de nasıl vergilenir; çalışana tahsis ve hak edişte yerel danışman gerekir mi?
+- Şirket kurulursa ana şirketle hangi grup içi hizmet sözleşmesi ve transfer fiyatlandırması gerekir? (`/tax-legal:transfer-pricing-review`)
 
-What they need to do: benefits benchmarking, comp benchmarking against local
-market, confirm mandatory vs. supplemental benefits.
+**Finans / bordro** (ilk maaştan önce) — bordro sağlayıcı, zorunlu işveren katkıları, banka.
+- Yerel bordro sağlayıcı belli mi (aracıysa sosyal katkılar dahil bordroyu üstleniyor mu)?
+- Zorunlu işveren katkıları (emeklilik, sosyal sigorta, sağlık) ücret modelinde var mı? Oranları sabit yazma; güncel oranı teyit et. B yönünde SGK primleri dahil.
+- Pay planında hak edişte işveren tarafı vergi kesintisi modellendi mi?
 
-Questions legal should ask:
-- What benefits are legally mandatory in [country] vs. market-standard? (Do
-  not want to accidentally promise more than required or less than market)
-- Is our standard equity package competitive in this market, or does local
-  practice differ significantly?
-- Who will be this person's day-to-day manager — local or remote from HQ?
-  (Affects employee-representation analysis and employment agreement terms
-  in some jurisdictions)
+**İK / ücret ve yan haklar** (teklif öncesi) — yan hak ve ücret karşılaştırması, zorunlu ve piyasa standardı haklar.
+- [Ülke]de hangi haklar kanunen zorunlu, hangileri piyasa standardı? (Zorunludan az ya da piyasadan fazla vaat etmeyelim.)
+- Standart pay paketimiz bu pazarda rekabetçi mi?
+- Günlük yönetici yerel mi, merkezden uzaktan mı? (Bazı ülkelerde temsil ve sözleşme şartlarını etkiler.)
 
-**Outside counsel** (required — do not skip)
+**Yerel avukat** (zorunlu — atlanmaz): Adım 4A'daki brif bu işin gündemidir; baştan tek seferde gönder.
 
-What they need to do: research and advise on the local employment framework
-for this role and headcount, review/draft local employment agreement, flag
-any structural issues with the proposed arrangement.
+**B yönünde Türk hukuku ekibi:** Adım 4B kontrol listesi.
 
-The outside-counsel briefing request in Step 4 is the agenda for this
-engagement. Send it at the start — do not ask piecemeal.
+## Adım 4A — Yabancı ülke: önce ArthurLegal, sonra yerel avukat
 
-### Step 4 — Country-specific briefing request
+| Ülke | Önek | Başlangıç çağrısı |
+|---|---|---|
+| AB üyesi (ortak çerçeve) | `eu_` | `eu_search_eu_law(query="transparent and predictable working conditions")` → `eu_get_document_text(celex="32019L1152")`; gönderme: `eu_search_eu_law(query="posting of workers")`; uygulanacak hukuk: `eu_search_eu_law(query="law applicable to contractual obligations")`; çalışan verisi: `eu_search_eu_law(query="protection of natural persons processing of personal data")` |
+| Almanya | `de_` | `de_norm_getir(kanun="KSchG", norm="1")` (fesih koruması); `de_gesetz_ara(sorgu="Nachweisgesetz")`; işyeri temsili: `de_norm_getir(kanun="BetrVG", norm="1")`; içtihat: `de_rii_case_search(query={"court": "BAG", "date_from": "2022-01-01"})` |
+| Birleşik Krallık | `uk_` | `uk_search_legislation(title="Employment Rights Act", type="ukpga")`; `uk_get_section(year="1996", number="18", section="94")`; alıntıdan önce `uk_get_effects` |
+| Hollanda | `nl_` | `nl_search_legislation(query="Burgerlijk Wetboek Boek 7")` |
+| Polonya | `pl_` | `pl_search_by_title(title="Kodeks pracy", in_force_only=true)` → `pl_get_act_text(publisher="DU", year=..., pos=...)` (güncel birleştirilmiş metni sonuçlardan seç) |
+| Avusturya | `at_` | `at_search_legislation(title="Arbeitsverfassungsgesetz")`; konu araması: `at_search_legislation(terms="Kündigung Arbeitnehmer")` |
+| İrlanda | `ie_` | `ie_search_acts(query="unfair dismissals")` → `ie_get_section(year=..., number=..., section=...)` |
+| Finlandiya | `fi_` | `fi_search_acts(query="työsopimuslaki")` → `fi_get_act(year=..., number=...)` |
+| İspanya | `es_` | `es_search_legislation(query="Estatuto de los Trabajadores", only_in_force=true)` → `es_get_act_text(boe_id=...)` |
+| Japonya | `jp_` | `jp_search_laws(keyword="労働基準法")` (law_id `322AC0000000049`) → `jp_get_article(law_id="322AC0000000049", article=...)`; ayrıca `jp_search_laws(keyword="労働契約法")` |
+| Azerbaycan | `az_` | `az_search_acts(query="Əmək Məcəlləsi", types=[107])` → `az_get_act_fulltext(act_id=...)` |
+| Diğer tüm ülkeler (ABD, BAE, İsviçre, Rusya …) | — | **ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al.** (ABD için yalnız kuruluysa üçüncü taraf CourtListener bağlayıcısı.) |
 
-Instead of a stored country reference table, this skill produces a structured
-outside-counsel briefing request. Substantive local law (entity requirements,
-statutory benefits and contributions, termination protections, notice periods,
-employee-representation / works-council / collective-bargaining obligations,
-mandatory leave, restrictive covenants, data protection, work authorization)
-varies by country *and* by role and headcount *and* by industry, and changes
-frequently. Treat every country as a country that requires verification — do
-not rely on the skill's own knowledge.
+Kurallar: sonuç ince görünürse önce `status` çağır (yüklenmemiş kaynak ≠ boş sonuç). Dizin kapsamı yıl aralığıyla sınırlı araçlarda (`ie_`, `fi_`, `pl_search_indexed`) kapsamı rapora yaz. Aracın döndürdüğü atıf ve bağlantıyı birebir kullan; veri gelmezse "UYARI: veri çekilemedi, teyidiniz gerekli: <aracın source_url'si>". Sağlayıcı ya da grup şirketi kimliği için `gleif_search_entities(name="[tam unvan]", jurisdiction="[ISO kodu]")`.
 
-Draft the briefing request below, tailored to the intake answers:
+**Yerel avukat brif talebi — [Ülke]** (takip dosyasına tek açık kalem: sahibi Yerel avukat, sorular alanında brifin tamamı; ülke daha önce sorulduysa yine gönder — bu bir güncellik kontrolüdür):
 
-**Outside counsel briefing request — [Country]**
+> [Ülke]de [tarih]ten itibaren [roller] için [N] kişi istihdam etmeyi planlıyoruz; 12 ay hedefi [N]. Tercih edilen yapı (görüşünüze ve vergi ekibine bağlı): [aracı / şirket / görevlendirme / belirsiz]. Lütfen her soruyu birincil kaynak atfıyla, tablo değil soru-cevap olarak yanıtlayın — değişiklikleri izleyebilmek istiyoruz:
+> 1. **Yapı** — şirket, aracı, yüklenici seçenekleri ve bu sayı ve roller için ödünleşim.
+> 2. **Sözleşme** — zorunlu şekil ve içerik, geçersiz hükümler, dil/çeviri şartı.
+> 3. **Fesih** — bildirim süresi ve tazminat, korunan sebepler, toplu çıkarmada seçim kuralları; ilk günden kurulacak belge standardı.
+> 4. **Zorunlu haklar ve işveren katkıları** — emeklilik, sosyal sigorta, sağlık, ücretli izin, ikramiye; güncel oranlar ve dayanak.
+> 5. **Rekabet yasağı, gizlilik, fikri haklar** — geçerlilik şartları, tazminat zorunluluğu.
+> 6. **Çalışan temsili** — işyeri konseyi, sendika, toplu sözleşme; hangi sayıda tetiklenir; sendikasız olsak da sektörel sözleşmeye tabi miyiz?
+> 7. **Çalışan verisi** — yerel yükümlülükler ve Türkiye'ye veri aktarım mekanizması.
+> 8. **Çalışma ve oturma izni** — Türk ve üçüncü ülke vatandaşları için izin türleri ve süreler.
+> 9. **Sektörel kurallar.**
+> 10. **Yüklenici sınıflandırması** — ölçüt ve yeniden nitelendirme riski.
+> 11. **Pay/opsiyon** — yerel vergi, sermaye piyasası ve iş hukuku kuralları.
+> 12. **İlk gün uyumu** — tescil, bildirim, ilan yükümlülükleri.
+> 13. **Bu ülkede ilk kez işe alan Türk işverenleri en çok neyi şaşırtıyor** ve yakın zamanda ne değişti?
 
-> We are planning to hire [N] employees in [Country] starting [date], in the
-> following roles: [roles]. Target headcount over 12 months: [N]. Preferred
-> structure (subject to your advice and tax counsel): [EOR / entity /
-> undecided]. We need a briefing covering each of the following. Please
-> answer as questions with cites to primary law, not as a reference table —
-> we want to be able to track changes over time.
->
-> 1. **Entity and engagement structure** — what are our options (direct
->    hire via entity, EOR, contractor) and what are the practical and legal
->    trade-offs for this headcount and these roles?
->
-> 2. **Employment contract requirements** — what form is required or standard?
->    What must be included? What cannot be included or is unenforceable?
->    What language or translation requirements apply?
->
-> 3. **Termination** — what are the notice requirements and severance
->    obligations? How difficult is termination in practice (protected-cause
->    standards, social-selection rules in RIFs, reasonable-notice common-law
->    exposure)? What documentation standard should we establish from day one?
->
-> 4. **Mandatory benefits and employer contributions** — what must we provide
->    by law (pension, social insurance, healthcare, paid leave, bonuses)?
->    What are the current employer contribution rates we should budget?
->    Please cite the controlling statute and verify currency.
->
-> 5. **Restrictive covenants** — are non-competes enforceable? Under what
->    conditions and with what compensation requirements? What confidentiality
->    and IP assignment language holds up?
->
-> 6. **Employee representation** — are there works council, employee
->    representation, union, or collective bargaining requirements? At what
->    headcount do they trigger? What consultation or co-determination rights
->    apply? Are we covered by any sectoral collective agreement even if we
->    are not unionized?
->
-> 7. **Data protection** — what obligations apply to employee data? Is there
->    a data transfer mechanism needed for employee data flowing to the US?
->
-> 8. **Work authorization** — what permits or visas are required for foreign
->    nationals? What are the processing timelines?
->
-> 9. **Industry-specific rules** — are there sector rules, awards, or
->    collective agreements that apply to our industry regardless of whether
->    we are unionized?
->
-> 10. **Contractor/independent-contractor risk** — what is the country's test
->     for classification, and what are the deemed-employment or reclassification
->     risks for any contractor arrangements we may consider?
->
-> 11. **Equity / incentive compensation** — any local tax, securities, or
->     employment-law rules that govern how we grant RSUs, options, or other
->     equity here?
->
-> 12. **Day 1 compliance** — what must be in place before the first employee
->     starts? Registration requirements, notices, filings, posters?
->
-> 13. **Top 2-3 things that surprise US companies hiring here for the first
->     time** — what do you wish clients had asked you earlier? What has
->     *changed recently* that a US team might not have caught?
+A yönünde Türk tarafında ayrıca: KVKK m. 9 (çalışan verisinin yurt dışına aktarımı — aşağıdaki 4B/7. satır), MÖHUK m. 27 hukuk seçimi klozu, 4904 m. 20 İŞKUR izni.
 
-Add this briefing request to the expansion tracker as a single open item:
-owner = Outside Counsel, status = open, with the full briefing agenda in
-the questions field. If the jurisdiction is one the team has asked about
-before, still send the briefing — this is a currency check, not a first
-contact.
+## Adım 4B — Türkiye (B yönü): ilk gün kontrol listesi
 
-### Step 5 — Create the expansion tracker
+| # | Kalem | Dayanak | Sahibi |
+|---|---|---|---|
+| 1 | İş sözleşmesi — süresi bir yıl ve daha fazla olan sözleşme yazılı; yazılı sözleşme yoksa en geç iki ay içinde çalışma koşullarını gösteren yazılı belge | İş K. m. 8 | Hukuk |
+| 2 | İşyeri bildirimi — işyerini kuran işveren bir ay içinde bölge müdürlüğüne; şirketlerde tescil kaydı ticaret sicilinin gönderdiği belgelerle | İş K. m. 3 | Hukuk / kurumsal |
+| 3 | SGK işyeri bildirgesi — en geç sigortalı çalıştırmaya başlanan tarihte; şirket kuruluşunun ticaret siciline bildirimi SGK'ya yapılmış sayılır | 5510 m. 11 | Bordro |
+| 4 | Sigortalı işe giriş bildirgesi — sigortalılık başlangıcından önce (kanundaki istisnalar saklı) | 5510 m. 8 | Bordro |
+| 5 | Yabancı çalışan — çalışma izni olmaksızın çalışma ve çalıştırma yasak; başvuru yurt içinde Bakanlığa, yurt dışında konsolosluğa; belgeler tamsa otuz günde değerlendirme; ilk izin en çok bir yıl ve belirli işyeri için; yabancı ortak-müdür/YK üyesi izinle çalışabilir; nitelikli işgücü, proje çalışanı, AB vatandaşı gibi istisnai kategoriler | 6735 m. 6, 7, 10, 16 | İK / hukuk |
+| 6 | İzinsiz çalıştırma yaptırımı — idari para cezası (tutarları teyit et — yeniden değerleme), sınır dışı ve dönüş masraflarının işverence karşılanması | 6735 m. 23 | Hukuk |
+| 7 | Çalışan aydınlatması ve ana şirkete veri aktarımı — yeterlilik kararı yoksa uygun güvence: standart sözleşme (imzadan itibaren beş iş günü içinde Kuruma bildirim), bağlayıcı şirket kuralları ya da diğer m. 9 yolları | KVKK m. 10, m. 9 | Hukuk / uyum |
+| 8 | Uygulanacak hukuk ve yetki klozu | MÖHUK m. 27, m. 44 | Hukuk |
+| 9 | Büyüme eşikleri — 30 işçi iş güvencesi (m. 18), toplu işçi çıkarma (m. 29), 50 işçi engelli kontenjanı (m. 30); CLAUDE.md eşik tablosuna satır ekle | İş K. | Hukuk / İK |
+| 10 | Uyuşmazlıkta arabuluculuk dava şartı | 7036 m. 3 | Hukuk |
+| 11 | Vergi, SGK prim oranları, asgari ücret, kıdem tazminatı tavanı — sabit yazma; güncel değeri teyit et | — | Finans |
 
-Write a new file to `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-[country-slug].yaml` with all open items
-identified in Steps 2-4. This file persists across sessions.
+Açık sorular (Türk hukuku ekibi + SGK/vergi uzmanı): şube mi şirket mi; tüzel kişilik kurulmadan istihdamın SGK ve vergi uygulaması; grup içi geçici devirde ücretin hangi şirketten ödeneceği ve bordro düzeni.
 
-Format:
+## Adım 5 — Takip dosyası
+
+Yol: matter workspace kapalıysa `~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-<ulke-slug>.yaml`; açıksa aktif matter klasöründe aynı ad. Dosya oturumlar arası kalır. Adım 2-4'te çıkan her eylem **ayrı kalem** olur; her kalem tek sahibe atanır ve tamamlanabilir olur.
 
 ```yaml
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-country: [Country name]
-country_slug: [lowercase-hyphenated]
-kickoff_date: [ISO date]
-first_hire_target: [ISO date or "TBD"]
-headcount_12mo: [N]
-roles: [list]
-strategic_commitment: [testing / long-term]
-eor_or_entity: [EOR / entity / undecided]
-outside_counsel_engaged: [true / false]
-pe_risk_flagged: [true / false]
-last_updated: [ISO date]
+# [ÜST BAŞLIK — CLAUDE.md ## Outputs]
+ulke: [ad]
+ulke_slug: [kucuk-harf-tireli]
+yon: [TR-yurtdisi | yurtdisi-TR]
+arthurlegal_kaynak: [eu_ / de_ / ... | yok — yerel hukukçu]
+baslangic: [ISO tarih]
+ilk_ise_alim_hedefi: [ISO tarih | belirsiz]
+kisi_12_ay: [N]
+roller: [liste]
+stratejik: [test | kalici]
+yapi: [sirket | grup-ici-devir | ozel-istihdam-burosu | araci | yuklenici | belirsiz]
+yerel_avukat: [true | false]
+vergi_isyeri_riski: [true | false]
+son_guncelleme: [ISO tarih]
 
-open_items:
+acik_kalemler:
   - id: 1
-    category: [structure / tax / finance / hr / outside-counsel / compliance]
-    item: "[what needs to happen]"
-    owner: "[function or person]"
-    status: [open / in-progress / done / blocked]
-    due: [ISO date or null]
-    questions:
-      - "[specific question drafted in Steps 2-4]"
-    notes: ""
-
-  - id: 2
-    [etc.]
+    kategori: [yapi | vergi | finans | ik | yerel-avukat | uyum | izin]
+    kalem: "[ne yapılacak]"
+    sahibi: "[birim ya da kişi]"
+    durum: [acik | devam | tamam | blokeli]
+    son_tarih: [ISO tarih | null]
+    bagimli_oldugu: []        # önce kapanması gereken kalem id'leri
+    dayanak: "[doğrulanmış madde ya da araç sonucu atfı]"
+    sorular:
+      - "[Adım 2-4'te taslaklanan soru]"
+    notlar: ""
 ```
 
-Generate one open item per action identified across Steps 2-4. Do not collapse
-multiple actions into one item — each item should be completable and
-attributable to a single owner.
+## Adım 6 — Çıktı
 
-### Step 6 — Output
-
-> **Jurisdiction assumption.** This plan frames the expansion to the single country identified in intake. Local employment law, tax rules, employee-representation obligations, and data-protection requirements vary materially by country, region, industry, and headcount, and change frequently. Every substantive local-law answer comes from the outside-counsel briefing request, not from this skill. If the plan is adapted for another country later, re-run the briefing.
+> **Yargı çevresi varsayımı.** Bu plan ön görüşmedeki tek ülke ve yön içindir. Yerel iş hukuku, vergi, çalışan temsili ve veri koruma kuralları ülkeye, bölgeye, sektöre ve kişi sayısına göre değişir ve sık değişir. Yabancı ülkeye ilişkin esaslı cevap ArthurLegal araç sonucundan ve yerel avukat brifinden gelir; bu skill'in kendi bilgisinden gelmez. Plan başka ülkeye uyarlanırsa brifi yeniden gönder.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — CLAUDE.md ## Outputs]
+## Uluslararası Genişleme: [Ülke] ([yön]) — [Tarih]
+**İlk işe alım hedefi:** [tarih] · **12 ay:** [N] kişi · **Roller:** [liste]
+**ArthurLegal kaynağı:** [önek | yok — yerel hukukçu] · **Takip dosyası:** [yol]
+⚠️ İnceleyen notu: doğrulanamayan madde / çekilemeyen yabancı kaynak: [liste | yok] · tartışmalı: [liste]
 
-## International Expansion: [Country] — [Date]
+### Yapı seçenekleri — [Adım 2 tablosu; B yönünde m. 7 notu; işyeri riski işareti]
+### Uygulanacak hukuk ve yetki — [MÖHUK m. 27 / m. 44 özeti; önerilen klozun ana hatları]
+### Kimler devreye girmeli — Vergi [N] soru · Finans/bordro [N] · İK [N] · Yerel avukat (brif aşağıda)
+### [A yönü] ArthurLegal notları + yerel avukat brifi — [çağrılar, dönen atıflar; brifin tamamı]
+### [B yönü] Türkiye ilk gün kontrol listesi — [Adım 4B tablosu, doğrulama tarihiyle]
+### Açık kalemler ([N])
+| # | Kalem | Sahibi | Durum | Son tarih |
+|---|---|---|---|---|
 
-**First hire target:** [date]
-**Headcount (12 months):** [N]
-**Roles:** [list]
-**Tracker:** ~/.claude/plugins/config/claude-for-legal/employment-legal/expansion-[slug].yaml
-
----
-
-### EOR vs. Entity
-
-[Framing from Step 2 — table, PE risk flag if applicable, questions for CFO/tax]
-
----
-
-### Who needs to be looped in — and what to ask them
-
-**Tax counsel** — [N] questions
-[Questions from Step 3]
-
-**Finance / Payroll** — [N] questions
-[Questions from Step 3]
-
-**HR / Total Rewards** — [N] questions
-[Questions from Step 3]
-
-**Outside counsel** — see briefing request below
-[Full briefing request from Step 4]
-
----
-
-### Open items ([N] total)
-
-| # | Item | Owner | Status |
-|---|---|---|---|
-| 1 | [item] | [owner] | Open |
-[etc.]
-
----
-
-Run `/employment-legal:expansion-update [country]` to update status
-as items close.
+Kalemler kapandıkça `/employment-legal:expansion-update [ülke]` çalıştırın.
 ```
 
-## What this skill does NOT do
+## Bu skill ne yapmaz
 
-- Advise on specific local employment law — that is outside counsel's job.
-- Make the EOR vs. entity decision — frames it for the right decision-makers.
-- Draft the local employment agreement — flags that outside counsel must do
-  this.
-- State country-specific rules from its own knowledge — every country is
-  routed through an outside-counsel briefing.
-- Substitute for outside counsel engagement — every new country requires
-  local counsel, no exceptions.
+- Yabancı ülkenin iş hukuku hakkında kendi bilgisinden kural söylemez — ArthurLegal aracı ve yerel avukat brifi üzerinden gider.
+- Yapı kararını vermez — doğru karar vericiler için çerçeveler.
+- Yerel iş sözleşmesini yazmaz — yerel avukatın yazması gerektiğini işaretler. (B yönünde Türk iş sözleşmesi için `/employment-legal:hiring-review`.)
+- Yerel avukatın yerini tutmaz — ArthurLegal'ın kaynağı olan ülkelerde de her yeni ülke yerel teyit ister.
 
 ---
 
@@ -2091,42 +1326,41 @@ as items close.
 ---
 name: investigation-add
 description: >
-  Add data to an open investigation — documents, interview notes, or
-  observations. Processes batches against the documented pull criteria,
-  surfaces significant items, and logs everything reviewed for coverage
-  verification. Use when new evidence, interview notes, or document
-  productions come in for an open investigation.
-argument-hint: "[matter name or slug, then paste or attach data]"
+  Açık bir iç soruşturmaya veri ekle — belge, görüşme notu, savunma tutanağı ya da
+  gözlem. Partileri yazılı çekme ölçütlerine göre tarar, önemli öğeleri öne çıkarır,
+  incelenen her belgeyi kapsama doğrulaması için kaydeder; e-posta/cihaz/kamera
+  verisinde önce KVKK kontrolünü ister. Yeni delil, görüşme notu ya da belge
+  geldiğinde kullan.
+argument-hint: "[matter adı ya da slug; ardından veriyi yapıştır veya ekle]"
 ---
 
 # /investigation-add
 
-Adds data to an open investigation log. Processes document batches using
-documented pull criteria, surfaces significant items, logs everything
-reviewed for coverage verification.
+Açık soruşturma kaydına veri ekler. Belge partilerini yazılı çekme ölçütleriyle işler, öne çıkanları kayda geçirir, incelenen her belgeyi kapsama için kaydeder.
 
-## Instructions
+## Talimat
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`.
-2. Load the `internal-investigation` reference skill and run Mode 2 (Add data).
-3. After processing, show the surface ratio and list of surfaced items.
-4. Prompt to update the sources checklist if the data covers a checklist item.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasını yükle.
+2. `internal-investigation` referans skill'ini yükle ve **Mod 2 (Veri ekle)** uygula.
+3. Kurumsal e-posta, mesaj, cihaz, kamera ya da log verisi geldiyse ve kayıtta `kvkk_kontrol` boşsa işlemeden önce KVKK ve delil kontrolünü tamamla (KVKK m. 4, 5, 10; TBK m. 419; HMK m. 189/2).
+4. İşlemden sonra öne çıkma oranını ve öne çıkan öğelerin listesini göster.
+5. Veri bir kaynak listesi kalemini karşılıyorsa güncelleme için sor; kendiliğinden `tamam` işaretleme.
+6. Gelen veri savunma tutanağıysa kayıttaki `savunma` alanını ve m. 26 sayacını güncelle.
 
-## Examples
-
-```
-/employment-legal:investigation-add [matter name]
-[paste interview notes]
-```
+## Örnekler
 
 ```
-/employment-legal:investigation-add [matter name]
-[attach email export]
+/employment-legal:investigation-add [matter adı]
+[görüşme notunu yapıştır]
 ```
 
-> Detailed needle-finding process, log entry format, surface-ratio rules, and
-> sources-checklist tracking live in the `internal-investigation` reference
-> skill — load it before doing substantive work.
+```
+/employment-legal:investigation-add [matter adı]
+[e-posta dışa aktarımını ekle]
+```
+
+> İğne bulma süreci, kayıt girdisi biçimi, oran kuralları ve kaynak listesi takibi
+> `internal-investigation` referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -2135,39 +1369,38 @@ reviewed for coverage verification.
 ---
 name: investigation-memo
 description: >
-  Draft or update the privileged investigation memo from the investigation log.
-  Use when an investigation is far enough along to write the first memo cut, or
-  when new data has been added and the existing draft needs updating.
-argument-hint: "[matter name]"
+  Soruşturma kaydından iç soruşturma notunu yaz ya da güncelle — konu bazında
+  bulgular, güvenilirlik değerlendirmesi, Türk hukuku çerçevesi (m. 25/II eşleşmesi,
+  m. 19 savunma, m. 26 süre, TBK m. 417). Soruşturma ilk taslak için yeterince
+  ilerlediğinde ya da yeni veri eklendikten sonra kullan.
+argument-hint: "[matter adı]"
 ---
 
 # /investigation-memo
 
-Drafts the first cut of the privileged investigation memo from the log,
-or updates an existing draft when new data has been added.
+Soruşturma kaydından notun ilk taslağını yazar ya da yeni veri eklendiğinde mevcut taslağı günceller.
 
-## Instructions
+## Talimat
 
-1. Load the `internal-investigation` reference skill and run Mode 4 (Draft or update memo).
-2. If drafting for the first time, warn if high-priority sources are still
-   open on the checklist.
-3. If updating, show what changed before rewriting.
-4. All output is marked PRIVILEGED AND CONFIDENTIAL — ATTORNEY WORK PRODUCT.
+1. `internal-investigation` referans skill'ini yükle ve **Mod 4 (Soruşturma notu)** uygula.
+2. İlk taslakta: yüksek öncelikli kaynaklar açıksa, savunma alınmamışsa ya da m. 26 son günü yaklaşıyorsa en üstte uyar.
+3. Güncellemede: yeniden yazmadan önce neyin değiştiğini göster.
+4. Not A sınıfı dosyadır (avukat çalışma ürünü); `## Outputs`'taki gizlilik başlığıyla açılır. Başlık koruma yaratmaz — gizlilik notunu koru.
+5. "Hukuki çerçeve" bölümündeki her madde atfını `tr_mevzuat_madde_getir` ile doğrula; çekilemeyen için "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/" yaz.
 
-## Examples
-
-```
-/employment-legal:investigation-memo [matter name]
-```
+## Örnekler
 
 ```
-/employment-legal:investigation-memo [matter name]
-(updates existing memo if one exists)
+/employment-legal:investigation-memo [matter adı]
 ```
 
-> Detailed memo structure, credibility-assessment framework, and update rules
-> live in the `internal-investigation` reference skill — load it before doing
-> substantive work.
+```
+/employment-legal:investigation-memo [matter adı]
+(not varsa günceller)
+```
+
+> Not yapısı, güvenilirlik çerçevesi ve güncelleme kuralları `internal-investigation`
+> referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -2176,39 +1409,38 @@ or updates an existing draft when new data has been added.
 ---
 name: investigation-open
 description: >
-  Open a new internal investigation matter — runs intake, generates the sources
-  checklist, and creates the persistent investigation log. Use when a complaint
-  or allegation comes in and the attorney needs to stand up a privileged
-  investigation workspace.
-argument-hint: "[brief description of the allegation]"
+  Yeni iç soruşturma dosyası aç — ön görüşmeyi yürütür, m. 26 süre sayacını ve savunma
+  durumunu kurar, türe uygun kaynak listesini üretir ve kalıcı soruşturma kaydını
+  oluşturur. Şikâyet, ihbar ya da iddia geldiğinde ve avukat soruşturma çalışma alanını
+  kurmak istediğinde kullan.
+argument-hint: "[iddianın kısa tarifi]"
 ---
 
 # /investigation-open
 
-Opens a new investigation matter — runs intake, generates the sources
-checklist, and creates the persistent investigation log.
+Yeni bir iç soruşturma dosyası açar: ön görüşme, süre ve usul ön-kontrolü, kaynak listesi, kalıcı kayıt.
 
-## Instructions
+## Talimat
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`.
-2. Load the `internal-investigation` reference skill and run Mode 1 (Open).
-3. If a matter with the same slug already exists, warn before overwriting.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasını yükle (yoksa önce `/employment-legal:cold-start-interview` öner).
+2. `internal-investigation` referans skill'ini yükle ve **Mod 1 (Soruşturma aç)** uygula — önce ⏰ ÖN-KONTROL (İş K. m. 26 öğrenme tarihi, m. 19 savunma, TİS/disiplin usulü).
+3. Aynı slug'la bir soruşturma varsa üzerine yazmadan önce uyar.
+4. Açılış çıktısında şunları göster: klasör yolu, m. 26 son günü ("tartışmalı" notuyla), dosya sınıfı ayrımı (A — avukat çalışma ürünü / B — işveren delil dosyası), KVKK kontrolü gereken kaynaklar.
 
-## Examples
-
-```
-/employment-legal:investigation-open
-Harassment complaint filed against a manager in the Austin office.
-```
+## Örnekler
 
 ```
 /employment-legal:investigation-open
-(skill will ask for details)
+İzmir şubesindeki bir müdür hakkında psikolojik taciz şikâyeti; İK'ya dün e-postayla ulaştı.
 ```
 
-> Detailed intake, privilege-formation requirements, sources checklist, and log
-> templates live in the `internal-investigation` reference skill — load it
-> before doing substantive work.
+```
+/employment-legal:investigation-open
+(skill ayrıntıları soracak)
+```
+
+> Ön görüşme soruları, gizlilik ayrımı, kaynak listeleri ve kayıt şablonları
+> `internal-investigation` referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -2217,47 +1449,43 @@ Harassment complaint filed against a manager in the Austin office.
 ---
 name: investigation-query
 description: >
-  Ask questions against an open investigation log — what witnesses said, where
-  accounts conflict, what gaps exist, what the strongest evidence is on each
-  issue. Use when the attorney needs to query the investigation record without
-  re-reading every entry.
-argument-hint: "[matter name] [question]"
+  Açık bir soruşturma kaydına soru sor — tanıklar ne dedi, anlatımlar nerede
+  çelişiyor, hangi boşluklar var, her konuda en güçlü delil ne, savunma ve m. 26
+  süresi ne durumda. Avukat her girdiyi yeniden okumadan kayda soru sormak
+  istediğinde kullan.
+argument-hint: "[matter adı] [soru]"
 ---
 
 # /investigation-query
 
-Answers questions against the investigation log — what witnesses said,
-where accounts conflict, what gaps exist, what the strongest evidence is
-on each issue.
+Soruşturma kaydına karşı soruları cevaplar: tanık anlatımları, çelişkiler, boşluklar, konu bazında en güçlü delil, usul durumu.
 
-## Instructions
+## Talimat
 
-1. Load the `internal-investigation` reference skill and run Mode 3 (Query).
-2. Always cite log entry IDs in the answer.
-3. If the log contains nothing relevant to the question, say so explicitly —
-   "I have not seen any information on [topic] in this investigation log
-   ([N] entries reviewed)" — and offer to flag it as a gap.
+1. `internal-investigation` referans skill'ini yükle ve **Mod 3 (Kayda soru sor)** uygula.
+2. Her cevapta kayıt ID'lerini göster.
+3. Kayıtta ilgili bilgi yoksa açıkça söyle — "Bu soruşturma kaydında ([N] girdi) [konu] hakkında bilgi görmedim" — ve boşluk olarak işaretlemeyi öner.
+4. Usul sorularında (savunma, m. 26, açılış bildirimleri, KVKK kontrolü) tarihleri kayıttan ver; hesapladığın son günü "tartışmalı — içtihadı kontrol et" notuyla yaz.
 
-## Examples
+## Örnekler
 
 ```
-/employment-legal:investigation-query [matter name]
-What did the respondent say about the December team dinner?
+/employment-legal:investigation-query [matter adı]
+Hakkında iddia olan kişi Aralık ayındaki ekip yemeği hakkında ne dedi?
 ```
 
 ```
-/employment-legal:investigation-query [matter name]
-Where do the complainant's and respondent's accounts conflict?
+/employment-legal:investigation-query [matter adı]
+Şikâyetçinin ve hakkında iddia olanın anlatımları nerede çelişiyor?
 ```
 
 ```
-/employment-legal:investigation-query [matter name]
-What do we still need?
+/employment-legal:investigation-query [matter adı]
+Neyi eksik? Savunma alındı mı, m. 26 için kaç iş günü kaldı?
 ```
 
-> Detailed log-query process, citation rules, and gap-flagging templates live
-> in the `internal-investigation` reference skill — load it before doing
-> substantive work.
+> Sorgu süreci, atıf kuralları ve boşluk işaretleme şablonları `internal-investigation`
+> referans skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -2266,43 +1494,40 @@ What do we still need?
 ---
 name: investigation-summary
 description: >
-  Draft an audience-specific summary from the privileged investigation memo —
-  HR, leadership, or outside counsel versions. Use when an investigation memo
-  needs to be communicated to an audience that should not see the full
-  privileged work product.
-argument-hint: "[matter name] [audience: hr / leadership / outside-counsel]"
+  Soruşturma notundan hedef kitleye özel özet yaz — İK, yönetim/YK, dış avukat ya da
+  şikâyetçiye sonuç bildirimi. Notun tamamını görmemesi gereken bir kitleye sonucun
+  iletilmesi gerektiğinde kullan.
+argument-hint: "[matter adı] [kitle: ik / yonetim / dis-avukat / ilgili]"
 ---
 
 # /investigation-summary
 
-Drafts a stripped-down, audience-appropriate summary from the privileged
-investigation memo. HR summaries contain no privilege analysis. Leadership
-summaries are high-level. Outside counsel briefings include full context.
+Soruşturma notundan kitleye uygun, sadeleştirilmiş özet üretir. İK özeti hukuki analiz içermez; yönetim özeti üst düzeydedir; dış avukat brifingi tam bağlamı taşır; ilgiliye bildirim yalnız sonuç ve önlemleri söyler.
 
-## Instructions
+## Talimat
 
-1. Load the `internal-investigation` reference skill and run Mode 5 (Audience summary).
-2. If no memo exists yet, offer to draft the memo first.
-3. HR summaries must not include attorney mental impressions, credibility
-   methodology, or legal exposure analysis.
+1. `internal-investigation` referans skill'ini yükle ve **Mod 5 (Hedef kitle özeti)** uygula.
+2. Henüz not yoksa önce notu yazmayı öner (`/employment-legal:investigation-memo`).
+3. İK özetine avukat izlenimleri, güvenilirlik yöntemi ve hukuki risk analizi girmez; İK özetinin davada sunulabileceğini varsayarak olgusal yaz.
+4. İlgiliye bildirimde başka kişilerin kişisel verisini ve tanık beyanlarını açma (KVKK m. 4/2-ç, İş K. m. 75/2).
+5. Özet bir dış merciye (arabuluculuk, ihtarname cevabı, iş müfettişi, KVKK, savcılık) gidecekse referans skill'deki **sonuçlu işlem kapısını** uygula.
 
-## Examples
-
-```
-/employment-legal:investigation-summary [matter name] hr
-```
+## Örnekler
 
 ```
-/employment-legal:investigation-summary [matter name] leadership
+/employment-legal:investigation-summary [matter adı] ik
 ```
 
 ```
-/employment-legal:investigation-summary [matter name] outside-counsel
+/employment-legal:investigation-summary [matter adı] yonetim
 ```
 
-> Detailed audience-stripping rules and summary templates live in the
-> `internal-investigation` reference skill — load it before doing substantive
-> work.
+```
+/employment-legal:investigation-summary [matter adı] dis-avukat
+```
+
+> Kitleye göre ayıklama kuralları ve özet şablonları `internal-investigation` referans
+> skill'indedir — esaslı işe başlamadan önce yükle.
 
 ---
 
@@ -2311,39 +1536,34 @@ summaries are high-level. Outside counsel briefings include full context.
 ---
 name: leave-tracker
 description: >
-  Check open leaves for deadline alerts and required decisions. Surfaces only
-  the leaves that require an action and explains why — not a status board.
-  Use weekly, or whenever the attorney needs to know which leaves have
-  upcoming designation, certification, or exhaustion deadlines.
-argument-hint: "[no arguments — works from HRIS or leave-register.yaml]"
+  Açık izin ve raporları kanuni süre uyarıları ve karar noktaları için tarar
+  (Türk hukuku) — hastalık/kaza bekleme süresi (İş K. m. 25/I), iş kazası SGK
+  bildirimi (5510 m. 13), analık izni ve sonrası haklar (m. 74, m. 13/5),
+  askerlik ve kanuni ödev (m. 31), uzun izin dönüşü İSG eğitimi. Yalnız
+  eylem gerektiren izinleri gösterir ve nedenini söyler; durum panosu değildir.
+  Haftalık ya da avukat hangi izinde yaklaşan süre olduğunu bilmek istediğinde
+  kullan.
+argument-hint: "[argüman yok — İK sisteminden ya da leave-register.yaml'dan çalışır]"
 ---
 
-# /leave-tracker
+# /leave-tracker — İzin Süreleri Takibi
 
-Checks all open leaves with hard legal deadlines and surfaces only the ones
-requiring a decision or action. Not a status board — tells you what you need
-to do and why.
+Kanuni saati işleyen tüm açık izinleri kontrol eder; yalnız karar ya da işlem gerektirenleri gösterir. Durum panosu değildir: ne yapmanız gerektiğini ve nedenini söyler.
 
-## Instructions
+## Talimat
 
-1. Load the `leave-tracker` agent and run the full workflow.
+1. `leave-tracker` ajanını yükle ve tam iş akışını çalıştır.
+2. İK sistemi bağlı değilse ve `~/.claude/plugins/config/claude-for-legal/employment-legal/leave-register.yaml` yoksa, avukattan izin listesini (tablo) yüklemesini ya da `/employment-legal:log-leave` ile tek tek kayıt eklemesini iste.
+3. Uyarı yalnız eylem gerektiren izinler için; temiz izinler birer satırla özetlenir.
+4. Her süre, `tr_mevzuat_madde_getir` ile çekilen maddeye dayanır; değişiklik notu taşıyan maddelerde (ör. 4857 m. 74 ve ek m. 2 — 2026 değişiklikleri) güncel metni esas al.
 
-2. If no HRIS is connected and no `~/.claude/plugins/config/claude-for-legal/employment-legal/leave-register.yaml` exists, prompt
-   the attorney to upload a leave spreadsheet or use
-   `/employment-legal:log-leave` to add entries.
-
-3. Alerts only for leaves requiring action. Clean leaves summarized one line each.
-
-## Examples
+## Örnek
 
 ```
 /employment-legal:leave-tracker
 ```
 
-Run this weekly — set a Monday-morning reminder to invoke
-`/employment-legal:leave-tracker`. Automated scheduling requires a separate
-integration (calendar reminder, cron job, etc.); Claude Code agents do not
-self-schedule.
+Haftalık çalıştır — Pazartesi sabahı için bir hatırlatıcı kur. Otomatik zamanlama ayrı bir entegrasyon gerektirir (takvim hatırlatıcısı, zamanlanmış görev vb.); Claude Code ajanları kendi kendini zamanlamaz.
 
 ---
 
@@ -2352,52 +1572,55 @@ self-schedule.
 ---
 name: log-leave
 description: >
-  Add a new leave to the leave register with the minimum information needed to
-  start tracking deadlines. Use when an employee goes on leave and you want the
-  tracker to watch designation, certification, and exhaustion clocks from day
-  one.
-argument-hint: "[describe the leave — employee/role, type, jurisdiction, start date]"
+  İzin kaydına yeni bir izin/rapor ekler (Türk hukuku) — süre takibini
+  başlatmak için gereken asgari bilgiyle: hastalık ya da iş kazası raporu,
+  analık izni, yarım çalışma ya da ücretsiz izin (m. 74), askerlik/kanuni ödev
+  (m. 31), mazeret izni (ek m. 2), uzun ücretsiz izin. Bir çalışan izne ya da
+  rapora çıktığında, takipçinin saatleri ilk günden izlemesi için kullan.
+argument-hint: "[izni anlatın — çalışan/rol, izin türü, işyeri, başlangıç tarihi]"
 ---
 
-# /log-leave
+# /log-leave — İzin Kaydı Ekle
 
-Adds a new leave entry to `~/.claude/plugins/config/claude-for-legal/employment-legal/leave-register.yaml` with the minimum
-information needed to start tracking deadlines. Use when an employee goes on
-leave and you want the tracker to watch the clocks from day one.
+`~/.claude/plugins/config/claude-for-legal/employment-legal/leave-register.yaml` dosyasına, süre takibini başlatacak asgari bilgiyle yeni kayıt ekler.
 
-## Instructions
+## Talimat
 
-1. Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdiction table and Systems section.
+1. `company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → ayak izi, `## Systems` (İK sistemi), eskalasyon matrisi.
 
-2. Ask all of the following in a single prompt — do not drip them one at a time:
+2. Aşağıdakilerin hepsini tek seferde sor — tek tek sorma:
 
-   > A few quick questions to set up leave tracking:
+   > İzin takibini kurmak için birkaç soru:
    >
-   > - Employee name or role (anonymized is fine)
-   > - Where do they work? (State — this determines which rules apply)
-   > - Leave type: FMLA / state leave (which state) / USERRA / ADA accommodation
-   > - Leave start date
-   > - Is this intermittent leave?
-   > - Expected return date (if known — leave blank if not)
-   > - Has the designation notice been sent? If yes, when?
-   > - Has medical certification been requested? If yes, when?
+   > - Çalışan adı ya da rolü (anonim olabilir)
+   > - İşyeri (Türkiye dışındaysa ülke) ve işe giriş tarihi (kıdem → bildirim süresi ve bekleme süresi)
+   > - İzin türü: hastalık raporu / iş kazası / analık (doğum öncesi-sonrası) / yarım çalışma ya da 6 aya kadar ücretsiz izin (m. 74) / süt izni / kısmi süreli çalışma talebi (m. 13/5) / askerlik veya kanuni ödev (m. 31) / mazeret izni (ek m. 2) / anlaşmalı ücretsiz izin
+   > - Başlangıç tarihi; rapor varsa rapor bitiş tarihi
+   > - Analıkta tahmini (ya da gerçek) doğum tarihi, çoğul gebelik mi, hekim onayıyla doğuma yakın çalışma talebi var mı
+   > - İş kazasında kaza tarihi ve SGK'ya bildirildi mi (ne zaman)
+   > - Beklenen dönüş tarihi (biliniyorsa)
 
-3. Using the jurisdiction table in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`, look up the applicable leave
-   entitlement (hours/weeks) for this leave type in this jurisdiction.
+3. Maddeleri `tr_mevzuat_madde_getir` ile çek ve ilk yaklaşan süreyi hesapla:
 
-4. Compute the first upcoming deadline based on the information provided:
-   - Designation not yet sent → deadline is 5 business days from leave start
-   - Med cert requested but not received → deadline is 15 days from request date
-   - Both sent and received → next deadline is at 75% exhaustion
+   | İzin türü | İlk süre | Dayanak |
+   |---|---|---|
+   | İş kazası | Kolluğa derhal; SGK'ya kazadan sonraki **3 iş günü** içinde (işveren kontrolü dışındaki yerde: öğrenmeden itibaren) | 5510 m. 13 |
+   | Hastalık / kaza raporu | **Bekleme süresi sonu** = rapor başlangıcı + m. 17'ye göre bildirim süresi (kıdeme göre 2/4/6/8 hafta) + **6 hafta**; bu tarihten önce bu gerekçeyle bildirimsiz fesih hakkı doğmaz | 4857 m. 25/I, m. 17, m. 18/3-f |
+   | Analık — doğum öncesi | Tahmini doğumdan **8 hafta** önce (çoğulda 10); hekim onayı ve işçinin isteğiyle doğuma 2 hafta kalana kadar çalışabilir, çalışılan süre doğum sonrasına eklenir | 4857 m. 74/1 |
+   | Analık — doğum sonrası | Doğumdan itibaren **16 hafta**; erken doğumda kullanılamayan doğum öncesi süre eklenir; bitişte işçinin talebini al: yarım çalışma ücretsiz izni (ilk doğumda 60, ikincide 120, sonrakilerde 180 gün; çoğulda +30; engelli doğumda 360) ya da 6 aya kadar ücretsiz izin; süt izni çocuk 1 yaşına kadar günde 1,5 saat | 4857 m. 74/1, 74/2, 74/6, 74/7 |
+   | Kısmi süreli çalışma talebi | İşçi en az **1 ay önce** yazılı bildirir; talep karşılanır; mecburi ilköğretim çağının başladığı tarihi izleyen ay başına kadar | 4857 m. 13/5 |
+   | Askerlik / kanuni ödev | İki ayrı saat: (a) sözleşme ayrılıştan **2 ay** sonra (1 yılı aşan her yıl için +2 gün, toplam en çok 90 gün) işverence feshedilmiş sayılır — en az 1 yıl kıdem şartı; (b) ödev bitince işçinin **2 ay** içinde işe dönüş başvurusu | 4857 m. 31 |
+   | Mazeret izni (ücretli) | Evlenme, evlat edinme, ana/baba/eş/kardeş/çocuk ölümü 3 gün; eşin doğumu **10 gün**; %70+ engelli ya da süreğen hastalıklı çocuk için yılda 10 güne kadar (bir ebeveyn) — kaydet, uyarı yok | 4857 ek m. 2 |
+   | Uzun izin (6 aydan fazla) | Dönüşten önce İSG bilgi yenileme eğitimi | 6331 m. 17/4 |
 
-5. Write a new entry to `~/.claude/plugins/config/claude-for-legal/employment-legal/leave-register.yaml` using the leave register
-   format from the leave-tracker agent. If the file doesn't exist, create it.
+   Kayıtta olmayan bilgi (işe giriş tarihi gibi) bekleme süresini etkiliyorsa hesaplama; boş bırak ve "eksik bilgi" diye işaretle. Aralıklı raporların bekleme süresinde toplanıp toplanmayacağı **tartışmalı — içtihadı kontrol et**.
 
-6. Confirm with a single line:
-   > "Logged. [Employee/Role] — [Leave type] — [Jurisdiction] — started [date].
-   > First deadline: [what it is and when]. Leave tracker will alert automatically."
+4. Yeni kaydı `leave-tracker` ajanındaki kayıt biçimiyle `leave-register.yaml` dosyasına yaz; dosya yoksa oluştur. `kontrol_eden_kaynaklar` alanına çekilen maddelerin `citation` değerini yaz.
 
-## Examples
+5. Tek satırla onayla:
+   > "Kaydedildi. [Çalışan/Rol] — [İzin türü] — [İşyeri] — başlangıç [tarih]. İlk süre: [ne ve ne zaman] ([dayanak]). İzin takipçisi bu tarihi izleyecek."
+
+## Örnekler
 
 ```
 /employment-legal:log-leave
@@ -2405,8 +1628,14 @@ leave and you want the tracker to watch the clocks from day one.
 
 ```
 /employment-legal:log-leave
-Sarah (Sr. Engineer, works in California) just started FMLA today for a
-serious health condition. Intermittent. No designation sent yet.
+Kıdemli mühendis, İstanbul işyeri, 4 yıllık kıdem; bugün 20 günlük hastalık
+raporu getirdi, daha önce de bu yıl iki kez rapor almıştı.
+```
+
+```
+/employment-legal:log-leave
+Muhasebe uzmanı, tahmini doğum 15 Mart, tek gebelik; hekim onayıyla doğuma
+2 hafta kalana kadar çalışmak istiyor.
 ```
 
 ---
@@ -2416,190 +1645,163 @@ serious health condition. Intermittent. No designation sent yet.
 ---
 name: matter-workspace
 description: >
-  Manage matter workspaces — new, list, switch, close, or detach (practice-
-  level). Creates, lists, switches, closes, and detaches the active matter so
-  context from one client engagement never leaks into another. Use when a
-  multi-client practitioner says "new matter", "switch matter", "list my
-  matters", "close this matter", or needs to manage which matter is active.
+  Matter çalışma alanlarını yönet — new, list, switch, close ya da none (yalnız
+  uygulama düzeyi). Bir müvekkilin ya da dosyanın bağlamının diğerine sızmamasını
+  sağlar; iş hukukunda işveren ve işçi tarafının aynı büroda bulunabilmesi nedeniyle
+  çapraz okuma kapalı tutulur. Çok müvekkilli avukat "yeni matter", "matter değiştir",
+  "matter'larımı listele", "matter'ı kapat" dediğinde ya da aktif matter'ı yönetmesi
+  gerektiğinde kullan.
 argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
 
-Practitioners work across multiple clients and matters. A matter workspace keeps one client or engagement's context separate from every other. This skill manages those workspaces.
+Avukat birçok müvekkil ve dosya üzerinde çalışır. Matter çalışma alanı her dosyanın bağlamını diğerlerinden ayrı tutar. Bu skill o alanları yönetir.
 
-## Subcommands
+## Alt komutlar
 
-- `/employment-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`
-- `/employment-legal:matter-workspace list` — list matters with status and active flag
-- `/employment-legal:matter-workspace switch <slug>` — set the active matter
-- `/employment-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/_archived/`, never delete)
-- `/employment-legal:matter-workspace none` — detach from any active matter, work at practice-level only
+- `/employment-legal:matter-workspace new <slug>` — yeni matter oluştur, kısa ön görüşme yap, `matter.md` yaz
+- `/employment-legal:matter-workspace list` — matter'ları durum ve aktiflik işaretiyle listele
+- `/employment-legal:matter-workspace switch <slug>` — aktif matter'ı değiştir
+- `/employment-legal:matter-workspace close <slug>` — arşivle (`~/.claude/plugins/config/claude-for-legal/employment-legal/matters/_archived/` altına taşı; asla silme)
+- `/employment-legal:matter-workspace none` — aktif matter'dan ayrıl, yalnız uygulama düzeyinde çalış
 
-## Instructions
+## Talimat
 
-1. Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: "Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/employment-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all." Don't error — the disabled state is the expected one for in-house users.
-2. Use the subcommand logic below.
-3. Dispatch on the first token of `$ARGUMENTS`:
-   - `new` → run the intake interview, write `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<slug>/matter.md`, seed `history.md` and `notes.md`.
-   - `list` → enumerate `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/*/matter.md`, print a table, mark the active matter.
-   - `switch` → update the `Active matter:` line in the practice-level CLAUDE.md.
-   - `close` → move `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<slug>/` to `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/_archived/<slug>/`, log the close date in `history.md`.
-   - `none` → set `Active matter:` to `none — practice-level context only`.
-4. Show the user what changed and confirm before writing.
+1. `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` dosyasını oku; `## Matter workspaces` bölümünün dolu olduğunu teyit et. `Enabled` `✗` ise hata verme, şunu söyle: "Matter çalışma alanları kapalı — tek müvekkilli kurum içi kullanım olarak kurulmuşsunuz; eklenti uygulama düzeyindeki bağlamla çalışır. Gerçekten birden fazla müvekkil için çalışıyorsanız `/employment-legal:cold-start-interview --redo` ile büro ortamını seçin. Aksi hâlde `/matter-workspace`'e ihtiyacınız yok."
+2. `$ARGUMENTS`'ın ilk kelimesine göre dallan:
+   - `new` → ön görüşme, `matters/<slug>/matter.md` yaz, `history.md` ve `notes.md` oluştur.
+   - `list` → `matters/*/matter.md` dosyalarını tara, tablo bas, aktif olanı işaretle.
+   - `switch` → uygulama CLAUDE.md'sindeki `Active matter:` satırını güncelle.
+   - `close` → `matters/<slug>/` klasörünü `matters/_archived/<slug>/` altına taşı, kapanış tarihini `history.md`'ye yaz.
+   - `none` → `Active matter:` satırını `none — practice-level context only` yap.
+3. Yazmadan önce neyin değişeceğini göster ve onay al.
 
-## Notes
+**Anahtarları çevirme:** `## Matter workspaces`, `Enabled`, `Active matter:`, `Cross-matter context` ve `none — practice-level context only` değerleri şablondaki gibi kalır; diğer skill'ler bunları birebir okur.
 
-- The skill never reads across matters unless `Cross-matter context` is `on` in the practice-level CLAUDE.md.
-- Archiving is not deletion — closed matters remain readable for retention/conflicts purposes.
-- Slugs are lowercase with hyphens. If a slug is reused across archived and active, the archived one is preserved under `_archived/<slug>/`.
-
----
-
-## Reference
-
-Multi-client practitioners (private practice — solo, small firm, large firm) work across many matters. Context from one must not leak into another. This skill is the thin file-management layer that makes that true.
-
-**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; instead it explains the disabled state and suggests `/employment-legal:cold-start-interview --redo` for users who actually need matter isolation.
-
-## Storage layout
-
-All matter data lives under:
+## Klasör yapısı
 
 ```
 ~/.claude/plugins/config/claude-for-legal/employment-legal/
-├── CLAUDE.md                       # practice-level practice profile
+├── CLAUDE.md                       # uygulama düzeyi profil (Active matter: satırı burada)
 └── matters/
     ├── <slug>/
-    │   ├── matter.md               # client, counterparty, matter type, key facts, overrides
-    │   ├── history.md              # dated log of events, decisions, drafts, reviews
-    │   ├── notes.md                # free-form working notes
-    │   └── outputs/                # skill outputs for this matter (optional subfolder)
+    │   ├── matter.md               # müvekkil, karşı taraf, tür, olgular, matter'a özel sapmalar
+    │   ├── history.md              # tarihli olay günlüğü (yalnız ekleme)
+    │   ├── notes.md                # serbest çalışma notları
+    │   ├── investigation-<slug>/   # iç soruşturma dosyaları (varsa)
+    │   └── outputs/                # skill çıktıları (isteğe bağlı)
     └── _archived/
-        └── <slug>/                 # closed matters — readable but not active
+        └── <slug>/                 # kapalı matter'lar — okunur ama aktif değil
 ```
 
-Slugs are lowercase with hyphens. Examples: `acme-msa-2026`, `zenith-renewal`, `vendor-xyz-nda`.
+Slug küçük harf ve tireli, Türkçe karakter yok: `abc-isverenlik-fesih-2026`, `isci-ise-iade-x`, `xyz-ic-sorusturma`. Müvekkil gerçek adını slug'a koymak zorunda değilsin; takma ad kullanılabilir.
 
-## Active matter is in the practice CLAUDE.md
+**Tek doğru kaynak:** aktif matter yalnız uygulama CLAUDE.md'sindeki `Active matter:` satırıdır; ayrı durum dosyası yok.
 
-The `Active matter:` line under `## Matter workspaces` in the practice-level CLAUDE.md is the single source of truth. Switching a matter edits that line. No separate state file.
-
-## Subcommand logic
+## Alt komut mantığı
 
 ### `new <slug>`
 
-1. Confirm slug is not already present in `matters/<slug>/` or `matters/_archived/<slug>/`. If reused, ask the user to pick a different slug.
-2. Run the intake interview:
-   - **Client** (the party we represent, or the internal business unit if in-house)
-   - **Counterparty** (the other side — may be multiple)
-   - **Matter type** (read the plugin's practice profile for typical categories; for employment-legal: hire | termination | investigation | leave | accommodation | classification | country expansion | policy project | other)
-   - **Confidentiality level** (standard | heightened | clean-team — heightened prompts extra care in cross-matter settings)
-   - **Key facts** (2–5 sentences: what this matter is about, who the stakeholders are, what's at stake)
-   - **Matter-specific overrides to the practice playbook** (e.g., "client requires 24-month LoL cap not 12", "counterparty is a strategic partner — relationship-preserving tone")
-   - **Related matters** (slugs of any connected matters)
-3. Write `matters/<slug>/matter.md` using the template below.
-4. Seed `matters/<slug>/history.md` with a single "Opened" entry.
-5. Create an empty `matters/<slug>/notes.md`.
-6. Do **not** auto-switch to the new matter. Ask: "Want to switch to `<slug>` now? (`/employment-legal:matter-workspace switch <slug>`)"
+1. Slug `matters/<slug>/` ya da `matters/_archived/<slug>/` altında varsa başka slug iste.
+2. **Çıkar çatışması kapısı** (büroda): Aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat teklifi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Sor: "Bu matter için çatışma kontrolü yapıldı mı?" Bu skill çatışma kontrolünü kendisi yapmaz ve başka matter'ların dosyalarını bu amaçla okumaz; cevap "hayır" ise `matter.md`'ye `Çatışma kontrolü: YAPILMADI` yaz ve avukata hatırlat.
+3. Ön görüşme:
+   - **Müvekkil ve taraf rolü** — temsil ettiğimiz taraf (işveren / işçi / kurum içi birim)
+   - **Karşı taraf** — işveren, işçi(ler), alt işveren, özel istihdam bürosu (birden fazla olabilir)
+   - **Matter türü** — işe alım | fesih danışmanlığı | işe iade / arabuluculuk | alacak hesabı | iç soruşturma | taciz-mobbing | sınıflandırma | toplu işçi çıkarma | yurt dışı genişleme | yönetmelik/politika | diğer
+   - **Gizlilik düzeyi** — standart | yüksek | kapalı ekip (yüksek, çapraz bağlamda ek dikkat demektir)
+   - **Kritik süre** — varsa: m. 26 son günü, fesih tebliğ tarihi (işe iade için bir aylık arabuluculuk süresi, İş K. m. 20/1), arabuluculuk son tutanak tarihi
+   - **Ana olgular** — 2-5 cümle: konu, paydaşlar, ne söz konusu
+   - **Matter'a özel sapmalar** — ör. "müvekkil TİS'i 5 iş günü savunma süresi öngörüyor", "işçi tarafı: sulh alt sınırı müvekkil yazılı onayıyla"
+   - **İlgili matter'lar** — bağlantılı slug'lar
+4. `matters/<slug>/matter.md` yaz (şablon aşağıda); `history.md`'ye tek "Açıldı" girdisi; boş `notes.md`.
+5. Kendiliğinden geçiş yapma. Sor: "`<slug>`'a şimdi geçelim mi? (`/employment-legal:matter-workspace switch <slug>`)"
 
 ### `list`
 
-Enumerate `matters/*/matter.md`. Read each file's front-matter or first few lines to extract status. Print a table:
+`matters/*/matter.md` dosyalarının ilk satırlarından durumu çıkar:
 
-| Slug | Client | Matter type | Status | Opened | Active |
-|---|---|---|---|---|---|
+| Slug | Müvekkil | Taraf | Tür | Durum | Açılış | Aktif |
+|---|---|---|---|---|---|---|
 
-Mark the currently-active matter with `*`. Include `_archived/*` under a separate "Archived" heading if any exist.
+Aktif olanı `*` ile işaretle. `_archived/*` varsa ayrı "Arşiv" başlığı altında göster.
 
 ### `switch <slug>`
 
-1. Confirm `matters/<slug>/matter.md` exists. If not, offer `/employment-legal:matter-workspace new <slug>`.
-2. Edit the `Active matter:` line in the practice-level CLAUDE.md to `Active matter: <slug>`.
-3. Show the user the matter.md summary so they can confirm they're on the right matter.
+1. `matters/<slug>/matter.md` var mı bak; yoksa `new <slug>` öner.
+2. `Active matter: <slug>` olarak güncelle.
+3. Doğru matter'da olduğunu teyit etmesi için `matter.md` özetini göster (taraf rolü ve kritik süre dahil).
 
 ### `close <slug>`
 
-1. Confirm `matters/<slug>/` exists.
-2. Append a "Closed" entry to `matters/<slug>/history.md` with today's date.
-3. Move `matters/<slug>/` → `matters/_archived/<slug>/`.
-4. If the closed matter was the active matter, set `Active matter:` to `none — practice-level context only`.
+1. `matters/<slug>/` var mı bak.
+2. `history.md`'ye bugünün tarihiyle "Kapandı" girdisi ekle.
+3. `matters/<slug>/` → `matters/_archived/<slug>/` taşı.
+4. Kapanan aktif matter'sa `Active matter:` satırını `none — practice-level context only` yap.
 
-### `none`
+`none`: yalnız `Active matter:` satırını `none — practice-level context only` yapar; kullanıcıya teyit ettir.
 
-Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level context only`. Confirm with the user.
-
-## `matter.md` template
+## `matter.md` şablonu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[ÜST BAŞLIK — uygulama CLAUDE.md ## Outputs; role göre değişir]
 
-# Matter: [Client] — [short description]
+# Matter: [Müvekkil/takma ad] — [kısa tarif]
 
-**Slug:** [slug]
-**Opened:** [YYYY-MM-DD]
-**Status:** active
-**Confidentiality:** [standard / heightened / clean-team]
+**Slug:** [slug] · **Açılış:** [YYYY-AA-GG] · **Durum:** aktif
+**Gizlilik:** [standart / yüksek / kapalı ekip]
+**Çatışma kontrolü:** [YAPILDI — tarih / YAPILMADI]
+
+## Taraflar
+**Müvekkil:** [ad] — **Taraf rolü:** [işveren / işçi / kurum içi]
+**Karşı taraf:** [ad(lar)]
+
+## Matter türü
+[tür — tek satır gerekçe]
+
+## Kritik süreler
+- [ör. m. 26 son günü: …; fesih tebliğ tarihi: …; arabuluculuk son tutanak: …]
+
+## Ana olgular
+[2-5 cümle; işyeri ve işçi sayısı, TİS durumu dahil]
+
+## Matter'a özel sapmalar
+- [ör. "Savunma süresi: TİS'e göre 5 iş günü."]
+
+## İlgili matter'lar
+- [slug — neden ilgili]
+
+## Gizlilik notu
+[Yüksek / kapalı ekipse nedeni; dosyaları kim görebilir; genel ayar açık olsa bile çapraz bağlama izin var mı]
+```
+
+## `history.md` başlangıcı
+
+```markdown
+# Geçmiş: [Müvekkil] — [kısa tarif]
+
+Yalnız ekleme yapılan olay günlüğü; en yeni üstte.
 
 ---
 
-## Parties
+## [YYYY-AA-GG] — Matter açıldı
 
-**Client:** [name]
-**Counterparty:** [name(s)]
-
-## Matter type
-
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
-
-## Key facts
-
-[2–5 sentences. What this matter is about. Who the stakeholders are. What's at stake. What makes it different from the default playbook.]
-
-## Matter-specific overrides
-
-*Any deviation from the practice-level playbook that applies to this matter and only this matter.*
-
-- [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
-- [e.g., "Governing law: must be English law, not Delaware."]
-
-## Related matters
-
-- [slug — one line why related]
-
-## Notes on confidentiality
-
-[If heightened or clean-team, describe why. Who may see matter files. Whether cross-matter context is permissible even if globally on.]
+Ön görüşme tamamlandı. Slug: `[slug]`. Durum: aktif.
+[matter.md dışında saklanmaya değer ilk bağlam]
 ```
 
-## `history.md` seed
+## Çapraz matter bağlamı
 
-```markdown
-# History: [Client] — [short description]
+Uygulama CLAUDE.md'sinde `Cross-matter context:` bayrağı vardır. `off` iken (varsayılan; işveren ve işçi tarafını birlikte yürüten büroda **zorunlu**) A matter'ında çalışan bir skill başka hiçbir `matters/B/` klasörünü **okumaz**. Bayrağın varlık nedeni bu gizlilik güvencesidir; avukatın sır saklama yükümlülüğünü (Av. K. m. 36) ve aynı büroda zıt tarafların bulunabilmesinden doğan çatışma riskini (m. 38) destekler.
 
-Append-only event log. Most recent at top.
+`on` iken bile yalnız kullanıcı açıkça isterse ("son beş işveren dosyasında savunma süresini karşılaştır") çapraz okunur; varsayılan yine yalnız aktif matter'dır.
 
----
+## Bu skill ne yapmaz
 
-## [YYYY-MM-DD] — Matter opened
-
-Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
-```
-
-## Cross-matter context
-
-The practice-level CLAUDE.md has a `Cross-matter context:` flag. When it's `off` (the default), a skill working in matter A **never reads** files in `matters/B/` for any other `B`. Period. This is the confidentiality guarantee the setting exists to provide.
-
-When it's `on`, a skill may read files across matter folders only when the user explicitly asks it to (e.g., "compare our position on liability caps across the last five vendor matters"). Even when `on`, the default is to load only the active matter unless the user asks for a cross-matter view.
-
-## What this skill does not do
-
-- **Run a conflicts check.** Conflicts are the practitioner's/firm's job; the intake captures what the user declares.
-- **Enforce retention.** Closing archives a matter; it does not delete. Retention policy is out of scope.
-- **Auto-route outputs.** The substantive skill decides where to write; this skill tells it *which folder* is active, not what to put in it.
-- **Decide whether cross-matter is appropriate.** It reads the flag and obeys.
+- **Çatışma kontrolü yapmaz** — yalnız yapılıp yapılmadığını sorar ve kaydeder.
+- **Saklama politikası uygulamaz** — kapatmak arşivlemektir, silmek değil. Saklama süresi büronun/şirketin politikasıdır (kişisel veride KVKK m. 4/2-d: işlendikleri amaç için gerekli süre kadar muhafaza).
+- **Çıktıları yönlendirmez** — esaslı skill nereye yazacağına karar verir; bu skill yalnız hangi klasörün aktif olduğunu söyler.
+- **Çapraz bağlamın uygun olup olmadığına karar vermez** — bayrağı okur ve uyar.
 
 ---
 
@@ -2608,134 +1810,133 @@ When it's `on`, a skill may read files across matter folders only when the user 
 ---
 name: policy-drafting
 description: >
-  Draft an employment policy with state supplements where law differs across
-  the jurisdictional footprint. Use when the user says "draft a [topic]
-  policy", "we need a policy on", "update our [topic] policy", or names a
-  policy gap.
-argument-hint: "[policy topic — e.g., 'remote work', 'parental leave', 'PTO']"
+  İşyeri politikası / personel yönetmeliği bölümü taslağı (Türk hukuku) —
+  çekirdek politika + gerektiğinde ülke, işyeri ya da TİS ekleri; dayanak
+  maddeler (İş K., TBK m. 399 ve 417, 6331 İSG, KVKK aydınlatma) canlı çekilir,
+  m. 22 esaslı değişiklik riski işaretlenir. "[konu] politikası hazırla",
+  "şuna dair bir politikamız olmalı", "[konu] politikasını güncelle" denince ya
+  da bir politika boşluğu adlandırıldığında kullan.
+argument-hint: "[politika konusu — ör. 'uzaktan çalışma', 'taciz ve mobbing', 'yıllık izin']"
 ---
 
-# /policy-drafting
+# /policy-drafting — Politika Taslağı
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, handbook location.
-2. Use the workflow below.
-3. Draft core policy. Check each jurisdiction in footprint for required variants.
-4. Output: core policy + state supplements. Flag where law is currently shifting.
+Türkiye için doğru olan bir politika, ayak izindeki başka bir ülke ya da TİS'li bir işyeri için eksik kalabilir. Bu skill tek bir çekirdek politika yazar; yalnız kuralın farklılaştığı yerde ek üretir. Personel yönetmeliği iş sözleşmesinin eki sayılabildiğinden (4857 m. 22/1) yazılan her cümle bir sözdür.
 
----
+## Bağlamı yükle
 
-## Matter context
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → ayak izi (ülkeler, işyerleri, TİS'ler), el kitabı/personel yönetmeliği yeri ve biçimi.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Adımlar
 
-## Purpose
+### 1. Kapsam
 
-A policy that's right for California may be wrong (or unnecessary) in Texas. This skill drafts a core policy and generates state supplements where the footprint requires different rules.
+- Politika ne için? Neden şimdi (kanuni zorunluluk, olay, büyüme, fark edilen boşluk)?
+- Kime uygulanır (tüm çalışanlar, belirli işyerleri, alt işveren/geçici işçiler)?
+- Yeni bir hak mı tanıyor, mevcut bir hakkı mı daraltıyor? Daraltma → Adım 5'teki m. 22 kontrolü zorunlu.
 
-## Load context
+### 2. Mevzuat taraması
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, handbook location and format.
+Konunun çıpa maddelerini `tr_mevzuat_madde_getir` ile çek; aşağıdaki tablo başlangıçtır:
 
-## Workflow
-
-### Step 1: Scope the policy
-
-- What's the policy for? (Remote work, parental leave, social media, etc.)
-- Why now? (Legal requirement, incident, growth, gap noticed)
-- Who does it apply to? (All employees, certain roles, certain locations)
-
-### Step 2: Jurisdictional scan
-
-For each state/country in the footprint, check: does this jurisdiction have a specific rule on this topic?
-
-**Common topics with jurisdictional variance:**
-
-| Topic | Variance |
+| Konu | Çıpa (metinden doğrula) |
 |---|---|
-| Paid leave | State mandates (CA, NY, CO, WA, etc.) with different accrual rates, uses, carryover |
-| Parental leave | State programs layer on top of FMLA (CA PFL, NY PFL, etc.) |
-| Meal and rest breaks | CA is the outlier (penalty pay); most states minimal |
-| Expense reimbursement | CA requires; most states don't |
-| Pay transparency | Growing list of states requiring ranges in postings |
-| Non-competes | See hiring-review skill — unenforceable in some states |
-| Final pay | Timing varies widely |
+| Genel düzenleme yetkisi | TBK m. 399 — işveren işin görülmesi ve işyerindeki davranışlarla ilgili genel düzenleme ve özel talimat verebilir; işçi dürüstlük kurallarının gerektirdiği ölçüde uyar |
+| Taciz, mobbing, kişiliğin korunması | TBK m. 417 — psikolojik ve cinsel tacizi önleme ve mağdurun daha fazla zarar görmemesi için önlem; 4857 m. 24/II-b, d (işçinin haklı fesih hâlleri), m. 25/II-c (işverenin haklı fesih hâli) |
+| İş sağlığı ve güvenliği | 6331 m. 4 (işverenin genel yükümlülüğü, risk değerlendirmesi), m. 16 (bilgilendirme), m. 17 (eğitim), m. 19 (çalışanın yükümlülükleri) |
+| Kişisel veri, izleme (e-posta, kamera, cihaz) | 6698 m. 4 (ölçülülük), m. 5–6 (hukuki sebep, özel nitelikli veri), m. 10 (aydınlatma) |
+| Çalışma süresi, fazla çalışma | 4857 m. 41, m. 63, m. 68, m. 69 |
+| Yıllık izin | 4857 m. 53–60 (bölünme m. 56; izin kayıt belgesi m. 56) |
+| Analık, ebeveynlik, mazeret izni | 4857 m. 74, m. 13/5, ek m. 2 |
+| Uzaktan çalışma | 4857 m. 14 (yazılı sözleşme, zorunlu içerik, İSG bilgilendirmesi) + Bakanlık yönetmeliği |
+| Disiplin, ücret kesme cezası | 4857 m. 38 (yalnız TİS/iş sözleşmesindeki sebepler; ayda 2 gündelik sınırı), m. 19 (savunma), m. 25 |
+| Eşit davranma | 4857 m. 5; 6701 m. 3, m. 6 |
 
-If the topic has no jurisdictional variance (dress code, say), skip this step.
+Konunun mevzuatta özel karşılığı yoksa (ör. kıyafet kuralı) yalnız TBK m. 399 ölçülülük ve KVKK boyutunu kontrol et, bu adımı kısa geç.
 
-### Step 3: Draft the core policy
+Ayak izinde Türkiye dışı ülke varsa her biri için ayrı ek gerekip gerekmediğine bak; kural ezberden yazılmaz: AB `eu_search_eu_law(query="work-life balance for parents and carers")`, İngiltere `uk_search_legislation`, Almanya `de_gesetz_ara`, Hollanda `nl_search_legislation`, Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-One policy. Applies everywhere. Clear and readable — employees should understand it without a lawyer.
+### 3. Çekirdek politikayı yaz
 
-Structure:
-- Purpose (one sentence — why this policy exists)
-- Scope (who it applies to)
-- The rule (what's required/permitted/prohibited)
-- Process (how to request, who approves, what happens if)
-- Questions (who to ask)
+Tek politika, her yerde geçerli; çalışan avukatsız anlayabilmeli. Yapı:
+- **Amaç** (tek cümle)
+- **Kapsam** (kime)
+- **Kural** (ne zorunlu / serbest / yasak)
+- **Süreç** (nasıl talep edilir, kim onaylar, ihlalde ne olur — disiplin yaptırımı varsa m. 38 ve savunma hakkı)
+- **Kişisel veri** (politika veri işliyorsa aydınlatma metnine atıf)
+- **Sorular** (kime sorulur)
 
-Avoid: "heretofore," "notwithstanding," nested exceptions. This is a handbook policy, not a contract.
+Kaçın: "işbu", "mezkûr", iç içe istisnalar. Bu bir personel politikasıdır, sözleşme metni değil.
 
-### Step 4: State supplements
-
-For each jurisdiction where the rule differs, a supplement:
+### 4. Ekler (yalnız farklılık varsa)
 
 ```markdown
-### [State] Supplement
+### [Ülke / işyeri / TİS] Eki
 
-Employees working in [State] are subject to the following in addition to / instead of the core policy:
-
-- [Specific difference]
-- [Cite the state law if helpful]
+[Ülke/işyeri/TİS kapsamındaki] çalışanlara çekirdek politikaya ek olarak / yerine şunlar uygulanır:
+- [Somut fark]
+- [Dayanak — yalnız araçla doğrulanmışsa]
 ```
 
-Keep supplements tight. Only what's different — don't repeat the core.
+Ekler kısa: yalnız farklı olan; çekirdeği tekrar etme. TİS'li işyerinde politikanın TİS hükümleriyle çatışıp çatışmadığını ayrıca kontrol et.
 
-### Step 5: Cross-check
+### 5. Çapraz kontrol
 
-- Does this policy conflict with anything already in the handbook?
-- Does it promise more than the company intends to deliver? (A policy is a promise — courts hold employers to handbook promises.)
-- Does it inadvertently create a contract? (Some states treat handbook policies as contractual — include the standard "this is not a contract" language if the handbook doesn't already.)
+- **Esaslı değişiklik (4857 m. 22):** politika mevcut çalışma koşullarını (iş sözleşmesi, personel yönetmeliği, işyeri uygulaması) işçi aleyhine esaslı biçimde değiştiriyor mu? Öyleyse yazılı bildirim ve işçinin 6 iş günü içinde yazılı kabulü gerekir; kabul etmeyeni bağlamaz; değişiklik geçmişe etkili olamaz (m. 22/2). Neyin "esaslı" olduğu **tartışmalı — içtihadı kontrol et**.
+- **Söz kontrolü:** şirketin vermek istemediği bir hakkı vaat ediyor mu? İşyeri uygulamasına dönüşebilecek tekrar eden ödemeler/izinler var mı?
+- **Mevcut el kitabıyla çatışma:** aynı konuyu düzenleyen başka bölüm var mı?
+- **KVKK:** yeni bir veri işleme getiriyorsa aydınlatma metni güncellenmeli (6698 m. 10).
+- **İSG:** risk değerlendirmesini değiştiriyorsa bilgilendirme ve eğitim (6331 m. 16, m. 17).
 
-## Output
+### 6. ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_madde_getir(number="6098", madde_no=["399","417"])
+tr_mevzuat_madde_getir(number="4857", madde_no=["22","38"])
+tr_mevzuat_madde_getir(number="6331", madde_no=["4","16","17","19"])
+tr_kurum_karari_ara(kurum="kvkk", query="çalışan e-posta kamera izleme")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="personel yönetmeliği esaslı değişiklik işçi aleyhine", date_from="2022-01-01")
+```
+
+Sonuç azsa sessizce doldurma; seçenekleri sun. Atıf etiketleri: `[ArthurLegal TR — 4857 m. 22 — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`.
+
+## Çıktı
 
 ```markdown
-# [Policy Name]
+# [Politika Adı]
 
-## Core Policy
+## Çekirdek Politika
+[Tam metin]
 
-[Full text]
-
-## State Supplements
-
-### [State 1]
-[Supplement]
-
-### [State 2]
-[Supplement]
+## Ekler
+### [Ülke / işyeri / TİS 1]
+[Ek]
 
 ---
 
-## Drafting Notes (internal — remove before handbook insertion)
-
-- **Jurisdictional scan:** [which states checked, which have variance]
-- **Conflicts with existing handbook:** [none | list]
-- **Law currently shifting:** [any state where this is in flux]
-- **Review cadence:** [when to revisit — annual, or when X happens]
+## Taslak notları (dahili — yönetmeliğe eklemeden önce çıkar)
+- **Mevzuat taraması:** [çekilen maddeler; farklılık çıkan ülke/işyeri/TİS]
+- **m. 22 değerlendirmesi:** [aleyhe esaslı değişiklik yok / var — yazılı kabul süreci]
+- **Mevcut el kitabıyla çatışma:** [yok / liste]
+- **KVKK / İSG etkisi:** [aydınlatma, bilgilendirme, eğitim]
+- **Değişen mevzuat:** [madde notlarında görülen yakın değişiklikler]
+- **Tartışmalı noktalar:** [liste]
+- **Gözden geçirme sıklığı:** [yıllık / X olunca]
 ```
 
-> **Draft, not a policy in effect.** This is a drafting aid for attorney review, not a policy you can publish. Publishing a handbook policy has legal consequences — in several states it can bind the company as a contractual promise, and wage/leave/accommodation policies are routinely read against the employer. A licensed attorney, solicitor, barrister, or other authorised legal professional in your jurisdiction reviews, edits as needed, and takes professional responsibility before the policy is rolled out. Do not publish or distribute this draft unreviewed.
+> **Taslak, yürürlükteki politika değil.** Bu metin avukat incelemesi için bir yardımcıdır. Personel politikası yayımlamak hukuki sonuç doğurur: iş sözleşmesinin eki sayılabilir, aleyhe değişiklikler m. 22'ye tabidir, ücret/izin/disiplin hükümleri işveren aleyhine yorumlanabilir. Yetkili bir avukat inceleyip sorumluluğu üstlenmeden yayımlama ve dağıtma.
 
-## Handoff
+## Devir
 
-To handbook-updates skill: when this policy is approved, it diffs against the current handbook and flags what changes.
+Politika onaylanınca `/employment-legal:handbook-updates` mevcut el kitabıyla karşılaştırır ve değişiklikleri işaretler.
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- Approve the policy. It drafts; a human approves.
-- Roll out the policy. Communication to employees is an HR workflow.
-- Cover every jurisdiction on earth — only the ones in the footprint. If the footprint expands, re-run.
+- Politikayı onaylamaz; taslak yazar, insan onaylar.
+- Çalışanlara duyurmaz; bu İK süreci (yazılı tebliğ ve gerekiyorsa kabul imzası İK'da).
+- Ayak izi dışındaki ülkeleri kapsamaz; ayak izi genişlerse yeniden çalıştır.
 
 ---
 
@@ -2744,286 +1945,222 @@ To handbook-updates skill: when this policy is approved, it diffs against the cu
 ---
 name: termination-review
 description: >
-  Termination review — high-risk flag detection, severance + release, and
-  final pay timing by jurisdiction. Jurisdiction-specific rules and release
-  consideration periods are researched per review, not stored. Use when the
-  user says "reviewing a termination", "can we fire this person", "term
-  review", or describes a termination scenario.
-argument-hint: "[describe the termination, or attach documentation]"
+  Fesih incelemesi (Türk iş hukuku) — fesih türünü (geçerli sebep İş K. m. 18,
+  haklı sebep m. 25, süreli fesih m. 17, ikale) belirler, yüksek risk
+  bayraklarını tarar, süreleri (haklı fesihte 6 iş günü, işe iadede 1 ay
+  arabuluculuk) kontrol eder; ihbar-kıdem-izin ücreti kalemlerini, ibraname
+  (TBK m. 420) ve arabuluculuk anlaşması yolunu ve fesih günü kontrol listesini
+  çıkarır. "Bu işçiyi çıkarabilir miyiz", "fesih incelemesi", "işten çıkarma",
+  "işe iade riski" denince ya da bir fesih senaryosu anlatıldığında kullan.
+argument-hint: "[feshi anlatın ya da belgeleri ekleyin]"
 ---
 
-# /termination-review
+# /termination-review — Fesih İncelemesi
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → termination review triggers, high-risk flags, severance practice, jurisdiction rules.
-2. Use the workflow below.
-3. Walk the checklist. Check every high-risk flag.
-4. Final pay timing per employee's jurisdiction. Severance + release if applicable.
-5. If any high-risk flag fires: escalate per table, don't proceed without sign-off.
+Çoğu fesih sorunsuzdur; birkaçı hazır bir işe iade ya da alacak davasıdır. Bu skill, karar kesinleşmeden önce ikinci türü yakalar. Kural ezberden söylenmez: atıf yapılan her madde `tr_mevzuat_madde_getir` ile çekilir; değişen tutarlar (kıdem tavanı, asgari ücret) her incelemede teyit edilir.
 
----
+## ⏰ ÖN-KONTROL — Süre (her çalıştırmada)
 
-## Matter context
-
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
-
----
-
-## Purpose
-
-Most terminations are fine. A few are lawsuits waiting to happen. This skill
-runs the checklist that catches the second kind before the decision is final.
-The skill does not state the law — every jurisdiction-specific rule and
-release-period requirement is researched and cited at the time of review.
-
-## Load context
-
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → termination review triggers, high-risk flags, standard severance,
-jurisdiction table.
-
-## Output header
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`). Match the memo format from seed term memos referenced in that config where one exists. The work-product header is always first.
-
-## Workflow
-
-### Step 1: The basic facts
-
-- Employee name (or role if staying abstract)
-- Jurisdiction (where they work)
-- Reason for termination (performance, misconduct, RIF, position elimination)
-- How long employed
-- Age (relevant to release requirements for older-worker protections)
-- Whether any other employees are being terminated as part of the same
-  decisional unit or program (relevant to group-termination release rules)
-- When is the planned term date
-
-### Step 2: High-risk flag scan
-
-This is the most important step. Check every flag from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. Default
-set:
-
-| Flag | Why it's high-risk | Check |
+| Durum | Süre | Dayanak |
 |---|---|---|
-| **Recent complaint** | Retaliation claim | Has this employee filed any complaint (HR, ethics hotline, regulatory) recently? |
-| **Protected leave** | Leave-law interference/retaliation | Currently on or recently returned from protected leave (FMLA/state equivalents, disability, parental, military)? |
-| **Protected class + timing** | Discrimination claim | Protected class AND recently disclosed/visible (pregnancy announcement, religious accommodation request, disability disclosure)? |
-| **Whistleblower** | Federal and state whistleblower statutes | Has this employee raised concerns about illegality, safety, fraud? |
-| **Thin documentation** | "Why now?" problem | For performance terms: is there a PIP, written warnings, documented feedback? Or did this come out of nowhere? |
-| **Comparator problem** | Disparate treatment | Is someone else doing the same thing and not being terminated? |
-| **Contract/handbook promise** | Breach | Does the offer letter, handbook, or any writing promise a process that isn't being followed? |
-| **Exempt misclassification** | FLSA + state wage claim with liquidated damages | See the classification check below. Fires on state + classification + title. |
+| İşveren ahlak ve iyiniyet kurallarına aykırılık nedeniyle derhal fesih | Öğrenmeden itibaren **6 iş günü**; her hâlde fiilden itibaren **1 yıl** (işçi maddi çıkar sağladıysa 1 yıl uygulanmaz) | 4857 m. 26 |
+| İşçi işe iade isteyecek | Fesih bildiriminin tebliğinden itibaren **1 ay** içinde arabulucuya başvuru; son tutanaktan itibaren **2 hafta** içinde dava | 4857 m. 20/1 |
+| Toplu işçi çıkarma | Sendika temsilcileri, bölge müdürlüğü ve İŞKUR'a en az **30 gün** önce yazılı bildirim; fesihler bölge müdürlüğüne bildirimden 30 gün sonra hüküm doğurur | 4857 m. 29 |
+| SGK işten ayrılış bildirimi | Sözleşmenin sona ermesinden itibaren en geç **10 gün** | 5510 m. 9 |
+| İbraname | Sözleşmenin sona ermesinden **en az 1 ay sonra** | TBK m. 420/2 |
 
-**Exempt/non-exempt classification flag.** Fire this flag when ALL of the
-following are true:
+6 iş günü süresinde ≤ 2 gün kaldı → 🔴 ACİL. "Öğrenme"nin feshe yetkili kişi/organın öğrenmesi olarak arandığı yerleşik uygulamadır — içtihadı kontrol et. Süre kaçtıysa haklı fesih yerine geçerli sebep + bildirim süreli fesih yolunu değerlendir.
 
-1. The employee works in a state with a high exempt salary threshold — **CA,
-   NY, WA, CO, AK** (and any other state listed in
-   `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` →
-   `## Wage & hour` → Known classification risk areas as a high-threshold
-   state) — **AND**
-2. The employee is classified **exempt** (salaried, no overtime) — **AND**
-3. The employee's title contains **"supervisor," "lead," "coordinator,"
-   "analyst," "administrator,"** or **"specialist"** (case-insensitive, and
-   any equivalent-scope title the practice profile flags as risky).
+## Destination check
 
-When all three fire, emit:
+- **Müvekkile / İK'ya fesih notu** → profilin `## Outputs` bölümündeki işveren tarafı fesih notu başlığı ("AVUKATLIK K. m. 36 – DAHİLİ"; sır saklama: Av. K. m. 36)
+- **Yöneticinin fesih görüşmesi konuşma metni** → hukuki değerlendirme ve risk notları çıkarılır
+- **İşçiye tebliğ edilecek fesih bildirimi** → "TASLAK"; avukat onayından sonra
+- **Arabulucuya / karşı tarafa gidecek metin** → iç hesap, risk puanı ve strateji çıkarılır
 
-> 🔴 **Potential exempt misclassification** — [title] earning $[X] in
-> [state]. The exempt salary threshold in [state] is approximately $[Y]
-> `[model knowledge — verify]`. Before termination, route to
-> `/employment-legal:wage-hour-qa` for a classification check — a misclassified
-> employee who's terminated has a ready-made FLSA and state-wage claim with
-> liquidated damages, attorneys' fees, and (in CA) PAGA exposure, which
-> the separation agreement may not be able to release cleanly. A terminated
-> plaintiff with unpaid-OT exposure is the most litigated wage-and-hour
-> fact pattern in these states.
+## ADIM 0 — Taraf ve çıkar çatışması
 
-Do not suppress this flag because the title "looks managerial" — the whole
-premise of the misclassification claim is that titles lie. Route to
-`/employment-legal:wage-hour-qa` for the actual duties-and-salary test.
+- [ŞİRKET ADI] işveren mi, işçi mi? Aynı işte menfaati zıt tarafa avukatlık etmiş avukat işi reddetmek zorundadır (Av. K. m. 38/1-b). Çatışma kontrolü yapılmadan devam etme.
+- İşveren tarafı → aşağıdaki akış. İşçi tarafı → en sondaki **İşçi tarafı varyantı**.
 
-**If a back-pay number is being computed as part of this review (severance
-modeling, settlement posture, exposure estimate), do NOT compute it in this
-skill.** Route to `wage-hour-qa` → Step 2a and use its regular-rate
-scaffold: §207(e) inclusions (non-discretionary bonuses, commissions,
-shift diffs) in the regular rate, 0.5× premium when straight time was
-already paid for OT hours (else 1.5×), liquidated damages under §216(b),
-and 2-year / 3-year willful SOL under §255(a). Every back-pay number
-carries `[verify — consult wage-and-hour counsel before asserting or
-paying]`. A clean-looking wrong number here is the specific failure mode
-this scaffold prevents.
+## Bağlamı yükle
 
-**Any flag fires → escalate per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` before the term proceeds.** Not
-after. Before.
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → fesih tetikleyicileri, yüksek risk bayrakları, ayrılış paketi pratiği, eskalasyon matrisi, `## Outputs` ve `## Who's using this`.
 
-### Step 3: Jurisdiction-specific requirements
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-> **Research the applicable rules for the employee's jurisdiction before
-> finalizing the plan.** Specifically:
->
-> - Final-pay timing — this varies widely by state and often depends on
->   whether the employee was terminated or resigned. Research the currently
->   operative rule, including any waiting-time or late-pay penalties.
-> - Accrued-PTO payout — research whether the jurisdiction requires payout,
->   and any interaction with accrual-cap or use-it-or-lose-it policies.
-> - Required notices — research any jurisdiction-specific notices required at
->   termination (e.g., state unemployment, continuation-coverage notices
->   beyond federal COBRA, benefits continuation).
-> - Mass-layoff / plant-closing notices — research federal WARN Act and any
->   state "mini-WARN" or local ordinance that may apply if this is part of a
->   larger reduction. Coverage thresholds and notice periods differ.
->
-> Cite primary sources. Verify currency.
->
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for the jurisdiction's final-pay, PTO, notice, or WARN rule, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) stop here and flag for attorney verification. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Tag every citation in the plan — final-pay rule, PTO rule, notices, WARN / mini-WARN, OWBPA consideration periods, state release restrictions — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+## Adımlar
 
-### Step 4: Severance and release
+### 1. Temel olgular
 
-Per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → standard severance:
+| Soru | Neden önemli |
+|---|---|
+| İşçi (ad ya da unvan takma adı), işin yapıldığı yer | Yurt dışındaysa uygulanacak hukuk (aşağıda) |
+| İşyerindeki ve aynı işkolundaki işyerlerinde toplam işçi sayısı | 30 eşiği iş güvencesi için toplam sayıyla belirlenir (m. 18/1, m. 18/4) |
+| Kıdem (işe giriş tarihi) | 6 ay eşiği; ihbar süresi; kıdem tazminatı |
+| Sözleşme türü | Belirsiz / belirli süreli (m. 11); iş güvencesi belirsiz süreliye uygulanır |
+| Pozisyon | İşletmenin bütününü sevk ve idare eden işveren vekili mi (m. 18 son fıkra) |
+| Fesih nedeni | Yeterlilik / davranış / işletme gerekleri / haklı neden / anlaşma |
+| Sendika üyeliği, temsilcilik, TİS | m. 18/3-a,b; TİS'teki disiplin usulü |
+| Aynı dönemde başka çıkarma | Toplu çıkarma eşiği (m. 29/2) |
+| Planlanan tarih | Süreler, izin ve rapor çakışması |
 
-- Is severance being offered? Per formula or discretionary?
-- Release required? (Usually yes if paying severance — that's the
-  consideration.)
+### 2. Fesih türünü belirle
 
-> **Research the applicable release-consideration rules.** If the employee is
-> 40 or over, federal law (OWBPA) imposes specific requirements that affect
-> the consideration period, revocation period, required advisements, and —
-> for group terminations — required decisional-unit disclosures. The specific
-> consideration period differs between an individual termination, a group
-> RIF, and a group exit incentive; the rule also depends on the employee's
-> age and the number of employees affected. Do not state the day count from
-> memory — research the currently operative rule for the specific situation
-> and cite primary sources. Also research any state-law analogs or parallel
-> release requirements. Verify currency.
+- **Geçerli sebep (m. 18):** işçinin yeterliliği, davranışı ya da işletme/işyeri/iş gerekleri. Bildirim yazılı, sebep açık ve kesin (m. 19/1); davranış ya da verim nedeniyle fesihte önce savunma alınır (m. 19/2; m. 25/II hâlleri hariç). Savunma şartının iş güvencesi dışındaki işçiye de uygulanıp uygulanmadığı **tartışmalı — içtihadı kontrol et**; şüphede savunma al. İspat yükü işverendedir (m. 20/2). Bildirim süresine uyulur ya da ücreti peşin ödenir (m. 17).
+- **Haklı sebep (m. 25):** I sağlık, II ahlak ve iyiniyet kurallarına aykırılık, III zorlayıcı sebep, IV gözaltı/tutukluluğun bildirim süresini aşması. II için m. 26 süresi işler.
+- **İş güvencesi dışındaki işçinin süreli feshi (m. 17):** fesih hakkı kötüye kullanılırsa bildirim süresinin üç katı tutarında tazminat (m. 17/6).
+- **Esaslı değişikliğin reddi üzerine fesih (m. 22/1):** geçerli nedenin yazılı açıklanması ve bildirim süresi şart.
+- **İkale (bozma sözleşmesi):** kanunda düzenlenmemiş, karşılıklı anlaşmaya dayanan uygulama kavramı. İşveren önerdiyse işçiye "makul yarar" sağlanması ve irade sakatlığı denetimi yerleşik uygulamadır — **tartışmalı, içtihadı kontrol et** (sorgu aşağıda).
+- **İş K. kapsamı dışındaki işçi** (m. 4 istisnaları, ör. ev hizmetleri): TBK hükümleri; ör. haklı sebep olmaksızın derhal fesihte TBK m. 438.
 
-Separately, consider whether any of the following apply to the release:
-- State-specific waiver restrictions (some states limit what can be released
-  or require specific language).
-- Federal or state restrictions on non-disclosure or non-disparagement
-  clauses that relate to sexual harassment, discrimination, or other
-  protected categories.
-- Separation-agreement rules on NLRA-protected activity.
+### 3. Yüksek risk bayrakları (en önemli adım)
 
-### Step 5: Documentation check
+Eklenti ayarındaki bayrakların hepsini işaretle. Varsayılan set:
 
-For performance terminations especially:
+| Bayrak | Neden riskli | Kontrol | Dayanak |
+|---|---|---|---|
+| Yakın tarihli şikâyet / resmî başvuru | Geçerli sebep sayılmaz; misilleme algısı | İşveren aleyhine idari/adli makama başvurdu ya da sürece katıldı mı? | m. 18/3-c |
+| Sendika üyeliği / temsilcilik | Geçerli sebep sayılmaz; sendikal tazminat | Üyelik, faaliyet → 6356 s.K. ilgili maddesini çek | m. 18/3-a,b |
+| Gebelik, doğum, aile yükümlülükleri, din, cinsiyet, engellilik vb. | Geçerli sebep sayılmaz; 4 aya kadar ücret tutarında ayrımcılık tazminatı + yoksun kalınan haklar; ispat yükü kayar | Yakın zamanda bildirilen gebelik, izin talebi, sağlık durumu | m. 5/6-7; m. 18/3-d; 6701 m. 3, 6 |
+| Analık izni ya da raporlu bekleme süresinde devamsızlık | Geçerli sebep sayılmaz; hastalıkta bildirimsiz fesih hakkı ancak bildirim süresi + 6 hafta aşılınca doğar | Rapor tarihleri, kıdem → `/employment-legal:leave-tracker` | m. 18/3-e,f; m. 25/I; m. 74 |
+| Savunma alınmadı | Davranış/verim nedenli fesih yapılamaz | Yazılı davet, makul süre, tutanak | m. 19/2 |
+| Sebep yazılı ve açık değil | Geçersizlik | Bildirim metni | m. 19/1 |
+| Zayıf belge ("neden şimdi?") | İspat yükü işverende | Uyarılar, performans kayıtları; yakın tarihli olumlu değerlendirme, prim, terfi çelişkisi | m. 20/2 |
+| Emsal sorunu | Eşit davranma ihlali | Aynı davranışı yapan başkası çıkarılmıyor mu? | m. 5 |
+| İç prosedür sözü | Sözleşmesel usul ihlali | TİS, personel yönetmeliği, iş sözleşmesindeki disiplin aşamaları izlendi mi? | yerleşik uygulama — kontrol et |
+| Ödenmemiş ücret / fazla çalışma | İşçinin haklı fesih hakkı ve alacak davası | Bordro, puantaj → `/employment-legal:wage-hour-qa` | m. 24/II-e; m. 34 |
+| Mobbing / taciz iddiası | TBK m. 417 sorumluluğu; basın riski | Açık şikâyet var mı → profil eskalasyonu | TBK m. 417 |
+| İşletmesel karar | Feshin son çare olması, tutarlılık, keyfilik denetimi | İşletme kararı belgelendi mi, kadro gerçekten kaldırıldı mı? | yerleşik uygulama — içtihadı kontrol et |
+| Toplu çıkarma eşiği | Usul ihlali; m. 18-21'i dolanmak yasak | 1 ay içindeki çıkarmaların toplamı | m. 29 |
+| Alt işveren işçisi | Asıl işverenle birlikte sorumluluk, muvazaa | → `/employment-legal:worker-classification` | m. 2 |
 
-- Is there a paper trail? Written warnings, PIP, feedback docs?
-- Does the paper trail tell a consistent story?
-- Is there anything in writing that contradicts the reason (recent positive
-  review, bonus, promotion)?
+**Herhangi bir bayrak 🔴 → fesihten ÖNCE profilin eskalasyon matrisine göre onay.** Sonra değil.
 
-The "why now" question: if this person has been underperforming for a year,
-what changed? The answer should be documented.
+### 4. İşe iade riskinin sonucu
 
-## Output
+İş güvencesi kapsamı: 30+ işçi, 6 ay kıdem, belirsiz süreli sözleşme, işveren vekili istisnası (m. 18). Geçersizlik kararında (m. 21): işveren işçiyi 1 ay içinde işe başlatır; başlatmazsa en az 4, en çok 8 aylık ücret tutarında tazminat; kesinleşmeye kadar en çok 4 aylık boşta geçen süre ücreti ve diğer haklar; işçi kesinleşen kararın tebliğinden itibaren 10 iş günü içinde başvurmazsa fesih geçerli sayılır (m. 21/6). Arabuluculukta işe başlatma anlaşması işe başlatma tarihini, boşta geçen süre alacağını ve işe başlatmama tazminatını parasal olarak içermek zorundadır (m. 21/7). Bu hükümler sözleşmeyle değiştirilemez.
 
-> **Research-connector pre-flight.** Before emitting the memo, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 3 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication topics in termination-law memos are final-pay timing, OWBPA group/individual distinctions, state-specific NDA / non-disparagement rules (e.g., CA SB 331), and NLRB positions (e.g., McLaren Macomb) — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the memo.
+### 5. Parasal kalemler (hesap iskeleti)
 
-> **Jurisdiction assumption.** This review assumes the employee's jurisdiction as stated in Step 1 and any defaults from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → Jurisdictional footprint. Employment rules, final-pay timing, release requirements, and notice obligations vary materially by jurisdiction. If the employee works in a different state or country, or if choice-of-law is contested, this analysis may not apply as written.
-
-Match the memo format from seed term memos referenced in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If none:
-
-```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
-
-## Termination Review: [Role/Name] — [Date]
-
-**Jurisdiction:** [State]
-**Reason:** [Performance / Misconduct / RIF / Elimination]
-**Planned date:** [Date]
-
----
-
-### Bottom line
-
-[Can you proceed / Need to fix X first / Stop — one-sentence why]
-
----
-
-### High-risk flags
-
-[Every flag from Step 2. ✅ Clear or 🔴 FLAG with detail.]
-
-**Escalation:** [None needed | Escalate to [name] before proceeding — [which flag]]
-
----
-
-### Jurisdiction requirements ([State])
-
-- Final pay: [researched rule and cite; state whether PTO is included per the
-  researched rule and any team policy]
-- Required notices: [list, each researched and cited]
-- Mass-layoff notice (if applicable): [researched rule and cite]
-
----
-
-### Severance and release
-
-- Severance: [amount per formula / none]
-- Release: [required / not — if required, research and apply the
-  consideration-period, revocation-period, advisement, and (for groups)
-  decisional-unit-disclosure requirements that govern this specific
-  situation; cite primary sources and verify currency]
-- [Any state-law release rules or non-disclosure/non-disparagement
-  restrictions that apply]
-
----
-
-### Documentation
-
-[Assessment of paper trail. Gaps flagged.]
-
----
-
-### Go / No-go
-
-[Clear to proceed | Proceed with changes below | Hold — escalation pending]
-
-### Checklist for term day
-
-- [ ] Final paycheck ready, correct amount, delivered per researched rule
-- [ ] Continuation-coverage notices (COBRA / state analogs) prepared
-- [ ] [State] unemployment notice prepared
-- [ ] Severance agreement (if applicable) with the consideration period
-      required for this specific situation
-- [ ] Return of property / access cutoff coordinated
-- [ ] [etc.]
+```
+İhbar süresi (m. 17/2, asgari): <6 ay → 2 hf | 6 ay–1,5 yıl → 4 hf | 1,5–3 yıl → 6 hf | 3 yıl+ → 8 hf
+İhbar tazminatı  = giydirilmiş günlük ücret × bildirim süresi (gün)          [m. 17/4, m. 17/7]
+Kıdem tazminatı  = giydirilmiş son brüt ücret (tavanla sınırlı) × 30 gün × hizmet yılı (küsurat orantılı)  [1475 m. 14]
+Kıdem tavanı     = güncel tutarı teyit et (dönemsel güncellenir)
+Yıllık izin ücreti = kullanılmayan izin günü × sözleşmenin sona erdiği tarihteki ücret  [m. 59/1]
+Kötüniyet (iş güvencesi dışı) = 3 × bildirim süresi ücreti                    [m. 17/6]
 ```
 
-## Consequential-action gate (terminate an employee)
+- Kıdem doğuran hâller 1475 m. 14'te sayılıdır: işveren feshi (ahlak ve iyiniyet hâlleri hariç), işçinin haklı feshi, muvazzaf askerlik, emeklilik/yaşlılık aylığı, yaş dışındaki şartların tamamlanması, kadının evlenmeden itibaren 1 yıl içinde ayrılması, ölüm. 1475'in yalnız m. 14'ü yürürlüktedir (4857 m. 120); m. 14'teki eski madde atıflarının 4857'deki karşılıklarla okunduğu yerleşik uygulamadır. Bir yılı doldurmayan çalışmada kıdem doğmadığı da yerleşik uygulamadır — teyit et.
+- Sona ermede ücret ve para ile ölçülebilen tüm menfaatler tam ödenir (m. 32/6); kıdem gecikirse mevduata uygulanan en yüksek faiz (1475 m. 14).
+- Bildirim süresi içinde günde en az 2 saat ücretli iş arama izni (m. 27); bildirim süresi yıllık izinle iç içe giremez (m. 59/2).
+- İşsizlik ödeneği fesih nedenine bağlıdır (4447 m. 51; madde hâlâ 1475 numaralarına atıf yapar) → SGK çıkış kodu doğru seçilmeli. İkalenin işsizlik ödeneğine etkisi **tartışmalı** — SGK/İŞKUR uygulamasını ve içtihadı kontrol et.
+- Her tutar satırına: `[doğrula — avukat/uzman kontrolünden geçmeden müvekkile verilmez]`.
 
-**Before producing a "Go" recommendation or a term-day checklist marked ready:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
+### 6. Ayrılış paketi: ikale, ibraname, arabuluculuk anlaşması
 
-> Terminating an employee has legal consequences — wrongful-termination, discrimination, retaliation, and wage-law claims all trace back to how this decision is structured. Have you reviewed this termination with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> - Employee, jurisdiction, reason, planned date
-> - Every high-risk flag the review surfaced (recent complaint, protected leave, protected class + timing, whistleblower, thin documentation, comparator, contract/handbook promise) — with detail
-> - Jurisdiction-specific findings (final pay, PTO, required notices, mass-layoff rules) and where they were cited from
-> - Severance/release analysis, including any OWBPA/older-worker-protection angles
-> - Open questions and what's unresolved
-> - What could go wrong (the claim theory this fact pattern supports)
-> - What to ask the attorney (is this a clean term; do we need more documentation first; does the release need specific language; do we need to stagger decisional units)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service. Employment is one of the practice areas where a short consult before the termination meeting consistently outvalues a post-termination claim defense.
+ABD'deki "kıdem ödemesi + feragat (release)" kurgusunun Türk karşılıkları:
 
-Do not produce a "Clear to proceed" output past this gate without an explicit yes. A marked-DRAFT flagged for attorney review is fine.
+- **İbraname (TBK m. 420/2):** yazılı; sözleşmenin sona ermesinden en az 1 ay sonra; alacağın türü ve miktarı açık; ödeme hak tutarına göre noksansız ve banka aracılığıyla. Eksik unsur → kesin hükümsüz. Gerçek tutarı içermeyen belge yalnız ödenen miktar kadar makbuz hükmündedir (m. 420/3). **Fesih günü imzalatılan ibranameye güvenme.**
+- **İkale + ek ödeme:** yazılı protokol; ödenecek kalemler tek tek; makul yarar ve irade sakatlığı riski (yukarıda).
+- **Arabuluculuk anlaşması:** iş alacakları ve işe iade davalarında arabuluculuk dava şartıdır (7036 m. 3/1). Taraflar ve avukatları ile arabulucunun imzaladığı anlaşma belgesi ilam niteliğindedir (6325 m. 18/4); anlaşılan hususlar hakkında dava açılamaz (6325 m. 18/5). Anlaşılan kalemleri ve tutarları tek tek yaz; genel "tüm haklardan feragat" ifadesinin kapsamı **tartışmalı — içtihadı kontrol et**.
+- **Gizlilik / karalamama klozu:** yalnız işçi aleyhine konan ceza koşulu geçersizdir (TBK m. 420/1) → karşılıklı kur.
+- **Rekabet yasağı varsa:** işveren haklı sebep olmaksızın feshederse yasak sona erer (TBK m. 447/2).
+- *Karşılaştırmalı not:* ABD'de 40 yaş üstü işçi için kanuni düşünme/cayma süreleri vardır; Türk hukukunda bunun karşılığı TBK m. 420'nin 1 aylık bekleme şartı ve arabuluculuk anlaşmasıdır.
 
----
+### 7. Belge kontrolü
 
-## Close with the next-steps decision tree
+Uyarılar, savunma tutanakları, performans kayıtları tutarlı bir hikâye anlatıyor mu? Gerekçeyle çelişen yazılı bir şey (yakın tarihli olumlu değerlendirme, prim, terfi) var mı? "Bir yıldır düşük performans varsa ne değişti?" sorusunun cevabı yazılı olmalı.
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+### 8. Yurt dışında çalışan işçi
 
-## What this skill does not do
+Uygulanacak hukuk: tarafların seçtiği hukuk, işçinin mutad işyeri hukukunun emredici asgari koruması saklı kalmak üzere (MÖHUK 5718 m. 27). Yabancı kural ezberden yazılmaz: AB `eu_search_eu_law(query="collective redundancies")`; İngiltere `uk_search_legislation`; Almanya `de_gesetz_ara`; Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-- Make the termination decision. It checks the decision.
-- Have the conversation. The manager does that.
-- State release or jurisdiction rules from memory — every rule is researched
-  and cited at the time of review.
-- Guarantee no lawsuit. It reduces the risk by catching the obvious problems.
+### 9. ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_madde_getir(number="4857", madde_no=["17","18","19","20","21","25","26"])
+tr_mevzuat_madde_getir(number="1475", madde_no="14")
+tr_mevzuat_madde_getir(number="6098", madde_no=["420","447"])
+tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="feshin son çare olması ilkesi işletmesel karar", date_from="2022-01-01")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="ikale makul yarar irade fesadı", date_from="2022-01-01")
+tr_ictihat_semantik_ara(initial_keyword="savunma alınmadan fesih", query="iş güvencesi dışındaki işçide savunma zorunluluğu")
+```
+
+Daire dağılımı değişebilir; sonuç ince ise `chamber` boş bırakıp tekrar dene. Dönen kararın künyesini birebir kullan; karar numarası ezberden yazılmaz. Sonuç azsa sessizce doldurma: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) burada dur ve avukat teyidine işaretle." Atıf etiketi: `[ArthurLegal TR — 4857 m. X — GG.AA.YYYY]`, ezberden gelen için `[model bilgisi — doğrula]`, kullanıcıdan gelen için `[kullanıcı verdi]`.
+
+## Çıktı
+
+Eklenti ayarında örnek fesih notu varsa onun biçimini izle; yoksa:
+
+```markdown
+[ÜST BAŞLIK — profil ## Outputs]
+
+# Fesih İncelemesi — [Unvan/takma ad] — [Tarih]
+
+## ⚠️ İnceleyen notu
+- **Fesih türü:** [Geçerli m. 18 / Haklı m. 25 / Süreli m. 17 / İkale]
+- **Süre:** [6 iş günü sonu GG.AA.YYYY / işe iade başvuru penceresi] 🔴/🟠/🟡
+- **İş güvencesi:** [kapsamda / dışında — gerekçe]
+- **Kaynaklar:** ArthurLegal MCP (`tr_`) — [madde sayısı, içtihat sayısı]; doğrulanamayan: [liste]
+- **Tartışmalı noktalar:** [liste]
+- **Eskalasyon:** [yok / [isim] — hangi bayrak]
+
+## Sonuç
+[Devam edilebilir / Önce X düzeltilmeli / Dur — tek cümle neden]
+
+## Yüksek risk bayrakları
+[Her bayrak: ✅ temiz ya da 🔴 BAYRAK + ayrıntı]
+
+## İşe iade riski
+[Kapsam + olası parasal sonuç aralığı]
+
+## Parasal kalemler
+[İhbar, kıdem (tavan teyidi), yıllık izin, diğer — formül + girdiler + doğrula etiketi]
+
+## Ayrılış paketi
+[İkale / ibraname zamanlaması / arabuluculuk anlaşması kalemleri]
+
+## Belgeler
+[Değerlendirme, eksikler]
+
+## Karar
+[Devam / Değişikliklerle devam / Bekle — eskalasyon]
+
+### Fesih günü kontrol listesi
+- [ ] Yazılı fesih bildirimi, sebep açık ve kesin (m. 19/1); tebliğ kanıtı
+- [ ] Savunma tutanağı (davranış/verim nedenli fesihte, m. 19/2)
+- [ ] Bildirim süresi ya da peşin ihbar ücreti (m. 17); iş arama izni planı (m. 27)
+- [ ] Son ücret, yıllık izin ücreti, kıdem — banka yoluyla (m. 32, m. 59, 1475 m. 14)
+- [ ] SGK işten ayrılış bildirimi 10 gün içinde, doğru çıkış kodu (5510 m. 9; 4447 m. 51)
+- [ ] Çalışma belgesi (m. 28)
+- [ ] Zimmet iadesi, sistem erişiminin kapatılması, kişisel verilerin saklama süresi
+- [ ] İbraname gerekiyorsa en erken sona ermeden 1 ay sonra (TBK m. 420)
+```
+
+## Sonuç doğuran işlem kapısı (işçinin işine son verme)
+
+"Devam edilebilir" ya da hazır kontrol listesi üretmeden önce eklenti ayarında `## Who's using this` oku. Rol **avukat değilse**:
+
+> İşten çıkarma işe iade, ayrımcılık, kötüniyet ve işçilik alacağı davalarına yol açabilir. Bu feshi bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz özet: işçi, işyeri ve işçi sayısı, kıdem, fesih nedeni ve tarihi; çıkan her bayrak ve ayrıntısı; süre hesabı; parasal kalemler ve hangi kaynaktan çekildiği; ayrılış paketi önerisi; açık sorular; ters gidebilecek şey (bu olguların desteklediği dava teorisi); avukata sorulacaklar (fesih temiz mi, önce savunma/belge mi gerekir, arabuluculuk anlaşması nasıl kurulmalı). Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
+
+Açık "evet" olmadan "Devam edilebilir" yazma; avukat incelemesi için "TASLAK" işaretli çıktı serbest.
+
+## İşçi tarafı varyantı
+
+[ŞİRKET ADI] işçiyse: (1) tebliğ tarihini sabitle → işe iade için 1 aylık arabuluculuk penceresi (m. 20/1); alacaklar için zamanaşımı 5 yıl (m. 32/8; ek m. 3); arabuluculuk süresince zamanaşımı durur ve hak düşürücü süre işlemez (7036 m. 3/17). (2) Alacak kalemlerini `/employment-legal:wage-hour-qa` ile hesapla; hesap doğru olmadan başvurma (profil uyarısı). (3) İmzalatılmış ibraname varsa TBK m. 420 şartlarıyla test et. (4) İlk arabuluculuk toplantısına mazeretsiz katılmamanın masraf ve vekâlet ücreti sonucu vardır (7036 m. 3/12).
+
+## Kapanış
+
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları bu incelemenin sonucuna göre uyarla (fesih bildirimi taslağı, eskalasyon, ek olgu, bekle-izle, diğer). Ağaç çıktıdır; seçimi avukat yapar.
+
+## Bu skill ne yapmaz
+
+- Fesih kararını vermez; kararı denetler.
+- Fesih görüşmesini yapmaz.
+- Kural ya da tutarı ezberden vermez; her madde araçtan, her tutar güncel kaynaktan.
+- Dava çıkmayacağını garanti etmez; bariz sorunları yakalayarak riski azaltır.
 
 ---
 
@@ -3032,217 +2169,125 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: wage-hour-qa
 description: >
-  Jurisdiction-aware wage/hour and employment Q&A — classification, overtime,
-  meal/rest breaks, leave, final pay — answered for the specific state/country
-  with the controlling rule researched and cited rather than stated from
-  memory. Use when the user asks any employment law question, or says "what's
-  the rule in [state]", "is this exempt", "do we have to pay overtime for",
-  or "can we classify this as".
-argument-hint: "[question]"
+  Ücret, çalışma süresi ve iş hukuku soru-cevabı (Türk hukuku) — ücretin
+  ödenmesi, asgari ücret, fazla çalışma ve fazla sürelerle çalışma, ara
+  dinlenmesi, gece çalışması, hafta tatili, genel tatil, yıllık izin,
+  zamanaşımı ve alacak hesabı; kontrol eden kural canlı çekilip atıfla verilir,
+  ezberden söylenmez. "Fazla mesai ödemek zorunda mıyız", "kural ne", "izin kaç
+  gün", "alacağı hesapla" ya da herhangi bir iş hukuku sorusunda kullan.
+argument-hint: "[soru]"
 ---
 
-# /wage-hour-qa
+# /wage-hour-qa — Ücret ve Çalışma Süresi Soru-Cevap
 
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint.
-2. Use the workflow below.
-3. Identify jurisdiction the question is about. If not specified, ask.
-4. Answer per that jurisdiction's rule. Cite. Flag if it's a close call or law is shifting.
+"Duruma göre değişir" doğru ama işe yaramaz. Bu skill soruya, kontrol eden maddeyi canlı çekip atıfla cevap verir ve sorunun insan muhakemesi gerektirecek kadar sınırda olduğunu açıkça söyler. Tutarlar (asgari ücret, kıdem tavanı, faiz oranları) dönemsel değişir; hiçbiri sabit yazılmaz.
 
----
+## Bağlamı yükle
 
-## Matter context
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → yargı çevresi ayak izi, [ŞİRKET ADI] tarafı (işveren/işçi), TİS bilgisi.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Adımlar
 
-## Purpose
+### 1. Hangi hukuk, hangi rejim?
 
-"It depends" is true but unhelpful. This skill produces a jurisdiction-specific
-answer grounded in researched, cited primary sources — and flags when the
-question is close enough to need human judgment. It does not state rules from
-memory: wage-and-hour thresholds, exemption criteria, and final-pay timing
-change frequently and vary meaningfully by state.
+- İş nerede yapılıyor? Türkiye dışındaysa uygulanacak hukuk MÖHUK 5718 m. 27 (hukuk seçimi + mutad işyeri emredici asgari koruması).
+- İşçi 4857 kapsamında mı? m. 4 istisnaları (ör. ev hizmetleri, 50 ve daha az işçili tarım işyerleri, sporcular) → TBK hizmet sözleşmesi hükümleri. Basın ve deniz iş ilişkileri ayrı kanunlara tabidir — ilgili kanunu `tr_mevzuat_ara` ile bul.
+- TİS var mı? TİS ve iş sözleşmesi kanuni asgarileri işçi lehine artırabilir.
 
-## Load context
+### 2. Kuralı çek, sonra söyle
 
-`~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint. If the question doesn't specify a
-jurisdiction, ask — or answer for the state with the most employees and note
-that.
+Önce `tr_mevzuat_madde_getir` ile maddeyi çek, sonra tek paragrafta atıfla söyle. Sık soruların çıpaları (4857 s.K.):
 
-## The answer
+| Konu | Çıpa | Kural özeti (metinden doğrula) |
+|---|---|---|
+| Ücretin ödenmesi | m. 32 | Türk parası, işyerinde ya da bankada; en geç ayda bir; sona ermede tam ödeme (m. 32/6); ücret alacağında zamanaşımı 5 yıl (m. 32/8) |
+| Gecikme | m. 34 | Ödeme gününden itibaren 20 gün içinde ödenmezse işçi çalışmaktan kaçınabilir; gününde ödenmeyen ücrete mevduata uygulanan en yüksek faiz |
+| Ücretin saklı kısmı | m. 35 | Aylık ücretin dörtte birinden fazlası haczedilemez/devredilemez (nafaka saklı) |
+| Ücret hesap pusulası | m. 37 | Her ödemede ekler ve kesintiler ayrı ayrı gösterilir |
+| Ücret kesme cezası | m. 38 | Yalnız TİS/iş sözleşmesinde gösterilen sebeplerle; ayda 2 gündeliği aşamaz; derhal sebebiyle bildirilir |
+| Asgari ücret | m. 39 | Komisyonca en geç iki yılda bir belirlenir, RG'de yayımlanır → güncel tutarı teyit et (`tr_resmi_gazete_tara`) |
+| Haftalık çalışma süresi | m. 63 | En çok 45 saat; anlaşmayla günde 11 saati aşmadan farklı dağıtım; denkleştirme 2 ay (TİS ile 4 aya kadar; turizmde ayrı) |
+| Fazla çalışma | m. 41 | 45 saati aşan çalışma → saat ücreti %50 zamlı; sözleşmeyle 45'in altında süre varsa fazla sürelerle çalışma → %25 zamlı; işçi isterse 1 s 30 dk / 1 s 15 dk serbest zaman (6 ay içinde); işçinin onayı gerekir; yılda en çok 270 saat |
+| Ara dinlenmesi | m. 68 | 4 saate kadar 15 dk; 4–7,5 saat 30 dk; 7,5 saat üstü 1 saat; çalışma süresinden sayılmaz |
+| Gece çalışması | m. 69 | 7,5 saati geçemez (sayılı sektörlerde yazılı onayla istisna); gece çalışmasında fazla çalışma yapılamaz (m. 41/6) |
+| Çalışma süresinden sayılanlar | m. 66 | Hazır bekleme, görevle başka yere gönderilme, süt izni vb. |
+| Hafta tatili | m. 46 | 7 günlük dilimde kesintisiz en az 24 saat; çalışılmayan hafta tatili günü ücreti tam ödenir |
+| Genel tatil | m. 47 | Çalışılmazsa o günün ücreti tam; çalışılırsa ayrıca bir günlük ücret |
+| Yıllık izin | m. 53–60 | 1–5 yıl (5 dahil) en az 14 gün; 5 yıldan fazla 15 yıldan az en az 20 gün; 15 yıl (dahil) ve fazlası en az 26 gün; 18 yaş ve altı ile 50 yaş ve üstü en az 20 gün; vazgeçilemez; bölünmesi tarafların anlaşmasıyla, bir bölüm en az 10 gün (m. 56); izin ücreti izinden önce peşin (m. 57); sona ermede kullanılmayan izin son ücretle ödenir (m. 59) |
+| Zamanaşımı | m. 32/8; ek m. 3 | Ücret 5 yıl; yıllık izin ücreti, kıdem, ihbar, kötüniyet ve eşit davranmama tazminatı 5 yıl; izin ücretinde zamanaşımı sözleşmenin sona ermesinden başlar (m. 59/1) |
 
-### Step 1: Jurisdiction
+ABD'deki "muaf (exempt) çalışan" testinin (maaş eşiği + görev testi) Türk hukukunda karşılığı yoktur. Benzer sorular Türkiye'de şöyle sorulur — hepsi **tartışmalı / yerleşik uygulamaya bağlı, içtihadı kontrol et**:
+- "Fazla çalışma ücrete dahildir" klozu geçerli mi, hangi sınırla? (yıllık 270 saat sınırıyla bağlantı kurulması yerleşik uygulamadır)
+- Kendi çalışma saatini belirleyen üst düzey yönetici fazla çalışma isteyebilir mi?
+- İmzalı bordroda tahakkuk görünen aylar için daha fazlası nasıl ispatlanır?
 
-Which state/country is this about? If not stated:
-- If it's about a specific employee: where do they work?
-- If it's a policy question: identify the jurisdictions in the footprint that
-  are most likely to be the most restrictive on the question at hand, then
-  research those.
+### 2a. Alacak hesabı iskeleti (fazla çalışma ve benzeri)
 
-### Step 2: Research the rule, then state it
-
-> **Research before answering.** For the jurisdiction and question, identify
-> the currently operative rule. Cite the controlling primary source (statute,
-> regulation, wage order, or case) with a pinpoint cite. Note the effective
-> date and whether the rule has been recently amended, indexed, or is in
-> litigation. If you are uncertain or cannot verify the current state of the
-> law, say so and flag for attorney verification — do not state a rule you
-> haven't confirmed.
-
-State the rule in one paragraph, tied to the cite. Use your tools (web search,
-legal research integrations, team reference materials) to verify currency —
-especially for:
-
-> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, CourtListener, or firm platform) returns few or no results for the jurisdiction-and-question, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / question]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag the question as unverified and stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Tag every citation in the answer with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the user supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
-
-
-- Salary thresholds for any exemption (federal and state — several states
-  index annually and several have tiered thresholds by employer size).
-- Final-pay timing on termination vs. resignation (many states differ).
-- PTO payout requirements (jurisdiction-specific; some require, some leave
-  it to policy, some depend on accrual-plan design).
-- Meal and rest break rules and any penalty-pay consequence.
-- Daily or weekly overtime rules (some states have daily overtime and
-  double-time rules that federal law does not).
-- Classification tests — see the worker-classification skill; the applicable
-  test depends on jurisdiction and purpose.
-
-Common question types you may be asked — for each, the answer is
-jurisdiction-specific and time-sensitive. Do not state the rule here; route
-to research:
-
-- "Is this role exempt?" — Research the applicable federal and state salary
-  thresholds (verify current amounts and any employer-size tiers) and the
-  applicable duties test(s).
-- "Do we have to pay overtime for X?" — Research federal FLSA overtime plus
-  any state-specific overtime rules (daily OT, double-time, alternative
-  workweeks).
-- "Do we have to provide meal/rest breaks?" — Research the applicable
-  state rule and any penalty-pay consequence for missed breaks.
-- "When is final pay due?" — Research the applicable state rule, including
-  whether timing differs for termination vs. resignation and whether
-  waiting-time or late-pay penalties apply.
-- "Do we have to pay out accrued PTO?" — Research the applicable state rule
-  and any carve-out for accrual-cap or use-it-or-lose-it policies.
-- "Can we classify this person as a contractor?" — Route to
-  `/employment-legal:worker-classification` if the facts are not already clear.
-
-### Step 2a: FLSA regular-rate and back-pay calculations
-
-When the question is a back-pay computation, unpaid-OT computation, or any
-question that turns on the FLSA "regular rate," use this scaffold. Do not
-answer from bare hourly wage × OT hours; that's the two most common errors
-this skill exists to catch.
-
-**The regular rate is NOT just the hourly wage.** Under 29 U.S.C. §207(e),
-the regular rate is **all remuneration** for employment EXCEPT the eight
-statutory exclusions in §207(e)(1)–(8) (e.g., discretionary bonuses, gifts,
-premium pay, expense reimbursements, profit-sharing plans meeting the DOL
-regs, stock options meeting §207(e)(8), retirement/insurance contributions).
-Anything NOT within those eight exclusions is IN.
-
-1. **Non-discretionary bonuses are IN the regular rate.** Productivity
-   bonuses, attendance bonuses, commissions, shift differentials, contest
-   awards, and most "bonuses" a reasonable employee would expect as a matter
-   of course are non-discretionary under §207(e)(3) and 29 C.F.R. §778.211.
-   Divide the bonus by the total hours worked in the bonus period to get
-   the per-hour increase to the regular rate. True discretionary bonuses
-   (§207(e)(3)) require both the fact of payment AND the amount to be
-   within the employer's sole discretion, determined at or near the end of
-   the period — narrow category.
-2. **The unpaid OT premium is 0.5×, not 1.5× — when straight time was
-   already paid for all hours.** If the employee was paid straight time for
-   every hour (including the OT hours) but no premium, they are owed the
-   **half-time premium** on OT hours, not time-and-a-half: `unpaid OT =
-   0.5 × regular rate × OT hours`. 29 C.F.R. §778.110(b). If the employee
-   was NOT paid for the OT hours at all, the owed amount is 1.5× the
-   regular rate on those hours. **State which pay posture you're assuming
-   before you compute** — it determines 0.5× vs. 1.5× and is the most
-   common error in this computation.
-3. **Show your math.** Print the formula and the inputs explicitly:
-   ```
-   Regular rate    = (straight-time wages + non-discretionary bonuses + other non-excluded comp) ÷ total hours worked
-   OT premium owed = 0.5 × regular rate × OT hours    [if straight time already paid for OT hours]
-                   = 1.5 × regular rate × OT hours    [if OT hours were unpaid]
-   ```
-   A number without the formula is not usable by a wage-and-hour lawyer.
-4. **Liquidated damages double the back-pay.** 29 U.S.C. §216(b). Liquidated
-   damages equal the unpaid back-pay amount unless the employer proves, to
-   the court's satisfaction, that the violation was in good faith and based
-   on reasonable grounds to believe it was not a violation. 29 U.S.C.
-   §260. Default assumption is liquidated damages apply; the employer bears
-   the burden to avoid them.
-5. **Statute of limitations is 2 years; 3 for willful.** 29 U.S.C. §255(a).
-   State the lookback explicitly and compute both bookends unless the
-   willfulness posture is already established by the user.
-6. **State overlay.** Many states have longer lookback, higher overtime
-   multipliers (daily OT, double-time), and different regular-rate rules.
-   Check state wage-and-hour law against the jurisdiction gate from Step 1
-   and flag where state law compounds (higher cap) or replaces (different
-   rate) federal. California, New York, Massachusetts, and Washington are
-   the most frequent overlay hits.
-7. **Attach the verify tag to the number.** Any back-pay amount produced by
-   this skill carries `[verify — consult wage-and-hour counsel before
-   asserting or paying]` on the line the number appears. The computation is
-   specialist work; the skill is scaffolding, not opinion.
-
-If the question is a back-pay calculation and any of these inputs are
-missing (bonus breakdown, whether straight time was paid for OT hours,
-willfulness posture, state jurisdiction), **ask before computing**. A
-confident wrong number is the worst output this skill can produce.
-
-### Step 3: The flag
-
-Is this a close call? Be honest.
-
-- If the answer is clear on the researched rule: say so. "Exempt — meets
-  each element of the applicable duties test and the current salary
-  threshold."
-- If it's close: say so. "The duties test is borderline — this role could
-  go either way. Recommend classifying as non-exempt to be safe, or getting
-  a formal opinion."
-- If the law is in flux: say so. "This rule has been amended recently — the
-  current version takes effect [date]. Confirm effective date before relying
-  on this answer."
-- If you could not verify currency: say so. Do not guess.
-
-## Output format
-
-Conversational. This is a Q&A, not a memo.
-
-> **Research-connector pre-flight.** Before emitting the answer, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; pinpoint cites (volume/page/subsection) carry the highest fabrication risk, spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
-
-> **Jurisdiction assumption.** Answers apply only to the jurisdiction identified. Wage-hour rules, exemption thresholds, and final-pay timing vary materially by state and country, and many rules index or change year over year. If the employee works in another jurisdiction, or the question is answered for the default-footprint state, this answer may not apply as written.
+Çıplak "ücret × saat" hesabı yapma. Önce varsayımları yaz, eksik girdi varsa **hesaplamadan önce sor**: ücretin brüt/net olduğu, prim ve ek ödemelerin niteliği, puantaj ya da tanık dayanağı, bordroda tahakkuk ve ödeme görünen aylar, izin/rapor haftaları, arabuluculuk başvuru tarihi.
 
 ```
-**[Jurisdiction]:** [The researched rule, one paragraph, with pinpoint cite
-and currency note.]
-
-[If close call or shifting law: the flag.]
-
-[If the answer differs in other footprint jurisdictions: one line noting that,
-and whether the differences are material.]
+Saat ücreti               = aylık brüt ücret ÷ 225            [yerleşik uygulama — teyit et]
+Fazla çalışma saat ücreti = saat ücreti × 1,5                 [m. 41/2]
+Fazla sürelerle çalışma   = saat ücreti × 1,25                [m. 41/3]
+Haftalık fazla saat       = fiilî çalışma − ara dinlenmeleri (m. 68) − 45
+Alacak                    = Σ haftalık fazla saat × fazla çalışma saat ücreti
+                            − bordroda tahakkuk edip ödenen tutar (mahsup)
+Hafta tatili / genel tatil çalışması: ayrı kalem (m. 46, m. 47)
+Dönem                     = başvuru tarihinden geriye 5 yıl (m. 32/8); arabuluculuk süresince zamanaşımı durur (7036 m. 3/17)
+Faiz                      = ücret alacağında mevduata uygulanan en yüksek faiz (m. 34); kalem bazında faiz türü tartışmalı — içtihadı kontrol et
 ```
 
-> **Verify citations.** Any case, statute, regulation, or wage-order cite above was generated with AI assistance. Before relying on a cite, check it against Westlaw, CourtListener, the relevant state agency's site, or your firm's research tool for accuracy, currency, and subsequent history. Fabricated or misquoted citations in filings or formal advice have resulted in sanctions.
+- Formülü ve girdileri her zaman yaz; formülsüz rakam avukatın işine yaramaz.
+- Tanık beyanına dayanan fazla çalışmada mahkemelerin hakkaniyet indirimi uyguladığı yerleşik uygulamadır — oran ezberden verilmez.
+- Rakamın yanına: `[doğrula — iş hukuku uzmanı kontrolünden geçmeden iddia edilmez/ödenmez]`.
+- Arabuluculuk dava şartıdır (7036 m. 3/1); hesap başvurudan önce bitmeli (profil: sonradan ek alacak riski).
 
-## Close with the next-steps decision tree
+### 3. Bayrak
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+- **Açık:** "m. 41'e göre 45 saati aşan her saat %50 zamlı ödenir."
+- **Sınırda:** "Kloz yerleşik uygulamaya göre tartışmalı; risk şu — formal görüş önerilir."
+- **Değişmiş/değişen mevzuat:** madde metnindeki değişiklik notunu oku (ör. 2026 değişiklikleri) ve yürürlük tarihini yaz.
+- **Teyit edilemedi:** "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/" — tahmin etme.
 
-## What this skill does not do
+### 4. ArthurLegal MCP (`tr_`)
 
-- State the rule from memory — every answer is grounded in a researched,
-  cited primary source verified for currency.
-- Make classification decisions for borderline cases. It states the rule and
-  flags the close call. Human decides.
-- Give a 50-state survey unless asked. Answers for the relevant
-  jurisdiction(s).
-- Track when the answer changes. If thresholds index or law shifts, the
-  answer goes stale. Re-ask for current.
+```
+tr_mevzuat_madde_getir(number="4857", madde_no=["41","63","68","69"])
+tr_mevzuat_madde_getir(number="4857", madde_no=["32","34","ek 3"])
+tr_resmi_gazete_tara(query="Asgari Ücret Tespit Komisyonu Kararı")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H9", query="fazla çalışma ücretin içinde 270 saat", date_from="2022-01-01")
+tr_ictihat_semantik_ara(initial_keyword="imzalı bordro fazla mesai", query="imzalı bordroda fazla çalışma tahakkuku varsa ispat")
+```
+
+Sonuç azsa sessizce doldurma: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) doğrulanmamış diye işaretle ve dur." Etiketler: `[ArthurLegal TR — 4857 m. X — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`; etiketleri silme.
+
+Yabancı yargı çevresi: kural ezberden verilmez. AB çalışma süresi: `eu_search_eu_law(query="organisation of working time")`; Azerbaycan: `az_search_acts(query="Əmək Məcəlləsi", types=[107])`; İngiltere: `uk_search_legislation(query="Working Time Regulations")`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
+
+## Çıktı
+
+Sohbet biçiminde; not değil.
+
+```
+**[Hukuk / rejim]:** [Kural, tek paragraf, madde atfı ve güncellik notu.]
+
+[Sınırda ya da değişen mevzuat varsa: bayrak.]
+
+[Ayak izindeki başka bir ülkede ya da TİS'te fark varsa: tek satır, farkın önemli olup olmadığı.]
+```
+
+> **Atıfları doğrula.** Yukarıdaki madde ve karar atıfları yapay zekâ desteğiyle üretildi. Dilekçe ya da resmî görüşte kullanmadan önce mevzuat.gov.tr, UYAP Emsal ya da büro araştırma aracıyla doğruluk ve güncelliği kontrol et.
+
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları cevaba göre uyarla.
+
+## Bu skill ne yapmaz
+
+- Kuralı ezberden söylemez; her cevap çekilen maddeye dayanır.
+- Sınırdaki sınıflandırma ya da kloz geçerliliği kararını vermez; kuralı söyler, sınırı işaretler.
+- İstenmedikçe çok ülkeli tarama yapmaz.
+- Tutar değişikliklerini takip etmez; cevap eskiyebilir, güncel için yeniden sor.
+- İşçi/serbest çalışan ayrımında → `/employment-legal:worker-classification`.
 
 ---
 
@@ -3251,401 +2296,200 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: worker-classification
 description: >
-  Classify a proposed worker engagement — employee, IC, temp, or vendor — by
-  running the applicable jurisdiction tests and flagging misclassification gaps
-  between the intended arrangement and what the facts actually support.
-  Prospective use only. Use when someone says "we want to bring on a
-  contractor", "is this a vendor or a temp", "how should we classify this
-  person", or describes a proposed working arrangement.
-argument-hint: "[describe the proposed arrangement, or just start and I'll ask]"
+  Önerilen bir çalışma ilişkisini sınıflandırır (Türk hukuku) — işçi (iş
+  sözleşmesi), serbest çalışan (eser / vekâlet / serbest meslek), geçici işçi
+  (özel istihdam bürosu), alt işveren ya da hizmet alımı — bağımlılık ölçütünü
+  ve İş K., TBK, 5510 hükümlerini olgulara uygular; istenen yapı ile olguların
+  desteklediği yapı arasındaki boşlukları (muvazaa, 4/b danışman riski)
+  işaretler. Yalnız ileriye dönük. "Danışman olarak alalım", "freelancer mı
+  işçi mi", "taşeron mu geçici işçi mi", "bu kişiyi nasıl sınıflandıralım"
+  denince kullan.
+argument-hint: "[önerilen düzenlemeyi anlatın ya da başlayın, ben sorayım]"
 ---
 
-# /worker-classification
+# /worker-classification — Çalışan Sınıflandırması
 
-Runs the applicable classification tests for the jurisdiction and flags where
-the proposed arrangement doesn't match the structure you're trying to use.
-Prospective only — for existing relationships, consult counsel.
+En pahalı sınıflandırma kararı, kimsenin bilinçli olarak vermediği karardır: biri "danışman" der, iş başlar, iki yıl sonra olgular iş ilişkisine benzer. Bu skill, iş başlamadan önce ölçütleri olgulara uygular ve anlatılan düzenlemenin kurulmak istenen yapıya uymadığı yeri söyler. Akıl yürütme kalıbını öğretir; kuralın kendisi her seferinde `tr_mevzuat_madde_getir` ile çekilir.
 
-## Instructions
-
-1. Load `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, escalation table.
-2. Run the full workflow below.
-3. If the attorney provides details upfront, extract what's available and ask
-   only about the gaps. Do not re-ask information already provided.
-
-## Examples
+## Örnekler
 
 ```
 /employment-legal:worker-classification
-We want to bring on a data scientist for 6 months, working out of our
-SF office, using our tools, embedded in our analytics team.
+6 ay boyunca bir veri bilimciyi analiz ekibimize gömülü, bizim ofisimizde,
+bizim araçlarımızla çalıştırmak istiyoruz; serbest meslek makbuzu keser.
 ```
 
 ```
 /employment-legal:worker-classification
-Is our recruiter contractor arrangement okay? She works exclusively for
-us, sets her own hours, uses her own laptop, project fee per placement.
+İşe alım danışmanı yalnız bize çalışıyor, saatlerini kendi belirliyor,
+kendi bilgisayarını kullanıyor, yerleştirme başına ücret alıyor.
 ```
 
-```
-/employment-legal:worker-classification
-(skill will ask for details)
-```
+## ⛔ Yalnız ileriye dönük — girişten ÖNCE sor
 
----
+> Bu iş başladı mı? Kişi şu anda bu düzenleme altında herhangi bir süredir çalışıyor mu?
 
-## Matter context
+**Evetse DUR.** Mevcut ilişkinin sınıflandırılması planlama değil, sorumluluk değerlendirmesidir: geriye dönük işçilik alacakları (kıdem, ihbar, fazla çalışma, yıllık izin — 5 yıllık zamanaşımı, 4857 m. 32/8 ve ek m. 3), SGK hizmet tespiti ve prim/idari para cezası, muvazaa tespiti, vergi düzeltmesi. Bu iş avukat yönetiminde, gizli ve bir iyileştirme planıyla yürür. Aynen şunu yaz ve bekle:
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/employment-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+> **Kapsam dışı — mevcut ilişki.** Bu skill bir çalışma ilişkisini *başlamadan önce* analiz eder. Anlattığınız düzenleme zaten var. Geriye dönük sınıflandırma; alacak, SGK ve vergi maruziyetini ve yeniden yapılandırmayı kapsayan ayrı bir risk değerlendirmesidir ve profilin eskalasyon matrisine göre avukata yönlendirilmelidir. Yine de yalnız ileriye dönük planlama için ("bugün sıfırdan kursaydık") analiz istiyorsanız "yine de devam" deyin; çıktı iyileştirme planı değildir, geçmiş dönem maruziyetini hesaplamaz ve avukat onayı olmadan güvenilir sayılmaz.
 
----
-
-## Purpose
-
-The most expensive classification decision is the one nobody made consciously.
-Someone describes what they want ("a contractor"), the engagement starts, and
-two years later the facts look like employment. This skill walks the applicable
-tests on the proposed arrangement before it starts — and tells you when what
-you're describing doesn't match the structure you're trying to use.
-
-This skill teaches the reasoning pattern. It does not state the law. Every
-test formulation, statutory citation, threshold, and carve-out must come from
-current research for the applicable jurisdiction.
-
-## Prospective-only hard gate — run BEFORE intake
-
-**This skill analyzes a PROPOSED engagement before the work starts.** Before any substantive intake (Step 1), ask:
-
-> Has this work already started? Is the worker currently engaged, or have they been performing work under this arrangement for any period of time (days, weeks, months, or years)?
-
-If the answer is yes — the engagement already exists, in any form, for any duration — **STOP**. Do not proceed to Step 1 intake. Classifying an existing arrangement is not a planning exercise; it's a liability assessment with remediation implications: back pay (OT, meal/rest premiums), unpaid employer-side payroll tax, benefits eligibility that was denied, unemployment and workers' comp back-exposure, state penalties (in CA, PAGA), IRS § 530 relief analysis, and — in strict-test jurisdictions with ongoing work — the prospective exposure of letting it run another day. That analysis is privileged, led by counsel, and coupled with a remediation plan.
-
-Output exactly this block and wait for a response:
-
-> **Out of scope — existing arrangement.**
->
-> This skill is designed to analyze a worker engagement *before it starts*, so the classification choice informs how to structure the contract and operations. You've described an arrangement that already exists. Analyzing an existing engagement retroactively is a different exercise: reclassification risk assessment coupled with remediation planning — back-pay exposure, payroll-tax back-exposure, penalty exposure, benefits exposure, IRS § 530 relief analysis, and prospective restructuring. That work should be privileged, led by an attorney, and likely coupled with outside-counsel review given the dollar and enforcement exposure.
->
-> Recommended next step: escalate per your config's escalation table (for retroactive classification, this typically routes to GC + outside employment counsel). I've flagged this for escalation routing.
->
-> **If you want to proceed with the prospective-style analysis anyway for planning purposes, say "proceed anyway" — but understand:**
->
-> - The output is NOT a remediation plan and should not be treated as one.
-> - The output does NOT scope back-pay, penalty, or payroll-tax exposure for the period already worked.
-> - The output does NOT substitute for the reclassification-risk assessment that this fact pattern actually calls for.
-> - The output will carry a prominent banner reflecting this scope mismatch, and the consequential-action gate will require an attorney yes before the analysis is treated as reliable.
->
-> Only say "proceed anyway" if you're using this skill for forward-looking planning (e.g., "if we were structuring this fresh today, how should we think about it?") and you have a separate plan for the remediation question.
-
-**Only proceed past this gate with an explicit `"proceed anyway"` (or equivalent user instruction). A hesitant "I guess" does not count — re-prompt. If the user proceeds anyway, prepend this banner to every output of this skill for this session:**
+Yalnız açık "yine de devam" ile ilerle; tereddütlü cevapta yeniden sor. Devam edilirse bu oturumdaki her çıktının başına:
 
 ```
-⚠️ SCOPE MISMATCH — OUT-OF-SCOPE USE
-This skill analyzes prospective worker engagements. The arrangement here
-already exists. This output is the prospective-style analysis the user
-requested for planning purposes only — it is NOT a remediation plan, does
-NOT scope existing back-pay / penalty / payroll-tax exposure, and does
-NOT substitute for the reclassification-risk assessment this fact pattern
-requires. The remediation question has been flagged for escalation to
-counsel per your config's escalation table.
+⚠️ KAPSAM UYUŞMAZLIĞI — İlişki zaten mevcut. Bu, yalnız planlama amaçlı
+ileriye dönük analizdir; iyileştirme planı değildir, geçmiş dönem alacak /
+SGK / vergi maruziyetini kapsamaz. Geriye dönük soru eskalasyona işaretlendi.
 ```
 
-If the answer to "has this work already started?" is no (the engagement is genuinely prospective, not yet begun), proceed to load context.
+## Bağlamı yükle
 
----
+`company-profile.md` ve `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → ayak izi, eskalasyon matrisi, varsa geçmiş sınıflandırma uyuşmazlıkları, büronun/şirketin sınıflandırma politikası, `## Outputs`, `## Who's using this`.
 
-## Load context
+**Matter bağlamı.** Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/employment-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/employment-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-Read `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → jurisdictional footprint, any classification history or
-prior settlements noted, escalation table, and any house classification
-policy the team has recorded.
+## Adımlar
 
-## Output header
+### 1. Bilgi toplama (tek blokta sor)
 
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` → `## Outputs` (it differs by user role — see `## Who's using this`).
-
-## Workflow
-
-### Step 1 — Information gathering
-
-Ask all of the following in a single block. Do not drip questions one at a
-time. Briefly explain why you're asking — attorneys answer better when they
-understand what the question is testing.
-
-> To run the right classification tests I need to understand the proposed
-> arrangement in detail. Please answer as many of these as you can — the more
-> complete the picture, the more accurate the analysis:
+> Doğru ölçütleri uygulayabilmem için düzenlemeyi ayrıntılı anlamam gerekiyor:
 >
-> **The work**
-> - What will this person actually do day-to-day?
-> - Is this work part of your company's core business, or peripheral to it?
->   (e.g., a software engineer at a software company = core; an IT
->   contractor at a law firm = more peripheral)
-> - Is this a defined project with a clear end, or ongoing indefinite work?
-> - How specialized is the skill? Does this person have expertise your team
->   doesn't?
->
-> **Control**
-> - Who sets their hours and schedule — them or you?
-> - Where will they work — your office, their location, or either?
-> - Will you direct how they do the work (methods, process, sequence), or
->   just what the end result should be?
-> - Will they supervise any of your employees?
->
-> **Economics**
-> - How will they be paid — hourly, daily, or fixed project fee?
-> - Will you provide equipment, tools, or software, or do they use their own?
-> - Do they work for other companies, or will this be exclusive?
-> - Will they bear any financial risk — can they profit beyond the fee, or
->   lose money on the engagement?
-> - Do they have their own business entity (LLC, S-corp, sole proprietor)?
->
-> **The arrangement**
-> - How do you want to structure this — direct contractor, staffing agency
->   temp, or vendor/SOW (company-to-company)?
-> - If staffing agency: who pays the worker — the agency or you? Who controls
->   day-to-day work?
-> - Will there be a written contract? Do you have a template in mind?
-> - Roughly how long is the engagement — weeks, months, over a year?
-> - Will they work alongside your employees doing similar work?
->
-> **Purpose(s) of the classification**
-> - What legal purposes does the classification need to serve — federal
->   payroll tax, FLSA wage/hour, state wage/hour, unemployment insurance,
->   workers' compensation, benefits eligibility? Different purposes are often
->   governed by different tests, and the answers can diverge.
->
-> **Jurisdiction**
-> - Where will this person physically perform the work?
+> **İş:** Günlük olarak ne yapacak? İş [ŞİRKET ADI]'ın asıl işinin parçası mı, yardımcı iş mi? Belirli bir sonucu (eser) mi teslim edecek, yoksa süre boyunca emeğini mi sunacak? Ekipte olmayan bir uzmanlığı var mı?
+> **Talimat ve organizasyon:** Saatleri kim belirliyor? Nerede çalışacak? Nasıl çalışacağına (yöntem, sıra) siz mi karar vereceksiniz, yalnız sonucu mu tanımlayacaksınız? Ekibin vardiya/toplantı düzenine dahil olacak mı? Sizin çalışanlarınızı yönetecek mi?
+> **Ekonomi:** Ücret saatlik/aylık mı, iş başına mı? Ekipman kimden? Başka müşterilere çalışıyor mu? Zarar riski taşıyor mu? Vergi mükellefiyeti (serbest meslek / şirket) var mı?
+> **Yapı:** Doğrudan sözleşme mi, özel istihdam bürosu (geçici işçi) mi, alt işveren mi, şirketten şirkete hizmet alımı mı? Daha önce sizde işçi olarak çalıştı mı? Yazılı sözleşme var mı? Süre?
+> **Amaç:** Sınıflandırma hangi sonuç için önemli — iş hukuku hakları, SGK (4/a – 4/b), vergi, İSG? Cevaplar amaca göre ayrışabilir.
+> **Yer:** İş fiilen hangi ülkede yapılacak?
 
-Wait for responses before proceeding. If the attorney can't answer certain
-questions, note the gaps — they affect the analysis.
+Cevapları bekle. Cevaplanamayan sorular analizi etkiler; boşluk olarak not et.
 
-### Step 2 — Identify the applicable tests
+### 2. Uygulanacak ölçütleri belirle (kuralı çek)
 
-> **Research the applicable tests before proceeding.** For the jurisdiction(s)
-> and purpose(s) identified in intake, research the currently operative
-> classification test(s). Jurisdictions commonly use one or more of: an ABC
-> test, an economic-realities test, a common-law right-to-control test, a
-> hybrid, or a purpose-specific statutory test. The test that governs for
-> federal payroll tax may not be the same test that governs for state
-> wage/hour, unemployment, or workers' compensation — run each purpose on its
-> own track. Cite the controlling statute, regulation, or case. Note the
-> effective date of each rule and whether it has been recently amended.
-> Identify any carve-outs or exceptions that may apply (e.g., B2B,
-> professional services, construction, referral-agency, business-to-business
-> contracting relationship). Verify currency. If you are uncertain about the
-> current state of the law in any jurisdiction, flag it for attorney
-> verification — do not state a test you haven't confirmed.
-
-If `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` records the company's house classification policy, apply it
-first and flag any tension with the researched test.
-
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a jurisdiction-and-purpose combination, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / purpose / test]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Tag every citation — each classification test, statute, regulation, or case — with where it came from: `[Westlaw]`, `[CourtListener]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations the attorney supplied. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
-
-### Step 3 — Apply the researched tests to the facts
-
-For each test identified in Step 2, apply it to the intake facts. Score each
-factor or prong explicitly — do not summarize. The attorney needs to see which
-factors are clean and which are problems.
-
-Use a structure like the one below, but populate the *factors* from the
-researched test, not from this file:
-
-```
-Test: [name of test, per research]
-Purpose: [what this test governs — federal tax / state wage-hour / UI / etc.]
-Source: [pinpoint cite to statute/regulation/case]
-Currency: [verified as of date]
-
-| Factor / prong | Intake facts | Signal / pass-fail |
+| İlişki | Çıpa | Ana ölçüt (metinden doğrula) |
 |---|---|---|
-| [Factor 1 from researched test] | [from intake] | [direction or pass/fail] |
-| [Factor 2] | [from intake] | [direction or pass/fail] |
-| ...                            |                |                   |
+| İş sözleşmesi | 4857 m. 8/1; TBK m. 393 | İşçinin işverene **bağımlı** olarak iş görmesi, işverenin ücret ödemesi |
+| Eser sözleşmesi | TBK m. 470 | Yüklenicinin bir **eser meydana getirmesi** karşılığında bedel |
+| Vekâlet / iş görme | TBK m. 502 | Bir işin görülmesi; düzenlenmemiş iş görme sözleşmelerine de uygulanır |
+| Asıl işveren – alt işveren | 4857 m. 2/6-7 | Yardımcı iş ya da asıl işin uzmanlık gerektiren bölümü; alt işveren işçileri yalnız o işyerinde; asıl iş bölünemez (uzmanlık istisnası); eski işçiyle alt işveren ilişkisi kurulamaz, aksi muvazaa → işçiler başlangıçtan itibaren asıl işverenin işçisi |
+| Geçici iş ilişkisi | 4857 m. 7; 4904 m. 17 | Yalnız İŞKUR izinli özel istihdam bürosu ya da holding/şirketler topluluğu içi görevlendirme; sınırlı hâller ve süreler |
+| Belirli süreli | 4857 m. 11 | Objektif koşul + yazılı; esaslı neden olmadan zincirleme → başlangıçtan belirsiz süreli |
+| Kısmi süreli / çağrı üzerine / uzaktan | 4857 m. 13, m. 14 | Çağrı üzerine çalışmada yazılı sözleşme; süre belirlenmemişse haftalık 20 saat; çağrı en az 4 gün önce; uzaktan çalışmada yazılı sözleşme ve zorunlu içerik |
+| Deneme süresi | 4857 m. 15 | En çok 2 ay (TİS ile 4 aya kadar) |
+| SGK statüsü | 5510 m. 4/1-a, 4/1-b | Hizmet akdiyle çalışan (4/a) – kendi adına ve hesabına bağımsız çalışan (4/b) |
+| İş K. kapsamı | 4857 m. 4 | İstisna işlerde TBK hizmet sözleşmesi hükümleri |
 
-Structure of the test:
-[How the test weighs factors — e.g., a multi-factor balancing test, or a
-conjunctive test where each prong must be satisfied, or a hybrid. State this
-from research, not from memory.]
+Bağımlılığın ölçütleri (talimat altında çalışma, işverenin iş organizasyonuna katılma, süreklilik, ücretin zamana göre ödenmesi, araç-gereç ve işyerinin işverence sağlanması, tek işverene çalışma, kişisel ifa, risk taşımama) kanunda sayılmaz; **yerleşik uygulama ve doktrindir** — `tr_ictihat_ara` ve `scholar_search_legal_scholarship` ile teyit et, karar numarası ezberden yazma.
 
-Result under this test:
-[Employee-leaning / IC-leaning / Fails prong X / Uncertain — contested prong]
-```
+Vergi boyutu (ücret – serbest meslek kazancı) → `/tax-legal` skill'lerine yönlendir; madde numarası ezberden verilmez.
 
-Repeat for each applicable test.
+Sonuç azsa sessizce doldurma: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]`, (4) doğrulanmamış diye işaretle ve dur." Her atıf etiketli: `[ArthurLegal TR — 6098 m. 393 — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`.
 
-**Notes on contested prongs.** Some prongs of some tests are heavily contested
-in case law and fact-sensitive. Identify contested prongs explicitly — do not
-paper over them. The fact that a test is stated does not mean its application
-to these facts is settled; flag prongs that require attorney judgment or that
-have generated recent litigation in the jurisdiction.
+### 3. Ölçütleri olgulara uygula
 
-### Step 4 — Classify and flag gaps
-
-**The classification call**
-
-Based on the test results, state the most accurate classification for this
-proposed arrangement:
-
-- **Employee (W-2):** Facts support employment under one or more applicable
-  tests for the relevant purpose(s).
-- **Independent Contractor (1099):** Facts support IC status under all
-  applicable tests for the relevant purpose(s).
-- **Temp via staffing agency:** Worker will be on the agency's payroll;
-  company is a client — co-employment risk exists if company exercises
-  day-to-day control. Research the applicable joint-employer standard if
-  relevant.
-- **Vendor/SOW:** Company-to-company engagement; worker is employed by the
-  vendor entity — cleanest structure if facts support it.
-- **Unclear / close call:** Facts cut both ways under one or more tests —
-  state which test is the problem and why.
-
-If tests give different answers for different purposes (e.g., defensible as
-IC for federal tax but fails a state wage/hour test), say so explicitly and
-name the controlling purpose and jurisdiction.
-
-**The gap analysis**
-
-This is the most important output. Compare the intended structure against what
-the facts actually support:
+Her ölçüt için ayrı tablo; özetleme, puanla:
 
 ```
-Intended structure: [what they said they want]
-What the facts suggest: [what the researched tests say this actually is]
+Ölçüt: [ad — kaynak]
+Amaç: [iş hukuku / SGK / vergi / İSG]
+Kaynak: [madde atfı ya da içtihat künyesi] | Güncellik: [GG.AA.YYYY]
 
-Gaps — where the arrangement doesn't match the intended structure:
-🔴 [Factor]: [What they described] conflicts with [intended classification]
-   because [specific researched test language + cite]. This is a significant
-   misclassification risk if the engagement proceeds as described.
-🟡 [Factor]: [What they described] is a weaker point under [test]. Not
-   disqualifying alone, but combined with other factors increases risk.
-✅ [Factor]: Supports [intended classification]. No issue.
+| Unsur | Giriş olgusu | Sinyal |
+|---|---|---|
+| Talimat / yöntem kontrolü | ... | işçi yönünde / bağımsız yönünde |
+| Organizasyona katılma | ... | ... |
+| ... | ... | ... |
+
+Ölçütün yapısı: [bütüncül değerlendirme mi, kümülatif şartlar mı — kaynaktan]
+Sonuç: [işçi yönünde / bağımsız yönünde / X unsuru belirsiz]
 ```
 
-**Escalation trigger**
+Tartışmalı unsurları açıkça işaretle ("tartışmalı — içtihadı kontrol et"); yazılı sözleşmenin adı ("danışmanlık", "hizmet alımı") tek başına belirleyici değildir — olgular esas alınır (yerleşik uygulama).
 
-Escalate per `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md` if any of the following, or any team-specific
-triggers recorded in that config:
-- The jurisdiction uses a strict test and the proposed work is core to the
-  company's business — do not proceed without counsel review.
-- Prior misclassification settlement or audit noted in the config — heightened
-  scrutiny applies.
-- Worker will supervise employees or have significant budget authority.
-- Engagement expected to exceed 12 months with no clear project endpoint.
-- Any contested prong where the outcome changes the classification.
+### 4. Sınıflandır ve boşlukları işaretle
 
-### Step 5 — Output
+**Sınıflandırma:**
+- **İşçi (iş sözleşmesi):** olgular bağımlılığı gösteriyor → SGK 4/a, işe giriş bildirgesi (5510 m. 8), `/employment-legal:hiring-review`.
+- **Bağımsız çalışan (eser / vekâlet / serbest meslek, SGK 4/b):** olgular her amaç için bağımsızlığı destekliyor.
+- **Geçici işçi (özel istihdam bürosu):** işçi büronun bordrosunda; m. 7'deki hâl, süre ve oran sınırları; büronun İŞKUR izni ve geçici iş ilişkisi kurma yetkisi (4904 m. 17).
+- **Alt işveren:** yalnız m. 2'deki şartlarla; asıl işverenle birlikte sorumluluk.
+- **Hizmet alımı (şirketten şirkete):** kişi tedarikçinin işçisi; günlük talimat sizden geliyorsa muvazaa/geçici iş riski.
+- **Belirsiz:** hangi ölçüt neden sorunlu.
 
-> **Research-connector pre-flight.** Before emitting the analysis, check whether a legal research connector is reachable for this session — Westlaw, CourtListener, or any firm-configured research MCP. Collect this into the reviewer note per CLAUDE.md `## Outputs`: if no connector returns results in Step 2 (or none is configured at run time), record it in the **Sources:** line of the reviewer note — e.g., `not connected — cites from training knowledge; the highest-fabrication pinpoints in classification analyses are ABC-test codifications, state carve-out subsections (e.g., CA Lab. Code §§ 2775/2776/2783), element counts in B2B exemptions, and purpose-specific test selection — spot-check those first`. Per-citation `[model knowledge — verify]` tags remain inline. Do not emit a standalone banner above the output.
+Amaçlara göre farklı sonuç çıkıyorsa (ör. sözleşme eser görünümlü ama SGK açısından 4/a olgusu) açıkça yaz.
 
-> **Jurisdiction assumption.** This analysis applies the tests operative in the jurisdiction(s) identified in intake. Classification rules vary materially by state and country, and the test that governs for one purpose (e.g., federal payroll tax) often differs from the test that governs another (e.g., state wage/hour). If the work will be performed in a jurisdiction not analyzed here, or if a new purpose is added later, this analysis may not apply as written.
+**Boşluk analizi (en önemli çıktı):**
+
+```
+İstenen yapı: [söylenen]
+Olguların gösterdiği: [ölçütlerin sonucu]
+
+🔴 [Unsur]: [anlatılan] istenen [yapı] ile çelişiyor çünkü [ölçüt + kaynak]. Düzenleme bu hâliyle başlarsa önemli risk.
+🟡 [Unsur]: [ölçüt] altında zayıf nokta; tek başına belirleyici değil.
+✅ [Unsur]: [yapıyı] destekliyor.
+```
+
+Türkiye'de sık görülen 🔴 kalıplar: eski işçinin "danışman" ya da alt işveren işçisi olarak devam etmesi (m. 2/7); asıl işin uzmanlık gerekçesi olmadan bölünmesi (m. 2/7); izinsiz büro üzerinden işçi temini (m. 7; 4904 m. 17); serbest meslek makbuzu kesen ama ekip içinde mesai düzeniyle çalışan kişi (4/a – 4/b).
+
+**Eskalasyon tetikleyicileri** (profil matrisine ek): iş asıl işin parçası ve olgular bağımlılığa işaret ediyor; geçmişte sınıflandırma uyuşmazlığı/denetim; kişi işçileri yönetecek ya da bütçe yetkisi olacak; belirli bir bitişi olmayan uzun süre; sonucu değiştiren tartışmalı unsur.
+
+### 5. Yurt dışında yapılacak iş
+
+Uygulanacak hukuk MÖHUK 5718 m. 27. Yabancı ülkenin ölçütü ezberden yazılmaz: AB `eu_search_eu_law(query="improving working conditions in platform work")`; Hollanda `nl_search_legislation`; İngiltere `uk_search_legislation`; Almanya `de_gesetz_ara`; Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
+
+### 6. ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_madde_getir(number="4857", madde_no=["2","7","8","11","14"])
+tr_mevzuat_madde_getir(number="6098", madde_no=["393","470","502"])
+tr_mevzuat_madde_getir(number="5510", madde_no="4")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="hizmet sözleşmesi eser sözleşmesi ayrımı bağımlılık unsuru", date_from="2022-01-01")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="asıl işveren alt işveren muvazaa uzmanlık", date_from="2022-01-01")
+```
+
+## Çıktı
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — profil ## Outputs]
 
-## Worker Classification Analysis
-**Proposed arrangement:** [what they described]
-**Jurisdiction:** [state/country]
-**Purpose(s):** [federal tax / state wage-hour / UI / WC / benefits]
-**Tests applied:** [list, each with pinpoint cite and currency date]
+# Çalışan Sınıflandırma Analizi
+**Önerilen düzenleme:** [...] | **Yer:** [...] | **Amaç(lar):** [iş hukuku / SGK / vergi / İSG]
+**Uygulanan ölçütler:** [liste, her biri kaynak ve güncellik tarihiyle]
 
----
+## ⚠️ İnceleyen notu
+- **En yakın sınıflandırma:** [İşçi / Bağımsız / Geçici işçi / Alt işveren / Hizmet alımı / Belirsiz]
+- **Kaynaklar:** [çekilen maddeler, içtihat sayısı; doğrulanamayan]
+- **Tartışmalı unsurlar:** [liste]
+- **Eskalasyon:** [yok / [isim] — neden]
 
-### Bottom line
+## Sonuç
+[Devam edilebilir / Önce X düzeltilmeli / Dur — tek cümle]
 
-[Can you proceed / Need to fix X first / Stop — one-sentence why]
+## Ölçüt sonuçları
+[Adım 3 tabloları]
 
----
+## Boşluk analizi
+[🔴 / 🟡 / ✅]
 
-### Classification
-
-**Closest classification:** [Employee / IC / Temp via agency / Vendor-SOW / Unclear]
-
-[One paragraph summary of why — test results in plain language, tied to the
-cited sources.]
-
----
-
-### Test results
-
-#### [Test name — per research]
-Purpose: [...] | Source: [...] | Currency: [...]
-[Scored table from Step 3]
-**Result:** [Employee-leaning / IC-leaning / Fails prong X / Mixed]
-
-#### [Additional researched tests — repeat the block]
-
----
-
-### Gap analysis
-
-[Flags as structured in Step 4 — 🔴 significant risks, 🟡 weaker points,
-✅ clean factors]
-
----
-
-### Escalation
-
-[None needed | Escalate to [name] before proceeding — [reason]]
-
----
-
-### Next steps
-
-[If IC viable: "Proceed — ensure the written agreement reflects the terms that
-support IC status under the researched test."]
-[If gaps exist: "Address the following before using IC structure: [list]"]
-[If agency/vendor is cleaner: "Consider restructuring as [agency/SOW] — here's
-why it's cleaner for this fact pattern."]
-[If escalation needed: "Do not proceed until counsel reviews the [specific
-issue]."]
-[If employee confirmed: "Classification confirmed as W-2 employee — run
-`/employment-legal:hiring-review` to review the offer letter, restrictive
-covenants, and jurisdiction-specific requirements."]
-[If IC confirmed: "Classification confirmed as independent contractor — no
-offer letter review needed. Ensure the written agreement reflects IC-supporting
-terms before the engagement starts."]
-[If agency/vendor: "Engagement should be structured through [agency/vendor
-entity] — coordinate with them on worker agreement. No `/hiring-review` needed."]
+## Sonraki adımlar
+[Bağımsız yapı uygunsa: sözleşmeye bağımsızlığı destekleyen hükümleri yansıt ve uygulamayı ona göre kur]
+[Boşluk varsa: başlamadan önce giderilecekler]
+[Büro/tedarikçi yapısı daha temizse: neden]
+[İşçi ise: `/employment-legal:hiring-review`]
 ```
 
-## Consequential-action gate (classify a worker)
+## Sonuç doğuran işlem kapısı (sınıflandırma kararı)
 
-**Before producing a "Proceed as IC / employee / agency / vendor" final recommendation:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/employment-legal/CLAUDE.md`. If the Role is **Non-lawyer**:
+Nihai "bu yapıyla devam" önerisinden önce eklenti ayarında `## Who's using this` oku. Rol **avukat değilse**:
 
-> Classifying a worker has legal consequences — misclassification exposes the company to back wages, taxes, benefits, penalties, and private-action risk, and in several states is strict-liability. Have you reviewed this classification call with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> - The arrangement (work, control, economics, structure) as described
-> - Jurisdiction and which tests were applied
-> - Test-by-test results with cites and currency
-> - Gap analysis (🔴 / 🟡 / ✅) with the weak prongs called out
-> - Open questions and what's unresolved
-> - What could go wrong (the misclassification theory this arrangement most likely fails on; prior-audit/settlement overlay if any)
-> - What to ask the attorney (is IC viable here; would restructuring through an agency or vendor remove the risk; what contract terms do we need to support the classification)
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+> Yanlış sınıflandırma geriye dönük işçilik alacakları, SGK primi ve idari para cezası, vergi düzeltmesi ve muvazaa tespitine yol açar. Bu sınıflandırmayı bir avukatla incelediniz mi? Hayırsa götüreceğiniz özet: düzenleme (iş, talimat, ekonomi, yapı); uygulanan ölçütler ve sonuçları; boşluk analizi; açık sorular; en olası risk teorisi; sorulacaklar (bağımsız yapı uygun mu, büro/tedarikçi üzerinden kurmak riski kaldırır mı, sözleşmede hangi hükümler gerekir). Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
 
-Do not produce a final "IC viable" / "use this classification" output past this gate without an explicit yes. A marked-DRAFT analysis for attorney review is fine.
+Açık "evet" olmadan nihai öneri verme; "TASLAK" işaretli analiz serbest.
 
----
+## Bu skill ne yapmaz
 
-## What this skill does NOT do
+- Mevcut ilişkiyi geriye dönük analiz etmez.
+- Hizmet/danışmanlık sözleşmesini yazmaz.
+- Yanlış sınıflandırma olmuşsa iyileştirme danışmanlığı yapmaz.
+- Hiçbir ülkenin kuralını ezberden söylemez.
+- Sınırdaki vakalarda avukatın yerini tutmaz.
 
-- Analyze an existing relationship retroactively — this is prospective only.
-- Draft the contractor agreement or SOW.
-- Advise on remediation if misclassification has already occurred.
-- State the law for any jurisdiction on its own — every test, factor, and
-  carve-out must come from verified current research.
-- Substitute for outside counsel on close calls — strict-test jurisdictions,
-  contested prongs, and prior-audit situations should always get a human
-  review before the engagement starts.
-
-## Close with the next-steps decision tree
-
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
-
----
-
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; seçimi avukat yapar.
