@@ -20,9 +20,9 @@ Başvuru geldiğinde:
    g) (e)+(f) bildirim üçüncü kişilere
    h) otomatik karar analiz aleyhine itiraz
    i) zarar halinde tazmin
-4. m. 28 istisnaları kontrol (savunma hakkı, suç önleme, yargı süreci vs.)
+4. m. 28 istisnaları kontrol: m. 28/1 (Kanun hiç uygulanmaz — ör. yargı makamlarınca işleme, kamu güvenliğine yönelik kamu faaliyetleri) ve m. 28/2 (m. 10, 11 — zararın giderilmesi hakkı hariç — ve 16 uygulanmaz: suç önleme/soruşturma, ilgili kişinin alenileştirdiği veri, kamu kurumlarının denetim/düzenleme/disiplin görevi, Devletin ekonomik ve mali çıkarları; Kanunun amacına ve temel ilkelerine uygun ve orantılı olmak kaydıyla)
 5. m. 13/2 — 30 gün içinde cevap
-6. Reddedilirse → 30 gün içinde Kurula şikayet hakkı bilgisi
+6. Reddedilirse → cevabı öğrendiği tarihten itibaren 30 gün, her hâlde başvuru tarihinden itibaren 60 gün içinde Kurula şikâyet hakkı bilgisi (m. 14/1)
 ```
 
 ---
@@ -79,8 +79,9 @@ karşılanamamıştır. Bu istisnaların ayrıntısı:]
 ────────────────────────────────────────────────────────
 4. HAKKINIZ
 
-Bu cevabı yetersiz bulmanız halinde, KVKK m. 14 uyarınca Kişisel Verileri 
-Koruma Kurulu'na 30 gün içinde şikayette bulunma hakkınız bulunmaktadır.
+Bu cevabı yetersiz bulmanız halinde, KVKK m. 14 uyarınca cevabımızı öğrendiğiniz 
+tarihten itibaren 30 gün ve her hâlde başvuru tarihinden itibaren 60 gün içinde 
+Kişisel Verileri Koruma Kurulu'na şikâyette bulunma hakkınız bulunmaktadır.
 
 KVK Kurumu: https://www.kvkk.gov.tr/
 
@@ -102,10 +103,14 @@ VERBİS Sicil No: [Sicil no]
 
 Cevap m. 28'e dayanıyorsa **istisna metnini açıkça yaz:**
 
-> "Talep ettiğiniz [konu] kapsamındaki kişisel veriler, KVKK m. 28/1-[a/b/c/ç/d] 
-> uyarınca [kanun tarafından öngörülen başka kanunlar / suç işlenmesinin 
-> önlenmesi veya soruşturma yapılması / kamu ekonomik veya mali çıkarları / 
-> mesleki sırrı] kapsamına girdiğinden talebinizin bu kısmı karşılanamamıştır."
+> "Talep ettiğiniz [konu] kapsamındaki kişisel verilerin işlenmesi KVKK m. 28/2-[a/b/c/ç] 
+> uyarınca [suç işlenmesinin önlenmesi veya suç soruşturması için gerekli olması / 
+> tarafınızca alenileştirilmiş olması / kamu kurumlarının denetim, düzenleme veya disiplin 
+> görevi / Devletin bütçe, vergi ve mali konulardaki ekonomik ve mali çıkarlarının 
+> korunması] kapsamında olduğundan talebinizin bu kısmı karşılanamamıştır; zararın 
+> giderilmesini talep etme hakkınız saklıdır."
+
+Kanunun hiç uygulanmadığı m. 28/1 hâllerinde (ör. yargı makamlarınca işleme) ilgili bendi ayrıca yaz. Avukatlık sırrı ve ticari sır m. 28'de istisna olarak sayılmaz; bu gerekçeyle ret için ayrı dayanak gerekir (tartışmalı — Kurul kararlarını `tr_kurum_karari_ara(kurum="kvkk", query="...")` ile ara).
 
 ---
 
