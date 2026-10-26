@@ -1,6 +1,8 @@
 # regulatory-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentinin skill'lerini tek dosyada toplar; ArthurLegal başlık, içindekiler ve Türkçe `/regulatory-legal:ai-ajan-onayi` skill'ini eklemiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+>
+> ⚠️ **Türk hukukuna uyarlanmadı.** `ai-ajan-onayi` dışındaki skill metinleri özgün İngilizce hâliyle ABD hukukuna dayanır. Türk hukuku sorusunda buradaki kural, süre ve dayanakları doğrudan kullanmayın; Türk mevzuatını `tr_mevzuat_madde_getir` ile doğrulayın.
 
 > Alan: Regulasyon - EPDK/SPK/Rekabet, RG digest, yapay zeka ajani onayi
 > Toplam skill: 10

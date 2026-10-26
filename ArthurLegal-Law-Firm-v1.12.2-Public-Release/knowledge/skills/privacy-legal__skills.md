@@ -1,6 +1,8 @@
 # privacy-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentinin skill'lerini tek dosyada toplar; ArthurLegal başlık ve içindekiler eklemiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+>
+> ⚠️ **Türk hukukuna uyarlanmadı.** Skill metinleri özgün İngilizce hâliyle ABD hukukuna dayanır. Türk hukuku sorusunda buradaki kural, süre ve dayanakları doğrudan kullanmayın; Türk mevzuatını `tr_mevzuat_madde_getir` ile doğrulayın.
 
 > Alan: KVKK/GDPR - DSAR, DPIA, DPA review
 > Toplam skill: 9

@@ -6,7 +6,7 @@
 
 ```
 İdari işlem (Kurum/Bakanlık) →
-İYUK m. 7 (30 gün) → İdare Mahkemesi (ilk derece) →
+İYUK m. 7 (60 gün; vergi mahkemesinde 30 gün; özel kanunda ayrı süre varsa o) → İdare Mahkemesi (ilk derece) →
 İYUK m. 45 (30 gün) → Bölge İdare Mahkemesi (istinaf) →
 İYUK m. 46 (30 gün) → Danıştay (temyiz, ilgili daire) →
 [İDDK — ısrar/çelişki]

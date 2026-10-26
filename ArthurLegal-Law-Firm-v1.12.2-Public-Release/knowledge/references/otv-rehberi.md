@@ -65,11 +65,11 @@ Rafineriye giriş →
 - Aylık raporlama (üretim, satış, stok)
 - **EPDK + GİB ortak denetim** yapabilir
 
-## Dava prep (Danıştay 3. Daire)
+## Dava hazırlığı (vergi mahkemesi)
 
 ÖTV mahsubu reddedilirse:
-- **İYUK m. 7 — 30 gün** Danıştay'a iptal davası
-- **Danıştay 3. Daire** — KDV/ÖTV uzmanı
+- **İYUK m. 7 — 30 gün** içinde vergi mahkemesinde iptal davası (2576 s.K. m. 6; yetkili mahkeme işlemi yapan dairenin bulunduğu yerdeki vergi mahkemesi — İYUK m. 37)
+- **Danıştay** temyiz aşamasıdır (ilgili vergi dava dairesi; temyiz yalnız İYUK m. 46'daki hallerde)
 - **Yürütmenin durdurulması** talep et (bekletme zarara yol açıyorsa)
 
 ## ArthurLegal MCP (`tr_`)
