@@ -14,7 +14,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 ### 2. Tüketici yanıltma + haksız rekabet
 - **TTK m. 54-63** — haksız rekabet
 - **6502 TKHK m. 61-62** — yanıltıcı reklam
-- **5651 İnternet K. m. 8/A, m. 9** — içerik kaldırma / erişim engelleme
+- **5651 İnternet K. m. 8/A** — içerik kaldırma / erişim engelleme (m. 9 AYM'nin 11/10/2023 tarihli, E. 2020/76 K. 2023/172 sayılı kararıyla iptal edildi — aşağıdaki nota bakın)
 
 ### 3. Dolandırıcılık (cezai)
 - **TCK m. 158/1-f** — bilişim sistemi araç edilerek dolandırıcılık (4-10 yıl)
