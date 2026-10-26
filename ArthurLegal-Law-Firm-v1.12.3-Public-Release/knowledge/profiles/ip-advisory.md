@@ -99,6 +99,7 @@
 
 - Hosting'e ihtarname → içeriğin çıkarılması/erişimin engellenmesi (m. 9 iptal edilmiştir — AYM 11.10.2023, E. 2020/76, K. 2023/172; özel hayat ihlalinde m. 9/A yolu geçerlidir)
 - Sulh ceza hakimi kararı → erişimin engellenmesi
+- Günlük erişimi bir milyonu aşan sosyal ağ sağlayıcı: 1.11.2026'dan itibaren kişilerin her başvurusuna 48 saat içinde, olumsuzsa gerekçeli cevap (5651 ek m. 4/3; 7578 s.K. m. 22 ile 9 ve 9/A sınırı kalktı) — telif bildirimine uygulanışı tartışmalı; ayrıntı `/ip-legal:takedown`
 - **Hata düzeltme + cevap hakkı** (5187 sayılı Basın K. m. 14)
 
 ---
