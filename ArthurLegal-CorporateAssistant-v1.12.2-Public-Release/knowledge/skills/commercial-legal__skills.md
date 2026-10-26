@@ -1,6 +1,6 @@
-﻿# commercial-legal - Skill Referans Kitapcigi
+# commercial-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türkçeye çevrilmiş, Türk hukukuna göre değiştirilmiş ve genişletilmiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10); yabancı yargı çevreleri için yalnız ArthurLegal MCP araçlarına yönlendirir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
 
 > Alan: Ticari sozlesmeler - NDA, MSA, SaaS, vendor
 > Toplam skill: 13
@@ -8,19 +8,19 @@
 
 ## Icindekiler
 
-- /commercial-legal:amendment-history (298 satir)
-- /commercial-legal:cold-start-interview (643 satir)
-- /commercial-legal:customize (101 satir)
-- /commercial-legal:escalation-flagger (159 satir)
-- /commercial-legal:governing-law-review (134 satir)
-- /commercial-legal:matter-workspace (184 satir)
-- /commercial-legal:nda-review (312 satir)
-- /commercial-legal:renewal-tracker (199 satir)
-- /commercial-legal:review (111 satir)
-- /commercial-legal:review-proposals (39 satir)
-- /commercial-legal:saas-msa-review (245 satir)
-- /commercial-legal:stakeholder-summary (192 satir)
-- /commercial-legal:vendor-agreement-review (351 satir)
+- /commercial-legal:amendment-history (160 satir)
+- /commercial-legal:cold-start-interview (274 satir)
+- /commercial-legal:customize (50 satir)
+- /commercial-legal:escalation-flagger (137 satir)
+- /commercial-legal:governing-law-review (224 satir)
+- /commercial-legal:matter-workspace (135 satir)
+- /commercial-legal:nda-review (215 satir)
+- /commercial-legal:renewal-tracker (183 satir)
+- /commercial-legal:review (103 satir)
+- /commercial-legal:review-proposals (29 satir)
+- /commercial-legal:saas-msa-review (210 satir)
+- /commercial-legal:stakeholder-summary (149 satir)
+- /commercial-legal:vendor-agreement-review (268 satir)
 
 ---
 
@@ -51,306 +51,170 @@ Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi
 
 ---
 
+---
+
 ## /commercial-legal:amendment-history
 
 ---
 name: amendment-history
 description: >
-  Trace how a contract has changed across its base agreement and all amendments —
-  either a summary of all changes over time, or a provision trace for a specific
-  clause. Use when the user says "what changed in this contract over time", "show
-  me the amendment history", "where's the latest [clause]", "how has [provision]
-  evolved", or uploads multiple versions of an agreement.
-argument-hint: "[file(s) | [CLM ID (coming soon)] | [repository link (coming soon)]] [--provision <clause name>]"
+  Bir sözleşmenin ana metni ve tüm değişiklikleri (ek protokol, tadil
+  protokolü, zeyilname) boyunca nasıl değiştiğini izler — ya zaman içindeki
+  tüm değişikliklerin özeti ya da belirli bir hükmün bugün geçerli metnine
+  kadar izi. Değişikliğin şeklini (TBK m. 13, 17), taraf değişikliğini (TBK
+  m. 205) ve yeniden düzenlenmiş metnin yenileme etkisini (TBK m. 133)
+  işaretler. "Bu sözleşme zamanla nasıl değişti", "değişiklik geçmişini
+  göster", "[hüküm]ün son hâli nerede", "[hüküm] nasıl evrildi" denince ya
+  da bir sözleşmenin birden çok sürümü yüklendiğinde kullan.
+argument-hint: "[dosya(lar) | [CLM ID (yakında)] | [depo bağlantısı (yakında)]] [--provision <hüküm adı>]"
 ---
 
-# /amendment-history
+# /amendment-history — Değişiklik Geçmişi
 
-Loads a base agreement and all amendments, then either summarizes what
-changed over time or traces a specific provision to its current
-controlling language.
+Ana sözleşmeyi ve tüm değişikliklerini yükler; ya zaman içindeki değişiklikleri özetler ya da belirli bir hükmü bugün geçerli metnine kadar izler. Üçüncü değişiklikten sonra kimse ana metnin ne dediğini ya da hangi sürümün geçerli olduğunu hatırlamaz; bu skill belgeleri kronolojik okur.
 
-## Instructions
+## Adımlar
 
-1. **Get the documents:** From file upload, [CLM ID (coming soon)], or [repository link (coming soon)]. Accept multiple files in one invocation. If none
-   provided, ask.
-
-2. **Detect the mode** by parsing the request per the mode
-   detection rules below. If a provision name is clearly stated, go straight
-   to Mode 2. If no provision is mentioned, run Mode 1. Ask only if
-   genuinely ambiguous.
-
-3. **Run the workflow below.** Follow it fully.
-
-4. **Offer follow-ups after output:**
-   - "Want me to trace another provision?"
-   - "Want a full playbook review of the current agreement as amended?"
-     (routes to vendor-agreement-review)
-   - "Want a stakeholder summary of the key changes?"
-     (routes to stakeholder-summary)
-
-## Examples
+1. **Belgeleri al:** yükleme, [CLM ID (yakında)] ya da [depo bağlantısı (yakında)]. Tek çağrıda birden çok dosya kabul et. Yoksa iste.
+2. **Modu belirle** (aşağıdaki kurallar). Hüküm adı açıkça söylendiyse doğrudan Mod 2; söylenmediyse Mod 1. Yalnız gerçekten belirsizse sor.
+3. **Akışı eksiksiz uygula.**
+4. **Takip öner:** "Başka bir hükmü izleyeyim mi?" · "Değişikliklerle birlikte bugünkü sözleşmenin tam playbook incelemesi?" (→ vendor-agreement-review) · "Önemli değişikliklerin iş birimi özeti?" (→ stakeholder-summary)
 
 ```
-/commercial-legal:amendment-history acme-msa.pdf amendment-1.pdf amendment-2.pdf
+/commercial-legal:amendment-history ana-sozlesme.pdf ek-protokol-1.pdf ek-protokol-2.pdf
+/commercial-legal:amendment-history --provision tazmin
 ```
 
-```
-/commercial-legal:amendment-history --provision indemnity
-```
+## Matter bağlamı
 
-```
-/commercial-legal:amendment-history
-[paste agreement and amendment text]
-```
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
----
+## Mod tespiti
 
-## Matter context
+**Mod 1 — Özet** (belirli hüküm yok): "ne değişti", "değişiklik geçmişi", "zaman içindeki değişiklikler", "değişiklikleri özetle", "sözleşmenin bugünkü hâli".
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+**Mod 2 — Hüküm izi** (belirli hüküm/konu): "[hüküm] nerede", "son [hüküm]", "[şart] nasıl değişti", "tazmini bul", "[konu] hakkında şimdi ne diyor".
 
----
+Eşlemeler: "tazmin" → tazmin maddesi · "sorumluluk", "tavan" → sorumluluğun sınırlandırılması · "fesih", "süre" → süre ve sona erme · "veri", "KVKK", "kişisel veri eki" → veri koruma hükümleri · "fikrî hak", "lisans" → fikrî haklar · "fiyat", "bedel", "ödeme" → ödeme şartları · "yenileme" → yenileme düzeni · "cezai şart" → ceza koşulu · "yetki", "tahkim" → uyuşmazlık çözümü.
 
-## Purpose
+Terim birden çok hükme denk geliyorsa: "[terim] ile ilgili [N] hüküm buldum — [liste]. Hangisi?" Mod belirsizse tek soru: "Sözleşmedeki tüm değişikliklerin özeti mi, yoksa tazmin, sorumluluk ya da fesih gibi belirli bir hükmün izi mi?"
 
-Contracts accumulate amendments. By the third amendment, nobody remembers
-what the original said or which version of a clause controls. This skill
-reads the base agreement and all amendments in chronological order and
-either summarizes what changed across the whole contract or traces a
-specific provision through every version to find the current controlling
-language.
+## Adım 1: Belgeleri yükle ve sırala
 
-## Mode detection
+- **[CLM] (yakında):** karşı taraf ya da sözleşme adıyla ara; imza tarihleri meta veride.
+- **[Belge deposu] (yakında):** "Ek Protokol", "Tadil Protokolü", "Zeyilname", "Değişiklik Sözleşmesi", "Ek-1", "Amendment No. 1", "Addendum" gibi adları ara; dosya tarihi ya da numarayla sırala.
+- **Doğrudan yükleme:** sıra genelde başlıktan ("1 No.lu Ek Protokol", "İkinci Tadil Protokolü") ya da tarihten bellidir — sormadan devam et.
 
-Parse the user's request to determine which mode to run. Do not ask
-which mode unless the request is genuinely ambiguous.
+Yalnız şu hâllerde sırayı teyit ettir: dosya adları sıra vermiyor ("sozlesme-son.pdf", "sozlesme-v2.pdf"); dosya adında ve başlıkta tarih yok; iki belge aynı değişikliğin sürümleri gibi görünüyor. Sıra çıkarımsa yalnız emin olmadığın yerde not düş: "Sıra başlıklardan çıkarıldı — emin olmadığım belge: [belge]. İncelemenizi etkiliyorsa teyit edin."
 
-**Mode 1 — Summary** (no specific provision mentioned)
-Trigger phrases: "what changed", "amendment history", "show me changes
-over time", "summarize amendments", "what does this contract look like now"
+Sıralama kuralları: içeriği okumadan önce kronolojiyi kur; meta verideki imza tarihi → başlık ya da girişteki tarih ("işbu Ek Protokol [tarih] tarihinde…") → atıf zinciri ("[tarih] tarihli Hizmet Sözleşmesi'nde değişiklik yapan…").
 
-**Mode 2 — Provision trace** (specific clause or topic named)
-Trigger phrases: "where's the [clause]", "latest [provision]", "how did
-[term] change", "find the indemnity", "what does it say now about [topic]"
+## Gizlilik
 
-Common provision mappings:
-- "indemnity" / "indemnification" → indemnification section
-- "liability" / "liability cap" → limitation of liability
-- "termination" → term and termination
-- "data" / "privacy" / "DPA" → data protection provisions
-- "IP" / "intellectual property" → IP ownership and licenses
-- "price" / "fees" / "payment" → payment terms
-- "auto-renewal" / "renewal" → renewal mechanics
+Ana sözleşme ve değişiklikler çoğu zaman gizlidir; çıktı kaynağın statüsünü devralır. Her çıktının başına eklenti ayarı `## Outputs` → üst başlığı koy, yalnız dar çevrede dağıt; dışa gidecek teslimde başlığı çıkar.
 
-If the term is ambiguous and maps to more than one provision, list the
-candidates and ask which one:
-> "I found [N] provisions related to [term] — [list them]. Which one?"
+## Adım 2: Oku ve indeksle
 
-If the overall request is ambiguous between modes, ask one question:
-> "Summary of all changes across the contract, or trace a specific
-> provision — like indemnity, liability, or termination?"
+Her belgeyi kronolojik oku ve çıkar: belge türü (ana sözleşme, kaçıncı değişiklik, ek), imza tarihi, taraflar, açıkça değiştirilen / eklenen / silinen hükümler. Çalışma indeksini çıktıyı yönetmek için kullan; kullanıcıya gösterme.
 
----
+Okurken şu Türk hukuku işaretlerini topla (yorumlama; **izleme maddesi** olarak yaz):
 
-## Step 1: Load and order the documents
+- **Değişikliğin şekli.** Kanunda yazılı şekle bağlı bir sözleşmenin değiştirilmesi de yazılı olmalıdır; sözleşme metniyle çelişmeyen tamamlayıcı yan hükümler hariç (TBK m. 13). Taraflar kanunda şekle bağlı olmayan sözleşme için belirli bir şekil (ör. "değişiklikler yalnız iki tarafça imzalı yazılı ek protokolle yapılır") kararlaştırdıysa, o şekle uyulmadan yapılan değişiklik tarafları bağlamaz (TBK m. 17/1). E-postayla, sipariş formuyla ya da tek tarafın imzasıyla yapılmış "değişiklik" → işaretle.
+- **İmza.** Değişiklik ana sözleşmedeki imza düzeniyle (yetkili temsilci, ıslak imza ya da güvenli e-imza — 5070 m. 5) imzalanmış mı?
+- **Taraf değişikliği.** Bir değişiklikte taraf adı farklıysa: yalnız unvan değişikliği mi, sözleşmenin devri mi (devralan, devreden ve kalan tarafın anlaşması ya da kalan tarafın önceden izni/sonradan onayı; devredilen sözleşmenin şekline tabi — TBK m. 205), yoksa birleşme/bölünme gibi kanundan doğan halefiyet mi (m. 205/4; TTK'daki hükmü çek: `tr_mevzuat_icinde_ara(number="6102", query="külli halefiyet")`)? Resmî devir belgesi yoksa işaretle.
+- **"Tadil edilmiş ve yeniden düzenlenmiş" metin.** Yeni bir borçla mevcut borcun sona erdirilmesi (yenileme) ancak tarafların açık iradesiyle olur (TBK m. 133/1). Yeniden düzenlenmiş metnin ana sözleşmenin yerine mi geçtiği yoksa onu mu değiştirdiği, bağlı teminatlara (kefalet, garanti, rehin) etkisi → **izleme maddesi; değerlendirme avukatın**.
+- **Bedeli artıran değişiklik** damga vergisi doğurabilir → oran ve tutar yazma; `/tax-legal` skill'leri.
+- **Bölüm numarası kayması:** aynı hüküm farklı numaraya taşınmış mı?
 
-Accept documents from any of these sources:
+## Mod 1: Tüm değişikliklerin özeti
 
-**[CLM integration coming soon] (if connected):**
-Search by counterparty name or agreement title. Pull the base agreement
-and all amendments. Record metadata typically includes execution dates —
-use these to establish chronological order.
-
-**[Document repository integration coming soon] (if connected):**
-Search by counterparty name or filename. Look for files matching patterns
-like "Amendment", "Addendum", "Amendment No. 1", "First Amendment", or
-numbered suffixes. Pull all matches and sort by file date or filename
-numbering.
-
-**Direct upload:**
-User provides files directly. In most cases the ordering is
-self-explanatory from document titles (e.g., "Amendment No. 1",
-"Second Amendment", "Addendum A") or dates visible in the filename
-or document header — proceed without asking.
-
-Only ask the user to confirm ordering if:
-- Filenames give no indication of sequence (e.g., "agreement-final.pdf",
-  "agreement-v2.pdf", "agreement-markup.pdf")
-- Dates are absent from both filenames and document headers
-- Two documents appear to be the same amendment version
-
-If ordering was inferred rather than confirmed, note confidence at the
-top of the output only where uncertain:
-> "Order inferred from document titles — one item I was less certain
-> about: [specific document]. Confirm if this affects your review."
-
-**Ordering rules:**
-- Always establish chronological order before reading content.
-- If execution dates are available in metadata, use them.
-- If not, look for dates in the document header or recitals
-  ("This Amendment, dated as of...").
-- Amendments often reference the agreement they modify ("this Amendment
-  to the Master Services Agreement dated [X]") — use these references
-  to confirm the chain.
-
----
-
-## Privilege inheritance
-
-This skill reads the base agreement and amendments — often privileged or confidential in their own right, and typically used for privileged analysis. The output inherits the source's privilege and confidentiality status. Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` to every output below, distribute only within the privilege circle, and store it where privileged materials live. Strip the header before any external delivery.
-
-## Step 2: Read and index
-
-Read each document in chronological order. For each, extract:
-- Document type (base agreement, amendment number, addendum, etc.)
-- Execution date
-- Parties (confirm they match across documents — flag if a new party
-  was added or a party name changed)
-- A list of provisions explicitly modified, added, or deleted
-
-Build a working index before producing output. Use it internally to
-drive the output — do not show it to the user.
-
----
-
-## Mode 1: Summary of all changes
-
-### Section reference rule
-
-Every finding must include an inline section reference so the reader
-can verify against the source document without searching:
-
-  "Termination for convenience (§12.3): Added. Customer may terminate
-  on 90 days written notice with no fee after the initial term."
-
-If a provision spans multiple sections or the section number changed
-across amendments, cite all references:
-  "Indemnification (§9.1 base; §9.1 restated in Amendment 5)"
-
-### Output format
+**Bölüm atfı kuralı:** Her bulguda satır içi madde atfı olsun ki okuyan kaynakta aramadan doğrulayabilsin: "İsteğe bağlı fesih (m. 12.3): Eklendi. İlk süreden sonra Müşteri 90 gün önceden yazılı bildirimle, bedelsiz feshedebilir." Numara değiştiyse hepsini yaz: "Tazmin (ana sözleşme m. 9.1; 5 No.lu Ek Protokol ile yeniden düzenlenen m. 9.1)."
 
 ```markdown
-# Amendment History: [Counterparty] — [Agreement type]
+[ÜST BAŞLIK — profil ## Outputs]
 
-**Base agreement:** [date]
-**Amendments:** [N] ([date of first] → [date of last])
-**Last amended:** [date]
+# Değişiklik Geçmişi: [Karşı taraf] — [Sözleşme türü]
 
----
+**Ana sözleşme:** [tarih]
+**Değişiklikler:** [N] ([ilk tarih] → [son tarih])
+**Son değişiklik:** [tarih]
 
-## What changed — chronological
+## Ne değişti — kronolojik
 
-### Amendment 1 — [date]
-**Purpose:** [one sentence — why this amendment existed, from recitals
-or clear from context. If not stated, omit rather than guess.]
+### 1 No.lu Ek Protokol — [tarih]
+**Amaç:** [tek cümle — girişte ya da bağlamdan açıksa; değilse yazma, tahmin etme]
+**Önemli değişiklikler:**
+- [Hüküm] (m. [X.X]): [eskiden ne diyordu → şimdi ne diyor, sade dille]
+- [Eklenen hüküm] (m. [X.X]): [ne yapıyor]
+- [Silinen hüküm] (m. [X.X]): [ne kaldırıldı ve neden önemli]
 
-**Material changes:**
-- [Provision] (§[X.X]): [what it said before → what it says now,
-  in plain English]
-- [New provision added] (§[X.X]): [what it does]
-- [Provision deleted] (§[X.X]): [what was removed and why it matters]
+[her değişiklik için tekrarla]
 
-### Amendment 2 — [date]
-[same structure]
+## Bugünkü durum
 
-[repeat for each amendment]
-
----
-
-## Net current state
-
-| Provision | Current position | §Ref | Last changed |
+| Hüküm | Güncel pozisyon | Madde | Son değişiklik |
 |---|---|---|---|
-| [clause] | [plain English summary] | §[X.X] | Amendment N, [date] |
-| [clause] | [unchanged from base] | §[X.X] | Base agreement |
+| [kloz] | [sade özet] | m. [X.X] | [N] No.lu Ek Protokol, [tarih] |
+| [kloz] | [ana sözleşmeden değişmedi] | m. [X.X] | Ana sözleşme |
 
----
-
-## Watch items
-[Flag anything that looks inconsistent — e.g., an amendment modifying
-a provision that was already deleted, contradictory language between
-amendments, a party name that changed without a formal assignment,
-or a provision where the section number shifted across documents.
-Include section references on every flag.]
+## İzleme maddeleri
+[Tutarsız görünen her şey, madde atfıyla: zaten silinmiş hükmü değiştiren değişiklik; değişiklikler arasında çelişen ifade; resmî devir olmadan değişen taraf adı; kararlaştırılan şekle (TBK m. 17) uymayan değişiklik; yeniden düzenlenmiş metnin yenileme sorusu (TBK m. 133); belgeler arasında kayan madde numarası.]
 ```
 
----
+## Mod 2: Hüküm izi
 
-## Mode 2: Provision trace
-
-### Output format
-
-Show only what changed. Do not list amendments where the provision
-was untouched — skip them entirely.
+Yalnız değişeni göster; hükme dokunmayan değişiklikleri tamamen atla.
 
 ```markdown
-# Provision Trace: [Provision name]
-## [Counterparty] — [Agreement type]
+[ÜST BAŞLIK — profil ## Outputs]
 
----
+# Hüküm İzi: [Hüküm adı]
+## [Karşı taraf] — [Sözleşme türü]
 
-### Original — [Base agreement date], §[X.X]
-> "[exact quote]"
+### Ana metin — [Ana sözleşme tarihi], m. [X.X]
+> "[birebir alıntı]"
+*Sade dille:* [tek cümle]
 
-*Plain English:* [one sentence]
+### [N] No.lu Ek Protokol — [tarih], m. [X.X]
+**Eski:**
+> "[önceki metnin birebir alıntısı]"
+**Yeni:**
+> "[yeni metnin birebir alıntısı]"
+*Ne değişti:* [tek cümle — taraflar için pratik etkisi]
 
----
+[Yalnız bu hükme dokunan sonraki değişiklikler.]
 
-### Amendment [N] — [date], §[X.X]
+## Bugün geçerli metin
+**m. [X.X] — [kaynak belge, tarih]**
+> "[birebir alıntı]"
+*Sade dille:* [tek cümle]
 
-**Was:**
-> "[exact quote of prior language]"
-
-**Now:**
-> "[exact quote of replacement language]"
-
-*What changed:* [one sentence — practical effect on the parties]
-
----
-
-[Only subsequent amendments that touched this provision appear here.
-All others are omitted.]
-
----
-
-## Current controlling language
-
-**§[X.X] — [source document, date]**
-> "[exact quote]"
-
-*Plain English:* [one sentence]
-
----
-
-## Watch items
-[Flags, inconsistencies, open questions — with section references.
-Common items to check: whether the provision is subject to or carved
-out of the liability cap; whether the section number shifted across
-amendments; whether the amendment language conflicts with another
-provision.]
+## İzleme maddeleri
+[Madde atıflı bayraklar, tutarsızlıklar, açık sorular. Sık bakılanlar: hüküm sorumluluk tavanına tabi mi, tavan dışında mı; madde numarası kaydı mı; değişiklik ifadesi başka bir hükümle çelişiyor mu; değişiklik kararlaştırılan şekle uygun mu.]
 ```
 
-If the provision was never amended after the base agreement:
-> "This provision has not been modified by any amendment. Original
-> language controls. §[X.X], base agreement, [date]."
+Hüküm ana sözleşmeden sonra hiç değişmediyse: "Bu hüküm hiçbir değişiklikle değiştirilmemiştir. Ana metin geçerlidir. m. [X.X], ana sözleşme, [tarih]."
 
----
+## ArthurLegal MCP (`tr_`)
 
-## Close with the next-steps decision tree
+```
+tr_mevzuat_madde_getir(number="6098", madde_no=["13","17","19","23","133","205"])
+tr_mevzuat_madde_getir(number="5070", madde_no="5")
+tr_mevzuat_icinde_ara(number="6102", query="külli halefiyet")
+```
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+Atıf etiketi: `[ArthurLegal TR — 6098 m. X — GG.AA.YYYY]`. Çekilemeyen madde: "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/".
 
-## What this skill does not do
+## Kapanış
 
-- It does not determine which document controls in the event of a
-  conflict between the base agreement and an amendment — that is a
-  legal interpretation question. It flags conflicts and routes to Legal.
-- It does not draft new amendments.
-- It does not compare against the playbook in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` — that is the
-  vendor-agreement-review skill's job. This skill is purely historical.
-- It does not infer what an amendment means if the language is
-  ambiguous — it quotes exactly and flags ambiguity for Legal.
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları bu çıktıya göre uyarla (yeni değişiklik taslağı, eskalasyon, eksik belge iste, bekle, diğer). Ağaç çıktıdır; seçimi avukat yapar.
+
+## Bu skill ne yapmaz
+
+- Ana sözleşme ile değişiklik çeliştiğinde hangisinin geçerli olduğuna karar vermez — bu yorum sorusudur (tarafların gerçek ve ortak iradesi, TBK m. 19/1; matbu koşulda belirsizlik düzenleyen aleyhine, TBK m. 23). Çelişkiyi işaretler, hukuka yönlendirir.
+- Yeni değişiklik yazmaz.
+- Playbook'la karşılaştırmaz — o vendor-agreement-review'un işidir; bu skill yalnız tarihseldir.
+- Belirsiz değişiklik ifadesine anlam yüklemez; birebir alıntılar ve belirsizliği hukuka işaretler.
 
 ---
 
@@ -359,646 +223,277 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: cold-start-interview
 description: >
-  Run the cold-start interview to learn your commercial contracts practice and write
-  your team practice profile. Use on first use of the plugin, when
-  `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` is missing or still contains template
-  placeholders, or when the user says "set up the plugin", "configure commercial
-  contracts", "onboard me", or "let's get started". This is the only skill that
-  should run on a fresh install.
-argument-hint: "[--redo to re-run on an already-configured plugin] [--check-integrations to re-probe integrations only] [--side sales|purchasing to re-run only the playbook section for one side]"
+  İlk kurulum — ticari sözleşme pratiğinizi öğrenir ve ekip profilini yazar: pratik
+  ortamı (büro / şirket içi), taraf (satış / satın alma), Türk hukukuna göre standart
+  duruşlar (sorumluluğun sınırlandırılması TBK m. 115, cezai şart TBK m. 179, 180, 182 ve
+  TTK m. 22, veri koruma, süre ve fesih, uygulanacak hukuk ve yetki/tahkim), eskalasyon
+  matrisi ve imza yetkisi, örnek sözleşmelerden fiilî duruşlar. İlk kullanımda,
+  `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` yoksa ya da
+  yer tutucu içeriyorsa, "eklentiyi kur", "beni tanı", "başlayalım" denince kullan.
+  Yeni kurulumda çalışacak tek skill budur.
+argument-hint: "[--redo | --full | --check-integrations | --side sales|purchasing]"
 ---
 
 # /cold-start-interview
 
-Runs the cold-start interview. First run writes `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`; subsequent runs with `--redo` re-interview and show a diff before overwriting.
+1. **Durum:** `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` yoksa görüşmeye başla. `<!-- SETUP PAUSED AT: -->` varsa o bölümden devam öner. `[PLACEHOLDER]` ya da `[Your Company Name]` varsa (duraklatma notu yok) baştan ya da yer tutucuların başladığı yerden devam öner. Doluysa ve `--redo` / `--side` yoksa sor: "Kurulum yapılmış görünüyor. Yeniden yapalım mı? Üzerine yazmadan önce farkı gösteririm."
+2. **Taşıma:** eski önbellek yolunda (`~/.claude/plugins/cache/claude-for-legal/commercial-legal/*/CLAUDE.md`) dolu bir CLAUDE.md varsa ve ayar yolunda yoksa ayar yoluna kopyala; neyin taşındığını göster.
+3. Görüşmeyi yürüt (önce Bölüm 0); örnek belgelerden fiilî duruşları çıkar (Bölüm 4); profili aşağıdaki iskelete göre yaz (üst klasörleri gerekirse oluştur), avukatın kendi sözleriyle.
+4. Özeti göster: "Duyduklarım bunlar — profil yazıldı. Neyi yanlış anladım?" Deneme incelemesi öner; CLM bağlıysa yenileme kaydını toplu yüklemeyi öner.
 
-## Instructions
+**`--check-integrations`:** görüşme yapma; yalnız bağlantı kontrolünü çalıştır ve `## Available integrations` tablosunu yeniden yaz. ✓ yalnız gerçek bir MCP çağrısı başarılı döndüyse; denenmemiş bağlantı ⚪. `.mcp.json` beyanına bakarak ✓ verme.
 
-1. **Check current state:** Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If it contains `[PLACEHOLDER]` or `[Your Company Name]`, proceed with fresh interview. If populated and `--redo` not passed, ask: "Looks like you're already set up. Want to re-run the interview? This will overwrite `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` (I'll show you a diff first)."
+**`--side sales` / `--side purchasing`:** yalnız Bölüm 2'yi o tarafa göre yürüt, `### Sales-side playbook` ya da `### Purchasing-side playbook` alt bölümüne yaz; Bölüm 0, 1 ve 3'ü sorma, diğer tarafa dokunma; `**Active side:**` satırını güncelle (`sales`, `purchasing`, `both`).
 
-2. **Follow the interview script below.**
+**Bölüm ve anahtar adlarını çevirme.** `## Who we are`, `## Who's using this`, `## Available integrations`, `## Playbook`, `**Active side:**`, `### Sales-side playbook`, `### Purchasing-side playbook`, `#### Limitation of liability` vb., `## Escalation`, `## House style`, `## Outputs`, `## Review preferences` (`confirm_routing`), `## NDA triage preferences` (`closing_action`), `## Playbook monitor settings` (`pattern_threshold`, `lookback_months`), `## Matter workspaces` adları aynen kalır — inceleme skill'leri ve ajanlar bunları birebir okur. İçerik Türkçe yazılır.
 
-3. **Ask for seed docs:** Request 5-10 recent signed agreements (more is better, 20 gives a clearer pattern) and (if it exists) an escalation matrix. Accept file paths, Google Drive links, or [CLM] record IDs.
+## Ortak profil
 
-4. **Read the seed docs** and extract actual playbook positions. Note deltas between stated positions and what was signed.
+`~/.claude/plugins/config/claude-for-legal/company-profile.md` varsa oku ve tek satırla teyit et ("Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu?"); teyitte ortak soruları (pratik ortamı, ad, sektör, ne sattığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri) atla. Yoksa ilk kurulan eklenti budur: ortak soruları sor, paketteki `knowledge/company-profile.md` şablonuna göre yaz ve söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak." Playbook, eskalasyon matrisi ve ev üslubu eklentiye özeldir.
 
-5. **Migration:** If a populated CLAUDE.md (no `[PLACEHOLDER]` markers) exists at `~/.claude/plugins/cache/claude-for-legal/commercial-legal/*/CLAUDE.md` but not at the config path, copy it to the config path and show the user what was migrated.
+**Kurulum kapsamı:** Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden sözleşme okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Onay al. Ev dizinindeysen sessizce geç.
 
-6. **Write `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`** (create parent directories as needed) per the structure below. Use the lawyer's own words where possible.
+## Başlamadan önce
 
-7. **Show summary + propose next steps:**
-   - "Here's what I heard — `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` is written. What did I get wrong?"
-   - Offer a test review: "Want to throw a contract at me?"
-   - If a [CLM] is connected: offer to bulk-load the renewal register
+Kısa tut, önce hızlı/tam sor:
 
-## `--check-integrations`
-
-Re-runs the integration availability check (CLM, e-signature, document storage, Slack) and updates `## Available integrations` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Does not re-interview. Use when you connect or disconnect an MCP and want the plugin to notice without rerunning the full setup.
-
-When probing: only report ✓ if an MCP tool call actually succeeded. Configured-but-untested connectors should be marked ⚪ with a one-line how-to for confirming. Never report ✓ based on `.mcp.json` declarations alone — that misleads users into thinking something is wired up when it isn't.
-
-## `--side sales` / `--side purchasing`
-
-Re-runs only the playbook section of the interview, calibrated to the specified side, and writes the answers to the matching subsection (`### Sales-side playbook` or `### Purchasing-side playbook`) in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Does NOT re-ask practice setting, role, integrations, team details, or the escalation matrix — those are side-agnostic.
-
-Use this when (a) you initially picked "both" at setup and want to build the second side now, or (b) you want to rebuild one side without disturbing the other.
-
-Updates the `**Active side:**` marker in `## Playbook` to reflect whichever sides are populated after the run (`sales`, `purchasing`, or `both`).
-
-## Examples
-
-```
-/commercial-legal:cold-start-interview
-```
-
-```
-/commercial-legal:cold-start-interview --redo
-```
-
-```
-/commercial-legal:cold-start-interview --check-integrations
-```
-
-```
-/commercial-legal:cold-start-interview --side purchasing
-```
-
----
-
-## Purpose
-
-You are meeting this commercial contracts team for the first time. Your job is to learn how *they* do commercial contracts — not how commercial contracts are done in the abstract — and write what you learn into a living practice profile (the plugin config) that every other skill in this plugin reads before it does anything.
-
-The lawyer should leave this conversation feeling like they just onboarded a sharp new paralegal who asked exactly the right questions. They should never see a YAML config file. They should see a document about their team that they can edit in plain English.
-
-## What "cold start" means
-
-Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
-- **Does not exist** → start the interview.
-- **Contains `<!-- SETUP PAUSED AT: -->`** → greet the user and offer to resume from that section.
-- **Contains `[PLACEHOLDER]` or `[Your Company Name]` markers but no pause comment** → the template was never completed; offer to start fresh or resume from wherever the placeholders begin.
-- **Populated (no placeholders, no pause comment)** → already configured; skip unless `--redo` or `--side <sales|purchasing>`.
-
-## `--side` flag: playbook-side-only re-interview
-
-If invoked as `/commercial-legal:cold-start-interview --side sales` or `--side purchasing`, run only Part 2 (the playbook) calibrated to the specified side, and write the answers to the matching section (`### Sales-side playbook` or `### Purchasing-side playbook`). Do NOT re-ask Part 0 (practice setting, role, integrations), Part 1 (team, volume, mix), or Part 3 (escalation matrix) — those are side-agnostic and already populated. If the other side is already populated, leave it untouched. If neither side is populated yet, the flag still works — it builds the requested side and the other stays as a placeholder pointer until you run `--side <other>`.
-
-Update the `**Active side:**` marker in `## Playbook`: if only one side was built, set it to `sales` or `purchasing`; if both are populated after this run, set it to `both`.
-
-The template structure lives at `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` — use it as the section scaffold. Write the completed practice profile to the config path, creating parent directories as needed.
-
-If a CLAUDE.md exists at the old cache path `~/.claude/plugins/cache/claude-for-legal/commercial-legal/*/CLAUDE.md` but not at the config path, copy it forward to the config path before proceeding.
-
-If the user explicitly asks to re-run setup ("let's redo the interview", "my playbook changed"), run it again and show a diff before overwriting.
-
-## Check for the shared company profile
-
-Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
-
-- **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
-- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/company-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
-
-The company questions that belong in the shared profile (and should NOT be re-asked if it exists): practice setting, company name, industry, what-you-sell, size, jurisdictions, regulators, risk appetite, escalation names. The plugin-specific questions (playbook positions, review framework, house style, supervision model, etc.) stay per-plugin.
-
-## Install scope check
-
-Before the orientation, if you notice the working directory is inside a project (not the user's home directory), flag it. Say once:
-
-> **Heads up — it looks like this plugin may be project-scoped, which means I can only read files in [current directory]. If you'll want me to read documents from elsewhere (Downloads, Documents, Dropbox), install user-scoped instead — see QUICKSTART.md. You can continue with project scope, but you'll need to move files into this folder.**
-
-Ask the user to confirm before proceeding: continue with project scope, or pause to reinstall user-scoped. If the working directory *is* the user's home directory, skip this check silently.
-
-## Before the interview starts
-
-Before asking anything else, show the fork-first preamble — 3-4 short lines, no longer:
-
-> **`commercial-legal` is for people who review, negotiate, and manage commercial contracts (vendor agreements, SaaS MSAs, NDAs, renewals).** Not your area? `/legal-builder-hub:related-skills-surfacer`.
+> **`commercial-legal`** ticari sözleşmeleri (tedarikçi/hizmet sözleşmeleri, SaaS abonelikleri, gizlilik sözleşmeleri, yenilemeler) inceleyen, müzakere eden ve yöneten ekipler içindir.
 >
-> **2 minutes** gets you your role, practice setting, jurisdiction, and playbook side (sales or purchasing), plus working defaults for playbook positions, escalation thresholds, LoL cap, indemnity direction, and house style. **15 minutes** adds your real playbook positions (LoL, indemnity, DPA, term, governing law) calibrated to your side, your one-thing deal-breaker, full escalation matrix with dollar thresholds and automatic escalations, house style and renewal-alerts destination, and the positions extracted from your signed agreements.
+> **2 dakika:** rol, pratik ortamı, taraf (satış / satın alma) ve varsayılan duruşlar. **15 dakika:** gerçek playbook duruşlarınız (sorumluluk sınırı, tazmin, cezai şart, veri koruma, süre/fesih, uygulanacak hukuk ve yetki), vazgeçilmez tek şartınız, tutar eşikli eskalasyon matrisi ve imza yetkisi, ev üslubu, imzalı sözleşmelerden çıkarılan fiilî duruşlar.
 >
-> Quick or full? (Upgrade any time with `/commercial-legal:cold-start-interview --full`.)
+> Hızlı mı, tam mı? (Sonra `/commercial-legal:cold-start-interview --full` ile genişletebilirsiniz.)
 
-Wait for the user's pick before showing anything else.
+**Hızlı yol:** yalnız Bölüm 0 ve taraf sorusu; diğer her alana `[DEFAULT]` yaz. Kapanış: "Tamam, komutları kullanabilirsiniz. Playbook duruşları, eskalasyon eşikleri ve ev üslubunda makul varsayımlar kullandım. Bir çıktı yanlış gelirse genellikle ayarlanacak bir varsayımdır — çıktı hangisi olduğunu söyler. Tam görüşme için `--full`, tek bölüm için `--redo <bölüm>`."
 
-<!-- COLLATERAL LINKS: when onboarding collateral exists, prepend a line above the preamble:
-     "Want a walkthrough first? [Watch the 3-minute intro](URL) or [read the getting-started guide](URL), then come back and run /<plugin>:cold-start-interview." -->
+**Seçimden sonra** tek paragraf oryantasyon: "Bu eklenti profilinizi (tarafınıza göre playbook, eskalasyon matrisi), fesih bildirimi son günlerini tutan yenileme kaydını, sapma günlüğünü ve playbook öneri kuyruğunu tutar. Cevaplarınızı her skill'in okuduğu düz bir metin dosyasına yazar; her şey sonradan değiştirilebilir." Ardından: "Kurulum yalnız sizin yazdıklarınızdan ve paylaştığınız belgelerden profil kurar; kişisel Claude geçmişinizi, başka sohbetleri ya da ev dizininizdeki CLAUDE.md'yi okumaz. Sohbette daha önce geçen bir bilgiyi kullanmadan önce sorarım."
 
-## After the user picks quick or full
+## Görüşme temposu
 
-Once the user has chosen, orient them before the first interview question:
+- **Cevap bir yerde yazılıdır varsay.** Şirket tanıtımı, playbook, eskalasyon matrisi, imza sirküleri, yetki devri belgesi için önce bağlantı/yapıştırma iste: "Belge yapıştırın, bağlantı verin ya da kısa hâlini söyleyin."
+- **Bir turda 2-3 cevaplanabilir soru** (alt sorular da sayılır); ekranı kaydırmadan cevaplanabilmeli.
+- **Uzun cevapta bekle:** "Bu soru yazılı cevap istiyor — bekliyorum." Yüklemede: "Yapıştırın, dosya yolu verin ya da 'şimdilik geç' deyin; geçerseniz profilde boşluğu işaretlerim."
+- **Yazmadan önce açıkları say:** "Profili yazmadan önce açık kalanlar: [liste — özellikle playbook duruşları, vazgeçilmez şart, örnek sözleşmeler]. Şimdi mi dolduralım, yer tutucu mu kalsın?" Sessiz boşluk bırakma.
+- **Duraklat/devam:** "dur", "sonra devam" denirse kısmi profili `<!-- SETUP PAUSED AT: [bölüm] — devam için /commercial-legal:cold-start-interview -->` notuyla ve cevapsız alanlarda `[PENDING]` ile yaz. Dönüşte: "Hoş geldiniz, [bölüm]de kalmıştınız. Devam mı, baştan mı?" Cevaplanmış soruyu tekrar sorma.
+- **Kullanıcının söylediği hukuki olguyu doğrula.** Madde, süre, eşik söylenirse `tr_mevzuat_madde_getir` ile çek ve karşılaştır; çelişirse: "[X] dediniz; madde metni [Y] diyor — profile hangisi girsin? `[premise flagged — verify]`" Örnek: "Cezai şart fahişse mahkeme indirir" — tacir sıfatındaki borçlu aşırı ceza iddiasıyla indirim isteyemez (TTK m. 22); bu ayrım profile doğru girmeli. Değişen tutarları (damga vergisi oranı ve azami tutarı, faiz oranları, parasal sınırlar) profile sabit yazma; "güncel tutarı teyit et — dönemsel güncellenir" notu düş.
 
-> "This plugin maintains your practice profile (playbook positions for your side, escalation matrix), a renewal register with cancel-by dates, a deviation log, and a playbook proposal queue. It runs your commercial contracts practice — NDAs, vendor agreements, SaaS subscriptions, renewals — against your team's playbook and escalation matrix. This setup interview learns how you actually work: your playbook, your escalation rules, your house conventions. It writes that into a plain-text file every skill in the plugin reads from. Everything you answer can be changed later. Once it's done, the plugin's commands will work the way *your* team works, not the way a generic template does."
->
-> Then: "Ready? A few quick questions first, then I'll ask to see some recently signed agreements."
+## Bölüm 0 — Kim kullanıyor, ne bağlı
 
-**Why this matters.** Every command in this plugin reads from the configuration this interview writes. A generic configuration gives you generic output — default playbook positions, a default escalation matrix, a default house style, and a review that feels like it was written for someone else's contracts team. Telling the plugin how your team actually works is what makes the difference between "a legal AI tool" and "a tool that works the way you work." The more specific your answers — your real LoL cap, your real escalation thresholds, your real one-thing deal-breaker — the more the outputs will feel like yours.
+### Kim kullanıyor?
 
-**Fresh professional profile.** Setup builds a fresh professional profile from the user's answers and the documents they explicitly share. It does not read the user's personal Claude history, unrelated conversations, or their home-directory CLAUDE.md. If something relevant surfaces in the current conversation context (e.g., they mentioned the company earlier), ask before using it — do not fold anything personal into the team practice profile unless the user types it or approves it.
+> Eklentiyi günlük kim kullanacak? (Her inceleme, değişiklik geçmişi ve yenileme çıktısındaki üst başlığı belirler.)
+> 1. **Avukat ya da avukat gözetiminde çalışan** (stajyer avukat, sözleşme yöneticisi, hukuk operasyonu)
+> 2. **Avukata erişimi olan, avukat olmayan** (kurucu, satın alma, satış operasyonu, finans)
+> 3. **Düzenli avukat erişimi olmayan**
 
-Corollary: the interview's inputs are the user's typed answers and documents they explicitly share. Do not pull from ambient context, prior sessions, or user memory to fill in gaps.
+2 ya da 3 ise bir kez söyle: "Tüm özellikleri kullanabilirsiniz; iki şey değişir: (1) çıktıları 'imzalayın' hükmü değil, avukatla konuşmanız için araştırma olarak çerçevelerim; (2) hukuki sonucu olan adımlardan önce (imza, karşı tarafa redline gönderme, yenilemeyi kabul ya da fesih bildirimi) avukatla görüşüp görüşmediğinizi sorar, görüşmeyi hızlandıracak kısa bir brif hazırlarım." 3 ise ekle: "Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz; barolar adli yardım hizmeti de yürütür, koşullarını baroya sorun."
 
-**Quick start path:** ask only Part 0 (role, practice setting, integrations) and the playbook side. Write the config with `[DEFAULT]` markers on everything else. Close with: "Done. You can start using the commands now. I've used sensible defaults for playbook positions, escalation thresholds, and house style. When a skill's output feels off, that's usually a default you should tune — it'll tell you which. Run `/commercial-legal:cold-start-interview --full` anytime to do the whole interview, or `/commercial-legal:cold-start-interview --redo <section>` to re-do one part."
+### Pratik ortamı
 
-**Full setup path:** the existing interview flow below.
+> Hangisi size uyuyor? (Eskalasyon matrisinin dilini belirler.)
+> - **Hukuk bürosu (müvekkil adına sözleşme hazırlama/inceleme)** — onay zinciri değil danışma tetikleri sorarım.
+> - **Kurum içi hukuk** — eskalasyon matrisi, hukuk müşaviri/genel müdür, ne zaman iş birimine gider.
+> - **Tek avukat / küçük büro** — üst kademe yerine "meslektaşa/dış avukata ne zaman danışırsınız".
+> - **Kamu / klinik** — denetim modeli ve imza zinciri.
+> - **Hiçbiri** — kendi anlatımınızla yazın; kutuya zorlamam, doldurulan, uyarlanan ve boş bırakılan alanları işaretlerim.
 
-## Interview pacing
+Dallanma ve kayıt (`## Who we are` altında `**Practice setting:**` satırı):
+- **Büro (her tür):** `## Matter workspaces` → `Enabled: ✓`, `Cross-matter context: off`. `## Escalation` tablosu onay seviyeleri değil danışma tetikleri gösterir. Profile `## Çıkar çatışması` notu yaz: aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat ve kendi düzenlediği sözleşmenin hükümsüzlüğünü ileri sürmek durumunda kalan avukat işi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Her yeni matter'da kontrolün yapıldığını sor.
+- **Kurum içi:** `Enabled: ✗` (tek müvekkil; matter katmanı görünmez).
+- **Kamu / klinik:** işi kim gözden geçirir, imza zinciri.
 
-**Pause for real answers.** Some questions are quick (pick A/B/C, a dollar number, yes/no). Others need the user to type, describe, or share a document (playbook, escalation matrix, seed agreements). When a question needs more than a quick tap:
+### Ne bağlı?
 
-- **Assume the answer exists somewhere.** When a question asks for information that's probably written down somewhere — company description, playbook, escalation matrix, style guide, handbook, jurisdiction list, matter portfolio — prompt for a link or a paste before asking the user to type it from memory. "Paste a link or a doc, or give me the short version" is the default ask for anything that's more than a sentence. An interviewer who makes people re-type what they've already written has failed the first job of an interviewer.
-- **Batch size — count subparts.** "Never ask more than 2-3 questions in one turn" means 2-3 *answerable prompts*, counting subparts. One question with 5 subparts is 5 questions. The test: can the user answer without scrolling? If the questions don't fit on one screen, it's too many. Prefer structured tap-through questions where possible — they don't require scrolling or typing.
-- **Ask and wait.** Say explicitly: "This one needs a typed answer — I'll wait." Do not move to the next question until the user responds.
-- **For uploads and seed docs:** "Paste the contents, share a file path, or say 'skip for now.' If you skip, I'll flag the gap in your practice profile so you can fill it later." Then actually wait.
-- **Before writing the practice profile:** review the interview and list any questions that were skipped or answered with placeholders — especially the playbook positions, the "one thing," and the seed agreements. Say: "Before I write your practice profile, here's what's still open: [list]. Want to fill any of these now, or leave them as placeholders?" Then wait.
-- **Never** write a practice profile with silent gaps. Every placeholder should be a deliberate choice the user made to skip, not a question that scrolled past.
-- **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/commercial-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /commercial-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
+Yapılandırılmış ile **çalışan** bağlantıyı karıştırma.
+- **ArthurLegal MCP (`tr_`)** — dene: `tr_mevzuat_madde_getir(number="6098", madde_no="115")`. Cevap geldiyse ✓.
+- **Sözleşme emsali (`contracts_`)** — kloz kıyası için isteğe bağlı: `contracts_search_contracts`.
+- **Yabancı ülke araçları** (`eu_`, `uk_`, `de_` …) — yalnız yabancı hukuka tabi sözleşme varsa; önce `status`.
+- **CLM (Ironclad vb.), e-imza (DocuSign vb.), belge deposu (Drive, SharePoint, Box), Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪. KEP için MCP yoktur; KEP adresi varsa `## House style`'a not et.
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+Raporla: ✓ bağlı (denendi) · ⚪ yapılandırılmış, doğrulanmadı — MCP ayarlarından teyit edin · ✗ yok — [özellik] [manuel yönteme] düşer, nasıl bağlanır, sonra `--check-integrations`. "Hepsine gerek yok; çekirdek özellikler dosya erişimiyle çalışır." ArthurLegal MCP ✗ ise: "Her madde ve karar atfı 'doğrulanmadı' işaretlenir ve UYARI satırı taşır."
 
-## The interview
+**Hemen yaz:** `## Who's using this` ve `## Available integrations` bölümlerini `## Who we are`'dan hemen sonra yaz; `## Outputs` üst başlığını role göre kur.
 
-### Opening
+## Bölüm 1 — Ekip ve iş akışı (2-3 dk)
 
-> I'm going to be your commercial contracts assistant. Before I review anything, I want to learn how your team actually works — not generic best practices, but *your* playbook, *your* escalation rules, *your* deal breakers.
->
-> This takes about ten minutes. I'll ask a few questions, then I'll ask you to point me at a handful of recently approved agreements so I can see your positions in the wild, not just in theory.
->
-> Ready?
+- **Ne iş yapıyorsunuz?** Ne satıyorsunuz, kime, nasıl (doğrudan, bayi/distribütör, pazaryeri, abonelik)? Web sitesi bağlantısı yeter. Büroysanız: müvekkil profiliniz ve en sık sözleşme tipleri.
+- **Kim?** Şirket türü (AŞ, Ltd., şube, yabancı şirket), sözleşme ekibinin büyüklüğü, son sözü kim söylüyor (hukuk müşaviri, genel müdür, yönetici ortak)?
+- **Ne geliyor?** Aylık hacim; karışım (tedarik, hizmet, SaaS, lisans, distribütörlük/acentelik, gizlilik); kendi metniniz mi karşı tarafın mı; hafif redline mı çok turlu müzakere mi; ortalama süre.
+- **Ne acıtıyor?** Masaya gelince "of" dedirten ne; darboğaz inceleme mi, müzakere turu mu, onay kovalamak mı?
 
-### Part 0: Who's using this, and what's connected
+**Taraf sorusu** (doğrudan sor):
 
-Two quick questions before we get into commercial-contracts specifics. These shape how the plugin works, not what it can do.
+> Playbook duruşlarını hangi tarafa göre kurayım? (Her inceleme yalnız eşleşen tarafın playbook'unu uygular; satış duruşu satın alma sözleşmesine uygulanmaz.)
+> - **Satış tarafı (sales-side)** — ürün/hizmet satıyoruz; genelde bizim metnimiz.
+> - **Satın alma tarafı (purchasing-side)** — tedarikçiden alıyoruz; genelde onların metni.
+> - **İkisi.**
 
-#### Who's using this?
+- **Tek taraf:** `**Active side:** sales` ya da `purchasing`; Bölüm 2 cevapları eşleşen alt bölüme; diğerinde `*[Not configured — run /commercial-legal:cold-start-interview --side <side> to build it]*` kalır.
+- **İkisi:** önce satış tarafını kur (genelde kendi metniniz, yüzeyi küçük); sonunda `--side purchasing` öner. İkisi de dolunca `**Active side:** both`.
 
-> Who'll be using this plugin day to day? (This feeds the work-product header on every /review, /amendment-history, and /renewal-tracker output — lawyer gets "PRIVILEGED & CONFIDENTIAL — ATTORNEY WORK PRODUCT"; non-lawyer gets "RESEARCH NOTES — NOT LEGAL ADVICE" plus research-framed outputs.)
->
-> 1. **Lawyer or legal professional** — attorney, paralegal, legal ops working under attorney oversight.
-> 2. **Non-lawyer with attorney access** — founder, business lead, contracts manager, HR, procurement; you have an in-house or outside attorney you can consult.
-> 3. **Non-lawyer without regular attorney access** — you're handling this yourself.
+Soruları tarafın sesiyle sor: satışta "hangi tavanı **sunuyoruz**", satın almada "tedarikçiden hangi tavanı **kabul ediyoruz**". Karıştırma.
 
-If the answer is 2 or 3, say this once (don't repeat it on every output):
+## Bölüm 2 — Playbook (3-4 dk)
 
-> You can use every feature here — research, review, drafting, tracking. Two things change in how I work:
->
-> 1. **I'll frame outputs as research for attorney review, not as verdicts.** Instead of "GREEN — sign it," you'll get "here's what I found and here are the questions to ask before you sign." That's more useful than a green light you can't be sure of.
-> 2. **I'll pause before steps that have legal consequences** — signing a contract, sending redlines to a counterparty, accepting or declining a renewal. I'll ask whether you've reviewed with an attorney, and I'll put together a short brief so the conversation with them is fast.
->
-> This isn't a disclaimer. It's the plugin knowing the difference between what it's good at — research, organization, structure — and licensed legal judgment about your specific situation, which a tool can't give you. A few hours of a lawyer's time at the right moment is usually cheaper than the mistake.
+> "Playbook'unuzu şimdi kuralım mı? İnceleme skill'leri genel varsayım yerine sizin duruş ve geri çekilme noktalarınızı bilir. 3-4 dakika. Geçerseniz varsayılan kullanılır ve kurulmamış bir duruşa gelindiğinde söylenir."
 
-If the answer is 3, add:
+Önce sor: "Müzakere playbook'u, sözleşme standartları belgesi ya da geri çekilme notu var mı? Ekip/departman düzeyindeki ortak belge varsa onu isterim; kişisel farklarınızı ayrıca sorarım." Varsa oku, her kategori için duruşu çıkar, yalnız boşlukları sor; iki tarafı kapsıyorsa yazarken ikiye böl.
 
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) — most offer a lawyer referral service (your jurisdiction's bar association, law society, or legal aid body) as the fastest starting point. Many offer free or low-cost initial consultations. For small businesses, local law school clinics (and equivalents like SCORE mentors in the US) can point you in the right direction. For individuals, legal aid organizations cover many practice areas.
+Yoksa her kategori için **standart duruş / kabul edilebilir geri çekilme / asla kabul edilmeyen** sor:
 
-#### What's connected?
+**Sorumluluğun sınırlandırılması** (`#### Limitation of liability`)
+- Tavan: son 12 ay bedeli mi, sabit tutar mı (para birimi)? Dolaylı zarar ve kâr kaybı hariç mi?
+- İstisnalar (tavan dışı): gizlilik ihlali, fikri mülkiyet ihlali, kişisel veri ihlali, kast ve ağır kusur.
+- Hukuki sınır: borçlunun ağır kusurundan sorumlu olmayacağına ilişkin önceden yapılan anlaşma kesin hükümsüzdür; uzmanlık gerektiren ve izinle yürütülen hizmette hafif kusur için de öyledir (TBK m. 115/1, 115/3). Tavanın ağır kusur ve kastı da sınırlaması bu yüzden geçersizlik riski taşır; profile "tavan kast/ağır kusuru kapsamaz" notunu yaz.
+- Karşı tarafın standart metninde (genel işlem koşulu) aleyhe kloz: açıkça bilgi verilip kabul edilmedikçe yazılmamış sayılır (TBK m. 21); dürüstlük kuralına aykırı aleyhe hüküm konulamaz (m. 25). "Her madde tartışıldı" kaydı tek başına GİK niteliğini kaldırmaz (m. 20/3).
 
-> This plugin can work with: CLM (Ironclad, Agiloft, etc.), e-signature (DocuSign, etc.), document storage (Google Drive, SharePoint, Box), and Slack. Let me check which connectors you have configured — features that need them will work, and features that don't have them will fall back to manual gracefully instead of failing silently.
+**Tazmin (indemnity)** (`#### Indemnification`)
+- Karşılıklı mı, tedarikçiden tek yönlü mü? Fikri mülkiyet ihlali tazmini zorunlu mu? Hiç kabul edilmeyen tazmin?
+- Türk hukukunda "indemnity" kendi başına bir kurum değildir; üçüncü kişinin fiilini üstlenme (TBK m. 128) ya da sözleşmesel tazmin taahhüdü olarak yazılır — kapsam, bildirim ve savunmayı yönetme usulü açık olmalı.
 
-**Check what's actually connected, not what's configured.** A connector listed in `.mcp.json` is *available*. A connector that's actually responding is *connected*. These are different, and confusing them destroys trust. For each connector this plugin uses:
+**Cezai şart** (`#### Penalty clause`)
+- Kabul ediliyor mu, hangi hâllerde, üst sınır? Seçimlik mi (borç ya da ceza), ifa ile birlikte mi (TBK m. 179)?
+- Zarar olmasa da istenir; aşan zarar için kusur ispatı gerekir (m. 180). Hâkim aşırı cezayı kendiliğinden indirir (m. 182/3) — ama tacir sıfatındaki borçlu aşırılık iddiasıyla indirim isteyemez (TTK m. 22). Borçlu olduğumuz cezada (ör. satışta gecikme cezası, satın almada erken fesih cezası) yüksek tutarı kabul etmek bu yüzden "asla" ya da eskalasyon konusu olabilir.
 
-- If you can test the connection (call a simple MCP tool like a list or search), report ✓ only on a successful response.
-- If you can't test (no way to probe from here), report ⚪ "configured but not verified — open your MCP settings to confirm" with a one-line how-to.
-- Never report ✓ based on configuration alone.
+**Veri koruma** (`#### Data protection`)
+- Standart veri işleme sözleşmeniz var mı, karşı tarafınkini mi alırsınız? Veri sorumlusu, işleyenin alması gereken teknik ve idari tedbirlerden onunla müştereken sorumludur (KVKK m. 12/2) — işleyen sözleşmesi bu yüzden şart mı?
+- Yurt dışı aktarım: yeterlilik kararı yoksa uygun güvence (standart sözleşme vb.) gerekir; standart sözleşme imzadan itibaren beş iş günü içinde Kurum'a bildirilir (KVKK m. 9/4-5). Bulut/SaaS tedarikçisinde kim bildirir?
+- Güvenlik belgesi (ISO 27001, SOC 2) tüm tedarikçilerden mi, yalnız veri işleyenlerden mi? Alt işleyende onay mı, bildirim mi?
 
-For connectors that show as not connected, tell the user how to connect. Example phrasing: "Box isn't connected. In Claude Cowork: Settings → Connectors → Add → Box → sign in. In Claude Code: add the Box MCP to your config or via `/mcp`. This plugin works without it — you'll paste documents instead of pulling them — but connecting it makes document pulls automatic."
+**Süre ve fesih** (`#### Term and termination`)
+- Haklı sebeple ve olağan (sebepsiz) fesih: bildirim süresi? Otomatik yenilemede kabul edilen en uzun fesih bildirim penceresi? Fesih bedeli hiç kabul edilir mi?
+- Fesih bildiriminin şekli: tacirler arasında fesih ve temerrüt ihbarları noter, taahhütlü mektup, telgraf ya da güvenli elektronik imzalı KEP ile yapılır (TTK m. 18/3). Sözleşme "e-posta yeterli" diyorsa duruşunuz ne?
+- Tüketiciye satıyorsanız (B2C abonelik): belirli süreli abonelikte sözleşmenin kendiliğinden uzayacağına dair hüküm konulamaz (6502 s. TKHK m. 52/3) → satış tarafı playbook'una ayrı not.
 
-Then report findings in this form:
+**Uygulanacak hukuk ve uyuşmazlık çözümü** (`#### Governing law and venue` — `**Preferred:**`, `**Acceptable:**`, `**Escalate:**`, `**Never:**`)
+- Sözleşmeden doğan borç ilişkileri tarafların açıkça seçtiği hukuka tabidir (MÖHUK m. 24/1); yabancılık unsuru olmayan saf iç sözleşmede yabancı hukuk seçimi **tartışmalı — içtihadı kontrol et**. Tercih / kabul / eskalasyon / asla listesi; yabancı hukuk ve yabancı yer tahkimi için ayrıntılı analiz `/commercial-legal:governing-law-review`'dadır.
+- Yetki sözleşmesi yalnız tacirler veya kamu tüzel kişileri arasında yapılabilir (HMK m. 17) ve yazılı olmalı, hukuki ilişki belirli ya da belirlenebilir, mahkeme gösterilmiş olmalıdır (m. 18/2). Tahkim sözleşmesi yazılıdır (HMK m. 412/3). Tercih: İstanbul mahkemeleri mi, kurumsal tahkim mi?
+- Para alacağı, tazminat, itirazın iptali, menfi tespit ve istirdat konulu ticari davalarda dava öncesi arabuluculuk dava şartıdır (TTK m. 5/A) — kademeli uyuşmazlık klozu (müzakere → arabuluculuk → mahkeme/tahkim) istiyor musunuz?
 
-> - ✓ [Integration] — connected (tested)
-> - ⚪ [Integration] — configured but not verified. Open your MCP settings to confirm.
-> - ✗ [Integration] — not found. [Feature] will fall back to [manual alternative]. [How to connect.] If you set this up later, re-run `/commercial-legal:cold-start-interview --check-integrations`.
->
-> You don't need all of these. Core features work with file access alone.
+**Damga vergisi** (`#### Stamp duty`) — kim öder, nüsha sayısı, imza yeri; oran ve azami tutar dönemsel güncellenir, profile sayı yazma (488 s. Damga Vergisi Kanunu — güncel tutarı teyit et).
 
-#### Practice setting
+**YZ/ML eğitim hakları** (`## AI/ML training rights` — yedi boyut, her biri ayrı yazılır; "her şeye hayır" geçerli ama yedi ayrı "hayır" olarak):
+1. Açık eğitim izni — kesin hayır / dar tanımlıysa kabul / önemsiz?
+2. Gizlilik politikasına atıfla örtülü izin — politika tek taraflı değişebiliyorsa red / kabul?
+3. Anonimleştirme standardı — KVKK tanımı (başka verilerle eşleştirilerek dahi kişiyle ilişkilendirilemeyecek hâle getirme, m. 3/1-b) ya da adı konmuş bir standart şart mı; tanımsız "anonim" yeterli mi? AB verisi varsa: `eu_search_eu_law(query="Regulation (EU) 2016/679 recital 26 anonymous information")`.
+4. Rakip kirlenmesi — tedarikçi rakiplerinize de hizmet veriyorsa yalıtım taahhüdü?
+5. Opt-out kapsamı ve kalıcılığı — tüm YZ kullanımlarını kapsayan, yenileme ve şart güncellemesinden sonra da süren opt-out?
+6. Çıktıların sahipliği — müşteride mi; tedarikçinin çıktıları eğitim örneği olarak tutması?
+7. Düzenleyici zincir — AB YZ Tüzüğü (`eu_search_eu_law(query="Regulation (EU) 2024/1689 artificial intelligence")`) ve Türkiye'de yürürlükteki düzenleme (`tr_mevzuat_ara(query="yapay zeka", search_in="fulltext")`) bakımından tedarikçiden bildirim istenir mi?
 
-Ask once, early, so Part 3 (escalation) branches correctly:
+**Vazgeçilmez tek şart** (`#### The one thing`): "Bir sözleşmede tek bir sorun olsa ve sırf o yüzden imzalamasanız, o ne?"
 
-> Practice setting: (This feeds the escalation matrix — solo/small reframes as "consult triggers"; in-house/midsize/large asks for the full approval chain.)
->
-> - **Solo / small firm (no hierarchy)** — I'll skip approval-chain questions and ask when you'd loop in a colleague or outside counsel instead.
-> - **Midsize / large firm** — I'll ask about your approval chain, billing thresholds, and who signs off above you.
-> - **In-house** — I'll ask about your escalation matrix, who the GC/CLO is, and when something goes to the business.
-> - **Government / legal aid / clinic** — I'll ask about supervision structure and any restrictions on your practice.
-> - **My practice doesn't fit any of these** — say so. I'll adapt.
+Playbook belgesi yüklenmediyse sonunda öner: "Bunu ekibinizle paylaşabileceğiniz ayrı bir playbook belgesi olarak da yazayım mı?"
 
-**Practices that don't fit the boxes.** If the user's practice doesn't match the options above (international arbitration, public international law, amicus-only, academic consulting, pro bono panel, tribal court, military justice, maritime, or anything else the standard categories assume away), offer: "It sounds like your practice doesn't fit my usual categories. Tell me about it in your own words — what you do, who for, what jurisdictions and forums, what the work looks like — and I'll build your profile from that instead of forcing you into boxes that don't fit. I'll skip or adapt the questions that don't apply." Then build the profile from the free-form description, flagging which template fields were filled, adapted, or left empty because they don't apply. A profile built from a forced fit is worse than a sparse profile built from what's actually true.
+## Bölüm 3 — Eskalasyon ve imza yetkisi (1-2 dk)
 
-Branching notes (apply in Part 3 and when writing the escalation matrix):
+Önce sor: "Eskalasyon matrisi, onay eşikleri belgesi ya da yetki devri/iç yönerge var mı? Yapıştırın; temel alırım." Varsa doğrudan çıkar, belirsizi teyit et.
 
-- **Solo or small firm without a hierarchy:** skip or reframe the internal escalation chain. Instead of "who approves above your threshold," ask "when do you call in outside counsel or a colleague for a second opinion." Escalation maps to "consult," not "route for approval." The `## Escalation` table should show consult triggers, not internal approval levels.
-- **In-house, midsize, or large firm:** ask the escalation chain as currently designed (Part 3).
-- **Legal aid / clinic:** route toward supervision-model questions — who supervises, when does a matter go up to the supervising attorney?
-- **Government:** adapt — approval chain inside the agency/office.
+Yoksa:
+- **Onay seviyeleri:** "İnceleme playbook dışı bir şey bulduğunda (daha yüksek tavan, geri çekilme dışı tazmin) ya da yetkinizi aşan bir karar gerektiğinde kime gider? İsim ya da rol, ya da 'kendim karar veririm'." (Bunu `/commercial-legal:escalation-flagger` kullanır.)
+- **Tutar eşikleri:** sözleşme bedeline göre kim onaylar (para birimiyle)?
+- **Tutardan bağımsız otomatik eskalasyon:** tipik — sınırsız sorumluluk, fikri mülkiyetin karşı tarafa devri, tacir olarak yüksek cezai şart, yabancı hukuk + yabancı yer tahkimi, yurt dışına kişisel veri aktarımı, playbook'taki "asla" listesi.
+- **İmza yetkisi:** Sözleşmeyi kim imzalar? AŞ'de esas sözleşmede aksi yoksa temsil yetkisi çift imza ile yönetim kuruluna aittir (TTK m. 370/1); temsile yetkililer ve temsil şekli ticaret siciline tescil ve ilan edilir (m. 373/1). İç onay matrisi şirketin iç düzenidir (yönetimin devri esas sözleşme hükmüyle ve iç yönergeyle yapılır, m. 367); iç sınırlamalar iyiniyetli üçüncü kişilere karşı hüküm ifade etmez — yalnız tescil ve ilan edilen merkez/şube ya da birlikte kullanma sınırlamaları geçerlidir (m. 371/3). Ltd.'de bu hükümler kıyasen uygulanır (m. 629/1). İmza sirkülerinin güncel olup olmadığını ve kimin tuttuğunu not et.
+- **Kanal ve süre:** Bugün nasıl eskale ediliyor (Slack, e-posta, toplantı)? Beklenen dönüş süresi?
+- **İnceleme tercihi:** İncelemeye başlarken yönlendirmeyi (hangi skill, hangi ek hangi skill'e) önce teyit edeyim mi? `confirm_routing` varsayılanı açık.
+- **NDA kapanış eylemi:** NDA triyajı bitince ne yapılsın (ekip kutusuna e-posta, CLM iş akışı, sözleşme yöneticisine iletme)? Her NDA çıktısına standart talimat olarak eklerim.
 
-Record this on a `**Practice setting:**` line in `## Who we are` in the practice profile, and shape `## Escalation` accordingly.
+Matris yüklenmediyse sonunda öner: "Bunu paylaşılabilir ayrı bir eskalasyon matrisi olarak da yazayım mı?"
 
-#### Record to the plugin config
+## Bölüm 4 — Örnek belgeler
 
-Write `## Who's using this` and `## Available integrations` sections immediately after the `## Who we are` section in the plugin config, and update `## Outputs` so the work-product header is conditional on role (see the practice profile template below).
+Önce altyapı sorusu: "İmzalı sözleşmeleriniz fiilen nerede duruyor — CLM, ortak Drive/SharePoint klasörü, fiziksel arşiv taraması? Haftalık deal-debrief ve renewal-watcher ajanları burayı tarar." CLM ise sistem adını ve "imzalandı" durumunun adını; klasörse tam yolu; dağınıksa "manuel yükleme" yaz.
 
-### Part 1: The team (2-3 minutes)
+> Önce: en sık kullandığınız sözleşme tipleri için kendi şablonlarınız (başlangıç duruşu). Sonra: 5-10 yakın tarihli imzalı sözleşme — 20 daha net desen verir; azsa olanı paylaşın.
 
-Ask conversationally, one cluster at a time. Don't interrogate — listen for what they volunteer beyond the question.
+Okuma sırası: (1) şablonlardan başlangıç duruşları; (2) imzalılardan fiilî şartlar; (3) fark — gerçek playbook budur; (4) sözleşme tipi ve karşı taraf büyüklüğüne göre desen (kurumsal karşı tarafta farklı geri çekilme vb.). 5'ten az imzalı sözleşmeyle kurulan her bölüme `[LIMITED DATA — N sözleşme incelendi]` yaz.
 
-**What does [your company] do?** This is the single most important context — a SaaS vendor's playbook, a hardware distributor's playbook, and a services firm's playbook are completely different. You don't have to type it out: paste a link to your company website, your "about" page, your Wikipedia article, or your latest 10-K, and I'll extract what I need. Or give me the one-sentence version: what you sell, to whom, and how (direct sales / channel / marketplace / subscription).
+## Profili yazma
 
-**Who are you?**
-- Company name and entity type (Delaware C-corp? LLC? Something else?)
-- How big is the contracts team? Just you? A few lawyers? Paralegals?
-- Who's the GC or whoever the buck stops with?
-
-**What comes through the door?**
-- What's the rough volume? Ten contracts a month? A hundred?
-- What's the mix — mostly vendor/supplier agreements? Customer contracts? Licensing? Partnerships? Or all of the above?
-- How does negotiation typically work? Do you negotiate on your own paper, their paper, or a mix? Is most of it light (minor redlines off a template), heavy (multiple rounds, lawyers on both sides), or effectively clickthrough — you sign without negotiating?
-- How long does a typical deal take from first draft to signed? A few days? Weeks? Months?
-
-**Playbook side.** Ask directly:
-
-> When I build your playbook positions, which side should I calibrate for? (This feeds every /review run — the review skills check the contract against the matching side's playbook only, and never apply a sales-side position to a purchasing-side contract or vice versa.)
->
-> - **Sales-side** — we sell our products/services. We're the vendor. Usually our paper.
-> - **Purchasing-side** — we buy from vendors/suppliers. We're the customer. Usually their paper.
-> - **Both.**
->
-> The answer changes every playbook position — risk appetite, standard and fallback terms, approval thresholds, liability caps, indemnity direction. It's not a detail; it's the frame for everything that follows.
-
-Handle the response:
-
-- **One side (sales or purchasing):** "Got it. Every playbook question from here on is calibrated to [sales-side / purchasing-side]." Record `**Active side:** sales` or `**Active side:** purchasing` at the top of the `## Playbook` section. Write all Part 2 playbook answers to the matching subsection (`### Sales-side playbook` or `### Purchasing-side playbook`). Leave the other subsection with its `*[Not configured — run /commercial-legal:cold-start-interview --side <side> to build it]*` pointer.
-
-- **Both:** "Got it. I'll build your sales-side playbook now — it's usually the smaller surface because it's mostly your own paper. When we're done, run `/commercial-legal:cold-start-interview --side purchasing` to build the other one. Your configuration will hold both, and the review skills will ask which side a contract is on if it's not obvious from whose paper it is." Record `**Active side:** both` once both sides are populated, or `**Active side:** sales` after the first pass with a note that purchasing is still pending.
-
-Carry the selected side through Part 2. When phrasing playbook questions, frame them in the right voice — for sales-side, "what's the cap we offer"; for purchasing-side, "what's the cap we accept from vendors."
-
-**What hurts right now?**
-- What's the thing that lands on your desk that makes you groan?
-- Where does the bottleneck actually live — review time, negotiation cycles, chasing approvals?
-
-### Part 2: The playbook (3-4 minutes)
-
-- **AI/ML training rights.** This is the fastest-moving clause in SaaS contracts right now and every vendor has a default. If you don't have a position, you'll get the vendor's default. "Hard no / case-by-case / don't care" is not enough — the review skill runs a seven-point sub-checklist and each dimension needs a playbook position. Ask through each:
-  1. **Explicit training grants** — hard no / acceptable if narrowly defined / don't care?
-  2. **Implicit grants via privacy-policy incorporation** — refuse if policy can change unilaterally / acceptable / don't care?
-  3. **Anonymization standard** — require a named standard (GDPR Recital 26, HIPAA Safe Harbor) / "anonymized" without a definition is acceptable / don't care?
-  4. **Competitive contamination** — require competitive-isolation commitment when vendor serves competitors / case-by-case / don't care?
-  5. **Opt-out scope and durability** — require opt-out that covers all AI uses and survives renewals+TOS updates / accept any opt-out / don't require?
-  6. **Output ownership** — require customer owns outputs / accept vendor retention of outputs as training examples / don't care?
-  7. **Downstream regulatory chain** — require vendor to surface EU AI Act / FTC §5 / state AI law exposure / don't require?
-
-  Record positions per dimension in a `## AI/ML training rights` section of the practice profile. "Hard no across the board" is a valid answer — but it's seven hard nos, written explicitly, not one.
-
-> "**Do you want to build a playbook now?** It makes the review skills (vendor-agreement-review, NDA triage, SaaS MSA review) much better — they'll know your positions and fallbacks instead of generic ones. It takes about 3-4 minutes. Skip if you just want to try the other commands; the review skills will use defaults and tell you when they hit a position you haven't set."
-
-**Calibrate to the side chosen in Part 1.** Frame every question in the voice of the side being built. For sales-side, the questions are about the position the company offers on its own paper ("what cap do we offer"); for purchasing-side, they're about the position the company accepts from counterparties ("what cap do we accept from vendors"). Never mix.
-
-If the user picked **both**, run Part 2 once for sales-side now. Tell them: "We'll come back to purchasing-side with `/commercial-legal:cold-start-interview --side purchasing` when we're done here." Write sales-side answers to `### Sales-side playbook`.
-
-If the user picked **one side**, run Part 2 once, write to the matching subsection, and leave the other subsection with its placeholder pointer.
-
-Before asking any questions, check whether they already have a playbook:
-
-> Do you have a negotiation playbook, contract standards document, or fallback positions memo you can share? If your team has a shared playbook, escalation matrix, or delegation-of-authority policy set at the team or department level, that's the one I want — paste it or link it. I'll use it as the baseline and ask about your personal overrides separately. If so, point me at it — I'll read it and only ask about the gaps. (This feeds /review and /review-proposals — the review skills diff contracts against these positions and the playbook-monitor surfaces proposals when practice drifts from the stated position.)
-
-If they share one: read it, extract positions for each playbook category, note what's missing or ambiguous, and ask only about those gaps. Do not ask questions they've already answered in the document. If the playbook covers both sides, split it into the two subsections at write time.
-
-If they don't have one: proceed with the questions below.
-
-**Limitation of liability**
-- What's your standard cap? 12 months fees? Fixed dollar amount?
-- What carveouts do you accept? (Confidentiality, IP indemnity, gross negligence are typical — confirm theirs)
-- What have you walked away from?
-
-**Indemnification**
-- Mutual or do you push for one-way from vendors?
-- IP infringement indemnity — must-have or nice-to-have?
-- Any indemnity you categorically refuse?
-
-**Data protection**
-- Do you have a standard DPA? Yours, or do you take theirs?
-- SOC 2 required for all vendors, or just ones touching customer data?
-- Subprocessor approval rights — blocking or notification?
-
-**Term and termination**
-- Termination for convenience — how much notice do you need?
-- Auto-renewal — what's the longest notice-to-cancel you'll accept?
-- Termination fees — ever acceptable?
-
-**Governing law**
-- Preferred? Acceptable? Never?
-
-**The one thing**
-- If a contract has exactly one problem that would make you refuse to sign it, what is it?
-
-**If the user didn't upload a playbook:** at the end of this section, offer: "Want me to write this up as a standalone playbook document you can share and maintain? Same content I just captured for your practice profile, but formatted as a team-facing doc you can circulate or hand to a new hire."
-
-### Part 3: Escalation (1-2 minutes)
-
-Before asking questions, check whether they have an escalation matrix:
-
-> Do you have an escalation matrix, approval thresholds document, or delegation of authority you can share? If your team has a shared escalation matrix or delegation-of-authority policy set at the team or department level, that's the one I want — paste it or link it. I'll use it as the baseline and ask about your personal overrides separately.
-
-If they share one: read it and extract the matrix directly. Confirm anything ambiguous. Skip the questions below.
-
-If they don't have one: proceed with the questions below.
-
-**Approval levels**
-
-> When a review finds something that needs someone more senior to sign off — a term that's above playbook (a higher LoL cap, an indemnity structure outside your fallbacks), a risk that needs a second opinion, or a decision that's above your authority — who does that go to? Give me a name or a role (the GC, your boss, the deal partner), or say "I decide myself." This is how the plugin knows when to say "you can handle this" versus "loop in [X]." (This feeds /escalation-flagger — the skill drafts the escalation ask using this matrix, and /review uses it to decide whether a flagged term lands in your lane or somebody else's.)
-
-**Automatic escalations**
-- What triggers an escalation regardless of dollar value? (Typical answers: unlimited liability, IP assignment to counterparty, anything on a "never accept" list from the playbook.)
-
-**Channel and timing**
-- How do people escalate today — Slack, email, a ticket, a standing meeting?
-- What's a realistic turnaround expectation — same day, 24 hours, end of week?
-
-**Review workflow preferences**
-- When the reviewer starts on a contract, do you want them to confirm the routing decision with the user first (which skill(s) will run, which exhibits attach to which skill), or proceed silently? The plugin uses a `confirm_routing` preference — default is on. Let me know which you prefer.
-
-**NDA triage closing action**
-- When someone finishes an NDA triage, what do you want them to do with the output? (Examples: email it and the NDA to a team inbox, submit to the CLM NDA workflow, forward to a contracts manager.) I'll add that as a standing instruction appended to every NDA review.
-
-**If the user didn't upload an escalation matrix:** at the end of this section, offer: "Want me to write this up as a standalone escalation matrix you can share and maintain? Same content I just captured, formatted so you can circulate it, post it on the wiki, or hand it to someone new."
-
-### Part 4: Seed documents
-
-Before asking for documents, ask one infrastructure question:
-
-> Before I ask you to share agreements — where do your fully executed contracts actually live? A CLM system, a shared Drive folder, a SharePoint library, something else? I'll need this to pull recently signed deals automatically for the deal-debrief agent each week. (This feeds the deal-debrief and renewal-watcher agents — the weekly sweeps crawl this location to find recently signed agreements and upcoming cancel-by dates.)
-
-- If CLM: note the system name and what "executed/signed" status is called in their system
-- If Drive or SharePoint: note the exact folder path or shared link
-- If scattered or no single location: note "manual upload" — the agent will prompt the attorney each time it runs
-
-This is the most important part. The goal is to see positions in the wild — not just what they say their standard is, but what they actually sign.
-
-Ask two things in order:
-
-> First: do you have standard templates — your own paper for the agreement types you use most? Share those. Templates show the starting position before negotiation.
-
-> Second: share 5-10 recent signed agreements — more is better, 20 gives a clearer pattern on where positions actually land. If you have fewer than five, share what you can.
-
-If they have a CLM or good contract visibility: aim for 5-10 signed agreements (20 is better), across the agreement types they described in Part 1.
-
-If they have poor visibility (scattered Drive folders, no CLM): accept whatever they can pull together. Templates plus even 3-5 agreements is better than nothing — but flag every section of the practice profile with [LIMITED DATA — N agreements reviewed].
-
-**How to ingest:**
-1. Read templates first — extract starting positions for each playbook category.
-2. Read signed agreements — extract actual signed terms.
-3. Compute the delta: where do signed agreements differ from templates or stated positions? The delta is the real playbook.
-4. Look for patterns by agreement type and counterparty size — teams often have different effective fallbacks for enterprise vs. startup counterparties, or for vendor vs. customer paper.
-
-## Writing the practice profile
-
-Write the plugin config in the structure below. Use their words where you can. This is a document *about their team* that they will read and edit — it is not a config file.
-
-Before writing, re-read any documents shared during Parts 2, 3, and 4 — playbook, escalation matrix, templates, and signed agreements. Do not rely on memory from earlier in the conversation.
+Yazmadan önce paylaşılan belgeleri yeniden oku; hafızaya güvenme. Profil avukatın okuyup düzenleyeceği bir belgedir, YAML değil. İskelet (başlıklar aynen, içerik Türkçe):
 
 ```markdown
 # Commercial Contracts Practice Profile
-
-*Written by the cold-start interview on [DATE]. Edit this file directly — every
-skill in this plugin reads it before doing anything. If something below is wrong,
-fix it here and it's fixed everywhere.*
-
----
-
+*[TARİH] tarihinde kurulum görüşmesiyle yazıldı. Doğrudan düzenleyin — eklentideki her skill önce bunu okur.*
 ## Who we are
-
-[Company name] is a [entity type]. The contracts team is [N] people: [names/roles
-if given]. [GC name] is the final escalation point. We process roughly [N]
-agreements per month, mostly [vendor/customer/mix]. We use [CLM/other] for
-contract lifecycle management.
-
-**The thing that hurts:** [what they said hurts — write it in their words]
-
----
-
+[ŞİRKET ADI] — [şirket türü]. **Practice setting:** [büro / kurum içi / tek avukat / kamu / diğer]
+Ekip: [N kişi, roller]. Son karar: [isim/rol]. Aylık ~[N] sözleşme, ağırlıkla [tip]. CLM: [ad / yok].
+**Acıtan şey:** [kendi sözleriyle]
 ## Who's using this
-
-**Role:** [Lawyer / legal professional | Non-lawyer with attorney access | Non-lawyer without attorney access]
-**Attorney contact:** [Name / team / outside firm / N/A — fill in if non-lawyer]
-
----
-
+**Role:** [Avukat / Avukata erişimi olan avukat olmayan / Avukat erişimi olmayan]
+**Attorney contact:** [isim / ekip / dış büro / —]
 ## Available integrations
-
 | Integration | Status | Fallback if unavailable |
 |---|---|---|
-| CLM (Ironclad, Agiloft, etc.) | [✓ / ✗] | Manual record-keeping; renewal-tracker runs against a local register |
-| E-signature (DocuSign, etc.) | [✓ / ✗] | User routes for signature outside the plugin |
-| Document storage (Drive / SharePoint / Box) | [✓ / ✗] | User uploads agreements directly for each review |
-| Slack | [✓ / ✗] | Alerts and stakeholder summaries delivered inline instead of posted |
-
-*Re-check: `/commercial-legal:cold-start-interview --check-integrations`*
-
----
-
+| ArthurLegal MCP (`tr_`) | [✓/⚪/✗] | Atıflar "doğrulanmadı" + UYARI satırı |
+| CLM | [✓/⚪/✗] | Yerel yenileme kaydı ve manuel kayıt |
+| E-imza | [✓/⚪/✗] | İmza eklenti dışında yürür |
+| Belge deposu (Drive / SharePoint / Box) | [✓/⚪/✗] | Her incelemede dosya yüklenir |
+| Slack | [✓/⚪/✗] | Uyarılar sohbette verilir |
 ## Playbook
-
 **Active side:** [sales / purchasing / both]
-
-*Sales-side = the company sells its products or services. We're the vendor. Usually our paper. Purchasing-side = the company buys from third-party vendors or suppliers. We're the customer. Usually their paper. The answer changes every playbook position.*
-
-> Skills that review or assess a contract against this playbook first determine which side the company is on (usually obvious from whose paper it is — if the counterparty is buying your product, you're sales-side; if you're buying theirs, you're purchasing-side). If it's not obvious, ask. Read the matching playbook section. Never apply a sales-side position to a purchasing-side contract or vice versa.
-
+> İnceleme skill'leri önce sözleşmede hangi tarafta olduğumuzu belirler (genelde kimin metni olduğundan anlaşılır; değilse sorar) ve yalnız eşleşen bölümü uygular.
 ### Sales-side playbook
-
-*Applies when the company is the vendor. Usually our paper.*
-
-*[If not configured yet: leave the pointer "[Not configured — run /commercial-legal:cold-start-interview --side sales to build it]" in place of the subsections below.]*
-
 #### Limitation of liability
-
-**Standard position:** [their stated position for deals where they're selling]
-
-**Acceptable fallbacks:** [what the signed agreements show they actually accept]
-
-**Never accept:** [their hard nos]
-
-**Carveouts we accept:** [list]
-
-> *From the seed docs:* [If you found a delta between stated and actual, note
-> it here. E.g., "Stated standard is a 12-month cap. 3 of 5 reviewed agreements
-> closed at 24 months. Treating 24 months as an acceptable fallback."]
-
+**Standard position:** … **Acceptable fallbacks:** … **Never accept:** … **Carveouts we accept:** …
+> *Örnek belgelerden:* [beyan ile imzalanan farkı — ör. "Standart 12 ay; incelenen 5 sözleşmenin 3'ü 24 ayda kapandı → 24 ay geri çekilme sayıldı."]
 #### Indemnification
-
-[same structure]
-
+#### Penalty clause
 #### Data protection
-
-[same structure]
-
 #### Term and termination
-
-[same structure]
-
 #### Governing law and venue
-
-**Preferred:** [list]
-**Acceptable:** [list]
-**Escalate:** [list]
-**Never:** [list]
-
+**Preferred:** … **Acceptable:** … **Escalate:** … **Never:** …
+#### Stamp duty
 #### The one thing
-
-[The deal-breaker they named for sales-side deals. This is the first thing every sales-side review checks.]
-
----
-
 ### Purchasing-side playbook
-
-*Applies when the company is the customer. Usually their paper.*
-
-*[If not configured yet: leave the pointer "[Not configured — run /commercial-legal:cold-start-interview --side purchasing to build it]" in place of the subsections below.]*
-
-[Same subsection structure as Sales-side: Limitation of liability, Indemnification, Data protection, Term and termination, Governing law and venue, The one thing. Calibrated for purchasing — what we accept from vendors, not what we offer customers.]
-
----
-
+*[Not configured — run /commercial-legal:cold-start-interview --side purchasing to build it]*
+[Aynı alt bölümler; tedarikçiden kabul ettiklerimize göre]
+## AI/ML training rights
+[Yedi boyut, her biri ayrı duruş]
 ## Escalation
-
 | Can approve | Without escalation | Escalate to | Via |
 |---|---|---|---|
-| [Junior] | [their threshold] | [You] | [Slack/email] |
-| [You] | [your threshold] | [GC] | [method] |
-| [GC] | [GC threshold] | [Business owner] | [method] |
-
-**Dollar thresholds:** [if they mentioned any]
-
-**Automatic escalations regardless of dollar value:**
-- [their list — unlimited liability, unfavorable IP, etc.]
-
----
-
+**Dollar thresholds:** [tutar ve para birimi]
+**Automatic escalations regardless of dollar value:** [liste]
+**Signing authority:** [kim imzalar, tek/çift imza, imza sirküleri tarihi, iç yönerge var mı]
+## Çıkar çatışması
+[Yalnız büroda — Av. K. m. 38 notu ve çatışma kontrolü pratiği]
 ## House style
-
-**Tone in redlines:** [terse? collaborative? depends on counterparty?]
-
-**Stakeholder summaries:** [who reads them? how long should they be?]
-
-**Where work product goes:** [[CLM]? Google Drive folder? Slack thread?]
-
-**Where signed contracts live:** [CLM system + executed filter / Google Drive folder path / SharePoint library / manual upload]
-
----
-
+**Tone in redlines:** … **Stakeholder summaries:** … **Where work product goes:** …
+**Where signed contracts live:** [CLM + imzalı süzgeci / klasör yolu / manuel yükleme]
+**Renewal alerts:** [kanal ya da e-posta listesi] · **KEP address:** [varsa]
 ## Outputs
-
-**Work-product header** (prepended to every analysis, memo, review, or assessment this plugin generates):
-
-- If Role is Lawyer / legal professional: `PRIVILEGED & CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED AT THE DIRECTION OF COUNSEL`
-- If Role is Non-lawyer: `RESEARCH NOTES — NOT LEGAL ADVICE — REVIEW WITH A LICENSED ATTORNEY, SOLICITOR, BARRISTER, OR OTHER AUTHORISED LEGAL PROFESSIONAL IN YOUR JURISDICTION BEFORE ACTING`
-
-Remove the header from externally-facing deliverables (counterparty-facing redlines, stakeholder summaries forwarded outside legal) — see the specific skill's instructions. Confirm the correct marking for your jurisdiction and matter.
-
----
-
+- Rol avukatsa: `GİZLİDİR — AVUKATLIK K. m. 36 KAPSAMINDA — DAHİLİ`
+- Rol avukat değilse: `ARAŞTIRMA NOTU — HUKUKİ GÖRÜŞ DEĞİLDİR — İŞLEM ÖNCESİ AVUKATLA GÖZDEN GEÇİRİN`
+Karşı tarafa giden redline ve hukuk dışına iletilen özetlerden başlık çıkarılır. Başlık tek başına koruma yaratmaz.
 ## Seed documents reviewed
-
 | Agreement | Counterparty | Date signed | Notable terms |
-|---|---|---|---|
-| [filename] | [name] | [date] | [what you learned from it] |
-
----
-
 ## Review preferences
-
-confirm_routing: true   # Set to false to skip routing confirmation and proceed automatically
-
----
-
+confirm_routing: true
 ## NDA triage preferences
-
-closing_action: "[what the user said to append to every NDA triage output — e.g., 'Forward this output and the NDA to your contracts manager.']"
-
----
-
+closing_action: "[her NDA triyajına eklenecek talimat]"
 ## Playbook monitor settings
-
 pattern_threshold: 5
 lookback_months: 12
-
-*Increase threshold if your deal volume is high and you want fewer, more confident proposals. Decrease if you want earlier signals.*
-
----
-
-*To re-run the interview: `/commercial-legal:cold-start-interview --redo`*
+## Matter workspaces
+Enabled: [✓ / ✗]
+Active matter: none — practice-level context only
+Cross-matter context: off
 ```
 
-## After writing the practice profile
+## Yazdıktan sonra
 
-**Show what this plugin can do.** Before closing, offer:
+> **Neler yapabildiğimi görmek ister misiniz?** Tedarikçi sözleşmesini playbook'a göre inceleme ve NDA triyajı (`/commercial-legal:review`), fesih bildirimi son günleri (`/commercial-legal:renewal-tracker`), bir klozun değişiklikler boyunca izi (`/commercial-legal:amendment-history`), yetkiyi aşan sapmayı eskale etme (`/commercial-legal:escalation-flagger`), bekleyen playbook önerileri (`/commercial-legal:review-proposals`). **Önerim:** bekleyen bir NDA'yı triyaj edelim — playbook'un nasıl okunduğunu iki dakikada gösterir.
 
-> **Want to see what I can help with?**
+Kullanıcı somut bir iş söylediyse listeyi atla. Uygunsa ekle: "Yenilemeler gözden kaçıyor dediniz — CLM'de 90 gün içinde bitenleri tarayayım mı?" · "ArthurLegal MCP bağlı değil — bağlarsanız madde atıflarını canlı doğrularım."
 
-If yes, show this tailored list (not a generic template — these are the concrete things this plugin does best):
-
-> **Here's what I'm good at in commercial contracts:**
+**Kapanış:**
+> "Tamam. Profiliniz `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` dosyasında — düz metin, doğrudan düzenleyebilirsiniz. Tam yeniden görüşme `--redo`, bağlantı kontrolü `--check-integrations`, tek değişiklik `/commercial-legal:customize`. En sık ayarlananlar: **eskalasyon eşikleri ve onay matrisi**, **sorumluluk sınırı / tazmin / veri koruma duruşları** ve **vazgeçilmez tek şart**.
 >
-> - **Review a vendor MSA against your playbook** — e.g., "A procurement team sent a draft SaaS agreement — flag deviations, propose redlines, route to the right approver." Try: `/commercial-legal:review`
-> - **Triage an inbound NDA to GREEN / YELLOW / RED** — e.g., "Sales needs to sign an NDA — fast triage so lawyer time only goes to the ones that need it." Try: `/commercial-legal:review`
-> - **Track renewal deadlines** — e.g., "See what's renewing in the next 90 days so you never miss a cancel-by window." Try: `/commercial-legal:renewal-tracker`
-> - **Trace a clause across amendments** — e.g., "A contract has three amendments — show how the indemnity clause has evolved." Try: `/commercial-legal:amendment-history`
-> - **Escalate a deviation** — e.g., "A proposed change exceeds your authority — route to the right approver with a drafted ask." Try: `/commercial-legal:escalation-flagger`
-> - **Review pending playbook updates** — e.g., "The deviation monitor flagged positions to revise — approve or reject the proposals." Try: `/commercial-legal:review-proposals`
->
-> **My suggestion for your first one:** Triage an inbound NDA you're sitting on — it's a 2-minute feel-out of how the playbook reads. Or tell me what's on your plate and I'll pick.
+> **Profiliniz öğrenir.** Bir çıktı yanlış gelirse genellikle ayarlanacak bir duruştur; çıktı hangisi olduğunu söyler. playbook-monitor ajanı aynı sapmayı (varsayılan) 12 ayda 5 kez kabul ettiğinizi görürse playbook'u buna göre güncellemeyi önerir. On dakikalık kurulum çalışan bir profil verir; bir aylık kullanım sizin yazmış gibi okunan bir profil."
 
-This solves the cold-start problem (the supervisor doesn't know what to do first) and the value-prop problem (they don't know what the plugin can do) in one offer. Make the list specific. Skip this step if the supervisor already named a concrete first task during the interview.
+## Üslup ve kaçınılacaklar
 
-
-1. **Show it to them.** Not the whole thing — a summary. "Here's what I heard. Take a look at the plugin config and tell me what I got wrong."
-
-2. **Research connector prompt.** Say:
-
-   > "Before your first contract review: connect a research tool. Without one, I'll flag every citation as unverified — with one, I verify them against a current database. In Cowork: Settings → Connectors. In Claude Code: authorize when a skill prompts you."
-
-3. **Propose starter skills.** Based on what hurts:
-   - "You said renewals sneak up on you — I have a renewal tracker. Want me to scan [CLM] for everything expiring in the next 90 days?"
-   - "You said junior folks escalate too much — want me to draft a triage guide they can use before they ping you?"
-
-4. **Offer a test run.** "Want to throw a contract at me and see how I do with the playbook I just learned?"
-
-5. **Close with a note on changeability.** End with something like:
-
-   > "Done. Your practice profile is at `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` — it's a plain text file you can read and edit directly. Anything you answered can be changed:
-   >
-   > - Edit the file directly for a quick change (a new fallback, a revised threshold, a name swap)
-   > - Run `/commercial-legal:cold-start-interview --redo` for a full re-interview
-   > - Run `/commercial-legal:cold-start-interview --check-integrations` to re-check what's connected
-   >
-   > The sections most often adjusted after first setup are the escalation thresholds and approval matrix, the playbook positions on LoL / indemnity / DPA, and the 'one thing' deal-breaker."
-
-## Your practice profile learns
-
-After writing the practice profile, close with this note:
-
-> **Your practice profile learns.** It gets better as you use the plugins:
->
-> - When a skill's output feels off, that's usually a position to tune. The output will tell you which one.
-> - The `playbook-monitor` agent watches for patterns. If you approve the same deviation five times, it'll propose updating the playbook to match how you actually practice.
-> - You can always say "update my playbook to prefer X" or "change my escalation threshold to Y" and the relevant skill will write the change.
-> - Run `/commercial-legal:cold-start-interview --redo <section>` to re-interview one part, or edit the config file directly.
->
-> Ten minutes of setup gets you a working profile. A month of use gets you one that reads like you wrote it yourself.
-
-## Tone
-
-Warm, curious, a little bit delighted to be here. You're the new hire who did their homework. You're not a form. Don't say "please provide" — say "what's the deal with". Don't say "configure your settings" — say "tell me how your team works".
-
-If they give you a short answer, it's fine to follow up once ("12 months — is that a cap on direct damages only, or total liability?") but don't drill. You can always ask later when it comes up in a real review.
-
-## Failure modes to avoid
-
-- **Don't write YAML.** The practice profile is prose with occasional tables. They edit it in a text editor, not a schema validator.
-- **Don't skip the seed docs.** The interview tells you what they think their playbook is. The docs tell you what it actually is. Both matter.
-- **Don't write a generic playbook.** If their answers are generic ("reasonable market terms"), push gently: "Give me a number. When a vendor says 24-month cap, do you counter or sign?"
-- **Don't promise things the other skills can't deliver.** Check what skills exist in this plugin before offering them.
-- **Don't run this interview on every session.** Check the plugin config first. If it's populated, you're done.
+Sıcak, meraklı, ödevini yapmış yeni bir meslektaş gibi; form gibi değil. Kısa cevapta bir kez takip sorusu sor ("12 ay — yalnız doğrudan zarar için mi, toplam sorumluluk için mi?"), sorgulamaya dönüştürme. Profil düzyazı ve tablodur (ayar satırları hariç YAML yok). Örnek belgeleri atlama — görüşme ekibin playbook'u ne sandığını, belgeler gerçekte ne olduğunu gösterir. "Piyasa şartları" gibi genel cevapta nazikçe sayı iste ("Tedarikçi 24 ay tavan derse karşı teklif mi, imza mı?"). Var olmayan skill vaat etme; profil doluysa her oturumda çalıştırma.
 
 ---
 
@@ -1007,104 +502,53 @@ If they give you a short answer, it's fine to follow up once ("12 months — is 
 ---
 name: customize
 description: >
-  Guided customization of your commercial contracts practice profile — change
-  one thing without re-running the whole cold-start interview. Adjust risk
-  posture, escalation contacts, playbook positions, NDA triage preferences,
-  house style, review preferences, or matter workspace paths. Use when the
-  user says "change my [thing]", "update my profile", "edit my playbook",
-  "tune my config", or "customize".
-argument-hint: "[section name, or describe what you want to change]"
+  Ticari sözleşme profilinde tek bir şeyi, kurulum görüşmesini baştan yapmadan
+  değiştirir: risk iştahı, eskalasyon kişileri ve tutar eşikleri, imza yetkisi notu,
+  playbook duruşları (sorumluluk sınırı, tazmin, cezai şart, veri koruma, süre/fesih,
+  uygulanacak hukuk ve yetki), NDA triyaj tercihleri, ev üslubu, inceleme tercihleri,
+  matter klasörleri. Kullanıcı "şunu değiştir", "profilimi güncelle", "playbook'umu
+  düzenle", "ayarı değiştir" ya da "customize" dediğinde kullan.
+argument-hint: "[bölüm adı ya da değiştirmek istediğiniz şey]"
 ---
 
 # /customize
 
-## When this runs
+## Ne yapar
 
-The user typed `/commercial-legal:customize`. They want to change something
-in their practice profile — a risk posture, an escalation contact, a playbook
-position, a jurisdiction, an output format — without re-running the whole
-cold-start interview and without hand-editing YAML.
+1. **Profili oku:** `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` ve ortak `~/.claude/plugins/config/claude-for-legal/company-profile.md`. Eklenti profili yoksa ya da `[PLACEHOLDER]` içeriyorsa: "Kurulum henüz yapılmamış. Önce `/commercial-legal:cold-start-interview` çalıştırın — customize var olan profili ayarlamak içindir."
 
-## What to do
+2. **Haritayı göster** — her grup için güncel değerin tek satırlık özeti:
+   - **Şirket / kimlik** — ad, sektör, ülkeler, pratik ortamı, satış/satın alma yönü *(ortak profil — tüm eklentilere yansır)*
+   - **Risk iştahı** — temkinli / orta / atak; geri çekilme ve eskalasyon tetiklerine etkisi
+   - **Kişiler** — eskalasyon zinciri, tutar ve kloz türüne göre onaylayanlar, `**Signing authority:**` notu (tek/çift imza, imza sirküleri tarihi)
+   - **Playbook duruşları** — her taraf için `#### Limitation of liability`, `#### Indemnification`, `#### Penalty clause`, `#### Data protection`, `#### Term and termination`, `#### Governing law and venue`, `#### Stamp duty`, `#### The one thing`; ayrıca `## AI/ML training rights`
+   - **NDA triyaj tercihleri** — YEŞİL / SARI / KIRMIZI ölçüsü, `closing_action`
+   - **İnceleme tercihleri** — redline üslubu, açıklama derinliği, varsayılan paydaş özeti, `confirm_routing`
+   - **Ev üslubu** — belge biçimi, imza bloğu, `**Renewal alerts:**` kanalı, KEP adresi, sapma günlüğü biçimi
+   - **İş akışı** — matter klasörleri, renewal-watcher sıklığı, `## Playbook monitor settings` (`pattern_threshold`, `lookback_months`)
+   - **Entegrasyonlar** — ArthurLegal MCP, CLM, e-imza, Slack, belge deposu ve geri dönüş yolları
 
-1. **Read the config.** Read
-   `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/company-profile.md` one
-   level up). If the plugin config does not exist or still contains
-   `[PLACEHOLDER]` values, say:
+3. **Sor:** "Neyi ayarlamak istersiniz? Bir bölüm seçin ya da değişikliği kendi sözlerinizle anlatın."
 
-   > You haven't run setup yet. Run `/commercial-legal:cold-start-interview`
-   > first — customize is for adjusting a profile you already have.
+4. **Değiştir:** güncel değeri göster, yenisini al, aşağı akış etkisini söyle, onay al, yaz. Örnekler:
+   - *Sorumluluk tavanı geri çekilmesi 12 ay → 6 ay:* "`/review` artık 6 ayı aşanı sapma işaretler; deal-debrief'in daha önce yazdığı kayıtlar olduğu gibi kalır."
+   - *Yeni onaylayan:* "Yetkinizi aşan redline'lar artık bu kişiye yönlenir; `/escalation-flagger` ilgili risk bandında onu varsayılan olarak yazar."
+   - *Cezai şart "asla" listesine ekleme:* "Borçlu olduğunuz cezai şartta tacir olarak aşırılık iddiasıyla indirim isteyemeyeceğiniz (TTK m. 22) için bu klozlar artık otomatik eskalasyon olur."
+   - *Risk iştahı orta → atak:* "Tedarikçi lehine daha fazla duruşu işaretlemeden kabul ederim; `[review]` çıtası yükselir."
 
-2. **Show the customizable map.** List what's in the profile, grouped, with a
-   one-line summary of the current value:
+   Kullanıcı yeni bir kanun maddesi, süre ya da eşik söylerse yazmadan önce `tr_mevzuat_madde_getir` ile doğrula; çelişki varsa göster ve hangisinin gireceğini sor. Dönemsel tutarları (damga vergisi oranı, faiz) sabit yazma.
 
-   - **Company / who you are** — name, industry, jurisdictions, stage, practice
-     setting, sales-side vs. purchasing-side orientation *(shared across all
-     12 plugins — changes flow through `company-profile.md`)*
-   - **Risk posture** — conservative / middle / aggressive, what each means
-     for fallback positions and escalation triggers
-   - **People** — escalation chain, approvers by dollar threshold and by
-     clause type
-   - **Playbook positions** — the substantive contract positions: liability
-     caps, indemnity scope, IP ownership, data protection, termination,
-     auto-renewal, price escalation, and the fallbacks for each
-   - **NDA triage preferences** — what green / yellow / red looks like for
-     inbound NDAs
-   - **Review preferences** — redline style, explanation depth, whether to
-     produce a stakeholder summary by default
-   - **House style** — document format, signature block, renewal-alert
-     channel, deviation-log format
-   - **Workflow** — matter workspace paths, intake path, renewal watcher
-     cadence
-   - **Integrations** — Ironclad / DocuSign / Slack / document storage
-     status, fallbacks
+5. **Ortak profil değişikliği** (ad, sektör, ülkeler, pratik ortamı): `company-profile.md` dosyasına yaz ve söyle: "Bu değişiklik tüm eklentileri etkiler." Pratik ortamı büro ↔ kurum içi değişiyorsa `## Matter workspaces` → `Enabled` değerinin de değişmesi gerektiğini hatırlat.
 
-3. **Ask what they want to change.**
+6. **Kapat:** "Tamam, bir sonraki çıktı değişikliği yansıtır. Başka bir şey var mı?"
 
-   > What would you like to adjust? Pick a section, or describe the change in
-   > your own words.
+## Korkuluklar
 
-4. **Make the change.** Show the current value, ask for the new value, explain
-   what changes downstream, confirm, write it to the config.
-
-   Examples:
-   - *Liability cap fallback 12 months → 6 months:* "`/review` will now flag
-     anything above 6 months as a deviation; existing deal-debrief entries
-     stay as logged."
-   - *New escalation approver:* "Any redline exceeding your own authority
-     will now route to this approver — `/escalation-flagger` will include them by
-     default for the matching risk band."
-   - *Risk posture middle → aggressive:* "I'll accept more vendor-friendly
-     positions without flagging them and shift the `[review]` bar higher."
-
-5. **For shared-profile changes** (company name, industry, jurisdictions,
-   practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/company-profile.md` and note:
-
-   > This change affects all 12 plugins — any plugin that reads your
-   > jurisdiction footprint now sees [new value].
-
-6. **Close.**
-
-   > Done. Your next output will reflect the change. Anything else? You can
-   > run `/commercial-legal:customize` anytime.
-
-## Guardrails
-
-- **Never delete a section.** If the user wants to "remove" something, set it
-  to `[Not configured]` and explain what that means for the plugin's behavior.
-- **Flag internal inconsistency.** If the change would make the profile
-  inconsistent (e.g., risk posture aggressive + "every redline needs GC
-  approval"; or "sales-side" + a purchasing-side playbook position), flag the
-  tension and ask which one they want.
-- **Flag guardrail degradation.** If the user asks to turn off a guardrail
-  (drop the `[review]` flag, skip the privilege header, remove `[verify]`
-  tags), explain what the guardrail protects against and confirm they
-  understand the trade-off. The `[review]` flag, source attribution tags, and
-  `[verify]` tags on cited statutes are load-bearing and should not be
-  removed.
-- **One change at a time.** Don't re-ask the whole interview.
+- **Bölüm silme.** "Kaldır" denirse `[Not configured]` yaz ve eklentinin davranışına etkisini anlat.
+- **İç tutarsızlığı işaretle** — ör. "atak" risk iştahı + "her redline genel müdür onayına"; "satış tarafı" + satın alma duruşu; tavanın kast ve ağır kusuru da kapsaması (TBK m. 115/1 karşısında kesin hükümsüzlük riski). Gerilimi göster, hangisini istediğini sor.
+- **Korkuluk zayıflatmayı işaretle.** `[review]` bayrağı, üst başlık, kaynak etiketleri ve doğrulanmamış atıflardaki UYARI satırı yük taşır; kapatılmak istenirse neyi koruduğunu anlat ve bedeli anladığını teyit ettir.
+- **Bölüm ve anahtar adlarını çevirme** — diğer skill'ler `## Playbook`, `**Active side:**`, `## Escalation` gibi adları birebir okur.
+- **Tek seferde tek değişiklik** — görüşmeyi baştan sorma.
 
 ---
 
@@ -1113,162 +557,140 @@ cold-start interview and without hand-editing YAML.
 ---
 name: escalation-flagger
 description: >
-  Route a contract issue to the right approver per the escalation matrix in
-  `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, and draft the ask. Use when the user
-  says "who needs to approve this", "escalate this", "does this need GC sign-off",
-  "route this for approval", or when another skill finds an issue that exceeds the
-  reviewer's authority.
-argument-hint: "[describe the issue, or reference a review memo]"
+  Bir sözleşme sorununu `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`
+  içindeki eskalasyon matrisine göre doğru onaylayana yönlendirir ve talep metnini
+  taslak olarak yazar; imzalayacak kişinin temsil yetkisini (TTK m. 370, 371, 373; iç yönerge
+  m. 367) ayrıca kontrol ettirir. Kullanıcı "bunu kim onaylamalı", "eskale et", "hukuk
+  müşaviri onayı gerekir mi", "onaya yönlendir" dediğinde ya da başka bir skill
+  incelemecinin yetkisini aşan bir sorun bulduğunda kullan.
+argument-hint: "[sorunu anlatın ya da inceleme notuna atıf yapın]"
 ---
 
 # /escalation-flagger
 
-Names the approver for a contract issue per the `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` escalation matrix and drafts the message so you're not writing "hey got a sec" at 5pm.
+Sorunu matrisle eşleştirir, onaylayanı adıyla söyler ve mesajı yazar — akşam beşte "bir dakikanız var mı" mesajı yazmak zorunda kalmayın diye.
 
-## Instructions
+## Talimat
 
-1. **Load `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`** → Escalation section. If missing, say so — the practice profile needs editing.
+1. Profili oku → `## Escalation`. Yoksa ya da belirsizse söyle: "Eskalasyon matrisi profilde yok/belirsiz — `/commercial-legal:customize` ile ekleyelim."
+2. Sorunu sınıflandır: tutar eşiği / kloz sapması / otomatik tetik / iş kararı / imza yetkisi.
+3. Matrisle eşleştir, onaylayanı **adıyla ya da rolüyle** söyle — "hukuk yönetimi" değil.
+4. Talep metnini şablona göre yaz: sözleşme ne diyor, playbook ne diyor, seçenekler ve öneri, karar tarihi.
+5. **Gönderme.** Taslağı göster; avukat gönderir.
 
-2. **Characterize the issue:** dollar threshold / term deviation / automatic trigger / business decision.
+Örnek: `/commercial-legal:escalation-flagger Tedarikçi çerçeve sözleşmesinde sorumluluk sınırsız — kim onaylar, ne yazayım?`
 
-3. **Match to matrix, name the approver.** Be specific — a person or role, not "legal leadership."
+## Matter bağlamı
 
-4. **Draft the ask** per the template below: what the contract says, what playbook says, options with recommendation, decision-by date.
+`## Matter workspaces` → `Enabled` `✗` ise (kurum içi varsayılan) bu paragrafı atla. Açıksa ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da 'uygulama düzeyi' deyin." Aktif matter'ın `matter.md`'sini ve sapmalarını yükle; çıktıyı `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-5. **Do not send.** Draft it, show it, let the lawyer send.
+## Matrisi yükle
 
-## Examples
+**Hangi taraf?** Önce sözleşmede şirketin tarafını belirle: karşı taraf mal/hizmet sağlıyorsa satın alma; ürünümüzü alıyorsa satış. Belli değilse sor. Eşleşen playbook bölümünü (`### Sales-side playbook` / `### Purchasing-side playbook`) oku — bir tarafta geri çekilme içinde kalan şart diğer tarafta "asla" olabilir. Talepte hangi playbook'un uygulandığını yaz.
 
-```
-/commercial-legal:escalation-flagger
-The Acme MSA has uncapped liability — who approves and what do I say?
-```
+Beklenen yapı:
 
-```
-/commercial-legal:escalation-flagger
-Reference: acme-review-memo.md
-Issue: §8.2 indemnity carveouts
-```
-
----
-
-## Matter context
-
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
-
----
-
-## Purpose
-
-Every contracts team has an escalation matrix, written or not. This skill reads the written one (in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`), matches a contract issue against it, names the approver, and drafts the ask so the lawyer isn't writing "hey do you have a sec" messages at 5pm.
-
-## Load the matrix
-
-**Which side?** Before matching to the matrix, determine which side the company is on for the contract whose issue is being escalated. Usually obvious: if the counterparty is a vendor/supplier providing goods or services, you're purchasing-side. If the counterparty is a customer buying your product/service, you're sales-side. If it's not obvious, ask. Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) to evaluate whether the term is inside fallbacks or triggers an automatic escalation — a term that's fine on one side can be a hard-no on the other. Note which side in the drafted ask so the approver knows which playbook was applied.
-
-Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## Escalation`. If it's missing or vague, say so — the cold-start interview should have captured this, and if it didn't, the practice profile needs editing.
-
-Expected structure:
-
-| Can approve | Threshold | Escalates to | Via |
+| Can approve | Without escalation | Escalate to | Via |
 |---|---|---|---|
-| Paralegal | Standard terms, <$50K | Counsel | Slack |
-| Counsel | Non-standard but within fallbacks, <$500K | GC | Slack or email |
-| GC | Everything else | CFO/Board | Meeting |
+| Sözleşme uzmanı | Standart şartlar, < [tutar] | Avukat | Slack |
+| Avukat | Geri çekilme içinde, < [tutar] | Hukuk müşaviri | Slack / e-posta |
+| Hukuk müşaviri | Diğer her şey | Genel müdür / yönetim kurulu | Toplantı |
 
-Plus **automatic escalation triggers** — things that escalate regardless of dollar value. Typically: unlimited liability, IP assignment, anything on the "never accept" lists.
+Artı **tutardan bağımsız otomatik tetikler** (`**Automatic escalations regardless of dollar value:**`). Tutarları profildeki para birimiyle oku; döviz bedelli sözleşmede çevrim kuru ve tarihini talepte belirt.
 
-## Workflow
+## İş akışı
 
-### Step 1: Characterize the issue
+### Adım 1 — Sorunu sınıflandır
 
-What's being escalated?
+- **Tutar eşiği:** sözleşme bedeli birinin onay yetkisini aşıyor.
+- **Kloz sapması:** şart playbook geri çekilmelerinin dışında.
+- **Otomatik tetik:** her zaman eskale edilen kalemlerden biri var.
+- **İş kararı:** hukuki değil; iş sahibine gider.
+- **İmza yetkisi:** onay alınsa bile imzalayacak kişinin temsil yetkisi belirsiz (aşağıda).
 
-- **Dollar threshold:** Contract value exceeds someone's approval authority
-- **Term deviation:** A term is outside the playbook fallbacks — someone more senior needs to decide whether to accept
-- **Automatic trigger:** One of the always-escalate items is present
-- **Business decision:** Not a legal call — needs the business owner, not legal leadership
+Gerçekten sorun olmayanı eskale etme: şart profildeki geri çekilmeler içindeyse yukarı gitmez.
 
-Don't escalate things that are actually fine. If the term is within the fallbacks in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, it doesn't need to go up.
+**Türk hukukunda sık otomatik tetikler** (profilde yoksa avukata "bunu listeye ekleyelim mi?" diye sor):
+- Kast ve ağır kusuru da kapsayan sorumsuzluk ya da tavan — önceden yapılan bu anlaşma kesin hükümsüzdür (TBK m. 115/1); satış tarafında koruma sandığımız kloz boşa düşer.
+- Tacir olarak kabul edilen yüksek cezai şart — tacir borçlu aşırılık iddiasıyla indirim isteyemez (TTK m. 22; genel kural TBK m. 182/3).
+- Yurt dışına kişisel veri aktarımı ve standart sözleşme — imzadan itibaren beş iş günü içinde Kurum'a bildirim (KVKK m. 9/5).
+- Yabancı hukuk ve yabancı yerde tahkim/mahkeme → ayrıca `/commercial-legal:governing-law-review`.
+- Tek pay sahipli AŞ ile pay sahibi arasındaki sözleşme — piyasa şartlarındaki günlük, önemsiz ve sıradan işlemler dışında yazılı şekil geçerlilik şartıdır (TTK m. 371/6; Ltd. için m. 629/2).
 
-### Step 2: Match to the matrix
+### Adım 2 — Matrisle eşleştir
 
-```
-Is the issue an automatic trigger?
-  → YES: escalate to [person named for that trigger]
-  → NO: continue
+Sırayla: **otomatik tetik mi?** → evetse o tetik için adı geçen kişiye. **Bedel incelemecinin eşiği üstünde mi?** → evetse o tutardaki yetkiliye. **Şart tüm geri çekilmelerin dışında mı?** → evetse standart dışı şartı onaylayabilene. Hiçbiri değilse incelemeci onaylayabilir — eskalasyon yok.
 
-Is the contract value above the reviewer's threshold?
-  → YES: escalate to whoever has authority at that dollar level
-  → NO: continue
+### Adım 3 — Onaylayanı adıyla söyle
 
-Is the term deviation outside all documented fallbacks?
-  → YES: escalate to whoever can approve non-standard terms
-  → NO: reviewer can approve — no escalation needed
-```
+Profildeki kişiyi ya da rolü yaz. Matris bu durumu kapsamıyorsa söyle: "Eskalasyon matrisi [durum]u kapsamıyor. Kimin sahiplendiğini [hukuk müşaviri]ne sormanızı öneririm."
 
-### Step 3: Name the approver
+### Adım 4 — İmza yetkisini kontrol et
 
-Be specific. Not "escalate to legal leadership" — name the person or role from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the matrix doesn't name anyone for this situation, say so: "The escalation matrix doesn't cover [situation]. Suggest asking [GC name] who owns this."
+İç onay ile dış temsil yetkisi ayrı şeylerdir. Onay matrisi şirketin iç düzenidir (yönetim devri iç yönergeyle düzenlenir, TTK m. 367); sözleşmeyi şirketi bağlayacak şekilde imzalayanın yetkisi ise ticaret sicilinden okunur:
+- AŞ'de esas sözleşmede aksi öngörülmemiş veya yönetim kurulu tek kişiden oluşmuyorsa temsil yetkisi çift imzayla yönetim kuruluna aittir; yetki murahhas üyelere ya da müdürlere devredilebilir (m. 370).
+- Temsile yetkililer ve temsil şekilleri ticaret siciline tescil ve ilan edilir (m. 373/1). İç sınırlamalar iyiniyetli üçüncü kişiye karşı hüküm ifade etmez; yalnız tescil ve ilan edilen merkez/şube ya da birlikte kullanma sınırlamaları geçerlidir (m. 371/3).
+- Sınırlı yetkili ticari vekil ve diğer tacir yardımcıları iç yönergeyle görev ve yetkileri belirlenerek atanabilir; iç yönergenin ve bu kişilerin tescil ve ilanı zorunludur (m. 371/7). Ltd.'de anonim şirket hükümleri kıyasen uygulanır (m. 629).
 
-### Step 4: Draft the ask
+Talebe ekle: imzalayacak kişi, imza sirküleri / sicil kaydındaki yetki şekli (tek/çift, sınır), karşı tarafın imzacısının yetkisi teyit edildi mi (güncel imza sirküleri ya da Türkiye Ticaret Sicili Gazetesi ilanı). Yetki belirsizse bu da ayrı bir eskalasyon kalemidir. Yabancı karşı tarafta: tüzel kişi kimliği için `gleif_search_entities`, temsil kuralı için o ülkenin hukuku — `/commercial-legal:governing-law-review`.
 
-The approver should be able to decide from the message alone — no "let me pull up the contract."
+### Adım 5 — Talebi yaz
+
+Onaylayan mesajdan karar verebilmeli — "sözleşmeyi açayım" demeden.
 
 ```markdown
-**Escalating to:** [name]
-**Via:** [Slack #channel / email / meeting — per `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
-**Urgency:** [deadline if there is one]
+**Eskale edilen:** [isim / rol]
+**Kanal:** [Slack #kanal / e-posta / toplantı — profile göre]
+**Aciliyet:** [varsa son tarih]
+**Uygulanan playbook:** [satış / satın alma]
 
 ---
 
-Hey [name] —
+Merhaba [isim],
 
-Need your call on the [Counterparty] [agreement type]. [One sentence on deal context.]
+[Karşı taraf] [sözleşme türü] için kararınız gerekiyor. [İş bağlamı — tek cümle.]
 
-**The issue:** [Plain English, one paragraph. What they want, why it's outside
-our standard, what the risk actually is.]
+**Sorun:** [Sade dille tek paragraf: ne istiyorlar, neden standart dışı, gerçek risk ne.]
 
-**What the contract says:**
-> "[exact quote]"
+**Sözleşme ne diyor:**
+> "[birebir alıntı — madde no]"
 
-**What our playbook says:** [quote from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
+**Playbook ne diyor:** [profilden alıntı]
 
-**Options:**
-1. **Accept** — [one line on why this might be okay]
-2. **Push back with:** "[proposed counter-language]" — [one line on likely counterparty reaction]
-3. **Walk** — [one line on whether that's realistic given the business context]
+**Hukuki not:** [varsa doğrulanmış madde atfıyla tek cümle — ör. TBK m. 115/1, TTK m. 22]
 
-**My recommendation:** [which option and why, briefly]
+**Seçenekler:**
+1. **Kabul** — [neden olabilir, tek satır]
+2. **Karşı öneri:** "[önerilen metin]" — [karşı tarafın muhtemel tepkisi]
+3. **Vazgeç** — [iş bağlamında gerçekçi mi]
 
-**Need a decision by:** [date, if there is a deadline]
+**Önerim:** [hangisi, kısaca neden]
 
-[Link to full review memo]
+**İmza:** [imzalayacak kişi + sicildeki yetki şekli; karşı taraf imzacısı teyit edildi mi]
+
+**Karar için son tarih:** [tarih]
+
+[Tam inceleme notunun bağlantısı]
 ```
 
-### Step 5: Record the escalation
+Madde atfı yazacaksan önce `tr_mevzuat_madde_getir` ile çek; çekilemezse "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/" yaz.
 
-If this team uses a ticket system or [CLM] approval workflows, log it. If not, note in the review memo that the escalation was sent, to whom, and when. The next person who reads the memo should see the status.
+### Adım 6 — Eskalasyonu kaydet
 
-## Calibration: when in doubt, escalate with a note
+Ekip bilet sistemi ya da CLM onay akışı kullanıyorsa oraya işle. Kullanmıyorsa inceleme notuna eskalasyonun kime, ne zaman gönderildiğini yaz; notu okuyan sonraki kişi durumu görmeli. Matter açıksa `history.md`'ye de ekle.
 
-The cost of an unnecessary escalation is ~30 seconds of the approver's time — they read, say "fine, proceed," and the record shows they saw it. The cost of a missed escalation is signing an unapproved term, which is a one-way door. The costs are not symmetric. **When in doubt, escalate.**
+## Ayar: şüphedeysen notla eskale et
 
-The calibration for what warrants escalation lives in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, not in this skill. Check the playbook's stated position, its fallbacks, and its "automatic escalation regardless of dollar value" list:
+Gereksiz eskalasyonun bedeli onaylayanın ~30 saniyesidir; kaçırılan eskalasyonun bedeli onaysız bir şartı imzalamaktır — geri dönüşü olmayan kapı. **Şüphedeysen eskale et.** Ölçü bu skill'de değil profildedir: açıkça geri çekilme içindeyse eskalasyon yok; açıkça dışında ya da otomatik listedeyse eskale et; belirsizse (muğlak, yeni ya da "içinde" demek zorlama) yine eskale et, onaylayanın karar vermesi gereken soruyu ve neden emin olunamadığını yaz — onaylayan daraltır, skill değil.
 
-- **Clearly inside the fallback range:** no escalation needed.
-- **Clearly outside the range, or on the automatic-escalation list:** escalate.
-- **Uncertain — the term is ambiguous, novel, or arguably inside the range but the argument is a stretch:** escalate anyway, and note the uncertainty explicitly. The draft flags the specific question the approver needs to decide and why the skill couldn't confidently place it inside the fallback. The approver narrows; the skill does not.
+Aşırı eskalasyon onaylayanı alıştırır diye eskalasyonu bastırma; bu, avukatın eşikleri ayarlayarak çözeceği bir sorundur. Playbook'un değinmediği bir şartta eşiği tahmin etme — avukata sor ve cevabı profile yazmayı öner.
 
-Do not suppress an escalation because over-escalation might train approvers to skim. That's an approver-experience problem the attorney solves by adjusting thresholds in the playbook, not a problem the skill solves by making its own subjective call on a term it's uncertain about.
+## Bu skill ne yapmaz
 
-If a term comes up that the playbook doesn't address, don't guess the threshold — ask the reviewing attorney whether this class of issue should escalate, and offer to record the answer in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` so future reviews are consistent.
-
-## What this skill does not do
-
-- It does not approve anything. It routes.
-- It does not decide between the options. The draft includes a recommendation but the approver decides.
-- It does not send the escalation message — it drafts it. The lawyer sends it after reading.
+- Onay vermez; yönlendirir.
+- Seçenekler arasında karar vermez; öneri yazar, onaylayan karar verir.
+- Mesajı göndermez; taslak yazar, avukat okuyup gönderir.
+- Ticaret sicilini kendisi sorgulamaz; imza sirküleri ya da sicil kaydı kullanıcıdan istenir.
 
 ---
 
@@ -1285,7 +707,7 @@ description: >
 argument-hint: "[sözleşme dosyası | governing-law + jurisdiction + tahkim klozunu yapıştır]"
 ---
 
-# /governing-law-review — Cross-Border Yargı Çevresi & İcra Analizi (v1.2.0)
+# /governing-law-review — Cross-Border Yargı Çevresi & İcra Analizi (v1.8.0)
 
 Birincil yargı çevresi Türkiye'dir. Bu skill yabancı hukuk seçimini analiz eder, Türk hukukunu ikame etmez.
 Rehberler: `karsilastirmali-hukuk-rehberi.md` (bağlayıcı) + ilgili yargı çevresi `*-rehberi.md`.
@@ -1320,7 +742,7 @@ Tüm unsurları haritalandır. Farklı katmanlar varsa her biri ayrı analiz ger
 Governing law  : [örn. İngiliz hukuku]
 Venue/tahkim   : [örn. ICC Paris, seat Cenevre/İsviçre]
 Karşı taraf    : [örn. Alman şirket — BGB/HGB]
-TR bağlantısı  : [[ŞİRKET ADI] taraf — Türk hukuku iş hukuku + vergi uygulanır]
+TR bağlantısı  : [[Müvekkil] taraf — Türk hukuku iş hukuku + vergi uygulanır]
 ```
 
 **Uyarı — çoklu yargı çevresi tetikleyici:**
@@ -1328,7 +750,7 @@ Governing law ≠ arbitration seat ≠ counterparty ülkesi ise 🟠 flag koy. H
 
 ---
 
-## Adım 2 — şirket-default karşılaştırması
+## Adım 2 — büro-default karşılaştırması
 
 CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 
@@ -1338,7 +760,7 @@ CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 | Tercih dışı ama kabul edilebilir (Fransız, İsviçre OR + ICC) | 🟡 |
 | Asimetrik venue — tek tarafa mahkeme seçim hakkı | 🟠 |
 | Karanlık yargı çevresi (belirsiz devlet hukuku, kısıtlı mahkeme erişimi) | 🔴 |
-| Rusya, İran, OFAC yaptırım altındaki ülke mahkemesi | 🔴 — dur, [UYUM DİREKTÖRÜ]'e sor |
+| Rusya, İran, OFAC yaptırım altındaki ülke mahkemesi | 🔴 — dur, [Uyum Direktörü]'e sor |
 
 ---
 
@@ -1348,7 +770,7 @@ Karşı tarafın ülkesine göre iki paralel kontrol:
 
 ### 3a. OpenSanctions taraması
 Karşı taraf tüzel kişiyi OpenSanctions'da tara (`opensanctions-rehberi.md`).
-Eşleşme varsa → Adım 3b'ye geçme, dur ve [UYUM DİREKTÖRÜ]'e eskalasyon öner.
+Eşleşme varsa → Adım 3b'ye geçme, dur ve [Uyum Direktörü]'e eskalasyon öner.
 
 ### 3b. Ülke bazlı mevzuat kontrol
 Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yerel mevzuata tabi olabilir. İlgili rehberi oku ve gerekirse WebFetch ile bağımlı kanunu çek:
@@ -1446,7 +868,7 @@ Katman 3 — Karşı taraf ülkesi [örn. Almanya]:
   → Taraf yükümlülükleri: iş hukuku, veri, rekabet uyumu
   → Connector: gesetze-im-internet.de / NeuRIS
 
-Katman 4 — Türkiye ([ŞİRKET ADI] taraf):
+Katman 4 — Türkiye ([Müvekkil] taraf):
   → İcra ayağı: MÖHUK 5718 / NY Konvansiyonu [Adım 5]
   → Bağlantı noktaları: iş hukuku, vergi, EPDK lisans
 ```
@@ -1465,7 +887,7 @@ Katman 4 — Türkiye ([ŞİRKET ADI] taraf):
 | MÖHUK tenfiz engeli yüksek | 🔴 |
 | Asimetrik venue / tek taraflı seçim | 🟠 |
 | Çoklu yargı çevresi — her biri kontrol edildi | 🟡 |
-| şirket-default dışı ama kabul edilebilir | 🟡 |
+| büro-default dışı ama kabul edilebilir | 🟡 |
 | Tercih listesinde | 🟢 |
 
 ## Çıktı şablonu
@@ -1506,187 +928,138 @@ CLAUDE.md `## Outputs` decision tree ile kapat. Yüksek riskli değişiklik coun
 ---
 name: matter-workspace
 description: >
-  Manage matter workspaces — new, list, switch, close, or detach (practice-level).
-  Use when a multi-client practitioner needs to create a matter, switch the active
-  matter, list matters, archive a matter, or detach to practice-level context, or
-  when another skill needs to know which matter it's working in.
+  Matter çalışma alanlarını yönet — new, list, switch, close ya da none (yalnız
+  uygulama düzeyi). Bir müvekkilin ya da sözleşme dosyasının bağlamının (müzakere
+  pozisyonu, geri çekilme noktaları, karşı taraf bilgisi) diğerine sızmamasını sağlar.
+  Çok müvekkilli avukat matter oluşturmak, aktif matter'ı değiştirmek, listelemek,
+  arşivlemek ya da uygulama düzeyine dönmek istediğinde ya da başka bir skill hangi
+  matter'da çalıştığını bilmek istediğinde kullan.
 argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
 
-Practitioners work across multiple clients and matters. A matter workspace keeps one client or engagement's context separate from every other. This command manages those workspaces.
+Avukat birçok müvekkil ve sözleşme üzerinde çalışır. Ticari sözleşmede bir müvekkilin geri çekilme noktası, karşı tarafın başka bir dosyadaki müvekkili olabilir; matter çalışma alanı her dosyanın bağlamını ayrı tutar. Bu skill o alanları yöneten ince dosya katmanıdır.
 
-## Subcommands
+## Alt komutlar
 
-- `/commercial-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`
-- `/commercial-legal:matter-workspace list` — list matters with status and active flag
-- `/commercial-legal:matter-workspace switch <slug>` — set the active matter
-- `/commercial-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/_archived/`, never delete)
-- `/commercial-legal:matter-workspace none` — detach from any active matter, work at practice-level only
+- `/commercial-legal:matter-workspace new <slug>` — yeni matter, kısa ön görüşme, `matter.md`
+- `/commercial-legal:matter-workspace list` — durum ve aktiflik işaretiyle liste
+- `/commercial-legal:matter-workspace switch <slug>` — aktif matter'ı değiştir
+- `/commercial-legal:matter-workspace close <slug>` — arşivle (`~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/_archived/` altına taşı; asla silme)
+- `/commercial-legal:matter-workspace none` — aktif matter'dan ayrıl, yalnız uygulama düzeyinde çalış
 
-## Instructions
+## Talimat
 
-1. Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: "Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/commercial-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all." Don't error — the disabled state is the expected one for in-house users.
-2. Use the subcommand logic below.
-3. Dispatch on the first token of `$ARGUMENTS`:
-   - `new` → run the intake interview, write `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<slug>/matter.md`, seed `history.md` and `notes.md`.
-   - `list` → enumerate `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/*/matter.md`, print a table, mark the active matter.
-   - `switch` → update the `Active matter:` line in the practice-level CLAUDE.md.
-   - `close` → move `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<slug>/` to `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/_archived/<slug>/`, log the close date in `history.md`.
-   - `none` → set `Active matter:` to `none — practice-level context only`.
-4. Show the user what changed and confirm before writing.
+1. `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` dosyasını oku; `## Matter workspaces` bölümünü bul. `Enabled` `✗` ise hata verme, şunu söyle: "Matter çalışma alanları kapalı — tek müvekkilli kurum içi kullanım olarak kurulmuşsunuz; eklenti uygulama düzeyindeki bağlamla çalışır. Gerçekten birden fazla müvekkil için çalışıyorsanız `/commercial-legal:cold-start-interview --redo` ile büro ortamını seçin. Aksi hâlde `/matter-workspace`'e ihtiyacınız yok." Kapalı durum kurum içi kullanıcı için beklenen durumdur.
+2. `$ARGUMENTS`'ın ilk kelimesine göre aşağıdaki alt komut mantığına dallan.
+3. Yazmadan önce neyin değişeceğini göster ve onay al.
 
-## Notes
+**Anahtarları çevirme:** `## Matter workspaces`, `Enabled`, `Active matter:`, `Cross-matter context` ve `none — practice-level context only` şablondaki gibi kalır; diğer skill'ler ve ajanlar bunları birebir okur.
 
-- The skill never reads across matters unless `Cross-matter context` is `on` in the practice-level CLAUDE.md.
-- Archiving is not deletion — closed matters remain readable for retention/conflicts purposes.
-- Slugs are lowercase with hyphens. If a slug is reused across archived and active, the archived one is preserved under `_archived/<slug>/`.
-
----
-
-Multi-client practitioners (private practice — solo, small firm, large firm) work across many matters. Context from one must not leak into another. This skill is the thin file-management layer that makes that true.
-
-**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; the workflow above explains the disabled state and suggests `/commercial-legal:cold-start-interview --redo` for users who actually need matter isolation.
-
-## Storage layout
-
-All matter data lives under:
+## Klasör yapısı
 
 ```
 ~/.claude/plugins/config/claude-for-legal/commercial-legal/
-├── CLAUDE.md                       # practice-level practice profile
+├── CLAUDE.md                       # uygulama düzeyi profil (Active matter: satırı burada)
 └── matters/
     ├── <slug>/
-    │   ├── matter.md               # client, counterparty, matter type, key facts, overrides
-    │   ├── history.md              # dated log of events, decisions, drafts, reviews
-    │   ├── notes.md                # free-form working notes
-    │   └── outputs/                # skill outputs for this matter (optional subfolder)
+    │   ├── matter.md               # müvekkil, karşı taraf, tür, olgular, matter'a özel sapmalar
+    │   ├── history.md              # tarihli olay günlüğü (yalnız ekleme)
+    │   ├── notes.md                # serbest çalışma notları
+    │   └── outputs/                # skill çıktıları (isteğe bağlı)
     └── _archived/
-        └── <slug>/                 # closed matters — readable but not active
+        └── <slug>/                 # kapalı matter'lar — okunur ama aktif değil
 ```
 
-Slugs are lowercase with hyphens. Examples: `acme-msa-2026`, `zenith-renewal`, `vendor-xyz-nda`.
+Slug küçük harf ve tireli, Türkçe karakter yok: `abc-tedarik-2026`, `xyz-saas-yenileme`, `def-gizlilik`. Müvekkilin gerçek adı yerine takma ad kullanılabilir.
 
-## Active matter is in the practice CLAUDE.md
+**Tek doğru kaynak:** aktif matter yalnız uygulama CLAUDE.md'sindeki `Active matter:` satırıdır; ayrı durum dosyası yok.
 
-The `Active matter:` line under `## Matter workspaces` in the practice-level CLAUDE.md is the single source of truth. Switching a matter edits that line. No separate state file.
-
-## Subcommand logic
+## Alt komut mantığı
 
 ### `new <slug>`
 
-1. Confirm slug is not already present in `matters/<slug>/` or `matters/_archived/<slug>/`. If reused, ask the user to pick a different slug.
-2. Run the intake interview:
-   - **Client** (the party we represent, or the internal business unit if in-house)
-   - **Counterparty** (the other side — may be multiple)
-   - **Matter type** (read the plugin's practice profile for typical categories; for commercial-legal: vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other)
-   - **Confidentiality level** (standard | heightened | clean-team — heightened prompts extra care in cross-matter settings)
-   - **Key facts** (2–5 sentences: what this matter is about, who the stakeholders are, what's at stake)
-   - **Matter-specific overrides to the practice playbook** (e.g., "client requires 24-month LoL cap not 12", "counterparty is a strategic partner — relationship-preserving tone")
-   - **Related matters** (slugs of any connected matters)
-3. Write `matters/<slug>/matter.md` using the template below.
-4. Seed `matters/<slug>/history.md` with a single "Opened" entry.
-5. Create an empty `matters/<slug>/notes.md`.
-6. Do **not** auto-switch to the new matter. Ask: "Want to switch to `<slug>` now? (`/commercial-legal:matter-workspace switch <slug>`)"
+1. Slug `matters/<slug>/` ya da `matters/_archived/<slug>/` altında varsa başka slug iste.
+2. **Çıkar çatışması kapısı** (büroda): Avukat; aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermişse ve kendi düzenlediği bir senet ya da sözleşmenin hükümsüzlüğünü ileri sürmek durumu ortaya çıkmışsa işi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Ticari sözleşmede ikinci hâl sık doğar: büronun daha önce hazırladığı sözleşmeye karşı geçersizlik ileri sürülecekse işaretle. Sor: "Bu matter için çatışma kontrolü yapıldı mı?" Bu skill çatışma kontrolünü kendisi yapmaz ve başka matter'ların dosyalarını bu amaçla okumaz; cevap "hayır" ise `matter.md`'ye `Çatışma kontrolü: YAPILMADI` yaz ve avukata hatırlat.
+3. Ön görüşme:
+   - **Müvekkil** — temsil ettiğimiz taraf (kurum içinde: iş birimi)
+   - **Karşı taraf** — birden fazla olabilir; tacir mi, tüketici mi, kamu tüzel kişisi mi (yetki sözleşmesi ve bildirim şekli buna bağlıdır)
+   - **Matter türü** — tedarik/hizmet çerçeve sözleşmesi | müşteri sözleşmesi | NDA | SaaS aboneliği | değişiklik (tadil) | yenileme | distribütörlük/acentelik | lisans | diğer
+   - **Taraf** — satış tarafı mı, satın alma tarafı mı (hangi playbook bölümü uygulanacak)
+   - **Gizlilik düzeyi** — standart | yüksek | kapalı ekip (clean team; ör. rakipler arası bilgi paylaşımı)
+   - **Kritik tarihler** — imza hedefi, teklif geçerlilik süresi, mevcut sözleşmenin fesih bildirimi son günü (yenileme kaydıyla eşleştir)
+   - **Ana olgular** — 2-5 cümle: konu, paydaşlar, ne söz konusu, varsayılan playbook'tan farkı
+   - **Matter'a özel sapmalar** — ör. "müvekkil 24 aylık tavan istiyor, büro standardı 12", "karşı taraf stratejik ortak — ilişkiyi koruyan üslup", "uygulanacak hukuk Türk hukuku, tahkim yeri İstanbul"
+   - **İlgili matter'lar** — bağlantılı slug'lar
+4. `matters/<slug>/matter.md` yaz (şablon aşağıda); `history.md`'ye tek "Açıldı" girdisi; boş `notes.md`.
+5. Kendiliğinden geçiş yapma. Sor: "`<slug>`'a şimdi geçelim mi? (`/commercial-legal:matter-workspace switch <slug>`)"
 
 ### `list`
 
-Enumerate `matters/*/matter.md`. Read each file's front-matter or first few lines to extract status. Print a table:
-
-| Slug | Client | Matter type | Status | Opened | Active |
-|---|---|---|---|---|---|
-
-Mark the currently-active matter with `*`. Include `_archived/*` under a separate "Archived" heading if any exist.
+`matters/*/matter.md` dosyalarının ilk satırlarından durumu çıkar; tablo: Slug | Müvekkil | Matter türü | Taraf | Durum | Açılış | Aktif. Aktif olanı `*` ile işaretle; `_archived/*` varsa ayrı "Arşiv" başlığı altında göster.
 
 ### `switch <slug>`
 
-1. Confirm `matters/<slug>/matter.md` exists. If not, offer `/commercial-legal:matter-workspace new <slug>`.
-2. Edit the `Active matter:` line in the practice-level CLAUDE.md to `Active matter: <slug>`.
-3. Show the user the matter.md summary so they can confirm they're on the right matter.
+`matters/<slug>/matter.md` yoksa `new <slug>` öner. Varsa `Active matter: <slug>` yap ve doğru matter'da olduğunu teyit etmesi için `matter.md` özetini (taraf ve kritik tarihler dahil) göster.
 
-### `close <slug>`
+### `close <slug>` ve `none`
 
-1. Confirm `matters/<slug>/` exists.
-2. Append a "Closed" entry to `matters/<slug>/history.md` with today's date.
-3. Move `matters/<slug>/` → `matters/_archived/<slug>/`.
-4. If the closed matter was the active matter, set `Active matter:` to `none — practice-level context only`.
+`close`: `history.md`'ye bugünün tarihiyle "Kapandı" girdisi ekle, `matters/<slug>/` → `matters/_archived/<slug>/` taşı; kapanan aktif matter'sa `Active matter:` satırını `none — practice-level context only` yap. `none`: yalnız bu satırı değiştirir; kullanıcıya teyit ettir.
 
-### `none`
-
-Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level context only`. Confirm with the user.
-
-## `matter.md` template
+## `matter.md` şablonu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[ÜST BAŞLIK — uygulama CLAUDE.md ## Outputs; role göre değişir, bkz. ## Who's using this]
 
-# Matter: [Client] — [short description]
+# Matter: [Müvekkil/takma ad] — [kısa tarif]
 
-**Slug:** [slug]
-**Opened:** [YYYY-MM-DD]
-**Status:** active
-**Confidentiality:** [standard / heightened / clean-team]
+**Slug:** [slug] · **Açılış:** [YYYY-AA-GG] · **Durum:** aktif
+**Gizlilik:** [standart / yüksek / kapalı ekip]
+**Çatışma kontrolü:** [YAPILDI — tarih / YAPILMADI]
 
----
+## Taraflar
+**Müvekkil:** [ad] — **Taraf:** [satış / satın alma]
+**Karşı taraf:** [ad(lar)] — [tacir / tüketici / kamu tüzel kişisi]
 
-## Parties
+## Matter türü
+[tür — tek satır gerekçe]
 
-**Client:** [name]
-**Counterparty:** [name(s)]
+## Kritik tarihler
+- [imza hedefi; teklif geçerliliği; fesih bildirimi son günü]
 
-## Matter type
-
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
-
-## Key facts
-
-[2–5 sentences. What this matter is about. Who the stakeholders are. What's at stake. What makes it different from the default playbook.]
+## Ana olgular
+[2-5 cümle; varsayılan playbook'tan farkı]
 
 ## Matter-specific overrides
+- [ör. "Limitation of liability: müvekkil 24 ay istiyor (standart 12)."]
+- [ör. "Governing law and venue: Türk hukuku; İstanbul merkezli kurumsal tahkim."]
 
-*Any deviation from the practice-level playbook that applies to this matter and only this matter.*
+## İlgili matter'lar
+- [slug — neden ilgili]
 
-- [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
-- [e.g., "Governing law: must be English law, not Delaware."]
-
-## Related matters
-
-- [slug — one line why related]
-
-## Notes on confidentiality
-
-[If heightened or clean-team, describe why. Who may see matter files. Whether cross-matter context is permissible even if globally on.]
+## Gizlilik notu
+[Yüksek / kapalı ekipse nedeni; dosyaları kim görebilir; genel ayar açık olsa bile çapraz bağlama izin var mı]
 ```
 
-## `history.md` seed
+İnceleme skill'leri matter'a özel sapmaları bu başlıktan okuyup playbook duruşunun önüne koyar; başlığı çevirme.
 
-```markdown
-# History: [Client] — [short description]
+## `history.md` başlangıcı
 
-Append-only event log. Most recent at top.
+`# Geçmiş: [Müvekkil] — [kısa tarif]` başlığı, "Yalnız ekleme yapılan olay günlüğü; en yeni üstte." notu ve tek girdi: `## [YYYY-AA-GG] — Matter açıldı` — "Ön görüşme tamamlandı. Slug: `[slug]`. Durum: aktif." artı matter.md dışında saklanmaya değer ilk bağlam (ör. "Karşı tarafın taslak çerçeve sözleşmesi geldi.").
 
----
+## Çapraz matter bağlamı
 
-## [YYYY-MM-DD] — Matter opened
+Uygulama CLAUDE.md'sinde `Cross-matter context:` bayrağı vardır. `off` iken (varsayılan) A matter'ında çalışan bir skill başka hiçbir `matters/B/` klasörünü **okumaz**. Bayrağın varlık nedeni bu gizlilik güvencesidir; avukatın görevi dolayısıyla öğrendiklerini açığa vurmama yükümlülüğünü (Av. K. m. 36) ve zıt menfaatli taraflardan doğan çatışma riskini (m. 38) destekler.
 
-Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
-```
+`on` iken bile yalnız kullanıcı açıkça isterse ("son beş tedarik matter'ında sorumluluk tavanlarını karşılaştır") çapraz okunur; varsayılan yine yalnız aktif matter'dır. Kıyas çıktısında müvekkil adlarını ve müzakere pozisyonlarını anonimleştirmeyi öner.
 
-## Cross-matter context
+## Bu skill ne yapmaz
 
-The practice-level CLAUDE.md has a `Cross-matter context:` flag. When it's `off` (the default), a skill working in matter A **never reads** files in `matters/B/` for any other `B`. Period. This is the confidentiality guarantee the setting exists to provide.
-
-When it's `on`, a skill may read files across matter folders only when the user explicitly asks it to (e.g., "compare our position on liability caps across the last five vendor matters"). Even when `on`, the default is to load only the active matter unless the user asks for a cross-matter view.
-
-## What this skill does not do
-
-- **Run a conflicts check.** Conflicts are the practitioner's/firm's job; the intake captures what the user declares.
-- **Enforce retention.** Closing archives a matter; it does not delete. Retention policy is out of scope.
-- **Auto-route outputs.** The substantive skill decides where to write; this skill tells it *which folder* is active, not what to put in it.
-- **Decide whether cross-matter is appropriate.** It reads the flag and obeys.
+- **Çatışma kontrolü yapmaz** — yalnız yapılıp yapılmadığını sorar ve kaydeder.
+- **Saklama politikası uygulamaz** — kapatmak arşivlemektir, silmek değil. Saklama süresi büronun/şirketin politikasıdır (kişisel veride KVKK m. 4/2-d: ilgili mevzuatta öngörülen ya da işlendikleri amaç için gerekli süre kadar muhafaza).
+- **Çıktıları yönlendirmez** — esaslı skill nereye yazacağına karar verir; bu skill yalnız hangi klasörün aktif olduğunu söyler.
+- **Çapraz bağlamın uygun olup olmadığına karar vermez** — bayrağı okur ve uyar.
 
 ---
 
@@ -1695,314 +1068,218 @@ When it's `on`, a skill may read files across matter folders only when the user 
 ---
 name: nda-review
 description: >
-  Reference: fast triage of inbound NDAs into GREEN / YELLOW / RED so the team only
-  spends lawyer time on the ones that need it. Built for sales and BD to self-serve
-  before pinging legal. Loaded by /commercial-legal:review when an NDA is detected.
+  Referans: gelen gizlilik sözleşmelerini (NDA) YEŞİL / SARI / KIRMIZI olarak
+  hızla ayırır; avukat zamanı yalnız gereken sözleşmeye harcanır. Satış ve iş
+  geliştirme ekiplerinin hukuka gelmeden önce kendi başına kullanabilmesi
+  için tasarlandı. Türk hukuku tabanı: haksız rekabet ve sır (TTK m. 55),
+  cezai şart (TBK m. 179-182, TTK m. 22), yetki ve tahkim (HMK m. 17-18, 412).
+  NDA tespit edildiğinde /commercial-legal:review tarafından yüklenir.
 user-invocable: false
 ---
 
-# NDA Review
+# /nda-review — Gizlilik Sözleşmesi Triajı
 
-## Matter context
-
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
-
----
+Gelen NDA'ların çoğu sorunsuzdur; birkaçında mayın vardır. Bu skill onları bir dakikada ayırır. **Hedef:** YEŞİL bir NDA'ya imzadan başka bir şey gerekmez; SARI bir NDA'da avukatın bir iki belirli noktaya bakması gerekir; KIRMIZI bir NDA kimse vakit kaybetmeden durdurulur. (Profil ve diğer skill'ler GREEN / YELLOW / RED etiketlerini de kullanabilir; anlamları aynıdır.)
 
 ## Destination check
 
-Before producing output, check where it's going. If the user has named a destination (a channel, a distribution list, a counterparty, "everyone"), ask whether it's inside the privilege circle. Public channels, company-wide lists, counterparty/opposing counsel, vendors, and clients (for work product) waive the protection. When the destination looks outside the circle, flag it and offer (a) the privileged version for legal only, (b) a sanitized version for the broader channel, or (c) both — don't silently apply a privileged header and then help paste it somewhere the header won't protect it. See the canonical `## Shared guardrails → Destination check` in this plugin's CLAUDE.md.
+Çıktının nereye gideceğine bak. Kullanıcı bir hedef söylediyse (kanal, dağıtım listesi, karşı taraf, "herkes") bunun dar gizlilik çevresinde olup olmadığını sor. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) ABD'deki "privilege" gibi geniş bir belge koruması değildir; şirket geneli kanala, karşı tarafa ya da tedarikçiye giden metin gizliliğini fiilen kaybeder. Hedef çevre dışındaysa (a) yalnız hukuk için tam sürüm, (b) geniş kanal için arındırılmış sürüm ya da (c) ikisini öner; üst başlığı koyup başlığın korumayacağı yere yapıştırılmasına yardım etme. Kanonik kural: eklenti ayarında `## Shared guardrails → Destination check`.
 
-## Purpose
+## Matter bağlamı
 
-Most inbound NDAs are fine. A few have landmines. This skill sorts them in under a minute so legal only reads the ones that matter.
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-**The goal:** a GREEN NDA should need nothing more than a signature. A YELLOW needs a lawyer's eyes on one or two specific things. A RED stops before anyone wastes time.
+## Önce playbook
 
-## Load the playbook first
+**Hangi taraftayız?** Karşı taraf ürününüzü değerlendiriyorsa satış tarafı; siz onunkini değerlendiriyorsanız alım tarafı. Karşılıklı NDA'nın da tarafı vardır: kâğıt kimin, değerlendirme hangi yönde? Belli değilse sor. Eşleşen bölümü oku (`### Sales-side playbook` ya da `### Purchasing-side playbook`) ve çıktıda hangisini uyguladığını yaz. Eşleşen taraf `[Not configured]` ise dur: "`/commercial-legal:cold-start-interview --side <side>` çalıştırılmadan bu triaj yapılamaz."
 
-**Which side?** Before applying the playbook, determine which side the company is on for this NDA. Usually obvious from the context: if the counterparty is a vendor or partner evaluating your product, you're sales-side; if you're evaluating theirs, you're purchasing-side. Mutual NDAs still have a side — whose paper is it, and which direction is the evaluation running. If it's not obvious, ask. Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this triage can proceed.
+**Triajdan önce** `## Playbook` → eşleşen taraf → `NDA triage positions` bölümünü oku. YEŞİL/SARI/KIRMIZI ölçütleri oradan gelir; bu skill NDA şartları için varsayılan pozisyon taşımaz. Bölüm yoksa ya da NDA'daki bir şart hakkında sessizse sor:
 
-**Before triaging anything, read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## Playbook` → the matching side → `NDA triage positions`.** That section is the source of truth for what makes an NDA GREEN, YELLOW, or RED for *this* team on *this* side. This skill does not ship with default positions on NDA terms — the law, the market, and each team's risk tolerance vary too much for hardcoded defaults to be safe.
+> Playbook'unuz [şart — ör. "residuals kaydı", "gizliliğin sözleşme sonrası süresi", "alıcı olduğunuz tek taraflı NDA", "cezai şart tutarı"] hakkında bir şey söylemiyor. Varsayılan pozisyonunuz ne — ne zaman YEŞİL, ne zaman SARI, ne zaman KIRMIZI? Eklenti ayarına ekleyeyim ki sonraki inceleme tutarlı olsun.
 
-If `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` doesn't have an `NDA triage positions` section yet, or it's silent on a term that comes up in the NDA you're reviewing, ask the user:
+Cevabı eklenti ayarına yaz ve yeni pozisyonla devam et.
 
-> Your playbook doesn't cover [term — e.g., "residuals clauses," "survival period," "one-way NDAs where you're the receiver"]. What's your default position — when should this be GREEN, when YELLOW, when RED? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` so the next review is consistent.
+## Kapsam kontrolü
 
-Then record the answer in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` and proceed with the triage using the new position.
+NDA'ya özgü hükümlere geçmeden önce belgenin adından fazlasını yapıp yapmadığına bak. "Karşılıklı ticari NDA" şunları saklayabilir: standstill, lisans verilmesi, münhasırlık, çalışan/müşteri ayartmama, rekabet yasağı, fikrî hak devri, önalım hakkı, en çok kayrılan müşteri kaydı, gizlilik dışındaki uyuşmazlıkları da kapsayan geniş tahkim/yetki kaydı, yüksek tutarlı cezai şart, kişisel veri işleme talimatları.
 
-## Scope check
+Gizlilik dışında yükümlülük varsa: **NDA analizinden bağımsız olarak otomatik SARI.**
 
-**Before reviewing NDA-specific provisions, check whether the document is doing more than its name suggests.** Mutual commercial NDAs can hide: standstills, licensing grants, exclusivity, non-solicits, non-competes, IP assignments, right of first refusal, most-favored-nation clauses, and arbitration/jurisdiction clauses that govern far more than confidentiality disputes.
+> Bu belge NDA olarak adlandırılmış ama [standstill / lisans / ayartmama / münhasırlık / fikrî hak devri / önalım / en çok kayrılan / geniş tahkim] içeriyor. NDA'dan fazlası. Avukat incelemesine yönlendirin.
 
-If the NDA contains obligations beyond confidentiality: **auto-YELLOW regardless of the NDA-term analysis.** Flag the non-NDA provisions:
+NDA kılığındaki hizmet sözleşmesi, ön protokol ya da taahhüt paketini sessizce NDA triajından geçirme.
 
-> This document is labeled an NDA but contains [standstill / license grant / non-solicit / exclusivity / IP assignment / ROFR / MFN / broad arbitration]. It's more than an NDA. Route for attorney review.
+## Türk hukuku tabanı (kısa)
 
-Do not silently push a document labeled "NDA" through NDA triage when the substantive obligations are a services agreement, a term sheet, or a covenant package in NDA clothing.
+NDA olmasa da bilgi tamamen korumasız değildir; NDA bu tabanın **üstüne** sözleşmesel yükümlülük ve yaptırım ekler:
+- Kendisine emanet edilmiş teklif, hesap, plan gibi iş ürününden yetkisiz yararlanma (TTK m. 55/1-c) ve üretim ve iş sırlarını hukuka aykırı ifşa (TTK m. 55/1-d) haksız rekabettir; tespit, men, eski hâle getirme ve tazminat davaları TTK m. 56'dadır.
+- Ticari sır, bankacılık sırrı ya da müşteri sırrını yetkisiz kişilere veren kişi şikâyet üzerine cezalandırılır (TCK m. 239). Kanunda genel bir "ticari sır" tanımı yoktur; NDA'daki tanım uygulamada belirleyicidir.
+- Alıcı tarafın işçileri, hizmet ilişkisi süresince ve işverenin haklı menfaati gerektirdiği ölçüde sonrasında da sır saklamakla yükümlüdür (TBK m. 396/4). Bu yükümlülük işverene karşıdır; NDA'yı açıklayan tarafın işçiye doğrudan başvuru hakkı doğurmaz → NDA'da "çalışan ve yardımcılarını aynı yükümlülükle bağlama ve onların ihlalinden sorumluluk" kaydı aranır (yardımcı kişi sorumluluğu: TBK m. 116).
+- NDA kanunda şekle bağlı değildir (TBK m. 12/1); ispat için yazılı ve imzalı nüsha tut.
 
-## The triage
+## Triaj
 
-Classify the NDA into one of three buckets by applying the positions from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. The bucket definitions below are stable; the *criteria* that fill each bucket come from the playbook.
+Kova tanımları sabittir; her kovayı dolduran ölçütler playbook'tandır. Her çıktının başına eklenti ayarı `## Outputs` → üst başlığı koy (role göre değişir — `## Who's using this`).
 
-### GREEN — route to signature
+### YEŞİL — imzaya yönlendir
 
-The NDA satisfies every position in the team's playbook, and no term triggers a RED flag per the playbook. Examples of checks the playbook typically covers: mutuality, term length, survival period, carveouts, governing law, restrictive covenants, fee-shifting. Confirm each one against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` before calling GREEN.
+NDA playbook'taki her pozisyonu karşılıyor ve hiçbir şart KIRMIZI tetikleyicisine düşmüyor. Playbook'un genelde kapsadığı kontroller: karşılıklılık, süre, sözleşme sonrası gizlilik süresi, istisnalar, cezai şart, uygulanacak hukuk ve yetki, kısıtlayıcı taahhütler, ücret yükleme. Hepsini eklenti ayarına karşı teyit et.
 
-**GREEN requires attorney-reviewed playbook positions.** GREEN is the only path to signature without lawyer review. It cannot be issued against default or absent positions. Before issuing GREEN, check: does the practice profile have an attorney-reviewed `## NDA triage positions` section? If not:
+**YEŞİL, avukatın gözden geçirdiği pozisyon ister.** YEŞİL, avukat incelemesi olmadan imzaya giden tek yoldur; varsayılan ya da eksik pozisyonla verilemez. Profilde avukatın gözden geçirdiği `NDA triage positions` yoksa:
 
-> I can't issue GREEN without attorney-reviewed NDA positions in your practice profile. Run `/commercial-legal:cold-start-interview --full` with your commercial counsel to set them, or route this NDA for attorney review. Issuing GREEN against defaults means a non-lawyer set the positions the next non-lawyer relies on.
+> Profilinizde avukatın gözden geçirdiği NDA pozisyonları olmadan YEŞİL veremem. Ticari avukatınızla `/commercial-legal:cold-start-interview --full` çalıştırın ya da bu NDA'yı avukat incelemesine gönderin. Varsayılana göre YEŞİL vermek, sonraki hukukçu olmayanın güveneceği pozisyonu bir hukukçu olmayanın koyması demektir.
 
-Do not route to signature on defaults. YELLOW is the right call when positions are missing — it surfaces the NDA to a human who can decide.
-
-**Output:**
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
+Pozisyon eksikse doğru karar SARI'dır.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[ÜST BAŞLIK — profil ## Outputs]
 
-## NDA Triage: [Counterparty]
+## NDA Triajı: [Karşı taraf] — [Satış / Alım tarafı playbook'u]
 
-GREEN — route to signature
+YEŞİL — imzaya yönlendir
 
-### Executive Summary
+### Özet
+Playbook'a göre kırmızı bayrak yok. Standart süreçle imzaya yönlendirin.
 
-No red flags identified under the playbook. Route for signature per standard process.
-
-| Check | Status | Playbook reference |
+| Kontrol | Durum | Playbook bölümü |
 |---|---|---|
-| [Each playbook check] | [pass/fail] | [`~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` section] |
+| [her kontrol] | geçti | [eklenti ayarı bölümü] |
 
-**Next step:** [Submit to [CLM] standard NDA workflow | Send to [approver from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`] for signature]
+**Sonraki adım:** [[CLM] standart NDA akışına gönder | [eklenti ayarındaki onaylayıcı]'ya imzaya gönder]
 ```
 
-**Before proceeding past GREEN to signature:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the Role is Non-lawyer:
+### SARI — avukat belirli noktalara baksın
 
-> This step has legal consequences (countersigning an NDA binds the company). Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> [Generate a 1-page summary: counterparty, NDA direction (mutual / one-way), the playbook checks run, anything the playbook didn't cover, what could go wrong if signed as-is, and the three things to ask the attorney.]
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
-
-Do not proceed past this gate without an explicit yes.
-
-### YELLOW — needs a lawyer's eyes on specific items
-
-One or more terms deviate from the playbook but aren't categorical deal-breakers, OR a term appears that the playbook doesn't address. Surface each item individually so the approver can make the call.
-
-**Output:**
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
+Bir ya da birkaç şart playbook'tan sapıyor ama kesin ret değil, YA DA playbook'un hiç değinmediği bir şart var. Her noktayı ayrı ayrı göster ki onaylayıcı karar verebilsin.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[ÜST BAŞLIK — profil ## Outputs]
 
-## NDA Triage: [Counterparty]
+## NDA Triajı: [Karşı taraf] — [taraf]
 
-YELLOW — flag for [approver name from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
+SARI — [eklenti ayarındaki onaylayıcı]'ya işaretle
 
-### Executive Summary
+### Özet
+- [Tek satırlık mekanik düzeltme, ör. "Madde 6'daki ayartmama kaydını sil"]
 
-- [One-line actionable edit, e.g. "Strike non-solicit clause (Section 6)"]
-- [One-line actionable edit]
+### İşaretlenen noktalar
+**1. [Konu]** — Madde [X]
+   Ne: [tek satır]
+   Neden: [hangi playbook pozisyonu ya da "playbook sessiz"]
+   **Hukuki risk:** [🔴/🟠/🟡/🟢] | **İş sürtünmesi:** [🔴 Anlaşmayı durdurur / 🟠 Yavaşlatır / 🟡 Kafa karıştırır / 🟢 Görünmez]
+   Muhtemel çözüm: [kabul / X'e itiraz / bağlama göre]
 
-### Flagged items
-
-**1. [Issue]** — Section [X]
-   What: [one line]
-   Why flagged: [one line — which playbook position this hits, or "playbook is silent on this"]
-   **Legal risk:** [🔴/🟠/🟡/🟢] | **Business friction:** [🔴 Blocks deals / 🟠 Slows deals / 🟡 Confuses customers / 🟢 Invisible]
-   Likely resolution: [accept / push back on X / depends on deal context]
-
-[repeat for each flag]
-
-### Everything else
-
-| Check | Status | Playbook reference |
+### Geri kalanı
+| Kontrol | Durum | Playbook bölümü |
 |---|---|---|
-| [playbook checks that passed] | pass | [`~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` section] |
 
-**Next step:** Ask [approver] about the flagged items, then route to signature if they're okay with it.
+**Sonraki adım:** İşaretli noktaları [onaylayıcı]'ya sorun; uygun görürse imzaya yönlendirin.
 ```
 
-### RED — stop, talk to legal first
+### KIRMIZI — dur, önce hukuka danış
 
-The NDA hits a position on the playbook's "never accept" list, or the structure of the agreement is incompatible with the team's standard posture (e.g., a one-way NDA where the team's playbook requires mutual; a perpetual term where the playbook caps at a finite period; governing law on the "never" list).
-
-**Output:**
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
+Şart playbook'un "asla kabul etme" listesinde ya da yapı ekibin standart duruşuyla bağdaşmıyor (ör. playbook karşılıklı isterken tek taraflı NDA; süreli gizlilik isterken süresiz; "never" listesindeki hukuk ya da yargı yeri).
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+[ÜST BAŞLIK — profil ## Outputs]
 
-## NDA Triage: [Counterparty]
+## NDA Triajı: [Karşı taraf] — [taraf]
 
-RED — do not submit, talk to legal first
+KIRMIZI — göndermeyin, önce hukuka danışın
 
-### Executive Summary
+### Özet
+- [ör. "Madde 4 — hukuk incelemesine yönlendirin"]
 
-- [One-line actionable edit, e.g. "Section 4 — route to Legal for review"]
-- [One-line actionable edit]
+### Kritik sorunlar
+**1. [Konu]** — Madde [X]
+   > "[birebir alıntı]"
+   Neden sorun: [somut risk; ihlal edilen playbook pozisyonu]
+   **Hukuki risk:** [...] | **İş sürtünmesi:** [...]
+   Önerilen cevap: [bizim metni kullanalım | şu ifadeyle itiraz | vazgeç]
 
-### Critical issues
-
-**1. [Issue]** — Section [X]
-   > "[exact quote]"
-   Why this is a problem: [specific risk; cite the playbook position it violates]
-   **Legal risk:** [🔴/🟠/🟡/🟢] | **Business friction:** [🔴 Blocks deals / 🟠 Slows deals / 🟡 Confuses customers / 🟢 Invisible]
-   Recommended response: [use our paper instead | push back with specific language | walk]
-
-**Next step:** Send this triage to [GC or named escalation person from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]. Do not send to [CLM or approvals workflow]. Do not tell the counterparty we'll sign.
+**Sonraki adım:** Bu triajı [GC ya da eklenti ayarındaki eskalasyon kişisi]'ne gönderin. [CLM]'e ya da onay akışına sokmayın. Karşı tarafa imzalayacağımızı söylemeyin.
 ```
 
-## Redline granularity
+## Kontrol rehberi
 
-**Edit at the smallest possible granularity.** A redline is a negotiation artifact, not a rewrite. Wholesale clause replacement signals "we threw out your drafting" — it's aggressive, it forces the counterparty to re-read the whole clause, and it discards the parts of their drafting that were fine. Surgical redlines — strike a word, insert a phrase, restructure a subclause — signal "we have specific asks" and are faster to read, understand, and accept.
+Her kontrolün kovası playbook'tan gelir; bu liste yalnız **neye bakılacağını** ve Türk hukukunun koyduğu sınırları söyler.
 
-Default to the smallest edit that achieves the playbook position:
-- Replace a **word** before a phrase. ("twelve (12)" → "twenty-four (24)")
-- Replace a **phrase** before a sentence. ("paid by the Buyer" → "paid and payable by the Buyer")
-- Restructure a **subclause** before replacing the sentence. (Add "(a)" and "(b)" to split a compound condition.)
-- Replace a **sentence** before replacing the clause.
-- Only replace a **whole clause** when the counterparty's version is so far from your position that surgical edits would be harder to read than a fresh draft — and when you do, say so in the transmittal: "We've replaced §8.2 rather than marking it up because the changes were extensive. Happy to walk you through the delta."
+**Karşılıklılık.** Tek taraflıysa hemen KIRMIZI deme; sor: (1) Bu ilişkide bilgi veren yalnız siz misiniz? (2) Sınırlı, belirli bir açıklama mı (ör. teknolojinizi üzerinde çalışacak tedarikçiye vermek)? (3) Şirket alımı, işçi ya da yatırımla mı ilgili? (Evetse dur — bu skill yalnız ticari NDA içindir; hukuka yönlendir.) Playbook bu olguya pozisyon almıyorsa SARI ve cevapları onaylayıcıya göster.
 
-When in doubt, smaller. A client who receives a surgical redline trusts that you read carefully. A client who receives a wholesale replacement wonders whether you read at all.
+**Gizli bilgi tanımı.** Yalnız işaretli mi, açıklanan her şey mi; işaretleme şartı; sözlü açıklamanın yazılı teyit süresi. Tanım dar ve işaretlemeye bağlıysa korunmak istenen bilgi TTK m. 55 tabanına düşer — playbook'a göre değerlendir.
 
-## Jurisdiction assumption
+**İstisnalar.** Tipik beş istisna: (1) ihlal dışında kamuya açık olan/olacak bilgi, (2) alıcının zaten sahip olduğu, (3) gizli bilgiye başvurmadan bağımsız geliştirilen, (4) üçüncü kişiden kısıtsız alınan, (5) kanun, mahkeme, savcılık ya da düzenleyici kurum (ör. SPK, BDDK, Rekabet Kurumu, KVKK) kararıyla açıklanması zorunlu olan — hukuken izin verildiği ölçüde açıklayana önceden bildirimle. Hangisinin şart olduğu playbook sorusudur.
 
-This triage applies the governing-law and restrictive-covenant positions recorded in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Legal rules (enforceability of non-competes, non-solicits, fee-shifting, choice of law) vary materially by jurisdiction. If the NDA involves a jurisdiction outside the team's configured posture, flag it in the output and note that the triage may not transfer as written.
+**Residuals.** Alıcının yardımsız hafızasında kalan bilgiyi kullanma hakkı. Dar ("unaided memory") ya da geniş (not ve kopyalar dahil) olması playbook'a göre. Geniş residuals, TTK m. 55/1-c,d korumasını sözleşmeyle fiilen bertaraf edebilir → en az SARI.
 
-## Output rules
+**Süre ve sonrası.** Sözleşme süresi, sona erme sonrası gizlilik süresi, ticari sırlar için daha uzun koruma. Türk hukukunda süresiz gizlilik yükümlülüğünün sınırı (kişilik hakları, TBK m. 27/1) **tartışmalı — içtihadı kontrol et**; playbook süreli istiyorsa süreyi ve ticari sır istisnasını ayrı yaz.
 
-**Complexity filter:** If addressing an issue would require drafting new
-language, restructuring a clause, or inserting substantive new
-provisions — do not attempt it. Instead write:
-"Section [X] — route to Legal for review."
-Only include simple, mechanical actions in the Executive Summary
-(strike, delete, replace a word or phrase).
+**Kısıtlayıcı taahhütler.** Çalışan/müşteri ayartmama, rekabet yasağı, münhasırlık.
+- Rakipler arasında ayartmama ya da münhasırlık rekabeti kısıtlayıcı anlaşma sayılabilir (4054 m. 4). Rekabet Kurulu'nun işgücü piyasası uygulamasını ezberden söyleme; ara: `tr_kurum_karari_ara(kurum="rekabet", query="işgücü piyasası centilmenlik anlaşması ayartmama")`.
+- Bir gerçek kişiyi (ör. alıcının yöneticisi, danışmanı) bağlayan rekabet yasağı işçi için ancak yazılı ve TBK m. 444/2 şartlarıyla geçerlidir → `/employment-legal:hiring-review`.
+- Playbook sessizse sor; bu taahhütler yargı çevresine duyarlıdır.
 
-**Clean NDA rule:** If the NDA passes all checks with no flags, the Executive Summary
-should say only: "No red flags identified. Route for signature per
-standard process."
+**Cezai şart.** Türk NDA'larında sık görülür. Alacaklı ya ifayı ya cezayı ister; ifa zamanı/yeri için kararlaştırılan cezada ikisini birden isteyebilir (TBK m. 179/1-2). Zarar olmasa da ceza ödenir; zarar cezayı aşarsa aşan kısım için borçlunun kusurunu ispat gerekir (TBK m. 180). Hâkim aşırı cezayı kendiliğinden indirir (TBK m. 182/3), ama **tacir borçlu** aşırılık iddiasıyla indirim isteyemez (TTK m. 22). Tacirler arası NDA'da yüksek tek yönlü ceza → playbook'a göre en az SARI. Tacir aleyhine indirim yasağının sınırı (ekonomik çöküş hâli) **tartışmalı — içtihadı kontrol et**.
 
-Do not produce a lengthy report for a clean NDA.
+**Yargılama giderleri ve avukatlık ücreti.** Kanunda aleyhine hüküm verilen taraf yargılama giderlerini öder; giderler arasında kanuna göre takdir edilen vekâlet ücreti vardır (HMK m. 323/1-ğ, m. 326/1). Gerçek avukatlık ücretinin sözleşmeyle karşı tarafa yüklenmesi ve tek yönlü yükleme kaydının talep edilebilirliği **tartışmalı — içtihadı kontrol et**. Karşılıklı mı, tek yönlü mü, playbook'a göre değerlendir.
 
-## Detailed check reference
+**İhtiyati tedbir.** "Teminatsız tedbir istenebilir" kaydı mahkemeyi bağlamaz: tedbir isteyen kural olarak teminat gösterir; mahkeme gerekçe göstererek teminat almayabilir (HMK m. 389, m. 392/1). Kaydı silmek gerekmez, ama ona güvenerek hesap yapma.
 
-For each check below, the bucket (GREEN/YELLOW/RED) is determined by `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. This skill lists the *categories* to check; it does not hardcode thresholds.
+**İade/imha, yedek ve yasal saklama.** İade/imha kaydında standart yedek ve arşiv sistemleri istisnası var mı? Ayrıca tacir ticari mektuplarını (bir ticari işe ilişkin tüm yazışmalar) on yıl saklamakla yükümlüdür (TTK m. 82/1-b,c, m. 82/2, m. 82/5) → "kanunen saklanması zorunlu kayıtlar gizlilik yükümlülüğü sürmek kaydıyla saklanabilir" istisnası yoksa ekle. Playbook bu istisnayı zorunlu tutuyor mu, bak.
 
-### Mutuality
+**Kişisel veri.** NDA kapsamında kişisel veri aktarılacaksa NDA bir veri işleme sözleşmesi değildir → `/privacy-legal:dpa-review` öner; yurt dışı aktarım varsa KVKK m. 9 orada incelenir.
 
-Is the NDA mutual or one-way? Apply the team's position from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the playbook doesn't address one-way NDAs for this context, run the one-way questionnaire below and surface the result for a human.
+**Uygulanacak hukuk, yetki, tahkim.** `## Playbook` → `Governing law and venue`. Türk hukukunda yetki sözleşmesini yalnız tacirler ya da kamu tüzel kişileri yapabilir; yazılı olmalı, hukuki ilişki belirli/belirlenebilir olmalı ve mahkeme gösterilmelidir (HMK m. 17-18). Tahkim kaydı yazılı olmalıdır (HMK m. 412/3; yabancılık unsuru varsa MTK m. 4). Gizlilik ihlalinden doğan para alacağı ticari davaysa dava öncesi arabuluculuk dava şartıdır (TTK m. 5/A). Yabancı hukuk ya da yabancı mahkeme seçilmişse (MÖHUK m. 24, m. 47) → `/commercial-legal:governing-law-review`.
 
-**One-way NDA questionnaire**
+**İmza.** Güvenli elektronik imza elle atılan imzayla aynı sonucu doğurur (5070 m. 5/1); platform tıklamalı "basit" e-imza güvenli e-imza değildir. NDA şekle bağlı olmadığından geçerlilik sorunu çıkmaz, ispat sorunu çıkabilir → imza yöntemini profildeki tercihe göre not et.
 
-When the NDA is unilateral (one party discloses, the other only receives), do not immediately flag RED or exit. Ask:
+## Redline inceliği
 
-> A one-way NDA is appropriate in some situations. Before flagging this,
-> let me ask a few quick questions:
->
-> 1. In this relationship, are you the only party disclosing confidential
->    information? (i.e., the other side shares nothing back)
-> 2. Is this for a limited, specific disclosure — for example, sharing
->    your technology with a vendor who will work on it, but not sharing
->    theirs with you?
-> 3. Is this related to M&A, employment, or investment? (If yes, stop —
->    this skill is for commercial MNDAs only. Route to Legal.)
+Redline bir müzakere belgesidir, yeniden yazım değildir. En küçük düzeltme: kelime → ifade → alt bent → cümle → ancak gerekirse tüm madde. ("on iki (12)" → "yirmi dört (24)"). Tüm maddeyi değiştirdiysen ileti notunda söyle: "8.2'yi değişiklikler kapsamlı olduğu için işaretlemek yerine yeniden yazdık; farkı birlikte geçebiliriz." Şüphede, daha küçük.
 
-Use the answers plus the `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` position to decide GREEN/YELLOW/RED. If `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` doesn't take a position on this fact pattern, flag YELLOW and surface the questionnaire answers for the approver.
+**Yargı çevresi varsayımı:** triaj eklenti ayarındaki hukuk ve kısıtlayıcı taahhüt pozisyonlarını uygular; NDA profilin dışında bir yargı çevresine bağlıysa çıktıda işaretle, triajın olduğu gibi aktarılamayacağını yaz; yabancı kural ezberden yazılmaz (`/commercial-legal:governing-law-review`).
 
-### Definition of Confidential Information
+## Çıktı kuralları
 
-Check scope (marked-only vs. everything-disclosed), marking requirements, and oral-disclosure confirmation windows. Apply the team's position from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the playbook is silent on any of these, ask.
+- **Karmaşıklık filtresi:** Bir sorunu çözmek yeni ifade yazmayı, maddeyi yeniden kurmayı ya da esaslı yeni hüküm eklemeyi gerektiriyorsa deneme; yaz: "Madde [X] — hukuk incelemesine yönlendirin." Özette yalnız mekanik işlemler (sil, çıkar, kelime/ifade değiştir).
+- **Temiz NDA kuralı:** Hiç bayrak yoksa özet yalnız şunu der: "Kırmızı bayrak yok. Standart süreçle imzaya yönlendirin." Temiz NDA için uzun rapor yazma.
 
-### Carveouts
+## Karşı taraf bağlamı ve CLM
 
-The five carveouts typically present in an NDA:
+**Büyük kurumsal karşı taraf** NDA'sını genelde müzakere etmez: KIRMIZI gerçekten anlaşma bozucu mu, "bizim formdan farklı" mı? İlişki önemliyse onların metnini kabul kararını eskalasyona götür, kendin verme. **Girişimler** genelde bizim metni kabul eder; en hızlı yol çoğu zaman "bizimkini kullanalım"dır. **CLM** bağlıysa: YEŞİL → standart NDA akışında kayıt öner; SARI → işaretli noktaları not olarak ekleyip öner; KIRMIZI → kayıt açma, sonraki adıma avukat karar verir.
 
-1. Information that is or becomes public (other than through breach)
-2. Information the receiving party already had
-3. Information independently developed without reference to the CI
-4. Information received from a third party without restriction
-5. Information required to be disclosed by law or court order (with notice to discloser where legally permitted)
-
-Which carveouts the team requires, and how strictly, is a playbook question. Check `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` for the team's position on required carveouts, acceptable variations in wording, and what happens when one is missing.
-
-### Residuals
-
-A residuals clause lets the receiving party use information retained in unaided memory. Whether this is acceptable — and under what conditions (e.g., narrow "unaided memory" wording vs. broader scope covering notes or copies) — is a playbook question. Apply `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the playbook doesn't address residuals, ask.
-
-### Term and survival
-
-Check the initial term length, the post-term survival period for confidentiality obligations, and whether trade secrets are carved out with longer protection. Apply the team's position from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the playbook doesn't cover one of these, ask.
-
-### Restrictive covenants
-
-Check for non-solicits (employee, customer), non-competes, exclusivity, and any restriction on who else the receiving party can engage with. Apply `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the playbook is silent, ask — restrictive covenants are jurisdiction-sensitive and the team's posture matters.
-
-### Attorneys' fees
-
-Check for fee-shifting provisions and whether they are mutual, one-sided, or prevailing-party. Apply `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
-
-### Backup and archival carveout
-
-Check whether the destruction/return clause includes an exception for standard backup and archival retention systems. Apply the team's position from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` — some teams require this carveout and will push to add it; others accept an NDA without it. If the playbook doesn't address this, ask.
-
-### Governing law
-
-Per `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Playbook` → `Governing law and venue`.
-
-## Counterparty context
-
-**BigCo NDAs:** Fortune 500 counterparties generally won't negotiate NDAs. Calibrate: is the RED flag truly a deal-breaker, or is it "different from our form"? If the business relationship matters, the call is whether to accept their paper — escalate that decision, don't make it.
-
-**Startup NDAs:** Will usually take our paper. If their NDA has issues, the fastest path is often "let's use ours" rather than redlining theirs.
-
-## Integration: CLM
-
-If connected:
-- GREEN → offer to create the CLM record in the standard NDA workflow
-- YELLOW → offer to create it with a note attached listing the flagged items
-- RED → do not create a record; the lawyer decides what happens next
-
-## What this skill does NOT do
-
-- It does not negotiate. It sorts.
-- It does not draft an NDA. If the answer is "use our paper," the user pulls our form from [CLM or document system].
-- It does not make the call on YELLOW items. It surfaces them for a human.
-- It does not state a position on any NDA term. Positions live in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
-
-## Closing action
-
-Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## NDA triage preferences` → `closing_action`.
-
-If configured, append the closing action verbatim at the end of every
-output. Example configurations:
+## ArthurLegal MCP (`tr_`)
 
 ```
-closing_action: "Send the full text of this analysis along with a copy
-of the NDA to Legal at legal@[yourcompany].com for final confirmation before
-signing."
-
-closing_action: "Submit to [CLM] using the standard NDA workflow.
-Legal will confirm before routing for signature."
-
-closing_action: "Forward this output and the NDA to your contracts
-manager."
+tr_mevzuat_madde_getir(number="6102", madde_no=["5/A","22","55","56","82"])
+tr_mevzuat_madde_getir(number="6098", madde_no=["12","27","116","179","180","182","396","444"])
+tr_mevzuat_madde_getir(number="6100", madde_no=["17","18","323","326","389","392","412"])
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="gizlilik sözleşmesi cezai şart tacir indirim", date_from="2020-01-01")
+tr_kurum_karari_ara(kurum="rekabet", query="işgücü piyasası centilmenlik anlaşması ayartmama")
 ```
 
-If `closing_action` is not configured in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, append:
-"Route final NDA through your standard approval process."
+Dönen kararın künyesini birebir kullan; karar numarası ezberden yazılmaz. Sonuç azsa sessizce doldurma: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) burada dur ve avukat teyidine işaretle." Atıf etiketi: `[ArthurLegal TR — 6102 m. X — GG.AA.YYYY]`; ezberden gelen için `[model bilgisi — doğrula]`.
 
-The cold-start interview asks: "When someone finishes an NDA
-triage, what do you want them to do with the output? I'll add that as
-a standing instruction at the end of every review."
+## Sonuç doğuran işlem kapısı (imza)
 
-## Close with the next-steps decision tree
+YEŞİL'den imzaya geçmeden önce eklenti ayarında `## Who's using this` oku. Rol **avukat değilse**:
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+> Bu adımın hukuki sonucu var: NDA'yı imzalamak şirketi bağlar; cezai şart varsa ihlalde zarar ispatı gerekmeden ödenir. Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz bir sayfalık özet: karşı taraf, NDA yönü (karşılıklı / tek taraflı), yapılan playbook kontrolleri, playbook'un kapsamadığı noktalar, olduğu gibi imzalanırsa ne ters gidebilir ve avukata sorulacak üç soru. Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
+
+Açık "evet" olmadan bu kapıdan geçme.
+
+## Kapanış eylemi
+
+`## NDA triage preferences` → `closing_action` oku. Tanımlıysa her çıktının sonuna aynen ekle (ör. "Bu analizi ve NDA'yı imzadan önce son teyit için hukuka gönderin." / "Standart NDA akışıyla [CLM]'e gönderin." / "Bu çıktıyı ve NDA'yı sözleşme yöneticinize iletin."). Tanımlı değilse ekle: "NDA'yı standart onay sürecinizden geçirin." Cold-start görüşmesi bunu sorar: "NDA triajını bitiren kişi çıktıyla ne yapsın?"
+
+Ardından profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları bu triaja göre uyarla (redline gönder, eskalasyon, ek olgu iste, bekle, diğer). Ağaç çıktıdır; seçimi avukat yapar.
+
+## Bu skill ne yapmaz
+
+- Müzakere etmez; ayırır.
+- NDA yazmaz; cevap "bizim metni kullanalım" ise form [CLM ya da belge sistemi]nden alınır.
+- SARI noktalarda karar vermez; insana gösterir.
+- NDA şartları hakkında kendi pozisyonunu koymaz; pozisyonlar eklenti ayarındadır. Türk hukukunun sınırlarını ise her seferinde araçtan çeker.
 
 ---
 
@@ -2011,202 +1288,186 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: renewal-tracker
 description: >
-  Show contracts with cancel-by deadlines coming up and warn before notice windows
-  close, working from a maintained renewal register. Use when the user asks "what's
-  renewing soon", "what renewals are due", "did we miss a cancellation window", "add
-  this to the renewal tracker", or on a scheduled basis. Receives handoffs from
-  saas-msa-review.
-argument-hint: "[--days N to change window | --missed for lapsed windows]"
+  Fesih bildirimi son günü yaklaşan sözleşmeleri gösterir ve bildirim penceresi
+  kapanmadan uyarır; tutulan yenileme kaydından çalışır. Son günü Türk hukukuna göre
+  hesaplar (TBK m. 92-93 süre ve tatil kuralı, 2429 s. Kanun genel tatilleri), tacirler
+  arası ihbar şeklini (TTK m. 18/3) ve tebliğ süresini tampona katar, tüketici
+  aboneliklerinde otomatik uzama yasağını (6502 m. 52) işaretler. Kullanıcı "yakında ne
+  yenileniyor", "hangi yenilemeler geldi", "fesih süresini kaçırdık mı", "bunu yenileme
+  takibine ekle" dediğinde ya da zamanlanmış çalışmada kullan. saas-msa-review'dan
+  devir alır.
+argument-hint: "[--days N pencereyi değiştirir | --missed kaçan pencereler]"
 ---
 
 # /renewal-tracker
 
-Surfaces what's renewing and when you have to cancel by.
+Neyin ne zaman yenilendiğini ve en geç ne zaman fesih bildirimi **gönderilmesi** gerektiğini gösterir.
 
-## Instructions
+## Talimat
 
-1. **Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-register.yaml`** (the config directory — survives plugin updates).
+1. `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-register.yaml` dosyasını oku (ayar klasörü — eklenti güncellemelerinden etkilenmez).
+2. **Varsayılan:** Mod 2 — önümüzdeki 90 gün, aciliyete göre yarı açık aralıklarla: 🔴 0–13 gün, 🟠 14–44 gün, 🟡 45–89 gün. 14., 45. ve 90. gün sınırdır; her son gün tek bir banda düşer.
+3. **`--days N`:** pencereyi değiştir. **`--missed`:** Mod 4 — kayıtlı fesih olmadan geçen son günler.
+4. **Kayıt boşsa ve CLM bağlıysa:** Mod 3'ü öner (toplu yükleme).
+5. Çıktıya önerilen eylemleri ekle: kime sorulacak (kayıttaki iş sahibi), hangilerinde yenileme fiyatı sınırsız/endekssiz (pencere kapanmadan pazarlık gücü).
 
-2. **Default mode:** Mode 2 — what's coming up in the next 90 days, grouped by urgency using half-open intervals so each deadline lands in exactly one band: 🔴 0–13 days, 🟠 14–44 days, 🟡 45–89 days. Days 14, 45, and 90 are boundaries — each belongs to exactly one band, not two.
+## Matter bağlamı
 
-3. **`--days N`:** Change the window.
+`## Matter workspaces` → `Enabled` `✗` ise atla. Açıksa ve aktif matter varsa yalnız o matter'ın kayıtlarını göster (`matter` alanı); `Cross-matter context` `on` değilse diğer müvekkillerin satırlarını raporlama.
 
-4. **`--missed`:** Mode 4 — cancel-by deadlines that passed without recorded cancellation.
+## Kayıt
 
-5. **If register is empty and the [CLM] is connected:** Offer Mode 3 — scan the [CLM] for active agreements with renewal dates and bulk-load.
-
-6. **Output includes recommended actions:** who to ping (the business owner from each register entry), which ones have uncapped pricing (get leverage before window closes).
-
-## Examples
-
-```
-/commercial-legal:renewal-tracker
-```
-
-```
-/commercial-legal:renewal-tracker --days 180
-```
-
-```
-/commercial-legal:renewal-tracker --missed
-```
-
----
-
-## Purpose
-
-Nobody reads a contract twice. The renewal date is extracted once, at review time, and then it lives somewhere — ideally somewhere that shouts at you 45 days before the cancel-by deadline, not 45 days after.
-
-This skill maintains the renewal register and surfaces what's coming.
-
-## The register
-
-Lives at `~/.claude/plugins/config/claude-for-legal/commercial-legal/renewal-register.yaml` (the config directory — survives plugin updates). Each entry:
+`renewal-register.yaml` — **anahtarlar İngilizce kalır** (saas-msa-review, vendor-agreement-review ve renewal-watcher bu adları okur); değerler Türkçe olabilir:
 
 ```yaml
-- counterparty: "Acme SaaS Inc."
-  agreement: "Acme Platform Subscription Agreement"
+- counterparty: "ABC Yazılım A.Ş."
+  agreement: "ABC Platform Abonelik Sözleşmesi"
   signed_date: 2025-06-15
   initial_term_end: 2026-06-15
-  current_term_end: 2026-06-15     # rolls forward after each auto-renewal; compute cancel_by_* from this
-  renewal_mechanism: "auto-renew annual"
+  current_term_end: 2026-06-15     # her otomatik yenilemede ileri alınır; cancel_by_* bundan hesaplanır
+  renewal_mechanism: "yıllık otomatik yenileme"
   notice_period_days: 60
-  notice_method: "email"           # email / portal / certified mail / registered post / courier / per contract §X
-  transit_buffer_days: 0           # 0 for electronic, 5 for domestic certified mail, 10 for international registered post — or per contract if specified
-  cancel_by_calendar: 2026-04-16    # current_term_end minus notice_period_days
-  cancel_by_effective: 2026-04-16   # rolled back to last business day if needed
-  send_by_effective: 2026-04-16    # cancel_by_effective minus transit_buffer_days — the date you must SEND the notice
-  cancel_by_roll_note: ""           # e.g., "rolled back from Sunday 2026-11-01; verify against contract's business-day definition"
-  cancel_by_provenance: "[model calculation — verify against the notice clause]"
-  price_on_renewal: "then-current list (uncapped)"
-  annual_value: 48000
-  business_owner: "jane@company.com"
-  clm_id:        "IC-12345"        # if connected
-  docusign_envelope: "abc-123"   # if connected
-  status: "active"               # active | cancelled | renewed | lapsed
-  notes: "Pricing uncapped — revisit before renewal. Alt vendors: X, Y."
+  notice_method: "KEP"             # noter / taahhütlü mektup / telgraf / KEP / e-posta / portal / sözleşme m. X
+  transit_buffer_days: 1           # aşağıdaki tabloya göre ya da sözleşmedeki tebliğ kuralına göre
+  cancel_by_calendar: 2026-04-16   # current_term_end eksi notice_period_days
+  cancel_by_effective: 2026-04-16  # gerekiyorsa son iş gününe GERİ çekilmiş
+  send_by_effective: 2026-04-15    # cancel_by_effective eksi transit_buffer_days — bildirimin GÖNDERİLECEĞİ son gün
+  cancel_by_roll_note: ""          # ör. "Pazar 2026-11-01'den geri çekildi; sözleşmedeki iş günü tanımıyla teyit et"
+  cancel_by_provenance: "[model hesabı — fesih bildirimi klozuyla teyit et]"
+  price_on_renewal: "güncel liste fiyatı (sınırsız)"   # ya da "TÜFE endeksli" vb.
+  annual_value: 480000
+  currency: "TRY"                  # isteğe bağlı; yoksa notes'a yaz
+  business_owner: "ayse@sirket.com"
+  clm_id: "IC-12345"               # bağlıysa
+  docusign_envelope: "abc-123"     # bağlıysa
+  status: "active"                 # active | cancelled | renewed | lapsed
+  matter: "abc-tedarik-2026"       # isteğe bağlı; yalnız matter çalışma alanları açıksa
+  notes: "Fiyat sınırsız — yenilemeden önce gözden geçir. Alternatif: X, Y."
 ```
 
-**Notice transit time — alert off `send_by_effective`, not `cancel_by_effective`.** A 60-day window with a certified-mail requirement is really ~55 days. The tracker that alerts on the received-by date is the tracker that misses the deadline. Compute `send_by_effective = cancel_by_effective - transit_buffer_days` and fire alerts (the 🔴 / 🟠 / 🟡 urgency bands in Mode 2) off `send_by_effective`. Mode 2's urgency column shows `send_by_effective`; a detail column surfaces `cancel_by_effective`, `notice_method`, and `transit_buffer_days` so the reader can see the delta and challenge the buffer.
+**Uyarıyı `send_by_effective`'ten ver, `cancel_by_effective`'ten değil.** Noter kanalıyla 60 günlük pencere fiilen 50 küsur gündür; "ulaşma" tarihine göre uyaran kayıt son günü kaçırır. Mod 2'nin aciliyet sütunu `send_by_effective`'i gösterir; ayrıntı sütunu `cancel_by_effective`, `notice_method` ve `transit_buffer_days`'i gösterir ki okuyan tamponu sorgulayabilsin.
 
-**Rolling renewals — the register that doesn't roll forward is the register that's right once.** Store `initial_term_end` for the record, but compute `cancel_by_*` from `current_term_end`. When a renewal fires (the cancel window passes and no notice was given), prompt:
+**Yuvarlanan yenilemeler.** `initial_term_end` kayıt içindir; `cancel_by_*` daima `current_term_end`'den hesaplanır. Pencere bildirimsiz geçip yenileme gerçekleşince sor:
 
-> This contract auto-renewed on [date]. Update the register: new `current_term_end` is [date + renewal period], new `cancel_by_effective` is [computed], new `send_by_effective` is [computed]. Confirm?
+> Bu sözleşme [tarih]'te otomatik yenilendi. Kaydı güncelleyelim: yeni `current_term_end` [tarih + yenileme süresi], yeni `cancel_by_effective` [hesap], yeni `send_by_effective` [hesap]. Onaylıyor musunuz?
 
-After year one, `initial_term_end` is wrong and only `current_term_end` produces a correct cancel-by date.
+## Son gün hesabı — Türk hukuku
 
-## Business-day check on every cancel-by date
+Kayıttaki son gün, bildirimin hüküm doğurduğu **son iş günüdür**, takvim günü değil. Hafta sonuna ya da bayrama düşen tarih son günü kaçırmanın en yaygın yoludur; kayıt bunu bir kez, girişte yakalar.
 
-**The register's cancel-by date must be the last BUSINESS DAY on which notice
-is effective, not the calendar date.** A calendar date that falls on a
-weekend is the single most common way a renewal deadline gets missed. The
-register catches it.
+1. **Takvim tarihini hesapla.** `cancel_by_calendar = current_term_end − notice_period_days` (ya da klozun söylediği). Süre ay olarak belirlenmişse ay hesabı TBK m. 92 (bent 3) mantığıyla yapılır (son ayın karşılık gelen günü; o gün yoksa ayın son günü). TBK m. 92 ileriye doğru sayım için yazılmıştır; "bitişten iki ay önce" gibi geriye sayımda aynı mantığı uygula ve hesabı `cancel_by_roll_note`'a yaz.
+2. **Geri çek — asla ileri alma.** Sözleşme Türk hukukuna tabiyse tatil takvimi: hafta tatili Pazar (2429 s. Kanun m. 3); genel tatiller 1 Ocak, 23 Nisan, 1 Mayıs, 19 Mayıs, 15 Temmuz, 30 Ağustos, Ramazan Bayramı (arefe 13.00'ten itibaren 3,5 gün), Kurban Bayramı (arefe 13.00'ten itibaren 4,5 gün) (m. 2) ve 29 Ekim (28 Ekim 13.00'ten itibaren, m. 1). Dini bayram tarihleri her yıl değişir — o yılın takvimini teyit et. Arefe yarım gününü ve Cumartesi'yi de iş günü sayma (Cumartesi genel tatil değildir ama hafta tatili en geç Cumartesi 13.00'te başlar, m. 3; Cumartesi'nin TBK m. 93 anlamında "tatil" sayılıp sayılmadığı **tartışmalı**). Kamu idari izin günlerinde noterin ve postanın çalışıp çalışmadığını ayrıca teyit et.
+3. **TBK m. 93'e güvenme.** Kanuna göre ifa zamanı ya da sürenin son günü tatile rastlarsa izleyen ilk iş gününe geçer; aksine anlaşma geçerlidir (TBK m. 93). Kayıt bu ileri kaymayı **kullanmaz**: kuralın bildirim süresine uygulanması klozun ifadesine bağlıdır ve sözleşme bunu dışlamış olabilir. Geri çekilmiş tarih her durumda güvenlidir.
+4. **Sözleşmenin kendi gün kuralını kontrol et.** "İş günü", "tebliğ edilmiş sayılır", "saat 17.00'ye kadar", bildirim adresleri ve kanal klozu varsa o kontrol eder. Varsayılan geri çekme ile sözleşme kuralı arasındaki farkı işaretle.
+5. **İki tarihi de yaz.** `cancel_by_calendar` ham hesap; `cancel_by_effective` son iş günü; `cancel_by_roll_note` farkın nedeni. Her hesaplanan `cancel_by_effective` `cancel_by_provenance: "[model hesabı — fesih bildirimi klozuyla teyit et]"` taşır; doğrulama bayrağı tarihle birlikte gider.
+6. **Uyarıyı etkin tarihten ver.** Bantlar `send_by_effective`'e göre hesaplanır; geri çekme olduysa ayrıntı sütununda `cancel_by_calendar` ve `cancel_by_roll_note` görünür.
 
-When you compute (or ingest) a cancel-by date:
+**Yabancı hukuka tabi sözleşme:** o ülkenin tatil takvimini yerel kaynaktan teyit et (ArthurLegal araçları tatil takvimi vermez); bildirim ve süre kuralı için ilgili önek (ör. `uk_search_legislation`, `de_gesetz_ara`, `eu_search_eu_law`) ya da `/commercial-legal:governing-law-review`. Takvim belirlenemiyorsa: "Uygulanacak hukuk [X] — geri çekme yer tutucu olarak Türkiye tatilleriyle yapıldı; [ülke] takvimiyle teyit edin."
 
-1. **Compute the calendar date.** `cancel_by_calendar = initial_term_end − notice_period_days` (or whatever the clause specifies). This is the raw arithmetic.
-2. **Business-day roll-back keyed to governing law.** The contract's governing law determines which holidays count. US: federal holidays + the state's holidays if governing law is a state. England & Wales: bank holidays. Germany: Feiertage (vary by Bundesland — ask which). Canada: federal + provincial. Singapore: public holidays. If Saturday, roll back to Friday. If Sunday, roll back to Friday. If a holiday in the governing-law jurisdiction, roll back to the prior business day. Roll BACK, never forward — forward means notice arrives after the window closes. For non-US governing law, if you can't determine the holiday calendar, flag it: "Governing law is [X] — business-day roll-back uses US federal holidays as a placeholder. Verify against the [jurisdiction] holiday calendar before relying on the effective date."
-3. **Check the contract's own day-counting rule.** Look for "business day," "received by," "deemed received," "5:00 p.m. [local time]," or a notice-method clause. If the contract defines "business day" or specifies receipt mechanics (certified mail, email with read receipt), that definition controls. Flag any mismatch between the default roll-back and the contract's own rule.
-4. **Record BOTH dates in the register.** `cancel_by_calendar` is the raw arithmetic; `cancel_by_effective` is the last business day on which notice is effective; `cancel_by_roll_note` records why they differ (e.g., "rolled back from Sunday 2026-11-01; verify against contract's business-day definition"). Every computed `cancel_by_effective` carries a `cancel_by_provenance` tag of `[model calculation — verify against the notice clause]` so the verify flag travels with the date, not with the surrounding prose.
-5. **Fire alerts off the EFFECTIVE date, not the calendar date.** Urgency bands (🔴 / 🟠 / 🟡 in Mode 2) use `cancel_by_effective`. Mode 2 output shows `cancel_by_effective` in the urgency column and surfaces `cancel_by_calendar` and `cancel_by_roll_note` in a detail column where the roll-back happened, so the reader can see it and challenge it.
+Mod 2'de haftanın günü ve uyarı olmadan basılan `cancel_by: 2026-11-01` (Pazar) sessizce yanlış bir son gündür.
 
-A Mode 2 report that prints `cancel_by: 2026-11-01` (a Sunday) with no weekday and no warning is a silently wrong effective deadline. The register is the place to catch it — once, at ingest — not later, when the window has already moved.
+## Bildirim şekli ve tampon
 
-## Modes
+Tacirler arasında temerrüde düşürme, fesih ve dönme ihbarları noter, taahhütlü mektup, telgraf ya da güvenli elektronik imzalı KEP ile yapılır (TTK m. 18/3). Bu şeklin geçerlilik şartı mı ispat aracı mı olduğu **tartışmalı — içtihadı kontrol et** (`tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H11", query="TTK 18/3 ihbar şekli fesih")`; dönen kararın künyesini birebir kullan). Sözleşme "e-posta yeterli" diyorsa bile karşı taraf tacirse KEP ya da noter öner.
 
-### Mode 1: Ingest a renewal (handoff from review)
+| `notice_method` | Önerilen `transit_buffer_days` | Neden |
+|---|---|---|
+| KEP | 1 | Anlık iletim; teslim kaydını almak için bir gün pay |
+| Noter ihtarnamesi (karşı taraf şirket) | ≥ 7 | Noter tebligatı Tebligat Kanunu'na göre yapılır (m. 1); özel hukuk tüzel kişilerine elektronik tebligat zorunludur ve adrese ulaştığı tarihi izleyen beşinci günün sonunda yapılmış sayılır (m. 7/a); noter işlem süresi eklenir |
+| Taahhütlü mektup (yurt içi) | 5–7 | Posta süresi ve teslim belirsizliği |
+| Yurt dışı (kurye / uluslararası taahhütlü) | ≥ 10 | Ya da sözleşmedeki tebliğ kuralı |
+| E-posta / portal | 0 | Ancak tacirler arasında şekil riski — notlara yaz |
 
-When saas-msa-review or vendor-agreement-review finds a renewal clause, it hands off a record. Append it to the register. If the counterparty already has an entry, ask whether this is a replacement (renewed agreement) or an additional agreement.
+Bildirimin "ulaşma" tarihinde mi, tebliğin "yapılmış sayıldığı" tarihte mi süreyi karşıladığı sözleşmenin diline bağlıdır; belirsizse ihtiyatlı olanı (geç tarihi) esas al.
 
-### Mode 2: What's coming up
+## Otomatik yenileme ve belirsiz süreye dönüşme
 
-**Default lookback window:** next 90 days.
+- **Ticari (B2B):** Otomatik yenileme sözleşme serbestisi içindedir. Ancak karşı tarafın standart metnine gömülü yenileme klozu genel işlem koşuluysa: karşı tarafa açıkça bilgi verilip kabul edilmedikçe yazılmamış sayılır (TBK m. 21), dürüstlük kuralına aykırı aleyhe hüküm konulamaz (m. 25). Kaçırılan pencerede bu bir pazarlık aracıdır, güvence değil.
+- **Tüketiciye satış (B2C abonelik):** tüketici, ticari veya mesleki olmayan amaçlarla hareket eden kişidir (6502 m. 3/1-k). Belirli süreli abonelik sözleşmesine sözleşmenin kendiliğinden uzayacağına ilişkin hüküm konulamaz; uzatma ancak tüketicinin talebi ya da onayıyla olur (m. 52/3). Belirsiz süreli ya da bir yıldan uzun belirli süreli abonelikte tüketici gerekçesiz ve cezai şartsız her zaman feshedebilir; bildirim kâğıt üzerinde ya da kalıcı veri saklayıcısıyla yeterlidir (m. 52/4). Satış tarafı B2C kayıtlarında `renewal_mechanism`'e "otomatik uzama yasak — onay gerekir" yaz. Yönetmeliğin güncel metni: `tr_mevzuat_ara(query="Abonelik Sözleşmeleri Yönetmeliği", types=["YONETMELIK"])`.
+- **Örtülü sürdürme:** süre bitip taraflar ilişkiyi sürdürürse sözleşme belirsiz süreliye dönüşebilir — kira (TBK m. 327/2) ve acentelik (TTK m. 121/2) için açık hüküm var; acentelikte belirsiz süreli sözleşme üç ay önceden ihbarla feshedilir (m. 121/1). **TBK'da belirsiz süreli sürekli sözleşmelerin olağan feshine ilişkin tek bir genel madde yoktur;** sözleşmede fesih hükmü yoksa süre ve usul **tartışmalı — içtihadı kontrol et**: `tr_ictihat_semantik_ara(query="belirsiz süreli sürekli borç ilişkisinin olağan feshi makul bildirim süresi")`. Böyle kayıtlarda `renewal_mechanism: "belirsiz süreli — fesih süresi teyitsiz"` yaz.
 
-**Urgency bands are half-open intervals — a deadline lives in exactly one band.** Use days-until-cancel-by (`cancel_by_effective - today`). Day 14, 45, and 90 each belong to exactly one band, not two; an off-by-one here puts the most-urgent items into the less-urgent bucket.
+## Modlar
 
-- 🔴 **0–13 days** (cancel-by in less than 14 days — including today)
-- 🟠 **14–44 days**
-- 🟡 **45–89 days**
-- (everything 90+ days is outside the default lookback window; include only if the user passed `--horizon` beyond 90)
+### Mod 1 — Yenileme ekle (incelemeden devir)
+
+saas-msa-review ya da vendor-agreement-review bir yenileme klozu bulunca kaydı devreder. Kayda ekle ve yukarıdaki hesabı yap. Karşı tarafın kaydı zaten varsa sor: yenilenmiş sözleşme mi (değiştir), ek sözleşme mi (ekle)?
+
+### Mod 2 — Yaklaşanlar
+
+Varsayılan 90 gün. Bantlar `send_by_effective − bugün` ile hesaplanır:
+- 🔴 **0–13 gün** (bugün dahil) · 🟠 **14–44 gün** · 🟡 **45–89 gün** · 90+ yalnız `--days` ile.
 
 ```markdown
-## Renewals — next 90 days
+## Yenilemeler — önümüzdeki 90 gün
 
-### 🔴 Cancel-by deadline in 0–13 days
+### 🔴 Gönderim son günü 0–13 gün içinde
 
-| Counterparty | Cancel by | Renewal date | Annual $ | Owner | Notes |
-|---|---|---|---|---|---|
-| [name] | **[date]** | [date] | $[n] | [email] | [notes] |
+| Karşı taraf | Gönder (son) | Fesih son günü | Kanal / tampon | Yenileme | Yıllık bedel | Sorumlu | Not |
+|---|---|---|---|---|---|---|---|
+| [ad] | **[tarih, gün adı]** | [tarih] | [KEP / 1] | [tarih] | [tutar + para birimi] | [e-posta] | [geri çekme notu] |
 
-### 🟠 Cancel-by deadline in 14–44 days
+### 🟠 14–44 gün
+[aynı tablo]
 
-[same table]
-
-### 🟡 Cancel-by deadline in 45–89 days
-
-[same table]
+### 🟡 45–89 gün
+[aynı tablo]
 
 ---
 
-**Recommended actions:**
-- [ ] [Counterparty] — ping [business owner]: do we want to keep this?
-- [ ] [Counterparty] — pricing is uncapped; get a quote from an alternative before we lose leverage
+**Önerilen eylemler:**
+- [ ] [Karşı taraf] — [iş sahibi]'ne sor: devam mı?
+- [ ] [Karşı taraf] — yenileme fiyatı sınırsız; pazarlık gücü kaybolmadan alternatif teklif al
+- [ ] [Karşı taraf] — karşı taraf tacir, kayıtta kanal e-posta: KEP ya da noterle gönder
 ```
 
-If the register has more than ~10 renewals in the window, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by urgency tier (🔴 / 🟠 / 🟡), a cancel-by timeline, and a sortable register with counterparty, renewal date, annual $, and owner.
+Pencerede ~10'dan fazla kayıt varsa ya da kullanıcı isterse: profilde `## Outputs → Dashboard offer for data-heavy outputs` varsa ona göre pano öner — banda göre sayılar, son gün zaman çizelgesi ve sıralanabilir kayıt.
 
-### Mode 3: Scan the [CLM] / e-signature tool to populate the register
+### Mod 3 — CLM / e-imza taramasıyla kaydı doldur
 
-If MCPs are connected and the register is empty or stale:
+MCP'ler bağlıysa ve kayıt boş ya da eskiyse (tek seferlik toplu yükleme; sonra giriş inceleme anında olur): (1) CLM'de durumu "aktif" ve yenileme tarihi dolu sözleşmeleri sorgula; (2) e-imza aracında son 24 ayın tamamlanmış zarflarında "abonelik", "yenileme", "otomatik" geçenleri sorgula; (3) her biri için yenileme mekaniğini çıkar, yukarıdaki hesabı yap, kayda ekle; (4) meta veriden tarihi belirlenemeyenleri işaretle — sözleşmeyi bir insanın okuması gerekir.
 
-1. Query the [CLM] for all agreements with status "Active" and a renewal date field
-2. Query DocuSign for completed envelopes in the last 24 months with "subscription" / "renewal" / "auto-renew" in metadata
-3. For each hit, extract renewal mechanics and add to register
-4. Flag any where the renewal date can't be determined from metadata — those need a human to read the contract
-
-This is a one-time bulk load. After that, ingest happens at review time.
-
-### Mode 4: Missed windows (the bad news report)
+### Mod 4 — Kaçan pencereler
 
 ```markdown
-## Missed cancellation windows
+## Kaçan fesih pencereleri
 
-The following agreements had cancel-by deadlines that have passed and no
-cancellation was recorded:
+Aşağıdakilerin fesih bildirimi son günü geçti ve kayıtlı fesih yok:
 
-| Counterparty | Cancel-by was | Renewal date | Status |
+| Karşı taraf | Son gün | Yenileme tarihi | Durum |
 |---|---|---|---|
-| [name] | [date] | [date] | Will auto-renew on [date] |
+| [ad] | [tarih] | [tarih] | [tarih]'te otomatik yenilenecek |
 
-**Options:**
-- Negotiate late cancellation (rarely works but worth asking)
-- Accept the renewal, mark next year's cancel-by now
-- Check the agreement for any other termination rights (for convenience, for cause)
+**Seçenekler:**
+- Geç fesih için müzakere (nadiren tutar, sormaya değer)
+- Yenilemeyi kabul et, gelecek yılın son gününü şimdiden işaretle
+- Sözleşmedeki diğer fesih haklarını kontrol et (sebepsiz fesih, haklı sebeple fesih)
+- Yenileme klozu karşı tarafın genel işlem koşuluysa TBK m. 21/25 değerlendirmesi — avukatla
+- B2C abonelikte tüketici otomatik uzamaya bağlı tutulamaz (6502 m. 52/3)
 ```
 
-## Gate: accepting or declining a renewal
+## Kapı: yenilemeyi kabul ya da fesih
 
-Tracking a renewal date is research. *Acting* on it — sending a notice of non-renewal, letting an auto-renewal fire, or countersigning a renewal form — is a consequential legal step.
+Tarihi izlemek araştırmadır; **harekete geçmek** — fesih bildirimi göndermek, otomatik yenilemenin işlemesine izin vermek, yenileme formunu imzalamak — hukuki sonuçlu adımdır.
 
-**Before proceeding to accept or decline a renewal (including sending a non-renewal notice or letting an auto-renewal run past the cancel-by date):** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the Role is Non-lawyer:
+Bu adımdan önce profilde `## Who's using this` → Role'e bak. Avukat değilse:
 
-> This step has legal consequences (you're either committing to another term or terminating the relationship). Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Bu adımın hukuki sonucu var (ya yeni bir döneme bağlanıyorsunuz ya da ilişkiyi sona erdiriyorsunuz). Bir avukatla görüştünüz mü? Evetse devam edelim. Hayırsa götürmeniz için kısa brif:
 >
-> [Generate a 1-page summary: counterparty, current term end and cancel-by date, renewal price mechanism, what happens if we do nothing, alternative vendors if we want to shop, and the three things to ask the attorney before the window closes.]
+> [Tek sayfa: karşı taraf, mevcut dönem sonu ve gönderim son günü, kanal ve tampon, yenileme fiyat mekaniği, hiçbir şey yapmazsak ne olur, alternatif tedarikçiler, pencere kapanmadan avukata sorulacak üç soru.]
 >
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+> Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz.
 
-Do not proceed past this gate without an explicit yes.
+Açık bir "evet" olmadan bu kapıyı geçme.
 
-## Integration: renewal-watcher agent
+## renewal-watcher ajanıyla bağlantı
 
-The renewal-watcher agent in this plugin runs this skill on a schedule (weekly by default) and posts the "coming up" report to the channel named in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## House style` → where work product goes. Mode 2 is the agent's primary output.
+renewal-watcher ajanı bu skill'i zamanlanmış olarak (varsayılan haftalık) çalıştırır ve Mod 2 raporunu profildeki `## House style` → `**Renewal alerts:**` kanalına (yoksa `**Where work product goes:**`) gönderir.
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- It does not cancel contracts. It tells you when to decide.
-- It does not decide whether to renew. It surfaces the deadline and the business owner.
-- It does not read contracts to find renewal dates — that happens at review time. If a contract is in the register without a renewal date, it was added manually and someone needs to fill in the gap.
+- Sözleşme feshetmez ve yenileyip yenilememeye karar vermez; son günü ve iş sahibini gösterir.
+- Yenileme tarihini bulmak için sözleşme okumaz — bu inceleme anında olur; kayıtta tarihi olmayan satır elle eklenmiştir ve doldurulmalıdır.
+- Fesih bildirimini göndermez ya da noter/KEP işlemi yapmaz.
 
 ---
 
@@ -2215,87 +1476,76 @@ The renewal-watcher agent in this plugin runs this skill on a schedule (weekly b
 ---
 name: review
 description: >
-  Review a vendor agreement, NDA, or SaaS subscription against your playbook.
-  Identifies the agreement structure from titles, routes to the right review skill
-  (vendor-agreement-review, nda-review, saas-msa-review), and integrates the output
-  into a single memo. Use when the user says "review this contract", "check this
-  MSA", "is this NDA okay", "look at this SaaS agreement", or attaches an inbound
-  agreement for review.
-argument-hint: '[file path | Drive link | [CLM ID] | paste text]'
+  Gelen ticari sözleşmeyi (hizmet/tedarikçi sözleşmesi, gizlilik sözleşmesi,
+  SaaS/abonelik) playbook'a göre inceler. Önce belge yapısını başlıklardan
+  okur, doğru inceleme skill'ine (vendor-agreement-review, nda-review,
+  saas-msa-review) yönlendirir, tarafların tacir olup olmadığını ve seçilen
+  hukuku tarar, çıktıyı tek notta birleştirir. "Bu sözleşmeyi incele",
+  "çerçeve sözleşmeye bak", "bu NDA uygun mu", "SaaS sözleşmesini kontrol et"
+  denince ya da gelen bir sözleşme eklendiğinde kullan.
+argument-hint: '[dosya yolu | Drive bağlantısı | [CLM ID] | metni yapıştırın]'
 ---
 
-# /review
+# /review — Sözleşme İncelemesi (yönlendirici)
 
-Reviews an inbound agreement against the playbook in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Identifies the agreement structure from titles, selects the appropriate skill(s), and — if confirm_routing is enabled — checks with the user before proceeding.
+Gelen sözleşmeyi `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`'deki playbook'a göre inceler. Hangi skill'in çalışacağına belge başlıklarından karar verir; `confirm_routing` açıksa önce kullanıcıya teyit ettirir. Esas Türk hukukudur; yabancı hukuk ya da yabancı yargı yeri seçilmişse tespitler o hukuka taşınmaz, `/commercial-legal:governing-law-review`e yönlendirilir.
 
-## Instructions
+## Adımlar
 
-1. **Load `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.** If placeholders present, stop and prompt: "Run `/commercial-legal:cold-start-interview` first — I need to learn your playbook before I can review against it."
+1. **Eklenti ayarını ve `company-profile.md`'i yükle.** Yer tutucu varsa dur: "Önce `/commercial-legal:cold-start-interview` çalıştırın — playbook'unuzu öğrenmeden ona göre inceleyemem." `## Review preferences` → `confirm_routing` oku; alan yoksa `true` say.
 
-   Also read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## Review preferences` → `confirm_routing`. If the field is missing, treat it as `true`.
+2. **Sözleşmeyi al:** dosya, Drive bağlantısı, [CLM ID] ya da yapıştırılmış metin. Yoksa iste.
 
-2. **Get the agreement:** From file path, Drive link, [CLM ID], or pasted text. If none provided, ask.
+3. **Önce başlıkları oku.** Gövdeye geçmeden çıkar: ana sözleşmenin başlığı; tüm ek, ek protokol, sipariş formu, teknik şartname, iş emri başlıkları. Yönlendirme sinyali budur — 40 sayfalık çerçeve sözleşmede "gizli" kelimesinin sık geçmesi onu NDA yapmaz.
 
-3. **Read the document structure — titles first.**
+4. **Skill'i belge yapısına göre seç.**
 
-   Before reading the body, extract:
-   - The main agreement title (e.g., "Master Services Agreement", "Non-Disclosure Agreement")
-   - All exhibit, schedule, addendum, and attachment titles (e.g., "Exhibit A — Data Processing Addendum", "Schedule 1 — Subscription Order Form", "Annex B — Service Level Agreement")
-
-   This is the routing signal. Do not rely on body keywords alone — a 40-page MSA with "confidential" throughout is not an NDA.
-
-4. **Select the skill(s) based on document structure.**
-
-   Map each identified document or section to a skill:
-
-   | Document / section title contains | Skill |
+   | Başlıkta geçen | Skill |
    |---|---|
-   | Non-Disclosure, NDA, Confidentiality Agreement (as the *main* agreement) | **nda-review** |
-   | Master Services Agreement, Professional Services, Statement of Work, Consulting Agreement | **vendor-agreement-review** |
-   | Subscription, SaaS, Cloud Services, Order Form with auto-renewal, Software License with recurring fees | **saas-msa-review** (overlay on vendor-agreement-review) |
-   | Data Processing Addendum, DPA, Data Processing Agreement (as exhibit or standalone) | note for **vendor-agreement-review** → data protection section |
-   | Service Level Agreement, SLA (as exhibit) | note for **saas-msa-review** → SLA section |
+   | Gizlilik Sözleşmesi, Gizlilik Taahhütnamesi, NDA, Confidentiality Agreement (*ana* sözleşme olarak) | **nda-review** |
+   | Hizmet Sözleşmesi, Çerçeve Sözleşme, Master Services Agreement, Danışmanlık, Proje Sözleşmesi, İş Emri / Statement of Work, Satın Alma Sözleşmesi | **vendor-agreement-review** |
+   | Abonelik, SaaS, Bulut Hizmeti, Kullanım Koşulları, otomatik yenilemeli Sipariş Formu, yinelenen bedelli Yazılım Lisansı | **saas-msa-review** (vendor-agreement-review'un üstüne katman) |
+   | Kişisel Verilerin İşlenmesine İlişkin Ek Protokol, Veri İşleme Sözleşmesi, DPA (ek ya da ayrı) | vendor-agreement-review'da veri koruma başlığında işaretle + `/privacy-legal:dpa-review` öner |
+   | Hizmet Seviyesi Sözleşmesi (HSS), SLA (ek olarak) | saas-msa-review → HSS bölümü |
+   | NDA ama bağlam işçi, yatırım ya da şirket alımı | Bu eklentinin işi değil → `/employment-legal:hiring-review` ya da `/corporate-legal:` skill'leri; avukata |
 
-   Multiple skills may apply. Common combinations:
-   - MSA + DPA exhibit → vendor-agreement-review, with DPA noted
-   - SaaS subscription + Order Form + SLA exhibit → saas-msa-review (covers all three)
-   - MSA + Order Form with auto-renewal → vendor-agreement-review + saas-msa-review overlay
+   Birden çok skill uygulanabilir: çerçeve sözleşme + KVKK eki → vendor-agreement-review (veri eki işaretli); abonelik + sipariş formu + HSS eki → saas-msa-review (üçünü kapsar); çerçeve sözleşme + otomatik yenilemeli sipariş formu → vendor-agreement-review + saas-msa-review katmanı. Başlıklar yetmiyorsa (yalnız "Sözleşme", ek listesi yok) gövdenin ilk iki sayfasını oku, karar ver, dur.
 
-   When the structure is genuinely ambiguous after reading titles (e.g., a document titled "Agreement" with no exhibits listed), read the first two pages of the body to resolve it — then stop and route.
+5. **Ön tarama (yönlendirmeyle birlikte, her sözleşmede):**
+   - **Taraflar tacir mi?** Bir ticari işletmeyi ilgilendiren işlem ticari iştir (TTK m. 3); her iki tarafın ticari işletmesiyle ilgili uyuşmazlık ticari davadır (TTK m. 4/1). Sonuçları: fesih ve temerrüt bildirimlerinin şekli (TTK m. 18/3), cezai şartın indirilememesi (TTK m. 22), para alacaklarında dava şartı arabuluculuk (TTK m. 5/A). İnceleme skill'leri bunları kullanır; tacir sıfatını notun başına yaz.
+   - **Karşı taraf tüketici mi?** Ticari veya mesleki olmayan amaçla hareket eden kişi tüketicidir (6502 m. 3/1-k). O zaman playbook yetmez: haksız şartlar kesin hükümsüzdür (6502 m. 5/2), abonelikte otomatik uzatma ve fesih kuralları emredicidir (6502 m. 52/3-4) → avukata, ayrıca işaretle.
+   - **Uygulanacak hukuk ve uyuşmazlık çözümü.** Türk hukuku dışında bir hukuk, yabancı mahkeme ya da yurt dışında tahkim seçilmişse ya da yetki kaydı tek tarafa seçim hakkı veriyorsa → hukuk seçimi MÖHUK m. 24/1'e tabidir; yabancılık unsuru olmayan saf iç sözleşmede yabancı hukuk seçiminin geçerliliği **tartışmalı — içtihadı kontrol et**. Bu incelemenin Türk hukuku tespitlerinin o hukuka geçmediğini nota yaz ve `/commercial-legal:governing-law-review` öner.
 
-5. **Confirm routing if enabled.**
-
-   If `confirm_routing` is `true` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` (or field is absent):
+6. **Yönlendirmeyi teyit et** (`confirm_routing: true` ya da alan yoksa):
 
    ```
-   I'm going to review this as: [agreement type(s)].
+   Bunu şöyle inceleyeceğim: [sözleşme türü/türleri]. Taraflar: [tacir–tacir / tüketici var].
 
-   Documents identified:
-   - [Main agreement title] → [skill]
-   - [Exhibit A title] → [how it will be handled]
-   - [Exhibit B title] → [how it will be handled]
+   Tespit edilen belgeler:
+   - [Ana sözleşme başlığı] → [skill]
+   - [Ek 1 başlığı] → [nasıl ele alınacak]
+   - [Ek 2 başlığı] → [nasıl ele alınacak]
 
-   Sound right? (yes / no — or tell me what I got wrong)
+   Doğru mu? (evet / hayır — ya da neyi yanlış anladığımı söyleyin)
    ```
 
-   Wait for confirmation before proceeding. If the user corrects the routing, apply their instruction and proceed.
+   Teyit bekle; kullanıcı düzeltirse onun talimatıyla devam et. `confirm_routing: false` ise sessizce devam et, yönlendirme kararını notun en üstüne yaz.
 
-   If `confirm_routing` is `false`: proceed silently. Log the routing decision at the top of the review memo so the user can see what was applied.
+7. **Skill(ler)i çalıştır.** Her birinin akışını eksiksiz izle. Birden çok skill varsa sırayla çalıştır ve **tek not** üret; ayrı notlar çıkarma.
 
-6. **Run the skill(s).** Follow each skill's workflow fully. If multiple skills apply, run them in sequence and integrate the output into a single memo — don't produce separate memos.
+8. **Eskalasyon:** Bir bulgu inceleyenin yetkisini aşıyorsa (`## Escalation` matrisi) `/commercial-legal:escalation-flagger` ile yönlendir ve talebi taslakla.
 
-7. **Check for escalations:** If any issue exceeds the reviewer's authority per the `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` matrix, invoke **escalation-flagger** to route and draft the ask.
+9. **Takip öner:**
+   - İş birimine özet → `/commercial-legal:stakeholder-summary`
+   - İzlenen değişikliklerle redline .docx
+   - [CLM] kaydı (bağlıysa)
+   - Otomatik yenileme bulunduysa yenileme kaydı → `/commercial-legal:renewal-tracker`
+   - Yabancı hukuk, yabancı yargı yeri ya da asimetrik yetki/tahkim → `/commercial-legal:governing-law-review` (yabancı kural araçla çekilir: İngiltere `uk_search_legislation`, Almanya `de_gesetz_ara`, AB `eu_search_eu_law`; listede olmayan ülke için "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al")
+   - Damga vergisi sorusu → `/tax-legal` skill'leri (oran ve tutar bu eklentide yazılmaz)
 
-8. **Offer follow-ups:**
-   - Stakeholder summary for the business owner
-   - Redline .docx with tracked changes
-   - [CLM] record creation (if connected)
-   - Add to renewal register (if auto-renewal found)
-   - **Governing-law / jurisdiction deep-dive** — if the agreement's governing law is non-Turkish (English law, US/NY law) or the venue/arbitration clause is asymmetric, offer `/commercial-legal:governing-law-review` for a focused cross-border enforceability check using the UK/US legislation and CourtListener connectors (`references/karsilastirmali-hukuk-rehberi.md`).
+## confirm_routing ayarı
 
-## Configuring confirm_routing
-
-Add to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## Review preferences`:
+`~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## Review preferences`:
 
 ```markdown
 ## Review preferences
@@ -2303,26 +1553,29 @@ Add to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` �
 confirm_routing: true   # Set to false to skip routing confirmation and proceed automatically
 ```
 
-The cold-start interview should ask about this preference. Default is `true` — confirmation on. As trust builds, the user can set it to `false`.
+Cold-start görüşmesi bu tercihi sorar. Varsayılan `true`; güven oluştukça kullanıcı `false` yapabilir.
 
-## Examples
-
-```
-/commercial-legal:review vendor-msa.pdf
-```
+## ArthurLegal MCP (`tr_`)
 
 ```
+tr_mevzuat_madde_getir(number="6102", madde_no=["3","4","5/A","18","22"])
+tr_mevzuat_madde_getir(number="6502", madde_no=["3","5","52"])
+```
+
+Atıf etiketi: `[ArthurLegal TR — 6102 m. X — GG.AA.YYYY]`; ezberden gelen için `[model bilgisi — doğrula]`; kullanıcıdan gelen için `[kullanıcı verdi]`. Çekilemeyen madde: "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/".
+
+## Örnekler
+
+```
+/commercial-legal:review hizmet-cerceve-sozlesmesi.pdf
 /commercial-legal:review https://drive.google.com/file/d/ABC123
-```
-
-```
 /commercial-legal:review
-[paste agreement text]
+[sözleşme metnini yapıştırın]
 ```
 
-## Output
+## Çıktı
 
-Full review memo per the skill's format. Routing decision logged at the top. Deviation-by-deviation, specific redline language, named approver. Saved where `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → House style says work product goes.
+İlgili skill'in biçiminde tam inceleme notu. En üstte: yönlendirme kararı, uygulanan playbook tarafı (satış / alım), taraf sıfatı (tacir / tüketici), seçilen hukuk. Sapma sapma bulgu, somut redline metni, adıyla onaylayıcı. Not, `## House style` → iş ürününün gideceği yere kaydedilir.
 
 ---
 
@@ -2331,41 +1584,31 @@ Full review memo per the skill's format. Routing decision logged at the top. Dev
 ---
 name: review-proposals
 description: >
-  Review and approve (or reject) pending playbook update proposals from the
-  playbook-monitor agent and apply approved changes to the practice profile. Use
-  when the playbook-monitor agent has surfaced proposals, when the user says
-  "review playbook proposals", "what playbook updates are pending", or wants to
-  step through deviation-driven playbook changes.
-argument-hint: "[no arguments needed — works from the pending proposals file]"
+  playbook-monitor ajanının bekleyen playbook güncelleme önerilerini tek tek gözden
+  geçirir; avukat kabul, ret, düzenleme ya da erteleme seçer ve onaylanan değişiklik
+  profile yazılır. playbook-monitor öneri çıkardığında, kullanıcı "playbook önerilerini
+  gözden geçir", "bekleyen playbook güncellemeleri ne" dediğinde ya da sapmaya dayalı
+  değişiklikleri adım adım görmek istediğinde kullan.
+argument-hint: "[argüman gerekmez — bekleyen öneri dosyasından çalışır]"
 ---
 
 # /review-proposals
 
-Steps through pending playbook update proposals from the monitor agent and applies approved changes to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
+`~/.claude/plugins/config/claude-for-legal/commercial-legal/playbook-proposals.md` dosyasındaki önerileri tek tek gösterir ve onaylananları `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` dosyasına uygular.
 
-## Instructions
+## Talimat
 
-1. **Load the playbook-monitor agent** and run Step 5 (review and approval flow).
-
-2. **If no proposals file exists** or it is empty: respond *"No pending proposals. Playbook is up to date."* Do not proceed further.
-
-3. **Present proposals one at a time.** For each, show the full proposal block and offer four options: Accept, Reject, Edit, Defer.
-
-4. **For Accept or Edit:** show the exact diff to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` before writing. Only apply after the attorney explicitly confirms.
-
-5. **For Reject or Defer:** log the decision. Do not modify `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
-
-6. **After all proposals are resolved:** show a summary of what changed, then archive the proposals file.
-
-## Examples
+1. **playbook-monitor ajanının Adım 5'ini (gözden geçirme ve onay akışı) yükle ve çalıştır.**
+2. **Öneri dosyası yoksa ya da boşsa:** "Bekleyen öneri yok. Playbook güncel." de ve dur.
+3. **Önerileri tek tek göster.** Her biri için tam öneri bloğunu ve dört seçeneği ver: **[K] Kabul**, **[R] Ret**, **[D] Düzenle**, **[E] Ertele**.
+4. **Kabul ya da Düzenle:** yazmadan önce profildeki tam farkı göster (`- eski` / `+ yeni`); yalnız avukat açıkça onaylarsa yaz. Yalnız ilgili tarafın (`### Sales-side playbook` / `### Purchasing-side playbook`) ilgili alt bölümünü değiştir; başlık ve anahtar adlarını çevirme.
+5. **Ret ya da Ertele:** kararı (varsa gerekçesiyle) `playbook-monitor-log.yaml`'a işle; profili değiştirme. Reddedilen öneri, ret tarihinden sonra yeni bir desen oluşmadıkça yeniden önerilmez.
+6. **Hukuki sınır kontrolü:** Önerilen yeni duruş emredici bir hükme takılıyorsa kabulden önce söyle ve maddeyi `tr_mevzuat_madde_getir` ile çekip göster. Örnekler: tavanın kast ve ağır kusuru da kapsaması (önceden yapılan bu anlaşma kesin hükümsüzdür, TBK m. 115/1); borçlu olduğumuz yüksek cezai şartı "kabul edilebilir geri çekilme" yapmak (tacir borçlu aşırılık iddiasıyla indirim isteyemez, TTK m. 22); tüketici aboneliğinde otomatik uzama (6502 m. 52/3). Uygulamada sık kabul edilmiş olması, duruşu hukuken geçerli kılmaz.
+7. **Hepsi bitince:** neyin değiştiğinin özetini göster, sonra öneri dosyasını `playbook-proposals-[YYYYMMDD].md` adıyla arşivle.
 
 ```
 /commercial-legal:review-proposals
-```
-
-```
-/commercial-legal:review-proposals
-(runs automatically after playbook-monitor notifies you)
+(playbook-monitor bildirim gönderdikten sonra çalıştırın)
 ```
 
 ---
@@ -2375,247 +1618,213 @@ Steps through pending playbook update proposals from the monitor agent and appli
 ---
 name: saas-msa-review
 description: >
-  Reference: review of SaaS subscription agreements with attention to the terms
-  that matter most in subscription deals — auto-renewal mechanics, price escalation,
-  data portability, uptime SLAs, and subprocessor rights. Loaded by
-  /commercial-legal:review when a SaaS or subscription agreement is detected.
+  Referans: SaaS / abonelik sözleşmelerini abonelik ilişkisinde en çok can
+  yakan şartlara odaklanarak inceler — otomatik yenileme ve fesih bildiriminin
+  şekli (TTK m. 18/3), fiyat artışı ve döviz (TBK m. 99), tek taraflı
+  değişiklik (TBK m. 24), veri çıkışı, hizmet seviyesi, alt işleyenler, yapay
+  zekâ eğitim hakları. Tüketici karşı tarafta ise 6502 m. 52'yi işaretler.
+  SaaS ya da abonelik sözleşmesi tespit edildiğinde /commercial-legal:review
+  tarafından yüklenir.
 user-invocable: false
 ---
 
-# SaaS / Subscription Agreement Review
+# /saas-msa-review — SaaS / Abonelik Sözleşmesi İncelemesi
 
-## Matter context
+SaaS sözleşmesinin risk profili tek seferlik tedarikten farklıdır: bedel yenilemelerle katlanır, veri birikir, geçiş maliyeti her ay büyür. Bu skill playbook'un standart kontrolünü (`/commercial-legal:vendor-agreement-review`) çalıştırır ve üstüne abonelikte en çok can yakan şartlar için bir katman ekler.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Matter bağlamı
 
----
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
-## Purpose
+## Yargı çevresi varsayımı ve kaynak disiplini
 
-SaaS agreements have a distinct risk profile from one-time vendor contracts. The dollars compound over renewals, the data accumulates, and the switching cost grows every month. This skill reviews with that in mind.
+Otomatik yenileme, fiyat, veri taşınabilirliği ve alt işleyen kuralları yargı çevresine duyarlıdır. Bu inceleme eklenti ayarındaki pozisyonları ve Türk hukukunu esas alır. Sözleşme başka bir hukuku seçmişse ya da kullanıcılar AB'deyse işaretle; analiz olduğu gibi aktarılamaz → `/commercial-legal:governing-law-review` (AB: `eu_search_eu_law`; İngiltere: `uk_search_legislation`; Almanya: `de_gesetz_ara`).
 
-It runs the standard playbook check from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` and adds a SaaS-specific overlay on the terms that bite hardest in subscription deals.
+- **Sessiz tamamlama yok.** Araç bir emredici kural için az sonuç dönerse dur: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) burada dur ve avukat teyidine işaretle." Düşük güvenli kaynağı kabul kararını avukat verir.
+- **Kaynak etiketi:** `[ArthurLegal TR — 6098 m. X — GG.AA.YYYY]`, yabancı araç için `[ArthurLegal UK/DE/EU — … — GG.AA.YYYY]`, `[web — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`. Etiketleri silme ya da birleştirme.
 
-## Jurisdiction assumption
+## Playbook'u yükle
 
-SaaS terms (auto-renewal notice requirements, price-escalation caps, data-portability mandates, subprocessor rules) are jurisdiction-sensitive — California, New York, and EU rules diverge materially, and some states have auto-renewal statutes that override private contract terms. This review applies the team's positions from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, which assume the governing law recorded there. If the agreement picks a different governing law, or the deal spans jurisdictions with statutory overrides (e.g., EU-based users, California consumers), flag it — the analysis may not transfer as written.
+**Hangi taraftayız?** Karşı taraf size platformunu satıyorsa alım tarafı; siz SaaS sağlayıcısıysanız ve karşı taraf müşterinizse satış tarafı. Belli değilse (bayilik, beyaz etiket) sor: "[[ŞİRKET ADI]] bu sözleşmede hangi tarafta — sağlayıcı mı, müşteri mi?" Eşleşen bölümü oku (`### Sales-side playbook` / `### Purchasing-side playbook`), çıktıda yaz. `[Not configured]` ise dur ve `/commercial-legal:cold-start-interview --side <side>` öner.
 
-> **No silent supplement.** If a research query to the configured legal research tool (Westlaw, or firm platform) returns few or no results for a statutory override that might bear on the deal (auto-renewal statute, data-portability mandate, consumer-protection rule), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [jurisdiction / rule]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Where the review cites a statute, regulation, or case (e.g., a state auto-renewal law overriding contract terms), tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+Önce eşleşen tarafın genel playbook'unu (sorumluluk, tazmin, fesih, hukuk) vendor-agreement-review'daki gibi eksiksiz uygula. Sonra `## Playbook` → eşleşen taraf → `SaaS positions` bölümüne bak: yenileme bildirim penceresi, kabul edilebilir fiyat artışı, veri ihracı, HSS eşikleri, alt işleyen onayı, özellik kaldırma bildirimi. Bu skill bunlar için varsayılan rakam taşımaz. Bölüm bir şart hakkında sessizse sor:
 
-## Load the playbook
+> Playbook'unuz [şart — ör. "kabul edilebilir en uzun yenileme bildirim süresi", "sağlayıcının anonimleştirilmiş türev veriyi saklaması"] hakkında bir şey söylemiyor. Pozisyonunuz ne? Eklenti ayarına ekleyeyim.
 
-**Which side?** Before applying the playbook, determine which side the company is on for this SaaS agreement. Usually obvious: if the counterparty is a SaaS vendor selling you their platform, you're purchasing-side. If you are the SaaS vendor and the counterparty is your customer, you're sales-side. If it's not obvious (a reseller arrangement, a white-label deal), ask: "Which side is [company] on for this agreement — vendor or customer?" Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this review can proceed.
+Cevabı kaydet ve devam et.
 
-Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` first. The general playbook for the matching side (liability, indemnity, termination, governing law) applies fully — run all the standard checks from the vendor-agreement-review skill.
+## Sözleşmenin niteliği ve standart koşullar
 
-Then look for a `## Playbook` → matching side → `SaaS positions` section. That's where the team records its positions on auto-renewal notice windows, acceptable price escalators, data export rights, SLA thresholds, subprocessor approval rights, and deprecation notice. This skill does not ship with defaults for these — the right numbers vary by deal size, vendor leverage, and the team's risk tolerance.
+- **Nitelendirme.** SaaS sözleşmesi Türk hukukunda kanunda düzenlenmemiş (isimsiz/karma) bir sözleşme olarak görülür; hangi tipin (kira, lisans, eser, vekâlet) hükümlerinin kıyasen uygulanacağı **tartışmalı — doktrin ve içtihadı kontrol et**. Uygulanacak boşluk doldurucu kural sonucu değiştirir (ör. fesih); sözleşmede açık düzenleme ara.
+- **Lisans.** Kurulumlu yazılımda bilgisayar programı eserdir (FSEK m. 2/1-1); kullanma yetkisi ruhsattır (FSEK m. 48/2); mali haklara dair sözleşme yazılı olmalı ve haklar ayrı ayrı gösterilmelidir (FSEK m. 52). Kullanma ruhsatını üçüncü kişiye (grup şirketleri dahil) devretmek eser sahibinin yazılı muvafakatini ister (FSEK m. 49/1) → grup şirketlerinin kullanımını açıkça yaz. Kopya teslim edilmeyen saf SaaS'ta FSEK lisans şeklinin aranıp aranmadığı **tartışmalı**.
+- **Tıkla-kabul / matbu koşullar.** Sağlayıcının tek başına hazırlayıp sunduğu koşullar genel işlem koşuludur (TBK m. 20). Aleyhe koşul, açıkça bilgi verilip içeriği öğrenme imkânı sağlanmadıkça yazılmamış sayılır (m. 21/1); belirsiz koşul düzenleyen aleyhine yorumlanır (m. 23); düzenleyene tek yanlı değiştirme yetkisi veren kayıt yazılmamış sayılır (m. 24); dürüstlük kuralına aykırı aleyhe hüküm konulamaz (m. 25). Yanıltıcı biçimde kanundan önemli ölçüde ayrılan genel işlem şartı kullanmak haksız rekabettir (TTK m. 55/1-f). Alım tarafında güçlü kaldıraç; satış tarafında kendi koşullarınız için risk.
+- **Tüketici.** Müşteri tüketiciyse (6502 m. 3/1-k): belirli süreli abonelikte "süre kadar uzar" kaydı konulamaz; uzatma ancak tüketicinin talebi ya da onayıyla olur (6502 m. 52/3); belirsiz süreli ya da bir yıldan uzun abonelik gerekçesiz ve cezai şartsız feshedilebilir (m. 52/4); haksız şartlar kesin hükümsüzdür (m. 5/2). Bu durumda playbook'un B2B pozisyonları uygulanmaz → avukata.
 
-If `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` doesn't address a SaaS-specific term that comes up in this review, ask:
+## SaaS katmanı
 
-> Your playbook doesn't cover [term — e.g., "maximum acceptable auto-renewal notice window" or "whether vendor retention of anonymized derivatives is acceptable"]. What's your team's position? I'll add it to `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
+Her başlıkta sözleşmede bulduğunu yaz ve `SaaS positions` ile karşılaştır. Bu skill'den sabit eşik uygulama.
 
-Record the answer and proceed.
+### 1. Otomatik yenileme
 
-## SaaS-specific overlay
+SaaS anlaşmasının en sık bozulduğu yer: kimse bildirim penceresini fark etmez, bir yıl daha ve daha yüksek fiyatla bağlanırsınız.
+- **Yenileme süresi** (ilk süreyle aynı, daha uzun, çok yıllığa dönüşen)
+- **Fesih bildirim penceresi** (yenilemeden kaç gün önce)
+- **Bildirim yöntemi.** Tacirler arasında temerrüde düşürme, fesih ve sözleşmeden dönme ihbarları noter, taahhütlü mektup, telgraf ya da güvenli e-imzalı KEP ile yapılır (TTK m. 18/3). Sözleşmenin "e-posta ya da portal bildirimi yeterlidir" demesinin bu şekli karşılayıp karşılamadığı ve m. 18/3'ün geçerlilik mi ispat şartı mı olduğu **tartışmalı — içtihadı kontrol et**. Pratik: iptali her zaman TTK m. 18/3'teki yollardan biriyle gönder; sözleşmedeki KEP/tebligat adresini kaydet.
+- **Yenilemede fiyat** (aynı, endeks tavanlı, o günkü liste fiyatı, sınırsız takdir)
 
-For each category below, list what you found in the contract and compare to the team's position in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Do not apply hardcoded thresholds from this skill.
+Herhangi bir bayrak olsun olmasın **yenileme tarihini ve bildirim penceresini çıkar ve kaydet** → renewal-tracker.
 
-### 1. Auto-renewal mechanics
+### 2. Fiyat artışı
 
-The single most common way a SaaS deal goes wrong: nobody notices the renewal notice window and we're locked in for another year at a higher price.
+- **Yıllık artış** (sabit oran, TÜFE/ÜFE gibi endeks — hangi endeks ve hangi ay, tavan var mı, sınırsız)
+- **Tek taraflı fiyat değişikliği.** Matbu koşullarda sağlayıcıya tek yanlı fiyat/koşul değiştirme yetkisi veren kayıt yazılmamış sayılır (TBK m. 24) — müzakere edilmiş sözleşmede bu koruma zayıflar; açık tavan ve fesih hakkı iste.
+- **Döviz.** Bedel yabancı parayla belirlenmişse ve "aynen ödeme" kaydı yoksa borç ödeme günündeki rayiçle TL olarak da ödenebilir; temerrütte alacaklı aynen ya da vade/fiilî ödeme günü rayicinden TL ister (TBK m. 99/2-3). İki Türkiye yerleşiği arasında döviz cinsinden ya da dövize endeksli bedel için Türk Parası Kıymetini Koruma Hakkında 32 sayılı Karar ve tebliğlerindeki yasak ve istisnaları ayrıca çek (`tr_mevzuat_ara(query="Türk Parası Kıymetini Koruma Hakkında 32 Sayılı Karara İlişkin Tebliğ")`); madde atfını ancak çektiğin metinden yap.
+- **Kullanım aşımı** (yayımlanmış tarife, yüksek oran, belirsiz) ve **"ücret"in kapsamı** (yalnız abonelik mi, geniş tanımlı "ek hizmetler" mi).
+- **Fatura itirazı.** Faturayı alan sekiz gün içinde içeriğine itiraz etmezse kabul etmiş sayılır (TTK m. 21/2) → aşım faturaları için iç kontrol süreci gerektiğini iş birimine yaz.
+- Sonradan beklenmedik olağanüstü durum: tek kanuni araç aşırı ifa güçlüğüdür (TBK m. 138; sürekli edimlide kural olarak fesih); sözleşmede ayrıca uyarlama/yeniden müzakere kaydı ara.
 
-Check each element and compare against the team's `SaaS positions` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
+### 3. Veri taşınabilirliği ve çıkış
 
-- **Renewal term length** (e.g., same as initial, longer, multi-year auto-convert)
-- **Notice-to-cancel window** (number of days before renewal)
-- **Notice method** (email, written notice to legal, portal-only, certified mail)
-- **Price on renewal** (same, CPI-capped, then-current list, uncapped discretionary)
+Bu sağlayıcıdan bir gün ayrılacağız; verimizi alabilecek miyiz?
+- **İhraç biçimi** (açık/standart, belgelenmiş özel biçim, "ticari olarak makul")
+- **Ne zaman** (her an self-servis, süre içinde talep üzerine, yalnız sona ermede)
+- **Sona erme sonrası erişim** (kaç gün), **maliyet** (ücretsiz, iş-zaman, GB/kayıt başına)
+- **Silme teyidi** (talep üzerine tutanak, yok, sağlayıcı türev veriyi saklıyor). Kişisel verinin silinmesi, yok edilmesi ya da anonim hâle getirilmesi veri sorumlusunun yükümlülüğüdür (KVKK m. 7) → silme süresi ve tutanak `/privacy-legal:dpa-review` ile uyumlu olmalı.
+- Sağlayıcının "anonimleştirilmiş" ya da "toplulaştırılmış" türev veri saklaması esaslı bir pozisyondur; KVKK'da anonim hâle getirme, başka verilerle eşleştirilerek dahi kimliği belirlenebilir kişiyle ilişkilendirilemeyecek hâle getirmedir (KVKK m. 3/1-b). Ekibin tutumunu playbook'tan teyit et; her iki yönde de işaretle.
 
-**Extract and record** the exact renewal date and the notice window regardless of whether any item is flagged. This feeds the renewal-tracker skill.
+### 4. Erişilebilirlik ve hizmet seviyesi (HSS)
 
-### 2. Price escalation
+Yalnız iş bu hizmetin ayakta olmasına gerçekten bağlıysa önemlidir; anket aracı için müzakere sermayesi harcama.
+- **Erişilebilirlik taahhüdü** (yüzde ya da "ticari olarak makul çaba"), **ölçüm dönemi** (aylık, üç aylık, yıllık)
+- **Telafi.** Hizmet kredisi nasıl hesaplanıyor, tavanı var mı, "tek çare" mi? Hizmet kredisinin cezai şart mı (TBK m. 179-182), bedel indirimi mi sayılacağı **tartışmalı**; nitelendirme tavana ve ek tazminata etki eder. "Tek ve münhasır çare" kaydı önceden sorumsuzluk anlaşmasıdır: ağır kusurdan sorumsuzluk kesin hükümsüzdür (TBK m. 115/1).
+- **Planlı bakım istisnası** (tanımlı pencere, önceden bildirim, sınırsız)
+- Tek çare kaydının sorumluluk tavanıyla etkileşimi (aşağıda).
 
-Check each element against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
+### 5. Alt işleyenler
 
-- **Annual escalator** (fixed %, CPI, uncapped, etc.)
-- **Usage overage pricing** (published rate card, premium rate, unspecified)
-- **Scope of "fees"** (subscription only vs. "additional services" broadly defined)
+Veri koruma konusudur ama SaaS'a özgüdür, çünkü liste abonelik boyunca **değişir**.
+- **Güncel liste** (yayımlanmış, talep üzerine, yok), **değişiklik bildirimi** (önceden süre, yok), **itiraz hakkı** (engelleme, bildirip feshetme, yalnız bildirim, yok)
+- Yurt dışındaki alt işleyen ya da bulut → kişisel veri yurt dışı aktarımı (KVKK m. 9). Mekanizmayı bu skill değerlendirmez → `/privacy-legal:dpa-review` (sektörel katman ve aktarım orada).
 
-### 3. Data portability and exit
+### 6. Hizmet değişiklikleri ve özellik kaldırma
 
-When (not if) we leave this vendor, can we get our data out? Check each element against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
+- **Esaslı olumsuz değişiklik** (feshetme hakkı, yalnız bildirim, sınırsız) — matbu koşulda tek yanlı değiştirme yetkisi için TBK m. 24
+- Dayandığınız özellikler için **kaldırma bildirim süresi**; **yerine gelen özellik** aynı paket mi, üst paket mi
 
-- **Export format** (open/standard, proprietary-but-documented, "commercially reasonable")
-- **Export availability** (self-serve anytime, on request during term, only at termination)
-- **Post-termination access** (days available to export after termination)
-- **Export cost** (free, T&M, per-GB or per-record)
-- **Deletion certification** (certified on request, none, vendor retains derivatives)
+## Yapay zekâ ve makine öğrenmesi hakları
 
-Vendor retention of "anonymized" or "aggregated" derivatives is a material position — confirm the team's stance in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` and flag either way.
+SaaS müzakeresinin en hızlı değişen başlığı; tek satırlık "var mı" kontrolü yetmez. Yedi boyutun her birini profilin `## AI/ML training rights` bölümündeki pozisyonla eşleştir:
 
-### 4. Uptime and SLA
+1. **Açık izin.** Müşteri verisi / içeriği / kullanım verisi YZ eğitimi, model geliştirme için kullanılabiliyor mu? Alım tarafında genelde HAYIR (müşteri sağlayıcının ürününü sübvanse eder, rekabete duyarlı bilgi sızabilir). Satış tarafında gelir, kötüye kullanımda itibar riski.
+2. **Politika yoluyla örtülü izin.** Sözleşme sağlayıcının gizlilik politikasını ya da kullanım koşullarını "güncellendiği şekliyle" mi içeriyor? Tek yanlı güncelleme yoluyla eğitim hakkı eklenebiliyor mu? Matbu koşulda bu yetki yazılmamış sayılır (TBK m. 24), ama kayda güvenme; açık yasak iste. "Hizmet geliştirme", "analitik" gibi torba ifadelere ve log/telemetriyi müşteri verisi tanımından çıkaran "kullanım verisi" tanımlarına bak.
+3. **Anonimleştirme standardı.** "Anonim" tanımsızsa zayıftır; KVKK m. 3/1-b ölçütüne bağla. AB bağlantısı varsa GDPR ölçütünü araçla çek (`eu_get_document_text(celex="32016R0679")`, gerekçe 26). Geri döndürülebilir mi?
+4. **Rekabet açısından bulaşma.** Sağlayıcı rakiplerinize de hizmet veriyor mu? Verinizle eğitilen model rakibin çıktısına sızabilir; emanet iş ürününden yetkisiz yararlanma ve sır ifşası TTK m. 55/1-c,d tabanıdır ama sözleşmesel izolasyon taahhüdü iste.
+5. **Vazgeçme (opt-out) kapsamı ve kalıcılığı.** Tüm YZ kullanımlarını mı kapsıyor, yenilemelerden ve koşul güncellemelerinden sonra sürüyor mu, kullanıcı mı kurum mu düzeyinde? Varsayılan açık mı kapalı mı — sözleşmede yazılı mı?
+6. **Çıktı sahipliği.** Ürün YZ çıktısı üretiyorsa çıktı kimin, sağlayıcı çıktıyı eğitim örneği olarak kullanabilir mi? YZ çıktısının FSEK anlamında eser sayılıp sayılmadığı **tartışmalı**; hakları sözleşmeyle açıkça düzenle. Üçüncü taraf YZ alt işleyenleri (büyük dil modeli sağlayıcıları) alt işleyen listesinde görünür.
+7. **Düzenleyici zincir.** Sağlayıcının veriyi YZ için kullanması sizin için düzenleyici risk doğuruyor mu? Türkiye'de amaç dışı işleme ve aktarım → `/privacy-legal:use-case-triage`; AB bağlantısı varsa YZ Tüzüğü yükümlülükleri araçla çekilir (`eu_search_eu_law(query="Regulation (EU) 2024/1689 artificial intelligence")`); sektörel kurum kararları için `tr_kurum_karari_ara`.
 
-Only matters if the business actually depends on this service being up. If it's a nice-to-have tool, skip this section — don't spend negotiating capital on SLAs for a survey tool.
+Sözleşme yedisinde de sessizse bu da bulgudur: "Sözleşme YZ/ML eğitim hakları konusunda sessiz — açık yasak ya da yedi boyuta bağlı tanımlı istisna isteyin."
 
-Check each element against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
+## Sorumluluk tavanı ve Türk hukuku sınırları
 
-- **Uptime commitment** (percentage, or "commercially reasonable efforts")
-- **Measurement period** (monthly, quarterly, annual)
-- **Remedy** (service credits — how calculated, whether capped, whether sole remedy)
-- **Scheduled maintenance exclusions** (defined window, advance notice, unlimited)
-- **Credit-as-sole-remedy** interaction with the liability cap
+Tavan için vendor-agreement-review'daki dört boyutlu karar prosedürünü uygula (doğrudan/dolaylı zarar, tavan tabanının birebir alıntısı, tavan dışı kalemler, boyut başına playbook). SaaS'ta tavan dışı kalemler genelde veri ihlali, gizlilik ve fikrî hak tazminidir; bunlar tavan dışındaysa kalan "tavanlı alan"ın anlamlı mı göstermelik mi olduğunu yaz.
 
-### 5. Subprocessors
+**Yargı çevresi farkı.** Playbook tek bir hukuk tercihini her yere uygular; geçerlilik ise hukuka göre değişir. Türk hukukunun tipik sınırları:
 
-This is a data protection issue but it's SaaS-specific because the subprocessor list *changes* over the life of the subscription.
+| Konu | Türk hukuku | Dayanak |
+|---|---|---|
+| Sorumsuzluk / tavan | Ağır kusurdan önceden sorumsuzluk kesin hükümsüz; izinle yürütülen uzmanlık hizmetinde hafif kusur için de | TBK m. 115/1, 115/3 |
+| Yardımcı kişi (alt yüklenici, alt işleyen) | Sorumluluk önceden kaldırılabilir; izinle yürütülen uzmanlık hizmetinde kaldırılamaz | TBK m. 116/2-3 |
+| Otomatik yenileme | B2B'de kanuni üst sınır yok, bildirim şekli TTK m. 18/3; tüketicide emredici kural | TTK m. 18/3; 6502 m. 52 |
+| Cezai şart | Tacir borçlu aşırılık iddiasıyla indirim isteyemez | TTK m. 22 |
+| Zamanaşımı | TBK'daki zamanaşımı süreleri sözleşmeyle değiştirilemez; "talepler 1 yıl içinde ileri sürülür" kaydının sözleşmesel hak düşürücü süre olarak geçerliliği **tartışmalı** | TBK m. 148 |
+| Rekabet yasağı / ayartmama | Rakipler arasında 4054 m. 4 riski | 4054 m. 4 |
 
-Check each element against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
+Playbook pozisyonu seçilen hukukta uygulanamıyorsa işaretle: "Playbook'unuz [X] istiyor, ama bu sözleşme [Y] hukukuna tabi ve orada [X] [geçersiz / sınırlı / emredici kurala tabi]." Yabancı hukuk için kural araçtan çekilir, ezberden değil → `/commercial-legal:governing-law-review`.
 
-- **Current list** (published, on request, unavailable)
-- **Change notification** (advance notice period, or none)
-- **Objection rights** (blocking, notice-and-terminate, notice-only, none)
+## Redline inceliği
 
-### 6. Service changes and deprecation
+vendor-agreement-review'daki kural: en küçük düzeltme (kelime → ifade → alt bent → cümle → madde); tüm maddeyi değiştirdiysen ileti notunda söyle.
 
-SaaS vendors change their product. Usually fine. Sometimes they deprecate the thing you bought.
+## ArthurLegal MCP (`tr_`)
 
-Check each element against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`:
-
-- **Material adverse changes** (right to terminate on material degradation, notice-only, unrestricted)
-- **Deprecation notice period** for features the team relies on
-- **Feature parity on replacement** (same price tier, higher tier)
-
-
-
-## AI and machine learning rights
-
-**AI/ML data rights decision procedure.** Don't just check whether an AI training clause exists. The #1 emerging negotiation point in SaaS contracts is structurally more than a one-line existence check. Work through:
-
-1. **Explicit grant.** Does the contract explicitly grant the vendor rights to use Customer Data / Customer Content / Usage Data for AI training, model improvement, or ML development? Purchasing-side: this is usually a NO — customer data training the vendor's models means the customer is subsidizing the vendor's product and possibly leaking competitive information. Sales-side: this is revenue if you get it, reputation risk if you abuse it.
-2. **Implicit grant via policy.** Does the contract incorporate the vendor's privacy policy or terms of service by reference? Can the vendor add training rights via a unilateral policy update? Check: "The parties agree to the Provider's Privacy Policy as updated from time to time" is a training-rights grant waiting to happen. Also watch for "service improvement" or "analytics" catch-alls and "usage data" definitions that carve logs/telemetry out of the Customer Data definition so data-use restrictions don't apply.
-3. **Anonymization standard.** If the vendor claims it only trains on "anonymized" or "aggregated" data, what's the standard? "Anonymized" without a definition is weak. Does it meet GDPR Recital 26 / HIPAA Safe Harbor / a named standard? Is it reversible?
-4. **Competitive contamination.** Does the vendor serve your competitors? If so, training on your data could leak competitive intelligence into outputs your competitors see. Is there a competitive isolation commitment?
-5. **Opt-out scope and durability.** If there's an opt-out, does it cover all AI uses or only some? Does it survive renewals and TOS updates? Is it per-user or per-org? Many vendors default to training and offer an opt-out buried in an admin console — check whether the contract makes the default explicit.
-6. **Output ownership.** If the SaaS product is itself AI-generated (drafting, summarization, analysis), who owns the outputs? Can the vendor use your outputs as training examples? Check third-party AI subprocessors too — the vendor may send customer data to a third-party LLM (OpenAI, Anthropic, Google) and the subprocessor list / data flow is where that shows up.
-7. **Downstream regulatory chain.** Does the vendor's use of your data for AI create regulatory exposure for YOU? EU AI Act deployer obligations, FTC §5 undisclosed data-sharing exposure (see *FTC v. Humor Rainbow/OkCupid*), state AI laws.
-
-Match each to a playbook position. The practice profile's `## AI/ML training rights` section should have positions for each. If the agreement is silent on all seven, that's still a finding: "The agreement is silent on AI/ML training rights — request an explicit prohibition or a defined carve-out tied to each of the seven dimensions above."
-
-## Liability cap decision procedure
-
-**The cap amount is the least important part of the cap.** Limitation-of-liability is not a single "check against playbook" item. Work through:
-
-1. **Direct vs. indirect/consequential damages.** Does the cap apply to ALL liability, or only direct damages? A 12-month cap on direct damages with uncapped consequential damages is a completely different position than a 12-month aggregate cap. State both treatments explicitly.
-
-2. **The cap base — quote it verbatim.** "12-month cap" could mean: (a) fees paid in the 12 months preceding the claim, (b) fees payable in the current 12-month period, (c) fees over the last 12 months of usage, (d) fees under the current order form, (e) total fees ever paid. These can differ by an order of magnitude. Quote the exact language. If ambiguous, flag it: "Cap base is ambiguous — `[the quoted language]` — could mean [X] or [Y]. Confirm before signing."
-
-3. **Cap-carveout interaction.** A $100K cap with uncapped indemnity for data breach, IP, and confidentiality is functionally uncapped for the claims that actually arise in SaaS disputes. Enumerate what sits ABOVE the cap (the carveouts), what sits BELOW (what's actually capped), and assess whether the capped surface is meaningful: "The cap covers [general contract breach]. Data breach, IP indemnity, and confidentiality are carved out and uncapped. For this vendor's risk profile, the capped surface is [meaningful / nominal]."
-
-4. **Your playbook position per dimension.** The practice profile should have positions for: direct cap (multiple of fees), indirect damages (excluded / capped / uncapped), carveout list (what's acceptable above the cap), and cap base (which definition you'll accept). If the playbook has one "standard position" field, note: "Your playbook has a single cap position — consider splitting into direct/indirect/carveouts/base for more precise review."
-
-## Jurisdiction delta check
-
-**The playbook applies one governing-law preference globally. Enforceability varies materially.** Check the SaaS contract's actual governing law against the top divergences before accepting playbook positions at face value:
-
-- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction — verify]`
-- **Auto-renewal:** CA Bus. & Prof. Code §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction — verify]`
-- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction — verify]`
-- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction — verify]`
-- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction — verify]`
-
-When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction — verify]`"
-
-## Redline granularity
-
-**Edit at the smallest possible granularity.** A redline is a negotiation artifact, not a rewrite. Wholesale clause replacement signals "we threw out your drafting" — it's aggressive, it forces the counterparty to re-read the whole clause, and it discards the parts of their drafting that were fine. Surgical redlines — strike a word, insert a phrase, restructure a subclause — signal "we have specific asks" and are faster to read, understand, and accept.
-
-Default to the smallest edit that achieves the playbook position:
-- Replace a **word** before a phrase. ("twelve (12)" → "twenty-four (24)")
-- Replace a **phrase** before a sentence. ("paid by the Buyer" → "paid and payable by the Buyer")
-- Restructure a **subclause** before replacing the sentence. (Add "(a)" and "(b)" to split a compound condition.)
-- Replace a **sentence** before replacing the clause.
-- Only replace a **whole clause** when the counterparty's version is so far from your position that surgical edits would be harder to read than a fresh draft — and when you do, say so in the transmittal: "We've replaced §8.2 rather than marking it up because the changes were extensive. Happy to walk you through the delta."
-
-When in doubt, smaller. A client who receives a surgical redline trusts that you read carefully. A client who receives a wholesale replacement wonders whether you read at all.
-
-## Output
-
-Use the vendor-agreement-review memo structure, with a SaaS-specific section added after the standard playbook checks. The vendor-agreement-review memo already carries the privilege header.
-
-**Dual severity.** Every SaaS-specific finding carries both axes (see CLAUDE.md `## Dual severity`):
-- **Legal risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
-- **Business friction:** 🔴 Blocks deals | 🟠 Slows deals | 🟡 Confuses customers | 🟢 Invisible
-
-Data-exit, auto-renewal, and price-escalation findings are the ones most likely to be 🟢 legal / 🔴 business — the clause is enforceable, but it's the reason a customer can't leave or a renewal surprises finance. Surface those at the business-friction severity, not the legal one.
-
-```markdown
-### Bottom line
-
-[Can you sign / Need to fight for X first / Walk — one-sentence why]
-
-### AI and machine learning rights
-
-[The #1 emerging SaaS negotiation point. Flag: explicit ML training clauses, "service improvement" catch-alls, usage data definitions, output ownership, third-party AI subprocessors, opt-out vs opt-in. If the agreement is silent: "Silent on AI/ML training rights — request explicit prohibition or defined carve-out."]
-
-## SaaS-specific findings
-
-### Auto-renewal
-**Renewal date:** [date]
-**Notice window:** Cancel by [date] ([N] days before renewal)
-**Renewal price mechanism:** [as written]
-**Playbook fit:** [within position / deviation / not addressed]
-**Flag for renewal-tracker:** [yes — and the record the tracker needs]
-
-### Price escalation
-[findings against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` positions]
-
-### Data exit
-[findings — this is the one the business owner should read]
-
-### SLA
-[findings, or "Skipped — service is not business-critical per [stakeholder]"]
-
-### Subprocessors
-[findings against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` positions]
-
-### Service changes
-[findings against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` positions]
+```
+tr_mevzuat_madde_getir(number="6098", madde_no=["20","21","23","24","25","99","115","116","138","148"])
+tr_mevzuat_madde_getir(number="6102", madde_no=["18","21","22","55"])
+tr_mevzuat_madde_getir(number="5846", madde_no=["2","48","49","52"])
+tr_mevzuat_madde_getir(number="6502", madde_no=["3","5","52"])
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="18/3 fesih ihbarı noter aracılığıyla ispat şartı", date_from="2020-01-01")
+tr_ictihat_semantik_ara(initial_keyword="genel işlem koşulu tek taraflı değişiklik", query="tacirler arası sözleşmede TBK 24 değiştirme yasağı uygulanır mı")
 ```
 
-## Handoffs
+Dönen kararın künyesini birebir kullan; karar numarası ezberden yazılmaz. Çekilemeyen madde: "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/".
 
-**To renewal-tracker:** When you find the renewal date and notice window, hand them off. The renewal-tracker register expects the following fields (see `skills/renewal-tracker/references/renewal-register.yaml` for the full schema):
+## Çıktı
+
+vendor-agreement-review not yapısını kullan (üst başlık orada); standart playbook kontrollerinden sonra SaaS bölümü ekle.
+
+**Çift ciddiyet** (eklenti ayarı `## Dual severity`): her SaaS bulgusunda iki eksen —
+- **Hukuki risk:** 🔴 Kritik | 🟠 Yüksek | 🟡 Orta | 🟢 Düşük
+- **İş sürtünmesi:** 🔴 Anlaşmayı durdurur | 🟠 Yavaşlatır | 🟡 Kafa karıştırır | 🟢 Görünmez
+
+Veri çıkışı, otomatik yenileme ve fiyat artışı bulguları çoğu zaman 🟢 hukuki / 🔴 iş sürtünmesidir: kloz geçerlidir ama müşterinin ayrılamamasının ya da finansın yenilemede şaşırmasının nedenidir. Bunları iş sürtünmesi ciddiyetiyle öne çıkar.
+
+```markdown
+### Sonuç
+[İmzalanabilir / Önce X için mücadele / Vazgeç — tek cümle neden]
+**Taraflar:** [tacir–tacir / tüketici var]   **Playbook:** [Satış / Alım tarafı]
+
+### YZ ve makine öğrenmesi hakları
+[Açık eğitim kaydı, torba "hizmet geliştirme", kullanım verisi tanımı, çıktı sahipliği, üçüncü taraf YZ alt işleyenleri, opt-out / opt-in. Sessizse: "YZ/ML eğitim hakları konusunda sessiz — açık yasak ya da tanımlı istisna isteyin."]
+
+## SaaS'a özgü bulgular
+
+### Otomatik yenileme
+**Yenileme tarihi:** [tarih]
+**Bildirim penceresi:** [tarih]'e kadar iptal ([N] gün önce) — yöntem: [sözleşmedeki] / TTK m. 18/3 uyumu: [evet / hayır / tartışmalı]
+**Yenileme fiyatı:** [yazıldığı gibi]
+**Playbook uyumu:** [pozisyon içinde / sapma / değinilmemiş]
+**Yenileme takibine:** [evet — kayıt alanları aşağıda]
+
+### Fiyat artışı
+### Veri çıkışı
+[iş biriminin okuması gereken bölüm]
+### HSS
+[bulgular ya da "Atlandı — [paydaş]'a göre hizmet iş açısından kritik değil"]
+### Alt işleyenler
+### Hizmet değişiklikleri
+```
+
+## Devirler
+
+**renewal-tracker'a:** Yenileme tarihi ve bildirim penceresi bulununca devret. Kayıt şu alanları bekler (tam şema: `skills/renewal-tracker/references/renewal-register.yaml`; alan adları değişmez):
 
 ```yaml
-counterparty:         [name]
-agreement:            [title]
-signed_date:          [ISO date]
-initial_term_end:     [ISO date]
-renewal_mechanism:    [e.g., "auto-renew annual"]
-notice_period_days:   [integer]
-cancel_by_effective:            [ISO date — initial_term_end minus notice_period_days]
-price_on_renewal:     [mechanism as written]
-annual_value:         [integer, if stated]
-business_owner:       [email, if known]
-clm_id:               [id if available]
+counterparty:         [ad]
+agreement:            [başlık]
+signed_date:          [ISO tarih]
+initial_term_end:     [ISO tarih]
+renewal_mechanism:    [ör. "auto-renew annual"]
+notice_period_days:   [tam sayı]
+cancel_by_effective:  [ISO tarih — initial_term_end eksi notice_period_days]
+price_on_renewal:     [yazıldığı gibi]
+annual_value:         [tam sayı, belirtilmişse]
+business_owner:       [e-posta, biliniyorsa]
+clm_id:               [varsa]
 status:               active
 ```
 
-If any field is not determinable from the contract or context, leave it out and note which fields were missing so the human can fill them in. `clm_id`, `annual_value`, and `business_owner` are especially likely to need human input.
+Belirlenemeyen alanı boş bırak ve hangilerinin eksik olduğunu yaz (`clm_id`, `annual_value`, `business_owner` çoğu zaman insandan gelir). Bildirim yönteminin TTK m. 18/3'e uyup uymadığını kayıt notuna ekle.
 
-**To escalation-flagger:** If any of the SaaS-specific checks hits the team's "never accept" or escalation-trigger list in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, the escalation-flagger skill routes it.
+**escalation-flagger'a:** Bir SaaS kontrolü `## Escalation`'daki "asla kabul etme" ya da eskalasyon tetikleyicisine düşerse `/commercial-legal:escalation-flagger` yönlendirir.
 
-## A note on what to fight over
+## Neyle kavga edilir
 
-SaaS vendors, especially large ones, negotiate their paper about as willingly as airlines negotiate ticket terms. Pick battles *per the team's playbook* — the `SaaS positions` section in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` should distinguish between terms the team will always push on, terms it fights over only for material deals, and terms it lets slide. If the playbook doesn't draw those lines, ask.
+Büyük SaaS sağlayıcıları kâğıtlarını, havayolunun bilet koşullarını müzakere ettiği kadar müzakere eder. Savaşı playbook'a göre seç: `SaaS positions` her zaman itiraz edilen, yalnız büyük anlaşmada itiraz edilen ve bırakılan şartları ayırmalı; ayırmıyorsa sor. Sözleşme değeri ve geçiş maliyetine göre kalibre et: kolay ikamesi olan küçük bir araç, üzerine iş kurulacak büyük bir platformdan daha hafif ele alınır.
 
-Calibrate based on contract value and switching cost. A $5K/year tool with easy alternatives gets a lighter touch than a $500K/year platform we'll build on top of.
+## Kapanış
 
-## Close with the next-steps decision tree
-
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları bu incelemeye göre uyarla (redline'ı gönder, eskalasyon, ek olgu iste — ör. alt işleyen listesi, yenileme kaydını aç, bekle, diğer). Ağaç çıktıdır; seçimi avukat yapar.
 
 ---
 
@@ -2624,195 +1833,152 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 ---
 name: stakeholder-summary
 description: >
-  Translates a contract review into a summary the business stakeholder will
-  actually read. Not a legal memo — a two-minute answer to "can I sign this
-  and what do I need to know." Use when user says "summarize for the business",
-  "write this up for [stakeholder]", "explain this to procurement", "non-legal
-  summary", or when a review is done and needs to go to someone outside legal.
+  Tamamlanmış bir sözleşme incelemesini iş biriminin gerçekten okuyacağı bir
+  özete çevirir. Hukuki not değil — "bunu imzalayabilir miyim, neyi bilmem
+  gerekiyor" sorusuna iki dakikalık cevap. Eskalasyonların gerçekten
+  yönlendirilip yönlendirilmediğini de sayar. "İş birimi için özetle",
+  "[paydaş] için yaz", "satın almaya anlat", "hukukçu olmayan özet" denince ya
+  da inceleme bitip hukuk dışına gidecekken kullan.
 ---
 
-# Stakeholder Summary
+# /stakeholder-summary — İş Birimi Özeti
 
-## Matter context
+Sözleşmeyi isteyen iş birimi sahibi hukuki not istemez. Bilmek istediği: imzalayabilir miyim, püf noktası ne, benim ne yapmam gerekiyor. Bu skill tamamlanmış incelemeyi buna çevirir. Sözleşmeyi yeniden incelemez — incelemeyi okur.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Matter bağlamı
 
----
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
 ## Destination check
 
-Before producing output, check where it's going. If the user has named a destination (a channel, a distribution list, a counterparty, "everyone"), ask whether it's inside the privilege circle. Public channels, company-wide lists, counterparty/opposing counsel, vendors, and clients (for work product) waive the protection. When the destination looks outside the circle, flag it and offer (a) the privileged version for legal only, (b) a sanitized version for the broader channel, or (c) both — don't silently apply a privileged header and then help paste it somewhere the header won't protect it. See the canonical `## Shared guardrails → Destination check` in this plugin's CLAUDE.md.
+Özet çoğu zaman hukuk dışına gider. Kullanıcı bir hedef söylediyse (kanal, dağıtım listesi, karşı taraf, "herkes") dar gizlilik çevresinde mi diye sor. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) ABD'deki "privilege" gibi geniş bir koruma değildir; şirket geneli kanala ya da karşı tarafa giden metin gizliliğini fiilen kaybeder. Çevre dışıysa (a) hukuk için tam sürüm, (b) arındırılmış sürüm ya da (c) ikisini öner. Arındırılmış sürümde iç müzakere pozisyonu, geri çekilme noktası ve "kabul edebileceğimiz en kötü" yazılmaz. Kanonik kural: `## Shared guardrails → Destination check`.
 
-## Purpose
+## Hangi taraf?
 
-The business owner who asked for this contract doesn't want a legal memo. They want to know: can I sign it, what's the catch, and what do I need to do. This skill takes a completed review and turns it into that.
+Alttaki inceleme satış ya da alım tarafı playbook'uyla yapıldı; bu çerçeveyi koru. Alım tarafı özeti "ne alıyoruz ve karşılığında neyden vazgeçtik", satış tarafı özeti "ne satıyoruz ve neyi taahhüt ettik" der. İnceleme notunun başında yazar; yazmıyorsa özetlemeden önce avukata sor.
 
-## Which side?
+## Okur kalibrasyonu
 
-The underlying review memo was run against either the sales-side or the purchasing-side playbook. Carry that framing through. A purchasing-side summary tells the business owner "here's what we're getting and what we agreed to give up"; a sales-side summary tells them "here's what we're selling and what we're on the hook for." Check which side the review was run on (it should be noted at the top of the review memo) and match the voice. If it's not obvious from the memo, ask the lawyer before summarizing.
+Eklenti ayarı `## House style` → iş birimi özetlerini kim okur, uzunluk ne olmalı. Yazmıyorsa varsayılan: satın alma ya da birim yöneticisi, en fazla iki paragraf, hukuk terimi yok.
 
-## Audience calibration
-
-Read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `## House style` → who reads stakeholder summaries, how long should they be. If not specified, default to: procurement or a department head, two paragraphs max, no legal terms of art.
-
-Different audiences need different summaries:
-
-| Audience | Cares about | Doesn't care about |
+| Okur | Önemsediği | Önemsemediği |
 |---|---|---|
-| **Procurement** | Price, renewal mechanics, approval routing | Liability cap structure |
-| **Department head (budget owner)** | Can their team use it, what happens if it breaks, cost | Indemnity scope |
-| **Finance** | Total cost of ownership, renewal price risk, off-balance-sheet commitments | Governing law |
-| **Security / IT** | Data handling, subprocessors, SOC 2, where data lives | Everything else |
-| **Executive sponsor** | Is this going to embarrass us, is legal a blocker | Details |
+| **Satın alma** | Fiyat, yenileme düzeni, onay sırası, ödeme vadesi | Tavanın yapısı |
+| **Birim yöneticisi (bütçe sahibi)** | Ekibi kullanabilir mi, bozulursa ne olur, maliyet | Tazminin kapsamı |
+| **Finans** | Toplam sahip olma maliyeti, yenilemede fiyat riski, döviz/kur riski, fatura itiraz süresi | Uygulanacak hukuk |
+| **Bilgi güvenliği / BT** | Veri nerede, alt işleyenler, yurt dışı aktarım, ISO 27001 / SOC 2 | Geri kalan her şey |
+| **Üst yönetim sponsoru** | Bizi zor duruma sokar mı, hukuk engel mi | Ayrıntı |
 
-Ask who this is for if it's not obvious from context.
+Bağlamdan belli değilse kimin için olduğunu sor.
 
-## The summary
+## Özet
 
-### Length cap — enforced
+### Uzunluk sınırı — uygulanır
 
-The summary is:
-- **One paragraph** for the verdict and what this is (business terms, plain English)
-- **One paragraph** for the catch — the thing the stakeholder would be surprised by later if nobody told them now
-- **A 2-3 item checklist** for what the stakeholder actually needs to do (at most three items; if you want a fourth, the first three aren't tight enough)
-- **A one-line close** with approval timing
+- **Bir paragraf:** karar ve bu ne (ticari dille)
+- **Bir paragraf:** püf noktası — kimse şimdi söylemezse paydaşın sonra şaşıracağı şey
+- **2-3 maddelik yapılacaklar listesi** (en fazla üç; dördüncüyü istiyorsan ilk üçü yeterince sıkı değildir)
+- **Tek satır kapanış:** onay ve zamanlama
 
-**Under 200 words total.** If you're writing more, you're including detail the stakeholder doesn't need — they have the memo for that. This is the quick read before the stakeholder hits reply.
+**Toplam 200 kelimenin altında.** Fazlası paydaşın ihtiyaç duymadığı ayrıntıdır — onun için not var. Kapanış üçüncü paragrafa dönüşüyorsa listeye kat.
 
-If the close needs a third paragraph, fold it into the checklist instead. Don't let the close grow into a fourth block.
+### Alıntı disiplini
 
-### Scope of quote — discipline
+Bir kloz alıntılanacaksa **şartlı cümlenin tamamını** alıntıla. "Sipariş Formunda aksi öngörülmedikçe, kampanyalı ya da tek seferlik fiyatlı aboneliklerin yenilemesi liste fiyatından yapılır" ile "yenileme liste fiyatından yapılır" farklı şeylerdir; kesmek istisnayı kurala çevirir. Tam alıntı sığmıyorsa kesme, yeniden ifade et: "Kampanyalı fiyatta yenileme liste fiyatına döner" adil bir özettir.
 
-When quoting a contract clause (in the summary, in the "catch" paragraph, or in the checklist), quote the **full conditional sentence**, not a truncated version. A clause that reads "Except as expressly provided in the Order Form, renewal of promotional or one-time priced subscriptions resets to list price" means something different from "renewal resets to list price" — the truncation drops the condition and misrepresents what the term does.
-
-If a full conditional quote doesn't fit the summary's length cap, paraphrase rather than truncate. "For promotional pricing, renewal resets to list" is a fair paraphrase; "renewal resets to list" is not — it promotes the exception to the rule.
-
-### Format
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
+### Biçim
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
-<!-- Remove the header above if forwarding outside the legal-privileged circle (e.g., to a business stakeholder, counterparty, or vendor). Confirm the correct marking for your jurisdiction and matter before forwarding. -->
+[ÜST BAŞLIK — profil ## Outputs]
+<!-- Dar gizlilik çevresi dışına (iş birimi, karşı taraf, tedarikçi) gönderiyorsanız yukarıdaki başlığı kaldırın. Başlık tek başına koruma yaratmaz. -->
 
-**[Counterparty] [Agreement type]** — [READY TO SIGN | NEEDS CHANGES | BLOCKED]
+**[Karşı taraf] [Sözleşme türü]** — [İMZAYA HAZIR | DÜZELTME GEREKLİ | DURDURULDU]
 
-[One paragraph: what this agreement does, in business terms. Not "Master Services
-Agreement for the provision of cloud-based analytics" — "this is the contract
-for the dashboard tool the marketing team wants."]
+[Bir paragraf: sözleşme ne yapıyor, ticari dille. "Bulut tabanlı analitik hizmetlerin sunumuna ilişkin çerçeve sözleşme" değil — "pazarlama ekibinin istediği pano aracının sözleşmesi."]
 
-[One paragraph: what the stakeholder needs to know. The catch, if there is one.
-The thing that will surprise them later if nobody tells them now. E.g., "Heads
-up: this auto-renews every year and we have to cancel 60 days out. I've added
-it to the tracker but you should know." Or: "Clean agreement, no surprises,
-cleared to sign."]
+[Bir paragraf: bilmesi gereken. Varsa püf noktası. Ör.: "Dikkat: her yıl otomatik yenileniyor; iptal için yenilemeden 60 gün önce noter, taahhütlü mektup ya da KEP ile bildirim göndermemiz gerekiyor — e-posta yetmeyebilir." Ya da: "Temiz sözleşme, sürpriz yok, imzalanabilir."]
 
-<!-- Do not claim "I've added it to the tracker" unless `renewal-tracker` has
-actually been run for this contract — see Verify tracker entries before
-asserting them below. -->
+**Yapmanız gerekenler:**
+- [ ] [Varsa iş — "verinin AB'de tutulmasında ekip için sorun var mı, teyit edin" ya da "hiçbir şey — imzaya ben yönlendiriyorum"]
 
-**Verify tracker entries before asserting them.** Before the summary says "I've added it to the tracker" (or any equivalent — "it's in the tracker," "tracked," "set a reminder"), verify that `renewal-tracker` has been run for this contract. Check the outputs folder or the matter folder for a `renewal-tracker` output that names this counterparty / agreement. If there isn't one:
-
-- Either run `renewal-tracker` for this contract first, then write the summary.
-- Or write the summary without asserting the tracker entry, and include an action item: "Add to renewal tracker — not yet done."
-
-Claiming a tracker entry exists when it does not is worse than omitting the reassurance. The stakeholder then trusts the reminder that will never fire. If the truthful statement is "tracked," the skill runs the tracker. If it's "you should add this to your calendar — I haven't logged it," say that.
-
-**What you need to do:**
-- [ ] [Action item, if any — "confirm the team is okay with data living in EU"
-  or "nothing — I'll route for signature"]
-
-**Approval:** [who's approving and expected timing]
+**Onay:** [kim onaylıyor, beklenen zaman]
 ```
 
-### What to translate
+**Takip kaydını iddia etmeden önce doğrula.** Özet "yenileme takibine ekledim" (ya da "takipte", "hatırlatıcı kuruldu") demeden önce bu sözleşme için `renewal-tracker`'ın gerçekten çalıştırıldığını kontrol et: çıktı ya da matter klasöründe bu karşı tarafı/sözleşmeyi adlandıran bir `renewal-tracker` çıktısı ara. Yoksa ya önce `renewal-tracker`'ı çalıştır, ya da özeti kayıt iddiası olmadan yaz ve listeye ekle: "Yenileme takibine ekle — henüz yapılmadı." Hiç çalmayacak bir hatırlatıcıya paydaşı güvendirmek, güvenceyi hiç vermemekten kötüdür.
 
-| Legal finding | Business translation |
+### Ne nasıl çevrilir
+
+| Hukuki bulgu | İş dili |
 |---|---|
-| "Liability capped at 12 months fees" | "If they break something, the most we can recover is a year's worth of what we paid them." |
-| "No termination for convenience" | "Once we sign, we're locked in for the full term — we can't just cancel if we stop using it." |
-| "Auto-renewal with 60-day notice" | "This renews automatically every year. To cancel, we have to tell them two months before the renewal date." |
-| "No IP indemnity" | "If someone sues us claiming this tool infringes their patent, the vendor isn't on the hook to defend us." |
-| "Subprocessor list not disclosed" | "We don't know what other companies will have access to our data through them." |
-| "Data deletion within 30 days of termination" | "When we cancel, they delete our data within a month. Export anything you need before then." |
-| "SLA credits capped at 10% of monthly fee" | "If the service goes down, we get a small credit back. It won't cover the cost of the downtime to the business." |
+| "Sorumluluk 12 aylık bedelle sınırlı" | "Bir şeyi bozarlarsa alabileceğimiz en fazla, onlara bir yılda ödediğimiz kadar." |
+| "İsteğe bağlı fesih yok" | "İmzaladıktan sonra süre sonuna kadar bağlıyız; kullanmayı bırakırsak da iptal edemeyiz." |
+| "60 gün bildirimli otomatik yenileme" | "Her yıl kendiliğinden yenileniyor. İptal için yenileme tarihinden iki ay önce noter, taahhütlü mektup ya da KEP ile bildirmemiz gerekiyor." |
+| "Fikrî hak tazmini yok" | "Biri bu aracın kendi hakkını ihlal ettiğini söyleyip bize dava açarsa, tedarikçi bizi savunmak zorunda değil." |
+| "Alt işleyen listesi açıklanmamış" | "Verimize onların üzerinden başka hangi şirketlerin erişeceğini bilmiyoruz." |
+| "Sona ermeden itibaren 30 gün içinde veri silinir" | "İptal edince verimizi bir ay içinde siliyorlar. Gereken her şeyi ondan önce dışarı alın." |
+| "HSS kredisi aylık bedelin %10'uyla sınırlı" | "Hizmet çökerse küçük bir indirim alırız; kesintinin işe maliyetini karşılamaz." |
+| "Fatura 8 gün içinde itiraz edilmezse kabul sayılır" | "Faturadaki bir hataya 8 gün içinde itiraz etmezsek kabul etmiş sayılıyoruz — faturaları hemen kontrol edin." |
+| "Bedel USD; TL ile ödeme rayice göre" | "Fiyat dolar; kur yükselirse TL maliyetimiz de yükselir." |
+| "Ödeme vadesi 90 gün" (alım tarafı) | "Ödeme vadesi kanuni sınırı aşabilir; satın alma şartlarında değişiklik gerekebilir." |
 
-### What NOT to include
+Son üç satırın hukuki dayanağı (TTK m. 21/2, TBK m. 99, TTK m. 1530/5) incelemede yazılıdır; özette madde numarası verme.
 
-- Section numbers
-- Defined terms in quotes
-- The word "indemnification" (say "they cover us if" / "we cover them if")
-- The word "notwithstanding"
-- Risk matrices with colored dots (unless this stakeholder has specifically asked for them before)
-- Caveats about how this isn't legal advice — the stakeholder knows who sent it
+### Ne yazılmaz
 
-## When the review found problems
+- Madde numaraları
+- Tırnak içinde tanımlı terimler
+- "Tazmin" kelimesi ("şu olursa onlar bizi karşılar" / "biz onları karşılarız" de)
+- "Aksine hüküm bulunmadıkça", "işbu", "mezkûr" gibi kalıplar
+- Renkli noktalı risk matrisleri (paydaş daha önce özellikle istemediyse)
+- "Bu hukuki görüş değildir" uyarıları — paydaş kimin gönderdiğini biliyor
 
-If the review has 🔴 or 🟠 issues, the summary still needs to be two paragraphs — but the second paragraph is "here's what we're pushing back on and why."
+## İnceleme sorun bulduysa
 
-```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
-<!-- Remove the header above if forwarding outside the legal-privileged circle. -->
-
-**[Counterparty] [Agreement type]** — NEEDS CHANGES
-
-[What it is, one paragraph.]
-
-We're going back to them on [N] things before this is ready. The main one:
-[the critical issue in plain English — "they want the right to use our data
-to improve their product, which means our competitors' instance gets smarter
-from our data"]. We've asked them to strike it. [Realistic assessment: "They'll
-probably agree" / "This might be a sticking point — will keep you posted."]
-
-**What you need to do:**
-- [ ] Nothing yet — I'll let you know when it's back from them.
-  OR
-- [ ] [Business decision they need to make: "If they won't budge on X, are you
-  okay with Y, or do we walk?"]
-```
-
-## Handoffs
-
-**From vendor-agreement-review / saas-msa-review:** Those skills produce the full memo. This skill reads the memo and compresses it. Don't re-review the contract — read the review.
-
-**To the stakeholder:** Via whatever channel `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` says. If Slack, keep it under 150 words. If email, the format above is fine as-is.
-
-## Escalation-fan-out reconciliation
-
-The upstream review is a one-to-many producer: it can name five escalation targets (Deputy GC, CISO, Privacy Officer, CFO, business owner) across different findings. `escalation-flagger` routes one finding at a time. Without a reconciliation step, the Deputy GC sees the memo and the other four approvers never do.
-
-Before producing the summary, read the upstream review memo and tally escalations:
-
-1. **Count the escalation targets the review named.** Look for the routing / escalation block at the end of the review, or for per-finding "escalate to [X]" tags. De-dupe by approver name — a reviewer named for two findings counts once.
-2. **Count the escalations actually routed.** Read the review folder (or matter folder) for `escalation-*.md` drafts produced by `escalation-flagger` since the review was written. Each draft names one approver.
-3. **Reconcile.** If N approvers were named and M drafts exist, (N − M) escalations have not been routed.
-
-Include a short reconciliation block in the summary — above the checklist, below the catch paragraph:
+🔴 ya da 🟠 sorun varsa özet yine iki paragraftır; ikinci paragraf "neye itiraz ediyoruz ve neden" olur.
 
 ```markdown
-**Escalation status:** [M] of [N] escalation targets routed. The following have not been routed and require action:
-- [Approver name] — [one line on the finding that named them]
-- [Approver name] — [one line]
+[ÜST BAŞLIK — profil ## Outputs]
+<!-- Dar gizlilik çevresi dışına gönderiyorsanız başlığı kaldırın. -->
+
+**[Karşı taraf] [Sözleşme türü]** — DÜZELTME GEREKLİ
+
+[Ne olduğu, bir paragraf.]
+
+Hazır olmadan önce [N] konuda geri dönüyoruz. Asıl olanı: [kritik sorun sade dille — "verimizi kendi ürünlerini geliştirmek için kullanmak istiyorlar; yani rakiplerimizin kullandığı sürüm bizim verimizle akıllanıyor"]. Silinmesini istedik. [Gerçekçi değerlendirme: "Büyük ihtimalle kabul ederler" / "Tıkanma noktası olabilir — haber veririm."]
+
+**Yapmanız gerekenler:**
+- [ ] Şimdilik hiçbir şey — cevap gelince haber veririm.
+  YA DA
+- [ ] [Vermeleri gereken iş kararı: "X'te geri adım atmazlarsa Y'yi kabul eder misiniz, yoksa vazgeçelim mi?"]
 ```
 
-If all N have been routed:
+## Eskalasyon uzlaştırması
+
+Üstteki inceleme birden çok onaylayıcı adlandırabilir (GC yardımcısı, bilgi güvenliği yöneticisi, kişisel veri sorumlusu irtibat kişisi, finans direktörü, iş birimi sahibi); `escalation-flagger` ise bulguları tek tek yönlendirir. Uzlaştırma olmadan bir kişi notu görür, diğerleri hiç görmez. Özetten önce:
+
+1. **İncelemenin adlandırdığı hedefleri say** — sondaki yönlendirme bloğu ya da bulgu bazındaki "[X]'e eskalasyon" etiketleri; aynı kişi bir kez sayılır (N).
+2. **Gerçekten yönlendirilenleri say** — inceleme ya da matter klasöründe, inceleme yazıldıktan sonra `escalation-flagger`'ın ürettiği `escalation-*.md` taslakları (M).
+3. **Uzlaştır** — N − M eskalasyon yönlendirilmemiş demektir.
+
+Püf noktası paragrafının altına, listenin üstüne:
+
 ```markdown
-**Escalation status:** [N] of [N] escalation targets routed.
+**Eskalasyon durumu:** [N] hedeften [M]'i yönlendirildi. Şunlar yönlendirilmedi ve işlem bekliyor:
+- [Onaylayıcı] — [onu adlandıran bulgu, tek satır]
 ```
 
-If the upstream review surfaced no escalations, omit the block.
+Hepsi yönlendirildiyse: `**Eskalasyon durumu:** [N] hedeften [N]'i yönlendirildi.` İnceleme eskalasyon adlandırmadıysa bloğu çıkar. Taslak hiç yoksa M = 0 say ve N'nin tamamını listele — bulgu budur.
 
-**Do not omit a named approver from the reconciliation because the stakeholder wouldn't recognize the name.** Business stakeholders often do not know who the Privacy Officer or CISO is. The reconciliation is internal-facing — it tells the lawyer sending the summary whether all the routing is done, not the stakeholder. If the stakeholder-facing summary needs to stay narrow, the reconciliation can live in a "routing status" footer or attached note — but it has to exist. A summary that implies routing is complete when it is not is worse than no summary.
+**Paydaş tanımıyor diye bir onaylayıcıyı uzlaştırmadan çıkarma.** Uzlaştırma iç kullanım içindir: özeti gönderen avukata yönlendirmenin bitip bitmediğini söyler. Paydaşa giden metin dar kalacaksa uzlaştırma "yönlendirme durumu" dipnotunda ya da ayrı notta durabilir, ama var olmalıdır. Yönlendirme bitmemişken bitmiş izlenimi veren özet, hiç özet olmamasından kötüdür. **Kelime sınırı istisnası:** uzlaştırma bloğu 200 kelimeye dahil değildir.
 
-**Word-count carve-out.** The escalation reconciliation block is exempt from the 200-word cap. Length-cap discipline on the summary body stays; the reconciliation is housekeeping, not narrative.
+## Devirler
 
-**When no escalation-flagger drafts exist.** If the upstream review named approvers and no drafts are in the folder, treat the count as M = 0. The reconciliation block lists all N as unrouted. That is the finding.
+- **vendor-agreement-review / saas-msa-review'dan:** onlar tam notu üretir; bu skill notu okur ve sıkıştırır. Sözleşmeyi yeniden inceleme.
+- **Paydaşa:** eklenti ayarının söylediği kanaldan. Anlık mesajlaşma kanalıysa 150 kelimenin altında; e-postaysa yukarıdaki biçim yeterli.
 
-## A note on tone
+## Ton
 
-Stakeholders remember two things about legal: did it block me, and did it make sense. This skill is how legal makes sense. Write like you're explaining it to a smart colleague over coffee, not like you're writing a memo to file.
-
-If the honest summary is "this is fine, sign it," say that. Don't pad a clean review into three paragraphs to look thorough.
+Paydaşlar hukuk hakkında iki şeyi hatırlar: beni durdurdu mu, anlamlı mıydı. Bu skill hukukun anlamlı olduğu yerdir. Kahve içerken zeki bir iş arkadaşına anlatır gibi yaz, dosyaya not yazar gibi değil. Dürüst özet "sorun yok, imzalayın" ise bunu söyle; temiz bir incelemeyi titiz görünmek için üç paragrafa şişirme.
 
 ---
 
@@ -2821,353 +1987,268 @@ If the honest summary is "this is fine, sign it," say that. Don't pad a clean re
 ---
 name: vendor-agreement-review
 description: >
-  Reference: review of an inbound vendor agreement against the team playbook in
-  `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. Flags deviations, assesses risk, generates
-  specific redline language, and routes to the right approver. Loaded by
-  /commercial-legal:review when a vendor MSA, services agreement, or similar is detected.
+  Referans: gelen tedarikçi/hizmet sözleşmesini `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`
+  playbook'una ve Türk hukukunun emredici sınırlarına (TBK m. 115-116
+  sorumsuzluk, m. 179-182 cezai şart, TTK m. 1530 ödeme süresi, m. 18/3
+  bildirim şekli, FSEK m. 48-52 fikrî haklar, HMK yetki/tahkim) göre inceler;
+  sapmaları bulur, riski iki eksende puanlar, yapıştırılmaya hazır redline
+  yazar ve doğru onaylayıcıya yönlendirir. Çerçeve hizmet sözleşmesi ya da
+  benzeri tespit edildiğinde /commercial-legal:review tarafından yüklenir.
 user-invocable: false
 ---
 
-# Vendor Agreement Review
+# /vendor-agreement-review — Tedarikçi / Hizmet Sözleşmesi İncelemesi
 
-## Matter context
+Sözleşmeyi bu ekibin gerçekten kullandığı playbook'a göre oku, sapan her şartı bul ve avukata her biri için ne yapacağını söyle — "gözden geçirilmesi düşünülebilir" değil, somut redline metniyle. Çıktı avukatın tek geçişte işleyebileceği bir nottur: her sorunun ciddiyeti, iş etkisi, önerilen düzeltmesi ve gerekiyorsa eskalasyonu var.
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/commercial-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+## Matter bağlamı
 
----
+Eklenti ayarında `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/commercial-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/commercial-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
 ## Destination check
 
-Before producing output, check where it's going. If the user has named a destination (a channel, a distribution list, a counterparty, "everyone"), ask whether it's inside the privilege circle. Public channels, company-wide lists, counterparty/opposing counsel, vendors, and clients (for work product) waive the protection. When the destination looks outside the circle, flag it and offer (a) the privileged version for legal only, (b) a sanitized version for the broader channel, or (c) both — don't silently apply a privileged header and then help paste it somewhere the header won't protect it. See the canonical `## Shared guardrails → Destination check` in this plugin's CLAUDE.md.
+Kullanıcı bir hedef söylediyse (kanal, liste, karşı taraf, "herkes") dar gizlilik çevresinde mi diye sor. Avukatın sır saklama yükümlülüğü (Av. K. m. 36) ABD tipi geniş bir belge koruması değildir; karşı tarafa, tedarikçiye ya da şirket geneline giden metin gizliliğini fiilen kaybeder. Çevre dışıysa (a) hukuk için tam sürüm, (b) arındırılmış sürüm ya da (c) ikisini öner. Kanonik kural: `## Shared guardrails → Destination check`.
 
-## Purpose
+## Ön koşul: playbook
 
-Read a vendor agreement against the playbook this team actually uses (in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`), find every term that deviates, and tell the lawyer what to do about each one — with specific redline language, not vague "consider revising."
+**Sözleşmeyi okumadan önce eklenti ayarını ve `company-profile.md`'i oku.** Ayar yoksa ya da yer tutucu taşıyorsa:
 
-The output is a review memo the lawyer can act on in one pass. Every issue has a severity, a business-impact explanation, a proposed fix, and an escalation call if one is needed.
+> Profilinizi henüz yapılandırmamışsınız — playbook pozisyonlarını, eskalasyonu ve üslubu buradan öğreniyorum.
+> - `/commercial-legal:cold-start-interview` çalıştırın (2 dakika), sonra sizin playbook'unuza göre inceleyeyim.
+> - Ya da **"provisional"** deyin; genel varsayılanlarla (Türk hukuku, orta risk iştahı, avukat rolü, playbook yok — yaygın tedarikçi risklerini ilk ilkelerden işaretlerim) incelerim ve her çıktıyı `[PROVISIONAL — profili yapılandırınca size göre ayarlanır]` diye etiketlerim.
 
-## Precondition: load the playbook
+**Provisional mod:** Sınırsız sorumluluk, veri ihlali istisnası yokluğu, tavansız tazmin, bildirimsiz otomatik yenileme gibi yaygın riskleri ilk ilkelerden işaretle; inceleyen notunu ve her bulgu bloğunu `[PROVISIONAL]` ile etiketle; sonuna ekle: "Bu, varsayılanlarla yapılmış genel bir çalışmaydı. Kendi playbook'unuz, hukukunuz ve risk iştahınızla çıktı için `/commercial-legal:cold-start-interview` çalıştırın — 2 dakika."
 
-**Before reading the contract, read `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.** If it's missing or still has placeholders, surface this bounce:
+**Hangi taraftayız?** Karşı taraf mal/hizmet sağlıyorsa alım tarafı; ürününüzü satın alan müşteriyse satış tarafı. Belli değilse (bayilik, ortaklık, gelir paylaşımı) sor: "[[ŞİRKET ADI]] bu sözleşmede hangi tarafta — tedarikçi mi, müşteri mi?" Eşleşen bölümü oku (`### Sales-side playbook` / `### Purchasing-side playbook`), çıktıda yaz. `[Not configured]` ise dur, `/commercial-legal:cold-start-interview --side <side>` öner.
 
-> I notice you haven't configured your practice profile yet — that's how I tailor playbook positions, escalation, and house style to your practice.
->
-> **Two choices:**
-> - Run `/commercial-legal:cold-start-interview` (2 minutes) to configure your profile, then I'll review tailored to YOUR playbook.
-> - Say **"provisional"** and I'll review against generic defaults — US jurisdiction, middle risk appetite, lawyer role, no playbook (flag all common vendor-contract risks from first principles) — and tag every output `[PROVISIONAL — configure your profile for tailored output]` so you can see what I do before committing.
+Playbook doğruluğun kaynağıdır: ekibin standart pozisyonları (piyasa standardı değil, *onların* standardı), daha önce kabul ettikleri geri çekilme pozisyonları, asla kabul etmedikleri, kimin neyi onayladığı ve önce bakılacak tek anlaşma bozucu (`#### The one thing`). Sözleşmede anlaşma bozucu varsa notun başında işaretle ve ayrıntılı incelemeyi durdur.
 
-### Provisional mode
+## Akış
 
-If the user says "provisional," run the review normally using these generic defaults: middle risk appetite, lawyer role, US jurisdiction, no playbook (flag the common vendor-side risks from first principles — unlimited liability, no data-breach carveout, uncapped indemnity, auto-renewal without notice, etc. — rather than matching to configured positions). Tag the reviewer note and every finding block with `[PROVISIONAL]`. At the end of the output, append:
+### Adım 1: Yönlen
 
-> "That was a generic run against default assumptions. Run `/commercial-legal:cold-start-interview` to get output calibrated to YOUR practice — your playbook, your jurisdiction, your risk appetite. 2 minutes."
+Sözleşmeyi bir kez hızla oku:
 
-**Which side?** Before applying the playbook, determine which side the company is on for this contract. Usually obvious: if the counterparty is a vendor/supplier providing goods or services, you're purchasing-side. If the counterparty is a customer buying your product/service, you're sales-side. If it's not obvious (a reseller agreement, a partnership, a revenue share), ask: "Which side is [company] on for this agreement — vendor or customer?" Read the matching playbook section (`### Sales-side playbook` or `### Purchasing-side playbook`) from the config. Note which side in the output so the reviewer knows which playbook was applied. If the matching side is `[Not configured]`, stop and tell the user to run `/commercial-legal:cold-start-interview --side <side>` before this review can proceed.
-
-This skill is typically used for purchasing-side contracts (vendors supplying you), but the side check still applies — a "vendor agreement" could be your own template sent to a vendor as part of a reseller arrangement (sales-side).
-
-The playbook in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` is the source of truth. It tells you:
-- What this team's standard positions are (not market standard — *their* standard)
-- What fallbacks they've accepted before
-- What they never accept
-- Who approves what
-- The one deal-breaker to check first
-
-If the contract has the deal-breaker, flag it at the top of the memo and stop the detailed review. There's no point spending 30 minutes on liability caps if the agreement gives the vendor rights to use customer data for training.
-
-## Workflow
-
-### Step 1: Orient
-
-Read the whole agreement once, fast. Answer:
-
-| Question | Answer |
+| Soru | Cevap |
 |---|---|
-| What kind of agreement is this? | MSA / SaaS subscription / Professional services / License / Other |
-| Who are we? | Customer / Vendor (this plugin assumes customer — flag if not) |
-| Counterparty | Name, and are they a BigCo (won't negotiate) or a startup (will)? |
-| Dollar value | Annual / total contract value if stated |
-| Term | Length, renewal mechanics |
-| Is there a DPA? | Attached / referenced by URL / missing |
-| Is there an order form? | Separate doc or integrated |
+| Sözleşme türü | Çerçeve hizmet / SaaS / proje (eser) / danışmanlık (vekâlet) / lisans / diğer |
+| Biz kimiz | Müşteri / tedarikçi (bu skill genelde müşteri tarafıdır — değilse işaretle) |
+| Karşı taraf | Unvan; büyük kurumsal (müzakere etmez) mi, girişim (eder) mi? |
+| Taraflar tacir mi | Ticari iş (TTK m. 3) → TTK m. 18/3, 22, 1530, 5/A uygulanır |
+| İmza yetkisi | İmza sirküleri / ticaret sicili kaydıyla teyit edildi mi? |
+| Bedel | Yıllık / toplam; para birimi (TL / döviz) |
+| Süre | Uzunluk, yenileme düzeni |
+| Kişisel veri eki | Ekli / bağlantıyla atıf / yok |
+| Sipariş formu | Ayrı belge / gövdede |
+| Dil | Türkçe / yabancı dil / iki dilli (hangi metin esas) |
 
-**Dollar-value handling.** If the main agreement does not state a dollar value (the MSA sets terms but the Order Form carries price, which is typical), **stop and ask** before running escalation math or applying dollar thresholds:
+**Sözleşmenin niteliği.** Türk hukukunda sonuçlar türe göre değişir: eser sözleşmesinde (TBK m. 470) iş sahibi eser tamamlanmadan, yapılan kısmın karşılığını ödeyip yüklenicinin bütün zararını gidererek sözleşmeyi feshedebilir (TBK m. 484); vekâlet ve kanunda düzenlenmemiş iş görme sözleşmelerinde (TBK m. 502/2) taraflar her zaman sona erdirebilir, uygun olmayan zamanda sona erdiren zararı giderir (TBK m. 512). "Süre bitmeden feshedilemez" kaydının vekâlet niteliğindeki ilişkide geçerliliği **tartışmalı — içtihadı kontrol et**. Niteliği nota yaz.
 
-> The MSA itself doesn't state an annual contract value. The Order Form carries the price. Your escalation threshold is $[X from the matrix]. Before I route this, I need the ACV. Options:
-> 1. Paste the Order Form value (preferred — I'll use it for routing and the memo).
-> 2. Tell me if this is above or below $[threshold] and I'll route accordingly; the memo will flag that the routing assumed [above/below threshold] without an ACV in hand.
-> 3. Route conservatively to the higher approver regardless — safer for a review you haven't priced.
+**Bedel belirsizse dur ve sor.** Çerçeve sözleşme bedeli göstermiyor, sipariş formu gösteriyorsa (tipik), eskalasyon eşiğini uygulamadan önce:
 
-Do NOT silently assume a value and then use the assumed value to drive routing. The assumption propagates into the approval call, which is a place the review shouldn't be guessing.
+> Çerçeve sözleşme yıllık bedeli göstermiyor; bedel sipariş formunda. Eskalasyon eşiğiniz [matristen X]. Yönlendirmeden önce bedele ihtiyacım var: (1) sipariş formundaki bedeli yapıştırın (tercih), (2) eşiğin altında mı üstünde mi söyleyin — not, bedel görülmeden bu varsayımla yönlendirildiğini yazar, (3) her hâlükârda üst onaylayıcıya yönlendirelim.
 
-**DPA-by-reference handling.** If the main agreement incorporates a DPA "available at [URL]" or "as set forth at [URL]" or similar by reference, the DPA is part of the contract but is not in front of you. Note it explicitly in the Orient table and in the review memo:
+Varsayılan bir bedeli sessizce yönlendirmede kullanma.
 
-> This agreement incorporates a DPA by URL reference at `[URL]`. The DPA carries the real data terms — subprocessor rights, breach-notification timing, data-return mechanics, standard contractual clauses, audit rights. Without reading it, the data-protection analysis below is partial. Offer to route the DPA to `/privacy-legal:dpa-review` (if installed) for a separate review, or fetch and read it inline before completing Step 3's data-protection analysis.
+**Kişisel veri eki bağlantıyla atıfla eklenmişse** ("[URL]'de yer alan veri işleme eki"): ek sözleşmenin parçasıdır ama önünde değildir. Tabloda ve notta açıkça yaz; veri koruma analizinin kısmi olduğunu belirt ve `/privacy-legal:dpa-review` öner (yüklüyse: "Eki hazır olduğunuzda `/privacy-legal:dpa-review`'a vereyim mi? Alt işleyen, yurt dışı aktarım ve ihlal bildirimini o yakalar."). Eksik ek ile okunmamış eki ayrı etiketle.
 
-If the user is installed with `privacy-legal`, explicitly offer:
+### Adım 2: Anlaşma bozucu kontrolü
 
-> Want me to hand the DPA URL to `/privacy-legal:dpa-review` once you're ready? That skill is built for the DPA work and will catch subprocessor / SCC / breach-notification issues that this skill only flags at the gate.
-
-Do not silently proceed as if the DPA were absent when it is incorporated by reference. A missing DPA and an unread DPA are different gaps — label them differently.
-
-### Step 2: Deal-breaker check
-
-Check the "one thing" from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` first. If present:
+`#### The one thing`'i önce kontrol et. Varsa:
 
 ```markdown
-## ⛔ DEAL-BREAKER PRESENT
+## ⛔ ANLAŞMA BOZUCU VAR
 
-**Section [X.X]** contains [the deal-breaker]. Per the team playbook, this is a
-hard no. Recommend:
+**Madde [X.X]** [anlaşma bozucu]yu içeriyor. Playbook'a göre kesin hayır. Öneri:
+- [ ] İtiraz — [somut alternatif metin] öner
+- [ ] Vazgeç — karşı taraf geri adım atmazsa imzalamıyoruz
 
-- [ ] Push back — propose [specific alternative language]
-- [ ] Walk — if counterparty won't move, we don't sign
-
-Detailed review below is provided for completeness but is moot unless this is
-resolved.
+Aşağıdaki ayrıntılı inceleme bütünlük için verilmiştir; bu çözülmedikçe anlamsızdır.
 ```
 
-### Step 3: Term-by-term comparison
+### Adım 3: Madde madde karşılaştırma
 
-For each playbook category in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, find the corresponding contract section and compare.
-
-**For each deviation, produce:**
+Eklenti ayarındaki her playbook kategorisi için karşılık gelen maddeyi bul ve karşılaştır. Her sapma için:
 
 ```markdown
-### [Section X.X]: [Issue name]
+### [Madde X.X]: [Konu]
 
-**Playbook says:** [our standard position, quoted from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`]
-
-**Contract says:**
-> "[exact quote from the contract]"
-
-**Gap:** [Missing term | Weaker than standard | Weaker than fallback | Non-standard structure | Unacceptable]
-
-**Legal risk:** 🔴 Critical | 🟠 High | 🟡 Medium | 🟢 Low
-**Business friction:** 🔴 Blocks deals | 🟠 Slows deals | 🟡 Confuses customers | 🟢 Invisible
-
-**Why it matters:** [one or two sentences in plain English — what goes wrong
-for the business if this term stays as-is]
-
-**Proposed redline:**
-> "[the specific replacement language — ready to paste into a markup]"
-
-**If they won't move:** [the fallback from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, or "escalate to [person]"
-if no fallback exists]
+**Playbook:** [standart pozisyon, eklenti ayarından alıntı]
+**Sözleşme:**
+> "[birebir alıntı]"
+**Fark:** [Eksik şart | Standarttan zayıf | Geri çekilme pozisyonundan zayıf | Standart dışı yapı | Kabul edilemez]
+**Türk hukuku sınırı:** [varsa — madde atfıyla; yoksa "yok"]
+**Hukuki risk:** 🔴 Kritik | 🟠 Yüksek | 🟡 Orta | 🟢 Düşük
+**İş sürtünmesi:** 🔴 Anlaşmayı durdurur | 🟠 Yavaşlatır | 🟡 Kafa karıştırır | 🟢 Görünmez
+**Neden önemli:** [bir iki cümle, sade dille]
+**Önerilen redline:**
+> "[yapıştırılmaya hazır metin]"
+**Kabul etmezlerse:** [playbook geri çekilme pozisyonu ya da "[kişi]'ye eskalasyon"]
 ```
 
-**Severity calibration:**
-
-| Level | Means |
+| Düzey | Anlamı |
 |---|---|
-| 🔴 Critical | Don't sign without fixing. A term on the team's "never accept" list in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`, or a deal-breaker. |
-| 🟠 High | Strongly push; escalate if they won't move. A term outside the playbook's stated fallback range. |
-| 🟡 Medium | Push in first round; accept if it's the last open item. A term inside the fallback range but short of the standard position. |
-| 🟢 Low | Note it, don't spend capital. A term the playbook explicitly tolerates, or a purely stylistic deviation. |
+| 🔴 Kritik | Düzeltilmeden imzalanmaz. "Asla kabul etme" listesinde ya da anlaşma bozucu; ya da Türk hukukunda kesin hükümsüz bir kayda dayanılıyor. |
+| 🟠 Yüksek | Güçlü itiraz; geri adım yoksa eskalasyon. Geri çekilme aralığının dışında. |
+| 🟡 Orta | İlk turda itiraz; son açık nokta ise kabul. Aralık içinde ama standardın altında. |
+| 🟢 Düşük | Not et, sermaye harcama. Playbook'un açıkça tolere ettiği ya da üslup farkı. |
 
-Severity is always applied *against `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`*. If a term doesn't map cleanly to a playbook position, ask the user which bucket it belongs in and offer to record the answer in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`.
+Ciddiyet her zaman eklenti ayarına göre verilir. Bir şart hiçbir pozisyona oturmuyorsa kullanıcıya hangi kovaya ait olduğunu sor ve cevabı ayara kaydetmeyi öner.
 
-#### Liability cap decision procedure
+#### Türk hukukunun emredici sınırları (her incelemede tara)
 
-**The cap amount is the least important part of the cap.** When reviewing the limitation-of-liability clause, do not produce a single "check liability cap against playbook" line item. Work through the four dimensions below and state each one explicitly in the finding:
+| Kloz | Sınır / kural | Dayanak |
+|---|---|---|
+| Sorumluluk istisnası ve tavan | Ağır kusurdan önceden sorumsuzluk kesin hükümsüz; izinle yürütülen uzmanlık hizmetinde hafif kusurdan sorumsuzluk da kesin hükümsüz. Tavanın da bu sınıra tabi olduğu yerleşik görüştür — doktrini kontrol et | TBK m. 115/1, 115/3 |
+| Yardımcı kişiler (alt yüklenici) | Borçlu yardımcısının işi yürütürken verdiği zarardan sorumludur; bu sorumluluk önceden kaldırılabilir, izinle yürütülen uzmanlık hizmetinde kaldırılamaz. Ağır kusur sınırının burada da uygulanıp uygulanmadığı **tartışmalı** | TBK m. 116 |
+| "Dolaylı zarar" istisnası | Kanunda "dolaylı / netice zararı" tanımı yok; sorumluluğun kapsamına haksız fiil hükümleri kıyasen uygulanır. Kâr kaybı, veri kaybı, itibar kaybı, üçüncü kişi talepleri gibi kalemleri tek tek say; tanımsız istisnanın kapsamı **tartışmalı** | TBK m. 112, 114 |
+| Cezai şart | Seçimlik/ifaya eklenen ceza; zarar olmasa da ödenir; aşan zarar için kusur ispatı; hâkim aşırıyı indirir — tacir borçlu indirim isteyemez | TBK m. 179, 180, 182; TTK m. 22 |
+| Ödeme süresi (alım tarafında kritik) | Ticari işletmeler arası mal/hizmet tedarikinde sözleşmesel ödeme süresi en fazla 60 gün; açık anlaşmayla ve alacaklı aleyhine ağır haksızlık yaratmamak kaydıyla daha uzun olabilir, ama alacaklı KOBİ ya da borçlu büyük işletmeyse 60 günü aşamaz. Süresinde ödemeyen ihtarsız temerrüde düşer; gecikme faizini ya da geç ödeme zararından sorumluluğu kaldıran/sınırlayan hüküm geçersiz; oran ve asgari giderimi TCMB her yıl ocakta ilan eder (güncel oranı teyit et) | TTK m. 1530/2, 1530/5-7 |
+| Temerrüt ve faiz | Belirli vade gününün geçmesiyle temerrüt; ticari işlerde faiz oranı serbest; sözleşmede oran yoksa kanuni/avans oranı (TCMB'ye bağlı, 3095 m. 1 7589 s.K. ile 2026'da değişti — güncel oranı teyit et). Sözleşmesel temerrüt faizi sınırının (TBK m. 120/2) tacirler arasında uygulanıp uygulanmadığı **tartışmalı** | TBK m. 117/2, 120; TTK m. 8/1; 3095 m. 1-2 |
+| Döviz | "Aynen ödeme" kaydı yoksa TL ile ödenebilir; iki Türkiye yerleşiği arasında döviz bedel için 32 sayılı Karar mevzuatını ayrıca çek | TBK m. 99 |
+| Fesih ve temerrüt | İfasına başlanmış sürekli edimli sözleşmede borçlu temerrüdünde alacaklı feshedip erken sona ermeden doğan zararını isteyebilir | TBK m. 126 |
+| Fesih / ihtar bildirimi | Tacirler arasında temerrüt, fesih, dönme ihbarları noter, taahhütlü mektup, telgraf ya da güvenli e-imzalı KEP ile | TTK m. 18/3 |
+| Mücbir sebep | Kanunda tanım yok: borçlunun sorumlu olmadığı imkânsızlıkta borç sona erer, gecikmeksizin bildirim yükümlülüğü var; öngörülemeyen olağanüstü durumda uyarlama, olmazsa dönme/fesih. Sözleşmede olay listesi, bildirim süresi, askı ve fesih eşiği ara | TBK m. 136, 138 |
+| Alacağın devri / sözleşmenin devri | Sözleşmeyle devir yasaklanabilir (yasak içermeyen yazılı borç tanımasına güvenen devralan hariç); devir yazılı. Sözleşmenin devri üç taraflı ya da diğer tarafın önceden izni/onayıyla; devredilen sözleşmenin şekline tabi. "Kontrol değişikliği" kanunda yok — sözleşmede ara | TBK m. 183, 184, 205 |
+| Tazmin (indemnity) | Türk hukukunda kanuni karşılığı yok; sözleşmesel tazmin taahhüdü ya da üçüncü kişinin fiilini üstlenme olarak nitelendirilebilir — **tartışmalı**. Kapsam, bildirim süresi, savunmanın yönetimi, sulh yetkisi, tavanla ilişki açık yazılmalı; tazmin edilenin kendi ağır kusurunu kapsayan kayıt TBK m. 115/1 riski taşır | TBK m. 128, 115 |
+| Fikrî haklar / teslim edilenler | Bilgisayar programı eserdir. İşçilerin işlerini görürken meydana getirdiği eserdeki haklar işverence kullanılır → hak önce tedarikçide toplanır, müşteriye ancak devirle geçer. Mali hak devri/ruhsatı yazılı olmalı ve haklar ayrı ayrı gösterilmeli; henüz meydana getirilmemiş eser üzerindeki tasarruf batıl, ama devir taahhüdü geçerli → "teslimde devreder ve devri teslim tutanağıyla teyit eder" kurgusu; gelecekteki tüm eserlere ilişkin taahhüt 1 yıl önceden ihbarla feshedilebilir | FSEK m. 2/1-1, 18/2, 48, 50, 52 |
+| Zamanaşımı | Genel 10 yıl; dönemsel edimler, vekâlet ve (ağır kusur hariç) eser sözleşmesi alacakları 5 yıl; süreler sözleşmeyle değiştirilemez | TBK m. 146, 147, 148 |
+| Matbu koşullar | Tedarikçinin tek başına hazırlayıp sunduğu koşullar GİK: bilgilendirme + kabul yoksa yazılmamış sayılır, belirsizlik düzenleyen aleyhine, tek yanlı değiştirme yetkisi yazılmamış, dürüstlüğe aykırı aleyhe hüküm konulamaz | TBK m. 20-25 |
+| Yetki / tahkim | Yetki sözleşmesi yalnız tacirler ya da kamu tüzel kişileri arasında, yazılı, ilişki belirli/belirlenebilir; tahkim yazılı. Yabancılık unsuru varsa milletlerarası tahkim (MTK) ve yabancı mahkeme yetkisi (MÖHUK m. 47) → `/commercial-legal:governing-law-review` | HMK m. 17-18, 407, 412; MTK m. 1-2, 4; MÖHUK m. 24, 47 |
+| Arabuluculuk | Ticari davalarda para alacağı, tazminat, itirazın iptali, menfi tespit ve istirdat davalarında dava şartı; "önce müzakere, sonra dava" kaydı bunun yerine geçmez | TTK m. 5/A |
+| İmza ve teminat | Güvenli e-imza ıslak imzayla eşdeğer; resmî şekle tabi işlemler ve (banka teminat mektubu ile yerleşik sigorta şirketinin kefalet senedi dışındaki) teminat sözleşmeleri güvenli e-imzayla yapılamaz → ana şirket garantisi/kefalet varsa ıslak imza ve kefalete özgü şekil şartlarını ayrıca çek | 5070 m. 5 |
+| Dil | Türk şirketleri Türkiye'deki sözleşmelerini Türkçe tutmakla yükümlü; yabancı şirket için yükümlülük Türk kuruluşlarla ilişkisine özgü. Yalnız yabancı dildeki sözleşmenin sonucu **tartışmalı — içtihadı kontrol et** → iki dilli metin ve "Türkçe metin esastır" ya da en az Türkçe nüsha öner | 805 m. 1-2 |
+| Kişisel veri | Veri işleyen sözleşmesi, güvenlik ve yurt dışı aktarım bu skill'in konusu değil | → `/privacy-legal:dpa-review` |
+| Damga vergisi | Oran ve tutar yazma; nüsha, imza yeri, tutarın belirlenmesi (profilde `#### Stamp duty` varsa ona göre) | → `/tax-legal` skill'leri |
 
-1. **Direct vs. indirect/consequential damages.** Does the cap apply to ALL liability, or only direct damages? A 12-month cap on direct damages with uncapped consequential damages is a completely different position than a 12-month aggregate cap. State both treatments explicitly.
+#### Sorumluluk tavanı karar prosedürü
 
-2. **The cap base — quote it verbatim.** "12-month cap" could mean: (a) fees paid in the 12 months preceding the claim, (b) fees payable in the current 12-month period, (c) fees over the last 12 months of usage, (d) fees under the current order form, (e) total fees ever paid. These can differ by an order of magnitude. Quote the exact language. If ambiguous, flag it: "Cap base is ambiguous — `[the quoted language]` — could mean [X] or [Y]. Confirm before signing."
+**Tavan tutarı tavanın en önemsiz parçasıdır.** Tek satırlık "tavanı playbook'la karşılaştır" yazma; dört boyutu bulguda açıkça yaz:
 
-3. **Cap-carveout interaction.** A $100K cap with uncapped indemnity for data breach, IP, and confidentiality is functionally uncapped for the claims that actually arise in SaaS disputes. Enumerate what sits ABOVE the cap (the carveouts), what sits BELOW (what's actually capped), and assess whether the capped surface is meaningful: "The cap covers [general contract breach]. Data breach, IP indemnity, and confidentiality are carved out and uncapped. For this vendor's risk profile, the capped surface is [meaningful / nominal]."
+1. **Doğrudan / dolaylı zarar.** Tavan tüm sorumluluğa mı, yalnız doğrudan zarara mı? Doğrudan zararda 12 aylık tavan + tavansız dolaylı zarar ile 12 aylık toplam tavan bambaşka pozisyonlardır. Türk hukukunda "dolaylı zarar"ın kanuni tanımı olmadığından istisna edilen kalemlerin sayılıp sayılmadığını ayrıca yaz.
+2. **Tavan tabanı — birebir alıntıla.** "12 aylık tavan" şunlardan biri olabilir: (a) talepten önceki 12 ayda ödenen bedel, (b) içinde bulunulan 12 aylık dönemde ödenecek bedel, (c) son 12 aylık kullanım bedeli, (d) güncel sipariş formu bedeli, (e) bugüne kadar ödenen toplam. Belirsizse: "Tavan tabanı belirsiz — `[alıntı]` — [X] ya da [Y] anlamına gelebilir. İmzadan önce teyit edin." Döviz cinsinden tavanda kur ve tarih.
+3. **Tavan–istisna etkileşimi.** Veri ihlali, fikrî hak tazmini ve gizlilik tavansızsa, gerçek uyuşmazlıklar bakımından sözleşme fiilen tavansızdır. Tavanın ÜSTÜNDE kalanları (istisnalar), ALTINDA kalanları sırala ve tavanlı alanın anlamlı mı göstermelik mi olduğunu yaz. Kast ve ağır kusur her hâlükârda tavan dışında kalır (TBK m. 115/1) — bunu playbook "istisnası" gibi sayma.
+4. **Boyut başına playbook.** Profil şu pozisyonları tutmalı: doğrudan tavan (bedelin katı), dolaylı zarar (hariç / tavanlı / tavansız), tavan üstü kabul edilebilir istisnalar, kabul edilebilir tavan tabanı. Tek bir "standart pozisyon" varsa not et: "Playbook'unuzda tek tavan pozisyonu var — doğrudan/dolaylı/istisna/taban olarak bölmeyi düşünün."
 
-4. **Your playbook position per dimension.** The practice profile should have positions for: direct cap (multiple of fees), indirect damages (excluded / capped / uncapped), carveout list (what's acceptable above the cap), and cap base (which definition you'll accept). If the playbook has one "standard position" field, note: "Your playbook has a single cap position — consider splitting into direct/indirect/carveouts/base for more precise review."
+#### Yargı çevresi farkı
 
-#### Jurisdiction delta check
+Playbook tek bir hukuk tercihini her yere uygular; geçerlilik hukuka göre değişir. Sözleşme Türk hukuku dışında bir hukuka tabiyse yukarıdaki tablo o hukuka aktarılamaz. Kural ezberden yazılmaz; araçla çekilir ve `/commercial-legal:governing-law-review` ile derinleştirilir:
+- İngiltere: `uk_search_legislation(query="Unfair Contract Terms Act 1977")` → `uk_get_section`
+- Almanya: `de_gesetz_ara` / `de_norm_getir` (ör. BGB § 307 standart şart denetimi)
+- AB: `eu_search_eu_law(query="late payment in commercial transactions")`
+- Hollanda `nl_`, Polonya `pl_`, Avusturya `at_`, İrlanda `ie_`, Finlandiya `fi_`, İspanya `es_`, Japonya `jp_`, Azerbaycan `az_`
+- ABD: yalnız kuruluysa üçüncü taraf CourtListener bağlayıcısı (`courtlistener-rehberi.md`)
+- Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-**The playbook applies one governing-law preference globally. Enforceability varies materially.** Check the contract's actual governing law against the top divergences before accepting playbook positions at face value:
+Çektiğin kurala araç etiketi koy (`[ArthurLegal UK — … — GG.AA.YYYY]`); çekemediğini "UYARI: veri çekilemedi, teyidiniz gerekli: <aracın source_url'si ya da resmî giriş sayfası>" diye bırak. Karar Türkiye'de icra edilecekse (yabancı mahkeme ya da hakem kararı) bunu da işaretle → governing-law-review Adım 5.
 
-- **Non-solicits/non-competes:** Unenforceable in CA (Bus. & Prof. Code §16600). Restricted in many EU jurisdictions. Enforceable with limitations elsewhere. `[jurisdiction — verify]`
-- **Auto-renewal:** CA Bus. & Prof. Code §17600-17606, NY GBL §527-a, IL 815 ILCS 601 have specific consumer/B2B notice requirements. Other states vary. `[jurisdiction — verify]`
-- **Liability exclusions:** EU and UK unfair contract terms rules (UCTA 1977, Consumer Rights Act 2015) constrain consumer exclusions. Some US states limit exclusion of gross negligence or willful misconduct. `[jurisdiction — verify]`
-- **Indemnification:** Some states void indemnification for the indemnitee's own negligence. `[jurisdiction — verify]`
-- **Confidentiality term:** Some jurisdictions limit "perpetual" confidentiality to a reasonable period. `[jurisdiction — verify]`
+### Adım 4: Lehte şartlar ve eksikler
 
-When the playbook position conflicts with the contract's governing-law enforceability, flag: "Your playbook prefers [X], but this contract is governed by [Y] law where [X] is [unenforceable / restricted / subject to statutory override]. `[jurisdiction — verify]`"
+**Standardımızdan iyi:** tedarikçinin istediğimizden fazlasını verdiği şartlar — başka yerde taviz gerekirse pazarlık malzemesi.
+**Hiç yok:** sık eksikler — devir yasağı, denetim hakkı, mücbir sebep, sigorta, kişisel veri eki, TTK m. 18/3'e uygun tebligat/KEP adresleri, Türkçe esas metin, arabuluculuk ve yetki düzeni.
 
-**Cross-border connector teyidi (v1.6.0).** Bir `[jurisdiction — verify]` etiketini boş bırakma — uygulanacak hukuk İngiliz veya ABD hukukuysa ilgili statüyü fiilen çek:
-- **İngiliz hukuku** → `legislation.gov.uk` WebFetch (örn. UCTA 1977, Consumer Rights Act 2015, Arbitration Act 1996). Rehber: `references/uk-legislation-rehberi.md`. Atıf: `[UK Legislation — <tür yıl> s.<madde> — GG.AA.YYYY]`.
-- **ABD federal hukuku** → GovInfo WebFetch / WebFetch. Rehber: `references/us-legislation-rehberi.md`. Atıf: `[US Legislation — GovInfo — <atıf> — GG.AA.YYYY]`.
-- **ABD içtihatı** (örn. CA §16600 enforceability) → CourtListener REST + citation verification. Rehber: `references/courtlistener-rehberi.md`. Atıf: `[CourtListener — <mahkeme> — <citation> — GG.AA.YYYY]`.
-- **ABD eyalet statüsü** (CA/NY/IL) connector kapsamında değil → web search + `[verify]`.
+### Adım 5: Onay yönlendirmesi
 
-Türkiye'de icra ayağı varsa (yabancı mahkeme kararı tanıma-tenfiz veya yabancı hakem kararı), bunu da flag et — bkz. `references/karsilastirmali-hukuk-rehberi.md`. Çekemediğin yabancı hukuku `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` olarak bırak; connector etiketini yalnız fiilen çektiğinde kullan.
-
-### Step 4: Favorable terms and gaps
-
-Two short lists:
-
-**Better than our standard:** Terms where the vendor gave us more than we'd ask for. Note these — they're trade bait if you need to give something up elsewhere.
-
-**Missing entirely:** Standard provisions that just aren't there. Most common: assignment restrictions, audit rights (if we want them), force majeure, insurance requirements.
-
-### Step 5: Escalation routing
-
-Check the escalation matrix in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` against:
-- Contract dollar value
-- Presence of any 🔴 critical issues
-- Any automatic-escalation triggers (unlimited liability, IP assignment, etc.)
-
-State clearly who needs to approve this:
-
-```markdown
-## Approval routing
-
-Based on [dollar value / issue severity], this agreement requires:
-
-- [ ] **[Name/role]** approval — [reason]
-- [ ] **Business owner sign-off** on [specific commercial term they should weigh in on]
-
-**Recommended next step:** [Send redlines to counterparty | Escalate to GC before
-responding | Get business input on commercial term X before legal responds]
-```
-
-**Before proceeding to send redlines to the counterparty:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the Role is Non-lawyer:
-
-> Sending redlines is a legal act — the counterparty will treat every edit as our negotiating position. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> [Generate a 1-page summary: counterparty, agreement type, the specific redlines proposed, the playbook positions behind each, the fallbacks, and what to ask the attorney before the package leaves.]
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
-
-Do not proceed past this gate without an explicit yes.
-
-## Redline granularity
-
-**Edit at the smallest possible granularity.** A redline is a negotiation artifact, not a rewrite. Wholesale clause replacement signals "we threw out your drafting" — it's aggressive, it forces the counterparty to re-read the whole clause, and it discards the parts of their drafting that were fine. Surgical redlines — strike a word, insert a phrase, restructure a subclause — signal "we have specific asks" and are faster to read, understand, and accept.
-
-Default to the smallest edit that achieves the playbook position:
-- Replace a **word** before a phrase. ("twelve (12)" → "twenty-four (24)")
-- Replace a **phrase** before a sentence. ("paid by the Buyer" → "paid and payable by the Buyer")
-- Restructure a **subclause** before replacing the sentence. (Add "(a)" and "(b)" to split a compound condition.)
-- Replace a **sentence** before replacing the clause.
-- Only replace a **whole clause** when the counterparty's version is so far from your position that surgical edits would be harder to read than a fresh draft — and when you do, say so in the transmittal: "We've replaced §8.2 rather than marking it up because the changes were extensive. Happy to walk you through the delta."
-
-When in doubt, smaller. A client who receives a surgical redline trusts that you read carefully. A client who receives a wholesale replacement wonders whether you read at all.
-
-### Step 6: Assemble the memo
-
-Prepend the work-product header from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` `## Outputs` (it differs by user role — see `## Who's using this`).
-
-This memo and the underlying agreement may be privileged, confidential, or both. The output inherits that status from the source. Distribute only within the privilege circle; mark and store it where privileged materials live; strip the work-product header before any external delivery (e.g., counterparty redlines, stakeholder summaries).
-
-The playbook positions applied below reflect the jurisdiction recorded in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` → `Governing law and venue`. Legal rules and enforceability vary materially by jurisdiction. If this deal implicates a different governing law or a choice-of-law question, flag it in the memo — the analysis may not transfer as written.
-
-> **No silent supplement.** If a research query to the configured legal research tool returns few or no results for a rule the memo needs (enforceability of a limitation clause, indemnity scope, governing-law choice), report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The search returned [N] results from [tool]. Coverage appears thin for [rule / jurisdiction]. Options: (1) broaden the search query, (2) try a different research tool, (3) search the web — results will be tagged `[web search — verify]` and should be checked against a primary source before relying, or (4) flag as unverified and stop. Which would you like?" A lawyer decides whether to accept lower-confidence sources.
->
-> **Source attribution.** Where the memo cites a statute, regulation, or case, tag the citation: `[Westlaw]`, `[statute / regulator site]`, or the MCP tool name for citations retrieved from a legal research connector; `[web search — verify]` for web-search citations; `[model knowledge — verify]` for citations recalled from training data; `[user provided]` for citations from the counterparty draft or house files. Citations tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags.
+Eklenti ayarındaki eskalasyon matrisini sözleşme bedeli, 🔴 sorunların varlığı ve otomatik eskalasyon tetikleyicilerine (sınırsız sorumluluk, fikrî hak devri vb.) karşı kontrol et:
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs]
+## Onay yönlendirmesi
 
-# Vendor Agreement Review: [Counterparty] [Agreement Type]
+[Bedel / ciddiyet]'e göre bu sözleşme şunları gerektirir:
+- [ ] **[İsim/rol]** onayı — [neden]
+- [ ] **İş birimi sahibi** onayı — [tartması gereken ticari şart]
 
-**Reviewed:** [date]
-**Contract value:** $[amount] / [term]
-**Our role:** Customer
-
----
-
-## Bottom line
-
-[Two sentences. Can we sign this? What has to change first?]
-
-**Issues (legal risk):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
-**Issues (business friction):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
-
-**Approval needed from:** [name]
-
----
-
-## Deal-breaker check
-
-[✅ Clear | ⛔ Present — see above]
-
----
-
-## Issues by severity
-
-[All the deviation blocks from Step 3, grouped Critical → Low]
-
----
-
-## Favorable terms
-
-[list]
-
-## Missing provisions
-
-[list]
-
----
-
-## Approval routing
-
-[from Step 5]
-
----
-
-## Redline package
-
-[If requested: consolidated markup-ready language for all proposed changes]
+**Önerilen sonraki adım:** [Redline'ı karşı tarafa gönder | Cevaptan önce GC'ye eskalasyon | Hukuk cevap vermeden önce X ticari şartı için iş biriminin görüşünü al]
 ```
 
-## Integration: [CLM]
+**Redline'ı karşı tarafa göndermeden önce** `## Who's using this` oku. Rol avukat değilse:
 
-If a [CLM] MCP is connected, after the review:
+> Redline göndermek hukuki bir adımdır — karşı taraf her değişikliği müzakere pozisyonumuz sayar. Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz bir sayfalık özet: karşı taraf, sözleşme türü, önerilen redline'lar ve arkalarındaki playbook pozisyonları, geri çekilme pozisyonları, paket çıkmadan avukata sorulacaklar. Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
 
-- Check if this counterparty already has agreements with us (may inform negotiating posture — "we already gave them 24-month cap on the last deal")
-- Pull the workflow template that matches this agreement type
-- Offer to create the [CLM] record with the review memo attached and approvers pre-routed
+Açık "evet" olmadan geçme.
 
-## Integration: DocuSign
+## Redline inceliği
 
-If DocuSign MCP is connected and the agreement is ready to sign (all greens or all issues accepted), offer to:
-- Generate the envelope
-- Route to signers in the right order per the escalation matrix
+Redline müzakere belgesidir, yeniden yazım değil. Toptan madde değişikliği "yazdığınızı çöpe attık" der, karşı tarafı tüm maddeyi yeniden okumaya zorlar ve iyi kısımları da atar. En küçük düzeltme: kelime → ifade ("Alıcı tarafından ödenen" → "Alıcı tarafından ödenen ve ödenecek") → alt bent ((a)/(b) ile ayır) → cümle → ancak gerekirse tüm madde; o durumda ileti notunda söyle: "8.2'yi değişiklikler kapsamlı olduğu için işaretlemek yerine yeniden yazdık; farkı birlikte geçebiliriz." Şüphede, daha küçük.
 
-Do **not** send anything for signature without explicit instruction. "Ready to sign" is the lawyer's call, not yours.
+### Adım 6: Notu derle
 
-**Before generating a signature envelope or routing for countersignature:** Read `## Who's using this` in `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md`. If the Role is Non-lawyer:
+Başa eklenti ayarı `## Outputs` → üst başlığı koy (role göre). Not ve sözleşme gizli olabilir; çıktı kaynağın statüsünü devralır. Yalnız dar çevrede dağıt; dışa giden teslimlerde (karşı taraf redline'ı, iş birimi özeti) başlığı çıkar. Başlık tek başına koruma yaratmaz.
 
-> This step has legal consequences (signing binds the company to the whole agreement). Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
->
-> [Generate a 1-page summary: counterparty, contract value, the issues found and how they resolved, any risk the lawyer accepted, and what to ask the attorney before envelope goes out.]
->
-> If you need to find an attorney, solicitor, barrister, or other authorised legal professional: contact your professional regulator (state bar in the US, SRA/Bar Standards Board in England & Wales, Law Society in Scotland/NI/Ireland/Canada/Australia, or your jurisdiction's equivalent) for a referral service.
+Uygulanan pozisyonlar eklenti ayarındaki `Governing law and venue`'ya göredir; farklı hukuk ya da hukuk seçimi sorusu varsa notta işaretle.
 
-Do not proceed past this gate without an explicit yes.
+- **Sessiz tamamlama yok:** Araç gereken bir kural için az sonuç dönerse dur: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) burada dur ve avukat teyidine işaretle."
+- **Kaynak etiketi:** `[ArthurLegal TR — 6098 m. X — GG.AA.YYYY]`, `[web — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`; `doğrula` etiketliler önce kontrol edilir; etiketleri silme.
 
-## Output formats
+```markdown
+[ÜST BAŞLIK — profil ## Outputs]
 
-**Full memo (default):** As above. Goes in the [CLM] record or the Drive folder from `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` house-style section.
+# Tedarikçi Sözleşmesi İncelemesi: [Karşı taraf] [Sözleşme türü]
 
-**Slack-sized summary:** Two lines and a link. For when someone asks "is this okay?" in a channel.
+**İnceleme:** [GG.AA.YYYY]   **Bedel:** [tutar ve para birimi] / [süre]   **Rolümüz:** [Müşteri / Tedarikçi]
+**Playbook:** [Satış / Alım tarafı]   **Taraflar:** [tacir–tacir]   **Nitelik:** [eser / vekâlet / karma]   **Hukuk / yargı yeri:** [...]
+
+## ⚠️ İnceleyen notu
+- **Kaynaklar:** ArthurLegal MCP (`tr_`) — [madde sayısı]; doğrulanamayan: [liste]
+- **Tartışmalı noktalar:** [liste]
+- **Eksik belge:** [sipariş formu / veri eki (atıfla, okunmadı) / yok]
+
+## Sonuç
+[İki cümle: imzalanabilir mi, önce ne değişmeli?]
+**Sorunlar (hukuki risk):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+**Sorunlar (iş sürtünmesi):** [N]🔴 [N]🟠 [N]🟡 [N]🟢
+**Onay:** [isim]
+
+## Anlaşma bozucu kontrolü
+[✅ Temiz | ⛔ Var — yukarıda]
+
+## Ciddiyete göre sorunlar
+[Adım 3 blokları, Kritik → Düşük]
+
+## Lehte şartlar
+## Eksik hükümler
+## Onay yönlendirmesi
+## Redline paketi
+[İstenirse: tüm değişiklikler için işaretlemeye hazır toplu metin — iç gerekçe olmadan]
+```
+
+## Entegrasyonlar
+
+**[CLM]** bağlıysa: karşı tarafla önceki sözleşmelere bak ("geçen sefer 24 aylık tavan verdik"); bu türe uyan iş akışı şablonunu çek; not ekli ve onaylayıcıları atanmış kayıt aç.
+
+**E-imza (DocuSign vb.)** bağlıysa ve sözleşme imzaya hazırsa zarf oluşturmayı ve imzacıları matris sırasına göre yönlendirmeyi öner. Açık talimat olmadan hiçbir şeyi imzaya gönderme; "imzaya hazır" kararı avukatındır. Platformun imzası güvenli e-imza değilse (5070 m. 5) bunu ve teminat sözleşmesi varsa ıslak imza gereğini not et.
+
+**Zarf oluşturmadan ya da karşı imzaya yönlendirmeden önce** `## Who's using this` oku. Rol avukat değilse:
+
+> Bu adımın hukuki sonucu var: imza şirketi sözleşmenin tamamına bağlar. Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz özet: karşı taraf, bedel, bulunan sorunlar ve nasıl çözüldükleri, avukatın kabul ettiği riskler, zarf çıkmadan sorulacaklar. Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
+
+Açık "evet" olmadan geçme.
+
+## Çıktı biçimleri
+
+- **Tam not (varsayılan):** yukarıdaki gibi; [CLM] kaydına ya da `## House style` klasörüne.
+- **Kanal özeti:** iki satır ve bağlantı — `[Karşı taraf] [tür] — DÜZELTME GEREKLİ. 1🔴 (sınırsız sorumluluk m. 8.2), 2🟠. Tam inceleme: [bağlantı]. [GC] onayı gerekli.`
+- **Redline belgesi:** istenirse izlenen değişikliklerle .docx (docx skill'i); her değişikliğin yorumu playbook pozisyonuna atıf yapar.
+
+## ArthurLegal MCP (`tr_`)
 
 ```
-[Counterparty] [type] — NEEDS WORK. 1🔴 (uncapped liability §8.2), 2🟠. Full review: [link]. Needs [GC] approval.
+tr_mevzuat_madde_getir(number="6098", madde_no=["99","112","114","115","116","117","120","126","128","136"])   ← en çok 10 madde/çağrı; kalanlar (138, 146-148, 179-184, 205, 20-25, 470, 484, 502, 512) ayrı çağrılarla
+tr_mevzuat_madde_getir(number="6102", madde_no=["3","5/A","8","18","22","1530"], max_chars_per_article=6000)
+tr_mevzuat_madde_getir(number="5846", madde_no=["2","18","48","50","52"])
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="sorumluluğun sınırlandırılması ağır kusur dolaylı zarar", date_from="2020-01-01")
+tr_ictihat_ara(courts=["YARGITAYKARARI"], query="yabancı dilde düzenlenen sözleşme 805 sayılı Kanun")
 ```
 
-**Redline doc:** If the user asks for it, output a .docx with tracked changes. Use the docx skill. Comments on each change cite the playbook position.
+Dönen kararın künyesini birebir kullan; karar numarası ezberden yazılmaz. Çekilemeyen madde: "UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/".
 
-## Quality checks before delivering
+## Teslim öncesi kalite kontrolü
 
-- [ ] `~/.claude/plugins/config/claude-for-legal/commercial-legal/CLAUDE.md` was loaded and quoted — not generic market positions
-- [ ] Deal-breaker checked first
-- [ ] Every issue has specific replacement language
-- [ ] Risk levels are calibrated (not everything is Critical)
-- [ ] Approver is named, not "escalate to legal"
-- [ ] Counterparty context considered (BigCo vs. startup — affects what's worth fighting over)
+- [ ] Eklenti ayarı yüklendi ve alıntılandı (genel piyasa pozisyonu değil); anlaşma bozucu önce kontrol edildi
+- [ ] Emredici sınırlar tablosu tarandı, atıflar araçtan; tartışmalı noktalar inceleyen notunda
+- [ ] Her sorunun somut redline metni var; ciddiyetler kalibre (her şey Kritik değil)
+- [ ] Onaylayıcı adıyla yazıldı; karşı taraf bağlamı (büyük kurumsal / girişim) gözetildi
 
-## Close with the next-steps decision tree
+## Kapanış
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
-
----
-
+Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; dalları bu incelemeye göre uyarla (redline'ı taslakla, eskalasyon, ek olgu iste, bekle, diğer). Ağaç çıktıdır; seçimi avukat yapar.
