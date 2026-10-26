@@ -21,10 +21,10 @@ Bir İSG kazası genelde **3 paralel dava süreci** doğurur — her biri ayrı 
 
 ### Hukuki temel
 - **TCK m. 85** — Taksirle öldürme (85/1: 2–6 yıl; 85/2 — birden fazla ölüm ya da ölüm ve yaralanma: 2–15 yıl hapis)
-- **TCK m. 89** — Taksirle yaralama (3 ay - 1 yıl + ağırlatıcı sebepler)
+- **TCK m. 89** — Taksirle yaralama (89/1: 4 ay – 2 yıl hapis veya adli para cezası; 89/2-3 ağırlaştırılmış neticelerde artırım; 89/4 — birden fazla kişinin yaralanması: 9 ay – 5 yıl; 7571 s.K. ile 24.12.2025'te değişik)
 - **TCK m. 257** — Görevi kötüye kullanma (memur sıfatlı için)
 - **6331 sayılı İSG Kanunu m. 26** — İşveren idari para cezası sorumluluğu
-- **TCK m. 22/4** — Bilinçli taksir = ağırlatıcı
+- **TCK m. 22/3** — Bilinçli taksir: taksirli suça ilişkin ceza üçte birden yarısına kadar artırılır (m. 22/4: ceza failin kusuruna göre belirlenir)
 
 ### Olası sanık
 - Tesis müdürü
