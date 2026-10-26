@@ -1,8 +1,6 @@
 # regulatory-legal - Skill Referans Kitapcigi
 
-> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentinin skill'lerini tek dosyada toplar; ArthurLegal başlık, içindekiler ve Türkçe `/regulatory-legal:ai-ajan-onayi` skill'ini eklemiştir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
->
-> ⚠️ **Türk hukukuna uyarlanmadı.** `ai-ajan-onayi` dışındaki skill metinleri özgün İngilizce hâliyle ABD hukukuna dayanır. Türk hukuku sorusunda buradaki kural, süre ve dayanakları doğrudan kullanmayın; Türk mevzuatını `tr_mevzuat_madde_getir` ile doğrulayın.
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10); yabancı yargı çevreleri için yalnız ArthurLegal MCP araçlarına yönlendirir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
 
 > Alan: Regulasyon - EPDK/SPK/Rekabet, RG digest, yapay zeka ajani onayi
 > Toplam skill: 10
@@ -10,16 +8,16 @@
 
 ## Icindekiler
 
-- /regulatory-legal:ai-ajan-onayi (245 satir)
-- /regulatory-legal:cold-start-interview (358 satir)
-- /regulatory-legal:comments (90 satir)
-- /regulatory-legal:customize (103 satir)
+- /regulatory-legal:ai-ajan-onayi (243 satir)
+- /regulatory-legal:cold-start-interview (274 satir)
+- /regulatory-legal:comments (129 satir)
+- /regulatory-legal:customize (62 satir)
+- /regulatory-legal:gap-surfacer (227 satir)
 - /regulatory-legal:gaps (14 satir)
-- /regulatory-legal:gap-surfacer (242 satir)
-- /regulatory-legal:matter-workspace (180 satir)
-- /regulatory-legal:policy-diff (205 satir)
-- /regulatory-legal:policy-redraft (199 satir)
-- /regulatory-legal:reg-feed-watcher (227 satir)
+- /regulatory-legal:matter-workspace (172 satir)
+- /regulatory-legal:policy-diff (226 satir)
+- /regulatory-legal:policy-redraft (188 satir)
+- /regulatory-legal:reg-feed-watcher (251 satir)
 
 ---
 
@@ -46,6 +44,8 @@
 | karsilastirmali regulasyon literaturu — **ikincil**, mevzuat yerine gecmez | `/legal-research:karsilastirmali-doktrin` |
 
 Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` · `references/karsilastirmali-hukuk-rehberi.md`
+
+---
 
 ---
 
@@ -301,362 +301,278 @@ Kullanıcı isterse aynı içerik xlsx kontrol listesi olarak verilir:
 
 ---
 name: cold-start-interview
-description: Cold-start interview — builds your watchlist, indexes the policy library, and learns your materiality threshold so the monitor surfaces signal instead of noise. Use on fresh install, when reconfiguring (--redo), or when re-checking what connectors are actually responding (--check-integrations).
-argument-hint: "[--redo | --check-integrations]"
+description: >
+  İlk kurulum — izlenecek düzenleyici kurumları (EPDK, BDDK, SPK, BTK, KVKK,
+  Rekabet Kurumu, GİB, Sigorta Tahkim, Resmî Gazete'deki bakanlık ve
+  Cumhurbaşkanlığı düzenlemeleri, gerekiyorsa AB/İngiltere/Almanya vb.) listeler,
+  politika kütüphanesini dizinler, önemlilik eşiğini, tarama sıklığını ve özetin
+  kime gideceğini öğrenir; böylece izleme gürültü değil sinyal üretir. İlk
+  kurulumda, CLAUDE.md eksik ya da placeholder içeriyorsa, yeniden yapılandırmada
+  (--redo) ya da bağlantıları yeniden denemek için (--check-integrations) kullan.
+argument-hint: "[--redo | --full | --check-integrations]"
 ---
 
 # /cold-start-interview
 
-1. Check `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. If a populated CLAUDE.md (no `[PLACEHOLDER]` markers) exists at `~/.claude/plugins/cache/claude-for-legal/regulatory-legal/*/CLAUDE.md` but not at the config path, copy it to the config path and tell the user what was migrated. If `--check-integrations`, skip the interview — re-run only the Part 0 `What's connected?` check and rewrite the `## Available integrations` table in `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`.
-2. Use the interview workflow below. Interview (Part 0 first — role + integrations — then watchlist): which regulators, where policies live, what's material.
-3. Connect policy folder. Index policies.
-4. Write `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` (creating parent directories as needed) with watchlist + materiality threshold.
+1. `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` dosyasına bak. Eski önbellek yolunda (`~/.claude/plugins/cache/claude-for-legal/regulatory-legal/*/CLAUDE.md`) doldurulmuş bir profil varsa ve ayar yolunda yoksa ayar yoluna kopyala, neyin taşındığını söyle. `--check-integrations` verildiyse görüşmeyi atla; yalnız Bölüm 0'daki "Ne bağlı?" kontrolünü çalıştır ve `## Available integrations` tablosunu yeniden yaz.
+2. Görüşmeyi yürüt: önce Bölüm 0 (rol, pratik ortamı, bağlantılar), sonra izleme listesi, önemlilik, politika kütüphanesi, akışlar.
+3. Politika klasörünü bağla ve dizinle.
+4. Profili ayar yoluna yaz (üst klasörleri gerekirse oluştur).
 
-When probing integrations: only report ✓ if an MCP tool call actually succeeded. Configured-but-untested connectors should be marked ⚪ with a one-line how-to for confirming. Never report ✓ based on `.mcp.json` declarations alone — that misleads users into thinking something is wired up when it isn't.
+Bağlantı denerken ✓ yalnız gerçek bir MCP çağrısı başarılı döndüyse verilir; yapılandırılmış ama denenmemiş bağlantı ⚪ (nasıl teyit edileceğine dair tek satırla). `.mcp.json` beyanına bakarak ✓ verme.
 
----
+## Amaç
 
-## Purpose
+Her kurum her gün bir şey yayımlar; çoğu sizi ilgilendirmez. Bu görüşme hangi kurumların izleneceğini ve — asıl önemlisi — burada "önemli"nin ne demek olduğunu öğrenir. Her özet, karşılaştırma ve açık raporu bu profili okur; genel profil, her kurul duyurusunu idari para cezası gibi işleyen bir özet demektir.
 
-Every regulator publishes constantly. Most of it doesn't matter to you. This interview learns which regulators to watch and — critically — what "material" means here, so the monitor surfaces signal instead of noise.
+## Kurulum durumu
 
-## Cold-start check
+- **Dosya yok** → görüşmeye başla.
+- **`<!-- SETUP PAUSED AT: -->` var** → selamla, o bölümden devam etmeyi öner.
+- **`[PLACEHOLDER]` var, duraklatma notu yok** → baştan başlamayı ya da placeholder'ların başladığı yerden devam etmeyi öner.
+- **Dolu** → kurulmuş; `--redo` yoksa atla.
 
-Read `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`:
-- **Does not exist** → start the interview.
-- **Contains `<!-- SETUP PAUSED AT: -->`** → greet the user and offer to resume from that section.
-- **Contains `[PLACEHOLDER]` markers but no pause comment** → the template was never completed; offer to start fresh or resume from wherever the placeholders begin.
-- **Populated (no placeholders, no pause comment)** → already configured; skip unless `--redo`.
+Bölüm iskeleti `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` şablonundadır. **Anahtarları çevirme:** `## Regulators we watch`, `## Who's using this`, `## Available integrations`, `## Policy library`, `## Materiality threshold`, `## Gap response process`, `## Feed configuration`, `## Outputs`, `## Matter workspaces`, `**Check cadence:**`, `**Comment tracking:**`, `**Default comment decision owner:**`, `Digest output path`, `Enabled`, `Active matter:`, `Cross-matter context` — `/regulatory-legal:reg-feed-watcher`, `/regulatory-legal:gaps`, `/regulatory-legal:comments` ve `reg-change-monitor` ajanı bunları birebir okur. İçerik Türkçe yazılır.
 
-The template structure lives at `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` — use it as the section scaffold. Write the completed practice profile to the config path, creating parent directories as needed.
+## Ortak profil
 
-If a CLAUDE.md exists at the old cache path `~/.claude/plugins/cache/claude-for-legal/regulatory-legal/*/CLAUDE.md` but not at the config path, copy it forward.
+`~/.claude/plugins/config/claude-for-legal/company-profile.md` dosyasına bak.
+- **Varsa:** oku, tek satırla teyit et: "Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu? (Değiştirmek için 'güncelle' deyin.)" Teyit edilirse ortak soruları atla.
+- **Yoksa:** ilk kurulan eklenti budur; ortak soruları sor, paketteki `knowledge/company-profile.md` şablonuna göre yaz ve söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak."
 
-## Check for the shared company profile
+Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, ad, sektör, ne satıldığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri. İzleme listesinin ayrıntısı, önemlilik eşiği, politika kütüphanesi ve akışlar bu eklentide kalır.
 
-Look for `~/.claude/plugins/config/claude-for-legal/company-profile.md`.
+## Kurulum kapsamı
 
-- **If it exists:** Read it. Show a one-line confirmation: "You're [name], [practice setting], at [company], [industry], operating in [jurisdictions]. Right? (Or say 'update' to change the shared profile.)" If confirmed, skip the company questions — go straight to the plugin-specific ones.
-- **If it doesn't exist:** You'll be the first plugin this user set up. After the orientation and fork, ask the company questions and write them to the shared profile (per the template at `knowledge/company-profile.md` in this package), then continue with the plugin-specific questions. Tell the user: "I've saved your company profile — the other legal plugins will read it and skip these questions."
+Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Politikalarınız başka yerdeyse kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
-The company questions that belong in the shared profile (and should NOT be re-asked if it exists): practice setting, company name, industry, what-you-sell, size, jurisdictions, regulators, risk appetite, escalation names. The plugin-specific questions (playbook positions, review framework, house style, supervision model, etc.) stay per-plugin.
+## Başlamadan önce
 
-## Install scope check
-
-Before the orientation, if you notice the working directory is inside a project (not the user's home directory), flag it. Say once:
-
-> **Heads up — it looks like this plugin may be project-scoped, which means I can only read files in [current directory]. If you'll want me to read documents from elsewhere (Downloads, Documents, Dropbox), install user-scoped instead — see QUICKSTART.md. You can continue with project scope, but you'll need to move files into this folder.**
-
-Ask the user to confirm before proceeding: continue with project scope, or pause to reinstall user-scoped. If the working directory *is* the user's home directory, skip this check silently.
-
-## Before the interview starts
-
-Show this preamble first (3-4 short lines, nothing more):
-
-> **`regulatory-legal` is for people who track regulatory developments, assess policy gaps, and manage compliance obligations.** Not your area? `/legal-builder-hub:related-skills-surfacer`.
+> **`regulatory-legal`** mevzuat ve kurum kararı değişikliklerini izleyen, iç politikalardaki açıkları bulan ve uyum yükümlülüklerini yöneten ekip içindir.
 >
-> **2 minutes** gets you your role, practice setting, and primary regulatory regime. **15 minutes** adds your full watchlist, materiality thresholds, feed cadence, policy library index, and comment-period sources.
+> **2 dakika:** rolünüz, pratik ortamınız, ana düzenleyiciniz; gerisi varsayılan. **15 dakika:** tam izleme listesi, önemlilik eşiği, tarama sıklığı, özetin alıcıları, politika kütüphanesi dizini, taslak düzenleme görüş takibi.
 >
-> Quick or full? (Upgrade any time with `/regulatory-legal:cold-start-interview --full`.)
+> Hızlı mı, tam mı? (Sonra `/regulatory-legal:cold-start-interview --full` ile genişletebilirsiniz.)
 
-Do not read the user's home-directory `~/CLAUDE.md`, `~/user.md`, or other personal memory to pre-populate the interview. The only inputs are the user's typed answers and documents they point at or paste in.
+Kullanıcının ev dizinindeki `~/CLAUDE.md`'yi ya da kişisel hafızasını okuyarak görüşmeyi önceden doldurma. Seçimden sonra tek paragraf oryantasyon: "Bu eklenti profilinizi (izleme listesi, önemlilik eşiği, tarama sıklığı), bir açık takip kaydını, politika karşılaştırma arşivini ve taslak düzenleme görüş takvimini tutar. Cevaplarınızı her seferinde okunan düz bir metin dosyasına yazar; her şey sonradan değiştirilebilir. Kurulum yalnız sizin yazdıklarınızdan ve verdiğiniz belgelerden profil kurar; sohbette daha önce geçen bir bilgiyi kullanmadan önce sorarım."
 
-## After the user picks quick or full
+**Hızlı yol:** yalnız Bölüm 0 ve izleme listesinin kapsamı; diğer alanlara `[DEFAULT]` yaz (varsayılan eşik aşağıda). Kapanış: "Tamam, komutları kullanabilirsiniz. Önemlilik eşiği, tarama sıklığı ve politika kütüphanesi için makul varsayımlar kullandım. Bir çıktı yanlış gelirse genellikle ayarlanması gereken bir varsayımdır — çıktı hangisi olduğunu söyler. Tam görüşme için `--full`, tek bölüm için `--redo <bölüm>`."
 
-Once the user has picked, orient them. Cover, in your own voice:
+## Görüşme temposu
 
-- **What this plugin maintains:** your practice profile (watchlist, materiality thresholds, feed cadence), a gap tracker, a policy diff archive, and a comment-period calendar.
-- **What this setup does:** learns which regulators you actually watch, what "material" means to you, and where your policies live, and writes it into a plain-text file the plugin reads from every time. Everything answered can be changed later. Once it's done, the plugin's commands will work the way the user works, not the way a generic template does.
-- **Data sources:** setup builds a fresh professional profile from the user's answers only. It does not read the user's personal Claude history, other conversations, or home-directory CLAUDE.md. If something relevant came up earlier in this conversation (for example, the user mentioned a regulator or their sector), ask before using it. Nothing gets folded into the configuration unless the user types it or approves it.
+- **Cevap bir yerde yazılıdır varsay.** İzleme tablosu, uyum takvimi, eski açık analizi, politika dizini için önce bağlantı/yapıştırma iste: "Belgeyi yapıştırın ya da kısa hâlini söyleyin."
+- **Bir turda 2-3 cevaplanabilir soru** (alt sorular da sayılır); ekranı kaydırmadan cevaplanabilmeli.
+- **Uzun cevap gerekiyorsa bekle:** "Bu soru yazılı cevap istiyor — bekliyorum." Yüklemede: "Yapıştırın, dosya yolu verin ya da 'şimdilik geç' deyin; geçerseniz profilde boşluğu işaretlerim."
+- **Yazmadan önce açıkları say:** "Profili yazmadan önce açık kalanlar: [liste]. Şimdi doldurmak ister misiniz, placeholder olarak mı kalsın?" Sessiz boşluk bırakma.
+- **Duraklat/devam:** "dur", "sonra devam" denirse kısmi profili `<!-- SETUP PAUSED AT: [bölüm] — run /regulatory-legal:cold-start-interview to resume -->` notuyla ve cevapsız alanlarda `[PENDING]` ile yaz. Dönüşte cevaplanmış soruyu tekrar sorma.
+- **Kullanıcının söylediği hukuki olguyu doğrula.** Madde, süre ya da eşik söylerse `tr_mevzuat_madde_getir` ile çek ve karşılaştır; çelişirse: "[X] dediniz; metin [Y] diyor — profile hangisi girsin? `[premise flagged — verify]`" Örnek: Rekabet soruşturmasında yazılı savunma süresi rapor tebliğinden itibaren otuz gündür; haklı gerekçeyle bir kez, en çok bir katına kadar uzatılabilir (4054 s. Kanun m. 45/2). İdari para cezası tutarlarını profile yazma: "güncel tutarı teyit et — dönemsel güncellenir."
 
-**Why this matters.** Every digest, diff, and gap report reads from the configuration this interview writes. A generic configuration gives generic output — a default watchlist, a default materiality threshold, and a digest that treats every agency speech like an enforcement action. Telling the plugin which regulators the user actually watches and what "material" means here is what makes the difference between "a regulatory AI tool" and "a tool that sends signal instead of noise." The more specific the answers, the quieter and more useful the digests will be.
+## Bölüm 0 — Kim kullanıyor, ne bağlı
 
-## Interview pacing
+### Kim kullanıyor?
 
-- **Assume the answer exists somewhere.** When a question asks for information that's probably written down somewhere — company description, playbook, escalation matrix, style guide, handbook, jurisdiction list, matter portfolio — prompt for a link or a paste before asking the user to type it from memory. "Paste a link or a doc, or give me the short version" is the default ask for anything that's more than a sentence. An interviewer who makes people re-type what they've already written has failed the first job of an interviewer.
-- **Batch size — count subparts.** "Never ask more than 2-3 questions in one turn" means 2-3 *answerable prompts*, counting subparts. One question with 5 subparts is 5 questions. The test: can the user answer without scrolling? If the questions don't fit on one screen, it's too many. Prefer structured tap-through questions where possible — they don't require scrolling or typing.
+> Eklentiyi günlük kim kullanacak? (Her çıktının üst başlığını belirler.)
+> 1. **Avukat ya da avukat gözetiminde çalışan**
+> 2. **Avukata erişimi olan, avukat olmayan** (uyum yöneticisi, iş birimi)
+> 3. **Düzenli avukat erişimi olmayan**
 
-**Pause for real answers.** Some questions have quick tap-through answers. Others need the user to type a list (which regulators), describe calibration judgments, or point you at a policy folder. When a question needs more than a quick tap:
+2 ya da 3 ise bir kez söyle: "Tüm özellikleri kullanabilirsiniz; iki şey değişir: (1) çıktıları hüküm değil, avukatla konuşmanız için araştırma olarak çerçevelerim; (2) hukuki sonucu olan adımlardan önce — kuruma yazı ya da savunma, taslak düzenlemeye görüş gönderme, uyum beyanı, açığı 'kapandı' sayma — avukatla görüşüp görüşmediğinizi sorar, görüşmeyi hızlandıracak kısa bir brif hazırlarım." 3 ise ekle: "Avukat bulmak için bulunduğunuz ilin barosuna başvurabilirsiniz; barolar adli yardım hizmeti de yürütür, koşullarını baroya sorun." `## Who's using this` altına `**Role:**` ve (avukat değilse) `**Attorney contact:**` yaz.
 
-- **Ask the question and wait.** Say it plainly: "This one needs a typed answer — I'll wait." Don't queue the next question until they respond.
-- **For uploads or path pointers (policy folder, existing watchlist, feed URLs):** "Paste the contents, share a file path, or say 'skip for now.' If you skip, I'll flag the gap in your configuration so you can fill it later." Then actually wait.
-- **Before writing the practice profile:** review the interview. List every question that was skipped or answered with a placeholder. Say: "Before I write your configuration, here's what's still open: [list]. Want to fill any of these now, or leave them as placeholders?" Wait for the answer before writing.
-- **Never** write the practice profile with silent gaps. Every placeholder should be a deliberate user choice to skip, not a question that scrolled past unanswered.
-- **Pause and resume.** Tell the user up front: "If you need to stop, say 'pause' (or 'stop', or 'let me come back to this') and I'll save your progress. Run `/regulatory-legal:cold-start-interview` again later and I'll pick up where you left off." When the user pauses, write a partial configuration to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` with a `<!-- SETUP PAUSED AT: [section name] — run /regulatory-legal:cold-start-interview to resume -->` comment at the top and `[PENDING]` markers (distinct from `[PLACEHOLDER]`) on unanswered fields. When setup re-runs and finds a paused config, greet the user: "Welcome back. You paused at [section]. Your earlier answers are saved. Pick up where we left off, or start over?" Do not re-ask questions already answered.
+### Pratik ortamı
 
-**Verify user-stated legal facts as they come up in setup.** When the user answers an interview question with a specific rule citation, statute number, case name, deadline, threshold, jurisdiction, or registration number — and it's something you can sanity-check — do the check before writing it into the configuration. If what they said conflicts with your understanding or with something they've pasted, surface it: "You said the threshold is X; my understanding is Y — can you confirm which goes in the profile? `[premise flagged — verify]`" A wrong fact written into CLAUDE.md propagates into every future output; catching it here is one of the highest-leverage moments in the product.
+> Hangisi size uyuyor? (Açık yönetimini ve eskalasyon dilini belirler.)
+> - **Tek avukat / küçük büro** — onay zinciri sormam; "dış meslektaşa danış" yazarım.
+> - **Orta / büyük büro** — onay zinciri, üstünüzde kim imzalar.
+> - **Kurum içi hukuk / uyum** — eskalasyon matrisi, hukuk müdürü, uyum yöneticisi, ne zaman iş birimine gider.
+> - **Kamu / klinik** — denetim modeli, dış yazışmada imza zinciri.
+> - **Hiçbiri** — kendi anlatımınızla yazın; profili ona göre kurar, doldurulan, uyarlanan ve boş kalan alanları işaretlerim.
 
-## The interview
+Dallanma:
+- **Büro (her tür):** `## Matter workspaces` → `**Enabled:** ✓`, `**Cross-matter context:** off`. Aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat teklifi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Aynı sektörde birden fazla müvekkil izleniyorsa (ör. biri diğeri hakkında Rekabet Kurumuna başvuruyor) her yeni matter'da çatışma kontrolünü sor. İzleme taraması uygulama düzeyinde çalışır; müvekkile özgü değerlendirme matter'a yazılır.
+- **Kurum içi:** `**Enabled:** ✗`.
 
-### Opening
+Sonra eskalasyonu sade sor: "Bir inceleme üst onay gerektiren bir şey bulduğunda — şirket kararı gerektiren politika açığı, şirket adına görüş içeren yazı, uygulamayı değiştiren önemli bir düzenleme, yetkinizi aşan bir karar — kime gider? İsim ya da rol (hukuk müdürü, uyum yöneticisi), ya da 'kendim karar veririm'." Cevabı `**Practice setting:**` olarak `## Who's using this` altına, eskalasyonu `## Gap response process` → `**Escalation for material gaps:**` satırına yaz.
 
-> I'm going to watch your regulators and tell you when something moves. But "something moves" happens daily. I need to know what actually matters to you so I'm not crying wolf.
+### Ne bağlı?
 
-### Quick start or full setup — branching
+Yapılandırılmış ile **çalışan** bağlantı farklıdır.
+- **ArthurLegal MCP (`tr_`)** — dene: `tr_resmi_gazete_fihrist()` (bugünün fihristi) ve izlenecek kurumlardan biri için `tr_kurum_karari_ara(kurum="rekabet", query="birleşme", limit=3)`. Cevap geldiyse ✓. Sonuç ince gelirse önce `status`: yüklenememiş kaynak "karar yok" demek değildir.
+- **Yabancı ülke araçları** (`eu_`, `uk_`, `de_` …) — yalnız yabancı rejim izlenecekse dene.
+- **Thomson Reuters Regulatory Intelligence** (ücretli, isteğe bağlı), **belge deposu** (Google Drive, SharePoint, Box), **Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪.
 
-The user picked quick or full in the preamble. Branch:
+Rapor:
+> - ✓ [Bağlantı] — bağlı (denendi)
+> - ⚪ [Bağlantı] — yapılandırılmış, doğrulanmadı; MCP ayarlarınızdan teyit edin
+> - ✗ [Bağlantı] — yok; [özellik] [manuel yönteme] düşer. Sonra bağlarsanız `--check-integrations` çalıştırın.
 
-**Quick start path:** ask only Part 0 (role, practice setting, integrations) and watchlist scope. Write the config with `[DEFAULT]` markers on everything else. Close with: "Done. You can start using the commands now. I've used sensible defaults for materiality threshold, digest cadence, and policy library structure. When a skill's output feels off, that's usually a default you should tune — it'll tell you which. Run `/regulatory-legal:cold-start-interview --full` anytime to do the whole interview, or `/regulatory-legal:cold-start-interview --redo <section>` to re-do one part."
+ArthurLegal MCP ✗ ise: "Türk kaynakları için otomatik akış yok; yalnız yapıştırdığınız metinle çalışırım ve her atıf 'doğrulanmadı' işaretiyle, UYARI satırıyla gelir."
 
-**Full setup path:** the existing interview flow below.
+**Hemen yaz:** `## Who's using this`, `## Available integrations` ve `## Outputs` (role göre üst başlık).
 
-### Part 0: Who's using this, and what's connected
+## Bölüm 1 — İzleme listesi (2-3 dk)
 
-Two quick questions before we get into regulatory specifics. These shape how the plugin works, not what it can do.
+*(`/regulatory-legal:reg-feed-watcher` ve `reg-change-monitor` ajanını besler; listede olmayan kurum, siz `/regulatory-legal:policy-diff`'e yapıştırana kadar görünmez.)*
 
-#### Who's using this?
+**[ŞİRKET ADI] ne yapıyor?** En önemli bağlam budur. Web sitesi, "hakkımızda" sayfası ya da faaliyet raporu bağlantısı yeter; ya da tek cümle: ne satıyorsunuz, kime, nasıl. Hangi lisans, izin ya da bildirimlerle çalışıyorsunuz? Büroysanız: izlediğiniz müvekkil sektörleri.
 
-> Who'll be using this plugin day to day? (This feeds every skill's work-product header and output framing — lawyer gets "ATTORNEY WORK PRODUCT," non-lawyer gets research framing and attorney-review checkpoints before regulator-facing steps.)
->
-> 1. **Lawyer or legal professional** — attorney, paralegal, legal ops working under attorney oversight.
-> 2. **Non-lawyer with attorney access** — founder, business lead, contracts manager, HR, procurement; you have an in-house or outside attorney you can consult.
-> 3. **Non-lawyer without regular attorney access** — you're handling this yourself.
+Önce sor: "Mevcut bir izleme tablonuz, uyum takviminiz ya da eski bir açık analizi notunuz var mı? Yapıştırın; kurumları ve önemlilik ölçütlerini ben çıkarayım." Yoksa satır satır kur (her kurum için **neden** izlendiğini de yaz):
 
-If the answer is 2 or 3, say this once (don't repeat it on every output):
+| Kurum | Ne zaman izlenir (doğrulanmış dayanak) | ArthurLegal aracı |
+|---|---|---|
+| **EPDK** | Elektrik piyasasında üretim, iletim, dağıtım, toptan ve perakende satış, piyasa işletim, ithalat, ihracat ve toplayıcılık lisans almak koşuluyla yürütülür (6446 s. Kanun m. 4/1). Doğal gaz, petrol, LPG lisansı varsa ilgili kanunu `tr_mevzuat_ara(query="Doğal Gaz Piyasası", types=["KANUN"])` ile bul, maddeyi ilk konuda çek. | `tr_kurum_karari_ara(kurum="epdk", market="elektrik"\|"dogalgaz"\|"petrol"\|"lpg")` — yalnız yapısal Kurul kararları; bireysel lisans işlemleri RG fihristinde. RG: `tr_resmi_gazete_tara(konu="enerji", query=…)` |
+| **BDDK** | Mevduat, katılım, kalkınma ve yatırım bankaları, yabancı bankaların Türkiye şubeleri ve finansal holding şirketleri Bankacılık Kanununa tabidir (5411 s. Kanun m. 2); Kurul ikincil düzenleme yapar (m. 88/a). | `tr_kurum_karari_ara(kurum="bddk", query=…)` (başlıkta arar); metin için `tr_semantik_ara(kurum="bddk", query=…)` |
+| **TCMB** (ödeme / e-para) | Ödeme kuruluşu faaliyet iznini Merkez Bankası verir, izin kararı RG'de yayımlanır (6493 s. Kanun m. 3/1-b, m. 15/1). Fintech "BDDK" derse bu ayrımı sor. | Kurum kararı aracı yok → RG: `tr_resmi_gazete_tara(query="Merkez Bankası")`, `tr_mevzuat_ara` |
+| **SPK** | Kurul, kamunun zamanında, yeterli ve doğru aydınlatılması için genel ve özel nitelikte kararlar alır (6362 s. Kanun m. 128/1-b). Halka açık şirket, aracı kurum, portföy yönetimi vb. | Kararlar haftalık bültende: `tr_kurum_karari_ara(kurum="spk", year=2026)` → `tr_spk_bulten_icinde_ara(bulten="2026/NN", query=…)`; tebliğler `tr_mevzuat_ara(query="Sermaye Piyasası")` |
+| **BTK** | Elektronik haberleşme hizmeti sunmak ya da şebeke/altyapı işletmek isteyen şirket faaliyete başlamadan önce Kuruma bildirimde bulunur (5809 s. Kanun m. 9/2); Kurum, işletmeciler ile tüketicileri ilgilendiren Kurul kararlarını kamuoyuna açık tutar (m. 6/1-ç). | `tr_kurum_karari_ara(kurum="btk", date_from=…, date_to=…)`; metin için `tr_semantik_ara(kurum="btk")` |
+| **KVKK** | Kurul şikâyetleri karara bağlar, resen inceler, düzenleyici işlem yapar ve idari yaptırıma karar verir (6698 s. Kanun m. 22/1-b, c, e, ğ). Kişisel veri işleyen her şirket için. | `tr_kurum_karari_ara(kurum="kvkk", params={"scan_pages": 1})`; arşiv `tr_semantik_ara(kurum="kvkk")`. Ayrıntılı KVKK uyumu: `/privacy-legal:policy-monitor` |
+| **Rekabet Kurumu** | Hangi birleşme ve devralmaların izne tabi olduğunu Kurul tebliğle ilan eder (4054 s. Kanun m. 7/2); Kurul resen soruşturur, idari para cezası verir, tebliğ çıkarır (m. 27/a, f). Pazar payı yüksek, birleşme yapan ya da dağıtım ağı olan şirket için. | `tr_kurum_karari_ara(kurum="rekabet", decision_type="birlesme_devralma"\|"rekabet_ihlali"\|…)`; çok kelimeli ifadeyi tırnakla ara. RG: `konu="rekabet"` |
+| **GİB** | Mükellefin izahat talebine özelgeyle cevap verilir; aynı durumdaki tüm mükellefler için sirküler yayımlanabilir; özelgeler internette yayımlanır (213 s. VUK m. 413). | `tr_kurum_karari_ara(kurum="gib", query=…, date_from=…)` — özelge kapsar, bağlayıcı değildir; sirküler için GİB sitesi. RG: `konu="vergi"` |
+| **Sigorta Tahkim Komisyonu** | Sigorta ettiren ile riski üstlenen arasındaki uyuşmazlıklar için kurulur (5684 s. Kanun m. 30/1). Düzenleyici değil, hakem kararı: emsal izleme. Sigorta düzenleyicisi SEDDK için kurum kararı aracı yok → RG. | `tr_kurum_karari_ara(kurum="sigorta_tahkim", issue=…)`; arşiv `tr_semantik_ara(kurum="sigorta_tahkim")` |
+| **Bakanlıklar, Cumhurbaşkanlığı** | Sektör bakanlığı yönetmelikleri, Cumhurbaşkanı kararları, kanun ve torba kanunlar | `tr_resmi_gazete_tara(date_from, date_to, query=…)` (≤60 gün, gün başına bir istek); `tr_mevzuat_ara(types=["KANUN"], rg_date_from=…, rg_date_to=…, konu=…)` |
+| **Yargı** | Kanun veya CBK'yı iptal eden AYM kararı RG'de yayımlandığı tarihte yürürlüğü sona erdirir ya da en çok bir yıl ertelenir (Anayasa m. 153/3); Danıştayın düzenleyici işlem iptalleri | `tr_aym_ara(kind="norm", query="<kanun adı>")`; `tr_ictihat_ara(courts=["DANISTAYKARAR"], query=…)` |
 
-> You can use every feature here — research, review, drafting, tracking. Two things change in how I work:
->
-> 1. **I'll frame outputs as research for attorney review, not as verdicts.** Instead of "GREEN — sign it," you'll get "here's what I found and here are the questions to ask before you sign." That's more useful than a green light you can't be sure of.
-> 2. **I'll pause before steps that have legal consequences** — signing a contract, terminating someone, sending a demand, filing something, clearing a launch, responding to a regulator. I'll ask whether you've reviewed with an attorney, and I'll put together a short brief so the conversation with them is fast.
->
-> This isn't a disclaimer. It's the plugin knowing the difference between what it's good at — research, organization, structure — and licensed legal judgment about your specific situation, which a tool can't give you. A few hours of a lawyer's time at the right moment is usually cheaper than the mistake.
+`konu` bir ön elemedir, kapsam garantisi değildir; yayım teyidi için `query` ve fihrist kullanılır.
 
-If the answer is 3, add:
+**ArthurLegal'da olmayanlar:** KİK, Sayıştay, TÜRKPATENT ve İSTAÇ için kaynak yok (resmî uçları cevap vermiyor). Kullanıcı bunları sayarsa açıkça söyle; RG'de yayımlanan yönetmelik ve tebliğleri `tr_resmi_gazete_tara` ile yakalayabileceğini, kurul kararları için kurumun sitesinden manuel izleme ya da RSS adresi gerektiğini ekle. Sonuç uydurma.
 
-> If you need to find a lawyer: your professional regulator's referral service is the fastest starting point (state bar in the US; SRA/Bar Standards Board in England & Wales; Law Society in Scotland/NI/Ireland/Canada/Australia; or your jurisdiction's equivalent). Many offer free or low-cost initial consultations. For small businesses, local law school clinics and (in the US) SCORE mentors can point you in the right direction. For individuals, legal aid organizations cover many practice areas.
+**Yabancı rejimler** — varsayma; AB'ye ihracat, AB'de şube, AB'li müşteri, yabancı halka arz var mı, sor.
+- **AB:** `eu_search_eu_law(query="…")`, metin `eu_get_document_text(celex=…)`. **Birleşik Krallık:** `uk_search_legislation`, değişiklik etkileri `uk_get_effects`. **Almanya:** yeni yayımlar `de_recent_changes(since_iso=…)`. **Finlandiya** `fi_recent_changes`, **İspanya** günlük resmî gazete `es_get_daily_gazette`; **Hollanda, Polonya, Avusturya, İrlanda, Japonya, Azerbaycan:** ilgili önekli arama aracı (`nl_`, `pl_`, `at_`, `ie_`, `jp_`, `az_`).
+- **ABD ve listede olmayan ülkeler:** "ArthurLegal'da bu ülkenin kaynağı yok; ABD kurumu izlenecekse Federal Register API (herkese açık uç) ya da kurumun RSS adresi `Free feeds` tablosuna yazılır; yorum için o ülkenin hukukçusu."
 
-#### What's connected?
+Sonda: "İzlemediğiniz ama belki izlemeniz gereken bir kurum var mı?" ve izleme listesi yüklenmediyse: "Bunu ekibe dağıtabileceğiniz ayrı bir izleme listesi notu olarak da yazayım mı?"
 
-> This plugin can work with: regulatory feeds (Thomson Reuters Regulatory Intelligence), document storage (Google Drive, SharePoint, Box), and Slack. Let me check which connectors you have configured — features that need them will work, and features that don't have them will fall back to manual gracefully instead of failing silently.
+## Bölüm 2 — Önemlilik eşiği (asıl soru, 3-4 dk)
 
-**Check what's actually connected, not what's configured.** A connector listed in `.mcp.json` is *available*. A connector that's actually responding is *connected*. These are different, and confusing them destroys trust. For each connector this plugin uses:
+*(Bir gelişmenin anında mı, haftalık özette mi, hiç mi görüneceğine karar veren süzgeç. Yanlış ayar = okunmayan özet.)*
 
-- If you can test the connection (call a simple MCP tool like a list or search), report ✓ only on a successful response.
-- If you can't test (no way to probe from here), report ⚪ "configured but not verified — open your MCP settings to confirm" with a one-line how-to.
-- Never report ✓ based on configuration alone.
+Her örnek için sor: anında mı, haftalık özette mi, hiç mi?
+- İzlenen kurumun yeni yönetmeliği, tebliği ya da düzenleyici Kurul kararı
+- Sektör kanununuzda değişiklik (torba kanun dahil) ya da Cumhurbaşkanı kararı
+- Aleyhinize sonuç doğuran yeni düzenleyici işlem — **not:** ilanı gereken düzenleyici işlemde iptal davası süresi ilan tarihini izleyen günden başlar; özel kanunda ayrı süre yoksa idare mahkemesinde altmış, vergi mahkemesinde otuz gündür (İYUK m. 7/1, 7/4). Bu yüzden varsayılanı "anında"dır.
+- Taslak düzenlemenin görüşe açılması
+- Sektörünüzde bir şirkete soruşturma ya da idari para cezası; sektör dışında ama yaptığınız bir faaliyete ceza
+- Rekabet Kurulu taahhüt ya da uzlaşma kararı — uzlaşma ihlalin kabulünü gerektirir, para cezasında yüzde yirmi beşe kadar indirim sağlar (4054 m. 43/5, 43/7); taahhüt açık ve ağır ihlallerde kabul edilmez (m. 43/3)
+- AYM iptal kararı ya da Danıştayın yürütmeyi durdurma/iptal kararı
+- GİB özelgesi (başvurana verilir) ya da sirküler (tüm mükellefler için)
+- Kurum rehberi, kılavuzu, duyurusu (bağlayıcı değil); Kurul başkanı konuşması, basın açıklaması
 
-The Federal Register API is a free public endpoint and is always available — it does not require an MCP connector.
+Kalibrasyon şirketten şirkete değişir: hakkında soruşturma ya da taahhüt kararı olan şirket konuşmaları bile izler; kurumun hiç tanımadığı şirket görmezden gelebilir. Ölçüt yüklenmediyse sonda öner: "Bu önemlilik ölçütünü ekibin aynı ayarla okuması için ayrı bir not olarak yazayım mı?"
 
-For connectors that show as not connected, tell the user how to connect. Example phrasing: "TR Regulatory Intelligence isn't connected. In Claude Cowork: Settings → Connectors → Add → Thomson Reuters → sign in. In Claude Code: add the TR MCP to your config or via `/mcp`. This plugin works without it — Federal Register + manual paste covers US federal coverage — but connecting it adds enrichment and alert import."
+## Bölüm 3 — Politika kütüphanesi (2-3 dk)
 
-Then report findings in this form:
+*(`/regulatory-legal:policy-diff` ve `/regulatory-legal:gaps`'i besler; her değişiklik bu kütüphaneyle karşılaştırılır.)*
 
-> - ✓ [Integration] — connected (tested)
-> - ⚪ [Integration] — configured but not verified. Open your MCP settings to confirm.
-> - ✗ [Integration] — not found. [Feature] will fall back to [manual alternative]. [How to connect.]
+Önce: "Politika dizininiz (tablo, içindekiler, wiki sayfası) var mı? Yapıştırın; içe aktarayım." Yoksa:
+- Politikalar nerede? (Drive, SharePoint, Confluence, Notion, yerel klasör) — "Klasörü gösterin, dizinleyeyim."
+- Adlandırma kuralı ya da dizin var mı?
+- Hangi politikanın sahibi kim? (Açıkları doğru kişiye yönlendirmek için.) İç yönetmelik, prosedür, uyum programı (rekabet, KVKK, sektör) ve sözleşme şablonlarını ayrı satır yap.
 
-You don't need all of these. Core features work with free feeds (Federal Register API) and file access alone. Paid feeds add enrichment; manual paste-in always works. If you set something up later, re-run `/regulatory-legal:cold-start-interview --check-integrations`.
+Dizin yüklenmediyse sonda öner: "Yeni gelen hukuk müdürü ya da uyum yöneticisinin ilk gün okuyacağı ayrı bir politika sahipliği dizini olarak yazayım mı?"
 
-#### Write to the config
+## Bölüm 4 — Akışlar, sıklık, alıcılar (2-3 dk)
 
-Write `## Who's using this`, `## Available integrations`, and `## Outputs` sections immediately after the first section of the config, per the template. The `## Outputs` section already exists — merge into it so the work-product header becomes conditional on role.
+**Adım 1 — Ücretsiz akışlar (her zaman etkin):** ArthurLegal MCP bağlıysa izleme listesindeki her Türk kurumu için yukarıdaki araç; RG için `tr_resmi_gazete_tara`. Kurumun duyuru sayfası ya da RSS adresini kullanıcıdan al — adresler değişir, ezberden adres yazma. Akışı olmayan kurum için: "Bu kurumu şimdi nasıl takip ediyorsunuz?" diye sor ve manuel girişi kaydet.
 
-#### Practice setting
+**Adım 2 — Ücretli abonelikler (ek, zorunlu değil):** Thomson Reuters Regulatory Intelligence var mı, hangi uyarılar? Ticari mevzuat veri tabanı aboneliği varsa uyarı e-postaları manuel girişle işlenir. CourtListener yalnız ABD izleniyorsa.
 
-> One more quick one before the watchlist:
->
-> What's the setting? (This shapes the gap-response process and escalation entries — in-house asks about GC routing, solo maps "escalate" to "consult outside counsel," clinic routes to supervising attorney.)
->
-> - **Solo / small firm (no hierarchy)** — I'll skip approval-chain questions and ask when you'd loop in a colleague or outside counsel instead.
-> - **Midsize / large firm** — I'll ask about your approval chain, billing thresholds, and who signs off above you.
-> - **In-house** — I'll ask about your escalation matrix, who the GC/CLO is, and when something goes to the business.
-> - **Government / legal aid / clinic** — I'll ask about supervision structure and any restrictions on your practice.
-> - **My practice doesn't fit any of these** — say so. I'll adapt.
+**Adım 3 — Manuel giriş:** "Bülten, meslek kuruluşu duyurusu ya da dış avukat notunda gördüğünüz bir gelişmeyi yapıştırın; politikalarınızla karşılaştırır, açıkları takip ederim." Profilde etkin işaretle.
 
-**Practices that don't fit the boxes.** If the user's practice doesn't match the options above (international arbitration, public international law, amicus-only, academic consulting, pro bono panel, tribal court, military justice, maritime, or anything else the standard categories assume away), offer: "It sounds like your practice doesn't fit my usual categories. Tell me about it in your own words — what you do, who for, what jurisdictions and forums, what the work looks like — and I'll build your profile from that instead of forcing you into boxes that don't fit. I'll skip or adapt the questions that don't apply." Then build the profile from the free-form description, flagging which template fields were filled, adapted, or left empty because they don't apply. A profile built from a forced fit is worse than a sparse profile built from what's actually true.
+**Adım 4 — Taslak görüş takibi** (`/regulatory-legal:comments`'i besler): "İzlenen bir kurum taslak düzenlemeyi görüşe açtığında son tarihi kaydedip görüş verip vermeyeceğinize karar vermeniz için işaretleyeyim mi?" Evet ise etkinleştir ve varsayılan karar sahibini yaz. Görüşe açma usulü kurumdan kuruma değişir; son tarihi kurumun duyurusundan al, uydurma.
 
-Use this to shape the gap-response process and the escalation entries in the practice profile:
+**Adım 5 — Sıklık ve alıcılar:** Tarama günlük mü haftalık mı? (Enerji, finans gibi hareketli alanda günlük; aksi hâlde haftalık.) Özet kime gider — kişi/rol, Slack kanalı, e-posta listesi? Dosya da yazılsın mı, hangi klasöre? (Boşsa `~/regulatory-legal-digests/`.)
 
-- **Solo / small firm (no hierarchy):** Skip escalation-chain questions. Reframe: instead of "who approves a material gap response," ask "when do you pull in outside counsel or a colleague for a second opinion." The practice profile's escalation field maps to *consult* not *route for approval*.
-- **Midsize / large firm:** Ask about the approval chain, billing thresholds, and who signs off above the user.
-- **In-house:** Ask about the escalation matrix, who the GC/CLO is, and when something goes to the business.
-- **Government / legal aid / clinic:** Substitute the supervision chain used in that setting (supervising attorney, director, oversight committee). Keep the structure, relabel the roles.
+## Profili yazma
 
-Then ask the escalation question in plain English:
-
-> "When a review finds something that needs someone more senior to sign off — a policy gap that needs a company decision, a comment letter that takes a position on behalf of the company, a material regulatory change that rewrites practice, or a decision that's above your authority — who does that go to? Give me a name or a role (the GC, the CCO, your boss), or say 'I decide myself.' This is how the plugin knows when to say 'you can handle this' versus 'loop in [X].'"
-
-Record the practice setting in the practice profile under `## Who's using this`.
-
-### Part 1: The watchlist (2-3 min)
-
-*(This feeds `/regulatory-legal:reg-feed-watcher` and the `reg-change-monitor` agent — the feed only pulls from regulators on this list. Anything not on the list is invisible to the plugin until you paste it in via `/regulatory-legal:policy-diff`.)*
-
-**What does [your company] do?** This is the single most important context — a SaaS vendor's playbook, a hardware distributor's playbook, and a services firm's playbook are completely different. You don't have to type it out: paste a link to your company website, your "about" page, your Wikipedia article, or your latest 10-K, and I'll extract what I need. Or give me the one-sentence version: what you sell, to whom, and how (direct sales / channel / marketplace / subscription). This also tells me which regulators are even plausibly in your watchlist.
-
-> Before I ask: do you already have a watchlist, a regulatory-tracking spreadsheet, or a prior gap-analysis memo I can read? Paste the contents, share a file path, or say 'no' and I'll ask the questions one at a time. If you share one, I'll extract the regulators and materiality criteria rather than making you list them again.
-
-If not:
-
-- Which regulators? Name them. (FTC, SEC, CFPB, state AGs, CPPA, EU DPAs, sector-specific?)
-  *Coverage note: this plugin has structured feed support for US federal agencies (Federal Register API), SEC, FTC, and CFPB. State regulators and EU DPAs are supported via user-provided RSS URLs or manual entry — there is no automatic feed for those. Non-US regulators outside the EU DPA table require manual entry or user-provided feeds.*
-- Why each one? ("We're a fintech, CFPB is obvious" vs. "FTC because of the consent decree")
-- Any you're *not* watching that maybe you should be?
-
-**If the user didn't upload a watchlist or prior gap analysis:** at the end of this section, offer: "Want me to write this up as a standalone watchlist memo you can share and maintain? Same content I just captured — your regulators, why you watch each, and the feeds behind them — in a format you can circulate or hand to a new hire."
-
-### Part 2: Materiality (the key question) (3-4 min)
-
-*(This feeds `/regulatory-legal:reg-feed-watcher` and the `reg-change-monitor` agent — your materiality threshold is the filter that decides whether a new development shows up immediately, in the weekly digest, or not at all. Wrong calibration here = noisy digests you stop reading.)*
-
-Walk through examples. For each, would you want to know immediately, in a weekly digest, or not at all?
-
-- A final rule from one of your regulators
-- A proposed rule (NPRM) — comment period open
-- An enforcement action against a company in your sector
-- An enforcement action against a company *not* in your sector but for something you do
-- A speech by a commissioner signaling priorities
-- A blog post from the agency
-- A settlement with no admission of wrongdoing
-- New guidance (sub-regulatory, not binding)
-
-This builds the materiality threshold. Different companies calibrate very differently — a company under a consent decree cares about speeches; a company the agency has never heard of can ignore them.
-
-**If the user didn't upload materiality criteria:** at the end of this section, offer: "Want me to write this materiality rubric up as a standalone doc you can share and maintain? Same content I just captured — immediate vs. digest vs. FYI, with your examples — so the team reads the same calibration."
-
-### Part 3: The policy library (2-3 min)
-
-*(This feeds `/regulatory-legal:policy-diff` and `/regulatory-legal:gaps` — every incoming regulatory change is diffed against this library to find which policies it touches and who owns them.)*
-
-> Before I ask: do you have an existing policy library index — a spreadsheet, a table of contents, a wiki page — mapping each policy to its owner? Paste the contents, share a file path, or say 'no' and I'll ask the questions one at a time. If you share one, I'll import it rather than making you rebuild it from memory.
-
-If not:
-
-> Point me at your policy folder. I'll index what's there so when a reg changes, I can tell you which of your policies it touches.
-
-- Where do policies live? (Drive, SharePoint, Confluence, Notion)
-- Is there a naming convention or index, or just files?
-- Who owns which policy? (For routing gaps to the right person)
-
-**If the user didn't upload a policy index:** at the end of this section, offer: "Want me to write this up as a standalone policy-ownership index you can share and maintain? Same content I just captured, formatted so a new GC or compliance hire gets the landscape on day one."
-
-### Part 4: Feed sources (2-3 min)
-
-Free feeds are the baseline — every team gets monitoring regardless of subscriptions.
-Paid feeds add enrichment for teams that have them.
-
-**Step 1: Map free feeds for the named watchlist**
-
-The Federal Register API (federalregister.gov/api) is the stable primary source for US federal agencies — it returns structured data by agency, document type, effective date, and comment deadlines. Use it as the default for any federal regulator in the watchlist.
-
-For every other named regulator (state AGs, the CPPA (California), EU DPAs, sector-specific regulators, non-US regulators), ask the user for their preferred feed URL, or direct them to the agency's website to find the current feed. Feed URLs change; don't rely on a cached list.
-
-If a named regulator has no known free feed: flag it, ask the user how they currently track that regulator, and record the manual-entry fallback (see below).
-
-**Step 2: Ask about paid subscriptions (additive, not required)**
-
-- TR Regulatory Intelligence subscription? Which alerts are configured?
-- CourtListener? Which trackers?
-
-If yes: configure as enrichment layer on top of free feeds. If no: free feeds are sufficient to proceed.
-
-**Step 3: Manual entry fallback**
-
-> If you ever see something in Law360, a newsletter, or from outside counsel that you want to run through the system — just paste it in and I'll diff it against your policies and track any gaps. You don't need a feed subscription for that to work.
-
-Record in the config that manual entry is enabled.
-
-**Step 4: Comment period tracking** *(This feeds `/regulatory-legal:comments` — the comment-period calendar logs deadlines and surfaces decisions when a comment window opens.)*
-
-> When I see a proposed rule (NPRM) from your watchlist, I'll automatically log the comment deadline. Do you want me to flag these so you can decide whether to file a comment?
-
-If yes: comment-tracker is enabled. Record the default owner for comment decisions in the config.
-
-## Writing the practice profile
-
-Per the template. Key: the materiality threshold table.
+Şablon iskeletine göre; kısa örnek:
 
 ```markdown
-## Materiality threshold
+# Regulatory Practice Profile
+*Kurulum görüşmesiyle [TARİH] yazıldı. Doğrudan düzenlenebilir.*
+## Regulators we watch
+| Regulator | Jurisdiction | Why we watch | Feed source |
+|---|---|---|---|
+| EPDK | TR | [elektrik üretim lisansı — 6446 m. 4/1] | tr_kurum_karari_ara(kurum="epdk", market="elektrik") + RG konu="enerji" |
+| [kurum] | [TR/AB/…] | [neden] | [araç / RSS / manuel] |
 
+## Who's using this
+**Role:** [...] · **Attorney contact:** [...] · **Practice setting:** [...]
+## Available integrations
+| Integration | Status | Fallback if unavailable |
+|---|---|---|
+| ArthurLegal MCP (tr_) | [✓/⚪/✗] | Yapıştırılan metin; atıflar UYARI satırıyla |
+| Thomson Reuters Regulatory Intelligence | [✓/⚪/✗] | Ücretsiz akışlar + manuel giriş |
+| Document storage | [✓/⚪/✗] | Yerel klasörden dizin |
+| Slack | [✓/⚪/✗] | Özet yalnız dosya olarak |
+
+## Policy library
+**Location:** [...]
+**Policies indexed:**
+| Policy | File | Last updated | Owner |
+|---|---|---|---|
+
+## Materiality threshold
 **Always material (alert immediately):**
-- Final rule from [specific regulators]
-- Enforcement action in our sector
-- Anything mentioning [company name]
+- İzlenen kurumdan yeni yönetmelik/tebliğ/düzenleyici Kurul kararı; sektör kanununda değişiklik
+- Aleyhe düzenleyici işlem (İYUK m. 7/4 — dava süresi ilandan işler)
+- Sektörümüzde soruşturma ya da idari para cezası; [ŞİRKET ADI] adının geçtiği her şey
+- İzlenen kanun hakkında AYM iptal kararı
 
 **Review-worthy (weekly digest):**
-- Proposed rules from watched regulators
-- Enforcement action outside sector but related to our practices
-- New guidance documents
+- Taslak düzenlemenin görüşe açılması (son tarih comment-tracker'a)
+- Sektör dışı ama faaliyetimize ilişkin ceza; Rekabet taahhüt/uzlaşma kararları
+- Kurum rehberi, kılavuzu; GİB sirküleri ve konumuza ilişkin özelgeler
 
 **FYI (monthly roundup or not at all):**
-- Speeches, blog posts, academic commentary
-- Settlements with no novel theory
-```
-
-## Feed configuration block (add to the config)
-
-```markdown
+- Konuşmalar, basın açıklamaları, akademik yorum
+- Yeni bir yaklaşım içermeyen rutin bireysel kararlar
+## Gap response process
+**Who triages regulatory changes:** [...]
+**Who owns policy updates:** [...]
+**How gaps get tracked:** [...]
+**Escalation for material gaps:** [...]
 ## Feed configuration
-
 **Free feeds (always active):**
 | Regulator | Source | URL/method |
 |---|---|---|
-| [name] | Federal Register API / RSS / manual | [endpoint or "manual entry"] |
+| [kurum] | ArthurLegal tr_ / RSS / manual | [araç çağrısı, adres ya da "manual entry"] |
 
 **Paid feeds (if configured):**
 | Service | Subscription | Alerts |
 |---|---|---|
 | TR Regulatory Intelligence | [yes/no] | [alert names] |
-| CourtListener | [yes/no] | [tracker names] |
+| CourtListener | [yes/no] | [yalnız ABD] |
 
-**Manual entry:** Enabled — paste any regulatory development to trigger diff + gap tracking.
-
+**Manual entry:** Enabled — herhangi bir gelişmeyi yapıştırın; karşılaştırma ve açık takibi başlar.
 **Comment tracking:** [Enabled / Disabled]
-**Default comment decision owner:** [name]
+**Default comment decision owner:** [ad/rol]
 **Check cadence:** [daily / weekly]
+**Digest channel:** [kişi/rol, Slack kanalı, e-posta listesi]
+**Digest output path:** [klasör ya da "chat only"]
+## Outputs
+Üst başlık — avukat: "GİZLİDİR — AVUKATLIK K. m. 36 KAPSAMINDA — DAHİLİ"; avukat olmayan: "ARAŞTIRMA NOTU — HUKUKİ GÖRÜŞ DEĞİLDİR — AVUKATLA GÖZDEN GEÇİRİN". Başlık tek başına koruma yaratmaz; kuruma giden yazıda başlık konmaz.
+## Matter workspaces
+**Enabled:** [✓/✗] · **Active matter:** none · **Cross-matter context:** off
 ```
 
-## After writing
+Kaynak etiketi: `[ArthurLegal TR — <citation> — GG.AA.YYYY]`; araç veri getiremezse "UYARI: veri çekilemedi, teyidiniz gerekli: <aracın source_url'si ya da kaynağın resmî giriş sayfası>".
 
-**Show what this plugin can do.** Before closing, offer:
+## Yazdıktan sonra
 
-> **Want to see what I can help with?**
+1. **Özeti göster:** "İzleme listesi ve eşik bunlar. Ayarlanacak kısım eşik — çok sıkı olursa kaçırırsınız, çok gevşek olursa özeti okumayı bırakırsınız."
+2. **Neler yapabildiğimi görmek ister misiniz?**
+   - Akışları izleme listesine ve eşiğe göre süzüp özet çıkarma — `/regulatory-legal:reg-feed-watcher`
+   - Bir değişikliği politika kütüphanesiyle karşılaştırma — `/regulatory-legal:policy-diff`
+   - Açık açıklar, sahipleri ve son tarihleri — `/regulatory-legal:gaps`
+   - Taslak düzenleme görüş takvimi ve karar kaydı — `/regulatory-legal:comments`
+   **Önerim:** `/regulatory-legal:reg-feed-watcher` ile son 30 günü deneme taraması — eşiğin doğru ayarlanıp ayarlanmadığını hemen gösterir. Kullanıcı görüşmede somut bir iş söylediyse listeyi atla. Politika kütüphanesini şimdi dizinlemeyi de öner.
+3. **Kapanış:** "Profiliniz `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` dosyasında — düz metin. Doğrudan düzenleyebilir, `--redo` ile yeniden görüşebilir, `--check-integrations` ile bağlantıları yeniden deneyebilir, tek değişiklik için `/regulatory-legal:customize` kullanabilirsiniz. En sık ayarlananlar: izleme listesi, önemlilik eşiği, tarama sıklığı. Profiliniz öğrenir: bir özet çok gürültülü ya da çok sessiz gelirse ayar genellikle buradadır; `reg-change-monitor` ajanı politika kütüphanenize dokunan bir değişiklik görünce açık kontrolü için işaretler."
 
-If yes, show this tailored list (not a generic template — these are the concrete things this plugin does best):
+## Hata kalıpları
 
-> **Here's what I'm good at in regulatory practice:**
->
-> - **Check regulatory feeds for what's new** — e.g., "Filtered digest of rulemaking, guidance, and enforcement against your watchlist." Try: `/regulatory-legal:reg-feed-watcher`
-> - **Diff a regulatory change against your policy library** — e.g., "See exactly which internal policies a new rule impacts and what needs updating." Try: `/regulatory-legal:policy-diff`
-> - **Open gaps tracker** — e.g., "What's flagged and not yet closed across your portfolio, with owner and deadline." Try: `/regulatory-legal:gaps`
-> - **Track NPRM comment periods** — e.g., "What's open, comment deadlines, and a decision log on whether to file." Try: `/regulatory-legal:comments`
->
-> **My suggestion for your first one:** Run `/regulatory-legal:reg-feed-watcher` — it tells you immediately whether the feeds are calibrated to your materiality threshold. Or tell me what's on your plate and I'll pick.
-
-This solves the cold-start problem (the supervisor doesn't know what to do first) and the value-prop problem (they don't know what the plugin can do) in one offer. Make the list specific. Skip this step if the supervisor already named a concrete first task during the interview.
-
-
-- "Here's the watchlist and the threshold. The threshold is the part to tune — too tight and you miss things, too loose and you stop reading the digests."
-- Offer to index the policy library now.
-- Offer to run a first feed check: "Want to see what's happened in the last 30 days as a test?"
-- **Before your first digest or gap check, connect a research tool.** Say: "Before your first digest or gap check: connect a research tool. Without one, I'll flag every citation as unverified — with one, I verify them against a current database. In Cowork: Settings → Connectors. In Claude Code: authorize when a skill prompts you."
-
-<!-- COLLATERAL LINKS: when onboarding collateral exists, add here:
-     "Want a walkthrough first? [Watch the 3-minute intro](URL) or [read the getting-started guide](URL)." -->
-
-- Close with the changeability note:
-
-  > "Done. Your configuration is at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` — a plain-text file you can read and edit directly. Anything you answered can be changed:
-  >
-  > - Edit the file directly for a quick change
-  > - Run `/regulatory-legal:cold-start-interview --redo` for a full re-interview
-  > - Run `/regulatory-legal:cold-start-interview --check-integrations` to re-check what's connected
-  >
-  > The settings people tune most often: the watchlist (which regulators you actually care about), the materiality threshold (what's immediate vs. digest vs. FYI), and the check cadence. Your configuration will improve as you use the plugin — when a digest feels off (too noisy, too quiet), the fix is usually here."
-
-## Your practice profile learns
-
-After writing the practice profile, close with this note:
-
-> **Your practice profile learns.** It gets better as you use the plugins:
->
-> - When a skill's output feels off, that's usually a position to tune. The output will tell you which one.
-> - The `reg-change-monitor` agent watches the regulatory feeds; when a change matches something in your policy library, it flags it for a gap-check.
-> - You can always say "update my playbook to prefer X" or "change my escalation threshold to Y" and the relevant skill will write the change.
-> - Run `/regulatory-legal:cold-start-interview --redo <section>` to re-interview one part, or edit the config file directly.
->
-> Ten minutes of setup gets you a working profile. A month of use gets you one that reads like you wrote it yourself.
+- **Kurumu kanunla eşleştirmeden listeye alma.** Her satırın bir "neden"i olsun; dayanak maddeyi `tr_mevzuat_madde_getir` ile çek.
+- **Ödeme kuruluşunu BDDK'ya, Sigorta Tahkim'i düzenleyiciye yazma; ArthurLegal'da olmayan kurum (KİK, Sayıştay, TÜRKPATENT, İSTAÇ) için araç önerme.**
+- **`konu` ön elemesini kapsam garantisi sayma.** "Bu hafta başka bir şey çıkmadı" deme; elenen ve belirsiz sayısını yaz.
+- **Kurul kararı numarasını ya da para cezası tutarını ezberden yazma.** Yalnız araçtan dönen `citation` alanı.
 
 ---
 
@@ -664,94 +580,133 @@ After writing the practice profile, close with this note:
 
 ---
 name: comments
-description: Review open NPRM comment periods, log decisions, track deadlines. Use when an NPRM has a comment window open and you need to surface deadlines, decide whether to file, or record a filing / not-filing / waived decision (--decide CMT-ID).
-argument-hint: "[optional: --decide CMT-ID]"
+description: Görüşe açılan düzenleme taslaklarını ve istişareleri izler, görüş son tarihlerini gösterir, görüş verme kararını kaydeder. Bir kurum ya da bakanlık taslağı görüşe açtığında son tarihi görmek, görüş verip vermeme kararını almak ya da kararı kaydetmek (--decide CMT-ID) için kullan.
+argument-hint: "[isteğe bağlı: --decide CMT-ID]"
 ---
 
 # /comments
 
-## Purpose
+## Amaç
 
-NPRMs have deadlines. The decision to file a comment or not is an attorney
-call — but the deadline disappearing without a logged decision is the risk.
-This skill surfaces open comment periods and records decisions.
+Türkiye'de düzenleyici kurumlar ve bakanlıklar taslak düzenlemeleri çoğu zaman internet sitelerinde görüşe açar; son tarih duyuruda yazar. Görüş verip vermemek avukatın kararıdır; risk, son tarihin kayıtlı bir karar olmadan geçip gitmesidir. Bu skill açık görüş sürelerini gösterir ve kararları kaydeder. Kural Resmî Gazete'de yayımlandıktan sonra ikinci bir süre başlar: düzenleyici işleme karşı dava süresi (aşağıda); o tarih de buraya yazılır.
 
-## Load context
+> ABD ile karşılaştırma: ABD'deki zorunlu "notice-and-comment" usulünün (Federal Register'da NPRM) Türkiye'de genel ve bağlayıcı bir karşılığı yoktur. Aşağıdaki çerçeve ve kurum uygulaması geçerlidir.
 
-`~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` → all tracked NPRMs and their status.
-`~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → default comment decision owner.
+## Hukuki çerçeve (doğrulanmış)
 
-## Default view — open comment periods
+Aşağıda "m." atıfları, aksi yazılmadıkça Mevzuat Hazırlama Usul ve Esasları Hakkında Yönetmelik'e (RG 24.02.2022/31760) aittir.
+
+- **Kapsam.** Yönetmelik Cumhurbaşkanlığı, bakanlıklar, bağlı, ilgili, ilişkili kurum ve kuruluşlar ile diğer kamu kurum ve kuruluşlarının hazırladığı mevzuat taslaklarını kapsar; milletvekillerinin TBMM'ye sunduğu kanun teklifleri kapsam dışıdır (m. 1/2, 1/3).
+- **Paydaş görüşü.** Taslaklar hakkında ilgili mahallî idareler, üniversiteler, sendikalar, kamu kurumu niteliğindeki meslek kuruluşları ve sivil toplum kuruluşlarının; iş ve yatırım ortamına ilişkin taslaklarda ayrıca özel sektör paydaşlarının görüşlerinden faydalanılır (m. 6/4).
+- **Kamuoyuna açma takdire bağlıdır.** Kamuoyunu ilgilendiren taslaklar Cumhurbaşkanlığına iletilmeden önce internet, basın veya yayın yoluyla kamuoyunun bilgisine sunulabilir; toplanan görüşler değerlendirildikten sonra teklifte bulunulur (m. 6/5). "Sunulabilir"dir; her taslak görüşe açılmaz.
+- **Meslek kuruluşu ve STK süresi.** Görüşü istenen kamu kurumu niteliğindeki meslek kuruluşu ve sivil toplum kuruluşu görüşünü on beş gün içinde bildirir; süresinde bildirilmezse olumlu görüş verilmiş sayılır (m. 7/2). [ŞİRKET ADI] görüşünü bir oda, birlik ya da sektör derneği üzerinden iletecekse iç son tarihi bu süreye göre kur.
+- **Yürürlük için makul süre.** Ekonomik ve ticari alan ile yatırım ortamını etkileyen düzenlemelerde mümkün olduğunca yayım ile yürürlük arasında makul süre bırakılır (m. 17/2). Kısa uyum süresi görüşte ileri sürülebilecek bir noktadır.
+- **Dayanak sınırı.** Kanun, CB kararnamesi ve Cumhurbaşkanı kararıyla yürürlüğe konulanlar dışındaki taslaklarda, dayanağında belirtilenler dışında yükümlülük getiren hükme yer verilmez (m. 24/1-a). Dayanağı aşan yükümlülük görüşün güçlü bir başlığıdır.
+- **Düzenleyici etki analizi.** Kanun ve CB kararnamesi taslakları içindir (Düzenleyici Etki Analizinin Uygulanmasına İlişkin Usul ve Esaslar m. 1, 4/1-ç); ilgili taraflar ve paydaşlarla istişare edilerek yapılır ve analiz raporunda danışılan paydaşların görüş ve önerilerine yer verilir (m. 6/5, 9/4).
+- **Bağımsız kurulların kendi düzenlemeleri.** EPDK, BDDK, SPK, BTK, KVKK ve Rekabet Kurumu yönetmelik ve tebliğ taslaklarını sitelerinde görüşe açabilmektedir; bu bir kurum uygulamasıdır. Kurumun kendi kanununda ya da yönetmeliğinde görüş alma hükmü varsa bul ve yalnız çektiğin maddeye atıf yap: `tr_mevzuat_icinde_ara(number="<kurum kanunu>", query="görüş taslak")`, sonra `tr_mevzuat_madde_getir`. Bulamazsan kural yazma; "kurum uygulaması" de ve gerekirse şunu ekle: `UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/`.
+- **Tartışmalı — içtihadı kontrol et:** Mevzuat Hazırlama Yönetmeliği'nin görüş alma usulünün bağımsız kurulların kendi düzenlemelerine ne ölçüde uygulandığı ve görüş alınmamasının düzenleyici işlemin iptal sebebi olup olmadığı. Ara: `tr_ictihat_ara(courts=["DANISTAYKARAR"], query="\"görüş alınmadan\" yönetmelik iptal")`; dönen kararın künyesini birebir kullan, karar numarasını ezberden yazma.
+
+**Kural yayımlandıktan sonra.** Dava açma süresi özel kanununda ayrı süre yoksa Danıştay ve idare mahkemelerinde altmış gündür; ilanı gereken düzenleyici işlemlerde süre ilan tarihini izleyen günden başlar; ilgililer işlemin kendilerine uygulanması üzerine düzenleyici işlem ya da uygulama işlemi aleyhine de dava açabilir (İYUK m. 7/1, 7/4). Dava açılması işlemin yürütülmesini durdurmaz (İYUK m. 27/1). Özel kanunda farklı süre olup olmadığını ve görevli mercii `/administrative-legal:idari-dava-prep` ile kontrol et.
+
+## Bağlamı yükle
+
+- `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` → izlenen tüm taslak ve istişareler.
+- `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → `## Feed configuration` altındaki `**Comment tracking:**` ve `**Default comment decision owner:**`, `## Who's using this` → `**Role:**`.
+
+Şema (anahtarlar ve değerler İngilizce kalır):
+
+```yaml
+comments:
+  - id: CMT-001
+    item_type: draft          # draft (görüşe açılmış taslak) | consultation (taslaksız istişare) | bill (TBMM kanun teklifi)
+    regulator: "[kurum]"
+    title: "[taslağın adı]"
+    link: "[duyuru bağlantısı — uydurma]"
+    source_tag: "[kurum sitesi]"   # ya da [kullanıcı verdi], [ikincil kaynak], [ArthurLegal TR — <araç> — GG.AA.YYYY]
+    deadline: 2026-11-20      # duyurudaki son tarih; yoksa null ve not
+    decision: undecided       # undecided | filing | not-filing | waived
+    owner: "[ad]"
+    owner_slack: "[kimlik]"
+    rationale: ""
+    final_publication: ""     # kural yayımlanınca: RG tarih/sayı
+    challenge_deadline: ""    # kural yayımlanınca: dava süresinin son günü (hesap notuyla)
+```
+
+## Varsayılan görünüm — açık görüş süreleri
 
 ```markdown
-## Comment Period Tracker — [date]
+## Görüş Süresi İzleyici — [tarih]
 
-### ⏰ Deadline in <14 days
+### ⏰ Son tarihe 14 günden az
 
-| ID | Regulation | Deadline | Days left | Decision | Owner |
-|---|---|---|---|---|---|
-| CMT-001 | [name] | [date] | [N] | Undecided | [owner] |
+| ID | Düzenleme | Tür | Son tarih | Kalan gün | Karar | Sahip |
+|---|---|---|---|---|---|---|
+| CMT-001 | [ad] | taslak | [tarih] | [N] | Karar yok | [sahip] |
 
-### 🟡 Open (>14 days)
+### 🟡 Açık (14 günden fazla)
 
-[same table]
+[aynı tablo]
 
-### Recently decided
+### ⚖️ Yayımlanan kurallar — dava süresi işliyor
 
-| ID | Regulation | Decision | Rationale |
+| ID | Düzenleme | RG | Dava süresinin son günü | Not |
+|---|---|---|---|---|
+
+### Son kararlar
+
+| ID | Düzenleme | Karar | Gerekçe |
 |---|---|---|---|
-| CMT-002 | [name] | Not filing | [reason] |
+| CMT-002 | [ad] | not-filing | [gerekçe] |
 
 ---
 
-**Total open:** [N]  **Undecided with deadline <30 days:** [N]
+**Toplam açık:** [N]  **30 günden az kalan ve kararsız:** [N]
 ```
 
-## Log a decision
+Son tarihi belirtilmemiş kalemi "son tarih yok — kurumdan teyit et" diye ayrı satırda göster; tarih uydurma.
+
+## Karar kaydet
 
 ```
 /regulatory-legal:comments --decide CMT-001
 Decision: [filing / not-filing / waived]
-Rationale: "[brief — e.g., 'Rule doesn't apply to our model' or 'Filing comment on Section 3']"
+Rationale: "[kısa — ör. 'Taslak bizim faaliyetimize uygulanmıyor' ya da 'Taslağın geçiş süresi ve 4. maddesi hakkında görüş vereceğiz']"
 ```
 
-Updates tracker. If decision is "filing": prompt for filing deadline reminder
-(comment deadline minus 5 business days for internal review).
+İzleyiciyi günceller. Karar `filing` ise iç inceleme hatırlatması öner: görüş son tarihinden 5 iş günü önce.
 
-## Notifications
+**Görüş metni.** Bu skill görüş yazmaz. EPDK taslağına görüş için `/administrative-legal:epdk-proaktif-gorus`; diğer kurumlar için avukat taslağı. Görüş bir oda, birlik ya da sektör derneği üzerinden ortak verilecekse rakiplerle rekabete duyarlı bilgi (fiyat, maliyet, müşteri, kapasite planı) paylaşma: teşebbüsler arası anlaşma, uyumlu eylem ve teşebbüs birliklerinin rekabeti kısıtlayan kararları yasaktır (4054 m. 4). Ortak çalışmayı rekabet hukuku açısından avukata kontrol ettir.
 
-On first detection of an NPRM (populated by reg-feed-watcher): Slack DM to
-comment decision owner if Slack MCP is configured and `owner_slack` is set.
+## Bildirimler
 
-Reminder at 14 days before deadline if decision is still "undecided."
-Reminder at 3 days before deadline if still undecided — elevated urgency.
+Taslak ilk kez kaydedildiğinde (reg-feed-watcher tarafından) Slack ya da profildeki kanal bağlıysa ve `owner_slack` doluysa görüş karar sahibine mesaj. Kararsız kalırsa son tarihten 14 gün önce hatırlatma; hâlâ kararsızsa 3 gün önce yüksek öncelikli hatırlatma. Her mesaj gap-surfacer'daki gönderim başına onay kuralına tabidir: önizle, açık "evet" bekle, sonra gönder.
 
-## Consequential-action gate (submit a regulatory comment / respond to a regulator)
+## Sonuç doğuran eylem kapısı (kuruma görüş sunma ya da cevap verme)
 
-**Before logging a decision as "filing" — and always before producing a comment letter or regulator-response draft for submission:** Read `## Who's using this` in ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md. If the Role is **Non-lawyer**:
+**Bir kararı `filing` olarak kaydetmeden önce — ve sunulmaya hazır bir görüş ya da kuruma cevap taslağı üretmeden önce her zaman:** profildeki `## Who's using this` bölümünü oku. Rol **Non-lawyer** ise:
 
-> Submitting a comment or response to a regulator has legal consequences. It's a public statement of the company's position, it's on the record in the rulemaking or enforcement matter, and positions taken here bind the company and can be used against it in subsequent proceedings. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Bir kuruma görüş ya da cevap sunmak hukuki sonuç doğurur. Şirketin tutumunu kayda geçirir; kurum dosyasında kalır ve sonraki inceleme, denetim ya da davada şirket aleyhine kullanılabilir. Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz özet:
 >
-> - The rulemaking or inquiry (regulator, docket, deadline)
-> - What the proposed comment/response says and on what sections
-> - Open questions and what's unresolved
-> - What could go wrong (adverse admissions, inconsistent prior positions, coordination-of-comment concerns with trade associations)
-> - What to ask the attorney (should we file at all; should we file jointly through a trade group; are there positions we should not take)
+> - Düzenleme ya da istişare (kurum, taslak, son tarih)
+> - Görüşün neyi söylediği ve hangi maddelere ilişkin olduğu
+> - Açık sorular
+> - Ne ters gidebilir (aleyhe ikrar, önceki tutumlarla çelişki, sektör derneği üzerinden ortak görüşte rekabet hukuku riski)
+> - Avukata sorulacaklar (görüş verelim mi; dernek üzerinden mi verelim; hangi tutumu almayalım)
 >
-> If you need to find a lawyer: your professional regulator's referral service is the fastest starting point (state bar in the US; SRA/Bar Standards Board in England & Wales; Law Society in Scotland/NI/Ireland/Canada/Australia; or your jurisdiction's equivalent).
+> Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
 
-Do not log a "filing" decision or produce a submission-ready draft past this gate without an explicit yes. Tracking views, deadline reminders, and "not-filing / waived" decisions do not require the gate.
+Açık bir "evet" olmadan `filing` kararı kaydetme ve sunulmaya hazır taslak üretme. İzleme görünümleri, son tarih hatırlatmaları ve `not-filing` / `waived` kararları kapıya tabi değildir.
 
 ---
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- Draft the comment letter. That is a separate attorney task.
-- Make the filing decision. It tracks the decision; the attorney makes it.
-- Monitor post-comment activity. Once a decision is filed, this tracker's job
-  is done — follow the rulemaking through `/regulatory-legal:reg-feed-watcher`.
+- Görüş metnini yazmaz; ayrı bir avukat işidir (EPDK için `/administrative-legal:epdk-proaktif-gorus`).
+- Görüş verme kararını vermez; kararı kaydeder, kararı avukat verir.
+- Kurumların taslak duyurularını kendiliğinden bulmaz; ArthurLegal araçlarında taslak akışı yoktur. Duyuru sayfası profilde tanımlıysa reg-feed-watcher okur, değilse kullanıcı yapıştırır.
+- Görüş sunulduktan sonraki süreci izlemez; kural yayımlanınca `/regulatory-legal:reg-feed-watcher` yakalar, dava süresi buraya işlenir.
 
-> The `comment-decision` `gap_type` semantics, the per-send Slack confirmation rule, and the comment-tracker.yaml schema live in the **gap-surfacer** reference skill — load it before doing substantive work.
+> `comment-decision` `gap_type` anlamı ve gönderim başına onay kuralı **gap-surfacer** referans skill'indedir; asıl işe başlamadan önce onu yükle.
 
 ---
 
@@ -760,125 +715,65 @@ Do not log a "filing" decision or produce a submission-ready draft past this gat
 ---
 name: customize
 description: >
-  Guided customization of your regulatory practice profile — change one thing
-  without re-running the whole cold-start interview. Adjust watched
-  regulators, policy library index, materiality threshold, gap response
-  process, feed configuration, or matter workspace paths. Use when the user
-  says "change my [thing]", "add a regulator", "update my watchlist", "edit
-  my threshold", or "customize".
-argument-hint: "[section name, or describe what you want to change]"
+  Mevzuat izleme profilinde tek bir şeyi değiştir — tüm kurulum görüşmesini
+  yeniden yapmadan. İzlenen kurumlar (EPDK, BDDK, SPK, BTK, KVKK, Rekabet, GİB,
+  Sigorta Tahkim, Resmî Gazete, yabancı rejimler), politika kütüphanesi,
+  önemlilik eşiği, açık yönetim süreci, akışlar, tarama sıklığı, özetin
+  alıcıları ya da matter klasörleri. Kullanıcı "şunu değiştir", "kurum ekle",
+  "izleme listemi güncelle", "eşiği değiştir" ya da "customize" dediğinde kullan.
+argument-hint: "[bölüm adı ya da değişikliğin tarifi]"
 ---
 
 # /customize
 
-## When this runs
+## Ne zaman çalışır
 
-The user typed `/regulatory-legal:customize`. They want to change something
-in their regulatory profile — a watched regulator, a materiality threshold,
-a feed source — without re-running the whole cold-start interview and
-without hand-editing YAML.
+Kullanıcı profilindeki bir şeyi — izlenen bir kurumu, önemlilik eşiğini, bir akışı, tarama sıklığını — kurulum görüşmesini baştan yapmadan ve dosyayı elle düzenlemeden değiştirmek istiyor.
 
-## What to do
+## Ne yap
 
-1. **Read the config.** Read
-   `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`
-   (and `~/.claude/plugins/config/claude-for-legal/company-profile.md` one
-   level up). If the plugin config does not exist or still contains
-   `[PLACEHOLDER]` values, say:
+1. **Profili oku.** `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` ve bir üst klasördeki `~/.claude/plugins/config/claude-for-legal/company-profile.md`. Eklenti profili yoksa ya da `[PLACEHOLDER]` içeriyorsa:
+   > Henüz kurulum yapılmamış. Önce `/regulatory-legal:cold-start-interview` çalıştırın — customize mevcut bir profili ayarlamak içindir.
 
-   > You haven't run setup yet. Run `/regulatory-legal:cold-start-interview`
-   > first — customize is for adjusting a profile you already have.
+2. **Haritayı göster** (her biri için tek satır mevcut değer):
+   - **Kim olduğumuz** — ad, sektör, ülkeler, pratik ortamı *(tüm eklentilerle ortak — değişiklik `company-profile.md`'e yazılır)*
+   - **İzlenen kurumlar** (`## Regulators we watch`) — kurum, neden, akış kaynağı; "öncelikli" (politikayı en çok etkileyen) ve "izleme" ayrımı
+   - **Politika kütüphanesi** (`## Policy library`) — politikalar, yerleri, sahipleri
+   - **Önemlilik eşiği** (`## Materiality threshold`) — anında / haftalık özet / FYI; `/regulatory-legal:reg-feed-watcher` çıktısını nasıl süzdüğü
+   - **Açık yönetimi** (`## Gap response process`) — kim triyaj yapar, kim politikayı günceller, nerede takip edilir, eskalasyon
+   - **Akışlar** (`## Feed configuration`) — ArthurLegal araçları, RSS adresleri, ücretli abonelik, `**Check cadence:**`, `**Digest channel:**`, `Digest output path`, taslak görüş takibi ve karar sahibi
+   - **Kişiler** — hukuk müdürü, uyum yöneticisi, politika sahipleri, görüş yazısı hazırlayan, eskalasyon zinciri
+   - **İş akışı** — matter workspaces, açık takip kaydı, `comment-tracker.yaml`, özet yayım sıklığı
+   - **Entegrasyonlar** — ArthurLegal MCP, Thomson Reuters, Slack, belge deposu; düşüş yolları
 
-2. **Show the customizable map.** List what's in the profile, grouped, with a
-   one-line summary of the current value:
+3. **Sor:** "Neyi ayarlayalım? Bir bölüm seçin ya da değişikliği kendi cümlenizle anlatın."
 
-   - **Company / who you are** — name, industry, jurisdictions, stage, practice
-     setting *(shared across all 12 plugins — changes flow through
-     `company-profile.md`)*
-   - **Regulators we watch** — agencies / bodies / SROs / state regulators
-     in scope, and which are "leading" (most likely to drive policy
-     impact) vs. "monitor"
-   - **Policy library** — the internal policies the library indexes, path
-     to each, owner per policy
-   - **Materiality threshold** — when a regulatory change rises to
-     "notable" vs. "report" vs. "digest only"; how this threshold filters
-     `/watch` output
-   - **Gap response process** — who triages, SLA per severity, downstream
-     owners (policy, product, training)
-   - **Feed configuration** — regulator feeds, Thomson Reuters
-     connectors, cadence of the `/watch` sweep, digest channel
-   - **People** — regulatory counsel, policy owners, comment drafter,
-     escalation chain
-   - **Workflow** — matter workspaces, open gaps tracker, comment deadline
-     tracker, digest publication cadence
-   - **Integrations** — Thomson Reuters / Slack / document
-     storage status, fallbacks
+4. **Değişikliği yap.** Mevcut değeri göster, yenisini al, aşağı akış etkisini açıkla, onay al, yaz. Örnekler:
+   - *Kurum ekleme (EPDK, elektrik):* "Satıra neden ve akış yazılır: `tr_kurum_karari_ara(kurum="epdk", market="elektrik")` + `tr_resmi_gazete_tara(konu="enerji", query=…)`. `reg-feed-watcher` bir sonraki taramada bu kurumu süzer; `/regulatory-legal:policy-diff` bu kurumdan gelen düzenlemeyi girdi olarak kabul eder. Dayanak: lisanslı piyasa faaliyetleri 6446 s. Kanun m. 4/1."
+   - *Kullanıcı KİK, Sayıştay, TÜRKPATENT ya da İSTAÇ eklemek istiyor:* "ArthurLegal'da bu kaynaklar yok (resmî uçları cevap vermiyor). Satırı `Feed source: manual` ile ekleyebilirim; RG'de yayımlanan yönetmelik ve tebliğleri `tr_resmi_gazete_tara(query=…)` yakalar, kurul kararları için kurumun sitesini ya da RSS adresini siz verirsiniz."
+   - *Ödeme kuruluşu için BDDK ekleme talebi:* "Ödeme kuruluşu faaliyet iznini Merkez Bankası verir (6493 s. Kanun m. 3/1-b, m. 15/1); doğru satır TCMB'dir ve akışı RG'dir. BDDK'yı da tutalım mı?"
+   - *Eşiği sıkılaştırma:* "Haftalık özet kısalır; yeni eşiğin altındaki kalemler özetten düşer ama aranabilir kalır."
+   - *Sıklık haftalık → günlük:* "`reg-change-monitor` her gün çalışır; RG taraması gün başına bir istek atar ve tek seferde en çok 60 günlük aralık tarar."
+   - *Yeni politika eklendi:* "`/regulatory-legal:policy-diff` yeni kuralları bu politikayla da karşılaştırır; görüş takibi bu politikayı etkileyen taslakları etiketler. Sahibi boşsa açıklar `owner: [unassigned]` düşer."
+   - *Yabancı rejim (AB):* "Satır eklenir; kaynak `eu_search_eu_law`. ABD için ArthurLegal kaynağı yok — Federal Register API ya da kurum RSS'i `Free feeds` tablosuna, yorum için ABD'li avukat."
+   - *Özet alıcısı değişti:* "`**Digest channel:**` güncellenir; Slack bağlı değilse özet yalnız dosya olarak yazılır."
 
-3. **Ask what they want to change.**
+   Kullanıcı bir madde, süre ya da eşik söylüyorsa yazmadan önce `tr_mevzuat_madde_getir` ile doğrula; idari para cezası tutarlarını sabit yazma (güncel tutarı teyit et — dönemsel güncellenir).
 
-   > What would you like to adjust? Pick a section, or describe the change in
-   > your own words.
+5. **Ortak profil değişiklikleri** (ad, sektör, ülkeler, pratik ortamı) `company-profile.md`'e yazılır:
+   > Bu değişiklik tüm eklentileri etkiler — ülke listesini okuyan her eklenti artık [yeni değer]i görür.
 
-4. **Make the change.** Show the current value, ask for the new value, explain
-   what changes downstream, confirm, write it to the config.
+   Pratik ortamı kurum içinden büroya geçiyorsa `## Matter workspaces` → `**Enabled:** ✓` ve `**Cross-matter context:** off` önerilir; Av. K. m. 38 gereği çatışma kontrolünü hatırlat.
 
-   Examples:
-   - *Adding a regulator to the watchlist:* "`/watch` will sweep this
-     regulator on its next run. `/diff` will accept inputs from this
-     regulator's rulemaking feed."
-   - *Tightening materiality threshold:* "`/watch` digest will be
-     shorter — items below the new threshold will drop from the weekly
-     digest but stay searchable."
-   - *New policy added to the library:* "`/diff` will include this policy
-     when matching new rules against the library. The comment tracker
-     will tag comments affecting this policy."
+6. **Kapat:** "Tamam. Bir sonraki çıktı bunu yansıtacak. Başka bir şey var mı? `/regulatory-legal:customize` her zaman çalışır."
 
-5. **For shared-profile changes** (company name, industry, jurisdictions,
-   practice setting, stage): write to
-   `~/.claude/plugins/config/claude-for-legal/company-profile.md` and note:
+## Korkuluklar
 
-   > This change affects all 12 plugins — any plugin that reads your
-   > jurisdiction footprint now sees [new value].
-
-6. **Close.**
-
-   > Done. Your next output will reflect the change. Anything else? You can
-   > run `/regulatory-legal:customize` anytime.
-
-## Guardrails
-
-- **Never delete a section.** If the user wants to "drop" a regulator,
-  offer to mark it `[Monitor only]` and explain that monitoring keeps the
-  feed in the archive but pulls it out of the active digest.
-- **Flag internal inconsistency.** If the change would make the profile
-  inconsistent (e.g., regulator in scope + no jurisdiction in the footprint
-  that the regulator covers; or "weekly digest" + materiality threshold
-  that yields fewer than one item a quarter), flag the tension.
-- **Flag guardrail degradation.** `[verify]` tags on cited regulations,
-  source attribution on feed pulls, and the `[review]` flag on gap triage
-  are load-bearing — do not remove. Materiality threshold can be adjusted,
-  but lowering it below the point where the digest becomes noise is the
-  point — warn if that's the direction.
-- **One change at a time.** Don't re-ask the whole interview.
-
----
-
-## /regulatory-legal:gaps
-
----
-name: gaps
-description: Open gaps tracker — what's flagged and not yet closed. Use when the user asks "what gaps are open", "gap tracker", "remediation status", or wants to close (--close GAP-ID) or risk-accept (--accept GAP-ID) a tracked gap.
-argument-hint: "[optional: --close GAP-ID | --accept GAP-ID]"
----
-
-# /gaps
-
-1. Read the gap tracker at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml`.
-2. If `--close`: mark gap closed with resolution note.
-3. If `--accept`: record the risk-acceptance rationale and acceptor, status → risk-accepted.
-4. Otherwise: report open gaps by age and materiality.
-
-> Detailed tracker schema, status-report format, owner-notification logic (per-send confirmation, no exceptions), reminder cadence, the close/risk-accept modes, and the consequential-action gate live in the **gap-surfacer** reference skill — load it before doing substantive work.
+- **Bölümü silme.** Bir kurum "çıkarılmak" istenirse `[Monitor only]` işaretini öner: akış arşivde kalır, aktif özetten çıkar.
+- **İç tutarsızlığı işaretle.** Ör. izlenen kurum + o kurumun alanında faaliyet yok (EPDK var, lisans yok); "haftalık özet" + çeyrekte bir kalem bile çıkarmayacak eşik; "Sigorta Tahkim" düzenleyici gibi yazılmış (hakem kararıdır; düzenleyici SEDDK, akışı RG); KVKK izleniyor ama `/privacy-legal` profili farklı kurum listesi taşıyor.
+- **Güvence kaybını işaretle.** Kaynak etiketleri, çekilemeyen veride UYARI satırı, `[verify]` etiketleri ve açık triyajındaki `[review]` işareti yük taşır — kaldırma. Eşik ayarlanabilir; ama aleyhe düzenleyici işlemi "anında"dan düşürmek isteniyorsa uyar: ilanı gereken düzenleyici işlemde dava süresi ilan tarihini izleyen günden işler (İYUK m. 7/4).
+- **Anahtarları çevirme** (`## Regulators we watch`, `## Materiality threshold`, `## Feed configuration`, `**Check cadence:**`, `## Matter workspaces`, `Active matter:` vb.).
+- **Tek seferde tek değişiklik.** Görüşmeyi baştan sorma.
 
 ---
 
@@ -887,245 +782,249 @@ argument-hint: "[optional: --close GAP-ID | --accept GAP-ID]"
 ---
 name: gap-surfacer
 description: >
-  Reference: shared gap- and comment-tracker framework backing /regulatory-legal:gaps
-  and /regulatory-legal:comments. Tracks open policy gaps with remediation status,
-  ingests gaps from policy-diff, surfaces what's open and aging, routes to owners,
-  and notifies gap owners via Slack with per-send confirmation. Loaded by the gaps
-  and comments skills before doing substantive work.
+  Referans: /regulatory-legal:gaps ve /regulatory-legal:comments skill'lerinin dayandığı ortak
+  açık ve görüş izleme çerçevesi. Açık politika açıklarını düzeltme durumuyla izler,
+  policy-diff'in bulduğu açıkları alır, açık ve yaşlanan kalemleri gösterir, sahiplerine
+  yönlendirir ve sahiplere gönderim başına onayla bildirim taslağı hazırlar. gaps ve comments
+  skill'leri asıl işe başlamadan önce bunu yükler.
 user-invocable: false
 ---
 
 # Gap Surfacer
 
-> Owner notifications: on by default. To opt an owner out, leave `owner_slack` empty.
+> Sahip bildirimleri varsayılan olarak açıktır. Bir sahibi çıkarmak için `owner_slack` alanını boş bırak.
 
-## Per-send confirmation — no exceptions
+## Gönderim başına onay — istisnasız
 
-Before sending ANY Slack message (assignment notice, overdue reminder, bulk notification, status report):
+Herhangi bir mesajı (Slack, Teams ya da e-posta: atama bildirimi, gecikme hatırlatması, toplu bildirim, durum raporu) göndermeden önce:
 
-1. Show the user exactly what you're about to send and to whom: "I'm about to send this to [N] people: [preview]."
-2. Wait for an explicit yes.
-3. If the message contains any citations, deadlines, or compliance conclusions, add: "⚠️ The citations in this message are unverified — I'm not confirming they're current before sending. Do you want me to add a 'verify before acting' line?"
-4. Never send without the confirm. Not on a cadence. Not in a batch. Not because it was sent yesterday.
+1. Kullanıcıya tam olarak neyi kime göndereceğini göster: "Bunu [N] kişiye göndermek üzereyim: [önizleme]."
+2. Açık bir "evet" bekle.
+3. Mesajda künye, son tarih ya da uyum sonucu varsa ekle: "⚠️ Bu mesajdaki künyeler doğrulanmadı; güncel olduklarını teyit etmeden gönderiyorum. 'Uygulamadan önce doğrulayın' satırı ekleyeyim mi?"
+4. Onaysız asla gönderme. Takvime bağlı olarak da, toplu olarak da, "dün de gönderilmişti" diye de.
 
-Auto-send without confirmation is the most irreversible action in this plugin, sending content this plugin's own footer says may be wrong, to people who have no way to check. That combination does not get to skip review.
+Onaysız otomatik gönderim bu eklentideki en geri alınamaz eylemdir: eklentinin kendi doğrulama notunun "yanlış olabilir" dediği içeriği, kontrol imkânı olmayan kişilere gönderir. Bu ikisinin birleşimi incelemeyi atlayamaz.
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/regulatory-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Eklenti profilinde `## Matter workspaces` → `Enabled` `✗` ise (şirket içi kullanımda varsayılan) bu paragrafı atla; skill'ler practice-level bağlamla çalışır. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/regulatory-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
 ---
 
-## Purpose
+## Amaç
 
-Gaps get found and then forgotten. This skill tracks them until they're closed
-and notifies the people responsible for closing them.
+Açıklar bulunur, sonra unutulur. Bu skill açığı kapanana kadar izler ve kapatmaktan sorumlu kişiye hatırlatır.
 
-## The tracker
+## İzleyici
 
-Lives at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml`:
+`~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml` dosyasındadır. Anahtarlar ve değerler İngilizce kalır; açıklamalar Türkçe.
 
-> **Note on comment-tracker.yaml:** `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` is a sibling file owned by the comments skill. It is written to by reg-feed-watcher (which logs NPRMs automatically) and the comments skill (which tracks user-initiated comment decisions). This skill does not read or cross-reference it. If you modify the comment-tracker schema, update both actual consumers.
+> **comment-tracker.yaml notu:** `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` comments skill'inin kardeş dosyasıdır. reg-feed-watcher (taslak ve istişareleri otomatik kaydeder) ve comments (kullanıcının görüş kararlarını izler) yazar; şeması comments skill'indedir. Bu skill onu okumaz. Şemayı değiştirirsen iki kullanıcıyı da güncelle.
 
 ```yaml
 gaps:
   - id: GAP-001
-    requirement: "[what the reg requires]"
-    regulation: "[name + cite]"
-    policy_affected: "[name or 'new policy needed']"
+    requirement: "[düzenlemenin istediği, tek cümle]"
+    regulation: "[ad + araçtan dönen citation]"
+    policy_affected: "[politika adı ya da 'new policy needed']"
     gap_type: "partial"  # none | partial | full | new-policy | watch | comment-decision
-    owner: "[name from policy index]"
-    owner_slack: "[Slack user ID or handle, if known]"
-    opened: 2026-03-01
-    due: 2026-06-01  # reg effective date, internal deadline, or comment deadline
-    status_verified: true  # false if upstream policy-diff could not confirm the rule is in force; unverified items never hit 🔴 Overdue
+    owner: "[politika kütüphanesindeki sahip]"
+    owner_slack: "[Slack kullanıcı kimliği, biliniyorsa]"
+    opened: 2026-10-26
+    due: 2027-01-01  # yürürlük tarihi, geçiş süresinin sonu, kurum ihtarındaki giderme süresi, iç son tarih ya da görüş son tarihi
+    status_verified: true  # policy-diff kuralın yürürlükte olduğunu teyit edemediyse false; doğrulanmamış kalem hiçbir zaman 🔴 Overdue olmaz
     status: "open"  # open | in-progress | closed | risk-accepted
-    notified: false  # set to true after assignment notification sent
-    resolution: ""  # filled on close
+    notified: false  # atama bildirimi gönderilince true
+    resolution: ""  # kapanışta doldurulur
 ```
 
-**Never classify a gap as Overdue on an unverified rule.** The 🔴 Overdue classification means "we missed a binding deadline." If the rule's status is unverified (policy-diff set `status_verified: false`, or the rule is >12 months old / past its applicability date with no currency confirmation), the deadline may not be binding. Use 🟡 "Review needed" and note: "If this rule is in force as published, this would be overdue by [N] days. Verify rule status before escalating." Route unverified-rule items to `watch`, not to the active overdue/due-soon buckets; the `watch` revisit cadence forces a rule-status check before the item can re-surface as a compliance gap.
+**`due` nereden gelir.** Düzenlemenin yürürlük maddesi ya da geçiş hükmü; kurumun yazılı ihtarındaki giderme süresi (ör. elektrik piyasasında ikincil mevzuata ya da Kurul kararına aykırılıkta aykırılığın giderilmesi için verilen ihtar süresi: 6446 m. 16/1-b); iç son tarih; taslak ve istişarede görüş son tarihi. Hangisi olduğunu `due` satırının yanına yorum olarak yaz.
 
-**`gap_type` semantics:**
+**Dava açılmış olması tarihi durdurmaz.** Düzenlemeye karşı dava açılması işlemin yürütülmesini durdurmaz; yürütmeyi durdurma kararı ayrı şartlara bağlıdır (İYUK m. 27/1, 27/2). Kuralı dava edilmiş diye açığı `watch`'a çekme; yürütmeyi durdurma kararı varsa `status_verified: false` yap ve nedenini yaz.
 
-| Value | Meaning | Typical reminder cadence |
+**Doğrulanmamış kuralda Overdue yok.** 🔴 Overdue "bağlayıcı bir süreyi kaçırdık" demektir. Kuralın durumu doğrulanmadıysa (policy-diff `status_verified: false` yazdıysa, ya da kural 12 aydan eski, yürürlük tarihi geçmiş ve güncelliği teyit edilmemişse; AYM iptali, Danıştay yürütmeyi durdurma kararı, değişiklik ya da erteleme kontrol edilmediyse) süre bağlayıcı olmayabilir. 🟡 "İnceleme gerekli" kullan ve yaz: "Kural yayımlandığı hâliyle yürürlükteyse bu [N] gün gecikmiş olur. Eskale etmeden önce kuralın durumunu doğrula." Doğrulanmamış kuralı aktif gecikme ve yaklaşan son tarih kovalarına değil `watch`'a koy; `watch`'ın yeniden değerlendirme tarihi, kalem yeniden uyum açığı olarak çıkmadan önce durum kontrolünü zorlar.
+
+**`gap_type` anlamları:**
+
+| Değer | Anlamı | Hatırlatma |
 |---|---|---|
-| `none` | Policy already covers the requirement. Logged for audit trail only. Should be rare — if most entries are `none`, the diff is probably running against the wrong policy. | No auto-reminder. |
-| `partial` | Policy addresses the topic but doesn't fully cover the new requirement. Needs an amendment. | 30 days before due. |
-| `full` | Policy contradicts or silently omits the new requirement. Needs a rewrite or new section. | 30 days before due. |
-| `new-policy` | No existing policy covers this. Policy needs to be drafted. | 30 days before due. |
-| `watch` | Forward-looking item — ANPR, RFI, proposed rule not yet final. No compliance obligation today; policy work waits for the final rule. `due:` is a revisit date (typically the NPRM expected date or a one-year horizon), not a compliance deadline. | No auto-reminder; re-evaluate when an NPRM drops or at the revisit date. |
-| `comment-decision` | Pre-rulemaking comment decision pending — ANPR or NPRM where the team is deciding whether to file a comment. `due:` is the comment deadline. | 21 days before due (tighter than compliance gaps because comment-drafting windows are short). |
+| `none` | Politika gerekliliği zaten karşılıyor; yalnız denetim izi için kaydedilir. Seyrek olmalı; kayıtların çoğu `none` ise karşılaştırma büyük ihtimalle yanlış politikaya karşı yapılmıştır. | Otomatik hatırlatma yok. |
+| `partial` | Politika konuyu ele alıyor ama yeni gerekliliği tam karşılamıyor; değişiklik gerekir. | Son tarihten 30 gün önce. |
+| `full` | Politika yeni gereklilikle çelişiyor ya da hiç değinmiyor; yeniden yazım ya da yeni bölüm gerekir. | Son tarihten 30 gün önce. |
+| `new-policy` | Bunu karşılayan politika yok; yazılması gerekir. | Son tarihten 30 gün önce. |
+| `watch` | İleriye dönük kalem: istişare, görüşe açılmış ama yayımlanmamış taslak, TBMM'deki kanun teklifi ya da durumu doğrulanmamış kural. Bugün uyum yükümlülüğü yok. `due` yeniden değerlendirme tarihidir (beklenen yayım ya da bir yıllık ufuk), uyum son tarihi değildir. | Otomatik hatırlatma yok; kural yayımlanınca ya da tarih gelince yeniden değerlendir. |
+| `comment-decision` | Görüş kararı bekleyen taslak ya da istişare. `due` görüş son tarihidir. | Son tarihten 21 gün önce (görüş hazırlama penceresi kısadır). |
 
-A `watch` or `comment-decision` entry is not a compliance gap — it's a tracking artifact for pre-rule items that the watch skill and comments skill produce. Surface them in the status report in their own bucket so counsel reading at 7am can tell at a glance which items are "fix this before a regulator notices" vs. "keep an eye on this."
+`watch` ve `comment-decision` kalemleri uyum açığı değildir; kural öncesi izleme kayıtlarıdır. Durum raporunda ayrı kovada göster ki sabah okuyan avukat "kurum fark etmeden düzelt" ile "göz kulak ol"u bir bakışta ayırsın.
 
-## Modes
+## Modlar
 
-### Mode 1: Ingest from policy-diff
+### Mod 1: policy-diff'ten alma
 
-When policy-diff finds gaps, append them to gap-tracker.yaml. De-dupe — same
-requirement + same policy = same gap, don't double-count.
+policy-diff açık bulunca `gap-tracker.yaml`'a ekle. Mükerrer kayıt yapma: aynı gereklilik + aynı politika = aynı açık. policy-diff kapsamı daraltılmış bir karşılaştırma ise (⚠️ KAPSAM SINIRI başlığı) o başlığı her ilgili kayda aynen taşı.
 
-**After ingesting, notify the owner:**
-
-If Slack MCP is available and `owner_slack` is set:
-
-Send a Slack DM to the gap owner — but only after the per-send confirmation at the top of this file. Preview the message to the user, wait for an explicit yes, then send:
+**Aldıktan sonra sahibi bilgilendir.** Slack (ya da profildeki kanal) bağlıysa ve `owner_slack` doluysa, en baştaki gönderim başına onaydan sonra:
 
 ```
-📋 New compliance gap assigned to you
+📋 Size yeni bir uyum açığı atandı
 
-Gap: [GAP-ID] — [requirement, one sentence]
-Regulation: [name + link]
-Policy affected: [policy name or "new policy needed"]
-Due: [reg effective date]
+Açık: [GAP-ID] — [gereklilik, tek cümle]
+Düzenleme: [ad + bağlantı]
+Etkilenen politika: [politika adı ya da "yeni politika gerekli"]
+Son tarih: [tarih ve türü]
 
-View full gap tracker: /regulatory-legal:gaps
+Açık izleyicinin tamamı: /regulatory-legal:gaps
 ```
 
-Set `notified: true` in the tracker entry after sending.
+Gönderdikten sonra kayıtta `notified: true` yap. Kanal bağlı değilse durum raporunda bildirimin gönderilmediğini yaz ve elle takip için işaretle.
 
-If Slack MCP is not available: note in the status report that owner notification
-was not sent and flag for manual follow-up.
-
-### Mode 2: Status report
+### Mod 2: Durum raporu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — ## Outputs; role göre]
 
-## Open Gaps — [date]
+## Açık Uyum Açıkları — [tarih]
 
-### Bottom line
+### Sonuç
 
-[N gaps need action by [date] — top 3: X, Y, Z]
+[N açık [tarih]e kadar işlem gerektiriyor — ilk üçü: X, Y, Z]
 
 ### 🔴 Overdue
 
-| ID | Requirement | Policy | Owner | Due | Days over |
+| ID | Gereklilik | Politika | Sahip | Son tarih | Geçen gün |
 |---|---|---|---|---|---|
 
-### 🟠 Due in <30 days
+### 🟠 30 günden az kalan
 
-[same]
+[aynı tablo]
 
-### 🟡 Open
+### 🟡 Açık
 
-[same]
+[aynı tablo; doğrulanmamış kural kaynaklı "İnceleme gerekli" satırları da burada, notuyla]
 
-### 👀 Watch items (forward-looking — pre-rule)
+### 👀 İzleme kalemleri (kural öncesi)
 
-[Pre-rule tracking — `watch` and `comment-decision` entries. These are not
-compliance gaps. Surface separately so the overdue / due-soon bands contain
-only real compliance deadlines.]
+[`watch` ve `comment-decision` kayıtları. Uyum açığı değildir; ayrı tutulur ki gecikme ve yaklaşan son tarih kovalarında yalnız gerçek uyum süreleri kalsın.]
 
-| ID | Item | Type (ANPR/NPRM/RFI) | Comment deadline | Owner |
+| ID | Kalem | Tür (taslak / istişare / kanun teklifi / durumu doğrulanmamış) | Görüş ya da yeniden değerlendirme tarihi | Sahip |
 |---|---|---|---|---|
 
-### In progress
+### Devam eden
 
-[same]
+[aynı tablo]
 
-### Recently closed
+### Yakında kapananlar
 
-[last 5, with resolution]
-
----
-
-**Oldest open gap:** [ID], [N] days
-**Gaps by owner:** [breakdown]
-**Owner notifications sent:** [N] / [N total gaps]
+[son 5, kapanış notuyla]
 
 ---
 
-**Next step for each open gap:** `/regulatory-legal:policy-redraft` produces a marked-up policy redraft with `[verify]` tags and a change summary. It's a proposal for the policy owner's review — not a direct edit to source documents.
+**En eski açık:** [ID], [N] gün
+**Sahibe göre:** [dağılım]
+**Gönderilen sahip bildirimi:** [N] / [toplam]
 
 ---
 
-**Verify citations before relying on them.** Regulation citations in this tracker were AI-generated upstream (by reg-feed-watcher and policy-diff) and have not been checked against a primary source. Before closing or risk-accepting a gap — or citing one in an attestation, board report, or regulator response — confirm the underlying rule against Westlaw, your firm's research platform, or the issuing authority's website. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags carried forward from upstream (e.g., `[Federal Register]`, `[web search — verify]`) show where each citation originated; `verify` tags carry higher fabrication risk and should be checked first. Never strip the tags when surfacing gaps.
+**Her açık için sonraki adım:** `/regulatory-legal:policy-redraft`, `[doğrula]` etiketli işaretli bir politika taslağı ve değişiklik özeti üretir. Politika sahibinin incelemesi için öneridir; kaynak belgeye doğrudan müdahale değildir.
+
+---
+
+**Atıfları doğrula.** Bu izleyicideki künyeler önceki adımlarda (reg-feed-watcher ve policy-diff) yapay zekâ desteğiyle üretildi. Bir açığı kapatmadan ya da risk kabulüne almadan — veya bir iç beyan, yönetim kurulu raporu ya da kuruma cevapta kullanmadan — dayanak kuralı Resmî Gazete, mevzuat.gov.tr ya da kurumun sitesinden doğrula. Önceki adımlardan taşınan kaynak etiketleri (ör. `[ArthurLegal TR — tr_resmi_gazete_tara — GG.AA.YYYY]`, `[web araması — doğrula]`) künyenin nereden geldiğini gösterir; `doğrula` etiketliler önce kontrol edilir. Etiketleri silme.
 ```
 
-## Config-dependent fallbacks
+## Ayar eksikse
 
-This skill reads gap-response owners and the escalation path from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. When a value it needs is empty or still `[PLACEHOLDER]`:
+Bu skill açık sahiplerini `## Policy library` tablosunun Owner sütunundan, triyaj ve eskalasyonu `## Gap response process` altındaki `**Who triages regulatory changes:**` ve `**Escalation for material gaps:**` satırlarından okur. Gereken değer boşsa ya da `[PLACEHOLDER]` ise:
+- **Triyaj sorumlusu yok:** atamayı açık bırak ve ekle: "`## Gap response process` altında `**Who triages regulatory changes:**` boş. Yeni açıkların yönlendirilmesi için `/regulatory-legal:cold-start-interview --redo` ile ya da profili düzenleyerek atayın."
+- **Yeni açığın sahibi bilinmiyor:** `owner: [unassigned]` ile kaydet ve ekle: "Politika kütüphanesi etkilenen politika için sahip göstermediğinden [N] açık sahipsiz kaydedildi. Yönlendirme için kütüphanedeki Owner sütununu doldurun."
+- **Gecikmiş önemli açık için eskalasyon yolu yok:** yine gecikmiş olarak raporla ve ekle: "Gecikmiş önemli açıklar için eskalasyon yolu tanımlı değil. `/regulatory-legal:cold-start-interview --redo` ile ya da profili düzenleyerek tanımlayın."
 
-- **Gap-response triager missing:** leave assignment open and append to the output: "No triager is set in `## Gap response process`. Assign one with `/regulatory-legal:cold-start-interview --redo` or by editing `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` so new gaps get routed."
-- **Owner unknown for a newly-ingested gap (no owner in policy library):** log the gap with `owner: [unassigned]` and append: "[N] gaps were ingested without an owner because the policy library doesn't name one for the affected policy. Fill in the Owner column in the policy library to route them."
-- **Escalation path missing for an overdue material gap:** still report it as overdue, and append: "No escalation path is set for material overdue gaps. Configure it with `/regulatory-legal:cold-start-interview --redo` or by editing `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`."
+Değerler doluysa ayardan söz etme.
 
-Say nothing about config when the values are populated.
+**Son tarih hatırlatma mantığı** (durum raporunda ve zamanlanmış ajanda çalışır). Hatırlatma sıklığı `gap_type`'a bağlıdır: uyum açığına 30 gün, görüş kararına 21 gün önceden haber; `watch`'a otomatik hatırlatma yok.
 
-**Due-date reminder logic (runs during status report and scheduled agent):**
+"open" ya da "in-progress" her kayıt için:
+- `partial`, `full`, `new-policy`, `none`: son tarihe 30 günden az kaldıysa ve son 7 günde hatırlatma gönderilmediyse "⏰ Hatırlatma: uyum açığına [N] gün kaldı" başlıklı mesajı ÖNİZLE ve onay bekle.
+- `comment-decision`: görüş son tarihine 21 günden az kaldıysa ve son 7 günde hatırlatma gönderilmediyse "💬 Görüş kararı için [N] gün kaldı" başlıklı mesajı ÖNİZLE ve onay bekle.
+- `watch`: otomatik hatırlatma yok. İzleyici gözden geçirilirken ya da aynı düzenleme için kural yayımlanınca yeniden bak.
+- Uyum açığının son tarihi geçtiyse: raporda gecikmiş göster, mesajı ÖNİZLE, onay bekle.
+- `comment-decision` kaleminin son tarihi geçti ve görüş sunulmadıysa: gecikmiş göster, mesajı ÖNİZLE, onay bekle; sahibinden kaydı notuyla birlikte `risk-accepted` (bilinçli olarak görüş verilmedi) ya da `closed` (görüş sunuldu) yapmasını iste.
+- Hatırlatma zamanlarını kayda yaz ki tekrar tekrar rahatsız etmeyesin.
+- Toplu hatırlatma da onay ister: "12 mesaj göndermek üzeresiniz" önizlemesi ve "evet" yeterlidir; sessizce toplu gönderim yeterli değildir.
 
-Reminder cadence is a function of `gap_type` — compliance gaps get a 30-day heads-up, comment-decision items get 21 days (tighter because the drafting window is shorter), watch items get no auto-reminder (re-evaluate when an NPRM drops).
+### Sonuç doğuran eylem kapısı (uyum beyanı)
 
-For each gap with status "open" or "in-progress":
-- `partial`, `full`, `new-policy`, `none`: if due date is within 30 days and a reminder has not been sent in the last 7 days, PREVIEW a Slack DM (subject "⏰ Reminder: compliance gap due in [N] days") and wait for per-send confirm before sending.
-- `comment-decision`: if comment deadline is within 21 days and a reminder has not been sent in the last 7 days, PREVIEW a Slack DM (subject "💬 Comment-decision deadline in [N] days") and wait for per-send confirm before sending.
-- `watch`: no auto-reminder. Revisit when the tracker is reviewed or an NPRM is logged for the same regulation.
-- If due date has passed on a compliance gap: flag as overdue in the report and PREVIEW a Slack DM — wait for per-send confirm before sending.
-- If comment deadline has passed on a `comment-decision` item and no comment was filed: flag as overdue, PREVIEW a Slack DM (wait for per-send confirm), and ask the owner to update to `risk-accepted` (deliberate no-comment) or `closed` (comment filed) with a note.
-- Record reminder timestamps in the tracker to avoid repeat nags.
-- Batch reminders still require per-send confirm — previewing "you're about to send 12 DMs" and waiting for yes counts; silently firing a batch does not.
+**Bir açığı çözüldü diye kapatmadan ya da bir düzenleyici gerekliliğe uyumu beyan eden herhangi bir çıktı (iç beyan, yönetim kurulu raporu, denetim cevabı, kuruma cevap) üretmeden önce** profildeki `## Who's using this` bölümünü oku. Rol **Non-lawyer** ise:
 
-### Consequential-action gate (certify compliance)
-
-**Before closing a gap as resolved, or producing any output that certifies compliance with a regulatory requirement (internal attestation, board report, audit response, regulator response):** Read `## Who's using this` in ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md. If the Role is **Non-lawyer**:
-
-> Certifying compliance — or closing a gap as resolved — has legal consequences. The certification can be used against the company if it's later shown to be wrong, and premature closure leaves exposure unaddressed. Have you reviewed this with an attorney? If yes, proceed. If no, here's a brief to bring to them:
+> Uyum beyan etmek ya da bir açığı çözüldü diye kapatmak hukuki sonuç doğurur. Beyan sonradan yanlış çıkarsa şirket aleyhine kullanılabilir; erken kapanış riski açık bırakır. Kuruma verilen bilgi ayrıca yaptırıma konu olabilir: örneğin elektrik piyasasında Kurumun bilgi istemesinde yanlış, eksik ya da yanıltıcı bilgi verilmesi ihtar ve idari para cezasına bağlanmıştır (6446 m. 16/1-a). Bunu bir avukatla incelediniz mi? Evetse devam ediyorum. Hayırsa avukata götüreceğiniz özet:
 >
-> - The gap (requirement, source, what the policy diff found)
-> - What the proposed resolution does and does not cover
-> - Any residual gap or ambiguity
-> - Open questions and what's unresolved
-> - What could go wrong (overbroad certification, unresolved residual obligation, inconsistent prior position)
-> - What to ask the attorney (is this truly closed; should we risk-accept with rationale instead; do we need outside-counsel concurrence)
+> - Açık (gereklilik, kaynak, karşılaştırmanın bulduğu)
+> - Önerilen çözümün neyi kapsayıp neyi kapsamadığı
+> - Kalan açık ya da belirsizlik
+> - Açık sorular
+> - Ne ters gidebilir (fazla geniş beyan, çözülmemiş kalan yükümlülük, önceki tutumla çelişki)
+> - Avukata sorulacaklar (gerçekten kapandı mı; gerekçeli risk kabulü daha mı doğru; dış avukat görüşü gerekir mi)
 >
-> If you need to find a lawyer: your professional regulator's referral service is the fastest starting point (state bar in the US; SRA/Bar Standards Board in England & Wales; Law Society in Scotland/NI/Ireland/Canada/Australia; or your jurisdiction's equivalent).
+> Avukat bulmak için bağlı olduğunuz baroya başvurabilirsiniz.
 
-Do not mark a gap closed or produce a compliance certification past this gate without an explicit yes. Status reports and tracking views do not require the gate.
+Açık bir "evet" olmadan açığı kapalı işaretleme ve uyum beyanı üretme. Durum raporları ve izleme görünümleri kapıya tabi değildir.
 
-### Mode 3: Close a gap
+### Mod 3: Açığı kapatma
 
 ```
 /regulatory-legal:gaps --close GAP-001
-Resolution: "Policy updated v2.3, approved [date]"
+Resolution: "Politika v2.3 güncellendi, [tarih]te onaylandı"
 ```
 
-Updates status to closed, records resolution and close date.
+Durumu `closed` yapar; kapanış notunu ve tarihini kaydeder.
 
-### Mode 4: Risk-accept a gap
+### Mod 4: Risk kabulü
 
-Sometimes the answer is "we're not going to fix this." That's a valid decision
-— but it should be documented.
+Bazen cevap "bunu düzeltmeyeceğiz"dir. Geçerli bir karardır ama belgelenmelidir.
 
 ```
 /regulatory-legal:gaps --accept GAP-002
-Rationale: "Requirement applies only to [condition we don't meet]. Revisit if [trigger]."
-Accepted by: [name with authority]
+Rationale: "Gereklilik yalnız [karşılamadığımız koşul] için geçerli. [Tetikleyici] olursa yeniden bak."
+Accepted by: [yetkili kişi]
 ```
 
-Status → risk-accepted. Stays in the tracker (not deleted) but falls out of
-the open-gaps report.
+Durum `risk-accepted` olur. Kayıt silinmez ama açık raporundan çıkar. Önemli bir açıkta kabul edenin yetkisini `**Escalation for material gaps:**` satırıyla karşılaştır; yetkisi görünmüyorsa kaydetmeden önce eskalasyonu öner.
 
-## Integration: reg-change-monitor agent
+## Entegrasyon: reg-change-monitor ajanı
 
-The agent's digest includes the gap count and oldest-open-gap age. If anything
-goes overdue, that goes at the top of the digest. The agent also runs the
-due-date reminder check and sends any outstanding Slack notifications.
+Ajanın digest'i açık sayısını ve en eski açığın yaşını içerir. Gecikmiş bir şey varsa digest'in en üstüne yazılır. Ajan son tarih hatırlatma kontrolünü de çalıştırır; ama mesajlar burada da gönderim başına onaya tabidir: gözetimsiz çalışmada göndermez, "onay bekleyen bildirimler" olarak listeler.
 
-## Close with the next-steps decision tree
+## Kapanış
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+Profildeki `## Outputs` karar ağacıyla bitir; seçenekleri bu çıktıya uyarla (X'i yaz, eskale et, olgu topla, izle ve bekle, başka bir şey). Ağaç çıktıdır; seçimi avukat yapar.
 
-If the tracker surfaced more than ~10 open gaps, or any time the user asks: offer the dashboard (see CLAUDE.md `## Outputs → Dashboard offer for data-heavy outputs`). Shape the offer for this output — counts by severity, a timeline of gaps by due date, and a sortable grid with owner, status, and last-touched date.
+İzleyicide yaklaşık 10'dan fazla açık açık varsa ya da kullanıcı isterse panoyu öner (profil `## Outputs → Dashboard offer for data-heavy outputs`): önem derecesine göre sayılar, son tarihe göre açık zaman çizelgesi, sahip, durum ve son işlem tarihiyle sıralanabilir tablo.
 
-## What this skill does not do
+## Bu skill ne yapmaz
 
-- Close gaps on its own. Closing requires the resolution note and the human
-  action that the note describes.
-- Send Slack notifications if the Slack MCP is not configured. Falls back to
-  flagging in the status report.
-- Send more than one reminder per 7-day period per gap. Nag once, not constantly.
+- Açıkları kendiliğinden kapatmaz. Kapanış, kapanış notu ve notun anlattığı insan eylemiyle olur.
+- Slack (ya da profildeki kanal) bağlı değilse bildirim göndermez; durum raporunda işaretler.
+- Aynı açık için 7 günde birden fazla hatırlatma göndermez.
+- Uyum beyanı ya da kuruma cevap metnini kapı onayı olmadan üretmez.
+
+---
+
+## /regulatory-legal:gaps
+
+---
+name: gaps
+description: Açık uyum açıkları izleyicisi — işaretlenmiş ama kapanmamış olanlar. "Hangi açıklar açık", "açık izleyici", "düzeltme durumu" denince ya da izlenen bir açık kapatılmak (--close GAP-ID) veya risk kabulüne alınmak (--accept GAP-ID) istendiğinde kullan.
+argument-hint: "[isteğe bağlı: --close GAP-ID | --accept GAP-ID]"
+---
+
+# /gaps
+
+1. `~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml` dosyasındaki izleyiciyi oku.
+2. `--close`: açığı kapanış notuyla kapat. Önce gap-surfacer'daki uyum beyanı kapısını uygula (rol Non-lawyer ise avukat onayı sorulur).
+3. `--accept`: risk kabulü gerekçesini ve kabul edeni kaydet; durum `risk-accepted`. Kabul edenin yetkisini profildeki eskalasyon yolundan kontrol et.
+4. Aksi hâlde: açık kalemleri yaşa ve önemliliğe göre raporla; kural öncesi kalemleri (`watch`, `comment-decision`) ayrı kovada göster.
+
+> İzleyici şeması, durum raporu biçimi, sahip bildirimi kuralı (gönderim başına onay, istisnasız), hatırlatma sıklığı, kapatma ve risk kabulü modları, doğrulanmamış kuralda Overdue yasağı ve uyum beyanı kapısı **gap-surfacer** referans skill'indedir; asıl işe başlamadan önce onu yükle.
 
 ---
 
@@ -1133,184 +1032,176 @@ If the tracker surfaced more than ~10 open gaps, or any time the user asks: offe
 
 ---
 name: matter-workspace
-description: Manage matter workspaces — create, list, switch, close, or detach the active matter (practice-level). Use when working across multiple clients or matters and you need to keep one engagement's context separate from another, or when a substantive skill needs to know which matter it's working in.
+description: >
+  Matter çalışma alanlarını yönet — new, list, switch, close ya da none (yalnız
+  uygulama düzeyi). Bir müvekkilin mevzuat değişikliği, taslak görüş, açık
+  giderme, kurum bilgi talebi ya da soruşturma dosyasının bağlamını diğerlerinden
+  ayrı tutar; aynı sektörde birden fazla müvekkil izlenebildiği için çapraz okuma
+  kapalıdır. Çok müvekkilli avukat "yeni matter", "matter değiştir", "matter'larımı
+  listele", "matter'ı kapat" dediğinde ya da bir skill hangi matter'da çalıştığını
+  bilmek istediğinde kullan.
 argument-hint: "<new | list | switch | close | none> [slug]"
 ---
 
 # /matter-workspace
 
-Practitioners work across multiple clients and matters. A matter workspace keeps one client or engagement's context separate from every other. This skill manages those workspaces.
+Avukat birçok müvekkil ve dosya üzerinde çalışır. Matter çalışma alanı her dosyanın bağlamını diğerlerinden ayrı tutar. Bu skill o alanları yöneten ince dosya katmanıdır.
 
-## Subcommands
+## Alt komutlar
 
-- `/regulatory-legal:matter-workspace new <slug>` — create a new matter workspace, run a short intake, write `matter.md`
-- `/regulatory-legal:matter-workspace list` — list matters with status and active flag
-- `/regulatory-legal:matter-workspace switch <slug>` — set the active matter
-- `/regulatory-legal:matter-workspace close <slug>` — archive a matter (move to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/_archived/`, never delete)
-- `/regulatory-legal:matter-workspace none` — detach from any active matter, work at practice-level only
+- `/regulatory-legal:matter-workspace new <slug>` — yeni matter oluştur, kısa ön görüşme yap, `matter.md` yaz
+- `/regulatory-legal:matter-workspace list` — matter'ları durum ve aktiflik işaretiyle listele
+- `/regulatory-legal:matter-workspace switch <slug>` — aktif matter'ı değiştir
+- `/regulatory-legal:matter-workspace close <slug>` — arşivle (`~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/_archived/` altına taşı; asla silme)
+- `/regulatory-legal:matter-workspace none` — aktif matter'dan ayrıl, yalnız uygulama düzeyinde çalış
 
-## Instructions
+## Talimat
 
-1. Read `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` — confirm the `## Matter workspaces` section is populated. If `Enabled` is `✗`, tell the user: "Matter workspaces are off — you're configured as an in-house practice with one client, so the plugin works from practice-level context automatically. If you actually work across multiple clients, re-run `/regulatory-legal:cold-start-interview --redo` and select a private-practice setting. Otherwise, you don't need `/matter-workspace` at all." Don't error — the disabled state is the expected one for in-house users.
-2. Use the file-management logic below.
-3. Dispatch on the first token of `$ARGUMENTS`:
-   - `new` → run the intake interview, write `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<slug>/matter.md`, seed `history.md` and `notes.md`.
-   - `list` → enumerate `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/*/matter.md`, print a table, mark the active matter.
-   - `switch` → update the `Active matter:` line in the practice-level CLAUDE.md.
-   - `close` → move `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<slug>/` to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/_archived/<slug>/`, log the close date in `history.md`.
-   - `none` → set `Active matter:` to `none — practice-level context only`.
-4. Show the user what changed and confirm before writing.
+1. `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` dosyasını oku; `## Matter workspaces` bölümünün dolu olduğunu teyit et. `Enabled` `✗` ise hata verme, şunu söyle: "Matter çalışma alanları kapalı — tek şirket için kurum içi kullanım olarak kurulmuşsunuz; eklenti uygulama düzeyindeki bağlamla çalışır. Gerçekten birden fazla müvekkil için çalışıyorsanız `/regulatory-legal:cold-start-interview --redo` ile büro ortamını seçin. Aksi hâlde `/matter-workspace`'e ihtiyacınız yok."
+2. `$ARGUMENTS`'ın ilk kelimesine göre dallan:
+   - `new` → ön görüşme, `matters/<slug>/matter.md` yaz, `history.md` ve `notes.md` oluştur.
+   - `list` → `matters/*/matter.md` dosyalarını tara, tablo bas, aktif olanı işaretle.
+   - `switch` → uygulama CLAUDE.md'sindeki `Active matter:` satırını güncelle.
+   - `close` → `matters/<slug>/` klasörünü `matters/_archived/<slug>/` altına taşı, kapanış tarihini `history.md`'ye yaz.
+   - `none` → `Active matter:` satırını `none — practice-level context only` yap.
+3. Yazmadan önce neyin değişeceğini göster ve onay al.
 
-## Notes
+**Anahtarları çevirme:** `## Matter workspaces`, `Enabled`, `Active matter:`, `Cross-matter context` ve `none — practice-level context only` şablondaki gibi kalır; `/regulatory-legal:policy-diff`, `/regulatory-legal:policy-redraft` ve `/regulatory-legal:gaps` bunları birebir okur.
 
-- The skill never reads across matters unless `Cross-matter context` is `on` in the practice-level CLAUDE.md.
-- Archiving is not deletion — closed matters remain readable for retention/conflicts purposes.
-- Slugs are lowercase with hyphens. If a slug is reused across archived and active, the archived one is preserved under `_archived/<slug>/`.
+**İzleme uygulama düzeyindedir.** `reg-feed-watcher` ve `reg-change-monitor` ajanı varsayılan olarak matter'sız çalışır. Özetteki bir kalem belirli bir müvekkili ilgilendiriyorsa değerlendirme (`policy-diff`, açık kaydı, görüş kararı) o müvekkilin matter klasörüne yazılır.
 
----
-
-Multi-client practitioners (private practice — solo, small firm, large firm) work across many matters. Context from one must not leak into another. This skill is the thin file-management layer that makes that true.
-
-**Default state is off.** In-house users never see this — they run at practice-level only. Matter workspaces turn on at cold-start for private-practice users, or by editing `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗`, this skill does not run; it explains the disabled state and suggests `/regulatory-legal:cold-start-interview --redo` for users who actually need matter isolation.
-
-## Storage layout
-
-All matter data lives under:
+## Klasör yapısı
 
 ```
 ~/.claude/plugins/config/claude-for-legal/regulatory-legal/
-├── CLAUDE.md                       # practice-level practice profile
+├── CLAUDE.md                       # uygulama düzeyi profil (Active matter: satırı burada)
 └── matters/
     ├── <slug>/
-    │   ├── matter.md               # client, counterparty, matter type, key facts, overrides
-    │   ├── history.md              # dated log of events, decisions, drafts, reviews
-    │   ├── notes.md                # free-form working notes
-    │   └── outputs/                # skill outputs for this matter (optional subfolder)
+    │   ├── matter.md               # müvekkil, kurum, tür, kritik süreler, olgular, sapmalar
+    │   ├── history.md              # tarihli olay günlüğü (yalnız ekleme)
+    │   ├── notes.md                # serbest çalışma notları
+    │   └── outputs/                # skill çıktıları (isteğe bağlı)
     └── _archived/
-        └── <slug>/                 # closed matters — readable but not active
+        └── <slug>/                 # kapalı matter'lar — okunur ama aktif değil
 ```
 
-Slugs are lowercase with hyphens. Examples: `acme-msa-2026`, `zenith-renewal`, `vendor-xyz-nda`.
+Slug küçük harf ve tireli, Türkçe karakter yok: `abc-epdk-lisans-tadili`, `xyz-rekabet-sorusturma-2026`, `musteri-taslak-teblig-gorusu`. Gerçek ad yerine takma ad kullanılabilir. Aynı slug arşivde varsa arşivdeki korunur; yeni matter'a başka slug ver.
 
-## Active matter is in the practice CLAUDE.md
+**Tek doğru kaynak:** aktif matter yalnız uygulama CLAUDE.md'sindeki `Active matter:` satırıdır; ayrı durum dosyası yok.
 
-The `Active matter:` line under `## Matter workspaces` in the practice-level CLAUDE.md is the single source of truth. Switching a matter edits that line. No separate state file.
-
-## Subcommand logic
+## Alt komut mantığı
 
 ### `new <slug>`
 
-1. Confirm slug is not already present in `matters/<slug>/` or `matters/_archived/<slug>/`. If reused, ask the user to pick a different slug.
-2. Run the intake interview:
-   - **Client** (the party we represent, or the internal business unit if in-house)
-   - **Counterparty** (the other side — may be multiple)
-   - **Matter type** (read the plugin's practice profile for typical categories; for regulatory-legal: rulemaking | comment period | gap remediation | agency inquiry | enforcement response | standing topic | other)
-   - **Confidentiality level** (standard | heightened | clean-team — heightened prompts extra care in cross-matter settings)
-   - **Key facts** (2–5 sentences: what this matter is about, who the stakeholders are, what's at stake)
-   - **Matter-specific overrides to the practice playbook** (e.g., "client requires 24-month LoL cap not 12", "counterparty is a strategic partner — relationship-preserving tone")
-   - **Related matters** (slugs of any connected matters)
-3. Write `matters/<slug>/matter.md` using the template below.
-4. Seed `matters/<slug>/history.md` with a single "Opened" entry.
-5. Create an empty `matters/<slug>/notes.md`.
-6. Do **not** auto-switch to the new matter. Ask: "Want to switch to `<slug>` now? (`/regulatory-legal:matter-workspace switch <slug>`)"
+1. Slug `matters/<slug>/` ya da `matters/_archived/<slug>/` altında varsa başka slug iste.
+2. **Çıkar çatışması kapısı:** Aynı işte menfaati zıt bir tarafa avukatlık etmiş ya da mütalaa vermiş avukat teklifi reddetmek zorundadır; bu zorunluluk ortakları ve yanında çalışan avukatları da kapsar (Av. K. m. 38). Mevzuat işlerinde tipik risk: aynı soruşturmada şikâyetçi ile soruşturulan, aynı birleşme dosyasında taraf ile itiraz eden rakip, aynı taslağa zıt görüş verecek iki müvekkil. Yalnız aynı sektörde rakip olmak "aynı iş" sayılır mı — **tartışmalı**; büronun meslek kuralı yorumuna ve politikasına bırak. Sor: "Bu matter için çatışma kontrolü yapıldı mı?". Bu skill kontrolü kendisi yapmaz ve bu amaçla başka matter'ları okumaz; cevap "hayır" ise `matter.md`'ye `Çatışma kontrolü: YAPILMADI` yaz ve hatırlat.
+3. Ön görüşme:
+   - **Müvekkil** — temsil ettiğimiz taraf (kurum içiyse iç birim)
+   - **Kurum** — EPDK, BDDK, SPK, BTK, KVKK, Rekabet, GİB, TCMB, bakanlık, AB/yabancı makam …
+   - **Karşı taraf / diğer ilgililer** — şikâyetçi, rakip, karşı işlem tarafı (birden fazla olabilir)
+   - **Matter türü** — mevzuat değişikliği danışmanlığı | taslak düzenlemeye görüş | açık giderme (politika güncelleme) | kurum bilgi/belge talebi ya da yerinde inceleme | soruşturma / idari yaptırım savunması | düzenleyici işleme karşı dava hazırlığı | lisans/izin/bildirim | sürekli konu | diğer
+   - **Gizlilik düzeyi** — standart | yüksek | kapalı ekip (yüksek, çapraz bağlamda ek dikkat demektir; ör. soruşturmadaki ticari sır)
+   - **Kritik süreler** — varsa, aşağıdaki listeden
+   - **Ana olgular** — 2-5 cümle: konu, paydaşlar, ne söz konusu, hangi düzenleme
+   - **Matter'a özel sapmalar** — uygulama profiline göre farklar; ör. "müvekkil bu kurum için günlük tarama istiyor", "bu dosyada kuruma yazılar yalnız ortak imzasıyla çıkar"
+   - **İlgili matter'lar** — bağlantılı slug'lar
+4. `matters/<slug>/matter.md` yaz (şablon aşağıda); `history.md`'ye tek "Açıldı" girdisi; boş `notes.md`.
+5. Kendiliğinden geçiş yapma. Sor: "`<slug>`'a şimdi geçelim mi? (`/regulatory-legal:matter-workspace switch <slug>`)"
+
+**Kritik süre listesi** (doğrulanmış; matter'a uyanı yaz, tarihleri tebliğ belgesinden hesapla):
+- **Düzenleyici işleme dava:** özel kanunda ayrı süre yoksa Danıştayda ve idare mahkemesinde altmış, vergi mahkemesinde otuz gün (İYUK m. 7/1). İlanı gereken düzenleyici işlemde süre ilan tarihini izleyen günden başlar; düzenleyici işleme uygulama işlemiyle birlikte de dava açılabilir (m. 7/4).
+- **Rekabet soruşturması:** soruşturma kararı 15 gün içinde taraflara bildirilir; soruşturma en geç 6 ayda tamamlanır, bir defaya mahsus 6 aya kadar ek süre verilebilir (4054 m. 43/1-2). Yazılı savunma soruşturma raporunun tebliğinden itibaren 30 gün; haklı gerekçeyle bir kez, en çok bir katına kadar uzatılabilir; raportörlerin ek yazılı görüşüne 30 gün içinde cevap; süresinde verilmeyen savunma dikkate alınmaz (m. 45/2-3). Uzlaşma yalnız soruşturma raporunun tebliğine kadar ve ihlalin kabulüyle; Kurulun verdiği kesin süre geçirilirse bildirim dikkate alınmaz; uzlaşılan hususlar dava konusu yapılamaz (m. 43/5, 6, 8). Taahhüt önaraştırma ya da soruşturma sürecinde sunulur (m. 43/3).
+- **EPDK (elektrik):** bilgi isteme ya da yerinde incelemede aykırılık hâlinde on beş gün, mevzuata aykırılıkta otuz gün içinde düzeltme ihtarı; Kurul ihtar sürelerini fiilin niteliğine göre farklı uygulayabilir; idari para cezaları tebliğden itibaren bir ay içinde ödenir (6446 m. 16/1-a, b; 16/2; 16/8). Tutarları matter'a yazma; ihtar yazısındaki süreyi esas al.
+- **KVKK dosyaları:** süreler `/privacy-legal:matter-workspace` listesinde.
+- **Diğer kurumlar (BDDK, SPK, BTK, GİB, TCMB):** süreyi özel kanundan ve tebliğ edilen yazıdan çek; ezberden süre yazma. İdari para cezasına karşı yargı yolu ve süresi özel kanuna göre değişir — **tartışmalı, içtihadı kontrol et:** `tr_ictihat_ara(courts=["DANISTAYKARAR"], query="<kurum> idari para cezası görevli yargı yeri")`; dönen kararın künyesini birebir kullan.
 
 ### `list`
 
-Enumerate `matters/*/matter.md`. Read each file's front-matter or first few lines to extract status. Print a table:
+`matters/*/matter.md` dosyalarının ilk satırlarından durumu çıkar:
 
-| Slug | Client | Matter type | Status | Opened | Active |
-|---|---|---|---|---|---|
+| Slug | Müvekkil | Kurum | Tür | En yakın süre | Durum | Açılış | Aktif |
+|---|---|---|---|---|---|---|---|
 
-Mark the currently-active matter with `*`. Include `_archived/*` under a separate "Archived" heading if any exist.
+Aktif olanı `*` ile işaretle. `_archived/*` varsa ayrı "Arşiv" başlığı altında göster.
 
 ### `switch <slug>`
 
-1. Confirm `matters/<slug>/matter.md` exists. If not, offer `/regulatory-legal:matter-workspace new <slug>`.
-2. Edit the `Active matter:` line in the practice-level CLAUDE.md to `Active matter: <slug>`.
-3. Show the user the matter.md summary so they can confirm they're on the right matter.
+1. `matters/<slug>/matter.md` var mı bak; yoksa `new <slug>` öner.
+2. `Active matter: <slug>` olarak güncelle.
+3. Doğru matter'da olduğunu teyit etmesi için `matter.md` özetini göster (kurum ve en yakın süre dahil).
 
 ### `close <slug>`
 
-1. Confirm `matters/<slug>/` exists.
-2. Append a "Closed" entry to `matters/<slug>/history.md` with today's date.
-3. Move `matters/<slug>/` → `matters/_archived/<slug>/`.
-4. If the closed matter was the active matter, set `Active matter:` to `none — practice-level context only`.
+1. `matters/<slug>/` var mı bak.
+2. `history.md`'ye bugünün tarihiyle "Kapandı" girdisi ekle.
+3. `matters/<slug>/` → `matters/_archived/<slug>/` taşı.
+4. Kapanan aktif matter'sa `Active matter:` satırını `none — practice-level context only` yap.
 
 ### `none`
 
-Set `Active matter:` in the practice-level CLAUDE.md to `none — practice-level context only`. Confirm with the user.
+Yalnız `Active matter:` satırını `none — practice-level context only` yapar; kullanıcıya teyit ettir.
 
-## `matter.md` template
+## `matter.md` şablonu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this` in the practice-level CLAUDE.md]
+[ÜST BAŞLIK — uygulama CLAUDE.md ## Outputs; role göre değişir]
 
-# Matter: [Client] — [short description]
+# Matter: [Müvekkil/takma ad] — [kısa tarif]
 
-**Slug:** [slug]
-**Opened:** [YYYY-MM-DD]
-**Status:** active
-**Confidentiality:** [standard / heightened / clean-team]
+**Slug:** [slug] · **Açılış:** [YYYY-AA-GG] · **Durum:** aktif
+**Gizlilik:** [standart / yüksek / kapalı ekip]
+**Çatışma kontrolü:** [YAPILDI — tarih / YAPILMADI]
+
+## Taraflar ve kurum
+**Müvekkil:** [ad] · **Kurum:** [ad] · **Karşı taraf / ilgililer:** [ad(lar)]
+
+## Matter türü
+[tür — tek satır gerekçe]
+
+## Kritik süreler
+- [ör. soruşturma raporu tebliği: …, savunma son günü: …; düzenleyici işlemin RG tarihi: …, dava süresi sonu: …]
+
+## Ana olgular
+[2-5 cümle; ilgili düzenleme ve RG künyesi araçtan]
+
+## Matter'a özel sapmalar
+- [ör. "Bu kurum için günlük tarama; ev standardı haftalık."]
+
+## İlgili matter'lar
+- [slug — neden ilgili]
+
+## Gizlilik notu
+[Yüksek / kapalı ekipse nedeni; dosyaları kim görebilir; genel ayar açık olsa bile çapraz bağlama izin var mı]
+```
+
+## `history.md` başlangıcı
+
+```markdown
+# Geçmiş: [Müvekkil] — [kısa tarif]
+
+Yalnız ekleme yapılan olay günlüğü; en yeni üstte.
 
 ---
 
-## Parties
+## [YYYY-AA-GG] — Matter açıldı
 
-**Client:** [name]
-**Counterparty:** [name(s)]
-
-## Matter type
-
-[vendor MSA | customer agreement | NDA | SaaS subscription | amendment | renewal | other — with one-line rationale]
-
-## Key facts
-
-[2–5 sentences. What this matter is about. Who the stakeholders are. What's at stake. What makes it different from the default playbook.]
-
-## Matter-specific overrides
-
-*Any deviation from the practice-level playbook that applies to this matter and only this matter.*
-
-- [e.g., "LoL cap: client requires 24 months, not house standard 12."]
-- [e.g., "Tone: relationship-preserving — counterparty is a strategic partner."]
-- [e.g., "Governing law: must be English law, not Delaware."]
-
-## Related matters
-
-- [slug — one line why related]
-
-## Notes on confidentiality
-
-[If heightened or clean-team, describe why. Who may see matter files. Whether cross-matter context is permissible even if globally on.]
+Ön görüşme tamamlandı. Slug: `[slug]`. Durum: aktif.
+[matter.md dışında saklanmaya değer ilk bağlam — ör. "Kurumun bilgi isteme yazısı üzerine açıldı."]
 ```
 
-## `history.md` seed
+## Çapraz matter bağlamı
 
-```markdown
-# History: [Client] — [short description]
+Uygulama CLAUDE.md'sinde `Cross-matter context:` bayrağı vardır. `off` iken (varsayılan) A matter'ında çalışan bir skill başka hiçbir `matters/B/` klasörünü **okumaz**. Bayrağın varlık nedeni bu gizlilik güvencesidir; avukatın görevi dolayısıyla öğrendiklerini açığa vurma yasağını (Av. K. m. 36) ve aynı büroda zıt tarafların bulunabilmesinden doğan çatışma riskini (m. 38) destekler. Soruşturma dosyalarındaki rakip bilgisi ve ticari sırlar özellikle ayrı tutulur.
 
-Append-only event log. Most recent at top.
+`on` iken bile yalnız kullanıcı açıkça isterse ("son beş taslak görüşümüzde EPDK'ya karşı aldığımız duruşu karşılaştır") çapraz okunur; varsayılan yine yalnız aktif matter'dır.
 
----
+## Bu skill ne yapmaz
 
-## [YYYY-MM-DD] — Matter opened
-
-Intake completed. Slug: `[slug]`. Status: active.
-[Any initial context worth preserving beyond matter.md — e.g., "Opened in response to inbound MSA draft from [counterparty]."]
-```
-
-## Cross-matter context
-
-The practice-level CLAUDE.md has a `Cross-matter context:` flag. When it's `off` (the default), a skill working in matter A **never reads** files in `matters/B/` for any other `B`. Period. This is the confidentiality guarantee the setting exists to provide.
-
-When it's `on`, a skill may read files across matter folders only when the user explicitly asks it to (e.g., "compare our position on liability caps across the last five vendor matters"). Even when `on`, the default is to load only the active matter unless the user asks for a cross-matter view.
-
-## What this skill does not do
-
-- **Run a conflicts check.** Conflicts are the practitioner's/firm's job; the intake captures what the user declares.
-- **Enforce retention.** Closing archives a matter; it does not delete. Retention policy is out of scope.
-- **Auto-route outputs.** The substantive skill decides where to write; this skill tells it *which folder* is active, not what to put in it.
-- **Decide whether cross-matter is appropriate.** It reads the flag and obeys.
+- **Çatışma kontrolü yapmaz** — yalnız yapılıp yapılmadığını sorar ve kaydeder.
+- **Saklama politikası uygulamaz** — kapatmak arşivlemektir, silmek değil; kapalı matter'lar çatışma kontrolü ve saklama amacıyla okunur kalır.
+- **Süre hesabını kesinleştirmez** — listedeki süreler başlangıç noktasıdır; tebliğ tarihini ve özel kanunu avukat teyit eder.
+- **Çıktıları yönlendirmez** — esaslı skill nereye yazacağına karar verir; bu skill yalnız hangi klasörün aktif olduğunu söyler.
+- **Çapraz bağlamın uygun olup olmadığına karar vermez** — bayrağı okur ve uyar.
 
 ---
 
@@ -1318,209 +1209,230 @@ When it's `on`, a skill may read files across matter folders only when the user 
 
 ---
 name: policy-diff
-description: Diff a specific regulatory change against the indexed policy library. Use when a reg has changed and you need to know which policies it touches and what the gap is, when the user says "diff this reg against our policies", "which policy does this affect", or "gap analysis", or when reg-feed-watcher hands off a material item.
-argument-hint: "[reg name, or paste reg text/summary]"
+description: Belirli bir düzenleme değişikliğini dizinlenmiş politika kütüphanesiyle karşılaştırır. Bir kanun, yönetmelik, tebliğ ya da Kurul kararı değiştiğinde hangi politikalara dokunduğunu ve açığın ne olduğunu bulmak için; "bu düzenlemeyi politikalarımızla karşılaştır", "hangi politikayı etkiliyor", "açık analizi" denince ya da reg-feed-watcher önemli bir kalemi devrettiğinde kullan.
+argument-hint: "[düzenlemenin adı ya da künyesi, veya metni/özeti yapıştırın]"
 ---
 
 # /policy-diff
 
-1. Load `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → policy library index.
-2. Use the workflow below.
-3. Extract requirements from the reg. Match to indexed policies.
-4. Output: per-requirement gap analysis, which policy needs updating.
+1. Profili yükle: `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → `## Policy library` (`**Location:**`, `**Policies indexed:**` tablosu: Policy, File, Last updated, Owner).
+2. Aşağıdaki iş akışını uygula.
+3. Düzenlemeden gereklilikleri çıkar; dizinlenmiş politikalarla eşle.
+4. Çıktı: gereklilik bazında açık analizi ve güncellenmesi gereken politika.
 
 ---
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/regulatory-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Eklenti profilinde `## Matter workspaces` → `Enabled` `✗` ise (şirket içi kullanımda varsayılan) bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/regulatory-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
 ---
 
-## Purpose
+## Amaç
 
-A reg changed. You have policies. This skill finds which policies the change touches and what the gap is between "what the reg now requires" and "what the policy says."
+Bir düzenleme değişti; politikalarınız var. Bu skill değişikliğin hangi politikalara dokunduğunu ve "düzenlemenin artık istediği" ile "politikanın söylediği" arasındaki açığı bulur. Yalnız KVKK'ya dokunan ve aydınlatma, VERBİS, başvuru süreçlerine inen ayrıntılı analiz için `/privacy-legal:reg-gap-analysis` daha uygundur; İK el kitabı değişikliği için `/employment-legal:handbook-updates`.
 
-## Load context
+## Bağlamı yükle
 
-`~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → policy library index (policies, locations, owners).
+`## Policy library` → politikalar, dosya yerleri, sahipler. `company-profile.md` → [ŞİRKET ADI]'ın faaliyetleri, lisansları, halka açıklığı (gerekliliğin uygulanıp uygulanmadığını anlamak için).
 
-## Scope integrity
+## Kapsam bütünlüğü
 
-If the user asks you to exclude a policy section, requirement, or category from the diff:
+Kullanıcı bir politika bölümünü, gerekliliği ya da kategoriyi karşılaştırma dışında bırakmak isterse:
 
-1. Do it — the user owns the scope.
-2. But flag it, loudly and permanently: "⚠️ SCOPE LIMITATION: Section [X] excluded at user request. This diff does not reflect the full policy. Gaps in the excluded area are NOT identified." Above the header, carried to every downstream artifact.
-3. Hand the flag to `gap-surfacer`: "This diff was scope-limited. Do not represent it as a complete compliance picture." Include the scope-limitation banner verbatim on any gap tracker entry derived from this diff.
-4. Note what the exclusion means: "Excluding vendor management means the diff will show 'no policy addresses vendor management' — which is worse than showing the gap."
+1. Bırak — kapsam kullanıcınındır.
+2. Ama yüksek sesle ve kalıcı olarak işaretle: "⚠️ KAPSAM SINIRI: [X] bölümü kullanıcı isteğiyle dışarıda bırakıldı. Bu karşılaştırma politikanın tamamını yansıtmaz. Dışarıda kalan alandaki açıklar BELİRLENMEDİ." Üst başlığın üstüne koy; sonraki her çıktıya taşı.
+3. gap-surfacer'a da ilet: "Bu karşılaştırmanın kapsamı daraltıldı; tam uyum resmi olarak sunulmasın." Bu karşılaştırmadan doğan her açık kaydına başlığı aynen taşı.
+4. Dışarıda bırakmanın sonucunu söyle: "Tedarikçi yönetimini dışarıda bırakmak, sonuçta 'tedarikçi yönetimini ele alan politika yok' görünmesine yol açar; bu, açığı göstermekten daha kötüdür."
 
-A compliance artifact built on an undisclosed scope exclusion looks like concealment in discovery. The flag is the difference between "we scoped the review" and "we hid the problem."
+Açıklanmamış bir kapsam daraltmasına dayanan uyum belgesi, sonradan bir denetim ya da uyuşmazlıkta gizleme gibi görünür. İşaret "incelemeyi daralttık" ile "sorunu sakladık" arasındaki farktır.
 
-## Workflow
+## İş akışı
 
-### Step 0: Verify rule status before you diff
+### Adım 0: Karşılaştırmadan önce kuralın durumunu doğrula
 
-Before diffing a rule against policy, confirm the rule is actually in force. Red flags that the rule may not be in force:
+Kuralı politikaya karşı koymadan önce gerçekten yürürlükte olduğunu teyit et. Uyarı işaretleri:
+- Yürürlük ya da uyum tarihi 30 günden fazla geçmiş ama ertelenmediğine dair teyit yok; ya da yürürlük ileri tarihli, geçiş süresi var.
+- Kural 12 aydan eski.
+- Tartışmalı bir düzenleme; dava ya da AYM başvurusu konusu olabilir.
 
-- The applicability/compliance date has passed by more than 30 days but you have no confirmation it wasn't delayed
-- The rule is more than 12 months old
-- The rule is a politically contentious final rule (major rulemakings are frequently challenged)
+İşaret görürsen kontrol et:
+- **Konsolide metin ve dipnotlar:** `tr_mevzuat_madde_getir(number="<no>", madde_no=[...])` (kurum düzenlemesinde `mevzuat_id`) → `annotations` alanındaki "(Değişik: …)", "(Ek: …)", "(Mülga: …)", "(İptal …)" notları. Mülga hükmü yürürlükte gösterme.
+- **Geçiş hükmü:** geçici maddeleri ayrıca çek (`madde_no="geçici 3"`). Örnek: 7499 sayılı Kanunla değişen KVKK m. 9'un eski birinci fıkrası, değişik hâliyle birlikte 1/9/2024'e kadar uygulanmaya devam etti (KVKK geçici m. 3/1).
+- **AYM:** `tr_aym_ara(kind="norm", query="<kanun no ve adı>")`. Kanun ya da CB kararnamesi hükmü, iptal kararının Resmî Gazete'de yayımlandığı tarihte yürürlükten kalkar; AYM iptalin yürürlüğe gireceği tarihi ayrıca kararlaştırabilir (yayımdan başlayarak en çok bir yıl); iptal kararları geriye yürümez (Anayasa m. 153/3, 153/5).
+- **Danıştay (yönetmelik, tebliğ, düzenleyici Kurul kararı):** `tr_ictihat_ara(courts=["DANISTAYKARAR"], query="\"<düzenleme adı>\" iptal")`; dönen kararın künyesini birebir kullan. Dava açılması işlemin yürütülmesini durdurmaz; yürütmeyi durdurma ayrı şartlara bağlı bir karardır (İYUK m. 27/1, 27/2). Yalnız dava açılmış olması kuralı askıya almaz.
+- **Sonraki değişiklik:** `tr_resmi_gazete_tara(query="<düzenleme adı>", date_from="<yayım tarihi>")` (60 günlük dilimlerle).
 
-When you see a red flag, check (via research MCP, web search if enabled, or the Federal Register docket) for: delays, stays, injunctions, rescission proposals, vacatur, or amendments. If you can check and the rule is confirmed in force, proceed. If you cannot verify (no tools connected), emit this banner ABOVE the header, before any content:
+Teyit edersen devam et. Araç yoksa ya da teyit edemiyorsan, üst başlıktan önce, her şeyin üstüne şu başlığı koy:
 
-> `⚠️ RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not treat any compliance date below as binding until you confirm the rule's status at the Federal Register docket or with outside counsel.`
+> `⚠️ KURAL DURUMU DOĞRULANMADI — Bu kuralın şu anda yürürlükte olduğunu teyit edemedim. Yayımlanan düzenlemeler sonradan değiştirilebilir, ertelenebilir, iptal edilebilir ya da yürütmesi durdurulabilir. Durumunu mevzuat.gov.tr, Resmî Gazete ve AYM/Danıştay kararlarından ya da dış avukattan teyit etmeden aşağıdaki tarihleri bağlayıcı sayma.`
 
-Tag every due date in the output: `[due date per published rule — status unverified]`.
+Her son tarihi etiketle: `[yayımlanan metne göre — durum doğrulanmadı]`. Belirsizlik aşağı akar: açığı gap-surfacer'a devrederken `status_verified: false` yaz ki yayımlanmış bir tarih tek başına onu Overdue kovasına taşımasın.
 
-Rule-status uncertainty travels downstream. When handing off a gap to `gap-surfacer`, mark the item `status_verified: false` so it never gets routed to an Overdue bucket on the strength of a published date alone.
+### Adım 1: Yeni gereklilikleri çıkar
 
-### Step 1: Extract the new requirements
+**Sessiz tamamlama yok.** Düzenleme metni eksik ya da belirsizse ve tamamı kaynaktan alınamıyorsa dur ve sor. Web araması ya da model bilgisiyle doldurma: "Elimde [olan] var. Gereklilikleri doğru çıkarmak için [eksik] gerekiyor. Seçenekler: (1) tam metni yapıştırın, (2) birincil kaynağı gösterin, (3) web araması — sonuçlar `[web araması — doğrula]` etiketi taşır ve kurumun sitesinden kontrol edilmelidir, (4) burada durmak. Hangisi?" Düşük güvenilirlikteki kaynağı kabul etme kararı avukatındır.
 
-**No silent supplement.** If the regulatory change text is partial or ambiguous and the fuller rule isn't available from the indexed source, stop and ask. Do NOT fill the gap from web search or model knowledge without asking. Say: "I have [what you have]. To extract requirements accurately I'd need [what's missing]. Options: (1) paste the full text, (2) point me at the primary source, (3) search the web for the rule — results will be tagged `[web search — verify]` and should be checked against the issuing authority before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
+Metni araçla çek:
+- Yayımlanan değişiklik metni: `tr_resmi_gazete_getir(url="<fihrist url>")`.
+- Konsolide madde: `tr_mevzuat_madde_getir(number="<no>" | mevzuat_id="<id>", madde_no=[...])` (en çok 10); kimlik için `tr_mevzuat_ara`.
+- Kurul kararı: `tr_kurum_karari_getir(kurum="<kurum>", id="<id>")`.
+- Yabancı: `eu_get_document_text`, `uk_get_section`, `de_norm_getir` vb.; listede olmayan ülke için "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
-**Source attribution.** Tag every citation — the regulatory citation, any cross-references, any policy excerpts — with where it came from: `[<regulator or research tool>]` for items retrieved from a primary source, policy library, or MCP; `[web search — verify]` for items pulled from web search; `[model knowledge — verify]` for items recalled from the model's training data; `[user provided]` for items pasted in by the user. Items tagged `verify` carry higher fabrication risk and should be checked first. Never strip or collapse the tags in the output.
+**Kaynak etiketi.** Düzenleme künyesi, atıflar ve politika alıntıları dâhil her öğeye nereden geldiğini yaz: `[ArthurLegal TR — <araç> — GG.AA.YYYY]`, `[politika kütüphanesi]`, `[web araması — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`. Etiketleri silme.
 
-Read the regulatory change. List each discrete new or changed requirement:
+Her ayrık yeni ya da değişen gerekliliği listele:
 
-| # | Requirement | Effective | Citation |
+| # | Gereklilik | Yürürlük / geçiş | Atıf (araçtan dönen `citation`) |
 |---|---|---|---|
-| 1 | [what it requires] | [date] | [section] |
+| 1 | [ne istiyor] | [tarih] | [madde/fıkra] |
 
-Be specific. "Enhanced disclosure requirements" is not a requirement. "Must disclose X in Y format at Z point in the flow" is.
+Somut ol. "Bildirim yükümlülükleri güçlendirildi" bir gereklilik değildir. "Standart sözleşme, imzaların tamamlanmasından itibaren beş iş günü içinde Kuruma bildirilir; bildirimi kimin yapacağı sözleşmede belirlenmemişse veri aktaran bildirir" bir gerekliliktir (Kişisel Verilerin Yurt Dışına Aktarılmasına İlişkin Usul ve Esaslar Hakkında Yönetmelik m. 14/5).
 
-### Step 2: Map to policies
+### Adım 2: Politikalarla eşle
 
-For each requirement, which indexed policy is closest?
+Her gereklilik için en yakın dizinlenmiş politika hangisi?
+- **Doğrudan:** politika bu konuyu açıkça ele alıyor.
+- **Dolaylı:** politika ilgili bir konuyu ele alıyor; bu yeni bir alt konu.
+- **Eşleşme yok:** hiçbir politika ele almıyor — açık "politika yok"tur.
 
-- Direct hit: policy explicitly covers this topic
-- Indirect: policy covers a related topic, this is a new sub-issue
-- No match: no policy addresses this — gap is "policy doesn't exist"
+Türk mevzuatında değişiklik çoğu zaman kanundan değil ikincil düzenlemeden gelir; eşlerken dayanak zincirini izle. Doğrulanmış örnekler:
 
-### Step 3: Diff
+| Alan | Tipik politika | Dayanak zinciri |
+|---|---|---|
+| Kişisel veri (6698) | Veri güvenliği, yurt dışı aktarım, tedarikçi yönetimi | Teknik ve idari tedbir yükümlülüğü (m. 12/1); yurt dışı aktarım yeterlilik kararı → uygun güvence → arızi istisna sırasıyla (m. 9/1, 9/4, 9/6); usul ve esaslar yönetmelikle (m. 9/11) → `KKY` türünü izle. |
+| Bankacılık (5411) | Müşteri sırrı, veri paylaşımı, dış hizmet | Müşteri sırrı, istisnalar dışında, açık rıza alınsa dahi müşteri talebi ya da talimatı olmadan üçüncü kişilerle paylaşılamaz (m. 73/3); paylaşımın kapsam, usul ve esaslarını Kurul belirler (m. 73/5) → BDDK düzenlemelerini izle. |
+| Sermaye piyasası (6362) | İçsel bilgi ve özel durum açıklama politikası | Değeri, fiyatı ya da yatırım kararını etkileyebilecek bilgi kamuya açıklanır; açıklama, erteleme usul ve esaslarını Kurul belirler (m. 15/1, 15/2) → SPK tebliğleri ve haftalık bülten. |
+| Elektrik piyasası (6446) | Lisans uyumu, Kuruma bilgi verme, piyasa işlemleri | Lisans hak ve yükümlülükleri Kurum yönetmeliğiyle düzenlenir (m. 5/1); lisans sahibi istenen bilgi ve belgeyi zamanında, tam ve doğru verir ve faaliyet alanına göre mevzuatın gereklerini yerine getirir (m. 5/2-d, 5/2-e); ikincil mevzuata, Kurul kararına aykırılık ihtar ve idari para cezasına bağlıdır (m. 16/1-b) → EPDK yönetmelik ve Kurul kararları. |
+| İş sağlığı ve güvenliği (6331) | Risk değerlendirmesi, acil durum, eğitim | İşveren risk değerlendirmesi yapmak ya da yaptırmakla yükümlüdür (m. 10/1); ayrıntılar Bakanlık yönetmelikleriyle düzenlenir (m. 30/1) → `YONETMELIK` türünü izle. |
+| Rekabet (4054) | Rekabet uyum programı, dağıtım ve bayilik | Rekabeti kısıtlayan anlaşma, uyumlu eylem ve teşebbüs birliği kararları yasaktır (m. 4); Kurul belirli anlaşma türleri için grup muafiyeti tebliğleri çıkarabilir (m. 5/4) → tebliğ değişikliği dağıtım sözleşmelerine ve uyum politikasına dokunur. |
 
-For each direct or indirect hit, read the policy and compare:
+Tutar ve eşikleri (idari para cezası, sermaye, ciro) politikaya sabit yazma; "güncel tutarı teyit et (dönemsel güncellenir)" de.
+
+### Adım 3: Karşılaştır
+
+Her doğrudan ve dolaylı eşleşmede politikayı oku ve karşılaştır:
 
 ```markdown
-### Requirement [N]: [name]
+### Gereklilik [N]: [ad]
 
-**New rule requires:** [requirement]
+**Yeni kural istiyor:** [gereklilik + atıf + kaynak etiketi]
 
-**Our policy ([name], last updated [date]) says:**
-> "[relevant excerpt]"
+**Politikamız ([ad], son güncelleme [tarih]) diyor ki:**
+> "[ilgili alıntı]"
 
-**Gap:** [None — policy already covers this | Partial — policy addresses X but not Y | Full — policy contradicts or doesn't address]
+**Açık:** [Yok — politika zaten karşılıyor | Kısmi — politika X'i ele alıyor ama Y'yi değil | Tam — politika çelişiyor ya da hiç değinmiyor]
 
-**Change needed:** [specific — "add a paragraph on X" not "update the policy"]
+**Gereken değişiklik:** [somut — "X hakkında paragraf ekle", "politikayı güncelle" değil]
 
-**Policy owner:** [from index]
+**Politika sahibi:** [kütüphaneden]
 ```
 
-### Step 4: No-match gaps
+Düzenleme iki türlü okunabiliyorsa ikisini de yaz ve "tartışmalı — içtihadı ve kurum kararlarını kontrol et" diye işaretle; aranacak sorguyu ver (`tr_ictihat_ara`, `tr_semantik_ara(kurum=…)`), karar numarasını ezberden yazma.
 
-Requirements with no policy match get called out separately:
+### Adım 4: Eşleşmeyen açıklar
 
 ```markdown
-### New policy needed
+### Yeni politika gerekli
 
-Requirement [N]: [requirement]
+Gereklilik [N]: [gereklilik]
 
-No existing policy covers this. Options:
-- Draft new policy (suggested owner: [whoever owns the closest topic])
-- Add to existing [related policy] as a new section
-- Determine this doesn't need a policy (one-off compliance, not ongoing)
+Bunu karşılayan politika yok. Seçenekler:
+- Yeni politika yaz (önerilen sahip: [en yakın konunun sahibi])
+- [İlgili politika]ya yeni bölüm olarak ekle
+- Politika gerektirmediğine karar ver (tek seferlik uyum işi, sürekli değil)
 ```
 
-## Branches by regulatory input type
+## Girdi türüne göre dallar
 
-### Pre-rule branch (ANPR / RFI)
+### Kural öncesi dalı (görüşe açılmış taslak ya da istişare)
 
-If the regulatory input is an ANPR or RFI (no imposed requirements), do NOT run a full gap-closure diff. Instead, produce a **pre-positioning analysis**:
+Girdi görüşe açılmış bir taslak, taslaksız bir istişare ya da TBMM'deki bir kanun teklifiyse tam açık kapatma karşılaştırması YAPMA; **ön konumlanma analizi** üret:
+- Kural yayımlanırsa (bugün değil) değişmesi muhtemel politikaları say.
+- Taslağın konularından biri [ŞİRKET ADI]'ın uygulamasıyla görüş vermeyi gerektirecek biçimde kesişiyor mu, işaretle.
+- Görüş son tarihini ve `**Default comment decision owner:**`'ı yaz; karar için `/regulatory-legal:comments`.
+- Gereklilik bazında "açık yok" satırları üretme; karşılaştırılacak gereklilik yok. Gelecekteki etkiyi ve dokunacağı politikaları tek paragrafta yaz.
 
-- Name the policies that will likely need to change once a final rule issues (not today).
-- Flag whether any of the ANPR's issue areas intersect with the company's practice in a way that warrants a comment letter.
-- Note the comment deadline and the team's comment-decision owner from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`.
-- Do NOT produce per-requirement "no gap" rows for an ANPR — there are no requirements to diff against. Produce one paragraph naming the future exposure and the policies it would touch.
+### Olumsuz bulgu dalı (yanlış hedef politikaya karşı karşılaştırma)
 
-### Negative-finding branch (final rule / NPRM diffed against a policy that isn't the right target)
-
-If every requirement in the extracted list comes out as "no gap against [the named policy]," do NOT produce the full per-requirement analysis — compress to a single short paragraph:
+Çıkarılan her gereklilik "[adı geçen politikaya] karşı açık yok" çıkıyorsa tam analiz üretme; tek kısa paragrafa indir:
 
 ```markdown
-## Policy Diff: [Regulation name] — [Policy name]
+## Politika Karşılaştırması: [Düzenleme] — [Politika]
 
-[REGULATION] doesn't appear to require a change to [POLICY NAME]. [POLICY NAME]
-§[X] already covers [Y]. The policies this regulation actually touches are
-[other-policy-1] and [other-policy-2] — rerun `/regulatory-legal:policy-diff` against those.
+[DÜZENLEME] [POLİTİKA] için değişiklik gerektirmiyor görünüyor. [POLİTİKA] §[X]
+[Y]'yi zaten karşılıyor. Bu düzenlemenin gerçekten dokunduğu politikalar
+[politika-1] ve [politika-2] — `/regulatory-legal:policy-diff`'i onlara karşı yeniden çalıştırın.
 
-Review on [next cycle — e.g., "at the next annual policy review"] or if
-[trigger — e.g., "the rule is finalized or amended"].
+[Sonraki döngüde — ör. "yıllık politika gözden geçirmesinde"] ya da
+[tetikleyici — ör. "kural değişirse ya da geçiş süresi biterse"] yeniden bakın.
 ```
 
-One paragraph, one recommendation, routing note. Don't repeat the "no gap" finding for every requirement — the summary table handles that. A negative finding against the wrong target policy is a routing problem, not a compliance analysis.
+Bir paragraf, bir öneri, bir yönlendirme notu. Yanlış hedefe karşı olumsuz bulgu bir yönlendirme sorunudur, uyum analizi değildir.
 
-### Gap branch (final rule / NPRM with at least one gap against the target policy)
+### Açık dalı (en az bir açık bulunan yayımlanmış kural)
 
-Full per-requirement analysis as specified below. The detailed diff format is for diffs that actually find gaps.
+Aşağıdaki tam çıktı. Ayrıntılı biçim gerçekten açık bulan karşılaştırmalar içindir.
 
-## Output
+## Çıktı
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — ## Outputs; role göre]
 
-## Policy Diff: [Regulation name]
+## Politika Karşılaştırması: [Düzenleme adı]
 
-**Regulation:** [name, link]
-**Effective:** [date]
-**Requirements extracted:** [N]
+**Düzenleme:** [araçtan dönen citation, bağlantı]
+**Yürürlük:** [tarih; geçiş hükmü varsa]
+**Kural durumu:** [doğrulandı — kaynak, tarih | doğrulanmadı — yukarıdaki başlığa bakın]
+**Çıkarılan gereklilik:** [N]
 
-### Bottom line
+### Sonuç
 
-[N gaps need action by [date] — top 3: X, Y, Z]
+[N açık [tarih]e kadar işlem gerektiriyor — ilk üçü: X, Y, Z]
 
-### Summary
+### Özet
 
-| # | Requirement | Policy affected | Gap | Owner |
+| # | Gereklilik | Etkilenen politika | Açık | Sahip |
 |---|---|---|---|---|
-| 1 | [short] | [policy name or "none"] | None/Partial/Full | [name] |
+| 1 | [kısa] | [politika ya da "yok"] | Yok/Kısmi/Tam | [ad] |
 
-### Detailed diffs
+### Ayrıntılı karşılaştırmalar
 
-[Each requirement block from Step 3]
+[Adım 3'teki bloklar]
 
-### New policies needed
+### Gereken yeni politikalar
 
-[From Step 4, if any]
+[Adım 4'ten, varsa]
 
-### No-gap requirements
+### Açık olmayan gereklilikler
 
-[List — useful to know what's already covered]
+[Liste — neyin zaten karşılandığını bilmek işe yarar]
 
 ---
 
-**Verify citations before relying on them.** The regulatory citations and policy references above were AI-generated and have not been checked against a primary source. Before acting on any requirement here, confirm the rule against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each requirement (e.g., `[Federal Register]`, `[web search — verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
+**Atıfları doğrula.** Yukarıdaki künyeler ve politika atıfları yapay zekâ desteğiyle üretildi. Bir gerekliliğe dayanarak işlem yapmadan önce kuralı Resmî Gazete, mevzuat.gov.tr ya da kurumun sitesinden doğruluk, yürürlük tarihi ve güncel durum bakımından kontrol et. Her gereklilikteki kaynak etiketi künyenin nereden geldiğini gösterir; `doğrula` etiketliler önce kontrol edilir.
 ```
 
-## Config-dependent fallbacks
+## Ayar eksikse
 
-This skill reads the policy library index from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. When the index is empty or still `[PLACEHOLDER]`:
+- **Politika kütüphanesi boş:** her gerekliliği varsayılan olarak "politika eşleşmesi yok" işaretle ve ekle: "Profilinizdeki `## Policy library` boş; bu yüzden her gereklilik yeni politika açığı olarak işaretlendi. Bunları karşılayan politikalarınız varsa `/regulatory-legal:cold-start-interview --redo` ile ya da profili düzenleyerek kütüphaneye ekleyin ve karşılaştırmayı yeniden çalıştırın."
+- **Eşleşen politikanın sahibi yok:** Özet tablosunda Sahip hücresini boş bırak ve ekle: "[Liste] için politika sahibi tanımlı değil. gap-surfacer'ın yönlendirebilmesi için `## Policy library` tablosunun Owner sütununu doldurun."
 
-- **Policy library empty:** flag every requirement as "no policy match" by default and append to the output: "The policy library in your configuration is empty, so every requirement is flagged as a new-policy gap. If you have policies that address these requirements, add them to the library with `/regulatory-legal:cold-start-interview --redo` or by editing `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`, then re-run the diff."
-- **Owner missing for a matched policy:** leave the Owner cell blank in the summary and append: "Policy owners aren't set for [list]. Assign them with `/regulatory-legal:cold-start-interview --redo` or by editing the policy library in `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` so gap-surfacer can route."
+Kütüphane doluysa ve sahipler tanımlıysa ayardan söz etme.
 
-Say nothing about config when the library is populated and owners are set.
+## Devir
 
-## Handoff
+gap-surfacer'a: her Kısmi ya da Tam açık, sahibi ve son tarihiyle izlenen bir kayıt olur (`status_verified` Adım 0'a göre; kapsam sınırı varsa başlığıyla).
 
-To gap-surfacer: every Partial or Full gap becomes a tracked item with owner and deadline.
+## Kapanış
 
-## Close with the next-steps decision tree
+Profildeki `## Outputs` karar ağacıyla bitir; seçenekleri bu çıktıya uyarla (politika taslağını yaz → `/regulatory-legal:policy-redraft`, eskale et, olgu topla, izle ve bekle, başka bir şey). Ağaç çıktıdır; seçimi avukat yapar.
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+## Bu skill ne yapmaz
 
-## What this skill does not do
-
-- Draft the policy updates. It identifies what needs updating; policy-drafting (or a human) drafts.
-- Interpret ambiguous regulatory text definitively. If the reg could be read two ways, say so and flag for counsel.
+- Politika güncellemelerini yazmaz; neyin güncellenmesi gerektiğini bulur. Taslak için `/regulatory-legal:policy-redraft` ya da insan.
+- Belirsiz düzenleyici metni kesin olarak yorumlamaz. İki türlü okunabiliyorsa söyler ve avukata işaretler.
+- Tutar ve eşikleri sabitlemez; dönemsel güncellenen her rakam için güncel değerin teyidini ister.
 
 ---
 
@@ -1528,203 +1440,192 @@ End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the 
 
 ---
 name: policy-redraft
-description: Produce a proposed marked-up policy redraft that closes a gap found by /regulatory-legal:gaps or /regulatory-legal:policy-diff. A first draft for internal review — not for direct application to approved policy documents. Use when the user says "redraft the policy", "draft the policy fix", "mark up the policy", or when gap-surfacer hands off a gap for drafting.
-argument-hint: "[GAP-ID or gap description]"
+description: /regulatory-legal:gaps ya da /regulatory-legal:policy-diff'in bulduğu bir açığı kapatan, işaretli (redline) bir politika taslağı önerir. İç inceleme için ilk taslaktır; onaylı politika belgesine doğrudan uygulanmaz. "Politikayı yeniden yaz", "politika düzeltmesini taslakla", "politikayı işaretle" denince ya da gap-surfacer bir açığı taslak için devrettiğinde kullan.
+argument-hint: "[GAP-ID ya da açığın tarifi]"
 ---
 
 # /policy-redraft
 
-1. Load `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → policy library index + practice profile.
-2. Use the workflow below.
-3. Gather inputs: the gap (from `/regulatory-legal:gaps` output or described directly), the current approved policy text, the rule text.
-4. Verify the rule is current (per the policy-diff rule-status check). If you can't verify, emit the `⚠️ RULE STATUS UNVERIFIED` banner.
-5. Produce a marked-up redraft of the affected policy section(s) — smallest-possible edit, `[verify]` tags carried through, inline comments explaining WHY each change was made.
-6. Output a Policy Redraft Memo. Write it to a new file named `[policy-name]-proposed-redraft-[YYYY-MM-DD].md` — never write to the source policy document.
-7. Do NOT close the gap in the tracker. The gap closes when the redraft is applied AND approved, which is the policy owner's action.
+1. Profili yükle: `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → `## Policy library` ve uygulama profili; ortak bilgi için `company-profile.md`.
+2. Aşağıdaki iş akışını uygula.
+3. Girdileri topla: açık (`/regulatory-legal:gaps` çıktısından ya da doğrudan tarif), güncel onaylı politika metni, kural metni.
+4. Kuralın güncel olduğunu doğrula (policy-diff Adım 0). Doğrulayamazsan `⚠️ KURAL DURUMU DOĞRULANMADI` başlığını koy.
+5. Etkilenen politika bölümlerinin işaretli taslağını üret: mümkün olan en küçük değişiklik, `[doğrula]` etiketleri taşınır, her değişikliğin NEDENİ satır içi yorumla açıklanır.
+6. Politika Yeniden Yazım Notu üret. `[policy-name]-proposed-redraft-[YYYY-MM-DD].md` adlı yeni bir dosyaya yaz — kaynak politika belgesine asla yazma.
+7. İzleyicide açığı KAPATMA. Açık, taslak uygulanıp ONAYLANDIĞINDA kapanır; bu politika sahibinin işidir.
 
 ---
 
-> This skill produces a **proposal**, not an edit. It writes to a new file with a clearly-marked draft filename. It never writes over a source policy document, and it never closes a gap in the tracker — the gap closes when the redraft is applied AND approved by the policy owner.
+> Bu skill bir **öneri** üretir, düzenleme yapmaz. Açıkça taslak olduğu belli bir adla yeni dosyaya yazar. Kaynak politika belgesinin üzerine asla yazmaz ve izleyicide açığı asla kapatmaz — açık, taslak politika sahibince uygulanıp onaylandığında kapanır.
 
 ## Matter context
 
-**Matter context.** Check `## Matter workspaces` in the practice-level CLAUDE.md. If `Enabled` is `✗` (the default for in-house users), skip the rest of this paragraph — skills use practice-level context and the matter machinery is invisible. If enabled and there is no active matter, ask: "Which matter is this for? Run `/regulatory-legal:matter-workspace switch <slug>` or say `practice-level`." Load the active matter's `matter.md` for matter-specific context and overrides. Write outputs to the matter folder at `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/`. Never read another matter's files unless `Cross-matter context` is `on`.
+Eklenti profilinde `## Matter workspaces` → `Enabled` `✗` ise bu paragrafı atla. Etkinse ve aktif matter yoksa sor: "Bu hangi matter için? `/regulatory-legal:matter-workspace switch <slug>` çalıştırın ya da `practice-level` deyin." Aktif matter'ın `matter.md` dosyasını yükle; çıktıları `~/.claude/plugins/config/claude-for-legal/regulatory-legal/matters/<matter-slug>/` altına yaz. `Cross-matter context` `on` değilse başka matter'ın dosyasını okuma.
 
 ---
 
-## Purpose
+## Amaç
 
-Gap-surfacer finds the gap. Policy-diff names what needs to change. This skill takes the next step and produces a marked-up redraft of the affected policy section — small, specific, flagged — as a first draft for the policy owner's review.
+gap-surfacer açığı bulur; policy-diff neyin değişmesi gerektiğini söyler. Bu skill bir adım ileri gider ve etkilenen politika bölümünün işaretli taslağını üretir: küçük, somut, etiketli; politika sahibinin incelemesi için ilk taslak.
 
-## Hard guardrails — read these first
+## Kesin sınırlar — önce bunları oku
 
-These are the load-bearing rules. If any of them would be violated, stop and ask.
+Bunlardan biri çiğnenecekse dur ve sor.
 
-1. **This is a PROPOSAL, not an edit.** Never write directly to a source policy document. The output goes to a new file at `[policy-name]-proposed-redraft-[YYYY-MM-DD].md`, or into the matter workspace. Not `[policy-name].md`.
-2. **Never close the gap in the tracker.** Gaps close when the redraft is APPLIED AND APPROVED — that is the policy owner's action, not yours. If the user says "close the gap now that you've redrafted it," decline: "I produce the proposal. The gap closes when you've reviewed, applied, and approved the change. When that's done, tell me and I'll update the tracker."
-3. **"Apply this for me" is not in scope.** If the user asks you to apply the redraft to the source policy: "I don't apply policy changes — that's the policy owner's action after review and approval. I produce the proposal. When it's been reviewed and approved, tell me and I'll update the gap tracker."
-4. **Confirm the policy version before redrafting.** If the user gives you a file, ask: "Is this the approved version of the policy, and is it the latest? A redraft against an outdated policy creates divergence." If they paste text, trust but flag in the reviewer note.
-5. **Smallest-possible edit.** Strike a word before a sentence, a sentence before a paragraph, a paragraph before a section. Only touch sections affected by the gap. Don't restyle the policy.
-6. **Carry `[verify]` tags through.** Any effective date, threshold, citation, or requirement that came from model knowledge or an unverified source gets tagged in the redraft itself, not just in the memo.
+1. **Bu bir ÖNERİDİR, düzenleme değil.** Kaynak politika belgesine asla doğrudan yazma. Çıktı `[policy-name]-proposed-redraft-[YYYY-MM-DD].md` adlı yeni dosyaya ya da matter çalışma alanına gider; `[policy-name].md`'ye değil.
+2. **İzleyicide açığı asla kapatma.** Açıklar taslak UYGULANIP ONAYLANDIĞINDA kapanır; bu politika sahibinin işidir. Kullanıcı "taslağı yazdın, açığı kapat" derse reddet: "Ben öneriyi üretiyorum. Açık, değişikliği inceleyip uygulayıp onayladığınızda kapanır. O zaman söyleyin, izleyiciyi güncellerim."
+3. **"Bunu benim yerime uygula" kapsam dışıdır.** Kullanıcı taslağı kaynak politikaya uygulamamı isterse: "Politika değişikliğini ben uygulamam; inceleme ve onaydan sonra politika sahibinin işidir. Öneriyi ben üretirim. İncelenip onaylandığında söyleyin, açık izleyiciyi güncellerim."
+4. **Taslaktan önce politika sürümünü teyit et.** Dosya verildiyse sor: "Bu politikanın onaylı ve en güncel sürümü mü? Eski bir sürüme karşı yazılan taslak ayrışma yaratır." Metin yapıştırıldıysa güven ama inceleyen notunda işaretle.
+5. **Mümkün olan en küçük değişiklik.** Cümleden önce kelime, paragraftan önce cümle, bölümden önce paragraf çiz. Yalnız açıktan etkilenen bölümlere dokun. Politikanın üslubunu yeniden düzenleme.
+6. **`[doğrula]` etiketlerini taşı.** Model bilgisinden ya da doğrulanmamış kaynaktan gelen her yürürlük tarihi, eşik, atıf ya da gereklilik yalnız notta değil, taslağın içinde de etiketlenir. Dönemsel güncellenen tutarları (idari para cezası, parasal sınırlar) politikaya sabit yazma; "güncel tutar [doğrula]" diye bırak.
 
-## Step 1: Gather inputs
+## Adım 1: Girdileri topla
 
-Three inputs are required. If any is missing, ask — don't infer.
+Üç girdi gerekir. Biri eksikse sor; çıkarsama yapma.
 
-### 1a. The gap
+### 1a. Açık
 
-One of:
-- A `GAP-ID` from the gap tracker — load the entry from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml` (or the matter-level equivalent).
-- A gap described in the user's message — capture the requirement, the regulation, and the affected policy.
-- A diff summary pasted from `/regulatory-legal:policy-diff` output.
+Biri:
+- İzleyiciden bir `GAP-ID` — kaydı `~/.claude/plugins/config/claude-for-legal/regulatory-legal/gap-tracker.yaml` dosyasından (ya da matter düzeyindeki karşılığından) yükle.
+- Kullanıcının mesajında tarif edilen açık — gerekliliği, düzenlemeyi ve etkilenen politikayı yakala.
+- `/regulatory-legal:policy-diff` çıktısından yapıştırılan karşılaştırma özeti.
 
-### 1b. The current policy text
+### 1b. Güncel politika metni
 
-One of:
-- A file path — read it, then ask: "Is this the approved version of the policy, and is it the latest? A redraft against an outdated policy creates divergence." Note the answer in the reviewer note.
-- Pasted text — trust but flag in the reviewer note: "Policy text was pasted directly; I assumed it was the current approved version. Confirm before applying."
-- Neither — ask for one. Do not guess at the policy text from the gap tracker or from web search.
+Biri:
+- Dosya yolu — oku, sonra sor: "Bu politikanın onaylı ve en güncel sürümü mü?" Cevabı inceleyen notuna yaz.
+- Yapıştırılmış metin — güven ama inceleyen notunda işaretle: "Politika metni doğrudan yapıştırıldı; güncel onaylı sürüm olduğunu varsaydım. Uygulamadan önce teyit edin."
+- Hiçbiri — iste. Politika metnini izleyiciden ya da web aramasından tahmin etme.
 
-### 1c. The rule text
+### 1c. Kural metni
 
-One of:
-- The diff output (already has the rule extracted and tagged).
-- A fetched regulation — note the source with a provenance tag.
-- Pasted rule text from the user — tag `[user provided]`.
+Biri:
+- Karşılaştırma çıktısı (kural çıkarılmış ve etiketlenmiş).
+- Araçla çekilmiş düzenleme: `tr_mevzuat_madde_getir`, `tr_resmi_gazete_getir`, `tr_kurum_karari_getir` — `citation` alanı birebir, kaynak etiketiyle.
+- Kullanıcının yapıştırdığı kural metni — `[kullanıcı verdi]`.
 
-If the rule text is partial or ambiguous, apply the **no silent supplement** rule from CLAUDE.md: offer the user the options (paste full text, point at primary source, web-search-with-verify-tag, or stop), and wait.
+Kural metni eksik ya da belirsizse **sessiz tamamlama yok** kuralını uygula: seçenekleri sun (tam metni yapıştır, birincil kaynağı göster, `doğrula` etiketli web araması, dur) ve bekle.
 
-## Step 2: Verify the rule is current
+## Adım 2: Kuralın güncel olduğunu doğrula
 
-Use the same rule-status check pattern as `policy-diff`. Red flags that the rule may not be in force:
+policy-diff Adım 0'daki kontrolü aynen uygula: konsolide metindeki "(Değişik/Ek/Mülga/İptal)" notları ve geçici maddeler, AYM norm denetimi (`tr_aym_ara(kind="norm", …)`), Danıştay iptal ya da yürütmeyi durdurma (`tr_ictihat_ara(courts=["DANISTAYKARAR"], …)`), sonraki RG değişiklikleri. Uyarı işaretleri: yürürlük tarihi 30 günden fazla geçmiş ve ertelenmediği teyit edilmemiş; kural 12 aydan eski; tartışmalı ve dava konusu olabilecek bir düzenleme.
 
-- The applicability/compliance date has passed by more than 30 days with no confirmation it wasn't delayed.
-- The rule is more than 12 months old.
-- The rule is a politically contentious final rule (major rulemakings are frequently challenged).
+Doğrulayamazsan:
 
-When you see a red flag, check (via research MCP, web search if enabled, or the Federal Register docket) for: delays, stays, injunctions, rescission proposals, vacatur, or amendments. If you can verify the rule is in force, proceed. If you cannot verify:
+> `⚠️ KURAL DURUMU DOĞRULANMADI — Bu kuralın şu anda yürürlükte olduğunu teyit edemedim. Yayımlanan düzenlemeler sonradan değiştirilebilir, ertelenebilir, iptal edilebilir ya da yürütmesi durdurulabilir. Durumunu mevzuat.gov.tr, Resmî Gazete ve AYM/Danıştay kararlarından ya da dış avukattan teyit etmeden bu taslağı uygulamayın.`
 
-> `⚠️ RULE STATUS UNVERIFIED — I could not confirm this rule is currently in force. Final rules are frequently stayed, enjoined, delayed, or rescinded after publication. Do not apply this redraft until you confirm the rule's status at the Federal Register docket or with outside counsel.`
+Bu başlığı üst başlığın üstüne koy. Taslaktaki her yürürlük ve uyum tarihini `[yayımlanan metne göre — durum doğrulanmadı]` diye etiketle.
 
-Emit that banner above the work-product header. Tag every effective/compliance date in the redraft as `[effective date per published rule — status unverified]`.
+## Adım 3: Taslağı üret
 
-## Step 3: Produce the redraft
+Etkilenen politika bölümünün işaretli hâli.
 
-A marked-up version of the affected policy section.
+### Kural
 
-### Redline granularity — smallest possible edit
+- Çizilen metin: `~~çizilen metin~~`
+- Eklenen metin: **eklenen metin**
+- Her değişiklik NEDENİNİ açıklayan satır içi yorum taşır — kural, atıf, kapanan açık:
 
-- Strike a word before a sentence.
-- Strike a sentence before a paragraph.
-- Strike a paragraph before a section.
-- Only touch sections affected by the gap. Don't restyle the whole policy.
+  > `[Değişiklik: standart sözleşmenin Kuruma bildirimi eklendi — imzaların tamamlanmasından itibaren beş iş günü; bildirim tarafı sözleşmede belirlenmemişse veri aktaran (Kişisel Verilerin Yurt Dışına Aktarılmasına İlişkin Usul ve Esaslar Hakkında Yönetmelik m. 14/5) [ArthurLegal TR — tr_mevzuat_madde_getir — GG.AA.YYYY]]`
 
-### Conventions
+- Model bilgisinden ya da doğrulanmamış kaynaktan gelen her yürürlük tarihi, eşik, atıf ya da gereklilik satır içinde `[doğrula]` etiketi alır; yalnız değişiklik özetinde değil.
+- Karşılaştırmadan gelen kaynak etiketlerini taşı: `[ArthurLegal TR — <araç> — GG.AA.YYYY]`, `[web araması — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`. Karşılaştırmadan taslağa geçerken silme.
 
-- Struck text: `~~struck text~~`
-- Inserted text: **inserted text**
-- Each change carries an inline comment explaining WHY — the rule, the cite, the gap being closed:
+### Kapsam disiplini
 
-  > `[Change: added biometric identifiers to the PII definition per COPPA 2025 amendments, 16 CFR 312.2 (effective Apr 22 2026) [verify]]`
+Politikanın bir bölümü açıktan etkilenmiyorsa ona dokunma. Açığın dışındaki bölümlere dokunan taslak, yapay zekânın sorulmadığı konularda görüş bildirdiği izlenimini verir ve incelemeyi zorlaştırır.
 
-- Any effective date, threshold, citation, or requirement that came from model knowledge or an unverified source gets a `[verify]` tag inline — not just in the change summary.
-- Carry source tags through from the diff: `[Federal Register]`, `[web search — verify]`, `[model knowledge — verify]`, `[user provided]`. Don't strip them when moving from the diff to the redraft.
+Taslağı yazarken ikinci bir açık görürsen (kuralla açıkça uyumsuz ama asıl açıkta olmayan bir hüküm) sessizce düzeltme. İnceleyen notunda işaretle: "[GAP-ID] için taslak yazarken [diğer hüküm]ün [gereklilik] ile ilgili bir sorunu olduğunu fark ettim. Bu taslağa dahil edilmedi. Ayrı bir açık açılmasını düşünün."
 
-### Scope discipline
-
-If a section of the policy isn't affected by the gap, leave it alone. A redraft that touches sections outside the gap looks like the AI opined on things it wasn't asked to opine on, and makes the review harder.
-
-If you see a second gap while redrafting — a provision that's clearly out of step with the rule but wasn't in the original gap — don't silently fix it. Flag it in the reviewer note: "While redrafting for [GAP-ID], I noticed [other provision] appears to have a related issue with [requirement]. Not included in this redraft. Consider a follow-on gap."
-
-## Step 4: Output — Policy Redraft Memo
+## Adım 4: Çıktı — Politika Yeniden Yazım Notu
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — ## Outputs; role göre]
 
-> **⚠️ Reviewer note**
-> - **Sources:** [Research connector: CourtListener ✓ verified | not connected — cites from training knowledge, verify before relying]
-> - **Read:** [sections of the policy reviewed; what wasn't read]
-> - **Flagged for your judgment:** [N items marked `[review]` inline | none]
-> - **Currency:** [rule status verified against [source], [date] | unverified — see banner above]
-> - **Before relying:** confirm this is the current approved version of the policy; verify rule status and effective date; get the policy owner's review; follow your policy-change approval process; update the gap tracker only when applied and approved.
+> **⚠️ İnceleyen notu**
+> - **Kaynaklar:** [ArthurLegal MCP (`tr_`) ✓ doğrulandı | bağlı değil — atıflar model bilgisinden, dayanmadan önce doğrula]
+> - **Okunan:** [politikanın incelenen bölümleri; okunmayanlar]
+> - **Takdirinize bırakılan:** [satır içinde `[incele]` işaretli N kalem | yok]
+> - **Güncellik:** [kural durumu [kaynak], [tarih] itibarıyla doğrulandı | doğrulanmadı — yukarıdaki başlığa bakın]
+> - **Dayanmadan önce:** bunun politikanın güncel onaylı sürümü olduğunu teyit et; kuralın durumunu ve yürürlük tarihini doğrula; politika sahibinin incelemesini al; politika değişikliği onay sürecini izle; açık izleyiciyi yalnız uygulanıp onaylandığında güncelle.
 
-## Policy Redraft: [Policy name]
+## Politika Yeniden Yazımı: [Politika adı]
 
-**Gap:** [GAP-ID or short description]
-**Regulation:** [name, citation, effective date]
-**Policy:** [name, last-updated date]
-**Status:** PROPOSAL — not yet reviewed or approved
+**Açık:** [GAP-ID ya da kısa tarif]
+**Düzenleme:** [araçtan dönen citation, yürürlük tarihi]
+**Politika:** [ad, son güncelleme tarihi]
+**Durum:** ÖNERİ — henüz incelenmedi ya da onaylanmadı
 
-### Bottom line
+### Sonuç
 
-[One sentence: what the gap is. One sentence: what the redraft does. One sentence: what needs review.]
+[Bir cümle: açık ne. Bir cümle: taslak ne yapıyor. Bir cümle: neyin incelenmesi gerekiyor.]
 
-### Marked-up policy section(s)
+### İşaretli politika bölüm(ler)i
 
-[The redlined text, with inline `[Change: ...]` comments. Only the affected sections.]
+[Satır içi `[Değişiklik: ...]` yorumlarıyla işaretli metin. Yalnız etkilenen bölümler.]
 
-### Change summary
+### Değişiklik özeti
 
-| # | Provision | Current | Proposed | Why | Verify |
+| # | Hüküm | Mevcut | Önerilen | Neden | Kaynak |
 |---|---|---|---|---|---|
-| 1 | §2.1 PII definition | "…names, addresses, SSNs…" | "…names, addresses, SSNs, biometric identifiers…" | COPPA 2025 amendments expand PII to cover biometrics | [Federal Register] |
-| 2 | §4.3 Retention period | "30 days" | "14 days" | New rule imposes 14-day cap | `[verify — model knowledge]` |
+| 1 | §3.2 Yurt dışı aktarım dayanağı | "…kişisel verileri ilgili kişinin açık rızasıyla yurt dışına aktarırız…" | "…yeterlilik kararı bulunan ülkelere; yoksa Kurulun ilan ettiği standart sözleşme gibi uygun güvencelerden biriyle; bunlar da yoksa yalnız arızi hâllerde aktarırız…" | 7499 s. Kanunla değişen KVKK m. 9: yeterlilik kararı → uygun güvence → arızi istisna (m. 9/1, 9/4, 9/6) | `[ArthurLegal TR — tr_mevzuat_madde_getir — GG.AA.YYYY]` |
+| 2 | §3.5 Bildirim | (yok) | "Standart sözleşme değiştirilmeden kullanılır ve imzaların tamamlanmasından itibaren beş iş günü içinde Kuruma bildirilir." | KVKK m. 9/5; Yönetmelik m. 14/3, 14/5 | `[ArthurLegal TR — tr_mevzuat_madde_getir — GG.AA.YYYY]` |
+| 3 | §6.1 İdari para cezası | "[tutar] TL'ye kadar" | "kanunda öngörülen idari para cezası" | Tutar dönemsel güncellenir; politikaya sabit yazılmaz | `[doğrula — güncel tutar]` |
 
-### Before applying — checklist
+### Uygulamadan önce — kontrol listesi
 
-- [ ] Confirm this is the current approved version of the policy being redrafted.
-- [ ] Verify the rule status and effective date (Federal Register docket, or outside counsel).
-- [ ] Get the policy owner's review.
-- [ ] Follow your policy-change approval process.
-- [ ] Update the gap tracker when applied and approved — not before.
+- [ ] Taslağın yazıldığı metnin politikanın güncel onaylı sürümü olduğunu teyit et.
+- [ ] Kuralın durumunu ve yürürlük tarihini doğrula (mevzuat.gov.tr, Resmî Gazete, AYM/Danıştay ya da dış avukat).
+- [ ] Politika sahibinin incelemesini al.
+- [ ] Politika değişikliği onay sürecini izle.
+- [ ] Açık izleyiciyi uygulanıp onaylandığında güncelle — öncesinde değil.
 
 ---
 
-**What next? Pick one and I'll help you build it out:**
+**Sırada ne var? Birini seçin, birlikte ilerletelim:**
 
-1. **Apply and get sign-off** — you review, circulate to the policy owner, walk it through your approval process. When approved, tell me and I'll mark the gap closed.
-2. **Get more info on [X]** — if a specific change needs more grounding (a cite verified, a threshold checked, a jurisdiction question resolved), tell me which one and I'll dig in.
-3. **Escalate to [owner / GC]** — if the redraft raises something above the policy-owner's authority, I'll draft a short escalation with the facts, the proposed change, and what decision is needed.
-4. **Watch and wait** — if the rule's status is uncertain or the policy owner is unavailable, I'll add a revisit note to the gap tracker.
-5. **Something else** — tell me what you'd do with it.
+1. **Uygula ve onay al** — siz incelersiniz, politika sahibine iletirsiniz, onay sürecinden geçirirsiniz. Onaylanınca söyleyin, açığı kapalı işaretlerim.
+2. **[X] hakkında daha fazla bilgi** — bir değişikliğin dayanağı güçlendirilmeli mi (atıf doğrulama, tutar kontrolü, yabancı hukuk sorusu), hangisi olduğunu söyleyin, araştırayım.
+3. **[Sahip / hukuk müdürü]ne eskale et** — taslak politika sahibinin yetkisini aşan bir şey doğuruyorsa olguları, önerilen değişikliği ve gereken kararı içeren kısa bir eskalasyon yazayım.
+4. **İzle ve bekle** — kuralın durumu belirsizse ya da politika sahibine ulaşılamıyorsa açık izleyiciye yeniden değerlendirme notu ekleyeyim.
+5. **Başka bir şey** — ne yapmak istediğinizi söyleyin.
 ```
 
-## Filename
+## Dosya adı
 
-The output file name makes clear it's a draft. Use:
+Çıktı dosyasının adı taslak olduğunu açıkça göstermelidir:
 
 `[policy-name]-proposed-redraft-[YYYY-MM-DD].md`
 
-Not `[policy-name].md`. Not `[policy-name]-v2.md`. The word "proposed-redraft" and the date are load-bearing — they prevent the draft from being mistaken for the current version.
+`[policy-name].md` değil. `[policy-name]-v2.md` değil. "proposed-redraft" sözcüğü ve tarih taşıyıcıdır; taslağın güncel sürümle karıştırılmasını önler.
 
-Write to the matter workspace if one is active; otherwise to the current working directory or a location the user names. Do not write to the policy library source directory.
+Aktif matter varsa matter çalışma alanına; yoksa çalışma klasörüne ya da kullanıcının gösterdiği yere yaz. Politika kütüphanesinin kaynak klasörüne yazma.
 
-## Config-dependent fallbacks
+## Ayar eksikse
 
-This skill reads the policy library index and owners from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. When a value it needs is empty or still `[PLACEHOLDER]`:
+- **Politika sahibi yok:** taslağı yine üret. İnceleyen notuna yaz: "`## Policy library` tablosunda [politika] için Owner tanımlı değil. Onay yolunun yönlendirilebilmesi için `/regulatory-legal:cold-start-interview --redo` ile atayın."
+- **Politika kütüphanesi boş ve açık belirli bir politika göstermiyor:** dur ve sor: "Taslak için güncel politika metnine ihtiyacım var. Etkilenen politikanın metnini yapıştırın ya da dosyayı gösterin."
 
-- **Policy owner missing:** still produce the redraft. Note in the reviewer note: "No policy owner is set for [policy] in `## Policy library`. Assign one with `/regulatory-legal:cold-start-interview --redo` so the approval path is routable."
-- **Policy library empty and the gap doesn't name a specific policy:** stop and ask: "I need the current policy text to redraft. Paste the text of the affected policy, or point me at the file."
+Değerler doluysa ayardan söz etme.
 
-Say nothing about config when the values are populated.
+## Diğer skill'lerle ilişki
 
-## Interactions with other skills
+- **Girdiler** `policy-diff`ten (gereklilik bazında açık analizi) ve `gap-surfacer`dan (izleyici) gelir. Kaynak etiketlerini ve `[doğrula]` işaretlerini taşı.
+- **İzleyici durumu:** bu skill izleyiciyi DEĞİŞTİRMEZ. Açığı kapalı ya da devam ediyor işaretlemez, `notified` alanına dokunmaz. Taslağın varlığına iz bırakmak istenirse, taslak uygulanıp onaylandığında politika sahibi ya da kullanıcı kapanış notuyla kaydı günceller — bkz. `/regulatory-legal:gaps --close`.
+- **Önem tabanı:** yukarı akıştaki açık 🔴 ya da 🟠 ise notun Sonuç bölümü o önemi taşır. Sessizce düşürmek, inceleyen avukatın göremeyeceği bir çelişkidir. Bkz. profil `## Cross-skill severity floor`.
+- **Konu skill'leri:** İK politikası için `/employment-legal:policy-drafting`; aydınlatma metni için `/privacy-legal:policy-monitor`.
 
-- **Upstream inputs** come from `policy-diff` (per-requirement gap analysis) and `gap-surfacer` (the tracker). Carry their source tags and `[verify]` flags through.
-- **Gap tracker state:** this skill does NOT change the tracker. It doesn't mark the gap closed, doesn't mark it in-progress, doesn't touch `notified`. If you want a paper trail that a redraft exists, the policy owner or the user can update the gap entry with a resolution note when the redraft is applied and approved — see `/regulatory-legal:gaps --close`.
-- **Severity floor:** if the upstream gap is 🔴 or 🟠, the memo's Bottom line carries that severity. Silent demotion is a contradiction a reviewing lawyer cannot see. See CLAUDE.md `## Cross-skill severity floor`.
+## Kapanış
 
-## Close with the next-steps decision tree
+Karar ağacı yukarıdaki çıktı şablonunun içindedir. Seçenekleri taslağın gerçekte ürettiğine göre uyarla: kuralın durumu doğrulanmadıysa 2. seçenek (daha fazla bilgi) öne çıkar; politika sahibi tanımlı değilse 3. seçenek (eskalasyon) somutlaşır.
 
-Included in the output template above. Customize the options to what the redraft actually produced — if the rule status is unverified, option 2 (get more info) moves up; if the policy owner isn't set, option 3 (escalate) gets specific.
+## Bu skill ne yapmaz
 
-## What this skill does not do
-
-- Apply the redraft to the source policy. That's the policy owner's action.
-- Close the gap in the tracker. Gaps close when the redraft is applied and approved.
-- Rewrite the whole policy. Smallest-possible edit to close the gap.
-- Produce multi-policy redrafts. One gap, one policy, one memo. A `:package` command for multi-policy fan-out is a future skill.
-- Produce the "apply" workflow. An `:apply` command with an approval gate is a future skill.
+- Taslağı kaynak politikaya uygulamaz; bu politika sahibinin işidir.
+- İzleyicide açığı kapatmaz; açıklar taslak uygulanıp onaylandığında kapanır.
+- Politikanın tamamını yeniden yazmaz; açığı kapatan en küçük değişikliği yapar.
+- Birden çok politikayı tek seferde yazmaz: bir açık, bir politika, bir not.
+- "Uygula" iş akışını yürütmez; onay kapılı bir uygulama komutu ileride ayrı bir skill olabilir.
 
 ---
 
@@ -1732,238 +1633,252 @@ Included in the output template above. Customize the options to what the redraft
 
 ---
 name: reg-feed-watcher
-description: Check regulatory feeds now and report what's new since the last check, filtered by your materiality threshold. Use when the user says "check the feeds", "what's new", "regulatory update", when running from the scheduled agent, or when manually pasting a regulatory development for classification and diff.
-argument-hint: "[optional: --since DATE]"
+description: >
+  Düzenleyici akışları şimdi kontrol eder (Resmî Gazete, mevzuat, sekiz düzenleyici kurumun
+  kararları, AYM norm denetimi, izlenen yabancı yargı çevreleri) ve son kontrolden bu yana
+  yeni olanı önemlilik eşiğine göre süzerek raporlar. "Akışları kontrol et", "yeni ne var",
+  "mevzuat güncellemesi", "bu haftanın Resmî Gazete'si" denince, zamanlanmış ajan
+  çalıştırdığında ya da kullanıcı bir düzenleyici gelişmeyi sınıflandırma ve politika
+  karşılaştırması için yapıştırdığında kullan.
+argument-hint: "[isteğe bağlı: --since YYYY-AA-GG]"
 ---
 
 # /reg-feed-watcher
 
-1. Load `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → watchlist, materiality threshold, feed config.
-2. Use the workflow below.
-3. Pull each feed. Filter by materiality.
-4. Output: what's new, categorized by materiality tier.
+1. Profili yükle: `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → `## Regulators we watch` (watchlist), `## Materiality threshold`, `## Feed configuration`.
+2. Aşağıdaki iş akışını uygula.
+3. Her akışı çek; önemlilik eşiğine göre süz.
+4. Çıktı: yeni olanlar, önem kademesine göre.
 
 ---
 
-## Purpose
+## Amaç
 
-Pull the feeds. Filter by materiality. Output what's left. The filter is the
-value — unfiltered feeds are noise.
+Akışı çek, önemliliğe göre süz, kalanı göster. Değer süzgeçtedir; süzülmemiş Resmî Gazete gürültüdür.
 
-## Load context
+## Bağlamı yükle
 
-`~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` → watchlist, materiality threshold, feed configuration, digest output path (if set).
+- Eklenti profili (başlık ve anahtar adları İngilizce kalır; çevirme):
+  - `## Regulators we watch` — watchlist tablosu (Regulator, Jurisdiction, Why we watch, Feed source).
+  - `## Materiality threshold` — üç kademe: `**Always material (alert immediately):**`, `**Review-worthy (weekly digest):**`, `**FYI (monthly roundup or not at all):**`.
+  - `## Feed configuration` — `**Free feeds (always active):**` tablosu (araç çağrısı, RSS ya da kurum duyuru sayfası), `**Paid feeds (if configured):**`, `**Manual entry:**`, `**Comment tracking:**`, `**Default comment decision owner:**`, `**Check cadence:**`, `**Digest channel:**`, `**Digest output path:**`.
+- Ortak profil `company-profile.md`: [ŞİRKET ADI]'ın sektörü, lisansları, halka açık olup olmadığı, denetime tabi olduğu kurumlar. Watchlist'te eksik kurum varsa buradan anla.
+- `source-catalog.md`: Türkiye, AB, Birleşik Krallık ve yaptırım kaynaklarının küratörlü listesi. Yeni kaynak yapılandırırken ya da kapsam boşluğu görürken kullan (Adım 0).
+- `mevzuat-mcp-rehberi.md` bölüm 4: `konu` süzgecinin ölçülmüş sınırları.
+- `reg-feed-haftalik-sablon.md`: müvekkile ya da şirket içine haftalık bülten biçimi isteniyorsa.
 
-`references/source-catalog.md` (in this skill's directory) → curated catalog of RSS/JSON/HTML sources across US federal, US state, EU/UK, international, and secondary/aggregator categories. Use when configuring new sources or when the user's watchlist has coverage gaps (see Step 0).
+## İş akışı
 
-## Workflow
+### Adım 0: Kapsam kontrolü (çekmeden önce)
 
-### Step 0: Coverage check (before pulling)
+Watchlist ve feed yapılandırmasını `source-catalog.md` ile karşılaştır:
+- Kullanıcı hangi kategorileri izliyor (Türk mevzuatı, Türk kurumları, AB/Birleşik Krallık, diğer yabancı, yaptırım)?
+- Bunlardan hangisinde hiç ya da çok az kaynak yapılandırılmış?
 
-Before running the pull, compare the watchlist + feed configuration in CLAUDE.md against `references/source-catalog.md`:
+Belirgin boşluk varsa digest'in başında **bir kez** göster. Türkiye'de sık görülenler:
+- [ŞİRKET ADI] EPDK lisans sahibi ama `epdk` kurum akışı yapılandırılmamış.
+- Halka açık ama SPK bülteni izlenmiyor; banka ya da finansal kuruluş ama BDDK yok.
+- `**Comment tracking:**` Enabled ama `**Free feeds (always active):**` tablosunda hiçbir kurumun taslak duyuru sayfası yok. Görüşe açılan taslaklar Resmî Gazete'de yayımlanmaz ve ArthurLegal araçlarında taslak akışı yoktur; bu sayfa tanımlanmadan görüş süreleri kaçar.
 
-- Which categories (US federal / US state / EU-UK / international) does the user care about per their watchlist?
-- Which of those categories have zero or very few sources configured?
+> **Kapsam boşluğu:** Watchlist'inizde [kategori] var ama yalnız [N] kaynak yapılandırılmış. `source-catalog.md` bu kategoride [ör. 2-3 ad] öneriyor. Ekleyeyim mi? `/regulatory-legal:cold-start-interview --redo` çalıştırın ya da `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` dosyasını düzenleyin.
 
-If there's an obvious gap — e.g., user watches "EU regulators" in the watchlist but has only `edpb.europa.eu` configured in feeds, missing ICO, CNIL, DPC Ireland — surface it once at the top of the digest:
+Aynı boşluğu her çalışmada tekrarlama. Kullanıcı "şimdilik X'i atla" dediyse uy ve bunu profile not et.
 
-> **Coverage gap noticed:** Your watchlist includes [category], but only [N] feeds are configured. The source catalog lists [X] options in this category (e.g., [top 2-3 names]). Want me to suggest additions? Run `/regulatory-legal:cold-start-interview --redo` to update, or edit `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` directly.
+### Adım 1: Çek
 
-Don't nag the same gap repeatedly — if the user has explicitly said "skip state AGs for now," respect that. Note state in CLAUDE.md so it sticks.
+Yapılandırılmış her katmandan çek. Tier 1 her kurulumda vardır; Tier 2 ve 3 eklenir.
 
-### Step 1: Pull
+Genel kurallar:
+- `tr_` çağrılarını sırayla yap, aralarında birkaç saniye bırak (hız sınırı ortaktır).
+- Her araç çağrısı 100 saniyede iptal edilir. Dar tut; iptal olursa aynı sorguyu tekrarlama, aralığı böl.
+- Araç veri getiremezse (hata, `unavailable`, `upstream_blocked`) boş sonuç sayma. O kalem için şunu yaz: `UYARI: veri çekilemedi, teyidiniz gerekli: <aracın source_url'si ya da resmî giriş sayfası>`. Bağlantı uydurma.
+- Pencere: `--since` verildiyse o tarih, yoksa son kontrol zamanı, o da yoksa son 7 gün.
 
-Pull from all configured feed tiers. Every installation has Tier 1. Tiers 2
-and 3 are additive — use them if configured, skip if not.
+**Tier 1 — Ücretsiz akışlar (her zaman açık): ArthurLegal MCP**
 
-**Tier 1 — Free feeds (always active)**
+1. **Resmî Gazete (birincil akış).** Neyin yayımlandığının ölçüsü fihristtir; mevzuat araması RG akışını vermez.
+   ```
+   tr_resmi_gazete_tara(date_from="2026-10-19", date_to="2026-10-25", konu="enerji")
+   tr_resmi_gazete_tara(date_from="2026-10-19", date_to="2026-10-25", query="Elektrik")
+   tr_resmi_gazete_tara(date_from="2026-10-19", date_to="2026-10-25", query="Kişisel Veri")
+   ```
+   - `konu` yalnız `enerji`, `rekabet`, `vergi`, `icra` alır. Başlığında konu adı geçmeyen kalemi de bulur ama bir ön elemedir. Sonucu `query` ile tamamla; enerji taramasında `konu`'ya tek başına güvenme (elektrik, doğal gaz, petrol, lisans, EPDK ile ikinci tarama).
+   - Dört konu dışındaki alanlar (KVKK, iş hukuku ve İSG, sermaye piyasası, bankacılık) yalnız `query` ile taranır.
+   - Yanıttaki `konu_elenen` sayısını digest'e yaz. "Bu hafta başka bir şey çıkmadı" deme; "konu süzgecinden geçenler bunlar, N kalem elendi" de.
+   - Tek çağrı en çok 60 gün tarar; uzun pencereyi böl.
+   - Tek gün ya da mükerrer sayı: `tr_resmi_gazete_fihrist(date="2026-10-24", mukerrer=1)`.
+   - Değişiklik metni, yürürlük maddesi ve geçiş hükmü: `tr_resmi_gazete_getir(url="<fihristteki url>")`.
+   - Sonuçtaki `section` alanı (YÖNETMELİKLER, KURUL KARARLARI, CUMHURBAŞKANI KARARLARI vb.) sınıflandırmada ilk ipucudur.
+2. **Mevzuat (kimlik ve konsolide metin).**
+   ```
+   tr_mevzuat_ara(types=["KANUN"], rg_date_from="2026-10-01", rg_date_to="2026-10-25", konu="vergi", max_pages=2)
+   tr_mevzuat_ara(query="Elektrik Piyasası", types=["YONETMELIK", "KKY", "TEBLIGLER"], rg_date_from="2026-10-01")
+   tr_mevzuat_ara(number="6446", types=["KANUN"])
+   ```
+   - Türler: `KANUN`, `KHK`, `CB_KARARNAME`, `CB_KARAR`, `CB_YONETMELIK`, `CB_GENELGE`, `YONETMELIK`, `KKY`, `UY`, `TEBLIGLER`.
+   - RG tarih süzgeci RG tarihi boş kayıtları hiç getirmez ve konsolide veri tabanı yayımın gerisinde kalabilir. Boş sonuç "o dönemde düzenleme yok" demek değildir; yayımı RG fihristinden teyit et.
+   - Torba kanun: `konu_kaynak: "degistirilen_kanunlar"` dönen kanunun hangi kanunları değiştirdiği `konu_degistirilen` alanındadır; `konu_kaynak: "belirsiz"` dönen kanunu `tr_mevzuat_getir` ile aç ve kendin karar ver.
+3. **Kurum kararları** (yalnız watchlist'teki kurumlar):
 
-For each regulator in the watchlist:
+   | Kurum | Çağrı | Not |
+   |---|---|---|
+   | EPDK | `tr_kurum_karari_ara(kurum="epdk", market="elektrik", year=2026, limit=20)` | `market`: elektrik, dogalgaz, petrol, lpg. Yalnız yapısal Kurul kararları; lisans tadilleri RG fihristindedir. Karar tarihi ile RG tarihi farklıdır; ikisini de yaz. |
+   | Rekabet | `tr_kurum_karari_ara(kurum="rekabet", query="\"dikey anlaşma\"", decision_type="rekabet_ihlali")` | Çok kelimeli ifadeyi tırnakla. Kılavuz ve tebliğler mevzuattadır (`tr_mevzuat_ara`). |
+   | SPK | `tr_kurum_karari_ara(kurum="spk", year=2026)` → son bülten no, sonra `tr_spk_bulten_icinde_ara(bulten="2026/74", query="idari para cezası")` | Kurul kararları haftalık bültendedir. |
+   | BDDK | `tr_kurum_karari_ara(kurum="bddk", query="destek hizmeti", year=2026)` | Canlı arama başlıkta; metin için `tr_semantik_ara(kurum="bddk", query=…)`. |
+   | KVKK | `tr_kurum_karari_ara(kurum="kvkk", params={"scan_pages": 3}, limit=30)` | Liste tarihe göre sıralı değil; `date` alanına bak. |
+   | BTK | `tr_kurum_karari_ara(kurum="btk", date_from="2026-10-01", date_to="2026-10-25")` | Canlı arama başlıkta; gerekçe PDF'te. |
+   | GİB | `tr_kurum_karari_ara(kurum="gib", query="<konu>", date_from="2026-10-01")` | Özelge bağlayıcı değildir; idarenin görüşüdür. |
+   | Sigorta Tahkim | `tr_kurum_karari_ara(kurum="sigorta_tahkim", issue=<dergi sayısı>)` | Hakem kararı dergisi. |
 
-- **Federal Register API** (`https://www.federalregister.gov/api/v1/documents`)
-  — query by agency slug, date range (since last check), document type. Returns
-  structured data: document type, title, abstract, effective date, comment
-  deadline (for NPRMs), and citation. Covers all US federal agencies.
-- **Türkiye — ArthurLegal MCP (`tr_`)** — Resmî Gazete akışı `tr_resmi_gazete_tara` ile taranır: izlenen konu `enerji`,
-  `rekabet`, `vergi` veya `icra` ise önce `konu=…` (başlığında konu adı geçmeyen kalemi de bulan, sunucuda koşan yerel ön
-  eleme), sonra `query=…` ile tamamlama; diğer alanlarda yalnız `query`. Haftanın kanunları ve torba kanunlar
-  `tr_mevzuat_ara(types=["KANUN"], rg_date_from=…, rg_date_to=…, konu=…)` ile, kurum kararları
-  `tr_kurum_karari_ara(kurum=…)` ile çekilir (EPDK, SPK, BDDK, KVKK, Rekabet, BTK, GİB, Sigorta Tahkim). `konu` kapsam
-  garantisi değildir: digest'e `konu_elenen` ve `konu_belirsiz` sayısını yaz, "bu hafta başka bir şey çıkmadı" deme.
-  Ölçülmüş sınırlar: `mevzuat-mcp-rehberi.md` bölüm 4.
-- **Direct regulator RSS** — fetch and parse any RSS URLs in ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md feed
-  configuration (SEC, FTC, CFPB, state agencies, EU DPAs, etc.).
+   Arşivde ya da tarih aralığında konu araması: `tr_semantik_ara(kurum="<kurum>", query="<konu>", date_from="YYYY-AA-GG")`. Tam metin: `tr_kurum_karari_getir(kurum="<kurum>", id="<id>")`. Filtreleri görmek için `tr_kurum_listesi`.
+4. **AYM norm denetimi** (watchlist'in dayandığı temel kanunlar için): `tr_aym_ara(kind="norm", query="6446 sayılı Elektrik Piyasası Kanunu")`. İptal kararları RG'de de yayımlanır; RG taramasında `query="Anayasa Mahkemesi"` ile yakalanır. İptal hükmü yayım tarihinde ya da AYM'nin belirlediği ileri tarihte yürürlükten kalkar (Anayasa m. 153/3); bu tarihi ayrıca yaz.
+5. **Yabancı yargı çevreleri** (yalnız watchlist'te varsa):
+   - AB: `eu_search_eu_law(query="electricity market", date_from="2026-10-01")`
+   - Birleşik Krallık: `uk_search_legislation(title="Energy", year="2026")`; bir kanunun işlenmemiş değişiklikleri: `uk_get_effects(year="<yıl>", number="<no>", unapplied_only=true)`
+   - Almanya: `de_recent_changes(since_iso="2026-10-19")`
+   - Finlandiya: `fi_recent_changes()` (yalnız son değişen beş akt)
+   - Hollanda, Polonya, Avusturya, İrlanda, İspanya, Japonya, Azerbaycan: kendi arama araçlarıyla (`nl_`, `pl_`, `at_`, `ie_`, `es_`, `jp_`, `az_`).
+   - Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
+6. **Araç dışı kaynaklar.** KİK, Sayıştay, TÜRKPATENT ve İSTAÇ ArthurLegal'da yoktur (resmî uçları cevap vermiyor); bunlar için araç önerme, sonuç uydurma. TBMM'deki kanun teklifleri, KAP bildirimleri, kurumların taslak duyuruları, MASAK, KGK ve bakanlık duyuruları da araçlarda yoktur. Profilde sayfa adresi tanımlıysa (ajanda WebFetch ile) oku ve `[kurum sitesi]` etiketi koy; tanımlı değilse kullanıcının manuel girişine bırak. Yaptırım listeleri (OFAC, AB, Birleşik Krallık) için `source-catalog.md`.
 
-Agency slug reference for common watchlist regulators:
-| Regulator | API slug |
+**Tier 2 — Ek bağlayıcılar (`**Paid feeds (if configured):**`)**
+
+Bağlıysa Thomson Reuters Regulatory Intelligence (son kontrolden bu yana, watchlist kurumlarına süzülmüş), kullanıcının kendi aboneliğiyle bağladığı başka veri tabanları ya da ABD için CourtListener (`courtlistener-rehberi.md`). Aynı belge birden çok kaynaktan gelebilir: teke indir, en zengin kaynağı kullan.
+
+**Sessiz tamamlama yok.** Bir watchlist kurumu için akış az ya da hiç sonuç döndürürse bulduğunu raporla ve dur. Boşluğu web araması ya da model bilgisiyle doldurma; sor:
+> "Akış kontrolü [N] kalem döndürdü ([kaynaklar]). [Kurum / konu] için kapsam ince görünüyor. Seçenekler: (1) tarih aralığını genişletmek, (2) başka bir araç ya da kaynak denemek, (3) web araması — sonuçlar `[web araması — doğrula]` etiketi taşır ve kullanılmadan önce kurumun sitesinden kontrol edilmelidir, (4) burada durmak. Hangisi?"
+
+Daha düşük güvenilirlikteki kaynağı kabul etme kararı avukatındır.
+
+**Kaynak etiketi.** Her kaleme nereden geldiğini yaz. Araçtan gelen kalem: `[ArthurLegal TR — <araç> — GG.AA.YYYY]` (ör. `[ArthurLegal TR — tr_resmi_gazete_tara — 26.10.2026]`, `[ArthurLegal TR — tr_kurum_karari_ara:epdk — 26.10.2026]`); yabancı araçta önek değişir (`[ArthurLegal EU — eu_search_eu_law — …]`). Diğerleri: `[TR Regulatory Intelligence]`, `[kurum sitesi]`, `[web araması — doğrula]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`. `doğrula` etiketli kalemlerin uydurma riski daha yüksektir; önce onlar kontrol edilir. Etiketleri silme ya da birleştirme.
+
+**İkincil kaynak.** Büro bültenleri, meslek kuruluşu ve dernek duyuruları, haber siteleri, Lexology ve benzeri yorumcular birincil kaynak değildir. Bunlardan gelen kaleme ayrıca `[ikincil kaynak]` etiketi koy ve şu notu ekle: "→ Birincil kaynağa git: RG fihristi ya da ilgili kurumun kararı; bulunmadan güvenme." İkincil kaynağa dayanan kalemi tek başına Always material yapma; birincil kaynak bulunana kadar bir kademe aşağıda tut.
+
+**Tier 3 — Manuel giriş**
+
+Kullanıcı düzenleme metnini ya da özetini yapıştırdıysa onu tek kalem say, Adım 2'ye geç, kaynağı `[kullanıcı verdi]` olarak kaydet. Akış çekmek gerekmez; abonelikten bağımsız çalışır.
+
+Çektikten sonra kontrol zamanını kaydet; sonraki çalışma oradan başlar.
+
+### Adım 2: Sınıflandır
+
+Her kalem profildeki `## Materiality threshold` kademelerinden birine girer: `**Always material (alert immediately):**`, `**Review-worthy (weekly digest):**`, `**FYI (monthly roundup or not at all):**`. Profildeki madde listeleri aşağıdaki tablodan önce gelir; tablo yalnız profilin sessiz kaldığı kalem türleri için varsayılandır. Kademe etiketleri İngilizce kalır.
+
+| Kalem türü | Eşik karşılığı |
 |---|---|
-| FTC | federal-trade-commission |
-| SEC | securities-and-exchange-commission |
-| CFPB | consumer-financial-protection-bureau |
-| CPPA (CA) | RSS only — cppa.ca.gov/feed |
-| DOL | labor-department |
-| HHS | health-and-human-services-department |
-| FCC | federal-communications-commission |
+| RG'de yayımlanan kanun, CB kararnamesi, CB kararı ya da yönetmeliği, kurum yönetmeliği, tebliğ | İzlenen faaliyete dokunuyorsa genelde Always material. Yürürlük tarihini ve geçiş hükmünü metnin kendisinden yaz. |
+| RG'de yayımlanan ya da kurumun ilan ettiği düzenleyici Kurul kararı | [ŞİRKET ADI]'ın lisansı ya da faaliyetiyle eşleşiyorsa Always material. Örnek: elektrik piyasasında lisans sahibi faaliyet alanına göre mevzuatın gereklerini yerine getirmekle yükümlüdür ve ikincil mevzuata, Kurul kararlarına aykırılık ihtar ve idari para cezasına bağlanır (6446 m. 5/2-e, 16/1-b). |
+| AYM iptal kararı; Danıştay yürütmeyi durdurma ya da iptal kararı | İzlenen kuralı etkiliyorsa Always material. Bu bir durum değişikliğidir: ilgili açıkların `status_verified` alanını yeniden değerlendir (`/regulatory-legal:gaps`). |
+| Görüşe açılan düzenleme taslağı | Genelde Review-worthy; görüş son tarihini her zaman kaydet (`item_type: draft`). |
+| Taslaksız istişare, tartışma metni, görüş çağrısı | Uyum için değil strateji için Review-worthy (`item_type: consultation`). |
+| TBMM'ye sunulan kanun teklifi | İzleme (`item_type: bill`). ArthurLegal'da TBMM kaynağı yok; teklif metnini kullanıcı verir. |
+| Bireysel Kurul kararı, idari para cezası | Sektör eşleşmesi → material; benzer uygulama → Review-worthy; ikisi de yoksa FYI ya da atla. |
+| Kılavuz, rehber, ilke kararı, duyuru | Review-worthy. |
+| Konuşma, sunum, basın açıklaması | Eşiğe göre FYI ya da atla. |
+| Taahhüt ya da uzlaşma kararı (ör. Rekabet Kurulu) | Yeni bir yaklaşım ya da yüksek tutar → Review-worthy; rutin → atla. |
+| [ŞİRKET ADI]'ın adının geçtiği her kalem | Always material. |
 
-For any regulator not in this list: check federalregister.gov/agencies for the
-correct slug, or fall back to direct RSS.
+**Taslak ve istişare dalı.** Taslak ve istişare kalemleri hukuku henüz değiştirmez ama görüş son tarihi gerçektir ve kurumun yönünü gösterir. Bu yüzden ayrı ele alınır:
+- İstişare ya da taslağı Always material yapma; uyum etkisi kural yayımlanana kadar sıfırdır.
+- Konusu watchlist'in Always material kategorilerinden birine dokunuyorsa Review-worthy yap.
+- `**Comment tracking:**` Enabled ise son tarihi `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` dosyasına yaz (şema `/regulatory-legal:comments`'te): `item_type` (`draft`, `consultation` ya da `bill`), `decision: undecided`, `owner` = `**Default comment decision owner:**`. Son tarih kurumun duyurusundan alınır; duyuruda yoksa "son tarih belirtilmemiş — kurumdan teyit et" yaz, tarih uydurma.
+- Digest satırına açıkça yaz: "Kural öncesi. Görüş son tarihi [tarih]. `/regulatory-legal:policy-diff`'e yalnız ön konumlanma analizi için yönlendir (henüz uyum açığı yok)."
+- Bunlar uyum açığı değildir: açık izleyiciye (gap tracker) değil görüş izleyicisine (comment tracker) gider. `gap-surfacer` bunları `comment-decision` `gap_type` ile tutar ya da hiç almaz.
 
-**Tier 2 — Paid feeds (if configured)**
+### Adım 3: Zenginleştir
 
-- **TR Regulatory Intelligence MCP:** Query for updates since last check date,
-  filtered to watchlist regulators.
-- **CourtListener REST:** Same.
+FYI üstündeki her kalem için:
+- Tek satır: ne değişti.
+- Neden önemli: "bu, [[ŞİRKET ADI]'ın yaptığı iş] hakkında".
+- Bağlantı: araçtan dönen `url` / `source_url`; künye için araçtan dönen `citation` birebir.
+- Yürürlük tarihi, geçiş süresi ya da görüş son tarihi. Yürürlük tarihini yürürlük maddesinden oku; "yayımı tarihinde" varsayma.
 
-De-duplicate across tiers — the same document may appear in multiple sources.
-Prefer the richest source for the enriched output.
+FYI kalemlerini tek tek özetleme; yalnız say.
 
-**No silent supplement.** If the feed pull returns few or no results for a regulator in the watchlist, report what was found and stop. Do NOT fill the gap from web search or model knowledge without asking. Say: "The feed check returned [N] items from [regulators hit]. Coverage appears thin for [regulator / topic]. Options: (1) broaden the date window, (2) try a different feed or MCP, (3) search the web — results will be tagged `[web search — verify]` and should be checked against the issuing authority's website before relying, or (4) stop here. Which would you like?" A lawyer decides whether to accept lower-confidence sources; Claude does not decide for them.
+## Çıktı
 
-**Source attribution.** Tag every citation and regulatory item with where it came from: `[Federal Register]`, `[<regulator> RSS]`, `[TR]`, `[CourtListener]`, or the specific MCP tool name for items retrieved via connector; `[web search — verify]` for items from web search; `[model knowledge — verify]` for items surfaced from the model's training data; `[user provided]` for manually-pasted items. Items tagged `verify` carry higher fabrication risk than tool-retrieved items and should be checked first. Never strip or collapse the tags — they are the user's fastest signal about which citations to verify.
+Digest varsayılan olarak sohbete yazılır. FYI üstünde en az bir kalem varsa, `**Digest output path:**` değeri "chat only" değilse **ayrıca paylaşılabilir bir dosyaya da yaz**:
 
-**Secondary sources.** Some catalog entries (IAPP, FPF, Hogan Lovells, Covington, Lexology, JD Supra, Artificial Lawyer, LawSites, and similar commentators/aggregators) report on primary regulatory action but are not the primary source. Tag any item pulled from these feeds with `[secondary source]` in addition to the feed-name tag — e.g., `[IAPP Daily Dashboard] [secondary source]`. In the digest, when a secondary-source item describes a regulator action, add a note: "→ Trace to primary: [link to regulator site if known, otherwise 'find on <regulator>.gov before relying']." Do not classify a secondary-source item as "Always material" on its own strength — bump it down a tier until the primary source is located.
-
-**Tier 3 — Manual entry**
-
-If the user has pasted regulatory text or a summary rather than invoking from
-a scheduled feed check: treat the pasted content as a single item, skip to
-Step 2 for classification, and record source as "manual entry." No feed pull
-required. This path works regardless of subscription status.
-
-Record the check timestamp after pulling. Next scheduled run pulls from here
-forward.
-
-### Step 2: Classify
-
-Each item gets a materiality tier per `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`:
-
-| Item type | Match against threshold |
-|---|---|
-| Final rule | Usually "always material" |
-| Proposed rule / NPRM | Usually "review-worthy" — and always log comment deadline |
-| ANPR (Advance Notice of Proposed Rulemaking) | Review-worthy for **strategy**, not compliance — no imposed requirements yet, but signals direction and carries a real comment deadline. Log the comment deadline. Route to `/regulatory-legal:policy-diff` only as a pre-positioning analysis, not as a gap-closure diff. |
-| RFI (Request for Information) | Same as ANPR — pre-rule, no compliance obligation, but comment deadline is real and direction-signaling is the value. |
-| Enforcement action | Sector match → material; related-practice match → review-worthy; neither → FYI or skip |
-| Guidance | Review-worthy |
-| Speech / blog / statement | FYI or skip per threshold |
-| Settlement | Depends — novel theory or big number → review-worthy; routine → skip |
-
-**ANPR / RFI handling — specific.** Pre-rule items are distinct from NPRMs in one important way: they don't change the law, but they do carry comment deadlines and they signal the regulator's direction. Treat them as a separate branch:
-
-- **Do not** classify an ANPR / RFI as "always material" — the compliance impact is zero until a rule issues.
-- **Do** classify as review-worthy if any of the issue areas in the notice touch the watchlist's always-material categories (e.g., an ANPR on open banking in a fintech watchlist).
-- **Do** log the comment deadline to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml` with `item_type: ANPR` or `item_type: RFI` so the downstream tracker can distinguish these from compliance gaps.
-- **Do** include in the digest entry a line that says explicitly: "Pre-rule. Comment deadline [date]. Route to `/regulatory-legal:policy-diff` only as a pre-positioning analysis (no compliance gap yet)." This primes the policy-diff skill to use its compressed pre-positioning branch rather than a full gap-closure diff.
-- **Route to the comment-tracker, not the gap-tracker.** Comment-decision items are not compliance gaps; they belong in the comment tracker, and `gap-surfacer` uses the `comment-decision` `gap_type` (or declines to ingest, if the team routes these separately).
-
-**NPRM comment deadline handling:**
-
-For every NPRM classified at any tier above "skip":
-- Extract comment deadline (Federal Register API returns this as structured data)
-- If comment tracking is enabled in ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md: append to `~/.claude/plugins/config/claude-for-legal/regulatory-legal/comment-tracker.yaml`
-  with status "undecided" and the default comment decision owner from ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md
-- Include comment deadline in the output entry
-
-### Step 3: Enrich
-
-For each item above FYI tier:
-
-- One-line summary (what changed)
-- Why it might matter here (the relevance hook — "this is about [practice you do]")
-- Link to source
-- Effective date or comment deadline if applicable
-
-Don't summarize FYI items individually — just count them.
-
-## Output
-
-The digest goes into the chat by default. **Also write it to a shareable file** whenever the output contains one or more items above FYI, unless the user's CLAUDE.md explicitly sets `Digest output → chat only`.
-
-**File output behavior:**
-
-1. Look for `Digest output path` in `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. If set, write there. Default if unset: `~/regulatory-legal-digests/reg-digest-YYYY-MM-DD.md`.
-2. Create parent directories if needed.
-3. Write the full digest as Markdown (same content as the chat output, including the work-product header, source tags, and the verify-citations footer).
-4. If a file already exists at the path for today, append a new section with a timestamped subheader rather than overwriting — the same day may see multiple runs (morning digest, ad-hoc check).
-5. After writing, tell the user: "Digest written to `<path>`. Share as-is, or convert to .docx with Pandoc: `pandoc <path> -o <path>.docx`."
-6. If the write fails (permission, missing directory the user didn't authorize creating, disk), fall back to chat-only output and say so — don't silently drop the file request.
-
-Format on disk matches the chat format exactly (below). Markdown renders well in GitHub, Notion, Obsidian, Google Docs (via "Import as Markdown" or Pandoc), and most email clients.
+1. `**Digest output path:**` bir klasörse oraya `reg-digest-YYYY-MM-DD.md`; boşsa `~/regulatory-legal-digests/reg-digest-YYYY-MM-DD.md`.
+2. Üst klasör yoksa oluştur.
+3. Sohbetteki içeriğin aynısını Markdown olarak yaz (üst başlık, kaynak etiketleri, doğrulama notu dâhil).
+4. O gün için dosya varsa üzerine yazma; zaman damgalı yeni bir alt başlık ekle.
+5. Sonra söyle: "Digest `<yol>` dosyasına yazıldı. Olduğu gibi paylaşabilir ya da Pandoc ile .docx'e çevirebilirsiniz: `pandoc <yol> -o <yol>.docx`."
+6. Yazma başarısız olursa (izin, klasör, disk) yalnız sohbete yaz ve bunu söyle; dosya isteğini sessizce düşürme.
+7. `**Digest channel:**` dolu ve kanal bağlıysa digest'i oraya göndermeyi öner; kişiye özel mesajlar gap-surfacer'daki gönderim başına onay kuralına tabidir.
 
 ```markdown
-[WORK-PRODUCT HEADER — per plugin config ## Outputs — differs by role; see `## Who's using this`]
+[ÜST BAŞLIK — ## Outputs; role göre]
 
-## Regulatory Feed Check — [date]
+## Düzenleyici Akış Kontrolü — [tarih]
 
-**Period:** [last check] to [now]
-**Feeds checked:** [list active tiers — e.g., "Federal Register API, FTC RSS, TR"]
-**Items found:** [N] total
+**Dönem:** [son kontrol] – [şimdi]
+**Taranan akışlar:** [ör. "RG fihristi (konu=enerji + query), tr_mevzuat_ara, EPDK, SPK bülteni 2026/74"]
+**Konu süzgeci:** elenen [n], belirsiz [n] — kapsam garantisi değildir
+**Bulunan kalem:** [N]
 
-### Bottom line
+### Sonuç
 
-[N gaps need action by [date] — top 3: X, Y, Z]
+[N kalem [tarih]e kadar işlem gerektiriyor — ilk üçü: X, Y, Z]
 
-### 🔴 Always material
+### 🔴 Always material (alert immediately)
 
-**[Regulator] — [Title]**
-[One-line summary]. [Relevance hook]. Effective [date].
-[Link]
-→ Recommend: run policy-diff against [likely affected policy]
+**[Kurum] — [Başlık]** `[kaynak etiketi]`
+[Tek satır özet]. [Neden önemli]. Yürürlük [tarih]; geçiş [varsa].
+[Bağlantı]
+→ Öneri: [etkilenmesi muhtemel politika] için `/regulatory-legal:policy-diff`
 
-[repeat for each]
+### 🟡 Review-worthy (weekly digest)
 
-### 🟡 Review-worthy
+**[Kurum] — [Başlık]** `[kaynak etiketi]`
+[Tek satır]. [Neden önemli]. [Son tarih varsa].
+[Bağlantı]
+[Taslak / istişare: "💬 Görüş son tarihi: [tarih] — karar bekliyor"]
 
-**[Regulator] — [Title]**
-[One-line]. [Relevance]. [Deadline if any].
-[Link]
+### 📝 FYI (monthly roundup or not at all)
 
-[NPRMs: include "💬 Comment deadline: [date] — decision pending" if comment tracking enabled]
+[N] kalem — [başlık + bağlantı listesi, özetsiz]
 
-[repeat]
+### UYARI satırları
 
-### 📝 FYI
-
-[N] items — [expandable list of titles + links, no summaries]
-
----
-
-**Last check updated to:** [timestamp]
-**Comment tracker:** [N] NPRMs with open comment decisions — run /regulatory-legal:comments to review
+[Veri çekilemeyen her kaynak için: UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>]
 
 ---
 
-**Verify citations before relying on them.** Regulatory citations here were AI-generated and have not been checked against a primary source. Before acting on any rule, guidance, or enforcement action above, confirm it against Westlaw, your firm's research platform, or the issuing authority's website — check accuracy, effective date, and current status. AI-generated regulatory citations are sometimes fabricated, misquoted, or stale. Source tags on each item (e.g., `[Federal Register]`, `[web search — verify]`) show where the citation came from; `verify` tags carry higher fabrication risk and should be checked first.
+**Son kontrol güncellendi:** [zaman damgası]
+**Görüş izleyici:** kararı bekleyen [N] taslak/istişare — `/regulatory-legal:comments`
+
+---
+
+**Atıfları doğrula.** Buradaki künyeler yapay zekâ desteğiyle derlendi. Bir düzenlemeye, karara ya da kılavuza dayanmadan önce Resmî Gazete, mevzuat.gov.tr ya da kurumun sitesinden doğruluğunu, yürürlük tarihini ve güncel durumunu kontrol et. Kaynak etiketleri her künyenin nereden geldiğini gösterir; `doğrula` etiketliler önce kontrol edilir.
 ```
 
-## Config-dependent fallbacks
+## Ayar eksikse
 
-This skill reads the watchlist, materiality threshold, and feed configuration from `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`. When a required value is still `[PLACEHOLDER]` or empty, say so in the output — specifically, not generically:
+Profilde gereken değer boşsa ya da `[PLACEHOLDER]` ise genel değil somut söyle:
+- **Watchlist boş (`## Regulators we watch`):** dur. "Profilinizdeki izleme listesi boş; hangi kurumları izleyeceğimi bilmeden akış çekemem. `/regulatory-legal:cold-start-interview --redo` çalıştırın ya da `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` dosyasına en az bir kurum ekleyin."
+- **Materiality threshold boş:** yukarıdaki varsayılan kademeleri kullan ve ekle: "Profilinizde özel eşik olmadığı için varsayılan kademeler kullanıldı. `/regulatory-legal:cold-start-interview --redo` ile ya da profili düzenleyerek ayarlayın."
+- **Feed configuration boş:** yalnız Resmî Gazete taramasını (watchlist'teki kurum ve kanun adlarıyla `query`) çalıştır ve ekle: "Profilinizde kurum akışı ya da duyuru sayfası tanımlı olmadığı için yalnız Resmî Gazete fihristi tarandı. Kurum akışlarını `/regulatory-legal:cold-start-interview --redo` ile ekleyin."
 
-- **Watchlist empty:** stop and say "The watchlist in your configuration is empty. I can't pull feeds without knowing which regulators to watch. Run `/regulatory-legal:cold-start-interview --redo` or edit `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md` and add at least one regulator."
-- **Materiality threshold empty:** fall back to the default tiers and append: "This output used the default materiality tiers because your configuration doesn't have custom thresholds set. Tune them with `/regulatory-legal:cold-start-interview --redo` or by editing `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`."
-- **Feed configuration empty:** run Federal Register API only and append: "This output used only the free Federal Register API because your configuration doesn't list direct RSS or paid feeds. Add feeds with `/regulatory-legal:cold-start-interview --redo` or by editing `~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md`."
+Değerler doluysa ayardan hiç söz etme.
 
-Say nothing about config when the relevant values are populated.
+FYI üstünde kalem yoksa: "Sakin. [N] FYI kalem, dikkat gerektiren yok. Konu süzgeci [n] kalem eledi."
 
-If nothing above FYI: "All quiet. [N] FYI items, nothing needing attention."
+## Devir
 
-## Handoff
+- **policy-diff'e:** politika etkisi muhtemel her Always material kalem için karşılaştırmayı öner.
+- **gap-surfacer'a:** karşılaştırma açık bulursa izlenir.
+- **Görüş izleyiciye:** FYI üstündeki her taslak ve istişare, `**Comment tracking:**` Enabled ise son tarihiyle otomatik kaydedilir.
+- **Uzman skill'ler:** yalnız KVKK'ya dokunan ayrıntılı açık analizi `/privacy-legal:reg-gap-analysis`; EPDK taslağına görüş metni `/administrative-legal:epdk-proaktif-gorus`.
 
-- **To policy-diff:** Any "always material" item with a likely policy impact → offer to run the diff.
-- **To gap-surfacer:** If a diff finds a gap → tracked.
-- **To comment-tracker:** Any NPRM classified above "skip" → comment deadline logged automatically if tracking is enabled.
+## Kapanış
 
-## Close with the next-steps decision tree
+Profildeki `## Outputs` karar ağacıyla bitir. Seçenekleri bu çıktıya uyarla; beş varsayılan dal (X'i yaz, eskale et, olgu topla, izle ve bekle, başka bir şey) başlangıçtır, kalıp değildir. Ağaç çıktıdır; seçimi avukat yapar.
 
-End with the next-steps decision tree per CLAUDE.md `## Outputs`. Customize the options to what this skill just produced — the five default branches (draft the X, escalate, get more facts, watch and wait, something else) are a starting point, not a lock-in. The tree is the output; the lawyer picks.
+## Bu skill ne yapmaz
 
-## What this skill does not do
-
-- Read every item in full. It classifies and enriches; deep reading is for the
-  items that survive the filter.
-- Change the materiality threshold. If the filter is wrong, edit ~/.claude/plugins/config/claude-for-legal/regulatory-legal/CLAUDE.md.
-- Require TR or CourtListener. Free feeds are the baseline; paid feeds add depth.
-
----
-
+- Her kalemi baştan sona okumaz. Sınıflandırır ve zenginleştirir; derin okuma süzgeçten geçenler içindir.
+- Önemlilik eşiğini değiştirmez. Süzgeç yanlışsa profil düzenlenir.
+- Ücretli kaynak gerektirmez. ArthurLegal araçları tabandır; ek bağlayıcılar derinlik katar.
+- Taslakları kendiliğinden bulmaz. Kurum duyuru sayfası profilde tanımlı değilse taslak ancak kullanıcı yapıştırınca girer.
