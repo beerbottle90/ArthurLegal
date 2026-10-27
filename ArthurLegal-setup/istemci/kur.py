@@ -1,7 +1,8 @@
 """Kurulum sonrası adım ve kaldırma. Inno Setup, KUR.cmd ve güncelleyici çağırır.
 
     al.py kur --kurulum      etkin sürümü seç, Claude Desktop yoksa winget ile kur, sunucuları kaydet
-                             (--moduller adliye,tapu,mask: kurulumda seçilen modüller; moduller.json'a yazılır)
+                             (--moduller adliye,tapu,mask: kurulumda seçilen modüller; moduller.json'a yazılır.
+                             --arayuz yeni|klasik: ArthurLegal Masası ya da Claude Desktop klasik; durum.json'a)
     al.py kur --zip-kurulum  zip'ten kurulum: modülleri konsolda sorar, içeriği %LOCALAPPDATA%\\Programs\\ArthurLegal'e
                              taşır, kısayolları ve oturum açılışı güncellemesini de kendisi yazar
     al.py kur --kaydet       yalnız Claude Desktop kaydını tazele (güncelleyici kullanır)
@@ -500,9 +501,13 @@ def main(argv=None) -> int:
                     help="kısayollar çalışan sürümden başka bir numara taşıyorsa yeniden yaz (güncelleyici)")
     ap.add_argument("--dil", choices=ortak.DILLER, help="kurulumun dili (kurulum sihirbazında seçilen)")
     ap.add_argument("--moduller", help="kurulumda seçilen modüller, virgülle: " + ",".join(ortak.MODULLER))
+    ap.add_argument("--arayuz", choices=ortak.ARAYUZLER,
+                    help="kurulumda seçilen arayüz: yeni (ArthurLegal Masası) ya da klasik (Claude Desktop)")
     args = ap.parse_args(argv)
     if args.dil and not args.zip_kurulum:
         ortak.durum_guncelle(dil=args.dil)
+    if args.arayuz and not args.zip_kurulum:
+        ortak.durum_guncelle(arayuz=args.arayuz)
     if args.moduller and not args.zip_kurulum:
         try:
             ortak.moduller_yaz(args.moduller)

@@ -101,8 +101,8 @@ en.ReadyLabel2a=Click Install. If you chose Arthur Mask and it is not installed 
 en.ReadyLabel2b=Click Install. If you chose Arthur Mask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
 tr.ReadyLabel2a=Kur düğmesine tıklayın. Arthur Mask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 tr.ReadyLabel2b=Kur düğmesine tıklayın. Arthur Mask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
-en.FinishedLabel={#UrunAd} is installed.%n%nOpen a new chat in Claude Desktop and type your question; the assistant loads the instructions of the package you chose itself. When Claude asks for permission the first time it uses a tool, choose 'Always allow'.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open Claude Desktop and the start panel. To add or remove modules, run this setup again.
-tr.FinishedLabel={#UrunAd} kuruldu.%n%nClaude Desktop'ta yeni bir sohbet açıp sorunuzu doğrudan yazın; asistan seçtiğiniz paketin talimatını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa 'Always allow' (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) Claude Desktop'u ve başlangıç panelini açar. Modül eklemek ya da çıkarmak için bu kurulumu yeniden çalıştırın.
+en.FinishedLabel={#UrunAd} is installed.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open the interface you chose: with the new interface, Claude Desktop with 'ArthurLegal Masası'nı aç' typed (press Enter); with the classic one, Claude Desktop and the start panel. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose 'Always allow'.%n%nTo add or remove modules or to change the interface, run this setup again.
+tr.FinishedLabel={#UrunAd} kuruldu.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) seçtiğiniz arayüzü açar: yeni arayüzde Claude Desktop 'ArthurLegal Masası'nı aç' yazılı gelir (Enter'a basın), klasikte Claude Desktop ve başlangıç paneli açılır. Claude Desktop'ta yeni bir sohbet açıp sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa 'Always allow' (Her zaman izin ver) seçin.%n%nModül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın.
 
 [CustomMessages]
 en.KaldirAdi={#KaldirAdiEn}
@@ -172,6 +172,25 @@ en.ModulGecersiz=Invalid /MODULLER value: %1%n%nUse a comma-separated list with 
 tr.ModulGecersiz=Geçersiz /MODULLER değeri: %1%n%nEn az bir paket içeren, virgülle ayrılmış bir liste verin, örneğin /MODULLER=adliye,tapu,mask. Modüller: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
 en.ModulOzet=Modules:
 tr.ModulOzet=Modüller:
+; Arayüz ekranı (2.7.0), modül ekranından sonra (Kod: ArayuzSayfasiOlustur). macOS kurulumu da bu metinleri okur.
+en.ArayuzBaslik=Choose the interface
+tr.ArayuzBaslik=Arayüzü seçin
+en.ArayuzAciklama=How should ArthurLegal open? Run setup again later to change.
+tr.ArayuzAciklama=ArthurLegal nasıl açılsın? Sonra kurulumu yeniden çalıştırıp değiştirebilirsiniz.
+en.ArayuzYeni=ArthurLegal new interface
+tr.ArayuzYeni=ArthurLegal yeni arayüz
+en.ArayuzYeniAciklama=The desktop icon opens ArthurLegal Masası inside Claude Desktop: modules on the left, the steps in the middle; results come as ArthurLegal cards. Recommended.
+tr.ArayuzYeniAciklama=Masaüstündeki simge Claude Desktop'un içinde ArthurLegal Masası'nı açar: solda modüller, ortada iş adımları; sonuçlar ArthurLegal kartlarıyla gelir. Önerilen.
+en.ArayuzKlasik=Claude Desktop classic
+tr.ArayuzKlasik=Claude Desktop klasik
+en.ArayuzKlasikAciklama=Claude Desktop opens as usual and you type your question in the chat. No desk and no cards; results come as text.
+tr.ArayuzKlasikAciklama=Claude Desktop her zamanki gibi açılır, sorunuzu sohbete yazarsınız. Masa ve kartlar kapalı; sonuçlar metin olarak gelir.
+en.ArayuzOzet=Interface:
+tr.ArayuzOzet=Arayüz:
+en.ArayuzGecersiz=Invalid /ARAYUZ value: %1%n%nUse yeni (ArthurLegal new interface) or klasik (Claude Desktop classic).
+tr.ArayuzGecersiz=Geçersiz /ARAYUZ değeri: %1%n%nyeni (ArthurLegal yeni arayüz) ya da klasik (Claude Desktop klasik) yazın.
+en.MasaAc=Open ArthurLegal Masası in Claude Desktop
+tr.MasaAc=ArthurLegal Masası'nı Claude Desktop'ta aç
 
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -194,8 +213,11 @@ Name: "{group}\{cm:KaldirAdi}"; Filename: "{uninstallexe}"
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ArthurLegalGuncelleme"; ValueData: """{app}\runtime\pythonw.exe"" -B ""{app}\bin\al.py"" guncelle --sessiz"; Flags: uninsdeletevalue
 
 [Run]
-Filename: "{app}\rehber\{cm:RehberDosyasi}"; Description: "{cm:RehberAc}"; Flags: postinstall shellexec nowait skipifsilent
-Filename: "claude://"; Description: "{cm:ClaudeBaslat}"; Flags: postinstall shellexec nowait skipifsilent
+; Yeni arayüzde tek kutu: ana simgenin işi (al.py kisayol baslat), Claude Desktop'u masa mesajıyla açar, rehber ilk
+; açılışta kendiliğinden gelir. Klasikte 2.6'daki iki kutu: başlangıç rehberi ve Claude Desktop.
+Filename: "{app}\runtime\pythonw.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol baslat"; Description: "{cm:MasaAc}"; Flags: postinstall nowait skipifsilent; Check: ArayuzYeni
+Filename: "{app}\rehber\{cm:RehberDosyasi}"; Description: "{cm:RehberAc}"; Flags: postinstall shellexec nowait skipifsilent; Check: not ArayuzYeni
+Filename: "claude://"; Description: "{cm:ClaudeBaslat}"; Flags: postinstall shellexec nowait skipifsilent; Check: not ArayuzYeni
 
 [UninstallRun]
 Filename: "{app}\runtime\python.exe"; Parameters: "-B ""{app}\bin\al.py"" kur --kaldir"; Flags: runhidden waituntilterminated; RunOnceId: "ClaudeKaydiniSil"
@@ -219,6 +241,11 @@ var
   { Seçilen modüller, virgüllü ve ortak.MODULLER sırasıyla (ör. "adliye,tapu,mask"). kur.py'ye --moduller ile geçer;
     önceki veri olarak saklanır, kurulum yeniden açılınca işaretli gelir. }
   Secim: String;
+  ArayuzSayfasi: TWizardPage;
+  ArayuzSecenegi: array[0..1] of TNewRadioButton;
+  { Seçilen arayüz: 'yeni' (ArthurLegal Masası) ya da 'klasik' (Claude Desktop). kur.py'ye --arayuz ile geçer; önceki
+    veri olarak saklanır. İlk kurulumda yeni seçili gelir. }
+  Arayuz: String;
 
 function MaskKurulu: Boolean;
 begin
@@ -257,6 +284,20 @@ begin
   else
     Result := 'ModulHafiza';
   end;
+end;
+
+function ArayuzKodu(I: Integer): String;
+begin
+  if I = 0 then
+    Result := 'yeni'
+  else
+    Result := 'klasik';
+end;
+
+{ [Run] bölümünün Check'i: bitiş sayfasındaki kutular seçilen arayüze göre. }
+function ArayuzYeni: Boolean;
+begin
+  Result := Arayuz <> ArayuzKodu(1);
 end;
 
 function ListedeVar(const Liste, Kod: String): Boolean;
@@ -312,12 +353,25 @@ begin
   Result := Result and (Artan = '') and PaketVar(Temiz);
 end;
 
-{ BT'nin sessiz dağıtımı için: ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask }
+{ BT'nin sessiz dağıtımı için: ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask /ARAYUZ=klasik }
 function InitializeSetup: Boolean;
 var
   Param, Temiz: String;
 begin
   Result := True;
+  Param := Lowercase(Trim(ExpandConstant('{param:ARAYUZ|}')));
+  if Param <> '' then
+  begin
+    if (Param = ArayuzKodu(0)) or (Param = ArayuzKodu(1)) then
+      Arayuz := Param
+    else
+    begin
+      Log('Geçersiz /ARAYUZ: ' + Param);
+      SuppressibleMsgBox(FmtMessage(CustomMessage('ArayuzGecersiz'), [Param]), mbCriticalError, MB_OK, IDOK);
+      Result := False;
+      exit;
+    end;
+  end;
   Param := ExpandConstant('{param:MODULLER|}');
   if Param = '' then
     exit;
@@ -412,6 +466,58 @@ begin
   Log(Format('Modül sayfası: içerik %d, yüzey %d piksel yüksekliğinde', [Ust, ModulSayfasi.SurfaceHeight]));
 end;
 
+procedure ArayuzAciklamasiTiklandi(Sender: TObject);
+begin
+  ArayuzSecenegi[TNewStaticText(Sender).Tag].Checked := True;
+end;
+
+{ Modül ekranından sonraki sayfa: iki seçenek (kalın), altlarında kısa açıklama (gri). Seçenekler aynı yüzeydeki
+  radyo düğmeleridir, yalnız biri seçilebilir; açıklamaya tıklamak da seçer. }
+procedure ArayuzSayfasiOlustur;
+var
+  I, Ust, Girinti: Integer;
+  Secenek: TNewRadioButton;
+  Aciklama: TNewStaticText;
+begin
+  ArayuzSayfasi := CreateCustomPage(ModulSayfasi.ID, CustomMessage('ArayuzBaslik'), CustomMessage('ArayuzAciklama'));
+  Ust := 0;
+  Girinti := ScaleX(18);
+  for I := 0 to 1 do
+  begin
+    Secenek := TNewRadioButton.Create(ArayuzSayfasi);
+    Secenek.Parent := ArayuzSayfasi.Surface;
+    Secenek.Left := 0;
+    Secenek.Top := Ust;
+    Secenek.Width := ArayuzSayfasi.SurfaceWidth;
+    Secenek.Height := ScaleY(17);
+    Secenek.Font.Style := [fsBold];
+    Aciklama := TNewStaticText.Create(ArayuzSayfasi);
+    Aciklama.Parent := ArayuzSayfasi.Surface;
+    Aciklama.Left := Girinti;
+    Aciklama.Top := Ust + Secenek.Height;
+    Aciklama.Width := ArayuzSayfasi.SurfaceWidth - Girinti;
+    Aciklama.AutoSize := False;
+    Aciklama.WordWrap := True;
+    Aciklama.Font.Color := clGrayText;
+    Aciklama.Tag := I;
+    Aciklama.OnClick := @ArayuzAciklamasiTiklandi;
+    if I = 0 then
+    begin
+      Secenek.Caption := CustomMessage('ArayuzYeni');
+      Aciklama.Caption := CustomMessage('ArayuzYeniAciklama');
+    end
+    else
+    begin
+      Secenek.Caption := CustomMessage('ArayuzKlasik');
+      Aciklama.Caption := CustomMessage('ArayuzKlasikAciklama');
+    end;
+    Secenek.Checked := (ArayuzKodu(I) = Arayuz);
+    ArayuzSecenegi[I] := Secenek;
+    Aciklama.AdjustHeight;
+    Ust := Aciklama.Top + Aciklama.Height + ScaleY(12);
+  end;
+end;
+
 procedure InitializeWizard;
 var
   Temiz: String;
@@ -425,7 +531,13 @@ begin
     else if WizardSilent then
       Secim := ESKI_SECIM;
   end;
+  { /ARAYUZ verilmediyse önceki kurulumun seçimi; o da yoksa (ilk kurulum, 2.7.0'dan önceki kurulum) yeni arayüz. }
+  if Arayuz = '' then
+    Arayuz := GetPreviousData('Arayuz', ArayuzKodu(0));
+  if Arayuz <> ArayuzKodu(1) then
+    Arayuz := ArayuzKodu(0);
   ModulSayfasiOlustur;
+  ArayuzSayfasiOlustur;
   IndirmeSayfasi := CreateDownloadPage(CustomMessage('MaskIndiriliyor'), CustomMessage('MaskAciklama'),
     @IndirmeIlerlemesi);
 end;
@@ -433,6 +545,7 @@ end;
 procedure RegisterPreviousData(PreviousDataKey: Integer);
 begin
   SetPreviousData(PreviousDataKey, 'Moduller', Secim);
+  SetPreviousData(PreviousDataKey, 'Arayuz', Arayuz);
 end;
 
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo,
@@ -444,6 +557,11 @@ begin
   for I := 0 to MODUL_SAYISI - 1 do
     if ListedeVar(Secim, ModulKodu(I)) then
       Result := Result + NewLine + Space + CustomMessage(ModulIletisi(I));
+  Result := Result + NewLine + NewLine + CustomMessage('ArayuzOzet') + NewLine + Space;
+  if ArayuzYeni then
+    Result := Result + CustomMessage('ArayuzYeni')
+  else
+    Result := Result + CustomMessage('ArayuzKlasik');
 end;
 
 function MaskIndir(Sessiz: Boolean): Boolean;
@@ -503,6 +621,13 @@ begin
     end;
     Secim := Liste;
   end;
+  if CurPageID = ArayuzSayfasi.ID then
+  begin
+    if ArayuzSecenegi[1].Checked then
+      Arayuz := ArayuzKodu(1)
+    else
+      Arayuz := ArayuzKodu(0);
+  end;
   if (CurPageID = wpReady) and (not WizardSilent) and ListedeVar(Secim, 'mask') and (not MaskIndir(False)) then
     Result := MsgBox(CustomMessage('MaskIndirilmedi') + #13#10#13#10 + CustomMessage('MaskOlmadanKur'),
       mbConfirmation, MB_YESNO) = IDYES;
@@ -550,10 +675,12 @@ begin
     eski bir kurulum dosyası daha yeni bir sürümün üzerine çalışsa da en yeni sürüm kalır. kur.py doğrudan
     çalıştırılamaz: gömülü Python betiğin klasörünü sys.path'e eklemez (al.py bunun için vardır).
     --dil: kurulumda seçilen dil (en/tr); kısayol adları ve başlangıç rehberi bu dilde yazılır.
-    --moduller: modül ekranındaki seçim; kur.py moduller.json'a yazar, kısayollar ve Claude kaydı ona göre olur. }
+    --moduller: modül ekranındaki seçim; kur.py moduller.json'a yazar, kısayollar ve Claude kaydı ona göre olur.
+    --arayuz: arayüz ekranındaki seçim; kur.py durum.json'a yazar, simge ve yerel sunucu ona göre açılır. }
   DeleteFile(ExpandConstant('{app}\aktif.txt'));
   Exec(ExpandConstant('{app}\runtime\python.exe'), '-B "' + ExpandConstant('{app}\bin\al.py') + '" kur --kurulum --kisayol --dil ' +
-       ActiveLanguage + ' --moduller ' + Secim, ExpandConstant('{app}'), SW_HIDE, ewWaitUntilTerminated, Sonuc);
+       ActiveLanguage + ' --moduller ' + Secim + ' --arayuz ' + Arayuz, ExpandConstant('{app}'), SW_HIDE,
+       ewWaitUntilTerminated, Sonuc);
   if Sonuc <> 0 then
     Log('kur --kurulum çıkış kodu ' + IntToStr(Sonuc));
 end;

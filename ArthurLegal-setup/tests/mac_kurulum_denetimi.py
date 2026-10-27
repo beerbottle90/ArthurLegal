@@ -134,6 +134,8 @@ def kurulum(secim: list, surum: str) -> None:
     onceki = sorted(p.name for p in (KOK / "onceki").iterdir()) if (KOK / "onceki").is_dir() else []
     denetle(onceki == sorted(secim), f"önceki seçim (kurulum yeniden açılınca işaretli gelir): {onceki}")
     denetle(not (KOK / "secim").exists(), "kurulumun seçim işaretleri temizlendi")
+    ilk_durum = json.loads((KOK / "veri" / "durum.json").read_text(encoding="utf-8") or "{}")
+    denetle(ilk_durum.get("arayuz") == "yeni", f"arayüz (kutu işaretli gelir): {ilk_durum.get('arayuz')}")
     aktif = (KOK / "aktif.txt").read_text(encoding="utf-8").strip() if (KOK / "aktif.txt").exists() else ""
     denetle(aktif == surum, f"etkin sürüm: {aktif}")
 

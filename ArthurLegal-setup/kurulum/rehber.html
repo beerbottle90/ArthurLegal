@@ -44,7 +44,7 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
 
-<p><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, Arthur Mask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. Bu sayfa yalnız ilk açılışta gelir.</p>
+<p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, Arthur Mask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. Bu sayfa yalnız ilk açılışta gelir.</p>
 
 <h2>Kurulu paketler</h2>
 <div id="paketler">
@@ -123,6 +123,10 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
   // Seçilmeyen modüllerin bölümleri gizlenir; Courthouse ya da Akademisyen simgesi o paketin kartını öne çıkarır.
   if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
     if (d.moduller.indexOf(el.getAttribute("data-modul")) < 0) el.style.display = "none";
+  });
+  // Kurulumda "Claude Desktop klasik" seçildiyse masa paragrafı gizlenir.
+  if (d.arayuz) document.querySelectorAll("[data-arayuz]").forEach(function (el) {
+    if (el.getAttribute("data-arayuz") !== d.arayuz) el.style.display = "none";
   });
   if (d.odak) document.querySelectorAll('#paketler [data-modul="' + d.odak + '"]').forEach(function (el) { el.classList.add("odak"); });
   var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");

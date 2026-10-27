@@ -17,6 +17,9 @@ hazırlanır (derle.py); güncelleme kanalı da aynıdır (releases/latest, ayn�
   geçirir. Önceki seçim onceki/ klasöründe durur; kurulum yeniden açılınca o kutular işaretli gelir.
 - Modül başlıkları ve açıklamaları Windows sihirbazınınkiyle aynıdır: kurulum/ArthurLegal.iss'teki Modul*
   iletilerinden okunur.
+- Arayüz (2.7.0): Windows'taki iki seçenekli sayfanın karşılığı, modüllerin altında işaretli gelen tek kutu
+  "ArthurLegal yeni arayüz" (Installer'da özel sayfa yok). İşaretliyse ArthurLegal Masası, değilse Claude Desktop
+  klasik; postinstall kur.py'ye --arayuz olarak geçirir. Klasik seçildiyse onceki/arayuz-klasik kalır.
 """
 from __future__ import annotations
 
@@ -54,18 +57,23 @@ def calistir(komut, **k):
 # Arthur Mask'in Mac sürümünün koşulu: seçenek öteki Mac'lerde soluk gelir, nedeni açıklamasında yazar.
 MASK_KOSULU = {"tr": " Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 gerekir.",
                "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14."}
+# Mac'te arayüz tek kutudur: işareti kaldırmak öteki seçeneği seçer.
+ARAYUZ_KUTUSU = {"tr": " İşareti kaldırırsanız Claude Desktop klasik kurulur: masa ve kartlar kapalı, sonuçlar metin.",
+                 "en": " Untick it for Claude Desktop classic: no desk and no cards, results come as text."}
 
 
 def iletiler() -> dict:
-    """Modül ekranının metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss [CustomMessages])."""
+    """Modül ve arayüz seçiminin metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss [CustomMessages])."""
     iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
     sonuc = {"tr": {}, "en": {}}
     for satir in iss.splitlines():
-        m = re.match(r"^(tr|en)\.(Modul\w+)=(.*)$", satir)
+        m = re.match(r"^(tr|en)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
         if m:
             sonuc[m.group(1)][m.group(2)] = m.group(3).replace("%n", "\n")
     for dil, ek in MASK_KOSULU.items():
         sonuc[dil]["ModulMaskAciklama"] = sonuc[dil].get("ModulMaskAciklama", "") + ek
+    for dil, ek in ARAYUZ_KUTUSU.items():
+        sonuc[dil]["ArayuzYeniAciklama"] = sonuc[dil].get("ArayuzYeniAciklama", "") + ek
     return sonuc
 
 
@@ -136,16 +144,20 @@ METIN = {
 <ul><li>Bir sonraki ekranlardan birinde <b>kurmak istediğiniz modülleri işaretleyin</b>. Bir modülü seçince ne işe
 yaradığı altta yazar. İlk kurulumda hiçbir kutu işaretli gelmez; <b>en az bir paket</b> gerekir: Hukuk Bürosu,
 Kurumsal Asistan, Courthouse ya da Akademisyen.</li>
+<li>Aynı ekranda <b>ArthurLegal yeni arayüz</b> işaretli gelir: ArthurLegal simgesi Claude Desktop'un içinde ArthurLegal
+Masası'nı açar. İşareti kaldırırsanız <b>Claude Desktop klasik</b> kurulur.</li>
 <li>Kurulum yalnız sizin kullanıcı hesabınıza yapılır, yönetici şifresi istemez.</li>
 <li>Arthur Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
 Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
         "bitis": """<h2>ArthurLegal kuruldu</h2>
 <p>Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe ve masaüstünde. Başlangıç rehberi tarayıcıda açılır.</p>
-<ul><li>Claude Desktop açıksa <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra yeni bir sohbet açıp sorunuzu
-yazın. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u seçin.</li>
+<ul><li>Claude Desktop açıksa <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine
+tıklayın. Yeni arayüzde Claude <i>ArthurLegal Masası'nı aç</i> mesajıyla açılır, Enter'a basın. Yeni bir sohbet açıp
+sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u seçin.</li>
 <li>Claude Desktop kurulu değilse <b>claude.ai/download</b> adresinden kurun.</li>
-<li>Modül eklemek ya da çıkarmak için bu kurulumu yeniden çalıştırın; son seçiminiz işaretli gelir.</li></ul>
+<li>Modül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın; son seçiminiz işaretli
+gelir.</li></ul>
 <p class="not">Kaldırmak için: Uygulamalar &gt; ArthurLegal &gt; ArthurLegal'i Kaldır.</p>""",
         "paket_yok": "En az bir paket seçin: Hukuk Bürosu, Kurumsal Asistan, Courthouse ya da Akademisyen. "
                      "Kurulum tamamlanmadı; kurulum dosyasını yeniden açıp bir paket işaretleyin.",
@@ -157,6 +169,8 @@ yazın. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'
 <ul><li>On one of the next screens, <b>tick the modules you want to install</b>. Select a module to see what it does
 below the list. Nothing is ticked on a first installation; <b>at least one package</b> is needed: Law Firm, Corporate
 Assistant, Courthouse or Academician.</li>
+<li>On the same screen <b>ArthurLegal new interface</b> comes ticked: the ArthurLegal icon opens ArthurLegal Masası (the
+ArthurLegal desk) inside Claude Desktop. Untick it for <b>Claude Desktop classic</b>.</li>
 <li>Setup installs for your user account only and does not ask for an administrator password.</li>
 <li>If you choose Arthur Mask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
 when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
@@ -164,10 +178,12 @@ when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and ma
         "bitis": """<h2>ArthurLegal is installed</h2>
 <p>The icons of the modules you chose are in the Applications folder and on the desktop. The start guide opens in
 your browser.</p>
-<ul><li>If Claude Desktop is open, quit it completely with <b>Cmd+Q</b> and open it again; then open a new chat and
-type your question. When Claude asks for permission the first time it uses a tool, choose <b>Always allow</b>.</li>
+<ul><li>If Claude Desktop is open, quit it completely with <b>Cmd+Q</b> and open it again; then click the
+<b>ArthurLegal</b> icon. With the new interface Claude opens with <i>ArthurLegal Masası'nı aç</i> typed; press Enter. You
+can also open a new chat and type your question. When Claude asks for permission the first time it uses a tool, choose
+<b>Always allow</b>.</li>
 <li>If Claude Desktop is not installed, get it from <b>claude.ai/download</b>.</li>
-<li>To add or remove modules, run this setup again; your last choice comes pre-ticked.</li></ul>
+<li>To add or remove modules or to change the interface, run this setup again; your last choice comes pre-ticked.</li></ul>
 <p class="not">To uninstall: Applications &gt; ArthurLegal &gt; Uninstall ArthurLegal.</p>""",
         "paket_yok": "Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician. Setup did "
                      "not finish; open the installer again and tick a package.",
@@ -179,15 +195,18 @@ def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
     """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, Arthur Mask'in koşulu
     (Apple Silicon, macOS 14) ve önceki seçim için Installer JavaScript'i. Bileşenler seçim sırasıyla kurulur: önce çekirdek, sonra işaretler, en son
     postinstall'u çalışan 'son' bileşeni."""
-    satirlar = "\n".join(f'    <line choice="{m}"/>' for m in moduller)
+    satirlar = "\n".join(f'    <line choice="{m}"/>' for m in moduller + ["arayuz-yeni"])
     secimler = []
     for m in moduller:
         ek = ' start_enabled="mask_uygun()"' if m == "mask" else ""
         secili = f"onceki('{m}') &amp;&amp; mask_uygun()" if m == "mask" else f"onceki('{m}')"
         secimler.append(f'  <choice id="{m}" title="{MODUL_ILETISI[m]}" description="{MODUL_ILETISI[m]}Aciklama" '
                         f'start_selected="{secili}"{ek}>\n    <pkg-ref id="{KIMLIK}.modul.{m}"/>\n  </choice>')
+    # Arayüz kutusu ilk kurulumda işaretli gelir; önceki kurulumda klasik seçildiyse işaretsiz.
+    secimler.append(f'  <choice id="arayuz-yeni" title="ArayuzYeni" description="ArayuzYeniAciklama" '
+                    f'start_selected="!onceki(\'arayuz-klasik\')">\n    <pkg-ref id="{KIMLIK}.arayuz.yeni"/>\n  </choice>')
     paketler = "\n".join(f'  <pkg-ref id="{KIMLIK}.{ad}" version="{surum}" auth="none">{ad}.pkg</pkg-ref>'
-                         for ad in ["cekirdek", "son"] + [f"modul.{m}" for m in moduller])
+                         for ad in ["cekirdek", "son"] + [f"modul.{m}" for m in moduller] + ["arayuz.yeni"])
     yol.write_text(f"""<?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="2">
   <title>KurulumBasligi</title>
@@ -287,6 +306,11 @@ def main(argv=None) -> int:
         (isaret / m).write_text("", encoding="utf-8")
         calistir(["pkgbuild", "--root", isaret.parent, "--identifier", f"{KIMLIK}.modul.{m}", "--version", surum,
                   "--install-location", KURULUM_YERI, paket_dizini / f"modul.{m}.pkg"])
+    isaret = hazirlik / "isaret-arayuz-yeni" / "secim"
+    isaret.mkdir(parents=True)
+    (isaret / "arayuz-yeni").write_text("", encoding="utf-8")
+    calistir(["pkgbuild", "--root", isaret.parent, "--identifier", f"{KIMLIK}.arayuz.yeni", "--version", surum,
+              "--install-location", KURULUM_YERI, paket_dizini / "arayuz.yeni.pkg"])
     son = (BURASI / "kurulum" / "macos" / "postinstall").read_text(encoding="utf-8").replace("\r\n", "\n")
     son = son.replace("{{PAKET_YOK_TR}}", METIN["tr"]["paket_yok"]).replace("{{PAKET_YOK_EN}}", METIN["en"]["paket_yok"])
     betik_yaz(hazirlik / "betik-son", "postinstall", son)

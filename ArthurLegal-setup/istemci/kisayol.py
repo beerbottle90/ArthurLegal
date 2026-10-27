@@ -1,7 +1,8 @@
 """Başlat menüsü ve masaüstü kısayollarının işleri.
 
     al.py kisayol baslat          ana simge: Claude Desktop'ı ArthurLegal Masası mesajı yazılmış olarak açar
-                                  (ilk açılışta başlat panelini de gösterir)
+                                  (ilk açılışta başlat panelini de gösterir); klasik arayüzde Claude Desktop'ı
+                                  ve başlat panelini açar
     al.py kisayol baslat adliye   Courthouse simgesi (akademisyen: Akademisyen simgesi): aynı iş; panel o paketin
                                   kartını öne çıkarır
     al.py kisayol masa            yalnız masa bağlantısı (claude://claude.ai/new?q=…)
@@ -87,6 +88,7 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
         "paketler": {p: s for p, s in bilgi.get("paketler", {}).items() if p in ortak.moduller()},
         "bilesenler": bilgi.get("bilesenler", {}),
         "moduller": ortak.moduller(),
+        "arayuz": ortak.arayuz(),  # klasikte panel masa paragrafını gizler
         "odak": odak if odak in ortak.PAKETLER else "",
         "isletim": "mac" if ortak.MAC else "windows",  # sayfa Mac'e özgü cümleleri buna göre gösterir
         "mask": ortak.mask_surumu() or "",
@@ -119,8 +121,12 @@ def masa() -> int:
 
 def baslat(profil: str = "") -> int:
     """Setup → Çalıştır → AL Masası. Başlat paneli ilk açılışta (kurulum adımlarını anlatır) ve masa
-    bağlantısı açılamadığında gösterilir."""
+    bağlantısı açılamadığında gösterilir. Kurulumda "Claude Desktop klasik" seçildiyse 2.6'daki gibi Claude
+    Desktop'ı ve başlat panelini açar."""
     durum_yaz(claude_ac(), profil)
+    if ortak.arayuz() == "klasik":
+        webbrowser.open(ortak.rehber_dosyasi().as_uri())
+        return 0
     ilk = not ortak.durum().get("masa_acildi")
     if masa() != 0 or ilk:
         webbrowser.open(ortak.rehber_dosyasi().as_uri())

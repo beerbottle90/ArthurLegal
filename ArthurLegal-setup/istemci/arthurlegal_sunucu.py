@@ -28,11 +28,14 @@ import hafiza
 import ortak
 
 # ArthurLegal Masası ve sohbet içi kartlar (MCP Apps). Görünümler istemci/arayuz'dadır: kopya, asıl yeri
-# beerbottle90/arthurlegal-app4all (sunucu/esitle.py). Klasör yoksa sunucu kartsız, metin araçlarıyla çalışır.
+# beerbottle90/arthurlegal-app4all (sunucu/esitle.py). Klasör yoksa ya da kurulumda "Claude Desktop klasik"
+# seçildiyse (ortak.arayuz) sunucu masasız ve kartsız, metin araçlarıyla çalışır.
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "arayuz"))
 try:
     import al_arayuz
 except ImportError:
+    al_arayuz = None
+if ortak.arayuz() != "yeni":
     al_arayuz = None
 
 PROTOKOLLER = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
