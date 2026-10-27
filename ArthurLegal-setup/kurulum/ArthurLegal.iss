@@ -64,6 +64,9 @@ UninstallDisplayName={#UrunAd} {#Surum}
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
+; Modern sihirbazın varsayılanı 120,120. Modül ekranındaki yedi modül (2.6.7) 120'de sığmıyordu (içerik 323, yüzey 309
+; piksel; ModulSayfasiOlustur günlüğe yazar): pencere yalnız dikeyde uzar.
+WizardSizePercent=120,130
 ; Dil her kurulumda sorulur; Windows'un arayüz diline uyan dil seçili gelir, uymuyorsa ilk dil (İngilizce).
 ShowLanguageDialog=yes
 LanguageDetectionMethod=uilanguage
