@@ -1,8 +1,11 @@
 """Başlat menüsü ve masaüstü kısayollarının işleri.
 
-    al.py kisayol baslat          ana simge: Claude Desktop'ı açar ve başlat panelini gösterir
+    al.py kisayol baslat          ana simge: Claude Desktop'ı ArthurLegal Masası mesajı yazılmış olarak açar
+                                  (ilk açılışta başlat panelini de gösterir)
     al.py kisayol baslat adliye   Courthouse simgesi (akademisyen: Akademisyen simgesi): aynı iş; panel o paketin
                                   kartını öne çıkarır
+    al.py kisayol masa            yalnız masa bağlantısı (claude://claude.ai/new?q=…)
+    al.py kisayol mask            Arthur Mask uygulamasını açar (masadaki düğme)
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
     al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge). Kısayolu
                                   yok: UYAP Dashboard girişi kendisi açar; elle çalıştırmak için durur
@@ -18,12 +21,17 @@ import socket
 import subprocess
 import sys
 import time
+import urllib.parse
 import webbrowser
 from pathlib import Path
 
 import claude_ayari
 import ortak
 import proje
+
+# Claude Desktop'ın resmî bağlantısı yeni sohbeti mesajı yazılmış olarak açar; kullanıcı Enter'a basar
+# (bağlantı mesajı kendiliğinden göndermez). Claude mesajı yerel sunucudaki al_masasi aracına götürür.
+MASA_ISTEMI = "ArthurLegal Masası'nı aç"
 
 TAPU_ADRES = ("127.0.0.1", 8765)
 
@@ -94,10 +102,48 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
     return yol
 
 
+def masa_adresi() -> str:
+    return "claude://claude.ai/new?q=" + urllib.parse.quote(MASA_ISTEMI, safe="")
+
+
+def masa() -> int:
+    """Claude Desktop'ı ArthurLegal Masası mesajıyla açar. Açılamazsa 1 (Claude Desktop yok ya da eski)."""
+    try:
+        if ortak.MAC:
+            return 0 if subprocess.run(["open", masa_adresi()], capture_output=True, timeout=60).returncode == 0 else 1
+        os.startfile(masa_adresi())  # noqa: S606 — Claude Desktop'ın kendi protokolü
+        return 0
+    except (OSError, subprocess.SubprocessError):
+        return 1
+
+
 def baslat(profil: str = "") -> int:
+    """Setup → Çalıştır → AL Masası. Başlat paneli ilk açılışta (kurulum adımlarını anlatır) ve masa
+    bağlantısı açılamadığında gösterilir."""
     durum_yaz(claude_ac(), profil)
-    webbrowser.open(ortak.rehber_dosyasi().as_uri())
+    ilk = not ortak.durum().get("masa_acildi")
+    if masa() != 0 or ilk:
+        webbrowser.open(ortak.rehber_dosyasi().as_uri())
+    try:
+        ortak.durum_guncelle(masa_acildi=time.time())
+    except OSError:
+        pass
     return 0
+
+
+def mask() -> int:
+    """Arthur Mask uygulamasını açar (masadaki "Arthur Mask'i aç" düğmesi)."""
+    if ortak.MAC:
+        app = ortak.mask_uygulamasi()
+        if app:
+            return 0 if subprocess.run(["open", str(app)], capture_output=True, timeout=60).returncode == 0 else 1
+    else:
+        lnk = Path(os.environ.get("APPDATA", "")) / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Arthur Mask.lnk"
+        if lnk.exists():
+            os.startfile(str(lnk))  # noqa: S606 — Arthur Mask kurulumunun kendi kısayolu
+            return 0
+    print(ortak.metin("Arthur Mask bu bilgisayarda kurulu değil.", "Arthur Mask is not installed on this computer."))
+    return 1
 
 
 def tapu() -> int:
@@ -154,8 +200,8 @@ def knowledge() -> int:
 
 
 if __name__ == "__main__":
-    islem = {"baslat": baslat, "tapu": tapu, "uyap-tarayici": uyap_tarayici, "uyap-ekran": uyap_ekran,
-             "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
+    islem = {"baslat": baslat, "masa": masa, "tapu": tapu, "mask": mask, "uyap-tarayici": uyap_tarayici,
+             "uyap-ekran": uyap_ekran, "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
     if not islem:
-        sys.exit("kullanım: al.py kisayol baslat [adliye|akademisyen]|tapu|uyap-tarayici|uyap-ekran|knowledge")
+        sys.exit("kullanım: al.py kisayol baslat [adliye|akademisyen]|masa|tapu|mask|uyap-tarayici|uyap-ekran|knowledge")
     sys.exit(islem(*sys.argv[2:3]) if islem is baslat else islem())

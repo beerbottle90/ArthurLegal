@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>ArthurLegal · Madde kartı</title>
+<!--
+  tr_mevzuat_madde_getir için sohbet içi kart. Ortak tasarım ve kod sunucuda gömülür
+  (sunucu/al_arayuz.py). Modelin okuduğu JSON metni değişmez; kart yalnız onu gösterir.
+-->
+<style>
+/*AL:CSS*/
+body {
+  background: transparent;
+  padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli-sag) + 4px)
+           calc(var(--guvenli-alt) + 12px) calc(var(--guvenli-sol) + 4px);
+}
+</style>
+</head>
+<body>
+<article class="kart" id="kart" aria-busy="true">
+  <header class="kimlik">
+    <!--AL:ARMA-->
+    <span class="marka">Arthur<span>Legal</span></span>
+    <span class="ayrac" aria-hidden="true"></span>
+    <span class="bolum">Mevzuat</span>
+  </header>
+  <div id="govde">
+    <div class="sonuc-baslik"><h2>Madde getiriliyor…</h2><div class="kunye" id="kunye"></div></div>
+    <div class="iskelet" aria-hidden="true" style="margin-top:12px"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="gizli" aria-live="polite" id="duyuru"></div>
+</article>
+
+<script>
+  // İstemci yüklenemezse kart sonsuza dek "getiriliyor" demesin: metin sohbetteki araç sonucunda duruyor.
+  window.__alBagli = false;
+  setTimeout(function () {
+    if (window.__alBagli) return;
+    var p = document.createElement("p");
+    p.className = "aciklama";
+    p.textContent = "Kart yüklenemedi. Madde metni ve atıf, sohbetteki araç sonucunda yer alıyor.";
+    document.getElementById("govde").replaceChildren(p);
+    document.getElementById("kart").removeAttribute("aria-busy");
+  }, 12000);
+</script>
+
+<script type="module">
+  import { App } from "https://unpkg.com/@modelcontextprotocol/ext-apps@1.7.5/dist/src/app-with-deps.js";
+  /*AL:JS*/
+  /*AL:KARTLAR*/
+
+  const app = new App({ name: "ArthurLegal Madde Kartı", version: AL.SURUM });
+  const ortam = { app, duyuru: document.getElementById("duyuru") };
+  const govde = document.getElementById("govde");
+  let cizildi = false;
+
+  function hata(mesaj) {
+    const g = AL.ogesi("section", "grup");
+    g.append(AL.ogesi("p", "aciklama", mesaj), AL.ogesi("p", "uyari", AL.UYARI + AL.RESMI_GIRIS));
+    govde.replaceChildren(AL.ogesi("h2", null, "Madde getirilemedi"), g);
+    document.getElementById("kart").removeAttribute("aria-busy");
+  }
+
+  // İşleyiciler connect()'ten önce: ilk tool-input / tool-result bildirimleri kaçmasın.
+  app.ontoolinput = ({ arguments: arg }) => {
+    if (cizildi || !arg) return;
+    const no = Array.isArray(arg.madde_no) ? arg.madde_no.join(", ") : (arg.madde_no || "");
+    const k = document.getElementById("kunye");
+    if (k) k.textContent = [arg.number ? `Kanun No. ${arg.number}` : "", no ? `m. ${no}` : ""].filter(Boolean).join(" · ");
+  };
+  app.ontoolresult = (sonuc) => {
+    const { veri, hata: h } = AL.veriAl(sonuc);
+    if (!veri) return hata(h);
+    cizildi = true;
+    govde.replaceChildren(KART.madde(veri, ortam));
+    document.getElementById("kart").removeAttribute("aria-busy");
+  };
+  app.ontoolcancelled = () => hata("Araç çağrısı iptal edildi.");
+  app.addEventListener("hostcontextchanged", (d) => AL.tema.baglamdan(d));
+
+  await app.connect();
+  window.__alBagli = true;
+  AL.tema.baglamdan(app.getHostContext());
+</script>
+</body>
+</html>

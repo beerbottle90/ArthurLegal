@@ -27,6 +27,14 @@ import urllib.error
 import hafiza
 import ortak
 
+# ArthurLegal Masası ve sohbet içi kartlar (MCP Apps). Görünümler istemci/arayuz'dadır: kopya, asıl yeri
+# beerbottle90/arthurlegal-app4all (sunucu/esitle.py). Klasör yoksa sunucu kartsız, metin araçlarıyla çalışır.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "arayuz"))
+try:
+    import al_arayuz
+except ImportError:
+    al_arayuz = None
+
 PROTOKOLLER = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 AZAMI = 60000
 UZANTILAR = (".md", ".json", ".txt", ".csv")
@@ -403,12 +411,74 @@ def salt_okunur_isaretle(araclar):
     return sonuc
 
 
+# ---------------------------------------------------------------------------- AL Masası
+
+# Sonucunu kartla gösteren uzak araçlar ve masanın doğrudan çağırdıkları.
+KARTLI_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara")
+MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara", "tr_ictihat_getir", "status")
+MODUL_KOMUTU = {"tapu": "tapu", "uyap": "uyap-ekran", "mask": "mask"}
+
+
+def masa_araclari():
+    """al_masasi (masayı açar) ve al_modul_ac (yerel modül penceresi). Arayüz klasörü yoksa yok."""
+    if al_arayuz is None:
+        return []
+    masa = dict(al_arayuz.masa_araci())
+    masa["_meta"] = al_arayuz.arac_meta("al_masasi")
+    ac = {"name": "al_modul_ac", "title": "ArthurLegal modülünü aç",
+          "description": "Bu bilgisayarda kurulu bir ArthurLegal modülünün penceresini açar: tapu (Tapu arayüzü), "
+                         "uyap (UYAP Dashboard), mask (Arthur Mask). Masadaki düğmeler kullanır.",
+          "inputSchema": {"type": "object", "properties": {"modul": {"type": "string", "enum": list(MODUL_KOMUTU)}},
+                          "required": ["modul"]},
+          "annotations": {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}}
+    return [masa, ac]
+
+
+def kart_meta(araclar):
+    """Kartı olan uzak araçlara _meta.ui.resourceUri: Claude sonucu ArthurLegal kartıyla çizer."""
+    if al_arayuz is None:
+        return araclar
+    sonuc = []
+    for arac in araclar:
+        meta = al_arayuz.arac_meta(arac.get("name", "")) if arac.get("name") in KARTLI_UZAK else None
+        sonuc.append({**arac, "_meta": {**(arac.get("_meta") or {}), **meta}} if meta else arac)
+    return sonuc
+
+
+def kart_verisi(ad, sonuc):
+    """Kartlı aracın sonucu kart için structuredContent da taşır: uzak uç vermediyse metin bloğundaki JSON.
+    Modelin okuduğu metin değişmez."""
+    if (al_arayuz is None or ad not in KARTLI_UZAK or not isinstance(sonuc, dict) or sonuc.get("isError")
+            or "structuredContent" in sonuc):
+        return sonuc
+    metin = "".join(b.get("text", "") for b in sonuc.get("content") or [] if b.get("type") == "text")
+    try:
+        veri = json.loads(metin)
+    except ValueError:
+        return sonuc
+    return {**sonuc, "structuredContent": veri} if isinstance(veri, dict) else sonuc
+
+
+def masa_modulleri():
+    """Masa panelinin modül durumları, bu kurulumun seçimine göre."""
+    hazir = lambda var: "hazir" if var else "kurulu-degil"  # noqa: E731
+    return {
+        "tapu": {"durum": "hazir" if ortak.bilesen_var("tapu") else "claude"},
+        "beyin": {"durum": hazir(ortak.hafiza_acik())},
+        "mask": {"durum": hazir(ortak.mask_surumu())},
+        "uyap": {"durum": hazir(ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists())},
+        "donna": {"durum": "hazir"},
+    }
+
+
 TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
            "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
            "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
            "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
 HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "
                    "düzeltmelerini ve son oturum kartını yükle.")
+MASA_TALIMATI = (" Kullanıcı 'ArthurLegal Masası'nı aç' derse ya da masayı, bir modülü (Mevzuat, İçtihat, ArthurTapu, "
+                 "Beyin, Arthur Mask, UYAP Dashboard, Donna) açmak isterse `al_masasi` aracını çağır.")
 
 
 class Sunucu:
@@ -419,6 +489,7 @@ class Sunucu:
         onbellek = ortak.json_oku(self.onbellek, {}).get("araclar")
         self.uzak_araclar = None if onbellek is None else salt_okunur_isaretle(onbellek)
         self.uzak_hata, self.baslatildi = None, False
+        self._gorunum_onbellek = None
         self._yaz_kilit, self._yenile_kilit = threading.Lock(), threading.Lock()
         self.havuz = concurrent.futures.ThreadPoolExecutor(8)
 
@@ -468,17 +539,22 @@ class Sunucu:
     def isle(self, metod, p):
         if metod == "initialize":
             istenen = p.get("protocolVersion")
+            yetenek = {"tools": {"listChanged": True}, "prompts": {"listChanged": False}}
+            if al_arayuz is not None:
+                yetenek["resources"] = {"listChanged": False}
             return {"protocolVersion": istenen if istenen in PROTOKOLLER else PROTOKOLLER[0],
-                    "capabilities": {"tools": {"listChanged": True}, "prompts": {"listChanged": False}},
+                    "capabilities": yetenek,
                     "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()},
-                    "instructions": TALIMAT + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")}
+                    "instructions": TALIMAT + (MASA_TALIMATI if al_arayuz is not None else "")
+                                    + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")}
         if metod == "ping":
             return {}
         if metod == "tools/list":
             if self.uzak_araclar is None:
                 self._uzak_yenile(zaman_asimi=True)
             profiller = self.bilgi.profiller()
-            return {"tools": yerel_araclar(profiller, self.bilgi.varsayilan(profiller)) + (self.uzak_araclar or [])}
+            return {"tools": yerel_araclar(profiller, self.bilgi.varsayilan(profiller)) + masa_araclari()
+                    + kart_meta(self.uzak_araclar or [])}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
@@ -489,11 +565,49 @@ class Sunucu:
             if ad not in ortak.ONYUKLEME or ad not in self.bilgi.profiller():
                 raise Hata(-32602, f"Bilinmeyen istem: {ad}")
             return {"messages": [{"role": "user", "content": {"type": "text", "text": ortak.ONYUKLEME[ad]}}]}
-        if metod in ("resources/list", "resources/templates/list"):
-            return {"resources": []} if metod == "resources/list" else {"resourceTemplates": []}
+        if metod == "resources/templates/list":
+            return {"resourceTemplates": []}
+        if metod == "resources/list":
+            return {"resources": [{k: v for k, v in g.items() if k != "text"} for g in self._gorunumler()]}
+        if metod == "resources/read":
+            g = next((g for g in self._gorunumler() if g["uri"] == p.get("uri")), None)
+            if g is None:
+                raise Hata(-32002, f"Bilinmeyen kaynak: {p.get('uri')}")
+            return {"contents": [{"uri": g["uri"], "mimeType": g["mimeType"], "text": g["text"], "_meta": g["_meta"]}]}
         raise Hata(-32601, f"Desteklenmeyen yöntem: {metod}")
 
+    def _gorunumler(self):
+        """Masa ve kartların birleşmiş HTML'i; ilk istekte bir kez kurulur."""
+        if al_arayuz is None:
+            return []
+        if self._gorunum_onbellek is None:
+            self._gorunum_onbellek = al_arayuz.kaynaklar()
+        return self._gorunum_onbellek
+
+    def _masa(self, a):
+        yetenekler = [t["name"] for t in (self.uzak_araclar or []) if t.get("name") in MASA_UZAK] + ["al_modul_ac"]
+        if ortak.hafiza_acik():
+            yetenekler += [t["name"] for t in hafiza.araclar()]
+        veri = al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"))
+        return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+
+    def _modul_ac(self, a):
+        modul = str(a.get("modul") or "")
+        komut = MODUL_KOMUTU.get(modul)
+        if not komut:
+            return {"content": [{"type": "text", "text": f"Bilinmeyen modül: {modul} (tapu, uyap, mask)"}], "isError": True}
+        if masa_modulleri()[modul]["durum"] != "hazir":
+            return {"content": [{"type": "text", "text": "Bu modül bu kurulumda yok."}], "isError": True}
+        ortak.arka_planda([ortak.python_yolu(pencereli=True), "-B", ortak.AL, "kisayol", komut])
+        mesaj = {"tapu": "Tapu arayüzü açılıyor.", "uyap": "UYAP Dashboard açılıyor.", "mask": "Arthur Mask açılıyor."}
+        return {"content": [{"type": "text", "text": json.dumps({"mesaj": mesaj[modul]}, ensure_ascii=False)}],
+                "structuredContent": {"mesaj": mesaj[modul]}}
+
     def _arac(self, ad, a):
+        if al_arayuz is not None and ad == "al_masasi":
+            return self._masa(a)
+        if al_arayuz is not None and ad == "al_modul_ac":
+            return self._modul_ac(a)
         yerel = {
             "arthurlegal_talimat": lambda: self.bilgi.talimat(self.bilgi.profil(a.get("profil"))),
             "arthurlegal_bilgi_ara": lambda: self.bilgi.ara(self.bilgi.profil(a.get("profil")), a.get("sorgu", ""),
@@ -521,7 +635,7 @@ class Sunucu:
                      "Bu kurulumda ArthurLegal Tapu seçilmedi; parsel bilgisi bu kurulumdan alınamaz.")
             return {"content": [{"type": "text", "text": metin}], "isError": True}
         try:
-            return self.uzak.cagir("tools/call", {"name": ad, "arguments": a})
+            return kart_verisi(ad, self.uzak.cagir("tools/call", {"name": ad, "arguments": a}))
         except Hata as e:
             if e.kod == -32602 or "not found" in str(e).lower() or "unknown" in str(e).lower():
                 raise

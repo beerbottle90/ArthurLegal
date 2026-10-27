@@ -78,6 +78,9 @@ def paket_yaz(s: Path, surum: str):
     (s / "istemci").mkdir(parents=True)
     for y in (BURASI / "istemci").glob("*.py"):
         shutil.copy2(y, s / "istemci" / y.name)
+    if (BURASI / "istemci" / "arayuz").is_dir():                   # derle.py'deki gibi masa dosyaları da
+        shutil.copytree(BURASI / "istemci" / "arayuz", s / "istemci" / "arayuz",
+                        ignore=shutil.ignore_patterns("__pycache__"))
     (s / "surum.txt").write_text(surum, encoding="utf-8")
 
 
@@ -304,6 +307,18 @@ class KisayolTesti(unittest.TestCase):
         cikti = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True,
                                encoding="utf-8", check=True).stdout
         return json.loads(cikti.strip().splitlines()[-1])       # işleyicinin uyarı satırından sonra
+
+    BASLAT = ("import kisayol, webbrowser; acilan = []; webbrowser.open = lambda u: acilan.append('rehber'); "
+              "kisayol.masa = lambda: acilan.append('masa') or 0; kisayol.claude_ac = lambda: 'açık'; "
+              "kisayol.baslat(); kisayol.baslat(); print(json.dumps([acilan, kisayol.masa_adresi()]))")
+
+    def test_calistir_masayi_acar_rehber_yalniz_ilk_acilista(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            acilan, adres = self.calistir(t, self.BASLAT)
+            self.assertEqual(acilan, ["masa", "rehber", "masa"])
+            self.assertEqual(adres, "claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7")
 
     def test_ekran_kisayolu_ve_acilisi(self):
         with tempfile.TemporaryDirectory() as t:
@@ -632,6 +647,34 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(r["isError"])
         self.assertEqual(self.iste("yok/boyle")["error"]["code"], -32601)
         self.assertIn("uzak_arac_sayisi", self.arac("arthurlegal_durum")["content"][0]["text"])
+
+    def test_7_masa_ve_kartlar(self):
+        """AL Masası (MCP Apps): görünümler kaynak olarak, masa araçları ve kartlı araştırma araçları."""
+        r = self.iste("initialize", {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "t"}})["result"]
+        self.assertIn("resources", r["capabilities"])
+        self.assertIn("al_masasi", r["instructions"])
+        uri = {k["uri"] for k in self.iste("resources/list")["result"]["resources"]}
+        self.assertEqual(uri, {"ui://arthurlegal/masa.html", "ui://arthurlegal/madde-karti.html",
+                               "ui://arthurlegal/ictihat-karti.html"})
+        oku = self.iste("resources/read", {"uri": "ui://arthurlegal/masa.html"})["result"]["contents"][0]
+        self.assertEqual(oku["mimeType"], "text/html;profile=mcp-app")
+        self.assertIn("ArthurLegal Masası", oku["text"])
+        self.assertNotIn("/*AL:", oku["text"], "ortak parçalar gömülmüş olmalı")
+        self.assertEqual(self.iste("resources/read", {"uri": "ui://yok"})["error"]["code"], -32002)
+        araclar = {t["name"]: t for t in self.iste("tools/list")["result"]["tools"]}
+        self.assertEqual(araclar["al_masasi"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
+        self.assertEqual(araclar["tr_ictihat_ara"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/ictihat-karti.html")
+        self.assertNotIn("_meta", araclar["status"])
+        masa = self.arac("al_masasi", bolum="ictihat")["structuredContent"]
+        self.assertEqual((masa["ortam"], masa["bolum"]), ("masaustu", "ictihat"))
+        # Sahte kurulumda UYAP köprüsü yok; Arthur Mask bu bilgisayarda kurulu olabilir (gerçek LOCALAPPDATA).
+        self.assertEqual(masa["moduller"]["uyap"], {"durum": "kurulu-degil"})
+        self.assertEqual(set(masa["moduller"]), {"tapu", "beyin", "mask", "uyap", "donna"})
+        self.assertIn("tr_ictihat_ara", masa["yetenekler"])
+        self.assertTrue(self.arac("al_modul_ac", modul="rm")["isError"])
+        self.assertTrue(self.arac("al_modul_ac", modul="uyap")["isError"], "kurulu olmayan modül açılmaz")
+        kart = self.arac("tr_ictihat_ara", query="kira")
+        self.assertEqual(kart["structuredContent"]["arguments"], {"query": "kira"}, "kart metindeki JSON'u veri olarak alır")
 
 
 class SaltOkunurTesti(unittest.TestCase):
