@@ -69,8 +69,10 @@ gelmez. En az bir paket gerekir:
 beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
 planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç rehberi ve Claude Desktop açılır.
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
-**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**. Claude
-Desktop'ta yeni bir sohbet açıp sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa
+**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**.
+**ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar: Enter'a basın,
+masa tam ekran açılır (solda modüller, ortada iş adımları). Claude Desktop'ta yeni bir sohbet açıp sorunuzu
+doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa
 **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Claude Desktop kurulu
 değilse kurulum onu da kurmayı dener; açılmazsa [claude.ai/download](https://claude.ai/download) adresinden kurun.
 Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın; son seçiminiz işaretli gelir.
@@ -153,8 +155,9 @@ Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir.
 modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
 **ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Arthur
 Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
-**Arthur Mask** simgesi eklenir. Claude Desktop açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; sonra yeni bir
-sohbet açıp sorunuzu yazın. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
+**Arthur Mask** simgesi eklenir. Claude Desktop açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; sonra **ArthurLegal**
+simgesine tıklayın: Claude *ArthurLegal Masası'nı aç* mesajıyla açılır, Enter'a basın. Yeni bir sohbet açıp
+sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
 Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek ya da
 çıkarmak için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
 ArthurLegal → **ArthurLegal'i Kaldır**.
@@ -223,8 +226,9 @@ you are typing first. If you chose Arthur Mask, setup also downloads it (about 1
 want to wait, click **Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the
 background. On the last page click **Finish**: the start guide and Claude Desktop open. The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
-**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**. Open a new chat in Claude Desktop and
-type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
+**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**. The **ArthurLegal** icon opens Claude
+Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) already typed: press Enter and the desk opens
+full screen. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
 If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
 [claude.ai/download](https://claude.ai/download). To add or remove modules, run the installer again; your last
 choice comes pre-ticked.
@@ -304,7 +308,8 @@ modules you chose have icons in the Applications folder (Launchpad) and on the d
 Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. If you
 chose Arthur Mask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
 ready and an **Arthur Mask** icon appears on the desktop. If Claude Desktop is open, quit it completely with
-**Cmd+Q** and open it again; then open a new chat and type your question. When Claude asks for permission the
+**Cmd+Q** and open it again; then click the **ArthurLegal** icon: Claude opens with *ArthurLegal Masası'nı aç*
+typed, press Enter. You can also open a new chat and type your question. When Claude asks for permission the
 first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
 [claude.ai/download](https://claude.ai/download). To add or remove modules, open the installer again; your last
 choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
@@ -473,6 +478,18 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.7.0 — ArthurLegal Masası: one panel inside Claude (2026-10-27)
+
+- **ArthurLegal Masası (the ArthurLegal desk).** The **ArthurLegal** icon now opens Claude Desktop with *ArthurLegal Masası'nı aç* already typed in a new chat; press Enter and the desk opens full screen inside Claude. On the left, one panel: Chat, Legislation and citations, Case law, ArthurLegal Tapu, Memory (Beyin), Arthur Mask, UYAP Dashboard, Donna and the research sources. In the middle, what is being done, step by step. At the bottom, Claude's own message box. Everything runs on your own Claude plan; nothing is billed to an API key. The start guide still opens on the first launch.
+- **Check every citation in a draft at once.** Paste a petition or a contract: each article citation in it (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 13`) is found and checked against the official text and comes back as verified or not found. Only the law and article numbers leave the page, never your text. On request Claude then compares what the draft says with the article itself.
+- **Cards in the chat.** Article and case-law results appear as ArthurLegal cards: the heading with its parent headings, the text, the citation to copy, a link to the official text and a verified badge; a decision's text opens inside the card.
+- **Donna**, an assistant on the desk: summarises your day and sets reminders through the apps you have connected to Claude (e-mail, calendar, Slack, tasks). She asks before creating or sending anything and never computes a legal deadline; dates are used as you give them.
+- **Article headings in tiered codes (research connector).** For TBK, TMK and TTK an article's heading depended on how it was requested (alone: none; in a list: "II. BELİRLENMESİ2" with a footnote digit), and the next article's headings were left at the end of the previous article's text (TMK m. 23 ended with m. 24's "II. Saldırıya karşı / 1. İlke"). Headings now come whole with their parents (`heading_path`); measured on 12 codes and 5,392 articles: 1,241 headings added, 1,540 article texts no longer carry the next article's headings, no heading lost or changed.
+- On the web and in the Claude mobile app the desk comes from the ArthurLegal research connector; Memory, Arthur Mask and UYAP stay on your computer by design and are shown as desktop-only there.
+- Light theme by default (white background, black text); dark and automatic on request.
+
+Packages are unchanged: Law Firm and Corporate Assistant 1.12.4, Courthouse 1.2.3, Academician 1.1.5. Installed copies update on their own.
 
 ## Setup 2.6.7 — ArthurLegal Memory: the assistant remembers between chats (2026-10-27)
 
