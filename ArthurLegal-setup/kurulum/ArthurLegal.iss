@@ -155,14 +155,18 @@ en.ModulMask=Arthur Mask
 tr.ModulMask=Arthur Mask
 en.ModulMaskAciklama=Masks documents on this computer before Claude sees them; about 1 GB download.
 tr.ModulMaskAciklama=Belgeleri Claude'a vermeden önce bu bilgisayarda maskeler; yaklaşık 1 GB indirilir.
+en.ModulHafiza=ArthurLegal Memory
+tr.ModulHafiza=ArthurLegal Hafıza
+en.ModulHafizaAciklama=Keeps your preferences, corrections and last session across chats, in a folder on this computer.
+tr.ModulHafizaAciklama=Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bu bilgisayardaki bir klasörde tutar.
 en.ModulMaskKurulu=Arthur Mask (already installed)
 tr.ModulMaskKurulu=Arthur Mask (bu bilgisayarda kurulu)
 en.ModulMaskKuruluAciklama=Installed on this computer; its updates arrive by themselves.
 tr.ModulMaskKuruluAciklama=Bu bilgisayarda kurulu; güncellemeleri kendiliğinden gelir.
 en.ModulPaketGerekli=Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician.
 tr.ModulPaketGerekli=En az bir paket seçin: Hukuk Bürosu, Kurumsal Asistan, Courthouse ya da Akademisyen.
-en.ModulGecersiz=Invalid /MODULLER value: %1%n%nUse a comma-separated list with at least one package, for example /MODULLER=adliye,tapu,mask. Modules: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask.
-tr.ModulGecersiz=Geçersiz /MODULLER değeri: %1%n%nEn az bir paket içeren, virgülle ayrılmış bir liste verin, örneğin /MODULLER=adliye,tapu,mask. Modüller: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask.
+en.ModulGecersiz=Invalid /MODULLER value: %1%n%nUse a comma-separated list with at least one package, for example /MODULLER=adliye,tapu,mask. Modules: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
+tr.ModulGecersiz=Geçersiz /MODULLER değeri: %1%n%nEn az bir paket içeren, virgülle ayrılmış bir liste verin, örneğin /MODULLER=adliye,tapu,mask. Modüller: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
 en.ModulOzet=Modules:
 tr.ModulOzet=Modüller:
 
@@ -200,7 +204,7 @@ Type: filesandordirs; Name: "{app}"
 
 [Code]
 const
-  MODUL_SAYISI = 6;
+  MODUL_SAYISI = 7;
   { 2.5.0'dan önceki kurulumların modülleri (ortak.ESKI_SECIM): seçim verilmeyen sessiz kurulum bunlarla sürer. }
   ESKI_SECIM = 'hukuk-burosu,kurumsal,tapu,mask';
 
@@ -208,7 +212,7 @@ var
   IndirmeSayfasi: TDownloadWizardPage;
   MaskIndirildi: Boolean;
   ModulSayfasi: TWizardPage;
-  ModulKutusu: array[0..5] of TNewCheckBox;
+  ModulKutusu: array[0..6] of TNewCheckBox;
   { Seçilen modüller, virgüllü ve ortak.MODULLER sırasıyla (ör. "adliye,tapu,mask"). kur.py'ye --moduller ile geçer;
     önceki veri olarak saklanır, kurulum yeniden açılınca işaretli gelir. }
   Secim: String;
@@ -223,7 +227,7 @@ begin
   Result := True;
 end;
 
-{ Modüller ortak.MODULLER sırasıyla: dört paket, sonra Tapu ve Arthur Mask. }
+{ Modüller ortak.MODULLER sırasıyla: dört paket, sonra Tapu, Arthur Mask ve ArthurLegal Hafıza. }
 function ModulKodu(I: Integer): String;
 begin
   case I of
@@ -232,8 +236,9 @@ begin
     2: Result := 'adliye';
     3: Result := 'akademisyen';
     4: Result := 'tapu';
+    5: Result := 'mask';
   else
-    Result := 'mask';
+    Result := 'hafiza';
   end;
 end;
 
@@ -245,8 +250,9 @@ begin
     2: Result := 'ModulAdliye';
     3: Result := 'ModulAkademisyen';
     4: Result := 'ModulTapu';
+    5: Result := 'ModulMask';
   else
-    Result := 'ModulMask';
+    Result := 'ModulHafiza';
   end;
 end;
 

@@ -1,10 +1,10 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v2.6.6
+# ArthurLegal Setup v2.6.7
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
-Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, Arthur Mask) seçer; seçtikleri, araştırma bağlantısıyla
+Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, Arthur Mask, ArthurLegal Hafıza) seçer; seçtikleri, araştırma bağlantısıyla
 birlikte Claude Desktop'a kendiliğinden bağlanır. Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası
 doğrulanarak sessizce kurulur. İki kurulum aynı paketleri, aynı modülleri ve aynı güncelleme kanalını kullanır.
 
@@ -27,6 +27,7 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 | **Akademisyen** | `akademisyen` | ArthurLegal - Akademisyen | Academician paketi: hukuk akademisyenleri |
 | **ArthurLegal Tapu** | `tapu` | ArthurLegal - Tapu | Yerel `arthur-tapu` sunucusu (aşağıda) |
 | **Arthur Mask** | `mask` | Arthur Mask (kendi kurulumundan) | Kurulum sırasında indirilir; kuruluysa kutu işaretli ve kilitli görünür |
+| **ArthurLegal Hafıza** | `hafiza` | (yok; Başlat menüsünde Hafıza Klasörü) | Sohbetler arası hafıza: `arthurlegal-yerel`'in `hafiza_` araçları (aşağıda) |
 
 macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır, masaüstünde birer
 takma adları durur; adlarda tire ve sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
@@ -39,6 +40,7 @@ Bileşenler:
 | **arthurlegal-yerel** | Claude Desktop · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz. Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
 | **arthur-tapu** | Claude Desktop + masaüstü kısayolu | Yalnız Tapu seçildiyse. tkgm-mcp 0.5.2: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
 | **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil ya da dosya belgelerini bilgisayarda maskeleyen gizlilik kapısı. Seçildiyse kurulum sırasında indirilir (≈1 GB); seçilmediyse güncelleyici de indirmez |
+| **hafiza_ araçları** | `arthurlegal-yerel` içinde | Yalnız ArthurLegal Hafıza seçildiyse (2.6.7, `istemci/hafiza.py`). Kasa `~/ArthurLegal-Hafiza` (ayar.json → `hafiza_dizini` ile var olan bir Beyin kasası da verilebilir); düzen [Beyin](https://github.com/avenoxai/avenoxbeyin)'inkidir: `🔮 850-Companion/` (Core, Kurallar, Last-Session, Threads, Journal), `knowledge/`, `Projeler/<dosya kodu>/`. Beş araç: `hafiza_baslangic`, `hafiza_ara`, `hafiza_getir` (salt okunur), `hafiza_yaz`, `hafiza_oturum_karti` (yazar; Claude Desktop izin sorar). Yazmadan önce kişisel veri kapısı: T.C. kimlik numarası, IBAN, telefon, e-posta reddedilir. Devir kartları 3.000 karakteri aşınca eskileri `Arşiv/`'e taşınır, silinmez. Kaldırma kasayı silmez |
 | *arthur-uyap* | (bu pakette yok) | UYAP köprüsü ayrı dağıtılır; kurulum, bilgisayarda varsa kendiliğinden bağlar. Köprünün yerel ekranı varsa ve Arthur Mask kuruluysa masaüstüne ve Başlat menüsüne UYAP için tek simge ekler: "ArthurLegal - UYAP Dashboard" (büro kurulumunda markadaki kısa adla). UYAP'a giriş tarayıcısını Dashboard kendisi açar. Yerel derlemeyle kurulmuş köprü güncellemede yeni sürüme kopyalanır; GitHub'daki paket köprü içermediği için güncelleme UYAP'ı kaldırmaz |
 
 Claude Desktop kurulu değilse Windows'ta `winget` ile kullanıcı kapsamında kurulur; Mac'te başlangıç paneli
@@ -147,8 +149,8 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 90 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v2.6.6         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python -m unittest discover -s tests   # 100 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
+python yayin/yayinla.py v2.6.7         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta

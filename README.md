@@ -58,6 +58,7 @@ gelmez. En az bir paket gerekir:
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
 | **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir) |
+| **ArthurLegal Hafıza** | Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bilgisayarınızdaki bir klasörde tutar |
 
 <p align="center">
   <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sonraki düğmesi (4)">
@@ -211,6 +212,7 @@ short description under it, and nothing is ticked on a first installation. At le
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
 | **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download) |
+| **ArthurLegal Memory** | Keeps your preferences, corrections and last session across chats, in a folder on your computer |
 
 <p align="center">
   <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Next button (4)">
@@ -471,6 +473,15 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 2.6.7 — ArthurLegal Memory: the assistant remembers between chats (2026-10-27)
+
+- **A new optional module: ArthurLegal Memory** (Turkish: ArthurLegal Hafıza). Until now every chat in Claude Desktop started from scratch. With this module the assistant keeps your lasting preferences, your corrections, a short handover card at the end of a meaningful piece of work, and your open threads in a folder on your computer (`ArthurLegal-Hafiza` in your home folder), and reads them back at the start of the next chat. A rule that belongs to one matter goes to that matter's folder, named by its file code, never by a client's name. Say "remember this" to add something; say "do not write to memory" and nothing is written in that chat.
+- **Masked text only.** Before anything is written, a privacy gate refuses text that contains a Turkish ID number, an IBAN, a phone number or an e-mail address; people are referred to by Arthur Mask labels such as `{{KİŞİ-01}}`. The folder never leaves your computer and uninstalling ArthurLegal does not delete it. The writing tools are not marked read-only, so Claude Desktop asks before the first write.
+- **Plain Markdown, Beyin-compatible.** The notes are ordinary Markdown files you can open and edit; the folder uses the same layout as [Beyin](https://github.com/avenoxai/avenoxbeyin), so it also opens in Obsidian or Beyin. To use an existing Beyin vault, set `hafiza_dizini` in `ayar.json`. ArthurLegal does not ship Beyin's code.
+- The module is off unless you tick it. To add it, run the installer again (Windows or Mac) and tick **ArthurLegal Memory** on the module screen; *Memory Folder* in the Start menu (Mac: Applications → ArthurLegal) opens the folder.
+
+Packages are unchanged: Law Firm and Corporate Assistant 1.12.4, Courthouse 1.2.3, Academician 1.1.5. Installed copies update on their own; the new module appears only when you choose it.
 
 ## Setup 2.6.6 — The internet law amendment of 1 November 2026 (2026-10-27)
 

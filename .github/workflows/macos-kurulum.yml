@@ -75,7 +75,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Kur (Courthouse, Tapu, Arthur Mask; yönetici şifresi olmadan)
+      - name: Kur (Courthouse, Tapu, Arthur Mask, Hafıza; yönetici şifresi olmadan)
         run: |
           cat > "$RUNNER_TEMP/secim.xml" <<'XML'
           <?xml version="1.0" encoding="UTF-8"?>
@@ -84,6 +84,7 @@ jobs:
             <dict><key>choiceIdentifier</key><string>adliye</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
             <dict><key>choiceIdentifier</key><string>tapu</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
             <dict><key>choiceIdentifier</key><string>mask</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
+            <dict><key>choiceIdentifier</key><string>hafiza</string><key>choiceAttribute</key><string>selected</string><key>attributeSetting</key><integer>1</integer></dict>
           </array></plist>
           XML
           installer -pkg yayin/cikti/ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory \
@@ -92,14 +93,14 @@ jobs:
             -applyChoiceChangesXML "$RUNNER_TEMP/secim.xml" -verbose
 
       - name: Kurulumu denetle
-        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask,hafiza
 
       - name: Arthur Mask (iner, kurulur, Claude Desktop'a kaydolur)
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.mask }}
-        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask,hafiza --mask
 
       - name: Kaldır
-        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir
+        run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask,hafiza --kaldir
 
       # README'deki Mac çizimleri için örnek ekranlar (İngilizce macOS): kurulum sihirbazının ilk adımları (Yükle'ye
       # basılmaz) ve internetten inmiş gibi işaretli paketin ilk açılışı. İş çıktısı olarak saklanır; adımlar kendi

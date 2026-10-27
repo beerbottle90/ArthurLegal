@@ -1093,7 +1093,7 @@ class ModulTesti(unittest.TestCase):
         for kotu in ("tapu,mask", "", "adliye,uyap", "courthouse"):
             with self.subTest(kotu=kotu), self.assertRaises(ValueError):
                 ortak.secim_coz(kotu)
-        self.assertEqual(ortak.MODULLER, ("hukuk-burosu", "kurumsal", "adliye", "akademisyen", "tapu", "mask"))
+        self.assertEqual(ortak.MODULLER, ("hukuk-burosu", "kurumsal", "adliye", "akademisyen", "tapu", "mask", "hafiza"))
 
     def test_secim_dosyasi_yoksa_eski_modullerle_surer(self):
         with tempfile.TemporaryDirectory() as t:
@@ -1171,6 +1171,40 @@ class ModulTesti(unittest.TestCase):
             self.assertEqual(set(json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]),
                              {"arthur-mask", "arthurlegal-yerel"}, "seçimden çıkan Tapu'nun kaydı silinir")
             self.assertEqual(self.calistir(t, "import kisayol; print(json.dumps(kisayol.tapu()))"), 1)
+
+    def test_hafiza_yalniz_secilirse_sunulur_ve_kasa_kalir(self):
+        """2.6.7: ArthurLegal Hafıza seçilmediyse araç da talimat maddesi de yok; seçilince kurulum kasayı açar, sunucu
+        yazar; seçimden çıkmak kasayı silmez."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "hukuk-burosu")
+            kasa = t / "ev" / "ArthurLegal-Hafiza"
+            kurallar = kasa / "🔮 850-Companion" / "Kurallar.md"
+            kod = ("import arthurlegal_sunucu as s, ortak; b = s.Bilgi(ortak.SURUM_DIZINI, ortak.FIRMA); "
+                   "print(json.dumps([[a['name'] for a in s.yerel_araclar(b.profiller(), b.varsayilan())], "
+                   "b.talimat('hukuk-burosu')]))")
+            yaz = ("import arthurlegal_sunucu as s; print(json.dumps(s.Sunucu()._arac('hafiza_yaz', "
+                   "{'yol': 'Kurallar.md', 'metin': '- 27.10: dilekçede kısa cümle'})))")
+            adlar, talimat = self.calistir(t, kod)
+            self.assertFalse([a for a in adlar if a.startswith("hafiza_")])
+            self.assertNotIn("ArthurLegal Hafıza", talimat)
+            self.assertTrue(self.calistir(t, yaz).get("isError"))
+            self.assertFalse(kasa.exists(), "seçilmeyen modül kasa açmaz")
+            secim_yaz(t / "kok", "hukuk-burosu", "hafiza")
+            adlar, talimat = self.calistir(t, kod)
+            self.assertIn("hafiza_baslangic", adlar)
+            self.assertIn("hafiza_oturum_karti", adlar)
+            self.assertIn("ArthurLegal Hafıza açık", talimat)
+            self.assertEqual(self.calistir(t, "import kur; print(kur.main(['--kaydet']))"), 0)
+            self.assertTrue(kurallar.exists(), "kurulum kasayı Beyin düzeninde açar")
+            self.assertTrue([s for s in self.calistir(t, KisayolTesti.LISTE) if "Hafıza Klasörü" in s[0]])
+            self.assertNotIn("isError", self.calistir(t, yaz))
+            self.assertIn("- 27.10: dilekçede kısa cümle", kurallar.read_text(encoding="utf-8"))
+            secim_yaz(t / "kok", "hukuk-burosu")
+            # run_anahtari gerçek kayıt defterine (HKCU\...\Run) yazar: testte devre dışı.
+            self.assertEqual(self.calistir(t, "import kur; kur.run_anahtari = lambda yaz: None; "
+                                              "print(kur.main(['--kaldir']))"), 0)
+            self.assertIn("dilekçede kısa cümle", kurallar.read_text(encoding="utf-8"), "kaldırma kasayı silmez")
 
     def test_sunucu_yalniz_secilen_paketleri_sunar(self):
         with tempfile.TemporaryDirectory() as t:
@@ -1290,13 +1324,13 @@ class ModulTesti(unittest.TestCase):
         tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr")}
         kodlar = re.findall(r"\d: Result := '(\w+)';|else\s+Result := '(Modul\w+)';", iss)
         iletiler = {a or b for a, b in kodlar if (a or b).startswith("Modul")}
-        self.assertEqual(len(iletiler), 6)
+        self.assertEqual(len(iletiler), 7)
         for ileti in iletiler:  # CustomMessage(ModulIletisi(I)) ve ... + 'Aciklama' çalışırken çözülür
             for dil in ("en", "tr"):
                 self.assertIn(ileti, tanimli[dil])
                 self.assertIn(ileti + "Aciklama", tanimli[dil])
         import ortak
-        sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["mask"]
+        sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["hafiza"]
         self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
 
 

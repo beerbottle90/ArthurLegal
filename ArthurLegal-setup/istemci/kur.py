@@ -24,6 +24,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 import claude_ayari
+import hafiza
 import mac
 import ortak
 import proje
@@ -96,6 +97,7 @@ KISAYOL_METNI = {
            "akademisyen_aciklama": "Akademisyen: Claude Desktop'ı ve başlangıç panelini açar ({s})",
            "rehber": "Başlangıç Rehberi", "rehber_aciklama": "Kurulum sonrası adımlar",
            "proje": "Proje Klasörleri", "proje_aciklama": "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri",
+           "hafiza": "Hafıza Klasörü", "hafiza_aciklama": "ArthurLegal Hafıza: asistanın bu bilgisayarda tuttuğu notlar",
            "guncelle": "Güncellemeleri Denetle", "guncelle_aciklama": "Güncellemeleri şimdi denetle",
            "uyap": "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})"},
     "en": {"ana": "Opens Claude Desktop and the start panel ({s})",
@@ -105,6 +107,7 @@ KISAYOL_METNI = {
            "akademisyen_aciklama": "Academician: opens Claude Desktop and the start panel ({s})",
            "rehber": "Start Guide", "rehber_aciklama": "Steps after setup",
            "proje": "Project Folders", "proje_aciklama": "Ready-made project folders to choose with 'Use a folder' in Claude",
+           "hafiza": "Memory Folder", "hafiza_aciklama": "ArthurLegal Memory: the notes the assistant keeps on this computer",
            "guncelle": "Check for Updates", "guncelle_aciklama": "Check for updates now",
            "uyap": "UYAP Dashboard: UYAP sign-in, morning scan, deadlines, mismatches and calendar; works without Claude ({s})"},
 }
@@ -175,6 +178,8 @@ def _kisayol_listesi() -> list:
         (menu / f"{ad} - {m['proje']} {s}.lnk", proje.kok(), "", m["proje_aciklama"]),
         (menu / f"{ad} - {m['guncelle']} {s}.lnk", py, f'-B "{al}" guncelle', m["guncelle_aciklama"]),
     ]
+    if ortak.hafiza_acik():
+        liste.append((menu / f"{ad} - {m['hafiza']} {s}.lnk", hafiza.kasa(), "", m["hafiza_aciklama"]))
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
     # olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir. Ad kısa addan ("<kısa ad> - UYAP Dashboard").
     if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
@@ -213,6 +218,8 @@ def _mac_kisayol_listesi() -> list:
         (menu / f"{m['guncelle']}.app", py, f"-B {al} guncelle --bildir", m["guncelle_aciklama"]),
         (menu / f"{_kaldir_adi(ad)}.app", Path("/bin/sh"), shlex.quote(str(ortak.KOK / "KALDIR.command")), _kaldir_adi(ad)),
     ]
+    if ortak.hafiza_acik():
+        liste.append((menu / f"{m['hafiza']}.app", acici, shlex.quote(str(hafiza.kasa())), m["hafiza_aciklama"]))
     return liste
 
 
@@ -403,13 +410,15 @@ MODUL_METNI = {
            "adliye": ("Courthouse", "hâkim ve kalem için tarafsız taslak: gerekçe, tensip, müzekkere, tebligat"),
            "akademisyen": ("Akademisyen", "hukuk akademisyenleri için literatür, atıf, dergi seçimi, yayın etiği"),
            "tapu": ("ArthurLegal Tapu", "ada/parsel ya da yer adıyla TKGM'den canlı parsel, kroki ve harç"),
-           "mask": ("Arthur Mask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler")},
+           "mask": ("Arthur Mask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler"),
+           "hafiza": ("ArthurLegal Hafıza", "tercihleri, düzeltmeleri ve son oturumu sohbetler arasında bu bilgisayarda tutar")},
     "en": {"hukuk-burosu": ("Law Firm", "for lawyers: petitions, contracts, case-law and legislation research"),
            "kurumsal": ("Corporate Assistant", "for in-house legal teams: contracts, compliance, data protection"),
            "adliye": ("Courthouse", "for judges and court clerks: neutral drafts of reasoning, orders, writs, service"),
            "akademisyen": ("Academician", "for legal academics: literature, citations, journal choice, ethics"),
            "tapu": ("ArthurLegal Tapu", "live Turkish land-registry parcels (TKGM) with sketch and fees"),
-           "mask": ("Arthur Mask", "masks documents on this computer before Claude sees them")},
+           "mask": ("Arthur Mask", "masks documents on this computer before Claude sees them"),
+           "hafiza": ("ArthurLegal Memory", "keeps preferences, corrections and the last session on this computer, across chats")},
 }
 
 
@@ -518,6 +527,11 @@ def main(argv=None) -> int:
         if not claude_kurulu():
             ortak.durum_guncelle(claude_winget=claude_kur())
         ortak.durum_guncelle(kurulum_zamani=time.time(), kurulum_surumu=ortak.surum())
+    if ortak.hafiza_acik():
+        try:  # kasa kullanıcının verisidir: yalnız eksik başlangıç notları yazılır; kaldırma kasayı silmez
+            hafiza.hazirla()
+        except (OSError, ValueError) as e:
+            ortak.gunluk("kurulum", f"hafıza kasası açılamadı: {e!r}")
     if args.kisayol or (args.kisayol_esitle and eski_surumlu_kisayol_var()):
         kisayollar_yaz()
         run_anahtari(True)

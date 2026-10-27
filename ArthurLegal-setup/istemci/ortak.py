@@ -8,7 +8,7 @@ Kurulu düzen (Windows: %LOCALAPPDATA%\\Programs\\ArthurLegal; macOS: ~/Library/
     bin\\al.py           sabit başlatıcı; Claude Desktop ve kısayollar hep bunu çağırır
     surumler\\<sürüm>\\  istemci\\, paketler\\, tapu\\, uyap\\ (güncelleme yeni klasör açar)
     aktif.txt           etkin sürüm
-    moduller.json       kurulumda seçilen modüller (paketler, Tapu, Arthur Mask); güncelleme dokunmaz
+    moduller.json       kurulumda seçilen modüller (paketler, Tapu, Arthur Mask, Hafıza); güncelleme dokunmaz
     firma\\              büro katmanı (yalnız büroya özel kurulumda)
     veri\\               durum, günlük, indirilen dosyalar
 """
@@ -64,10 +64,11 @@ PROFILLER = {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal A
              "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"}
 
 # Kurulumda seçilen modüller (2.5.0). Paketler talimat profilleridir; sıraları varsayılan profilin önceliğidir.
-# Bileşenler: ArthurLegal Tapu ve Arthur Mask. Seçim kurulum klasörünün kökünde durur (moduller.json): güncelleme
-# yalnız surumler\ altına yazar, seçime dokunmaz.
+# Bileşenler: ArthurLegal Tapu, Arthur Mask ve ArthurLegal Hafıza (2.6.7; ayrı sunucusu yok, arthurlegal-yerel'in
+# hafiza_ araçlarıdır: hafiza.py). Seçim kurulum klasörünün kökünde durur (moduller.json): güncelleme yalnız
+# surumler\ altına yazar, seçime dokunmaz.
 PAKETLER = tuple(PROFILLER)
-BILESENLER = ("tapu", "mask")
+BILESENLER = ("tapu", "mask", "hafiza")
 MODULLER = PAKETLER + BILESENLER
 # 2.5.0'dan önceki kurulumların seçim dosyası yoktur; bu modüllerle sürerler. Sessiz güncelleme kimseye yeni
 # paket ya da simge eklemez.
@@ -165,6 +166,11 @@ def bilesen_var(ad: str) -> bool:
     """Bileşen (tapu) seçildi mi ve etkin sürümde var mı. İkisi birlikte gerekir: seçilmeyen bileşen kaydedilmez,
     sürümde olmayan bileşen (ör. Tapu'suz büro derlemesi) seçilse de kaydedilmez."""
     return ad in moduller() and (SURUM_DIZINI / ad / "server.py").exists()
+
+
+def hafiza_acik() -> bool:
+    """ArthurLegal Hafıza seçildi mi. Kodu istemcinin içindedir (hafiza.py); seçim yeterlidir."""
+    return "hafiza" in moduller()
 
 _ACIK_ANAHTAR = re.compile(r"[0-9a-fA-F]{64}")
 

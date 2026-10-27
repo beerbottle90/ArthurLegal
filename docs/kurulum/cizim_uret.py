@@ -304,15 +304,15 @@ SIHIRBAZ = {
     "en": {"pencere": "Setup - ArthurLegal", "onceki": "Back", "sonraki": "Next", "iptal": "Cancel",
            "dipnot": "Drawing · the module screen of ArthurLegal Setup (example)"},
 }
-MODUL_SIRASI = ("ModulHukuk", "ModulKurumsal", "ModulAdliye", "ModulAkademisyen", "ModulTapu", "ModulMask")
+MODUL_SIRASI = ("ModulHukuk", "ModulKurumsal", "ModulAdliye", "ModulAkademisyen", "ModulTapu", "ModulMask", "ModulHafiza")
 
 
 def moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
     """Kurulumun modül ekranı: her modül kalın adlı bir onay kutusu ve altında gri kısa açıklama. ``isaretli``
     işaretli kutular; ``numaralar`` sırayla kırmızı çerçeve alan kutular, en sonda Sonraki düğmesi."""
     m, s = kurulum_metinleri()[dil], SIHIRBAZ[dil]
-    gen, yuk = 600, 520
-    x0, y0, g, h = 10, 10, 580, 484
+    gen, yuk = 600, 564
+    x0, y0, g, h = 10, 10, 580, 528
     govde = (f'<rect x="{x0 + 2}" y="{y0 + 4}" width="{g}" height="{h}" fill="#000000" opacity="0.14"/>'
              f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" fill="#f0f0f0" stroke="#8c959f"/>'
              f'<rect x="{x0 + 1}" y="{y0 + 1}" width="{g - 2}" height="31" fill="#ffffff"/>'
@@ -542,7 +542,7 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
     govde += f'<rect x="{cx + 16}" y="{cy + 16}" width="190" height="10" rx="5" fill="#c7c7cc"/>'   # başlık
     tx, ty, tg = cx + 14, cy + 40, cg - 28
     sutun = (tx + 10, tx + tg - 150, tx + tg - 70)
-    govde += (f'<rect x="{tx}" y="{ty}" width="{tg}" height="{22 + 6 * 24}" fill="#ffffff" stroke="#d1d1d6"/>'
+    govde += (f'<rect x="{tx}" y="{ty}" width="{tg}" height="{22 + len(MODUL_SIRASI) * 24}" fill="#ffffff" stroke="#d1d1d6"/>'
               f'<rect x="{tx}" y="{ty}" width="{tg}" height="22" fill="#f5f5f7" stroke="#d1d1d6"/>'
               + "".join(t(sx, ty + 15, ad, 11, "#3a3a3c", 600) for sx, ad in zip(sutun, mm["sutunlar"])))
     satirlar_y = {}

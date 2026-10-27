@@ -1,12 +1,13 @@
 """ArthurLegal yerel MCP sunucusu (stdio) — Claude Desktop'ta `arthurlegal-yerel`.
 
-İki iş yapar:
+İki iş yapar (ArthurLegal Hafıza seçildiyse üç):
 1. Paket: kurulumda seçilen paketlerin (Law Firm, Corporate, Courthouse, Academician; ortak.moduller)
    SYSTEM_PROMPT'u ve bütün knowledge dosyaları (büro katmanıyla) araçla okunur. Paket güncellenince
    Project'e hiçbir şey yüklenmez; Project'teki kısa ön yükleme talimatı (ortak.ONYUKLEME) hiç değişmez.
 2. Araştırma köprüsü: https://arthurlegal-mcp.fly.dev/mcp araçları aynen aktarılır, connector
    eklemek gerekmez. `tkgm_` araçları aktarılmaz: tapu işleri yerel arthur-tapu'dadır ve tapu
    kaydı metni buluta gitmez.
+3. Hafıza: `hafiza_` araçları bu bilgisayardaki Markdown kasasına yazar ve okur (hafiza.py).
 
 Yalnız standart kütüphane. Günlüğe sorgu metni veya belge içeriği yazılmaz.
 """
@@ -23,6 +24,7 @@ import time
 import traceback
 import urllib.error
 
+import hafiza
 import ortak
 
 PROTOKOLLER = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
@@ -244,7 +246,9 @@ class Bilgi:
              "yaz."),
             MASK_MADDESI.get(profil, MASK_MADDESI["hukuk-burosu"]),
         ]
-        oteki = [p for p in self.profiller() if p != profil]
+        if ortak.hafiza_acik():
+            maddeler.append(hafiza.talimat_maddesi())
+        oteki =[p for p in self.profiller() if p != profil]
         if oteki:
             maddeler.append(
                 "Bu bilgisayarda başka paketler de kurulu: " + "; ".join(f"`{p}` = {PROFIL_ACIKLAMASI[p]}" for p in oteki)
@@ -379,7 +383,8 @@ def yerel_araclar(profiller, varsayilan):
     ]
     for a in araclar:
         a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
-    return araclar
+    # Hafıza araçları kendi işaretleriyle gelir: yazanlar salt okunur değildir, Claude Desktop izin sorar.
+    return araclar + (hafiza.araclar() if ortak.hafiza_acik() else [])
 
 def salt_okunur_isaretle(araclar):
     """Köprülenen araştırma araçları yalnız okur (arama, getirme, sayma): uzak sunucu işaret koymadıysa
@@ -402,6 +407,8 @@ TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı huku
            "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
            "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
            "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
+HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "
+                   "düzeltmelerini ve son oturum kartını yükle.")
 
 
 class Sunucu:
@@ -463,7 +470,8 @@ class Sunucu:
             istenen = p.get("protocolVersion")
             return {"protocolVersion": istenen if istenen in PROTOKOLLER else PROTOKOLLER[0],
                     "capabilities": {"tools": {"listChanged": True}, "prompts": {"listChanged": False}},
-                    "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()}, "instructions": TALIMAT}
+                    "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()},
+                    "instructions": TALIMAT + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")}
         if metod == "ping":
             return {}
         if metod == "tools/list":
@@ -498,6 +506,15 @@ class Sunucu:
             try:
                 return {"content": [{"type": "text", "text": yerel[ad]()}]}
             except Hata as e:
+                return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+        if ad.startswith("hafiza_"):
+            if not ortak.hafiza_acik():
+                return {"content": [{"type": "text", "text": "Bu kurulumda ArthurLegal Hafıza seçilmedi."}], "isError": True}
+            try:
+                return {"content": [{"type": "text", "text": hafiza.cagir(ad, a)}]}
+            except KeyError:
+                raise Hata(-32602, f"Bilinmeyen araç: {ad}") from None
+            except (ValueError, OSError) as e:  # HafizaHatasi da ValueError'dır
                 return {"content": [{"type": "text", "text": str(e)}], "isError": True}
         if ad.startswith("tkgm_"):
             metin = ("tkgm_ araçları bu kurulumda yerel arthur-tapu sunucusundadır." if ortak.bilesen_var("tapu") else
@@ -558,6 +575,7 @@ class Sunucu:
             "bilesenler": icerik.get("bilesenler", {}),
             "arthur_mask": ortak.mask_surumu() or "kurulu değil",
             "buro": self.bilgi.firma_bilgi.get("ad") or "yok (standart paket)",
+            "hafiza": str(hafiza.kasa()) if ortak.hafiza_acik() else "seçilmedi",
             "son_guncelleme_denetimi": time.strftime("%Y-%m-%d %H:%M", time.localtime(d["son_denetim"])) if d.get("son_denetim") else "henüz yok",
             "son_guncelleme_sonucu": d.get("son_sonuc", "-"),
             # Araç listesi henüz gelmediyse "ulaşılamadı" denmez: bağlantı denenmeden başarısız sayılmaz.

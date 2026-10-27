@@ -31,6 +31,7 @@ CLAUDE = EV / "Library" / "Application Support" / "Claude" / "claude_desktop_con
 AJAN = EV / "Library" / "LaunchAgents" / "com.arthurlegal.guncelleme.plist"
 BURASI = Path(__file__).resolve().parents[1]
 PAKETLER = ("hukuk-burosu", "kurumsal", "adliye", "akademisyen")
+HAFIZA = EV / "ArthurLegal-Hafiza" / "🔮 850-Companion"  # ArthurLegal Hafıza'nın kasası (Beyin düzeni)
 
 hatalar: list = []
 uyarilar: list = []
@@ -167,6 +168,9 @@ def kurulum(secim: list, surum: str) -> None:
     if not {"hukuk-burosu", "kurumsal"} & set(secim):
         denetle("ArthurLegal.app" not in adlar and not (UYG / "ArthurLegal.app").exists(),
                 "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
+    if "hafiza" in secim:
+        denetle((HAFIZA / "Core.md").exists() and (HAFIZA / "Kurallar.md").exists(), f"hafıza kasası açıldı: {HAFIZA}")
+        denetle({"Hafıza Klasörü.app", "Memory Folder.app"} & adlar, "Hafıza Klasörü uygulaması")
     kaldir = KOK / "KALDIR.command"
     denetle(os.access(kaldir, os.X_OK) and calistir(["sh", "-n", kaldir]).returncode == 0, "kaldırma betiği")
 
@@ -209,6 +213,13 @@ def kurulum(secim: list, surum: str) -> None:
         denetle(uzak, f"uzak araçlar (arthurlegal-mcp): {len(araclar)} araç, {len(uzak)} tr_", yalniz_uyari=True)
         metin = s.iste("tools/call", {"name": "arthurlegal_talimat", "arguments": {}})["result"]["content"][0]["text"]
         denetle(metin.splitlines()[0].startswith("# ArthurLegal"), f"talimat: {metin.splitlines()[0]}")
+        if "hafiza" in secim:
+            denetle({"hafiza_baslangic", "hafiza_yaz", "hafiza_oturum_karti"} <= set(araclar), "hafıza araçları listede")
+            r = s.iste("tools/call", {"name": "hafiza_yaz", "arguments": {"yol": "Kurallar.md", "metin": "- CI: kısa cümle"}})
+            denetle(not r["result"].get("isError") and "- CI: kısa cümle" in (HAFIZA / "Kurallar.md").read_text(encoding="utf-8"),
+                    "hafıza kasasına yazıldı: " + r["result"]["content"][0]["text"])
+            r = s.iste("tools/call", {"name": "hafiza_yaz", "arguments": {"yol": "Kurallar.md", "metin": "tel 0532 123 45 67"}})
+            denetle(r["result"].get("isError"), "kişisel veri kapısı telefonu reddetti")
         if uzak:
             r = s.iste("tools/call", {"name": "status", "arguments": {}}, zaman=90).get("result", {})
             denetle(not r.get("isError"), "uzak araç çağrısı (status)", yalniz_uyari=True)
@@ -269,8 +280,9 @@ def mask(surum: str) -> None:
                 print("    stderr: " + hata.replace("\n", "\n    "))
 
 
-def kaldir() -> None:
-    """KALDIR.command'ın işi (onay penceresi olmadan): kayıt, uygulamalar, takma adlar ve LaunchAgent gider."""
+def kaldir(secim: list) -> None:
+    """KALDIR.command'ın işi (onay penceresi olmadan): kayıt, uygulamalar, takma adlar ve LaunchAgent gider; kullanıcının
+    verisi olan hafıza kasası kalır."""
     print("\n10. Kaldırma")
     r = calistir([PY, "-B", AL, "kur", "--kaldir"])
     denetle(r.returncode == 0, "kur --kaldir" + ("" if r.returncode == 0 else f": {r.stderr[-300:]}"))
@@ -281,6 +293,8 @@ def kaldir() -> None:
             "LaunchAgent kaldırıldı")
     sunucular = json.loads(CLAUDE.read_text(encoding="utf-8")).get("mcpServers", {})
     denetle(not {"arthurlegal-yerel", "arthur-tapu"} & set(sunucular), f"Claude Desktop kaydı silindi: {sorted(sunucular)}")
+    if "hafiza" in secim:
+        denetle((HAFIZA / "Kurallar.md").exists(), "hafıza kasası kaldı (kaldırma kullanıcının notlarını silmez)")
 
 
 def main(argv: list) -> int:
@@ -292,7 +306,7 @@ def main(argv: list) -> int:
         if "--mask" in argv:
             mask(surum)
         elif "--kaldir" in argv:
-            kaldir()
+            kaldir(secim)
         else:
             kurulum(secim, surum)
     except Exception as e:  # noqa: BLE001 — denetim yarıda kalsa da özet yazılsın

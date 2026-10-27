@@ -37,7 +37,7 @@ from derle import CIKTI, ortak  # noqa: E402
 KIMLIK = "com.arthurlegal"
 KURULUM_YERI = "/Library/Application Support/ArthurLegal"  # ev klasörüne kurulumda ~/Library/... olur
 MODUL_ILETISI = {"hukuk-burosu": "ModulHukuk", "kurumsal": "ModulKurumsal", "adliye": "ModulAdliye",
-                 "akademisyen": "ModulAkademisyen", "tapu": "ModulTapu", "mask": "ModulMask"}
+                 "akademisyen": "ModulAkademisyen", "tapu": "ModulTapu", "mask": "ModulMask", "hafiza": "ModulHafiza"}
 # Python'un kurulumda gerekmeyen parçaları (yalnız standart kütüphane kullanılır; test, tkinter ve araçlar yok).
 # lib/libpython3.12.dylib kalır: bin/python3.12 ona bağlıdır.
 ATILACAK = ("lib/python3.12/test", "lib/python3.12/idlelib", "lib/python3.12/tkinter", "lib/python3.12/turtledemo",
@@ -278,7 +278,7 @@ def main(argv=None) -> int:
     calistir(["pkgbuild", "--root", kok, "--identifier", f"{KIMLIK}.cekirdek", "--version", surum,
               "--install-location", KURULUM_YERI, "--scripts", hazirlik / "betik-cekirdek",
               paket_dizini / "cekirdek.pkg"])
-    moduller = [m for m in ortak.MODULLER if m in ("tapu", "mask") or m in icerik["paketler"]]
+    moduller = [m for m in ortak.MODULLER if m in ortak.BILESENLER or m in icerik["paketler"]]
     if not icerik["bilesenler"].get("tapu"):
         moduller.remove("tapu")
     for m in moduller:
