@@ -7,8 +7,9 @@ yer kırmızı çerçeve ve numarayla gösterilir. Üzerindeki yazılar Windows'
 metinleridir; Microsoft bir metni değiştirirse yalnız aşağıdaki METIN sözlüğü düzeltilip bu betik
 yeniden çalıştırılır. SVG dosyaları elle düzenlenmez.
 
-Modül ekranı çizimlerinin (moduller.svg, modules-en.svg, moduller-courthouse.svg) yazıları ArthurLegal kurulum
-betiğinden okunur (ArthurLegal-setup/kurulum/ArthurLegal.iss, Modul* iletileri).
+Modül ve arayüz ekranı çizimlerinin (moduller.svg, modules-en.svg, moduller-courthouse.svg, arayuz.svg,
+interface-en.svg) yazıları ArthurLegal kurulum betiğinden okunur (ArthurLegal-setup/kurulum/ArthurLegal.iss, Modul*
+ve Arayuz* iletileri).
 
 Mac çizimleri (mac-*.svg): macOS'un ilk açılış uyarısı, Sistem Ayarları'ndaki Yine de Aç ve kurulum sihirbazının
 Yükleme Türü ekranı. Üzerindeki macOS yazıları macOS'un kendi Türkçe ve İngilizce metinleridir (MAC_METIN; kaynağı
@@ -286,12 +287,12 @@ def edge_dialog(m: dict) -> str:
 
 
 def kurulum_metinleri() -> dict:
-    """Modül ekranının yazıları kurulum betiğinden okunur ([CustomMessages] Modul*): çizim kurulumla aynı kalır,
-    metin bir yerde değişince yalnız bu betik yeniden çalıştırılır."""
+    """Modül ve arayüz ekranlarının yazıları kurulum betiğinden okunur ([CustomMessages] Modul*, Arayuz*): çizim
+    kurulumla aynı kalır, metin bir yerde değişince yalnız bu betik yeniden çalıştırılır."""
     iss = (BURASI.parents[1] / "ArthurLegal-setup" / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
     metin = {"tr": {}, "en": {}}
     for satir in iss.splitlines():
-        m = re.match(r"^(tr|en)\.(Modul\w+)=(.*)$", satir)
+        m = re.match(r"^(tr|en)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
         if m:
             metin[m.group(1)][m.group(2)] = m.group(3)
     return metin
@@ -300,11 +301,72 @@ def kurulum_metinleri() -> dict:
 # Inno Setup 6'nın kendi metinleri (Default.isl, Languages\Turkish.isl) ve çizimin yazıları.
 SIHIRBAZ = {
     "tr": {"pencere": "ArthurLegal - Kurulum yardımcısı", "onceki": "Önceki", "sonraki": "Sonraki", "iptal": "İptal",
-           "dipnot": "Çizim · ArthurLegal kurulumunun modül ekranı (örnek görünüm)"},
+           "dipnot": "Çizim · ArthurLegal kurulumunun modül ekranı (örnek görünüm)",
+           "dipnot_arayuz": "Çizim · ArthurLegal kurulumunun arayüz ekranı (örnek görünüm)"},
     "en": {"pencere": "Setup - ArthurLegal", "onceki": "Back", "sonraki": "Next", "iptal": "Cancel",
-           "dipnot": "Drawing · the module screen of ArthurLegal Setup (example)"},
+           "dipnot": "Drawing · the module screen of ArthurLegal Setup (example)",
+           "dipnot_arayuz": "Drawing · the interface screen of ArthurLegal Setup (example)"},
 }
 MODUL_SIRASI = ("ModulHukuk", "ModulKurumsal", "ModulAdliye", "ModulAkademisyen", "ModulTapu", "ModulMask", "ModulHafiza")
+
+
+def sihirbaz_ust(x0: int, y0: int, g: int, h: int, s: dict, baslik: str, aciklama: str) -> str:
+    """Inno sihirbazının penceresi ve üst bandı: başlık çubuğu, sayfa başlığı ve açıklaması, sağda logo."""
+    govde = (f'<rect x="{x0 + 2}" y="{y0 + 4}" width="{g}" height="{h}" fill="#000000" opacity="0.14"/>'
+             f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" fill="#f0f0f0" stroke="#8c959f"/>'
+             f'<rect x="{x0 + 1}" y="{y0 + 1}" width="{g - 2}" height="31" fill="#ffffff"/>'
+             f'<rect x="{x0 + 10}" y="{y0 + 9}" width="16" height="16" fill="{LACIVERT}"/>'
+             + t(x0 + 34, y0 + 22, s["pencere"], 12.5, "#1f2328")
+             + t(x0 + g - 26, y0 + 22, "✕", 13, "#1f2328")
+             + f'<rect x="{x0 + 1}" y="{y0 + 32}" width="{g - 2}" height="64" fill="#ffffff"/>'
+             + t(x0 + 22, y0 + 54, baslik, 13.5, "#1f2328", 700))
+    if len(aciklama) > 84:  # sihirbazdaki gibi iki satır
+        kes = aciklama.rfind(" ", 0, 84)
+        govde += satirlar(x0 + 34, y0 + 74, [aciklama[:kes], aciklama[kes + 1:]], 12, "#1f2328", 16)
+    else:
+        govde += t(x0 + 34, y0 + 74, aciklama, 12, "#1f2328")
+    return govde + (f'<rect x="{x0 + g - 58}" y="{y0 + 38}" width="46" height="52" fill="{LACIVERT}"/>'
+                    + t(x0 + g - 35, y0 + 74, "A", 26, ALTIN, 700, hiza="middle")
+                    + f'<line x1="{x0 + 1}" y1="{y0 + 96}" x2="{x0 + g - 1}" y2="{y0 + 96}" stroke="#d0d7de"/>')
+
+
+def sihirbaz_dugmeleri(x0: int, g: int, by: int, s: dict) -> str:
+    """Alt çizgi ve Önceki / Sonraki / İptal düğmeleri (Sonraki varsayılan düğme, mavi çerçeve)."""
+    govde = f'<line x1="{x0 + 1}" y1="{by - 12}" x2="{x0 + g - 1}" y2="{by - 12}" stroke="#d0d7de"/>'
+    dugmeler = ((s["onceki"], x0 + g - 268), (s["sonraki"], x0 + g - 184), (s["iptal"], x0 + g - 96))
+    for ad, bx in dugmeler:
+        govde += (f'<rect x="{bx}" y="{by}" width="78" height="26" fill="#e1e1e1" '
+                  f'stroke="{"#0f6cbd" if ad == s["sonraki"] else "#adadad"}"/>'
+                  + t(bx + 39, by + 17, ad, 12.5, "#1f2328", hiza="middle"))
+    return govde
+
+
+def arayuz(dil: str, numaralar: tuple, baslik: str) -> str:
+    """Kurulumun arayüz ekranı (2.7.0): iki radyo düğmesi, yalnız biri seçilir; yeni arayüz seçili. ``numaralar``
+    sırayla kırmızı çerçeve alan yerler: "ArayuzYeni", "ArayuzKlasik" ya da "sonraki"."""
+    m, s = kurulum_metinleri()[dil], SIHIRBAZ[dil]
+    gen, yuk = 600, 372
+    x0, y0, g, h = 10, 10, 580, 336
+    govde = sihirbaz_ust(x0, y0, g, h, s, m["ArayuzBaslik"], m["ArayuzAciklama"])
+    y = y0 + 124
+    cerceveler = {}
+    for ileti in ("ArayuzYeni", "ArayuzKlasik"):
+        rx, ry = x0 + 30, y - 4
+        govde += (f'<circle cx="{rx}" cy="{ry}" r="6.5" fill="#ffffff" stroke="#333333"/>'
+                  + (f'<circle cx="{rx}" cy="{ry}" r="3.2" fill="#1f2328"/>' if ileti == "ArayuzYeni" else "")
+                  + t(rx + 14, y, m[ileti], 13, "#1f2328", 700))
+        govde += satirlar(rx + 14, y + 19, sar(m[ileti + "Aciklama"], 82), 12, "#6e7781", 16)
+        cerceveler[ileti] = (rx - 11, y - 16, 34 + len(m[ileti]) * 8, 23)
+        y += 19 + 16 * len(sar(m[ileti + "Aciklama"], 82)) + 22
+    by = y0 + h - 44
+    govde += sihirbaz_dugmeleri(x0, g, by, s)
+    for no, ileti in enumerate(numaralar, 1):
+        if ileti == "sonraki":
+            govde += isaret(x0 + g - 188, by - 4, 86, 34, no, rozet="ust")
+        else:
+            govde += isaret(*cerceveler[ileti], no, rozet="sag")
+    govde += dipnot(gen, yuk, s["dipnot_arayuz"])
+    return svg(gen, yuk, govde, baslik)
 
 
 def moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
@@ -313,23 +375,7 @@ def moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
     m, s = kurulum_metinleri()[dil], SIHIRBAZ[dil]
     gen, yuk = 600, 564
     x0, y0, g, h = 10, 10, 580, 528
-    govde = (f'<rect x="{x0 + 2}" y="{y0 + 4}" width="{g}" height="{h}" fill="#000000" opacity="0.14"/>'
-             f'<rect x="{x0}" y="{y0}" width="{g}" height="{h}" fill="#f0f0f0" stroke="#8c959f"/>'
-             f'<rect x="{x0 + 1}" y="{y0 + 1}" width="{g - 2}" height="31" fill="#ffffff"/>'
-             f'<rect x="{x0 + 10}" y="{y0 + 9}" width="16" height="16" fill="{LACIVERT}"/>'
-             + t(x0 + 34, y0 + 22, s["pencere"], 12.5, "#1f2328")
-             + t(x0 + g - 26, y0 + 22, "✕", 13, "#1f2328")
-             + f'<rect x="{x0 + 1}" y="{y0 + 32}" width="{g - 2}" height="64" fill="#ffffff"/>'
-             + t(x0 + 22, y0 + 54, m["ModulBaslik"], 13.5, "#1f2328", 700))
-    aciklama = m["ModulAciklama"]
-    if len(aciklama) > 84:  # sihirbazdaki gibi iki satır
-        kes = aciklama.rfind(" ", 0, 84)
-        govde += satirlar(x0 + 34, y0 + 74, [aciklama[:kes], aciklama[kes + 1:]], 12, "#1f2328", 16)
-    else:
-        govde += t(x0 + 34, y0 + 74, aciklama, 12, "#1f2328")
-    govde += (f'<rect x="{x0 + g - 58}" y="{y0 + 38}" width="46" height="52" fill="{LACIVERT}"/>'
-              + t(x0 + g - 35, y0 + 74, "A", 26, ALTIN, 700, hiza="middle")
-              + f'<line x1="{x0 + 1}" y1="{y0 + 96}" x2="{x0 + g - 1}" y2="{y0 + 96}" stroke="#d0d7de"/>')
+    govde = sihirbaz_ust(x0, y0, g, h, s, m["ModulBaslik"], m["ModulAciklama"])
     y = y0 + 124
     cerceveler = {}
     for i, ileti in enumerate(MODUL_SIRASI):
@@ -348,12 +394,7 @@ def moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
         cerceveler[ileti] = (kx - 5, ky - 5, 26 + len(m[ileti]) * 8, 23)
         y += 44
     by = y0 + h - 44
-    govde += f'<line x1="{x0 + 1}" y1="{by - 12}" x2="{x0 + g - 1}" y2="{by - 12}" stroke="#d0d7de"/>'
-    dugmeler = ((s["onceki"], x0 + g - 268), (s["sonraki"], x0 + g - 184), (s["iptal"], x0 + g - 96))
-    for ad, bx in dugmeler:
-        govde += (f'<rect x="{bx}" y="{by}" width="78" height="26" fill="#e1e1e1" '
-                  f'stroke="{"#0f6cbd" if ad == s["sonraki"] else "#adadad"}"/>'
-                  + t(bx + 39, by + 17, ad, 12.5, "#1f2328", hiza="middle"))
+    govde += sihirbaz_dugmeleri(x0, g, by, s)
     for no, ileti in enumerate(numaralar, 1):
         if ileti == "sonraki":
             govde += isaret(x0 + g - 188, by - 4, 86, 34, no, rozet="ust")
@@ -518,15 +559,23 @@ def mac_metinleri_kurulum(dil: str) -> dict:
     kaynak = (BURASI.parents[1] / "ArthurLegal-setup" / "yayin" / "derle_macos.py").read_text(encoding="utf-8")
     kosul = re.search(rf'"{dil}": "([^"]*)"', kaynak[kaynak.index("MASK_KOSULU"):]).group(1)
     m["ModulMaskAciklama"] = m["ModulMaskAciklama"] + kosul
+    kutu = re.search(rf'"{dil}": "([^"]*)"', kaynak[kaynak.index("ARAYUZ_KUTUSU ="):]).group(1)
+    m["ArayuzYeniAciklama"] = m["ArayuzYeniAciklama"] + kutu
     return m
 
 
+# Mac'te arayüz (2.7.0) modüllerin altında işaretli gelen tek kutudur; tabloda son satır.
+MAC_SATIRLARI = MODUL_SIRASI + ("ArayuzYeni",)
+
+
 def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
-    """macOS kurulumunun Yükleme Türü ekranı: modüller tabloda onay kutusuyla; seçilen modülün açıklaması altta.
-    ``numaralar`` sırayla kırmızı çerçeve alan satırlar, en sonda Sürdür düğmesi (Yükle sonraki sayfadadır)."""
+    """macOS kurulumunun Yükleme Türü ekranı: modüller ve arayüz kutusu tabloda onay kutusuyla; seçilen satırın
+    açıklaması altta. ``numaralar`` sırayla kırmızı çerçeve alan satırlar, en sonda Sürdür düğmesi (Yükle sonraki
+    sayfadadır)."""
     mm, m = MAC_METIN[dil], mac_metinleri_kurulum(dil)
-    gen, yuk = 640, 500
-    x0, y0, g, h = 10, 10, 620, 462
+    isaretli = tuple(isaretli) + ("ArayuzYeni",)  # arayüz kutusu kurulumda işaretli gelir
+    gen, yuk = 640, 524
+    x0, y0, g, h = 10, 10, 620, 486
     govde = mac_pencere(x0, y0, g, h, "#ececec")
     # sol: adımlar
     ay = y0 + 70
@@ -542,13 +591,13 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
     govde += f'<rect x="{cx + 16}" y="{cy + 16}" width="190" height="10" rx="5" fill="#c7c7cc"/>'   # başlık
     tx, ty, tg = cx + 14, cy + 40, cg - 28
     sutun = (tx + 10, tx + tg - 150, tx + tg - 70)
-    govde += (f'<rect x="{tx}" y="{ty}" width="{tg}" height="{22 + len(MODUL_SIRASI) * 24}" fill="#ffffff" stroke="#d1d1d6"/>'
+    govde += (f'<rect x="{tx}" y="{ty}" width="{tg}" height="{22 + len(MAC_SATIRLARI) * 24}" fill="#ffffff" stroke="#d1d1d6"/>'
               f'<rect x="{tx}" y="{ty}" width="{tg}" height="22" fill="#f5f5f7" stroke="#d1d1d6"/>'
               + "".join(t(sx, ty + 15, ad, 11, "#3a3a3c", 600) for sx, ad in zip(sutun, mm["sutunlar"])))
     satirlar_y = {}
     sy = ty + 22
     secili = numaralar[-2] if len(numaralar) > 1 else MODUL_SIRASI[0]
-    for ileti in MODUL_SIRASI:
+    for ileti in MAC_SATIRLARI:
         isaretli_mi = ileti in isaretli
         if ileti == secili:
             govde += f'<rect x="{tx + 1}" y="{sy}" width="{tg - 2}" height="24" fill="#dce9fb"/>'
@@ -619,6 +668,13 @@ def main() -> int:
                                             ("ModulAdliye", "ModulTapu", "ModulMask", "sonraki"),
                                             "Örnek: modül ekranında Courthouse, ArthurLegal Tapu ve Arthur Mask'i "
                                             "işaretleyip Sonraki'ye tıklayın"),
+        # Arayüz ekranı (2.7.0): yeni arayüz seçili gelir, Sonraki.
+        "arayuz.svg": arayuz("tr", ("ArayuzYeni", "sonraki"),
+                             "Örnek: arayüz ekranında ArthurLegal yeni arayüz seçili gelir; Claude Desktop klasik de "
+                             "seçilebilir. Sonraki'ye tıklayın"),
+        "interface-en.svg": arayuz("en", ("ArayuzYeni", "sonraki"),
+                                   "Example: on the interface screen ArthurLegal new interface comes selected; Claude "
+                                   "Desktop classic can be chosen instead. Click Next"),
     })
     for dil, (ad1, ad2) in MAC_DOSYALAR.items():
         ciktilar.update({ad1: mac_acilmadi(MAC_METIN[dil]), ad2: mac_yine_de_ac(MAC_METIN[dil])})

@@ -64,9 +64,19 @@ gelmez. En az bir paket gerekir:
   <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sonraki düğmesi (4)">
 </p>
 
-**4. Arayüzü seçin ve kurun.** Sonraki sayfada arayüzü seçin: **ArthurLegal yeni arayüz** (seçili gelir; masa
-ve sohbet içi kartlar) ya da **Claude Desktop klasik** (Claude Desktop her zamanki gibi; masa ve kartlar kapalı).
-**Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
+**4. Arayüzü seçin.** **Arayüzü seçin** ekranında iki seçenek vardır, yalnız biri seçilir; değiştirmek için
+kurulumu sonra yeniden çalıştırabilirsiniz:
+
+| Arayüz | Ne olur |
+|---|---|
+| **ArthurLegal yeni arayüz** (seçili gelir) | ArthurLegal simgesi Claude Desktop'un içinde [ArthurLegal Masası](#masa)'nı açar: solda modüller, ortada iş adımları; madde ve içtihat sonuçları ArthurLegal kartlarıyla gelir |
+| **Claude Desktop klasik** | Claude Desktop her zamanki gibi açılır, sorunuzu sohbete yazarsınız; masa ve kartlar kapalı, sonuçlar metin olarak gelir |
+
+<p align="center">
+  <img src="docs/kurulum/arayuz.svg" width="560" alt="Örnek çizim: arayüz ekranında ArthurLegal yeni arayüz seçili (1); sonra Sonraki düğmesi (2)">
+</p>
+
+**5. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
 önce yazdığınız mesajı gönderin. Arthur Mask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
 beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
 planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde ArthurLegal Masası, klasikte
@@ -154,7 +164,7 @@ Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir. Modüllerin altınd
 kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız **Claude Desktop klasik** kurulur.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sürdür düğmesi (4)">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
 **4. Kurun.** Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
@@ -164,8 +174,8 @@ Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazı
 **Arthur Mask** simgesi eklenir. Claude Desktop açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; sonra **ArthurLegal**
 simgesine tıklayın: yeni arayüzde Claude *ArthurLegal Masası'nı aç* mesajıyla açılır, Enter'a basın. Yeni bir sohbet açıp
 sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
-Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek ya da
-çıkarmak için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
+Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek, çıkarmak
+ya da arayüzü değiştirmek için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
 ArthurLegal → **ArthurLegal'i Kaldır**.
 
 Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir** (Mac:
@@ -176,7 +186,8 @@ Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/Arth
 **[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
 · **[⬇ Download the Mac installer (ArthurLegal-Kurulum.pkg)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** ([Mac steps](#mac-en)).
 The links always download the latest release. One installer lets you choose the packages (Law Firm, Corporate
-Assistant, Courthouse, Academician) and the tools (the Turkish land registry, Arthur Mask) you need and puts them
+Assistant, Courthouse, Academician), the tools (the Turkish land registry, Arthur Mask, ArthurLegal Memory) and the
+interface (the [ArthurLegal desk](#masa) inside Claude Desktop, or Claude Desktop classic) you want and puts them
 into Claude Desktop with the research connector; after that, ArthurLegal installs new versions itself in the
 background and verifies their signatures, so you never need to download this file again. No administrator
 rights are needed.
@@ -227,9 +238,19 @@ short description under it, and nothing is ticked on a first installation. At le
   <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Next button (4)">
 </p>
 
-**4. Choose the interface and install.** On the next page choose the interface: **ArthurLegal new interface**
-(selected by default; the desk and in-chat cards) or **Claude Desktop classic** (Claude Desktop as usual; no desk
-and no cards). Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
+**4. Choose the interface.** The **Choose the interface** screen has two options and only one can be selected; run
+setup again later to change it:
+
+| Interface | What happens |
+|---|---|
+| **ArthurLegal new interface** (selected by default) | The ArthurLegal icon opens [ArthurLegal Masası](#masa) (the ArthurLegal desk) inside Claude Desktop: modules on the left, the steps in the middle; article and case-law results come as ArthurLegal cards |
+| **Claude Desktop classic** | Claude Desktop opens as usual and you type your question in the chat; no desk and no cards, results come as text |
+
+<p align="center">
+  <img src="docs/kurulum/interface-en.svg" width="560" alt="Example drawing: on the interface screen ArthurLegal new interface is selected (1); then the Next button (2)">
+</p>
+
+**5. Install.** Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
 you are typing first. If you chose Arthur Mask, setup also downloads it (about 1 GB, a few minutes); if you don't
 want to wait, click **Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the
 background. On the last page click **Finish**: with the new interface ArthurLegal Masası opens, with the classic one
@@ -309,7 +330,7 @@ macOS 14 (Sonoma) or later only. The **ArthurLegal new interface** box below the
 and cards); untick it for **Claude Desktop classic**.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Continue button (4)">
+  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
 </p>
 
 **4. Install.** On the next page click **Install**, then **Close** on the last page: the start guide opens in your
@@ -321,18 +342,56 @@ ready and an **Arthur Mask** icon appears on the desktop. If Claude Desktop is o
 **Cmd+Q** and open it again; then click the **ArthurLegal** icon: with the new interface Claude opens with
 *ArthurLegal Masası'nı aç* typed, press Enter. You can also open a new chat and type your question. When Claude asks for permission the
 first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
-[claude.ai/download](https://claude.ai/download). To add or remove modules, open the installer again; your last
-choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
+[claude.ai/download](https://claude.ai/download). To add or remove modules or to change the interface, open the
+installer again; your last choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
 
 Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download** (Mac:
 **https://github.com/beerbottle90/ArthurLegal#mac-en**)
+
+<h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
+
+<p align="center">
+  <img src="docs/masa/masa-genel.png" width="760" alt="ArthurLegal Masası: solda Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler; ortada Madde getir ve doğrula, Taslaktaki atıfları teyit et, Konuyla ilgili kararları bul, Parsel sorgula, Belgeyle maskeli çalış ve Bugünümü Donna ile planla kartları">
+</p>
+
+**Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
+olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu,
+Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve araştırma kaynakları. Ortada yapılan iş adım adım, altta
+Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
+
+- **Taslaktaki atıfları tek seferde teyit.** Dilekçe ya da sözleşme metnini yapıştırın: içindeki madde atıfları
+  (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 35`) bulunur, resmî metinden kontrol edilir ve başlıklarıyla
+  "doğrulandı" ya da "bulunamadı" olarak döner. Sunucuya yalnız kanun ve madde numaraları gider, metniniz ekranda kalır.
+- **Sohbette kartlar.** Madde ve içtihat sonuçları ArthurLegal kartlarıyla gelir: üst başlıklarıyla birlikte başlık,
+  metin, kopyalanacak atıf, resmî metin bağlantısı ve doğrulandı rozeti; kararın metni kartın içinde açılır.
+- **Donna**, masadaki asistan: Claude'a bağladığınız uygulamalarla (e-posta, takvim, Slack, görevler) gününüzü
+  özetler ve hatırlatma kurar. Bir şey oluşturmadan ya da göndermeden önce sorar, hukuki süre hesaplamaz.
+- **Web ve telefon.** [Araştırma bağlantısını](#use-arthurlegal-mcp-directly) claude.ai'ye ekleyince masa web'de ve
+  Claude'un telefon uygulamasında da açılır; Hafıza, Arthur Mask ve UYAP tasarım gereği bilgisayarınızda kalır.
+- Klasik görünümü tercih ederseniz kurulumda **Claude Desktop klasik**'i seçin: masa ve kartlar kapanır, sonuçlar
+  metin olarak gelir. Açık tema varsayılandır; koyu ve otomatik masanın sol altından seçilir.
+
+<p align="center">
+  <img src="docs/masa/masa-atif.png" width="760" alt="Masada atıf teyidi: yapıştırılan paragraftaki TBK m. 344, TBK m. 347 ve AY m. 35 atıfları başlıklarıyla doğrulandı">
+</p>
+
+**English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
+desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
+citations, case law, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and the research sources), the
+steps of the current task in the middle, Claude's own message box at the bottom. It runs on your own Claude plan;
+no API key, nothing billed to one. Paste a draft to check every article citation in it against the official text
+(only the law and article numbers leave the page); article and case-law results appear as ArthurLegal cards; Donna
+summarises your day through the apps you have connected to Claude and asks before creating or sending anything. On
+the web and in the Claude mobile app the desk comes from the research connector, with the desktop-only modules
+shown as such. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
 
 ---
 
 > **Proprietary — Non-Commercial Use Only. All Rights Reserved. See [LICENSE](LICENSE).**
 
-**Multi-jurisdiction legal AI assistant packages that run on [Claude.ai Projects](https://claude.ai/projects).**
-Each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
+**Multi-jurisdiction legal AI assistant packages for Claude Desktop (one installer, Windows and Mac), opened as one
+panel inside Claude: [ArthurLegal Masası](#masa).** They also run as [Claude.ai Projects](https://claude.ai/projects):
+each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
 jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
 
@@ -385,6 +444,9 @@ without installing a package, in any MCP client (Streamable HTTP, no authenticat
 | Cursor, VS Code and other JSON-configured clients | `{"mcpServers": {"arthurlegal": {"url": "https://arthurlegal-mcp.fly.dev/mcp"}}}` |
 | Clients that only launch local (stdio) servers | command `npx -y mcp-remote https://arthurlegal-mcp.fly.dev/mcp` |
 
+In Claude (web, desktop, iOS and Android) results come with ArthurLegal views: an article card for
+`tr_mevzuat_madde_getir`, a decision list for `tr_ictihat_ara`, and the full-screen desk when you ask for
+*ArthurLegal Masası'nı aç* (`al_masasi`); other clients read the same JSON as before.
 Call the `status` tool first to see which jurisdictions are loaded. The land-registry tools (`tkgm_`) fetch single parcels live from TKGM Parsel Sorgu, at most 30 requests a minute for all users together; the first live call in a chat returns a one-time consent card ([design](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/tkgm-mcp/docs/MANIFESTO.md)). The endpoint searches public
 sources; do not put client names or confidential facts into queries. Setup details and source:
 [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly).
@@ -431,7 +493,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 104 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 124 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · global sanctions / PEP | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **OpenSanctions** (REST API, API key) |
 
