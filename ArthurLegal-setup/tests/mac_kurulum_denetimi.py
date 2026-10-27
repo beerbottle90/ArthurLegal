@@ -134,6 +134,8 @@ def kurulum(secim: list, surum: str) -> None:
     onceki = sorted(p.name for p in (KOK / "onceki").iterdir()) if (KOK / "onceki").is_dir() else []
     denetle(onceki == sorted(secim), f"önceki seçim (kurulum yeniden açılınca işaretli gelir): {onceki}")
     denetle(not (KOK / "secim").exists(), "kurulumun seçim işaretleri temizlendi")
+    ilk_durum = json.loads((KOK / "veri" / "durum.json").read_text(encoding="utf-8") or "{}")
+    denetle(ilk_durum.get("arayuz") == "yeni", f"arayüz (kutu işaretli gelir): {ilk_durum.get('arayuz')}")
     aktif = (KOK / "aktif.txt").read_text(encoding="utf-8").strip() if (KOK / "aktif.txt").exists() else ""
     denetle(aktif == surum, f"etkin sürüm: {aktif}")
 
@@ -213,6 +215,11 @@ def kurulum(secim: list, surum: str) -> None:
         denetle(uzak, f"uzak araçlar (arthurlegal-mcp): {len(araclar)} araç, {len(uzak)} tr_", yalniz_uyari=True)
         metin = s.iste("tools/call", {"name": "arthurlegal_talimat", "arguments": {}})["result"]["content"][0]["text"]
         denetle(metin.splitlines()[0].startswith("# ArthurLegal"), f"talimat: {metin.splitlines()[0]}")
+        # AL Masası: araç listede ve görünüm paketin içinden okunuyor (arayuz/ yalnız .py değil, HTML ile kuruldu).
+        denetle("al_masasi" in araclar, "AL Masası aracı listede")
+        masa = s.iste("resources/read", {"uri": "ui://arthurlegal/masa.html"}).get("result", {}).get("contents") or [{}]
+        denetle("ArthurLegal Masası" in masa[0].get("text", "") and "/*AL:" not in masa[0].get("text", ""),
+                "masa görünümü kurulu pakette eksiksiz")
         if "hafiza" in secim:
             denetle({"hafiza_baslangic", "hafiza_yaz", "hafiza_oturum_karti"} <= set(araclar), "hafıza araçları listede")
             r = s.iste("tools/call", {"name": "hafiza_yaz", "arguments": {"yol": "Kurallar.md", "metin": "- CI: kısa cümle"}})

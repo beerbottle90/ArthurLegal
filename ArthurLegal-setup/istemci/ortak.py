@@ -232,6 +232,17 @@ def dil() -> str:
     return d if d in DILLER else "tr"
 
 
+ARAYUZLER = ("yeni", "klasik")
+
+
+def arayuz() -> str:
+    """Kurulumda seçilen arayüz (2.7.0): "yeni" ArthurLegal Masası ve sohbet içi kartlar, "klasik" Claude Desktop'un
+    kendi sohbeti (masa ve kartlar kapalı, araçlar metinle). Kurulum sihirbazında seçilir (kur.py --arayuz) ve
+    durum.json'a yazılır. Yazılmamışsa yeni: 2.7.0'a güncellenen kurulumlar masayla açılır."""
+    a = durum().get("arayuz")
+    return a if a in ARAYUZLER else "yeni"
+
+
 def sistem_dili() -> str:
     """Sistemin arayüz dili Türkçeyse "tr", değilse "en". Dil seçilmeden kurulan yollarda kullanılır (Windows zip
     kurulumu, macOS kurulum paketi)."""

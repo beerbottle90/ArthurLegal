@@ -157,7 +157,8 @@ def anahtarlar(k: dict) -> list:
 
 def paket_hazirla(k: dict, hedef: Path) -> dict:
     icerik = {"surum": k["surum"], "paketler": {}, "bilesenler": {}, "kaynak": {}, "anahtarlar": anahtarlar(k)}
-    kopyala(BURASI / "istemci", hedef / "istemci", lambda g: g.endswith(".py"))
+    # arayuz/: AL Masası ve kartların HTML, CSS, JS ve SVG dosyaları da gider (yalnız .py değil).
+    kopyala(BURASI / "istemci", hedef / "istemci", lambda g: g.endswith(".py") or g.startswith("arayuz/"))
     al = depo(k, "ArthurLegal")
     for profil, desen in k["paketler"].items():
         klasor = en_yeni_paket(al, desen)

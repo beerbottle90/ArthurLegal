@@ -78,6 +78,9 @@ def paket_yaz(s: Path, surum: str):
     (s / "istemci").mkdir(parents=True)
     for y in (BURASI / "istemci").glob("*.py"):
         shutil.copy2(y, s / "istemci" / y.name)
+    if (BURASI / "istemci" / "arayuz").is_dir():                   # derle.py'deki gibi masa dosyaları da
+        shutil.copytree(BURASI / "istemci" / "arayuz", s / "istemci" / "arayuz",
+                        ignore=shutil.ignore_patterns("__pycache__"))
     (s / "surum.txt").write_text(surum, encoding="utf-8")
 
 
@@ -304,6 +307,18 @@ class KisayolTesti(unittest.TestCase):
         cikti = subprocess.run([sys.executable, "-c", tam], env=env, capture_output=True, text=True,
                                encoding="utf-8", check=True).stdout
         return json.loads(cikti.strip().splitlines()[-1])       # işleyicinin uyarı satırından sonra
+
+    BASLAT = ("import kisayol, webbrowser; acilan = []; webbrowser.open = lambda u: acilan.append('rehber'); "
+              "kisayol.masa = lambda: acilan.append('masa') or 0; kisayol.claude_ac = lambda: 'açık'; "
+              "kisayol.baslat(); kisayol.baslat(); print(json.dumps([acilan, kisayol.masa_adresi()]))")
+
+    def test_calistir_masayi_acar_rehber_yalniz_ilk_acilista(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            acilan, adres = self.calistir(t, self.BASLAT)
+            self.assertEqual(acilan, ["masa", "rehber", "masa"])
+            self.assertEqual(adres, "claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7")
 
     def test_ekran_kisayolu_ve_acilisi(self):
         with tempfile.TemporaryDirectory() as t:
@@ -632,6 +647,34 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(r["isError"])
         self.assertEqual(self.iste("yok/boyle")["error"]["code"], -32601)
         self.assertIn("uzak_arac_sayisi", self.arac("arthurlegal_durum")["content"][0]["text"])
+
+    def test_7_masa_ve_kartlar(self):
+        """AL Masası (MCP Apps): görünümler kaynak olarak, masa araçları ve kartlı araştırma araçları."""
+        r = self.iste("initialize", {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "t"}})["result"]
+        self.assertIn("resources", r["capabilities"])
+        self.assertIn("al_masasi", r["instructions"])
+        uri = {k["uri"] for k in self.iste("resources/list")["result"]["resources"]}
+        self.assertEqual(uri, {"ui://arthurlegal/masa.html", "ui://arthurlegal/madde-karti.html",
+                               "ui://arthurlegal/ictihat-karti.html"})
+        oku = self.iste("resources/read", {"uri": "ui://arthurlegal/masa.html"})["result"]["contents"][0]
+        self.assertEqual(oku["mimeType"], "text/html;profile=mcp-app")
+        self.assertIn("ArthurLegal Masası", oku["text"])
+        self.assertNotIn("/*AL:", oku["text"], "ortak parçalar gömülmüş olmalı")
+        self.assertEqual(self.iste("resources/read", {"uri": "ui://yok"})["error"]["code"], -32002)
+        araclar = {t["name"]: t for t in self.iste("tools/list")["result"]["tools"]}
+        self.assertEqual(araclar["al_masasi"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
+        self.assertEqual(araclar["tr_ictihat_ara"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/ictihat-karti.html")
+        self.assertNotIn("_meta", araclar["status"])
+        masa = self.arac("al_masasi", bolum="ictihat")["structuredContent"]
+        self.assertEqual((masa["ortam"], masa["bolum"]), ("masaustu", "ictihat"))
+        # Sahte kurulumda UYAP köprüsü yok; Arthur Mask bu bilgisayarda kurulu olabilir (gerçek LOCALAPPDATA).
+        self.assertEqual(masa["moduller"]["uyap"], {"durum": "kurulu-degil"})
+        self.assertEqual(set(masa["moduller"]), {"tapu", "beyin", "mask", "uyap", "donna"})
+        self.assertIn("tr_ictihat_ara", masa["yetenekler"])
+        self.assertTrue(self.arac("al_modul_ac", modul="rm")["isError"])
+        self.assertTrue(self.arac("al_modul_ac", modul="uyap")["isError"], "kurulu olmayan modül açılmaz")
+        kart = self.arac("tr_ictihat_ara", query="kira")
+        self.assertEqual(kart["structuredContent"]["arguments"], {"query": "kira"}, "kart metindeki JSON'u veri olarak alır")
 
 
 class SaltOkunurTesti(unittest.TestCase):
@@ -1334,6 +1377,61 @@ class ModulTesti(unittest.TestCase):
         self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
 
 
+class ArayuzTesti(unittest.TestCase):
+    """2.7.0: kurulumda seçilen arayüz. Yeni: simge ArthurLegal Masası'nı açar, yerel sunucu masa ve kartlarla çalışır.
+    Klasik: simge Claude Desktop'ı ve başlat panelini açar, sunucu 2.6'daki gibi metinle çalışır."""
+
+    calistir = ModulTesti.calistir
+
+    def test_kurulum_ekrani(self):
+        """Modül ekranından sonra iki seçenek; aynı yüzeydeki radyo düğmeleri, yalnız biri seçilir; ilk kurulumda yeni
+        arayüz seçili gelir; seçim kur.py'ye --arayuz ile geçer; bitiş sayfasının kutuları seçime göre."""
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        self.assertIn("CreateCustomPage(ModulSayfasi.ID, CustomMessage('ArayuzBaslik')", iss)
+        self.assertIn("TNewRadioButton.Create(ArayuzSayfasi)", iss)
+        self.assertIn("Arayuz := GetPreviousData('Arayuz', ArayuzKodu(0))", iss, "ilk kurulumda yeni arayüz seçili")
+        self.assertIn("SetPreviousData(PreviousDataKey, 'Arayuz', Arayuz)", iss)
+        self.assertIn("{param:ARAYUZ|}", iss)
+        self.assertIn("' --moduller ' + Secim + ' --arayuz ' + Arayuz", iss)
+        self.assertIn("tr.ArayuzYeni=ArthurLegal yeni arayüz", iss)
+        self.assertIn("tr.ArayuzKlasik=Claude Desktop klasik", iss)
+        calis = iss.split("\n[Run]")[1].split("\n[UninstallRun]")[0]
+        self.assertIn('kisayol baslat"; Description: "{cm:MasaAc}"; Flags: postinstall nowait skipifsilent; '
+                      'Check: ArayuzYeni', calis)
+        self.assertEqual(calis.count("Check: not ArayuzYeni"), 2, "klasikte rehber ve Claude Desktop kutuları")
+
+    def test_secim_yazilir_varsayilan_yeni(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = "import ortak; print(json.dumps(ortak.arayuz()))"
+            self.assertEqual(self.calistir(t, kod), "yeni", "seçim yazılmamışsa (2.7.0'a güncellenen kurulum) yeni")
+            self.assertEqual(self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))"), 0)
+            self.assertEqual(self.calistir(t, kod), "klasik")
+            r = self.calistir(t, "import kur; kur.main(['--kaydet', '--arayuz', 'masa'])", kontrol=False)
+            self.assertEqual(r.returncode, 2, "bilinmeyen arayüz reddedilir")
+            self.assertEqual(self.calistir(t, kod), "klasik", "geçersiz değer öncekini bozmaz")
+
+    def test_klasikte_simge_paneli_acar_sunucu_masasiz(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            sunucu = ("import arthurlegal_sunucu as s; b = s.Sunucu().isle('initialize', {}); "
+                      "print(json.dumps([s.al_arayuz is not None, [a['name'] for a in s.masa_araclari()], "
+                      "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
+                      "'_meta' in s.kart_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
+            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_modul_ac"], True, True, True])
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
+            self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
+            acilan, _ = self.calistir(t, KisayolTesti.BASLAT)
+            self.assertEqual(acilan, ["rehber", "rehber"], "klasikte her açılışta panel; masa bağlantısı açılmaz")
+            self.assertIn('"arayuz": "klasik"', (t / "kok" / "rehber" / "durum.js").read_text(encoding="utf-8"))
+            for ad in ("rehber.html", "rehber-en.html"):  # panel klasikte masa paragrafını gizler
+                html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+                self.assertIn('<p data-arayuz="yeni">', html)
+                self.assertIn("d.arayuz", html)
+
+
 class MacKurulumTesti(unittest.TestCase):
     """macOS kurulumu (.pkg, yayin/derle_macos.py): paketler, istemci ve güncelleme kanalı Windows'takiyle aynı; değişen
     yalnız işletim sistemine bağlanan yerler (Python yolu, Claude ayar dosyası, uygulamalar ve masaüstü takma adları,
@@ -1561,7 +1659,8 @@ class MacKurulumTesti(unittest.TestCase):
             alan = kok.find("domains")
             self.assertEqual((alan.get("enable_currentUserHome"), alan.get("enable_localSystem"),
                               alan.get("enable_anywhere")), ("true", "false", "false"), "yönetici şifresi istemez")
-            self.assertEqual([s.get("choice") for s in kok.find("choices-outline")], ["cekirdek", *moduller, "son"])
+            self.assertEqual([s.get("choice") for s in kok.find("choices-outline")],
+                             ["cekirdek", *moduller, "arayuz-yeni", "son"])
             secim = {c.get("id"): c for c in kok.findall("choice")}
             for m in moduller:
                 for dil in ("tr", "en"):
@@ -1572,13 +1671,19 @@ class MacKurulumTesti(unittest.TestCase):
             self.assertEqual(secim["mask"].get("start_selected"), "onceki('mask') && mask_uygun()")
             self.assertIn("compareVersions(system.version.ProductVersion, '14.0')", kok.find("script").text)
             self.assertIn("Apple Silicon", ileti["tr"]["ModulMaskAciklama"], "Mac'teki koşul modül açıklamasında")
+            # Arayüz: Windows'taki iki seçeneğin karşılığı tek kutu; ilk kurulumda işaretli, klasik seçildiyse işaretsiz.
+            self.assertEqual((secim["arayuz-yeni"].get("title"), secim["arayuz-yeni"].get("start_selected")),
+                             ("ArayuzYeni", "!onceki('arayuz-klasik')"))
+            self.assertIn("Claude Desktop klasik", ileti["tr"]["ArayuzYeniAciklama"], "işareti kaldırmanın anlamı")
             self.assertTrue(all(p.get("auth") == "none" for p in kok.findall("pkg-ref") if p.text))
             strings = Path(t) / "Localizable.strings"
             derle_macos.strings_yaz(strings, {"A": 'tırnak " ve\nsatır'})
             self.assertIn(strings.read_bytes()[:2], (b"\xff\xfe", b"\xfe\xff"), "UTF-16")
             self.assertEqual(strings.read_bytes().decode("utf-16"), '"A" = "tırnak \\" ve\\nsatır";\n')
         son = (BURASI / "kurulum" / "macos" / "postinstall").read_text(encoding="utf-8")
-        self.assertIn('kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM"', son)
+        self.assertIn('kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM" --arayuz "$ARAYUZ"', son)
+        self.assertLess(son.index('rm -f "$KOK/secim/arayuz-yeni"'), son.index('for f in "$KOK"/secim/*'),
+                        "arayüz işareti modül listesine girmez")
         self.assertIn("{{PAKET_YOK_TR}}", son)
         self.assertIn("{{PAKET_YOK_EN}}", son)
 
