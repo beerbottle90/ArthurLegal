@@ -125,6 +125,9 @@ en.MaskKuruluyor=Installing Arthur Mask (this may take a few minutes)...
 tr.MaskKuruluyor=Arthur Mask kuruluyor (birkaç dakika sürebilir)...
 en.ClaudeBaglaniyor=Connecting to Claude Desktop...
 tr.ClaudeBaglaniyor=Claude Desktop'a bağlanıyor...
+; Son sayfada kalın hatırlatma (yalnız yeni arayüz; Kod: CurPageChanged). Mesaj yazılı gelir ama gönderilmez.
+en.MasaEnterHatirlatma=Important: when Claude Desktop opens, 'ArthurLegal Masası'nı aç' is already typed in the message box. Press Enter to open the desk; the message is not sent by itself. The same happens every time you click the desktop icon.
+tr.MasaEnterHatirlatma=Önemli: Claude Desktop açıldığında yazma kutusunda 'ArthurLegal Masası'nı aç' yazılı gelir. Masanın açılması için Enter'a basın; mesaj kendiliğinden gönderilmez. Masaüstündeki simgeyle her açılışta da böyledir.
 ; Modül ekranı. Kısa açıklamalar istemci/kur.py'deki MODUL_METNI ile aynı tutulur (zip kurulumunun sorusu).
 en.ModulBaslik=Choose modules
 tr.ModulBaslik=Modülleri seçin
@@ -246,6 +249,7 @@ var
   { Seçilen arayüz: 'yeni' (ArthurLegal Masası) ya da 'klasik' (Claude Desktop). kur.py'ye --arayuz ile geçer; önceki
     veri olarak saklanır. İlk kurulumda yeni seçili gelir. }
   Arayuz: String;
+  EnterHatirlatmasi: TNewStaticText;
 
 function MaskKurulu: Boolean;
 begin
@@ -540,6 +544,25 @@ begin
   ArayuzSayfasiOlustur;
   IndirmeSayfasi := CreateDownloadPage(CustomMessage('MaskIndiriliyor'), CustomMessage('MaskAciklama'),
     @IndirmeIlerlemesi);
+end;
+
+{ Son sayfa, yeni arayüz: Claude Desktop mesaj yazılmış olarak açılır ama gönderilmez; kullanıcı Enter'a basmazsa
+  masa açılmaz. FinishedLabel kalın yazamaz: altına kalın bir satır konur, "Masayı aç" kutusu onun altına kayar. }
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if (CurPageID <> wpFinished) or (not ArayuzYeni) or (EnterHatirlatmasi <> nil) then
+    exit;
+  EnterHatirlatmasi := TNewStaticText.Create(WizardForm.FinishedPage);
+  EnterHatirlatmasi.Parent := WizardForm.FinishedPage;
+  EnterHatirlatmasi.AutoSize := False;
+  EnterHatirlatmasi.WordWrap := True;
+  EnterHatirlatmasi.Left := WizardForm.FinishedLabel.Left;
+  EnterHatirlatmasi.Width := WizardForm.FinishedLabel.Width;
+  EnterHatirlatmasi.Top := WizardForm.FinishedLabel.Top + WizardForm.FinishedLabel.Height + ScaleY(12);
+  EnterHatirlatmasi.Font.Style := [fsBold];
+  EnterHatirlatmasi.Caption := CustomMessage('MasaEnterHatirlatma');
+  EnterHatirlatmasi.AdjustHeight;
+  WizardForm.RunList.Top := EnterHatirlatmasi.Top + EnterHatirlatmasi.Height + ScaleY(12);
 end;
 
 procedure RegisterPreviousData(PreviousDataKey: Integer);

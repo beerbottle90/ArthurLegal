@@ -22,6 +22,7 @@ button,a.dugme{display:inline-block;margin:10px 8px 0 0;background:var(--laciver
 a.dugme.ikincil{background:transparent;color:var(--lacivert);border:1px solid var(--cizgi)}
 button.tamam{background:var(--yesil);color:#fff}
 .uyari{border-left:4px solid var(--altin);padding:10px 14px;background:var(--kart);border-radius:0 8px 8px 0}
+.onemli{border-left:4px solid var(--altin);padding:12px 16px;background:var(--kart);border-radius:0 8px 8px 0;font-size:17px;margin:18px 0 0}
 code{background:var(--kod);padding:1px 6px;border-radius:4px;font-size:14px}
 li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
@@ -43,6 +44,8 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 <div id="durum"></div>
 
 <p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
+
+<p data-arayuz="yeni" class="onemli"><b>Önemli: masayı açmak için Enter'a basın.</b> Claude Desktop açıldığında yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı gelir; mesaj kendiliğinden gönderilmez. Masaüstündeki <i>{{URUN}}</i> simgesiyle her açılışta da Enter'a basın.</p>
 
 <p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, Arthur Mask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. Bu sayfa yalnız ilk açılışta gelir.</p>
 
