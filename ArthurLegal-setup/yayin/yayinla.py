@@ -162,9 +162,10 @@ def yuklenecek_kurulumlar(cikti: Path, derleme: dict, public: bool) -> list:
         return kurulumlar
     icerik = derleme.get("icerik") or {}
     if icerik.get("bilesenler", {}).get("uyap"):
-        kaynak = (icerik.get("kaynak") or {}).get("uyap") or {}
+        # derleme.json kaynakları üst düzeyde tutar (derle.py); içerikteki kopya eski biçim için.
+        kaynak = (derleme.get("kaynak") or icerik.get("kaynak") or {}).get("uyap") or {}
         if kaynak.get("ref") != UYAP_DALI:
-            sys.exit(f"Bu derlemenin UYAP köprüsü {UYAP_DALI}'dan değil ({kaynak.get('ref') or 'bilinmiyor'}); public depoya "
+            sys.exit(f"Bu derlemenin UYAP köprüsü {UYAP_DALI} dalından değil ({kaynak.get('ref') or 'bilinmiyor'}); public depoya "
                      "yüklenmez. kaynaklar.json 'dallar' → uyap: origin/main ile yeniden derleyin.")
     ozetler = derleme.get("kurulum") or {}
     secilen = []

@@ -911,6 +911,12 @@ class YayimlamaTesti(unittest.TestCase):
                     self.cikti, {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}, "kaynak": kaynak}}, True)
         sabit = {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}, "kaynak": {"uyap": {"ref": "origin/main"}}}}
         self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, sabit, True), list(self.KURULUMLAR))
+        # derle.py'nin yazdığı biçim: kaynaklar derleme.json'un üst düzeyinde.
+        ust = {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}},
+               "kaynak": {"ArthurLegal": {"commit": "abc1234", "ref": "HEAD"}, "uyap": {"ref": "origin/main"}}}
+        self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, ust, True), list(self.KURULUMLAR))
+        with self.assertRaises(SystemExit):
+            self.y.yuklenecek_kurulumlar(self.cikti, {**ust, "kaynak": {"uyap": {"ref": "surum/2.0.0"}}}, True)
         with self.assertRaises(SystemExit):
             self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "kurulum": {}}, True)
 
