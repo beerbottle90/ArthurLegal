@@ -384,7 +384,7 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 <h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
 
 <p align="center">
-  <img src="docs/masa/masa-genel.png" width="760" alt="ArthurLegal Masası: solda Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler; ortada Madde getir ve doğrula, Taslaktaki atıfları teyit et, Konuyla ilgili kararları bul, Parsel sorgula, Belgeyle maskeli çalış ve Bugünümü Donna ile planla kartları">
+  <img src="docs/masa/masa-genel.png" width="760" alt="ArthurLegal Masası: solda Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler; ortada Mevzuatta ara, madde getir, Taslaktaki atıfları teyit et, Konuyla ilgili kararları bul, Parsel sorgula, Belgeyle maskeli çalış ve Bugünümü Donna ile planla kartları">
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
@@ -392,6 +392,10 @@ olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet
 Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve araştırma kaynakları. Ortada yapılan iş adım adım, altta
 Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
+- **Türk mevzuatının tamamı.** Mevzuat ve atıf ekranında kanundan tebliğe bütün mevzuat aranır: kanun, KHK,
+  Cumhurbaşkanlığı kararname, karar, yönetmelik ve genelgeleri, tüzük, yönetmelik, tebliğ ve mülga mevzuat. Adla,
+  numarayla ya da metindeki bir ifadeyle arayın, türe göre süzün, mevzuatın içindekilerini açın ve maddeyi resmî
+  metinden doğrulanmış olarak getirin.
 - **Taslaktaki atıfları tek seferde teyit.** Dilekçe ya da sözleşme metnini yapıştırın: içindeki madde atıfları
   (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 35`) bulunur, resmî metinden kontrol edilir ve başlıklarıyla
   "doğrulandı" ya da "bulunamadı" olarak döner. Sunucuya yalnız kanun ve madde numaraları gider, metniniz ekranda kalır.
@@ -412,7 +416,9 @@ Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bi
 desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
 citations, case law, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and the research sources), the
 steps of the current task in the middle, Claude's own message box at the bottom. It runs on your own Claude plan;
-no API key, nothing billed to one. Paste a draft to check every article citation in it against the official text
+no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
+acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
+official text. Paste a draft to check every article citation in it against the official text
 (only the law and article numbers leave the page); article and case-law results appear as ArthurLegal cards; Donna
 summarises your day through the apps you have connected to Claude and asks before creating or sending anything. On
 the web and in the Claude mobile app the desk comes from the research connector, with the desktop-only modules
@@ -633,6 +639,26 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.1 — The desk searches all Turkish legislation; the user guide in the repository (2026-10-28)
+
+- **All Turkish legislation on the desk.** The *Mevzuat ve atıf* (legislation and citations) screen now opens with
+  *Mevzuatta ara*: search laws, decree-laws, presidential decrees, decisions, regulations and circulars, by-laws,
+  regulations, communiqués and repealed legislation by name, number or a phrase in the text, filter by type, open a
+  text's table of contents and fetch any article verified against the official text. The old suggestion list of 20
+  laws, which made the scope look narrow, is gone; abbreviations such as TBK still work, and any other name is
+  looked up in the legislation.
+- **User guide (PDF) in the repository.** `docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf` (9 pages, Turkish),
+  linked [at the top of this page](#rehber) and from a large button on the start guide.
+- **Start guide.** The new icon instead of the pixel banner, the desk as it opens now and a separate paragraph for
+  the classic interface; the UYAP Dashboard item shows only where it is installed.
+- The research connector already serves the new desk on the web and in the Claude mobile app.
+
+**Türkçe:** Masanın Mevzuat ve atıf ekranı artık Türk mevzuatının tamamını arıyor: kanundan tebliğe, mülga dâhil;
+adla, numarayla ya da metindeki bir ifadeyle, türe göre süzerek. Mevzuatın içindekilerini açıp maddeyi resmî
+metinden doğrulanmış olarak getirebilirsiniz. Kapsamı dar gösteren 20 kanunluk öneri listesi kalktı; TBK gibi
+kısaltmalar yine çalışır. Kullanıcı rehberi (PDF) depoda: bu sayfanın başında ve başlangıç sayfasındaki büyük
+düğmede.
 
 ## Setup 3.0.0 — The UYAP Dashboard comes with the installer (2026-10-28)
 
