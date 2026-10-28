@@ -110,17 +110,16 @@ def python_hazirla(k: dict, hedef: Path) -> dict:
 
 
 def simge_hazirla(hedef: Path) -> None:
-    """Windows simgesinin (varlik/gorseller.py, 16x16 pixel art) macOS biçimi (.icns): her boyut pikselin tam katıyla
-    büyütülür, keskin kalır. Yalnız standart kütüphane ve macOS'un iconutil'i."""
+    """Windows simgesinin (varlik/simge.py, vektör) macOS biçimi (.icns): her boyut ayrı çizilir, büyütülmez. Yalnız
+    standart kütüphane ve macOS'un iconutil'i."""
     sys.path.insert(0, str(BURASI / "varlik"))
-    import gorseller
-    tuval = gorseller.simge_tuvali()
+    import simge
     takim = hedef.parent / "arthurlegal.iconset"
     shutil.rmtree(takim, ignore_errors=True)
     takim.mkdir(parents=True)
     for boyut in (16, 32, 128, 256, 512):
         for kat, ek in ((1, ""), (2, "@2x")):
-            tuval.png_yaz(takim / f"icon_{boyut}x{boyut}{ek}.png", boyut * kat // tuval.en)
+            (takim / f"icon_{boyut}x{boyut}{ek}.png").write_bytes(simge.simge_png(boyut * kat))
     calistir(["iconutil", "-c", "icns", takim, "-o", hedef])
     shutil.rmtree(takim, ignore_errors=True)
 

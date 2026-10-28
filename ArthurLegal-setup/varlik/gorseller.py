@@ -1,4 +1,4 @@
-"""ArthurLegal kurulum görsellerini üretir (pixel art, stdlib).
+"""ArthurLegal kurulum görsellerini üretir (stdlib).
 
     python varlik/gorseller.py
 
@@ -8,10 +8,11 @@
     banner-en.png          afiş, İngilizce alt yazılı (depo README'si)
     rehber-banner.png      başlangıç rehberi başlığı (Türkçe)
     rehber-banner-en.png   başlangıç rehberi başlığı (İngilizce)
-    sihirbaz.png           Inno Setup sihirbaz görseli (164x312)
-    sihirbaz-kucuk.png     Inno Setup küçük görsel (55x55)
+    sihirbaz.png           Inno Setup sihirbaz görseli (164x312'nin iki katı, 328x624)
+    sihirbaz-kucuk.png     Inno Setup küçük görsel (55x55'in iki katı, 110x110)
 
-Tema: açık kaynak, özgürlük, hukuk yapay zekâsı. Lacivert zemin, altın "A", gökkuşağı şeridi.
+Simge ve sihirbaz görselleri 3.0.0'dan beri vektördür (simge.py: yumuşak köşeli lacivert kare, altın "A"); afişler
+pixel art kalır. Tema: açık kaynak, özgürlük, hukuk yapay zekâsı.
 """
 from __future__ import annotations
 
@@ -20,6 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pixelart import GOKKUSAGI, Tuval  # noqa: E402
+import simge as simge_cizimi  # noqa: E402
 
 BURASI = Path(__file__).resolve().parent
 
@@ -91,17 +93,10 @@ def a_isareti(t: Tuval, x: int, y: int, olcek: int) -> None:
     t.rect(x + olcek, y, x + 4 * olcek - 1, y + max(1, olcek // 3) - 1, "H")
 
 
-def simge_tuvali() -> Tuval:
-    """16x16 simge; Windows'ta .ico (simge), macOS'ta .icns (yayin/derle_macos.py) olarak yazılır."""
-    t = Tuval(16, 16, "N")
-    t.rect(0, 0, 15, 0, "n")
-    a_isareti(t, 3, 0, 2)
-    gokkusagi(t, 14, 15, 0, 15, 2)
-    return t
-
-
 def simge() -> Path:
-    return Path(simge_tuvali().ico_yaz(BURASI / "arthurlegal.ico"))
+    """Kurulum ve kısayol simgesi (16–256 px, her boyut ayrı çizilir); macOS'un .icns'i aynı çizimden
+    (yayin/derle_macos.py)."""
+    return simge_cizimi.ico_yaz(BURASI / "arthurlegal.ico")
 
 
 def afis(alt_yazi: str = "ACIK KAYNAK HUKUK YAPAY ZEKASI", ad: str = "banner.png") -> Path:
@@ -140,24 +135,15 @@ def rehber_afisi_en() -> Path:
 
 
 def sihirbaz() -> Path:
-    t = Tuval(41, 78, "N")
-    zemin(t, (("N", 0.0), ("n", 0.5), ("m", 0.82)))
-    a_isareti(t, 9, 6, 4)
-    t.yazi(3, 38, "ARTHUR", "G", 1)
-    t.yazi(3, 46, "LEGAL", "c", 1)
-    t.sprite(23, 54, TERAZI)
-    t.sprite(4, 56, KILIT)
-    t.sprite(16, 67, KOD)
-    t.sprite(28, 66, TOKMAK)
-    gokkusagi(t, 74, 77, 0, 40, 5)
-    return Path(t.png_yaz(BURASI / "sihirbaz.png", 4))
+    yol = BURASI / "sihirbaz.png"
+    yol.write_bytes(simge_cizimi.sihirbaz_tuvali().png())
+    return yol
 
 
 def sihirbaz_kucuk() -> Path:
-    t = Tuval(11, 11, "N")
-    a_isareti(t, 3, 1, 1)
-    gokkusagi(t, 9, 10, 0, 10, 2)
-    return Path(t.png_yaz(BURASI / "sihirbaz-kucuk.png", 5))
+    yol = BURASI / "sihirbaz-kucuk.png"
+    yol.write_bytes(simge_cizimi.simge_png(110))
+    return yol
 
 
 def main() -> int:
