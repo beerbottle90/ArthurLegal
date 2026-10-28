@@ -190,7 +190,7 @@ Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle 
 | `gleif_` | 🌍 Tüzel kişi kimliği + grup yapısı (LEI) |
 | `tkgm_` | 🇹🇷 Tapu-kadastro — TKGM Parsel Sorgu'dan canlı parsel (ada/parsel, koordinat, yer adı), parsel raporu, ölçekli kroki, dayanak köprüsü; dakikada en çok 30 istek, sohbet başına onay kartı |
 
-> ⚠️ **Önek zorunlu.** Alttaki sunucularda `get_act` **beş ayrı şey** demek. Önek,
+> ⚠️ **Önek zorunlu.** Alttaki sunucularda `get_act` **altı ayrı şey** demek. Önek,
 > İspanyol hukuku sorusunun Fin mevzuatıyla cevaplanmasını engelleyen tek şeydir.
 > Araçları önekli adlarıyla çağır: `tr_ictihat_ara`, `az_get_act`, `es_search_legislation`.
 

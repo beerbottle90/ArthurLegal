@@ -752,7 +752,7 @@ Profilin `## Escalation` bölümüne göre, en az şu hâllerde:
 
 - **AB (GDPR):** `eu_get_document_text(celex="32016R0679")` ile süre ve uzatma (Art. 12), haklar (Art. 15–22) ve sınırlamalar (Art. 23) metnini çek; ezberden yazma. KVKK ile birlikte uygulanıyorsa her hak ve süre için iki rejimi yan yana koy, farkı iç notta yaz.
 - **İngiltere:** `uk_search_legislation(query="Data Protection Act 2018")`, ardından `uk_get_section`.
-- **Almanya ek kuralları:** `de_gesetz_ara(query="Bundesdatenschutzgesetz")`.
+- **Almanya ek kuralları:** `de_gesetz_ara(sorgu="Bundesdatenschutzgesetz")`.
 - Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 - *Karşılaştırmalı not:* ABD eyalet gizlilik yasalarının kendi cevap süreleri ve uzatma mekanizmaları vardır; yalnız CourtListener bağlayıcısı kuruluysa `courtlistener-rehberi.md` üzerinden araştırılır, ezberden yazılmaz.
 
