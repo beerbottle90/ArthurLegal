@@ -107,7 +107,13 @@ class SahteUzak(http.server.BaseHTTPRequestHandler):
             sonuc = {"tools": [{"name": n, "description": n, "inputSchema": {"type": "object"}}
                                for n in ("status", "tr_ictihat_ara", "tkgm_tapu_kaydi_oku")]
                      + [{"name": "ornek_yazan", "description": "yazar", "inputSchema": {"type": "object"},
-                         "annotations": {"readOnlyHint": False}}]}
+                         "annotations": {"readOnlyHint": False}},
+                        # arthurlegal-mcp 1.5.0'dan beri uzak uç da masa aracı ve görünüm işaretleri yayımlar
+                        {"name": "al_masasi", "description": "uzak masa", "inputSchema": {"type": "object"},
+                         "_meta": {"ui": {"resourceUri": "ui://arthurlegal/masa.html"},
+                                   "ui/resourceUri": "ui://arthurlegal/masa.html"}},
+                        {"name": "ornek_kartli", "description": "başka görünüm", "inputSchema": {"type": "object"},
+                         "_meta": {"ui": {"resourceUri": "ui://baska/kart.html"}, "diger": 1}}]}
         else:
             if self.headers.get("Mcp-Session-Id") != "oturum-1":
                 self.send_response(404)
@@ -661,7 +667,11 @@ class SunucuTesti(unittest.TestCase):
         self.assertIn("ArthurLegal Masası", oku["text"])
         self.assertNotIn("/*AL:", oku["text"], "ortak parçalar gömülmüş olmalı")
         self.assertEqual(self.iste("resources/read", {"uri": "ui://yok"})["error"]["code"], -32002)
-        araclar = {t["name"]: t for t in self.iste("tools/list")["result"]["tools"]}
+        liste = self.iste("tools/list")["result"]["tools"]
+        self.assertEqual([t["name"] for t in liste].count("al_masasi"), 1, "uzak ucun masa aracı köprülenmez")
+        araclar = {t["name"]: t for t in liste}
+        self.assertNotEqual(araclar["al_masasi"]["description"], "uzak masa", "listelenen masa yerelinki")
+        self.assertEqual(araclar["ornek_kartli"]["_meta"], {"diger": 1}, "verilemeyen görünüm işareti silinir")
         self.assertEqual(araclar["al_masasi"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
         self.assertEqual(araclar["tr_ictihat_ara"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/ictihat-karti.html")
         self.assertNotIn("_meta", araclar["status"])
@@ -689,6 +699,31 @@ class SaltOkunurTesti(unittest.TestCase):
         self.assertEqual(cikti["d"], {"destructiveHint": True})
         self.assertNotIn("annotations", girdi[0], "girdi değiştirilmez")
         self.assertEqual(s.salt_okunur_isaretle(None), [])
+
+
+class KopruTesti(unittest.TestCase):
+    """Uzak araçların köprüsü: uzak masa aracı listelenmez, verilemeyen kart işareti silinir (klasikte hepsi)."""
+    UZAK = [{"name": "al_masasi", "_meta": {"ui": {"resourceUri": "ui://arthurlegal/masa.html"}}},
+            {"name": "tr_mevzuat_madde_getir", "_meta": {"ui": {"resourceUri": "ui://arthurlegal/madde-karti.html"},
+                                                         "ui/resourceUri": "ui://arthurlegal/madde-karti.html"}},
+            {"name": "tr_ictihat_ara", "_meta": {"ui/resourceUri": "ui://arthurlegal/ictihat-karti.html", "x": 1}},
+            {"name": "status"}]
+
+    def test_klasik_arayuzde_kart_isareti_kalmaz(self):
+        import arthurlegal_sunucu as s
+        cikti = {t["name"]: t for t in s.kopru_araclari(self.UZAK, gorunumler=set())}
+        self.assertEqual(set(cikti), {"tr_mevzuat_madde_getir", "tr_ictihat_ara", "status"})
+        self.assertNotIn("_meta", cikti["tr_mevzuat_madde_getir"])
+        self.assertEqual(cikti["tr_ictihat_ara"]["_meta"], {"x": 1})
+        self.assertIn("ui", self.UZAK[1]["_meta"], "girdi değiştirilmez")
+
+    def test_yeni_arayuzde_verilen_gorunum_kalir(self):
+        import arthurlegal_sunucu as s
+        cikti = {t["name"]: t for t in s.kopru_araclari(self.UZAK, gorunumler={"ui://arthurlegal/madde-karti.html"})}
+        self.assertNotIn("al_masasi", cikti)
+        self.assertEqual(cikti["tr_mevzuat_madde_getir"]["_meta"], self.UZAK[1]["_meta"])
+        self.assertEqual(cikti["tr_ictihat_ara"]["_meta"], {"x": 1})
+        self.assertEqual(s.kopru_araclari(None), [])
 
 
 @SADECE_WINDOWS
