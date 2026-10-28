@@ -136,10 +136,17 @@ def _commitler(derleme: dict) -> dict:
     return {ad: (v or {}).get("commit") or "" for ad, v in (derleme.get("kaynak") or {}).items()}
 
 
+# UYAP köprüsünün public kuruluma girebildiği tek dal.
+UYAP_DALI = "origin/main"
+# Yalnız Windows kurulumuna giren bileşenler: macOS paketi bunlarsız derlenir, karşılaştırmada sayılmaz.
+YALNIZ_WINDOWS = ("uyap",)
+
+
 def ayni_kaynaklar(a: dict, b: dict) -> bool:
     """İki derleme aynı depolardan, aynı commit'lerden mi? Kısa özetin uzunluğu deponun büyüklüğüne göre değişir
-    (GitHub Actions'taki sığ klonda daha kısa olabilir): biri ötekinin başıysa aynı commit sayılır."""
-    ca, cb = _commitler(a), _commitler(b)
+    (GitHub Actions'taki sığ klonda daha kısa olabilir): biri ötekinin başıysa aynı commit sayılır. Yalnız Windows'a
+    giren bileşenler (UYAP) karşılaştırılmaz."""
+    ca, cb = ({ad: c for ad, c in _commitler(d).items() if ad not in YALNIZ_WINDOWS} for d in (a, b))
     return bool(ca) and ca.keys() == cb.keys() and all(
         len(min(ca[ad], cb[ad], key=len)) >= 7 and (ca[ad].startswith(cb[ad]) or cb[ad].startswith(ca[ad])) for ad in ca)
 
@@ -147,13 +154,19 @@ def ayni_kaynaklar(a: dict, b: dict) -> bool:
 def yuklenecek_kurulumlar(cikti: Path, derleme: dict, public: bool) -> list:
     """Yüklenecek kurulum dosyaları (.exe/.zip; varsa macOS'un .pkg'si). Public depoya yalnız genel
     ArthurLegal-Kurulum.exe/.zip/.pkg ve yalnız bu derlemenin dosyaları gider: özeti derleme.json'dakiyle uyuşmayan
-    dosya (eski ya da UYAP'lı bir deneme derlemesinden kalan) ve UYAP bileşenli derleme reddedilir."""
+    dosya (eski ya da bir deneme derlemesinden kalan) reddedilir. UYAP köprüsü (3.0.0'dan beri genel kurulumda) yalnız
+    arthur-uyap'ın sabit dalından derlendiyse yüklenir: çalışılan bir daldan ya da yerel deneme derlemesinden gelen
+    köprü public'e çıkmaz."""
     kurulumlar = sorted(y.name for y in cikti.glob("ArthurLegal-Kurulum*") if y.suffix in (".exe", ".zip"))
     if not public:
         return kurulumlar
-    if (derleme.get("icerik") or {}).get("bilesenler", {}).get("uyap"):
-        sys.exit("Bu derlemede UYAP köprüsü var; public depoya yüklenmez. kaynaklar.json'da uyap: false ile yeniden "
-                 "derleyin.")
+    icerik = derleme.get("icerik") or {}
+    if icerik.get("bilesenler", {}).get("uyap"):
+        # derleme.json kaynakları üst düzeyde tutar (derle.py); içerikteki kopya eski biçim için.
+        kaynak = (derleme.get("kaynak") or icerik.get("kaynak") or {}).get("uyap") or {}
+        if kaynak.get("ref") != UYAP_DALI:
+            sys.exit(f"Bu derlemenin UYAP köprüsü {UYAP_DALI} dalından değil ({kaynak.get('ref') or 'bilinmiyor'}); public depoya "
+                     "yüklenmez. kaynaklar.json 'dallar' → uyap: origin/main ile yeniden derleyin.")
     ozetler = derleme.get("kurulum") or {}
     secilen = []
     for ad in ("ArthurLegal-Kurulum.exe", "ArthurLegal-Kurulum.zip"):

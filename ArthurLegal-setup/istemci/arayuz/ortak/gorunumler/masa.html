@@ -318,7 +318,7 @@ body { background: var(--zemin); }
     { id: "mask", ad: "Arthur Mask", simge: "maske", bolum: "Modüller",
       baslik: "Arthur Mask", alt: "Müvekkil belgesi Claude'a gitmeden önce bu bilgisayarda maskelenir." },
     { id: "uyap", ad: "UYAP Dashboard", simge: "bina", bolum: "Modüller",
-      baslik: "UYAP Dashboard", alt: "Dosyalarınızın salt okunur özeti kendi penceresinde açılır." },
+      baslik: "UYAP Dashboard", alt: "Tebligat ve duruşmalarınız, UYAP'ta açtığınız listelerden; salt okunur, gerçek değerler kendi penceresinde." },
     { id: "donna", ad: "Donna", donna: true, bolum: "Modüller",
       baslik: "Donna", alt: "İşlerinizi bağlı uygulamalarınızdan toplar, hatırlatır ve planlar." },
     { id: "mcp", ad: "MCP'ler", simge: "fis", bolum: "Bağlantılar",
@@ -832,13 +832,72 @@ body { background: var(--zemin); }
   };
 
   // ---- UYAP Dashboard ----
+  // Masa UYAP verisini göstermez: gerçek değerler yalnız Dashboard penceresinde açılır. Burada durum (saatler,
+  // sayılar) ve ne yapılacağı durur; durum köprünün yazdığı özetten gelir (moduller.uyap.ozet).
+  const UYAP_ADIMLARI = [
+    ["dis", "1. Dashboard'u açın", "Masaüstündeki simgeyle ya da aşağıdaki düğmeyle."],
+    ["bina", "2. Avukat Portal'a girin", "Dashboard tarayıcıyı kendisi açar; e-imza ya da e-Devlet ile siz girersiniz."],
+    ["kitap", "3. Listeleri açın, Tara'ya basın", "UYAP'ta Tebligatlar ve Duruşmalarım ekranını açın; Dashboard açtığınız listeyi maskeleyerek okur."],
+  ];
+  const UYAP_LISTELERI = { tebligatlar: "Tebligatlar", durusma_takvimi: "Duruşmalar", dosya_listesi: "Dosyalar" };
+
+  function uyapDurumu(kok, o) {
+    kok.replaceChildren();
+    const adimlar = AL.adimlar(kok);
+    if (!o || !o.son_islem) {
+      adimlar.ekle("").uyar("Henüz tarama yok. Dashboard'u açıp UYAP'a girin, sonra Tara'ya basın.");
+    } else {
+      const yazi = `Son işlem ${String(o.son_islem).slice(11, 16)}${o.kaynak ? " · " + o.kaynak : ""}`;
+      const a = adimlar.ekle("");
+      if (o.sonuc === "tamam") a.tamam(yazi + " · tamamlandı");
+      else (o.sonuc === "hazir_degil" ? a.uyar : a.hata)(`${yazi} · ${o.mesaj || "tamamlanamadı"} Dashboard'da Tekrar dene'ye basın.`);
+    }
+    const g = (o && o.gorulen) || {};
+    const gorulen = Object.keys(UYAP_LISTELERI).filter((t) => g[t]).map((t) => `${UYAP_LISTELERI[t]} ${g[t]}`);
+    if (gorulen.length) adimlar.ekle("").tamam("UYAP'ta görülen listeler: " + gorulen.join(" · "));
+    if (o && o.bugun_istek != null) {
+      const yazi = `Bugün UYAP'a giden yenileme isteği: ${o.bugun_istek}/${o.gunluk_sinir || 200}`;
+      const a = adimlar.ekle("");
+      if (o.durduruldu) a.hata(yazi + " · UYAP erişimi reddetti; bugün yenileme yapılmaz, listeleri UYAP'ta açmaya devam edebilirsiniz.");
+      else if (o.bekleme_kalan_sn) a.uyar(`${yazi} · UYAP yoğun: ${Math.ceil(o.bekleme_kalan_sn / 60)} dk yenileme yok.`);
+      else a.tamam(yazi);
+    }
+  }
+
   CIZIM.uyap = (ekran) => {
     const d = modulDurumu("uyap");
     if (d === "masaustu") return masaustuGerekli(ekran, "UYAP Dashboard");
-    if (d === "kurulu-degil") return kuruluDegil(ekran, "UYAP Dashboard");
+    if (d === "kurulu-degil") {
+      ekran.append(bilgi("UYAP Dashboard bu kurulumda açık değil. Windows'ta Hukuk Bürosu ya da Kurumsal paketiyle birlikte Arthur Mask seçilince kendiliğinden gelir: ArthurLegal kurulumunu yeniden çalıştırıp modül ekranında işaretleyin."));
+      return;
+    }
+    const satir = ogesi("div", "satir");
     const ac = dugme("UYAP Dashboard'u aç", { sinif: "birincil", simge: "dis" });
     ac.onclick = () => modulAc("uyap", ac);
-    ekran.append(ac, bilgi("UYAP Dashboard salt okunurdur; UYAP'a hiçbir şey yazmaz. Kendi penceresinde, bu bilgisayardaki tarayıcı oturumunuzla açılır."));
+    const yenile = dugme("Durumu yenile", { simge: "otomatik" });
+    satir.append(ac, yenile);
+    const izgara = ogesi("div", "izgara");
+    for (const [s, b, n] of UYAP_ADIMLARI) {
+      const k = ogesi("div", "eylem-karti");
+      const sim = ogesi("span", "simge");
+      sim.append(ikon(s));
+      k.append(sim, ogesi("b", null, b), ogesi("span", "ne", n));
+      izgara.append(k);
+    }
+    const durum = ogesi("div", "kesit");
+    uyapDurumu(durum, (DURUM.moduller.uyap || {}).ozet);
+    yenile.onclick = async () => {
+      yenile.disabled = true;
+      try {
+        const { veri } = await cagir(app, "al_masasi", { bolum: "uyap" });
+        if (veri && veri.moduller) DURUM.moduller = veri.moduller;
+        uyapDurumu(durum, (DURUM.moduller.uyap || {}).ozet);
+      } catch { /* durum eskisiyle kalır */ } finally {
+        yenile.disabled = false;
+      }
+    };
+    ekran.append(satir, izgara, durum,
+      bilgi("Salt okunur: UYAP'a hiçbir şey yazılmaz. Dashboard UYAP'a ek istek göndermez, sizin açtığınız listeyi okur; yenilemede iki istek arası en az 2 sn, günde en çok 200 istek, 10 dakika içinde aynı liste yeniden istenmez. Ad ve numaralar yalnız Dashboard penceresinde görünür, Claude etiketli hâlini görür."));
   };
 
   // ---- Donna ----

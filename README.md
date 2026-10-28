@@ -57,7 +57,7 @@ gelmez. En az bir paket gerekir:
 | **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.3-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
-| **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir) |
+| **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
 | **ArthurLegal Hafıza** | Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bilgisayarınızdaki bir klasörde tutar |
 
 <p align="center">
@@ -88,7 +88,8 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 > **ArthurLegal** simgesiyle her açılışta da Enter'a basın.
 
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
-**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**.
+**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**. Windows'ta
+Hukuk Bürosu ya da Kurumsal ile Arthur Mask'i seçtiyseniz **ArthurLegal - UYAP Dashboard** da gelir ([UYAP Dashboard](#uyap)).
 Yeni arayüzde **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar:
 Enter'a basın, masa tam ekran açılır (solda modüller, ortada iş adımları); klasikte Claude Desktop'u ve
 başlangıç rehberini açar. Claude Desktop'ta yeni bir sohbet açıp sorunuzu
@@ -241,7 +242,7 @@ short description under it, and nothing is ticked on a first installation. At le
 | **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.3-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
-| **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download) |
+| **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
 | **ArthurLegal Memory** | Keeps your preferences, corrections and last session across chats, in a folder on your computer |
 
 <p align="center">
@@ -273,7 +274,8 @@ background. On the last page click **Finish**: with the new interface Claude Des
 
 The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
-**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**. With the new interface the
+**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**; on Windows, Law Firm or Corporate
+together with Arthur Mask also adds **ArthurLegal - UYAP Dashboard** ([UYAP Dashboard](#uyap-en)). With the new interface the
 **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) already
 typed: press Enter and the desk opens full screen; with the classic one it opens Claude Desktop and the start guide. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
 If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
@@ -473,31 +475,81 @@ sources; do not put client names or confidential facts into queries. Setup detai
 [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly).
 Each package's `KURULUM.md` / `INSTALLATION.md` repeats these steps next to the connector step.
 
-## UYAP bridge — distributed separately
+<h2 id="uyap">UYAP Dashboard: salt okunur, kurulumla gelir</h2>
 
-For lawyers who follow their own case files in UYAP, ArthurLegal has a read-only bridge to the lawyer's **own**
-UYAP session. It is not part of the packages or of the public installer: it is distributed separately, and a firm
-reviews the UYAP Lawyer Portal terms of use in writing before switching it on. When it is installed together with
-Arthur Mask, ArthurLegal Setup adds one desktop icon for it: **"ArthurLegal - UYAP Dashboard"** (Setup 2.4.0).
+**Türkçe.** Avukatın kendi UYAP dosyalarını izlemesi için. Windows'ta kurulumda **Hukuk Bürosu** ya da **Kurumsal**
+paketiyle birlikte **Arthur Mask**'i işaretlerseniz kendiliğinden gelir; ayrı bir ayar, uç kaydı ya da kalibrasyon
+yoktur. Masaüstünde tek simge olur: **ArthurLegal - UYAP Dashboard**.
 
-- **Sign-in.** If UYAP is not connected, the Dashboard opens the UYAP Lawyer Portal (`avukat.uyap.gov.tr`) in a
-  separate browser profile; the lawyer signs in with e-signature or e-Devlet.
-- **Scan on click only.** UYAP is asked only when the lawyer presses Scan. There are no scheduled queries, and a rate
-  limit protects the portal.
-- **Deadlines, entered twice.** The lawyer calculates and types the last day first; the bridge's own calculation runs
-  only afterwards and warns only on a mismatch, which a second lawyer resolves on the same screen after a blind
-  calculation. Until then the earlier day stands. No date is ever given to the model.
-- **Calendar.** One click writes an all-day calendar entry with reminders three days and one day before, at 09:00;
-  the file is written only on the lawyer's computer.
-- **Privacy.** Real values, case numbers included, are masked before anything reaches Claude. The real list opens only
-  on the lawyer's screen and cannot be copied.
-- **Firm settings.** A firm file decides whether a red-line warning can be overridden with the lawyer's approval (the
-  default) or never, and whether criminal files give Claude calendar data only.
+1. **Simgeye çift tıklayın.** Dashboard, UYAP için ayrı profilli bir tarayıcıda Avukat Portal'ı
+   (`avukat.uyap.gov.tr`) açar.
+2. **Girişi siz yapın.** E-imza ya da e-Devlet ile her zamanki gibi girin. Şifre ve çerez ArthurLegal'e hiç girmez.
+3. **Listeleri açın, Tara'ya basın.** UYAP'ta **Tebligatlar** ve **Duruşmalarım** ekranlarını her zamanki gibi açın.
+   Dashboard açtığınız listeyi sekmenin içinden okur, maskeleyip bu bilgisayardaki şifreli arşive yazar ve Bugün
+   listesini gösterir.
 
-**Türkçe:** UYAP köprüsü ayrı dağıtılır; paketlerde ve genel kurulumda yoktur. Kurulduğunda masaüstünde tek simge
-olur: "ArthurLegal - UYAP Dashboard". Avukatın kendi oturumunda, yalnız onun tıkıyla ve salt okunur çalışır. Son günü
-önce avukat yazar; takvim kaydı avukatın bilgisayarında oluşur, modele gün gitmez. Büro, Avukat Portal Kullanım
-Sözleşmesini yazılı olarak değerlendirmeden köprüyü açmaz.
+- **UYAP'a ek istek yok.** Dashboard, UYAP'ın sizin ekranınıza zaten gönderdiği listeyi okur. UYAP'a hiçbir şey
+  yazmaz: dilekçe gönderme, imza ya da ödeme yoktur, zamanlanmış sorgu da yoktur.
+- **Ekranlar kendiliğinden tanınır.** Tebligat, duruşma, dosya, safahat ve evrak listeleri alan adlarından tanınır.
+  Emin olunamayan liste kullanılmaz. Tarihi okunamayan satır sessizce atlanmaz; liste bütünüyle reddedilir ve
+  nedeni yazılır.
+- **Hata olursa Tekrar dene.** Tarayıcı kapalıysa, giriş yapılmadıysa ya da liste henüz görülmediyse Dashboard ne
+  yapılacağını yazar ve **Tekrar dene** düğmesini gösterir. Yenileme olmazsa son görülen liste saatiyle gelir.
+- **Gerçek değerler yalnız ekranınızda.** Ad, esas numarası ve tebligat konusu Claude'a gitmeden önce Arthur Mask'te
+  etiketlenir (`{{KİŞİ-01}}`, `{{DOSYA_NO-01}}`). Gerçek liste yalnız Dashboard penceresinde açılır, kopyalanamaz ve
+  10 dakika kullanılmazsa gizlenir.
+- **Son gün çift kayıtla.** Son günü önce siz yazarsınız; sistemin hesabı sonra çalışır ve yalnız uyuşmazlıkta
+  uyarır, modele gün gitmez. Takvim kaydı bilgisayarınızda oluşur (üç gün ve bir gün önce, 09.00).
+- **Claude'da ve masada.** Aynı köprü Claude Desktop'ta `arthur-uyap` olarak görünür; **+** menüsündeki *Sabah
+  taraması* Bugün listesini Claude'a maskeli verir. [ArthurLegal Masası](#masa)'nın UYAP ekranı son işin saatini,
+  görülen listeleri ve bugünkü sayacı gösterir.
+
+**Sınırlar.** UYAP'ın sunucusuna bir insanın portaldaki yükünden fazlası gitmez. Ortam değişkenleriyle yalnız
+daraltılabilir, gevşetilemez:
+
+| Sınır | Değer |
+|---|---|
+| Okuma | UYAP'a ek istek yok: yalnız avukatın açtığı listeler okunur |
+| Yenileme (Tara) | yalnız `GET` ile gelmiş ve 10 dakikadan eski liste, aynı adresle bir kez |
+| İki istek arası | en az 2 sn, tek sıradan (dakikada en çok 30) |
+| Günlük | en çok 200 istek (Dashboard ve Claude birlikte) |
+| Tarama başına | en çok 40 istek ve 3 dakika |
+| UYAP yoğunluk bildirirse (429, 503) ya da üst üste 3 hata | 10 dakika istek yok |
+| UYAP erişimi reddederse (403) | o gün istek yok |
+| Kendiliğinden yeniden deneme | yok; Tekrar dene avukatın tıkıyla |
+| Tek istek | en çok 20 sn |
+| Tek cevap | en çok 2 MB (liste), 10 MB (evrak) |
+| Liste | en çok 500 satır; fazlası alınmaz ve söylenir |
+| Evrak indirme | günde en çok 30 |
+| Sekmedeki gözlem belleği | en çok 20 cevap ve 10 MB; 2 saatten eski cevap okunmaz |
+
+UYAP Dashboard yalnız Windows'ta çalışır; Mac kurulumunda yoktur.
+
+<h3 id="uyap-en">English</h3>
+
+For lawyers who follow their own case files in UYAP, the Turkish e-justice system. On Windows it comes with the
+installer when you tick **Law Firm** or **Corporate** together with **Arthur Mask**; there is nothing to set up, no
+endpoint recording and no calibration. One desktop icon: **ArthurLegal - UYAP Dashboard**.
+
+1. **Double-click the icon.** The Dashboard opens the UYAP Lawyer Portal (`avukat.uyap.gov.tr`) in a separate
+   browser profile.
+2. **Sign in yourself** with e-signature or e-Devlet. No password or cookie ever reaches ArthurLegal.
+3. **Open the lists and press Scan.** Open **Tebligatlar** (notifications) and **Duruşmalarım** (hearings) in UYAP as
+   usual. The Dashboard reads the list you opened from inside the tab, masks it, stores it in the encrypted local
+   archive and shows today's list.
+
+It sends **no extra requests** to UYAP: it reads what UYAP already sent to your screen, and it never writes to UYAP.
+Lists are recognised from their field names; a list it cannot recognise with confidence is not used, and a row with
+an unreadable date rejects the whole list with the reason. Every error says what to do next and offers **Retry**;
+if a refresh fails, the last list seen comes back with its time. Names, case numbers and notification subjects are
+masked before anything reaches Claude; the real list opens only in the Dashboard window. The lawyer enters a
+deadline first; the bridge's own calculation runs afterwards and warns only on a mismatch.
+
+Limits (they can only be tightened): a refresh only for lists that arrived by `GET` and are older than 10 minutes;
+at least 2 s between requests; at most 200 requests a day, 40 requests and 3 minutes per scan; 10 minutes without
+requests after a busy signal (429, 503) or three errors in a row; no requests for the rest of the day after a 403;
+no automatic retries; 20 s per request; 2 MB per list response and 10 MB per document; 500 rows per list; 30
+document downloads a day; at most 20 responses and 10 MB kept in the tab, none older than 2 hours. Windows only.
 
 ## Jurisdictional coverage
 
@@ -571,6 +623,28 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.0 — The UYAP Dashboard comes with the installer (2026-10-28)
+
+- **UYAP Dashboard in the public installer (Windows).** Tick Law Firm or Corporate together with Arthur Mask and the
+  Dashboard comes with them: one desktop icon, *ArthurLegal - UYAP Dashboard*, and the read-only `arthur-uyap`
+  bridge in Claude Desktop. Courthouse and Academician installations do not get it. See [UYAP Dashboard](#uyap).
+- **No calibration.** The bridge no longer needs a recording of UYAP's endpoints. It reads the lists the lawyer
+  opens in the UYAP Lawyer Portal from inside the tab and recognises them from their field names, so it sends no
+  extra requests to UYAP. Every error says what to do and offers Retry.
+- **Tighter, documented limits.** 200 requests a day (was 300), 40 requests and 3 minutes per scan, a 10-minute
+  window before the same list is refreshed again, 20 s per request, 2 MB per list and 10 MB per document, 500 rows
+  per list and 30 document downloads a day. The full table is in the UYAP Dashboard section.
+- **ArthurLegal Masası.** The UYAP screen shows the time and result of the last action, the lists seen in UYAP and
+  today's request count, with the three steps to follow and a refresh button. Real values stay in the Dashboard
+  window.
+- **Press Enter after setup.** The last setup page (Windows and Mac), the start guide and this page now say plainly
+  that the desk opens when you press Enter in Claude Desktop.
+
+**Türkçe:** UYAP Dashboard artık genel kurulumla geliyor (Windows; Hukuk Bürosu ya da Kurumsal ile Arthur Mask).
+Uç kaydı ve kalibrasyon yok: köprü avukatın UYAP'ta açtığı listeleri okur, UYAP'a ek istek göndermez; her hatada ne
+yapılacağını yazar ve Tekrar dene sunar. Sınırlar sıkılaştı ve [UYAP Dashboard](#uyap) bölümünde tablo olarak duruyor.
+Masanın UYAP ekranı son işin saatini, görülen listeleri ve sayacı gösterir.
 
 ## Setup 2.7.0 — ArthurLegal Masası: one panel inside Claude (2026-10-27)
 

@@ -42,9 +42,9 @@ def istenen_girdiler() -> dict:
     if ortak.bilesen_var("tapu"):
         girdiler["arthur-tapu"] = {"command": py, "args": ["-B", al, "tapu", "--ui-ile"], "env": dict(env)}
     mask = ortak.mask_python()
-    # UYAP yalnız bu kurulumda varsa ve Arthur Mask kuruluysa kaydedilir: maskelemeyi atlayamaz,
-    # arthur_mask olmadan veri döndürmez, o yüzden Mask'in Python'unda çalışır.
-    if mask and (ortak.SURUM_DIZINI / "uyap" / "server.py").exists():
+    # UYAP yalnız bu kurulumda açıksa kaydedilir (ortak.uyap_acik: avukat paketi, Arthur Mask, köprü):
+    # maskelemeyi atlayamaz, arthur_mask olmadan veri döndürmez, o yüzden Mask'in Python'unda çalışır.
+    if mask and ortak.uyap_acik() and (ortak.SURUM_DIZINI / "uyap" / "server.py").exists():
         girdiler["arthur-uyap"] = {"command": str(mask), "args": ["-B", al, "uyap"],
                                    "env": {**env, "HF_HUB_OFFLINE": "1", "PYTHONNOUSERSITE": "1"}}
     return girdiler

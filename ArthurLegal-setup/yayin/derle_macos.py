@@ -280,7 +280,7 @@ def main(argv=None) -> int:
     print(f"ArthurLegal macOS kurulumu {surum} derleniyor → ArthurLegal-Kurulum.pkg")
 
     # 1) Windows derlemesiyle ortak olanlar: sürüm klasörü (istemci, paketler, Tapu), başlatıcı, rehber, lisans, ayar.
-    icerik = derle.paket_hazirla(k, kok / "surumler" / surum)
+    icerik = derle.paket_hazirla(k, kok / "surumler" / surum, uyap=False)  # UYAP yalnız Windows'ta
     derle.kopyala(BURASI / "bin", kok / "bin", lambda g: g.endswith(".py"))
     derle.varlik_uret()
     simge_hazirla(kok / "bin" / "arthurlegal.icns")

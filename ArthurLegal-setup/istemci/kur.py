@@ -182,8 +182,9 @@ def _kisayol_listesi() -> list:
     if ortak.hafiza_acik():
         liste.append((menu / f"{ad} - {m['hafiza']} {s}.lnk", hafiza.kasa(), "", m["hafiza_aciklama"]))
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
-    # olmadan açılmaz: köprü ve Arthur Mask birlikte varsa eklenir. Ad kısa addan ("<kısa ad> - UYAP Dashboard").
-    if ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists():
+    # olmadan açılmaz: avukat paketi, Arthur Mask ve köprü birlikteyse eklenir (ortak.uyap_acik). Ad kısa
+    # addan ("<kısa ad> - UYAP Dashboard").
+    if ortak.uyap_acik():
         dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran', m["uyap"].format(s=s))
         liste += [(masa / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard),
                   (menu / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard)]

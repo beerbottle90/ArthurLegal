@@ -22,6 +22,9 @@
 #ifndef Paketler
   #define Paketler "hukuk-burosu,kurumsal,adliye,akademisyen"
 #endif
+#ifndef UyapVar
+  #define UyapVar "0"
+#endif
 #ifndef TapuVar
   #define TapuVar "1"
 #endif
@@ -169,6 +172,9 @@ en.ModulMaskKurulu=Arthur Mask (already installed)
 tr.ModulMaskKurulu=Arthur Mask (bu bilgisayarda kurulu)
 en.ModulMaskKuruluAciklama=Installed on this computer; its updates arrive by themselves.
 tr.ModulMaskKuruluAciklama=Bu bilgisayarda kurulu; güncellemeleri kendiliğinden gelir.
+; UYAP Dashboard (yalnız Windows; derle.py /DUyapVar): Mask açıklamasının sonuna eklenir. ortak.uyap_acik ile aynı koşul.
+en.ModulMaskUyap=With Law Firm or Corporate, the UYAP Dashboard comes too.
+tr.ModulMaskUyap=Hukuk Bürosu ya da Kurumsal ile UYAP Dashboard da gelir.
 en.ModulPaketGerekli=Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician.
 tr.ModulPaketGerekli=En az bir paket seçin: Hukuk Bürosu, Kurumsal Asistan, Courthouse ya da Akademisyen.
 en.ModulGecersiz=Invalid /MODULLER value: %1%n%nUse a comma-separated list with at least one package, for example /MODULLER=adliye,tapu,mask. Modules: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
@@ -457,10 +463,14 @@ begin
     Aciklama.Tag := I;
     Aciklama.OnClick := @AciklamaTiklandi;
     Aciklama.Caption := CustomMessage(ModulIletisi(I) + 'Aciklama');
+    if (I = 5) and ('{#UyapVar}' = '1') then
+      Aciklama.Caption := Aciklama.Caption + ' ' + CustomMessage('ModulMaskUyap');
     if (I = 5) and MaskKurulu then
     begin
       Kutu.Caption := CustomMessage('ModulMaskKurulu');
       Aciklama.Caption := CustomMessage('ModulMaskKuruluAciklama');
+      if '{#UyapVar}' = '1' then
+        Aciklama.Caption := Aciklama.Caption + ' ' + CustomMessage('ModulMaskUyap');
       Kutu.Checked := True;
       Kutu.Enabled := False;
     end;

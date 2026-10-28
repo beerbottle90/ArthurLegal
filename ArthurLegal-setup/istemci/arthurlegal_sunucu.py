@@ -491,7 +491,7 @@ def masa_modulleri():
         "tapu": {"durum": "hazir" if ortak.bilesen_var("tapu") else "claude"},
         "beyin": {"durum": hazir(ortak.hafiza_acik())},
         "mask": {"durum": hazir(ortak.mask_surumu())},
-        "uyap": {"durum": hazir(ortak.mask_python() and (ortak.SURUM_DIZINI / "uyap" / "ekran.py").exists())},
+        "uyap": ({"durum": "hazir", "ozet": ortak.uyap_ozeti()} if ortak.uyap_acik() else {"durum": "kurulu-degil"}),
         "donna": {"durum": "hazir"},
     }
 

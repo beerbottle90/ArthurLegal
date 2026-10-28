@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import threading
+import time
 import unittest
 import zipfile
 from pathlib import Path
@@ -288,10 +289,19 @@ class ClaudeAyariTesti(unittest.TestCase):
                              "UYAP bu kurulumda yokken kaydedilmemeli")
             (t / "kok" / "surumler" / "0.0.1" / "uyap").mkdir()
             (t / "kok" / "surumler" / "0.0.1" / "uyap" / "server.py").write_text("", encoding="utf-8")
+            (t / "kok" / "surumler" / "0.0.1" / "uyap" / "ekran.py").write_text("", encoding="utf-8")
             self.calistir("kaydet", t / "kok", appdata, yerel)
             uyap = json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]["arthur-uyap"]
             self.assertEqual(uyap["command"], str(mask / "python.exe"))
             self.assertEqual(uyap["args"][-1], "uyap")
+            # UYAP avukat paketiyle gelir (3.0.0): yalnız Courthouse ve Arthur Mask seçildiyse kaydedilmez.
+            (t / "kok" / "moduller.json").write_text(json.dumps({"moduller": ["adliye", "mask"]}), encoding="utf-8")
+            self.calistir("kaydet", t / "kok", appdata, yerel)
+            self.assertNotIn("arthur-uyap", json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"],
+                             "avukat paketi yokken UYAP kaydı silinmeli")
+            (t / "kok" / "moduller.json").write_text(json.dumps({"moduller": ["kurumsal", "mask"]}), encoding="utf-8")
+            self.calistir("kaydet", t / "kok", appdata, yerel)
+            self.assertIn("arthur-uyap", json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"])
             self.calistir("sil", t / "kok", appdata, yerel)
             veri = json.loads(yapi.read_text(encoding="utf-8"))
             self.assertEqual(set(veri["mcpServers"]), {"arthur-mask"})
@@ -317,6 +327,30 @@ class KisayolTesti(unittest.TestCase):
     BASLAT = ("import kisayol, webbrowser; acilan = []; webbrowser.open = lambda u: acilan.append('rehber'); "
               "kisayol.masa = lambda: acilan.append('masa') or 0; kisayol.claude_ac = lambda: 'açık'; "
               "kisayol.baslat(); kisayol.baslat(); print(json.dumps([acilan, kisayol.masa_adresi()]))")
+
+    def test_uyap_ozeti_yalniz_saat_ve_sayi(self):
+        """Masanın UYAP ekranı köprünün özetini okur: tanınan alanlar geçer, başka alan (ör. esas numarası) geçmez;
+        hız sayacı yalnız bugünse."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            veri = t / "uyap"
+            veri.mkdir()
+            (veri / "durum-ozeti.json").write_text(json.dumps({
+                "surum": "2.0.0", "son_islem": "2026-10-28T09:12", "sonuc": "hazir_degil", "mesaj": "x" * 500,
+                "gorulen": {"tebligatlar": "09:10"}, "esas_no": "2025/1234", "gunluk_sinir": 200}), encoding="utf-8")
+            (veri / "hiz.json").write_text(json.dumps({"gun": time.strftime("%Y-%m-%d"), "gunluk": 7,
+                                                       "bekle_bitis": time.time() + 120}), encoding="utf-8")
+            kod = (f"import os; os.environ['UYAP_VERI'] = r'{veri}'; import ortak; "
+                   "print(json.dumps(ortak.uyap_ozeti()))")
+            o = self.calistir(t, kod)
+            self.assertNotIn("esas_no", o)
+            self.assertEqual((o["sonuc"], o["gorulen"], o["bugun_istek"], o["gunluk_sinir"]),
+                             ("hazir_degil", {"tebligatlar": "09:10"}, 7, 200))
+            self.assertEqual(len(o["mesaj"]), 240)
+            self.assertGreater(o["bekleme_kalan_sn"], 0)
+            (veri / "hiz.json").write_text(json.dumps({"gun": "2000-01-01", "gunluk": 99}), encoding="utf-8")
+            self.assertNotIn("bugun_istek", self.calistir(t, kod), "dünkü sayaç gösterilmez")
 
     def test_calistir_masayi_acar_rehber_yalniz_ilk_acilista(self):
         with tempfile.TemporaryDirectory() as t:
@@ -870,8 +904,19 @@ class YayimlamaTesti(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.y.yuklenecek_kurulumlar(self.cikti, self.d, True)
         (self.cikti / "ArthurLegal-Kurulum.exe").write_bytes(b"ArthurLegal-Kurulum.exe")
+        # UYAP köprüsü (3.0.0) yalnız arthur-uyap'ın sabit dalından derlendiyse public'e gider.
+        for kaynak in ({}, {"uyap": {"ref": "HEAD"}}, {"uyap": {"ref": "origin/mahkeme-kanali"}}):
+            with self.subTest(kaynak=kaynak), self.assertRaises(SystemExit):
+                self.y.yuklenecek_kurulumlar(
+                    self.cikti, {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}, "kaynak": kaynak}}, True)
+        sabit = {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}, "kaynak": {"uyap": {"ref": "origin/main"}}}}
+        self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, sabit, True), list(self.KURULUMLAR))
+        # derle.py'nin yazdığı biçim: kaynaklar derleme.json'un üst düzeyinde.
+        ust = {**self.d, "icerik": {"bilesenler": {"uyap": "2.0.0"}},
+               "kaynak": {"ArthurLegal": {"commit": "abc1234", "ref": "HEAD"}, "uyap": {"ref": "origin/main"}}}
+        self.assertEqual(self.y.yuklenecek_kurulumlar(self.cikti, ust, True), list(self.KURULUMLAR))
         with self.assertRaises(SystemExit):
-            self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "icerik": {"bilesenler": {"uyap": "1.18.3"}}}, True)
+            self.y.yuklenecek_kurulumlar(self.cikti, {**ust, "kaynak": {"uyap": {"ref": "surum/2.0.0"}}}, True)
         with self.assertRaises(SystemExit):
             self.y.yuklenecek_kurulumlar(self.cikti, {**self.d, "kurulum": {}}, True)
 
@@ -889,6 +934,10 @@ class YayimlamaTesti(unittest.TestCase):
         uzun = {**mac, "kaynak": {**kaynak, "ArthurLegal": {"commit": "abc1234f"}}}
         (self.cikti / "derleme-macos.json").write_text(json.dumps(uzun), encoding="utf-8")
         self.assertIn(pkg.name, self.y.yuklenecek_kurulumlar(self.cikti, self.d, True), "kısa özetin uzunluğu değişebilir")
+        # UYAP yalnız Windows kurulumunda: macOS paketinin kaynaklarında olmaması aynı derleme olmasını bozmaz.
+        self.d["kaynak"] = {**kaynak, "uyap": {"commit": "aaa1111"}}
+        self.assertIn(pkg.name, self.y.yuklenecek_kurulumlar(self.cikti, self.d, True), "UYAP karşılaştırılmaz")
+        self.d["kaynak"] = kaynak
         for bozuk in ({"surum": "9.9.8"}, {"kaynak": {**kaynak, "tapu": {"commit": "0000000"}}},
                       {"kurulum": {pkg.name: "0" * 64}}):
             (self.cikti / "derleme-macos.json").write_text(json.dumps({**mac, **bozuk}), encoding="utf-8")

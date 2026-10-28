@@ -1,5 +1,5 @@
 {
-  "surum": "2.7.0",
+  "surum": "3.0.0",
   "depolar": {
     "ArthurLegal": "..",
     "tapu": "../../arthurlegal-mcp",
@@ -11,7 +11,7 @@
   },
   "bilesenler": {
     "tapu": true,
-    "uyap": false
+    "uyap": true
   },
   "paketler": {
     "hukuk-burosu": "ArthurLegal-Law-Firm-v*-Public-Release",
@@ -49,6 +49,7 @@
   "kasa_anahtari": "091e0aa64e95062998c0458667fdba09ace4ee4d4579cef8acafe35d720445a8",
   "dallar": {
     "tapu": "origin/master",
-    "arthur-mask": "origin/main"
+    "arthur-mask": "origin/main",
+    "uyap": "origin/main"
   }
 }
