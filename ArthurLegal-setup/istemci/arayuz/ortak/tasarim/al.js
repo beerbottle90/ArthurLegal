@@ -33,6 +33,7 @@ const AL = (() => {
     ay: [["path", { d: "M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z" }]],
     otomatik: [["circle", { cx: 8, cy: 8, r: 5.5 }], ["path", { d: "M8 2.5a5.5 5.5 0 0 0 0 11z", fill: "currentColor" }]],
     ok: [["path", { d: "M6 3.5 10.5 8 6 12.5" }]],
+    liste: [["path", { d: "M6 4h7.5M6 8h7.5M6 12h7.5M2.5 4h.1M2.5 8h.1M2.5 12h.1" }]],
     bag: [["path", { d: "M6.5 9.5l3-3M5.5 7 4 8.5a2.5 2.5 0 0 0 3.5 3.5L9 10.5M10.5 9 12 7.5A2.5 2.5 0 0 0 8.5 4L7 5.5" }]],
   };
 
@@ -67,11 +68,19 @@ const AL = (() => {
   }
 
   // Kanun adları kaynakta BÜYÜK HARFLE gelir; başlıkta okunaklı yazılır, atıf alanı birebir kalır.
+  // Parantez ya da tırnakla başlayan kelime de büyük harfle başlar; bilinen kısaltmalar büyük kalır:
+  // "(ELEKTRİK PİYASASI …)" -> "(Elektrik Piyasası …)", "(LPG)" -> "(LPG)".
   const KUCUK = new Set(["ve", "ile", "veya", "ya", "da", "de"]);
+  const KISALTMALAR = new Set(["LPG", "KHK", "YEK", "AB", "TBMM", "KDV", "ÖTV", "SGK", "BDDK", "SPK", "EPDK", "KVKK", "BTK",
+    "TCK", "TBK", "TMK", "TTK", "HMK", "CMK", "İİK", "BM", "NATO", "OECD"]);
   function baslikDuzeni(s) {
-    return String(s || "").toLocaleLowerCase("tr").split(/\s+/).filter(Boolean)
-      .map((w, i) => (i > 0 && KUCUK.has(w)) ? w : w.charAt(0).toLocaleUpperCase("tr") + w.slice(1))
-      .join(" ");
+    return String(s || "").split(/\s+/).filter(Boolean).map((ham, i) => {
+      const [, on, govde, son] = /^([("'“]*)(.*?)([)"'”.,;:]*)$/u.exec(ham);
+      if (KISALTMALAR.has(govde.toLocaleUpperCase("tr"))) return on + govde.toLocaleUpperCase("tr") + son;
+      const w = govde.toLocaleLowerCase("tr");
+      if (i > 0 && !on && KUCUK.has(w)) return w + son;
+      return on + w.charAt(0).toLocaleUpperCase("tr") + w.slice(1) + son;
+    }).join(" ");
   }
 
   // Kenar başlığının ekrandaki hali. Kaynak verisine dokunmaz, yalnız gösterir:

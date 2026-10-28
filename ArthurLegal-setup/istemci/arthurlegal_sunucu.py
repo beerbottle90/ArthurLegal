@@ -418,7 +418,7 @@ def salt_okunur_isaretle(araclar):
 
 # Sonucunu kartla gösteren uzak araçlar ve masanın doğrudan çağırdıkları.
 KARTLI_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara")
-MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara", "tr_ictihat_getir", "status")
+MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_mevzuat_ara", "tr_mevzuat_icindekiler", "tr_ictihat_ara", "tr_ictihat_getir", "status")
 MODUL_KOMUTU = {"tapu": "tapu", "uyap": "uyap-ekran", "mask": "mask"}
 
 

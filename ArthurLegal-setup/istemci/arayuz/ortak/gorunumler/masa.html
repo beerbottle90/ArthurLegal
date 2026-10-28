@@ -250,6 +250,23 @@ body { background: var(--zemin); }
   .icerik-ust h1 { font-size: 20px; }
   #ekran { padding: 6px 16px 150px; }
 }
+/* Mevzuat: kapsam notu, madde ağacı, seçili mevzuat, aday listesi */
+.kapsam-notu { margin: 0 0 12px; font-size: 13.5px; line-height: 1.45; color: var(--ikincil); }
+/* .alan satırda yana esner (flex 1 1 180px); alt alta dizilen madde ağacında yükseklik olmasın */
+.karar-metni > .alan { flex: none; }
+.madde-listesi, .aday-listesi { display: flex; flex-direction: column; max-height: 320px; overflow: auto;
+  border: 1px solid var(--cizgi); border-radius: 12px; background: var(--yuzey); }
+.aday-listesi { max-height: none; margin-top: 4px; }
+.madde-satiri { display: flex; align-items: baseline; gap: 12px; width: 100%; min-height: 0; padding: 9px 12px;
+  border: 0; border-bottom: 1px solid var(--cizgi); border-radius: 0; background: transparent; color: var(--metin);
+  font: inherit; font-size: 14px; text-align: left; cursor: pointer; box-shadow: none; }
+.madde-satiri:last-child { border-bottom: 0; }
+.madde-satiri:hover { background: var(--dolgu); }
+.madde-satiri .no { flex: none; min-width: 64px; font-weight: 650; color: var(--altin-metin); font-variant-numeric: tabular-nums; }
+.madde-satiri .ad { flex: 1; min-width: 0; }
+.secili-mevzuat { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 6px 6px 12px;
+  border: 1px solid var(--cizgi); border-radius: 12px; background: var(--yuzey); }
+.secili-mevzuat .ad { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -308,7 +325,7 @@ body { background: var(--zemin); }
     { id: "sohbet", ad: "Sohbet", simge: "sohbet", bolum: "Çalışma",
       baslik: "Merhaba", alt: "Sorunuzu aşağıdaki kutuya yazın ya da bir işle başlayın. Claude cevaplar; ArthurLegal kaynağı getirir, doğrular ve adımları gösterir." },
     { id: "mevzuat", ad: "Mevzuat ve atıf", simge: "kitap", bolum: "Çalışma",
-      baslik: "Mevzuat ve atıf", alt: "Maddeyi resmî metinden getirin ya da taslağınızdaki atıfları tek seferde teyit edin." },
+      baslik: "Mevzuat ve atıf", alt: "Türk mevzuatının tamamında arayın, maddeyi resmî metinden getirin ya da taslağınızdaki atıfları teyit edin." },
     { id: "ictihat", ad: "İçtihat", simge: "terazi", bolum: "Çalışma",
       baslik: "İçtihat", alt: "Yargıtay ve Danıştay kararlarını künyeleriyle bulun, metni kartın içinde açın." },
     { id: "tapu", ad: "ArthurTapu", simge: "harita", bolum: "Modüller",
@@ -498,7 +515,7 @@ body { background: var(--zemin); }
   CIZIM.sohbet = (ekran) => {
     const izgara = ogesi("div", "izgara");
     const kartlar = [
-      ["kitap", "Madde getir ve doğrula", "Resmî metin, başlık ve birebir atıf.", () => git("mevzuat")],
+      ["kitap", "Mevzuatta ara, madde getir", "Kanundan tebliğe bütün mevzuat; resmî metin ve birebir atıf.", () => git("mevzuat")],
       ["onay", "Taslaktaki atıfları teyit et", "Metni yapıştırın, her atıf tek tek kontrol edilir.", () => { git("mevzuat"); mevzuatSekme("teyit"); }],
       ["terazi", "Konuyla ilgili kararları bul", "Yargıtay ve Danıştay, künyeleriyle.", () => git("ictihat")],
       ["harita", "Parsel sorgula", "Ada/parsel ya da yer adıyla.", () => git("tapu")],
@@ -542,75 +559,314 @@ body { background: var(--zemin); }
   };
 
   // ---- Mevzuat ve atıf ----
-  const { KANUNLAR, kanunCoz, kanunAdi, kisaAd, atiflariBul } = ATIF;
+  // Kapsam Türk mevzuatının tamamıdır (tr_mevzuat_ara: kanundan tebliğe, mülga dâhil). atif.js'teki kısa ad listesi
+  // yalnız "TBK -> 6098" çözümü içindir; ekranda seçenek listesi olarak gösterilmez, yoksa kapsam dar sanılır.
+  const { kanunCoz, kanunAdi, kisaAd, atiflariBul } = ATIF;
 
-  let mevzuatAktif = "getir";
+  const TURLER = [
+    ["", "Tümü"], ["KANUN", "Kanun"], ["KHK", "KHK"], ["CB_KARARNAME", "CB kararnamesi"], ["CB_KARAR", "CB kararı"],
+    ["CB_YONETMELIK", "CB yönetmeliği"], ["CB_GENELGE", "CB genelgesi"], ["TUZUK", "Tüzük"],
+    ["YONETMELIK,KKY,UY", "Yönetmelik"], ["TEBLIGLER", "Tebliğ"], ["MULGA", "Mülga"],
+  ];
+  const TUR_ADI = {
+    KANUN: "Kanun", KHK: "KHK", TUZUK: "Tüzük", CB_KARARNAME: "CB kararnamesi", CB_KARAR: "CB kararı",
+    CB_YONETMELIK: "CB yönetmeliği", CB_GENELGE: "CB genelgesi", YONETMELIK: "Yönetmelik", KKY: "Kurum yönetmeliği",
+    UY: "Üniversite yönetmeliği", TEBLIGLER: "Tebliğ", MULGA: "Mülga",
+  };
+  const MEVZUAT_KAYNAK = "https://www.mevzuat.gov.tr/";
+
+  let mevzuatAktif = "ara";
+  let mevzuatSecili = null;   // { mevzuat_id, ad, number, type }: aramadan "Madde getir"e taşınan mevzuat
   function mevzuatSekme(s) {
     mevzuatAktif = s;
     if (aktif === "mevzuat") { const e = $("ekran"); e.replaceChildren(); CIZIM.mevzuat(e); }
   }
 
+  const mevzuatAdi = (m) => AL.baslikDuzeni(m.title || "");
+  const mevzuatKunyesi = (m) => [m.number && `No. ${m.number}`, m.rg_number && `RG ${[AL.tarih(m.rg_date), m.rg_number].filter(Boolean).join("/")}`]
+    .filter(Boolean).join(" · ");
+
   CIZIM.mevzuat = (ekran) => {
+    ekran.append(ogesi("p", "kapsam-notu", "Kapsam: kanun, KHK, Cumhurbaşkanlığı kararname, karar, yönetmelik ve genelgeleri, " +
+      "tüzük, yönetmelik, tebliğ ve mülga mevzuat. Kaynak mevzuat.gov.tr, canlı."));
     const seg = ogesi("div", "segment");
-    seg.style.maxWidth = "360px";
-    for (const [id, yazi] of [["getir", "Madde getir"], ["teyit", "Atıf teyidi"]]) {
+    seg.style.maxWidth = "520px";
+    for (const [id, yazi] of [["ara", "Mevzuatta ara"], ["getir", "Madde getir"], ["teyit", "Atıf teyidi"]]) {
       const b = dugme(yazi);
       b.setAttribute("aria-pressed", String(mevzuatAktif === id));
       b.onclick = () => mevzuatSekme(id);
       seg.append(b);
     }
     ekran.append(seg);
-    (mevzuatAktif === "teyit" ? atifTeyidi : maddeGetir)(ekran);
+    ({ ara: mevzuatAra, getir: maddeGetir, teyit: atifTeyidi }[mevzuatAktif] || mevzuatAra)(ekran);
   };
+
+  function mevzuatAra(ekran) {
+    const form = ogesi("form", "form");
+    const sorgu = girdi("text", "elektrik piyasası · 6446 · kira bedeli");
+    const tur = document.createElement("select");
+    for (const [deger, yazi] of TURLER) tur.append(new Option(yazi, deger));
+    const yer = ogesi("div", "segment");
+    let nerede = "title";
+    for (const [id, yazi] of [["title", "Başlıkta"], ["fulltext", "Metinde"]]) {
+      const b = dugme(yazi);
+      b.setAttribute("aria-pressed", String(id === nerede));
+      b.onclick = () => { nerede = id; yer.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); };
+      yer.append(b);
+    }
+    const ara = dugme("Ara", { sinif: "birincil", simge: "arama" });
+    ara.type = "submit";
+    const s1 = ogesi("div", "satir");
+    s1.append(alan("Mevzuat adı, numarası ya da metinde geçen ifade", sorgu));
+    const s2 = ogesi("div", "satir");
+    const yerAlan = ogesi("div", "alan");
+    yerAlan.append(ogesi("label", null, "Nerede"), yer);
+    s2.append(alan("Tür", tur, "alan dar"), yerAlan, ara);
+    form.append(s1, s2);
+    const sonuc = ogesi("div", "kesit");
+    let sayfa = 1;
+
+    async function getir(yeniArama) {
+      const q = sorgu.value.trim();
+      if (yeniArama) { sayfa = 1; sonuc.replaceChildren(); }
+      const adimlar = AL.adimlar(sonuc);
+      if (!q && !tur.value) { adimlar.ekle("").hata("Aranacak adı, numarayı ya da ifadeyi yazın; ya da bir tür seçin."); return; }
+      const girdiler = { page: sayfa, page_size: 10, search_in: nerede };
+      if (/^\d{1,6}$/.test(q)) girdiler.number = q; else if (q) girdiler.query = q;
+      if (tur.value) girdiler.types = tur.value.split(",");
+      const turYazi = tur.value ? tur.options[tur.selectedIndex].text.toLocaleLowerCase("tr") : "bütün mevzuat";
+      const a = adimlar.ekle(q ? `${turYazi[0].toLocaleUpperCase("tr") + turYazi.slice(1)}: “${q}” ${nerede === "fulltext" ? "metinde" : "başlıkta"} aranıyor…`
+        : `${turYazi} listeleniyor…`);
+      ara.disabled = true;
+      try {
+        const { veri, hata } = await cagir(app, "tr_mevzuat_ara", girdiler);
+        if (!veri) throw new Error(hata);
+        // Kaynak tarihe göre sıralar: "elektrik piyasası" aranınca önce onu değiştiren torba kanunlar gelir. Başlığı
+        // aranan ifadeyle başlayanlar (kısası önce) öne alınır; ötekilerin sırası değişmez.
+        const bas = (m) => !!q && AL.baslikDuzeni(m.title || "").toLocaleLowerCase("tr").startsWith(q.toLocaleLowerCase("tr"));
+        const kisaOnce = (x, y) => (bas(y) - bas(x)) || (bas(x) && bas(y) ? (x.title || "").length - (y.title || "").length : 0);
+        // Tür seçilmemişse ilk sayfayı yeni kararlar ve tebliğler doldurur; adı aranan ifadeyle başlayan kanun
+        // (ör. "Elektrik Piyasası Kanunu") ayrı bir kanun aramasıyla başa alınır.
+        let one = [];
+        if (sayfa === 1 && !tur.value && girdiler.query) {
+          try {
+            const k = await cagir(app, "tr_mevzuat_ara", { query: q, types: ["KANUN"], page_size: 5, search_in: nerede });
+            one = ((k.veri && k.veri.results) || []).filter(bas).sort(kisaOnce);
+          } catch { /* öne alma yalnız kolaylıktır; asıl sonuç aşağıda */ }
+        }
+        const kimlik = new Set(one.map((m) => String(m.mevzuat_id)));
+        const liste = [...one, ...[...(veri.results || [])].sort(kisaOnce).filter((m) => !kimlik.has(String(m.mevzuat_id)))];
+        const toplam = veri.total ?? liste.length;
+        (liste.length ? a.tamam : a.uyar)(liste.length
+          ? `${toplam} mevzuat bulundu` + (one.length ? `; adı “${q}” ile başlayan kanun başta.` : `; ${(sayfa - 1) * 10 + 1}–${(sayfa - 1) * 10 + liste.length} gösteriliyor.`)
+          : "Bu aramayla mevzuat bulunamadı. Daha kısa bir ad, numara ya da “Metinde” deneyin.");
+        const kap = ogesi("div", "sonuc-kabi");
+        for (const m of liste) kap.append(mevzuatSatiri(m));
+        if (liste.length) {
+          const devam = toplam > sayfa * 10;
+          const alt = ogesi("div", "alt-satir");
+          const ey = ogesi("div", "eylemler");
+          if (devam) {
+            const sonraki = dugme(`Sonraki ${Math.min(10, toplam - sayfa * 10)}`, { simge: "ok" });
+            sonraki.onclick = () => { sonraki.disabled = true; sayfa += 1; getir(false); };
+            ey.append(sonraki);
+          }
+          alt.append(ogesi("span", "zaman", "mevzuat.gov.tr · Bedesten"), ey);
+          kap.append(alt);
+        }
+        sonuc.append(kap);
+        if (yeniArama) {
+          gecmiseEkle(`Mevzuat: “${q || turYazi}”`, [["tamam", turYazi], [liste.length ? "tamam" : "uyar", `${toplam} mevzuat`]]);
+          bildir(`mevzuat araması "${q}" (${turYazi}): ${toplam} sonuç. İlkler: ${liste.slice(0, 5).map((m) => m.citation).join(" | ")}`);
+        }
+      } catch {
+        a.hata("Mevzuat aranamadı.");
+        sonuc.append(ogesi("p", "uyari", AL.UYARI + MEVZUAT_KAYNAK));
+      } finally {
+        ara.disabled = false;
+      }
+    }
+    form.onsubmit = (e) => { e.preventDefault(); getir(true); };
+    ekran.append(form, sonuc);
+  }
+
+  // Arama sonucunun satırı: tür, ad, künye; madde getir, içindekiler, atıf, resmî metin.
+  function mevzuatSatiri(m) {
+    const g = ogesi("section", "grup karar");
+    const bas = ogesi("div", "grup-bas");
+    bas.append(ogesi("span", "hap-altin", TUR_ADI[m.type] || m.type || "Mevzuat"));
+    bas.append(ogesi("span", "baslik", mevzuatAdi(m)));
+    g.append(bas, ogesi("div", "kunye", mevzuatKunyesi(m)));
+    const eylem = ogesi("div", "eylemler sol");
+    const madde = dugme("Madde getir", { simge: "kitap" });
+    const icind = dugme("İçindekiler", { simge: "liste" });
+    const kopya = dugme("Atfı kopyala", { simge: "kopya" });
+    const kaynak = dugme("Resmî metin", { simge: "dis" });
+    const yer = ogesi("div", "karar-metni");
+    madde.onclick = () => {
+      mevzuatSecili = { mevzuat_id: String(m.mevzuat_id), ad: mevzuatAdi(m), number: m.number, type: m.type };
+      mevzuatSekme("getir");
+    };
+    let acik = false;
+    icind.onclick = async () => {
+      if (acik) { yer.replaceChildren(); acik = false; icind.querySelector("span").textContent = "İçindekiler"; return; }
+      acik = true;
+      icind.querySelector("span").textContent = "İçindekileri kapat";
+      icindekiler(yer, m);
+    };
+    kopya.onclick = () => kopyala(m.citation || mevzuatAdi(m), kopya, null, ortam.duyuru);
+    kaynak.onclick = () => baglantiAc(app, m.source_url || MEVZUAT_KAYNAK, ortam.duyuru);
+    eylem.append(madde, icind, kopya, kaynak);
+    g.append(eylem, yer);
+    return g;
+  }
+
+  // Madde ağacı: başlıklar listelenir, süzülür; bir maddeye basınca metni kartla gelir.
+  async function icindekiler(yer, m) {
+    const adim = AL.adimlar(yer).ekle("Madde başlıkları resmî kaynaktan getiriliyor…");
+    try {
+      const { veri, hata } = await cagir(app, "tr_mevzuat_icindekiler", { mevzuat_id: String(m.mevzuat_id), compact: true, limit: 2000 });
+      if (!veri) throw new Error(hata);
+      const satirlar = (veri.rows || []).map((r) => String(r).split(" | ")).filter((p) => p.length >= 2)
+        .map(([no, baslik]) => ({ no: no.replace(/\s*\[\d+\]$/, ""), baslik: AL.baslikGoster(baslik) }));
+      if (!satirlar.length) { adim.uyar("Bu mevzuatın madde ağacı kaynakta yok; maddeyi numarasıyla getirin."); return; }
+      adim.tamam(`${satirlar.length} madde başlığı.` + (veri.has_more ? " Liste kısaltıldı." : ""));
+      const suz = girdi("search", "Başlıkta süz: kira, süre, fesih …");
+      const liste = ogesi("div", "madde-listesi");
+      const kart = ogesi("div", "sonuc-kabi");
+      kart.hidden = true;
+      const ciz = () => {
+        const k = suz.value.trim().toLocaleLowerCase("tr");
+        liste.replaceChildren();
+        for (const s of satirlar.filter((x) => !k || x.baslik.toLocaleLowerCase("tr").includes(k))) {
+          const b = ogesi("button", "madde-satiri");
+          b.type = "button";
+          b.append(ogesi("span", "no", `m. ${s.no}`), ogesi("span", "ad", s.baslik || "başlık kaynakta yok"));
+          b.onclick = () => maddeyiGoster(kart, { mevzuat_id: String(m.mevzuat_id), ad: mevzuatAdi(m) }, [s.no]);
+          liste.append(b);
+        }
+      };
+      suz.oninput = ciz;
+      ciz();
+      yer.append(alan("Başlıkta süz", suz), liste, kart);
+    } catch {
+      adim.hata("Madde başlıkları getirilemedi.");
+      yer.append(ogesi("p", "uyari", AL.UYARI + (m.source_url || MEVZUAT_KAYNAK)));
+    }
+  }
+
+  // Maddeyi resmî metinden çekip kartla gösterir. hedef: { mevzuat_id, ad } ya da { number, ad }.
+  async function maddeyiGoster(kap, hedef, maddeler, adimlar = null) {
+    kap.hidden = false;
+    if (!adimlar) { kap.replaceChildren(); adimlar = AL.adimlar(kap); }
+    const a = adimlar.ekle(`${hedef.ad} m. ${maddeler.join(", ")} resmî kaynaktan çekiliyor…`);
+    const girdiler = { madde_no: maddeler.length === 1 ? maddeler[0] : maddeler };
+    if (hedef.mevzuat_id) girdiler.mevzuat_id = hedef.mevzuat_id; else girdiler.number = hedef.number;
+    try {
+      const { veri, hata } = await cagir(app, "tr_mevzuat_madde_getir", girdiler);
+      if (!veri) throw new Error(hata);
+      const tamam = (veri.items || []).filter((i) => i && i.ok).length;
+      const toplam = (veri.items || []).length;
+      // Kaynak hiç madde döndürmediyse doğrulanan bir şey yoktur: 0/0 başarı sayılmaz.
+      const hepsi = toplam > 0 && tamam === toplam;
+      const ozet = toplam ? `${toplam} maddeden ${sayiEki(tamam)} doğrulandı` : "Kaynak madde döndürmedi; doğrulanmadı";
+      (hepsi ? a.tamam : a.uyar)(ozet + ".");
+      kap.append(KART.madde(veri, ortam));
+      gecmiseEkle(`${hedef.ad} m. ${maddeler.join(", ")}`, [["tamam", hedef.ad], [hepsi ? "tamam" : "uyar", ozet]]);
+      bildir(`${hedef.ad} m. ${maddeler.join(", ")} getirildi; ${tamam}/${toplam} doğrulandı. Atıflar: ${(veri.items || []).filter((i) => i.ok).map((i) => i.citation).join(" | ")}`);
+      return true;
+    } catch {
+      a.hata("Madde getirilemedi.");
+      kap.append(ogesi("p", "uyari", AL.UYARI + MEVZUAT_KAYNAK));
+      return false;
+    }
+  }
 
   function maddeGetir(ekran) {
     const form = ogesi("form", "form");
-    const liste = ogesi("datalist");
-    liste.id = "kanunlar";
-    for (const [no, ad, kisa] of KANUNLAR) {
-      const o = document.createElement("option");
-      o.value = kisa ? `${kisa} · ${no}` : no;
-      o.label = ad;
-      liste.append(o);
-    }
-    const kanun = girdi("text", "TBK, 6098 ya da kanun adı");
-    kanun.setAttribute("list", "kanunlar");
+    const kanun = girdi("text", "Kanun adı, numarası ya da kısaltması: TBK, 6446, Elektrik Piyasası …");
     const madde = girdi("text", "344  ·  344, 345  ·  geçici 1");
     const satir = ogesi("div", "satir");
     const getir = dugme("Getir", { sinif: "birincil", simge: "arama" });
     getir.type = "submit";
-    satir.append(alan("Kanun", kanun), alan("Madde", madde), getir);
-    form.append(liste, satir);
+    // Aramadan gelen mevzuat (KHK, yönetmelik, tebliğ dâhil) seçili durur; değiştirince kanun alanına dönülür.
+    const seciliAlan = ogesi("div", "alan");
+    const kanunAlani = alan("Mevzuat", kanun);
+    const seciliCiz = () => {
+      seciliAlan.replaceChildren();
+      seciliAlan.hidden = !mevzuatSecili;
+      kanunAlani.hidden = !!mevzuatSecili;
+      if (!mevzuatSecili) return;
+      const hap = ogesi("div", "secili-mevzuat");
+      hap.append(ogesi("span", "hap-altin", TUR_ADI[mevzuatSecili.type] || "Mevzuat"), ogesi("span", "ad", mevzuatSecili.ad));
+      const degis = dugme("Değiştir", { sinif: "kucuk" });
+      degis.onclick = () => { mevzuatSecili = null; seciliCiz(); kanun.focus(); };
+      hap.append(degis);
+      seciliAlan.append(ogesi("label", null, "Mevzuat"), hap);
+    };
+    seciliCiz();
+    satir.append(seciliAlan, kanunAlani, alan("Madde", madde, "alan dar"), getir);
+    form.append(satir);
     const sonuc = ogesi("div", "kesit");
     form.onsubmit = async (e) => {
       e.preventDefault();
       sonuc.replaceChildren();
       const adimlar = AL.adimlar(sonuc);
-      const no = kanunCoz(kanun.value);
       const maddeler = madde.value.split(",").map((s) => s.trim()).filter(Boolean).slice(0, 10);
-      const a1 = adimlar.ekle("Kanun çözülüyor…");
-      if (!no) { a1.hata("Kanun tanınmadı. Numarasını yazın (ör. 6098) ya da listeden seçin."); return; }
-      if (!maddeler.length) { a1.hata("Madde numarası yazın (ör. 344)."); return; }
-      a1.tamam(kanunAdi(no));
-      const a2 = adimlar.ekle(`m. ${maddeler.join(", ")} resmî kaynaktan çekiliyor…`);
+      if (!mevzuatSecili && !kanun.value.trim()) { adimlar.ekle("").hata("Mevzuatın adını ya da numarasını yazın (ör. TBK, 6446)."); return; }
+      if (!maddeler.length) { adimlar.ekle("").hata("Madde numarası yazın (ör. 344)."); return; }
       getir.disabled = true;
       try {
-        const { veri, hata } = await cagir(app, "tr_mevzuat_madde_getir", { number: no, madde_no: maddeler.length === 1 ? maddeler[0] : maddeler });
-        if (!veri) throw new Error(hata);
-        const tamam = (veri.items || []).filter((i) => i && i.ok).length;
-        const toplam = (veri.items || []).length;
-        // Kaynak hiç madde döndürmediyse doğrulanan bir şey yoktur: 0/0 başarı sayılmaz.
-        const hepsi = toplam > 0 && tamam === toplam;
-        const ozet = toplam ? `${toplam} maddeden ${sayiEki(tamam)} doğrulandı` : "Kaynak madde döndürmedi; doğrulanmadı";
-        (hepsi ? a2.tamam : a2.uyar)(ozet + ".");
+        let hedef = mevzuatSecili;
+        if (!hedef) {
+          const no = kanunCoz(kanun.value);
+          if (no) {
+            hedef = { number: no, ad: kanunAdi(no) };
+            adimlar.ekle("").tamam(hedef.ad);
+          } else {
+            // Kısa ad listesinde yok: ad, mevzuatın tamamında aranır.
+            const a1 = adimlar.ekle(`“${kanun.value.trim()}” mevzuatta aranıyor…`);
+            // Madde çoğunlukla kanundan istenir: önce kanunlarda, bulunmazsa bütün mevzuatta aranır.
+            let { veri } = await cagir(app, "tr_mevzuat_ara", { query: kanun.value.trim(), types: ["KANUN"], page_size: 5 });
+            if (!veri || !(veri.results || []).length) ({ veri } = await cagir(app, "tr_mevzuat_ara", { query: kanun.value.trim(), page_size: 5 }));
+            // Adı tam tutan (ya da "… Kanunu" diye tamamlanan) tek aday sorulmadan seçilir; ötekiler adı aranan
+            // ifadeyle başlayan önce, kısası önce sıralanır (torba kanunlar arkaya düşer).
+            const norm = (s) => AL.baslikDuzeni(s || "").toLocaleLowerCase("tr");
+            const aranan = norm(kanun.value.trim());
+            const bas = (m) => norm(m.title).startsWith(aranan);
+            let adaylar = [...((veri && veri.results) || [])]
+              .sort((x, y) => (bas(y) - bas(x)) || ((x.title || "").length - (y.title || "").length));
+            const tam = adaylar.filter((m) => [aranan, aranan + " kanunu"].includes(norm(m.title)));
+            if (tam.length === 1) adaylar = tam;
+            if (!adaylar.length) { a1.hata("Bu adla mevzuat bulunamadı. Numarasını yazın ya da “Mevzuatta ara”yı kullanın."); return; }
+            if (adaylar.length > 1) {
+              a1.uyar(`${adaylar.length} mevzuat bulundu; hangisi?`);
+              const secim = ogesi("div", "aday-listesi");
+              for (const m of adaylar) {
+                const b = ogesi("button", "madde-satiri");
+                b.type = "button";
+                b.append(ogesi("span", "no", TUR_ADI[m.type] || m.type || ""), ogesi("span", "ad", `${mevzuatAdi(m)} · ${mevzuatKunyesi(m)}`));
+                b.onclick = () => {
+                  mevzuatSecili = { mevzuat_id: String(m.mevzuat_id), ad: mevzuatAdi(m), number: m.number, type: m.type };
+                  seciliCiz();
+                  form.requestSubmit();
+                };
+                secim.append(b);
+              }
+              sonuc.append(secim);
+              return;
+            }
+            const m = adaylar[0];
+            hedef = { mevzuat_id: String(m.mevzuat_id), ad: mevzuatAdi(m) };
+            a1.tamam(`${hedef.ad} (${mevzuatKunyesi(m)})`);
+          }
+        }
         const kap = ogesi("div", "sonuc-kabi");
-        kap.append(KART.madde(veri, ortam));
         sonuc.append(kap);
-        gecmiseEkle(`${kanunAdi(no)} m. ${maddeler.join(", ")}`, [["tamam", kanunAdi(no)], [hepsi ? "tamam" : "uyar", ozet]]);
-        bildir(`${kanunAdi(no)} m. ${maddeler.join(", ")} getirildi; ${tamam}/${toplam} doğrulandı. Atıflar: ${(veri.items || []).filter((i) => i.ok).map((i) => i.citation).join(" | ")}`);
-      } catch (err) {
-        a2.hata("Madde getirilemedi.");
-        sonuc.append(ogesi("p", "uyari", AL.UYARI + AL.RESMI_GIRIS));
+        await maddeyiGoster(kap, hedef, maddeler, adimlar);
+      } catch {
+        adimlar.ekle("").hata("Mevzuat aranamadı.");
+        sonuc.append(ogesi("p", "uyari", AL.UYARI + MEVZUAT_KAYNAK));
       } finally {
         getir.disabled = false;
       }
