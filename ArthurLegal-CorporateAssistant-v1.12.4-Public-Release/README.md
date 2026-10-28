@@ -136,7 +136,7 @@ Full guide → [KURULUM.md](KURULUM.md) (Turkish).
 
 1. **Create a new Claude.ai Project** — [claude.ai/projects](https://claude.ai/projects) → "+ New Project".
 2. **Paste `SYSTEM_PROMPT.md`** into the Custom Instructions field.
-3. **Upload the 103 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
+3. **Upload the 105 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
 4. **Add the ArthurLegal MCP connector** — URL: `https://arthurlegal-mcp.fly.dev/mcp` (no auth; Türkiye under `tr_` plus 14 jurisdictions — KURULUM.md Step 4). Optional: OpenCaseLaw.ch · CourtListener · Fedlex (Step 4b) · TR Legal MCP for ECHR/KİK/Sayıştay (Step 4d).
 5. **Install Arthur Mask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum.exe` from [this direct download link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
 6. **Fill the `[DOLDUR]` placeholders** in `knowledge/company-profile.md` for your own organization — or have the assistant do it with `/<plugin>:cold-start-interview`.
@@ -179,7 +179,7 @@ Full guide → [KURULUM.md](KURULUM.md) (Turkish).
 /legal-research:az-mevzuat
 What is the notice period under the Azerbaijani Labour Code?
 ```
-→ `search_acts` → **status verification via `get_act`** (`Qüvvədədir` / `Ləğv olunmuş`) → article text, with the in-force status inside the citation.
+→ `az_search_acts` → **status verification via `az_get_act`** (`Qüvvədədir` / `Ləğv olunmuş`) → article text, with the in-force status inside the citation.
 
 ```text
 /legal-research:sozlesme-emsali
@@ -210,10 +210,10 @@ ArthurLegal-CorporateAssistant-v1.12.4-Public-Release/
 ├── VERSION.md             ← 1.12.4
 ├── ATTRIBUTION.md         ← Attribution
 ├── LICENSE                ← Proprietary — Non-Commercial
-└── knowledge/             ← 103 files to upload to Project Knowledge
+└── knowledge/             ← 105 files to upload to Project Knowledge
     ├── company-profile.md       (organization profile template — ships with [DOLDUR] placeholders)
     ├── skills/                  (12 consolidated skill books, one file per plugin)
-    ├── references/              (83 references: legislation, jurisdictions, MCP guides, Arthur Mask)
+    ├── references/              (85 references: legislation, jurisdictions, MCP guides, Arthur Mask)
     └── agents/                  (7 scheduled agent definitions)
 ```
 
