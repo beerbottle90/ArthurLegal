@@ -17,6 +17,8 @@
 *.docx
 *.xlsx
 *.pdf
+# Kullanıcı rehberi bilerek depoda: README ve başlangıç sayfası bu adla bağlar (kaynağı arthurlegal-marketing).
+!docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf
 
 # Ofis geçici dosyaları
 ~$*
