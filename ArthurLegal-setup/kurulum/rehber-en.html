@@ -22,6 +22,7 @@ button,a.dugme{display:inline-block;margin:10px 8px 0 0;background:var(--laciver
 a.dugme.ikincil{background:transparent;color:var(--lacivert);border:1px solid var(--cizgi)}
 button.tamam{background:var(--yesil);color:#fff}
 .uyari{border-left:4px solid var(--altin);padding:10px 14px;background:var(--kart);border-radius:0 8px 8px 0}
+.onemli{border-left:4px solid var(--altin);padding:12px 16px;background:var(--kart);border-radius:0 8px 8px 0;font-size:17px;margin:18px 0 0}
 code{background:var(--kod);padding:1px 6px;border-radius:4px;font-size:14px}
 li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
@@ -43,6 +44,8 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 <div id="durum"></div>
 
 <p style="margin-top:22px">{{FIRMA_SATIRI}}Setup is complete. <b>Open a new chat in Claude Desktop and type your legal question:</b> the assistant loads the ArthurLegal instructions and knowledge files itself. When Claude asks for permission the first time it uses a tool, choose <b>Always allow</b>. The project step below is optional: it is for those who want to fix a profile or add their own files to a project.</p>
+
+<p data-arayuz="yeni" class="onemli"><b>Important: press Enter to open the desk.</b> When Claude Desktop opens, <i>ArthurLegal Masası'nı aç</i> is already typed in the message box; the message is not sent by itself. Press Enter every time you open it with the <i>{{URUN}}</i> desktop icon, too.</p>
 
 <p data-arayuz="yeni"><b>ArthurLegal desk.</b> The <i>{{URUN}}</i> icon on the desktop opens Claude Desktop with <i>ArthurLegal Masası'nı aç</i> already typed; press Enter and the desk opens full screen: modules on the left (legislation and citations, case law, Tapu, Memory, Arthur Mask, UYAP, Donna), the steps in the middle, Claude's message box at the bottom. This page opens only on the first launch.</p>
 

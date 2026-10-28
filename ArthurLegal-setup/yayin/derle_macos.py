@@ -134,7 +134,9 @@ def strings_yaz(yol: Path, cift: dict) -> None:
 
 SAYFA = """<!doctype html><html lang="{dil}"><head><meta charset="utf-8"><style>
 body{{font:13px -apple-system,"Helvetica Neue",sans-serif;color:#1b2433;margin:0 4px}}h2{{font-size:15px;margin:4px 0 10px}}
-li{{margin:4px 0}}.not{{color:#5b6576;font-size:12px}}</style></head><body>{govde}</body></html>"""
+li{{margin:4px 0}}.not{{color:#5b6576;font-size:12px}}
+.onemli{{margin:10px 0;padding:8px 12px;border-left:3px solid #b08d3c;background:#fbf3e0;border-radius:0 6px 6px 0}}
+</style></head><body>{govde}</body></html>"""
 
 METIN = {
     "tr": {
@@ -152,8 +154,11 @@ Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da son
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
         "bitis": """<h2>ArthurLegal kuruldu</h2>
 <p>Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe ve masaüstünde. Başlangıç rehberi tarayıcıda açılır.</p>
+<p class="onemli"><b>Önemli: yeni arayüzde ArthurLegal simgesine tıkladığınızda Claude Desktop, yazma kutusunda
+<i>ArthurLegal Masası'nı aç</i> yazılı açılır. Masanın açılması için Enter'a basın; mesaj kendiliğinden
+gönderilmez.</b></p>
 <ul><li>Claude Desktop açıksa <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine
-tıklayın. Yeni arayüzde Claude <i>ArthurLegal Masası'nı aç</i> mesajıyla açılır, Enter'a basın. Yeni bir sohbet açıp
+tıklayın ve Enter'a basın. Yeni bir sohbet açıp
 sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u seçin.</li>
 <li>Claude Desktop kurulu değilse <b>claude.ai/download</b> adresinden kurun.</li>
 <li>Modül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın; son seçiminiz işaretli
@@ -178,8 +183,11 @@ when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and ma
         "bitis": """<h2>ArthurLegal is installed</h2>
 <p>The icons of the modules you chose are in the Applications folder and on the desktop. The start guide opens in
 your browser.</p>
+<p class="onemli"><b>Important: with the new interface, clicking the ArthurLegal icon opens Claude Desktop with
+<i>ArthurLegal Masası'nı aç</i> already typed in the message box. Press Enter to open the desk; the message is not
+sent by itself.</b></p>
 <ul><li>If Claude Desktop is open, quit it completely with <b>Cmd+Q</b> and open it again; then click the
-<b>ArthurLegal</b> icon. With the new interface Claude opens with <i>ArthurLegal Masası'nı aç</i> typed; press Enter. You
+<b>ArthurLegal</b> icon and press Enter. You
 can also open a new chat and type your question. When Claude asks for permission the first time it uses a tool, choose
 <b>Always allow</b>.</li>
 <li>If Claude Desktop is not installed, get it from <b>claude.ai/download</b>.</li>

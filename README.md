@@ -79,8 +79,14 @@ kurulumu sonra yeniden çalıştırabilirsiniz:
 **5. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
 önce yazdığınız mesajı gönderin. Arthur Mask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
 beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
-planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde ArthurLegal Masası, klasikte
-başlangıç rehberi ve Claude Desktop açılır.
+planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde Claude Desktop masayı açmaya hazır
+gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop açılır.
+
+> [!IMPORTANT]
+> **Kurulumdan sonra Enter'a basın.** Claude Desktop açıldığında yazma kutusunda *ArthurLegal Masası'nı aç*
+> yazılı gelir; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez. Masaüstündeki
+> **ArthurLegal** simgesiyle her açılışta da Enter'a basın.
+
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
 **ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**.
 Yeni arayüzde **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar:
@@ -178,6 +184,10 @@ Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresin
 ya da arayüzü değiştirmek için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
 ArthurLegal → **ArthurLegal'i Kaldır**.
 
+> [!IMPORTANT]
+> **ArthurLegal simgesine tıkladıktan sonra Enter'a basın.** Claude Desktop yazma kutusunda *ArthurLegal Masası'nı aç*
+> yazılı açılır; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez.
+
 Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir** (Mac:
 **https://github.com/beerbottle90/ArthurLegal#mac**)
 
@@ -253,8 +263,15 @@ setup again later to change it:
 **5. Install.** Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
 you are typing first. If you chose Arthur Mask, setup also downloads it (about 1 GB, a few minutes); if you don't
 want to wait, click **Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the
-background. On the last page click **Finish**: with the new interface ArthurLegal Masası opens, with the classic one
-the start guide and Claude Desktop. The desktop gets an icon
+background. On the last page click **Finish**: with the new interface Claude Desktop opens ready to open the desk
+(see the note below), with the classic one the start guide and Claude Desktop.
+
+> [!IMPORTANT]
+> **Press Enter after setup.** When Claude Desktop opens, *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) is
+> already typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
+> Press Enter every time you open it with the **ArthurLegal** desktop icon, too.
+
+The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
 **ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**. With the new interface the
 **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) already
@@ -344,6 +361,10 @@ ready and an **Arthur Mask** icon appears on the desktop. If Claude Desktop is o
 first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
 [claude.ai/download](https://claude.ai/download). To add or remove modules or to change the interface, open the
 installer again; your last choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
+
+> [!IMPORTANT]
+> **Press Enter after clicking the ArthurLegal icon.** Claude Desktop opens with *ArthurLegal Masası'nı aç* already
+> typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
 
 Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download** (Mac:
 **https://github.com/beerbottle90/ArthurLegal#mac-en**)

@@ -1467,6 +1467,26 @@ class ArayuzTesti(unittest.TestCase):
                 self.assertIn("d.arayuz", html)
 
 
+class MasaEnterHatirlatmasiTesti(unittest.TestCase):
+    """Yeni arayüzde simge Claude Desktop'u 'ArthurLegal Masası'nı aç' yazılmış olarak açar ama göndermez: Enter'a
+    basılmazsa masa açılmaz. Hatırlatma kurulumun son ekranında (Windows kalın, macOS vurgulu), başlangıç rehberinde
+    ve README'nin dört kurulum bölümünde durur."""
+
+    def test_hatirlatma_her_yerde(self):
+        import re
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8")
+        for dil in ("en", "tr"):
+            self.assertRegex(iss, rf"(?m)^{dil}\.MasaEnterHatirlatma=.*Enter")
+        self.assertIn("CustomMessage('MasaEnterHatirlatma')", iss)
+        self.assertIn("EnterHatirlatmasi.Font.Style := [fsBold]", iss)
+        self.assertEqual((BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8").count('<p class="onemli"><b>'), 2)
+        for ad in ("rehber.html", "rehber-en.html"):
+            html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+            self.assertRegex(html, r'<p data-arayuz="yeni" class="onemli"><b>[^<]*Enter')
+        readme = (BURASI.parent / "README.md").read_text(encoding="utf-8")
+        self.assertGreaterEqual(len(re.findall(r"> \[!IMPORTANT\]\n> \*\*[^*\n]*Enter", readme)), 4)
+
+
 class MacKurulumTesti(unittest.TestCase):
     """macOS kurulumu (.pkg, yayin/derle_macos.py): paketler, istemci ve güncelleme kanalı Windows'takiyle aynı; değişen
     yalnız işletim sistemine bağlanan yerler (Python yolu, Claude ayar dosyası, uygulamalar ve masaüstü takma adları,
