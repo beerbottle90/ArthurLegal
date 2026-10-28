@@ -155,7 +155,7 @@ def anahtarlar(k: dict) -> list:
     return [a for a in (k.get("yayin_anahtari"), k.get("kasa_anahtari")) if a]
 
 
-def paket_hazirla(k: dict, hedef: Path) -> dict:
+def paket_hazirla(k: dict, hedef: Path, *, uyap: bool = True) -> dict:
     icerik = {"surum": k["surum"], "paketler": {}, "bilesenler": {}, "kaynak": {}, "anahtarlar": anahtarlar(k)}
     # arayuz/: AL Masası ve kartların HTML, CSS, JS ve SVG dosyaları da gider (yalnız .py değil).
     kopyala(BURASI / "istemci", hedef / "istemci", lambda g: g.endswith(".py") or g.startswith("arayuz/"))
@@ -171,7 +171,10 @@ def paket_hazirla(k: dict, hedef: Path) -> dict:
         kopyala(tapu, hedef / "tapu", lambda g: not g.startswith(("tests/", "docs/")) and not g.endswith(".cmd"))
         icerik["bilesenler"]["tapu"] = modul_surumu(tapu / "server.py")
         kullanilan.append("tapu")
-    if k["bilesenler"].get("uyap"):  # arthur-uyap deposu private: public kuruluma girmez
+    # UYAP köprüsü (3.0.0) yalnız Windows kurulumuna girer: pencereleri ve arşiv anahtarı Windows'a bağlıdır. Kaynak
+    # private arthur-uyap deposunun sabit dalıdır (kaynaklar.json "dallar"); macOS paketi GitHub Actions'ta derlenir,
+    # o depoya erişmez ve uyap=False ile çağırır.
+    if k["bilesenler"].get("uyap") and uyap:
         uyap = depo(k, "uyap")
         kopyala(uyap, hedef / "uyap", lambda g: not g.startswith("tests/"))
         icerik["bilesenler"]["uyap"] = modul_surumu(uyap / "server.py")
@@ -467,7 +470,8 @@ def main(argv=None) -> int:
                             f"/DMaskSha={mask['sha256']}", f"/DVarlik={BURASI / 'varlik'}",
                             # Modül ekranı yalnız bu derlemedeki paketleri ve bileşenleri gösterir.
                             f"/DPaketler={','.join(p for p in ortak.PAKETLER if p in icerik['paketler'])}",
-                            f"/DTapuVar={1 if icerik['bilesenler'].get('tapu') else 0}", *imza_args, "/Qp", str(iss)])
+                            f"/DTapuVar={1 if icerik['bilesenler'].get('tapu') else 0}",
+                            f"/DUyapVar={1 if icerik['bilesenler'].get('uyap') else 0}", *imza_args, "/Qp", str(iss)])
         if r.returncode:
             sys.exit(f"ISCC hata verdi ({r.returncode})")
         exe = CIKTI / f"{ad}.exe"

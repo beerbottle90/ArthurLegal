@@ -172,6 +172,48 @@ def hafiza_acik() -> bool:
     """ArthurLegal Hafıza seçildi mi. Kodu istemcinin içindedir (hafiza.py); seçim yeterlidir."""
     return "hafiza" in moduller()
 
+
+# UYAP Dashboard (3.0.0) ayrı bir modül kutusu değildir: avukat paketlerinden biri ve Arthur Mask seçildiyse
+# kendiliğinden gelir. Maskeleme olmadan çalışmaz; Avukat Portal'ı avukat kullanır (Courthouse ve Akademisyen'de
+# simge yok). Yalnız Windows: pencereleri ve arşiv anahtarı Windows'a bağlıdır.
+UYAP_PAKETLERI = ("hukuk-burosu", "kurumsal")
+
+
+def uyap_acik() -> bool:
+    """UYAP köprüsü ve Dashboard bu bilgisayarda açılır mı: Windows, seçimde Arthur Mask ve bir avukat paketi,
+    Arthur Mask kurulu, köprü etkin sürümde."""
+    if MAC:
+        return False
+    secim = moduller()
+    return ("mask" in secim and any(p in secim for p in UYAP_PAKETLERI) and mask_python() is not None
+            and (SURUM_DIZINI / "uyap" / "ekran.py").exists())
+
+
+# Köprünün veri klasörü (arşiv, kasa, denetim defteri). Masa buradan yalnız iki küçük dosyayı okur: köprünün son işinin
+# özeti (durum-ozeti.json) ve hız sınırının sayacı (hiz.json). İkisinde de kişisel veri yoktur.
+UYAP_VERI = Path(os.environ.get("UYAP_VERI") or (Path.home() / ".arthurlegal" / "uyap"))
+UYAP_OZET_ALANLARI = ("surum", "son_islem", "kaynak", "sonuc", "mesaj", "kanal", "gorulen", "gunluk_sinir")
+
+
+def uyap_ozeti() -> dict:
+    """Masanın UYAP ekranı için: son işin saati, sonucu, görülen listeler, bugünkü istek sayısı ve bekleme. Yalnız
+    tanınan alanlar ve kısaltılmış metin geçer; dosyalar yoksa boş sözlük."""
+    ozet = json_oku(UYAP_VERI / "durum-ozeti.json", {})
+    sonuc = {k: ozet[k] for k in UYAP_OZET_ALANLARI if isinstance(ozet, dict) and k in ozet}
+    if isinstance(sonuc.get("mesaj"), str):
+        sonuc["mesaj"] = sonuc["mesaj"][:240]
+    if not isinstance(sonuc.get("gorulen"), dict):
+        sonuc.pop("gorulen", None)
+    hiz = json_oku(UYAP_VERI / "hiz.json", {})
+    if isinstance(hiz, dict) and hiz.get("gun") == time.strftime("%Y-%m-%d"):
+        sonuc["bugun_istek"] = int(hiz.get("gunluk") or 0)
+        bitis = hiz.get("bekle_bitis")
+        if isinstance(bitis, (int, float)) and bitis > time.time():
+            sonuc["bekleme_kalan_sn"] = int(bitis - time.time()) + 1
+        if hiz.get("durdurma") and hiz.get("durdurma_gunu") == hiz.get("gun"):
+            sonuc["durduruldu"] = True
+    return sonuc
+
 _ACIK_ANAHTAR = re.compile(r"[0-9a-fA-F]{64}")
 
 
