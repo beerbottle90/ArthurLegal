@@ -1536,6 +1536,34 @@ class MasaEnterHatirlatmasiTesti(unittest.TestCase):
         self.assertGreaterEqual(len(re.findall(r"> \[!IMPORTANT\]\n> \*\*[^*\n]*Enter", readme)), 4)
 
 
+class KullaniciRehberiTesti(unittest.TestCase):
+    """Kullanıcı rehberi PDF'i depoda sabit adla durur (docs/rehber/): README'nin başı ve başlangıç sayfasının büyük
+    düğmesi ona bağlanır; rehber güncellense de bağlantı bozulmaz. Başlangıç sayfasının görseli masanın açılış ekranıdır
+    ve iki derleyici de onu rehber/masa.png olarak pakete koyar."""
+
+    PDF = "docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"
+
+    def test_pdf_readme_ve_baslangic_sayfasi(self):
+        kok = BURASI.parent
+        self.assertTrue((kok / self.PDF).read_bytes().startswith(b"%PDF"))
+        self.assertTrue((kok / "docs" / "rehber" / "kapak.png").exists())
+        readme = (kok / "README.md").read_text(encoding="utf-8")
+        ust = readme[:readme.index('<h2 id="kurulum">')]
+        self.assertIn('id="rehber"', ust, "rehber bloğu README'nin başında, kurulum anlatımından önce")
+        self.assertIn(f'<a href="{self.PDF}">', ust)
+        for ad in ("rehber.html", "rehber-en.html"):
+            html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+            self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{self.PDF}"', html)
+            self.assertIn('<img src="masa.png"', html)
+            self.assertNotIn("banner", html, "eski piksel afiş yerine başlıkta yeni simge (SVG)")
+            self.assertIn('<svg class="simge"', html)
+            self.assertIn('<p data-arayuz="klasik">', html)
+            self.assertIn("data-uyap", html)
+        self.assertTrue((BURASI / "varlik" / "rehber-masa.png").exists())
+        for derleyici in ("derle.py", "derle_macos.py"):
+            self.assertIn('"rehber-masa.png"', (BURASI / "yayin" / derleyici).read_text(encoding="utf-8"))
+
+
 class MacKurulumTesti(unittest.TestCase):
     """macOS kurulumu (.pkg, yayin/derle_macos.py): paketler, istemci ve güncelleme kanalı Windows'takiyle aynı; değişen
     yalnız işletim sistemine bağlanan yerler (Python yolu, Claude ayar dosyası, uygulamalar ve masaüstü takma adları,

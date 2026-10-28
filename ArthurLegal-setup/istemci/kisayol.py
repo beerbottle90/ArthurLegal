@@ -89,6 +89,7 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
         "bilesenler": bilgi.get("bilesenler", {}),
         "moduller": ortak.moduller(),
         "arayuz": ortak.arayuz(),  # klasikte panel masa paragrafını gizler
+        "uyap": ortak.uyap_acik(),  # UYAP Dashboard maddesi yalnız kurulduğu bilgisayarda
         "odak": odak if odak in ortak.PAKETLER else "",
         "isletim": "mac" if ortak.MAC else "windows",  # sayfa Mac'e özgü cümleleri buna göre gösterir
         "mask": ortak.mask_surumu() or "",

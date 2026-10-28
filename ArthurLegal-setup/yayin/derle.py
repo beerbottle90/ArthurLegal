@@ -417,8 +417,8 @@ def main(argv=None) -> int:
     if urun != ortak.URUN_VARSAYILAN:
         print(f"  ürün adı: {urun} (kısayollar, Başlat menüsü, başlangıç sayfası, programlar listesi)")
     rehber_yaz(hazirlik, firma.get("ad", ""), icerik, urun)
-    shutil.copy2(BURASI / "varlik" / "rehber-banner.png", hazirlik / "rehber" / "banner.png")
-    shutil.copy2(BURASI / "varlik" / "rehber-banner-en.png", hazirlik / "rehber" / "banner-en.png")
+    # Başlangıç sayfasının tek görseli masanın açılış ekranı; başlıktaki simge sayfanın içinde (SVG).
+    shutil.copy2(BURASI / "varlik" / "rehber-masa.png", hazirlik / "rehber" / "masa.png")
     lisans_yaz(k, hazirlik)
     ayar = {"manifest_url": f"https://github.com/{k['yayin_deposu']}/releases/latest/download/arthurlegal-manifest.json",
             "yedek_depo": k["yayin_deposu"], "kanal": k.get("kanal", "kararli"),
