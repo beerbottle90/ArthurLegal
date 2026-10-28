@@ -69,6 +69,9 @@ body { background: var(--zemin); }
 .panel-alt { margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding: 14px 6px 0; }
 .segment { display: flex; gap: 2px; padding: 3px; border-radius: var(--k-hap); background: var(--dolgu); }
 .segment button { flex: 1; min-height: 30px; padding: 0 10px; font-size: 13px; background: transparent; }
+/* Üç simgeli seçenek 252 px'lik panele sığsın; daha geniş bir yazı tipinde yazı taşmaz, kısalır. */
+.tema-secimi button { flex: 1 1 auto; min-width: 0; padding: 0 4px; gap: 4px; font-size: 12.5px; }
+.tema-secimi button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .segment button[aria-pressed="true"] { background: var(--yuzey); box-shadow: var(--golge); font-weight: 600; }
 .surum { font-size: 12px; color: var(--soluk); padding: 0 6px; }
 
@@ -241,6 +244,7 @@ body { background: var(--zemin); }
   .panel nav { flex-direction: row; gap: 4px; }
   .git { width: auto; flex: none; white-space: nowrap; }
   .panel-alt { margin: 0; padding: 0; }
+  .tema-secimi button { padding: 0 10px; }
   .tema-secimi button span { display: none; }
   .icerik-ust { padding: 16px 16px 6px; }
   .icerik-ust h1 { font-size: 20px; }
@@ -381,7 +385,7 @@ body { background: var(--zemin); }
     const seg = ogesi("div", "segment tema-secimi");
     seg.setAttribute("role", "group");
     seg.setAttribute("aria-label", "Tema");
-    for (const [deger, yazi, simge] of [["acik", "Açık", "gunes"], ["koyu", "Koyu", "ay"], ["otomatik", "Otomatik", null]]) {
+    for (const [deger, yazi, simge] of [["acik", "Açık", "gunes"], ["koyu", "Koyu", "ay"], ["otomatik", "Otomatik", "otomatik"]]) {
       const b = dugme(yazi, { simge, baslik: yazi + " tema" });
       b.dataset.tema = deger;
       b.onclick = () => AL.tema.sec(deger);
@@ -418,6 +422,14 @@ body { background: var(--zemin); }
       if (EK_YAZISI[d]) b.append(ogesi("span", "ek", EK_YAZISI[d]));
       if (id === "mcp" && DURUM.mcpSaglik) b.append(ogesi("span", "nokta " + DURUM.mcpSaglik));
     });
+    // Dar ekranda panel yatay şerittir: seçili ekranın düğmesi şeridin ortasına gelir (geniş ekranda kayma olmaz).
+    const panel = document.querySelector(".panel");
+    const secili = document.querySelector(".git[aria-current]");
+    if (panel && secili && panel.scrollWidth > panel.clientWidth) {
+      const p = panel.getBoundingClientRect();
+      const s = secili.getBoundingClientRect();
+      panel.scrollLeft += (s.left + s.width / 2) - (p.left + p.width / 2);
+    }
   }
 
   function git(id) {
@@ -587,11 +599,14 @@ body { background: var(--zemin); }
         if (!veri) throw new Error(hata);
         const tamam = (veri.items || []).filter((i) => i && i.ok).length;
         const toplam = (veri.items || []).length;
-        (tamam === toplam ? a2.tamam : a2.uyar)(`${toplam} maddeden ${sayiEki(tamam)} doğrulandı.`);
+        // Kaynak hiç madde döndürmediyse doğrulanan bir şey yoktur: 0/0 başarı sayılmaz.
+        const hepsi = toplam > 0 && tamam === toplam;
+        const ozet = toplam ? `${toplam} maddeden ${sayiEki(tamam)} doğrulandı` : "Kaynak madde döndürmedi; doğrulanmadı";
+        (hepsi ? a2.tamam : a2.uyar)(ozet + ".");
         const kap = ogesi("div", "sonuc-kabi");
         kap.append(KART.madde(veri, ortam));
         sonuc.append(kap);
-        gecmiseEkle(`${kanunAdi(no)} m. ${maddeler.join(", ")}`, [["tamam", kanunAdi(no)], [tamam === toplam ? "tamam" : "uyar", `${toplam} maddeden ${sayiEki(tamam)} doğrulandı`]]);
+        gecmiseEkle(`${kanunAdi(no)} m. ${maddeler.join(", ")}`, [["tamam", kanunAdi(no)], [hepsi ? "tamam" : "uyar", ozet]]);
         bildir(`${kanunAdi(no)} m. ${maddeler.join(", ")} getirildi; ${tamam}/${toplam} doğrulandı. Atıflar: ${(veri.items || []).filter((i) => i.ok).map((i) => i.citation).join(" | ")}`);
       } catch (err) {
         a2.hata("Madde getirilemedi.");
@@ -977,13 +992,20 @@ body { background: var(--zemin); }
     $("kok").replaceChildren(kap);
   }
 
+  // Açılış ekranı: araç girdisi ya da sunucu bir bölüm istediyse o, istemediyse kullanıcının son ekranı.
+  function acilisEkrani() {
+    if (DURUM.acilis !== "sohbet") return DURUM.acilis;
+    try { return localStorage.getItem("al.masa.ekran") || "sohbet"; } catch { return "sohbet"; }
+  }
+
   let masaKuruldu = false;
+  let acilisUygulandi = false;
   function ciz() {
     const ctx = app.getHostContext() || {};
     const modlar = ctx.availableDisplayModes || [];
     const tam = ctx.displayMode === "fullscreen" || !modlar.includes("fullscreen");
     if (tam) {
-      if (!masaKuruldu) { iskeletKur(); masaKuruldu = true; let ilk = DURUM.acilis; try { ilk = localStorage.getItem("al.masa.ekran") && DURUM.acilis === "sohbet" ? localStorage.getItem("al.masa.ekran") : DURUM.acilis; } catch { /* yok */ } git(ilk); }
+      if (!masaKuruldu) { iskeletKur(); masaKuruldu = true; git(acilisEkrani()); acilisUygulandi = DURUM.hazir; }
       else panelYenile();
     } else {
       masaKuruldu = false;
@@ -1014,7 +1036,10 @@ body { background: var(--zemin); }
       if (veri.bolum && EKRANLAR.some((e) => e.id === veri.bolum)) DURUM.acilis = veri.bolum;
     }
     DURUM.hazir = true;
-    ciz();
+    // Ev sahibi baştan tam ekransa masa sunucunun cevabından önce, varsayımlarla kurulmuştur: istenen bölüm ve
+    // modül durumları (yerel/uzak) şimdi uygulanır, açık ekran yeniden çizilir.
+    if (masaKuruldu) { git(acilisUygulandi ? aktif : acilisEkrani()); acilisUygulandi = true; }
+    else ciz();
   };
   app.addEventListener("hostcontextchanged", (d) => {
     AL.tema.baglamdan(d);

@@ -448,6 +448,28 @@ def kart_meta(araclar):
     return sonuc
 
 
+def kopru_araclari(araclar, gorunumler=None):
+    """Uzak uçtan köprülenen araçlar, bu sunucunun karşılayabildiği kadarıyla. Uzak ucun masa araçları (al_)
+    listelenmez: masa yereldedir ve bu bilgisayarın modüllerini bilir. Görünüm işareti (_meta.ui) yalnız bu sunucu o
+    ui:// görünümü veriyorsa kalır; klasik arayüzde hiçbiri kalmaz ve sonuç metin olarak gelir."""
+    if gorunumler is None:
+        gorunumler = set(al_arayuz.GORUNUMLER) if al_arayuz is not None else set()
+    sonuc = []
+    for arac in araclar or []:
+        if arac.get("name", "").startswith("al_"):
+            continue
+        meta = arac.get("_meta") or {}
+        ui = meta.get("ui") if isinstance(meta.get("ui"), dict) else {}
+        uri = ui.get("resourceUri") or meta.get("ui/resourceUri")
+        if uri and uri not in gorunumler:
+            kalan = {k: v for k, v in meta.items() if k not in ("ui", "ui/resourceUri")}
+            arac = {k: v for k, v in arac.items() if k != "_meta"}
+            if kalan:
+                arac["_meta"] = kalan
+        sonuc.append(arac)
+    return sonuc
+
+
 def kart_verisi(ad, sonuc):
     """Kartlı aracın sonucu kart için structuredContent da taşır: uzak uç vermediyse metin bloğundaki JSON.
     Modelin okuduğu metin değişmez."""
@@ -557,7 +579,7 @@ class Sunucu:
                 self._uzak_yenile(zaman_asimi=True)
             profiller = self.bilgi.profiller()
             return {"tools": yerel_araclar(profiller, self.bilgi.varsayilan(profiller)) + masa_araclari()
-                    + kart_meta(self.uzak_araclar or [])}
+                    + kart_meta(kopru_araclari(self.uzak_araclar))}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
@@ -611,6 +633,10 @@ class Sunucu:
             return self._masa(a)
         if al_arayuz is not None and ad == "al_modul_ac":
             return self._modul_ac(a)
+        if ad.startswith("al_"):  # uzak ucun masa araçları köprülenmez (kopru_araclari)
+            metin = ("ArthurLegal Masası bu kurulumda kapalı (Claude Desktop klasik). Kurulumu yeniden çalıştırıp "
+                     "'ArthurLegal yeni arayüz'ü seçebilirsiniz." if al_arayuz is None else f"Bilinmeyen masa aracı: {ad}")
+            return {"content": [{"type": "text", "text": metin}], "isError": True}
         yerel = {
             "arthurlegal_talimat": lambda: self.bilgi.talimat(self.bilgi.profil(a.get("profil"))),
             "arthurlegal_bilgi_ara": lambda: self.bilgi.ara(self.bilgi.profil(a.get("profil")), a.get("sorgu", ""),
