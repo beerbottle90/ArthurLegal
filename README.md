@@ -640,11 +640,14 @@ justify building an MCP server, and which already have a good enough public API.
   window.
 - **Press Enter after setup.** The last setup page (Windows and Mac), the start guide and this page now say plainly
   that the desk opens when you press Enter in Claude Desktop.
+- **New icon.** The desktop and installer icon, the setup wizard images and the desk's emblem are now a
+  soft-cornered navy square with a gold "A" (Windows and Mac), drawn from one vector source (`varlik/simge.py`).
 
 **Türkçe:** UYAP Dashboard artık genel kurulumla geliyor (Windows; Hukuk Bürosu ya da Kurumsal ile Arthur Mask).
 Uç kaydı ve kalibrasyon yok: köprü avukatın UYAP'ta açtığı listeleri okur, UYAP'a ek istek göndermez; her hatada ne
 yapılacağını yazar ve Tekrar dene sunar. Sınırlar sıkılaştı ve [UYAP Dashboard](#uyap) bölümünde tablo olarak duruyor.
-Masanın UYAP ekranı son işin saatini, görülen listeleri ve sayacı gösterir.
+Masanın UYAP ekranı son işin saatini, görülen listeleri ve sayacı gösterir. Simge yeni: yumuşak köşeli lacivert
+kare ve altın "A".
 
 ## Setup 2.7.0 — ArthurLegal Masası: one panel inside Claude (2026-10-27)
 
