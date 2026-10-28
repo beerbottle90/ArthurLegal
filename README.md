@@ -10,6 +10,16 @@
 </p>
 <p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>)</p>
 
+<h3 align="center" id="rehber">Kullanıcı Rehberi · User guide</h3>
+<p align="center">
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><img src="docs/rehber/kapak.png" width="300" alt="ArthurLegal Kullanıcı Rehberi, kapak sayfası · ArthurLegal user guide, cover page"></a>
+</p>
+<p align="center">
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 9 sayfa, Türkçe)</b></a><br>
+  ArthurLegal nedir, kurulum, ArthurLegal Masası, Arthur Mask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 9 pages, in Turkish)</a>
+</p>
+
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
 Bu adımlar Windows içindir; Mac'te kurulum [aşağıda](#mac). Düğme açılmazsa bu bağlantıya tıklayın:

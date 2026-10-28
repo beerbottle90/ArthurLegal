@@ -284,8 +284,7 @@ def main(argv=None) -> int:
     derle.varlik_uret()
     simge_hazirla(kok / "bin" / "arthurlegal.icns")
     derle.rehber_yaz(kok, "", icerik)
-    for ad, hedef in (("rehber-banner.png", "banner.png"), ("rehber-banner-en.png", "banner-en.png")):
-        shutil.copy2(BURASI / "varlik" / ad, kok / "rehber" / hedef)
+    shutil.copy2(BURASI / "varlik" / "rehber-masa.png", kok / "rehber" / "masa.png")
     derle.lisans_yaz(k, kok)
     ortak.json_yaz(kok / "ayar.json", {
         "manifest_url": f"https://github.com/{k['yayin_deposu']}/releases/latest/download/arthurlegal-manifest.json",

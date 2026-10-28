@@ -9,7 +9,17 @@
 @media (prefers-color-scheme:dark){:root{--zemin:#0e1522;--kart:#16202f;--yazi:#e8e4da;--soluk:#9aa4b4;--lacivert:#e8e4da;--altin:#d4b36a;--cizgi:#26334a;--kod:#1c2839;--yesil:#57c08a}}
 *{box-sizing:border-box}body{margin:0;background:var(--zemin);color:var(--yazi);font:16px/1.6 "Segoe UI",system-ui,sans-serif}
 main{max-width:880px;margin:0 auto;padding:36px 16px 64px}
-header img{display:block;width:100%;max-width:840px;height:auto;image-rendering:pixelated;border-radius:8px 8px 0 0}
+.baslik-kart{display:flex;align-items:center;gap:18px;max-width:840px;background:var(--kart);border:1px solid var(--cizgi);border-bottom:0;border-radius:14px 14px 0 0;padding:20px 24px}
+.baslik-kart svg{width:64px;height:64px;flex:none}
+.baslik-kart .ad{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lacivert)}
+.baslik-kart .ad span{color:var(--altin)}.baslik-kart .alt{font-size:15px;color:var(--soluk);margin-top:2px}
+a.rehber-pdf{display:flex;align-items:center;gap:18px;margin:22px 0 0;padding:22px 26px;background:#14233c;color:#fff;border:2px solid #b08d3c;border-radius:14px;text-decoration:none}
+a.rehber-pdf:hover{background:#1c3152}a.rehber-pdf svg{width:46px;height:46px;flex:none}
+a.rehber-pdf b{display:block;font-size:24px;line-height:1.25}
+a.rehber-pdf small{display:block;font-size:15px;line-height:1.45;color:#c9d3e0;margin-top:4px}
+a.rehber-pdf .ok{margin-left:auto;font-size:30px;color:#d4b36a}
+figure.masa{margin:16px 0 0}figure.masa img{display:block;width:100%;height:auto;border:1px solid var(--cizgi);border-radius:12px;box-shadow:0 6px 24px rgba(13,24,38,.08)}
+figure.masa figcaption{font-size:14px;color:var(--soluk);margin-top:6px}
 .serit{display:flex;height:8px;border-radius:0 0 8px 8px;overflow:hidden;max-width:840px}.serit i{flex:1}
 h2{font-size:20px;margin:34px 0 10px;color:var(--lacivert)}
 .adim{display:flex;gap:14px;margin:14px 0}
@@ -37,17 +47,22 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 <main>
 <nav class="dil" lang="en"><a href="baslangic-en.html">English</a></nav>
 <header>
-  <img src="banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı">
+  <div class="baslik-kart"><svg class="simge" viewBox="0 0 100 100" role="img" aria-label="ArthurLegal arması"><defs><linearGradient id="alArmaZ" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#223B63"/><stop offset="1" stop-color="#0B1524"/></linearGradient><linearGradient id="alArmaA" x1="0" y1="0.2" x2="0" y2="0.8"><stop offset="0" stop-color="#F6D98E"/><stop offset="1" stop-color="#D6A23A"/></linearGradient></defs><path fill="url(#alArmaZ)" d="M100.00 50.00L99.90 69.75L99.61 76.01L99.13 80.49L98.44 84.05L97.55 87.01L96.44 89.52L95.11 91.68L93.53 93.53L91.68 95.11L89.52 96.44L87.01 97.55L84.05 98.44L80.49 99.13L76.01 99.61L69.75 99.90L50.00 100.00L30.25 99.90L23.99 99.61L19.51 99.13L15.95 98.44L12.99 97.55L10.48 96.44L8.32 95.11L6.47 93.53L4.89 91.68L3.56 89.52L2.45 87.01L1.56 84.05L0.87 80.49L0.39 76.01L0.10 69.75L0.00 50.00L0.10 30.25L0.39 23.99L0.87 19.51L1.56 15.95L2.45 12.99L3.56 10.48L4.89 8.32L6.47 6.47L8.32 4.89L10.48 3.56L12.99 2.45L15.95 1.56L19.51 0.87L23.99 0.39L30.25 0.10L50.00 0.00L69.75 0.10L76.01 0.39L80.49 0.87L84.05 1.56L87.01 2.45L89.52 3.56L91.68 4.89L93.53 6.47L95.11 8.32L96.44 10.48L97.55 12.99L98.44 15.95L99.13 19.51L99.61 23.99L99.90 30.25Z"/><path fill="url(#alArmaA)" d="M43.75 23.50L56.25 23.50L35.00 77.50L22.50 77.50ZM43.75 23.50L56.25 23.50L77.50 77.50L65.00 77.50ZM30.50 57.50L69.50 57.50L69.50 66.75L30.50 66.75Z"/></svg><div><div class="ad">Arthur<span>Legal</span></div><div class="alt">Açık kaynak hukuk yapay zekâsı</div></div></div>
   <div class="serit"><i style="background:#c8453b"></i><i style="background:#f29b4b"></i><i style="background:#ffe066"></i><i style="background:#3fae6a"></i><i style="background:#5ec8e5"></i><i style="background:#3b7dd8"></i><i style="background:#7b5cc4"></i><i style="background:#b45a9a"></i></div>
 </header>
 
 <div id="durum"></div>
 
-<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <b>Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın:</b> asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki proje adımı isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki yedek yollar isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
 
 <p data-arayuz="yeni" class="onemli"><b>Önemli: masayı açmak için Enter'a basın.</b> Claude Desktop açıldığında yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı gelir; mesaj kendiliğinden gönderilmez. Masaüstündeki <i>{{URUN}}</i> simgesiyle her açılışta da Enter'a basın.</p>
 
+<a class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#d4b36a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg><span><b>Kullanıcı Rehberi (PDF)</b><small>Kurulum, ArthurLegal Masası, Arthur Mask, UYAP Dashboard ve sık sorulanlar tek belgede · GitHub'da açılır</small></span><span class="ok" aria-hidden="true">→</span></a>
+
 <p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, Arthur Mask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. Bu sayfa yalnız ilk açılışta gelir.</p>
+<figure data-arayuz="yeni" class="masa"><img src="masa.png" width="1200" height="879" alt="ArthurLegal Masası'nın açılış ekranı: solda modüller, ortada işe başlama kartları"><figcaption>Masanın açılış ekranı (açık tema; koyu ve otomatik sol altta).</figcaption></figure>
+
+<p data-arayuz="klasik"><b>Claude Desktop klasik.</b> Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın: asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Masayı kullanmak isterseniz kurulum dosyasını yeniden çalıştırıp <b>ArthurLegal yeni arayüz</b>'ü seçin.</p>
 
 <h2>Kurulu paketler</h2>
 <div id="paketler">
@@ -83,6 +98,7 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <ul>
   <li data-modul="mask"><b>Arthur Mask</b> — Müvekkil ya da dosya belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın.
     İlk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
+  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hukuk Bürosu ya da Kurumsal ile Arthur Mask seçildiyse masaüstündeki <i>{{URUN}} - UYAP Dashboard</i> simgesi UYAP Avukat Portal'ı ayrı bir tarayıcı profilinde açar; girişi e-imza ya da e-Devlet ile siz yaparsınız. Tebligatlar ve Duruşmalarım ekranlarını açıp <b>Tara</b>'ya basın. Salt okunurdur: UYAP'a bir şey yazmaz, ek istek göndermez; adlar ve esas numaraları Claude'a gitmeden Arthur Mask'te etiketlenir.</li>
   <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
     parsel TKGM Parsel Sorgu'nun herkese açık verisinden gelir (ilk sorguda bir kez onay istenir). Masaüstündeki
     <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> simgesi aynı işi yapan parsel arayüzünü açar.
@@ -105,8 +121,8 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <h2>Sorun giderme</h2>
 <div class="uyari">Araçlar görünmüyorsa Claude Desktop'u <span data-os="windows">sistem tepsisindeki simge dâhil
 <b>tamamen kapatıp</b></span><span data-os="mac"><b>Cmd+Q</b> ile tamamen kapatıp</span> yeniden açın.
-<b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code> ile
-<code>arthur-mask</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
+<b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code>,
+<code>arthur-mask</code> ile <code>arthur-uyap</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
 <footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir ve karar vermez. Her çıktıyı onu kullanan
 hukukçu (avukat, hâkim, kalem ya da akademisyen) doğrulamalıdır. Arthur Mask takma adlandırma yapar, anonim hâle getirmez;
@@ -131,6 +147,8 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
   if (d.arayuz) document.querySelectorAll("[data-arayuz]").forEach(function (el) {
     if (el.getAttribute("data-arayuz") !== d.arayuz) el.style.display = "none";
   });
+  // UYAP Dashboard yalnız kurulduğu bilgisayarda anlatılır (ortak.uyap_acik; eski durum.js'de alan yok, gösterilir).
+  if (d.uyap === false) document.querySelectorAll("[data-uyap]").forEach(function (el) { el.style.display = "none"; });
   if (d.odak) document.querySelectorAll('#paketler [data-modul="' + d.odak + '"]').forEach(function (el) { el.classList.add("odak"); });
   var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Başlangıç";
