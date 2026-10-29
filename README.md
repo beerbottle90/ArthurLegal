@@ -642,6 +642,24 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.0.4 — Sanctions screening from the official lists; Law Firm and Corporate 1.12.5 (2026-10-29)
+
+- **Sanctions screening without an API key.** The packages no longer use the OpenSanctions API. Sanctions checks go
+  to the official lists (OFAC SDN, the EU consolidated list, UK OFSI, the UN consolidated list) and, in Türkiye, to
+  asset-freezing decisions under Laws 6415 and 7262 (`yaptirim-tarama-rehberi.md`). A list that cannot be fetched is
+  never reported as clean; the answer carries the `UYARI` line instead. An OpenSanctions key that old archived
+  packages carried has been revoked and removed from the archive.
+- Packages: Law Firm and Corporate Assistant 1.12.5, Courthouse 1.2.4; Academician 1.1.5 is unchanged. Installed
+  copies pick up the new packages on their own. The desk is the same as in 3.0.3.
+- **Claude plugin.** The Law Firm package is also available as a Claude plugin in
+  [`ArthurLegal-plugin/`](ArthurLegal-plugin/) (143 skills, connected to ArthurLegal MCP), generated from the package.
+
+**Türkçe:** Paketler artık OpenSanctions API'sini kullanmıyor; yaptırım taraması resmî listelerden (OFAC SDN, AB
+konsolide listesi, UK OFSI, BM konsolide listesi) ve Türkiye'de 6415 ile 7262 sayılı kanunlara göre verilen dondurma
+kararlarından yapılır. Çekilemeyen liste "temiz" sayılmaz, cevapta UYARI satırı yer alır. Eski arşiv paketlerindeki
+OpenSanctions anahtarı iptal edildi ve arşivden silindi. Paketler: Hukuk Bürosu ve Kurumsal 1.12.5, Courthouse 1.2.4;
+Akademisyen 1.1.5 aynı. Hukuk Bürosu paketi ayrıca Claude eklentisi olarak `ArthurLegal-plugin/` klasöründe.
+
 ## Setup 3.0.3 — The start page opens with every click on the icon (2026-10-29)
 
 - **Start page every time.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* already
