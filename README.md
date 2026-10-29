@@ -642,6 +642,18 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.0.3 — The start page opens with every click on the icon (2026-10-29)
+
+- **Start page every time.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* already
+  typed and, with every click, the start page in the browser as well. Until now the page came only on the first
+  launch, so an updated start page stayed out of sight. The classic interface is unchanged: Claude Desktop and the
+  start page.
+- The packages (Law Firm, Corporate, Courthouse, Academician) and the desk are the same as in 3.0.2.
+
+**Türkçe:** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* yazılmış olarak açar ve
+artık her tıklamada başlangıç sayfasını da tarayıcıda açar; şimdiye kadar sayfa yalnız ilk açılışta geliyordu. Paketler
+ve masa 3.0.2 ile aynı.
+
 ## Setup 3.0.2 — Ask the desk in plain words: legislation and regulators' decisions (2026-10-29)
 
 - **One box, plain words.** The desk's legislation screen, now *Mevzuat ve kararlar* (legislation and decisions), has a
