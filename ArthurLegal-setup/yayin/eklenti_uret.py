@@ -6,8 +6,14 @@ Kaynak, depodaki güncel `ArthurLegal-Law-Firm-v*-Public-Release` paketidir. SYS
 (`/arthurlegal:<alan>-<skill>`), rehberler, profiller ve büro profili `references/` altına girer. Eklenti klasörü
 elle düzenlenmez: paket değişince bu betik çalıştırılır ve çıktı commitlenir; elle yapılan değişiklik testte yakalanır.
 
-    python yayin/eklenti_uret.py             klasörü paketten yeniden üret
-    python yayin/eklenti_uret.py --denetle   yalnız denetle: klasör paketten farklıysa 1 ile çık
+Sürüm eklentinin kendi sayacıdır: üretilen içerik klasördekinden farklıysa betik son haneyi kendisi bir artırır (paketin
+sürümünün gerisinde kalmaz). Kurulu kopyalar ve Claude dizini güncellemeyi sürümden anlar, aynı sürümle gelen değişiklik
+avukata inmez. Paketin sürümünü artırmak gerekmez: SYSTEM_PROMPT değişmez, sürüm sınavı koşmaz. Hangi paketten
+üretildiği README'de yazar.
+
+    python yayin/eklenti_uret.py                        klasörü paketten yeniden üret (gerekirse sürümü artırır)
+    python yayin/eklenti_uret.py --denetle              yalnız denetle: klasör paketten farklıysa 1 ile çık
+    python yayin/eklenti_uret.py --denetle --taban REF  ayrıca: eklenti REF'tekinden farklıysa sürümü artmış mı
 
 Eklenti, Claude dizinindeki ArthurLegal MCP profiline (`/directory/mcp`) bağlanır. Tapu (`arthur-tapu`), UYAP
 (`arthur-uyap`) ve Arthur Mask masaüstü kurulumun yerel modülleridir: eklenti onları taşımaz, ana beceri kuruluysa
@@ -20,9 +26,10 @@ import importlib.util
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 KOK = Path(__file__).resolve().parents[2]
 CIKTI = "ArthurLegal-plugin"
@@ -31,8 +38,12 @@ MCP_URL = "https://arthurlegal-mcp.fly.dev/directory/mcp"
 DEPO = "https://github.com/beerbottle90/ArthurLegal"
 GIZLILIK = "https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md"
 DESTEK_EPOSTA = "ertug@datsproject.io"
+# MCP_URL'deki dizin profilinin yargı çevresi sayısı (LEI, doktrin ve sözleşme arşivi yargı çevresi değildir); bağlayıcının
+# dizin ilanı da bu sayıyı yazar. Haftalık dizin denetimi (tests/dizin_denetimi.py) canlı uçtaki öneklerle karşılaştırır.
+YARGI_CEVRESI = 12
 
 PAKET = re.compile(r"^ArthurLegal-Law-Firm-v(\d+\.\d+\.\d+)-Public-Release$")
+SURUM = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
 BOLUM = re.compile(r"(?m)^## /([a-z0-9-]+):([a-z0-9-]+)\n")
 KOMUT = re.compile(r"/([a-z]+(?:-[a-z]+)*):([a-z0-9]+(?:-[a-z0-9]+)*)")
 ONBILGI = re.compile(r"\A\s*---\n(.*?)\n---\n", re.S)
@@ -170,7 +181,7 @@ def beceri_dosyasi(alan: str, skill: str, govde: str, alan_notu: str, adlar: set
     return beceri_metni(metin, adlar, rehberler).rstrip() + "\n"
 
 
-def readme(surum: str, beceri_sayisi: int, rehber_sayisi: int, alanlar: List[str]) -> str:
+def readme(surum: str, paket_surumu: str, beceri_sayisi: int, rehber_sayisi: int, alanlar: List[str]) -> str:
     alan_listesi = ", ".join("`%s`" % a for a in alanlar)
     return f"""# ArthurLegal for Claude
 
@@ -178,9 +189,10 @@ ArthurLegal is a Turkish-law-first legal assistant for law firms. This plugin br
 {beceri_sayisi} practice skills to Claude: contracts and NDAs, corporate and M&A, employment, KVKK and privacy,
 regulatory, intellectual property, litigation and petitions, tax, administrative law, criminal defense, energy and
 finance, expert opinions, contract drafting and law firm operations. Statutes and decisions are quoted from the official
-text through ArthurLegal MCP, which covers fifteen jurisdictions from Türkiye and the EU to the UK, Germany and Japan.
+text through ArthurLegal MCP, which covers {YARGI_CEVRESI} jurisdictions from Türkiye and the EU to the UK, Germany and
+Japan, plus legal-entity identity, open-access legal scholarship and published resource contracts.
 
-Plugin version {surum} is the ArthurLegal Law Firm package {surum}. Source: [{DEPO}]({DEPO}).
+Plugin version {surum}, built from the ArthurLegal Law Firm package {paket_surumu}. Source: [{DEPO}]({DEPO}).
 
 ## What it contains
 
@@ -246,9 +258,29 @@ def _simge_png() -> bytes:
     return modul.simge_png(512)
 
 
-def uret(kok: Path = KOK) -> Dict[str, bytes]:
-    """Eklenti klasörünün tamamı: göreli yol -> içerik."""
-    paket, surum = paket_dizini(kok)
+def _sayi(surum: str) -> Tuple[int, int, int]:
+    m = SURUM.match(surum)
+    if not m:
+        raise EklentiHata("sürüm üç sayı olmalı (ör. 1.12.5): %r" % surum)
+    return int(m.group(1)), int(m.group(2)), int(m.group(3))
+
+
+def yeni_surum(eski: str, paket_surumu: str) -> str:
+    """İçerik değişince eklenti sürümü bir artar; paketin sürümünün gerisinde kalmaz."""
+    a, b, c = _sayi(eski)
+    return max("%d.%d.%d" % (a, b, c + 1), paket_surumu, key=_sayi)
+
+
+def mevcut_surum(kok: Path = KOK) -> Optional[str]:
+    """Depodaki eklenti klasörünün sürümü; klasör yoksa None."""
+    yol = kok / CIKTI / ".claude-plugin" / "plugin.json"
+    return json.loads(yol.read_text(encoding="utf-8"))["version"] if yol.exists() else None
+
+
+def uret(kok: Path = KOK, surum: Optional[str] = None) -> Dict[str, bytes]:
+    """Eklenti klasörünün tamamı: göreli yol -> içerik. Sürüm verilmezse klasördeki (yoksa paketin) sürümü."""
+    paket, paket_surumu = paket_dizini(kok)
+    surum = surum or mevcut_surum(kok) or paket_surumu
     knowledge = paket / "knowledge"
     beceriler, notlar = becerilere_ayir(knowledge)
     adlar = {"%s-%s" % (a, s) for a, s, _ in beceriler}
@@ -257,7 +289,7 @@ def uret(kok: Path = KOK) -> Dict[str, bytes]:
     rehberler = {p.name for p in (knowledge / "references").glob("*.md")} - set(ANAHTARLI_REHBER)
 
     dosyalar: Dict[str, str] = {}
-    dosyalar["skills/%s/SKILL.md" % AD] = ana_beceri(_oku(paket / "SYSTEM_PROMPT.md"), surum, adlar, rehberler)
+    dosyalar["skills/%s/SKILL.md" % AD] = ana_beceri(_oku(paket / "SYSTEM_PROMPT.md"), paket_surumu, adlar, rehberler)
     for alan, skill, govde in beceriler:
         dosyalar["skills/%s-%s/SKILL.md" % (alan, skill)] = beceri_dosyasi(
             alan, skill, govde, notlar.get(alan, ""), adlar, rehberler)
@@ -273,7 +305,8 @@ def uret(kok: Path = KOK) -> Dict[str, bytes]:
         "displayName": "ArthurLegal",
         "version": surum,
         "description": ("Turkish-law-first legal assistant for law firms: %d practice skills with citations checked "
-                        "against the official text through ArthurLegal MCP (15 jurisdictions)." % len(beceriler)),
+                        "against the official text through ArthurLegal MCP (%d jurisdictions)."
+                        % (len(beceriler), YARGI_CEVRESI)),
         "author": {"name": "ArthurLegal", "url": DEPO},
         "homepage": DEPO + "/tree/main/" + CIKTI,
         "repository": DEPO,
@@ -285,7 +318,7 @@ def uret(kok: Path = KOK) -> Dict[str, bytes]:
     }
     dosyalar[".claude-plugin/plugin.json"] = json.dumps(manifest, ensure_ascii=False, indent=2) + "\n"
     dosyalar[".mcp.json"] = json.dumps({"mcpServers": {AD: {"type": "http", "url": MCP_URL}}}, indent=2) + "\n"
-    dosyalar["README.md"] = readme(surum, len(beceriler), len(rehberler) + 11, sorted(notlar))
+    dosyalar["README.md"] = readme(surum, paket_surumu, len(beceriler), len(rehberler) + 11, sorted(notlar))
     dosyalar["LICENSE"] = _oku(kok / "LICENSE")
     dosyalar["LICENSE-APACHE-2.0-THIRD-PARTY.txt"] = _oku(paket / "LICENSE-APACHE-2.0-THIRD-PARTY.txt")
     dosyalar["ATTRIBUTION.md"] = _oku(paket / "ATTRIBUTION.md")
@@ -299,9 +332,7 @@ def _normal(yol: str, veri: bytes) -> bytes:
     return veri if Path(yol).suffix in IKILI else veri.replace(b"\r\n", b"\n")
 
 
-def denetle(kok: Path = KOK) -> List[str]:
-    hedef = kok / CIKTI
-    beklenen = uret(kok)
+def _farklar(hedef: Path, beklenen: Dict[str, bytes]) -> List[str]:
     sorunlar = []
     mevcut = {p.relative_to(hedef).as_posix() for p in hedef.rglob("*") if p.is_file()} if hedef.exists() else set()
     for yol in sorted(set(beklenen) - mevcut):
@@ -314,30 +345,66 @@ def denetle(kok: Path = KOK) -> List[str]:
     return sorunlar
 
 
-def yaz(kok: Path = KOK) -> int:
+def denetle(kok: Path = KOK) -> List[str]:
+    return _farklar(kok / CIKTI, uret(kok))
+
+
+def surum_denetle(taban: str, kok: Path = KOK) -> List[str]:
+    """Eklenti `taban` commit'indekinden farklıysa sürümü de artmış olmalı: kurulu kopyalar ve Claude dizini
+    güncellemeyi sürümden anlar, aynı sürümle gelen değişiklik avukatın bilgisayarına inmez."""
+    def git(*args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(["git", "-C", str(kok), *args], capture_output=True)
+
+    if git("rev-parse", "--verify", "--quiet", taban + "^{commit}").returncode:
+        raise EklentiHata("taban commit okunamadı: %s" % taban)
+    eski = git("show", "%s:%s/.claude-plugin/plugin.json" % (taban, CIKTI))
+    if eski.returncode:
+        return []   # tabanda eklenti yok: ilk sürüm
+    fark = git("diff", "--quiet", taban, "--", CIKTI).returncode
+    if fark not in (0, 1):
+        raise EklentiHata("git diff çalışmadı: %s" % taban)
+    if fark == 0 and not git("ls-files", "--others", "--exclude-standard", "--", CIKTI).stdout.strip():
+        return []
+    e, y = json.loads(eski.stdout)["version"], mevcut_surum(kok)
+    if y is None or _sayi(y) <= _sayi(e):
+        return ["eklenti %s'e göre değişti ama sürümü artmadı (%s → %s); "
+                "`python ArthurLegal-setup/yayin/eklenti_uret.py` sürümü kendisi artırır" % (taban[:12], e, y)]
+    return []
+
+
+def yaz(kok: Path = KOK) -> Tuple[int, str]:
+    """Klasörü paketten yeniden üretir; içerik değiştiyse sürümü bir artırır. (dosya sayısı, sürüm) döner."""
     hedef = kok / CIKTI
     dosyalar = uret(kok)
+    eski = mevcut_surum(kok)
+    if eski and _farklar(hedef, dosyalar):
+        dosyalar = uret(kok, yeni_surum(eski, paket_dizini(kok)[1]))
     if hedef.exists():
         shutil.rmtree(hedef)
     for yol, veri in dosyalar.items():
         dosya = hedef / yol
         dosya.parent.mkdir(parents=True, exist_ok=True)
         dosya.write_bytes(veri)
-    return len(dosyalar)
+    return len(dosyalar), json.loads(dosyalar[".claude-plugin/plugin.json"])["version"]
 
 
 def main(argv=None) -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")   # Windows konsolu (cp1254) Türkçe dışı işaretleri yazamaz
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--denetle", action="store_true", help="yalnız denetle, yazma")
+    ap.add_argument("--taban", metavar="REF", help="--denetle ile: eklenti bu commit'tekinden farklıysa sürümü artmış mı")
     a = ap.parse_args(argv)
     try:
         if a.denetle:
-            sorunlar = denetle()
+            sorunlar = denetle() + (surum_denetle(a.taban) if a.taban else [])
             for s in sorunlar:
                 print(s)
-            print("eklenti: " + ("paketle aynı" if not sorunlar else "%d sorun" % len(sorunlar)))
+            print("eklenti: " + ("paketle aynı, sürüm %s" % mevcut_surum() if not sorunlar
+                                 else "%d sorun" % len(sorunlar)))
             return 1 if sorunlar else 0
-        print("yazılan dosya: %d (%s/)" % (yaz(), CIKTI))
+        sayi, surum = yaz()
+        print("yazılan dosya: %d (%s/), sürüm %s" % (sayi, CIKTI, surum))
         return 0
     except EklentiHata as e:
         print("hata: %s" % e, file=sys.stderr)

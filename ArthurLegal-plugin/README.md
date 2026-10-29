@@ -4,9 +4,10 @@ ArthurLegal is a Turkish-law-first legal assistant for law firms. This plugin br
 142 practice skills to Claude: contracts and NDAs, corporate and M&A, employment, KVKK and privacy,
 regulatory, intellectual property, litigation and petitions, tax, administrative law, criminal defense, energy and
 finance, expert opinions, contract drafting and law firm operations. Statutes and decisions are quoted from the official
-text through ArthurLegal MCP, which covers fifteen jurisdictions from Türkiye and the EU to the UK, Germany and Japan.
+text through ArthurLegal MCP, which covers 12 jurisdictions from Türkiye and the EU to the UK, Germany and
+Japan, plus legal-entity identity, open-access legal scholarship and published resource contracts.
 
-Plugin version 1.12.5 is the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
+Plugin version 1.12.6, built from the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
 
 ## What it contains
 

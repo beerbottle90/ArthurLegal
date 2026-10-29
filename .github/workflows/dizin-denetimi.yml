@@ -1,0 +1,53 @@
+# Dizin denetimi (haftalık): Claude dizinindeki ilanlar hâlâ canlı uçla ve eklentiyle aynı şeyi mi söylüyor.
+#
+# Bağlayıcı ilanının metni (araç sayısı, araç adları, yargı çevresi) claude.ai/directory/manage portalında durur ve
+# kodla birlikte değişmez. Bu iş her Pazartesi canlı /directory/mcp ucunu ArthurLegal-setup/tests/dizin_kaydi.json'daki
+# ilan kaydıyla karşılaştırır, dizin kurallarını (başlık, readOnlyHint/destructiveHint) ve eklentinin aynı uca, aynı
+# yargı çevresi sayısına bağlı olduğunu denetler. Fark varsa kırmızı biter (GitHub e-postası) ve haftalık denetim
+# rutini sonucu raporuna yazar. Düzeltme: önce portaldaki ilan metni, sonra
+#   python ArthurLegal-setup/tests/dizin_denetimi.py --kaydet
+# Ağa yalnız ArthurLegal MCP ucu için çıkar; API anahtarı istemez, Claude kullanmaz.
+
+name: Dizin denetimi
+
+on:
+  schedule:
+    - cron: "30 5 * * 1"   # Pazartesi 08.30 İstanbul; haftalık denetim rutini 09.00'da sonucu okur
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "ArthurLegal-setup/tests/dizin_denetimi.py"
+      - "ArthurLegal-setup/tests/dizin_kaydi.json"
+      - "ArthurLegal-setup/yayin/eklenti_uret.py"
+      - ".github/workflows/dizin-denetimi.yml"
+  pull_request:
+    paths:
+      - "ArthurLegal-setup/tests/dizin_denetimi.py"
+      - "ArthurLegal-setup/tests/dizin_kaydi.json"
+      - ".github/workflows/dizin-denetimi.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  denetle:
+    name: Dizin ilanlarını denetle
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dizin denetimi
+        run: python ArthurLegal-setup/tests/dizin_denetimi.py --json dizin-denetimi.json
+
+      - name: Sonuç özeti
+        if: always()
+        run: |
+          if [ -f dizin-denetimi.json ]; then
+            python -c "import json; [print('- **%(durum)s** %(denetim)s: %(ayrinti)s' % s) for s in json.load(open('dizin-denetimi.json', encoding='utf-8'))]" >> "$GITHUB_STEP_SUMMARY"
+          fi
