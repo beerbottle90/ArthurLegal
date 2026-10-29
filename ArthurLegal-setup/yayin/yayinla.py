@@ -10,6 +10,7 @@
 
 Sürüm sınavı (Katman 2): %USERPROFILE%/.arthurlegal/sinav.json varsa yayından önce bir kalite sınavı çalışır ve
 kalite önceki sürüme göre düştüyse yayın durur (bkz. surum_sinavi). Ayar yoksa sınavsız devam edilir.
+Sınavdan önce Claude eklentisinin (ArthurLegal-plugin/) depodaki paketten üretildiği denetlenir (eklenti_denetimi).
 
 Önce: python yayin/derle.py  (standart kurulum ve paket zip'i). Etiket zaten varsa (ör. sürüm notu
 elle açıldıysa) dosyalar o yayına eklenir. Büroya özel kurulumlar ve büro katmanı YÜKLENMEZ.
@@ -236,6 +237,20 @@ def dosyalari_yukle(yayin: dict, jeton: str, dosyalar: list, yeni: bool) -> None
         print(f"  yüklendi: {ad}")
 
 
+def eklenti_denetimi() -> None:
+    """Yayından önce: Claude eklentisi (ArthurLegal-plugin/) depodaki Law Firm paketinden üretilmiş mi. Paket değişip
+    eklenti üretilmediyse dizindeki eklenti eski pakette kalır; sınavdan önce durur, sınav boşuna harcanmaz."""
+    import eklenti_uret
+    try:
+        sorunlar = eklenti_uret.denetle()
+    except eklenti_uret.EklentiHata as e:
+        sys.exit(f"Claude eklentisi denetlenemedi: {e}")
+    if sorunlar:
+        sys.exit("Claude eklentisi pakete göre eski; yayın durdu:\n  " + "\n  ".join(sorunlar[:5])
+                 + ("\n  ..." if len(sorunlar) > 5 else "")
+                 + "\nÖnce: python yayin/eklenti_uret.py (sürümü kendisi artırır), commit ve push.")
+
+
 def surum_sinavi(etiket: str, kabul: str | None, ayar_yolu: Path = SINAV_AYARI) -> str | None:
     """Yayından önce kalite sınavı (sürüm sınavı, Katman 2). Özet satırını döndürür; ayar yoksa None.
 
@@ -329,6 +344,7 @@ def main(argv=None) -> int:
     if not d:
         sys.exit("Önce derleyin: python yayin/derle.py")
     depo = k.get("dagitim_deposu") or k["yayin_deposu"]
+    eklenti_denetimi()
     sinav = None if (args.kuru or args.sinavsiz) else surum_sinavi(args.etiket, args.sinav_kabul)
     manifest = {
         "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,

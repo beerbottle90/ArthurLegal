@@ -12,6 +12,10 @@
 #   4. Yeni ayrışma: paketler arasında birbirinin aynısı olan bir dosya yalnız bir pakette değişti mi
 #   5. Ortak rehberler: ArthurLegal-setup/ortak-rehberler/ tek kaynağından üretilen paket kopyaları kaynakla
 #      aynı mı (yayin/ortak_uret.py); paketin içinde elle yapılan düzeltme burada yakalanır
+#   6. Claude eklentisi: ArthurLegal-plugin/ Law Firm paketinden üretilmiş mi ve dizinin dosya kurallarına uyuyor
+#      mu (yayin/eklenti_uret.py, tests/test_eklenti.py); paket değişip eklenti üretilmediyse kırmızı
+#   7. Eklenti sürümü: eklenti tabandakinden (PR'da hedef dal, push'ta önceki commit) farklıysa sürümü artmış mı.
+#      Kurulu kopyalar ve Claude dizini güncellemeyi sürümden anlar; eklenti_uret.py sürümü kendisi artırır
 # Bilinen eski sorunlar ArthurLegal-setup/tests/paket_denetimi_taban.json'dadır; iş yalnız yeni bir sorunda
 # kırmızı biter. Ayrıntılı rapor: python ArthurLegal-setup/yayin/paket_denetimi.py --ayrinti
 
@@ -22,18 +26,26 @@ on:
     branches: ["**"]
     paths:
       - "ArthurLegal-*-Public-Release/**"
+      - "ArthurLegal-plugin/**"
       - "ArthurLegal-setup/yayin/paket_denetimi.py"
       - "ArthurLegal-setup/yayin/ortak_uret.py"
+      - "ArthurLegal-setup/yayin/eklenti_uret.py"
+      - "ArthurLegal-setup/varlik/simge.py"
       - "ArthurLegal-setup/ortak-rehberler/**"
       - "ArthurLegal-setup/tests/**"
+      - "LICENSE"
       - ".github/workflows/paket-denetimi.yml"
   pull_request:
     paths:
       - "ArthurLegal-*-Public-Release/**"
+      - "ArthurLegal-plugin/**"
       - "ArthurLegal-setup/yayin/paket_denetimi.py"
       - "ArthurLegal-setup/yayin/ortak_uret.py"
+      - "ArthurLegal-setup/yayin/eklenti_uret.py"
+      - "ArthurLegal-setup/varlik/simge.py"
       - "ArthurLegal-setup/ortak-rehberler/**"
       - "ArthurLegal-setup/tests/**"
+      - "LICENSE"
       - ".github/workflows/paket-denetimi.yml"
 
 permissions:
@@ -54,3 +66,19 @@ jobs:
       # Depo kökünden çalışır; test, depo kökünü kendi konumundan bulur
       - name: Paket denetimi
         run: python -m unittest ArthurLegal-setup/tests/test_paketler.py ArthurLegal-setup/tests/test_ortak.py -v
+
+      - name: Claude eklentisi
+        run: python -m unittest ArthurLegal-setup/tests/test_eklenti.py ArthurLegal-setup/tests/test_dizin.py -v
+
+      # Taban: PR'da hedef dalın ucu, push'ta önceki commit; yeni açılan dalda (önceki commit yok) main
+      - name: Eklenti sürümü
+        env:
+          TABAN: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$TABAN" ] || [ "$TABAN" = "0000000000000000000000000000000000000000" ]; then
+            git fetch --no-tags --depth=1 origin main
+            TABAN=$(git rev-parse FETCH_HEAD)
+          else
+            git fetch --no-tags --depth=1 origin "$TABAN"
+          fi
+          python ArthurLegal-setup/yayin/eklenti_uret.py --denetle --taban "$TABAN"
