@@ -148,7 +148,7 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
   → dosya sorumlusu avukata bildir, dış kaynak (yabancı hukuk uzmanı, Lexpera/
   UYAP manuel doğrulama) öner.
 - **Yaptırım eşleşmesi** görülürse → dur, `firm-operations:conflict-check` ve
-  `references/opensanctions-rehberi.md` akışına geç.
+  `yaptirim-tarama-rehberi.md` akışına geç.
 - Bir MCP sürekli erişilemiyorsa → `[DOLDUR — teknik sorumlu]`'ya bildir; o arada
   yedek yolu kullan ve kapsam notu ekle.
 

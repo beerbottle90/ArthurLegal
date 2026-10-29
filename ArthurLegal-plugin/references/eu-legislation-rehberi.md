@@ -169,7 +169,7 @@ https://www.sanctionsmap.eu/api/v1/data?include_draft=0&lang=en
 https://www.sanctionsmap.eu/api/v1/regime?lang=en
 ```
 
-> **Sıralama:** isim/varlık taraması → **OpenSanctions** (`opensanctions-rehberi.md`);
+> **Sıralama:** isim/varlık taraması → **OpenSanctions** (`yaptirim-tarama-rehberi.md`);
 > "hangi AB tüzüğü hangi ülkeye hangi tedbiri koyuyor" → sanctionsmap `/data`;
 > resmî liste kaydının birebir doğrulanması → FSF CSV/XML.
 

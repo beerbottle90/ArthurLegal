@@ -26,7 +26,6 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 | 🇦🇿 AZ | ~~e-qanun.az WebFetch~~ | ⬆️ **MCP'ye taşındı** | **e-qanun MCP** (resmî `api.e-qanun.az`, statülü) → `eqanun-mcp-rehberi.md`. WebFetch yedeği hâlâ anti-bot ⚠️ → cis-legislation.com |
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
 | 🇷🇸 SR | paragraf.rs | ✅ | — |
-| 🌍 OpenSanctions | api.opensanctions.org | 🔑 ortam değişkeni `OPENSANCTIONS_API_KEY` | `Authorization: ApiKey $OPENSANCTIONS_API_KEY` (yalnız kabuk komutuyla, ör. curl; anahtar pakette yok) |
 | 🇹🇷 KAP | kap.org.tr | ✅ | — |
 | 🇹🇷 e-şirket | e-sirket.mkk.com.tr | ⚠️ JS SPA | Halka açıklar → KAP; tescil → ticaretsicil.gov.tr |
 
@@ -110,9 +109,9 @@ yardımcı kaynaktır.
 | Türk kanunu, yönetmeliği, CB kararnamesi | ArthurLegal MCP (`tr_`) (mevzuat) | `mevzuat-mcp-rehberi.md` |
 | Türk/idari yargı kararı, Kurul kararı | ArthurLegal MCP (`tr_`) (yargı) | `yargi-mcp-rehberi.md` |
 | İngiliz hukuku statüsü (governing law = English law) | legislation.gov.uk | `uk-legislation-rehberi.md` |
-| ABD federal statüsü/yönetmeliği (US/NY hukuku) | GovInfo WebFetch | `us-legislation-rehberi.md` |
+| ABD federal statüsü/yönetmeliği (US/NY hukuku) | GovInfo WebFetch | `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` |
 | ABD mahkeme kararı / içtihat | CourtListener REST | `courtlistener-rehberi.md` |
-| Yaptırım / PEP taraması | OpenSanctions API | `opensanctions-rehberi.md` |
+| Yaptırım / PEP taraması | OpenSanctions API | `yaptirim-tarama-rehberi.md` |
 | **Azerbaycan mevzuatı + yürürlük statüsü** 🆕 | **e-qanun MCP** | `eqanun-mcp-rehberi.md` |
 | **Yabancı / karşılaştırmalı akademik doktrin** 🆕 | **LexScholar MCP** | `lex-scholar-rehberi.md` |
 | **Türk akademik doktrini (DergiPark)** 🆕 | **LexScholar MCP** (19 TR hukuk dergisi) | `lex-scholar-rehberi.md` |
@@ -227,8 +226,8 @@ ilgili rehberin "Yedek kaynaklar" bölümüne düş ve kesintiyi kullanıcıya b
 - **v1.4.0 (paket sürümü):** MCP sunucu tablosu, 100 saniye kuralı, kaynak
   hiyerarşisi ve üç yeni atıf etiketi eklendi; AZ satırı WebFetch'ten MCP'ye
   taşındı.
-- İlişkili rehberler: `uk-legislation-rehberi.md`, `us-legislation-rehberi.md`,
-  `courtlistener-rehberi.md`, `istac-rehberi.md`, `opensanctions-rehberi.md`,
+- İlişkili rehberler: `uk-legislation-rehberi.md`, `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)`,
+  `courtlistener-rehberi.md`, `istac-rehberi.md`, `yaptirim-tarama-rehberi.md`,
   `eqanun-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md`.
 
 ---

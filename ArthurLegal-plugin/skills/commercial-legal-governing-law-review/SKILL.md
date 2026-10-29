@@ -71,7 +71,7 @@ CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 Karşı tarafın ülkesine göre iki paralel kontrol:
 
 ### 3a. OpenSanctions taraması
-Karşı taraf tüzel kişiyi OpenSanctions'da tara (`opensanctions-rehberi.md`).
+Karşı taraf tüzel kişiyi OpenSanctions'da tara (`yaptirim-tarama-rehberi.md`).
 Eşleşme varsa → Adım 3b'ye geçme, dur ve [Uyum Direktörü]'e eskalasyon öner.
 
 ### 3b. Ülke bazlı mevzuat kontrol
@@ -80,7 +80,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 | Karşı taraf ülkesi | Rehber | Kritik kontrol |
 |---|---|---|
 | 🇬🇧 İngiltere | `uk-legislation-rehberi.md` | Arbitration Act 1996, UCTA 1977 s.3 |
-| 🇺🇸 ABD | `us-legislation-rehberi.md` + `courtlistener-rehberi.md` | CISG opt-out, UCC Art.2, FAA §2 |
+| 🇺🇸 ABD | `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` + `courtlistener-rehberi.md` | CISG opt-out, UCC Art.2, FAA §2 |
 | 🇩🇪 Almanya | `germany-legislation-rehberi.md` | BGB §307 standart şart denetimi, HGB |
 | 🇫🇷 Fransa | `france-legislation-rehberi.md` | Code civil m.1171 (haksız şart), m.1442 |
 | 🇨🇭 İsviçre | `switzerland-caselaw-rehberi.md` | IPRG m.178 tahkim sözleşmesi, OR m.19 |
@@ -104,7 +104,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 
 **Governing law**'u fiilen çek:
 - İngiliz hukuku → `uk-legislation-rehberi.md` → `legislation.gov.uk` WebFetch
-- ABD hukuku → `us-legislation-rehberi.md` + `courtlistener-rehberi.md` → citation verification zorunlu
+- ABD hukuku → `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` + `courtlistener-rehberi.md` → citation verification zorunlu
 - Alman hukuku → **de-eli MCP** (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
 - Hollanda hukuku → **nl-rechtspraak MCP** (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
 - Polonya hukuku → **pl-sejm MCP** (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği

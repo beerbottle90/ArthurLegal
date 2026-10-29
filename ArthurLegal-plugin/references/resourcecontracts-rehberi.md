@@ -180,7 +180,7 @@ Bu tablo yalnız bir örnektir — aynı desen 107 ülkenin herhangi biri için
 | Uygulanacak hukuk & tahkim klozu analizi | `karsilastirmali-hukuk-rehberi.md`, `istac-rehberi.md` |
 | AZ mevzuat lafzı + statü | `eqanun-mcp-rehberi.md` (BİRİNCİL) |
 | Enerji hukuku doktrini | `lex-scholar-rehberi.md` (İKİNCİL) |
-| Karşı taraf yaptırım taraması | `opensanctions-rehberi.md` — **emsale dayanmadan önce tara** |
+| Karşı taraf yaptırım taraması | `yaptirim-tarama-rehberi.md` — **emsale dayanmadan önce tara** |
 
 ---
 

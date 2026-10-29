@@ -55,4 +55,4 @@ taşır ve bu durum cevabın görünür kısmında belirtilir.
 
 ## Bilgi tabanı
 
-`abd-atif-dogrulama-rehberi.md` · `courtlistener-rehberi.md` · `us-legislation-rehberi.md`
+`abd-atif-dogrulama-rehberi.md` · `courtlistener-rehberi.md` · `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)`

@@ -121,5 +121,5 @@ altında yer alır — **Dayanak birincil hukuk kalır**.
   `energy-finance:jv-agreement-review`, `energy-finance:project-finance-review`,
   `energy-finance:ma-diligence-energy`, `corporate-legal`,
   `contract-drafting:redline-contract`, `expert-opinion:uzman-mutalaasi`.
-- Yaptırım örtüşmesi: emsalin karşı tarafı için `opensanctions-rehberi.md`.
+- Yaptırım örtüşmesi: emsalin karşı tarafı için `yaptirim-tarama-rehberi.md`.
 - Kaynak disiplini: `/arthurlegal:legal-research-kaynak-secimi` tam olarak uygulanır.

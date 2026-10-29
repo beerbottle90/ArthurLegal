@@ -109,9 +109,8 @@ Her satırda önce ilk sütundaki yol denenir; yedek yol yalnız o yol kurulu de
 | Taşınmaz, parsel (il/ilçe/mahalle ada/parsel, koordinat, yer adı) | `tkgm_parsel_sorgula`, `tkgm_konumdan_parsel`, `tkgm_yer_bul`, `tkgm_parsel_raporu` (Claude Desktop yerel kurulumunda aynı adlar öneksiz; sohbetteki ilk canlı çağrıda onay kartı) | kullanıcı Parsel Sorgu'yu kendi tarayıcısında açar (`tkgm_baglanti`) | `tapu-kadastro-rehberi.md` | `[TKGM Parsel Sorgu, il/ilçe/mahalle ada/parsel, GG.AA.YYYY, bilgi amaçlı]` |
 | AİHM | TR Legal MCP (isteğe bağlı) `aihm_ictihat_ara` (varsayılan ülke Türkiye) | HUDOC WebFetch | `echr-hudoc-rehberi.md` | `[ECHR, dava adı, başvuru no, GG.AA.YYYY]` |
 | KAP, e-Şirket | WebFetch | | `kap-esirket-webfetch-rehberi.md` | `[KAP, ticker, GG.AA.YYYY HH:MM]` |
-| Yaptırım taraması | OpenSanctions API (`OPENSANCTIONS_API_KEY`) | OFAC SDN, AB Sanctions Map, UK OFSI | `opensanctions-rehberi.md`, `yaptirim-tarama-rehberi.md` | `[OpenSanctions API, eşleşme skoru X, GG.AA.YYYY]` |
 | Birleşik Krallık mevzuatı | `uk_` (5 araç) | legislation.gov.uk WebFetch | `uk-legislation-mcp-rehberi.md`, `uk-legislation-rehberi.md` | `[UK Legislation, tür/yıl s. madde, GG.AA.YYYY]` |
-| ABD federal mevzuatı | GovInfo REST WebFetch | | `us-legislation-rehberi.md` | `[US Legislation, GovInfo, atıf, GG.AA.YYYY]` |
+| ABD federal mevzuatı | GovInfo REST WebFetch | | `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` | `[US Legislation, GovInfo, atıf, GG.AA.YYYY]` |
 | ABD içtihadı | CourtListener MCP | | `courtlistener-rehberi.md`, `abd-atif-dogrulama-rehberi.md` | `[CourtListener, mahkeme, citation, GG.AA.YYYY]` |
 | AB mevzuatı ve CJEU | `eu_` (4 araç) | CELLAR üç adımı (WebFetch) | `eurlex-cellar-rehberi.md`, `eu-legislation-rehberi.md` | `[EU Legislation, CELEX no, GG.AA.YYYY]`; `[CJEU, dava adı, C numarası, GG.AA.YYYY]` |
 | Almanya mevzuat, içtihat, yasama gerekçesi | `de_` (17 araç; kanun maddesi `de_norm_getir`) | `germany-legislation-rehberi.md` WebFetch | `de-eli-mcp-rehberi.md` | `[DE, de-eli MCP, human_readable_citation, eli_uri veya ECLI, GG.AA.YYYY]`; WebFetch ile `[DE Mevzuat, kanun, paragraf, GG.AA.YYYY]` |

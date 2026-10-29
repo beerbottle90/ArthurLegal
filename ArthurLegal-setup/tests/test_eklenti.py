@@ -63,6 +63,18 @@ class EklentiKlasoru(unittest.TestCase):
             for rehber in re.findall(r"\$\{CLAUDE_PLUGIN_ROOT\}/(references/[\w./-]+\.md)", metin):
                 self.assertIn(rehber, self.dosyalar, "%s içinde olmayan rehber: %s" % (ad, rehber))
 
+    def test_kullanici_anahtari_istenmez(self):
+        # Dizin, kullanıcının makinesindeki anahtarı okuyup dışarı gönderen talimatı bekletir (MCP_FORWARDS_CREDENTIAL_ENV).
+        for yol, veri in self.dosyalar.items():
+            if yol.endswith(".png"):
+                continue
+            metin = veri.decode("utf-8")
+            kalan = set(eklenti_uret.KIMLIK.findall(metin)) - eklenti_uret.SERBEST_KIMLIK
+            self.assertEqual(kalan, set(), yol)
+            self.assertNotRegex(metin, r"\b[0-9a-f]{32}\b", yol)
+        for rehber in eklenti_uret.ANAHTARLI_REHBER:
+            self.assertNotIn("references/" + rehber, self.dosyalar)
+
     def test_yerel_moduller_eklentiye_girmez(self):
         # Tapu, UYAP ve Mask kullanıcının bilgisayarında çalışır; eklenti yalnız onlara yönlendirir.
         ana = self.dosyalar["skills/%s/SKILL.md" % eklenti_uret.AD].decode("utf-8")

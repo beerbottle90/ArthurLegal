@@ -14,7 +14,7 @@ Plugin version 1.12.4 is the ArthurLegal Law Firm package 1.12.4. Source: [https
   that replaces any fact a live source could not return. Claude loads it before any legal task.
 - **142 practice skills**, called as `/arthurlegal:<area>-<skill>`, for example
   `/arthurlegal:commercial-legal-nda-review` or `/arthurlegal:tax-legal-gib-ozelge-request`. Areas: `administrative-legal`, `advocacy-legal`, `commercial-legal`, `contract-drafting`, `corporate-legal`, `criminal-defense`, `employment-legal`, `energy-finance`, `expert-opinion`, `firm-operations`, `ip-legal`, `legal-research`, `litigation-legal`, `privacy-legal`, `regulatory-legal`, `tax-legal`.
-- **`references/`**: 106 guides, practice profiles and a firm profile template that the skills read.
+- **`references/`**: 104 guides, practice profiles and a firm profile template that the skills read.
 - **One connector: ArthurLegal MCP** (`https://arthurlegal-mcp.fly.dev/directory/mcp`), read-only legal research with no account.
 
 ## What it runs and sends
