@@ -55,6 +55,7 @@ _PARCALAR = {
     "JS": ("tasarim", "al.js"),
     "KARTLAR": ("tasarim", "kartlar.js"),
     "ATIF": ("tasarim", "atif.js"),
+    "ISTEK": ("tasarim", "istek.js"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }

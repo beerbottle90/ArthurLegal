@@ -234,5 +234,5 @@ const KART = (() => {
     return kok;
   }
 
-  return { madde, ictihat, maddeEtiketi, durumRozeti };
+  return { madde, ictihat, maddeEtiketi, durumRozeti, uzunMetin };
 })();
