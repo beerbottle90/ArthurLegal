@@ -64,7 +64,7 @@ gelmez. En az bir paket gerekir:
 |---|---|
 | **Hukuk Bürosu** | Avukatlar ve hukuk büroları |
 | **Kurumsal Asistan** | Şirket hukuk birimleri |
-| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.3-Public-Release/)) |
+| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.4-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
 | **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
@@ -249,7 +249,7 @@ short description under it, and nothing is ticked on a first installation. At le
 |---|---|
 | **Law Firm** | Lawyers and law firms |
 | **Corporate Assistant** | In-house legal teams |
-| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.3-Public-Release/), in Turkish) |
+| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.4-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
 | **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
@@ -451,14 +451,14 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.4](ArthurLegal-CorporateAssistant-v1.12.4-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 105 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.4](ArthurLegal-Law-Firm-v1.12.4-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 130 knowledge files · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.4](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 105 knowledge files · Arthur Mask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.4](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 130 knowledge files · Arthur Mask local privacy gate |
 | Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
+| **Courthouse** | **[v1.2.3](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
-Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.3-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.3](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
