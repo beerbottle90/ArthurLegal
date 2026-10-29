@@ -31,8 +31,8 @@
 varlığın **hangi tüzel kişi olduğunu** deterministik biçimde sabitlemektir. Serbest
 metin unvanla yaptırım taraması yanlış pozitif/negatif üretir; LEI ise tek ve
 küresel benzersiz kimliktir. Akış: **önce GLEIF ile kimlik çözümle (LEI + tescilli
-unvan + yargı çevresi + sicil no), sonra bu doğrulanmış kimlikle OpenSanctions
-taraması yap** (`yaptirim-tarama-rehberi.md`). Aynı veri KYC dosyası ve governing-law
+unvan + yargı çevresi + sicil no), sonra bu doğrulanmış kimlikle resmî yaptırım
+listelerinde tara** (`yaptirim-tarama-rehberi.md`). Aynı veri KYC dosyası ve governing-law
 analizinde (karşı tarafın gerçek kuruluş yeri) doğrudan kullanılır.
 
 ---
@@ -109,8 +109,8 @@ ADIM 3 — Nihai ana ortak (Level 2):
   → "Siemens Aktiengesellschaft" — LEI: W38RGI023J3WT1HWRP32, jurisdiction: DE
 
 ADIM 4 — Doğrulanmış kimlikle yaptırım taraması:
-  yaptirim-tarama-rehberi.md prosedürü — Matching API'ye unvan + ülke + sicil no
-  ile git; hem sözleşme tarafını hem nihai ana ortağı AYRI AYRI tara.
+  yaptirim-tarama-rehberi.md Adım 2 — resmî listelerde unvan + ülke + sicil no
+  ile ara; hem sözleşme tarafını hem nihai ana ortağı AYRI AYRI tara.
 
 ADIM 5 — Atıf:
   [GLEIF — LEI 52990021T5LVTQOGSU18 — çekim: GG.AA.YYYY]
@@ -188,9 +188,8 @@ Ticari kullanım, kopyalama ve yeniden dağıtım serbesttir.
 
 ## İlgili rehberler
 
-- `yaptirim-tarama-rehberi.md` — kimlik çözümünden sonraki yaptırım/PEP taraması;
-  GLEIF → OpenSanctions sırası bu rehberin ana akışıdır
-- `yaptirim-tarama-rehberi.md` — tam yaptırım tarama prosedürü; Adım 1'de
+- `yaptirim-tarama-rehberi.md` — kimlik çözümünden sonraki yaptırım taraması ve tam
+  tarama prosedürü; GLEIF → resmî listeler sırası bu rehberin ana akışıdır, Adım 1'de
   karşı-taraf kimliği GLEIF ile sabitlenir
 - `karsilastirmali-hukuk-rehberi.md` — karşı tarafın yargı çevresi belirlendikten
   sonra ülke hukuku katmanı

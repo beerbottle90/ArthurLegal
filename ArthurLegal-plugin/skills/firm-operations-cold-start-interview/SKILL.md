@@ -82,7 +82,7 @@ user-invocable: true
 - Fatura / muhasebe (dahili / dış muhasebeci)
 - E-imza / KEP (büro + her ortak)
 - CRM (varsa)
-- Sanctions tarama (OpenSanctions API — API key alınmış mı?)
+- Sanctions tarama (resmî listeler WebFetch ile; ayrıca ticari tarama hizmeti var mı?)
 
 ### 10. "Yakıcı" stres alanları
 

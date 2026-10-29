@@ -1,6 +1,6 @@
 # ArthurLegal Law Firm Assistant — Installation Guide
 
-**Version:** 1.12.4 | **Updated:** 2026-10-27
+**Version:** 1.12.5 | **Updated:** 2026-10-29
 
 ---
 
@@ -12,7 +12,6 @@
 | ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 14 jurisdictions + land registry, 123 tools, no auth (Step 4) |
 | TR Legal MCP | yargi-mcp-pro connector — only for ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK (optional — Step 4b) |
 | Arthur Mask | Local privacy gate that masks documents on your computer; Windows 10/11 64-bit + Claude Desktop (recommended, optional — Step 5) |
-| OpenSanctions API key | For sanctions screening (optional) |
 
 ---
 
@@ -98,7 +97,6 @@ knowledge/references/uyap-rehberi.md
 knowledge/references/idari-yargi-yapisi-rehberi.md
 knowledge/references/mevzuat-mcp-rehberi.md
 knowledge/references/yargi-mcp-rehberi.md
-knowledge/references/opensanctions-rehberi.md
 knowledge/references/kvkk-m11-cevap-sablonu.md
 knowledge/references/conflict-check-rehberi.md
 knowledge/references/masak-kimlik-tespit-rehberi.md
@@ -322,15 +320,12 @@ Everyday use, red line, leak check and troubleshooting: [ARTHUR-MASK-EN.md](ARTH
 
 ---
 
-## Step 6 — OpenSanctions API (optional)
+## Step 6 — Sanctions screening (no setup needed)
 
-For sanctions screening and KYC:
-1. Get an API key at [opensanctions.org](https://www.opensanctions.org/)
-2. Put the key in the `OPENSANCTIONS_API_KEY` environment variable (Claude Code: the `env` block of
-   `~/.claude/settings.json`, or an operating-system environment variable). Never write the key into the package,
-   project files or the chat.
-3. The API call needs a shell command (`curl`), so it works in Claude Code. In claude.ai Projects, use the keyless
-   OpenSanctions web search instead. Details: `knowledge/references/opensanctions-rehberi.md`.
+Sanctions screening and KYC use the official lists: OFAC SDN, the EU consolidated list, UK OFSI and the UN
+consolidated list; in Türkiye, asset-freezing decisions under Laws No. 6415 and 7262. The lists are fetched with
+WebFetch; no API key, environment variable or extra connector is needed. Workflow:
+`knowledge/references/yaptirim-tarama-rehberi.md` and `/firm-operations:sanctions-check`.
 
 ---
 
@@ -409,7 +404,9 @@ A: Type `/<plugin>:` — the assistant will list all available skills for that p
 
 ## Update Notes
 
-This is version **1.12.4**. Upgrading from 1.12.3: replace `knowledge/skills/ip-legal__skills.md` and `knowledge/profiles/ip-advisory.md` in Project knowledge. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
+This is version **1.12.5**. Upgrading from 1.12.4: a guide was removed, so upload this version's `knowledge/` folder to Project knowledge afresh (four skill books, `firm-profile.md`, two profiles, 14 guides and `oss-source-catalog.json` changed; the list is in `CHANGELOG.md`). The sanctions row in section 6 and section 13 changed in `SYSTEM_PROMPT.md`; paste it again. Sanctions screening no longer needs an API key; you can delete the environment variable you set for it earlier. The local ArthurLegal installation refreshes package files on its own.
+
+Upgrading from 1.12.3 to 1.12.4: replace `knowledge/skills/ip-legal__skills.md` and `knowledge/profiles/ip-advisory.md` in Project knowledge. Only the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is not required. The local ArthurLegal installation refreshes package files on its own.
 
 Upgrading from 1.12.2 to 1.12.3: many files changed, so upload this version's `knowledge/` folder to Project knowledge afresh (eight skill books, seven agents, `firm-profile.md`, three profiles and 26 guides; the list is in `CHANGELOG.md`). One phrase in section 8 and the version lines changed in `SYSTEM_PROMPT.md`; pasting it again is recommended. The local ArthurLegal installation refreshes package files on its own.
 

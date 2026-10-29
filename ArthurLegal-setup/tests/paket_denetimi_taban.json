@@ -71,7 +71,6 @@
     "knowledge/references/lex-scholar-rehberi.md": {"kopyalar": ["CorporateAssistant = Law-Firm"], "not": "kopyalar aynı; biri değişirse ötekiler de değişmeli"},
     "knowledge/references/mevzuat-mcp-rehberi.md": {"kopyalar": ["Academician = CorporateAssistant = Courthouse = Law-Firm"], "not": "kopyalar aynı; biri değişirse ötekiler de değişmeli"},
     "knowledge/references/nl-rechtspraak-mcp-rehberi.md": {"kopyalar": ["CorporateAssistant = Law-Firm"], "not": "kopyalar aynı; biri değişirse ötekiler de değişmeli"},
-    "knowledge/references/opensanctions-rehberi.md": {"kopyalar": ["CorporateAssistant", "Law-Firm"], "not": "kopyalar tabanda farklı (paket uyarlaması ya da eski kopya); denetim birbirine bağlamaz"},
     "knowledge/references/orta-asya-hukuku-rehberi.md": {"kopyalar": ["CorporateAssistant", "Law-Firm"], "not": "kopyalar tabanda farklı (paket uyarlaması ya da eski kopya); denetim birbirine bağlamaz"},
     "knowledge/references/oss-source-catalog.json": {"kopyalar": ["CorporateAssistant = Law-Firm"], "not": "kopyalar aynı; biri değişirse ötekiler de değişmeli"},
     "knowledge/references/otv-rehberi.md": {"kopyalar": ["CorporateAssistant", "Courthouse", "Law-Firm"], "not": "kopyalar tabanda farklı (paket uyarlaması ya da eski kopya); denetim birbirine bağlamaz"},

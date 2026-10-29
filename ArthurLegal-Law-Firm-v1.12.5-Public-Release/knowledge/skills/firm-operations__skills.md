@@ -134,7 +134,7 @@ user-invocable: true
 - Fatura / muhasebe (dahili / dış muhasebeci)
 - E-imza / KEP (büro + her ortak)
 - CRM (varsa)
-- Sanctions tarama (OpenSanctions API — API key alınmış mı?)
+- Sanctions tarama (resmî listeler WebFetch ile; ayrıca ticari tarama hizmeti var mı?)
 
 ### 10. "Yakıcı" stres alanları
 
@@ -462,7 +462,7 @@ Dil anlaşılır, açık ve sade olur (Tebliğ m. 5/1-ğ). Eksik, yanıltıcı v
 Aydınlatma ve açık rıza **ayrı ayrı** alınır (Tebliğ m. 5/1-f). İkisini tek formda, tek imzayla birleştirme.
 
 ### 5. Yurt dışı aktarım kontrolü (m. 9)
-Büro bulut depolama, e-posta, belge yönetimi, çeviri veya yaptırım taraması (OpenSanctions) için yurt dışındaki bir hizmete kişisel veri gönderiyorsa bu **yurt dışına aktarımdır**:
+Büro bulut depolama, e-posta, belge yönetimi, çeviri veya yaptırım taraması için yurt dışındaki bir hizmete kişisel veri gönderiyorsa bu **yurt dışına aktarımdır**:
 - Aktarılan ülke veya sektör için yeterlilik kararı var mı (m. 9/1-2)?
 - Yoksa uygun güvence: Kurulun ilan ettiği standart sözleşme vb. (m. 9/4). Standart sözleşme imzadan itibaren **beş iş günü** içinde Kuruma bildirilir (m. 9/5).
 - İkisi de yoksa yalnız arızi hâllerde aktarım yapılabilir (m. 9/6).
@@ -961,8 +961,8 @@ ZORUNLU SONRAKI ADIMLAR:
 name: sanctions-check
 description: >
   Müvekkil, temsilciler, gerçek faydalanıcılar ve (biliniyorsa) karşı taraf için yaptırım
-  ve PEP taraması. OpenSanctions sonucunu ve Türk hukukundaki malvarlığı dondurma
-  kararlarını (6415, 7262) ayrı raporlar. Sonuç: ✓ TEMİZ / 🟠 İNCELE / ⛔ HIT.
+  ve PEP taraması. Resmî yaptırım listelerinin (OFAC, AB, UK, BM) sonucunu ve Türk hukukundaki
+  malvarlığı dondurma kararlarını (6415, 7262) ayrı raporlar. Sonuç: ✓ TEMİZ / 🟠 İNCELE / ⛔ HIT.
 user-invocable: true
 ---
 
@@ -1002,24 +1002,25 @@ AB, ABD (OFAC) ve Birleşik Krallık listeleri 6415 m. 5 ile 7262 m. 3'teki BMGK
 
 ### 2. Veri en azı ve sır
 - Sorguya **yalnız tarama için gereken alanlar** girer. İşin konusu, dosya özeti, karşı tarafla ilişki ve talep **gönderilmez** (Av. K. m. 36).
-- OpenSanctions yurt dışında bir hizmettir; ona kişisel veri göndermek **yurt dışına aktarımdır** (KVKK m. 9). Büronun bu aktarım için dayanağı `/firm-operations:kvkk-aydinlatma` kaydında yoksa gerçek kişi taramasını durdur: 🟠 İNCELE → Yönetici Ortak.
+- Resmî listenin dosyasını (CSV/XML) çekip içinde aramak, sorguyu liste sahibine göndermez. Yurt dışındaki bir arama hizmetine (yabancı kurumun çevrimiçi arama formu, ticari tarama hizmeti) kişisel veri girmek **yurt dışına aktarımdır** (KVKK m. 9). Büronun bu aktarım için dayanağı `/firm-operations:kvkk-aydinlatma` kaydında yoksa gerçek kişiyi o hizmette arama: 🟠 İNCELE → Yönetici Ortak.
 
-### 3. OpenSanctions
-- Çağrı kalıbı: `references/opensanctions-rehberi.md` (match API, `default` kapsam, curl ile).
-- Anahtar `OPENSANCTIONS_API_KEY` ortam değişkenindedir; pakette yoktur. Değişken tanımlı değilse API çağrısı yapma, rehberdeki manuel kaynaklarla (OpenSanctions web araması dahil) tara. Anahtarı hiçbir çıktıya, nota, dosyaya veya sohbet metnine yazma.
-- Skor 0 ile 1 arasındadır (OpenSanctions dokümanı). Yorum: ≥ 0,90 → ⛔; 0,70-0,90 → 🟠, ayırt edici bilgilerle (doğum tarihi, uyruk, sicil numarası) teyit et; < 0,70 → ✓, kaydet.
+### 3. Resmî yaptırım listeleri
+- Listeler ve adresleri: `references/yaptirim-tarama-rehberi.md` (OFAC SDN, AB konsolide listesi, UK OFSI, BM konsolide listesi). Her listeyi ayrı tara; hangi listeye hangi tarihte bakıldığını yaz.
+- Anahtar ya da ek connector gerekmez; listeler WebFetch ile çekilir. Bir liste çekilemezse o liste için `UYARI: veri çekilemedi, teyidiniz gerekli: <listenin resmî adresi>` yaz; çekilemeyen listeyi temiz sayma.
+- Eşleşme (rehberde Adım 2): aynı ad + aynı ülke + (gerçek kişide) aynı doğum yılı → kesin eşleşme, ⛔; ad benzer ama ayırt edici bilgiler farklı ya da eksik → olası eşleşme, 🟠, ayırt edici bilgilerle (doğum tarihi, uyruk, sicil numarası) teyit et; eşleşme yok → ✓, kaydet.
+- PEP: resmî yaptırım listeleri siyasi nüfuz sahibi kişileri (PEP) içermez. PEP kontrolü büronun kullandığı tarama hizmetiyle yapılır (rehberde Adım 2); hizmet yoksa raporda "PEP taraması yapılmadı" yaz.
 - Yalnız ad benzerliğiyle hüküm kurma. Eşleşen kaydın doğum tarihi, uyruk ve sicil bilgisini müvekkilinkiyle karşılaştır.
 
 ### 4. Türk listeleri
-6415 ve 7262 kapsamında yayımlanan kararları ve 7262 m. 3/3 uyarınca kurum sitelerinde yayımlanan nihai listeleri elle kontrol et; kontrol tarihini ve kaynağı yaz. OpenSanctions'ın Türk listelerini kapsayıp kapsamadığı ve güncelliği bu pakette doğrulanmadı.
+6415 ve 7262 kapsamında yayımlanan kararları ve 7262 m. 3/3 uyarınca kurum sitelerinde yayımlanan nihai listeleri elle kontrol et; kontrol tarihini ve kaynağı yaz.
 
 ### 5. Karar
 
 | Sonuç | Anlam | Akış |
 |---|---|---|
 | ✓ TEMİZ | anlamlı eşleşme yok | kayıt → `/firm-operations:kvkk-aydinlatma` |
-| 🟠 İNCELE | orta skor, ad benzerliği, PEP, yabancı liste eşleşmesi | ek teyit + Yönetici Ortak |
-| ⛔ HIT | kişi veya kuruluş bir Türk dondurma kararında yer alıyor ya da ≥ 0,90 skorla teyitli eşleşme var | iş kabulü durur → Yönetici Ortak + Ortaklar Kurulu; finansal işlem aracılığı yapılmaz; `/firm-operations:masak-kontrol` şüpheli işlem değerlendirmesi |
+| 🟠 İNCELE | olası eşleşme (ad benzerliği), PEP, yabancı liste eşleşmesi | ek teyit + Yönetici Ortak |
+| ⛔ HIT | kişi veya kuruluş bir Türk dondurma kararında yer alıyor ya da ayırt edici bilgilerle teyitli kesin eşleşme var | iş kabulü durur → Yönetici Ortak + Ortaklar Kurulu; finansal işlem aracılığı yapılmaz; `/firm-operations:masak-kontrol` şüpheli işlem değerlendirmesi |
 
 Savunma hakkı kapsamındaki temsil ile finansal işlem aracılığı ayrı değerlendirilir. Kabul veya ret kararını bu skill vermez, Ortaklar Kurulu verir.
 
@@ -1029,25 +1030,26 @@ Savunma hakkı kapsamındaki temsil ile finansal işlem aracılığı ayrı değ
 [ÜST BAŞLIK — YAPTIRIM TARAMASI — DAHİLİ]
 
 # Sanctions Check — [takma ad] — GG.AA.YYYY
-| Taranan | Kaynak | Sonuç | Skor | Eşleşen liste | Teyit |
+| Taranan | Kaynak | Sonuç | Eşleşme | Eşleşen liste | Teyit |
 |---|---|---|---|---|---|
-| Müvekkil | OpenSanctions | ✓ / 🟠 / ⛔ | [X] | [liste] | [doğum tarihi / uyruk / sicil karşılaştırması] |
-| GF-1 | OpenSanctions | ... | | | |
+| Müvekkil | OFAC SDN · AB · UK OFSI · BM | ✓ / 🟠 / ⛔ | [kesin / olası / yok] | [liste, kayıt no] | [doğum tarihi / uyruk / sicil karşılaştırması] |
+| GF-1 | OFAC SDN · AB · UK OFSI · BM | ... | | | |
+| Müvekkil | PEP (tarama hizmeti) | ✓ / 🟠 | — | [hizmet] | [hizmet yoksa: PEP taraması yapılmadı] |
 | Müvekkil | TR dondurma kararları (6415 / 7262) | ✓ / ⛔ | — | [karar, RG tarihi] | elle kontrol GG.AA.YYYY |
 
-Atıf: [OpenSanctions API — match skoru X — GG.AA.YYYY]
+Atıf: [Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY] (her liste için)
 SONUÇ: ✓ TEMİZ / 🟠 İNCELE / ⛔ HIT
 ```
 
 ## Hatalar
 
 - Dosya ayrıntısını sorguya koymak (Av. K. m. 36)
-- KVKK m. 9 dayanağı olmadan gerçek kişi verisini yurt dışındaki API'ye göndermek
+- KVKK m. 9 dayanağı olmadan gerçek kişi verisini yurt dışındaki bir arama hizmetine göndermek
 - Teyitsiz ad benzerliğini HIT saymak
 - OFAC veya AB eşleşmesini "Türkiye'de malvarlığı dondurulmuş" diye raporlamak
-- API anahtarını çıktıya yazmak
+- Çekilemeyen listeyi temiz saymak
 
-Ayrıntı: `references/opensanctions-rehberi.md` · `references/yaptirim-tarama-rehberi.md`
+Ayrıntı: `references/yaptirim-tarama-rehberi.md`
 
 ---
 

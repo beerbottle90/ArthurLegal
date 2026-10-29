@@ -2,7 +2,7 @@
 
 > **Custom MCP server YOK** — legislation.gov.uk yalnızca REST API + content
 > negotiation sunar. Bu rehber, Claude'un `WebFetch` aracını UK mevzuatıyla
-> birlikte kullanma prosedürünü tanımlar. OpenSanctions rehberiyle aynı kalıp.
+> birlikte kullanma prosedürünü tanımlar.
 >
 > **Durum:** ✅ Açık erişim — **API anahtarı gerekmez**, kayıt gerekmez. Birincil
 > yargı çevresi Türkiye'dir; bu kaynak yalnızca İngiliz hukuku temas eden işlerde

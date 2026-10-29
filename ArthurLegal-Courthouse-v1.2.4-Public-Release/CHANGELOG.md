@@ -5,6 +5,13 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.2.4] — 2026-10-29 — *OpenSanctions Satırı Çıkarıldı*
+
+> **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.
+
+### Kaldırıldı
+1. `connector-saglik-fallback-rehberi.md`: OpenSanctions API satırı (anahtar, ortam değişkeni, kabuk çağrısı) tablodan çıkarıldı.
+
 ## [1.2.3] — 2026-10-26 — *ÖTV Davasında Yargı Yolu; Bakım*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.

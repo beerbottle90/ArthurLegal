@@ -104,7 +104,7 @@
 
 **Conflict check derinliği:** [DOLDUR — son N yıl, fonetik tarama var mı?]
 **MASAK kimlik tespit standardı:** [DOLDUR — zorunlu belgeler listesi]
-**Sanctions tarama:** OpenSanctions API (`opensanctions-rehberi.md`) — tüzel ve yabancı müvekkil zorunlu
+**Sanctions tarama:** resmî yaptırım listeleri (OFAC SDN, AB, UK OFSI, BM; `yaptirim-tarama-rehberi.md`) — tüzel ve yabancı müvekkil zorunlu
 **KVKK aydınlatma:** [DOLDUR — standart metin var mı?]
 **Otomatik 🟠 inceleme tetikleyicileri:**
 - PEP (siyasi açıdan önemli kişi) müvekkil
@@ -171,7 +171,7 @@
 | Fatura / muhasebe | [DOLDUR] |
 | E-imza / KEP | [DOLDUR] |
 | CRM | [DOLDUR — varsa] |
-| Sanctions tarama | OpenSanctions API — `OPENSANCTIONS_API_KEY` [kuruldu mu?] |
+| Sanctions tarama | Resmî listeler (WebFetch) + [DOLDUR — ticari tarama hizmeti varsa] |
 
 ---
 

@@ -1,7 +1,7 @@
 # İsviçre Emtia Ticareti Hukuku & Uyum — Kullanım Rehberi
 
 > **Erişim:** OpenCaseLaw.ch MCP (İsviçre kanunları + içtihat, auth yok ✅) + SECO WebFetch +
-> OpenSanctions API. Bu rehber İsviçre **emtia ticareti** (commodity trading) uyum çerçevesini
+> resmî yaptırım listeleri (WebFetch). Bu rehber İsviçre **emtia ticareti** (commodity trading) uyum çerçevesini
 > ve canlı kaynak prosedürünü tanımlar.
 >
 > **Ne zaman gerekir?** Grubun **İsviçre merkezli bir emtia ticaret kolu** varsa — ham
@@ -60,9 +60,6 @@ https://www.seco.admin.ch/seco/en/home/Aussenwirtschaftspolitik_Wirtschaftliche_
 - Excel tam veritabanı + XSD şeması + örnek dosyalar
 - Online arama uygulaması (yaptırım adresi sorgulama)
 
-**OpenSanctions entegrasyonu:** SECO listesi `ch_seco_sanctions` dataset'i olarak OpenSanctions'ta
-da var — mevcut `POST /match/default` taraması SECO'yu kapsar (bkz. `yaptirim-tarama-rehberi.md`).
-
 **İhlal yaptırımı:** 5 yıla kadar hapis + 1M CHF'ye kadar para cezası.
 
 ---
@@ -72,11 +69,11 @@ da var — mevcut `POST /match/default` taraması SECO'yu kapsar (bkz. `yaptirim
 ### 4.1 Karşı taraf KYC + yaptırım taraması (ham petrol/LNG alım-satım)
 
 ```
-ADIM 1: OpenSanctions POST /match → karşı taraf (OFAC+AB+BM+SECO ch_seco)
-ADIM 2: SECO WebFetch → İsviçre özel önlemleri/donmalar teyit
+ADIM 1: Resmî listeler → karşı taraf (OFAC+AB+UK+BM; yaptirim-tarama-rehberi.md)
+ADIM 2: SECO WebFetch → karşı tarafı SECO konsolide listesinde tara; İsviçre özel önlemleri/donmalar teyit
 ADIM 3: GwG SR 955.0 → finansman/ödeme aracılığı AML yükümlülüğü doğuyor mu?
 ADIM 4: Atıf → [CH Mevzuat — GwG SR 955.0 Art.X — OpenCaseLaw — GG.AA.YYYY]
-        + [SECO — yaptırım taraması — GG.AA.YYYY] + [OpenSanctions API — skor X]
+        + [SECO — yaptırım taraması — GG.AA.YYYY] + [Yaptırım listesi — {liste} — {sonuç} — GG.AA.YYYY]
 ```
 
 ### 4.2 Trade finance / ödeme yapısı (akreditif, prepayment)
@@ -101,7 +98,7 @@ ADIM 3: Ticaret kolu eşiği aşıyorsa → yıllık gayrı-finansal rapor yük�
 
 - `[CH Mevzuat — {kanun} SR:{no} Art.{no} — OpenCaseLaw — GG.AA.YYYY]` — OpenCaseLaw'dan çekilen kanun
 - `[SECO — yaptırım/embargo — {konu} — GG.AA.YYYY]` — seco.admin.ch'ten çekilen
-- `[OpenSanctions API — ch_seco match skoru X — GG.AA.YYYY]` — SECO dahil OpenSanctions taraması
+- `[Yaptırım listesi — {OFAC SDN / AB / UK OFSI / BM} — {eşleşme yok / kayıt no} — GG.AA.YYYY]` — resmî liste taraması
 - `[OpenCaseLaw.ch — {mahkeme} — {ref} — GG.AA.YYYY]` — ticaret uyuşmazlığı içtihadı
 
 **Asla** çekmediğin İsviçre kaynağına atıf koyma — `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` kullan.
@@ -125,7 +122,6 @@ ADIM 3: Ticaret kolu eşiği aşıyorsa → yıllık gayrı-finansal rapor yük�
 ## 7. İlgili rehberler
 
 - `switzerland-caselaw-rehberi.md` — İsviçre içtihat + Fedlex + fedlex-connector MCP
-- `yaptirim-tarama-rehberi.md` — yaptırım taraması (SECO dahil)
 - `yaptirim-tarama-rehberi.md` — [Müvekkil] yaptırım prosedürü
 - `karsilastirmali-hukuk-rehberi.md` — governing-law seçimi (CH vs Singapur)
 - energy-finance: `commodity-trade-compliance` skill (bu rehberi operasyonel kullanır)
@@ -139,4 +135,4 @@ ADIM 3: Ticaret kolu eşiği aşıyorsa → yıllık gayrı-finansal rapor yük�
 
 ---
 
-*Son güncelleme: 29.08.2026. İsviçre merkezli emtia ticaret kolları için uyum çerçevesi: AML/GwG + SECO yaptırım + OR 964 due diligence + FinSA. OpenCaseLaw.ch + SECO + OpenSanctions.*
+*Son güncelleme: 29.08.2026. İsviçre merkezli emtia ticaret kolları için uyum çerçevesi: AML/GwG + SECO yaptırım + OR 964 due diligence + FinSA. OpenCaseLaw.ch + SECO + resmî yaptırım listeleri.*

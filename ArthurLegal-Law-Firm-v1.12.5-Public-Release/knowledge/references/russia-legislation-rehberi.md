@@ -3,7 +3,7 @@
 > **⚠️ KULLANIM KAPSAMI:** Bu rehber YALNIZCA yaptırım uyumu ve karşı taraf durum tespiti içindir.
 > Rusya hukuku yönetimli işlem desteği bu asistanın kapsamı dışındadır.
 > **Auth:** Yok
-> **⚠️ 2026-06-28 testi:** `pravo.gov.ru` / `publication.pravo.gov.ru` bu ortamdan **ECONNREFUSED** (geo-block). **Çalışan alternatif → consultant.ru:** `https://www.consultant.ru/document/...` (Rus mevzuat tam metni, ✅ test edildi). KYC/yaptırım amacıyla **OpenSanctions API birincil** kalır.
+> **⚠️ 2026-06-28 testi:** `pravo.gov.ru` / `publication.pravo.gov.ru` bu ortamdan **ECONNREFUSED** (geo-block). **Çalışan alternatif → consultant.ru:** `https://www.consultant.ru/document/...` (Rus mevzuat tam metni, ✅ test edildi). KYC/yaptırım amacıyla **resmî yaptırım listeleri birincil** kalır (`yaptirim-tarama-rehberi.md`).
 > **[Müvekkil] bağlamı:** Rus karşı taraf taraması, OFAC/AB yaptırım listesi kontrolü, önceki sözleşme yükümlülükleri
 
 ---
@@ -11,7 +11,7 @@
 ## ⚠️ ZORUNLU UYARI
 
 Yabancı ana ortaklı [Müvekkil] için Rusya hukuku temas eden her analizde:
-1. **OpenSanctions API** ile karşı taraf taraması zorunlu (önce)
+1. **Resmî yaptırım listeleriyle** karşı taraf taraması zorunlu (önce; `yaptirim-tarama-rehberi.md`)
 2. **OFAC SDN + AB 269/2014 + AB 833/2014** kontrolleri
 3. **CAATSA m.232** — Rus enerji sektörüyle belirli işlemler yaptırım riski
 4. Hukuki görüş Counsel + Compliance ([Uyum Direktörü]) onayı şart
@@ -86,12 +86,12 @@ Ek kontrol kaynakları:
 ```
 # AB yaptırım arama
 # ⚠️ .../api/v1/sanction?name=... ENDPOINT'İ YOK (404, 30.08.2026 doğrulandı).
-# İsim taraması için OpenSanctions birincildir; resmî AB kaydı için FSF listesi:
+# İsim taraması ve resmî AB kaydı için FSF listesi:
 WebFetch("https://webgate.ec.europa.eu/fsd/fsf/public/files/csvFullSanctionsList_1_1/content?token=dG9rZW4tMjAxNw",
          "{ad} bu AB konsolide yaptırım listesinde geçiyor mu? Geçiyorsa EU referans no ve tüzük bilgisini ver")
 
-# OFAC SDN list (statik liste, OpenSanctions zaten kapsıyor)
-# → opensanctions-rehberi.md'ye bak
+# OFAC SDN listesi
+# → https://sanctionssearch.ofac.treas.gov/ (yaptirim-tarama-rehberi.md, OFAC bölümü)
 
 # BM yaptırım listesi
 # ⚠️ scsanctions.un.org/search 404, un.org/securitycouncil/... 403 veriyor.
@@ -108,7 +108,7 @@ Rosneft, Gazprom, Lukoil vd. Rus enerji şirketleri:
 - **AB 833/2014** ve ek tüzükler: enerji sektörü işlemleri kısıtlama kapsamında
 - **CAATSA Bölüm 232**: Rus boru hattı projelerine "önemli işlem" — ABD yaptırım riski
 - **OFAC Sectoral Sanctions** (SSI): enerji, finans, savunma sektörleri
-- OpenSanctions `POST /match/default` ile her Rus şirketi için `schema=Company, country=ru` sorgusu yap
+- Her Rus şirketini OFAC (SDN + SSI), AB ve UK listelerinde ayrı ayrı tara (`yaptirim-tarama-rehberi.md` Adım 2)
 
 ---
 
@@ -117,7 +117,7 @@ Rosneft, Gazprom, Lukoil vd. Rus enerji şirketleri:
 ```
 [RU Mevzuat — {Kanun adı/ФЗ no} md.{no} — pravo.gov.ru — GG.AA.YYYY]
 [ЕГРЮЛ — {şirket adı} OGRN:{no} — nalog.ru — GG.AA.YYYY]
-[OpenSanctions — {şirket} — score:{skor} — GG.AA.YYYY]
+[Yaptırım listesi — {liste} — {şirket} — {eşleşme yok / kayıt no} — GG.AA.YYYY]
 ```
 
 ---

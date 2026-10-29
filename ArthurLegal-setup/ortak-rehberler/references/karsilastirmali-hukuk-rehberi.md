@@ -26,7 +26,6 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 | 🇦🇿 AZ | ~~e-qanun.az WebFetch~~ | ⬆️ **MCP'ye taşındı** | **e-qanun MCP** (resmî `api.e-qanun.az`, statülü) → `eqanun-mcp-rehberi.md`. WebFetch yedeği hâlâ anti-bot ⚠️ → cis-legislation.com |
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
 | 🇷🇸 SR | paragraf.rs | ✅ | — |
-| 🌍 OpenSanctions | api.opensanctions.org | 🔑 ortam değişkeni `OPENSANCTIONS_API_KEY` | `Authorization: ApiKey $OPENSANCTIONS_API_KEY` (yalnız kabuk komutuyla, ör. curl; anahtar pakette yok) |
 | 🇹🇷 KAP | kap.org.tr | ✅ | — |
 | 🇹🇷 e-şirket | e-sirket.mkk.com.tr | ⚠️ JS SPA | Halka açıklar → KAP; tescil → ticaretsicil.gov.tr |
 
@@ -111,7 +110,7 @@ yardımcı kaynaktır.
 | İngiliz hukuku statüsü (governing law = English law) | legislation.gov.uk | `uk-legislation-rehberi.md` |
 | ABD federal statüsü/yönetmeliği (US/NY hukuku) | GovInfo WebFetch | `us-legislation-rehberi.md` |
 | ABD mahkeme kararı / içtihat | CourtListener REST | `courtlistener-rehberi.md` |
-| Yaptırım / PEP taraması | OpenSanctions API | `opensanctions-rehberi.md` |
+| Yaptırım taraması | Resmî listeler (OFAC SDN, AB, UK OFSI, BM) WebFetch | `yaptirim-tarama-rehberi.md` |
 | **Azerbaycan mevzuatı + yürürlük statüsü** 🆕 | **e-qanun MCP** | `eqanun-mcp-rehberi.md` |
 | **Yabancı / karşılaştırmalı akademik doktrin** 🆕 | **LexScholar MCP** | `lex-scholar-rehberi.md` |
 | **Türk akademik doktrini (DergiPark)** 🆕 | **LexScholar MCP** (19 TR hukuk dergisi) | `lex-scholar-rehberi.md` |
@@ -198,7 +197,7 @@ araştırılabilir — ama:
 | İngiliz mevzuatı | `[UK Legislation — <tür yıl> s.<madde> — GG.AA.YYYY]` |
 | ABD mevzuatı | `[US Legislation — GovInfo — <atıf> — GG.AA.YYYY]` |
 | ABD içtihatı | `[CourtListener — <mahkeme> — <citation> — GG.AA.YYYY]` |
-| Yaptırım taraması | `[OpenSanctions API — match skoru X — GG.AA.YYYY]` |
+| Yaptırım taraması | `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]` |
 | **AZ mevzuatı** 🆕 | `[AZ Mevzuat — e-qanun MCP — <belge> — id:<id> — <statü> — GG.AA.YYYY]` |
 | **Akademik doktrin** 🆕 | `[LexScholar — <indeks> — <yazar, başlık, dergi, yıl>] doi:<...>` — **ikincil** olarak işaretle |
 | **Sözleşme emsali** 🆕 | `[ResourceContracts.org — <sözleşme adı> — id <id>]` + `source_url` (CC BY-SA 4.0) |
@@ -227,7 +226,7 @@ ilgili rehberin "Yedek kaynaklar" bölümüne düş ve kesintiyi kullanıcıya b
   hiyerarşisi ve üç yeni atıf etiketi eklendi; AZ satırı WebFetch'ten MCP'ye
   taşındı.
 - İlişkili rehberler: `uk-legislation-rehberi.md`, `us-legislation-rehberi.md`,
-  `courtlistener-rehberi.md`, `istac-rehberi.md`, `opensanctions-rehberi.md`,
+  `courtlistener-rehberi.md`, `istac-rehberi.md`, `yaptirim-tarama-rehberi.md`,
   `eqanun-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md`.
 
 ---

@@ -50,7 +50,7 @@
       "provenance": "resmî (Global LEI Foundation)",
       "status": "recommend",
       "conditions": "Level 2 yalnız muhasebe ana-ortaklığı — gerçek-kişi nihai fayda sahipliği DEĞİL; LEI yokluğu şirket yokluğu değildir",
-      "role": "OpenSanctions'ın deterministik kimlik tamamlayıcısı: önce LEI ile kimlik çöz, sonra yaptırım tara",
+      "role": "Yaptırım taramasının deterministik kimlik tamamlayıcısı: önce LEI ile kimlik çöz, sonra resmî listelerde tara",
       "rehberi": "gleif-rehberi.md"
     },
     {

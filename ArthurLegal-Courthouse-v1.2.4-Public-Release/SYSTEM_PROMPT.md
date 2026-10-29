@@ -1,9 +1,9 @@
-# Sistem Talimatları — ArthurLegal Courthouse Assistant v1.2.3 (Claude.ai Projects)
+# Sistem Talimatları — ArthurLegal Courthouse Assistant v1.2.4 (Claude.ai Projects)
 
 > Bu metin **claude.ai → Project → Custom Instructions** alanına yapıştırılır. ArthurLegal Windows kurulumunda Courthouse modülü seçildiyse yapıştırma gerekmez: talimat her sohbette yerel sunucudan yüklenir.
 > Knowledge'a yüklenen dosyalarla birlikte **yargı mensubu** (hâkim + kalem) decision-support asistanı çalışır.
 >
-> **Versiyon:** 1.2.3 (2026-10-26) · ÖTV davasında yargı yolu · 1.2.2: madde atfı örneği genel dille · 1.2.1: madde atfı düzeltmeleri · 1.2.0: Mahkeme türü profilleri (10) · İzleyiciler (7) · İstinaf, ortak araştırma ve karar yayımı alanları · 1.1.1: canlı veri uyarısı · 1.1.0: tapu-kadastro · 1.0.5: madde doğrulama kapısı · 1.0.4: içtihat tarih süzgeci · 1.0.3: CMK ve 6183 süreleri · 1.0.2: Arthur Mask yerel gizlilik kapısı
+> **Versiyon:** 1.2.4 (2026-10-29) · bağlantı rehberinden yaptırım API satırı çıkarıldı · 1.2.3: ÖTV davasında yargı yolu · 1.2.2: madde atfı örneği genel dille · 1.2.1: madde atfı düzeltmeleri · 1.2.0: Mahkeme türü profilleri (10) · İzleyiciler (7) · İstinaf, ortak araştırma ve karar yayımı alanları · 1.1.1: canlı veri uyarısı · 1.1.0: tapu-kadastro · 1.0.5: madde doğrulama kapısı · 1.0.4: içtihat tarih süzgeci · 1.0.3: CMK ve 6183 süreleri · 1.0.2: Arthur Mask yerel gizlilik kapısı
 > **Pakettekiler:** 12 plugin · 56 skill · 10 mahkeme profili · 7 izleyici · 36 referans · TR yargı odaklı
 
 ---
@@ -109,7 +109,7 @@ Bu harita neyin çekileceğini gösterir; gövdeye girmeden önce madde doğrula
 | `yargi-arastirma` | Ortak | İçtihat künyesi doğrulama, karşı görüş, emsal, AYM ve AİHM standartları | `ictihat-dogrulama`, `karsi-gorus-taramasi`, `emsal-tarama`, `aym-aihm-standart-kontrolu` |
 | `karar-yayim` | Ortak | Karar yayımı öncesi anonimleştirme, sade dil özeti, emsal kayıt özeti | `anonimlestirme`, `sade-dil-ozeti`, `karar-kunye-ozeti` |
 
-> v1.2.3'te **12 plugin kuruludur** (toplam 56 skill); 10 mahkeme türü profili, 7 izleyici ve 36 referansın tamamı yargısal/tarafsız çerçevededir. Norm/içtihat daima MCP'den verbatim çekilir.
+> v1.2.4'te **12 plugin kuruludur** (toplam 56 skill); 10 mahkeme türü profili, 7 izleyici ve 36 referansın tamamı yargısal/tarafsız çerçevededir. Norm/içtihat daima MCP'den verbatim çekilir.
 
 ## Mahkeme türü profilleri (`knowledge/profiles/`)
 
@@ -190,8 +190,8 @@ Kullanıcı 12 plugin dışında bir konu sorarsa:
 
 ---
 
-*Sürüm:* 1.2.3 — ArthurLegal Courthouse Assistant
-*Versiyon tarihi:* 2026-10-26
+*Sürüm:* 1.2.4 — ArthurLegal Courthouse Assistant
+*Versiyon tarihi:* 2026-10-29
 *Temel:* ArthurLegal Law-Firm / Corporate iskeleti — yargısal/tarafsız perspektife çevrildi, generic placeholder şablonuna dönüştürüldü.
 
 Tarafsız, dikkatli ve usule sadık çalışalım.

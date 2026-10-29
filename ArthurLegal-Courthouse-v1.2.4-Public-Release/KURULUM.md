@@ -1,7 +1,7 @@
 # Kurulum — ArthurLegal Courthouse
 
 **Hedef ortam:** Windows ve Mac'te Claude Desktop (kurulum dosyası) · web'de [Claude.ai Projects](https://claude.ai/projects) (elle kurulum)
-**Sürüm:** v1.2.3 · 2026-10-26
+**Sürüm:** v1.2.4 · 2026-10-29
 **Süre:** kurulum dosyasıyla ~5 dakika (Arthur Mask indirmesiyle ~15 dakika) · elle ~10 dakika
 
 > ⚠️ Bu paket **yargı mensupları** (mahkeme hâkimleri + kalem memurlukları) içindir. Tüm çıktılar **taslaktır** ve **hâkim / heyet onayı** gerektirir; hiçbir çıktı yargısal karar yerine geçmez.
@@ -104,7 +104,7 @@ Knowledge'a `knowledge/references/arthur-mask-rehberi.md` dosyasını da yükley
 
 Bir plugin'in tüm komutlarını görmek için yeni konuşmada sadece `/<plugin>:` yazın (örn. `/hukuk-hakim:`).
 
-## Komut haritası (v1.2.3)
+## Komut haritası (v1.2.4)
 
 | Plugin | Skill'ler |
 |---|---|
@@ -130,7 +130,9 @@ A: Önce kurum kurallarınızın harici bir yapay zekâ hizmetinin kullanılmas�
 
 ## Güncelleme notları
 
-Bu sürüm **v1.2.3**'tür. v1.2.2'den geçiş: Project knowledge'da `knowledge/references/otv-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md` ve `knowledge/skills/yargi-arastirma__skills.md` yenilenir.
+Bu sürüm **v1.2.4**'tür. v1.2.3'ten geçiş: Project knowledge'da `knowledge/references/connector-saglik-fallback-rehberi.md` yenilenir.
+
+v1.2.2'den v1.2.3'e geçiş: Project knowledge'da `knowledge/references/otv-rehberi.md`, `knowledge/references/yargi-mcp-rehberi.md` ve `knowledge/skills/yargi-arastirma__skills.md` yenilenir.
 
 v1.2.1'den v1.2.2'ye geçiş: Project knowledge'da `knowledge/references/mevzuat-mcp-rehberi.md` yenilenir.
 

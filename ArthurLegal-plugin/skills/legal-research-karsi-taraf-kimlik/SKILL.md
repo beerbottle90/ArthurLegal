@@ -6,12 +6,12 @@ description: >
 user-invocable: true
 ---
 
-# Karşı Taraf Kimlik Çözümleme ve Tarama (GLEIF → OpenSanctions)
+# Karşı Taraf Kimlik Çözümleme ve Tarama (GLEIF → Resmî Yaptırım Listeleri)
 
 ## Ne zaman kullanılır
 
 Yeni karşı taraf KYC dosyası; imza öncesi kontrol; grup yapısı soruları ("kimin
-iştiraki?", "nihai ana ortak kim?"); **her OpenSanctions taramasının ön adımı olarak.**
+iştiraki?", "nihai ana ortak kim?"); **her yaptırım taramasının ön adımı olarak.**
 
 ## Sıra sabittir: önce kimlik, sonra listeler
 
@@ -21,7 +21,8 @@ belirgin) üretir. Taraf önce tescilli kimliğine indirgenir, sonra taranır.
 
 ## Araçlar
 
-GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
+GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + resmî yaptırım listeleri
+(WebFetch; `yaptirim-tarama-rehberi.md`).
 
 ## Yöntem
 
@@ -30,9 +31,10 @@ GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
    `registration.status` kontrol et (LAPSED kayıtta veri bayat olabilir).
 2. **Grubu haritala:** `/ultimate-parent` ve `/direct-parent`. Hem sözleşme
    tarafını hem nihai ana ortağı **ayrı ayrı** tara.
-3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile OpenSanctions.
+3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile resmî yaptırım listeleri
+   (OFAC SDN, AB, UK OFSI, BM).
 4. **Raporla:** `[GLEIF — LEI {lei} — çekim: GG.AA.YYYY]` +
-   `[OpenSanctions — {taraf} — çekim: GG.AA.YYYY]`
+   `[Yaptırım listesi — {liste} — {taraf} — çekim: GG.AA.YYYY]`
 
 ## Sert sınırlar (her raporda beyan edilir)
 
@@ -44,4 +46,4 @@ GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
 
 ## Bilgi tabanı
 
-`gleif-rehberi.md` · `yaptirim-tarama-rehberi.md` · `yaptirim-tarama-rehberi.md`
+`gleif-rehberi.md` · `yaptirim-tarama-rehberi.md`

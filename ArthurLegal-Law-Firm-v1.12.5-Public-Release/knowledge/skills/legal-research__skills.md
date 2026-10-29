@@ -21,7 +21,7 @@
 - /legal-research:alman-hukuku (de-eli MCP - DE mevzuat + ictihat + parlamento, BIRINCIL)
 - /legal-research:tr-atif-dogrulama (ArthurLegal tr_ - TR karar kunyesi dogrulama)
 - /legal-research:abd-atif-dogrulama (CourtListener - uydurma atif savunmasi)
-- /legal-research:karsi-taraf-kimlik (GLEIF -> OpenSanctions - once kimlik, sonra liste)
+- /legal-research:karsi-taraf-kimlik (GLEIF -> resmi yaptirim listeleri - once kimlik, sonra liste)
 - /legal-research:uk-mevzuat (TNA resmi MCP - UK mevzuati)
 - /legal-research:ab-mevzuat (EUR-Lex Cellar - CELEX/ELI kimlikleme)
 - /legal-research:jp-mevzuat (e-Gov API v2 - as-of-date cekim)
@@ -74,7 +74,7 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **İmzalı PSA/JOA emsali, kloz benchmark** | **ResourceContracts MCP** | **EMSAL** | `resourcecontracts-rehberi.md` |
 | **Türk akademik doktrini** | **LexScholar MCP** (DergiPark, 19 dergi) | **İKİNCİL** | `lex-scholar-rehberi.md` |
 | **Yabancı / karşılaştırmalı doktrin** | **LexScholar MCP** (10 indeks) | **İKİNCİL** | `lex-scholar-rehberi.md` |
-| Yaptırım / PEP / UBO taraması | OpenSanctions | STOP-RULE | `opensanctions-rehberi.md` |
+| Yaptırım / PEP / UBO taraması | Resmî yaptırım listeleri (PEP için tarama hizmeti) | STOP-RULE | `yaptirim-tarama-rehberi.md` |
 | Halka açık şirket açıklaması | KAP / e-ŞİRKET WebFetch | BİRİNCİL | `kap-esirket-webfetch-rehberi.md` |
 | **DE mevzuatı + içtihat + yasama gerekçesi** | **de-eli MCP** | **BİRİNCİL** | `de-eli-mcp-rehberi.md` |
 | **NL içtihadı (3,75 M ECLI) + mevzuatı** | **nl-rechtspraak MCP** | **BİRİNCİL** | `nl-rechtspraak-mcp-rehberi.md` |
@@ -190,7 +190,7 @@ user-invocable: true
 - AZ hukuku üzerine akademik şerh → `/legal-research:karsilastirmali-doktrin`
   (İKİNCİL — aktın kendisinin yerine **asla** geçmez).
 - İmzalı sözleşme emsali (PSA/JOA şartları) → `/legal-research:sozlesme-emsali`.
-- Yaptırım / taraf taraması → OpenSanctions.
+- Yaptırım / taraf taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 
 ## Araçlar (6)
 
@@ -313,7 +313,7 @@ user-invocable: true
   e-qanun MCP, resmî kaynaklar. **Doktrin bunların yerine geçmez.**
 - İmzalı sözleşme emsali / kloz benchmark → `/legal-research:sozlesme-emsali`.
 - İsviçre doktrini → **OpenCaseLaw.ch zaten kapsıyor**, tekrarlama.
-- Taraf / UBO / yaptırım taraması → OpenSanctions.
+- Taraf / UBO / yaptırım taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 - Müvekkile özel sözleşme pozisyonları / büro standartları → `firm-profile.md`
   ve ilgili `profiles/*.md`.
 
@@ -483,7 +483,7 @@ user-invocable: true
 
 - Yürürlükteki mevzuat, madde metni veya bağlayıcı karar → ArthurLegal MCP (`tr_`) /
   e-qanun MCP / resmî içtihat kaynakları.
-- Taraf, UBO, gemi veya yaptırım taraması → OpenSanctions.
+- Taraf, UBO, gemi veya yaptırım taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 - Müvekkile özel pozisyonlar / statik büro bağlamı → `firm-profile.md`,
   `profiles/*.md`.
 - **Gizli bir taslağı analiz için yapıştırmak.** Bu bir **PUBLIC** sözleşme
@@ -543,7 +543,7 @@ Sayılar keşif anına aittir; **canlı `contracts_search_contracts` ile teyit e
   uygulama.
 - **100 saniye:** geniş `contracts_search_contracts` çağrılarını filtrele; tam metni sayfa
   penceresiyle al.
-- Bir emsalin karşı tarafına dayanmadan önce **OpenSanctions ile tara**.
+- Bir emsalin karşı tarafına dayanmadan önce **resmî yaptırım listelerinde tara**.
 
 ## Atıf
 
@@ -578,7 +578,7 @@ altında yer alır — **Dayanak birincil hukuk kalır**.
   `energy-finance:jv-agreement-review`, `energy-finance:project-finance-review`,
   `energy-finance:ma-diligence-energy`, `corporate-legal`,
   `contract-drafting:redline-contract`, `expert-opinion:uzman-mutalaasi`.
-- Yaptırım örtüşmesi: emsalin karşı tarafı için `opensanctions-rehberi.md`.
+- Yaptırım örtüşmesi: emsalin karşı tarafı için `yaptirim-tarama-rehberi.md`.
 - Kaynak disiplini: `/legal-research:kaynak-secimi` tam olarak uygulanır.
 
 ---
@@ -799,12 +799,12 @@ description: >
 user-invocable: true
 ---
 
-# Karşı Taraf Kimlik Çözümleme ve Tarama (GLEIF → OpenSanctions)
+# Karşı Taraf Kimlik Çözümleme ve Tarama (GLEIF → Resmî Yaptırım Listeleri)
 
 ## Ne zaman kullanılır
 
 Yeni karşı taraf KYC dosyası; imza öncesi kontrol; grup yapısı soruları ("kimin
-iştiraki?", "nihai ana ortak kim?"); **her OpenSanctions taramasının ön adımı olarak.**
+iştiraki?", "nihai ana ortak kim?"); **her yaptırım taramasının ön adımı olarak.**
 
 ## Sıra sabittir: önce kimlik, sonra listeler
 
@@ -814,7 +814,8 @@ belirgin) üretir. Taraf önce tescilli kimliğine indirgenir, sonra taranır.
 
 ## Araçlar
 
-GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
+GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + resmî yaptırım listeleri
+(WebFetch; `yaptirim-tarama-rehberi.md`).
 
 ## Yöntem
 
@@ -823,9 +824,10 @@ GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
    `registration.status` kontrol et (LAPSED kayıtta veri bayat olabilir).
 2. **Grubu haritala:** `/ultimate-parent` ve `/direct-parent`. Hem sözleşme
    tarafını hem nihai ana ortağı **ayrı ayrı** tara.
-3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile OpenSanctions.
+3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile resmî yaptırım listeleri
+   (OFAC SDN, AB, UK OFSI, BM).
 4. **Raporla:** `[GLEIF — LEI {lei} — çekim: GG.AA.YYYY]` +
-   `[OpenSanctions — {taraf} — çekim: GG.AA.YYYY]`
+   `[Yaptırım listesi — {liste} — {taraf} — çekim: GG.AA.YYYY]`
 
 ## Sert sınırlar (her raporda beyan edilir)
 
@@ -837,7 +839,7 @@ GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
 
 ## Bilgi tabanı
 
-`gleif-rehberi.md` · `opensanctions-rehberi.md` · `yaptirim-tarama-rehberi.md`
+`gleif-rehberi.md` · `yaptirim-tarama-rehberi.md`
 
 ---
 
@@ -922,8 +924,8 @@ enstrümanını uyguladığı soruluyor.
 kimliği, konsolidasyon durumu ve erişim tarihi birlikte verilir.
 
 **Yaptırım rotası değildir.** Bir yaptırım enstrümanının OJ referansı, o kişinin
-**güncel listede olduğu** anlamına gelmez — güncel listeleme OpenSanctions'tan
-doğrulanır.
+**güncel listede olduğu** anlamına gelmez — güncel listeleme resmî konsolide listeden
+(`yaptirim-tarama-rehberi.md`) doğrulanır.
 
 Ulusal uygulama ölçütleri ayrı korpustur (Almanya için → `alman-hukuku`).
 

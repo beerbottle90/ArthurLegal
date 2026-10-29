@@ -92,7 +92,7 @@ ADIM 4: Atıf → [UA Mevzuat — zakon.rada.gov.ua — {kanun} — GG.AA.YYYY]
 ### 4.2 Ukrayna karşı taraf yaptırım taraması
 
 ```
-ADIM 1: OpenSanctions → UA karşı tarafı + UA yaptırım listesi (1644-18)
+ADIM 1: Resmî yaptırım listeleri → UA karşı tarafı + UA yaptırım listesi (1644-18)
 ADIM 2: AB/ABD yaptırımlarıyla çakışma → yaptirim-tarama-rehberi.md
 ADIM 3: Karşı-taraf NSDC (Milli Güvenlik Konseyi) yaptırım kararları kontrol
 ```

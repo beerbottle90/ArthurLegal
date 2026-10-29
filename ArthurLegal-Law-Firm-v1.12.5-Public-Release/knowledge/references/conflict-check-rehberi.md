@@ -129,7 +129,7 @@
 ### Yabancı tüzel kişi
 
 - Yabancı sicil no + Türkiye'deki şube/iştirak
-- **OpenSanctions** taraması (paralel olarak `/firm-operations:sanctions-check`)
+- **Yaptırım** taraması (paralel olarak `/firm-operations:sanctions-check`)
 
 ---
 

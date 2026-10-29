@@ -113,7 +113,7 @@ ADIM 1: Enerji Kanunu'nu getir
 ADIM 2: Şirket Kanunu'ndan karşı taraf temsil yetkisi kontrol
   WebFetch: https://www.paragraf.rs/propisi/zakon_o_privrednim_drustvima.html
 
-ADIM 3: OpenSanctions → Sırp karşı taraf yaptırım durumu
+ADIM 3: Resmî yaptırım listeleri (yaptirim-tarama-rehberi.md) → Sırp karşı taraf yaptırım durumu
 ```
 
 ### 3.3 GDPR uyumu (Sırbistan KVKK eşdeğeri)
@@ -217,7 +217,7 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 1. **Sırbistan governing-law sözleşmesi** → paragraf.rs'den ZOO (Borçlar Kanunu) +
    sektöre özel kanunu getir. Türk hukuku seçilmişse → SR analizi karşılaştırmalı arka plan.
 
-2. **Sırp enerji karşı tarafı** (Srbijagas, EPS, NIS) → OpenSanctions + Zakon o
+2. **Sırp enerji karşı tarafı** (Srbijagas, EPS, NIS) → resmî yaptırım listeleri + Zakon o
    energetici + Zakon o privrednim društvima (şirket yapısı) birlikte.
 
 3. **Kişisel veri aktarımı (SR → TR)** → Zakon o zaštiti podataka o ličnosti; SR AB

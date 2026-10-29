@@ -26,7 +26,7 @@ user-invocable: true
 
 - Yürürlükteki mevzuat, madde metni veya bağlayıcı karar → ArthurLegal MCP (`tr_`) /
   e-qanun MCP / resmî içtihat kaynakları.
-- Taraf, UBO, gemi veya yaptırım taraması → OpenSanctions.
+- Taraf, UBO, gemi veya yaptırım taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 - Müvekkile özel pozisyonlar / statik büro bağlamı → `firm-profile.md`,
   `profiles/*.md`.
 - **Gizli bir taslağı analiz için yapıştırmak.** Bu bir **PUBLIC** sözleşme
@@ -86,7 +86,7 @@ Sayılar keşif anına aittir; **canlı `contracts_search_contracts` ile teyit e
   uygulama.
 - **100 saniye:** geniş `contracts_search_contracts` çağrılarını filtrele; tam metni sayfa
   penceresiyle al.
-- Bir emsalin karşı tarafına dayanmadan önce **OpenSanctions ile tara**.
+- Bir emsalin karşı tarafına dayanmadan önce **resmî yaptırım listelerinde tara**.
 
 ## Atıf
 

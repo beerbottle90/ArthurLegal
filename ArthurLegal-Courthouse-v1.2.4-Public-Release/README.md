@@ -25,7 +25,7 @@ Kurulumdan sonra masaüstünde üç simge olur:
 Mac'te simgeler Uygulamalar klasöründe de durur ve adlarında tire yoktur: **ArthurLegal Courthouse**,
 **ArthurLegal Tapu**.
 
-Sürüm: **Courthouse v1.2.3** (2026-10-26) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası (Mac: 2.6.0) ·
+Sürüm: **Courthouse v1.2.4** (2026-10-29) · kurulum dosyası ArthurLegal Setup 2.5.0 ve sonrası (Mac: 2.6.0) ·
 [sürüm notları](CHANGELOG.md) · [lisans](LICENSE)
 
 ---
@@ -303,7 +303,7 @@ ArthurLegal-Courthouse-v1.2.4-Public-Release/
 ├── ARTHUR-MASK.md         ← Arthur Mask kullanım rehberi
 ├── SYSTEM_PROMPT.md       ← asistanın sistem talimatı
 ├── CHANGELOG.md           ← sürüm notları
-├── VERSION.md             ← 1.2.3
+├── VERSION.md             ← 1.2.4
 ├── ATTRIBUTION.md         ← atıf bilgisi
 ├── LICENSE                ← Proprietary — Non-Commercial
 └── knowledge/

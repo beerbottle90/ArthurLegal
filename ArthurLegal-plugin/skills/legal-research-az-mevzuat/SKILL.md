@@ -31,7 +31,7 @@ user-invocable: true
 - AZ hukuku üzerine akademik şerh → `/arthurlegal:legal-research-karsilastirmali-doktrin`
   (İKİNCİL — aktın kendisinin yerine **asla** geçmez).
 - İmzalı sözleşme emsali (PSA/JOA şartları) → `/arthurlegal:legal-research-sozlesme-emsali`.
-- Yaptırım / taraf taraması → OpenSanctions.
+- Yaptırım / taraf taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 
 ## Araçlar (6)
 

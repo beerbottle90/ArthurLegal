@@ -1,6 +1,6 @@
 # ArthurLegal Hukuk Bürosu Asistanı — Kurulum Rehberi
 
-**Versiyon:** 1.12.4 | **Güncelleme:** 2026-10-27
+**Versiyon:** 1.12.5 | **Güncelleme:** 2026-10-29
 
 ---
 
@@ -13,7 +13,6 @@
 | TR Legal MCP | yargi-mcp-pro connector — yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK için (isteğe bağlı, Adım 4d) |
 | e-qanun / LexScholar / ResourceContracts MCP | self-hosted, auth yok (isteğe bağlı — Adım 4b) |
 | Arthur Mask | Belgeleri bilgisayarınızda maskeleyen yerel gizlilik kapısı; Windows 10/11 64 bit + Claude Desktop (önerilir, isteğe bağlı, Adım 5) |
-| OpenSanctions API key | Yaptırım taraması için (isteğe bağlı) |
 
 ---
 
@@ -105,7 +104,6 @@ knowledge/references/uyap-rehberi.md
 knowledge/references/idari-yargi-yapisi-rehberi.md
 knowledge/references/mevzuat-mcp-rehberi.md
 knowledge/references/yargi-mcp-rehberi.md
-knowledge/references/opensanctions-rehberi.md
 knowledge/references/kvkk-m11-cevap-sablonu.md
 knowledge/references/conflict-check-rehberi.md
 knowledge/references/masak-kimlik-tespit-rehberi.md
@@ -329,14 +327,12 @@ Günlük kullanım, kırmızı hat, sızıntı denetimi ve sorun giderme: [ARTHU
 
 ---
 
-## Adım 6 — OpenSanctions API (isteğe bağlı)
+## Adım 6 — Yaptırım taraması (kurulum gerekmez)
 
-Yaptırım taraması ve KYC için:
-1. [opensanctions.org](https://www.opensanctions.org/) → API key edinin
-2. Anahtarı `OPENSANCTIONS_API_KEY` ortam değişkenine koyun (Claude Code: `~/.claude/settings.json` → `env` bloğu,
-   ya da işletim sisteminin ortam değişkeni). Anahtarı pakete, proje dosyalarına veya sohbete yazmayın.
-3. API çağrısı kabuk komutu (`curl`) gerektirir, bu yüzden Claude Code'da çalışır. claude.ai Projects'te anahtarsız
-   OpenSanctions web araması kullanılır. Ayrıntı: `knowledge/references/opensanctions-rehberi.md`.
+Yaptırım taraması ve KYC resmî listelerden yapılır: OFAC SDN, AB konsolide listesi, UK OFSI, BM konsolide listesi;
+Türkiye'de 6415 ve 7262 sayılı Kanunlar uyarınca verilen malvarlığı dondurma kararları. Listeler WebFetch ile çekilir;
+API anahtarı, ortam değişkeni ya da ek connector gerekmez. Akış: `knowledge/references/yaptirim-tarama-rehberi.md`
+ve `/firm-operations:sanctions-check`.
 
 ---
 
@@ -415,7 +411,9 @@ A: `/<plugin>:` yazın — asistan o plugin'in tüm mevcut skill'lerini listeler
 
 ## Güncelleme notları
 
-Bu versiyon **v1.12.4**'tür. v1.12.3'ten geçiş: Project knowledge'da `knowledge/skills/ip-legal__skills.md` ve `knowledge/profiles/ip-advisory.md` yenilenir. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+Bu versiyon **v1.12.5**'tir. v1.12.4'ten geçiş: bir rehber kaldırıldığı için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (dört skill kitapçığı, `firm-profile.md`, iki profil, 14 rehber ve `oss-source-catalog.json` değişti; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 6'daki yaptırım satırı ve bölüm 13 değişti; yeniden yapıştırın. Yaptırım taraması artık API anahtarı istemez; daha önce bu iş için tanımladığınız ortam değişkenini silebilirsiniz. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
+v1.12.3'ten v1.12.4'e geçiş: Project knowledge'da `knowledge/skills/ip-legal__skills.md` ve `knowledge/profiles/ip-advisory.md` yenilenir. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.12.2'den v1.12.3'e geçiş: değişen dosya çok olduğu için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (sekiz skill kitapçığı, yedi ajan, `firm-profile.md`, üç profil ve 26 rehber; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 8'de bir ifade ve sürüm satırları değişti; yeniden yapıştırmak önerilir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 

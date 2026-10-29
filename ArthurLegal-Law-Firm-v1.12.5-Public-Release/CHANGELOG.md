@@ -5,6 +5,20 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.5] — 2026-10-29 — *OpenSanctions API Çıkarıldı; Yaptırım Taraması Resmî Listelerden*
+
+> **Bakım sürümü.** Sistem talimatında bölüm 6'daki yaptırım satırı, bölüm 13 madde 4 ve sürüm satırları değişti.
+
+### Kaldırıldı
+1. `opensanctions-rehberi.md` ve OpenSanctions API'sine dayanan bütün talimatlar: API anahtarı, ortam değişkeni, `curl` çağrısı, eşleşme skoru eşikleri. Kurulum rehberlerindeki Adım 6 artık kurulum istemez.
+
+### Değişti
+1. Yaptırım taraması resmî listelerden yapılır (`yaptirim-tarama-rehberi.md`): OFAC SDN, AB konsolide listesi, UK OFSI, BM konsolide listesi; Türkiye'de 6415 ve 7262 sayılı Kanunlar kapsamındaki malvarlığı dondurma kararları. Anahtar ya da ek connector gerekmez.
+2. `firm-operations` / `sanctions-check`: iş ve sonuç etiketleri aynı (✓ TEMİZ / 🟠 İNCELE / ⛔ HIT). Eşleşme skoru yerine rehberdeki kesin / olası eşleşme ayrımı; çekilemeyen liste UYARI satırıyla yazılır ve temiz sayılmaz; resmî yaptırım listeleri PEP içermediği için PEP kontrolü ayrı satırda.
+3. Atıf etiketi: `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]`.
+4. Yaptırım taramasını anan yerler bu kaynağa yönlendirildi: `commercial-legal`, `energy-finance`, `firm-operations` ve `legal-research` kitapçıkları; `firm-profile.md`; `profiles/firm-operations.md` ve `profiles/legal-research.md`; 14 rehber (`cin-hukuku`, `conflict-check`, `eu-legislation`, `gleif`, `isvicre-emtia-ticareti`, `karsilastirmali-hukuk`, `masak-kimlik-tespit`, `orta-asya-hukuku`, `resourcecontracts`, `russia-legislation`, `sirbistan-hukuku`, `source-catalog`, `uk-legislation`, `ukrayna-hukuku`) ve `oss-source-catalog.json`.
+5. README, KURULUM, INSTALLATION ve ATTRIBUTION'daki OpenSanctions satırları resmî yaptırım listelerine çevrildi.
+
 ## [1.12.4] — 2026-10-27 — *5651 Değişikliği (1 Kasım 2026)*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.

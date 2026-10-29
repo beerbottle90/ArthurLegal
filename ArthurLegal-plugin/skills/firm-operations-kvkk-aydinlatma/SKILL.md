@@ -61,7 +61,7 @@ Dil anlaşılır, açık ve sade olur (Tebliğ m. 5/1-ğ). Eksik, yanıltıcı v
 Aydınlatma ve açık rıza **ayrı ayrı** alınır (Tebliğ m. 5/1-f). İkisini tek formda, tek imzayla birleştirme.
 
 ### 5. Yurt dışı aktarım kontrolü (m. 9)
-Büro bulut depolama, e-posta, belge yönetimi, çeviri veya yaptırım taraması (OpenSanctions) için yurt dışındaki bir hizmete kişisel veri gönderiyorsa bu **yurt dışına aktarımdır**:
+Büro bulut depolama, e-posta, belge yönetimi, çeviri veya yaptırım taraması için yurt dışındaki bir hizmete kişisel veri gönderiyorsa bu **yurt dışına aktarımdır**:
 - Aktarılan ülke veya sektör için yeterlilik kararı var mı (m. 9/1-2)?
 - Yoksa uygun güvence: Kurulun ilan ettiği standart sözleşme vb. (m. 9/4). Standart sözleşme imzadan itibaren **beş iş günü** içinde Kuruma bildirilir (m. 9/5).
 - İkisi de yoksa yalnız arızi hâllerde aktarım yapılabilir (m. 9/6).
