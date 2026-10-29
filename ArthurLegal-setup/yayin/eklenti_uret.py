@@ -39,6 +39,16 @@ ONBILGI = re.compile(r"\A\s*---\n(.*?)\n---\n", re.S)
 REHBER = re.compile(r"(?<![\w/$}])(?:knowledge/)?references/([\w.-]+\.md)")
 IKILI = {".png"}
 
+# Kullanıcının makinesindeki bir API anahtarını okuyup dış bir hizmete gönderen rehber eklentiye girmez (dizin bunu
+# "credential leaving the machine" diye bekletir); Projects paketinde kalabilirler. Rehbere yapılan atıf, varsa aynı
+# işi anahtarsız yapan rehbere döner, yoksa rehberin eklentide olmadığı yazılır. Anahtarı anan satırlar da düşer.
+ANAHTARLI_REHBER = {
+    "opensanctions-rehberi.md": "yaptirim-tarama-rehberi.md",
+    "us-legislation-rehberi.md": None,
+}
+KIMLIK = re.compile(r"\b[A-Z][A-Z0-9]*_(?:API_KEY|TOKEN|SECRET)\b")
+SERBEST_KIMLIK = {"EMBEDDINGS_API_KEY", "OPENALEX_API_KEY"}   # sunucu tarafı ya da isteğe bağlı; kullanıcıdan istenmez
+
 
 class EklentiHata(Exception):
     pass
@@ -71,6 +81,15 @@ def becerilere_ayir(knowledge: Path) -> Tuple[List[Tuple[str, str, str]], Dict[s
     return beceriler, notlar
 
 
+def anahtarsiz(metin: str) -> str:
+    """Anahtarlı rehberlere atfı yönlendirir, kullanıcı anahtarını anan satırları atar."""
+    for rehber, yerine in ANAHTARLI_REHBER.items():
+        kalip = re.compile(r"(?:\$\{CLAUDE_PLUGIN_ROOT\}/|knowledge/)?(?:references/)?" + re.escape(rehber))
+        metin = kalip.sub(yerine or (rehber + " (bu eklentide yok: kullanıcı API anahtarı ister)"), metin)
+    return "\n".join(s for s in metin.split("\n")
+                     if not (set(KIMLIK.findall(s)) - SERBEST_KIMLIK))
+
+
 def _komutlar(metin: str, adlar: set) -> str:
     def degistir(m: re.Match) -> str:
         yeni = "%s-%s" % (m.group(1), m.group(2))
@@ -80,7 +99,7 @@ def _komutlar(metin: str, adlar: set) -> str:
 
 def beceri_metni(metin: str, adlar: set, rehberler: set) -> str:
     """Beceri gövdesi: komutlar eklenti adına, knowledge yolları eklenti köküne (Claude Code gövdede çözer)."""
-    metin = _komutlar(metin, adlar)
+    metin = _komutlar(anahtarsiz(metin), adlar)
     metin = metin.replace("knowledge/firm-profile.md", "${CLAUDE_PLUGIN_ROOT}/references/firm-profile.md")
     metin = metin.replace("knowledge/profiles/", "${CLAUDE_PLUGIN_ROOT}/references/profiles/")
     return REHBER.sub(lambda m: "${CLAUDE_PLUGIN_ROOT}/references/" + m.group(1) if m.group(1) in rehberler
@@ -89,7 +108,7 @@ def beceri_metni(metin: str, adlar: set, rehberler: set) -> str:
 
 def rehber_metni(metin: str, adlar: set) -> str:
     """Rehberler düz dosyadır, gövdede değişken çözülmez: yollar eklenti köküne göre kalır."""
-    metin = _komutlar(metin, adlar)
+    metin = _komutlar(anahtarsiz(metin), adlar)
     return (metin.replace("knowledge/references/", "references/").replace("knowledge/profiles/", "references/profiles/")
             .replace("knowledge/firm-profile.md", "references/firm-profile.md"))
 
@@ -225,7 +244,7 @@ def uret(kok: Path = KOK) -> Dict[str, bytes]:
     adlar = {"%s-%s" % (a, s) for a, s, _ in beceriler}
     if len(adlar) != len(beceriler):
         raise EklentiHata("aynı adlı iki beceri var")
-    rehberler = {p.name for p in (knowledge / "references").glob("*.md")}
+    rehberler = {p.name for p in (knowledge / "references").glob("*.md")} - set(ANAHTARLI_REHBER)
 
     dosyalar: Dict[str, str] = {}
     dosyalar["skills/%s/SKILL.md" % AD] = ana_beceri(_oku(paket / "SYSTEM_PROMPT.md"), surum, adlar, rehberler)
@@ -233,7 +252,8 @@ def uret(kok: Path = KOK) -> Dict[str, bytes]:
         dosyalar["skills/%s-%s/SKILL.md" % (alan, skill)] = beceri_dosyasi(
             alan, skill, govde, notlar.get(alan, ""), adlar, rehberler)
     for p in sorted((knowledge / "references").glob("*.md")):
-        dosyalar["references/" + p.name] = rehber_metni(_oku(p), adlar)
+        if p.name in rehberler:
+            dosyalar["references/" + p.name] = rehber_metni(_oku(p), adlar)
     for p in sorted((knowledge / "profiles").glob("*.md")):
         dosyalar["references/profiles/" + p.name] = rehber_metni(_oku(p), adlar)
     dosyalar["references/firm-profile.md"] = rehber_metni(_oku(knowledge / "firm-profile.md"), adlar)

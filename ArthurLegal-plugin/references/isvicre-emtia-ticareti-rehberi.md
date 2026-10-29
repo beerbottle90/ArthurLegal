@@ -61,7 +61,7 @@ https://www.seco.admin.ch/seco/en/home/Aussenwirtschaftspolitik_Wirtschaftliche_
 - Online arama uygulaması (yaptırım adresi sorgulama)
 
 **OpenSanctions entegrasyonu:** SECO listesi `ch_seco_sanctions` dataset'i olarak OpenSanctions'ta
-da var — mevcut `POST /match/default` taraması SECO'yu kapsar (bkz. `opensanctions-rehberi.md`).
+da var — mevcut `POST /match/default` taraması SECO'yu kapsar (bkz. `yaptirim-tarama-rehberi.md`).
 
 **İhlal yaptırımı:** 5 yıla kadar hapis + 1M CHF'ye kadar para cezası.
 
@@ -125,7 +125,7 @@ ADIM 3: Ticaret kolu eşiği aşıyorsa → yıllık gayrı-finansal rapor yük�
 ## 7. İlgili rehberler
 
 - `switzerland-caselaw-rehberi.md` — İsviçre içtihat + Fedlex + fedlex-connector MCP
-- `opensanctions-rehberi.md` — yaptırım taraması (SECO dahil)
+- `yaptirim-tarama-rehberi.md` — yaptırım taraması (SECO dahil)
 - `yaptirim-tarama-rehberi.md` — [Müvekkil] yaptırım prosedürü
 - `karsilastirmali-hukuk-rehberi.md` — governing-law seçimi (CH vs Singapur)
 - energy-finance: `commodity-trade-compliance` skill (bu rehberi operasyonel kullanır)

@@ -44,4 +44,4 @@ GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + OpenSanctions.
 
 ## Bilgi tabanı
 
-`gleif-rehberi.md` · `opensanctions-rehberi.md` · `yaptirim-tarama-rehberi.md`
+`gleif-rehberi.md` · `yaptirim-tarama-rehberi.md` · `yaptirim-tarama-rehberi.md`

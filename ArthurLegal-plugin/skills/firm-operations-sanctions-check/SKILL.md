@@ -46,8 +46,7 @@ AB, ABD (OFAC) ve Birleşik Krallık listeleri 6415 m. 5 ile 7262 m. 3'teki BMGK
 - OpenSanctions yurt dışında bir hizmettir; ona kişisel veri göndermek **yurt dışına aktarımdır** (KVKK m. 9). Büronun bu aktarım için dayanağı `/arthurlegal:firm-operations-kvkk-aydinlatma` kaydında yoksa gerçek kişi taramasını durdur: 🟠 İNCELE → Yönetici Ortak.
 
 ### 3. OpenSanctions
-- Çağrı kalıbı: `${CLAUDE_PLUGIN_ROOT}/references/opensanctions-rehberi.md` (match API, `default` kapsam, curl ile).
-- Anahtar `OPENSANCTIONS_API_KEY` ortam değişkenindedir; pakette yoktur. Değişken tanımlı değilse API çağrısı yapma, rehberdeki manuel kaynaklarla (OpenSanctions web araması dahil) tara. Anahtarı hiçbir çıktıya, nota, dosyaya veya sohbet metnine yazma.
+- Çağrı kalıbı: `yaptirim-tarama-rehberi.md` (match API, `default` kapsam, curl ile).
 - Skor 0 ile 1 arasındadır (OpenSanctions dokümanı). Yorum: ≥ 0,90 → ⛔; 0,70-0,90 → 🟠, ayırt edici bilgilerle (doğum tarihi, uyruk, sicil numarası) teyit et; < 0,70 → ✓, kaydet.
 - Yalnız ad benzerliğiyle hüküm kurma. Eşleşen kaydın doğum tarihi, uyruk ve sicil bilgisini müvekkilinkiyle karşılaştır.
 
@@ -88,7 +87,7 @@ SONUÇ: ✓ TEMİZ / 🟠 İNCELE / ⛔ HIT
 - OFAC veya AB eşleşmesini "Türkiye'de malvarlığı dondurulmuş" diye raporlamak
 - API anahtarını çıktıya yazmak
 
-Ayrıntı: `${CLAUDE_PLUGIN_ROOT}/references/opensanctions-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/yaptirim-tarama-rehberi.md`
+Ayrıntı: `yaptirim-tarama-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/yaptirim-tarama-rehberi.md`
 
 ---
 

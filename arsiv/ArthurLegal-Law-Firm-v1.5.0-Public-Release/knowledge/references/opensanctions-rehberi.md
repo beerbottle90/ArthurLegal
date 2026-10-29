@@ -2,7 +2,7 @@
 
 > **Custom MCP server YOK** — OpenSanctions sadece REST API. Bu rehber, Claude'un `WebFetch` aracını OpenSanctions ile birlikte kullanmak için prosedürü tanımlar.
 >
-> **Durum:** ✅ Lisans + API key aktif ve **bu pakette default gömülü** (`a1c019122d0de8880772f7282c0ae03d`). Bu rehberdeki çağrılar olduğu gibi canlı çalışır — ek kurulum gerekmez.
+> **Durum:** ✅ Lisans + API key aktif ve **bu pakette default gömülü** (`[ANAHTAR SİLİNDİ]`). Bu rehberdeki çağrılar olduğu gibi canlı çalışır — ek kurulum gerekmez.
 
 ---
 
@@ -48,7 +48,7 @@ Counterparty bilgisini gönder, eşleşme skoru + bağlantılı varlık döndür
 
 ```bash
 POST https://api.opensanctions.org/match/default
-Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
+Authorization: Apikey [ANAHTAR SİLİNDİ]
 Content-Type: application/json
 
 {
@@ -72,7 +72,7 @@ Content-Type: application/json
 
 ```bash
 GET https://api.opensanctions.org/search/default?q=Acme+Trading+LLC
-Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
+Authorization: Apikey [ANAHTAR SİLİNDİ]
 ```
 
 ### 3. Entities API — bilinen ID ile detay çekme
@@ -80,7 +80,7 @@ Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
 
 ```bash
 GET https://api.opensanctions.org/entities/Q123456
-Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
+Authorization: Apikey [ANAHTAR SİLİNDİ]
 ```
 
 ### Scope seçimi
@@ -104,7 +104,7 @@ Authorization: Apikey a1c019122d0de8880772f7282c0ae03d
 - Aylık abonelik + aşımda ek bedel
 - Yıllık taahhüt indirim
 
-**Adım 4:** API key bu pakette **default olarak gömülüdür** (`a1c019122d0de8880772f7282c0ae03d`) — ek kurulum/env değişkeni gerekmez; tüm çağrılar olduğu gibi çalışır.
+**Adım 4:** API key bu pakette **default olarak gömülüdür** (`[ANAHTAR SİLİNDİ]`) — ek kurulum/env değişkeni gerekmez; tüm çağrılar olduğu gibi çalışır.
 
 > **Not:** Bu, sahibi tarafından bilinçli olarak pakete gömülen, sabit ücretli (kota-aşımı/exhaust riski düşük) bir anahtardır. Public dağıtımda anahtarı periyodik rotasyona açık tutmak yine de iyi pratiktir.
 
@@ -121,7 +121,7 @@ Claude (sen) sorgu yapıyorsun:
 2. WebFetch çağrısı:
    - URL: https://api.opensanctions.org/match/default
    - Method: POST
-   - Headers: Authorization: Apikey a1c019122d0de8880772f7282c0ae03d, Content-Type: application/json
+   - Headers: Authorization: Apikey [ANAHTAR SİLİNDİ], Content-Type: application/json
    - Body: { "queries": { "q1": { "schema": "Company", "properties": {...}}}}
 3. Cevap JSON'ı parse et — match skoru ve eşleşen liste(ler)
 4. Skora göre karar:

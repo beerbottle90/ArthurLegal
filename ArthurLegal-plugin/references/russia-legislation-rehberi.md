@@ -91,7 +91,7 @@ WebFetch("https://webgate.ec.europa.eu/fsd/fsf/public/files/csvFullSanctionsList
          "{ad} bu AB konsolide yaptırım listesinde geçiyor mu? Geçiyorsa EU referans no ve tüzük bilgisini ver")
 
 # OFAC SDN list (statik liste, OpenSanctions zaten kapsıyor)
-# → opensanctions-rehberi.md'ye bak
+# → yaptirim-tarama-rehberi.md'ye bak
 
 # BM yaptırım listesi
 # ⚠️ scsanctions.un.org/search 404, un.org/securitycouncil/... 403 veriyor.

@@ -99,7 +99,7 @@ ABD içtihatı oturumda fiilen CourtListener'dan çekildiyse:
 - **Yalnızca ABD** — İngiliz/AB içtihatı CourtListener'da yok (UK için
   `uk-legislation-rehberi.md` mevzuat verir, İngiliz case law için BAILII).
 - **PACER kapsamı** — bazı PACER belgeleri ücretli/sınırlı; üyelik elevated erişim açar.
-- **İçtihat ≠ mevzuat** — statü metni için `us-legislation-rehberi.md` (GovInfo).
+- **İçtihat ≠ mevzuat** — statü metni için `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` (GovInfo).
 - **ABD doktrini Türk hukukuna doğrudan uygulanamaz** — work-product,
   attorney-client privilege gibi kavramlar Türk hukukunda yoktur veya farklıdır.
   Bkz. `karsilastirmali-hukuk-rehberi.md`.

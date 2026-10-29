@@ -66,7 +66,7 @@
 
 > 🔴 **Yaptırım taraması bir digest işi değildir.** Bu kaynaklar izleme içindir;
 > karşı taraf taraması için **OpenSanctions** birincildir
-> (`opensanctions-rehberi.md`). Digest'te çıkan bir isim, tarama yerine geçmez.
+> (`yaptirim-tarama-rehberi.md`). Digest'te çıkan bir isim, tarama yerine geçmez.
 
 ---
 

@@ -135,6 +135,6 @@ Kurallar:
 ## İlgili rehberler
 
 - `courtlistener-rehberi.md` — CourtListener connector'ının arama/docket yetenekleri ve mevcut atıf-doğrulama uyarısı
-- `us-legislation-rehberi.md` — ABD mevzuat kaynakları (kanun atıflarının içerik doğrulaması)
+- `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` — ABD mevzuat kaynakları (kanun atıflarının içerik doğrulaması)
 - `yargi-mcp-rehberi.md` — Türk içtihat/mevzuat doğrulaması; Türkçe atıf ayrıştırıcısının doğrulama arka ucu
 - `karsilastirmali-hukuk-rehberi.md` — yargı çevresi yönlendirme kuralları

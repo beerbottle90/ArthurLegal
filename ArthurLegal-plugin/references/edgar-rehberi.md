@@ -188,7 +188,7 @@ fiilen çekildiyse etiket:
 
 ## İlgili rehberler
 
-- `us-legislation-rehberi.md` — ABD federal mevzuat (GovInfo); HSR Act, Securities Act statü zemini
+- `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` — ABD federal mevzuat (GovInfo); HSR Act, Securities Act statü zemini
 - `courtlistener-rehberi.md` — ABD mahkeme kararları; beyanla anılan davanın yargısal kaydı
 - `kap-esirket-webfetch-rehberi.md` — Türk analoğu (KAP özel durum açıklamaları); aynı "beyan ≠ tespit" disiplini
 - `karsilastirmali-hukuk-rehberi.md` — yabancı hukuk kaynaklarının devreye girme koşulları

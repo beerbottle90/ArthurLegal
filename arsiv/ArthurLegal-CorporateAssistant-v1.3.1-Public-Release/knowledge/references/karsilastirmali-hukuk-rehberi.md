@@ -26,7 +26,7 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 | 🇦🇿 AZ | e-qanun.az | ⚠️ anti-bot | **cis-legislation.com** (11 BDT ülkesi, EN/RU, ✅) |
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
 | 🇷🇸 SR | paragraf.rs | ✅ | — |
-| 🌍 OpenSanctions | api.opensanctions.org | ✅ key gömülü | `Authorization: Apikey a1c019122d0de8880772f7282c0ae03d` |
+| 🌍 OpenSanctions | api.opensanctions.org | ✅ key gömülü | `Authorization: Apikey [ANAHTAR SİLİNDİ]` |
 | 🇹🇷 KAP | kap.org.tr | ✅ | — |
 | 🇹🇷 e-şirket | e-sirket.mkk.com.tr | ⚠️ JS SPA | Halka açıklar → KAP; tescil → ticaretsicil.gov.tr |
 
