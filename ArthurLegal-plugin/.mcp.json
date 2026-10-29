@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "arthurlegal": {
+      "type": "http",
+      "url": "https://arthurlegal-mcp.fly.dev/directory/mcp"
+    }
+  }
+}
