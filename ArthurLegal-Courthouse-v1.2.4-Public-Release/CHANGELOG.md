@@ -38,7 +38,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 ### Güvenlik
 
 1. `knowledge/references/connector-saglik-fallback-rehberi.md`: OpenSanctions satırındaki API anahtarı çıkarıldı;
-   anahtar `OPENSANCTIONS_API_KEY` ortam değişkeninden okunur.
+   anahtar bir ortam değişkeninden okunur.
 
 ### Düzeltildi
 

@@ -77,7 +77,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 ### Güvenlik
 
 1. OpenSanctions API anahtarı paketten çıkarıldı (`opensanctions-rehberi.md`, `karsilastirmali-hukuk-rehberi.md`);
-   anahtar `OPENSANCTIONS_API_KEY` ortam değişkeninden okunur. Önceki sürümlerde yayımlanan anahtar iptal edilmelidir.
+   anahtar bir ortam değişkeninden okunur. Önceki sürümlerde yayımlanan anahtar iptal edilmelidir.
 
 ### Düzeltildi
 
