@@ -1,0 +1,24 @@
+{
+  "name": "arthurlegal",
+  "displayName": "ArthurLegal",
+  "version": "1.12.4",
+  "description": "Turkish-law-first legal assistant for law firms: 142 practice skills with citations checked against the official text through ArthurLegal MCP (15 jurisdictions).",
+  "author": {
+    "name": "ArthurLegal",
+    "url": "https://github.com/beerbottle90/ArthurLegal"
+  },
+  "homepage": "https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-plugin",
+  "repository": "https://github.com/beerbottle90/ArthurLegal",
+  "keywords": [
+    "legal",
+    "law-firm",
+    "turkish-law",
+    "citations",
+    "kvkk",
+    "contracts"
+  ],
+  "icon": "./logo.png",
+  "documentationUrl": "https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-plugin#readme",
+  "supportUrl": "https://github.com/beerbottle90/ArthurLegal/issues",
+  "privacyPolicyUrl": "https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md"
+}
