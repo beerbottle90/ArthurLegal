@@ -1,9 +1,9 @@
 # ArthurLegal — Claude Law Firm Assistant
 
-**Version:** v1.12.4 · **Date:** 2026-10-27 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Version:** v1.12.5 · **Date:** 2026-10-29 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
 
-> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 130 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
+> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 129 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
@@ -38,7 +38,7 @@ carries its source and retrieval date (`[Legislation MCP — date]`, `[Case Law 
 — institution — date]`, `[model knowledge — verify]`), and unretrieved text is
 never presented as retrieved.
 
-Version history and the full v1.0.1 → v1.12.4 progression: [CHANGELOG.md](CHANGELOG.md).
+Version history and the full v1.0.1 → v1.12.5 progression: [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -115,7 +115,7 @@ troubleshooting questions.
 | **CourtListener** | MCP — official server, Anthropic connector directory | OAuth 2.0 (dynamic client registration) | **United States case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (fabricated-citation defence). Operated by Free Law Project. See `courtlistener-rehberi.md` |
 | **ArthurLegal MCP** | MCP — `arthurlegal-mcp.fly.dev/mcp` | None | **Türkiye + 14 jurisdictions and the Turkish land registry behind one connector — 123 tools.** 🇹🇷 Türkiye (`tr_`, 23 tools): Yargıtay, Danıştay, regional and local courts, KYB, Constitutional Court, Uyuşmazlık Mahkemesi, 12 legislation types with article tree and gerekçe, Official Gazette, eight regulators (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) and a 19,498-document semantic archive · 🇦🇿 Azerbaijan, in-force status verified (`az_`) · 🇦🇹 Austria (`at_`) · 🇩🇪 Germany (`de_`) · 🇳🇱 Netherlands (`nl_`) · 🇵🇱 Poland (`pl_`) · 🇪🇸 Spain (`es_`) · 🇫🇮 Finland (`fi_`) · 🇮🇪 Ireland (`ie_`) · 🇬🇧 UK (`uk_`) · 🇪🇺 EU/CJEU (`eu_`) · 🇯🇵 Japan (`jp_`) · GLEIF (`gleif_`) · 10 scholarship indexes incl. 19 Turkish law journals (`scholar_`) · 5,125 signed petroleum & mining contracts (`contracts_`) · 🇹🇷 land registry: live parcels from TKGM Parsel Sorgu with parcel report, scaled sketch and legal-basis bridge (`tkgm_`, 17 tools) |
 | **TR Legal MCP** (optional) | MCP — `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth (WorkOS) | Only for what the Turkish backend deliberately omits: ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK. Paid server by [saidsurucu](https://github.com/saidsurucu) |
-| **OpenSanctions** | REST API — `api.opensanctions.org` | API key | Client sanctions / PEP / KYC screening |
+| **Official sanctions lists** | WebFetch — OFAC SDN, EU consolidated list, UK OFSI, UN consolidated list | None | Client sanctions screening (`yaptirim-tarama-rehberi.md`) |
 | **Fedlex** | MCP — Anthropic connector directory *(WebFetch fallback: `fedlex.admin.ch`)* | None | **Swiss federal legislation** — article text, full statute text, amendment history, title search |
 
 **Jurisdictions reached via WebFetch** (no additional connector required):
@@ -156,7 +156,7 @@ Turkish guide → [KURULUM.md](KURULUM.md)
 3. `knowledge/` folder → Upload Files
 4. Add the ArthurLegal MCP connector (Türkiye under `tr_` plus 14 jurisdictions, no auth — Step 4); then, per client portfolio, CourtListener · Fedlex · OpenCaseLaw.ch (Step 4a) and, only if ECHR/KİK/Sayıştay work is needed, TR Legal MCP (Step 4b)
 5. Arthur Mask on Windows with Claude Desktop (recommended, optional — Step 5)
-6. OpenSanctions API key (optional)
+6. Sanctions screening: no key or connector needed, official lists (Step 6)
 7. Run `/firm-operations:cold-start-interview`
 8. Run the practice-area cold-starts
 
@@ -222,7 +222,7 @@ ArthurLegal-Law-Firm-v1.12.5-Public-Release/
     ├── profiles/           ← 10 practice-area profiles (incl. legal-research)
     ├── skills/             ← 16 consolidated skill files
     ├── agents/             ← 7 automation agent definitions
-    └── references/         ← 96 references: legislation + international jurisdictions + MCP guides + Arthur Mask
+    └── references/         ← 95 references: legislation + international jurisdictions + MCP guides + Arthur Mask
 ```
 
 > **Note on language:** the knowledge layer and `SYSTEM_PROMPT.md` are written in

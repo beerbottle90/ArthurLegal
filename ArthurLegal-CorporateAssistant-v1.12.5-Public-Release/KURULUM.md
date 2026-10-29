@@ -1,13 +1,13 @@
 # Claude.ai Projects – Kurulum Rehberi
 
-## ArthurLegal Corporate Assistant v1.12.4
+## ArthurLegal Corporate Assistant v1.12.5
 
 Çok yargı çevreli (multi-jurisdiction) 12-eklenti kurumsal hukuk asistanı.
 Claude.ai Projects üzerinde çalışır.
 
-**İçerik:** 12 birleşik skill dosyası · 85 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
+**İçerik:** 12 birleşik skill dosyası · 84 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
 **MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 14 yargı çevresi + tapu-kadastro, 123 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
-(ArthurLegal dışındakiler isteğe bağlıdır · ayrıca OpenSanctions REST API)
+(ArthurLegal dışındakiler isteğe bağlıdır)
 **Yerel gizlilik kapısı:** Arthur Mask (isteğe bağlı, önerilir; Windows 10/11 64 bit + Claude Desktop, Adım 5)
 
 > **28 yargı çevresinin** tam listesi ve her birinin kaynak yolu sistem talimatının bölüm 6'daki kaynak
@@ -36,12 +36,12 @@ Claude.ai Projects üzerinde çalışır.
 
 ## Adım 3 — Knowledge Dosyalarını Yükle
 
-`knowledge/` klasörünün altında **105 dosya** var (4 kategori):
+`knowledge/` klasörünün altında **104 dosya** var (4 kategori):
 
 ```
 knowledge/
   skills/      ← 12 dosya (birleşik skill kitapçıkları — legal-research dâhil)
-  references/  ← 85 dosya (TR mevzuat, yargı çevresi ve MCP rehberleri, arthur-mask-rehberi.md)
+  references/  ← 84 dosya (TR mevzuat, yargı çevresi ve MCP rehberleri, arthur-mask-rehberi.md)
   agents/      ← 7 dosya (periyodik ajan tanımları)
   company-profile.md
 ```
@@ -54,7 +54,7 @@ knowledge/
 Project → **+ Add content** → **Files** ekranını açık tutun.
 
 1. `knowledge/skills/` klasörünü aç → `Ctrl+A` (12 dosya) → sürükle → bekle
-2. `knowledge/references/` klasörünü aç → `Ctrl+A` (85 dosya) → sürükle → bekle
+2. `knowledge/references/` klasörünü aç → `Ctrl+A` (84 dosya) → sürükle → bekle
 3. `knowledge/agents/` klasörünü aç → `Ctrl+A` (7 dosya) → sürükle → bekle
 4. `knowledge/company-profile.md`'yi ayrıca sürükle
 
@@ -356,6 +356,8 @@ Yeni bir sürüm geldiğinde:
 2. Claude.ai projesinde ilgili dosyaları silin → güncellenmiş halleri yeniden yükleyin
 3. `SYSTEM_PROMPT.md` değiştiyse Custom Instructions'ı güncelleyin
 
+v1.12.4'ten v1.12.5'e geçiş: bir rehber kaldırıldığı için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (üç skill kitapçığı, 12 rehber ve `oss-source-catalog.json` değişti; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 6'daki yaptırım satırı ve bölüm 13 değişti; yeniden yapıştırın. Yaptırım taraması artık API anahtarı istemez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
+
 v1.12.3'ten v1.12.4'e geçiş: Project knowledge'da `knowledge/skills/ip-legal__skills.md` yenilenir. `SYSTEM_PROMPT.md`'de yalnız sürüm satırları değişti; yeniden yapıştırmak gerekmez. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
 
 v1.12.2'den v1.12.3'e geçiş: değişen dosya çok olduğu için Project knowledge'ı bu sürümün `knowledge/` klasörüyle baştan yükleyin (sekiz skill kitapçığı, yedi ajan, `company-profile.md` ve 25 rehber; liste `CHANGELOG.md`'de). `SYSTEM_PROMPT.md`'de bölüm 8'de bir ifade ve sürüm satırları değişti; yeniden yapıştırmak önerilir. ArthurLegal yerel kurulumu paket dosyalarını kendiliğinden yeniler.
@@ -376,4 +378,4 @@ v1.7.0'dan v1.8.0'a geçiş: `SYSTEM_PROMPT.md` yeniden yapıştırılır (yeni 
 
 ---
 
-*ArthurLegal Corporate Assistant v1.12.4 — https://github.com/beerbottle90/ArthurLegal*
+*ArthurLegal Corporate Assistant v1.12.5 — https://github.com/beerbottle90/ArthurLegal*

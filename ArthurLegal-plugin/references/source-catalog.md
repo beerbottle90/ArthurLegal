@@ -65,7 +65,7 @@
 | OFAC son işlemler | `https://ofac.treasury.gov/recent-actions` ✅ | HTML |
 
 > 🔴 **Yaptırım taraması bir digest işi değildir.** Bu kaynaklar izleme içindir;
-> karşı taraf taraması için **OpenSanctions** birincildir
+> karşı taraf taraması için **resmî listelerde tarama** birincildir
 > (`yaptirim-tarama-rehberi.md`). Digest'te çıkan bir isim, tarama yerine geçmez.
 
 ---

@@ -65,8 +65,9 @@ source sits in rather than papering over the difference.
 - **Cross-cutting corpora** (inside ArthurLegal MCP): 5,125 signed petroleum and
   mining contracts across 107 countries with expert clause annotations (CC BY-SA
   4.0, NRGI/CCSI) · 10 federated open-access scholarship indexes, including 19
-  Turkish law journals via DergiPark's official OAI-PMH endpoint ·
-  **OpenSanctions** (REST API — sanctions / PEP screening).
+  Turkish law journals via DergiPark's official OAI-PMH endpoint.
+- **Sanctions screening** (no extra connector): the official OFAC, EU, UK OFSI and UN
+  lists via WebFetch.
 
 Türkiye currently has the deepest coverage — its own backend inside ArthurLegal MCP
 and the largest share of the reference layer. Sources whose official endpoints do not
@@ -191,8 +192,8 @@ visitors are not surprised.)
 
 1. **"integration with three Model Context Protocol servers" → up to 7.**
    The full set, identical in both flagship packages: TR Legal MCP · OpenCaseLaw.ch ·
-   CourtListener · Fedlex · e-qanun · LexScholar · ResourceContracts. Plus
-   OpenSanctions as a REST API, and GovInfo / EUR-Lex / the other national portals
+   CourtListener · Fedlex · e-qanun · LexScholar · ResourceContracts. Plus the
+   official sanctions lists, GovInfo / EUR-Lex and the other national portals
    via WebFetch. The "three" appears to have been read off the phrase "three *new*
    MCP guides" — those three (e-qanun, LexScholar, ResourceContracts) were the ones
    *added* in v1.4.0, not the total.

@@ -5,6 +5,19 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
+## [1.12.5] — 2026-10-29 — *OpenSanctions API Çıkarıldı; Yaptırım Taraması Resmî Listelerden*
+
+> **Bakım sürümü.** Sistem talimatında bölüm 6'daki yaptırım satırı, bölüm 13 madde 4 ve sürüm satırları değişti.
+
+### Kaldırıldı
+1. `opensanctions-rehberi.md` ve OpenSanctions API'sine dayanan bütün talimatlar: API anahtarı, ortam değişkeni, `curl` çağrısı, eşleşme skoru eşikleri.
+
+### Değişti
+1. Yaptırım taraması resmî listelerden yapılır (`yaptirim-tarama-rehberi.md`): OFAC SDN, AB konsolide listesi, UK OFSI, BM konsolide listesi; Türkiye'de 6415 ve 7262 sayılı Kanunlar kapsamındaki malvarlığı dondurma kararları. Anahtar ya da ek connector gerekmez.
+2. Atıf etiketi: `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]`.
+3. Yaptırım taramasını anan yerler bu kaynağa yönlendirildi: `commercial-legal`, `energy-finance` ve `legal-research` kitapçıkları; 12 rehber (`cin-hukuku`, `eu-legislation`, `gleif`, `isvicre-emtia-ticareti`, `karsilastirmali-hukuk`, `orta-asya-hukuku`, `resourcecontracts`, `russia-legislation`, `sirbistan-hukuku`, `source-catalog`, `uk-legislation`, `ukrayna-hukuku`) ve `oss-source-catalog.json`.
+4. README, KURULUM ve ATTRIBUTION'daki OpenSanctions satırları resmî yaptırım listelerine çevrildi.
+
 ## [1.12.4] — 2026-10-27 — *5651 Değişikliği (1 Kasım 2026)*
 
 > **Bakım sürümü.** Sistem talimatında yalnız sürüm satırları değişti.

@@ -246,7 +246,7 @@ ihmali aklama suçu m. 282'de **yoktur**. m. 282/2 "bilerek" şartını arar.
 - Madde atfı: `tr_mevzuat_madde_getir` yanıtındaki `citation` alanı birebir
 - `[5549 m. X / Tedbirler Yön. m. X — GG.AA.YYYY]`
 - `[MERSİS — şirket no — gerçek faydalanıcı sorgusu — GG.AA.YYYY]`
-- `[OpenSanctions API — match skoru — GG.AA.YYYY]` (eşzamanlı taramada)
+- `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]` (eşzamanlı taramada)
 
 ---
 
@@ -257,7 +257,7 @@ Adresler 24.09.2026'da doğrulanmadı; kullanmadan önce resmi sitelerden teyit 
 - **MASAK** — [https://www.masak.gov.tr/](https://www.masak.gov.tr/)
 - **UYARIS** — [https://uyaris.masak.gov.tr/](https://uyaris.masak.gov.tr/) (şüpheli işlem bildirim portalı)
 - **MERSİS** — gerçek faydalanıcı sorgusu
-- **OpenSanctions API** — yaptırım + PEP taraması (paralel kontrol)
+- **Resmî yaptırım listeleri** — OFAC SDN, AB, UK OFSI, BM ve Türkiye dondurma kararları (paralel kontrol; `yaptirim-tarama-rehberi.md`)
 - **FATF** — [https://www.fatf-gafi.org/](https://www.fatf-gafi.org/) — yüksek riskli ülke listesi
 
 ---

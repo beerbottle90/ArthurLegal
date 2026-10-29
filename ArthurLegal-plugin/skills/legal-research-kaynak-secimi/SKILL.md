@@ -40,7 +40,7 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **İmzalı PSA/JOA emsali, kloz benchmark** | **ResourceContracts MCP** | **EMSAL** | `resourcecontracts-rehberi.md` |
 | **Türk akademik doktrini** | **LexScholar MCP** (DergiPark, 19 dergi) | **İKİNCİL** | `lex-scholar-rehberi.md` |
 | **Yabancı / karşılaştırmalı doktrin** | **LexScholar MCP** (10 indeks) | **İKİNCİL** | `lex-scholar-rehberi.md` |
-| Yaptırım / PEP / UBO taraması | OpenSanctions | STOP-RULE | `yaptirim-tarama-rehberi.md` |
+| Yaptırım / PEP / UBO taraması | Resmî yaptırım listeleri (PEP için tarama hizmeti) | STOP-RULE | `yaptirim-tarama-rehberi.md` |
 | Halka açık şirket açıklaması | KAP / e-ŞİRKET WebFetch | BİRİNCİL | `kap-esirket-webfetch-rehberi.md` |
 | **DE mevzuatı + içtihat + yasama gerekçesi** | **de-eli MCP** | **BİRİNCİL** | `de-eli-mcp-rehberi.md` |
 | **NL içtihadı (3,75 M ECLI) + mevzuatı** | **nl-rechtspraak MCP** | **BİRİNCİL** | `nl-rechtspraak-mcp-rehberi.md` |

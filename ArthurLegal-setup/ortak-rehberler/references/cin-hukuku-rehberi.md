@@ -243,7 +243,7 @@ ADIM 3: Atıf ekle → [CN Mevzuat — HuggingFace/twang2218 — {başlık} — 
 ### 6.2 Çin karşı taraf due diligence (enerji tedarik)
 
 ```
-ADIM 1: OpenSanctions → Çin şirketinin yaptırım durumu kontrol
+ADIM 1: Resmî yaptırım listeleri (yaptirim-tarama-rehberi.md) → Çin şirketinin yaptırım durumu kontrol
 ADIM 2: HF filter → 外商投资法 + 石油 + 能源法 — tedarik kısıtlamaları kontrol
 ADIM 3: Karşı Yaptırım Kanunu (反外国制裁法) — ABD/AB yaptırım çakışma riski
 ```
@@ -321,7 +321,7 @@ Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 1. **Çin governing-law sözleşmesi** → HF API'dan 民法典 (Medeni Kanun) + ilgili 法律'yi getir.
    Türk hukuku seçilmişse → Çin hukuku analizi karşılaştırmalı arka plan; Türk analizi önce.
 
-2. **Çin karşı tarafıyla enerji tedarik** → OpenSanctions + 反外国制裁法 + 外商投资法 +
+2. **Çin karşı tarafıyla enerji tedarik** → resmî yaptırım listeleri + 反外国制裁法 + 外商投资法 +
    enerji sektörü mevzuatı (能源法, 石油 düzenlemeleri) birlikte.
 
 3. **PIPL uyumu** → 个人信息保护法 madde 38-43 (yurt dışı transfer şartları). Hem Çin hem

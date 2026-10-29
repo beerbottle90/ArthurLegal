@@ -35,7 +35,7 @@ user-invocable: true
   e-qanun MCP, resmî kaynaklar. **Doktrin bunların yerine geçmez.**
 - İmzalı sözleşme emsali / kloz benchmark → `/arthurlegal:legal-research-sozlesme-emsali`.
 - İsviçre doktrini → **OpenCaseLaw.ch zaten kapsıyor**, tekrarlama.
-- Taraf / UBO / yaptırım taraması → OpenSanctions.
+- Taraf / UBO / yaptırım taraması → resmî yaptırım listeleri (`yaptirim-tarama-rehberi.md`).
 - Müvekkile özel sözleşme pozisyonları / büro standartları → `firm-profile.md`
   ve ilgili `profiles/*.md`.
 

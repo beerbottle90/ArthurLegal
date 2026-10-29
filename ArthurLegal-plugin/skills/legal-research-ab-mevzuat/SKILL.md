@@ -27,8 +27,8 @@ enstrümanını uyguladığı soruluyor.
 kimliği, konsolidasyon durumu ve erişim tarihi birlikte verilir.
 
 **Yaptırım rotası değildir.** Bir yaptırım enstrümanının OJ referansı, o kişinin
-**güncel listede olduğu** anlamına gelmez — güncel listeleme OpenSanctions'tan
-doğrulanır.
+**güncel listede olduğu** anlamına gelmez — güncel listeleme resmî konsolide listeden
+(`yaptirim-tarama-rehberi.md`) doğrulanır.
 
 Ulusal uygulama ölçütleri ayrı korpustur (Almanya için → `alman-hukuku`).
 

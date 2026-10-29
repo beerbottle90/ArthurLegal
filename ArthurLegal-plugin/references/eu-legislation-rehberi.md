@@ -150,7 +150,8 @@ WebFetch("https://hudoc.echr.coe.int/eng#{itemid}", "Kararın özeti ve gerekçe
 
 ## 5. AB Yaptırım Listesi (konsolide)
 
-OpenSanctions zaten aktif (isim taraması için **birincil** araç odur).
+İsim/varlık taraması `yaptirim-tarama-rehberi.md` akışıyla resmî listelerden yapılır; AB kaydı için
+**birincil** kaynak aşağıdaki FSF konsolide listesidir.
 
 ⚠️ **`sanctionsmap.eu/api/v1/sanction` diye bir endpoint YOK — 404** (30.08.2026).
 Ayrıca sanctionsmap bir **isim arama API'si değildir**; ülke/rejim haritası ve filtre
@@ -169,7 +170,7 @@ https://www.sanctionsmap.eu/api/v1/data?include_draft=0&lang=en
 https://www.sanctionsmap.eu/api/v1/regime?lang=en
 ```
 
-> **Sıralama:** isim/varlık taraması → **OpenSanctions** (`yaptirim-tarama-rehberi.md`);
+> **Sıralama:** isim/varlık taraması → **resmî listeler** (`yaptirim-tarama-rehberi.md`; AB için FSF);
 > "hangi AB tüzüğü hangi ülkeye hangi tedbiri koyuyor" → sanctionsmap `/data`;
 > resmî liste kaydının birebir doğrulanması → FSF CSV/XML.
 

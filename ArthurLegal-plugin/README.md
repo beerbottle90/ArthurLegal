@@ -6,7 +6,7 @@ regulatory, intellectual property, litigation and petitions, tax, administrative
 finance, expert opinions, contract drafting and law firm operations. Statutes and decisions are quoted from the official
 text through ArthurLegal MCP, which covers fifteen jurisdictions from Türkiye and the EU to the UK, Germany and Japan.
 
-Plugin version 1.12.4 is the ArthurLegal Law Firm package 1.12.4. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
+Plugin version 1.12.5 is the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
 
 ## What it contains
 

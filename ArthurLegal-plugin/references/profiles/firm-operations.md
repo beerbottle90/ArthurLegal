@@ -26,7 +26,7 @@ Diğer 15 plugin **müvekkil matter'larında çalışır** (dispute, advisory, .
 | **Pre-matter** | `cold-start-interview` | İlk kurulum: büro profili + ortaklar + organizasyon |
 | **Pre-matter** | `new-client-intake` | Yeni müvekkil ön sohbet + KVKK + MASAK |
 | **Pre-matter** | `conflict-check` | Av. K. m. 38 + TBB MK m. 35-36 çatışma taraması |
-| **Pre-matter** | `sanctions-check` | OpenSanctions yaptırım taraması (özellikle tüzel/yabancı) |
+| **Pre-matter** | `sanctions-check` | Resmî listelerle yaptırım taraması (özellikle tüzel/yabancı) |
 | **Pre-matter** | `kvkk-aydinlatma` | KVKK aydınlatma metni sunma |
 | **Pre-matter** | `fee-agreement` | Ücret sözleşmesi taslağı |
 | **Pre-matter** | `vekalet-sablon` | Vekalet (genel/özel/sınırlı) taslağı |
@@ -63,7 +63,7 @@ Diğer 15 plugin **müvekkil matter'larında çalışır** (dispute, advisory, .
    ↓
 6. /arthurlegal:firm-operations-sanctions-check
    - Müvekkil + (varsa) yurtdışı bağlantı
-   - OpenSanctions API
+   - Resmî yaptırım listeleri (OFAC SDN, AB, UK OFSI, BM) + TR dondurma kararları (6415, 7262)
    ⛔ Hit → Yönetici Ortak + ret değerlendirme
    ↓
 7. /arthurlegal:firm-operations-kvkk-aydinlatma
@@ -297,7 +297,7 @@ KARAR: ✓ KABUL / 🟠 ORTAKLAR KURULU / ⛔ RET
 ### Atıf disiplini
 
 - Madde atfı: `tr_mevzuat_madde_getir` yanıtındaki `citation` alanı birebir (ör. `AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 164`). Çekilemeyen madde "doğrulanmadı" diye işaretlenir.
-- `[OpenSanctions API — match skoru — GG.AA.YYYY]`
+- `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]`
 - `[5549 m. X / Tedbirler Yön. m. X — GG.AA.YYYY]`
 - `[AAÜT — RG tarih/sayı]` (24.09.2026 itibarıyla son kayıt: RG 04.11.2025/33067)
 - `[KVKK m. X — Kurul kararı künyesi — GG.AA.YYYY]`

@@ -1,9 +1,9 @@
 # ArthurLegal — Claude Corporate Legal Assistant
 
-**Version:** v1.12.4 · **Date:** 2026-10-27 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
+**Version:** v1.12.5 · **Date:** 2026-10-29 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
 **Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
 
-> **Multi-jurisdiction legal assistant package for in-house corporate legal teams**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 105 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
+> **Multi-jurisdiction legal assistant package for in-house corporate legal teams**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 104 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
@@ -103,7 +103,7 @@ For detailed content → [CHANGELOG.md](CHANGELOG.md).
 | **CourtListener** | MCP — official server, Anthropic connector directory | OAuth 2.0 (dynamic client registration) | **United States case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (fabricated-citation defence). Operated by Free Law Project. See `courtlistener-rehberi.md` |
 | **ArthurLegal MCP** | MCP — `arthurlegal-mcp.fly.dev/mcp` | None | **Türkiye + 14 jurisdictions and the Turkish land registry behind one connector — 123 tools.** 🇹🇷 Türkiye (`tr_`, 23 tools): Yargıtay, Danıştay, regional and local courts, KYB, Constitutional Court, Uyuşmazlık Mahkemesi, 12 legislation types with article tree and gerekçe, Official Gazette, eight regulators (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) and a 19,498-document semantic archive · 🇦🇿 Azerbaijan, in-force status verified (`az_`) · 🇦🇹 Austria (`at_`) · 🇩🇪 Germany (`de_`) · 🇳🇱 Netherlands (`nl_`) · 🇵🇱 Poland (`pl_`) · 🇪🇸 Spain (`es_`) · 🇫🇮 Finland (`fi_`) · 🇮🇪 Ireland (`ie_`) · 🇬🇧 UK (`uk_`) · 🇪🇺 EU/CJEU (`eu_`) · 🇯🇵 Japan (`jp_`) · GLEIF (`gleif_`) · 10 scholarship indexes incl. 19 Turkish law journals (`scholar_`) · 5,125 signed petroleum & mining contracts (`contracts_`) · 🇹🇷 land registry: live parcels from TKGM Parsel Sorgu with parcel report, scaled sketch and legal-basis bridge (`tkgm_`, 17 tools) |
 | **TR Legal MCP** (optional) | MCP — `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth (WorkOS) | Only for what the Turkish backend deliberately omits: ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK. Paid server by [saidsurucu](https://github.com/saidsurucu) |
-| **OpenSanctions** | REST API — `api.opensanctions.org` | API key | Sanctions / PEP screening (paid membership) |
+| **Official sanctions lists** | WebFetch — OFAC SDN, EU consolidated list, UK OFSI, UN consolidated list | None | Sanctions screening (`yaptirim-tarama-rehberi.md`) |
 | **Fedlex** | MCP — Anthropic connector directory *(WebFetch fallback: `fedlex.admin.ch`)* | None | **Swiss federal legislation** — article text, full statute text, amendment history, title search |
 | **KAP + e-ŞİRKET** | WebFetch — `kap.org.tr`, `e-sirket.mkk.com.tr` | None | Turkish public-company disclosures |
 
@@ -136,7 +136,7 @@ Full guide → [KURULUM.md](KURULUM.md) (Turkish).
 
 1. **Create a new Claude.ai Project** — [claude.ai/projects](https://claude.ai/projects) → "+ New Project".
 2. **Paste `SYSTEM_PROMPT.md`** into the Custom Instructions field.
-3. **Upload the 105 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
+3. **Upload the 104 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
 4. **Add the ArthurLegal MCP connector** — URL: `https://arthurlegal-mcp.fly.dev/mcp` (no auth; Türkiye under `tr_` plus 14 jurisdictions — KURULUM.md Step 4). Optional: OpenCaseLaw.ch · CourtListener · Fedlex (Step 4b) · TR Legal MCP for ECHR/KİK/Sayıştay (Step 4d).
 5. **Install Arthur Mask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum.exe` from [this direct download link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
 6. **Fill the `[DOLDUR]` placeholders** in `knowledge/company-profile.md` for your own organization — or have the assistant do it with `/<plugin>:cold-start-interview`.
@@ -207,13 +207,13 @@ ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/
 ├── SYSTEM_PROMPT.md       ← Claude.ai Custom Instructions text
 ├── README.md              ← This file
 ├── CHANGELOG.md           ← Release notes
-├── VERSION.md             ← 1.12.4
+├── VERSION.md             ← 1.12.5
 ├── ATTRIBUTION.md         ← Attribution
 ├── LICENSE                ← Proprietary — Non-Commercial
-└── knowledge/             ← 105 files to upload to Project Knowledge
+└── knowledge/             ← 104 files to upload to Project Knowledge
     ├── company-profile.md       (organization profile template — ships with [DOLDUR] placeholders)
     ├── skills/                  (12 consolidated skill books, one file per plugin)
-    ├── references/              (85 references: legislation, jurisdictions, MCP guides, Arthur Mask)
+    ├── references/              (84 references: legislation, jurisdictions, MCP guides, Arthur Mask)
     └── agents/                  (7 scheduled agent definitions)
 ```
 

@@ -22,7 +22,6 @@
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
 | 🇷🇸 SR | paragraf.rs | ✅ | — |
 | 🇨🇭 CH | OpenCaseLaw.ch / Fedlex | (MCP) | İsviçre içtihat/mevzuat — MCP üzerinden |
-| 🌍 OpenSanctions | api.opensanctions.org | 🔑 ortam değişkeni `OPENSANCTIONS_API_KEY` | `Authorization: ApiKey $OPENSANCTIONS_API_KEY` (yalnız kabuk komutuyla, ör. curl; anahtar pakette yok) |
 | 🇹🇷 KAP | kap.org.tr | ✅ | — |
 
 ## Yargısal kullanım notu

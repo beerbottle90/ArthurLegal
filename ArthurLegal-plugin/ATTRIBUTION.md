@@ -1,4 +1,4 @@
-# Atıf — ArthurLegal Claude Law Firm Assistant v1.12.4
+# Atıf — ArthurLegal Claude Law Firm Assistant v1.12.5
 
 ## Yapı
 
@@ -7,7 +7,7 @@
 | **Author** (kod & içerik üretimi) | Claude (Anthropic) — Opus 4.7 (`claude-opus-4-7`) |
 | **Designer** (proje tasarımı & domain bilgisi) | Ertuğ Demir |
 | **Knowledge base** (temel hukuk asistanı paketi) | Anthropic — [claude-for-legal](https://github.com/anthropics/claude-for-legal) (Apache 2.0) |
-| **Kardeş paket** | ArthurLegal Claude Corporate Assistant v1.12.4 (in-house tarafı; aynı metodoloji) |
+| **Kardeş paket** | ArthurLegal Claude Corporate Assistant v1.12.5 (in-house tarafı; aynı metodoloji) |
 
 ## Türk Mevzuat & Yargı entegrasyonu
 
@@ -74,7 +74,7 @@ API'leri sarar. Kaynakları:
 
 ## Üçüncü-taraf veri kaynakları
 
-- **OpenSanctions API** (`api.opensanctions.org`) — paid membership; kullanıcı kendi API key'ini temin eder. Müvekkil intake'inde yaptırım/PEP taraması için.
+- **Resmî yaptırım listeleri** (OFAC SDN, AB konsolide liste, UK OFSI, BM konsolide liste) — kamuya açık, anahtar gerekmez (WebFetch). Müvekkil intake'inde yaptırım taraması için.
 - **UYAP Avukat Portalı** (`uyap.gov.tr`) — avukatın kendi oturumu; dosya takip, e-tebligat, vekalet sunum.
 - **KEP** (BTK lisanslı KEP sağlayıcı) — kullanıcı oturumu; müvekkil yazışmaları + ihtarname + mahkeme tebligat.
 - **TÜRKPATENT** (`turkpatent.gov.tr`) — public marka/patent/tasarım arama (WebFetch).

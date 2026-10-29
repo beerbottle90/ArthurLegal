@@ -43,7 +43,6 @@ IKILI = {".png"}
 # "credential leaving the machine" diye bekletir); Projects paketinde kalabilirler. Rehbere yapılan atıf, varsa aynı
 # işi anahtarsız yapan rehbere döner, yoksa rehberin eklentide olmadığı yazılır. Anahtarı anan satırlar da düşer.
 ANAHTARLI_REHBER = {
-    "opensanctions-rehberi.md": "yaptirim-tarama-rehberi.md",
     "us-legislation-rehberi.md": None,
 }
 KIMLIK = re.compile(r"\b[A-Z][A-Z0-9]*_(?:API_KEY|TOKEN|SECRET)\b")

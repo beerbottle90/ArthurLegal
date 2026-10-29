@@ -111,7 +111,7 @@ yardımcı kaynaktır.
 | İngiliz hukuku statüsü (governing law = English law) | legislation.gov.uk | `uk-legislation-rehberi.md` |
 | ABD federal statüsü/yönetmeliği (US/NY hukuku) | GovInfo WebFetch | `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` |
 | ABD mahkeme kararı / içtihat | CourtListener REST | `courtlistener-rehberi.md` |
-| Yaptırım / PEP taraması | OpenSanctions API | `yaptirim-tarama-rehberi.md` |
+| Yaptırım taraması | Resmî listeler (OFAC SDN, AB, UK OFSI, BM) WebFetch | `yaptirim-tarama-rehberi.md` |
 | **Azerbaycan mevzuatı + yürürlük statüsü** 🆕 | **e-qanun MCP** | `eqanun-mcp-rehberi.md` |
 | **Yabancı / karşılaştırmalı akademik doktrin** 🆕 | **LexScholar MCP** | `lex-scholar-rehberi.md` |
 | **Türk akademik doktrini (DergiPark)** 🆕 | **LexScholar MCP** (19 TR hukuk dergisi) | `lex-scholar-rehberi.md` |
@@ -198,7 +198,7 @@ araştırılabilir — ama:
 | İngiliz mevzuatı | `[UK Legislation — <tür yıl> s.<madde> — GG.AA.YYYY]` |
 | ABD mevzuatı | `[US Legislation — GovInfo — <atıf> — GG.AA.YYYY]` |
 | ABD içtihatı | `[CourtListener — <mahkeme> — <citation> — GG.AA.YYYY]` |
-| Yaptırım taraması | `[OpenSanctions API — match skoru X — GG.AA.YYYY]` |
+| Yaptırım taraması | `[Yaptırım listesi — <OFAC SDN / AB / UK OFSI / BM> — <eşleşme yok / kayıt no> — GG.AA.YYYY]` |
 | **AZ mevzuatı** 🆕 | `[AZ Mevzuat — e-qanun MCP — <belge> — id:<id> — <statü> — GG.AA.YYYY]` |
 | **Akademik doktrin** 🆕 | `[LexScholar — <indeks> — <yazar, başlık, dergi, yıl>] doi:<...>` — **ikincil** olarak işaretle |
 | **Sözleşme emsali** 🆕 | `[ResourceContracts.org — <sözleşme adı> — id <id>]` + `source_url` (CC BY-SA 4.0) |

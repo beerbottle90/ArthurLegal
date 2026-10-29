@@ -257,7 +257,7 @@ argument-hint: "[LNG SPA | gas supply agreement | offtake agreement]"
 
 ## Adım 6 — Sanction compliance
 
-1. OpenSanctions: karşı taraf tara
+1. Resmî yaptırım listeleri: karşı taraf tara (`yaptirim-tarama-rehberi.md`)
 2. CAATSA m.232: Rusya kaynaklı LNG mı? (Yamal LNG gibi)
 3. OFAC SDGT: transit ülkeler (Türkiye Boğazları, Hürmüz)
 4. AB 833/2014: Rusya LNG kısıtlamaları ve istisnaları
@@ -355,7 +355,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 ## Adım 2 — Yaptırım & KYC taraması
 
-1. Hedef şirket ve gerçek yararlanan sahipleri OpenSanctions'da tara
+1. Hedef şirket ve gerçek yararlanan sahipleri resmî yaptırım listelerinde tara (`yaptirim-tarama-rehberi.md`)
 2. Türk ortaklar: MKK / VERBİS teyit
 3. Azerbaycanlı veya CIS ortak: CAATSA m.232 riski değerlendirmesi
 4. Yaptırım eşleşmesi → [UYUM DİREKTÖRÜ]'e eskalasyon, işleme devam etme

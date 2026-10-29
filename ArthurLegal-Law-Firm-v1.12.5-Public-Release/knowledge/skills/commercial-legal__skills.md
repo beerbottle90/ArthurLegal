@@ -700,7 +700,7 @@ Aşırı eskalasyon onaylayanı alıştırır diye eskalasyonu bastırma; bu, av
 name: governing-law-review
 description: >
   Cross-border mega-skill: Sözleşmeden yargı çevrelerini otomatik tespit eder,
-  karşı taraf ülke bazlı risk profili çeker (OpenSanctions + ülke rehberi),
+  karşı taraf ülke bazlı risk profili çeker (resmî yaptırım listeleri + ülke rehberi),
   MÖHUK 5718 / NY Konvansiyonu icra analizini yapar, çoklu yargı çevresi
   katmanlarını (governing law ≠ arbitration seat ≠ counterparty ülkesi) ayrı
   ayrı ele alır. Tüm yabancı hukuk sorularında kullan.
@@ -768,8 +768,8 @@ CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 
 Karşı tarafın ülkesine göre iki paralel kontrol:
 
-### 3a. OpenSanctions taraması
-Karşı taraf tüzel kişiyi OpenSanctions'da tara (`opensanctions-rehberi.md`).
+### 3a. Yaptırım taraması
+Karşı taraf tüzel kişiyi resmî yaptırım listelerinde tara (`yaptirim-tarama-rehberi.md`).
 Eşleşme varsa → Adım 3b'ye geçme, dur ve [Uyum Direktörü]'e eskalasyon öner.
 
 ### 3b. Ülke bazlı mevzuat kontrol
@@ -881,7 +881,7 @@ Katman 4 — Türkiye ([Müvekkil] taraf):
 
 | Kriter | Severity |
 |---|---|
-| OpenSanctions eşleşmesi | 🔴 dur |
+| Yaptırım listesi eşleşmesi | 🔴 dur |
 | Rusya/İran/OFAC mahkemesi | 🔴 |
 | Çakışan mandatory rules | 🔴 |
 | MÖHUK tenfiz engeli yüksek | 🔴 |
@@ -908,7 +908,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 
 ## Yargı çevresi haritası
 
-## Karşı taraf risk profili (OpenSanctions + ülke rehberi)
+## Karşı taraf risk profili (resmî yaptırım listeleri + ülke rehberi)
 
 ## İcra-edilebilirlik bulguları (connector atıflı)
 

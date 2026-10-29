@@ -85,7 +85,7 @@ agent çekemez, kullanıcı tarayıcıdan açıp metni yapıştırmalı. URL pat
 - KazMunayGaz/Uzbekneftegaz **devlet şirketleri** — sözleşmede sovereign immunity feragati ve
   devlet onay şartlarını kontrol et (PSA/JV işlerinde `/energy-finance:jv-agreement-review`).
 - Yaptırım taraması: her iki ülke karşı tarafında RU bağlantılı ortak/UBO riski yüksek —
-  OpenSanctions zorunlu (`yaptirim-tarama-rehberi.md`).
+  resmî listelerde tarama zorunlu (`yaptirim-tarama-rehberi.md`).
 
 ---
 

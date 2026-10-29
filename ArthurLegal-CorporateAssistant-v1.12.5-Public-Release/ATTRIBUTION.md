@@ -1,4 +1,4 @@
-# Atıf — ArthurLegal Claude Corporate Assistant v1.12.4
+# Atıf — ArthurLegal Claude Corporate Assistant v1.12.5
 
 ## Yapı
 
@@ -72,7 +72,7 @@ API'leri sarar. Kaynakları:
 
 ## Üçüncü-taraf veri kaynakları
 
-- **OpenSanctions API** (`api.opensanctions.org`) — paid membership; kullanıcı kendi API key'ini temin eder.
+- **Resmî yaptırım listeleri** (OFAC SDN, AB konsolide liste, UK OFSI, BM konsolide liste) — kamuya açık, anahtar gerekmez (WebFetch).
 - **KAP** (`kap.org.tr`) — public özel durum açıklamaları (WebFetch).
 - **e-ŞİRKET** (`e-sirket.mkk.com.tr`) — public sermaye yapısı bilgileri (WebFetch).
 - **TKGM Parsel Sorgu** (`parselsorgu.tkgm.gov.tr`) — herkese açık parsel verisi (bilgi amaçlı; malik, şerh, rehin içermez), ArthurLegal Tapu (`tkgm-mcp`, MIT) üzerinden canlı ve hız sınırlı; tasarım: `arthurlegal-mcp/tkgm-mcp/docs/MANIFESTO.md`.

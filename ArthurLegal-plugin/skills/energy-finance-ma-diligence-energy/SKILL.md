@@ -40,7 +40,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 ## Adım 2 — Yaptırım & KYC taraması
 
-1. Hedef şirket ve gerçek yararlanan sahipleri OpenSanctions'da tara
+1. Hedef şirket ve gerçek yararlanan sahipleri resmî yaptırım listelerinde tara (`yaptirim-tarama-rehberi.md`)
 2. Türk ortaklar: MKK teyit
 3. Yabancı ortak: CAATSA m.232 riski değerlendirmesi (Rusya/CIS bağlantılı ise)
 4. Yaptırım eşleşmesi → **Yönetici Ortak / Uyum görevlisine eskalasyon, işleme devam etme**
