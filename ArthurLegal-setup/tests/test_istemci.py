@@ -352,12 +352,12 @@ class KisayolTesti(unittest.TestCase):
             (veri / "hiz.json").write_text(json.dumps({"gun": "2000-01-01", "gunluk": 99}), encoding="utf-8")
             self.assertNotIn("bugun_istek", self.calistir(t, kod), "dünkü sayaç gösterilmez")
 
-    def test_calistir_masayi_acar_rehber_yalniz_ilk_acilista(self):
+    def test_calistir_masayi_ve_rehberi_her_acilista_acar(self):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
             sahte_kok(t / "kok")
             acilan, adres = self.calistir(t, self.BASLAT)
-            self.assertEqual(acilan, ["masa", "rehber", "masa"])
+            self.assertEqual(acilan, ["masa", "rehber", "masa", "rehber"], "başlangıç sayfası her tıklamada açılır")
             self.assertEqual(adres, "claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7")
 
     def test_ekran_kisayolu_ve_acilisi(self):
