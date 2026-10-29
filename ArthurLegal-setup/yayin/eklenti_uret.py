@@ -201,6 +201,17 @@ the result. Interactive views (article card, decision list, the ArthurLegal desk
 unpkg.com. What the server stores and for how long is in its [privacy policy]({GIZLILIK}). Do not put client names or
 other confidential facts into requests; mask documents on your own computer first with Arthur Mask.
 
+Some skills also ask Claude to use tools the user already has, through Claude and with the user's own permissions; the
+plugin installs none of them and sends nothing to them by itself:
+
+- **Claude's web search and web fetch**, for official public sources such as EUR-Lex, legislation.gov.uk, HUDOC, KAP
+  and GovInfo (search words and document identifiers).
+- **Connectors the user has added**, when they are connected: CourtListener and TR Legal MCP for case law; document
+  stores such as Google Drive, Box or iManage; Slack for posting a report the user asked for; DocuSign for sending a
+  document for signature after the user approves it.
+- **The local ArthurLegal modules** described below (`arthur-tapu`, `arthur-uyap`, Arthur Mask), which run on the
+  user's computer.
+
 ## Desktop modules (not part of this plugin)
 
 ArthurTapu (land registry), UYAP Dashboard (a read-only bridge to the lawyer's own UYAP account), Arthur Mask and
