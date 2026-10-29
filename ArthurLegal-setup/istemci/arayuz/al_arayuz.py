@@ -19,7 +19,7 @@ import os
 import re
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.0.1"
+SURUM = "3.0.2"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -55,6 +55,7 @@ _PARCALAR = {
     "JS": ("tasarim", "al.js"),
     "KARTLAR": ("tasarim", "kartlar.js"),
     "ATIF": ("tasarim", "atif.js"),
+    "ISTEK": ("tasarim", "istek.js"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }

@@ -252,6 +252,9 @@ body { background: var(--zemin); }
 }
 /* Mevzuat: kapsam notu, madde ağacı, seçili mevzuat, aday listesi */
 .kapsam-notu { margin: 0 0 12px; font-size: 13.5px; line-height: 1.45; color: var(--ikincil); }
+.ornekler { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 10px; }
+.ornekler .zaman { margin-right: 2px; }
+@media (max-width: 520px) { .ornekler button:nth-of-type(n+3) { display: none; } }
 /* .alan satırda yana esner (flex 1 1 180px); alt alta dizilen madde ağacında yükseklik olmasın */
 .karar-metni > .alan { flex: none; }
 .madde-listesi, .aday-listesi { display: flex; flex-direction: column; max-height: 320px; overflow: auto;
@@ -302,6 +305,7 @@ body { background: var(--zemin); }
   /*AL:JS*/
   /*AL:KARTLAR*/
   /*AL:ATIF*/
+  /*AL:ISTEK*/
 
   const { ogesi, ikon, dugme, cagir, sor, baglantiAc, kopyala, sayiEki } = AL;
   const $ = (id) => document.getElementById(id);
@@ -324,8 +328,8 @@ body { background: var(--zemin); }
   const EKRANLAR = [
     { id: "sohbet", ad: "Sohbet", simge: "sohbet", bolum: "Çalışma",
       baslik: "Merhaba", alt: "Sorunuzu aşağıdaki kutuya yazın ya da bir işle başlayın. Claude cevaplar; ArthurLegal kaynağı getirir, doğrular ve adımları gösterir." },
-    { id: "mevzuat", ad: "Mevzuat ve atıf", simge: "kitap", bolum: "Çalışma",
-      baslik: "Mevzuat ve atıf", alt: "Türk mevzuatının tamamında arayın, maddeyi resmî metinden getirin ya da taslağınızdaki atıfları teyit edin." },
+    { id: "mevzuat", ad: "Mevzuat ve kararlar", simge: "kitap", bolum: "Çalışma",
+      baslik: "Mevzuat ve kurul kararları", alt: "İsteğinizi yazın: mevzuatın tamamı ve EPDK, SPK, Rekabet gibi kurumların kararları gelir. Maddeyi resmî metinden getirin, taslağınızdaki atıfları teyit edin." },
     { id: "ictihat", ad: "İçtihat", simge: "terazi", bolum: "Çalışma",
       baslik: "İçtihat", alt: "Yargıtay ve Danıştay kararlarını künyeleriyle bulun, metni kartın içinde açın." },
     { id: "tapu", ad: "ArthurTapu", simge: "harita", bolum: "Modüller",
@@ -558,16 +562,11 @@ body { background: var(--zemin); }
     ekran.append(kesit);
   };
 
-  // ---- Mevzuat ve atıf ----
+  // ---- Mevzuat ve kararlar ----
   // Kapsam Türk mevzuatının tamamıdır (tr_mevzuat_ara: kanundan tebliğe, mülga dâhil). atif.js'teki kısa ad listesi
   // yalnız "TBK -> 6098" çözümü içindir; ekranda seçenek listesi olarak gösterilmez, yoksa kapsam dar sanılır.
   const { kanunCoz, kanunAdi, kisaAd, atiflariBul } = ATIF;
 
-  const TURLER = [
-    ["", "Tümü"], ["KANUN", "Kanun"], ["KHK", "KHK"], ["CB_KARARNAME", "CB kararnamesi"], ["CB_KARAR", "CB kararı"],
-    ["CB_YONETMELIK", "CB yönetmeliği"], ["CB_GENELGE", "CB genelgesi"], ["TUZUK", "Tüzük"],
-    ["YONETMELIK,KKY,UY", "Yönetmelik"], ["TEBLIGLER", "Tebliğ"], ["MULGA", "Mülga"],
-  ];
   const TUR_ADI = {
     KANUN: "Kanun", KHK: "KHK", TUZUK: "Tüzük", CB_KARARNAME: "CB kararnamesi", CB_KARAR: "CB kararı",
     CB_YONETMELIK: "CB yönetmeliği", CB_GENELGE: "CB genelgesi", YONETMELIK: "Yönetmelik", KKY: "Kurum yönetmeliği",
@@ -587,11 +586,12 @@ body { background: var(--zemin); }
     .filter(Boolean).join(" · ");
 
   CIZIM.mevzuat = (ekran) => {
-    ekran.append(ogesi("p", "kapsam-notu", "Kapsam: kanun, KHK, Cumhurbaşkanlığı kararname, karar, yönetmelik ve genelgeleri, " +
-      "tüzük, yönetmelik, tebliğ ve mülga mevzuat. Kaynak mevzuat.gov.tr, canlı."));
+    ekran.append(ogesi("p", "kapsam-notu", "Kapsam: Türk mevzuatının tamamı (kanun, KHK, Cumhurbaşkanlığı kararname, karar, " +
+      "yönetmelik ve genelgeleri, tüzük, yönetmelik, tebliğ, mülga) ve sekiz kurumun kararları: EPDK, SPK bültenleri, " +
+      "Rekabet Kurulu, BDDK, KVKK, BTK, GİB özelgeleri, Sigorta Tahkim Komisyonu. Kaynaklar canlı."));
     const seg = ogesi("div", "segment");
     seg.style.maxWidth = "520px";
-    for (const [id, yazi] of [["ara", "Mevzuatta ara"], ["getir", "Madde getir"], ["teyit", "Atıf teyidi"]]) {
+    for (const [id, yazi] of [["ara", "Ara"], ["getir", "Madde getir"], ["teyit", "Atıf teyidi"]]) {
       const b = dugme(yazi);
       b.setAttribute("aria-pressed", String(mevzuatAktif === id));
       b.onclick = () => mevzuatSekme(id);
@@ -601,93 +601,310 @@ body { background: var(--zemin); }
     ({ ara: mevzuatAra, getir: maddeGetir, teyit: atifTeyidi }[mevzuatAktif] || mevzuatAra)(ekran);
   };
 
+  // Tek kutu: istek istek.js ile çözülür (kurum, sayı, piyasa, tür, yıl, konu). Kurum kararı isteği kurumun canlı
+  // listesine, gerisi mevzuat aramasına gider; çözülen istek ilk adım satırında yazar, kullanıcı neyin arandığını görür.
+  const ORNEKLER = ["son 5 EPDK elektrik piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı",
+    "SPK son 3 bülten", "BDDK faaliyet izni kararları", "6446 sayılı Elektrik Piyasası Kanunu", "kira bedelinin belirlenmesi"];
+
   function mevzuatAra(ekran) {
     const form = ogesi("form", "form");
-    const sorgu = girdi("text", "elektrik piyasası · 6446 · kira bedeli");
-    const tur = document.createElement("select");
-    for (const [deger, yazi] of TURLER) tur.append(new Option(yazi, deger));
-    const yer = ogesi("div", "segment");
-    let nerede = "title";
-    for (const [id, yazi] of [["title", "Başlıkta"], ["fulltext", "Metinde"]]) {
-      const b = dugme(yazi);
-      b.setAttribute("aria-pressed", String(id === nerede));
-      b.onclick = () => { nerede = id; yer.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); };
-      yer.append(b);
-    }
+    const sorgu = girdi("text", "Örnek: son 5 EPDK elektrik piyasası kurul kararı");
     const ara = dugme("Ara", { sinif: "birincil", simge: "arama" });
     ara.type = "submit";
     const s1 = ogesi("div", "satir");
-    s1.append(alan("Mevzuat adı, numarası ya da metinde geçen ifade", sorgu));
-    const s2 = ogesi("div", "satir");
-    const yerAlan = ogesi("div", "alan");
-    yerAlan.append(ogesi("label", null, "Nerede"), yer);
-    s2.append(alan("Tür", tur, "alan dar"), yerAlan, ara);
-    form.append(s1, s2);
+    s1.append(alan("Ne arıyorsunuz? Mevzuat adı, numarası ya da konusu; bir kurumun kararları", sorgu), ara);
+    const ornek = ogesi("div", "ornekler");
+    ornek.append(ogesi("span", "zaman", "Örnek:"));
+    for (const o of ORNEKLER) {
+      const b = dugme(o, { sinif: "kucuk" });
+      b.onclick = () => { sorgu.value = o; form.requestSubmit(); };
+      ornek.append(b);
+    }
+    form.append(s1, ornek);
     const sonuc = ogesi("div", "kesit");
-    let sayfa = 1;
-
-    async function getir(yeniArama) {
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      sonuc.replaceChildren();
       const q = sorgu.value.trim();
-      if (yeniArama) { sayfa = 1; sonuc.replaceChildren(); }
-      const adimlar = AL.adimlar(sonuc);
-      if (!q && !tur.value) { adimlar.ekle("").hata("Aranacak adı, numarayı ya da ifadeyi yazın; ya da bir tür seçin."); return; }
-      const girdiler = { page: sayfa, page_size: 10, search_in: nerede };
-      if (/^\d{1,6}$/.test(q)) girdiler.number = q; else if (q) girdiler.query = q;
-      if (tur.value) girdiler.types = tur.value.split(",");
-      const turYazi = tur.value ? tur.options[tur.selectedIndex].text.toLocaleLowerCase("tr") : "bütün mevzuat";
-      const a = adimlar.ekle(q ? `${turYazi[0].toLocaleUpperCase("tr") + turYazi.slice(1)}: “${q}” ${nerede === "fulltext" ? "metinde" : "başlıkta"} aranıyor…`
-        : `${turYazi} listeleniyor…`);
+      if (!q) { AL.adimlar(sonuc).ekle("").hata("Aradığınızı yazın: bir mevzuat, konu ya da kurum kararı."); return; }
+      const c = ISTEK.coz(q);
       ara.disabled = true;
       try {
-        const { veri, hata } = await cagir(app, "tr_mevzuat_ara", girdiler);
-        if (!veri) throw new Error(hata);
-        // Kaynak tarihe göre sıralar: "elektrik piyasası" aranınca önce onu değiştiren torba kanunlar gelir. Başlığı
-        // aranan ifadeyle başlayanlar (kısası önce) öne alınır; ötekilerin sırası değişmez.
-        const bas = (m) => !!q && AL.baslikDuzeni(m.title || "").toLocaleLowerCase("tr").startsWith(q.toLocaleLowerCase("tr"));
-        const kisaOnce = (x, y) => (bas(y) - bas(x)) || (bas(x) && bas(y) ? (x.title || "").length - (y.title || "").length : 0);
-        // Tür seçilmemişse ilk sayfayı yeni kararlar ve tebliğler doldurur; adı aranan ifadeyle başlayan kanun
-        // (ör. "Elektrik Piyasası Kanunu") ayrı bir kanun aramasıyla başa alınır.
-        let one = [];
-        if (sayfa === 1 && !tur.value && girdiler.query) {
-          try {
-            const k = await cagir(app, "tr_mevzuat_ara", { query: q, types: ["KANUN"], page_size: 5, search_in: nerede });
-            one = ((k.veri && k.veri.results) || []).filter(bas).sort(kisaOnce);
-          } catch { /* öne alma yalnız kolaylıktır; asıl sonuç aşağıda */ }
-        }
-        const kimlik = new Set(one.map((m) => String(m.mevzuat_id)));
-        const liste = [...one, ...[...(veri.results || [])].sort(kisaOnce).filter((m) => !kimlik.has(String(m.mevzuat_id)))];
-        const toplam = veri.total ?? liste.length;
-        (liste.length ? a.tamam : a.uyar)(liste.length
-          ? `${toplam} mevzuat bulundu` + (one.length ? `; adı “${q}” ile başlayan kanun başta.` : `; ${(sayfa - 1) * 10 + 1}–${(sayfa - 1) * 10 + liste.length} gösteriliyor.`)
-          : "Bu aramayla mevzuat bulunamadı. Daha kısa bir ad, numara ya da “Metinde” deneyin.");
-        const kap = ogesi("div", "sonuc-kabi");
-        for (const m of liste) kap.append(mevzuatSatiri(m));
-        if (liste.length) {
-          const devam = toplam > sayfa * 10;
-          const alt = ogesi("div", "alt-satir");
-          const ey = ogesi("div", "eylemler");
-          if (devam) {
-            const sonraki = dugme(`Sonraki ${Math.min(10, toplam - sayfa * 10)}`, { simge: "ok" });
-            sonraki.onclick = () => { sonraki.disabled = true; sayfa += 1; getir(false); };
-            ey.append(sonraki);
-          }
-          alt.append(ogesi("span", "zaman", "mevzuat.gov.tr · Bedesten"), ey);
-          kap.append(alt);
-        }
-        sonuc.append(kap);
-        if (yeniArama) {
-          gecmiseEkle(`Mevzuat: “${q || turYazi}”`, [["tamam", turYazi], [liste.length ? "tamam" : "uyar", `${toplam} mevzuat`]]);
-          bildir(`mevzuat araması "${q}" (${turYazi}): ${toplam} sonuç. İlkler: ${liste.slice(0, 5).map((m) => m.citation).join(" | ")}`);
-        }
-      } catch {
-        a.hata("Mevzuat aranamadı.");
-        sonuc.append(ogesi("p", "uyari", AL.UYARI + MEVZUAT_KAYNAK));
+        await (c.hedef === "kurum" ? kurumKararlari : mevzuatListesi)(sonuc, c, q);
       } finally {
         ara.disabled = false;
       }
-    }
-    form.onsubmit = (e) => { e.preventDefault(); getir(true); };
+    };
     ekran.append(form, sonuc);
+  }
+
+  // Claude'a bırakma: çözücünün anlamadığı ya da yorum isteyen soru sohbete gider, masa kaynağı yine gösterir.
+  function claudeaBirak(kap, q, yazi = "Claude'a sor", birincil = false) {
+    const b = dugme(yazi, { sinif: birincil ? "birincil" : "kucuk", simge: "sohbet" });
+    b.onclick = () => claudeaSor(`ArthurLegal araçlarıyla (mevzuat ve kurum kararları) bul, maddeyi resmî metinden getir ve künyeleri birebir kullan: ${q}`, `Claude: ${q}`);
+    kap.append(b);
+  }
+
+  // ---- Mevzuat: önce başlıkta; başlıkta yoksa metninde ifadenin geçtiği kanunlar (kullanıcı seçmez) ----
+  // Kaynağın metin araması ilgiye göre değil Resmî Gazete tarihine göre sıralar: konu sorusunda bu dürüstçe yazar
+  // ve "hangi madde?" sorusu Claude'a bırakılır (Claude maddeyi bulur, masa resmî metinden doğrular).
+  async function mevzuatListesi(sonuc, c, q, sayfa = 1, kapsam = { yer: "title" }) {
+    const adimlar = AL.adimlar(sonuc);
+    const kod = /^\d{1,6}$/.test(q) ? { number: q } : { query: q };
+    const metinde = kapsam.yer === "fulltext";
+    const a = adimlar.ekle(metinde
+      ? `Metninde “${q}” ifadesi geçen ${kapsam.yalnizKanun ? "kanunlar" : "mevzuat"} aranıyor…`
+      : `Mevzuatta “${q}” başlıkta aranıyor…`);
+    try {
+      const arg = { ...kod, page: sayfa, page_size: 10, search_in: kapsam.yer };
+      if (metinde) arg.exact_phrase = true;
+      if (kapsam.yalnizKanun) arg.types = ["KANUN"];
+      const { veri, hata } = await cagir(app, "tr_mevzuat_ara", arg);
+      if (!veri) throw new Error(hata);
+      // Başlığı aranan ifadeyle başlayanlar (kısası önce) öne alınır.
+      const bas = (m) => !!kod.query && AL.baslikDuzeni(m.title || "").toLocaleLowerCase("tr").startsWith(q.toLocaleLowerCase("tr"));
+      const kisaOnce = (x, y) => (bas(y) - bas(x)) || (bas(x) && bas(y) ? (x.title || "").length - (y.title || "").length : 0);
+      let one = [];
+      if (sayfa === 1 && kod.query && !metinde) {
+        try {
+          const k = await cagir(app, "tr_mevzuat_ara", { query: q, types: ["KANUN"], page_size: 5, search_in: "title" });
+          one = ((k.veri && k.veri.results) || []).filter(bas).sort(kisaOnce);
+        } catch { /* öne alma yalnız kolaylıktır */ }
+      }
+      const kimlik = new Set(one.map((m) => String(m.mevzuat_id)));
+      const liste = [...one, ...[...(veri.results || [])].sort(kisaOnce).filter((m) => !kimlik.has(String(m.mevzuat_id)))];
+      const toplam = veri.total ?? liste.length;
+      if (!liste.length && kod.query && !metinde) {
+        a.uyar(`Başlığında “${q}” geçen mevzuat yok.`);
+        return mevzuatListesi(sonuc, c, q, 1, { yer: "fulltext", yalnizKanun: true });
+      }
+      if (!liste.length && kapsam.yalnizKanun) {
+        a.uyar(`Metninde bu ifade geçen kanun yok.`);
+        return mevzuatListesi(sonuc, c, q, 1, { yer: "fulltext" });
+      }
+      (liste.length ? a.tamam : a.uyar)(liste.length
+        ? (metinde
+          ? `${toplam} ${kapsam.yalnizKanun ? "kanunda" : "mevzuatta"} geçiyor; liste Resmî Gazete tarihine göre, ilgiye göre değil.`
+          : `${toplam} mevzuat bulundu; ${(sayfa - 1) * 10 + 1}–${(sayfa - 1) * 10 + liste.length} gösteriliyor.`)
+        : "Bu aramayla mevzuat bulunamadı. Daha kısa bir ad ya da numara deneyin; kurum kararı arıyorsanız kurumun adını yazın.");
+      const kap = ogesi("div", "sonuc-kabi");
+      if (metinde && sayfa === 1) {
+        // Konu sorusu: hangi maddenin uygulanacağını Claude söyler, masa getirir ve doğrular.
+        const ust = ogesi("div", "eylemler sol");
+        claudeaBirak(ust, q, "Claude'a sor: hangi mevzuat ve madde?", true);
+        kap.append(ust);
+      }
+      for (const m of liste) kap.append(mevzuatSatiri(m));
+      const alt = ogesi("div", "alt-satir");
+      const ey = ogesi("div", "eylemler");
+      if (toplam > sayfa * 10) {
+        const sonraki = dugme(`Sonraki ${Math.min(10, toplam - sayfa * 10)}`, { simge: "ok" });
+        sonraki.onclick = () => { sonraki.disabled = true; mevzuatListesi(sonuc, c, q, sayfa + 1, kapsam); };
+        ey.append(sonraki);
+      }
+      if (kapsam.yalnizKanun) {
+        const genis = dugme("Bütün mevzuatta göster", { simge: "arama" });
+        genis.onclick = () => { sonuc.replaceChildren(); mevzuatListesi(sonuc, c, q, 1, { yer: "fulltext" }); };
+        ey.append(genis);
+      }
+      if (!metinde) claudeaBirak(ey, q);
+      alt.append(ogesi("span", "zaman", "mevzuat.gov.tr · Bedesten"), ey);
+      kap.append(alt);
+      sonuc.append(kap);
+      if (sayfa === 1) {
+        gecmiseEkle(`Mevzuat: “${q}”`, [[liste.length ? "tamam" : "uyar", `${toplam} mevzuat`]]);
+        bildir(`mevzuat araması "${q}" (${metinde ? "metinde" : "başlıkta"}): ${toplam} sonuç. İlkler: ${liste.slice(0, 5).map((m) => m.citation).join(" | ")}`);
+      }
+    } catch {
+      a.hata("Mevzuat aranamadı.");
+      sonuc.append(ogesi("p", "uyari", AL.UYARI + MEVZUAT_KAYNAK));
+    }
+  }
+
+  // ---- Kurul kararları ----
+  const KURUM_KAYNAK = {
+    epdk: "https://www.epdk.gov.tr/Detay/Icerik/3-0-39-3/son-kurul-kararlari/elektrik", spk: "https://spk.gov.tr/spk-bultenleri",
+    rekabet: "https://www.rekabet.gov.tr/tr/Kararlar", bddk: "https://www.bddk.org.tr/Mevzuat/Liste/55",
+    kvkk: "https://www.kvkk.gov.tr/Icerik/5406/kurul-karar-ozetleri", btk: "https://www.btk.tr/kurul-kararlari",
+    gib: "https://gib.gov.tr/gibmevzuat", sigorta_tahkim: "https://www.sigortatahkim.org",
+  };
+
+  // "22.10.2026", "26/12/2024", "2014-03-31", "30.6.2026" → sıralanabilir sayı (yyyymmdd); okunamazsa 0.
+  function tarihSirasi(t) {
+    const s = String(t || "");
+    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) return Number(m[1]) * 10000 + Number(m[2]) * 100 + Number(m[3]);
+    m = s.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})/);
+    return m ? Number(m[3]) * 10000 + Number(m[2]) * 100 + Number(m[1]) : 0;
+  }
+
+  // Kurumların cevapları farklı alanlar taşır; satır tek biçime indirilir.
+  function kararVerisi(kurum, r) {
+    const belge = r.documents && r.documents[0] && r.documents[0].url;
+    const rg = r.rg_no ? `RG ${[r.rg_date, r.rg_no].filter(Boolean).join("/")}` : "";
+    return {
+      kurum,
+      baslik: kurum === "spk" && r.bulten ? `SPK Bülteni ${r.bulten}` : (r.subject || r.title || r.summary || r.konu || r.citation || ""),
+      tarih: r.date || r.decision_date || "",
+      no: r.decision_no || r.decision_number || r.ozelge_no || "",
+      ek: [r.decision_type, r.category, rg, r.publication_date && `yayım ${r.publication_date}`,
+        kurum === "spk" && r.bulten && "haftalık bülten; Kurul kararları içinde"].filter(Boolean),
+      atif: r.citation || "",
+      url: r.source_url || r.pdf_url || belge || KURUM_KAYNAK[kurum],
+      getir: (belge || r.id || r.karar_id || r.pdf_url) ? { kurum, id: String(belge || r.id || r.karar_id || r.pdf_url) } : null,
+      bulten: r.bulten || null,
+    };
+  }
+
+  function anlamVerisi(kurum, r) {
+    return { kurum, baslik: r.title || "", tarih: r.date || "", no: "", ek: [], atif: r.citation || "", url: r.url || KURUM_KAYNAK[kurum],
+      ref: r.ref, ozet: r.snippet || "" };
+  }
+
+  async function kurumCanli(c) {
+    const n = Math.max(1, Math.min(50, c.sayi || 10));
+    const arg = { kurum: c.kurum };
+    if (c.konu) arg.query = c.konu;
+    if (c.kurum === "epdk") { if (c.piyasa) arg.market = c.piyasa; if (c.yil) arg.year = c.yil; arg.limit = n; }
+    if (c.kurum === "rekabet" && c.karar_turu) arg.decision_type = c.karar_turu;
+    if (["spk", "bddk"].includes(c.kurum)) { if (c.yil) arg.year = c.yil; arg.limit = n; }
+    if (["kvkk", "sigorta_tahkim"].includes(c.kurum)) arg.limit = n;
+    if (["btk", "gib"].includes(c.kurum)) {
+      arg.page_size = n;
+      if (c.yil) { arg.date_from = `${c.yil}-01-01`; arg.date_to = `${c.yil}-12-31`; }
+    }
+    let sonuclar = [];
+    let toplam = null;
+    // Rekabet sayfa başına 10 karar verir: istenen sayıya kadar sayfa sayfa (en çok 5 sayfa).
+    const sayfalar = c.kurum === "rekabet" ? Math.min(5, Math.ceil(n / 10)) : 1;
+    for (let sayfa = 1; sayfa <= sayfalar && sonuclar.length < n; sayfa++) {
+      const { veri, hata } = await cagir(app, "tr_kurum_karari_ara", sayfalar > 1 ? { ...arg, page: sayfa } : arg);
+      if (!veri) throw new Error(hata || "Kaynak cevap vermedi.");
+      toplam = veri.total ?? null;
+      sonuclar.push(...(veri.results || []));
+      if ((veri.results || []).length < 10) break;
+    }
+    let liste = sonuclar.map((r) => kararVerisi(c.kurum, r));
+    if (c.yil && ["rekabet", "kvkk", "sigorta_tahkim"].includes(c.kurum)) {
+      liste = liste.filter((v) => String(Math.floor(tarihSirasi(v.tarih) / 10000)) === String(c.yil));
+    }
+    // "son", "en yeni" ya da konusuz istek: en yeni önce (kaynağın sırası korunarak, tarihi okunamayan sona).
+    if (c.en_yeni || !c.konu) liste = liste.map((v, i) => [v, i]).sort((x, y) => (tarihSirasi(y[0].tarih) - tarihSirasi(x[0].tarih)) || (x[1] - y[1])).map((x) => x[0]);
+    return { liste: liste.slice(0, n), toplam };
+  }
+
+  async function kurumKararlari(sonuc, c, q) {
+    const adimlar = AL.adimlar(sonuc);
+    adimlar.ekle("").tamam(`İstek: ${ISTEK.ozet(c)}`);
+    let liste = [];
+    let kanal = "canlı";
+    try {
+      // SPK kararları haftalık bültenlerde: konu verildiyse bülten arşivinde anlamca aranır.
+      if (!(c.kurum === "spk" && c.konu)) {
+        const a = adimlar.ekle(`${c.kurum_adi} resmî listesinden getiriliyor…`);
+        const r = await kurumCanli(c);
+        liste = r.liste;
+        if (liste.length) a.tamam(`${liste.length} ${c.kurum === "spk" ? "bülten" : "karar"} geldi` + (r.toplam ? ` (listede ${r.toplam}).` : "."));
+        else a.uyar(c.konu ? `Resmî listede “${c.konu}” geçen karar yok.` : "Resmî listeden karar gelmedi.");
+      }
+      if (!liste.length && c.konu) {
+        const konu = [c.piyasa && ISTEK.PIYASA_ADI[c.piyasa], c.konu].filter(Boolean).join(" ");
+        const b = adimlar.ekle(`${c.kurum_adi} arşivinde “${konu}” anlamca aranıyor (ilgiye göre sıralı)…`);
+        const arg = { kurum: c.kurum, query: konu, limit: Math.min(20, c.sayi || 10), snippet_chars: 260 };
+        if (c.yil) { arg.date_from = `${c.yil}-01-01`; arg.date_to = `${c.yil}-12-31`; }
+        const { veri, hata } = await cagir(app, "tr_semantik_ara", arg);
+        if (!veri) throw new Error(hata);
+        liste = (veri.results || []).map((r) => anlamVerisi(c.kurum, r));
+        if (c.en_yeni) liste.sort((x, y) => tarihSirasi(y.tarih) - tarihSirasi(x.tarih));
+        kanal = "arşiv";
+        (liste.length ? b.tamam : b.uyar)(liste.length ? `${liste.length} karar bulundu (arşiv, ${c.en_yeni ? "en yeni önce" : "ilgiye göre"}).` : "Arşivde de bulunamadı.");
+      }
+    } catch {
+      adimlar.ekle("").hata(`${c.kurum_adi} kararları getirilemedi.`);
+      sonuc.append(ogesi("p", "uyari", AL.UYARI + KURUM_KAYNAK[c.kurum]));
+      return;
+    }
+    const kap = ogesi("div", "sonuc-kabi");
+    for (const v of liste) kap.append(kararSatiri(v));
+    const alt = ogesi("div", "alt-satir");
+    const ey = ogesi("div", "eylemler");
+    claudeaBirak(ey, q);
+    alt.append(ogesi("span", "zaman", `${c.kurum_adi} · ${kanal === "canlı" ? "resmî liste, canlı" : "ArthurLegal arşivi"}`), ey);
+    kap.append(alt);
+    sonuc.append(kap);
+    gecmiseEkle(`${c.kurum_adi}: “${q}”`, [["tamam", ISTEK.ozet(c)], [liste.length ? "tamam" : "uyar", `${liste.length} sonuç`]]);
+    bildir(`kurum kararı isteği "${q}" (${ISTEK.ozet(c)}): ${liste.length} sonuç. ${liste.slice(0, 5).map((v) => v.atif || v.baslik).join(" | ")}`);
+  }
+
+  // Karar satırı: kurum, konu, künye; metni aç, (SPK'da) bültende ara, atfı kopyala, resmî kaynak.
+  function kararSatiri(v) {
+    const g = ogesi("section", "grup karar");
+    const bas = ogesi("div", "grup-bas");
+    bas.append(ogesi("span", "hap-altin", ISTEK.AD[v.kurum] || v.kurum), ogesi("span", "baslik", v.baslik));
+    g.append(bas, ogesi("div", "kunye", [v.no && `No. ${v.no}`, v.tarih, ...v.ek].filter(Boolean).join(" · ")));
+    if (v.ozet) g.append(ogesi("p", "kunye", String(v.ozet).replace(/\s+/g, " ").slice(0, 260) + "…"));
+    const eylem = ogesi("div", "eylemler sol");
+    const yer = ogesi("div", "karar-metni");
+    if (v.getir || v.ref) {
+      const metin = dugme("Metni aç", { simge: "kitap" });
+      let acik = false;
+      metin.onclick = async () => {
+        if (acik) { yer.replaceChildren(); acik = false; metin.querySelector("span").textContent = "Metni aç"; return; }
+        acik = true;
+        metin.querySelector("span").textContent = "Metni kapat";
+        const adim = AL.adimlar(yer).ekle("Metin resmî kaynaktan getiriliyor…");
+        try {
+          const { veri, hata } = v.ref
+            ? await cagir(app, "tr_belge_getir", { ref: v.ref })
+            : await cagir(app, "tr_kurum_karari_getir", { ...v.getir, page_chars: 8000 });
+          const yazi = veri && (veri.text || veri.content || "");
+          if (!yazi) throw new Error(hata || "Metin boş geldi.");
+          adim.tamam(`Metin geldi${veri.total_pages > 1 ? ` (1/${veri.total_pages}. sayfa)` : ""}.`);
+          yer.append(KART.uzunMetin(String(yazi).split(/\n+/).map((p) => p.trim()).filter(Boolean), 700));
+        } catch {
+          adim.hata("Metin getirilemedi.");
+          yer.append(ogesi("p", "uyari", AL.UYARI + (v.url || KURUM_KAYNAK[v.kurum])));
+        }
+      };
+      eylem.append(metin);
+    }
+    if (v.kurum === "spk" && v.bulten) {
+      const ara = dugme("Bültende ara", { simge: "arama" });
+      ara.onclick = () => {
+        yer.replaceChildren();
+        const f = ogesi("form", "satir");
+        const q = girdi("search", "halka arz · idari para cezası · işlem yasağı");
+        const b = dugme("Ara", { sinif: "kucuk", simge: "arama" });
+        b.type = "submit";
+        f.append(alan(`SPK Bülteni ${v.bulten} içinde`, q), b);
+        const s = ogesi("div", "kesit");
+        f.onsubmit = async (e) => {
+          e.preventDefault();
+          s.replaceChildren();
+          const adim = AL.adimlar(s).ekle(`Bülten ${v.bulten} içinde “${q.value.trim()}” aranıyor…`);
+          try {
+            const { veri, hata } = await cagir(app, "tr_spk_bulten_icinde_ara", { bulten: v.bulten, query: q.value.trim(), limit: 8 });
+            if (!veri) throw new Error(hata);
+            const bolumler = veri.results || veri.matches || [];
+            (bolumler.length ? adim.tamam : adim.uyar)(bolumler.length ? `${bolumler.length} bölüm bulundu.` : "Bu bültende geçmiyor.");
+            for (const r of bolumler) s.append(ogesi("p", "kunye", String(r.snippet || r.text || r.excerpt || "").replace(/\s+/g, " ").slice(0, 400)));
+          } catch {
+            adim.hata("Bültende aranamadı.");
+            s.append(ogesi("p", "uyari", AL.UYARI + v.url));
+          }
+        };
+        yer.append(f, s);
+        q.focus();
+      };
+      eylem.append(ara);
+    }
+    const kopya = dugme("Atfı kopyala", { simge: "kopya" });
+    kopya.onclick = () => kopyala(v.atif || v.baslik, kopya, null, ortam.duyuru);
+    const kaynak = dugme("Resmî kaynak", { simge: "dis" });
+    kaynak.onclick = () => baglantiAc(app, v.url, ortam.duyuru);
+    eylem.append(kopya, kaynak);
+    g.append(eylem, yer);
+    return g;
   }
 
   // Arama sonucunun satırı: tür, ad, künye; madde getir, içindekiler, atıf, resmî metin.

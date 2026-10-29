@@ -388,14 +388,16 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
-olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu,
+olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat, ArthurTapu,
 Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve araştırma kaynakları. Ortada yapılan iş adım adım, altta
 Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
-- **Türk mevzuatının tamamı.** Mevzuat ve atıf ekranında kanundan tebliğe bütün mevzuat aranır: kanun, KHK,
-  Cumhurbaşkanlığı kararname, karar, yönetmelik ve genelgeleri, tüzük, yönetmelik, tebliğ ve mülga mevzuat. Adla,
-  numarayla ya da metindeki bir ifadeyle arayın, türe göre süzün, mevzuatın içindekilerini açın ve maddeyi resmî
-  metinden doğrulanmış olarak getirin.
+- **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
+  piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
+  kanun" yazın; masa isteği çözer (kurum, kaç tane, piyasa ya da karar türü, yıl, konu) ve ilk satırda ne aradığını
+  söyler. Kapsam: Türk mevzuatının tamamı (kanundan tebliğe, mülga dâhil) ve EPDK, SPK bültenleri, Rekabet Kurulu,
+  BDDK, KVKK, BTK, GİB özelgeleri, Sigorta Tahkim Komisyonu kararları. Kararın metni masada açılır; mevzuatın
+  içindekileri açılır, madde resmî metinden doğrulanmış olarak gelir.
 - **Taslaktaki atıfları tek seferde teyit.** Dilekçe ya da sözleşme metnini yapıştırın: içindeki madde atıfları
   (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 35`) bulunur, resmî metinden kontrol edilir ve başlıklarıyla
   "doğrulandı" ya da "bulunamadı" olarak döner. Sunucuya yalnız kanun ve madde numaraları gider, metniniz ekranda kalır.
@@ -639,6 +641,27 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.2 — Ask the desk in plain words: legislation and regulators' decisions (2026-10-29)
+
+- **One box, plain words.** The desk's legislation screen, now *Mevzuat ve kararlar* (legislation and decisions), has a
+  single search box. Type a request such as *son 5 EPDK elektrik piyasası kurul kararı* (the latest five electricity
+  market decisions of the energy regulator) and the desk works out the regulator, how many, the market or decision
+  type, the year and the topic, says so in its first step and fetches the decisions newest first. The separate
+  title/text switch is gone.
+- **Regulators' decisions on the desk.** EPDK (energy), SPK (capital markets, weekly bulletins, with a search inside a
+  bulletin), the Competition Board, BDDK (banking), KVKK (data protection), BTK (telecoms), GİB tax rulings and the
+  Insurance Arbitration Commission. A topic the official list does not carry is searched by meaning in the archive.
+  Each decision opens in full on the desk, with its citation and the official source.
+- **Topic questions about legislation.** The official legislation search sorts by Official Gazette date, not by
+  relevance. When a topic is not in any title, the desk lists the laws whose text contains the phrase, says the list
+  is by date, and offers to ask Claude which law and article apply; the article is then fetched from the official text.
+
+**Türkçe:** Masanın Mevzuat ekranı artık *Mevzuat ve kararlar*: tek kutuya isteğinizi yazın ("son 5 EPDK elektrik
+piyasası kurul kararı"); masa kurumu, sayıyı, piyasa ya da karar türünü, yılı ve konuyu çözer, kararları en yeni önce
+getirir. EPDK, SPK bültenleri, Rekabet Kurulu, BDDK, KVKK, BTK, GİB özelgeleri ve Sigorta Tahkim kararları kapsamda;
+başlık/metin seçimi kalktı. Mevzuatta konu sorusunda liste tarih sıralı olduğunu söyler ve hangi madde olduğunu
+Claude'a sormayı önerir.
 
 ## Setup 3.0.1 — The desk searches all Turkish legislation; the user guide in the repository (2026-10-28)
 
