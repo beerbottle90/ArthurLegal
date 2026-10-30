@@ -1,6 +1,7 @@
 # Tapu-Kadastro — ArthurLegal Tapu (`tkgm_`) Kullanım Rehberi
 
 > Araç adları, parametreler ve davranış 23.09.2026'da canlı uçtan (ArthurLegal MCP, `tkgm-mcp` 0.5.0) doğrulanmıştır.
+> Yerel tahmini 3D görünüm, uydu altlığı ve "arayüzde aç" bağlantısı 30.10.2026'da `tkgm-mcp` 0.6.0 ile eklendi.
 > Kaynak: `github.com/beerbottle90/arthurlegal-mcp/tree/master/tkgm-mcp`. Tasarım ve sınırlar:
 > `tkgm-mcp/docs/MANIFESTO.md`.
 
@@ -54,13 +55,13 @@ söyle. Aynı adada parsel numaralarını tek tek **tarama**: ardışık altı n
 | `tkgm_konumdan_parsel` | Koordinattaki parsel (canlı) |
 | `tkgm_yer_bul` | Yer adı/adres → en çok 5 koordinat adayı (OpenStreetMap) |
 | `tkgm_parsel_raporu` | Tek parsel raporu (markdown): kimlik, ölçü, kenarlar, konum bağlantıları, hukuki işaretler; `konu` ile dayanak adresleri |
-| `tkgm_geometri` / `tkgm_kroki` / `tkgm_harita` | Ölçü, A4 ölçekli SVG kroki, OpenStreetMap altlıklı harita |
+| `tkgm_geometri` / `tkgm_kroki` / `tkgm_harita` | Ölçü, A4 ölçekli SVG kroki, OpenStreetMap altlıklı harita (yerel Tapu arayüzünde kullanıcının kendi ücretsiz Esri anahtarıyla uydu görüntüsü de) |
 | `tkgm_koridor_kesisim` | Hat + genişlik → parsel başına kesilen alan (irtifak, kamulaştırma ham verisi) |
 | `tkgm_disa_aktar` / `tkgm_koordinat_donustur` | GeoJSON/KML/DXF/CSV; coğrafi ↔ ITRF96 TM 3° / UTM |
 | `tkgm_tarife_kalemi` / `tkgm_harc_hesapla` | 2026 tapu harcı ve döner sermaye kalemi; ön hesap, her kalem kaynağıyla |
 | `tkgm_dayanak_koprusu` | Uyuşmazlık konusuna göre dayanak madde adresleri ve hazır `tr_` çağrıları |
 | `tkgm_parsel_oku` | Kullanıcının kendiliğinden getirdiği GeoJSON/KML |
-| Yalnız yerel (Claude Desktop) | `tapu_kaydi_oku` (maskeli), `parsel_foyu` (Word), `portfoy_tablosu` (Excel), `arazi_3d` |
+| Yalnız yerel (Claude Desktop) | `tapu_kaydi_oku` (maskeli), `parsel_foyu` (Word), `portfoy_tablosu` (Excel), `arazi_3d` (arazi ve çevre binaların **tahmini** 3D görünümü) |
 
 ## 5. Tipik akışlar
 
@@ -72,6 +73,9 @@ söyle. Aynı adada parsel numaralarını tek tek **tarama**: ardışık altı n
 - **Kamulaştırma / irtifak güzergâhı.** Parseller tek tek getirilir → `tkgm_koridor_kesisim` → bedel hesabına girecek alan
   için yine harita mühendisi ölçüsü gerekir.
 - **İşlem masrafı.** `tkgm_tarife_kalemi` → `tkgm_harc_hesapla`; tutarı yazarken `dayanak` ve `alinti` alanlarını da aktar.
+- **Görsel fikir (yalnız Claude Desktop).** Parsel getirilir → `arazi_3d(ref, kat?)`: arazi, eğim ve çevre binaların
+  açık bina tabanlarından kat kuralıyla üretilen tahmini kütlesi. `kat`ı yalnız kullanıcı söylerse ver. Çıktıdaki
+  `uyari_3d` metnini **aynen** ilet; `arayuzde_ac` bağlantısı varsa kullanıcıya onu ver.
 
 ## 6. Disiplin
 
@@ -79,6 +83,12 @@ söyle. Aynı adada parsel numaralarını tek tek **tarama**: ardışık altı n
   için kullanıcı kendi e-Devlet / Web Tapu kaydını alır (Claude Desktop'ta `tapu_kaydi_oku` maskeleyerek yapılandırır).
 - **Kroki resmî belge değildir**; aplikasyon ya da röperli kroki yerine geçmez. Hesap alanı ile kayıtlı alan farkı bir
   işarettir, hata tespiti değildir (düzeltme 3402 s. K. m. 41 yolu ve kadastro kayıtlarıyla).
+- **3D görünüm tahmindir.** Gerçek (ölçülmüş ya da resmî) veriye dayanmaz; yalnız fikir vermek içindir. Ölçüm, imar
+  durumu, ruhsat, röleve ya da bilirkişi incelemesi yerine geçmez; kat sayısı ya da bina yüksekliği bu görselden
+  çıkarılıp yazılmaz. Google görüntüsünden 3D türetilmez.
+- **Harita ve 3D dosyasını Tapu arayüzünden aç.** Çıktıda `arayuzde_ac` varsa onu ver: dosya bilgisayardan doğrudan
+  açılınca harita altlığının karoları reddedilebilir. Uydu görüntüsü yalnız yerel arayüzde, kullanıcının kendi Esri
+  anahtarıyla gelir; anahtarı sohbette isteme ve hiçbir yere yazma.
 - **`tkgm_dayanak_koprusu` adres verir, metin vermez.** Maddeyi `tr_mevzuat_madde_getir` ile çekmeden alıntılama
   (madde doğrulama kapısı).
 - **Atıf:** `[TKGM Parsel Sorgu, İl/İlçe/Mahalle ada/parsel, GG.AA.YYYY, bilgi amaçlı]`.

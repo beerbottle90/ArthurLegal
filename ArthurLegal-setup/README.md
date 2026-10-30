@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.0.4
+# ArthurLegal Setup v3.0.5
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
@@ -150,7 +150,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 100 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v3.0.4         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python yayin/yayinla.py v3.0.5         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta

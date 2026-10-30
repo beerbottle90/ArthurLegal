@@ -270,6 +270,16 @@ body { background: var(--zemin); }
 .secili-mevzuat { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 6px 6px 12px;
   border: 1px solid var(--cizgi); border-radius: 12px; background: var(--yuzey); }
 .secili-mevzuat .ad { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Geçmiş: başlıktaki bağlantı, gün başlıkları, tıklanır satırlar, kayıt ayrıntısı */
+.icerik-ust .gecmis-bag { flex: none; margin-top: 2px; }
+.gecmis-gun { margin: 8px 2px 0; color: var(--ikincil); font-size: 13px; font-weight: 600; }
+button.liste-ogesi { width: 100%; min-height: 0; font: inherit; color: var(--metin); text-align: left; cursor: pointer;
+  box-shadow: none; }
+button.liste-ogesi:hover { background: var(--dolgu); }
+.liste-ogesi .ad { overflow: hidden; text-overflow: ellipsis; }
+.gecmis-ust { align-items: flex-end; }
+.gecmis-ust .alan { flex: 1 1 240px; }
+.gecmis-metin { white-space: pre-wrap; align-self: stretch; max-width: none; border-radius: 14px; }
 </style>
 </head>
 <body>
@@ -332,6 +342,8 @@ body { background: var(--zemin); }
       baslik: "Mevzuat ve kurul kararları", alt: "İsteğinizi yazın: mevzuatın tamamı ve EPDK, SPK, Rekabet gibi kurumların kararları gelir. Maddeyi resmî metinden getirin, taslağınızdaki atıfları teyit edin." },
     { id: "ictihat", ad: "İçtihat", simge: "terazi", bolum: "Çalışma",
       baslik: "İçtihat", alt: "Yargıtay ve Danıştay kararlarını künyeleriyle bulun, metni kartın içinde açın." },
+    { id: "gecmis", ad: "Geçmiş", simge: "saat", bolum: "Çalışma",
+      baslik: "Geçmiş", alt: "Masada yaptığınız aramalar, getirdiğiniz maddeler ve kararlar, o günkü sonuçlarıyla. Yeniden çalıştırınca güncel hali gelir." },
     { id: "tapu", ad: "ArthurTapu", simge: "harita", bolum: "Modüller",
       baslik: "ArthurTapu", alt: "Parseli il, ilçe, mahalle ve ada/parselle ya da yer adıyla sorgulayın; rapor ve kroki Claude'da gelir." },
     { id: "beyin", ad: "Beyin", simge: "beyin", bolum: "Modüller",
@@ -365,19 +377,30 @@ body { background: var(--zemin); }
     try { await app.updateModelContext({ content: [{ type: "text", text: "ArthurLegal Masası: " + metin }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
 
-  async function claudeaSor(metin, kayit) {
+  // metinSaklanmaz: mesaj kullanıcının taslağından cümle taşıyorsa geçmişe yalnız başlığı yazılır.
+  async function claudeaSor(metin, kayit, { metinSaklanmaz = false } = {}) {
     try {
       await sor(app, metin);
-      if (kayit) gecmiseEkle(kayit, [["tamam", "Claude'a iletildi; cevap sohbette."]]);
+      if (kayit) gecmiseEkle(kayit, [["tamam", "Claude'a iletildi; cevap sohbette."]],
+        { kategori: "claude", tur: "claude", sorgu: metinSaklanmaz ? null : { metin } });
       ortam.duyuru.textContent = "Mesaj Claude'a gönderildi.";
     } catch {
       ortam.duyuru.textContent = "Mesaj gönderilemedi; aynı metni aşağıdaki kutuya yazabilirsiniz.";
     }
   }
 
-  function gecmiseEkle(soru, adimlar) {
-    GECMIS.unshift({ soru, adimlar, saat: new Date() });
-    if (GECMIS.length > 20) GECMIS.pop();
+  // Geçmiş: oturum listesi (GECMIS) her yerde; kalıcı kayıt yalnız yerel AL sunucusu al_gecmis verdiyse (bu
+  // bilgisayarda, 90 gün). Uzak uçta iş hiçbir sunucuya yazılmaz. kayit: { kategori, tur, sorgu, anlik }.
+  const gecmisKalici = () => DURUM.yetenekler.has("al_gecmis");
+  function gecmiseEkle(soru, adimlar, kayit = null) {
+    const g = { soru, adimlar, saat: new Date(), ekran: aktif, ...(kayit || {}) };
+    GECMIS.unshift(g);
+    if (GECMIS.length > 50) GECMIS.pop();
+    if (kayit && gecmisKalici()) {
+      cagir(app, "al_gecmis", { islem: "kaydet", kayit: { ekran: aktif, baslik: soru, adimlar, ...kayit } })
+        .then(({ veri }) => { if (veri && veri.id) g.id = veri.id; })
+        .catch(() => { /* geçmiş yazılamadıysa iş yine ekranda */ });
+    }
   }
 
   // ---------------------------------------------------------------- iskelet
@@ -399,7 +422,7 @@ body { background: var(--zemin); }
       b.type = "button";
       b.dataset.ekran = e.id;
       b.append(e.donna ? sablon("t-donna") : ikon(e.simge), ogesi("span", null, e.ad));
-      b.onclick = () => git(e.id);
+      b.onclick = () => { if (e.id === "gecmis") gecmisSifirla(); git(e.id); };
       nav.append(b);
     }
     const alt = ogesi("div", "panel-alt");
@@ -419,7 +442,10 @@ body { background: var(--zemin); }
     const iust = ogesi("header", "icerik-ust");
     const metinler = ogesi("div", "metinler");
     metinler.append(ogesi("h1", null, ""), ogesi("p", "alt-yazi", ""));
-    iust.append(metinler);
+    // Her ekranın başlığında o ekranın işlerine süzülmüş geçmiş (UYAP ve kaynak durumu geçmiş tutmaz).
+    const gb = dugme("Geçmiş", { sinif: "kucuk gecmis-bag", simge: "saat", baslik: "Bu ekranın geçmişi" });
+    gb.onclick = () => { gecmisSifirla(ekraninSuzgeci(aktif)); git("gecmis"); };
+    iust.append(metinler, gb);
     icerik.append(iust, Object.assign(ogesi("section"), { id: "ekran" }));
     masa.append(panel, icerik);
     $("kok").replaceChildren(masa);
@@ -459,6 +485,9 @@ body { background: var(--zemin); }
     const e = EKRANLAR.find((x) => x.id === id) || EKRANLAR[0];
     document.querySelector(".icerik-ust h1").textContent = e.baslik;
     document.querySelector(".icerik-ust .alt-yazi").textContent = e.alt;
+    const gb = document.querySelector(".gecmis-bag");
+    if (gb) gb.hidden = ["gecmis", "uyap", "mcp"].includes(id);
+    if (id !== "gecmis") gecmisAcik = null;
     const ekran = $("ekran");
     ekran.replaceChildren();
     (CIZIM[id] || CIZIM.sohbet)(ekran);
@@ -543,7 +572,7 @@ body { background: var(--zemin); }
       kesit.append(ogesi("div", "bos", "Henüz bir iş yok. Bir kart seçin ya da sorunuzu aşağıdaki kutuya yazın; yaptığınız işler adımlarıyla burada birikir."));
     } else {
       const akis = ogesi("div", "akis");
-      for (const g of GECMIS) {
+      for (const g of GECMIS.slice(0, 20)) {
         const o = ogesi("div", "akis-ogesi");
         o.append(ogesi("div", "balon", g.soru));
         const ad = ogesi("div", "adimlar");
@@ -559,6 +588,11 @@ body { background: var(--zemin); }
       }
       kesit.append(akis);
     }
+    const tum = dugme(gecmisKalici() ? "Bütün geçmiş" : "Bu oturumun geçmişi", { sinif: "kucuk", simge: "saat" });
+    tum.onclick = () => { gecmisSifirla(); git("gecmis"); };
+    const ey = ogesi("div", "eylemler sol");
+    ey.append(tum);
+    kesit.append(ey);
     ekran.append(kesit);
   };
 
@@ -579,6 +613,7 @@ body { background: var(--zemin); }
   function mevzuatSekme(s) {
     mevzuatAktif = s;
     if (aktif === "mevzuat") { const e = $("ekran"); e.replaceChildren(); CIZIM.mevzuat(e); }
+    else git("mevzuat");   // geçmişteki bir sonuçtan "Madde getir"
   }
 
   const mevzuatAdi = (m) => AL.baslikDuzeni(m.title || "");
@@ -636,6 +671,7 @@ body { background: var(--zemin); }
       }
     };
     ekran.append(form, sonuc);
+    if (bekleyen && bekleyen.sekme === "ara") { sorgu.value = bekleyen.q; bekleyen = null; form.requestSubmit(); }
   }
 
   // Claude'a bırakma: çözücünün anlamadığı ya da yorum isteyen soru sohbete gider, masa kaynağı yine gösterir.
@@ -712,7 +748,9 @@ body { background: var(--zemin); }
       kap.append(alt);
       sonuc.append(kap);
       if (sayfa === 1) {
-        gecmiseEkle(`Mevzuat: “${q}”`, [[liste.length ? "tamam" : "uyar", `${toplam} mevzuat`]]);
+        gecmiseEkle(`Mevzuat: “${q}”`, [[liste.length ? "tamam" : "uyar", `${toplam} mevzuat`]],
+          { kategori: "mevzuat", tur: "mevzuat-liste", sorgu: { q },
+            anlik: { liste, toplam, metinde, yalnizKanun: !!kapsam.yalnizKanun } });
         bildir(`mevzuat araması "${q}" (${metinde ? "metinde" : "başlıkta"}): ${toplam} sonuç. İlkler: ${liste.slice(0, 5).map((m) => m.citation).join(" | ")}`);
       }
     } catch {
@@ -832,7 +870,9 @@ body { background: var(--zemin); }
     alt.append(ogesi("span", "zaman", `${c.kurum_adi} · ${kanal === "canlı" ? "resmî liste, canlı" : "ArthurLegal arşivi"}`), ey);
     kap.append(alt);
     sonuc.append(kap);
-    gecmiseEkle(`${c.kurum_adi}: “${q}”`, [["tamam", ISTEK.ozet(c)], [liste.length ? "tamam" : "uyar", `${liste.length} sonuç`]]);
+    gecmiseEkle(`${c.kurum_adi}: “${q}”`, [["tamam", ISTEK.ozet(c)], [liste.length ? "tamam" : "uyar", `${liste.length} sonuç`]],
+      { kategori: "mevzuat", tur: "kurum", sorgu: { q },
+        anlik: { kurum_adi: c.kurum_adi, istek: ISTEK.ozet(c), kanal, liste } });
     bildir(`kurum kararı isteği "${q}" (${ISTEK.ozet(c)}): ${liste.length} sonuç. ${liste.slice(0, 5).map((v) => v.atif || v.baslik).join(" | ")}`);
   }
 
@@ -989,7 +1029,8 @@ body { background: var(--zemin); }
       const ozet = toplam ? `${toplam} maddeden ${sayiEki(tamam)} doğrulandı` : "Kaynak madde döndürmedi; doğrulanmadı";
       (hepsi ? a.tamam : a.uyar)(ozet + ".");
       kap.append(KART.madde(veri, ortam));
-      gecmiseEkle(`${hedef.ad} m. ${maddeler.join(", ")}`, [["tamam", hedef.ad], [hepsi ? "tamam" : "uyar", ozet]]);
+      gecmiseEkle(`${hedef.ad} m. ${maddeler.join(", ")}`, [["tamam", hedef.ad], [hepsi ? "tamam" : "uyar", ozet]],
+        { kategori: "mevzuat", tur: "madde", sorgu: { hedef, maddeler }, anlik: { veri } });
       bildir(`${hedef.ad} m. ${maddeler.join(", ")} getirildi; ${tamam}/${toplam} doğrulandı. Atıflar: ${(veri.items || []).filter((i) => i.ok).map((i) => i.citation).join(" | ")}`);
       return true;
     } catch {
@@ -1089,6 +1130,61 @@ body { background: var(--zemin); }
       }
     };
     ekran.append(form, sonuc);
+    if (bekleyen && bekleyen.sekme === "getir") {
+      if (!mevzuatSecili && bekleyen.kanun) kanun.value = bekleyen.kanun;
+      madde.value = bekleyen.maddeler.join(", ");
+      bekleyen = null;
+      form.requestSubmit();
+    }
+  }
+
+  // Atıfları (kanun + madde) resmî metinden doğrular. Taslağın cümleleri kullanılmaz; geçmişe de yalnız bu satırlar gider.
+  async function atiflariDogrula(atiflar, adimlar) {
+    const gruplar = new Map();
+    for (const a of atiflar) gruplar.set(a.kanun, [...(gruplar.get(a.kanun) || []), a]);
+    const tablo = ogesi("div", "teyit");
+    const satirlar = [];
+    let dogru = 0;
+    for (const [kanun, liste] of gruplar) {
+      for (let i = 0; i < liste.length; i += 10) {
+        const parca = liste.slice(i, i + 10);
+        const ad = adimlar.ekle(`${kanunAdi(kanun)}: m. ${parca.map((p) => p.madde).join(", ")} kontrol ediliyor…`);
+        try {
+          const { veri, hata } = await cagir(app, "tr_mevzuat_madde_getir", { number: kanun, madde_no: parca.map((p) => p.madde) });
+          if (!veri) throw new Error(hata);
+          const items = veri.items || [];
+          let ok = 0;
+          parca.forEach((p, j) => {
+            const it = items[j] || {};
+            const s = { kanun, madde: p.madde, ok: !!it.ok, baslik: it.ok ? AL.baslikYolu(it) : "",
+              citation: it.citation || "", hata: it.ok ? "" : (it.error_code || "") };
+            if (s.ok) ok++;
+            satirlar.push(s);
+            tablo.append(teyitSatiri(s));
+          });
+          dogru += ok;
+          (ok === parca.length ? ad.tamam : ad.uyar)(`${kanunAdi(kanun)}: ${parca.length} atıftan ${sayiEki(ok)} doğru.`);
+        } catch {
+          ad.hata(`${kanunAdi(kanun)}: kaynağa ulaşılamadı.`);
+        }
+      }
+    }
+    return { tablo, satirlar, dogru };
+  }
+
+  function teyitSatiri(s) {
+    const satirEl = ogesi("div", "teyit-satiri");
+    if (s.ok) {
+      satirEl.append(ogesi("span", "rozet nane", "Doğrulandı"), ogesi("span", "ne", `${kisaAd(s.kanun)} m. ${s.madde}`),
+        ogesi("span", "baslik-k", s.baslik || "başlık kaynakta yok"));
+      const kp = dugme("Atfı kopyala", { sinif: "kucuk", simge: "kopya" });
+      kp.onclick = () => kopyala(s.citation, kp, null, ortam.duyuru);
+      satirEl.append(kp);
+    } else {
+      satirEl.append(ogesi("span", "rozet amber", s.hata === "NOT_FOUND" ? "Bulunamadı" : "Doğrulanamadı"),
+        ogesi("span", "ne", `${kisaAd(s.kanun)} m. ${s.madde}`), ogesi("span", "baslik-k", "Atıf olarak kullanmayın; resmî metinden teyit edin."));
+    }
+    return satirEl;
   }
 
   function atifTeyidi(ekran) {
@@ -1110,42 +1206,7 @@ body { background: var(--zemin); }
       if (!atiflar.length) { a1.uyar("Metinde tanınan bir madde atfı bulunamadı. “TBK m. 344” ya da “6098 sayılı … 344. maddesi” biçimleri tanınır."); return; }
       a1.tamam(`${atiflar.length} atıf bulundu.`);
       bul.disabled = true;
-      const gruplar = new Map();
-      for (const a of atiflar) gruplar.set(a.kanun, [...(gruplar.get(a.kanun) || []), a]);
-      const tablo = ogesi("div", "teyit");
-      let dogru = 0;
-      for (const [kanun, liste] of gruplar) {
-        for (let i = 0; i < liste.length; i += 10) {
-          const parca = liste.slice(i, i + 10);
-          const ad = adimlar.ekle(`${kanunAdi(kanun)}: m. ${parca.map((p) => p.madde).join(", ")} kontrol ediliyor…`);
-          try {
-            const { veri, hata } = await cagir(app, "tr_mevzuat_madde_getir", { number: kanun, madde_no: parca.map((p) => p.madde) });
-            if (!veri) throw new Error(hata);
-            const items = veri.items || [];
-            let ok = 0;
-            parca.forEach((p, j) => {
-              const it = items[j] || {};
-              const satirEl = ogesi("div", "teyit-satiri");
-              if (it.ok) {
-                ok++;
-                satirEl.append(ogesi("span", "rozet nane", "Doğrulandı"), ogesi("span", "ne", `${kisaAd(kanun)} m. ${p.madde}`),
-                  ogesi("span", "baslik-k", AL.baslikYolu(it) || "başlık kaynakta yok"));
-                const kp = dugme("Atfı kopyala", { sinif: "kucuk", simge: "kopya" });
-                kp.onclick = () => kopyala(it.citation, kp, null, ortam.duyuru);
-                satirEl.append(kp);
-              } else {
-                satirEl.append(ogesi("span", "rozet amber", it.error_code === "NOT_FOUND" ? "Bulunamadı" : "Doğrulanamadı"),
-                  ogesi("span", "ne", `${kisaAd(kanun)} m. ${p.madde}`), ogesi("span", "baslik-k", "Atıf olarak kullanmayın; resmî metinden teyit edin."));
-              }
-              tablo.append(satirEl);
-            });
-            dogru += ok;
-            (ok === parca.length ? ad.tamam : ad.uyar)(`${kanunAdi(kanun)}: ${parca.length} atıftan ${sayiEki(ok)} doğru.`);
-          } catch {
-            ad.hata(`${kanunAdi(kanun)}: kaynağa ulaşılamadı.`);
-          }
-        }
-      }
+      const { tablo, satirlar, dogru } = await atiflariDogrula(atiflar, adimlar);
       bul.disabled = false;
       const kap = ogesi("div", "sonuc-kabi");
       const ust = ogesi("div", "sonuc-ust");
@@ -1157,7 +1218,7 @@ body { background: var(--zemin); }
         "ArthurLegal atıf teyidi: aşağıdaki cümlelerdeki madde atıflarının içeriği maddenin başlığı ve metniyle örtüşüyor mu? " +
         "Her maddeyi tr_mevzuat_madde_getir ile çek, atfı citation alanıyla birebir yaz, uyuşmayanı açıkça belirt.\n\n" +
         atiflar.map((a, i) => `${i + 1}. [${kanunAdi(a.kanun)} m. ${a.madde}] … ${a.cumle} …`).join("\n"),
-        `Atıf teyidi: ${atiflar.length} atfın içerik uyumu Claude'a soruldu`);
+        `Atıf teyidi: ${atiflar.length} atfın içerik uyumu Claude'a soruldu`, { metinSaklanmaz: true });
       kap.append(ust, tablo, bilgi("Numaraların doğruluğu burada kontrol edildi. Maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini Claude'a kontrol ettirebilirsiniz; bu, atıfların geçtiği cümleleri sohbete gönderir. Müvekkil bilgisi varsa önce Arthur Mask'ten geçirin."));
       const alt = ogesi("div", "alt-satir");
       const ey = ogesi("div", "eylemler");
@@ -1165,7 +1226,9 @@ body { background: var(--zemin); }
       alt.append(ogesi("span", "zaman", "mevzuat.gov.tr"), ey);
       kap.append(alt);
       sonuc.append(kap);
-      gecmiseEkle(`Atıf teyidi (${atiflar.length} atıf)`, [["tamam", `${atiflar.length} atıf bulundu`], [dogru === atiflar.length ? "tamam" : "uyar", `${dogru} doğrulandı`]]);
+      gecmiseEkle(`Atıf teyidi (${atiflar.length} atıf)`, [["tamam", `${atiflar.length} atıf bulundu`], [dogru === atiflar.length ? "tamam" : "uyar", `${dogru} doğrulandı`]],
+        { kategori: "atif", tur: "atif", sorgu: { atiflar: atiflar.map((a) => ({ kanun: a.kanun, madde: a.madde })) },
+          anlik: { satirlar, dogru, toplam: atiflar.length } });
       bildir(`atıf teyidi yapıldı: ${atiflar.length} atıftan ${sayiEki(dogru)} resmî metinde bulundu.`);
     };
     ekran.append(form, sonuc);
@@ -1219,7 +1282,9 @@ body { background: var(--zemin); }
         const derin = dugme("Claude'a derin araştırma yaptır", { simge: "sohbet" });
         derin.onclick = () => claudeaSor(`ArthurLegal ile şu konuda içtihat araştırması yap; kararları künyeleriyle birebir ver: ${q}`, `İçtihat araştırması: ${q}`);
         sonuc.append(derin);
-        gecmiseEkle(`İçtihat: “${q}”`, [["tamam", `${yer} tarandı`], [n ? "tamam" : "uyar", n ? `${n} karar listelendi` : "Sonuç yok"]]);
+        gecmiseEkle(`İçtihat: “${q}”`, [["tamam", `${yer} tarandı`], [n ? "tamam" : "uyar", n ? `${n} karar listelendi` : "Sonuç yok"]],
+          { kategori: "ictihat", tur: "ictihat", sorgu: { q, mahkeme, daire: daire.value.trim(), sayi: Number(sayi.value) },
+            anlik: { veri } });
         bildir(`içtihat araması "${q}": ${n} karar. Künyeler: ${(veri.results || []).map((k) => k.citation).join(" | ")}`);
       } catch {
         a.hata("Kararlar getirilemedi.");
@@ -1229,9 +1294,331 @@ body { background: var(--zemin); }
       }
     };
     ekran.append(form, sonuc);
+    if (bekleyen && bekleyen.ekran === "ictihat") {
+      const b = bekleyen;
+      bekleyen = null;
+      sorgu.value = b.q || "";
+      daire.value = b.daire || "";
+      if ([5, 10, 20].includes(b.sayi)) sayi.value = String(b.sayi);
+      if (["yargitay", "danistay", "hepsi"].includes(b.mahkeme)) {
+        mahkeme = b.mahkeme;
+        seg.querySelectorAll("button").forEach((x, i) => x.setAttribute("aria-pressed", String(["yargitay", "danistay", "hepsi"][i] === mahkeme)));
+      }
+      form.requestSubmit();
+    }
   };
 
+  // ---- Geçmiş ----
+  // Liste yerelde al_gecmis'ten (bu bilgisayar, 90 gün), uzakta yalnız bu oturumdan (GECMIS). Ayrıntı o günkü sonucu
+  // ekranların kendi çizicileriyle gösterir; "Yeniden çalıştır" işi kendi ekranında güncel kaynakla yeniden yapar.
+  const KATEGORI_ADI = { hepsi: "Tümü", mevzuat: "Mevzuat ve kararlar", ictihat: "İçtihat", atif: "Atıf teyidi",
+    claude: "Claude'a gönderilenler" };
+  let gecmisSuzgec = { kategori: "hepsi", ekran: null, ara: "" };
+  let gecmisAcik = null;   // açık kayıt: kalıcıda kimlik (metin), oturumda kayıt nesnesi
+  let bekleyen = null;     // yeniden çalıştırma: hedef ekran formu doldurup kendisi gönderir
+
+  function gecmisSifirla(suzgec = {}) {
+    gecmisAcik = null;
+    gecmisSuzgec = { kategori: "hepsi", ekran: null, ara: "", ...suzgec };
+  }
+
+  // Bir ekranın başlığındaki "Geçmiş": o ekranın işleri.
+  function ekraninSuzgeci(id) {
+    if (id === "mevzuat") return { kategori: mevzuatAktif === "teyit" ? "atif" : "mevzuat" };
+    if (id === "ictihat") return { kategori: "ictihat" };
+    if (["tapu", "beyin", "mask", "donna"].includes(id)) return { kategori: "claude", ekran: id };
+    return {};
+  }
+
+  const ekranAdi = (id) => (EKRANLAR.find((e) => e.id === id) || {}).ad || "";
+  const ekranSimgesi = (id) => (EKRANLAR.find((e) => e.id === id) || {}).simge || "liste";
+
+  function gunEtiketi(iso) {
+    const bugun = new Date();
+    bugun.setHours(0, 0, 0, 0);
+    const g = new Date(iso);
+    g.setHours(0, 0, 0, 0);
+    const fark = Math.round((bugun - g) / 86400000);
+    if (fark === 0) return "Bugün";
+    if (fark === 1) return "Dün";
+    return g.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  }
+
+  // Oturum kaydı kalıcı kaydın biçimine çevrilir: liste ve ayrıntı tek biçimle çalışır.
+  const oturumKaydi = (g) => ({ id: g.id || null, oturum: g, zaman: g.saat.toISOString(), ekran: g.ekran,
+    kategori: g.kategori || "claude", tur: g.tur || "claude", baslik: g.soru, adimlar: g.adimlar,
+    sorgu: g.sorgu ?? null, anlik: g.anlik ?? null });
+
+  CIZIM.gecmis = (ekran) => {
+    if (gecmisAcik) { gecmisAyrinti(ekran, gecmisAcik); return; }
+    const kalici = gecmisKalici();
+    ekran.append(ogesi("p", "kapsam-notu", kalici
+      ? "Bu bilgisayarda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya gönderilmez. Atıf teyidinde " +
+        "yapıştırdığınız metin değil, yalnız bulunan atıflar saklanır. UYAP işleri geçmişe yazılmaz."
+      : "Bu bağlantıda geçmiş yalnız bu oturum boyunca tutulur ve hiçbir yere yazılmaz. Kalıcı geçmiş (90 gün) " +
+        "masaüstündeki ArthurLegal'de."));
+    const seg = ogesi("div", "segment");
+    for (const [id, yazi] of Object.entries(KATEGORI_ADI)) {
+      const b = dugme(yazi);
+      b.setAttribute("aria-pressed", String(gecmisSuzgec.kategori === id));
+      b.onclick = () => { gecmisSuzgec = { ...gecmisSuzgec, kategori: id, ekran: null }; git("gecmis"); };
+      seg.append(b);
+    }
+    const ara = girdi("search", "Başlıkta ara: kira, 6098, EPDK …", gecmisSuzgec.ara);
+    const temizle = dugme(kalici ? "Geçmişi temizle" : "Oturumu temizle", { simge: "sil" });
+    let emin = false;
+    temizle.onclick = async () => {
+      const yazi = temizle.querySelector("span");
+      if (!emin) {
+        emin = true;
+        yazi.textContent = "Emin misiniz? Bir daha basın";
+        setTimeout(() => { emin = false; yazi.textContent = kalici ? "Geçmişi temizle" : "Oturumu temizle"; }, 4000);
+        return;
+      }
+      temizle.disabled = true;
+      try {
+        if (kalici) {
+          const { hata } = await cagir(app, "al_gecmis", { islem: "temizle" });
+          if (hata) throw new Error(hata);
+        }
+        GECMIS.length = 0;
+        ortam.duyuru.textContent = "Geçmiş temizlendi.";
+      } catch (e) {
+        ortam.duyuru.textContent = "Geçmiş temizlenemedi: " + (e.message || "bilinmeyen hata");
+      }
+      git("gecmis");
+    };
+    const ust = ogesi("div", "satir gecmis-ust");
+    ust.append(alan("Ara", ara), temizle);
+    ekran.append(seg, ust);
+    if (gecmisSuzgec.ekran) {
+      const not = ogesi("div", "eylemler sol");
+      const kaldir = dugme(`Yalnız ${ekranAdi(gecmisSuzgec.ekran)} · süzgeci kaldır`, { sinif: "kucuk", simge: "carpi" });
+      kaldir.onclick = () => { gecmisSuzgec = { ...gecmisSuzgec, ekran: null }; git("gecmis"); };
+      not.append(kaldir);
+      ekran.append(not);
+    }
+    const liste = ogesi("div", "kesit");
+    ekran.append(liste);
+    let zamanlayici = null;
+    ara.oninput = () => {
+      clearTimeout(zamanlayici);
+      zamanlayici = setTimeout(() => { gecmisSuzgec.ara = ara.value; gecmisListesi(liste); }, 250);
+    };
+    gecmisListesi(liste);
+  };
+
+  async function gecmisListesi(kap) {
+    kap.replaceChildren();
+    const s = gecmisSuzgec;
+    let kayitlar = [];
+    if (gecmisKalici()) {
+      const adim = AL.adimlar(kap).ekle("Geçmiş okunuyor…");
+      try {
+        const arg = { islem: "listele", en_fazla: 300 };
+        if (s.kategori !== "hepsi") arg.kategori = s.kategori;
+        if (s.ara.trim()) arg.ara = s.ara.trim();
+        const { veri, hata } = await cagir(app, "al_gecmis", arg);
+        if (!veri) throw new Error(hata);
+        kayitlar = veri.kayitlar || [];
+      } catch {
+        adim.hata("Geçmiş okunamadı.");
+        return;
+      }
+      kap.replaceChildren();
+    } else {
+      const q = s.ara.trim().toLocaleLowerCase("tr");
+      kayitlar = GECMIS.map(oturumKaydi).filter((k) => (s.kategori === "hepsi" || k.kategori === s.kategori) &&
+        (!q || k.baslik.toLocaleLowerCase("tr").includes(q)));
+    }
+    if (s.ekran) kayitlar = kayitlar.filter((k) => k.ekran === s.ekran);
+    if (!kayitlar.length) {
+      kap.append(ogesi("div", "bos", s.ara.trim() || s.kategori !== "hepsi" || s.ekran
+        ? "Bu süzgeçle kayıt yok."
+        : "Henüz geçmiş yok. Masada bir arama yaptığınızda burada o günkü sonucuyla birikir."));
+      return;
+    }
+    let gun = "";
+    let grup = null;
+    for (const k of kayitlar) {
+      const g = gunEtiketi(k.zaman);
+      if (g !== gun) {
+        gun = g;
+        grup = ogesi("div", "liste");
+        kap.append(ogesi("div", "gecmis-gun", g), grup);
+      }
+      const b = ogesi("button", "liste-ogesi");
+      b.type = "button";
+      const sim = ogesi("span", "simge");
+      sim.append(ikon(ekranSimgesi(k.ekran)));
+      const m = ogesi("span", "metinler");
+      const son = (k.adimlar || []).slice(-1)[0];
+      m.append(ogesi("span", "ad", k.baslik), ogesi("span", "ne", [KATEGORI_ADI[k.kategori], son && son[1]].filter(Boolean).join(" · ")));
+      b.append(sim, m, ogesi("span", "sayi", new Date(k.zaman).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })));
+      b.onclick = () => { gecmisAcik = k.oturum ? k : k.id; git("gecmis"); };
+      grup.append(b);
+    }
+  }
+
+  async function gecmisAyrinti(ekran, ref) {
+    const geri = dugme("Geçmişe dön", { simge: "geri" });
+    geri.onclick = () => { gecmisAcik = null; git("gecmis"); };
+    const ust = ogesi("div", "eylemler sol");
+    ust.append(geri);
+    ekran.append(ust);
+    let k = ref;
+    if (typeof ref === "string") {
+      const bekle = ogesi("div", "kesit");
+      ekran.append(bekle);
+      const adim = AL.adimlar(bekle).ekle("Kayıt açılıyor…");
+      try {
+        const { veri, hata } = await cagir(app, "al_gecmis", { islem: "getir", id: ref });
+        if (!veri) throw new Error(hata);
+        k = veri.kayit;
+      } catch (e) {
+        adim.hata(e.message || "Kayıt açılamadı.");
+        return;
+      }
+      if (aktif !== "gecmis" || gecmisAcik !== ref) return;   // bu arada başka ekrana geçildi
+      bekle.remove();
+    }
+    const kart = ogesi("div", "sonuc-kabi");
+    const bas = ogesi("div", "sonuc-ust");
+    const bk = ogesi("div", "sonuc-baslik");
+    bk.append(ogesi("h2", null, k.baslik), ogesi("div", "kunye",
+      [KATEGORI_ADI[k.kategori], ekranAdi(k.ekran) !== KATEGORI_ADI[k.kategori] && ekranAdi(k.ekran), AL.zaman(k.zaman)]
+        .filter(Boolean).join(" · ")));
+    const ey = ogesi("div", "eylemler");
+    const yeniden = yenidenDugmesi(k);
+    if (yeniden) ey.append(yeniden);
+    const sil = dugme("Sil", { simge: "sil" });
+    sil.onclick = async () => {
+      sil.disabled = true;
+      try {
+        if (k.id && gecmisKalici()) {
+          const { hata } = await cagir(app, "al_gecmis", { islem: "sil", id: k.id });
+          if (hata) throw new Error(hata);
+        }
+        const i = GECMIS.findIndex((g) => g === k.oturum || (k.id && g.id === k.id));
+        if (i >= 0) GECMIS.splice(i, 1);
+        gecmisAcik = null;
+        ortam.duyuru.textContent = "Kayıt silindi.";
+        git("gecmis");
+      } catch (e) {
+        sil.disabled = false;
+        ortam.duyuru.textContent = "Kayıt silinemedi: " + (e.message || "bilinmeyen hata");
+      }
+    };
+    ey.append(sil);
+    bas.append(bk, ey);
+    const ad = ogesi("div", "adimlar");
+    for (const [tur, metin] of k.adimlar || []) {
+      const s = ogesi("div", "adim " + tur);
+      const im = ogesi("span", "im");
+      im.append(ikon(tur === "tamam" ? "onay" : tur === "hata" ? "carpi" : "uyari"));
+      s.append(im, ogesi("span", null, metin));
+      ad.append(s);
+    }
+    kart.append(bas, ad);
+    const icerik = ogesi("div", "kesit");
+    if (k.tur !== "claude") {
+      icerik.append(bilgi(`Bu, ${AL.zaman(k.zaman)} tarihindeki sonuçtur; kaynak o günden sonra değişmiş olabilir. Güncel hali için “Yeniden çalıştır”.`));
+    }
+    anlikCiz(icerik, k);
+    ekran.append(kart, icerik);
+    bildir(`kullanıcı geçmişte "${k.baslik}" kaydını (${AL.zaman(k.zaman)}) açtı.`);
+  }
+
+  // Kaydın o günkü sonucu, ekranların kendi çizicileriyle (düğmeler canlı kaynağa gider).
+  function anlikCiz(kap, k) {
+    const a = k.anlik;
+    if (k.tur === "claude") {
+      kap.append(ogesi("div", "balon gecmis-metin", k.sorgu && k.sorgu.metin ? k.sorgu.metin
+        : "Mesajın metni saklanmadı (taslağınızdan cümle taşıyordu); yalnız başlığı tutuldu."));
+      kap.append(bilgi("Cevap Claude sohbetinde; masa cevabı saklamaz."));
+      return;
+    }
+    if (!a) {
+      kap.append(bilgi(k.anlik_kesildi ? "Sonuç çok büyük olduğu için saklanmadı; güncel hali için yeniden çalıştırın."
+        : "Bu kayıtta sonuç saklanmamış; güncel hali için yeniden çalıştırın."));
+      return;
+    }
+    const s = ogesi("div", "sonuc-kabi");
+    if (k.tur === "mevzuat-liste") {
+      if (a.metinde) s.append(ogesi("div", "kunye", "Metninde arandı; liste Resmî Gazete tarihine göre, ilgiye göre değil."));
+      for (const m of a.liste || []) s.append(mevzuatSatiri(m));
+    } else if (k.tur === "kurum") {
+      s.append(ogesi("div", "kunye", [a.istek && `İstek: ${a.istek}`, a.kanal === "arşiv" ? "ArthurLegal arşivi" : "resmî liste"].filter(Boolean).join(" · ")));
+      for (const v of a.liste || []) s.append(kararSatiri(v));
+    } else if (k.tur === "madde" && a.veri) {
+      s.append(KART.madde(a.veri, ortam));
+    } else if (k.tur === "ictihat" && a.veri) {
+      s.append(KART.ictihat(a.veri, ortam));
+    } else if (k.tur === "atif") {
+      const ust = ogesi("div", "sonuc-ust");
+      const bk = ogesi("div", "sonuc-baslik");
+      bk.append(ogesi("h2", null, "Atıf teyidi"), ogesi("div", "kunye", `${a.toplam || 0} atıf · ${a.dogru || 0} doğrulandı`));
+      ust.append(bk, KART.durumRozeti(a.dogru || 0, a.toplam || 0));
+      const t = ogesi("div", "teyit");
+      for (const r of a.satirlar || []) t.append(teyitSatiri(r));
+      s.append(ust, t);
+    }
+    if (s.childElementCount <= (k.tur === "mevzuat-liste" || k.tur === "kurum" ? 1 : 0) && !(a.liste || []).length && k.tur !== "atif") {
+      s.append(ogesi("div", "bos", "Bu aramada sonuç yoktu."));
+    }
+    kap.append(s);
+  }
+
+  function yenidenDugmesi(k) {
+    const s = k.sorgu;
+    if (!s) return null;
+    const claude = k.tur === "claude";
+    const b = dugme(claude ? "Claude'a yeniden gönder" : "Yeniden çalıştır", { sinif: "birincil", simge: claude ? "sohbet" : "yenile" });
+    b.onclick = () => {
+      if (claude) { claudeaSor(s.metin, k.baslik); return; }
+      if (k.tur === "atif") { atifYeniden(k, b); return; }
+      gecmisAcik = null;
+      if (k.tur === "mevzuat-liste" || k.tur === "kurum") {
+        bekleyen = { sekme: "ara", q: s.q };
+        mevzuatAktif = "ara";
+        git("mevzuat");
+      } else if (k.tur === "madde") {
+        const h = s.hedef || {};
+        mevzuatSecili = h.mevzuat_id ? { mevzuat_id: String(h.mevzuat_id), ad: h.ad, number: h.number, type: h.type } : null;
+        bekleyen = { sekme: "getir", kanun: h.number || h.ad || "", maddeler: s.maddeler || [] };
+        mevzuatAktif = "getir";
+        git("mevzuat");
+      } else if (k.tur === "ictihat") {
+        bekleyen = { ekran: "ictihat", ...s };
+        git("ictihat");
+      }
+    };
+    return b;
+  }
+
+  // Atıf teyidi yeniden: taslak saklanmadığı için atıflar (kanun + madde) burada, kaydın altında yeniden doğrulanır.
+  async function atifYeniden(k, dugmeEl) {
+    const atiflar = ((k.sorgu && k.sorgu.atiflar) || []).map((a) => ({ kanun: String(a.kanun), madde: String(a.madde) }));
+    if (!atiflar.length) return;
+    dugmeEl.disabled = true;
+    const kesit = ogesi("div", "kesit");
+    kesit.append(ogesi("h3", null, "Güncel teyit"));
+    $("ekran").append(kesit);
+    const { tablo, satirlar, dogru } = await atiflariDogrula(atiflar, AL.adimlar(kesit));
+    kesit.append(tablo);
+    dugmeEl.disabled = false;
+    gecmiseEkle(`Atıf teyidi (${atiflar.length} atıf, yeniden)`, [["tamam", `${atiflar.length} atıf`],
+      [dogru === atiflar.length ? "tamam" : "uyar", `${dogru} doğrulandı`]],
+    { ekran: "mevzuat", kategori: "atif", tur: "atif", sorgu: { atiflar }, anlik: { satirlar, dogru, toplam: atiflar.length } });
+    bildir(`geçmişteki atıf teyidi yeniden yapıldı: ${atiflar.length} atıftan ${sayiEki(dogru)} resmî metinde bulundu.`);
+  }
+
   // ---- ArthurTapu ----
+  // Tapu'nun 3D uyarısının masadaki kopyası (asıl yeri arthurlegal-mcp tkgm-mcp/tkgm_harita.py UYARI_3D).
+  const UYARI_3D = "UYARI: Bu 3B görsel gerçek (ölçülmüş ya da resmî) veriye dayanmaz. Yapay zekâ ve otomatik " +
+    "kurallarla üretilmiş bir TAHMİNDİR; yalnız fikir vermek amacıyla oluşturulmuştur. Ölçüm, imar durumu, ruhsat, " +
+    "röleve ya da bilirkişi incelemesi yerine geçmez ve resmî işlemde kullanılamaz.";
+
   CIZIM.tapu = (ekran) => {
     const d = modulDurumu("tapu");
     // Tapu araçları bu uçta yoksa (Claude dizinindeki sürüm) form Claude'a yapamayacağı bir iş bırakmasın.
@@ -1254,9 +1641,24 @@ body { background: var(--zemin); }
     };
     ekran.append(form);
     if (DURUM.ortam === "masaustu" && d === "hazir") {
+      // Tahmini 3D yalnız bu bilgisayardaki Tapu'da: arazi ve çevre binaların tabanı oradan çekilir.
+      const kat = girdi("number", "bilmiyorsanız boş");
+      kat.min = "1";
+      kat.max = "80";
+      const uc = dugme("Tahmini 3D görünüm", { simge: "bina" });
+      uc.onclick = () => {
+        const m = yer.value.trim();
+        if (!m) { yer.focus(); ortam.duyuru.textContent = "Önce yer ve ada/parseli yazın."; return; }
+        const k = Number.parseInt(kat.value, 10);
+        claudeaSor(`ArthurLegal Tapu: ${m} parselini getir ve arazi_3d ile çevre binalarla tahmini 3D görünümünü üret` +
+          (k >= 1 && k <= 80 ? `; parseldeki bina ${k} katlı` : "; kat sayısını söylemedim, parseldeki bina için kat uydurma") +
+          ". Araç çıktısındaki uyari_3d metnini aynen ilet; arayuzde_ac bağlantısı varsa onu ver.", `Tahmini 3D: ${m}`);
+      };
       const ac = dugme("Tapu arayüzünü aç", { simge: "dis" });
       ac.onclick = () => modulAc("tapu", ac);
-      ekran.append(ac);
+      const s3 = ogesi("div", "satir");
+      s3.append(alan("Parseldeki binanın kat sayısı (isteğe bağlı)", kat, "alan dar"), uc, ac);
+      ekran.append(s3, bilgi(UYARI_3D));
     } else if (d === "kurulu-degil") {
       kuruluDegil(ekran, "ArthurLegal Tapu");
     }

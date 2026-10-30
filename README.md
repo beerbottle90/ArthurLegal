@@ -642,6 +642,39 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.0.5 — Desk history; ArthurTapu estimated 3D view; refreshed brand colors (2026-10-30)
+
+- **Desk history.** The desk has a new **History** page, and every screen has a History link filtered to that
+  screen. Legislation and regulator searches, fetched articles, case-law searches, citation checks and requests
+  sent to Claude are kept with the result as it was that day; **Run again** repeats the search against the live
+  source. History stays on this computer and is deleted after 90 days. A pasted draft is never stored, only the
+  citations found in it, and UYAP work is never recorded. On the web and phone the desk keeps history for the
+  session only and writes nothing to a server.
+- **ArthurTapu 0.6.0.** An estimated 3D view of the parcel and its surroundings: terrain plus building masses
+  built from open building footprints (OpenStreetMap, Overture Maps) and a floor rule. The view always carries a
+  warning that it is an estimate, not measured or official data, made only to give an idea. The desk's ArthurTapu
+  screen has an **Estimated 3D view** button. Satellite imagery (Esri World Imagery) is available with the user's
+  own free ArcGIS key, which is never written to any file. Map tiles that OpenStreetMap was refusing now load:
+  pages send only their origin as referrer. Maps and 3D views open from a link in the Tapu interface, which now
+  follows the desk's design and carries the new icon.
+- **Refreshed brand colors:** the icon, setup wizard, desk and start page now use a vivid navy and a bright gold;
+  the Claude plugin logo was updated too.
+- Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); the land
+  registry guide in all four describes the 3D view and its warning. Claude plugin 1.12.8.
+
+**Türkçe:** Masada yeni **Geçmiş** sayfası ve her ekranın başlığında o ekrana süzülmüş Geçmiş bağlantısı: mevzuat ve
+kurum kararı aramaları, getirilen maddeler, içtihat aramaları, atıf teyitleri ve Claude'a gönderilen istekler o
+günkü sonuçlarıyla açılır; **Yeniden çalıştır** güncel kaynakla tekrarlar. Geçmiş bu bilgisayarda tutulur ve 90 gün
+sonra silinir; yapıştırılan taslak saklanmaz, yalnız bulunan atıflar; UYAP işi yazılmaz. Web ve telefonda geçmiş
+yalnız oturum boyunca. **ArthurTapu 0.6.0:** parselin ve çevresinin tahmini 3D görünümü (arazi + açık bina
+tabanlarından kat kuralıyla bina kütleleri); görselde her zaman "gerçek veriye dayanmaz, yapay zekâ ve otomatik
+kurallarla üretilmiş tahmindir, yalnız fikir vermek içindir" uyarısı. Masanın ArthurTapu ekranında **Tahmini 3D
+görünüm** düğmesi. Kullanıcının kendi ücretsiz anahtarıyla Esri uydu görüntüsü (anahtar hiçbir dosyaya yazılmaz).
+OpenStreetMap'in engellediği harita karoları artık yükleniyor. Tapu arayüzü masanın tasarımında ve yeni simgeyle.
+Yeni marka renkleri: simge, kurulum sihirbazı, masa ve başlangıç sayfası canlı lacivert ve parlak altında (lacivert
+maviye kaymaz); Claude eklentisinin logosu da yenilendi. Paket sürümleri aynı; dört paketteki tapu rehberi 3D
+görünümü ve uyarısını anlatır. Claude eklentisi 1.12.8.
+
 ## Setup 3.0.4 — Sanctions screening from the official lists; Law Firm and Corporate 1.12.5 (2026-10-29)
 
 - **Sanctions screening without an API key.** The packages no longer use the OpenSanctions API. Sanctions checks go

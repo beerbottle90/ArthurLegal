@@ -719,6 +719,18 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(self.arac("al_modul_ac", modul="uyap")["isError"], "kurulu olmayan modül açılmaz")
         kart = self.arac("tr_ictihat_ara", query="kira")
         self.assertEqual(kart["structuredContent"]["arguments"], {"query": "kira"}, "kart metindeki JSON'u veri olarak alır")
+        # Masa geçmişi: yalnız bu (sahte) kurulumun veri klasöründe; UYAP işi yazılmaz.
+        self.assertIn("al_gecmis", masa["yetenekler"])
+        self.assertIn("al_gecmis", araclar)
+        kayit = {"ekran": "ictihat", "kategori": "ictihat", "tur": "ictihat", "baslik": "İçtihat: “kira”",
+                 "adimlar": [["tamam", "3 karar"]], "sorgu": {"q": "kira"}, "anlik": {"veri": {"results": []}}}
+        k = self.arac("al_gecmis", islem="kaydet", kayit=kayit)["structuredContent"]
+        liste = self.arac("al_gecmis", islem="listele")["structuredContent"]
+        self.assertEqual([x["id"] for x in liste["kayitlar"]], [k["id"]])
+        self.assertEqual(self.arac("al_gecmis", islem="getir", id=k["id"])["structuredContent"]["kayit"]["sorgu"], {"q": "kira"})
+        self.assertTrue(self.arac("al_gecmis", islem="kaydet", kayit=dict(kayit, ekran="uyap"))["isError"])
+        self.assertTrue(self.arac("al_gecmis", islem="getir", id="../ayar")["isError"])
+        self.assertEqual(self.arac("al_gecmis", islem="temizle")["structuredContent"], {"silinen": 1})
 
 
 class SaltOkunurTesti(unittest.TestCase):
@@ -1504,7 +1516,7 @@ class ArayuzTesti(unittest.TestCase):
                       "print(json.dumps([s.al_arayuz is not None, [a['name'] for a in s.masa_araclari()], "
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
                       "'_meta' in s.kart_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
-            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_modul_ac"], True, True, True])
+            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_modul_ac", "al_gecmis"], True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
             acilan, _ = self.calistir(t, KisayolTesti.BASLAT)
