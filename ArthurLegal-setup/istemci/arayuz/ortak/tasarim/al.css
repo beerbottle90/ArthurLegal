@@ -2,6 +2,8 @@
 
    Açık tema (varsayılan): beyaz zemin, siyah yazı; renkler ArthurLegal Kullanıcı Rehberi'nden.
    Koyu tema: AL lacivertinin üstünde kırık beyaz yazı, altın aynı kalır.
+   Renkler 30.10.2026'da canlandı: lacivert maviye kaymadan doygun (#12285a), altın parlak (#f7c948);
+   arma simge.py'den (#183064→#071230 zemin, #FFE48A→#F7BE2D altın).
    Biçim: Apple/Microsoft gibi yumuşak yüzeyler, kapsül düğmeler, cihazın sistem yazı tipi.
    Tema seçimi al.js'tedir: <html data-tema="acik|koyu">. */
 
@@ -10,20 +12,20 @@
   --yuzey: #ffffff;
   --grup: #f6f5f1;
   --grup-ust: #efede6;
-  --alan: rgb(224 178 76 / 0.12);
+  --alan: rgb(247 201 72 / 0.12);
   --cizgi: rgb(13 24 38 / 0.10);
   --cizgi-guclu: rgb(13 24 38 / 0.18);
   --metin: #0d1117;
   --ikincil: #4b5565;
   --soluk: #808a99;
-  --altin: #e0b24c;
-  --altin-metin: #87621f;
-  --lacivert: #0d1826;
-  --birincil: #0d1826;
+  --altin: #f7c948;
+  --altin-metin: #8a6400;
+  --lacivert: #12285a;
+  --birincil: #12285a;
   --birincil-yazi: #ffffff;
   --dolgu: rgb(118 118 128 / 0.12);
   --dolgu-ust: rgb(118 118 128 / 0.20);
-  --secili: rgb(224 178 76 / 0.16);
+  --secili: rgb(247 201 72 / 0.16);
   --nane-metin: #1f7a52;   --nane-zemin: #eaf6f0;
   --amber-metin: #87621f;  --amber-zemin: #fbf3e0;
   --kirmizi-metin: #b43d2a; --kirmizi-zemin: #fceeeb;
@@ -49,23 +51,23 @@
 }
 
 :root[data-tema="koyu"] {
-  --zemin: #0b1220;
-  --yuzey: #111a2b;
-  --grup: #172238;
-  --grup-ust: #1d2a44;
-  --alan: rgb(224 178 76 / 0.12);
+  --zemin: #0a1430;
+  --yuzey: #0e1d3d;
+  --grup: #142749;
+  --grup-ust: #1a3057;
+  --alan: rgb(247 201 72 / 0.12);
   --cizgi: rgb(255 255 255 / 0.08);
   --cizgi-guclu: rgb(255 255 255 / 0.16);
   --metin: #f2f4f8;
   --ikincil: #a7b3c6;
   --soluk: #7c889c;
-  --altin-metin: #e7c26a;
+  --altin-metin: #f7cd55;
   --lacivert: #e8e4da;
-  --birincil: #e0b24c;
-  --birincil-yazi: #0b1220;
+  --birincil: #f7c948;
+  --birincil-yazi: #0a1430;
   --dolgu: rgb(255 255 255 / 0.07);
   --dolgu-ust: rgb(255 255 255 / 0.12);
-  --secili: rgb(224 178 76 / 0.16);
+  --secili: rgb(247 201 72 / 0.16);
   --nane-metin: #6fd3a4;   --nane-zemin: rgb(63 169 124 / 0.16);
   --amber-metin: #e7c26a;  --amber-zemin: rgb(224 178 76 / 0.15);
   --kirmizi-metin: #f08a78; --kirmizi-zemin: rgb(229 83 63 / 0.16);

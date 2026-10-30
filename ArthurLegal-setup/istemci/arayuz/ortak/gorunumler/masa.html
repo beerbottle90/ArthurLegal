@@ -1234,6 +1234,11 @@ body { background: var(--zemin); }
   // ---- ArthurTapu ----
   CIZIM.tapu = (ekran) => {
     const d = modulDurumu("tapu");
+    // Tapu araçları bu uçta yoksa (Claude dizinindeki sürüm) form Claude'a yapamayacağı bir iş bırakmasın.
+    if (d === "masaustu") {
+      ekran.append(bilgi("ArthurTapu bu bağlantıda yok. Parsel sorgusu ArthurLegal kurulumunda ve ArthurLegal'in kendi bağlantısında çalışır."));
+      return;
+    }
     const form = ogesi("form", "form");
     const yer = girdi("text", "Kadıköy Caferağa 123 ada 45 parsel");
     const satir = ogesi("div", "satir");
