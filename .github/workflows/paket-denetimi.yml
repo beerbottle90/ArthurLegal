@@ -1,6 +1,7 @@
 # Paket denetimi (sürüm sınavı, Katman 1).
 #
-# Paketlere ya da denetime dokunan her push'ta (bütün dallar) ve PR'da GitHub'ın Linux bilgisayarında çalışır;
+# Her push'ta (bütün dallar) ve PR'da GitHub'ın Linux bilgisayarında çalışır; ana dalda zorunlu denetim
+# olduğu için yol süzgeci yok (süzgeçle atlanan PR, zorunlu denetimi hiç almaz ve birleşemez);
 # ağa çıkmaz, API anahtarı istemez, birkaç saniyede biter. ArthurLegal-setup/yayin/paket_denetimi.py depo
 # kökündeki ArthurLegal-*-v*-Public-Release paketlerini denetler (arsiv/ hariç):
 #   1. Kırık skill atfı: .md dosyalarındaki /eklenti:komut o pakette tanımlı bir skill'e gidiyor mu
@@ -24,29 +25,7 @@ name: Paket denetimi
 on:
   push:
     branches: ["**"]
-    paths:
-      - "ArthurLegal-*-Public-Release/**"
-      - "ArthurLegal-plugin/**"
-      - "ArthurLegal-setup/yayin/paket_denetimi.py"
-      - "ArthurLegal-setup/yayin/ortak_uret.py"
-      - "ArthurLegal-setup/yayin/eklenti_uret.py"
-      - "ArthurLegal-setup/varlik/simge.py"
-      - "ArthurLegal-setup/ortak-rehberler/**"
-      - "ArthurLegal-setup/tests/**"
-      - "LICENSE"
-      - ".github/workflows/paket-denetimi.yml"
   pull_request:
-    paths:
-      - "ArthurLegal-*-Public-Release/**"
-      - "ArthurLegal-plugin/**"
-      - "ArthurLegal-setup/yayin/paket_denetimi.py"
-      - "ArthurLegal-setup/yayin/ortak_uret.py"
-      - "ArthurLegal-setup/yayin/eklenti_uret.py"
-      - "ArthurLegal-setup/varlik/simge.py"
-      - "ArthurLegal-setup/ortak-rehberler/**"
-      - "ArthurLegal-setup/tests/**"
-      - "LICENSE"
-      - ".github/workflows/paket-denetimi.yml"
 
 permissions:
   contents: read
