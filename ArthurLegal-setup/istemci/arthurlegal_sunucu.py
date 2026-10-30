@@ -436,7 +436,22 @@ def masa_araclari():
           "inputSchema": {"type": "object", "properties": {"modul": {"type": "string", "enum": list(MODUL_KOMUTU)}},
                           "required": ["modul"]},
           "annotations": {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}}
-    return [masa, ac]
+    araclar = [masa, ac]
+    # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
+    if hasattr(al_arayuz, "gecmis_araci"):
+        araclar.append(al_arayuz.gecmis_araci())
+    return araclar
+
+
+_GECMIS = None
+
+
+def masa_gecmisi():
+    """Masa geçmişinin deposu; ilk çağrıda kurulur (klasör ilk kayıtta açılır)."""
+    global _GECMIS
+    if _GECMIS is None:
+        _GECMIS = al_arayuz.Gecmis(str(ortak.VERI / "masa-gecmisi"))
+    return _GECMIS
 
 
 def kart_meta(araclar):
@@ -613,6 +628,8 @@ class Sunucu:
 
     def _masa(self, a):
         yetenekler = [t["name"] for t in (self.uzak_araclar or []) if t.get("name") in MASA_UZAK] + ["al_modul_ac"]
+        if hasattr(al_arayuz, "Gecmis"):
+            yetenekler.append("al_gecmis")
         if ortak.hafiza_acik():
             yetenekler += [t["name"] for t in hafiza.araclar()]
         veri = al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"))
@@ -635,6 +652,12 @@ class Sunucu:
             return self._masa(a)
         if al_arayuz is not None and ad == "al_modul_ac":
             return self._modul_ac(a)
+        if al_arayuz is not None and ad == "al_gecmis" and hasattr(al_arayuz, "Gecmis"):
+            try:
+                veri = masa_gecmisi().cagir(a)
+            except (ValueError, OSError) as e:  # GecmisHatasi da ValueError'dır; içerik günlüğe yazılmaz
+                return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+            return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
         if ad.startswith("al_"):  # uzak ucun masa araçları köprülenmez (kopru_araclari)
             metin = ("ArthurLegal Masası bu kurulumda kapalı (Claude Desktop klasik). Kurulumu yeniden çalıştırıp "
                      "'ArthurLegal yeni arayüz'ü seçebilirsiniz." if al_arayuz is None else f"Bilinmeyen masa aracı: {ad}")
