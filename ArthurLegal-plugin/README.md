@@ -7,7 +7,7 @@ finance, expert opinions, contract drafting and law firm operations. Statutes an
 text through ArthurLegal MCP, which covers 12 jurisdictions from Türkiye and the EU to the UK, Germany and
 Japan, plus legal-entity identity, open-access legal scholarship and published resource contracts.
 
-Plugin version 1.12.6, built from the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
+Plugin version 1.12.7, built from the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
 
 ## What it contains
 

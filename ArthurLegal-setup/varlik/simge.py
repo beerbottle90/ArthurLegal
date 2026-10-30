@@ -26,9 +26,10 @@ Renk = Tuple[int, int, int]
 
 ALT = 4                                  # piksel başına alt satır (dikey yumuşatma)
 
-# AL renkleri (kullanıcı rehberi): lacivert zemin, altın işaret.
-ZEMIN_UST, ZEMIN_ALT = (0x22, 0x3B, 0x63), (0x0B, 0x15, 0x24)
-ALTIN_UST, ALTIN_ALT = (0xF6, 0xD9, 0x8E), (0xD6, 0xA2, 0x3A)
+# AL renkleri: canlı lacivert zemin (maviye kaymaz), parlak altın işaret (30.10.2026; önceki #223B63→#0B1524,
+# #F6D98E→#D6A23A soluk kalıyordu).
+ZEMIN_UST, ZEMIN_ALT = (0x18, 0x30, 0x64), (0x07, 0x12, 0x30)
+ALTIN_UST, ALTIN_ALT = (0xFF, 0xE4, 0x8A), (0xF7, 0xBE, 0x2D)
 KENAR_IZI = (0xFF, 0xFF, 0xFF)           # üst kenarda ince ışık
 
 
@@ -211,7 +212,7 @@ def sihirbaz_tuvali(en: int = 328, boy: int = 624) -> Tuval:
     """Kurulum sihirbazının sol görseli (Inno 164x312'nin iki katı): lacivert degrade, yumuşak iki daire, ortada
     simge. Yazı yok: ürün adı sihirbazın kendi metninde."""
     t = Tuval(en, boy)
-    t.boya([[(0, 0), (1, 0), (1, 1), (0, 1)]], (0x1A, 0x30, 0x52), (0x0A, 0x13, 0x21))
+    t.boya([[(0, 0), (1, 0), (1, 1), (0, 1)]], (0x12, 0x2B, 0x58), (0x06, 0x10, 0x2A))
     oran = boy / en
 
     def daire_birim(cx: float, cy: float, r: float) -> List[Nokta]:
@@ -219,8 +220,8 @@ def sihirbaz_tuvali(en: int = 328, boy: int = 624) -> Tuval:
         return [(cx + r * math.cos(2 * math.pi * i / 96), cy + r / oran * math.sin(2 * math.pi * i / 96))
                 for i in range(96)]
 
-    t.boya([daire_birim(0.95, 0.80, 0.62)], (0x2B, 0x4A, 0x7A), (0x14, 0x26, 0x42), 0.5, 1.0, saydamlik=0.35)
-    t.boya([daire_birim(0.05, 0.10, 0.45)], (0x2E, 0x50, 0x84), (0x1A, 0x30, 0x52), 0.0, 0.3, saydamlik=0.25)
+    t.boya([daire_birim(0.95, 0.80, 0.62)], (0x1F, 0x44, 0x7F), (0x0D, 0x22, 0x41), 0.5, 1.0, saydamlik=0.35)
+    t.boya([daire_birim(0.05, 0.10, 0.45)], (0x21, 0x4A, 0x89), (0x12, 0x2B, 0x58), 0.0, 0.3, saydamlik=0.25)
     # Simge ortada, üstten üçte birde; ince altın çizgi altında.
     boyut = 0.56
     x0, y0 = (1 - boyut) / 2, 0.30 - boyut / 2 / oran
