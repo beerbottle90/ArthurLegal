@@ -1,0 +1,71 @@
+# Sır taraması.
+#
+# Her push'ta (bütün dallar ve etiketler) ve PR'da, yalnız o push'un ya da PR'ın getirdiği commit'leri
+# gitleaks ile tarar. Bilinen sağlayıcıların anahtar biçimlerine ek olarak depo kökündeki .gitleaks.toml'daki
+# ArthurLegal kuralı çalışır: "Apikey", "API key", "anahtar" gibi bir sözcüğün yakınında 32 haneli hex.
+# gitleaks'in sürümü ve dosya özeti sabit; bulunan değer çıktıya yazılmaz (--redact).
+# Paketlere gömülü anahtar olmaması ayrıca ArthurLegal-setup/tests/test_paketler.py'de sınanır.
+#
+# Elle başlatırken (workflow_dispatch) bir commit aralığı verilebilir, ör. "abc123^..abc123".
+# Ağa yalnız gitleaks'i indirmek için çıkar; API anahtarı istemez, Claude kullanmaz.
+
+name: Sır taraması
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      aralik:
+        description: "Taranacak commit aralığı (git log biçimi); boşsa main..HEAD"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sir-taramasi-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tara:
+    name: Sır taraması
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GITLEAKS_SURUM: "8.30.1"
+      GITLEAKS_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
+      - name: gitleaks (sürüm ve özet sabit)
+        run: |
+          set -euo pipefail
+          d="gitleaks_${GITLEAKS_SURUM}_linux_x64.tar.gz"
+          curl -sSfLo "$RUNNER_TEMP/$d" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_SURUM}/$d"
+          echo "${GITLEAKS_SHA256}  $RUNNER_TEMP/$d" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$d" -C "$RUNNER_TEMP" gitleaks
+
+      # Taban: PR'da hedef dalın ucu, push'ta önceki commit; yeni dal, etiket ya da bulunamazsa main.
+      - name: Bu değişikliğin commit'lerini tara
+        env:
+          ELLE: ${{ github.event.inputs.aralik }}
+          TABAN: ${{ github.event.pull_request.base.sha || github.event.before }}
+          UC: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "${ELLE:-}" ]; then
+            ARALIK="$ELLE"
+          elif [ -n "$TABAN" ] && [ "$TABAN" != "0000000000000000000000000000000000000000" ] \
+               && git cat-file -e "${TABAN}^{commit}" 2>/dev/null; then
+            ARALIK="${TABAN}..${UC}"
+          else
+            ARALIK="origin/main..${UC}"
+          fi
+          echo "Taranan aralık: $ARALIK"
+          "$RUNNER_TEMP/gitleaks" git --config .gitleaks.toml --log-opts="$ARALIK" --redact --no-banner --exit-code 1 .

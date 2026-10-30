@@ -1,6 +1,6 @@
 """Paket denetimi testleri (yayin/paket_denetimi.py): depo kökündeki paketlerde yeni kırık skill atfı,
-sürüm ve sayım uyuşmazlığı, paketler arasında yeni ayrışma; ayrıca denetleyicinin kendisi, geçici klasördeki
-küçük uydurma paketlerle. Ağa çıkmaz, birkaç saniyede biter.
+sürüm ve sayım uyuşmazlığı, paketler arasında yeni ayrışma, gömülü API anahtarı; ayrıca denetleyicinin
+kendisi, geçici klasördeki küçük uydurma paketlerle. Ağa çıkmaz, birkaç saniyede biter.
 
     python -m unittest discover -s tests                            (ArthurLegal-setup içinden)
     python -m unittest ArthurLegal-setup/tests/test_paketler.py -v   (depo kökünden)
@@ -10,6 +10,7 @@ Bilinen eski sorunlar tests/paket_denetimi_taban.json'dadır; testler yalnız ta
 import contextlib
 import io
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -94,6 +95,25 @@ class PaketlerTesti(unittest.TestCase):
     def test_yeni_ayrisma_yok(self):
         self.assertFalse(self.rapor.yeni_ayrisma, "Tabanda aynı olan kopyalar artık farklı (değişikliği öteki pakete de "
                                                   "uygulayın; bilinçliyse --taban-yaz):" + satirlar(self.rapor.yeni_ayrisma))
+
+    def test_pakete_anahtar_gomulmez(self):
+        # Paketler ve ortak rehberler kullanıcının bilgisayarına kopyalanır; içlerinde API anahtarı olmaz
+        # (test_eklenti.py'deki eklenti denetiminin paketlerdeki karşılığı). Anahtar gereken kaynak kurulumda
+        # kullanıcıdan istenir ya da hiç kullanılmaz.
+        kokler = sorted(KOK.glob("ArthurLegal-*-v*-Public-Release")) + [KOK / "ArthurLegal-setup" / "ortak-rehberler"]
+        bulunan = []
+        for kok in kokler:
+            for yol in sorted(kok.rglob("*")):
+                if not yol.is_file():
+                    continue
+                try:
+                    metin = yol.read_text(encoding="utf-8")
+                except (UnicodeDecodeError, OSError):
+                    continue
+                if re.search(r"\b[0-9a-f]{32}\b", metin):
+                    bulunan.append(str(yol.relative_to(KOK)))
+        self.assertTrue(kokler[:-1], f"{KOK} altında paket klasörü yok")
+        self.assertEqual(bulunan, [], "32 haneli hex (API anahtarı olabilir):" + satirlar(bulunan))
 
 
 class DenetleyiciTesti(unittest.TestCase):

@@ -1,0 +1,18 @@
+# gitleaks ayarı: varsayılan kurallar + ArthurLegal kuralı (.github/workflows/sir-taramasi.yml kullanır).
+#
+# Varsayılan kurallar bilinen sağlayıcıların biçimlerini tanır (GitHub, AWS, Anthropic...). Bazı API'lerin anahtarı
+# önek taşımayan 32 haneli hex'tir; bunu yalnız yakındaki bir sözcükten tanımak mümkün. Aşağıdaki kural, "Apikey",
+# "API key", "anahtar", "token", "secret", "Authorization" sözcüklerinden sonraki 80 karakter içinde duran tam
+# 32 haneli küçük harf hex'i yakalar. sha256 (64 hane) ve git commit kimliği (40 hane) eşleşmez.
+
+title = "ArthurLegal gitleaks ayarı"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "arthurlegal-hex32-anahtar"
+description = "Bir anahtar sözcüğünün yakınında 32 haneli hex (önek taşımayan API anahtarı)"
+regex = '''(?i)(?:apikey|api[_ -]?key|anahtar|\bkey\b|token|secret|authorization)[^\n]{0,80}?\b([0-9a-f]{32})\b'''
+secretGroup = 1
+keywords = ["key", "anahtar", "token", "secret", "authorization"]
