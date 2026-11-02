@@ -731,6 +731,18 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(self.arac("al_gecmis", islem="kaydet", kayit=dict(kayit, ekran="uyap"))["isError"])
         self.assertTrue(self.arac("al_gecmis", islem="getir", id="../ayar")["isError"])
         self.assertEqual(self.arac("al_gecmis", islem="temizle")["structuredContent"], {"silinen": 1})
+        # Cevap masaya (al_masaya_yaz): sohbet kaydı tam ekran masanın arkasında kalır; sunucu cevabı geri yazmaz.
+        r = self.iste("initialize", {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "t"}})["result"]
+        self.assertIn("al_masaya_yaz", r["instructions"])
+        self.assertEqual(araclar["al_masaya_yaz"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
+        self.assertIn("al_masaya_yaz", masa["yetenekler"])
+        teslim = self.arac("al_masaya_yaz", soru="Kira artışı?", cevap="TBK m. 344 uyarınca")
+        self.assertEqual(teslim["structuredContent"]["bolum"], "cevap")
+        self.assertIn("al_gecmis", teslim["structuredContent"]["yetenekler"], "cevap bu bilgisayardaki geçmişe yazılır")
+        self.assertNotIn("TBK m. 344", teslim["content"][0]["text"])
+        self.assertTrue(self.arac("al_masaya_yaz", soru="s", cevap="")["isError"])
+        bagli = self.arac("al_masasi", baglayicilar=[{"ad": "Gmail"}])["structuredContent"]["baglayicilar"]
+        self.assertEqual(bagli, [{"ad": "Gmail", "durum": "bagli"}])
 
 
 class SaltOkunurTesti(unittest.TestCase):
@@ -1516,7 +1528,8 @@ class ArayuzTesti(unittest.TestCase):
                       "print(json.dumps([s.al_arayuz is not None, [a['name'] for a in s.masa_araclari()], "
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
                       "'_meta' in s.kart_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
-            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_modul_ac", "al_gecmis"], True, True, True])
+            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masaya_yaz", "al_modul_ac", "al_gecmis"],
+                                                        True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
             acilan, _ = self.calistir(t, KisayolTesti.BASLAT)

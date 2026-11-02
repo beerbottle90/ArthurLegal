@@ -437,6 +437,12 @@ def masa_araclari():
                           "required": ["modul"]},
           "annotations": {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}}
     araclar = [masa, ac]
+    # Cevabı masaya teslim (al_masaya_yaz): sohbet kaydı tam ekran masanın arkasında kalır, masa onu okuyamaz.
+    # Eski arayüz kopyasında yoksa eklenmez.
+    if hasattr(al_arayuz, "teslim_araci"):
+        teslim = dict(al_arayuz.teslim_araci())
+        teslim["_meta"] = al_arayuz.arac_meta("al_masaya_yaz")
+        araclar.insert(1, teslim)
     # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "gecmis_araci"):
         araclar.append(al_arayuz.gecmis_araci())
@@ -587,7 +593,8 @@ class Sunucu:
             return {"protocolVersion": istenen if istenen in PROTOKOLLER else PROTOKOLLER[0],
                     "capabilities": yetenek,
                     "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()},
-                    "instructions": TALIMAT + (MASA_TALIMATI if al_arayuz is not None else "")
+                    "instructions": TALIMAT + (MASA_TALIMATI + (" " + al_arayuz.TESLIM_KURALI if hasattr(al_arayuz, "TESLIM_KURALI") else "")
+                                               if al_arayuz is not None else "")
                                     + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")}
         if metod == "ping":
             return {}
@@ -626,13 +633,27 @@ class Sunucu:
             self._gorunum_onbellek = al_arayuz.kaynaklar()
         return self._gorunum_onbellek
 
-    def _masa(self, a):
+    def _masa_verisi(self, a):
         yetenekler = [t["name"] for t in (self.uzak_araclar or []) if t.get("name") in MASA_UZAK] + ["al_modul_ac"]
         if hasattr(al_arayuz, "Gecmis"):
             yetenekler.append("al_gecmis")
         if ortak.hafiza_acik():
             yetenekler += [t["name"] for t in hafiza.araclar()]
-        veri = al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"))
+        if not hasattr(al_arayuz, "teslim_araci"):  # eski arayüz kopyası: teslim ve bağlayıcı listesi yok
+            return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"))
+        yetenekler.append("al_masaya_yaz")
+        return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"))
+
+    def _masa(self, a):
+        veri = self._masa_verisi(a)
+        return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+
+    def _teslim(self, a):
+        """al_masaya_yaz: cevap masada açılır; sunucu cevabı saklamaz ve geri yazmaz, masanın durumunu döndürür."""
+        try:
+            veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
+        except ValueError as e:  # TeslimHatasi
+            return {"content": [{"type": "text", "text": str(e)}], "isError": True}
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
     def _modul_ac(self, a):
@@ -652,6 +673,8 @@ class Sunucu:
             return self._masa(a)
         if al_arayuz is not None and ad == "al_modul_ac":
             return self._modul_ac(a)
+        if al_arayuz is not None and ad == "al_masaya_yaz" and hasattr(al_arayuz, "teslim_araci"):
+            return self._teslim(a)
         if al_arayuz is not None and ad == "al_gecmis" and hasattr(al_arayuz, "Gecmis"):
             try:
                 veri = masa_gecmisi().cagir(a)

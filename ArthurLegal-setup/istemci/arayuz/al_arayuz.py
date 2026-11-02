@@ -8,11 +8,14 @@ yalnız standart kütüphaneyle çalışır.
 - ``kaynaklar()``: her ``ui://`` görünümü, MCP ``resources/list`` ve ``resources/read`` için.
 - ``arac_meta(ad)``: aracın görünümü varsa ``_meta``; host o aracın sonucunu görünümle çizer.
 - ``masa_araci()``: ``al_masasi`` aracının tanımı. Cevabı ``masa_cevabi(...)`` kurar.
+- ``teslim_araci()``: ``al_masaya_yaz``; Claude sohbet kutusuna yazılan sorunun cevabını masaya teslim eder.
+  Cevabı ``teslim_cevabi(girdi, masa)`` kurar; masa cevabı araç girdisinden (yazıldıkça) okur, sunucu saklamaz.
 - ``gecmis_araci()`` ve ``Gecmis(klasor)``: masa geçmişi (``al_gecmis``). Yalnız yerel AL sunucusu klasör
   verir; uzak uç geçmiş tutmaz, masa orada oturumluk listeyle çalışır.
 
 Görünümler ``ortak/gorunumler/*.html`` şablonlarıdır. Ortak tasarım ve kod tek geçişte gömülür:
-``/*AL:CSS*/`` ``/*AL:JS*/`` ``/*AL:KARTLAR*/`` ``/*AL:ATIF*/`` ``<!--AL:ARMA-->`` ``<!--AL:DONNA-->``.
+``/*AL:CSS*/`` ``/*AL:JS*/`` ``/*AL:KARTLAR*/`` ``/*AL:ATIF*/`` ``/*AL:ISTEK*/`` ``/*AL:MD*/`` ``<!--AL:ARMA-->``
+``<!--AL:DONNA-->``.
 Gömülen içerik yeniden taranmaz; bir dosyanın kendi yorumunda yer tutucu adı geçse de bozulmaz.
 """
 from __future__ import annotations
@@ -25,7 +28,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.0.5"
+SURUM = "3.0.6"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -54,6 +57,7 @@ ARAC_GORUNUMU = {
     "tr_mevzuat_madde_getir": "ui://arthurlegal/madde-karti.html",
     "tr_ictihat_ara": "ui://arthurlegal/ictihat-karti.html",
     "al_masasi": "ui://arthurlegal/masa.html",
+    "al_masaya_yaz": "ui://arthurlegal/masa.html",
 }
 
 _PARCALAR = {
@@ -62,13 +66,14 @@ _PARCALAR = {
     "KARTLAR": ("tasarim", "kartlar.js"),
     "ATIF": ("tasarim", "atif.js"),
     "ISTEK": ("tasarim", "istek.js"),
+    "MD": ("tasarim", "md.js"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }
 _YER_TUTUCU = re.compile(r"/\*AL:([A-Z]+)\*/|<!--AL:([A-Z]+)-->")
 
 # Masanın ekranları; al_masasi(bolum=...) bunlardan biriyle açılır.
-EKRANLAR = ("sohbet", "mevzuat", "ictihat", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
+EKRANLAR = ("sohbet", "cevap", "mevzuat", "ictihat", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
 
 
 def _oku(*yol: str) -> str:
@@ -117,7 +122,8 @@ def masa_araci() -> Dict[str, Any]:
             "ArthurLegal Masası'nı açar: mevzuat ve atıf teyidi, içtihat, ArthurTapu, Beyin (hafıza), "
             "Arthur Mask, UYAP Dashboard, Donna ve kaynak durumu tek panelde. Kullanıcı 'ArthurLegal'i aç', "
             "'masayı aç', 'AL Masası' ya da bir modülün adını söyleyip onu açmak istediğinde çağırın. "
-            "bolum ile belirli bir ekranda açılır."
+            "bolum ile belirli bir ekranda açılır. Her açılışta baglayicilar'ı doldurun: masa MCP'ler ekranında "
+            "kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."
         ),
         "inputSchema": {
             "type": "object",
@@ -126,32 +132,153 @@ def masa_araci() -> Dict[str, Any]:
                           "description": "Açılış ekranı; boşsa sohbet."},
                 "tam_ekran": {"type": "boolean", "default": True,
                               "description": "Masa tam ekran açılmayı istesin mi."},
+                "baglayicilar": {
+                    "type": "array", "maxItems": BAGLAYICI_AZAMI,
+                    "description": (
+                        "Bu sohbette erişebildiğiniz MCP sunucuları ve Claude bağlayıcıları (Gmail, Google Calendar, "
+                        "Slack, ArthurTapu ...): her sunucu bir kez, araç adı değil sunucunun adı. Giriş isteyen ya da "
+                        "hata veren sunucuyu o durumla yazın. Bilmiyorsanız boş bırakın, uydurmayın."),
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "ad": {"type": "string"},
+                            "durum": {"type": "string", "enum": list(BAGLAYICI_DURUMLARI), "default": "bagli"},
+                        },
+                        "required": ["ad"],
+                    },
+                },
             },
         },
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False},
     }
 
 
+# Claude'un bildirdiği bağlı sunucular (MCP'ler ekranı). Masa bu listeyi ev sahibinden alamaz, yalnız Claude bilir.
+BAGLAYICI_AZAMI = 60
+BAGLAYICI_DURUMLARI = ("bagli", "giris-gerekli", "hata")
+
+
+def baglayicilari_duzenle(liste: Any) -> List[Dict[str, str]]:
+    """Tekil ad (büyük/küçük harf ve Türkçe harf farkı gözetilmez), bilinen durum, sınırlı uzunluk; bozuk öğe atlanır."""
+    out: List[Dict[str, str]] = []
+    gorulen = set()
+    for o in liste if isinstance(liste, list) else []:
+        if isinstance(o, str):
+            o = {"ad": o}
+        if not isinstance(o, dict):
+            continue
+        ad = _kisalt(o.get("ad"), 80)
+        if not ad or _katla(ad) in gorulen:
+            continue
+        gorulen.add(_katla(ad))
+        out.append({"ad": ad, "durum": o.get("durum") if o.get("durum") in BAGLAYICI_DURUMLARI else "bagli"})
+        if len(out) >= BAGLAYICI_AZAMI:
+            break
+    return out
+
+
+# Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı cevabı ancak masada okur.
+TESLIM_KURALI = (
+    "Masa ekranda açıkken (masa bunu her mesajda 'ArthurLegal Masası: ekranda açık' notuyla bildirir) kullanıcının "
+    "sorusunu cevaplayınca cevabı al_masaya_yaz ile masaya teslim edin: araştırmayı bitirince bir kez çağırın; "
+    "cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' yazın.")
+
+
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
-                bolum: Optional[str] = None) -> Dict[str, Any]:
+                bolum: Optional[str] = None, baglayicilar: Any = None) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
     moduller: {"tapu": {"durum": "hazir" | "claude" | "masaustu" | "kurulu-degil"}, ...}
+    baglayicilar: Claude'un bildirdiği bağlı sunucular (al_masasi girdisi); verilmediyse alan yok.
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
         "ortam": ortam,
         "yetenekler": sorted(set(yetenekler)),
         "moduller": moduller,
-        "not": ("Masa açıldı. Kullanıcı masada çalışırken yaptığı işi size ArthurLegal Masası notlarıyla "
-                "bildirir; masa kendi başına size bir şey göndermez."),
+        "not": "Masa açıldı. Kullanıcı masada çalışırken yaptığı işi size ArthurLegal Masası notlarıyla bildirir.",
     }
+    # Teslim aracı olmayan uçta (Claude dizini profili) kural söylenmez; cevap sohbette kalır.
+    if "al_masaya_yaz" in out["yetenekler"]:
+        out["not"] = "Masa açıldı. " + TESLIM_KURALI + out["not"][len("Masa açıldı."):]
+    if baglayicilar is not None:
+        out["baglayicilar"] = baglayicilari_duzenle(baglayicilar)
     if "al_gecmis" in out["yetenekler"]:
         out["not"] += (" Masadaki işlerin geçmişi (%d gün, o anki sonuçlarıyla) bu bilgisayarda tutulur; kullanıcı "
                        "masada daha önce baktığı bir şeyi sorarsa al_gecmis ile bakabilirsiniz." % GECMIS_GUN)
     if bolum in EKRANLAR:
         out["bolum"] = bolum
+    return out
+
+
+# --------------------------------------------------------------------------- cevabı masaya teslim
+# Masa yalnız kendi aracının girdisini görür; sohbete yazılan cevabı okuyamaz. Claude cevabı bu araçla verir, ev sahibi
+# masayı aracın girdisiyle (yazıldıkça, parça parça) yeni bir pencerede açar. Sunucu cevabı saklamaz ve geri yazmaz.
+class TeslimHatasi(ValueError):
+    """Eksik ya da bozuk teslim; çağıran isError olarak döndürür."""
+
+
+def teslim_araci() -> Dict[str, Any]:
+    # Özellik sırası akışı belirler: soru ve adımlar cevaptan önce yazılır, masa onları önce gösterir.
+    adim = {"type": "object", "properties": {
+        "durum": {"type": "string", "enum": list(_GECMIS_ADIM), "default": "tamam"},
+        "metin": {"type": "string"}}, "required": ["metin"]}
+    kaynak = {"type": "object", "properties": {
+        "baslik": {"type": "string"},
+        "atif": {"type": "string", "description": "Araç yanıtındaki citation, birebir."},
+        "url": {"type": "string", "description": "Araç yanıtındaki source_url, birebir; yoksa boş."}},
+        "required": ["baslik"]}
+    return {
+        "name": "al_masaya_yaz",
+        "title": "Cevabı ArthurLegal Masası'na yaz",
+        "description": (
+            "ArthurLegal Masası ekranda açıkken (masa her mesajda 'ArthurLegal Masası: ekranda açık' notunu gönderir) "
+            "kullanıcının sorusuna verdiğiniz cevabı masaya teslim eder. Masa cevabı Cevap ekranında, yaptığınız "
+            "adımlar ve kaynaklarla gösterir; cevaptaki kanun maddesi atıflarını resmî metinden kendisi teyit eder. "
+            "Araştırmayı bitirince bir kez çağırın; cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' "
+            "yazın. Masa açık değilse çağırmayın, cevabı sohbette verin."),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."},
+                "adimlar": {"type": "array", "items": adim, "maxItems": 30, "description": (
+                    "Cevabı hazırlarken yaptıklarınız, sırayla ve kısa: hangi kaynağa baktınız, ne buldunuz "
+                    "(ör. 'TBK m. 344 resmî metinden getirildi', 'Yargıtay'da 12 karar tarandı, 3'ü ilgili'). "
+                    "Veri çekilemeyen adım hata ya da uyar.")},
+                "cevap": {"type": "string", "description": (
+                    "Cevabın tamamı, Markdown: ## başlık, madde işaretli ve numaralı liste, **kalın**, tablo, > alıntı. "
+                    "Atıfları araç yanıtındaki citation ile birebir yazın; veri çekilemediyse UYARI satırını koyun.")},
+                "kaynaklar": {"type": "array", "items": kaynak, "maxItems": 40, "description": (
+                    "Dayandığınız mevzuat ve kararlar. Bağlantı uydurmayın.")},
+            },
+            "required": ["soru", "cevap"],
+        },
+        "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True,
+                        "openWorldHint": False},
+    }
+
+
+def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]:
+    """al_masaya_yaz'ın cevabı: masanın durumu (masa_cevabi, Cevap ekranında) ve kısa teslim özeti.
+
+    Cevap metni geri yazılmaz: masa onu araç girdisinden okur, Claude'un bağlamı ikinci kez dolmaz.
+    """
+    soru, cevap = girdi.get("soru"), girdi.get("cevap")
+    if not isinstance(cevap, str) or not cevap.strip():
+        raise TeslimHatasi("cevap boş olamaz: cevabın tamamını Markdown olarak yazın.")
+    if soru is not None and not isinstance(soru, str):
+        raise TeslimHatasi("soru metin olmalı.")
+    for alan in ("adimlar", "kaynaklar"):
+        if girdi.get(alan) is not None and not isinstance(girdi.get(alan), list):
+            raise TeslimHatasi("%s bir liste olmalı." % alan)
+    out = dict(masa)
+    out["bolum"] = "cevap"
+    out["teslim"] = {"soru": _kisalt(soru, 200), "karakter": len(cevap),
+                     "adim": len(girdi.get("adimlar") or []), "kaynak": len(girdi.get("kaynaklar") or [])}
+    out["not"] = ("Cevap masada gösterildi. Sohbete yalnız 'Cevap masada.' yazın, cevabı yinelemeyin. Masa cevaptaki "
+                  "madde atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa "
+                  "notuyla bildirir.")
     return out
 
 
@@ -162,7 +289,7 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
 GECMIS_GUN = 90
 GECMIS_AZAMI = 2000
 GECMIS_KATEGORILER = ("mevzuat", "ictihat", "atif", "claude")
-GECMIS_TURLERI = ("mevzuat-liste", "kurum", "madde", "atif", "ictihat", "claude")
+GECMIS_TURLERI = ("mevzuat-liste", "kurum", "madde", "atif", "ictihat", "claude", "cevap")
 _GECMIS_ADIM = ("tamam", "uyar", "hata")
 _GECMIS_KAYIT_SINIRI = 600_000   # bayt; anlık sonuç bundan büyükse kayıt sonuçsuz saklanır
 _GECMIS_SORGU_SINIRI = 20_000
@@ -180,8 +307,8 @@ def gecmis_araci() -> Dict[str, Any]:
         "title": "ArthurLegal Masası geçmişi",
         "description": (
             "ArthurLegal Masası'nda yapılan işlerin bu bilgisayardaki geçmişi (%d gün): mevzuat ve kurum kararı "
-            "aramaları, getirilen maddeler, içtihat aramaları, atıf teyitleri ve masadan Claude'a gönderilen "
-            "istekler, o anki sonuçlarıyla. islem: listele (kategori, ara), getir (id), kaydet (kayit; masa "
+            "aramaları, getirilen maddeler, içtihat aramaları, atıf teyitleri, masadan Claude'a gönderilen "
+            "istekler ve masaya teslim edilen cevaplar, o anki sonuçlarıyla. islem: listele (kategori, ara), getir (id), kaydet (kayit; masa "
             "kullanır), sil (id), temizle. Kullanıcı masada daha önce baktığı bir şeyi sorarsa listele ve getir "
             "ile bakın; kayıttaki sonuç o günkü haldir, güncel hali için kaynağı yeniden sorgulayın. kaydet, sil ve "
             "temizle'yi yalnız kullanıcı isterse çağırın." % GECMIS_GUN),

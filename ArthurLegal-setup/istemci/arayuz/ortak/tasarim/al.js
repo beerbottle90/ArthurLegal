@@ -7,7 +7,7 @@
 const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
   const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";
-  const SURUM = "3.0.5";
+  const SURUM = "3.0.6";
   const NS = "http://www.w3.org/2000/svg";
 
   // 16x16 çizgi simgeleri; tek kalınlık, tek köşe biçimi.
@@ -39,6 +39,10 @@ const AL = (() => {
     sil: [["path", { d: "M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.4a1 1 0 0 0 1 .9h3.8a1 1 0 0 0 1-.9l.6-8.4" }]],
     yenile: [["path", { d: "M13 8a5 5 0 1 1-1.5-3.5M13 2.5V5h-2.5" }]],
     geri: [["path", { d: "M10 3.5 5.5 8l4.5 4.5" }]],
+    cevap: [["path", { d: "M2.5 4A1.5 1.5 0 0 1 4 2.5h8A1.5 1.5 0 0 1 13.5 4v5.5A1.5 1.5 0 0 1 12 11H6.5l-3 2.5V11A1.5 1.5 0 0 1 2.5 9.5z" }],
+            ["path", { d: "M5.5 5.5h5M5.5 8h3" }]],
+    posta: [["rect", { x: 2, y: 3.5, width: 12, height: 9, rx: 1.5 }], ["path", { d: "M2.5 4.5 8 8.5l5.5-4" }]],
+    takvim: [["rect", { x: 2.5, y: 3.5, width: 11, height: 10, rx: 1.5 }], ["path", { d: "M2.5 6.5h11M5.5 2v3M10.5 2v3" }]],
   };
 
   function ikon(ad) {
