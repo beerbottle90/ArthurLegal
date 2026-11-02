@@ -390,10 +390,11 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
 olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
 Geçmiş, ArthurTapu, Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
-Claude'un kendi yazma kutusu; oraya yazdığınız sorunun cevabı da masada açılır. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
+Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araştırma ve cevap masada canlı görünür. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
-- **Cevap masada.** Claude'un yazma kutusuna yazdığınız sorunun cevabı masanın Sohbet ekranında, Claude yazdıkça
-  açılır: yapılan adımlar, biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
+- **Soru, her adım ve cevap masada canlı.** Claude'un yazma kutusuna yazdığınız soru hemen masanın Sohbet ekranına
+  gelir; Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç; madde ya da karar listesi satırın
+  altında açılır). Cevap aynı yerde, Claude yazdıkça açılır: biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
   teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
   masadan sorarsınız; cevaplar bu bilgisayardaki Geçmiş'te 90 gün durur. Masa her açılışta Sohbet'le başlar; öneri
   kartları cevabın altında durur.
@@ -425,7 +426,7 @@ Claude'un kendi yazma kutusu; oraya yazdığınız sorunun cevabı da masada aç
 **English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
 desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
 citations, case law, history, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and connected servers), the
-steps of the current task in the middle, Claude's own message box at the bottom. Ask in that box and the answer opens on the desk: the steps taken, the answer and its sources, with every article citation in it checked against the official text. It runs on your own Claude plan;
+steps of the current task in the middle, Claude's own message box at the bottom. Type only your question in that box: the question, every source Claude checks (a live line each) and the answer appear on the desk, with every article citation in the answer checked against the official text. It runs on your own Claude plan;
 no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
 acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
 official text. Paste a draft to check every article citation in it against the official text
