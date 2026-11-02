@@ -384,18 +384,19 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 <h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
 
 <p align="center">
-  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Cevap ekranı: Claude'un yazma kutusuna yazılan sorunun cevabı masada; soru, yapılan adımlar ve TBK m. 344-345'e dayanan cevap. Solda Sohbet, Cevap, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
+  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan sorunun cevabı masada; soru, yapılan adımlar ve TBK m. 344-345'e dayanan cevap. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
-olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Cevap, Mevzuat ve kararlar, İçtihat,
+olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
 Geçmiş, ArthurTapu, Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
 Claude'un kendi yazma kutusu; oraya yazdığınız sorunun cevabı da masada açılır. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
-- **Cevap masada.** Claude'un yazma kutusuna yazdığınız sorunun cevabı masanın Cevap ekranında, Claude yazdıkça
+- **Cevap masada.** Claude'un yazma kutusuna yazdığınız sorunun cevabı masanın Sohbet ekranında, Claude yazdıkça
   açılır: yapılan adımlar, biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
   teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
-  masadan sorarsınız; cevaplar bu bilgisayardaki Geçmiş'te 90 gün durur.
+  masadan sorarsınız; cevaplar bu bilgisayardaki Geçmiş'te 90 gün durur. Masa her açılışta Sohbet'le başlar; öneri
+  kartları cevabın altında durur.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
   kanun" yazın; masa isteği çözer (kurum, kaç tane, piyasa ya da karar türü, yıl, konu) ve ilk satırda ne aradığını
@@ -422,7 +423,7 @@ Claude'un kendi yazma kutusu; oraya yazdığınız sorunun cevabı da masada aç
 </p>
 
 **English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
-desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, answer, legislation and
+desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
 citations, case law, history, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and connected servers), the
 steps of the current task in the middle, Claude's own message box at the bottom. Ask in that box and the answer opens on the desk: the steps taken, the answer and its sources, with every article citation in it checked against the official text. It runs on your own Claude plan;
 no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
@@ -653,9 +654,10 @@ justify building an MCP server, and which already have a good enough public API.
 
 - **Answers on the desk.** With the desk open full screen the chat transcript sits behind it, so a question typed in
   Claude's message box brought cards onto the screen but not the answer. Claude now hands its answer to the desk: the
-  new **Answer** screen shows the question, the steps taken, the answer as it is being written and its sources. Every
+  **Chat** screen shows the question, the steps taken, the answer as it is being written and its sources. Every
   statutory citation in the answer is checked against the official text; one that cannot be verified is flagged and
-  reported back to Claude. Copy the answer in one click or ask a follow-up from the desk. Answers are kept in the desk
+  reported back to Claude. Copy the answer in one click or ask a follow-up from the desk; the suggestions stay below the answer and the desk
+  always opens on Chat. Answers are kept in the desk
   history on this computer (90 days); on the web and phone for the session only. The research connector has the
   matching tool (`al_masaya_yaz`, 125 tools); the Claude directory profile is unchanged.
 - **MCP screen.** Connected servers and their status instead of tools and sources: ArthurLegal (research, ArthurTapu,
@@ -666,18 +668,18 @@ justify building an MCP server, and which already have a good enough public API.
   fields that transaction needs, pre-fills what the parcel record gives (the parcel's character selects the
   independent-unit row; the district keys the local coefficient remembered in this browser) and shows the result in
   one table.
-- The user guide (PDF) and the start page describe the Answer screen. Packages keep their versions (Law Firm and
+- The user guide (PDF) and the start page describe answers on the desk. Packages keep their versions (Law Firm and
   Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin 1.12.8.
 
-**Türkçe:** Masa tam ekrandayken Claude'un yazma kutusuna yazılan sorunun cevabı artık masada: yeni **Cevap** ekranı
+**Türkçe:** Masa tam ekrandayken Claude'un yazma kutusuna yazılan sorunun cevabı artık masada: **Sohbet** ekranı
 soruyu, yapılan adımları, Claude yazdıkça cevabı ve kaynakları gösterir; cevaptaki madde atıfları resmî metinden
 teyit edilir, doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevap tek tuşla kopyalanır, devam sorusu
-masadan sorulur. Cevaplar bu bilgisayardaki Geçmiş'te 90 gün, web ve telefonda oturum boyunca durur. Araştırma
+masadan sorulur; öneriler cevabın altında durur ve masa hep Sohbet'le açılır. Cevaplar bu bilgisayardaki Geçmiş'te 90 gün, web ve telefonda oturum boyunca durur. Araştırma
 bağlantısında karşılığı olan araç (`al_masaya_yaz`, 125 araç); Claude dizini sürümü değişmedi. **MCP'ler** ekranı
 araçlar yerine bağlı sunucuları ve durumlarını gösterir: ArthurLegal ve Claude bağlayıcılarınız (Gmail, Takvim,
 Slack ...); **Bağlayıcıları yönet** ve **Bağla** Claude'un bağlayıcı ekranını açar. **ArthurTapu 0.6.1:** harç
 kartında kod yerine işlem seçilir, yalnız o işlemin istediği kutular görünür, tapudan gelen bilgi önden dolar, sonuç
-tek tabloda. Kullanıcı rehberi (PDF) ve başlangıç sayfası Cevap ekranını anlatır. Paket sürümleri aynı; Claude
+tek tabloda. Kullanıcı rehberi (PDF) ve başlangıç sayfası cevabın masada açılmasını anlatır. Paket sürümleri aynı; Claude
 eklentisi 1.12.8.
 
 ## Setup 3.0.5 — Desk history; ArthurTapu estimated 3D view; refreshed brand colors (2026-10-30)

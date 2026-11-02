@@ -73,7 +73,7 @@ _PARCALAR = {
 _YER_TUTUCU = re.compile(r"/\*AL:([A-Z]+)\*/|<!--AL:([A-Z]+)-->")
 
 # Masanın ekranları; al_masasi(bolum=...) bunlardan biriyle açılır.
-EKRANLAR = ("sohbet", "cevap", "mevzuat", "ictihat", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
+EKRANLAR = ("sohbet", "mevzuat", "ictihat", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
 
 
 def _oku(*yol: str) -> str:
@@ -234,7 +234,7 @@ def teslim_araci() -> Dict[str, Any]:
         "title": "Cevabı ArthurLegal Masası'na yaz",
         "description": (
             "ArthurLegal Masası ekranda açıkken (masa her mesajda 'ArthurLegal Masası: ekranda açık' notunu gönderir) "
-            "kullanıcının sorusuna verdiğiniz cevabı masaya teslim eder. Masa cevabı Cevap ekranında, yaptığınız "
+            "kullanıcının sorusuna verdiğiniz cevabı masaya teslim eder. Masa cevabı Sohbet ekranında, yaptığınız "
             "adımlar ve kaynaklarla gösterir; cevaptaki kanun maddesi atıflarını resmî metinden kendisi teyit eder. "
             "Araştırmayı bitirince bir kez çağırın; cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' "
             "yazın. Masa açık değilse çağırmayın, cevabı sohbette verin."),
@@ -260,7 +260,7 @@ def teslim_araci() -> Dict[str, Any]:
 
 
 def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]:
-    """al_masaya_yaz'ın cevabı: masanın durumu (masa_cevabi, Cevap ekranında) ve kısa teslim özeti.
+    """al_masaya_yaz'ın cevabı: masanın durumu (masa_cevabi, Sohbet ekranında) ve kısa teslim özeti.
 
     Cevap metni geri yazılmaz: masa onu araç girdisinden okur, Claude'un bağlamı ikinci kez dolmaz.
     """
@@ -273,7 +273,7 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]
         if girdi.get(alan) is not None and not isinstance(girdi.get(alan), list):
             raise TeslimHatasi("%s bir liste olmalı." % alan)
     out = dict(masa)
-    out["bolum"] = "cevap"
+    out["bolum"] = "sohbet"
     out["teslim"] = {"soru": _kisalt(soru, 200), "karakter": len(cevap),
                      "adim": len(girdi.get("adimlar") or []), "kaynak": len(girdi.get("kaynaklar") or [])}
     out["not"] = ("Cevap masada gösterildi. Sohbete yalnız 'Cevap masada.' yazın, cevabı yinelemeyin. Masa cevaptaki "
