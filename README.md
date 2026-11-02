@@ -396,7 +396,7 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
   gelir; Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç; madde ya da karar listesi satırın
   altında açılır). Cevap aynı yerde, Claude yazdıkça açılır: biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
   teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
-  masadan sorarsınız; cevaplar bu bilgisayardaki Geçmiş'te 90 gün durur. Masa her açılışta Sohbet'le başlar; öneri
+  masadan sorarsınız; cevaplar ve aramalar Geçmiş'te 90 gün durur (kurulumla bu bilgisayarın diskinde, uzak bağlantıda bu cihazda), yeni sohbette ve güncellemede de. Masa her açılışta Sohbet'le başlar; öneri
   kartları cevabın altında durur.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
@@ -650,6 +650,25 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.8 — Desk history that stays (2026-11-02)
+
+- **History stays.** When the desk came from the remote connector (the web, the phone, or the remote ArthurLegal
+  connector in Claude Desktop), its history lived only in the open window, so it was gone in every new chat. Now the
+  desk keeps it for 90 days in its own storage on the device; it stays across chats, when Claude is reopened and when
+  ArthurLegal is updated, and nothing is written to a server. With the ArthurLegal install the history stays on this
+  computer's disk as before. UYAP work is never recorded.
+- **Recent work** under the Chat screen replaces "This session": the last six jobs from history, also in a new chat;
+  everything else is on the History page.
+- Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin
+  1.12.8. The research connector is 1.8.1 (desk copy only).
+
+**Türkçe:** Masa uzak bağlantıdan (web, telefon ya da Claude Desktop'taki uzak ArthurLegal bağlayıcısı) açıldığında
+geçmiş yalnız açık pencerede duruyor, her yeni sohbette kayboluyordu. Artık masa geçmişi 90 gün boyunca bu cihazdaki
+kendi deposunda tutar: yeni sohbette, Claude yeniden açıldığında ve ArthurLegal güncellendiğinde de durur; hiçbir
+sunucuya yazılmaz. Kurulumla gelen masada geçmiş eskisi gibi bu bilgisayarın diskinde. UYAP işleri yazılmaz. Sohbet
+ekranının altında "Bu oturumda" yerine **Son işler**: geçmişten son altı iş, yeni sohbette de; tamamı Geçmiş
+sayfasında. Paket sürümleri aynı; Claude eklentisi 1.12.8.
 
 ## Setup 3.0.7 — The question, every step and the answer live on the desk (2026-11-02)
 

@@ -321,6 +321,8 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 .sunucu .rozet { flex: none; }
 @media (prefers-reduced-motion: reduce) { .yaziyor::before { animation: none; } }
 /* Çalışma adımları: kartlı adımın sonucu satırın altında açılır */
+.son-is-ust { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.son-is-zaman { color: var(--soluk); font-size: 12px; white-space: nowrap; }
 .adim .sonuc-ac { margin-left: auto; min-height: 24px; padding: 0 10px; font-size: 12px; flex: none; }
 .adim-sonuc { margin: 6px 0 8px 24px; }
 /* Masa açılmamış sohbette araç penceresi: kart ya da tek satırlık adım şeridi */
@@ -445,19 +447,76 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
   }
 
-  // Geçmiş: oturum listesi (GECMIS) her yerde; kalıcı kayıt yalnız yerel AL sunucusu al_gecmis verdiyse (bu
-  // bilgisayarda, 90 gün). Uzak uçta iş hiçbir sunucuya yazılmaz. kayit: { kategori, tur, sorgu, anlik, ekran? }.
+  // Geçmiş oturumdan ve ArthurLegal sürümünden bağımsızdır, 90 gün durur ve hiçbir sunucuya yazılmaz. Kalıcı depo:
+  //  - disk: yerel AL sunucusu al_gecmis veriyorsa bu bilgisayarın diski (veri/masa-gecmisi, sürüm klasörünün dışında);
+  //  - cihaz: yoksa (uzak bağlantı: Claude Desktop'taki uzak bağlayıcı, web, telefon) masanın bu cihazdaki tarayıcı
+  //    deposu. Ev sahibi masa pencerelerine bağlantı başına sabit bir köken verir: depo yeni sohbette, Claude yeniden
+  //    açılınca ve masa güncellenince de durur; başka cihazda görünmez;
+  //  - pencere: depo kapalıysa (gizli pencere, yalıtılmış çerçeve) liste yalnız bu pencere açıkken (GECMIS).
+  // Kayıt biçimi ikisinde aynıdır: { id, zaman, ekran, kategori, tur, baslik, adimlar, sorgu, anlik }.
+  // kayit: { kategori, tur, sorgu, anlik, ekran? }. UYAP işleri hiçbir depoya yazılmaz.
   const gecmisKalici = () => DURUM.yetenekler.has("al_gecmis");
+  const CIHAZ_GECMISI = "al.masa.gecmis";
+  const GECMIS_GUN = 90;
+  const CIHAZ_AZAMI = 300;           // kayıt
+  const CIHAZ_SINIRI = 2000000;      // karakter: tarayıcı deposu köken başına ~5 MB, masanın öteki kayıtlarına yer kalır
+  const ANLIK_SINIRI = 200000;       // tek kaydın o günkü sonucu; aşarsa kayıt sonuçsuz saklanır (disktekiyle aynı ilke)
+  const GECMIS_KIMLIGI = /^\d{8}-\d{6}-[0-9a-f]{6}$/;
+  const iki = (n) => String(n).padStart(2, "0");
+  const zamanKimligi = (d) => `${d.getFullYear()}${iki(d.getMonth() + 1)}${iki(d.getDate())}-` +
+    `${iki(d.getHours())}${iki(d.getMinutes())}${iki(d.getSeconds())}`;
+  function gecmisKimligi(d) {
+    const r = new Uint8Array(3);
+    try { crypto.getRandomValues(r); } catch { r.forEach((_, i) => { r[i] = Math.floor(Math.random() * 256); }); }
+    return zamanKimligi(d) + "-" + [...r].map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  // Cihaz deposundaki kayıtlar, en yeni önce; süresi dolan ve bozuk kayıt atlanır. Depo kullanılamıyorsa null.
+  function cihazGecmisi() {
+    try {
+      const d = JSON.parse(localStorage.getItem(CIHAZ_GECMISI) || "null");
+      const sinir = zamanKimligi(new Date(Date.now() - GECMIS_GUN * 86400000));
+      return (d && Array.isArray(d.kayitlar) ? d.kayitlar : [])
+        .filter((k) => k && typeof k === "object" && GECMIS_KIMLIGI.test(String(k.id)) && k.id.slice(0, 15) >= sinir &&
+          typeof k.baslik === "string");
+    } catch { return null; }
+  }
+
+  // Sınırı aşan ya da depoya sığmayan en eski kayıtlar bırakılır.
+  function cihazaYaz(kayitlar) {
+    let liste = kayitlar.slice(0, CIHAZ_AZAMI);
+    for (;;) {
+      const metin = JSON.stringify({ surum: 1, kayitlar: liste });
+      if (metin.length <= CIHAZ_SINIRI) {
+        try { localStorage.setItem(CIHAZ_GECMISI, metin); return true; } catch { if (!liste.length) return false; }
+      }
+      liste = liste.slice(0, -1);
+    }
+  }
+
+  const gecmisDeposu = () => (gecmisKalici() ? "disk" : cihazGecmisi() ? "cihaz" : "pencere");
+
   function gecmiseEkle(soru, adimlar, kayit = null) {
     const { ekran = aktif, ...geri } = kayit || {};
-    const g = { soru, adimlar, saat: new Date(), ekran, ...geri };
+    const saat = new Date();
+    const g = { soru, adimlar, saat, ekran, ...geri };
     GECMIS.unshift(g);
     if (GECMIS.length > 50) GECMIS.pop();
-    if (kayit && gecmisKalici()) {
+    if (!kayit || ekran === "uyap") return;
+    if (gecmisKalici()) {
       cagir(app, "al_gecmis", { islem: "kaydet", kayit: { ekran, baslik: soru, adimlar, ...geri } })
         .then(({ veri }) => { if (veri && veri.id) g.id = veri.id; })
         .catch(() => { /* geçmiş yazılamadıysa iş yine ekranda */ });
+      return;
     }
+    const onceki = cihazGecmisi();
+    if (!onceki) return;
+    const tam = { id: gecmisKimligi(saat), zaman: saat.toISOString(), ekran, kategori: geri.kategori || "claude",
+      tur: geri.tur || "claude", baslik: String(soru || "").slice(0, 300),
+      adimlar: (adimlar || []).slice(0, 10).map(([t, m]) => [t, String(m || "").slice(0, 300)]),
+      sorgu: geri.sorgu ?? null, anlik: geri.anlik ?? null };
+    if (JSON.stringify(tam.anlik).length > ANLIK_SINIRI) { tam.anlik = null; tam.anlik_kesildi = true; }
+    if (cihazaYaz([tam, ...onceki])) g.id = tam.id;
   }
 
   // ---------------------------------------------------------------- iskelet
@@ -635,37 +694,71 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     } else ekran.append(izgara);
 
     const kesit = ogesi("div", "kesit");
-    kesit.append(ogesi("h3", null, "Bu oturumda"));
-    // Yukarıda açık olan cevap listede yinelenmez.
-    const oturum = GECMIS.slice(0, 20).filter((g) => !(c && g.tur === "cevap" && g.anlik && g.anlik.cevap === c.cevap));
-    if (!oturum.length) {
-      kesit.append(ogesi("div", "bos", c ? "Bu oturumda başka iş yok." : "Henüz bir iş yok. Bir kart seçin ya da sorunuzu aşağıdaki kutuya yazın; yaptığınız işler adımlarıyla burada birikir."));
-    } else {
-      const akis = ogesi("div", "akis");
-      for (const g of oturum) {
-        const o = ogesi("div", "akis-ogesi");
-        o.append(ogesi("div", "balon", g.soru));
-        const ad = ogesi("div", "adimlar");
-        for (const [tur, metin] of g.adimlar) ad.append(adimSatiri(tur, metin));
-        o.append(ad);
-        if (g.tur === "cevap" && g.anlik) {
-          const ac = dugme("Cevabı aç", { sinif: "kucuk", simge: "cevap" });
-          ac.onclick = () => { acikCevap = cevapKaydindan(g); git("sohbet"); scrollTo(0, 0); };
-          const ey = ogesi("div", "eylemler sol");
-          ey.append(ac);
-          o.append(ey);
-        }
-        akis.append(o);
-      }
-      kesit.append(akis);
-    }
-    const tum = dugme(gecmisKalici() ? "Bütün geçmiş" : "Bu oturumun geçmişi", { sinif: "kucuk", simge: "saat" });
+    kesit.append(ogesi("h3", null, "Son işler"));
+    const liste = ogesi("div");
+    const tum = dugme(gecmisDeposu() === "pencere" ? "Bu pencerenin geçmişi" : "Bütün geçmiş", { sinif: "kucuk", simge: "saat" });
     tum.onclick = () => { gecmisSifirla(); git("gecmis"); };
     const ey = ogesi("div", "eylemler sol");
     ey.append(tum);
-    kesit.append(ey);
+    kesit.append(liste, ey);
     ekran.append(kesit);
+    sonIsler(liste, c);
   };
+
+  // Son 6 iş, kalıcı geçmişten: yeni sohbette ve Claude yeniden açıldığında da görünür. Yukarıda açık olan cevap
+  // yinelenmez. Diskteki kayıtların listesi özettir; cevabı açmak için kayıt getirilir.
+  async function sonIsler(kap, c) {
+    const depo = gecmisDeposu();
+    let kayitlar;
+    if (depo === "disk") {
+      const { veri } = await cagir(app, "al_gecmis", { islem: "listele", en_fazla: 7 }).catch(() => ({}));
+      if (!kap.isConnected) return;
+      kayitlar = veri && Array.isArray(veri.kayitlar) ? veri.kayitlar : GECMIS.map(oturumKaydi);
+    } else {
+      kayitlar = depo === "cihaz" ? cihazGecmisi() : GECMIS.map(oturumKaydi);
+    }
+    kayitlar = kayitlar.filter((k) => !(c && k.tur === "cevap" && (k.anlik && k.anlik.cevap !== undefined
+      ? k.anlik.cevap === c.cevap : k.baslik === c.soru))).slice(0, 6);
+    if (!kayitlar.length) {
+      kap.append(ogesi("div", "bos", c ? "Başka iş yok." : "Henüz bir iş yok. Bir kart seçin ya da sorunuzu aşağıdaki kutuya yazın; yaptığınız işler adımlarıyla burada birikir, tümü Geçmiş'te."));
+      return;
+    }
+    const akis = ogesi("div", "akis");
+    for (const k of kayitlar) {
+      const o = ogesi("div", "akis-ogesi");
+      const ust = ogesi("div", "son-is-ust");
+      ust.append(ogesi("span", "son-is-zaman",
+        `${gunEtiketi(k.zaman)} ${new Date(k.zaman).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}`),
+        ogesi("div", "balon", k.baslik));
+      o.append(ust);
+      const ad = ogesi("div", "adimlar");
+      for (const [tur, metin] of k.adimlar || []) ad.append(adimSatiri(tur, metin));
+      o.append(ad);
+      const ey = ogesi("div", "eylemler sol");
+      if (k.tur === "cevap" && (k.anlik || (depo === "disk" && k.id))) {
+        const ac = dugme("Cevabı aç", { sinif: "kucuk", simge: "cevap" });
+        ac.onclick = async () => {
+          let tam = k;
+          if (!k.anlik || k.anlik === true) {
+            ac.disabled = true;
+            const { veri } = await cagir(app, "al_gecmis", { islem: "getir", id: k.id }).catch(() => ({}));
+            ac.disabled = false;
+            if (!veri || !veri.kayit) { ortam.duyuru.textContent = "Cevap açılamadı; Geçmiş'ten deneyin."; return; }
+            tam = veri.kayit;
+          }
+          acikCevap = cevapKaydindan(tam); git("sohbet"); scrollTo(0, 0);
+        };
+        ey.append(ac);
+      } else {
+        const ac = dugme("Aç", { sinif: "kucuk", simge: "saat" });
+        ac.onclick = () => { gecmisSifirla(); gecmisAcik = k.oturum || depo === "cihaz" ? k : k.id; git("gecmis"); };
+        ey.append(ac);
+      }
+      o.append(ey);
+      akis.append(o);
+    }
+    kap.append(akis);
+  }
 
   function adimSatiri(tur, metin) {
     const s = ogesi("div", "adim " + tur);
@@ -682,7 +775,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // aşağıdaki çalışma akışı taşır.
   const TESLIM = "al_masaya_yaz";
   let CEVAP = null;          // bu pencereye teslim edilen: { soru, adimlar, cevap, kaynaklar, tamam, kesildi, teyit }
-  let acikCevap = null;      // "Bu oturumda" ya da geçmişten açılan eski cevap
+  let acikCevap = null;      // "Son işler"den ya da geçmişten açılan eski cevap
   let cevapKaydedildi = false;
   let cevapAcildi = false;   // teslim penceresi Sohbet ekranına bir kez kendiliğinden geçer
 
@@ -955,6 +1048,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (c) { c.bitti = Date.now(); calismaYaz(c); }
   }
   addEventListener("storage", (e) => {
+    if (e.key === CIHAZ_GECMISI && masaKuruldu && (aktif === "sohbet" || (aktif === "gecmis" && !gecmisAcik))) git(aktif);
     if (e.key === CALISMA && (ROL === "basla" || (ROL === "adim" && masaModu()) || (ROL === "teslim" && CEVAP && !CEVAP.tamam))) {
       if (CEVAP && !CEVAP.tamam) { const c = acikCalisma(); if (c) CEVAP.araclar = c.adimlar; }
       cevapYenile();
@@ -1834,8 +1928,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   };
 
   // ---- Geçmiş ----
-  // Liste yerelde al_gecmis'ten (bu bilgisayar, 90 gün), uzakta yalnız bu oturumdan (GECMIS). Ayrıntı o günkü sonucu
-  // ekranların kendi çizicileriyle gösterir; "Yeniden çalıştır" işi kendi ekranında güncel kaynakla yeniden yapar.
+  // Liste kalıcı depodan (disk ya da cihaz, 90 gün; bkz. gecmiseEkle), depo kapalıysa bu pencereden (GECMIS). Ayrıntı
+  // o günkü sonucu ekranların kendi çizicileriyle gösterir; "Yeniden çalıştır" işi kendi ekranında güncel kaynakla yeniden yapar.
   const KATEGORI_ADI = { hepsi: "Tümü", mevzuat: "Mevzuat ve kararlar", ictihat: "İçtihat", atif: "Atıf teyidi",
     claude: "Claude'a sorulanlar" };
   let gecmisSuzgec = { kategori: "hepsi", ekran: null, ara: "" };
@@ -1876,12 +1970,17 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   CIZIM.gecmis = (ekran) => {
     if (gecmisAcik) { gecmisAyrinti(ekran, gecmisAcik); return; }
-    const kalici = gecmisKalici();
-    ekran.append(ogesi("p", "kapsam-notu", kalici
-      ? "Bu bilgisayarda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya gönderilmez. Atıf teyidinde " +
-        "yapıştırdığınız metin değil, yalnız bulunan atıflar saklanır. UYAP işleri geçmişe yazılmaz."
-      : "Bu bağlantıda geçmiş yalnız bu oturum boyunca tutulur ve hiçbir yere yazılmaz. Kalıcı geçmiş (90 gün) " +
-        "masaüstündeki ArthurLegal'de."));
+    const depo = gecmisDeposu();
+    const kalici = depo !== "pencere";
+    const ORTAK = " Atıf teyidinde yapıştırdığınız metin değil, yalnız bulunan atıflar saklanır. UYAP işleri geçmişe yazılmaz.";
+    ekran.append(ogesi("p", "kapsam-notu", {
+      disk: "Bu bilgisayarda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya gönderilmez. Yeni sohbette " +
+        "ve ArthurLegal güncellendiğinde de durur." + ORTAK,
+      cihaz: "Bu cihazda, masanın kendi deposunda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya " +
+        "gönderilmez. Yeni sohbette, Claude yeniden açıldığında ve ArthurLegal güncellendiğinde de durur; başka " +
+        "cihazda görünmez." + ORTAK,
+      pencere: "Bu pencerede tarayıcı deposu kapalı: geçmiş yalnız pencere açıkken durur ve hiçbir yere yazılmaz.",
+    }[depo]));
     const seg = ogesi("div", "segment");
     for (const [id, yazi] of Object.entries(KATEGORI_ADI)) {
       const b = dugme(yazi);
@@ -1890,22 +1989,23 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       seg.append(b);
     }
     const ara = girdi("search", "Başlıkta ara: kira, 6098, EPDK …", gecmisSuzgec.ara);
-    const temizle = dugme(kalici ? "Geçmişi temizle" : "Oturumu temizle", { simge: "sil" });
+    const temizle = dugme(kalici ? "Geçmişi temizle" : "Listeyi temizle", { simge: "sil" });
     let emin = false;
     temizle.onclick = async () => {
       const yazi = temizle.querySelector("span");
       if (!emin) {
         emin = true;
         yazi.textContent = "Emin misiniz? Bir daha basın";
-        setTimeout(() => { emin = false; yazi.textContent = kalici ? "Geçmişi temizle" : "Oturumu temizle"; }, 4000);
+        setTimeout(() => { emin = false; yazi.textContent = kalici ? "Geçmişi temizle" : "Listeyi temizle"; }, 4000);
         return;
       }
       temizle.disabled = true;
       try {
-        if (kalici) {
+        if (depo === "disk") {
           const { hata } = await cagir(app, "al_gecmis", { islem: "temizle" });
           if (hata) throw new Error(hata);
         }
+        if (depo === "cihaz") localStorage.removeItem(CIHAZ_GECMISI);
         GECMIS.length = 0;
         ortam.duyuru.textContent = "Geçmiş temizlendi.";
       } catch (e) {
@@ -1937,7 +2037,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     kap.replaceChildren();
     const s = gecmisSuzgec;
     let kayitlar = [];
-    if (gecmisKalici()) {
+    const depo = gecmisDeposu();
+    if (depo === "disk") {
       const adim = AL.adimlar(kap).ekle("Geçmiş okunuyor…");
       try {
         const arg = { islem: "listele", en_fazla: 300 };
@@ -1952,9 +2053,12 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       }
       kap.replaceChildren();
     } else {
+      // Diskteki aramayla aynı: başlıkta ve adımlarda geçen ifade.
       const q = s.ara.trim().toLocaleLowerCase("tr");
-      kayitlar = GECMIS.map(oturumKaydi).filter((k) => (s.kategori === "hepsi" || k.kategori === s.kategori) &&
-        (!q || k.baslik.toLocaleLowerCase("tr").includes(q)));
+      const gecer = (k) => !q || [k.baslik, ...(k.adimlar || []).map((a) => a && a[1])]
+        .some((x) => String(x || "").toLocaleLowerCase("tr").includes(q));
+      kayitlar = (depo === "cihaz" ? cihazGecmisi() : GECMIS.map(oturumKaydi))
+        .filter((k) => (s.kategori === "hepsi" || k.kategori === s.kategori) && gecer(k));
     }
     if (s.ekran) kayitlar = kayitlar.filter((k) => k.ekran === s.ekran);
     if (!kayitlar.length) {
@@ -1980,7 +2084,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const son = (k.adimlar || []).slice(-1)[0];
       m.append(ogesi("span", "ad", k.baslik), ogesi("span", "ne", [KATEGORI_ADI[k.kategori], son && son[1]].filter(Boolean).join(" · ")));
       b.append(sim, m, ogesi("span", "sayi", new Date(k.zaman).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })));
-      b.onclick = () => { gecmisAcik = k.oturum ? k : k.id; git("gecmis"); };
+      b.onclick = () => { gecmisAcik = k.oturum || depo === "cihaz" ? k : k.id; git("gecmis"); };
       grup.append(b);
     }
   }
@@ -2023,6 +2127,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         if (k.id && gecmisKalici()) {
           const { hata } = await cagir(app, "al_gecmis", { islem: "sil", id: k.id });
           if (hata) throw new Error(hata);
+        } else if (k.id) {
+          const kalan = cihazGecmisi();
+          if (kalan && !cihazaYaz(kalan.filter((x) => x.id !== k.id))) throw new Error("depoya yazılamadı");
         }
         const i = GECMIS.findIndex((g) => g === k.oturum || (k.id && g.id === k.id));
         if (i >= 0) GECMIS.splice(i, 1);
