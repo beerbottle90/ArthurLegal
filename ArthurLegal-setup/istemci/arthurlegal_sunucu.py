@@ -416,7 +416,7 @@ def salt_okunur_isaretle(araclar):
 
 # ---------------------------------------------------------------------------- AL Masası
 
-# Sonucunu kartla gösteren uzak araçlar ve masanın doğrudan çağırdıkları.
+# Sonucu kart verisi (structuredContent) taşıyan uzak araçlar ve masanın doğrudan çağırdıkları.
 KARTLI_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara")
 MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_mevzuat_ara", "tr_mevzuat_icindekiler", "tr_ictihat_ara", "tr_ictihat_getir",
              "tr_kurum_karari_ara", "tr_kurum_karari_getir", "tr_semantik_ara", "tr_belge_getir",
@@ -443,6 +443,11 @@ def masa_araclari():
         teslim = dict(al_arayuz.teslim_araci())
         teslim["_meta"] = al_arayuz.arac_meta("al_masaya_yaz")
         araclar.insert(1, teslim)
+        # Soru araştırmadan önce masada (al_masada_basla); araçların adımları ve cevap ona eklenir.
+        if hasattr(al_arayuz, "baslangic_araci"):
+            basla = dict(al_arayuz.baslangic_araci())
+            basla["_meta"] = al_arayuz.arac_meta("al_masada_basla")
+            araclar.insert(1, basla)
     # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "gecmis_araci"):
         araclar.append(al_arayuz.gecmis_araci())
@@ -460,13 +465,15 @@ def masa_gecmisi():
     return _GECMIS
 
 
-def kart_meta(araclar):
-    """Kartı olan uzak araçlara _meta.ui.resourceUri: Claude sonucu ArthurLegal kartıyla çizer."""
+def gorunum_meta(araclar):
+    """Araçlara _meta.ui.resourceUri (al_arayuz.arac_meta): bütün araçlar masayı açar, çünkü Claude'un tam ekran
+    bölmesi en son açılan görünümü gösterir ve kendi kartı olan araç masanın yerine geçerdi. Masa açıksa çağrı
+    masada canlı adım olur; açık değilse aynı görünüm madde ve içtihatta kartı, ötekilerde tek satırı çizer."""
     if al_arayuz is None:
         return araclar
     sonuc = []
     for arac in araclar:
-        meta = al_arayuz.arac_meta(arac.get("name", "")) if arac.get("name") in KARTLI_UZAK else None
+        meta = al_arayuz.arac_meta(arac.get("name", ""))
         sonuc.append({**arac, "_meta": {**(arac.get("_meta") or {}), **meta}} if meta else arac)
     return sonuc
 
@@ -602,8 +609,8 @@ class Sunucu:
             if self.uzak_araclar is None:
                 self._uzak_yenile(zaman_asimi=True)
             profiller = self.bilgi.profiller()
-            return {"tools": yerel_araclar(profiller, self.bilgi.varsayilan(profiller)) + masa_araclari()
-                    + kart_meta(kopru_araclari(self.uzak_araclar))}
+            return {"tools": gorunum_meta(yerel_araclar(profiller, self.bilgi.varsayilan(profiller))) + masa_araclari()
+                    + gorunum_meta(kopru_araclari(self.uzak_araclar))}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
@@ -642,6 +649,8 @@ class Sunucu:
         if not hasattr(al_arayuz, "teslim_araci"):  # eski arayüz kopyası: teslim ve bağlayıcı listesi yok
             return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"))
         yetenekler.append("al_masaya_yaz")
+        if hasattr(al_arayuz, "baslangic_araci"):
+            yetenekler.append("al_masada_basla")
         return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"))
 
     def _masa(self, a):
@@ -652,6 +661,14 @@ class Sunucu:
         """al_masaya_yaz: cevap masada açılır; sunucu cevabı saklamaz ve geri yazmaz, masanın durumunu döndürür."""
         try:
             veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
+        except ValueError as e:  # TeslimHatasi
+            return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+        return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+
+    def _basla(self, a):
+        """al_masada_basla: soru araştırma başlamadan masada; sunucu soruyu saklamaz, masanın durumunu döndürür."""
+        try:
+            veri = al_arayuz.baslangic_cevabi(a, self._masa_verisi({}))
         except ValueError as e:  # TeslimHatasi
             return {"content": [{"type": "text", "text": str(e)}], "isError": True}
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
@@ -675,6 +692,8 @@ class Sunucu:
             return self._modul_ac(a)
         if al_arayuz is not None and ad == "al_masaya_yaz" and hasattr(al_arayuz, "teslim_araci"):
             return self._teslim(a)
+        if al_arayuz is not None and ad == "al_masada_basla" and hasattr(al_arayuz, "baslangic_araci"):
+            return self._basla(a)
         if al_arayuz is not None and ad == "al_gecmis" and hasattr(al_arayuz, "Gecmis"):
             try:
                 veri = masa_gecmisi().cagir(a)

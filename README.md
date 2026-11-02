@@ -384,7 +384,7 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 <h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
 
 <p align="center">
-  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan sorunun cevabı masada; soru, yapılan adımlar ve TBK m. 344-345'e dayanan cevap. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
+  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan soru, canlı araştırma adımları (madde ve içtihat) ve TBK m. 344-345'e dayanan cevap masada. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
@@ -592,7 +592,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 125 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 126 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
@@ -649,6 +649,29 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.7 — The question, every step and the answer live on the desk (2026-11-02)
+
+- **Live on the desk.** In Claude Desktop the full-screen pane shows the newest view, so a case-law or article card
+  could replace the desk while Claude was researching, and the answer stayed in the chat. Now every tool opens the
+  desk: the question appears on the **Chat** screen as soon as Claude starts, each source Claude checks becomes a live
+  line (what was searched, how many results; the article or decision list opens under the line), and the answer is
+  written in the same place with its citation check and sources. In the chat Claude only writes "Cevap masada.".
+  Type only the question in Claude's message box.
+- In a chat where the desk is not open, articles and case law still come as cards and other tools as a one-line step.
+  The research connector has the matching tool (`al_masada_basla`, 126 tools); the Claude directory profile is
+  unchanged. Tested in Claude Desktop on this release's desk before publishing.
+- The user guide (PDF) and the start page describe the live desk. Packages keep their versions (Law Firm and
+  Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin 1.12.8.
+
+**Türkçe:** Claude Desktop'ın tam ekran bölmesi en son açılan görünümü gösterdiği için araştırma sırasında içtihat ya
+da madde kartı masanın yerine geçebiliyor, cevap sohbette kalıyordu. Artık bütün araçlar masayı açar: soru Claude
+başlar başlamaz **Sohbet** ekranına gelir, Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç;
+madde ya da karar listesi satırın altında açılır), cevap atıf teyidi ve kaynaklarıyla aynı yerde yazılır. Sohbete
+Claude yalnız "Cevap masada." yazar; Claude'un yazma kutusuna yalnız soruyu yazarsınız. Masa açık olmayan sohbette
+madde ve içtihat yine kartla, öteki araçlar tek satırla gelir. Araştırma bağlantısında karşılığı olan araç
+(`al_masada_basla`, 126 araç); Claude dizini sürümü değişmedi. Kullanıcı rehberi (PDF) ve başlangıç sayfası buna
+göre. Paket sürümleri aynı; Claude eklentisi 1.12.8.
 
 ## Setup 3.0.6 — Answers on the desk; the MCP screen shows connected servers; ArthurTapu 0.6.1 fee card (2026-11-02)
 

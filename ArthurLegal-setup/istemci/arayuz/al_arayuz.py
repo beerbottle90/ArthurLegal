@@ -6,8 +6,11 @@ yalnız standart kütüphaneyle çalışır.
     from al_arayuz import kaynaklar, arac_meta, masa_araci, masa_cevabi
 
 - ``kaynaklar()``: her ``ui://`` görünümü, MCP ``resources/list`` ve ``resources/read`` için.
-- ``arac_meta(ad)``: aracın görünümü varsa ``_meta``; host o aracın sonucunu görünümle çizer.
+- ``arac_meta(ad)``: aracın ``_meta``'sı. Masanın iç araçları dışında her araç masayı açar: Claude masada çalışırken
+  her adım masada canlı görünür; masa açılmamış sohbette aynı görünüm kart ya da tek satırlık adım şerididir.
+  ``kart_meta(ad)``: eski kart eşlemesi (yalnız madde ve içtihat), Claude dizini profili için.
 - ``masa_araci()``: ``al_masasi`` aracının tanımı. Cevabı ``masa_cevabi(...)`` kurar.
+- ``baslangic_araci()``: ``al_masada_basla``; Claude soruyu alır almaz masaya yazar, masa çalışmayı başlatır.
 - ``teslim_araci()``: ``al_masaya_yaz``; Claude sohbet kutusuna yazılan sorunun cevabını masaya teslim eder.
   Cevabı ``teslim_cevabi(girdi, masa)`` kurar; masa cevabı araç girdisinden (yazıldıkça) okur, sunucu saklamaz.
 - ``gecmis_araci()`` ve ``Gecmis(klasor)``: masa geçmişi (``al_gecmis``). Yalnız yerel AL sunucusu klasör
@@ -28,7 +31,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.0.6"
+SURUM = "3.0.7"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -52,12 +55,15 @@ GORUNUMLER = {
                                    "ArthurLegal'in tek panelli yüzü: modüller solda, iş adımları ortada."),
 }
 
-# araç -> görünüm
-ARAC_GORUNUMU = {
+MASA_URI = "ui://arthurlegal/masa.html"
+# Claude Desktop'ın tam ekran bölmesi her zaman en son açılan görünümü gösterir. Bir aracın kendi kartı olsaydı masanın
+# yerine geçerdi; bu yüzden bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer.
+# Masanın kendi çağırdığı iç araçlar görünüm açmaz.
+GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac"})
+# Eski kartlar: Claude dizini profili (talimatsız, masasız) yalnız bu iki aracı kartla gösterir.
+KART_GORUNUMU = {
     "tr_mevzuat_madde_getir": "ui://arthurlegal/madde-karti.html",
     "tr_ictihat_ara": "ui://arthurlegal/ictihat-karti.html",
-    "al_masasi": "ui://arthurlegal/masa.html",
-    "al_masaya_yaz": "ui://arthurlegal/masa.html",
 }
 
 _PARCALAR = {
@@ -106,12 +112,22 @@ def kaynaklar() -> List[Dict[str, Any]]:
     return out
 
 
-def arac_meta(arac: str) -> Optional[Dict[str, Any]]:
-    uri = ARAC_GORUNUMU.get(arac)
-    if not uri:
-        return None
+def _meta(uri: str) -> Dict[str, Any]:
     # Düz "ui/resourceUri" anahtarı, bazı ev sahiplerinin hâlâ okuduğu eski yazım.
     return {"ui": {"resourceUri": uri}, "ui/resourceUri": uri}
+
+
+def arac_meta(arac: str) -> Optional[Dict[str, Any]]:
+    """Masanın iç araçları dışında her araç masayı açar."""
+    if not arac or arac in GORUNUMSUZ:
+        return None
+    return _meta(MASA_URI)
+
+
+def kart_meta(arac: str) -> Optional[Dict[str, Any]]:
+    """Masasız profil (Claude dizini) için eski kartlar: yalnız madde ve içtihat."""
+    uri = KART_GORUNUMU.get(arac)
+    return _meta(uri) if uri else None
 
 
 def masa_araci() -> Dict[str, Any]:
@@ -123,7 +139,8 @@ def masa_araci() -> Dict[str, Any]:
             "Arthur Mask, UYAP Dashboard, Donna ve kaynak durumu tek panelde. Kullanıcı 'ArthurLegal'i aç', "
             "'masayı aç', 'AL Masası' ya da bir modülün adını söyleyip onu açmak istediğinde çağırın. "
             "bolum ile belirli bir ekranda açılır. Her açılışta baglayicilar'ı doldurun: masa MCP'ler ekranında "
-            "kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."
+            "kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir. Masa açıldıktan sonra bu "
+            "sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz."
         ),
         "inputSchema": {
             "type": "object",
@@ -177,11 +194,12 @@ def baglayicilari_duzenle(liste: Any) -> List[Dict[str, str]]:
     return out
 
 
-# Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı cevabı ancak masada okur.
+# Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı soruyu, çalışmayı ve cevabı ancak masada görür. Kural
+# masanın bir notuna bağlı değildir (Claude Desktop o notu modele iletmeyebiliyor): masa bir kez açıldıysa geçerlidir.
 TESLIM_KURALI = (
-    "Masa ekranda açıkken (masa bunu her mesajda 'ArthurLegal Masası: ekranda açık' notuyla bildirir) kullanıcının "
-    "sorusunu cevaplayınca cevabı al_masaya_yaz ile masaya teslim edin: araştırmayı bitirince bir kez çağırın; "
-    "cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' yazın.")
+    "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) bundan sonraki her soruda şu sırayı izleyin: "
+    "1) hemen al_masada_basla ile soruyu masaya yazın; 2) araştırın (her aracın adımı masada canlı görünür); "
+    "3) cevabı al_masaya_yaz ile teslim edin. Cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' yazın.")
 
 
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
@@ -212,11 +230,43 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
     return out
 
 
-# --------------------------------------------------------------------------- cevabı masaya teslim
-# Masa yalnız kendi aracının girdisini görür; sohbete yazılan cevabı okuyamaz. Claude cevabı bu araçla verir, ev sahibi
-# masayı aracın girdisiyle (yazıldıkça, parça parça) yeni bir pencerede açar. Sunucu cevabı saklamaz ve geri yazmaz.
+# --------------------------------------------------------------------------- soru, çalışma ve cevap masada
+# Masa yalnız kendi aracının girdisini görür; sohbete yazılan soruyu ve cevabı okuyamaz. Claude soruyu al_masada_basla
+# ile yazar, araştırırken her araç masayı açar (adım), cevabı al_masaya_yaz ile verir; ev sahibi her çağrıda masayı yeni
+# bir pencerede açar ve pencereler çalışmayı bu kaynağın tarayıcı deposunda paylaşır. Sunucu hiçbirini saklamaz.
 class TeslimHatasi(ValueError):
     """Eksik ya da bozuk teslim; çağıran isError olarak döndürür."""
+
+
+def baslangic_araci() -> Dict[str, Any]:
+    return {
+        "name": "al_masada_basla",
+        "title": "Soruyu ArthurLegal Masası'na yaz",
+        "description": (
+            "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının her yeni sorusunda İLK iş "
+            "bunu çağırın: masa soruyu ve 'Claude çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
+            "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın."),
+        "inputSchema": {
+            "type": "object",
+            "properties": {"soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."}},
+            "required": ["soru"],
+        },
+        "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True,
+                        "openWorldHint": False},
+    }
+
+
+def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]:
+    """al_masada_basla'nın cevabı: masanın durumu (Sohbet ekranında) ve sıradaki adımın hatırlatması."""
+    soru = girdi.get("soru")
+    if not isinstance(soru, str) or not soru.strip():
+        raise TeslimHatasi("soru boş olamaz: kullanıcının sorusunu yazın.")
+    out = dict(masa)
+    out["bolum"] = "sohbet"
+    out["basla"] = {"soru": _kisalt(soru, 200)}
+    out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabı "
+                  "al_masaya_yaz ile teslim edin ve sohbete yalnız 'Cevap masada.' yazın.")
+    return out
 
 
 def teslim_araci() -> Dict[str, Any]:
@@ -233,11 +283,11 @@ def teslim_araci() -> Dict[str, Any]:
         "name": "al_masaya_yaz",
         "title": "Cevabı ArthurLegal Masası'na yaz",
         "description": (
-            "ArthurLegal Masası ekranda açıkken (masa her mesajda 'ArthurLegal Masası: ekranda açık' notunu gönderir) "
-            "kullanıcının sorusuna verdiğiniz cevabı masaya teslim eder. Masa cevabı Sohbet ekranında, yaptığınız "
-            "adımlar ve kaynaklarla gösterir; cevaptaki kanun maddesi atıflarını resmî metinden kendisi teyit eder. "
-            "Araştırmayı bitirince bir kez çağırın; cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' "
-            "yazın. Masa açık değilse çağırmayın, cevabı sohbette verin."),
+            "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının sorusuna verdiğiniz cevabı "
+            "masaya teslim eder. Masa cevabı Sohbet ekranında, yaptığınız adımlar ve kaynaklarla gösterir; cevaptaki "
+            "kanun maddesi atıflarını resmî metinden kendisi teyit eder. Soruyu önce al_masada_basla ile yazın, "
+            "araştırmayı bitirince bunu bir kez çağırın; cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' "
+            "yazın. Masa açılmadıysa çağırmayın, cevabı sohbette verin."),
         "inputSchema": {
             "type": "object",
             "properties": {
