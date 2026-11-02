@@ -737,7 +737,7 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(araclar["al_masaya_yaz"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
         self.assertIn("al_masaya_yaz", masa["yetenekler"])
         teslim = self.arac("al_masaya_yaz", soru="Kira artışı?", cevap="TBK m. 344 uyarınca")
-        self.assertEqual(teslim["structuredContent"]["bolum"], "cevap")
+        self.assertEqual(teslim["structuredContent"]["bolum"], "sohbet")
         self.assertIn("al_gecmis", teslim["structuredContent"]["yetenekler"], "cevap bu bilgisayardaki geçmişe yazılır")
         self.assertNotIn("TBK m. 344", teslim["content"][0]["text"])
         self.assertTrue(self.arac("al_masaya_yaz", soru="s", cevap="")["isError"])

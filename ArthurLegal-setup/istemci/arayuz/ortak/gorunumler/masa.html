@@ -15,7 +15,7 @@
   Ortak tasarım ve kod sunucuda gömülür (sunucu/al_arayuz.py).
 
   Sohbet kaydı masanın arkasında kalır ve masa onu okuyamaz. Claude cevabı al_masaya_yaz ile teslim eder:
-  ev sahibi bu görünümü o aracın girdisiyle yeniden açar, masa Cevap ekranında cevabı yazıldıkça gösterir.
+  ev sahibi bu görünümü o aracın girdisiyle yeniden açar, masa cevabı Sohbet ekranında yazıldıkça gösterir.
 -->
 <style>
 /*AL:CSS*/
@@ -374,9 +374,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 
   const EKRANLAR = [
     { id: "sohbet", ad: "Sohbet", simge: "sohbet", bolum: "Çalışma",
-      baslik: "Merhaba", alt: "Sorunuzu aşağıdaki kutuya yazın ya da bir işle başlayın. Claude araştırır; cevabı, yaptığı adımlar ve kaynaklarla Cevap ekranında açılır." },
-    { id: "cevap", ad: "Cevap", simge: "cevap", bolum: "Çalışma",
-      baslik: "Cevap", alt: "Claude'un cevabı: yaptığı adımlar, kaynaklar ve cevaptaki madde atıflarının resmî metinden teyidi." },
+      baslik: "Sohbet", alt: "Sorunuzu aşağıdaki kutuya yazın ya da bir işle başlayın. Claude araştırır; cevabı, yaptığı adımlar, kaynaklar ve atıfların resmî metinden teyidiyle burada açılır." },
     { id: "mevzuat", ad: "Mevzuat ve kararlar", simge: "kitap", bolum: "Çalışma",
       baslik: "Mevzuat ve kurul kararları", alt: "İsteğinizi yazın: mevzuatın tamamı ve EPDK, SPK, Rekabet gibi kurumların kararları gelir. Maddeyi resmî metinden getirin, taslağınızdaki atıfları teyit edin." },
     { id: "ictihat", ad: "İçtihat", simge: "terazi", bolum: "Çalışma",
@@ -509,8 +507,6 @@ button.liste-ogesi:hover { background: var(--dolgu); }
   function panelYenile() {
     document.querySelectorAll(".git").forEach((b) => {
       const id = b.dataset.ekran;
-      // Teslim aracı olmayan uçta Cevap ekranı hep boş kalırdı: gösterilmez.
-      b.hidden = id === "cevap" && DURUM.hazir && !DURUM.yetenekler.has("al_masaya_yaz") && aktif !== "cevap";
       b.toggleAttribute("aria-current", id === aktif);
       if (id === aktif) b.setAttribute("aria-current", "page");
       b.querySelectorAll(".ek, .nokta").forEach((x) => x.remove());
@@ -530,8 +526,6 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 
   function git(id) {
     aktif = id;
-    // Cevap ekranı son ekran sayılmaz: yeniden açılan masa boş bir Cevap ekranıyla başlamasın.
-    if (id !== "cevap") try { localStorage.setItem("al.masa.ekran", id); } catch { /* yok */ }
     const e = EKRANLAR.find((x) => x.id === id) || EKRANLAR[0];
     document.querySelector(".icerik-ust h1").textContent = e.baslik;
     document.querySelector(".icerik-ust .alt-yazi").textContent = e.alt;
@@ -595,7 +589,14 @@ button.liste-ogesi:hover { background: var(--dolgu); }
   // ---------------------------------------------------------------- ekranlar
   const CIZIM = {};
 
+  // Sohbet: Claude'un cevabı (varsa) en üstte, altında devam sorusu, işe başlama önerileri ve bu oturumda yapılanlar.
   CIZIM.sohbet = (ekran) => {
+    const c = gosterilenCevap();
+    if (c) {
+      const kok = ogesi("div", "cevap-kok");
+      cevapIcerik(kok, c);
+      ekran.append(kok, devamFormu(c));
+    }
     const izgara = ogesi("div", "izgara");
     const kartlar = [
       ["kitap", "Mevzuatta ara, madde getir", "Kanundan tebliğe bütün mevzuat; resmî metin ve birebir atıf.", () => git("mevzuat")],
@@ -614,15 +615,21 @@ button.liste-ogesi:hover { background: var(--dolgu); }
       k.onclick = f;
       izgara.append(k);
     }
-    ekran.append(izgara);
+    if (c) {
+      const oneriler = ogesi("div", "kesit");
+      oneriler.append(ogesi("h3", null, "Öneriler"), izgara);
+      ekran.append(oneriler);
+    } else ekran.append(izgara);
 
     const kesit = ogesi("div", "kesit");
     kesit.append(ogesi("h3", null, "Bu oturumda"));
-    if (!GECMIS.length) {
-      kesit.append(ogesi("div", "bos", "Henüz bir iş yok. Bir kart seçin ya da sorunuzu aşağıdaki kutuya yazın; yaptığınız işler adımlarıyla burada birikir."));
+    // Yukarıda açık olan cevap listede yinelenmez.
+    const oturum = GECMIS.slice(0, 20).filter((g) => !(c && g.tur === "cevap" && g.anlik && g.anlik.cevap === c.cevap));
+    if (!oturum.length) {
+      kesit.append(ogesi("div", "bos", c ? "Bu oturumda başka iş yok." : "Henüz bir iş yok. Bir kart seçin ya da sorunuzu aşağıdaki kutuya yazın; yaptığınız işler adımlarıyla burada birikir."));
     } else {
       const akis = ogesi("div", "akis");
-      for (const g of GECMIS.slice(0, 20)) {
+      for (const g of oturum) {
         const o = ogesi("div", "akis-ogesi");
         o.append(ogesi("div", "balon", g.soru));
         const ad = ogesi("div", "adimlar");
@@ -630,7 +637,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
         o.append(ad);
         if (g.tur === "cevap" && g.anlik) {
           const ac = dugme("Cevabı aç", { sinif: "kucuk", simge: "cevap" });
-          ac.onclick = () => { acikCevap = cevapKaydindan(g); git("cevap"); };
+          ac.onclick = () => { acikCevap = cevapKaydindan(g); git("sohbet"); scrollTo(0, 0); };
           const ey = ogesi("div", "eylemler sol");
           ey.append(ac);
           o.append(ey);
@@ -663,7 +670,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
   let CEVAP = null;          // bu pencereye teslim edilen: { soru, adimlar, cevap, kaynaklar, tamam, kesildi, teyit }
   let acikCevap = null;      // "Bu oturumda" ya da geçmişten açılan eski cevap
   let cevapKaydedildi = false;
-  let cevapAcildi = false;   // teslim penceresi Cevap ekranına bir kez kendiliğinden geçer
+  let cevapAcildi = false;   // teslim penceresi Sohbet ekranına bir kez kendiliğinden geçer
 
   const teslimMi = (arg) => ((app.getHostContext() || {}).toolInfo || {}).tool?.name === TESLIM ||
     !!(arg && ("cevap" in arg || "soru" in arg));
@@ -684,8 +691,8 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     if (CEVAP && CEVAP.tamam) return;   // tam girdiden sonra gelen geç parça cevabı bozmasın
     CEVAP = { ...cevapDuzenle(arg), tamam, kesildi: false, teyit: null };
     acikCevap = null;
-    DURUM.acilis = "cevap";
-    if (masaKuruldu && aktif !== "cevap" && !cevapAcildi) { cevapAcildi = true; git("cevap"); }
+    DURUM.acilis = "sohbet";
+    if (masaKuruldu && aktif !== "sohbet" && !cevapAcildi) { cevapAcildi = true; git("sohbet"); }
     else cevapYenile();
     if (tamam) cevapTeyidi();
   }
@@ -715,7 +722,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
       cevapZamanlayici = 0;
       if (!masaKuruldu) { if (window.__alBagli) onizlemeCiz(); return; }
       const kok = document.querySelector(".cevap-kok");
-      if (aktif === "cevap" && kok) { kok.replaceChildren(); cevapIcerik(kok, gosterilenCevap()); }
+      if (aktif === "sohbet" && kok) { kok.replaceChildren(); cevapIcerik(kok, gosterilenCevap()); }
     }, 60);
   }
 
@@ -730,7 +737,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
       c.teyit = { durum: "bitti", satirlar, dogru, toplam: atiflar.length };
       cevapYenile();
       const yanlis = satirlar.filter((s) => !s.ok).map((s) => `${kisaAd(s.kanun)} m. ${s.madde}`);
-      bildir(`Cevap ekranında. Cevaptaki ${atiflar.length} madde atfından ${sayiEki(dogru)} resmî metinde bulundu` +
+      bildir(`Sohbet ekranında. Cevaptaki ${atiflar.length} madde atfından ${sayiEki(dogru)} resmî metinde bulundu` +
         (yanlis.length ? `; doğrulanamayan: ${yanlis.join(", ")}. Bir sonraki cevabınızda bunu kullanıcıya söyleyip düzeltin.` : "."));
     }
     cevapKaydet();
@@ -746,12 +753,12 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     const adimlar = c.adimlar.slice(0, t.toplam ? 9 : 10);
     if (t.toplam) adimlar.push([t.dogru === t.toplam ? "tamam" : "uyar", `Atıf teyidi: ${t.toplam} atıftan ${sayiEki(t.dogru)} doğrulandı`]);
     gecmiseEkle(c.soru || "Claude'un cevabı", adimlar.length ? adimlar : [["tamam", "Cevap masaya geldi"]], {
-      ekran: "cevap", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null,
+      ekran: "sohbet", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null,
       anlik: { cevap: c.cevap, adimlar: c.adimlar, kaynaklar: c.kaynaklar,
         teyit: { satirlar: t.satirlar, dogru: t.dogru, toplam: t.toplam } } });
   }
 
-  // Cevabın gövdesi; Cevap ekranı, sohbet önizlemesi ve geçmiş ayrıntısı aynı çiziciyi kullanır.
+  // Cevabın gövdesi; Sohbet ekranı, sohbetteki önizleme ve geçmiş ayrıntısı aynı çiziciyi kullanır.
   function cevapIcerik(kap, c, { soruYok = false, adimYok = false } = {}) {
     if (!soruYok && c.soru) kap.append(ogesi("div", "balon", c.soru));
     const yaziliyor = !c.tamam && !c.kesildi;
@@ -855,14 +862,6 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     };
     return form;
   }
-
-  CIZIM.cevap = (ekran) => {
-    const c = gosterilenCevap();
-    const kok = ogesi("div", "cevap-kok");
-    if (c) cevapIcerik(kok, c);
-    else kok.append(ogesi("div", "bos", "Henüz cevap yok. Sorunuzu Claude'un yazma kutusuna (aşağıda) ya da buraya yazın: Claude araştırır; yaptığı adımları, cevabı ve kaynakları bu ekrana getirir."));
-    ekran.append(kok, devamFormu(c));
-  };
 
   // ---- Mevzuat ve kararlar ----
   // Kapsam Türk mevzuatının tamamıdır (tr_mevzuat_ara: kanundan tebliğe, mülga dâhil). atif.js'teki kısa ad listesi
@@ -1594,7 +1593,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
   function ekraninSuzgeci(id) {
     if (id === "mevzuat") return { kategori: mevzuatAktif === "teyit" ? "atif" : "mevzuat" };
     if (id === "ictihat") return { kategori: "ictihat" };
-    if (["tapu", "beyin", "mask", "donna", "cevap"].includes(id)) return { kategori: "claude", ekran: id };
+    if (["tapu", "beyin", "mask", "donna"].includes(id)) return { kategori: "claude", ekran: id };
     return {};
   }
 
@@ -2264,7 +2263,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     const ust = ogesi("header", "kimlik");
     const marka = ogesi("span", "marka", "Arthur");
     marka.append(ogesi("span", null, "Legal"));
-    ust.append(sablon("t-arma"), marka, Object.assign(ogesi("span", "ayrac"), { ariaHidden: "true" }), ogesi("span", "bolum", CEVAP ? "Cevap" : "Masa"));
+    ust.append(sablon("t-arma"), marka, Object.assign(ogesi("span", "ayrac"), { ariaHidden: "true" }), ogesi("span", "bolum", CEVAP ? "Sohbet" : "Masa"));
     const ac = dugme(CEVAP ? "Masada tam ekran aç" : "Masayı tam ekran aç", { sinif: "birincil", simge: "genislet" });
     ac.onclick = tamEkran;
     const sat = ogesi("div", "alt-satir");
@@ -2287,10 +2286,10 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     $("kok").replaceChildren(kap);
   }
 
-  // Açılış ekranı: araç girdisi ya da sunucu bir bölüm istediyse o, istemediyse kullanıcının son ekranı.
+  // Açılış ekranı: araç girdisi ya da sunucu bir bölüm istediyse o, istemediyse Sohbet. Son ekran hatırlanmaz:
+  // kullanıcı masayı açınca doğrudan sohbete gelir (kullanıcı kararı, 02.11.2026).
   function acilisEkrani() {
-    if (DURUM.acilis !== "sohbet") return DURUM.acilis;
-    try { return localStorage.getItem("al.masa.ekran") || "sohbet"; } catch { return "sohbet"; }
+    return DURUM.acilis;
   }
 
   let masaKuruldu = false;
@@ -2342,7 +2341,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
     // Ev sahibi baştan tam ekransa masa sunucunun cevabından önce, varsayımlarla kurulmuştur: istenen bölüm ve
     // modül durumları (yerel/uzak) şimdi uygulanır, açık ekran yeniden çizilir.
     if (masaKuruldu) { git(acilisUygulandi ? aktif : acilisEkrani()); acilisUygulandi = true; }
-    else { ciz(); bildir(CEVAP ? "Cevap ekranında." : "masa açıldı."); }   // yetenekler artık belli: not kuralla yinelenir
+    else { ciz(); bildir(CEVAP ? "Sohbet ekranında, cevap açık." : "masa açıldı."); }   // yetenekler artık belli: not kuralla yinelenir
     cevapKaydet();   // teslim: geçmiş, sunucunun bildirdiği yerde (bu bilgisayar ya da oturum) tutulur
   };
   app.addEventListener("hostcontextchanged", (d) => {
@@ -2355,7 +2354,7 @@ button.liste-ogesi:hover { background: var(--dolgu); }
   const ilkBaglam = app.getHostContext() || {};
   AL.tema.baglamdan(ilkBaglam);
   ciz();
-  bildir(CEVAP ? "Cevap ekranında." : "masa açıldı.");
+  bildir(CEVAP ? "Sohbet ekranında, cevap açık." : "masa açıldı.");
   if (DURUM.tamEkranIste && ilkBaglam.displayMode !== "fullscreen" && (ilkBaglam.availableDisplayModes || []).includes("fullscreen")) {
     tamEkran();
   }
