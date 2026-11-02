@@ -384,14 +384,18 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 <h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
 
 <p align="center">
-  <img src="docs/masa/masa-genel.png" width="760" alt="ArthurLegal Masası: solda Sohbet, Mevzuat ve atıf, İçtihat, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler; ortada Mevzuatta ara, madde getir, Taslaktaki atıfları teyit et, Konuyla ilgili kararları bul, Parsel sorgula, Belgeyle maskeli çalış ve Bugünümü Donna ile planla kartları">
+  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Cevap ekranı: Claude'un yazma kutusuna yazılan sorunun cevabı masada; soru, yapılan adımlar ve TBK m. 344-345'e dayanan cevap. Solda Sohbet, Cevap, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
-olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat, ArthurTapu,
-Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve araştırma kaynakları. Ortada yapılan iş adım adım, altta
-Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
+olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Cevap, Mevzuat ve kararlar, İçtihat,
+Geçmiş, ArthurTapu, Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
+Claude'un kendi yazma kutusu; oraya yazdığınız sorunun cevabı da masada açılır. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
+- **Cevap masada.** Claude'un yazma kutusuna yazdığınız sorunun cevabı masanın Cevap ekranında, Claude yazdıkça
+  açılır: yapılan adımlar, biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
+  teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
+  masadan sorarsınız; cevaplar bu bilgisayardaki Geçmiş'te 90 gün durur.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
   kanun" yazın; masa isteği çözer (kurum, kaç tane, piyasa ya da karar türü, yıl, konu) ve ilk satırda ne aradığını
@@ -405,6 +409,9 @@ Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bi
   metin, kopyalanacak atıf, resmî metin bağlantısı ve doğrulandı rozeti; kararın metni kartın içinde açılır.
 - **Donna**, masadaki asistan: Claude'a bağladığınız uygulamalarla (e-posta, takvim, Slack, görevler) gününüzü
   özetler ve hatırlatma kurar. Bir şey oluşturmadan ya da göndermeden önce sorar, hukuki süre hesaplamaz.
+- **MCP'ler.** Bağlı sunucularınız ve durumları, araç listesi olmadan: ArthurLegal (araştırma, ArthurTapu, UYAP
+  Dashboard, Arthur Mask, Beyin) ve Claude bağlayıcılarınız (Gmail, Takvim, Slack ...). Bağlı olmayanın yanında
+  **Bağla**; düğme Claude'un bağlayıcı ekranını açar.
 - **Web ve telefon.** [Araştırma bağlantısını](#use-arthurlegal-mcp-directly) claude.ai'ye ekleyince masa web'de ve
   Claude'un telefon uygulamasında da açılır; Hafıza, Arthur Mask ve UYAP tasarım gereği bilgisayarınızda kalır.
 - Klasik görünümü tercih ederseniz kurulumda **Claude Desktop klasik**'i seçin: masa ve kartlar kapanır, sonuçlar
@@ -415,16 +422,16 @@ Claude'un kendi yazma kutusu. Her şey kendi Claude planınızla çalışır; bi
 </p>
 
 **English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
-desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
-citations, case law, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and the research sources), the
-steps of the current task in the middle, Claude's own message box at the bottom. It runs on your own Claude plan;
+desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, answer, legislation and
+citations, case law, history, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and connected servers), the
+steps of the current task in the middle, Claude's own message box at the bottom. Ask in that box and the answer opens on the desk: the steps taken, the answer and its sources, with every article citation in it checked against the official text. It runs on your own Claude plan;
 no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
 acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
 official text. Paste a draft to check every article citation in it against the official text
 (only the law and article numbers leave the page); article and case-law results appear as ArthurLegal cards; Donna
 summarises your day through the apps you have connected to Claude and asks before creating or sending anything. On
 the web and in the Claude mobile app the desk comes from the research connector, with the desktop-only modules
-shown as such. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
+shown as such. The MCP screen lists your connected servers and their status, ArthurLegal and your Claude connectors, with a button to connect more. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
 
 ---
 
@@ -584,7 +591,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 124 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 125 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
@@ -641,6 +648,37 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.6 — Answers on the desk; the MCP screen shows connected servers; ArthurTapu 0.6.1 fee card (2026-11-02)
+
+- **Answers on the desk.** With the desk open full screen the chat transcript sits behind it, so a question typed in
+  Claude's message box brought cards onto the screen but not the answer. Claude now hands its answer to the desk: the
+  new **Answer** screen shows the question, the steps taken, the answer as it is being written and its sources. Every
+  statutory citation in the answer is checked against the official text; one that cannot be verified is flagged and
+  reported back to Claude. Copy the answer in one click or ask a follow-up from the desk. Answers are kept in the desk
+  history on this computer (90 days); on the web and phone for the session only. The research connector has the
+  matching tool (`al_masaya_yaz`, 125 tools); the Claude directory profile is unchanged.
+- **MCP screen.** Connected servers and their status instead of tools and sources: ArthurLegal (research, ArthurTapu,
+  UYAP Dashboard, Arthur Mask, Memory) and your Claude connectors (Gmail, Calendar, Slack ...). Claude reports the
+  connectors when it opens the desk; **Manage connectors** and **Connect** open Claude's connector settings.
+- **ArthurTapu 0.6.1: a simpler fee card.** Choose the transaction (sale, gift, mortgage, annotations, partition,
+  subdivision or merger, cancellation; any other by search) instead of typing a tariff code. The card shows only the
+  fields that transaction needs, pre-fills what the parcel record gives (the parcel's character selects the
+  independent-unit row; the district keys the local coefficient remembered in this browser) and shows the result in
+  one table.
+- The user guide (PDF) and the start page describe the Answer screen. Packages keep their versions (Law Firm and
+  Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin 1.12.8.
+
+**Türkçe:** Masa tam ekrandayken Claude'un yazma kutusuna yazılan sorunun cevabı artık masada: yeni **Cevap** ekranı
+soruyu, yapılan adımları, Claude yazdıkça cevabı ve kaynakları gösterir; cevaptaki madde atıfları resmî metinden
+teyit edilir, doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevap tek tuşla kopyalanır, devam sorusu
+masadan sorulur. Cevaplar bu bilgisayardaki Geçmiş'te 90 gün, web ve telefonda oturum boyunca durur. Araştırma
+bağlantısında karşılığı olan araç (`al_masaya_yaz`, 125 araç); Claude dizini sürümü değişmedi. **MCP'ler** ekranı
+araçlar yerine bağlı sunucuları ve durumlarını gösterir: ArthurLegal ve Claude bağlayıcılarınız (Gmail, Takvim,
+Slack ...); **Bağlayıcıları yönet** ve **Bağla** Claude'un bağlayıcı ekranını açar. **ArthurTapu 0.6.1:** harç
+kartında kod yerine işlem seçilir, yalnız o işlemin istediği kutular görünür, tapudan gelen bilgi önden dolar, sonuç
+tek tabloda. Kullanıcı rehberi (PDF) ve başlangıç sayfası Cevap ekranını anlatır. Paket sürümleri aynı; Claude
+eklentisi 1.12.8.
 
 ## Setup 3.0.5 — Desk history; ArthurTapu estimated 3D view; refreshed brand colors (2026-10-30)
 
