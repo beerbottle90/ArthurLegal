@@ -651,6 +651,31 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.0.9 — Arthur Mask 1.1.1: security fixes and the desk's look (2026-11-03)
+
+- **Arthur Mask 1.1.1.** Security fixes: unusual .docx files written by programs other than Word are stopped before
+  processing; the exit gate also catches lower-case e-mail and KEP addresses and numbers written without separators;
+  un-reviewed suspects cannot be approved after a restart; other user accounts on the same computer cannot reach the
+  interface or the vault. The interface now has the desk's look (light, dark, automatic) and the ArthurLegal emblem,
+  and its update notice works again.
+- **How it arrives.** On Windows the ArthurLegal updater installs Arthur Mask 1.1.1 by itself, in the background, when
+  Claude Desktop is closed (not while Windows 11 Smart App Control is on, since the installer is not code-signed). On
+  macOS ArthurLegal does not update an installed Arthur Mask: download 1.1.1 from the
+  [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). After the update,
+  open Arthur Mask once from its shortcut; links from Claude work after that.
+- Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin
+  1.12.8; the desk is unchanged (3.0.8). The research connector was hardened on the server the same day.
+
+**Türkçe:** Arthur Mask 1.1.1 güvenlik düzeltmeleri getirir: Word dışı programların yazdığı alışılmadık .docx
+dosyaları işlenmeden durdurulur; çıkış kapısı küçük harfli e-posta ve KEP adreslerini, bitişik yazılmış numaraları da
+yakalar; uygulama yeniden başladıysa şüpheli adaylar görülmeden onay verilemez; aynı bilgisayardaki başka bir kullanıcı
+hesabı arayüze ve kasaya erişemez. Arayüz masanın görünümüne (açık, koyu, otomatik) ve ArthurLegal armasına geçti,
+güncelleme bildirimi yeniden çalışır. Windows'ta ArthurLegal güncelleyicisi Arthur Mask 1.1.1'i Claude Desktop
+kapalıyken arka planda kendisi kurar (Windows 11 Akıllı Uygulama Denetimi açıksa kurulum imzasız olduğu için kurmaz).
+macOS'ta kurulu Arthur Mask'ı ArthurLegal güncellemez; 1.1.1'i
+[Arthur Mask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin.
+Güncellemeden sonra Arthur Mask'ı bir kez kısayolundan açın. Paket sürümleri ve masa aynı; Claude eklentisi 1.12.8.
+
 ## Setup 3.0.8 — Desk history that stays (2026-11-02)
 
 - **History stays.** When the desk came from the remote connector (the web, the phone, or the remote ArthurLegal
