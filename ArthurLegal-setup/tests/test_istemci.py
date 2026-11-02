@@ -705,10 +705,12 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual([t["name"] for t in liste].count("al_masasi"), 1, "uzak ucun masa aracı köprülenmez")
         araclar = {t["name"]: t for t in liste}
         self.assertNotEqual(araclar["al_masasi"]["description"], "uzak masa", "listelenen masa yerelinki")
-        self.assertEqual(araclar["ornek_kartli"]["_meta"], {"diger": 1}, "verilemeyen görünüm işareti silinir")
-        self.assertEqual(araclar["al_masasi"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html")
-        self.assertEqual(araclar["tr_ictihat_ara"]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/ictihat-karti.html")
-        self.assertNotIn("_meta", araclar["status"])
+        # Verilemeyen görünüm işareti silinir; bütün araçlar masayı açar (tam ekran bölmesi en yeni görünümü gösterir).
+        self.assertEqual(araclar["ornek_kartli"]["_meta"]["diger"], 1)
+        for ad in ("al_masasi", "al_masada_basla", "ornek_kartli", "tr_ictihat_ara", "status", "arthurlegal_talimat"):
+            self.assertEqual(araclar[ad]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html", ad)
+        for ad in ("al_modul_ac", "al_gecmis"):
+            self.assertNotIn("_meta", araclar[ad], "masanın kendi çağırdığı iç araç görünüm açmaz")
         masa = self.arac("al_masasi", bolum="ictihat")["structuredContent"]
         self.assertEqual((masa["ortam"], masa["bolum"]), ("masaustu", "ictihat"))
         # Sahte kurulumda UYAP köprüsü yok; Arthur Mask bu bilgisayarda kurulu olabilir (gerçek LOCALAPPDATA).
@@ -741,6 +743,12 @@ class SunucuTesti(unittest.TestCase):
         self.assertIn("al_gecmis", teslim["structuredContent"]["yetenekler"], "cevap bu bilgisayardaki geçmişe yazılır")
         self.assertNotIn("TBK m. 344", teslim["content"][0]["text"])
         self.assertTrue(self.arac("al_masaya_yaz", soru="s", cevap="")["isError"])
+        # Soru araştırmadan önce masada; kural koşulsuz (masanın notuna bağlı değil).
+        self.assertIn("al_masada_basla", r["instructions"])
+        self.assertIn("al_masada_basla", masa["yetenekler"])
+        basla = self.arac("al_masada_basla", soru="Kira artışı?")["structuredContent"]
+        self.assertEqual((basla["bolum"], basla["basla"]), ("sohbet", {"soru": "Kira artışı?"}))
+        self.assertTrue(self.arac("al_masada_basla", soru=" ")["isError"])
         bagli = self.arac("al_masasi", baglayicilar=[{"ad": "Gmail"}])["structuredContent"]["baglayicilar"]
         self.assertEqual(bagli, [{"ad": "Gmail", "durum": "bagli"}])
 
@@ -1527,8 +1535,9 @@ class ArayuzTesti(unittest.TestCase):
             sunucu = ("import arthurlegal_sunucu as s; b = s.Sunucu().isle('initialize', {}); "
                       "print(json.dumps([s.al_arayuz is not None, [a['name'] for a in s.masa_araclari()], "
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
-                      "'_meta' in s.kart_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
-            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masaya_yaz", "al_modul_ac", "al_gecmis"],
+                      "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
+            self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
+                                                               "al_modul_ac", "al_gecmis"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
