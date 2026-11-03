@@ -639,8 +639,66 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return g;
   }
 
-  function masaustuGerekli(ekran, ne) {
-    ekran.append(bilgi(`${ne} bu bilgisayarda çalışır; telefonda ve web'de masaüstündeki ArthurLegal'den açılır. Müvekkil verisi bu yüzden buluta çıkmaz.`));
+  // Uzak masada (web, telefon ya da Claude Desktop'taki uzak bağlayıcı) bilgisayardaki modüller boş kalmaz: ne işe
+  // yaradığı ve nereden açıldığı. Uzak masa bu modüllerin aracını çağıramaz (görünüm yalnız kendi sunucusunu çağırır);
+  // Claude bu sohbette yerel kurulumu (arthurlegal-yerel) bildirdiyse masayı oradan yeniden açtırır.
+  const INDIR = "https://github.com/beerbottle90/ArthurLegal#indir";
+  const MODUL_TANITIMI = {
+    beyin: { ad: "Beyin (ArthurLegal Hafıza)", maddeler: [
+      ["kitap", "Tercihlerinizi hatırlar", "Üslubunuz ve düzeltmeleriniz her sohbette geçerli olur."],
+      ["saat", "Nerede kaldığınızı bilir", "Son oturum kartı: ne yapıldı, ne kaldı, sonraki adım."],
+      ["beyin", "Bu bilgisayarda durur", "Hafıza kasası bilgisayarınızda; Claude'a yalnız istediğiniz not gider."]] },
+    mask: { ad: "Arthur Mask", maddeler: [
+      ["maske", "Adları ve numaraları etiketler", "Belgedeki kişi, kimlik ve dosya numaraları {{KİŞİ-01}} gibi etiketlenir."],
+      ["sohbet", "Claude maskeli metni görür", "Gerçek değerler bilgisayarınızdan çıkmaz."],
+      ["onay", "Word çıktısı gerçek değerlerle", "Düzeltilen ya da yeni yazılan belge bilgisayarınızda gerçek değerlerle oluşur."]] },
+    uyap: { ad: "UYAP Dashboard", maddeler: [
+      ["bina", "Tebligat ve duruşmalar tek yerde", "UYAP'ta açtığınız listeleri okur ve özetler."],
+      ["onay", "Salt okunur", "UYAP'a hiçbir şey yazılmaz."],
+      ["maske", "Gerçek değerler kendi penceresinde", "Claude ad ve numaraların etiketli hâlini görür."]] },
+  };
+  const YEREL_SUNUCU = /arthur\s*legal[\s_()-]*yerel/;
+
+  // Bu sohbette bilgisayardaki kurulum bağlı mı: true / false, Claude listeyi bildirmediyse null (bilinmiyor).
+  function yerelBagli() {
+    const b = DURUM.baglayicilar;
+    if (!b) return null;
+    return b.liste.some((x) => x.durum === "bagli" && YEREL_SUNUCU.test(x.ad.toLowerCase()));
+  }
+
+  function yerelMasaIstegi(id) {
+    return `ArthurLegal Masası'nı bu bilgisayardaki kurulumdan açın: arthurlegal-yerel sunucusunun al_masasi aracını bolum=${id} ` +
+      "ile çağırın. Bu sohbette arthurlegal-yerel yoksa bunu bir cümleyle söyleyin.";
+  }
+
+  function masaustuTanitimi(ekran, id) {
+    const t = MODUL_TANITIMI[id];
+    const izgara = ogesi("div", "izgara");
+    for (const [s, b, n] of t.maddeler) {
+      const k = ogesi("div", "eylem-karti");
+      const sim = ogesi("span", "simge");
+      sim.append(ikon(s));
+      k.append(sim, ogesi("b", null, b), ogesi("span", "ne", n));
+      izgara.append(k);
+    }
+    const yerel = yerelBagli();
+    const kesit = ogesi("div", "kesit");
+    kesit.append(ogesi("h3", null, yerel ? "Bu bilgisayarda kurulu" : "Bilgisayarınızda çalışır"));
+    const satir = ogesi("div", "satir");
+    const ac = dugme("Masayı bu bilgisayarda aç", { sinif: "birincil", simge: "dis" });
+    ac.onclick = () => claudeaSor(yerelMasaIstegi(id), null);
+    const indir = dugme("ArthurLegal'i indir", { sinif: yerel === false ? "birincil" : "", simge: "dis" });
+    indir.onclick = () => baglantiAc(app, INDIR, ortam.duyuru);
+    if (yerel) satir.append(ac);
+    else if (yerel === false) satir.append(indir);
+    else satir.append(ac, indir);
+    const not = yerel
+      ? `${t.ad} bu bilgisayardaki ArthurLegal kurulumunda çalışıyor. Bu masa uzak bağlantıdan açıldı; düğme masayı kurulumun kendi bağlantısıyla (arthurlegal-yerel) yeniden açar.`
+      : `${t.ad} yalnız ArthurLegal'in kurulu olduğu bilgisayarda çalışır; müvekkil verisi bu yüzden buluta çıkmaz. ` +
+        (yerel === false ? "Web'de ve telefonda mevzuat, içtihat ve kurul kararları ekranları çalışır."
+          : "Bilgisayardaysanız masayı kurulumun kendi bağlantısıyla açın; kurulu değilse indirin.");
+    kesit.append(satir, bilgi(not));
+    ekran.append(izgara, kesit);
   }
 
   function kuruluDegil(ekran, ne) {
@@ -2306,7 +2364,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // ---- Beyin ----
   CIZIM.beyin = (ekran) => {
     const d = modulDurumu("beyin");
-    if (d === "masaustu") return masaustuGerekli(ekran, "Beyin (ArthurLegal Hafıza)");
+    if (d === "masaustu") return masaustuTanitimi(ekran, "beyin");
     if (d === "kurulu-degil") return kuruluDegil(ekran, "ArthurLegal Hafıza");
     const form = ogesi("form", "form");
     const q = girdi("text", "kira tespiti davası tercihlerim");
@@ -2339,7 +2397,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // ---- Arthur Mask ----
   CIZIM.mask = (ekran) => {
     const d = modulDurumu("mask");
-    if (d === "masaustu") return masaustuGerekli(ekran, "Arthur Mask");
+    if (d === "masaustu") return masaustuTanitimi(ekran, "mask");
     if (d === "kurulu-degil") return kuruluDegil(ekran, "Arthur Mask");
     const satir = ogesi("div", "satir");
     const ac = dugme("Arthur Mask'i aç", { sinif: "birincil", simge: "dis" });
@@ -2385,7 +2443,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   CIZIM.uyap = (ekran) => {
     const d = modulDurumu("uyap");
-    if (d === "masaustu") return masaustuGerekli(ekran, "UYAP Dashboard");
+    if (d === "masaustu") return masaustuTanitimi(ekran, "uyap");
     if (d === "kurulu-degil") {
       ekran.append(bilgi("UYAP Dashboard bu kurulumda açık değil. Windows'ta Hukuk Bürosu ya da Kurumsal paketiyle birlikte Arthur Mask seçilince kendiliğinden gelir: ArthurLegal kurulumunu yeniden çalıştırıp modül ekranında işaretleyin."));
       return;
@@ -2465,26 +2523,31 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     };
     ekran.append(form);
 
+    // Bağlantılar: MCP'ler ekranıyla aynı liste (Claude'un bildirdiği bağlayıcılar). Bağlı olana düğme konmaz; durum
+    // bilinmiyorsa masa tahmin etmez, Claude'dan ister.
+    const b = DURUM.baglayicilar;
     const kesit = ogesi("div", "kesit");
     kesit.append(ogesi("h3", null, "Bağlantılar"));
     const liste = ogesi("div", "liste");
-    for (const [s, ad, acik] of [
-      ["sohbet", "Gmail", "Yanıt bekleyenler ve önemli yazışmalar"],
-      ["zil", "Google Takvim", "Toplantılar, duruşma ve randevu notları"],
-      ["sohbet", "Slack", "Ekipten gelen istekler"],
-      ["onay", "Görevler", "Todoist, Asana, Notion ya da kullandığınız uygulama"],
-    ]) {
-      const o = ogesi("div", "liste-ogesi");
-      const sim = ogesi("span", "simge");
-      sim.append(ikon(s));
-      const mt = ogesi("div", "metinler");
-      mt.append(ogesi("span", "ad", ad), ogesi("span", "ne", acik));
-      const b = dugme("Bağla", { simge: "bag", baslik: ad + " bağla" });
-      b.onclick = () => baglantiAc(app, BAGLAYICILAR, ortam.duyuru);
-      o.append(sim, mt, b);
-      liste.append(o);
+    for (const [simge, oneri, desen, acik] of DONNA_UYGULAMALARI) {
+      const eslesen = b ? b.liste.filter((x) => !AL_SUNUCUSU.test(x.ad.toLowerCase()) && desen.test(x.ad.toLowerCase())) : [];
+      const bagli = eslesen.filter((x) => x.durum === "bagli");
+      if (!b) liste.append(sunucuSatiri(simge, oneri, acik, ["Durum bilinmiyor", ""]));
+      else if (bagli.length) liste.append(sunucuSatiri(simge, bagli.map((x) => x.ad).join(", "), acik, BAGLAYICI_DURUMU.bagli));
+      else if (eslesen.length) {
+        const x = eslesen[0];
+        liste.append(sunucuSatiri(simge, x.ad, "Claude'un hesabında, bu sohbette çalışmıyor", BAGLAYICI_DURUMU[x.durum], baglaDugmesi(x.ad)));
+      } else liste.append(sunucuSatiri(simge, oneri, acik, ["Bağlı değil", ""], baglaDugmesi(oneri)));
     }
-    kesit.append(liste, bilgi("Bağlantıları Claude hesabınızda bir kez kurarsınız; telefonda da çalışır. Donna onları yalnız siz istediğinizde, sohbet üzerinden kullanır ve her değişiklikten önce onay ister."));
+    const iste = dugme(b ? "Listeyi Claude'dan yenile" : "Durumu Claude'dan öğren", { sinif: "kucuk", simge: "yenile" });
+    iste.onclick = () => claudeaSor(listeIstegi("donna"), null);
+    const mcp = dugme("MCP'ler ekranı", { sinif: "kucuk", simge: "fis" });
+    mcp.onclick = () => git("mcp");
+    const alt = ogesi("div", "alt-satir");
+    const ey = ogesi("div", "eylemler");
+    ey.append(iste, mcp);
+    alt.append(ogesi("span", "zaman", b ? `Claude'un bildirdiği liste · ${AL.zaman(b.zaman)}` : "Durum Claude'dan gelir"), ey);
+    kesit.append(liste, alt, bilgi("Bağlantıları Claude hesabınızda bir kez kurarsınız; telefonda da çalışır. Donna onları yalnız siz istediğinizde, sohbet üzerinden kullanır ve her değişiklikten önce onay ister."));
     ekran.append(kesit);
   };
 
@@ -2493,18 +2556,22 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // (Gmail, Slack ...) yalnız Claude'un bildirdiği listeden: ev sahibi bu listeyi masaya vermez, masa kendisi göremez.
   const BAGLAYICI_KAYDI = "al.masa.baglayicilar";
   const AL_SUNUCUSU = /arthur|^al[\s_-]/;   // ArthurLegal'in kendi sunucuları kendi bölümünde
-  const ONERILEN_BAGLAYICILAR = [
-    ["Gmail", "posta", /gmail/],
-    ["Google Takvim", "takvim", /calendar|takvim/],
-    ["Slack", "sohbet", /slack/],
-  ];
   const BAGLAYICI_SIMGESI = [[/mail|posta|outlook/, "posta"], [/calendar|takvim/, "takvim"], [/slack|teams|chat/, "sohbet"],
     [/drive|notion|docs|box|dropbox|sharepoint|confluence/, "kitap"]];
   const BAGLAYICI_DURUMU = { bagli: ["Bağlı", "nane"], "giris-gerekli": ["Giriş gerekli", "amber"], hata: ["Hata", "kirmizi"] };
   const MODUL_DURUMU = { hazir: ["Çalışıyor", "nane"], claude: ["Claude üzerinden", "mavi"], masaustu: ["Masaüstünde", ""],
     "kurulu-degil": ["Kurulu değil", ""] };
-  const LISTE_ISTEGI = "ArthurLegal Masası: bu sohbette bağlı MCP sunucularımı ve Claude bağlayıcılarımı masada göster. " +
-    "al_masasi'yi bolum=mcp ile yeniden açın ve baglayicilar'a sunucu adlarını durumlarıyla yazın.";
+  // Donna'nın kullandığı uygulamalar: önerilen ad, Claude'un bildirdiği adla eşleşme, ne için.
+  const DONNA_UYGULAMALARI = [
+    ["posta", "Gmail", /gmail|outlook|e-?posta|mail/, "Yanıt bekleyenler ve önemli yazışmalar"],
+    ["takvim", "Google Takvim", /calendar|takvim/, "Toplantılar, duruşma ve randevu notları"],
+    ["sohbet", "Slack", /slack|teams/, "Ekipten gelen istekler"],
+    ["onay", "Görev uygulaması", /notion|todoist|asana|trello|clickup|linear|tasks|görev/, "Todoist, Asana, Notion ya da kullandığınız uygulama"],
+  ];
+  function listeIstegi(bolum) {
+    return "ArthurLegal Masası: bu sohbette bağlı MCP sunucularımı ve Claude bağlayıcılarımı masada göster. " +
+      `al_masasi'yi bolum=${bolum} ile yeniden açın ve baglayicilar'a sunucu adlarını durumlarıyla yazın.`;
+  }
 
   // Claude'un bildirdiği liste (al_masasi girdisi ya da sonucu). Aynı sunucunun bütün masa pencerelerinde ortaktır.
   function baglayicilariAl(liste) {
@@ -2559,7 +2626,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     alListe.append(arastirma);
     for (const [id, ad, ne] of [["tapu", "ArthurTapu", "Tapu ve kadastro"], ["uyap", "UYAP Dashboard", "Tebligat ve duruşmalar, salt okunur"],
       ["mask", "Arthur Mask", "Belgeyi Claude'a gitmeden maskeler"], ["beyin", "Beyin", "ArthurLegal Hafıza"]]) {
-      alListe.append(sunucuSatiri(ekranSimgesi(id), ad, ne, MODUL_DURUMU[modulDurumu(id)] || MODUL_DURUMU.hazir));
+      const d = modulDurumu(id);
+      // Uzak masa yerel modülü çalıştıramaz, ama Claude bu sohbette kurulumu bildirdiyse modül bu bilgisayarda bağlıdır.
+      const durum = d === "masaustu" && id !== "tapu" && yerelBagli() ? ["Bilgisayarda bağlı", "mavi"] : MODUL_DURUMU[d];
+      alListe.append(sunucuSatiri(ekranSimgesi(id), ad, ne, durum || MODUL_DURUMU.hazir));
     }
     const alNot = ogesi("div");
     al.append(alListe, alNot);
@@ -2569,7 +2639,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     cb.append(ogesi("h3", null, "Claude bağlayıcılarınız"));
     const b = DURUM.baglayicilar;
     const iste = dugme(b ? "Listeyi Claude'dan yenile" : "Listeyi Claude'dan iste", { sinif: "kucuk", simge: "yenile" });
-    iste.onclick = () => claudeaSor(LISTE_ISTEGI, null);
+    iste.onclick = () => claudeaSor(listeIstegi("mcp"), null);
     if (!b) {
       cb.append(ogesi("div", "bos", "Claude, bu sohbette hangi bağlayıcıların açık olduğunu masaya henüz bildirmedi. Masa bunu kendi başına göremez; listeyi Claude'dan isteyin."));
     } else {
@@ -2581,7 +2651,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         liste.append(sunucuSatiri(simge, x.ad, x.durum === "bagli" ? "Bu sohbette açık" : "Claude'un hesabında, bu sohbette çalışmıyor",
           BAGLAYICI_DURUMU[x.durum], ...(x.durum === "bagli" ? [] : [baglaDugmesi(x.ad)])));
       }
-      for (const [ad, simge, desen] of ONERILEN_BAGLAYICILAR) {
+      for (const [simge, ad, desen] of DONNA_UYGULAMALARI) {
         if (!disari.some((x) => desen.test(x.ad.toLowerCase()))) {
           liste.append(sunucuSatiri(simge, ad, "Donna için önerilir", ["Bağlı değil", ""], baglaDugmesi(ad)));
         }
