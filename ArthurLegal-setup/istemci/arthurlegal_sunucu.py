@@ -428,7 +428,8 @@ def masa_araclari():
     """al_masasi (masayı açar) ve al_modul_ac (yerel modül penceresi). Arayüz klasörü yoksa yok."""
     if al_arayuz is None:
         return []
-    masa = dict(al_arayuz.masa_araci())
+    # Açıklama bunun bilgisayardaki masa olduğunu söyler: aynı sohbette uzak arthurlegal-mcp de varsa Claude bunu seçer.
+    masa = dict(al_arayuz.masa_araci("masaustu") if hasattr(al_arayuz, "MASA_ORTAM_NOTU") else al_arayuz.masa_araci())
     masa["_meta"] = al_arayuz.arac_meta("al_masasi")
     ac = {"name": "al_modul_ac", "title": "ArthurLegal modülünü aç",
           "description": "Bu bilgisayarda kurulu bir ArthurLegal modülünün penceresini açar: tapu (Tapu arayüzü), "
@@ -533,7 +534,9 @@ TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı huku
 HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "
                    "düzeltmelerini ve son oturum kartını yükle.")
 MASA_TALIMATI = (" Kullanıcı 'ArthurLegal Masası'nı aç' derse ya da masayı, bir modülü (Mevzuat, İçtihat, ArthurTapu, "
-                 "Beyin, Arthur Mask, UYAP Dashboard, Donna) açmak isterse `al_masasi` aracını çağır.")
+                 "Beyin, Arthur Mask, UYAP Dashboard, Donna) açmak isterse bu sunucunun `al_masasi` aracını çağır; uzak "
+                 "arthurlegal-mcp bağlayıcısınınkini değil: Beyin, Arthur Mask ve UYAP Dashboard yalnız bu bilgisayardaki "
+                 "masada çalışır.")
 
 
 class Sunucu:

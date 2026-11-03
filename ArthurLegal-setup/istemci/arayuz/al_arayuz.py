@@ -31,7 +31,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.0.8"
+SURUM = "3.0.11"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -130,7 +130,22 @@ def kart_meta(arac: str) -> Optional[Dict[str, Any]]:
     return _meta(uri) if uri else None
 
 
-def masa_araci() -> Dict[str, Any]:
+# Claude Desktop'ta aynı sohbette iki masa olabilir: bilgisayardaki kurulumun (arthurlegal-yerel) ve uzak bağlayıcının
+# (arthurlegal-mcp). Beyin, Arthur Mask ve UYAP yalnız yereldeki masada çalışır; açıklama Claude'u ona yönlendirir.
+MASA_ORTAM_NOTU = {
+    "masaustu": (" Bu, bilgisayardaki ArthurLegal kurulumunun masasıdır: Beyin, Arthur Mask ve UYAP Dashboard burada "
+                 "çalışır. Sohbette uzak arthurlegal-mcp bağlayıcısı da varsa masayı bu araçla açın."),
+    "uzak": (" Bu bilgisayarda ArthurLegal kuruluysa (sohbette arthurlegal-yerel sunucusu bağlıysa) masayı onun "
+             "al_masasi aracıyla açın: Beyin, Arthur Mask ve UYAP Dashboard yalnız oradaki masada çalışır. Bu masa "
+             "web ve telefon içindir."),
+}
+
+
+def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
+    """ortam: "masaustu" (yerel AL sunucusu), "uzak" (arthurlegal-mcp) ya da "dizin" (Claude dizini profili: teslim
+    aracı yok, yönlendirme yok). Verilmezse ortam notu eklenmez."""
+    teslim = "" if ortam == "dizin" else (
+        " Masa açıldıktan sonra bu sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz.")
     return {
         "name": "al_masasi",
         "title": "ArthurLegal Masası",
@@ -138,9 +153,9 @@ def masa_araci() -> Dict[str, Any]:
             "ArthurLegal Masası'nı açar: mevzuat ve atıf teyidi, içtihat, ArthurTapu, Beyin (hafıza), "
             "Arthur Mask, UYAP Dashboard, Donna ve kaynak durumu tek panelde. Kullanıcı 'ArthurLegal'i aç', "
             "'masayı aç', 'AL Masası' ya da bir modülün adını söyleyip onu açmak istediğinde çağırın. "
-            "bolum ile belirli bir ekranda açılır. Her açılışta baglayicilar'ı doldurun: masa MCP'ler ekranında "
-            "kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir. Masa açıldıktan sonra bu "
-            "sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz."
+            "bolum ile belirli bir ekranda açılır. Her açılışta baglayicilar'ı doldurun: masa MCP'ler ve Donna "
+            "ekranlarında kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."
+            + MASA_ORTAM_NOTU.get(ortam or "", "") + teslim
         ),
         "inputSchema": {
             "type": "object",
@@ -153,7 +168,8 @@ def masa_araci() -> Dict[str, Any]:
                     "type": "array", "maxItems": BAGLAYICI_AZAMI,
                     "description": (
                         "Bu sohbette erişebildiğiniz MCP sunucuları ve Claude bağlayıcıları (Gmail, Google Calendar, "
-                        "Slack, ArthurTapu ...): her sunucu bir kez, araç adı değil sunucunun adı. Giriş isteyen ya da "
+                        "Slack, Notion, arthurlegal-yerel, arthur-mask ...): her sunucu bir kez, araç adı değil sunucunun "
+                        "adı. Giriş isteyen ya da "
                         "hata veren sunucuyu o durumla yazın. Bilmiyorsanız boş bırakın, uydurmayın."),
                     "items": {
                         "type": "object",

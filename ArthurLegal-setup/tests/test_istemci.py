@@ -705,6 +705,8 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual([t["name"] for t in liste].count("al_masasi"), 1, "uzak ucun masa aracı köprülenmez")
         araclar = {t["name"]: t for t in liste}
         self.assertNotEqual(araclar["al_masasi"]["description"], "uzak masa", "listelenen masa yerelinki")
+        # Aynı sohbette uzak arthurlegal-mcp de olabilir: açıklama bunun bilgisayardaki masa olduğunu söyler.
+        self.assertIn("arthurlegal-mcp", araclar["al_masasi"]["description"])
         # Verilemeyen görünüm işareti silinir; bütün araçlar masayı açar (tam ekran bölmesi en yeni görünümü gösterir).
         self.assertEqual(araclar["ornek_kartli"]["_meta"]["diger"], 1)
         for ad in ("al_masasi", "al_masada_basla", "ornek_kartli", "tr_ictihat_ara", "status", "arthurlegal_talimat"):
