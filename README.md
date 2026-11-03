@@ -651,6 +651,34 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.0.10 — Arthur Mask 1.1.2 and a checked desk script (2026-11-03)
+
+- **Arthur Mask 1.1.2.** A stricter exit gate: it also catches surnames written alone or with an initial, short
+  names, phone numbers with +90 or without the leading zero, IBANs written without "TR", joined licence plates, case
+  numbers written with "Esas" or "E.", and spellings with accents or invisible characters; a long document is never
+  split inside a value. The masked Word copy leaves out document properties, comment and revision authors, alt text,
+  the thumbnail and external links. Very large Word or UDF files and very long PDFs are stopped with a clear message.
+  The program log carries no file names, and on macOS the Arthur Mask folder is private to your account.
+- **The desk checks its one outside script.** The desk and the cards load the MCP Apps client from unpkg only if its
+  fingerprint matches the one they carry. Nothing changes on screen; the desk stays 3.0.8.
+- **How it arrives.** As in 3.0.9: on Windows the ArthurLegal updater installs Arthur Mask 1.1.2 by itself, in the
+  background, when Claude Desktop is closed (not while Windows 11 Smart App Control is on); on macOS download it from
+  the [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). Arthur Mask
+  1.1.1 also shows its own update notice.
+- Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin
+  1.12.8. The research connector received the same hardening on the server the same day.
+
+**Türkçe:** Arthur Mask 1.1.2 çıkış kapısını sıkılaştırır: soyadının tek başına ya da baş harfle yazılması, kısa
+adlar, +90'lı ya da sıfırsız telefon, "TR"siz IBAN, bitişik plaka, "Esas" ya da "E." ile yazılan dosya numarası ve
+aksanlı ya da görünmez karakter taşıyan yazımlar da yakalanır; uzun belge bir değerin ortasından bölünmez. Maskeli Word
+kopyasında belge özellikleri, yorum ve değişiklik yazarları, alt metin, küçük resim ve dış bağlantılar yer almaz. Çok
+büyük Word ya da UDF dosyaları ve çok uzun PDF'ler açık bir iletiyle durdurulur. Program günlüğüne dosya adı yazılmaz;
+macOS'ta Arthur Mask klasörü yalnız sizin hesabınıza açıktır. Masa ve kartlar dışarıdan yükledikleri tek betiği
+(MCP Apps istemcisi) parmak izi tutarsa yükler; ekranda bir şey değişmez, masa 3.0.8 kalır. Windows'ta ArthurLegal
+güncelleyicisi Arthur Mask 1.1.2'yi Claude Desktop kapalıyken arka planda kendisi kurar; macOS'ta
+[Arthur Mask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin. Paket
+sürümleri aynı; Claude eklentisi 1.12.8.
+
 ## Setup 3.0.9 — Arthur Mask 1.1.1: security fixes and the desk's look (2026-11-03)
 
 - **Arthur Mask 1.1.1.** Security fixes: unusual .docx files written by programs other than Word are stopped before
