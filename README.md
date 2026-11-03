@@ -411,11 +411,14 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
   metin, kopyalanacak atıf, resmî metin bağlantısı ve doğrulandı rozeti; kararın metni kartın içinde açılır.
 - **Donna**, masadaki asistan: Claude'a bağladığınız uygulamalarla (e-posta, takvim, Slack, görevler) gününüzü
   özetler ve hatırlatma kurar. Bir şey oluşturmadan ya da göndermeden önce sorar, hukuki süre hesaplamaz.
+  Bağlantıların durumu MCP'ler ekranıyla aynı listeden gelir: bağlı uygulamada **Bağla** düğmesi çıkmaz.
 - **MCP'ler.** Bağlı sunucularınız ve durumları, araç listesi olmadan: ArthurLegal (araştırma, ArthurTapu, UYAP
   Dashboard, Arthur Mask, Beyin) ve Claude bağlayıcılarınız (Gmail, Takvim, Slack ...). Bağlı olmayanın yanında
   **Bağla**; düğme Claude'un bağlayıcı ekranını açar.
 - **Web ve telefon.** [Araştırma bağlantısını](#use-arthurlegal-mcp-directly) claude.ai'ye ekleyince masa web'de ve
-  Claude'un telefon uygulamasında da açılır; Hafıza, Arthur Mask ve UYAP tasarım gereği bilgisayarınızda kalır.
+  Claude'un telefon uygulamasında da açılır; Hafıza, Arthur Mask ve UYAP tasarım gereği bilgisayarınızda kalır. Masa
+  bu ekranlarda modülün ne işe yaradığını ve indirme bağlantısını gösterir. Claude Desktop'ta masa araştırma
+  bağlantısından açıldıysa **Masayı bu bilgisayarda aç** onu kurulumdan yeniden açar; bu üç modül orada çalışır.
 - Klasik görünümü tercih ederseniz kurulumda **Claude Desktop klasik**'i seçin: masa ve kartlar kapanır, sonuçlar
   metin olarak gelir. Açık tema varsayılandır; koyu ve otomatik masanın sol altından seçilir.
 
@@ -431,9 +434,10 @@ no API key, nothing billed to one. Search the whole of Turkish legislation, from
 acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
 official text. Paste a draft to check every article citation in it against the official text
 (only the law and article numbers leave the page); article and case-law results appear as ArthurLegal cards; Donna
-summarises your day through the apps you have connected to Claude and asks before creating or sending anything. On
-the web and in the Claude mobile app the desk comes from the research connector, with the desktop-only modules
-shown as such. The MCP screen lists your connected servers and their status, ArthurLegal and your Claude connectors, with a button to connect more. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
+summarises your day through the apps you have connected to Claude (their status comes from the same list as the MCP
+screen) and asks before creating or sending anything. On the web and in the Claude mobile app the desk comes from the
+research connector; the desktop-only modules say what they do and link to the download, and in Claude Desktop a desk
+opened from the connector offers to reopen itself from your installation, where those modules work. The MCP screen lists your connected servers and their status, ArthurLegal and your Claude connectors, with a button to connect more. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
 
 ---
 
@@ -650,6 +654,30 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.11 — Desktop modules explain themselves, Donna shows real connections (2026-11-03)
+
+- **Memory, Arthur Mask and the UYAP Dashboard on a desk opened from the research connector.** These modules run
+  only on your computer. Their screens no longer show a single grey line: they say what the module does and where to
+  open it. When Claude reports your ArthurLegal installation in the chat, **Masayı bu bilgisayarda aç** (open the
+  desk on this computer) reopens the desk from the installation; on the web and on the phone there is a download link.
+- **Claude Desktop is pointed at the installation's desk.** When the installation (`arthurlegal-yerel`) and the
+  research connector are in the same chat, the desk tool asks Claude to open the installation's desk, where the three
+  modules work.
+- **Donna shows real connections.** Donna and the MCP screen read the same list of your Claude connectors. A
+  connected app shows *Bağlı* (connected) with no button; **Bağla** (connect) appears only for an app that needs
+  sign-in or is not connected; when the status is unknown, the desk asks Claude instead of guessing.
+- Desk 3.0.11. Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5);
+  Claude plugin 1.12.8; Arthur Mask 1.1.2. The research connector's desk was updated on the server the same day.
+
+**Türkçe:** Hafıza, Arthur Mask ve UYAP Dashboard yalnız bilgisayarınızda çalışır. Masa araştırma bağlantısından
+açıldığında bu ekranlar artık tek gri satır değil: modülün ne işe yaradığını ve nereden açılacağını gösterir. Claude
+sohbette ArthurLegal kurulumunuzu görüyorsa **Masayı bu bilgisayarda aç** masayı kurulumdan yeniden açar; web'de ve
+telefonda indirme bağlantısı çıkar. Claude Desktop'ta kurulum (`arthurlegal-yerel`) ve araştırma bağlantısı aynı
+sohbetteyse masa aracı Claude'dan masayı kurulumdan açmasını ister. Donna ve MCP'ler ekranı Claude bağlayıcılarınızın
+aynı listesini okur: bağlı uygulamada düğme yoktur, **Bağla** yalnız giriş isteyen ya da bağlı olmayan uygulamada
+çıkar; durum bilinmiyorsa masa tahmin etmez, Claude'a sorar. Masa 3.0.11; paket sürümleri aynı, Claude eklentisi
+1.12.8, Arthur Mask 1.1.2.
 
 ## Setup 3.0.10 — Arthur Mask 1.1.2 and a checked desk script (2026-11-03)
 
