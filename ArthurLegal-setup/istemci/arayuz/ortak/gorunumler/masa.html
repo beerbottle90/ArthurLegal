@@ -360,6 +360,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   }, 12000);
 </script>
 
+<!-- Dışarıdan yüklenen tek betik, MCP Apps istemcisi: tarayıcı parmak izini denetler, tutmazsa yüklemez. -->
+<script type="importmap">
+  {"integrity": {"https://unpkg.com/@modelcontextprotocol/ext-apps@1.7.5/dist/src/app-with-deps.js": "sha384-wSTuCTWt2+bD7kgcVHbiUFIEDVUNFUZjWmT/T0NTP1RTg45gZJ4zVNOYLvujAZ/I"}}
+</script>
 <script type="module">
   import { App } from "https://unpkg.com/@modelcontextprotocol/ext-apps@1.7.5/dist/src/app-with-deps.js";
   /*AL:JS*/
