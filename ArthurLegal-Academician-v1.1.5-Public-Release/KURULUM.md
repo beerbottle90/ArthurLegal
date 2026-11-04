@@ -35,7 +35,7 @@ Projede **Add content / Upload** → `knowledge/` altındaki dosyaları yükle:
 knowledge/
 ├─ akademisyen-profili.md      ← önce bunu doldur (Adım 4)
 ├─ skills/      (8 dosya)
-├─ references/  (23 dosya)
+├─ references/  (24 dosya)
 └─ agents/      (4 dosya)
 ```
 

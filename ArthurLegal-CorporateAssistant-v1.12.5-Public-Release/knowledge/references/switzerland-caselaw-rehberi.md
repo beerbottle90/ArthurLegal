@@ -10,7 +10,7 @@
 ## 1. OpenCaseLaw.ch MCP — İsviçre İçtihadı
 
 **MCP endpoint: `https://mcp.opencaselaw.ch/sse`** ✅ (30.08.2026 test)
-**33 MCP aracı, CC0 lisans, günlük güncelleme, auth yok.**
+**42 MCP aracı, CC0 lisans, günlük güncelleme, auth yok.**
 
 > ⚠️ **REST/WebFetch yedeği YOK.** v1.5.0'a kadar burada
 > `https://mcp.opencaselaw.ch/api/` diye bir REST endpoint'i yazıyordu — **böyle bir
