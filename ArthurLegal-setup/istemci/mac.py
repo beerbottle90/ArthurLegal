@@ -5,8 +5,10 @@ listesinin ve Run anahtarının karşılığı. kur.py çağırır; liste (hangi
   birer takma adları (sembolik bağ) durur. Arthur Mask kuruluysa onun da masaüstü takma adı yazılır; Windows'ta bunu
   Arthur Mask'in kendi kurulumu yapar.
 - Yardımcılar (başlangıç rehberi, proje klasörleri, güncelleme denetimi, kaldırma) ~/Applications/<ürün> klasöründedir.
-- Adlar sürüm numarası taşımaz (Mac alışkanlığı; Dock'a eklenen simge güncellemede kopmasın). Sürüm uygulamanın
-  bilgisindedir (Finder: Bilgi Al) ve her güncellemede yeniden yazılır; eski_surumlu_kisayol_var ona bakar.
+- Uygulamaların adları sürüm numarası taşımaz (Mac alışkanlığı; Dock'a eklenen simge güncellemede kopmasın). Sürüm
+  uygulamanın bilgisindedir (Finder: Bilgi Al) ve her güncellemede yeniden yazılır. Masaüstü takma adları ise Windows'taki
+  kısayollar gibi sürümü adında taşır ("ArthurLegal 3.0.12"); güncellemede yenisi yazılır, eskisi silinir.
+  eski_surumlu_kisayol_var ikisine de bakar.
 - Silme yalnız bu kurulumun yazdığı uygulamalara (paket kimliği com.arthurlegal.kisayol.*) ve masaüstündeki sembolik
   bağlara dokunur; kullanıcının başka dosyasına dokunulmaz.
 - Güncelleyici oturum açılışında ve altı saatte bir LaunchAgent'la çalışır (~/Library/LaunchAgents).
@@ -166,11 +168,16 @@ def eski_kisayollari_temizle(liste: list, menu: Path, urun: str) -> None:
 
 
 def eski_surumlu_kisayol_var(liste: list, surum: str) -> bool:
-    """Bu kurulumun uygulamalarından biri çalışan sürümden başka bir sürüm taşıyor mu ya da eksik mi?"""
+    """Bu kurulumun uygulamalarından biri çalışan sürümden başka bir sürüm taşıyor mu ya da eksik mi? Masaüstünde
+    uygulamalarımızdan birine giden ama adı listede olmayan (önceki sürümün numarasını ya da hiç numara taşımayan)
+    takma ad var mı? Kullanıcının sildiği takma ad eksik sayılmaz (Windows'taki gibi)."""
     for yol, *_ in liste:
         if yol.parent != masaustu() and (not yol.exists() or surumu(yol) != surum):
             return True
-    return False
+    kalacak = {yol for yol, *_ in liste}
+    hedefler = {str(hedef) for yol, hedef, *_ in liste if yol.parent == masaustu()}
+    bagler = masaustu().glob("*.app") if masaustu().is_dir() else []
+    return any(bag.is_symlink() and bag not in kalacak and os.readlink(bag) in hedefler for bag in bagler)
 
 
 def kisayollar_sil(urun: str, menu: Path) -> None:

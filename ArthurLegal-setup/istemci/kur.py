@@ -194,7 +194,9 @@ def _kisayol_listesi() -> list:
 def _mac_kisayol_listesi() -> list:
     """macOS: (yol, hedef, argüman, açıklama). Paket ve Tapu uygulamaları ~/Applications'ta (Launchpad), masaüstünde
     takma adları (hedefi uygulamadır); yardımcılar ~/Applications/<ürün> klasöründe; Arthur Mask kuruluysa onun da
-    masaüstü takma adı. Adlar sürüm taşımaz, sürüm uygulamanın bilgisindedir (mac.py)."""
+    masaüstü takma adı. Masaüstü takma adları Windows'taki gibi sonda çalışan kodun sürümünü taşır ("<ad> 3.0.12",
+    "<ad> Tapu 3.0.12"); uygulamaların adları sürüm taşımaz (Dock'a eklenen simge güncellemede kopmasın), sürüm
+    uygulamanın bilgisindedir (mac.py)."""
     ad, menu, s = ortak.urun_adi(), _menu(), ortak.surum()
     m = KISAYOL_METNI[ortak.dil()]
     py, al, secili = ortak.python_yolu(), shlex.quote(str(ortak.AL)), ortak.moduller()
@@ -209,7 +211,8 @@ def _mac_kisayol_listesi() -> list:
         simgeler.append((f"{ad} Tapu.app", f"-B {al} kisayol tapu", m["tapu"].format(s=s)))
     uyg = mac.uygulamalar()
     liste = [(uyg / dosya, py, arg, aciklama) for dosya, arg, aciklama in simgeler]
-    liste += [(mac.masaustu() / dosya, uyg / dosya, "", aciklama) for dosya, _, aciklama in simgeler]
+    liste += [(mac.masaustu() / f"{Path(dosya).stem} {s}.app", uyg / dosya, "", aciklama)
+              for dosya, _, aciklama in simgeler]
     mask = ortak.mask_uygulamasi()
     if mask and "mask" in secili:
         liste.append((mac.masaustu() / mask.name, mask, "", "Arthur Mask"))
@@ -552,7 +555,8 @@ def main(argv=None) -> int:
     ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; modüller "
                             f"{','.join(ortak.moduller())}; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
-        paket = next((y.stem for y, _, a, _ in _kisayol_listesi()  # macOS'ta masaüstündeki takma adın adı aynı
+        # macOS'ta masaüstündeki takma adın adı uygulamanın adı ve sürüm ("<ad> 3.0.12"; _mac_kisayol_listesi).
+        paket = next((f"{y.stem} {ortak.surum()}" if ortak.MAC else y.stem for y, _, a, _ in _kisayol_listesi()
                       if (ortak.MAC or y.parent == _masaustu()) and "kisayol baslat" in a),
                      f"{ortak.urun_adi()} {ortak.surum()}")
         sayi, simge = len(claude_ayari.istenen_girdiler()), paket

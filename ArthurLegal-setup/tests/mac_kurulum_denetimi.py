@@ -163,13 +163,16 @@ def kurulum(secim: list, surum: str) -> None:
         denetle(os.access(y / "Contents" / "MacOS" / "arthurlegal", os.X_OK)
                 and (y / "Contents" / "Resources" / "arthurlegal.icns").exists(), "  çalıştırılabilir ve simgeli")
     adlar = {Path(y).name for y, _, _ in liste}
+    # Masaüstü takma adları Windows'taki kısayollar gibi sürümü adında taşır; uygulamaların adları sürüm taşımaz.
     if "adliye" in secim:
-        denetle((MASA / "ArthurLegal Courthouse.app").is_symlink(), "masaüstünde Courthouse simgesi")
+        denetle((MASA / f"ArthurLegal Courthouse {surum}.app").is_symlink(), f"masaüstünde Courthouse {surum} simgesi")
     if "tapu" in secim:
-        denetle((MASA / "ArthurLegal Tapu.app").is_symlink(), "masaüstünde Tapu simgesi")
+        denetle((MASA / f"ArthurLegal Tapu {surum}.app").is_symlink(), f"masaüstünde Tapu {surum} simgesi")
+    eski = [p.name for p in MASA.glob("ArthurLegal*.app") if p.is_symlink() and p.name not in adlar]
+    denetle(not eski, f"masaüstünde sürümsüz ya da eski numaralı ArthurLegal takma adı yok{': ' + ', '.join(eski) if eski else ''}")
     if not {"hukuk-burosu", "kurumsal"} & set(secim):
-        denetle("ArthurLegal.app" not in adlar and not (UYG / "ArthurLegal.app").exists(),
-                "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
+        denetle("ArthurLegal.app" not in adlar and f"ArthurLegal {surum}.app" not in adlar
+                and not (UYG / "ArthurLegal.app").exists(), "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
     if "hafiza" in secim:
         denetle((HAFIZA / "Core.md").exists() and (HAFIZA / "Kurallar.md").exists(), f"hafıza kasası açıldı: {HAFIZA}")
         denetle({"Hafıza Klasörü.app", "Memory Folder.app"} & adlar, "Hafıza Klasörü uygulaması")

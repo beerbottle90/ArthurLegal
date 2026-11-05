@@ -1629,7 +1629,8 @@ class MacKurulumTesti(unittest.TestCase):
 
     def test_simgeler_uygulamalar_ve_masaustu_takma_adlari(self):
         """İstenen: masaüstünde Courthouse, Tapu ve Mask simgeleri. macOS'ta paket ve Tapu simgeleri ~/Applications'ta
-        uygulamadır (Launchpad, Spotlight), masaüstünde takma adları durur; adlar sürüm taşımaz."""
+        uygulamadır (Launchpad, Spotlight), masaüstünde takma adları durur; uygulamaların adları sürüm taşımaz, masaüstü
+        takma adları Windows'taki kısayollar gibi sürümü adında taşır."""
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
             self.kok(t, "adliye", "tapu", "mask")
@@ -1638,13 +1639,13 @@ class MacKurulumTesti(unittest.TestCase):
             liste.pop("Desktop/Arthur Mask.app", None)  # bu Mac'te /Applications'ta kurulu bir Arthur Mask varsa
             self.assertEqual(sorted(y for y in liste if not y.startswith("Applications/ArthurLegal/")),
                              ["Applications/ArthurLegal Courthouse.app", "Applications/ArthurLegal Tapu.app",
-                              "Desktop/ArthurLegal Courthouse.app", "Desktop/ArthurLegal Tapu.app"],
+                              "Desktop/ArthurLegal Courthouse 0.0.1.app", "Desktop/ArthurLegal Tapu 0.0.1.app"],
                              "Hukuk Bürosu ve Kurumsal seçilmedi: ana simge yok")
             hedef, arg = liste["Applications/ArthurLegal Courthouse.app"]
             self.assertEqual(hedef, py)
             self.assertTrue(arg.startswith("-B ") and arg.endswith("kisayol baslat adliye"), arg)
             self.assertTrue(liste["Applications/ArthurLegal Tapu.app"][1].endswith("kisayol tapu"))
-            self.assertEqual(liste["Desktop/ArthurLegal Courthouse.app"], ("Applications/ArthurLegal Courthouse.app", ""))
+            self.assertEqual(liste["Desktop/ArthurLegal Courthouse 0.0.1.app"], ("Applications/ArthurLegal Courthouse.app", ""))
             yardimci = {y.rsplit("/", 1)[1]: h for y, (h, a) in liste.items() if y.startswith("Applications/ArthurLegal/")}
             self.assertEqual(sorted(yardimci), ["ArthurLegal'i Kaldır.app", "Başlangıç Rehberi.app",
                                                 "Güncellemeleri Denetle.app", "Proje Klasörleri.app"])
@@ -1665,7 +1666,7 @@ class MacKurulumTesti(unittest.TestCase):
             secim_yaz(t / "kok", "hukuk-burosu", "akademisyen")
             self.calistir(t, "ortak.durum_guncelle(dil='en'); print(1)")
             adlar = [y for y, *_ in self.calistir(t, self.LISTE)]
-            for ad in ("Applications/ArthurLegal.app", "Desktop/ArthurLegal.app", "Applications/ArthurLegal Academician.app",
+            for ad in ("Applications/ArthurLegal.app", "Desktop/ArthurLegal 0.0.1.app", "Applications/ArthurLegal Academician.app",
                        "Applications/ArthurLegal/Start Guide.app", "Applications/ArthurLegal/Uninstall ArthurLegal.app"):
                 self.assertIn(ad, adlar)
             self.assertFalse([a for a in adlar if "Tapu" in a or "Courthouse" in a])
@@ -1717,7 +1718,7 @@ class MacKurulumTesti(unittest.TestCase):
             os.symlink("/System/Applications/Notes.app", masa / "Notlar.app")  # kullanıcının takma adı
             self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
             self.assertTrue((uyg / "ArthurLegal Courthouse.app" / "Contents" / "MacOS" / "arthurlegal").exists())
-            self.assertEqual(os.readlink(masa / "ArthurLegal Courthouse.app"), str(uyg / "ArthurLegal Courthouse.app"))
+            self.assertEqual(os.readlink(masa / "ArthurLegal Courthouse 0.0.1.app"), str(uyg / "ArthurLegal Courthouse.app"))
             self.assertTrue((uyg / "ArthurLegal" / "ArthurLegal'i Kaldır.app").is_dir())
             kaldir = kok / "KALDIR.command"
             self.assertTrue(os.access(kaldir, os.X_OK))
@@ -1728,10 +1729,43 @@ class MacKurulumTesti(unittest.TestCase):
             self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
             self.assertFalse((uyg / "ArthurLegal Courthouse.app").exists())
             self.assertEqual(sorted(p.name for p in masa.iterdir()),
-                             ["ArthurLegal Tapu.app", "ArthurLegal.app", "Başka Program.app", "Notlar.app"])
+                             ["ArthurLegal 0.0.1.app", "ArthurLegal Tapu 0.0.1.app", "Başka Program.app", "Notlar.app"])
             self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
             self.assertEqual(sorted(p.name for p in masa.iterdir()), ["Başka Program.app", "Notlar.app"])
             self.assertEqual(sorted(p.name for p in uyg.iterdir()), [])
+
+    @unittest.skipUnless(os.name == "posix", "sembolik bağ: macOS ve Linux")
+    def test_masaustu_takma_adi_surumu_tasir_guncellemede_yenilenir(self):
+        """Masaüstündeki takma ad Windows'taki gibi "<ad> <sürüm>" adını taşır. 3.0.11 ve öncesinin sürümsüz takma adı
+        ya da önceki sürümün numaralı takma adı güncelleyicinin eşitlemesinde yenisiyle değişir; kullanıcının kendi
+        takma adlarına ve gerçek dosyalarına dokunulmaz, sildiği takma ad geri yazılmaz."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "hukuk-burosu", "tapu")
+            masa, uyg = t / "ev" / "Desktop", t / "ev" / "Applications"
+            masa.mkdir()
+            (masa / "ArthurLegal 9.9.9.app").mkdir()                         # kullanıcının gerçek klasörü
+            os.symlink("/System/Applications/Notes.app", masa / "Notlar.app")  # kullanıcının takma adı
+            self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
+            self.assertEqual(os.readlink(masa / "ArthurLegal 0.0.1.app"), str(uyg / "ArthurLegal.app"))
+            self.assertEqual(os.readlink(masa / "ArthurLegal Tapu 0.0.1.app"), str(uyg / "ArthurLegal Tapu.app"))
+            self.assertTrue((uyg / "ArthurLegal.app").is_dir(), "uygulamanın adı sürüm taşımaz (Dock)")
+            self.assertFalse(self.calistir(t, "import kur; print(json.dumps(kur.eski_surumlu_kisayol_var()))"))
+            # Önceki kurulumların takma adları: sürümsüz (3.0.11 ve öncesi) ve eski numaralı.
+            (masa / "ArthurLegal 0.0.1.app").unlink()
+            os.symlink(uyg / "ArthurLegal.app", masa / "ArthurLegal.app")
+            os.symlink(uyg / "ArthurLegal Tapu.app", masa / "ArthurLegal Tapu 0.0.0.app")
+            self.assertTrue(self.calistir(t, "import kur; print(json.dumps(kur.eski_surumlu_kisayol_var()))"),
+                            "güncelleyici eski adlı takma adı görür (kur --kisayol-esitle)")
+            self.calistir(t, "import kur; kur.kisayollar_yaz(); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()),
+                             ["ArthurLegal 0.0.1.app", "ArthurLegal 9.9.9.app", "ArthurLegal Tapu 0.0.1.app", "Notlar.app"])
+            self.assertFalse(self.calistir(t, "import kur; print(json.dumps(kur.eski_surumlu_kisayol_var()))"))
+            # Kullanıcı takma adı sildiyse eşitleme onu geri yazmaz (Windows'taki gibi; tam yazım güncellemede).
+            (masa / "ArthurLegal Tapu 0.0.1.app").unlink()
+            self.assertFalse(self.calistir(t, "import kur; print(json.dumps(kur.eski_surumlu_kisayol_var()))"))
+            self.calistir(t, "import kur; kur.kisayollar_sil(); print(1)")
+            self.assertEqual(sorted(p.name for p in masa.iterdir()), ["ArthurLegal 9.9.9.app", "Notlar.app"])
 
     def test_oturum_acilisi_ajani(self):
         """Windows'taki Run anahtarının karşılığı: LaunchAgent oturum açılışında ve altı saatte bir sessiz günceller."""
@@ -1854,6 +1888,14 @@ class MacKurulumTesti(unittest.TestCase):
                         "arayüz işareti modül listesine girmez")
         self.assertIn("{{PAKET_YOK_TR}}", son)
         self.assertIn("{{PAKET_YOK_EN}}", son)
+        # Windows'taki ClaudeKapat gibi: Claude Desktop yerel sunucuları yalnız açılışta okur; kayıt (kur) ve masa
+        # mesajı (kisayol baslat) ondan sonra gelir. Yalnız bu kullanıcının Claude Desktop'u, Claude Code ("claude") değil.
+        kapat = son.index('/usr/bin/pkill -TERM -x -U "$KULLANICI" Claude')
+        self.assertLess(kapat, son.index('al.py" kur --kurulum'), "Claude Desktop kayıttan önce kapatılır")
+        self.assertLess(kapat, son.index('al.py" kisayol baslat'))
+        for satir in son.splitlines():
+            if "pkill" in satir or "pgrep" in satir:
+                self.assertRegex(satir, r'-x -U "\$KULLANICI" Claude\b', satir)
 
     def test_kaldirma_betigi(self):
         from pathlib import PurePosixPath
