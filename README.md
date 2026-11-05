@@ -184,12 +184,15 @@ kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız **Claude D
   <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
-**4. Kurun.** Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
+**4. Kurun.** Claude Desktop açıksa kurulum onu kapatır; yazdığınız bir mesaj varsa önce gönderin. Sonraki sayfada
+**Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
 modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
-**ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Arthur
+**ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Masaüstündeki
+simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle yenilenir. Arthur
 Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
-**Arthur Mask** simgesi eklenir. Claude Desktop açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; sonra **ArthurLegal**
-simgesine tıklayın: yeni arayüzde Claude *ArthurLegal Masası'nı aç* mesajıyla açılır, Enter'a basın. Yeni bir sohbet açıp
+**Arthur Mask** simgesi eklenir. Kurulum Claude Desktop'u yeniden açar: yeni arayüzde Claude *ArthurLegal Masası'nı
+aç* mesajıyla açılır, Enter'a basın. Claude masayı bulamazsa Claude Desktop'tan **Cmd+Q** ile tamamen çıkıp yeniden
+açın, sonra **ArthurLegal** simgesine tıklayıp Enter'a basın. Yeni bir sohbet açıp
 sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
 Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek, çıkarmak
 ya da arayüzü değiştirmek için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
@@ -362,14 +365,15 @@ and cards); untick it for **Claude Desktop classic**.
   <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
 </p>
 
-**4. Install.** On the next page click **Install**, then **Close** on the last page: the start guide opens in your
-browser. The
+**4. Install.** If Claude Desktop is open, setup quits it; send any message you are typing first. On the next page
+click **Install**, then **Close** on the last page: the start guide opens in your browser. The
 modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal** for Law
-Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. If you
+Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. As on
+Windows, the desktop icons carry the version number (e.g. **ArthurLegal 3.0.12**) and are renamed by updates. If you
 chose Arthur Mask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
-ready and an **Arthur Mask** icon appears on the desktop. If Claude Desktop is open, quit it completely with
-**Cmd+Q** and open it again; then click the **ArthurLegal** icon: with the new interface Claude opens with
-*ArthurLegal Masası'nı aç* typed, press Enter. You can also open a new chat and type your question. When Claude asks for permission the
+ready and an **Arthur Mask** icon appears on the desktop. Setup reopens Claude Desktop: with the new interface
+Claude opens with *ArthurLegal Masası'nı aç* typed, press Enter. If Claude cannot find the desk, quit Claude Desktop
+completely with **Cmd+Q**, open it again, click the **ArthurLegal** icon and press Enter. You can also open a new chat and type your question. When Claude asks for permission the
 first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
 [claude.ai/download](https://claude.ai/download). To add or remove modules or to change the interface, open the
 installer again; your last choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
@@ -654,6 +658,38 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.12 — On a Mac the desk opens straight after setup; version numbers on the Mac desktop icons (2026-11-05)
+
+- **The Mac installer restarts Claude Desktop, as the Windows installer does.** Claude Desktop reads its local
+  servers only when it starts. The Windows installer quits it before installing; the Mac installer did not. Its last
+  step sent *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) to a Claude Desktop that was still running without
+  the new registration. On a first installation that chat had no ArthurLegal tools and Claude could not find the desk.
+  After an update it still ran the previous version. Setup now quits Claude Desktop first (send any message you are
+  typing) and opens it again at the end with the desk message typed: press Enter. Only Claude Desktop is closed;
+  Claude Code sessions are not touched.
+- **Version numbers on the Mac desktop icons.** As on Windows, the desktop icons are named with the version
+  (**ArthurLegal 3.0.12**, **ArthurLegal Courthouse 3.0.12**, **ArthurLegal Tapu 3.0.12**). The updater renames them
+  with each new version and removes the old ones. The apps in the Applications folder keep their names, so an icon
+  added to the Dock still works after an update.
+- **The start page no longer shows an old number right after setup.** Its *Running in Claude Desktop* line read the
+  version Claude Desktop had last started (e.g. 3.0.2) and told you to restart it, even when setup had just started
+  it. It now says Claude Desktop is starting with the installed version (Windows and Mac).
+- How it arrives: download and run the installer once on a Mac (the step that restarts Claude Desktop is part of the
+  installer). On Windows and on Macs that stay on 3.0.11, the updater installs 3.0.12 by itself; the Mac desktop
+  icons get their version numbers then. Packages, the desk (3.0.11), Claude plugin 1.12.8 and Arthur Mask 1.1.2 are
+  unchanged.
+
+**Türkçe:** Mac kurulumu artık Windows'taki gibi Claude Desktop'u kapatıp açıyor. Claude Desktop yerel sunucuları
+yalnız açılırken okur. Mac kurulumu onu kapatmadığı için son adımdaki *ArthurLegal Masası'nı aç* mesajı, yeni kaydı
+görmemiş Claude Desktop'a gidiyordu. İlk kurulumda masa bulunamıyor, güncellemede önceki sürüm çalışıyordu. Kurulum
+şimdi Claude Desktop'u önce kapatır (yazdığınız mesajı önce gönderin), sonunda masa mesajıyla yeniden açar: Enter'a
+basın. Yalnız Claude Desktop kapanır, Claude Code'a dokunulmaz. Mac'te masaüstü simgeleri Windows'taki gibi sürüm
+numarasını taşır (**ArthurLegal 3.0.12**); güncelleyici her yeni sürümde adı yeniler, eskisini siler. Uygulamalar
+klasöründeki adlar değişmez, Dock'a eklenen simge kopmaz. Başlangıç sayfasının *Claude Desktop'ta çalışan* satırı
+kurulumdan hemen sonra eski numarayı (ör. 3.0.2) göstermez; Claude Desktop'un kurulu sürümle açıldığını söyler. Mac'te
+kurulumu bir kez indirip çalıştırın. Windows'ta ve 3.0.11'de kalan Mac'lerde güncelleyici 3.0.12'yi kendisi kurar.
+Paketler, masa (3.0.11), Claude eklentisi 1.12.8 ve Arthur Mask 1.1.2 aynı.
 
 ## Setup 3.0.11 — Desktop modules explain themselves, Donna shows real connections (2026-11-03)
 
