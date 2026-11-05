@@ -177,9 +177,13 @@ The duty of confidentiality stays with the user.</footer>
   var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");
   if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Start";
   // The version Claude Desktop is really running; after an update it stays old until Claude Desktop is reopened.
-  var calisan = !d.calisan_surum ? "not opened yet" : (d.calisan_surum === d.surum ? d.calisan_surum + " (current)"
+  // If this click (or the last step of setup) has just started Claude Desktop, its server has not started yet: the
+  // recorded number is from its previous run, and Claude opens with this installation's version.
+  var calisan = d.calisan_surum === d.surum ? d.calisan_surum + " (current)"
+      : d.claude === "başlatıldı" ? "Claude Desktop is starting now and will run " + d.surum
+      : !d.calisan_surum ? "not opened yet"
       : d.calisan_surum + (mac ? " — quit Claude Desktop with Cmd+Q and reopen it to start "
-                                 : " — quit Claude Desktop completely, including the tray icon, and reopen it to start ") + d.surum);
+                               : " — quit Claude Desktop completely, including the tray icon, and reopen it to start ") + d.surum;
   var satirlar = [
     ["Installed", d.surum],
     ["Last update", d.son_guncelleme || "none since installation"],

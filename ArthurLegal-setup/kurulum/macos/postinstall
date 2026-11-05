@@ -2,10 +2,11 @@
 # ArthurLegal macOS kurulumunun son adımı ('son' bileşeninin betiği; derle_macos.py pakete koyar).
 # Kurulum yalnız kullanıcının ev klasörüne yapılır; betik kullanıcının yetkisiyle çalışır.
 #  1. Bilgisayarın işlemcisine uyan Python'u (Apple Silicon ya da Intel) runtime/ olarak yerine koyar.
-#  2. Seçilen modüllerin işaretlerini (secim/<kod>) kur.py'ye --moduller olarak, arayüz kutusunu (secim/arayuz-yeni)
+#  2. Claude Desktop açıksa kapatır (Windows kurulumundaki ClaudeKapat gibi).
+#  3. Seçilen modüllerin işaretlerini (secim/<kod>) kur.py'ye --moduller olarak, arayüz kutusunu (secim/arayuz-yeni)
 #     --arayuz olarak geçirir: Claude Desktop kaydı, uygulamalar, masaüstü takma adları ve oturum açılışında
 #     güncelleme (LaunchAgent) yazılır.
-#  3. Paket seçilmediyse uyarır ve kaydı yapmaz; seçildiyse başlangıç rehberini açar.
+#  4. Paket seçilmediyse uyarır ve kaydı yapmaz; seçildiyse Claude Desktop'u masa mesajıyla ve başlangıç rehberini açar.
 # Ev klasörü: ev klasörüne kurulumda $2 kullanıcının ev klasörüdür ($3 '/'); bulunamazsa $HOME.
 KOK="$HOME/Library/Application Support/ArthurLegal"
 for EV in "$2" "$3"; do
@@ -49,6 +50,28 @@ rm -rf "$KOK/secim"
 
 DIL=$(defaults read -g AppleLanguages 2>/dev/null | sed -n '2p' | tr -d ' ",' | cut -c1-2)
 [ "$DIL" = "tr" ] || DIL=en
+
+# Claude Desktop yerel sunucuları (claude_desktop_config.json) yalnız açılışta okur. Açık kalırsa kurulumun yazdığı
+# kaydı görmez: ilk kurulumda ArthurLegal'siz, güncellemede önceki sürümün sunucusuyla sürer ve son adımdaki
+# "ArthurLegal Masası'nı aç" mesajı masayı bulamaz. Windows kurulumundaki gibi kayıttan önce kapatılır; son adım
+# (kisayol baslat) onu yeniden açar. Önce SIGTERM (Electron bunu Cmd+Q gibi düzgün çıkış sayar), 10 saniyede
+# kapanmazsa zorla. Yalnız bu kullanıcının Claude Desktop'u: Claude Code'un süreci küçük harfli "claude"dır
+# (ortak.claude_calisiyor ile aynı ölçüt).
+KULLANICI=$(id -u)
+if /usr/bin/pgrep -x -U "$KULLANICI" Claude >/dev/null 2>&1; then
+  /usr/bin/pkill -TERM -x -U "$KULLANICI" Claude
+  for _ in $(seq 1 20); do
+    /usr/bin/pgrep -x -U "$KULLANICI" Claude >/dev/null 2>&1 || break
+    sleep 0.5
+  done
+  if /usr/bin/pgrep -x -U "$KULLANICI" Claude >/dev/null 2>&1; then
+    /usr/bin/pkill -KILL -x -U "$KULLANICI" Claude
+    sleep 1
+    echo "Claude Desktop 10 saniyede kapanmadı, zorla kapatıldı"
+  else
+    echo "Claude Desktop kapatıldı; kurulumun sonunda yeniden açılır"
+  fi
+fi
 
 rm -f "$KOK/aktif.txt"
 "$KOK/runtime/bin/python3" -B "$KOK/bin/al.py" kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM" --arayuz "$ARAYUZ"

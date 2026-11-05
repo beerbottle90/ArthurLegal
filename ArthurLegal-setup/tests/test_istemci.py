@@ -1854,6 +1854,14 @@ class MacKurulumTesti(unittest.TestCase):
                         "arayüz işareti modül listesine girmez")
         self.assertIn("{{PAKET_YOK_TR}}", son)
         self.assertIn("{{PAKET_YOK_EN}}", son)
+        # Windows'taki ClaudeKapat gibi: Claude Desktop yerel sunucuları yalnız açılışta okur; kayıt (kur) ve masa
+        # mesajı (kisayol baslat) ondan sonra gelir. Yalnız bu kullanıcının Claude Desktop'u, Claude Code ("claude") değil.
+        kapat = son.index('/usr/bin/pkill -TERM -x -U "$KULLANICI" Claude')
+        self.assertLess(kapat, son.index('al.py" kur --kurulum'), "Claude Desktop kayıttan önce kapatılır")
+        self.assertLess(kapat, son.index('al.py" kisayol baslat'))
+        for satir in son.splitlines():
+            if "pkill" in satir or "pgrep" in satir:
+                self.assertRegex(satir, r'-x -U "\$KULLANICI" Claude\b', satir)
 
     def test_kaldirma_betigi(self):
         from pathlib import PurePosixPath

@@ -148,6 +148,8 @@ Kurumsal Asistan, Courthouse ya da Akademisyen.</li>
 <li>Aynı ekranda <b>ArthurLegal yeni arayüz</b> işaretli gelir: ArthurLegal simgesi Claude Desktop'un içinde ArthurLegal
 Masası'nı açar. İşareti kaldırırsanız <b>Claude Desktop klasik</b> kurulur.</li>
 <li>Kurulum yalnız sizin kullanıcı hesabınıza yapılır, yönetici şifresi istemez.</li>
+<li><b>Claude Desktop açıksa kurulum sırasında kapatılır</b> ve sonunda yeniden açılır; yazdığınız bir mesaj varsa
+önce gönderin.</li>
 <li>Arthur Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
 Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
@@ -156,7 +158,8 @@ Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da son
 <p class="onemli"><b>Önemli: yeni arayüzde ArthurLegal simgesine tıkladığınızda Claude Desktop, yazma kutusunda
 <i>ArthurLegal Masası'nı aç</i> yazılı açılır. Masanın açılması için Enter'a basın; mesaj kendiliğinden
 gönderilmez.</b></p>
-<ul><li>Claude Desktop açıksa <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine
+<ul><li>Kurulum Claude Desktop'u yeniden açtı ve mesajı yazma kutusuna yazdı: <b>Enter</b>'a basın. Claude masayı
+bulamazsa Claude Desktop'tan <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine
 tıklayın ve Enter'a basın. Yeni bir sohbet açıp
 sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u seçin.</li>
 <li>Claude Desktop kurulu değilse <b>claude.ai/download</b> adresinden kurun.</li>
@@ -176,6 +179,8 @@ Assistant, Courthouse or Academician.</li>
 <li>On the same screen <b>ArthurLegal new interface</b> comes ticked: the ArthurLegal icon opens ArthurLegal Masası (the
 ArthurLegal desk) inside Claude Desktop. Untick it for <b>Claude Desktop classic</b>.</li>
 <li>Setup installs for your user account only and does not ask for an administrator password.</li>
+<li><b>If Claude Desktop is open, setup quits it</b> and opens it again at the end; send any message you are typing
+first.</li>
 <li>If you choose Arthur Mask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
 when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
 <li>From now on, updates install themselves in the background after their signatures are verified.</li></ul>""",
@@ -185,7 +190,8 @@ your browser.</p>
 <p class="onemli"><b>Important: with the new interface, clicking the ArthurLegal icon opens Claude Desktop with
 <i>ArthurLegal Masası'nı aç</i> already typed in the message box. Press Enter to open the desk; the message is not
 sent by itself.</b></p>
-<ul><li>If Claude Desktop is open, quit it completely with <b>Cmd+Q</b> and open it again; then click the
+<ul><li>Setup has reopened Claude Desktop with the message typed in the message box: press <b>Enter</b>. If Claude
+cannot find the desk, quit Claude Desktop completely with <b>Cmd+Q</b> and open it again; then click the
 <b>ArthurLegal</b> icon and press Enter. You
 can also open a new chat and type your question. When Claude asks for permission the first time it uses a tool, choose
 <b>Always allow</b>.</li>
