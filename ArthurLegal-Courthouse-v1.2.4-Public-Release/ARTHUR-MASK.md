@@ -198,8 +198,8 @@ ve QR kod.
 Hayır. KVKK yükümlülükleri, soruşturma ve kovuşturma dosyalarına ilişkin gizlilik
 kuralları ve kurumunuzun bilgi güvenliği kuralları aynen devam eder. Bir dosya
 içeriğinin maskeli hâliyle bile harici bir yapay zekâ hizmetine verilip
-verilemeyeceğini mevzuata ve kurum kurallarına göre siz değerlendirirsiniz; Arthur
-Mask bu kararı sizin yerinize vermez. Claude'un çıktıları her durumda taslaktır ve
+verilemeyeceğini mevzuata ve kurum kurallarına göre siz değerlendirirsiniz; ArthurMask
+bu kararı sizin yerinize vermez. Claude'un çıktıları her durumda taslaktır ve
 hâkim veya heyet onayı gerektirir.
 
 **Gizlilik kararı olan veya kısıtlı dosyalar?**
