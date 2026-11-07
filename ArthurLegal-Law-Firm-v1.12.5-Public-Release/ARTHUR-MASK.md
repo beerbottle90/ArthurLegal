@@ -197,8 +197,8 @@ ve QR kod.
 
 **ArthurMask kullanınca sorumluluğum kalkar mı?**
 Hayır. KVKK yükümlülükleriniz, Avukatlık Kanunu'ndaki sır saklama yükümlülüğünüz,
-ticari sır ve gizlilik sözleşmelerinden doğan yükümlülükler aynen devam eder. Arthur
-Mask bu yükümlülükleri yerine getirmenize yardım eden bir araçtır; maskeli metnin
+ticari sır ve gizlilik sözleşmelerinden doğan yükümlülükler aynen devam eder. ArthurMask
+bu yükümlülükleri yerine getirmenize yardım eden bir araçtır; maskeli metnin
 Claude'a gönderilmesinin değerlendirmesi size aittir.
 
 **İngilizce veya Azerbaycanca belge olur mu?**

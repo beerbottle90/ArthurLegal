@@ -188,8 +188,8 @@ kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız **Claude D
 **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
 modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
 **ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Masaüstündeki
-simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle yenilenir. Arthur
-Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
+simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle yenilenir. ArthurMask'i
+seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
 **ArthurMask** simgesi eklenir. Kurulum Claude Desktop'u yeniden açar: yeni arayüzde Claude *ArthurLegal Masası'nı
 aç* mesajıyla açılır, Enter'a basın. Claude masayı bulamazsa Claude Desktop'tan **Cmd+Q** ile tamamen çıkıp yeniden
 açın, sonra **ArthurLegal** simgesine tıklayıp Enter'a basın. Yeni bir sohbet açıp
