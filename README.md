@@ -601,7 +601,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 126 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 130 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
@@ -658,6 +658,45 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.0.13 — Fee cards on the desk, Official Gazette annexes, ArthurMask 1.2.0 (2026-11-07)
+
+- **Fee cards on the desk.** A new *Hesap kartları* screen: choose the work, fill in only the boxes it needs. The minimum
+  attorney fee comes from the 2026 Attorneys' Minimum Fee Tariff (Official Gazette 03.11.2026, no. 33419); court fees and
+  the advance on costs from Communiqué no. 98 on the Fees Law (Official Gazette 31.12.2025, no. 33124, 5th repeat) and
+  the HMK advance tariff (Official Gazette 28.10.2025, no. 33061). Code does the arithmetic, every line shows its legal
+  basis and a link to the Gazette, and points the tariff leaves open are marked *teyit edin* (verify) and kept out of
+  the total. Every amount was read again from the Gazette annexes themselves: 62 fee values and 27 court-fee items. A daily watcher scans the Official Gazette: if a new tariff or fee rule appears, or the day's check could not be made, the card does not give a final total and says so with a link; every result shows its source and the time of the last check.
+- **Official Gazette annexes.** Tariffs and schedules sit in the PDF annex, often as scanned pages. `tr_resmi_gazete_getir`
+  now lists a document's annexes, and the new `tr_resmi_gazete_ek_sayfa` returns one annex page: as text when the PDF
+  has text, otherwise as an image that Claude reads itself. Only www.resmigazete.gov.tr. Some scans (JBIG2, e.g. the
+  fee communiqué) need the next full server image; until then the tool says so instead of guessing.
+- **ArthurMask 1.2.0.** Compare two versions of a Word file: the counterparty's "clean" version opens on your computer as
+  real tracked changes, and Claude sees only a masked list of what changed. A contract consistency check (defined terms,
+  cross-references, party names, bilingual columns). The name is one word everywhere; the installer moves old
+  shortcuts, the documents folder and, on a Mac, the old app to the new name. Dates such as 2025/7/15 are no longer
+  masked when a short case number is in the vault.
+- **TBB compliance pack.** `/firm-operations:yz-kullanim-politikasi` (Law Firm) and `/regulatory-legal:yz-kullanim-politikasi`
+  (Corporate) draft an AI-use policy and a short client notice under the Union of Turkish Bar Associations' AI guideline,
+  filled in from your installation. `al_dogrulama_kaydi` exports the desk's citation checks as Markdown, CSV or Word.
+- How it arrives: the updater installs 3.0.13 and ArthurMask 1.2.0 on Windows; on a Mac install ArthurMask 1.2.0 from
+  its release page once (the app then moves itself to the new name). The research connector has 130 tools. Desk
+  3.0.13, Claude plugin 1.12.10; package version numbers are unchanged.
+
+**Türkçe:** Masada yeni **Hesap kartları** ekranı: işlemi seçin, yalnız gereken kutuları doldurun. Asgari avukatlık
+ücreti 2026 Avukatlık Asgari Ücret Tarifesi'nden (RG 03.11.2026/33419), harç ve gider avansı 98 Seri No'lu Harçlar
+Kanunu Genel Tebliği'nden (RG 31.12.2025/33124, 5. mükerrer) ve HMK Gider Avansı Tarifesi'nden (RG 28.10.2025/33061)
+gelir. Hesabı kod yapar; her satırda dayanak ve Resmî Gazete bağlantısı vardır, tarifenin açık bıraktığı noktalar
+"teyit edin" diye ayrılır ve toplama girmez. Bütün tutarlar Resmî Gazete eklerinden yeniden okundu (62 ücret, 27 harç
+kalemi). Günlük nöbetçi Resmî Gazete'yi tarar: yeni bir tarife ya da harç düzenlemesi çıkarsa ya da günün kontrolü yapılamazsa kart kesin toplam vermez, bağlantıyla uyarır; her sonuç kaynağını ve son kontrol zamanını gösterir. Resmî Gazete ekleri artık okunuyor: `tr_resmi_gazete_ek_sayfa` metni olan sayfayı metin, taranmış sayfayı
+görüntü olarak verir ve Claude kendisi okur (yalnız resmigazete.gov.tr; JBIG2 taramalar sonraki tam sunucu imajıyla).
+ArthurMask 1.2.0: iki sürümü karşılaştırıp karşı tarafın değişikliğini Word izli değişikliği olarak açar, sözleşmenin iç
+tutarlılığını denetler, adı her yerde bitişik yazar ve eski kısayol, klasör ve Mac uygulamasını yeni ada taşır; kısa
+esas numarası tarihin içinde artık maskelenmez. TBB uyum paketi: büro yapay zekâ kullanım politikası ve müvekkil
+aydınlatma taslağı (`/firm-operations:yz-kullanim-politikasi`, Kurumsal'da `/regulatory-legal:yz-kullanim-politikasi`),
+masadaki atıf teyitlerinin dökümü (`al_dogrulama_kaydi`). Windows'ta güncelleyici 3.0.13'ü ve ArthurMask 1.2.0'ı kendisi
+kurar; Mac'te ArthurMask 1.2.0'ı yayın sayfasından bir kez kurun. Araştırma bağlayıcısında 130 araç var. Masa 3.0.13,
+Claude eklentisi 1.12.10; paket sürüm numaraları aynı.
 
 ## Setup 3.0.12 — On a Mac the desk opens straight after setup; version numbers on the Mac desktop icons (2026-11-05)
 
