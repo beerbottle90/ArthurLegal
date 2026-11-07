@@ -91,6 +91,12 @@ def sunucu_baslat(isleyici):
     return httpd, f"http://127.0.0.1:{httpd.server_address[1]}"
 
 
+# arthurlegal-mcp'nin taranmış Resmî Gazete eki sayfası: metin bloğu + MCP görüntü bloğu (+ masa için özet).
+GORUNTULU_SONUC = {"content": [{"type": "text", "text": "{\"sayfa\": 2, \"toplam_sayfa\": 12}"},
+                               {"type": "image", "data": "iVBORw0KGgo=", "mimeType": "image/png"}],
+                   "structuredContent": {"sayfa": 2, "toplam_sayfa": 12}}
+
+
 class SahteUzak(http.server.BaseHTTPRequestHandler):
     """ArthurLegal MCP taklidi: oturum başlığı verir, tools/call'a SSE ile cevap verir."""
     def log_message(self, *a):
@@ -121,7 +127,9 @@ class SahteUzak(http.server.BaseHTTPRequestHandler):
                 self.end_headers()
                 return
             metin = json.dumps(m["params"], ensure_ascii=False)
-            govde = f"event: message\ndata: {json.dumps({'jsonrpc': '2.0', 'id': m['id'], 'result': {'content': [{'type': 'text', 'text': metin}]}})}\n\n"
+            sonuc = (GORUNTULU_SONUC if m["params"].get("name") == "tr_resmi_gazete_ek_sayfa"
+                     else {"content": [{"type": "text", "text": metin}]})
+            govde = f"event: message\ndata: {json.dumps({'jsonrpc': '2.0', 'id': m['id'], 'result': sonuc})}\n\n"
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream")
             self.end_headers()
@@ -760,6 +768,12 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(bagli, [{"ad": "Gmail", "durum": "bagli"}])
 
 
+    def test_8_goruntu_blogu_kopruden_gecer(self):
+        """Uzak aracın görüntü bloğu (taranmış RG eki) Claude'a olduğu gibi gider; metin bloğu ve özet de."""
+        r = self.arac("tr_resmi_gazete_ek_sayfa", url="https://www.resmigazete.gov.tr/eskiler/a.pdf", sayfa=2)
+        self.assertEqual(r, GORUNTULU_SONUC)
+
+
 class SaltOkunurTesti(unittest.TestCase):
     def test_isaretsiz_arac_salt_okunur_olur_acik_isarete_dokunulmaz(self):
         import arthurlegal_sunucu as s
@@ -776,6 +790,18 @@ class SaltOkunurTesti(unittest.TestCase):
 
 class KopruTesti(unittest.TestCase):
     """Uzak araçların köprüsü: uzak masa aracı listelenmez, verilemeyen kart işareti silinir (klasikte hepsi)."""
+
+    def test_kart_verisi_goruntu_blogunu_birakmaz(self):
+        """Kartlı araçta kart verisi yalnız metin bloğundan okunur; görüntü bloğu sonuçta kalır."""
+        import arthurlegal_sunucu as s
+        if s.al_arayuz is None:
+            self.skipTest("arayüz yok")
+        uzak = {"content": [{"type": "text", "text": "{\"results\": []}"},
+                            {"type": "image", "data": "AA==", "mimeType": "image/jpeg"}]}
+        cikti = s.kart_verisi("tr_ictihat_ara", uzak)
+        self.assertEqual(cikti["content"], uzak["content"])
+        self.assertEqual(cikti["structuredContent"], {"results": []})
+        self.assertIs(s.kart_verisi("tr_resmi_gazete_ek_sayfa", uzak), uzak, "kartsız araç olduğu gibi döner")
     UZAK = [{"name": "al_masasi", "_meta": {"ui": {"resourceUri": "ui://arthurlegal/masa.html"}}},
             {"name": "tr_mevzuat_madde_getir", "_meta": {"ui": {"resourceUri": "ui://arthurlegal/madde-karti.html"},
                                                          "ui/resourceUri": "ui://arthurlegal/madde-karti.html"}},
