@@ -275,6 +275,12 @@ body { background: var(--zemin); }
 .kucuk-not { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ikincil); }
 .hesap-katlanir summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ikincil); }
 .hesap-katlanir ul { margin: 8px 0 0; padding-left: 20px; font-size: 13px; line-height: 1.5; color: var(--ikincil); }
+/* Tazelik: kaynak ve son kontrol küçük satırda; yeni düzenleme kırmızı kutu (toplam gizli), denetlenemedi sarı kutu. */
+.hesap-tazelik { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ikincil); font-variant-numeric: tabular-nums; }
+.uyari.kirmizi { background: var(--kirmizi-zemin); color: var(--kirmizi-metin); }
+.tazelik-kutu { display: flex; flex-direction: column; gap: 8px; }
+.tazelik-kutu p { margin: 0; }
+.tazelik-kutu .eylemler { margin: 0; }
 .onay-kutusu { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; min-height: 34px; }
 .onay-kutusu input { width: 18px; height: 18px; margin: 0; accent-color: var(--birincil); }
 .ornekler { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 10px; }
@@ -1214,8 +1220,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (sonuc && sonuc.isError) return ["hata", kisalt(hata || "araç hata döndürdü", 120)];
     if (!veri || typeof veri !== "object") return ["tamam", "tamamlandı"];
     if (veri.unavailable || veri.upstream_blocked) return ["uyar", "kaynağa ulaşılamadı"];
-    if (arac.startsWith("hesap_") && typeof veri.asgari_tl === "number") return ["tamam", `asgari ücret ${tlYaz(veri.asgari_tl)}`];
-    if (arac.startsWith("hesap_") && typeof veri.toplam_tl === "number") return ["tamam", `toplam ${tlYaz(veri.toplam_tl)}`];
+    if (arac.startsWith("hesap_")) {
+      const tz = veri.tazelik || {};
+      if (tz.durum === "yeni_duzenleme") return ["uyar", "Resmî Gazete'de yeni düzenleme var: toplam verilmedi"];
+      const teyitsiz = tz.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : "";
+      const durum = teyitsiz ? "uyar" : "tamam";
+      if (typeof veri.asgari_tl === "number") return [durum, `asgari ücret ${tlYaz(veri.asgari_tl)}${teyitsiz}`];
+      if (typeof veri.toplam_tl === "number") return [durum, `toplam ${tlYaz(veri.toplam_tl)}${teyitsiz}`];
+    }
     if (Array.isArray(veri.items) && veri.items.length && "ok" in (veri.items[0] || {})) {
       const ok = veri.items.filter((i) => i && i.ok).length;
       return [ok === veri.items.length ? "tamam" : "uyar", `${veri.items.length} maddeden ${sayiEki(ok)} getirildi`];
@@ -2079,6 +2091,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     ust.append(alan("İşlem", secim));
     form.append(ust, kutular, ey);
     if (not) form.append(ogesi("p", "kucuk-not", "Kaynak: " + not));
+    // Menüde bu kartı etkileyen yeni düzenleme varsa formun üstünde kırmızı kutu; hesaptan sonra sonucun kendi kutusu kalır.
+    const mt = hesapMenusu.tazelik;
+    let ustKutu = [];
+    if (mt && mt.durum === "yeni_duzenleme" && (mt.yeni || []).some((y) => (y.kartlar || []).includes(hesapKart))) {
+      ustKutu = tazelikOgeleri(Object.assign({}, mt, { yeni: mt.yeni.filter((y) => (y.kartlar || []).includes(hesapKart)) }),
+        { satirsiz: true });
+      govde.append(...ustKutu);
+    }
     form.onsubmit = async (e) => {
       e.preventDefault();
       sonuc.replaceChildren();
@@ -2098,10 +2118,17 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       try {
         const { veri, hata } = await cagir(app, arac, girdi);
         if (!veri) throw new Error(hata || "Hesap yapılamadı.");
-        const ozet = hesapKart === "vekalet" ? `Asgari ücret: ${tlYaz(veri.asgari_tl)}` : `Toplam: ${tlYaz(veri.toplam_tl)}`;
-        s.tamam(ozet);
+        const tz = veri.tazelik || {};
+        const kilitli = tz.durum === "yeni_duzenleme";
+        const h = kilitli ? (veri.teyit_bekleyen_tutarlar || {}) : veri;
+        const teyitsiz = tz.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : "";
+        const ozet = kilitli ? "Resmî Gazete'de yeni düzenleme var; toplam gösterilmiyor"
+          : (hesapKart === "vekalet" ? `Asgari ücret: ${tlYaz(veri.asgari_tl)}` : `Toplam: ${tlYaz(veri.toplam_tl)}`) + teyitsiz;
+        if (kilitli || teyitsiz) s.uyar(ozet); else s.tamam(ozet);
+        for (const o of ustKutu) o.remove();
         sonuc.append(hesapSonucu(veri));
-        bildir(`hesap kartı, ${islem.ad}: ${ozet}. Kalemler: ${(veri.kalemler || []).map((k) => `${k.kalem} ${tlYaz(k.tutar_tl)}`).join(" | ")}`);
+        bildir(`hesap kartı, ${islem.ad}: ${ozet}. ${tz.uyari ? tz.uyari + " " : ""}${tz.satir ? tz.satir + ". " : ""}` +
+          `${kilitli ? "Teyit bekleyen kalemler" : "Kalemler"}: ${(h.kalemler || []).map((k) => `${k.kalem} ${tlYaz(k.tutar_tl)}`).join(" | ")}`);
       } catch (e2) {
         s.hata(e2.message || "Hesap yapılamadı.");
       } finally {
@@ -2224,50 +2251,104 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return d;
   }
 
+  // Tazelik (hesap_ araçlarının `tazelik` alanı): kartın verisi Resmî Gazete'nin günlük denetiminden geçer. Küçük satır
+  // kaynağı ve son kontrolü söyler; yeni düzenleme varsa kırmızı kutu (toplam gösterilmez), denetim yapılamadıysa sarı kutu.
+  function tazelikOgeleri(t, { satirsiz = false } = {}) {
+    if (!t || typeof t !== "object") return [];
+    const out = [];
+    if (t.durum === "yeni_duzenleme") {
+      const kutu = ogesi("div", "uyari kirmizi tazelik-kutu");
+      kutu.setAttribute("role", "alert");
+      const yeni = Array.isArray(t.yeni) ? t.yeni : [];
+      kutu.append(ogesi("p", null, "Resmî Gazete'de bu hesabı etkileyebilecek yeni bir düzenleme yayımlandı. Tutarlar " +
+        "güncellenene kadar toplam gösterilmiyor; düzenlemeyi açıp kontrol edin."));
+      const ey = ogesi("div", "eylemler sol");
+      for (const y of yeni.slice(0, 3)) {
+        kutu.append(ogesi("p", null, `${y.rg}: ${y.baslik}`));
+        if (!y.url) continue;
+        const b = dugme(yeni.length > 1 ? `Aç: ${y.rg}` : "Düzenlemeyi aç", { sinif: "kucuk", simge: "dis", baslik: y.baslik });
+        b.onclick = () => baglantiAc(app, y.url, ortam.duyuru);
+        ey.append(b);
+      }
+      if (yeni.length > 3) kutu.append(ogesi("p", null, `ve ${yeni.length - 3} yayım daha`));
+      if (ey.childElementCount) kutu.append(ey);
+      out.push(kutu);
+    } else if (t.durum === "kontrol_edilemedi") {
+      const kutu = ogesi("div", "uyari tazelik-kutu");
+      kutu.setAttribute("role", "status");
+      const metin = String(t.uyari || "Resmî Gazete denetimi yapılamadı.")
+        .replace(/^UYARI:\s*/, "").replace(/,?\s*teyidiniz gerekli:\s*\S+\s*$/, "");
+      kutu.append(ogesi("p", null, `${metin}. Tutarları teyit edin.`));
+      const ey = ogesi("div", "eylemler sol");
+      const b = dugme("Resmî Gazete", { sinif: "kucuk", simge: "dis", baslik: "Resmî Gazete'yi aç" });
+      b.onclick = () => baglantiAc(app, "https://www.resmigazete.gov.tr/", ortam.duyuru);
+      ey.append(b);
+      kutu.append(ey);
+      out.push(kutu);
+    }
+    if (!satirsiz && t.satir) out.push(ogesi("p", "hesap-tazelik", t.satir));
+    return out;
+  }
+
   function hesapSonucu(v) {
     const kap = ogesi("div", "sonuc-kabi hesap-sonuc");
-    const vekalet = typeof v.asgari_tl === "number";
-    const ust = ogesi("div", "hesap-toplam");
-    ust.append(ogesi("span", "etiket", vekalet ? "Asgari avukatlık ücreti" : "Toplam"),
-      ogesi("b", "hesap-tutar", tlYaz(vekalet ? v.asgari_tl : v.toplam_tl)));
-    kap.append(ust);
-    if (vekalet && v.asgari_notu && v.asgari_notu.metin) {
-      kap.append(ogesi("p", "kucuk-not", `${v.asgari_notu.metin} ${(v.asgari_notu.dayanak || []).join("; ")}.`));
+    const t = v.tazelik && typeof v.tazelik === "object" ? v.tazelik : null;
+    const kilitli = !!t && t.durum === "yeni_duzenleme";
+    // Yeni düzenlemede toplam yoktur; hesabın ayrıntısı `teyit_bekleyen_tutarlar`da, katlanır bölümde durur.
+    const h = kilitli ? (v.teyit_bekleyen_tutarlar || {}) : v;
+    const vekalet = typeof h.asgari_tl === "number";
+    let yer = kap;
+    if (kilitli) {
+      kap.append(...tazelikOgeleri(t));
+      const d = document.createElement("details");
+      d.className = "hesap-katlanir";
+      yer = ogesi("div", "hesap-sonuc");
+      d.append(ogesi("summary", null, "Teyit bekleyen hesap (kesin değil)"), yer);
+      kap.append(d);
+    } else {
+      const ust = ogesi("div", "hesap-toplam");
+      const teyitsiz = !!t && t.durum === "kontrol_edilemedi";
+      ust.append(ogesi("span", "etiket", (vekalet ? "Asgari avukatlık ücreti" : "Toplam") + (teyitsiz ? " (teyit edilmedi)" : "")),
+        ogesi("b", "hesap-tutar", tlYaz(vekalet ? h.asgari_tl : h.toplam_tl)));
+      kap.append(ust, ...tazelikOgeleri(t));
     }
-    if (typeof v.ust_sinir_tl === "number") {
-      kap.append(ogesi("p", "kunye", `Mahkemece karşı tarafa yükletilecek ücret en çok ${tlYaz(v.ust_sinir_tl)} (${v.ust_sinir_dayanak}).`));
+    if (vekalet && h.asgari_notu && h.asgari_notu.metin) {
+      yer.append(ogesi("p", "kucuk-not", `${h.asgari_notu.metin} ${(h.asgari_notu.dayanak || []).join("; ")}.`));
+    }
+    if (typeof h.ust_sinir_tl === "number") {
+      yer.append(ogesi("p", "kunye", `Mahkemece karşı tarafa yükletilecek ücret en çok ${tlYaz(h.ust_sinir_tl)} (${h.ust_sinir_dayanak}).`));
     }
     const tablo = ogesi("div", "hesap-kalemler");
-    for (const k of v.kalemler || []) tablo.append(hesapSatiri(k.kalem, k.tutar_tl, k.dayanak, k.hesap));
-    kap.append(tablo);
-    if (Array.isArray(v.hesap) && v.hesap.length) {
+    for (const k of h.kalemler || []) tablo.append(hesapSatiri(k.kalem, k.tutar_tl, k.dayanak, k.hesap));
+    yer.append(tablo);
+    if (Array.isArray(h.hesap) && h.hesap.length) {
       const ol = ogesi("ol", "hesap-adimlar");
-      for (const h of v.hesap) ol.append(ogesi("li", null, h));
-      kap.append(ol);
+      for (const x of h.hesap) ol.append(ogesi("li", null, x));
+      yer.append(ol);
     }
-    const dokum = (v.kalemler || []).flatMap((k) => k.dokum || []);
+    const dokum = (h.kalemler || []).flatMap((k) => k.dokum || []);
     if (dokum.length > 1) {
-      kap.append(katlanir(`Dilim dökümü (${dokum.length} dilim)`, dokum.map((d) =>
+      yer.append(katlanir(`Dilim dökümü (${dokum.length} dilim)`, dokum.map((d) =>
         `${d.sira}. dilim: ${tlYaz(d.dilim_tl)} × %${String(d.yuzde).replace(".", ",")} = ${tlYaz(d.ucret_tl)}`)));
     }
-    const ga = v.gider_avansi;
+    const ga = h.gider_avansi;
     if (ga && ga.eksik) {
-      kap.append(bilgi(`Gider avansı hesaplanmadı: ${ga.eksik === "tebligat_ucreti" ? "bir tebligatın ücretini girin" : "taraf sayısını girin"}. ` +
+      yer.append(bilgi(`Gider avansı hesaplanmadı: ${ga.eksik === "tebligat_ucreti" ? "bir tebligatın ücretini girin" : "taraf sayısını girin"}. ` +
         `Hesap: ${ga.formul} (${ga.dayanak}).`));
     }
-    if (v.kalan_tl != null) {
-      kap.append(ogesi("p", "kunye", `Peşin ödenen ${tlYaz(v.pesin_odenen_tl)} düşülünce kalan: ${tlYaz(v.kalan_tl)} (${v.kalan_dayanak}).`));
+    if (h.kalan_tl != null) {
+      yer.append(ogesi("p", "kunye", `Peşin ödenen ${tlYaz(h.pesin_odenen_tl)} düşülünce kalan: ${tlYaz(h.kalan_tl)} (${h.kalan_dayanak}).`));
     }
-    if (Array.isArray(v.ayrica) && v.ayrica.length) {
+    if (Array.isArray(h.ayrica) && h.ayrica.length) {
       const k = ogesi("div", "kesit");
       k.append(ogesi("h3", null, "Toplama katılmayanlar"));
-      for (const a of v.ayrica) k.append(hesapSatiri(a.kalem, a.tutar_tl, a.dayanak, a.teyit));
-      kap.append(k);
+      for (const a of h.ayrica) k.append(hesapSatiri(a.kalem, a.tutar_tl, a.dayanak, a.teyit));
+      yer.append(k);
     }
-    for (const n of v.notlar || []) kap.append(ogesi("p", "kucuk-not", n));
-    if (Array.isArray(v.teyit_edin) && v.teyit_edin.length) kap.append(katlanir(`Teyit edin (${v.teyit_edin.length})`, v.teyit_edin));
+    for (const n of h.notlar || []) yer.append(ogesi("p", "kucuk-not", n));
+    if (Array.isArray(h.teyit_edin) && h.teyit_edin.length) yer.append(katlanir(`Teyit edin (${h.teyit_edin.length})`, h.teyit_edin));
     const ey = ogesi("div", "eylemler sol");
-    for (const k of v.kaynak ? [v.kaynak] : (v.kaynaklar || [])) {
+    for (const k of h.kaynak ? [h.kaynak] : (h.kaynaklar || [])) {
       if (!k || !k.url) continue;
       const b = dugme(k.rg || "Kaynak", { sinif: "kucuk", simge: "dis", baslik: `${k.ad} (${k.rg || "kaynak"})` });
       b.onclick = () => baglantiAc(app, k.url, ortam.duyuru);
@@ -2282,13 +2363,21 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   // Panoya giden düz metin: avukat yazışmasına yapıştırılabilir; tutar ve dayanak aracın verdiği gibi.
   function hesapMetni(v) {
-    const vekalet = typeof v.asgari_tl === "number";
-    const s = [`${vekalet ? "Asgari avukatlık ücreti" : "Toplam"}: ${tlYaz(vekalet ? v.asgari_tl : v.toplam_tl)}`];
-    for (const k of v.kalemler || []) s.push(`- ${k.kalem}: ${tlYaz(k.tutar_tl)} (${k.dayanak})`);
-    for (const h of v.hesap || []) s.push(`  ${h}`);
-    for (const a of v.ayrica || []) s.push(`Toplama katılmayan: ${a.kalem}: ${tlYaz(a.tutar_tl)}. ${a.teyit || ""}`.trim());
-    for (const k of v.kaynak ? [v.kaynak] : (v.kaynaklar || [])) if (k && k.url) s.push(`Kaynak: ${k.ad}, ${k.rg || ""} ${k.url}`);
-    if (vekalet && v.asgari_notu && v.asgari_notu.metin) s.push(v.asgari_notu.metin);
+    const t = v.tazelik && typeof v.tazelik === "object" ? v.tazelik : null;
+    const kilitli = !!t && t.durum === "yeni_duzenleme";
+    const h = kilitli ? (v.teyit_bekleyen_tutarlar || {}) : v;
+    const vekalet = typeof h.asgari_tl === "number";
+    const s = [];
+    if (t && t.uyari) s.push(t.uyari);
+    if (kilitli) s.push("Teyit bekleyen hesap (kesin değil):");
+    else s.push(`${vekalet ? "Asgari avukatlık ücreti" : "Toplam"}: ${tlYaz(vekalet ? h.asgari_tl : h.toplam_tl)}` +
+      (t && t.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : ""));
+    for (const k of h.kalemler || []) s.push(`- ${k.kalem}: ${tlYaz(k.tutar_tl)} (${k.dayanak})`);
+    for (const x of h.hesap || []) s.push(`  ${x}`);
+    for (const a of h.ayrica || []) s.push(`Toplama katılmayan: ${a.kalem}: ${tlYaz(a.tutar_tl)}. ${a.teyit || ""}`.trim());
+    for (const k of h.kaynak ? [h.kaynak] : (h.kaynaklar || [])) if (k && k.url) s.push(`Kaynak: ${k.ad}, ${k.rg || ""} ${k.url}`);
+    if (vekalet && h.asgari_notu && h.asgari_notu.metin) s.push(h.asgari_notu.metin);
+    if (t && t.satir) s.push(t.satir);
     return s.join("\n");
   }
 

@@ -1,5 +1,5 @@
 {
-  "surum": "3.0.12",
+  "surum": "3.0.13",
   "depolar": {
     "ArthurLegal": "..",
     "tapu": "../../arthurlegal-mcp",
@@ -25,16 +25,16 @@
     "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3"
   },
   "mask": {
-    "surum": "1.1.2",
-    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.1.2.exe",
-    "sha256": "095c92a406c6b45be277e764a7995e2881221f6d3c5fddb580672b394462321a",
-    "boyut": 1059202607
+    "surum": "1.2.0",
+    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.2.0.exe",
+    "sha256": "9ff7fd4b76dfb1132d9fe4641b454a2854d8c96ba3117c2625771be4b0579973",
+    "boyut": 1059572370
   },
   "mask_macos": {
-    "surum": "1.1.2",
-    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.1.2.dmg",
-    "sha256": "85df93522160e5e53fecf57745f2d7375c38d155ff888ec2c71e01045b70506a",
-    "boyut": 1277832033
+    "surum": "1.2.0",
+    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.2.0.dmg",
+    "sha256": "bb740294782163c0b70037c893a742d3ef1def8cfa8634734f90c55d1f8dca74",
+    "boyut": 1278343323
   },
   "python_macos": {
     "surum": "3.12.10",
