@@ -79,7 +79,7 @@ _PARCALAR = {
 _YER_TUTUCU = re.compile(r"/\*AL:([A-Z]+)\*/|<!--AL:([A-Z]+)-->")
 
 # Masanın ekranları; al_masasi(bolum=...) bunlardan biriyle açılır.
-EKRANLAR = ("sohbet", "mevzuat", "ictihat", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
+EKRANLAR = ("sohbet", "mevzuat", "ictihat", "hesap", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
 
 
 def _oku(*yol: str) -> str:
