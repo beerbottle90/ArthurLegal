@@ -9,7 +9,7 @@ gösterilebilir. Düzen Beyin'inkidir (github.com/avenoxai/avenoxbeyin, MIT): s�
 ya da Beyin'le açılabilir; ArthurLegal Beyin'in kodunu taşımaz, yalnız aynı düzene yazar.
 
 Kasa bilgisayardan çıkmaz, ama araç sonucunu Claude okur. Bu yüzden yazmadan önce kişisel veri kapısı: T.C. kimlik
-numarası, IBAN, telefon ve e-posta içeren metin yazılmaz; kişiler Arthur Mask etiketiyle ({{KİŞİ-01}}) anılır.
+numarası, IBAN, telefon ve e-posta içeren metin yazılmaz; kişiler ArthurMask etiketiyle ({{KİŞİ-01}}) anılır.
 Kaldırma kasayı silmez. Günlüğe not içeriği yazılmaz. Yalnız standart kütüphane.
 """
 from __future__ import annotations
@@ -95,7 +95,7 @@ BASLANGIC_NOTLARI = {
                       "Dosyalar düz Markdown'dır; dilediğiniz gibi düzenleyebilir ya da silebilirsiniz. Obsidian'la ya da "
                       "Beyin'le (github.com/avenoxai/avenoxbeyin) açılabilir. ArthurLegal'i kaldırmak bu klasörü silmez.\n\n"
                       "Gizlilik: asistan buraya yalnız maskeli metin yazar. T.C. kimlik numarası, IBAN, telefon ve e-posta "
-                      "içeren metin reddedilir; kişiler Arthur Mask etiketiyle ({{KİŞİ-01}}) anılır. Bu klasörü bir bulut "
+                      "içeren metin reddedilir; kişiler ArthurMask etiketiyle ({{KİŞİ-01}}) anılır. Bu klasörü bir bulut "
                       "eşitlemesine (OneDrive, iCloud, Dropbox) koymadan önce büronuzun kurallarına bakın.\n",
         "knowledge/index.md": "# Bilgi dizini\n\nKalıcı bilgi notlarının tek satırlık listesi.\n",
     },
@@ -119,7 +119,7 @@ BASLANGIC_NOTLARI = {
                       "knowledge notes.\n\nThe files are plain Markdown; edit or delete them as you like. They open in "
                       "Obsidian or Beyin (github.com/avenoxai/avenoxbeyin). Uninstalling ArthurLegal does not delete this "
                       "folder.\n\nPrivacy: the assistant writes masked text only. Text containing a Turkish ID number, IBAN, "
-                      "phone number or e-mail address is refused; people are referred to by Arthur Mask labels "
+                      "phone number or e-mail address is refused; people are referred to by ArthurMask labels "
                       "({{KİŞİ-01}}). Check your firm's rules before putting this folder in cloud sync (OneDrive, iCloud, "
                       "Dropbox).\n",
         "knowledge/index.md": "# Knowledge index\n\nOne line per lasting knowledge note.\n",
@@ -161,7 +161,7 @@ def _tckn_gecerli(s: str) -> bool:
 
 
 def kisisel_veri(metin: str) -> list:
-    """Metinde görünen kişisel veri türleri. Adları bulmaz (bunu Arthur Mask yapar); yalnız biçimi belli olanlar."""
+    """Metinde görünen kişisel veri türleri. Adları bulmaz (bunu ArthurMask yapar); yalnız biçimi belli olanlar."""
     metin = str(metin or "")
     turler = []
     if any(_tckn_gecerli(m.group()) for m in _TCKN.finditer(metin)):
@@ -178,7 +178,7 @@ def kisisel_veri(metin: str) -> list:
 def _kapi(*metinler) -> None:
     turler = kisisel_veri("\n".join(str(m or "") for m in metinler))
     if turler:
-        raise HafizaHatasi("Yazılmadı: metinde kişisel veri görünüyor (" + ", ".join(turler) + "). Önce Arthur Mask "
+        raise HafizaHatasi("Yazılmadı: metinde kişisel veri görünüyor (" + ", ".join(turler) + "). Önce ArthurMask "
                            "ile maskeleyin ya da {{KİŞİ-01}} gibi bir etiketle yazın; hafızaya yalnız maskeli metin girer.")
 
 
@@ -453,7 +453,7 @@ def araclar() -> list:
          "description": "Hafıza kasasına yazar. kip=ekle sona ekler (not yoksa açar), kip=yeni yalnız not yoksa açar, "
                         "kip=degistir `eski` metni (notta tam bir kez geçmeli) `metin` ile değiştirir. Kullanıcının açıkça "
                         "söylediği kalıcı tercih ve düzeltmeler için. Yalnız maskeli metin: T.C. kimlik numarası, IBAN, "
-                        "telefon ya da e-posta içeren metin reddedilir; kişi adları yerine Arthur Mask etiketleri "
+                        "telefon ya da e-posta içeren metin reddedilir; kişi adları yerine ArthurMask etiketleri "
                         "({{KİŞİ-01}}). Kullanıcı hafızaya yazılmamasını istediyse çağırma.",
          "inputSchema": {"type": "object", "properties": {
              "yol": {"type": "string"}, "metin": {"type": "string"},
@@ -489,6 +489,6 @@ def talimat_maddesi() -> str:
             "ya da düzeltme söylediğinde beklemeden `hafiza_yaz` ile `Kurallar.md`'ye tarihli tek satır ekle (tek bir "
             "dosyaya aitse `Projeler/<dosya kodu>/Kurallar.md`). Anlamlı bir iş bitince, her cevapta değil, "
             "`hafiza_oturum_karti` ile kısa devir kartı yaz; açık konuyu `Threads.md`'de yerinde güncelle. Hafızaya "
-            "yalnız maskeli metin yaz: müvekkil, karşı taraf ve tanık adlarını yazma, {{KİŞİ-01}} gibi Arthur Mask "
+            "yalnız maskeli metin yaz: müvekkil, karşı taraf ve tanık adlarını yazma, {{KİŞİ-01}} gibi ArthurMask "
             "etiketlerini aynen koru, dosyayı adla değil dosya koduyla an. Kullanıcı hafızaya yazılmamasını isterse o "
             "sohbette hiçbir hafıza aracıyla yazma.")

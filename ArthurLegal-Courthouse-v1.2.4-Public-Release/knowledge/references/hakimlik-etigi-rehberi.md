@@ -32,7 +32,7 @@
 - Mahkeme dosyaları yoğun **kişisel + özel nitelikli veri** içerir (sağlık, ceza mahkûmiyeti, vb.).
 - Veri minimizasyonu: çıktıda gereksiz kişisel veriyi tekrarlama.
 - Müzakere gizliliği: heyet müzakeresi gizlidir; asistan çıktısı dahili çalışma notudur.
-- Maskeleme: dosya belgeleri Claude'a verilmeden önce Arthur Mask ile kullanıcının bilgisayarında maskelenebilir (yalnız Claude Desktop, Windows). Maskeleme takma adlandırmadır; gizlilik kararlarının ve kurum kurallarının yerine geçmez. Ayrıntı: `arthur-mask-rehberi.md`.
+- Maskeleme: dosya belgeleri Claude'a verilmeden önce ArthurMask ile kullanıcının bilgisayarında maskelenebilir (yalnız Claude Desktop, Windows). Maskeleme takma adlandırmadır; gizlilik kararlarının ve kurum kurallarının yerine geçmez. Ayrıntı: `arthur-mask-rehberi.md`.
 
 ## Duruşma düzeni & adil yargılanma
 

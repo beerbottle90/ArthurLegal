@@ -16,7 +16,7 @@
 </p>
 <p align="center">
   <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 9 sayfa, Türkçe)</b></a><br>
-  ArthurLegal nedir, kurulum, ArthurLegal Masası, Arthur Mask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
+  ArthurLegal nedir, kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
   <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 9 pages, in Turkish)</a>
 </p>
 
@@ -67,11 +67,11 @@ gelmez. En az bir paket gerekir:
 | **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.4-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
-| **Arthur Mask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
+| **ArthurMask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
 | **ArthurLegal Hafıza** | Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bilgisayarınızdaki bir klasörde tutar |
 
 <p align="center">
-  <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sonraki düğmesi (4)">
+  <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli; sonra Sonraki düğmesi (4)">
 </p>
 
 **4. Arayüzü seçin.** **Arayüzü seçin** ekranında iki seçenek vardır, yalnız biri seçilir; değiştirmek için
@@ -87,8 +87,8 @@ kurulumu sonra yeniden çalıştırabilirsiniz:
 </p>
 
 **5. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
-önce yazdığınız mesajı gönderin. Arthur Mask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
-beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, Arthur Mask sonra arka
+önce yazdığınız mesajı gönderin. ArthurMask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
+beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, ArthurMask sonra arka
 planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde Claude Desktop masayı açmaya hazır
 gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop açılır.
 
@@ -98,8 +98,8 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 > **ArthurLegal** simgesiyle her açılışta da Enter'a basın.
 
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
-**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **Arthur Mask**. Windows'ta
-Hukuk Bürosu ya da Kurumsal ile Arthur Mask'i seçtiyseniz **ArthurLegal - UYAP Dashboard** da gelir ([UYAP Dashboard](#uyap)).
+**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **ArthurMask**. Windows'ta
+Hukuk Bürosu ya da Kurumsal ile ArthurMask'i seçtiyseniz **ArthurLegal - UYAP Dashboard** da gelir ([UYAP Dashboard](#uyap)).
 Yeni arayüzde **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar:
 Enter'a basın, masa tam ekran açılır (solda modüller, ortada iş adımları); klasikte Claude Desktop'u ve
 başlangıç rehberini açar. Claude Desktop'ta yeni bir sohbet açıp sorunuzu
@@ -142,7 +142,7 @@ yolunu kullanın:
    sorar: kurmak istediklerinizin numaralarını virgülle yazıp <kbd>Enter</kbd>'a basın (ör. Hukuk Bürosu ve Tapu
    için `1,5`). Sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
 
-Bu yolla Arthur Mask kurulmaz (belge maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal paketleri, araştırma
+Bu yolla ArthurMask kurulmaz (belge maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal paketleri, araştırma
 araçları ve Tapu çalışır.
 </details>
 
@@ -176,12 +176,12 @@ tıklayın; mavi **Çöp Sepeti’ne Taşı**'ya değil. <kbd>Enter</kbd>'a basm
 **3. Modülleri seçin.** Kurulum Mac'inizin dilinde açılır. **Sürdür**'e tıklayarak ilerleyin; lisans sayfasından
 sonra çıkan pencerede **Kabul Ediyorum**'u seçin. **Yükleme Türü** ekranında kurmak istediğiniz modülleri
 işaretleyip **Sürdür**'e tıklayın: bir modülün adına tıklayınca ne işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır
-(yukarıdaki tablo); ilk kurulumda hiçbiri işaretli gelmez, en az bir paket gerekir. Arthur Mask yalnız Apple
+(yukarıdaki tablo); ilk kurulumda hiçbiri işaretli gelmez, en az bir paket gerekir. ArthurMask yalnız Apple
 Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir. Modüllerin altındaki **ArthurLegal yeni arayüz**
 kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız **Claude Desktop klasik** kurulur.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
 **4. Kurun.** Claude Desktop açıksa kurulum onu kapatır; yazdığınız bir mesaj varsa önce gönderin. Sonraki sayfada
@@ -190,7 +190,7 @@ modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedi
 **ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Masaüstündeki
 simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle yenilenir. Arthur
 Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
-**Arthur Mask** simgesi eklenir. Kurulum Claude Desktop'u yeniden açar: yeni arayüzde Claude *ArthurLegal Masası'nı
+**ArthurMask** simgesi eklenir. Kurulum Claude Desktop'u yeniden açar: yeni arayüzde Claude *ArthurLegal Masası'nı
 aç* mesajıyla açılır, Enter'a basın. Claude masayı bulamazsa Claude Desktop'tan **Cmd+Q** ile tamamen çıkıp yeniden
 açın, sonra **ArthurLegal** simgesine tıklayıp Enter'a basın. Yeni bir sohbet açıp
 sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
@@ -210,7 +210,7 @@ Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/Arth
 **[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
 · **[⬇ Download the Mac installer (ArthurLegal-Kurulum.pkg)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** ([Mac steps](#mac-en)).
 The links always download the latest release. One installer lets you choose the packages (Law Firm, Corporate
-Assistant, Courthouse, Academician), the tools (the Turkish land registry, Arthur Mask, ArthurLegal Memory) and the
+Assistant, Courthouse, Academician), the tools (the Turkish land registry, ArthurMask, ArthurLegal Memory) and the
 interface (the [ArthurLegal desk](#masa) inside Claude Desktop, or Claude Desktop classic) you want and puts them
 into Claude Desktop with the research connector; after that, ArthurLegal installs new versions itself in the
 background and verifies their signatures, so you never need to download this file again. No administrator
@@ -255,11 +255,11 @@ short description under it, and nothing is ticked on a first installation. At le
 | **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.4-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
-| **Arthur Mask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
+| **ArthurMask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
 | **ArthurLegal Memory** | Keeps your preferences, corrections and last session across chats, in a folder on your computer |
 
 <p align="center">
-  <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked; then the Next button (4)">
+  <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and ArthurMask (3) are ticked; then the Next button (4)">
 </p>
 
 **4. Choose the interface.** The **Choose the interface** screen has two options and only one can be selected; run
@@ -275,8 +275,8 @@ setup again later to change it:
 </p>
 
 **5. Install.** Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
-you are typing first. If you chose Arthur Mask, setup also downloads it (about 1 GB, a few minutes); if you don't
-want to wait, click **Stop download** and answer **Yes** to both questions, and Arthur Mask downloads later in the
+you are typing first. If you chose ArthurMask, setup also downloads it (about 1 GB, a few minutes); if you don't
+want to wait, click **Stop download** and answer **Yes** to both questions, and ArthurMask downloads later in the
 background. On the last page click **Finish**: with the new interface Claude Desktop opens ready to open the desk
 (see the note below), with the classic one the start guide and Claude Desktop.
 
@@ -287,8 +287,8 @@ background. On the last page click **Finish**: with the new interface Claude Des
 
 The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
-**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **Arthur Mask**; on Windows, Law Firm or Corporate
-together with Arthur Mask also adds **ArthurLegal - UYAP Dashboard** ([UYAP Dashboard](#uyap-en)). With the new interface the
+**ArthurLegal - Academician**, **ArthurLegal - Tapu** and **ArthurMask**; on Windows, Law Firm or Corporate
+together with ArthurMask also adds **ArthurLegal - UYAP Dashboard** ([UYAP Dashboard](#uyap-en)). With the new interface the
 **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) already
 typed: press Enter and the desk opens full screen; with the classic one it opens Claude Desktop and the start guide. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
 If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
@@ -327,7 +327,7 @@ You do not need to turn it off; use the zip version of the same setup:
    for the modules: type the numbers of the ones you want, separated by commas, and press <kbd>Enter</kbd>
    (e.g. `1,5` for Law Firm and Tapu). When it asks you to press a key, setup has finished.
 
-Arthur Mask is not installed this way (document masking and the UYAP bridge do not work); the ArthurLegal
+ArthurMask is not installed this way (document masking and the UYAP bridge do not work); the ArthurLegal
 packages, the research tools and Tapu work.
 </details>
 
@@ -357,12 +357,12 @@ press <kbd>Enter</kbd>: Enter moves the file to the Trash. Then:
 **3. Choose modules.** Setup opens in your Mac's language. Click **Continue** to move on, and **Agree** in the
 window that follows the licence page. On the **Installation Type** screen, tick the modules you want and click
 **Continue**; click a module's name to see what it does below the list. The modules are the same as on Windows (table above); nothing is
-ticked on a first installation and at least one package is needed. Arthur Mask can be chosen on Apple Silicon with
+ticked on a first installation and at least one package is needed. ArthurMask can be chosen on Apple Silicon with
 macOS 14 (Sonoma) or later only. The **ArthurLegal new interface** box below the modules comes ticked (the desk
 and cards); untick it for **Claude Desktop classic**.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and Arthur Mask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
+  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and ArthurMask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
 </p>
 
 **4. Install.** If Claude Desktop is open, setup quits it; send any message you are typing first. On the next page
@@ -370,8 +370,8 @@ click **Install**, then **Close** on the last page: the start guide opens in you
 modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal** for Law
 Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. As on
 Windows, the desktop icons carry the version number (e.g. **ArthurLegal 3.0.12**) and are renamed by updates. If you
-chose Arthur Mask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
-ready and an **Arthur Mask** icon appears on the desktop. Setup reopens Claude Desktop: with the new interface
+chose ArthurMask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
+ready and an **ArthurMask** icon appears on the desktop. Setup reopens Claude Desktop: with the new interface
 Claude opens with *ArthurLegal Masası'nı aç* typed, press Enter. If Claude cannot find the desk, quit Claude Desktop
 completely with **Cmd+Q**, open it again, click the **ArthurLegal** icon and press Enter. You can also open a new chat and type your question. When Claude asks for permission the
 first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
@@ -388,12 +388,12 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 <h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
 
 <p align="center">
-  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan soru, canlı araştırma adımları (madde ve içtihat) ve TBK m. 344-345'e dayanan cevap masada. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, Arthur Mask, UYAP Dashboard, Donna ve MCP'ler">
+  <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan soru, canlı araştırma adımları (madde ve içtihat) ve TBK m. 344-345'e dayanan cevap masada. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, ArthurMask, UYAP Dashboard, Donna ve MCP'ler">
 </p>
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
 olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
-Geçmiş, ArthurTapu, Beyin (Hafıza), Arthur Mask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
+Geçmiş, ArthurTapu, Beyin (Hafıza), ArthurMask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
 Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araştırma ve cevap masada canlı görünür. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
 - **Soru, her adım ve cevap masada canlı.** Claude'un yazma kutusuna yazdığınız soru hemen masanın Sohbet ekranına
@@ -417,10 +417,10 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
   özetler ve hatırlatma kurar. Bir şey oluşturmadan ya da göndermeden önce sorar, hukuki süre hesaplamaz.
   Bağlantıların durumu MCP'ler ekranıyla aynı listeden gelir: bağlı uygulamada **Bağla** düğmesi çıkmaz.
 - **MCP'ler.** Bağlı sunucularınız ve durumları, araç listesi olmadan: ArthurLegal (araştırma, ArthurTapu, UYAP
-  Dashboard, Arthur Mask, Beyin) ve Claude bağlayıcılarınız (Gmail, Takvim, Slack ...). Bağlı olmayanın yanında
+  Dashboard, ArthurMask, Beyin) ve Claude bağlayıcılarınız (Gmail, Takvim, Slack ...). Bağlı olmayanın yanında
   **Bağla**; düğme Claude'un bağlayıcı ekranını açar.
 - **Web ve telefon.** [Araştırma bağlantısını](#use-arthurlegal-mcp-directly) claude.ai'ye ekleyince masa web'de ve
-  Claude'un telefon uygulamasında da açılır; Hafıza, Arthur Mask ve UYAP tasarım gereği bilgisayarınızda kalır. Masa
+  Claude'un telefon uygulamasında da açılır; Hafıza, ArthurMask ve UYAP tasarım gereği bilgisayarınızda kalır. Masa
   bu ekranlarda modülün ne işe yaradığını ve indirme bağlantısını gösterir. Claude Desktop'ta masa araştırma
   bağlantısından açıldıysa **Masayı bu bilgisayarda aç** onu kurulumdan yeniden açar; bu üç modül orada çalışır.
 - Klasik görünümü tercih ederseniz kurulumda **Claude Desktop klasik**'i seçin: masa ve kartlar kapanır, sonuçlar
@@ -432,7 +432,7 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
 
 **English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
 desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
-citations, case law, history, land registry, memory, Arthur Mask, the UYAP Dashboard, Donna and connected servers), the
+citations, case law, history, land registry, memory, ArthurMask, the UYAP Dashboard, Donna and connected servers), the
 steps of the current task in the middle, Claude's own message box at the bottom. Type only your question in that box: the question, every source Claude checks (a live line each) and the answer appear on the desk, with every article citation in the answer checked against the official text. It runs on your own Claude plan;
 no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
 acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
@@ -455,10 +455,10 @@ jurisdictions and the Turkish land registry, no auth), up to four optional ones,
 
 <img src="ArthurLegal-setup/varlik/banner-en.png" alt="ArthurLegal — open source legal AI" width="760">
 
-> ### ⬇ Arthur Mask — local privacy gate for Claude Desktop (Windows and macOS)
+> ### ⬇ ArthurMask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
-> Windows: double-click the downloaded file. macOS: open the DMG, drag Arthur Mask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. The ArthurLegal installers (Windows and Mac) can also install it for you: tick Arthur Mask on their module screen. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
-> **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): Arthur Mask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
+> Windows: double-click the downloaded file. macOS: open the DMG, drag ArthurMask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. The ArthurLegal installers (Windows and Mac) can also install it for you: tick ArthurMask on their module screen. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): ArthurMask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
 
 Built for legal teams that work across borders: a contract governed by English
 law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
@@ -468,10 +468,10 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.5](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · Arthur Mask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.5](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · Arthur Mask local privacy gate |
+| **Corporate Assistant** | **[v1.12.5](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.5](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
 | Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · Arthur Mask local privacy gate |
+| **Courthouse** | **[v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
@@ -486,7 +486,7 @@ Only the current version of each package sits at the top of the repository; earl
 [`arsiv/`](arsiv/) (`v1.0.0` … `v1.10.0`, Law Firm `v1.8.1`; Courthouse `v1.0.0` … `v1.1.1`; Academician `v1.0.0` … `v1.1.0`).
 To install on Windows or a Mac, use the [download section](#indir) at the top of this page: all four packages are
 modules of the same installer. Otherwise start from the `KURULUM.md` file in the package you want (Turkish); the
-Law Firm and Academician packages also include an English `INSTALLATION.md`. Arthur Mask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
+Law Firm and Academician packages also include an English `INSTALLATION.md`. ArthurMask, the optional privacy gate, is installed by ArthurLegal Setup or from the download box above.
 
 ## Use ArthurLegal MCP directly
 
@@ -513,7 +513,7 @@ Each package's `KURULUM.md` / `INSTALLATION.md` repeats these steps next to the 
 <h2 id="uyap">UYAP Dashboard: salt okunur, kurulumla gelir</h2>
 
 **Türkçe.** Avukatın kendi UYAP dosyalarını izlemesi için. Windows'ta kurulumda **Hukuk Bürosu** ya da **Kurumsal**
-paketiyle birlikte **Arthur Mask**'i işaretlerseniz kendiliğinden gelir; ayrı bir ayar, uç kaydı ya da kalibrasyon
+paketiyle birlikte **ArthurMask**'i işaretlerseniz kendiliğinden gelir; ayrı bir ayar, uç kaydı ya da kalibrasyon
 yoktur. Masaüstünde tek simge olur: **ArthurLegal - UYAP Dashboard**.
 
 1. **Simgeye çift tıklayın.** Dashboard, UYAP için ayrı profilli bir tarayıcıda Avukat Portal'ı
@@ -530,7 +530,7 @@ yoktur. Masaüstünde tek simge olur: **ArthurLegal - UYAP Dashboard**.
   nedeni yazılır.
 - **Hata olursa Tekrar dene.** Tarayıcı kapalıysa, giriş yapılmadıysa ya da liste henüz görülmediyse Dashboard ne
   yapılacağını yazar ve **Tekrar dene** düğmesini gösterir. Yenileme olmazsa son görülen liste saatiyle gelir.
-- **Gerçek değerler yalnız ekranınızda.** Ad, esas numarası ve tebligat konusu Claude'a gitmeden önce Arthur Mask'te
+- **Gerçek değerler yalnız ekranınızda.** Ad, esas numarası ve tebligat konusu Claude'a gitmeden önce ArthurMask'te
   etiketlenir (`{{KİŞİ-01}}`, `{{DOSYA_NO-01}}`). Gerçek liste yalnız Dashboard penceresinde açılır, kopyalanamaz ve
   10 dakika kullanılmazsa gizlenir.
 - **Son gün çift kayıtla.** Son günü önce siz yazarsınız; sistemin hesabı sonra çalışır ve yalnız uyuşmazlıkta
@@ -563,7 +563,7 @@ UYAP Dashboard yalnız Windows'ta çalışır; Mac kurulumunda yoktur.
 <h3 id="uyap-en">English</h3>
 
 For lawyers who follow their own case files in UYAP, the Turkish e-justice system. On Windows it comes with the
-installer when you tick **Law Firm** or **Corporate** together with **Arthur Mask**; there is nothing to set up, no
+installer when you tick **Law Firm** or **Corporate** together with **ArthurMask**; there is nothing to set up, no
 endpoint recording and no calibration. One desktop icon: **ArthurLegal - UYAP Dashboard**.
 
 1. **Double-click the icon.** The Dashboard opens the UYAP Lawyer Portal (`avukat.uyap.gov.tr`) in a separate
@@ -677,7 +677,7 @@ justify building an MCP server, and which already have a good enough public API.
   it. It now says Claude Desktop is starting with the installed version (Windows and Mac).
 - How it arrives: download and run the installer once on a Mac (the step that restarts Claude Desktop is part of the
   installer). On Windows and on Macs that stay on 3.0.11, the updater installs 3.0.12 by itself; the Mac desktop
-  icons get their version numbers then. Packages, the desk (3.0.11), Claude plugin 1.12.8 and Arthur Mask 1.1.2 are
+  icons get their version numbers then. Packages, the desk (3.0.11), Claude plugin 1.12.8 and ArthurMask 1.1.2 are
   unchanged.
 
 **Türkçe:** Mac kurulumu artık Windows'taki gibi Claude Desktop'u kapatıp açıyor. Claude Desktop yerel sunucuları
@@ -689,11 +689,11 @@ numarasını taşır (**ArthurLegal 3.0.12**); güncelleyici her yeni sürümde 
 klasöründeki adlar değişmez, Dock'a eklenen simge kopmaz. Başlangıç sayfasının *Claude Desktop'ta çalışan* satırı
 kurulumdan hemen sonra eski numarayı (ör. 3.0.2) göstermez; Claude Desktop'un kurulu sürümle açıldığını söyler. Mac'te
 kurulumu bir kez indirip çalıştırın. Windows'ta ve 3.0.11'de kalan Mac'lerde güncelleyici 3.0.12'yi kendisi kurar.
-Paketler, masa (3.0.11), Claude eklentisi 1.12.8 ve Arthur Mask 1.1.2 aynı.
+Paketler, masa (3.0.11), Claude eklentisi 1.12.8 ve ArthurMask 1.1.2 aynı.
 
 ## Setup 3.0.11 — Desktop modules explain themselves, Donna shows real connections (2026-11-03)
 
-- **Memory, Arthur Mask and the UYAP Dashboard on a desk opened from the research connector.** These modules run
+- **Memory, ArthurMask and the UYAP Dashboard on a desk opened from the research connector.** These modules run
   only on your computer. Their screens no longer show a single grey line: they say what the module does and where to
   open it. When Claude reports your ArthurLegal installation in the chat, **Masayı bu bilgisayarda aç** (open the
   desk on this computer) reopens the desk from the installation; on the web and on the phone there is a download link.
@@ -704,69 +704,69 @@ Paketler, masa (3.0.11), Claude eklentisi 1.12.8 ve Arthur Mask 1.1.2 aynı.
   connected app shows *Bağlı* (connected) with no button; **Bağla** (connect) appears only for an app that needs
   sign-in or is not connected; when the status is unknown, the desk asks Claude instead of guessing.
 - Desk 3.0.11. Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5);
-  Claude plugin 1.12.8; Arthur Mask 1.1.2. The research connector's desk was updated on the server the same day.
+  Claude plugin 1.12.8; ArthurMask 1.1.2. The research connector's desk was updated on the server the same day.
 
-**Türkçe:** Hafıza, Arthur Mask ve UYAP Dashboard yalnız bilgisayarınızda çalışır. Masa araştırma bağlantısından
+**Türkçe:** Hafıza, ArthurMask ve UYAP Dashboard yalnız bilgisayarınızda çalışır. Masa araştırma bağlantısından
 açıldığında bu ekranlar artık tek gri satır değil: modülün ne işe yaradığını ve nereden açılacağını gösterir. Claude
 sohbette ArthurLegal kurulumunuzu görüyorsa **Masayı bu bilgisayarda aç** masayı kurulumdan yeniden açar; web'de ve
 telefonda indirme bağlantısı çıkar. Claude Desktop'ta kurulum (`arthurlegal-yerel`) ve araştırma bağlantısı aynı
 sohbetteyse masa aracı Claude'dan masayı kurulumdan açmasını ister. Donna ve MCP'ler ekranı Claude bağlayıcılarınızın
 aynı listesini okur: bağlı uygulamada düğme yoktur, **Bağla** yalnız giriş isteyen ya da bağlı olmayan uygulamada
 çıkar; durum bilinmiyorsa masa tahmin etmez, Claude'a sorar. Masa 3.0.11; paket sürümleri aynı, Claude eklentisi
-1.12.8, Arthur Mask 1.1.2.
+1.12.8, ArthurMask 1.1.2.
 
-## Setup 3.0.10 — Arthur Mask 1.1.2 and a checked desk script (2026-11-03)
+## Setup 3.0.10 — ArthurMask 1.1.2 and a checked desk script (2026-11-03)
 
-- **Arthur Mask 1.1.2.** A stricter exit gate: it also catches surnames written alone or with an initial, short
+- **ArthurMask 1.1.2.** A stricter exit gate: it also catches surnames written alone or with an initial, short
   names, phone numbers with +90 or without the leading zero, IBANs written without "TR", joined licence plates, case
   numbers written with "Esas" or "E.", and spellings with accents or invisible characters; a long document is never
   split inside a value. The masked Word copy leaves out document properties, comment and revision authors, alt text,
   the thumbnail and external links. Very large Word or UDF files and very long PDFs are stopped with a clear message.
-  The program log carries no file names, and on macOS the Arthur Mask folder is private to your account.
+  The program log carries no file names, and on macOS the ArthurMask folder is private to your account.
 - **The desk checks its one outside script.** The desk and the cards load the MCP Apps client from unpkg only if its
   fingerprint matches the one they carry. Nothing changes on screen; the desk stays 3.0.8.
-- **How it arrives.** As in 3.0.9: on Windows the ArthurLegal updater installs Arthur Mask 1.1.2 by itself, in the
+- **How it arrives.** As in 3.0.9: on Windows the ArthurLegal updater installs ArthurMask 1.1.2 by itself, in the
   background, when Claude Desktop is closed (not while Windows 11 Smart App Control is on); on macOS download it from
-  the [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). Arthur Mask
+  the [ArthurMask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). ArthurMask
   1.1.1 also shows its own update notice.
 - Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin
   1.12.8. The research connector received the same hardening on the server the same day.
 
-**Türkçe:** Arthur Mask 1.1.2 çıkış kapısını sıkılaştırır: soyadının tek başına ya da baş harfle yazılması, kısa
+**Türkçe:** ArthurMask 1.1.2 çıkış kapısını sıkılaştırır: soyadının tek başına ya da baş harfle yazılması, kısa
 adlar, +90'lı ya da sıfırsız telefon, "TR"siz IBAN, bitişik plaka, "Esas" ya da "E." ile yazılan dosya numarası ve
 aksanlı ya da görünmez karakter taşıyan yazımlar da yakalanır; uzun belge bir değerin ortasından bölünmez. Maskeli Word
 kopyasında belge özellikleri, yorum ve değişiklik yazarları, alt metin, küçük resim ve dış bağlantılar yer almaz. Çok
 büyük Word ya da UDF dosyaları ve çok uzun PDF'ler açık bir iletiyle durdurulur. Program günlüğüne dosya adı yazılmaz;
-macOS'ta Arthur Mask klasörü yalnız sizin hesabınıza açıktır. Masa ve kartlar dışarıdan yükledikleri tek betiği
+macOS'ta ArthurMask klasörü yalnız sizin hesabınıza açıktır. Masa ve kartlar dışarıdan yükledikleri tek betiği
 (MCP Apps istemcisi) parmak izi tutarsa yükler; ekranda bir şey değişmez, masa 3.0.8 kalır. Windows'ta ArthurLegal
-güncelleyicisi Arthur Mask 1.1.2'yi Claude Desktop kapalıyken arka planda kendisi kurar; macOS'ta
-[Arthur Mask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin. Paket
+güncelleyicisi ArthurMask 1.1.2'yi Claude Desktop kapalıyken arka planda kendisi kurar; macOS'ta
+[ArthurMask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin. Paket
 sürümleri aynı; Claude eklentisi 1.12.8.
 
-## Setup 3.0.9 — Arthur Mask 1.1.1: security fixes and the desk's look (2026-11-03)
+## Setup 3.0.9 — ArthurMask 1.1.1: security fixes and the desk's look (2026-11-03)
 
-- **Arthur Mask 1.1.1.** Security fixes: unusual .docx files written by programs other than Word are stopped before
+- **ArthurMask 1.1.1.** Security fixes: unusual .docx files written by programs other than Word are stopped before
   processing; the exit gate also catches lower-case e-mail and KEP addresses and numbers written without separators;
   un-reviewed suspects cannot be approved after a restart; other user accounts on the same computer cannot reach the
   interface or the vault. The interface now has the desk's look (light, dark, automatic) and the ArthurLegal emblem,
   and its update notice works again.
-- **How it arrives.** On Windows the ArthurLegal updater installs Arthur Mask 1.1.1 by itself, in the background, when
+- **How it arrives.** On Windows the ArthurLegal updater installs ArthurMask 1.1.1 by itself, in the background, when
   Claude Desktop is closed (not while Windows 11 Smart App Control is on, since the installer is not code-signed). On
-  macOS ArthurLegal does not update an installed Arthur Mask: download 1.1.1 from the
-  [Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). After the update,
-  open Arthur Mask once from its shortcut; links from Claude work after that.
+  macOS ArthurLegal does not update an installed ArthurMask: download 1.1.1 from the
+  [ArthurMask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). After the update,
+  open ArthurMask once from its shortcut; links from Claude work after that.
 - Packages keep their versions (Law Firm and Corporate 1.12.5, Courthouse 1.2.4, Academician 1.1.5); Claude plugin
   1.12.8; the desk is unchanged (3.0.8). The research connector was hardened on the server the same day.
 
-**Türkçe:** Arthur Mask 1.1.1 güvenlik düzeltmeleri getirir: Word dışı programların yazdığı alışılmadık .docx
+**Türkçe:** ArthurMask 1.1.1 güvenlik düzeltmeleri getirir: Word dışı programların yazdığı alışılmadık .docx
 dosyaları işlenmeden durdurulur; çıkış kapısı küçük harfli e-posta ve KEP adreslerini, bitişik yazılmış numaraları da
 yakalar; uygulama yeniden başladıysa şüpheli adaylar görülmeden onay verilemez; aynı bilgisayardaki başka bir kullanıcı
 hesabı arayüze ve kasaya erişemez. Arayüz masanın görünümüne (açık, koyu, otomatik) ve ArthurLegal armasına geçti,
-güncelleme bildirimi yeniden çalışır. Windows'ta ArthurLegal güncelleyicisi Arthur Mask 1.1.1'i Claude Desktop
+güncelleme bildirimi yeniden çalışır. Windows'ta ArthurLegal güncelleyicisi ArthurMask 1.1.1'i Claude Desktop
 kapalıyken arka planda kendisi kurar (Windows 11 Akıllı Uygulama Denetimi açıksa kurulum imzasız olduğu için kurmaz).
-macOS'ta kurulu Arthur Mask'ı ArthurLegal güncellemez; 1.1.1'i
-[Arthur Mask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin.
-Güncellemeden sonra Arthur Mask'ı bir kez kısayolundan açın. Paket sürümleri ve masa aynı; Claude eklentisi 1.12.8.
+macOS'ta kurulu ArthurMask'ı ArthurLegal güncellemez; 1.1.1'i
+[ArthurMask sürüm sayfasından](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) indirin.
+Güncellemeden sonra ArthurMask'ı bir kez kısayolundan açın. Paket sürümleri ve masa aynı; Claude eklentisi 1.12.8.
 
 ## Setup 3.0.8 — Desk history that stays (2026-11-02)
 
@@ -821,7 +821,7 @@ göre. Paket sürümleri aynı; Claude eklentisi 1.12.8.
   history on this computer (90 days); on the web and phone for the session only. The research connector has the
   matching tool (`al_masaya_yaz`, 125 tools); the Claude directory profile is unchanged.
 - **MCP screen.** Connected servers and their status instead of tools and sources: ArthurLegal (research, ArthurTapu,
-  UYAP Dashboard, Arthur Mask, Memory) and your Claude connectors (Gmail, Calendar, Slack ...). Claude reports the
+  UYAP Dashboard, ArthurMask, Memory) and your Claude connectors (Gmail, Calendar, Slack ...). Claude reports the
   connectors when it opens the desk; **Manage connectors** and **Connect** open Claude's connector settings.
 - **ArthurTapu 0.6.1: a simpler fee card.** Choose the transaction (sale, gift, mortgage, annotations, partition,
   subdivision or merger, cancellation; any other by search) instead of typing a tariff code. The card shows only the
@@ -948,7 +948,7 @@ düğmede.
 
 ## Setup 3.0.0 — The UYAP Dashboard comes with the installer (2026-10-28)
 
-- **UYAP Dashboard in the public installer (Windows).** Tick Law Firm or Corporate together with Arthur Mask and the
+- **UYAP Dashboard in the public installer (Windows).** Tick Law Firm or Corporate together with ArthurMask and the
   Dashboard comes with them: one desktop icon, *ArthurLegal - UYAP Dashboard*, and the read-only `arthur-uyap`
   bridge in Claude Desktop. Courthouse and Academician installations do not get it. See [UYAP Dashboard](#uyap).
 - **No calibration.** The bridge no longer needs a recording of UYAP's endpoints. It reads the lists the lawyer
@@ -965,7 +965,7 @@ düğmede.
 - **New icon.** The desktop and installer icon, the setup wizard images and the desk's emblem are now a
   soft-cornered navy square with a gold "A" (Windows and Mac), drawn from one vector source (`varlik/simge.py`).
 
-**Türkçe:** UYAP Dashboard artık genel kurulumla geliyor (Windows; Hukuk Bürosu ya da Kurumsal ile Arthur Mask).
+**Türkçe:** UYAP Dashboard artık genel kurulumla geliyor (Windows; Hukuk Bürosu ya da Kurumsal ile ArthurMask).
 Uç kaydı ve kalibrasyon yok: köprü avukatın UYAP'ta açtığı listeleri okur, UYAP'a ek istek göndermez; her hatada ne
 yapılacağını yazar ve Tekrar dene sunar. Sınırlar sıkılaştı ve [UYAP Dashboard](#uyap) bölümünde tablo olarak duruyor.
 Masanın UYAP ekranı son işin saatini, görülen listeleri ve sayacı gösterir. Simge yeni: yumuşak köşeli lacivert
@@ -973,12 +973,12 @@ kare ve altın "A".
 
 ## Setup 2.7.0 — ArthurLegal Masası: one panel inside Claude (2026-10-27)
 
-- **ArthurLegal Masası (the ArthurLegal desk).** The **ArthurLegal** icon now opens Claude Desktop with *ArthurLegal Masası'nı aç* already typed in a new chat; press Enter and the desk opens full screen inside Claude. On the left, one panel: Chat, Legislation and citations, Case law, ArthurLegal Tapu, Memory (Beyin), Arthur Mask, UYAP Dashboard, Donna and the research sources. In the middle, what is being done, step by step. At the bottom, Claude's own message box. Everything runs on your own Claude plan; nothing is billed to an API key. The start guide still opens on the first launch.
+- **ArthurLegal Masası (the ArthurLegal desk).** The **ArthurLegal** icon now opens Claude Desktop with *ArthurLegal Masası'nı aç* already typed in a new chat; press Enter and the desk opens full screen inside Claude. On the left, one panel: Chat, Legislation and citations, Case law, ArthurLegal Tapu, Memory (Beyin), ArthurMask, UYAP Dashboard, Donna and the research sources. In the middle, what is being done, step by step. At the bottom, Claude's own message box. Everything runs on your own Claude plan; nothing is billed to an API key. The start guide still opens on the first launch.
 - **Check every citation in a draft at once.** Paste a petition or a contract: each article citation in it (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 13`) is found and checked against the official text and comes back as verified or not found. Only the law and article numbers leave the page, never your text. On request Claude then compares what the draft says with the article itself.
 - **Cards in the chat.** Article and case-law results appear as ArthurLegal cards: the heading with its parent headings, the text, the citation to copy, a link to the official text and a verified badge; a decision's text opens inside the card.
 - **Donna**, an assistant on the desk: summarises your day and sets reminders through the apps you have connected to Claude (e-mail, calendar, Slack, tasks). She asks before creating or sending anything and never computes a legal deadline; dates are used as you give them.
 - **Article headings in tiered codes (research connector).** For TBK, TMK and TTK an article's heading depended on how it was requested (alone: none; in a list: "II. BELİRLENMESİ2" with a footnote digit), and the next article's headings were left at the end of the previous article's text (TMK m. 23 ended with m. 24's "II. Saldırıya karşı / 1. İlke"). Headings now come whole with their parents (`heading_path`); measured on 12 codes and 5,392 articles: 1,241 headings added, 1,540 article texts no longer carry the next article's headings, no heading lost or changed.
-- On the web and in the Claude mobile app the desk comes from the ArthurLegal research connector; Memory, Arthur Mask and UYAP stay on your computer by design and are shown as desktop-only there.
+- On the web and in the Claude mobile app the desk comes from the ArthurLegal research connector; Memory, ArthurMask and UYAP stay on your computer by design and are shown as desktop-only there.
 - **Choose the interface in setup.** A new page after the modules: *ArthurLegal yeni arayüz* (ArthurLegal new interface, selected by default) or *Claude Desktop klasik* (Claude Desktop classic: Claude Desktop as before, no desk and no cards, results as text). On a Mac it is one box below the modules, ticked by default. Run setup again to change it; installations that update on their own get the new interface.
 - Light theme by default (white background, black text); dark and automatic on request.
 
@@ -987,7 +987,7 @@ Packages are unchanged: Law Firm and Corporate Assistant 1.12.4, Courthouse 1.2.
 ## Setup 2.6.7 — ArthurLegal Memory: the assistant remembers between chats (2026-10-27)
 
 - **A new optional module: ArthurLegal Memory** (Turkish: ArthurLegal Hafıza). Until now every chat in Claude Desktop started from scratch. With this module the assistant keeps your lasting preferences, your corrections, a short handover card at the end of a meaningful piece of work, and your open threads in a folder on your computer (`ArthurLegal-Hafiza` in your home folder), and reads them back at the start of the next chat. A rule that belongs to one matter goes to that matter's folder, named by its file code, never by a client's name. Say "remember this" to add something; say "do not write to memory" and nothing is written in that chat.
-- **Masked text only.** Before anything is written, a privacy gate refuses text that contains a Turkish ID number, an IBAN, a phone number or an e-mail address; people are referred to by Arthur Mask labels such as `{{KİŞİ-01}}`. The folder never leaves your computer and uninstalling ArthurLegal does not delete it. The writing tools are not marked read-only, so Claude Desktop asks before the first write.
+- **Masked text only.** Before anything is written, a privacy gate refuses text that contains a Turkish ID number, an IBAN, a phone number or an e-mail address; people are referred to by ArthurMask labels such as `{{KİŞİ-01}}`. The folder never leaves your computer and uninstalling ArthurLegal does not delete it. The writing tools are not marked read-only, so Claude Desktop asks before the first write.
 - **Plain Markdown, Beyin-compatible.** The notes are ordinary Markdown files you can open and edit; the folder uses the same layout as [Beyin](https://github.com/avenoxai/avenoxbeyin), so it also opens in Obsidian or Beyin. To use an existing Beyin vault, set `hafiza_dizini` in `ayar.json`. ArthurLegal does not ship Beyin's code.
 - The module is off unless you tick it. To add it, run the installer again (Windows or Mac) and tick **ArthurLegal Memory** on the module screen; *Memory Folder* in the Start menu (Mac: Applications → ArthurLegal) opens the folder.
 
@@ -1023,7 +1023,7 @@ Packages: Law Firm and Corporate Assistant 1.12.2, Courthouse 1.2.2, Academician
   generalised; six were merged by hand. An internal test note, a headcount and a named patent attorney firm were
   removed from the examples, and a self-referencing link was dropped from the energy market (EPDK) guide. 82 of the 87
   guides shared between packages are now generated from one source; the other five are package-specific on purpose
-  (Arthur Mask and EPDK, and the Courthouse guides on expert witnesses, criminal procedure and e-notification).
+  (ArthurMask and EPDK, and the Courthouse guides on expert witnesses, criminal procedure and e-notification).
 - **A quality exam before every release.** On a computer where it is configured, the release script first runs a
   quality exam: the candidate package's instructions answer a fixed set of statute and case-citation questions in real
   Claude sessions, and the result is compared with the last release that passed. If two or more answers get worse, the
@@ -1098,11 +1098,11 @@ The installer itself changes only its version number; installed copies pick up t
   ArthurLegal.
 - **The same updates.** Macs and Windows PCs read the same signed release; a Mac checks at login and every six
   hours.
-- **Arthur Mask on the Mac.** If chosen, it downloads after setup (about 1.2 GB; Apple Silicon and macOS 14 or
+- **ArthurMask on the Mac.** If chosen, it downloads after setup (about 1.2 GB; Apple Silicon and macOS 14 or
   later), is checked against the signed release and registers itself with Claude Desktop; a notification says when
   it is ready.
 - **Tested on a Mac at every build.** A GitHub Actions job builds the package, installs it on an Apple Silicon Mac
-  with Courthouse, Tapu and Arthur Mask ticked, checks the Claude Desktop registration, the icons, the update job
+  with Courthouse, Tapu and ArthurMask ticked, checks the Claude Desktop registration, the icons, the update job
   and both local servers, then uninstalls it.
 - The Mac installer is not yet notarised by Apple: allow it once under System Settings → Privacy & Security →
   **Open Anyway**.
@@ -1112,18 +1112,18 @@ On Windows nothing changes apart from the version number. The packages stay at t
 ## Setup 2.5.0 — One installer, choose your modules; Courthouse 1.2.0 (2026-10-06)
 
 - **Choose modules.** After the licence page a new screen lists six modules, each with a short description under it:
-  the Law Firm, Corporate Assistant, Courthouse and Academician packages, ArthurLegal Tapu and Arthur Mask. Nothing is
+  the Law Firm, Corporate Assistant, Courthouse and Academician packages, ArthurLegal Tapu and ArthurMask. Nothing is
   ticked on a first installation and at least one package is needed. The selection decides the desktop icons
   (**ArthurLegal** for Law Firm or Corporate, **ArthurLegal - Courthouse**, **ArthurLegal - Academician**,
-  **ArthurLegal - Tapu**; Arthur Mask adds its own), the Claude Desktop registration, the packages the assistant offers
-  and the ready-made project folders. A judge or court clerk who ticks Courthouse, Tapu and Arthur Mask gets exactly
+  **ArthurLegal - Tapu**; ArthurMask adds its own), the Claude Desktop registration, the packages the assistant offers
+  and the ready-made project folders. A judge or court clerk who ticks Courthouse, Tapu and ArthurMask gets exactly
   those three icons. Running the installer again shows the last choice; a module that is unticked loses its icon and
   registration, while the user's own files in its project folder stay.
 - **Courthouse and Academician in Claude Desktop.** Both packages, until now set up by hand in Claude.ai Projects,
   install like Law Firm and Corporate: no project, no pasted instructions, no uploaded files. With one package the
   assistant uses it by default; with several, the instructions tell the model which package fits which task.
 - **Updates keep the choice.** Installations from before 2.5.0 update silently and keep exactly what they had (Law
-  Firm, Corporate, Tapu and Arthur Mask); nothing new is added to them. The updater no longer downloads Arthur Mask
+  Firm, Corporate, Tapu and ArthurMask); nothing new is added to them. The updater no longer downloads ArthurMask
   for an installation that did not choose it.
 - **Silent installation.** `ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask` installs without
   windows; an invalid list stops setup before anything is installed. The zip route asks for the modules in its
@@ -1149,7 +1149,7 @@ The Law Firm and Corporate packages are unchanged at **v1.10.1**; Academician st
   temporary name first. Publishing to this repository refuses an installer that is not from the current build
   or that contains the UYAP bridge.
 - **Smart App Control.** On a Windows 11 computer with Smart App Control on, the updater no longer downloads the
-  1 GB Arthur Mask installer that Windows would block anyway. The zip instructions now say to unblock the zip
+  1 GB ArthurMask installer that Windows would block anyway. The zip instructions now say to unblock the zip
   before extracting it: Smart App Control blocks an internet `.cmd` file, and File Explorer carries that mark onto
   the extracted files.
 
@@ -1192,7 +1192,7 @@ new packages).
 
 ## Setup 2.4.0 — One UYAP icon: the UYAP Dashboard (2026-09-27)
 
-- **One icon for UYAP.** When the separately distributed UYAP bridge and Arthur Mask are both installed, the
+- **One icon for UYAP.** When the separately distributed UYAP bridge and ArthurMask are both installed, the
   installer adds a single UYAP shortcut to the desktop and the Start menu: "ArthurLegal - UYAP Dashboard" (the
   bridge's local screen, formerly "UYAP Ekranı"). The separate "UYAP Tarayıcısı" Start menu shortcut is gone:
   the Dashboard opens the separate-profile login browser itself. Shortcuts left over from earlier versions are
@@ -1227,8 +1227,8 @@ new packages).
 ## Setup 2.2.0 — A desktop shortcut for the UYAP screen (2026-09-26)
 
 - **UYAP screen shortcut.** When the separately distributed UYAP bridge includes its local screen (`uyap/ekran.py`)
-  and Arthur Mask is installed, the installer adds an "ArthurLegal - UYAP Ekranı" shortcut to the desktop and the
-  Start menu. The screen runs in Arthur Mask's Python with the same environment as the Claude Desktop registration
+  and ArthurMask is installed, the installer adds an "ArthurLegal - UYAP Ekranı" shortcut to the desktop and the
+  Start menu. The screen runs in ArthurMask's Python with the same environment as the Claude Desktop registration
   (offline model, no user site-packages). Shortcuts are written at install time; silent updates do not add them.
   Packages are unchanged; no new public release.
 
@@ -1328,9 +1328,9 @@ and need not be pasted again. Replace five files in Project knowledge — Law Fi
 `sulh-ceza-hakimligi-rehberi.md`, `vergi-yargisi-rehberi.md`, `ceza-kalem__skills.md`,
 `vergi-hakim__skills.md`.
 
-## v1.8.0 — Arthur Mask: documents are masked before anything leaves the computer (2026-09-13)
+## v1.8.0 — ArthurMask: documents are masked before anything leaves the computer (2026-09-13)
 
-The packages gain a local privacy gate. **Arthur Mask 1.0.0** is a Windows app that runs
+The packages gain a local privacy gate. **ArthurMask 1.0.0** is a Windows app that runs
 only on the user's computer: a lawyer drops a client document into its local browser
 interface, personal data is replaced with labels such as `{{KİŞİ-01}}`, `{{ŞİRKET-02}}` or
 `{{TCKN-01}}`, and the real values stay in an encrypted vault per matter. Claude receives
@@ -1367,20 +1367,20 @@ desktop; open it from Claude Desktop.
 4 GB free disk, 8 GB RAM recommended). It installs per user without administrator rights
 and registers the `arthur-mask` connector in Claude Desktop. It is not code-signed, so
 SmartScreen may warn ("More info" → "Run anyway"); the SHA-256 checksum is on the
-[Arthur Mask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). Arthur Mask is covered by the same
+[ArthurMask release page](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask). ArthurMask is covered by the same
 proprietary non-commercial license (not an open-source license); its source can be read at
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask). Notices for the
 open-source components it bundles ship inside the installation folder.
 
 **macOS.** **[⬇ ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (about 1.2 GB; Apple Silicon Mac,
-macOS 14 Sonoma or later, Claude Desktop; Intel Macs are not supported). Drag Arthur Mask to Applications
+macOS 14 Sonoma or later, Claude Desktop; Intel Macs are not supported). Drag ArthurMask to Applications
 and open it. It is ad-hoc signed but not notarised, so macOS blocks the first launch: allow it once under
 System Settings → Privacy & Security → Open Anyway. On first launch it registers the `arthur-mask`
-connector in Claude Desktop and offers to restart Claude. Files live in `~/Arthur Mask` (outside iCloud
+connector in Claude Desktop and offers to restart Claude. Files live in `~/ArthurMask` (outside iCloud
 Desktop & Documents sync); the vault key is kept in the macOS Keychain.
 
 Package changes: Corporate and Law Firm **v1.8.0**, Courthouse **v1.0.2** — a compact
-Arthur Mask section in each system prompt (fetch with `arthur_mask_belge_getir`, keep labels
+ArthurMask section in each system prompt (fetch with `arthur_mask_belge_getir`, keep labels
 verbatim, never put a label into a research query, revise the uploaded document with
 tracked changes, one non-blocking reminder when identifiable data is pasted into a chat),
 `knowledge/references/arthur-mask-rehberi.md`, an `ARTHUR-MASK.md` user guide (Law Firm

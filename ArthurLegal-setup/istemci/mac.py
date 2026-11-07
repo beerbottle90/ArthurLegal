@@ -2,8 +2,8 @@
 listesinin ve Run anahtarının karşılığı. kur.py çağırır; liste (hangi simge, hangi ad) kur._kisayol_listesi'ndedir.
 
 - Paket ve Tapu simgeleri ~/Applications'ta küçük uygulamalardır (Launchpad'de ve Spotlight'ta görünür) ve masaüstünde
-  birer takma adları (sembolik bağ) durur. Arthur Mask kuruluysa onun da masaüstü takma adı yazılır; Windows'ta bunu
-  Arthur Mask'in kendi kurulumu yapar.
+  birer takma adları (sembolik bağ) durur. ArthurMask kuruluysa onun da masaüstü takma adı yazılır; Windows'ta bunu
+  ArthurMask'in kendi kurulumu yapar.
 - Yardımcılar (başlangıç rehberi, proje klasörleri, güncelleme denetimi, kaldırma) ~/Applications/<ürün> klasöründedir.
 - Uygulamaların adları sürüm numarası taşımaz (Mac alışkanlığı; Dock'a eklenen simge güncellemede kopmasın). Sürüm
   uygulamanın bilgisindedir (Finder: Bilgi Al) ve her güncellemede yeniden yazılır. Masaüstü takma adları ise Windows'taki
@@ -151,7 +151,7 @@ def kisayollar_yaz(liste: list, menu: Path, simge: Path | None, surum: str) -> N
 
 def eski_kisayollari_temizle(liste: list, menu: Path, urun: str) -> None:
     """Listede olmayan, bu kurulumun yazdığı uygulamaları ve masaüstündeki takma adları siler (seçimden çıkan modül,
-    önceki ad). Arthur Mask'in kendi uygulamasına dokunulmaz, yalnız masaüstündeki takma adı."""
+    önceki ad). ArthurMask'in kendi uygulamasına dokunulmaz, yalnız masaüstündeki takma adı."""
     kalacak = {yol for yol, *_ in liste}
     adaylar = [p for p in uygulamalar().glob(f"{urun}*.app")] + ([p for p in menu.glob("*.app")] if menu.is_dir() else [])
     for app in adaylar:
@@ -161,7 +161,8 @@ def eski_kisayollari_temizle(liste: list, menu: Path, urun: str) -> None:
         if bag in kalacak or not bag.is_symlink():
             continue
         hedef = os.readlink(bag)
-        if hedef.endswith("/Arthur Mask.app") or (Path(hedef).parent == uygulamalar() and Path(hedef).name.startswith(urun)):
+        if hedef.endswith(tuple("/" + ad for ad in ortak.MASK_UYGULAMA_ADLARI)) or (
+                Path(hedef).parent == uygulamalar() and Path(hedef).name.startswith(urun)):
             bag.unlink()
     if menu.is_dir() and not any(menu.iterdir()):
         menu.rmdir()

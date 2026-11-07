@@ -65,17 +65,17 @@ PROFIL_ACIKLAMASI = {
     "akademisyen": "hukuk akademisyeninin işi: makale, tez, atıf, dergi seçimi, proje başvurusu",
 }
 
-_AVUKAT_MASK = ("Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan "
-                "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. UYAP (`arthur-uyap`, salt okunur, maskeli) kuruluysa "
+_AVUKAT_MASK = ("ArthurMask için SYSTEM_PROMPT'taki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan "
+                "yapıştırılmışsa kullanıcıyı ArthurMask'e yönlendir. UYAP (`arthur-uyap`, salt okunur, maskeli) kuruluysa "
                 "onun kendi talimatı geçerlidir: son gün hesaplanmaz ve sana gün gelmez, takvim kaydı avukatın "
                 "bilgisayarında oluşur.")
 MASK_MADDESI = {
     "hukuk-burosu": _AVUKAT_MASK,
     "kurumsal": _AVUKAT_MASK,
-    "adliye": "Arthur Mask için SYSTEM_PROMPT'taki kurallar geçerlidir; dosya belgesi (UYAP UDF dâhil) sohbete doğrudan "
-              "yapıştırılmışsa kullanıcıyı Arthur Mask'e yönlendir. Gizlilik ya da kısıtlama kararı olan dosyanın "
+    "adliye": "ArthurMask için SYSTEM_PROMPT'taki kurallar geçerlidir; dosya belgesi (UYAP UDF dâhil) sohbete doğrudan "
+              "yapıştırılmışsa kullanıcıyı ArthurMask'e yönlendir. Gizlilik ya da kısıtlama kararı olan dosyanın "
               "içeriği maskeli olsa bile kurum kuralları izin vermedikçe sohbete alınmaz. Asistan UYAP'a bağlanmaz.",
-    "akademisyen": "Arthur Mask kuruluysa kişisel veri içeren belgeler için kullanılabilir; ancak değerlendirme altındaki "
+    "akademisyen": "ArthurMask kuruluysa kişisel veri içeren belgeler için kullanılabilir; ancak değerlendirme altındaki "
                    "gizli müsvedde, proje önerisi, tez ya da hakem materyali maskeli olsa bile sohbete alınmaz "
                    "(SYSTEM_PROMPT, ÜYZ Kapısı).",
 }
@@ -433,7 +433,7 @@ def masa_araclari():
     masa["_meta"] = al_arayuz.arac_meta("al_masasi")
     ac = {"name": "al_modul_ac", "title": "ArthurLegal modülünü aç",
           "description": "Bu bilgisayarda kurulu bir ArthurLegal modülünün penceresini açar: tapu (Tapu arayüzü), "
-                         "uyap (UYAP Dashboard), mask (Arthur Mask). Masadaki düğmeler kullanır.",
+                         "uyap (UYAP Dashboard), mask (ArthurMask). Masadaki düğmeler kullanır.",
           "inputSchema": {"type": "object", "properties": {"modul": {"type": "string", "enum": list(MODUL_KOMUTU)}},
                           "required": ["modul"]},
           "annotations": {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}}
@@ -534,8 +534,8 @@ TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı huku
 HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "
                    "düzeltmelerini ve son oturum kartını yükle.")
 MASA_TALIMATI = (" Kullanıcı 'ArthurLegal Masası'nı aç' derse ya da masayı, bir modülü (Mevzuat, İçtihat, ArthurTapu, "
-                 "Beyin, Arthur Mask, UYAP Dashboard, Donna) açmak isterse bu sunucunun `al_masasi` aracını çağır; uzak "
-                 "arthurlegal-mcp bağlayıcısınınkini değil: Beyin, Arthur Mask ve UYAP Dashboard yalnız bu bilgisayardaki "
+                 "Beyin, ArthurMask, UYAP Dashboard, Donna) açmak isterse bu sunucunun `al_masasi` aracını çağır; uzak "
+                 "arthurlegal-mcp bağlayıcısınınkini değil: Beyin, ArthurMask ve UYAP Dashboard yalnız bu bilgisayardaki "
                  "masada çalışır.")
 
 
@@ -684,7 +684,7 @@ class Sunucu:
         if masa_modulleri()[modul]["durum"] != "hazir":
             return {"content": [{"type": "text", "text": "Bu modül bu kurulumda yok."}], "isError": True}
         ortak.arka_planda([ortak.python_yolu(pencereli=True), "-B", ortak.AL, "kisayol", komut])
-        mesaj = {"tapu": "Tapu arayüzü açılıyor.", "uyap": "UYAP Dashboard açılıyor.", "mask": "Arthur Mask açılıyor."}
+        mesaj = {"tapu": "Tapu arayüzü açılıyor.", "uyap": "UYAP Dashboard açılıyor.", "mask": "ArthurMask açılıyor."}
         return {"content": [{"type": "text", "text": json.dumps({"mesaj": mesaj[modul]}, ensure_ascii=False)}],
                 "structuredContent": {"mesaj": mesaj[modul]}}
 

@@ -20,7 +20,7 @@ Kurulumdan sonra masaüstünde üç simge olur:
 |---|---|
 | **ArthurLegal - Courthouse** | Claude Desktop'u ve başlangıç panelini açar; sohbette asistan Courthouse talimatıyla çalışır |
 | **ArthurLegal - Tapu** | Ada/parsel ya da yer adıyla TKGM Parsel Sorgu'dan canlı parsel bilgisi, kroki ve harç |
-| **Arthur Mask** | Dosya belgelerini Claude'a vermeden önce bu bilgisayarda maskeler |
+| **ArthurMask** | Dosya belgelerini Claude'a vermeden önce bu bilgisayarda maskeler |
 
 Mac'te simgeler Uygulamalar klasöründe de durur ve adlarında tire yoktur: **ArthurLegal Courthouse**,
 **ArthurLegal Tapu**.
@@ -38,7 +38,7 @@ Bağlantı her zaman en son sürümü indirir. Kurduktan sonra ArthurLegal yeni 
 doğrulayarak kendisi kurar; bu dosyayı yeniden indirmeniz gerekmez.
 
 **Gerekenler:** Windows 10 ya da 11 (64 bit), internet bağlantısı ve bir Claude hesabı. Claude Desktop kurulu
-değilse kurulum onu da kurmayı dener. Arthur Mask için yaklaşık 4 GB boş disk; 8 GB bellek önerilir.
+değilse kurulum onu da kurmayı dener. ArthurMask için yaklaşık 4 GB boş disk; 8 GB bellek önerilir.
 
 **1. İndirin.** Yukarıdaki düğmeye tıklayın. Dosya tarayıcının sağ üstündeki indirmeler listesine iner; liste
 kapanırsa <kbd>Ctrl</kbd> + <kbd>J</kbd> ile açın.
@@ -75,7 +75,7 @@ ne işe yaradığı yazar; ilk kurulumda hiçbir kutu işaretli gelmez. Şunlar�
 1. **Courthouse**: hâkim ve kalem paketi. Bu sayfanın anlattığı asistan budur.
 2. **ArthurLegal Tapu**: tapu iptal ve tescil, ortaklığın giderilmesi, kamulaştırma, ecrimisil gibi dosyalarda
    parsel bilgisi, kroki ve harç için.
-3. **Arthur Mask**: dosya belgelerini (UYAP UDF, Word, PDF, tarama) Claude'a vermeden önce bilgisayarda maskelemek
+3. **ArthurMask**: dosya belgelerini (UYAP UDF, Word, PDF, tarama) Claude'a vermeden önce bilgisayarda maskelemek
    için. Kurulum sırasında yaklaşık 1 GB iner.
 4. Sonra **Sonraki**'ye tıklayın.
 
@@ -83,20 +83,20 @@ Hukuk Bürosu, Kurumsal Asistan ve Akademisyen başka meslekler içindir; gerekm
 seçmeden ilerlenmez.
 
 <p align="center">
-  <img src="../docs/kurulum/moduller-courthouse.svg" width="560" alt="Örnek çizim: modül ekranında Courthouse (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sonraki düğmesi (4)">
+  <img src="../docs/kurulum/moduller-courthouse.svg" width="560" alt="Örnek çizim: modül ekranında Courthouse (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli; sonra Sonraki düğmesi (4)">
 </p>
 
 **4. Kurun.** **Kurulmaya hazır** sayfası seçtiğiniz modülleri listeler. **Kur**'a tıklayın. Claude Desktop
-açıksa kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. Arthur Mask'in indirilmesi internet
+açıksa kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. ArthurMask'in indirilmesi internet
 hızınıza göre birkaç dakika sürer; beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya
-**Evet** deyin, Arthur Mask sonra arka planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç
+**Evet** deyin, ArthurMask sonra arka planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: başlangıç
 paneli ve Claude Desktop açılır, masaüstünde **ArthurLegal - Courthouse**, **ArthurLegal - Tapu** ve
-**Arthur Mask** simgeleri olur.
+**ArthurMask** simgeleri olur.
 
 <h3 id="mac">Mac'te kurulum</h3>
 
 **[ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)**: macOS 11 ve sonrası, Apple Silicon ve Intel Mac'ler için tek dosya; yönetici
-şifresi istemez. Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.
+şifresi istemez. ArthurMask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.
 
 **1. İndirin ve açın.** İndirilen **ArthurLegal-Kurulum.pkg** dosyasına çift tıklayın. Kurulum dosyası henüz
 Apple'ın noter onayını taşımadığı için macOS ilk açılışta "**“ArthurLegal-Kurulum.pkg” Açılmadı**" der: **Bitti**'ye
@@ -109,16 +109,16 @@ girin ve çıkan pencerede yine **Yine de Aç**'ı seçin. Bunu yalnız ilk aç�
 </p>
 
 **2. Modülleri seçin.** **Sürdür**'e tıklayarak ilerleyin; lisanstan sonra **Kabul Ediyorum**'u seçin. **Yükleme
-Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve **Arthur Mask**'i işaretleyip **Sürdür**'e tıklayın;
+Türü** ekranında **Courthouse**, **ArthurLegal Tapu** ve **ArthurMask**'i işaretleyip **Sürdür**'e tıklayın;
 bir modülün adına tıklayınca ne işe yaradığı altta yazar.
 
 <p align="center">
-  <img src="../docs/kurulum/mac-3-moduller-courthouse.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Courthouse (1), ArthurLegal Tapu (2) ve Arthur Mask (3) işaretli; sonra Sürdür düğmesi (4)">
+  <img src="../docs/kurulum/mac-3-moduller-courthouse.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Courthouse (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
 **3. Kurun.** Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç paneli tarayıcıda açılır. Masaüstünde ve
-Uygulamalar klasöründe **ArthurLegal Courthouse** ve **ArthurLegal Tapu** simgeleri olur. Arthur Mask kurulumdan
-sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne **Arthur Mask** simgesi
+Uygulamalar klasöründe **ArthurLegal Courthouse** ve **ArthurLegal Tapu** simgeleri olur. ArthurMask kurulumdan
+sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne **ArthurMask** simgesi
 eklenir.
 
 **4. Claude Desktop'u yeniden açın.** Açıksa **Cmd+Q** ile tamamen çıkıp yeniden açın; kurulu değilse
@@ -133,7 +133,7 @@ sorarsa **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menül
 
 ```text
 /hukuk-hakim:on-inceleme
-[dosyanın özeti, ya da Arthur Mask'te hazırlanmış belgenin numarası]
+[dosyanın özeti, ya da ArthurMask'te hazırlanmış belgenin numarası]
 ```
 
 Bir eklentinin bütün komutlarını görmek için sohbete yalnız adını yazın, örneğin `/hukuk-kalem:`. İzleyiciler
@@ -172,7 +172,7 @@ izin vermez. Denetimi kapatmanız gerekmez; aynı kurulumun zip yolunu kullanın
 4. Açılan klasörde **KUR** dosyasına (türü: Windows Komut Dosyası) çift tıklayın. Siyah pencere modülleri sorar:
    Courthouse ve Tapu için `3,5` yazıp <kbd>Enter</kbd>'a basın. Sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
 
-Bu yolla Arthur Mask kurulmaz (dosya belgesi maskeleme çalışmaz); Courthouse paketi, araştırma araçları ve
+Bu yolla ArthurMask kurulmaz (dosya belgesi maskeleme çalışmaz); Courthouse paketi, araştırma araçları ve
 Tapu çalışır.
 </details>
 
@@ -180,7 +180,7 @@ Tapu çalışır.
 <summary><b>Tarayıcıda claude.ai kullanıyorum</b></summary>
 
 Kurulum dosyaları Claude Desktop içindir (Windows ve Mac). claude.ai web'de Courthouse paketi Claude.ai Projects ile
-elle kurulur: [KURULUM.md](KURULUM.md#elle-kurulum-4-adım). Arthur Mask yalnız Claude Desktop'ta çalışır (Windows ve
+elle kurulur: [KURULUM.md](KURULUM.md#elle-kurulum-4-adım). ArthurMask yalnız Claude Desktop'ta çalışır (Windows ve
 Apple Silicon Mac); web ve mobil uygulamada çalışmaz.
 </details>
 
@@ -266,10 +266,10 @@ karşılaştırıldı.
 Araştırma sorgularına taraf adı ya da dosyaya özgü gizli bilgi yazılmaz; asistan hukuki soruyu soyut terimlerle
 araştırır. Ayrıntı: `knowledge/references/yargi-mcp-rehberi.md` ve `mevzuat-mcp-rehberi.md`.
 
-## Arthur Mask: belgeler bilgisayardan çıkmadan maskelenir
+## ArthurMask: belgeler bilgisayardan çıkmadan maskelenir
 
 Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce **kendi bilgisayarınızda**
-maskelenir. UYAP UDF, Word, PDF ya da taranmış belge Arthur Mask'e bırakılır; taraf, şüpheli, sanık, mağdur ve
+maskelenir. UYAP UDF, Word, PDF ya da taranmış belge ArthurMask'e bırakılır; taraf, şüpheli, sanık, mağdur ve
 tanık adları, TCKN, adres, telefon ve dosya numarası gibi bilgiler `{{KİŞİ-01}}` gibi etiketlere dönüşür, gerçek
 değerler bilgisayardaki şifreli kasada kalır. Claude yalnız maskeli metni görür; cevap bilgisayarınızda gerçek
 adlarla Word'de ya da UYAP editöründe açılır.
@@ -290,7 +290,7 @@ Kullanım rehberi: [ARTHUR-MASK.md](ARTHUR-MASK.md).
 - **Süreler hatırlatmadır.** İzleyicilerin ve işlerin gösterdiği günleri hâkim ve kalem UYAP kaydından teyit eder;
   olgu bilinmiyorsa en erken gün ve uyarı yazılır.
 - **Mevzuat ve içtihat değişebilir.** Kritik karardan önce UYAP ve Resmî Gazete'den doğrulayın.
-- **Arthur Mask** resim, el yazısı, imza, kaşe ve karekodu maskelemez.
+- **ArthurMask** resim, el yazısı, imza, kaşe ve karekodu maskelemez.
 - **Kurum kuralları önce gelir.** Harici bir yapay zekâ hizmetinin kullanılıp kullanılamayacağı ve hangi belgenin
   verilebileceği kullanıcının bağlı olduğu kuralların konusudur; paket bu kuralların yerine geçmez.
 
@@ -300,7 +300,7 @@ Kullanım rehberi: [ARTHUR-MASK.md](ARTHUR-MASK.md).
 ArthurLegal-Courthouse-v1.2.4-Public-Release/
 ├── README.md              ← bu sayfa
 ├── KURULUM.md             ← kurulum rehberi: kurulum dosyası ve elle kurulum, komut haritası
-├── ARTHUR-MASK.md         ← Arthur Mask kullanım rehberi
+├── ARTHUR-MASK.md         ← ArthurMask kullanım rehberi
 ├── SYSTEM_PROMPT.md       ← asistanın sistem talimatı
 ├── CHANGELOG.md           ← sürüm notları
 ├── VERSION.md             ← 1.2.4

@@ -78,7 +78,7 @@ class EklentiKlasoru(unittest.TestCase):
     def test_yerel_moduller_eklentiye_girmez(self):
         # Tapu, UYAP ve Mask kullanıcının bilgisayarında çalışır; eklenti yalnız onlara yönlendirir.
         ana = self.dosyalar["skills/%s/SKILL.md" % eklenti_uret.AD].decode("utf-8")
-        for arac in ("arthur-tapu", "arthur-uyap", "Arthur Mask"):
+        for arac in ("arthur-tapu", "arthur-uyap", "ArthurMask"):
             self.assertIn(arac, ana)
         self.assertFalse([y for y in self.dosyalar if y.startswith(("bin/", "hooks/", "agents/", "scripts/"))])
 

@@ -2,7 +2,7 @@
 
 > **Durum:** ⚠️ MCP/connector yok — Presidio yerel Python kütüphanesi veya self-host servis olarak çalıştırılır; TAB, GitHub üzerinden indirilen statik bir değerlendirme korpusudur.
 > **Erişim:** ✅ Açık kaynak (her ikisi de MIT) — API anahtarı gerekmez, tam çevrimdışı çalışabilir.
-> **Hazır yerel araç (v1.8.0):** Kullanıcıya belgeleri Claude'a vermeden önce maskelemek için Arthur Mask önerilir (Windows, Claude Desktop; kurulum ve araç kuralları `arthur-mask-rehberi.md`). Bu rehber maskeleme disiplinini ve ölçüm yöntemini anlatır.
+> **Hazır yerel araç (v1.8.0):** Kullanıcıya belgeleri Claude'a vermeden önce maskelemek için ArthurMask önerilir (Windows, Claude Desktop; kurulum ve araç kuralları `arthur-mask-rehberi.md`). Bu rehber maskeleme disiplinini ve ölçüm yöntemini anlatır.
 > **Yargı çevresi notu:** ArthurLegal'in birincil yargı çevresi Türkiye'dir; bu rehberdeki maskeleme disiplini tüm dosya türlerine uygulanır, ancak KVKK çerçevesi yalnızca Türkiye'ye temas eden kişisel veri işlemelerinde bağlayıcıdır. Yabancı yargı çevrelerindeki veri koruma rejimleri için `karsilastirmali-hukuk-rehberi.md` üzerinden ilgili rehbere geçilir.
 
 ## Presidio nedir?

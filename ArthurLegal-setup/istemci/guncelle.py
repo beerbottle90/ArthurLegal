@@ -9,7 +9,7 @@ Oturum açılışında (HKCU Run) ve yerel sunucu açıkken 6 saatte bir çalı�
    sunucular eski klasörle devam eder; yeni sürüm Claude Desktop'ın bir sonraki açılışında
    devreye girer. Bir önceki sürüm geri dönüş için saklanır. Yerel derlemeyle kurulmuş, pakette
    olmayan UYAP köprüsü yeni sürüme kopyalanır.
-3. Arthur Mask kurulu sürümden yeniyse (≈1 GB) arka planda indirilir, Claude Desktop kapalıyken
+3. ArthurMask kurulu sürümden yeniyse (≈1 GB) arka planda indirilir, Claude Desktop kapalıyken
    sessiz kurulur. Windows 11 Akıllı Uygulama Denetimi açıksa indirilmez: imzasız kurulum orada hiç çalışmaz.
    Kurulu değilse yalnız kurulumda seçildiyse (ortak.moduller) indirilir.
 """
@@ -164,26 +164,26 @@ def paket_guncelle(manifest: dict, indirici) -> bool:
 
 
 def mask_mac_engeli() -> str:
-    """Arthur Mask'in Mac sürümü Apple Silicon ve macOS 14 (Sonoma) ister. Uymuyorsa nedeni, uyuyorsa boş."""
+    """ArthurMask'in Mac sürümü Apple Silicon ve macOS 14 (Sonoma) ister. Uymuyorsa nedeni, uyuyorsa boş."""
     arm = subprocess.run(["sysctl", "-n", "hw.optional.arm64"], capture_output=True, text=True).stdout.strip() == "1"
     if not arm:
-        return "Arthur Mask Mac'te yalnız Apple Silicon'da çalışır"
+        return "ArthurMask Mac'te yalnız Apple Silicon'da çalışır"
     import platform
     try:
         ana = int((platform.mac_ver()[0] or "0").split(".")[0])
     except ValueError:
         ana = 0
-    return "" if ana >= 14 else "Arthur Mask Mac'te macOS 14 (Sonoma) ya da sonrasını ister"
+    return "" if ana >= 14 else "ArthurMask Mac'te macOS 14 (Sonoma) ya da sonrasını ister"
 
 
 def mac_mask_kur(manifest: dict) -> str:
-    """macOS: Arthur Mask'i ilk kez kurar (kurulumda seçildiyse; Apple Silicon ve macOS 14'te). Disk görüntüsü
+    """macOS: ArthurMask'i ilk kez kurar (kurulumda seçildiyse; Apple Silicon ve macOS 14'te). Disk görüntüsü
     indirilir, sha256'sı imzalı manifestteki değerle (mask_macos) doğrulanır, uygulama Uygulamalar klasörüne kopyalanır
-    (yazılamıyorsa ~/Applications) ve Arthur Mask'in kendi aracıyla Claude Desktop'a kaydedilir. Kurulu Arthur Mask
+    (yazılamıyorsa ~/Applications) ve ArthurMask'in kendi aracıyla Claude Desktop'a kaydedilir. Kurulu ArthurMask
     güncellemesini kendisi yapar; buraya karışılmaz. Bu yolla indirilen dosya karantina işareti taşımaz."""
     kurulu = ortak.mask_surumu()
     if kurulu:
-        return f"mask: kurulu ({kurulu}); Arthur Mask Mac'te güncellemesini kendisi yapar"
+        return f"mask: kurulu ({kurulu}); ArthurMask Mac'te güncellemesini kendisi yapar"
     if "mask" not in ortak.moduller():
         return "mask: kurulumda seçilmedi"
     engel = mask_mac_engeli()
@@ -196,7 +196,7 @@ def mac_mask_kur(manifest: dict) -> str:
     if not (dmg.exists() and ortak.sha256_dosya(dmg) == m["sha256"]):
         if ortak.indir(m["url"], dmg, zaman=120) != m["sha256"]:
             dmg.unlink(missing_ok=True)
-            raise GuncellemeHatasi("Arthur Mask (macOS) sha256 uyuşmadı")
+            raise GuncellemeHatasi("ArthurMask (macOS) sha256 uyuşmadı")
     import tempfile
     nokta = Path(tempfile.mkdtemp(prefix="arthurmask-"))
     subprocess.run(["hdiutil", "attach", "-nobrowse", "-readonly", "-noautoopen", "-mountpoint", str(nokta), str(dmg)],
@@ -204,24 +204,27 @@ def mac_mask_kur(manifest: dict) -> str:
     try:
         kok = Path("/Applications") if os.access("/Applications", os.W_OK) else Path.home() / "Applications"
         kok.mkdir(parents=True, exist_ok=True)
-        hedef = kok / "Arthur Mask.app"
-        subprocess.run(["ditto", str(nokta / "Arthur Mask.app"), str(hedef)], check=True, capture_output=True, timeout=1800)
+        # Mask 1.1.3 ve sonrası paketi "ArthurMask.app" adıyla taşır; 1.1.2 ve öncesi ayrı yazılmış eski adla.
+        kaynak = next((nokta / ad for ad in ortak.MASK_UYGULAMA_ADLARI if (nokta / ad).is_dir()),
+                      nokta / ortak.MASK_UYGULAMA_ADLARI[0])
+        hedef = kok / kaynak.name
+        subprocess.run(["ditto", str(kaynak), str(hedef)], check=True, capture_output=True, timeout=1800)
     finally:
         subprocess.run(["hdiutil", "detach", str(nokta), "-force"], capture_output=True, timeout=300)
         shutil.rmtree(nokta, ignore_errors=True)
     subprocess.run(["xattr", "-dr", "com.apple.quarantine", str(hedef)], capture_output=True, timeout=300)
     py = hedef / "Contents" / "Resources" / "runtime" / "bin" / "python3"
-    # Arthur Mask'in kendi kurulumunun yaptığı gibi (modülü derlenmiş olduğundan -m ile değil, -c ile çağrılır).
+    # ArthurMask'in kendi kurulumunun yaptığı gibi (modülü derlenmiş olduğundan -m ile değil, -c ile çağrılır).
     kayit = subprocess.run([str(py), "-I", "-B", "-c", "import sys; from arthur_mask.claude_ayari import main; "
                             "sys.exit(main(['kaydet']))"], capture_output=True, text=True, timeout=300)
     if kayit.returncode and kayit.stderr.strip():  # 1: zaten kayıtlı (değişen dosya yok)
-        ortak.gunluk("guncelle", f"Arthur Mask Claude kaydı {kayit.returncode}: {kayit.stderr.strip()[-300:]}")
+        ortak.gunluk("guncelle", f"ArthurMask Claude kaydı {kayit.returncode}: {kayit.stderr.strip()[-300:]}")
     dmg.unlink(missing_ok=True)
-    ortak.gunluk("guncelle", f"Arthur Mask (macOS) {m['surum']} kuruldu: {hedef}")
+    ortak.gunluk("guncelle", f"ArthurMask (macOS) {m['surum']} kuruldu: {hedef}")
     import mac
-    mac.bildirim("Arthur Mask", ortak.metin(
-        "Arthur Mask kuruldu. Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; araçları o zaman görünür.",
-        "Arthur Mask is installed. Quit Claude Desktop with Cmd+Q and open it again to see its tools."))
+    mac.bildirim("ArthurMask", ortak.metin(
+        "ArthurMask kuruldu. Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; araçları o zaman görünür.",
+        "ArthurMask is installed. Quit Claude Desktop with Cmd+Q and open it again to see its tools."))
     return f"mask: {m['surum']} kuruldu"
 
 
@@ -235,28 +238,28 @@ def mask_guncelle(manifest: dict) -> str:
     if kurulu and ortak.surum_demeti(kurulu) >= ortak.surum_demeti(m["surum"]):
         return f"mask: güncel ({kurulu})"
     if not kurulu and "mask" not in ortak.moduller():
-        # Kurulumda seçilmedi: kurulu değilse indirilmez. Kendi kurulumuyla eklenmiş bir Arthur Mask ise güncellenir.
+        # Kurulumda seçilmedi: kurulu değilse indirilmez. Kendi kurulumuyla eklenmiş bir ArthurMask ise güncellenir.
         return "mask: kurulumda seçilmedi"
     if ortak.akilli_denetim_acik() and not m.get("imzali"):
         # Denetim imzasız kurulumu engeller: ~1 GB boşuna iner ve her denetimde engellenen kurulum yeni bir Windows
-        # uyarısı gösterirdi (zip yoluyla kurulan bilgisayarlar). Denetim kapatılırsa ya da Arthur Mask kurulumu
+        # uyarısı gösterirdi (zip yoluyla kurulan bilgisayarlar). Denetim kapatılırsa ya da ArthurMask kurulumu
         # imzalanırsa (manifest: mask.imzali) bir sonraki denetimde iner. Önceki denemeden kalan dosya silinir.
         for eski in (ortak.VERI / "indirilen").glob("ArthurMask-Kurulum-*.exe*"):
             eski.unlink(missing_ok=True)
-        return "mask: Akıllı Uygulama Denetimi açık, Arthur Mask bu bilgisayarda kurulamaz"
+        return "mask: Akıllı Uygulama Denetimi açık, ArthurMask bu bilgisayarda kurulamaz"
     exe = ortak.VERI / "indirilen" / f"ArthurMask-Kurulum-{m['surum']}.exe"
     if not (exe.exists() and ortak.sha256_dosya(exe) == m["sha256"]):
         if ortak.indir(m["url"], exe, zaman=120) != m["sha256"]:
             exe.unlink(missing_ok=True)
-            raise GuncellemeHatasi("Arthur Mask sha256 uyuşmadı")
+            raise GuncellemeHatasi("ArthurMask sha256 uyuşmadı")
     if ortak.claude_calisiyor():
         return "mask: indirildi, Claude Desktop kapanınca kurulacak"
     sonuc = subprocess.run([str(exe), "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-"],
                            creationflags=ortak.PENCERESIZ, timeout=3600)
     if sonuc.returncode != 0:
-        raise GuncellemeHatasi(f"Arthur Mask kurulumu {sonuc.returncode} ile bitti")
+        raise GuncellemeHatasi(f"ArthurMask kurulumu {sonuc.returncode} ile bitti")
     exe.unlink(missing_ok=True)
-    ortak.gunluk("guncelle", f"Arthur Mask {kurulu or 'yok'} -> {m['surum']}")
+    ortak.gunluk("guncelle", f"ArthurMask {kurulu or 'yok'} -> {m['surum']}")
     return f"mask: {m['surum']} kuruldu"
 
 
@@ -274,7 +277,7 @@ def _claude_kaydet(guncellendi: bool = False) -> None:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="ArthurLegal güncelleyici")
     ap.add_argument("--sessiz", action="store_true", help="arka plan çalıştırması")
-    ap.add_argument("--mask-yok", action="store_true", help="Arthur Mask'e dokunma")
+    ap.add_argument("--mask-yok", action="store_true", help="ArthurMask'e dokunma")
     ap.add_argument("--bildir", action="store_true", help="sonucu bildirimle göster (macOS: Güncellemeleri Denetle)")
     args = ap.parse_args(argv)
 
@@ -310,7 +313,7 @@ def main(argv=None) -> int:
         except (GuncellemeHatasi, OSError, ValueError, KeyError, subprocess.SubprocessError) as e:
             sonuclar.append(f"hata: {e}")
             ortak.gunluk("guncelle", f"hata: {e!r}")
-        # macOS'ta Arthur Mask'i bu kurulum kurar: masaüstü takma adı için kısayollar yeniden yazılır.
+        # macOS'ta ArthurMask'i bu kurulum kurar: masaüstü takma adı için kısayollar yeniden yazılır.
         mask_kuruldu = ortak.MAC and any(s.startswith("mask: ") and s.endswith(" kuruldu") for s in sonuclar)
         _claude_kaydet(guncellendi or mask_kuruldu)
         ortak.durum_guncelle(son_sonuc="; ".join(sonuclar))

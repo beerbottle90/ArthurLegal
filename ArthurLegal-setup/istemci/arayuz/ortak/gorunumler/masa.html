@@ -403,8 +403,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       baslik: "ArthurTapu", alt: "Parseli il, ilçe, mahalle ve ada/parselle ya da yer adıyla sorgulayın; rapor ve kroki Claude'da gelir." },
     { id: "beyin", ad: "Beyin", simge: "beyin", bolum: "Modüller",
       baslik: "Beyin", alt: "ArthurLegal Hafıza: tercihleriniz, düzeltmeleriniz ve son oturum kartlarınız bu bilgisayarda." },
-    { id: "mask", ad: "Arthur Mask", simge: "maske", bolum: "Modüller",
-      baslik: "Arthur Mask", alt: "Müvekkil belgesi Claude'a gitmeden önce bu bilgisayarda maskelenir." },
+    { id: "mask", ad: "ArthurMask", simge: "maske", bolum: "Modüller",
+      baslik: "ArthurMask", alt: "Müvekkil belgesi Claude'a gitmeden önce bu bilgisayarda maskelenir." },
     { id: "uyap", ad: "UYAP Dashboard", simge: "bina", bolum: "Modüller",
       baslik: "UYAP Dashboard", alt: "Tebligat ve duruşmalarınız, UYAP'ta açtığınız listelerden; salt okunur, gerçek değerler kendi penceresinde." },
     { id: "donna", ad: "Donna", donna: true, bolum: "Modüller",
@@ -648,7 +648,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       ["kitap", "Tercihlerinizi hatırlar", "Üslubunuz ve düzeltmeleriniz her sohbette geçerli olur."],
       ["saat", "Nerede kaldığınızı bilir", "Son oturum kartı: ne yapıldı, ne kaldı, sonraki adım."],
       ["beyin", "Bu bilgisayarda durur", "Hafıza kasası bilgisayarınızda; Claude'a yalnız istediğiniz not gider."]] },
-    mask: { ad: "Arthur Mask", maddeler: [
+    mask: { ad: "ArthurMask", maddeler: [
       ["maske", "Adları ve numaraları etiketler", "Belgedeki kişi, kimlik ve dosya numaraları {{KİŞİ-01}} gibi etiketlenir."],
       ["sohbet", "Claude maskeli metni görür", "Gerçek değerler bilgisayarınızdan çıkmaz."],
       ["onay", "Word çıktısı gerçek değerlerle", "Düzeltilen ya da yeni yazılan belge bilgisayarınızda gerçek değerlerle oluşur."]] },
@@ -1900,7 +1900,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         "Her maddeyi tr_mevzuat_madde_getir ile çek, atfı citation alanıyla birebir yaz, uyuşmayanı açıkça belirt.\n\n" +
         atiflar.map((a, i) => `${i + 1}. [${kanunAdi(a.kanun)} m. ${a.madde}] … ${a.cumle} …`).join("\n"),
         `Atıf teyidi: ${atiflar.length} atfın içerik uyumu Claude'a soruldu`, { metinSaklanmaz: true });
-      kap.append(ust, tablo, bilgi("Numaraların doğruluğu burada kontrol edildi. Maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini Claude'a kontrol ettirebilirsiniz; bu, atıfların geçtiği cümleleri sohbete gönderir. Müvekkil bilgisi varsa önce Arthur Mask'ten geçirin."));
+      kap.append(ust, tablo, bilgi("Numaraların doğruluğu burada kontrol edildi. Maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini Claude'a kontrol ettirebilirsiniz; bu, atıfların geçtiği cümleleri sohbete gönderir. Müvekkil bilgisi varsa önce ArthurMask'ten geçirin."));
       const alt = ogesi("div", "alt-satir");
       const ey = ogesi("div", "eylemler");
       ey.append(kontrol);
@@ -2394,18 +2394,18 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     ekran.append(form, izgara, bilgi("Hafıza bu bilgisayardaki kasada durur; kişisel veri kapısı açıkken Claude'a yalnız istediğiniz not gider."));
   };
 
-  // ---- Arthur Mask ----
+  // ---- ArthurMask ----
   CIZIM.mask = (ekran) => {
     const d = modulDurumu("mask");
     if (d === "masaustu") return masaustuTanitimi(ekran, "mask");
-    if (d === "kurulu-degil") return kuruluDegil(ekran, "Arthur Mask");
+    if (d === "kurulu-degil") return kuruluDegil(ekran, "ArthurMask");
     const satir = ogesi("div", "satir");
-    const ac = dugme("Arthur Mask'i aç", { sinif: "birincil", simge: "dis" });
+    const ac = dugme("ArthurMask'i aç", { sinif: "birincil", simge: "dis" });
     ac.onclick = () => modulAc("mask", ac);
     const liste = dugme("Hazır belgeleri getir", { simge: "sohbet" });
-    liste.onclick = () => claudeaSor("Arthur Mask'te incelemesi tamamlanmış maskeli belgeleri listele.", "Arthur Mask: hazır belgeler");
+    liste.onclick = () => claudeaSor("ArthurMask'te incelemesi tamamlanmış maskeli belgeleri listele.", "ArthurMask: hazır belgeler");
     satir.append(ac, liste);
-    ekran.append(satir, bilgi("Belgeyi Arthur Mask'e bırakın; adlar ve numaralar bu bilgisayarda etiketlenir ({{KİŞİ-01}} gibi). Claude yalnız maskeli metni görür, gerçek değerler bilgisayarınızda geri yazılır."));
+    ekran.append(satir, bilgi("Belgeyi ArthurMask'e bırakın; adlar ve numaralar bu bilgisayarda etiketlenir ({{KİŞİ-01}} gibi). Claude yalnız maskeli metni görür, gerçek değerler bilgisayarınızda geri yazılır."));
   };
 
   // ---- UYAP Dashboard ----
@@ -2445,7 +2445,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const d = modulDurumu("uyap");
     if (d === "masaustu") return masaustuTanitimi(ekran, "uyap");
     if (d === "kurulu-degil") {
-      ekran.append(bilgi("UYAP Dashboard bu kurulumda açık değil. Windows'ta Hukuk Bürosu ya da Kurumsal paketiyle birlikte Arthur Mask seçilince kendiliğinden gelir: ArthurLegal kurulumunu yeniden çalıştırıp modül ekranında işaretleyin."));
+      ekran.append(bilgi("UYAP Dashboard bu kurulumda açık değil. Windows'ta Hukuk Bürosu ya da Kurumsal paketiyle birlikte ArthurMask seçilince kendiliğinden gelir: ArthurLegal kurulumunu yeniden çalıştırıp modül ekranında işaretleyin."));
       return;
     }
     const satir = ogesi("div", "satir");
@@ -2625,7 +2625,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     let arastirma = sunucuSatiri("arma", "ArthurLegal araştırma", alNe, ["Yoklanıyor", ""]);
     alListe.append(arastirma);
     for (const [id, ad, ne] of [["tapu", "ArthurTapu", "Tapu ve kadastro"], ["uyap", "UYAP Dashboard", "Tebligat ve duruşmalar, salt okunur"],
-      ["mask", "Arthur Mask", "Belgeyi Claude'a gitmeden maskeler"], ["beyin", "Beyin", "ArthurLegal Hafıza"]]) {
+      ["mask", "ArthurMask", "Belgeyi Claude'a gitmeden maskeler"], ["beyin", "Beyin", "ArthurLegal Hafıza"]]) {
       const d = modulDurumu(id);
       // Uzak masa yerel modülü çalıştıramaz, ama Claude bu sohbette kurulumu bildirdiyse modül bu bilgisayarda bağlıdır.
       const durum = d === "masaustu" && id !== "tapu" && yerelBagli() ? ["Bilgisayarda bağlı", "mavi"] : MODUL_DURUMU[d];

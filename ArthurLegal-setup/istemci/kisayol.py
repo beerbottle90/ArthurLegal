@@ -6,7 +6,7 @@
     al.py kisayol baslat adliye   Courthouse simgesi (akademisyen: Akademisyen simgesi): aynı iş; panel o paketin
                                   kartını öne çıkarır
     al.py kisayol masa            yalnız masa bağlantısı (claude://claude.ai/new?q=…)
-    al.py kisayol mask            Arthur Mask uygulamasını açar (masadaki düğme)
+    al.py kisayol mask            ArthurMask uygulamasını açar (masadaki düğme)
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
     al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge). Kısayolu
                                   yok: UYAP Dashboard girişi kendisi açar; elle çalıştırmak için durur
@@ -132,17 +132,19 @@ def baslat(profil: str = "") -> int:
 
 
 def mask() -> int:
-    """Arthur Mask uygulamasını açar (masadaki "Arthur Mask'i aç" düğmesi)."""
+    """ArthurMask uygulamasını açar (masadaki "ArthurMask'i aç" düğmesi)."""
     if ortak.MAC:
         app = ortak.mask_uygulamasi()
         if app:
             return 0 if subprocess.run(["open", str(app)], capture_output=True, timeout=60).returncode == 0 else 1
     else:
-        lnk = Path(os.environ.get("APPDATA", "")) / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Arthur Mask.lnk"
-        if lnk.exists():
-            os.startfile(str(lnk))  # noqa: S606 — Arthur Mask kurulumunun kendi kısayolu
-            return 0
-    print(ortak.metin("Arthur Mask bu bilgisayarda kurulu değil.", "Arthur Mask is not installed on this computer."))
+        programlar = Path(os.environ.get("APPDATA", "")) / "Microsoft" / "Windows" / "Start Menu" / "Programs"
+        for ad in ("ArthurMask.lnk", "Arthur Mask.lnk"):  # Mask 1.1.2 ve öncesi kısayolu ayrı yazılmış adla kurar
+            lnk = programlar / ad
+            if lnk.exists():
+                os.startfile(str(lnk))  # noqa: S606 — ArthurMask kurulumunun kendi kısayolu
+                return 0
+    print(ortak.metin("ArthurMask bu bilgisayarda kurulu değil.", "ArthurMask is not installed on this computer."))
     return 1
 
 
@@ -175,12 +177,12 @@ def uyap_tarayici() -> int:
 
 
 def uyap_ekran() -> int:
-    """UYAP Dashboard Arthur Mask'in Python'unda açılır: maskeleme orada. Ortam, Claude Desktop'taki UYAP
+    """UYAP Dashboard ArthurMask'in Python'unda açılır: maskeleme orada. Ortam, Claude Desktop'taki UYAP
     kaydıyla aynıdır (claude_ayari): model indirilmez, kullanıcı paketleri karışmaz."""
     mask, ekran = ortak.mask_python(), ortak.SURUM_DIZINI / "uyap" / "ekran.py"
     if not mask or not ekran.exists():
-        print(ortak.metin("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve Arthur Mask gerekir.",
-                          "This installation has no UYAP Dashboard: it needs the UYAP bridge and Arthur Mask."))
+        print(ortak.metin("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve ArthurMask gerekir.",
+                          "This installation has no UYAP Dashboard: it needs the UYAP bridge and ArthurMask."))
         return 1
     pencereli = mask.with_name("pythonw.exe")
     ortam = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",

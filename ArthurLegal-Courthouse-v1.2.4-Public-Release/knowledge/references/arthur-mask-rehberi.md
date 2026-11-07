@@ -1,14 +1,14 @@
-# Arthur Mask Rehberi (yerel gizlilik kapısı)
+# ArthurMask Rehberi (yerel gizlilik kapısı)
 
-> **Sürüm:** Arthur Mask 1.0.0, ArthurLegal v1.8.0 ile birlikte yayımlandı (13.09.2026).
-> **Bu dosya kimin için:** Claude'un, kullanıcının Arthur Mask hakkındaki sorularını (kurulum, günlük kullanım, sorun giderme, sınırlar) doğru cevaplaması ve `arthur_mask_*` araçlarını doğru kullanması için. Hâkim ve kalem personeline yönelik adım adım anlatım paket kökündeki `ARTHUR-MASK.md` dosyasındadır.
+> **Sürüm:** ArthurMask 1.0.0, ArthurLegal v1.8.0 ile birlikte yayımlandı (13.09.2026).
+> **Bu dosya kimin için:** Claude'un, kullanıcının ArthurMask hakkındaki sorularını (kurulum, günlük kullanım, sorun giderme, sınırlar) doğru cevaplaması ve `arthur_mask_*` araçlarını doğru kullanması için. Hâkim ve kalem personeline yönelik adım adım anlatım paket kökündeki `ARTHUR-MASK.md` dosyasındadır.
 > **Dağıtım:** Yalnız ArthurLegal GitHub sürüm sayfasındaki kurulum dosyası. Kaynak kodu `https://github.com/beerbottle90/arthur-mask` adresinde incelenebilir (ticari olmayan kullanım lisansı; açık kaynak değildir).
 
 ---
 
-## 1. Arthur Mask nedir
+## 1. ArthurMask nedir
 
-Arthur Mask, yalnız kullanıcının bilgisayarında çalışan bir Windows programıdır. Kullanıcı (hâkim veya kalem personeli) bir belgeyi Arthur Mask'in yerel tarayıcı arayüzüne bırakır; belgedeki kişisel veriler `{{KİŞİ-01}}`, `{{ŞİRKET-02}}`, `{{TCKN-01}}` gibi etiketlerle değiştirilir. Gerçek değerler bilgisayarda, her dosya için ayrı ve şifreli bir kasada kalır. Claude, Claude Desktop üzerinden yalnız maskeli metni alır. Claude'un cevabı yine bilgisayarda gerçek adlara geri çevrilir ve Word veya UDF olarak açılır.
+ArthurMask, yalnız kullanıcının bilgisayarında çalışan bir Windows programıdır. Kullanıcı (hâkim veya kalem personeli) bir belgeyi ArthurMask'in yerel tarayıcı arayüzüne bırakır; belgedeki kişisel veriler `{{KİŞİ-01}}`, `{{ŞİRKET-02}}`, `{{TCKN-01}}` gibi etiketlerle değiştirilir. Gerçek değerler bilgisayarda, her dosya için ayrı ve şifreli bir kasada kalır. Claude, Claude Desktop üzerinden yalnız maskeli metni alır. Claude'un cevabı yine bilgisayarda gerçek adlara geri çevrilir ve Word veya UDF olarak açılır.
 
 Hukuki terim olarak yapılan işlem **takma adlandırmadır** (KVKK ve GDPR bakımından pseudonymisation), anonim hâle getirme değildir: gerçek değerler kasada durduğu ve etiketler onlara geri çevrilebildiği için maskeli metin de kişisel veri niteliğini sürdürebilir.
 
@@ -45,23 +45,23 @@ Aynı dosyadaki belgeler etiketleri paylaşır: aynı kişi, dosyanın bütün b
 1. Doğrudan indirme bağlantısı (GitHub hesabı gerekmez, tıklayınca `ArthurMask-Kurulum.exe` İndirilenler klasörüne iner, yaklaşık 1 GB): https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe
    Kullanıcı GitHub sayfasında ne yapacağını bilemiyorsa ona yalnız bu bağlantıyı ver ve "tıklayın, inen dosyaya çift tıklayın" de. Klasör ya da sürüm sayfası tarif etme. Bağlantı her sürümde aynıdır.
 2. Kurulum dosyası kod imzalı değildir. Windows SmartScreen "Windows bilgisayarınızı korudu" uyarısı gösterebilir: "Ek bilgi", ardından "Yine de çalıştır". Bazı antivirüs ürünleri dosyayı bir süre tarayabilir.
-3. Kurulum kullanıcı başınadır, yönetici yetkisi istemez ve `%LOCALAPPDATA%\Programs\Arthur Mask` klasörüne kurar.
-4. Başlat menüsüne ve masaüstüne "Arthur Mask" kısayolu ekler.
+3. Kurulum kullanıcı başınadır, yönetici yetkisi istemez ve `%LOCALAPPDATA%\Programs\ArthurMask` klasörüne kurar.
+4. Başlat menüsüne ve masaüstüne "ArthurMask" kısayolu ekler.
 5. `arthur-mask` yerel connector'ını Claude Desktop yapılandırmasına kendiliğinden kaydeder; önceki yapılandırma dosyasının yedeğini tutar.
-6. Sonunda Arthur Mask'i açmayı önerir.
+6. Sonunda ArthurMask'i açmayı önerir.
 
 ## 5. Kurulumdan sonra doğrulama
 
 1. Claude Desktop'tan tamamen çıkın; sistem tepsisindeki simgeden de çıkın. Sonra yeniden açın.
 2. Claude Desktop'ta Ayarlar, Geliştirici (Settings, Developer) bölümünde "arthur-mask" çalışır durumda görünür.
-3. Bir sohbette araçlar menüsünde Arthur Mask araçları görünür.
+3. Bir sohbette araçlar menüsünde ArthurMask araçları görünür.
 
 ## 6. Günlük akış (6 adım)
 
-1. **Aç.** "Arthur Mask" kısayolu tarayıcıda http://127.0.0.1:47831 adresini açar. Sağ üstte "Claude Desktop'a bağlı" ve "Tam koruma" göstergeleri görünür.
+1. **Aç.** "ArthurMask" kısayolu tarayıcıda http://127.0.0.1:47831 adresini açar. Sağ üstte "Claude Desktop'a bağlı" ve "Tam koruma" göstergeleri görünür.
 2. **Belgeyi bırak.** İlk belge, belgenin adını taşıyan yeni bir dosya oluşturur. Başka bir iş için "+ Yeni dosya" kullanılır. Aynı dosyadaki belgeler etiketleri paylaşır.
 3. **İncele.** Durum "Onayınızı bekliyor" veya "Kırmızı hat" ise "İncele" açılır: belirsiz tespitler için "Maskele" veya "Açık bırak" seçilir, maskeli kopya kontrol edilir, kırmızı hat içeriği için gerekçe yazılır, sonra "Onayla — Claude'a hazırla".
-4. **Claude'a ver.** Gösterilen komut (ör. "Arthur Mask'teki belge-1'i incele") kopyalanır ve Claude Desktop'taki ArthurLegal Project sohbetine yapıştırılır. Orijinal belge ayrıca sohbete eklenmez.
+4. **Claude'a ver.** Gösterilen komut (ör. "ArthurMask'teki belge-1'i incele") kopyalanır ve Claude Desktop'taki ArthurLegal Project sohbetine yapıştırılır. Orijinal belge ayrıca sohbete eklenmez.
 5. **Cevabı al.** Claude'un cevabı "Cevaplar" altında gerçek adlarla görünür: "Word'de aç", "UYAP editöründe aç" veya revizyonlarda "Word'de aç (izli değişiklikler)" (değişiklikler orijinal belgeye Word izli değişikliği olarak işlenir, sayfa düzeni korunur). Her cevapta "Gerçek adlarla" ve "Claude'daki hâli" sekmeleri vardır.
 6. **Denetle.** "Claude'a giden" paneli Claude'un tam olarak ne aldığını gösterir. "Sızıntı denetimi yap" düğmesi "✓ Temiz" sonucunu verir veya bulguları listeler.
 
@@ -85,13 +85,13 @@ Aynı dosyadaki belgeler etiketleri paylaşır: aynı kişi, dosyanın bütün b
 
 ## 10. Veriler nerede, ne kadar kalır
 
-Konum: `Belgeler\Arthur Mask\<dosya adı>`. Maskeli kopyalar 30 gün sonra kendiliğinden silinir; gerçek adlara çevrilmiş cevaplar ve kasa kalır. Kurumun saklama ve imha kuralları bu klasöre de uygulanır.
+Konum: `Belgeler\ArthurMask\<dosya adı>`. Maskeli kopyalar 30 gün sonra kendiliğinden silinir; gerçek adlara çevrilmiş cevaplar ve kasa kalır. Kurumun saklama ve imha kuralları bu klasöre de uygulanır.
 
 ## 11. Güncelleme ve kaldırma
 
-**Güncelleme.** ArthurLegal sürüm sayfasında daha yeni bir kurulum dosyası yayımlandığında Arthur Mask arayüzü bildirim gösterir. Yeni sürüm eskisinin üzerine kurulur.
+**Güncelleme.** ArthurLegal sürüm sayfasında daha yeni bir kurulum dosyası yayımlandığında ArthurMask arayüzü bildirim gösterir. Yeni sürüm eskisinin üzerine kurulur.
 
-**Kaldırma.** Windows Ayarlar, Uygulamalar, Arthur Mask, Kaldır. Program ve Claude Desktop connector kaydı kaldırılır. `Belgeler\Arthur Mask` klasörü ve kurtarma anahtarı dosyası korunur; istenirse elle silinir.
+**Kaldırma.** Windows Ayarlar, Uygulamalar, ArthurMask, Kaldır. Program ve Claude Desktop connector kaydı kaldırılır. `Belgeler\ArthurMask` klasörü ve kurtarma anahtarı dosyası korunur; istenirse elle silinir.
 
 ## 12. Sorun giderme
 
@@ -101,7 +101,7 @@ Konum: `Belgeler\Arthur Mask\<dosya adı>`. Maskeli kopyalar 30 gün sonra kendi
 | Araçlar Claude'da görünmüyor | Claude Desktop'tan sistem tepsisi dâhil tamamen çıkıp yeniden açın; Ayarlar, Geliştirici bölümünde "arthur-mask" kaydını kontrol edin. |
 | Açılışta "Koruma hazırlanıyor…" | 15 ile 30 saniye arası normaldir (model yükleniyor). |
 | "Temel koruma" göstergesi | Yapay zekâ tespit bileşeni veya OCR yüklenemedi; kural tabanlı tespit çalışmaya devam eder. Programı yeniden kurun. |
-| Claude belgenin hazır olmadığını söylüyor | İnceleme Arthur Mask'te tamamlanmamış. "İncele" ekranını bitirip onaylayın. |
+| Claude belgenin hazır olmadığını söylüyor | İnceleme ArthurMask'te tamamlanmamış. "İncele" ekranını bitirip onaylayın. |
 | Cevabın altında bilinmeyen etiket uyarısı | Claude bir etiketi değiştirmiş. O cümleyi kontrol edin. |
 | Resim, gömülü nesne, el yazısı, imza, kaşe, QR kod maskelenmedi | Bu içerikler kapsam dışıdır. Belgeyi göndermeden önce elle kontrol edin veya bu kısımları çıkarın. |
 | claude.ai web veya mobilde araçlar yok | Desteklenmez. ArthurLegal Project'ini Claude Desktop'ta açın. |
@@ -110,7 +110,7 @@ Konum: `Belgeler\Arthur Mask\<dosya adı>`. Maskeli kopyalar 30 gün sonra kendi
 
 1. Takma adlandırma anonim hâle getirme değildir. Maskeli metin, bağlamıyla birlikte kişiyi belirlenebilir kılabilir.
 2. Tespit olasılığa dayalıdır; hiçbir tespit sistemi her kişisel veriyi yakalamayı garanti etmez. İnceleme ekranı ve sızıntı denetimi bu yüzden vardır.
-3. Sorumluluk kullanıcıdadır: KVKK yükümlülükleri, soruşturma ve kovuşturma dosyalarına ilişkin gizlilik kuralları, ticari sır ve kurumun bilgi güvenliği kuralları Arthur Mask kullanılsa da devam eder. Bir dosya içeriğinin maskeli hâliyle bile harici bir yapay zekâ hizmetine verilip verilemeyeceği (yurt dışına aktarım dâhil) mevzuata ve kurum kurallarına göre kullanıcı tarafından değerlendirilir.
+3. Sorumluluk kullanıcıdadır: KVKK yükümlülükleri, soruşturma ve kovuşturma dosyalarına ilişkin gizlilik kuralları, ticari sır ve kurumun bilgi güvenliği kuralları ArthurMask kullanılsa da devam eder. Bir dosya içeriğinin maskeli hâliyle bile harici bir yapay zekâ hizmetine verilip verilemeyeceği (yurt dışına aktarım dâhil) mevzuata ve kurum kurallarına göre kullanıcı tarafından değerlendirilir.
 4. Yalnız Claude Desktop (Windows). claude.ai web ve mobil uygulamalarda çalışmaz.
 5. Word içindeki resimler ve gömülü nesneler; taramalardaki el yazısı, imza, kaşe ve QR kod maskelenmez.
 6. Tarihler ve tutarlar bilinçli olarak maskelenmez; bunların kendisi gizliyse (ör. uzlaşma tutarı) kırmızı hat veya elle çıkarma gerekir.
@@ -126,15 +126,15 @@ Konum: `Belgeler\Arthur Mask\<dosya adı>`. Maskeli kopyalar 30 gün sonra kendi
 
 Kurallar:
 
-1. Kullanıcı "belge-N" veya "Arthur Mask'teki…" diyorsa belgeyi `arthur_mask_belge_getir` ile çek; kimlik belirsizse önce `arthur_mask_belgeler`. Ham belgeyi yapıştırmasını veya eklemesini isteme.
+1. Kullanıcı "belge-N" veya "ArthurMask'teki…" diyorsa belgeyi `arthur_mask_belge_getir` ile çek; kimlik belirsizse önce `arthur_mask_belgeler`. Ham belgeyi yapıştırmasını veya eklemesini isteme.
 2. Uzun belgede `parca` ile sırayla ilerle; okunmayan parçayı okunmuş gibi değerlendirme.
 3. `{{TÜR-NN}}` etiketleri harfi harfine korunur. Türkçe ek kesme işaretinden sonra gelir: `{{KİŞİ-01}}'in`, `{{ŞİRKET-02}}'ye`. Etiket değiştirilmez, birleştirilmez, çevrilmez.
 4. Gerçek değer tahmin edilmez, bağlamdan yeniden kurulmaz, kullanıcıdan istenmez.
 5. Etiket hiçbir araştırma sorgusuna konmaz (`tr_` araçları, diğer MCP'ler, web). Hukuki soru soyut terimlerle araştırılır ("kira bedelinin uyarlanması", "tutuklamanın ölçülülüğü").
 6. Yüklenen belgede değişiklik: `arthur_mask_belgeyi_revize_et`. Her `eski`, tek bir paragraf veya tek bir tablo hücresinden birebir kopyalanır; paragraflar arasına yayılan `eski` eşleşmez. İki dilli belgede iki dil sütunu birlikte revize edilir.
 7. Yeni belge: `arthur_mask_teslim`. Başlık ve tablo Markdown ile yazılır; kaynak iki dilliyse çıktı iki sütunlu tablodur. Paketin dosya üretimi kuralları içeriğe uygulanır.
-8. Araç belgenin hazır olmadığını söylerse kullanıcıdan incelemeyi Arthur Mask'te tamamlamasını iste.
-9. Kullanıcı soruşturma veya kovuşturma dosyasından, UYAP'tan alınmış bir UDF'den ya da dava dosyasından tanımlanabilir kişisel veriyi (taraf, şüpheli, sanık, mağdur, tanık adı, TCKN, adres) doğrudan sohbete yapıştırır ya da eklerse, sohbet başına en çok bir kez, işi durdurmadan kısa bir hatırlatma yapılır: dosya belgeleri Arthur Mask ile (Claude Desktop, Windows) paylaşılmadan önce bilgisayarda maskelenebilir. Reddedilmez, ders verilmez.
-10. Arthur Mask araçları yoksa (web, mobil veya kurulmamış) bu araçlar varmış gibi davranılmaz; kullanıcı soruyorsa bölüm 3 ve 4 anlatılır.
+8. Araç belgenin hazır olmadığını söylerse kullanıcıdan incelemeyi ArthurMask'te tamamlamasını iste.
+9. Kullanıcı soruşturma veya kovuşturma dosyasından, UYAP'tan alınmış bir UDF'den ya da dava dosyasından tanımlanabilir kişisel veriyi (taraf, şüpheli, sanık, mağdur, tanık adı, TCKN, adres) doğrudan sohbete yapıştırır ya da eklerse, sohbet başına en çok bir kez, işi durdurmadan kısa bir hatırlatma yapılır: dosya belgeleri ArthurMask ile (Claude Desktop, Windows) paylaşılmadan önce bilgisayarda maskelenebilir. Reddedilmez, ders verilmez.
+10. ArthurMask araçları yoksa (web, mobil veya kurulmamış) bu araçlar varmış gibi davranılmaz; kullanıcı soruyorsa bölüm 3 ve 4 anlatılır.
 
 İlgili: `hakimlik-etigi-rehberi.md`, `uyap-rehberi.md`.

@@ -213,7 +213,7 @@ Başkan/Hâkim [e-imza]              Zabıt Kâtibi [e-imza]
 ## İnceleyen notu
 
 - Madde kontrolü: CMK m. 58, 180, 182, 183, 185, 196, 216, 219, 220, 221, 222, 231, 236, 263 — bu sohbette çekildi mi, eşleşti mi.
-- Tutanak taslağında gereksiz kişisel veri tekrarlanmaz; dosya belgeleri Arthur Mask ile maskelenebilir.
+- Tutanak taslağında gereksiz kişisel veri tekrarlanmaz; dosya belgeleri ArthurMask ile maskelenebilir.
 - ⚠️ "Tutanak başkan veya hâkim ile zabıt kâtibi imzasıyla geçerlik kazanır."
 
 ## Sıradaki adımlar

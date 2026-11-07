@@ -57,9 +57,9 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <p data-arayuz="yeni" class="onemli"><b>Önemli: masayı açmak için Enter'a basın.</b> Claude Desktop açıldığında yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı gelir; mesaj kendiliğinden gönderilmez. Masaüstündeki <i>{{URUN}}</i> simgesiyle her açılışta da Enter'a basın.</p>
 
-<a class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#f7c948" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg><span><b>Kullanıcı Rehberi (PDF)</b><small>Kurulum, ArthurLegal Masası, Arthur Mask, UYAP Dashboard ve sık sorulanlar tek belgede · GitHub'da açılır</small></span><span class="ok" aria-hidden="true">→</span></a>
+<a class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#f7c948" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg><span><b>Kullanıcı Rehberi (PDF)</b><small>Kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede · GitHub'da açılır</small></span><span class="ok" aria-hidden="true">→</span></a>
 
-<p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, Arthur Mask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. O kutuya yalnız sorunuzu yazın: soru hemen masanın <b>Sohbet</b> ekranına gelir, Claude'un baktığı her kaynak canlı bir satır olarak belirir, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı yerde açılır (öneriler altında kalır). <b>MCP'ler</b> ekranı bağlı sunucularınızı ve durumlarını gösterir. Simge her tıklamada bu sayfayı da tarayıcıda açar.</p>
+<p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, Tapu, Hafıza, ArthurMask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. O kutuya yalnız sorunuzu yazın: soru hemen masanın <b>Sohbet</b> ekranına gelir, Claude'un baktığı her kaynak canlı bir satır olarak belirir, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı yerde açılır (öneriler altında kalır). <b>MCP'ler</b> ekranı bağlı sunucularınızı ve durumlarını gösterir. Simge her tıklamada bu sayfayı da tarayıcıda açar.</p>
 <figure data-arayuz="yeni" class="masa"><img src="masa.png" width="1200" height="879" alt="ArthurLegal Masası'nın açılış ekranı: solda modüller, ortada işe başlama kartları"><figcaption>Masanın açılış ekranı (açık tema; koyu ve otomatik sol altta).</figcaption></figure>
 
 <p data-arayuz="klasik"><b>Claude Desktop klasik.</b> Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın: asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Masayı kullanmak isterseniz kurulum dosyasını yeniden çalıştırıp <b>ArthurLegal yeni arayüz</b>'ü seçin.</p>
@@ -68,7 +68,7 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 <div id="paketler">
 <div class="kart" data-modul="hukuk-burosu"><b>Hukuk Bürosu</b> — avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması, süre takibi. Komutları görmek için sohbete <code>/litigation-legal:</code> gibi bir eklenti adı yazın; ya da işi doğrudan anlatın.</div>
 <div class="kart" data-modul="kurumsal"><b>Kurumsal Asistan</b> — şirket hukuk birimleri için sözleşme incelemesi, uyum, KVKK ve şirketler hukuku. İşi doğrudan anlatın; asistan uygun adımları kendisi seçer.</div>
-<div class="kart" data-modul="adliye"><b>Courthouse</b> — hâkim ve kalem için tarafsız taslak. Örnek: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izleyiciler için "yarının duruşmaları" ya da "kesinleşme kontrolü" yazın. Dosya belgelerini sohbete doğrudan eklemeyin, önce Arthur Mask'e bırakın. Her çıktı taslaktır, hâkim ya da heyet onayından geçer.</div>
+<div class="kart" data-modul="adliye"><b>Courthouse</b> — hâkim ve kalem için tarafsız taslak. Örnek: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izleyiciler için "yarının duruşmaları" ya da "kesinleşme kontrolü" yazın. Dosya belgelerini sohbete doğrudan eklemeyin, önce ArthurMask'e bırakın. Her çıktı taslaktır, hâkim ya da heyet onayından geçer.</div>
 <div class="kart" data-modul="akademisyen"><b>Akademisyen</b> — hukuk akademisyenleri için literatür, atıf doğrulama, dergi seçimi, yayın etiği ve proje başvurusu. Örnek: <code>/atif-kaynak:</code> ya da <code>/makale-yazim:</code> yazın. Değerlendirme altındaki gizli müsvedde ve hakem materyali sohbete verilmez.</div>
 </div>
 
@@ -96,9 +96,9 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 
 <h2>Diğer bileşenler</h2>
 <ul>
-  <li data-modul="mask"><b>Arthur Mask</b> — Müvekkil ya da dosya belgelerini sohbete doğrudan eklemeyin; önce Arthur Mask'e bırakın.
+  <li data-modul="mask"><b>ArthurMask</b> — Müvekkil ya da dosya belgelerini sohbete doğrudan eklemeyin; önce ArthurMask'e bırakın.
     İlk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
-  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hukuk Bürosu ya da Kurumsal ile Arthur Mask seçildiyse masaüstündeki <i>{{URUN}} - UYAP Dashboard</i> simgesi UYAP Avukat Portal'ı ayrı bir tarayıcı profilinde açar; girişi e-imza ya da e-Devlet ile siz yaparsınız. Tebligatlar ve Duruşmalarım ekranlarını açıp <b>Tara</b>'ya basın. Salt okunurdur: UYAP'a bir şey yazmaz, ek istek göndermez; adlar ve esas numaraları Claude'a gitmeden Arthur Mask'te etiketlenir.</li>
+  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hukuk Bürosu ya da Kurumsal ile ArthurMask seçildiyse masaüstündeki <i>{{URUN}} - UYAP Dashboard</i> simgesi UYAP Avukat Portal'ı ayrı bir tarayıcı profilinde açar; girişi e-imza ya da e-Devlet ile siz yaparsınız. Tebligatlar ve Duruşmalarım ekranlarını açıp <b>Tara</b>'ya basın. Salt okunurdur: UYAP'a bir şey yazmaz, ek istek göndermez; adlar ve esas numaraları Claude'a gitmeden ArthurMask'te etiketlenir.</li>
   <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
     parsel TKGM Parsel Sorgu'nun herkese açık verisinden gelir (ilk sorguda bir kez onay istenir). Masaüstündeki
     <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> simgesi aynı işi yapan parsel arayüzünü açar.
@@ -125,7 +125,7 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <code>arthur-mask</code> ile <code>arthur-uyap</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
 
 <footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir ve karar vermez. Her çıktıyı onu kullanan
-hukukçu (avukat, hâkim, kalem ya da akademisyen) doğrulamalıdır. Arthur Mask takma adlandırma yapar, anonim hâle getirmez;
+hukukçu (avukat, hâkim, kalem ya da akademisyen) doğrulamalıdır. ArthurMask takma adlandırma yapar, anonim hâle getirmez;
 gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
 </main>
 <script src="durum.js" onerror="void 0"></script>
@@ -167,7 +167,7 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
     ["Paketler", paket || "-"],
     ["Claude Desktop", d.claude === "bulunamadı" ? "kurulu değil" : d.claude],
     ["Bağlı sunucular", (d.sunucular || []).join(", ") || "-"],
-    ["Arthur Mask", d.mask || "kurulu değil"],
+    ["ArthurMask", d.mask || "kurulu değil"],
     ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]
   ];
   var k = d.proje_klasorleri || {};

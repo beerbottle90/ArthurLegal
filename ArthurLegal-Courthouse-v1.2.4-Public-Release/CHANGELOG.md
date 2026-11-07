@@ -84,7 +84,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
    `istinaf-temyiz-rehberi`, `izleyici-rehberi`, `karar-anonimlestirme-rehberi`, `karsi-gorus-rehberi`,
    `makul-sure-rehberi`, `sade-dil-rehberi`, `sure-ve-adli-tatil-rehberi`, `yargida-yapay-zeka-rehberi`.
 6. Kurulum: ArthurLegal Windows kurulumunda (Setup 2.5.0) modül ekranından Courthouse seçilir. Paket, araştırma
-   bağlantısı, ArthurLegal Tapu ve Arthur Mask tek dosyadan kurulur; masaüstüne Courthouse, Tapu ve Arthur Mask simgeleri
+   bağlantısı, ArthurLegal Tapu ve ArthurMask tek dosyadan kurulur; masaüstüne Courthouse, Tapu ve ArthurMask simgeleri
    gelir. `KURULUM.md` önce bu yolu anlatır; elle kurulum ikinci yol olarak duruyor.
 
 ### Değişti
@@ -284,17 +284,17 @@ Project knowledge'da yukarıdaki beş dosyayı yenileyin. `SYSTEM_PROMPT.md` yal
 
 ---
 
-## [1.0.2] — 2026-09-13 — *Arthur Mask: dosya belgeleri bilgisayardan çıkmadan maskelenir*
+## [1.0.2] — 2026-09-13 — *ArthurMask: dosya belgeleri bilgisayardan çıkmadan maskelenir*
 
-> Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce kullanıcının kendi Windows bilgisayarında maskelenebilir. Yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`). Yalnız **Claude Desktop (Windows)** ile çalışır; claude.ai web ve mobilde çalışmaz. Önceki sürümlerde "sonraki hatta gelecek" denen veri maskeleme katmanı budur.
+> Dava, soruşturma ve kovuşturma dosyalarındaki belgeler Claude'a verilmeden önce kullanıcının kendi Windows bilgisayarında maskelenebilir. Yerel program **ArthurMask 1.0.0**, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`). Yalnız **Claude Desktop (Windows)** ile çalışır; claude.ai web ve mobilde çalışmaz. Önceki sürümlerde "sonraki hatta gelecek" denen veri maskeleme katmanı budur.
 
 ### Eklendi
 
-- **`SYSTEM_PROMPT.md` — Arthur Mask bölümü:** `arthur_mask_*` araçlarının kullanımı (belge `arthur_mask_belge_getir` ile çekilir, etiketler harfi harfine korunur, gerçek değer tahmin edilmez, etiket araştırma sorgusuna konmaz, revizyon `arthur_mask_belgeyi_revize_et`, yeni belge `arthur_mask_teslim` ile UDF/Word). Sohbete soruşturma veya kovuşturma dosyasından tanımlanabilir kişisel veri yapıştırılırsa sohbet başına en çok bir kez, işi durdurmayan kısa hatırlatma.
+- **`SYSTEM_PROMPT.md` — ArthurMask bölümü:** `arthur_mask_*` araçlarının kullanımı (belge `arthur_mask_belge_getir` ile çekilir, etiketler harfi harfine korunur, gerçek değer tahmin edilmez, etiket araştırma sorgusuna konmaz, revizyon `arthur_mask_belgeyi_revize_et`, yeni belge `arthur_mask_teslim` ile UDF/Word). Sohbete soruşturma veya kovuşturma dosyasından tanımlanabilir kişisel veri yapıştırılırsa sohbet başına en çok bir kez, işi durdurmayan kısa hatırlatma.
 - **`knowledge/references/arthur-mask-rehberi.md`** (referans 23 → 24): kurulum, günlük akış, kırmızı hat, çıkış kapısı ve sızıntı denetimi, kurtarma anahtarı, sorun giderme, sınırlar, araç kuralları.
 - **`ARTHUR-MASK.md`:** hâkim ve kalem personeline yönelik adım adım rehber ve SSS (gizlilik veya kısıtlama kararı olan dosyalar dâhil).
-- **`KURULUM.md`:** Arthur Mask adımı, SSS ve güncelleme notları.
-- **`ATTRIBUTION.md`:** Arthur Mask kurulum dosyasındaki üçüncü taraf açık kaynak bileşenler.
+- **`KURULUM.md`:** ArthurMask adımı, SSS ve güncelleme notları.
+- **`ATTRIBUTION.md`:** ArthurMask kurulum dosyasındaki üçüncü taraf açık kaynak bileşenler.
 
 ### Değişti
 
@@ -308,7 +308,7 @@ Project knowledge'da yukarıdaki beş dosyayı yenileyin. `SYSTEM_PROMPT.md` yal
 
 ### Yükleme
 
-`SYSTEM_PROMPT.md` yeniden yapıştırılır; `arthur-mask-rehberi.md` Project knowledge'a eklenir. Arthur Mask için `KURULUM.md`; Project Claude Desktop'tan açılır.
+`SYSTEM_PROMPT.md` yeniden yapıştırılır; `arthur-mask-rehberi.md` Project knowledge'a eklenir. ArthurMask için `KURULUM.md`; Project Claude Desktop'tan açılır.
 
 ---
 

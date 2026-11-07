@@ -12,7 +12,7 @@
 | ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — tek connector, Türkiye + 14 yargı çevresi, auth yok (Adım 4) |
 | TR Legal MCP | yargi-mcp-pro connector — yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK için (isteğe bağlı, Adım 4d) |
 | e-qanun / LexScholar / ResourceContracts MCP | self-hosted, auth yok (isteğe bağlı — Adım 4b) |
-| Arthur Mask | Belgeleri bilgisayarınızda maskeleyen yerel gizlilik kapısı; Windows 10/11 64 bit + Claude Desktop (önerilir, isteğe bağlı, Adım 5) |
+| ArthurMask | Belgeleri bilgisayarınızda maskeleyen yerel gizlilik kapısı; Windows 10/11 64 bit + Claude Desktop (önerilir, isteğe bağlı, Adım 5) |
 
 ---
 
@@ -118,7 +118,7 @@ knowledge/references/lex-scholar-rehberi.md         ← akademik doktrin + Dergi
 knowledge/references/resourcecontracts-rehberi.md   ← imzalı PSA/JOA emsali (EMSAL)
 ```
 
-**Arthur Mask (v1.8.0, Adım 5'i kurduysanız önerilir):**
+**ArthurMask (v1.8.0, Adım 5'i kurduysanız önerilir):**
 ```
 knowledge/references/arthur-mask-rehberi.md        ← yerel maskeleme, araç kuralları, sorun giderme
 ```
@@ -283,9 +283,9 @@ gibi gösterilmez.
 
 ---
 
-## Adım 5 — Arthur Mask (önerilir, isteğe bağlı: belgeleri bilgisayarınızda maskeleyin)
+## Adım 5 — ArthurMask (önerilir, isteğe bağlı: belgeleri bilgisayarınızda maskeleyin)
 
-Arthur Mask, müvekkil belgelerini Claude'a vermeden önce **kendi bilgisayarınızda**
+ArthurMask, müvekkil belgelerini Claude'a vermeden önce **kendi bilgisayarınızda**
 maskeler: adlar, şirketler, TCKN, VKN, IBAN, adres, telefon, e-posta, dosya numarası gibi
 bilgiler `{{KİŞİ-01}}`, `{{ŞİRKET-02}}` gibi etiketlere dönüşür, gerçek değerler
 bilgisayarınızdaki şifreli kasada kalır. Claude yalnız maskeli metni görür; cevap yine
@@ -299,30 +299,30 @@ bilgisayarınızda gerçek adlarla Word veya UDF olarak açılır. Program çevr
 **Gereksinim:** Windows 10 veya 11 (64 bit) · [Claude Desktop](https://claude.ai/download) ·
 yaklaşık 4 GB boş disk · 8 GB RAM önerilir.
 
-1. **İndirin.** **[⬇ Arthur Mask kurulum dosyasını indirmek için buraya tıklayın](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, yaklaşık 1 GB).
+1. **İndirin.** **[⬇ ArthurMask kurulum dosyasını indirmek için buraya tıklayın](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, yaklaşık 1 GB).
    GitHub hesabı ya da GitHub bilgisi gerekmez: bağlantıya tıklayınca `ArthurMask-Kurulum.exe` dosyası
    doğrudan bilgisayarınızın **İndirilenler** klasörüne iner. İnternet hızınıza göre birkaç dakika sürebilir.
    Tarayıcı "Sakla / Keep" diye sorarsa **Sakla**'yı seçin. İndirme bitince İndirilenler klasöründe dosyaya çift tıklayın.
 2. **Çalıştırın.** Kurulum dosyası kod imzalı değildir; SmartScreen **"Windows bilgisayarınızı
    korudu"** derse **Ek bilgi** → **Yine de çalıştır**. Antivirüs dosyayı bir süre tarayabilir.
-3. **Kurun.** Yönetici yetkisi gerekmez (`%LOCALAPPDATA%\Programs\Arthur Mask`). Kurulum
+3. **Kurun.** Yönetici yetkisi gerekmez (`%LOCALAPPDATA%\Programs\ArthurMask`). Kurulum
    `arthur-mask` connector'ını Claude Desktop yapılandırmasına kendiliğinden ekler ve önceki
    yapılandırmanın yedeğini tutar.
 4. **Claude Desktop'u yeniden başlatın:** sistem tepsisi simgesi dâhil **tamamen** çıkın, yeniden açın.
 5. **Doğrulayın:** Claude Desktop → **Ayarlar → Geliştirici**'de `arthur-mask` çalışıyor
-   görünür; sohbette araçlar menüsünde Arthur Mask araçları listelenir.
-6. **Kurtarma anahtarını saklayın:** Arthur Mask → **Kurtarma anahtarı** → yazdırın veya
+   görünür; sohbette araçlar menüsünde ArthurMask araçları listelenir.
+6. **Kurtarma anahtarını saklayın:** ArthurMask → **Kurtarma anahtarı** → yazdırın veya
    güvenli yerde saklayın → **Sakladım**. Anahtarı Claude'a yazmayın.
 
-**Test:** Arthur Mask'e bir örnek belge bırakın, incelemeyi onaylayın, gösterilen komutu
-(`Arthur Mask'teki belge-1'i incele`) Claude Desktop'taki ArthurLegal Project sohbetine
+**Test:** ArthurMask'e bir örnek belge bırakın, incelemeyi onaylayın, gösterilen komutu
+(`ArthurMask'teki belge-1'i incele`) Claude Desktop'taki ArthurLegal Project sohbetine
 yapıştırın. Orijinal belgeyi sohbete ayrıca eklemeyin.
 
 Günlük kullanım, kırmızı hat, sızıntı denetimi ve sorun giderme: [ARTHUR-MASK.md](ARTHUR-MASK.md).
 
 > **Kurulmazsa ne olur?** Paket aynen çalışır. Asistan, sohbete tanımlanabilir kişisel veri
 > yapıştırıldığında sohbet başına bir kez kısa bir hatırlatma yapar; işi durdurmaz.
-> Arthur Mask takma adlandırma yapar, anonim hâle getirmez; KVKK ve sır saklama sorumluluğu
+> ArthurMask takma adlandırma yapar, anonim hâle getirmez; KVKK ve sır saklama sorumluluğu
 > avukatta kalır.
 
 ---
@@ -399,7 +399,7 @@ A: Hayır. Asistan `[DOLDUR]` gördüğünde sizi cold-start'a yönlendirir. Aci
 A: HAYIR. Sadece agregat istatistik ve takma ad kullanın. Gerçek müvekkil bilgileri asla knowledge dosyasına yazılmamalıdır (KVKK + mesleki sır).
 
 **S: Müvekkil belgesini Claude'a nasıl güvenle veririm?**
-A: Claude Desktop (Windows) kullanıyorsanız belgeyi önce Arthur Mask'e bırakın, incelemeyi onaylayın ve yalnız gösterilen komutu sohbete yapıştırın; orijinal belgeyi sohbete eklemeyin. Claude yalnız maskeli metni görür. Maskeleme takma adlandırmadır, anonim hâle getirme değildir ve tespit olasılığa dayalıdır: göndermeden önce maskeli kopyaya bakın, "Claude'a giden" panelini ve sızıntı denetimini kullanın. KVKK, Av. K. m. 36 sır saklama yükümlülüğü, ticari sır ve gizlilik sözleşmelerinden doğan sorumluluk avukatta kalır. claude.ai web ve mobilde Arthur Mask çalışmaz; orada tanımlanabilir müvekkil verisini paylaşmadan önce kendiniz ayıklayın. Ayrıntı: [ARTHUR-MASK.md](ARTHUR-MASK.md).
+A: Claude Desktop (Windows) kullanıyorsanız belgeyi önce ArthurMask'e bırakın, incelemeyi onaylayın ve yalnız gösterilen komutu sohbete yapıştırın; orijinal belgeyi sohbete eklemeyin. Claude yalnız maskeli metni görür. Maskeleme takma adlandırmadır, anonim hâle getirme değildir ve tespit olasılığa dayalıdır: göndermeden önce maskeli kopyaya bakın, "Claude'a giden" panelini ve sızıntı denetimini kullanın. KVKK, Av. K. m. 36 sır saklama yükümlülüğü, ticari sır ve gizlilik sözleşmelerinden doğan sorumluluk avukatta kalır. claude.ai web ve mobilde ArthurMask çalışmaz; orada tanımlanabilir müvekkil verisini paylaşmadan önce kendiniz ayıklayın. Ayrıntı: [ARTHUR-MASK.md](ARTHUR-MASK.md).
 
 **S: Knowledge limiti aşılırsa ne yapmalıyım?**
 A: Önce temel TR mevzuat referanslarını koruyun; uluslararası yargı referanslarını yalnızca ilgili matter'lar için geçici olarak ekleyip çıkarın.
@@ -433,6 +433,6 @@ v1.8.1'den geçiş: `SYSTEM_PROMPT.md` Custom Instructions alanına yeniden yap�
 
 v1.8.0'dan geçiş: yalnız bilgi dosyaları değişti (CMK kanun yolu süreleri, 7499 s.K.). Project knowledge'da şu beş dosyayı yenileyin: `knowledge/references/cmk-rehberi.md`, `knowledge/references/cmk-gorevli-rehberi.md`, `knowledge/references/dilekce-teknikleri-rehberi.md`, `knowledge/skills/advocacy-legal__skills.md`, `knowledge/skills/criminal-defense__skills.md`. `SYSTEM_PROMPT.md` yalnız sürüm etiketinde değişti; yeniden yapıştırmak zorunlu değil. Connector adresleri değişmedi.
 
-v1.7.0'dan geçiş: `SYSTEM_PROMPT.md` Custom Instructions alanına yeniden yapıştırılır (yeni bölüm 9, Arthur Mask); `knowledge/references/arthur-mask-rehberi.md` Project knowledge'a eklenir. Arthur Mask kullanacaksanız Adım 5'i uygulayın ve Project'i Claude Desktop'tan açın. Connector adresleri değişmedi.
+v1.7.0'dan geçiş: `SYSTEM_PROMPT.md` Custom Instructions alanına yeniden yapıştırılır (yeni bölüm 9, ArthurMask); `knowledge/references/arthur-mask-rehberi.md` Project knowledge'a eklenir. ArthurMask kullanacaksanız Adım 5'i uygulayın ve Project'i Claude Desktop'tan açın. Connector adresleri değişmedi.
 
 Destek ve geri bildirim: Projenin GitHub sayfasına issue açın.

@@ -11,7 +11,7 @@
 | Claude.ai account | Pro or Team plan (required for Projects feature) |
 | ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 14 jurisdictions + land registry, 123 tools, no auth (Step 4) |
 | TR Legal MCP | yargi-mcp-pro connector — only for ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK (optional — Step 4b) |
-| Arthur Mask | Local privacy gate that masks documents on your computer; Windows 10/11 64-bit + Claude Desktop (recommended, optional — Step 5) |
+| ArthurMask | Local privacy gate that masks documents on your computer; Windows 10/11 64-bit + Claude Desktop (recommended, optional — Step 5) |
 
 ---
 
@@ -111,7 +111,7 @@ knowledge/references/lex-scholar-rehberi.md         <- legal scholarship + Dergi
 knowledge/references/resourcecontracts-rehberi.md   <- signed PSA/JOA precedent (BENCHMARK)
 ```
 
-**Arthur Mask (v1.8.0 — recommended if you set up Step 5):**
+**ArthurMask (v1.8.0 — recommended if you set up Step 5):**
 ```
 knowledge/references/arthur-mask-rehberi.md        <- local masking, tool rules, troubleshooting
 ```
@@ -275,9 +275,9 @@ never presented as working.
 
 ---
 
-## Step 5 — Arthur Mask (recommended, optional: mask documents on your own computer)
+## Step 5 — ArthurMask (recommended, optional: mask documents on your own computer)
 
-Arthur Mask masks client documents **on your own computer** before Claude sees them: names,
+ArthurMask masks client documents **on your own computer** before Claude sees them: names,
 companies, national ID and tax numbers, IBANs, addresses, phone numbers, e-mail addresses and
 file numbers become labels such as `{{KİŞİ-01}}` or `{{ŞİRKET-02}}`, and the real values stay in
 an encrypted vault on your computer. Claude receives only the masked text; its answer is turned
@@ -291,30 +291,30 @@ back into real names locally and opened in Word or as a UDF file. The app works 
 **Requirements:** Windows 10 or 11 (64-bit) · [Claude Desktop](https://claude.ai/download) ·
 about 4 GB free disk · 8 GB RAM recommended.
 
-1. **Download.** **[⬇ Click here to download the Arthur Mask installer](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, about 1 GB).
+1. **Download.** **[⬇ Click here to download the ArthurMask installer](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, about 1 GB).
    No GitHub account or GitHub knowledge is needed: the link downloads `ArthurMask-Kurulum.exe` straight into
    your **Downloads** folder. Depending on your connection this can take a few minutes. If the browser asks
    whether to keep the file, choose **Keep**. When the download finishes, double-click the file in Downloads.
 2. **Run it.** The installer is not code-signed; if SmartScreen says **"Windows protected your
    PC"** (Turkish: "Windows bilgisayarınızı korudu"), choose **More info** → **Run anyway**.
    Antivirus software may scan the file for a while.
-3. **Install.** No administrator rights (`%LOCALAPPDATA%\Programs\Arthur Mask`). The installer
+3. **Install.** No administrator rights (`%LOCALAPPDATA%\Programs\ArthurMask`). The installer
    registers the `arthur-mask` connector in Claude Desktop's configuration and keeps a backup of
    the previous configuration file.
 4. **Restart Claude Desktop:** quit **completely**, including the system tray icon, and reopen.
 5. **Verify:** Claude Desktop → **Settings → Developer** lists `arthur-mask` as running; the
-   tools menu in a chat shows the Arthur Mask tools.
-6. **Store the recovery key:** Arthur Mask → **Kurtarma anahtarı** → print it or store it
+   tools menu in a chat shows the ArthurMask tools.
+6. **Store the recovery key:** ArthurMask → **Kurtarma anahtarı** → print it or store it
    safely → **Sakladım**. Never type the key into Claude.
 
-**Test:** drop a sample document into Arthur Mask, approve the review, and paste the command it
-shows (`Arthur Mask'teki belge-1'i incele`) into the ArthurLegal Project chat in Claude Desktop.
+**Test:** drop a sample document into ArthurMask, approve the review, and paste the command it
+shows (`ArthurMask'teki belge-1'i incele`) into the ArthurLegal Project chat in Claude Desktop.
 Do not also attach the original document.
 
 Everyday use, red line, leak check and troubleshooting: [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md).
 
 > **Without it** the package works as before. When identifiable personal data is pasted into a
-> chat, the assistant adds one short, non-blocking reminder per conversation. Arthur Mask
+> chat, the assistant adds one short, non-blocking reminder per conversation. ArthurMask
 > pseudonymises; it does not anonymise, and data protection and professional secrecy
 > obligations remain with the lawyer.
 
@@ -392,7 +392,7 @@ A: No. When the assistant encounters `[DOLDUR]`, it will prompt you to run the c
 A: NO. Use aggregate statistics and pseudonyms only. Real client data must never be written to knowledge files (attorney-client privilege + KVKK).
 
 **Q: How do I give a client document to Claude safely?**
-A: If you use Claude Desktop on Windows, drop the document into Arthur Mask first, approve the review, and paste only the command it shows into the chat; do not attach the original. Claude sees only the masked text. Masking is pseudonymisation, not anonymisation, and detection is probabilistic: check the masked copy before sending and use the "Claude'a giden" panel and the leak check. Responsibility under KVKK, professional secrecy (Av. K. m. 36), trade secret rules and NDAs stays with the lawyer. Arthur Mask does not work in claude.ai on the web or on mobile; there, remove identifiable client data yourself before sharing. Details: [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md).
+A: If you use Claude Desktop on Windows, drop the document into ArthurMask first, approve the review, and paste only the command it shows into the chat; do not attach the original. Claude sees only the masked text. Masking is pseudonymisation, not anonymisation, and detection is probabilistic: check the masked copy before sending and use the "Claude'a giden" panel and the leak check. Responsibility under KVKK, professional secrecy (Av. K. m. 36), trade secret rules and NDAs stays with the lawyer. ArthurMask does not work in claude.ai on the web or on mobile; there, remove identifiable client data yourself before sharing. Details: [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md).
 
 **Q: What if I hit the knowledge file limit?**
 A: Keep core Turkish law references; temporarily add/remove international jurisdiction references as needed for specific matters.
@@ -424,6 +424,6 @@ Upgrading from 1.8.1: paste `SYSTEM_PROMPT.md` into Custom Instructions again (s
 
 Upgrading from 1.8.0: only knowledge files changed (criminal-procedure deadlines under Law 7499). Replace these five files in Project knowledge: `knowledge/references/cmk-rehberi.md`, `knowledge/references/cmk-gorevli-rehberi.md`, `knowledge/references/dilekce-teknikleri-rehberi.md`, `knowledge/skills/advocacy-legal__skills.md`, `knowledge/skills/criminal-defense__skills.md`. `SYSTEM_PROMPT.md` changed only in its version label; pasting it again is optional. Connector URLs are unchanged.
 
-Upgrading from v1.7.0: paste `SYSTEM_PROMPT.md` into Custom Instructions again (new section 9, Arthur Mask) and add `knowledge/references/arthur-mask-rehberi.md` to Project knowledge. To use Arthur Mask, follow Step 5 and open the Project from Claude Desktop. Connector addresses are unchanged.
+Upgrading from v1.7.0: paste `SYSTEM_PROMPT.md` into Custom Instructions again (new section 9, ArthurMask) and add `knowledge/references/arthur-mask-rehberi.md` to Project knowledge. To use ArthurMask, follow Step 5 and open the Project from Claude Desktop. Connector addresses are unchanged.
 
 Feedback and support: Open an issue on the project's GitHub page.

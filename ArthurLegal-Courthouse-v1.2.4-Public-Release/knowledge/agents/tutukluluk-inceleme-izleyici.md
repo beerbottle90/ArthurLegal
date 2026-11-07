@@ -35,7 +35,7 @@ Tutukluluk kişi özgürlüğüne doğrudan dokunan ve kanunda süreye bağlanm�
 
 ## Girdi
 
-Kullanıcının verdiği liste: yapıştırılan tablo, CSV ya da kalemin UYAP'tan dışa aktardığı tutuklu veya adli kontrol listesi. Liste yoksa uydurulmaz: `UYARI: veri çekilemedi, teyidiniz gerekli: UYAP'taki kendi ekranınız (adliyede UYAP; dışarıda VPN ile vpn.uyap.gov.tr ya da UYAP Mobil)`. Ortak kaynak sırası ve UYARI satırı: `references/izleyici-rehberi.md` bölüm 3. Tercihen Arthur Mask ile maskeli; ad yerine `{{KİŞİ-01}}` ya da sıra numarası yeterlidir.
+Kullanıcının verdiği liste: yapıştırılan tablo, CSV ya da kalemin UYAP'tan dışa aktardığı tutuklu veya adli kontrol listesi. Liste yoksa uydurulmaz: `UYARI: veri çekilemedi, teyidiniz gerekli: UYAP'taki kendi ekranınız (adliyede UYAP; dışarıda VPN ile vpn.uyap.gov.tr ya da UYAP Mobil)`. Ortak kaynak sırası ve UYARI satırı: `references/izleyici-rehberi.md` bölüm 3. Tercihen ArthurMask ile maskeli; ad yerine `{{KİŞİ-01}}` ya da sıra numarası yeterlidir.
 
 | Alan | Neden gerekli |
 |---|---|

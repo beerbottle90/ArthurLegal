@@ -16,7 +16,7 @@ avukata inmez. Paketin sürümünü artırmak gerekmez: SYSTEM_PROMPT değişmez
     python yayin/eklenti_uret.py --denetle --taban REF  ayrıca: eklenti REF'tekinden farklıysa sürümü artmış mı
 
 Eklenti, Claude dizinindeki ArthurLegal MCP profiline (`/directory/mcp`) bağlanır. Tapu (`arthur-tapu`), UYAP
-(`arthur-uyap`) ve Arthur Mask masaüstü kurulumun yerel modülleridir: eklenti onları taşımaz, ana beceri kuruluysa
+(`arthur-uyap`) ve ArthurMask masaüstü kurulumun yerel modülleridir: eklenti onları taşımaz, ana beceri kuruluysa
 onlara yönlendirir (yerel kurulumun `arthurlegal_talimat` kurallarıyla aynı). Yalnız standart kütüphane.
 """
 from __future__ import annotations
@@ -126,7 +126,7 @@ def rehber_metni(metin: str, adlar: set) -> str:
 ANA_ACIKLAMA = (
     "ArthurLegal'in çalışma kuralları: Türk hukuku odaklı hukuk bürosu asistanının yazım biçimi, e-postaya hazır "
     "çıktı iskeleti, kanun maddesi ve karar künyesi doğrulama kapıları, canlı veri çekilemediğinde UYARI satırı, "
-    "16 pratik alanın beceri haritası ve Tapu, UYAP, Arthur Mask yönlendirmesi. Türk hukukuyla ilgili her soruda ve "
+    "16 pratik alanın beceri haritası ve Tapu, UYAP, ArthurMask yönlendirmesi. Türk hukukuyla ilgili her soruda ve "
     "/arthurlegal: becerilerinden biri çalışmadan önce yüklenir. Working rules of the ArthurLegal legal assistant "
     "(Turkish law first); load before any legal task or any other /arthurlegal: skill."
 )
@@ -161,8 +161,8 @@ Talimat claude.ai Project için yazıldığından bu eklentideki farklar şunlar
 5. UYAP işleri yalnız ArthurLegal kurulumunun yerel `arthur-uyap` köprüsüyle yapılır (salt okunur, esas numaraları
    etiketli); kuruluysa onun kendi talimatı geçerlidir: son gün hesaplanmaz ve sana gün gelmez. Kurulu değilse UYAP
    verisi uydurulmaz; `UYARI: veri çekilemedi, teyidiniz gerekli: https://avukat.uyap.gov.tr/` yazılır.
-6. Arthur Mask için aşağıdaki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan yapıştırılmışsa kullanıcıyı
-   Arthur Mask'e yönlendir.
+6. ArthurMask için aşağıdaki kurallar geçerlidir; müvekkil belgesi sohbete doğrudan yapıştırılmışsa kullanıcıyı
+   ArthurMask'e yönlendir.
 
 ---
 
@@ -210,7 +210,7 @@ network connection is ArthurLegal MCP: when Claude calls one of its tools, the t
 statute and article numbers, decision identifiers) go to that server, which queries the official sources and returns
 the result. Interactive views (article card, decision list, the ArthurLegal desk) load the MCP Apps client library from
 unpkg.com. What the server stores and for how long is in its [privacy policy]({GIZLILIK}). Do not put client names or
-other confidential facts into requests; mask documents on your own computer first with Arthur Mask.
+other confidential facts into requests; mask documents on your own computer first with ArthurMask.
 
 Some skills also ask Claude to use tools the user already has, through Claude and with the user's own permissions; the
 plugin installs none of them and sends nothing to them by itself:
@@ -220,12 +220,12 @@ plugin installs none of them and sends nothing to them by itself:
 - **Connectors the user has added**, when they are connected: CourtListener and TR Legal MCP for case law; document
   stores such as Google Drive, Box or iManage; Slack for posting a report the user asked for; DocuSign for sending a
   document for signature after the user approves it.
-- **The local ArthurLegal modules** described below (`arthur-tapu`, `arthur-uyap`, Arthur Mask), which run on the
+- **The local ArthurLegal modules** described below (`arthur-tapu`, `arthur-uyap`, ArthurMask), which run on the
   user's computer.
 
 ## Desktop modules (not part of this plugin)
 
-ArthurTapu (land registry), UYAP Dashboard (a read-only bridge to the lawyer's own UYAP account), Arthur Mask and
+ArthurTapu (land registry), UYAP Dashboard (a read-only bridge to the lawyer's own UYAP account), ArthurMask and
 ArthurLegal Hafıza run on the lawyer's computer and come with the ArthurLegal installer ([download]({DEPO}#download)).
 When they are installed, the `{AD}` skill sends land-registry work to `arthur-tapu` and UYAP work to `arthur-uyap`;
 when they are not, it says the data could not be retrieved instead of guessing.

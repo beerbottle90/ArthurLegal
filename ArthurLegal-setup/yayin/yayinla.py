@@ -350,7 +350,7 @@ def main(argv=None) -> int:
         "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,
         "taban": f"https://github.com/{depo}/releases/download/{args.etiket}/",
         "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
-        # macOS: güncelleyici Arthur Mask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
+        # macOS: güncelleyici ArthurMask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
         **({"mask_macos": d["mask_macos"]} if d.get("mask_macos") else {}),
     }
     ham = json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8")

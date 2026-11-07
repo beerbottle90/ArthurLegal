@@ -30,7 +30,7 @@ user-invocable: true
 
 ## Konum hatırlatması
 
-Anonim hâle getirme, kişisel verilerin başka verilerle eşleştirilerek dahi hiçbir surette kimliği belirli veya belirlenebilir bir gerçek kişiyle ilişkilendirilemeyecek hâle getirilmesidir (KVKK m. 3/1-b). Etiketle değiştirme (takma adlandırma, Arthur Mask dâhil) tek başına bu sonucu garanti etmez; dolaylı tanımlayıcılar ayrıca denetlenir. Yayım kararı, kapsamı ve kurum kuralları kullanıcıya ve yetkili birime aittir. Asistan çıktısında gerçek kişisel veri yeniden yazılmaz. Asistan UYAP'a bağlanmaz, kayıt eklemez; karar metni kullanıcıdan gelir.
+Anonim hâle getirme, kişisel verilerin başka verilerle eşleştirilerek dahi hiçbir surette kimliği belirli veya belirlenebilir bir gerçek kişiyle ilişkilendirilemeyecek hâle getirilmesidir (KVKK m. 3/1-b). Etiketle değiştirme (takma adlandırma, ArthurMask dâhil) tek başına bu sonucu garanti etmez; dolaylı tanımlayıcılar ayrıca denetlenir. Yayım kararı, kapsamı ve kurum kuralları kullanıcıya ve yetkili birime aittir. Asistan çıktısında gerçek kişisel veri yeniden yazılmaz. Asistan UYAP'a bağlanmaz, kayıt eklemez; karar metni kullanıcıdan gelir.
 
 ## Amaç
 
@@ -51,7 +51,7 @@ Karar metni dışa açılmadan önce kişisel verileri ve kişiyi dolaylı olara
 
 ## Girdi
 
-- Karar metni (tercihen Arthur Mask ile maskelenmiş; `{{KİŞİ-01}}` gibi etiketler harfi harfine korunur, gerçek değer tahmin edilmez)
+- Karar metni (tercihen ArthurMask ile maskelenmiş; `{{KİŞİ-01}}` gibi etiketler harfi harfine korunur, gerçek değer tahmin edilmez)
 - Amaç: emsal arşivi / eğitim veya akademik paylaşım / basın bilgilendirmesi / taraf dışı kuruma gönderim
 - Özel durum bayrakları: çocuk (sanık, mağdur, tanık), cinsel suç, 6284 gizlilik kararı, kapalı duruşma, kimliği saklı tanık, sağlık veya ceza mahkûmiyeti bilgisi, gizlilik kararı kapsamındaki belgeler
 
@@ -103,7 +103,7 @@ Karar metni dışa açılmadan önce kişisel verileri ve kişiyi dolaylı olara
 
 - Madde kontrolü: AY m. 20, 141; KVKK m. 3, 4, 6, 28; CMK m. 58, 185, 236; 6284 s.K. m. 8; HMK m. 28; 5187 s.K. m. 21 — bu sohbette çekildi mi, eşleşti mi.
 - Kurum kuralları çekilemediyse UYARI satırı.
-- Maskeleme hatırlatması: dosya belgeleri paylaşılmadan önce Arthur Mask ile bilgisayarda maskelenebilir (yalnız Claude Desktop, Windows); takma adlandırma anonim hâle getirme değildir.
+- Maskeleme hatırlatması: dosya belgeleri paylaşılmadan önce ArthurMask ile bilgisayarda maskelenebilir (yalnız Claude Desktop, Windows); takma adlandırma anonim hâle getirme değildir.
 - ⚠️ "Yayım ve paylaşım kararı ile karartmanın son hâli hâkim/heyet onayına tabidir."
 
 ## Sıradaki adımlar

@@ -67,7 +67,7 @@ class HafizaTesti(unittest.TestCase):
                       "Kimlik no 12345678901 (sağlama tutmuyor)"):
             with self.subTest(temiz=temiz):
                 self.assertEqual(hafiza.kisisel_veri(temiz), [])
-        with self.assertRaisesRegex(hafiza.HafizaHatasi, "Arthur Mask"):
+        with self.assertRaisesRegex(hafiza.HafizaHatasi, "ArthurMask"):
             hafiza.yaz("Kurallar.md", "- Karşı tarafın telefonu 0532 123 45 67")
         with self.assertRaises(hafiza.HafizaHatasi):
             hafiza.oturum_karti("dosya", "IBAN TR330006100519786457841326 ödendi")
