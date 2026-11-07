@@ -1,10 +1,10 @@
 """Claude Desktop yapılandırmasına ArthurLegal sunucularını ekler ve kaldırır.
 
-Arthur Mask'in claude_ayari.py'si örnek alındı: Windows'ta klasik (%APPDATA%\\Claude) ve Microsoft
+ArthurMask'in claude_ayari.py'si örnek alındı: Windows'ta klasik (%APPDATA%\\Claude) ve Microsoft
 Store/MSIX (Packages\\Claude_*\\LocalCache\\Roaming\\Claude) yapılandırmalarının hepsine, macOS'ta
 ~/Library/Application Support/Claude'a yazar; Claude'un kendi alanlarına (preferences vb.) dokunmaz,
 değiştirmeden önce yedek alır.
-`arthur-mask` girdisini Arthur Mask'in kendi kurulumu yönetir; burada ona dokunulmaz.
+`arthur-mask` girdisini ArthurMask'in kendi kurulumu yönetir; burada ona dokunulmaz.
 """
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ def istenen_girdiler() -> dict:
     if ortak.bilesen_var("tapu"):
         girdiler["arthur-tapu"] = {"command": py, "args": ["-B", al, "tapu", "--ui-ile"], "env": dict(env)}
     mask = ortak.mask_python()
-    # UYAP yalnız bu kurulumda açıksa kaydedilir (ortak.uyap_acik: avukat paketi, Arthur Mask, köprü):
+    # UYAP yalnız bu kurulumda açıksa kaydedilir (ortak.uyap_acik: avukat paketi, ArthurMask, köprü):
     # maskelemeyi atlayamaz, arthur_mask olmadan veri döndürmez, o yüzden Mask'in Python'unda çalışır.
     if mask and ortak.uyap_acik() and (ortak.SURUM_DIZINI / "uyap" / "server.py").exists():
         girdiler["arthur-uyap"] = {"command": str(mask), "args": ["-B", al, "uyap"],

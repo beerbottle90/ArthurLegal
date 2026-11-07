@@ -13,7 +13,7 @@ ve Arayuz* iletileri).
 
 Mac çizimleri (mac-*.svg): macOS'un ilk açılış uyarısı, Sistem Ayarları'ndaki Yine de Aç ve kurulum sihirbazının
 Yükleme Türü ekranı. Üzerindeki macOS yazıları macOS'un kendi Türkçe ve İngilizce metinleridir (MAC_METIN; kaynağı
-mac_metinleri.py); modül adları ve açıklamaları yine ArthurLegal.iss'ten, Mac'e özgü Arthur Mask koşuluyla
+mac_metinleri.py); modül adları ve açıklamaları yine ArthurLegal.iss'ten, Mac'e özgü ArthurMask koşuluyla
 (ArthurLegal-setup/yayin/derle_macos.py, MASK_KOSULU).
 """
 from __future__ import annotations
@@ -554,7 +554,7 @@ def mac_yine_de_ac(m: dict) -> str:
 
 
 def mac_metinleri_kurulum(dil: str) -> dict:
-    """Modül adları ve açıklamaları: Windows sihirbazınınkiler (ArthurLegal.iss) ve Mac'teki Arthur Mask koşulu."""
+    """Modül adları ve açıklamaları: Windows sihirbazınınkiler (ArthurLegal.iss) ve Mac'teki ArthurMask koşulu."""
     m = dict(kurulum_metinleri()[dil])
     kaynak = (BURASI.parents[1] / "ArthurLegal-setup" / "yayin" / "derle_macos.py").read_text(encoding="utf-8")
     kosul = re.search(rf'"{dil}": "([^"]*)"', kaynak[kaynak.index("MASK_KOSULU"):]).group(1)
@@ -658,15 +658,15 @@ def main() -> int:
     ciktilar.update({
         "moduller.svg": moduller("tr", ("ModulHukuk", "ModulTapu", "ModulMask"),
                                  ("ModulHukuk", "ModulTapu", "ModulMask", "sonraki"),
-                                 "Örnek: modül ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu ve Arthur Mask'i "
+                                 "Örnek: modül ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu ve ArthurMask'i "
                                  "işaretleyip Sonraki'ye tıklayın"),
         "modules-en.svg": moduller("en", ("ModulHukuk", "ModulTapu", "ModulMask"),
                                    ("ModulHukuk", "ModulTapu", "ModulMask", "sonraki"),
                                    "Example: on the module screen tick your package (here Law Firm), optionally Tapu and "
-                                   "Arthur Mask, then click Next"),
+                                   "ArthurMask, then click Next"),
         "moduller-courthouse.svg": moduller("tr", ("ModulAdliye", "ModulTapu", "ModulMask"),
                                             ("ModulAdliye", "ModulTapu", "ModulMask", "sonraki"),
-                                            "Örnek: modül ekranında Courthouse, ArthurLegal Tapu ve Arthur Mask'i "
+                                            "Örnek: modül ekranında Courthouse, ArthurLegal Tapu ve ArthurMask'i "
                                             "işaretleyip Sonraki'ye tıklayın"),
         # Arayüz ekranı (2.7.0): yeni arayüz seçili gelir, Sonraki.
         "arayuz.svg": arayuz("tr", ("ArayuzYeni", "sonraki"),
@@ -682,15 +682,15 @@ def main() -> int:
         "mac-3-moduller.svg": mac_moduller("tr", ("ModulHukuk", "ModulTapu", "ModulMask"),
                                            ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
                                            "Örnek: Yükleme Türü ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu "
-                                           "ve Arthur Mask'i işaretleyip Sürdür'e tıklayın"),
+                                           "ve ArthurMask'i işaretleyip Sürdür'e tıklayın"),
         "mac-3-modules-en.svg": mac_moduller("en", ("ModulHukuk", "ModulTapu", "ModulMask"),
                                              ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
                                              "Example: on the Installation Type screen tick your package (here Law Firm), "
-                                             "optionally Tapu and Arthur Mask, then click Continue"),
+                                             "optionally Tapu and ArthurMask, then click Continue"),
         "mac-3-moduller-courthouse.svg": mac_moduller("tr", ("ModulAdliye", "ModulTapu", "ModulMask"),
                                                       ("ModulAdliye", "ModulTapu", "ModulMask", "surdur"),
                                                       "Örnek: Yükleme Türü ekranında Courthouse, ArthurLegal Tapu ve "
-                                                      "Arthur Mask'i işaretleyip Sürdür'e tıklayın"),
+                                                      "ArthurMask'i işaretleyip Sürdür'e tıklayın"),
     })
     for ad, icerik in ciktilar.items():
         (BURASI / ad).write_text(icerik, encoding="utf-8", newline="\n")

@@ -21,7 +21,7 @@
 
 **v1.2.1 — Madde atfı düzeltmeleri.** Laboratuvardaki madde atfı denetiminden 1.2.0'da eksik kalan düzeltmeler (damga vergisi nüsha kuralı, HMK m. 297 başlığı, kanun kısaltmaları, CMK m. 231/5-6, HMK m. 187 ve 190) ve OpenSanctions API anahtarının bağlantı rehberinden çıkarılması.
 
-**v1.2.0 — Adliye dalgası.** 12 plugin (istinaf daire ve kalemi, ortak araştırma, karar yayımı eklendi), 56 skill, 10 mahkeme türü profili, 7 izleyici, 36 referans. İçtihat künyesi doğrulaması ve karşı görüş taraması. ArthurLegal Windows kurulumunda (Setup 2.5.0) Courthouse modülü: tek dosya, masaüstünde Courthouse, Tapu ve Arthur Mask simgeleri. Yazılan her kanun maddesi resmî metinden çekilip başlık ve içerikle eşleştirildi.
+**v1.2.0 — Adliye dalgası.** 12 plugin (istinaf daire ve kalemi, ortak araştırma, karar yayımı eklendi), 56 skill, 10 mahkeme türü profili, 7 izleyici, 36 referans. İçtihat künyesi doğrulaması ve karşı görüş taraması. ArthurLegal Windows kurulumunda (Setup 2.5.0) Courthouse modülü: tek dosya, masaüstünde Courthouse, Tapu ve ArthurMask simgeleri. Yazılan her kanun maddesi resmî metinden çekilip başlık ve içerikle eşleştirildi.
 
 **v1.1.1 — Canlı veri uyarısı.** Çekilemeyen bilgi köşeli ayraçlı etiket yerine açıkça `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` ile yazılır; bağlantı resmî giriş sayfasıdır, uydurulmaz.
 
@@ -33,7 +33,7 @@
 
 **v1.0.3 — Süre düzeltmeleri.** CMK itiraz, KYOK'a itiraz, istinaf ve temyiz süreleri 7499 s.K.'ya göre iki hafta; istinaf ve temyizde başlangıç gerekçeli hükmün tebliği. 6183 m. 58 ödeme emrine itiraz 15 gün. Talimat metni değişmedi.
 
-**v1.0.2 — Arthur Mask.** Dosya belgeleri Claude'a verilmeden önce kullanıcının Windows bilgisayarında maskelenebilir (yalnız Claude Desktop). Sistem talimatına Arthur Mask bölümü, `arthur-mask-rehberi.md` referansı, `ARTHUR-MASK.md` kullanım rehberi eklendi.
+**v1.0.2 — ArthurMask.** Dosya belgeleri Claude'a verilmeden önce kullanıcının Windows bilgisayarında maskelenebilir (yalnız Claude Desktop). Sistem talimatına ArthurMask bölümü, `arthur-mask-rehberi.md` referansı, `ARTHUR-MASK.md` kullanım rehberi eklendi.
 
 > **12 plugin kurulu** (toplam 56 skill), 10 mahkeme profili, 7 izleyici, 36 referans. Tamamı yargısal/tarafsız çerçevededir.
 

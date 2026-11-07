@@ -1,13 +1,13 @@
 # ArthurLegal — Claude Corporate Legal Assistant
 
 **Version:** v1.12.5 · **Date:** 2026-10-29 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
-**Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
+**Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; ArthurMask requires Claude Desktop for Windows)
 
-> **Multi-jurisdiction legal assistant package for in-house corporate legal teams**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 104 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
+> **Multi-jurisdiction legal assistant package for in-house corporate legal teams**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 104 knowledge files + up to 5 MCP connectors + the optional local ArthurMask privacy gate, covering **28 jurisdictions**.
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
-> ### ⬇ Arthur Mask — mask documents on your own computer before Claude sees them
+> ### ⬇ ArthurMask — mask documents on your own computer before Claude sees them
 > **[Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. The link downloads directly; no GitHub account needed.
 > Double-click the downloaded `ArthurMask-Kurulum.exe`. Step-by-step guide: **[ARTHUR-MASK.md](ARTHUR-MASK.md)** (Türkçe)
 > Requires Claude Desktop for Windows; it does not work in claude.ai on the web or in the mobile apps.
@@ -33,10 +33,10 @@ never presented as retrieved.
 
 ---
 
-## Arthur Mask — local privacy gate (new in v1.8.0)
+## ArthurMask — local privacy gate (new in v1.8.0)
 
 Company documents can now be masked **on the user's own Windows computer** before Claude
-sees them. **Arthur Mask 1.0.0** is a local app, distributed as a single Windows installer:
+sees them. **ArthurMask 1.0.0** is a local app, distributed as a single Windows installer:
 **[download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**
 (about 1 GB, direct download, no GitHub account needed). Drop a Word, UYAP UDF, PDF or scanned
 document into its local browser interface; names, companies, national ID and tax numbers,
@@ -138,7 +138,7 @@ Full guide → [KURULUM.md](KURULUM.md) (Turkish).
 2. **Paste `SYSTEM_PROMPT.md`** into the Custom Instructions field.
 3. **Upload the 104 files** in `knowledge/` to Project Knowledge (bulk drag-and-drop per folder).
 4. **Add the ArthurLegal MCP connector** — URL: `https://arthurlegal-mcp.fly.dev/mcp` (no auth; Türkiye under `tr_` plus 14 jurisdictions — KURULUM.md Step 4). Optional: OpenCaseLaw.ch · CourtListener · Fedlex (Step 4b) · TR Legal MCP for ECHR/KİK/Sayıştay (Step 4d).
-5. **Install Arthur Mask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum.exe` from [this direct download link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
+5. **Install ArthurMask** (recommended, optional; Windows + Claude Desktop) — download `ArthurMask-Kurulum.exe` from [this direct download link](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe), fully restart Claude Desktop, check `arthur-mask` under Settings → Developer (KURULUM.md Step 5).
 6. **Fill the `[DOLDUR]` placeholders** in `knowledge/company-profile.md` for your own organization — or have the assistant do it with `/<plugin>:cold-start-interview`.
 
 ---
@@ -203,7 +203,7 @@ list that plugin's skills.
 ```
 ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/
 ├── KURULUM.md             ← Installation guide, Turkish (start here)
-├── ARTHUR-MASK.md         ← Arthur Mask user guide (Turkish)
+├── ARTHUR-MASK.md         ← ArthurMask user guide (Turkish)
 ├── SYSTEM_PROMPT.md       ← Claude.ai Custom Instructions text
 ├── README.md              ← This file
 ├── CHANGELOG.md           ← Release notes
@@ -213,7 +213,7 @@ ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/
 └── knowledge/             ← 104 files to upload to Project Knowledge
     ├── company-profile.md       (organization profile template — ships with [DOLDUR] placeholders)
     ├── skills/                  (12 consolidated skill books, one file per plugin)
-    ├── references/              (84 references: legislation, jurisdictions, MCP guides, Arthur Mask)
+    ├── references/              (84 references: legislation, jurisdictions, MCP guides, ArthurMask)
     └── agents/                  (7 scheduled agent definitions)
 ```
 
@@ -230,7 +230,7 @@ ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/
 - **Tool calls are cancelled at 100 seconds** and a cancelled call returns nothing. Queries are kept narrow; if scope narrowed, the assistant says so.
 - **Doctrine and contract precedent are secondary / comparative** — they cannot carry a legal conclusion on their own. Peer-review status is three-valued (`true` / `false` / `null`); US law reviews are student-edited.
 - **The three new MCP servers are public search tools** — confidential drafts, negotiation positions and personal data are never sent to them.
-- **Arthur Mask pseudonymises; it does not anonymise.** Detection is probabilistic; dates and amounts are deliberately left unmasked; images, handwriting, signatures, stamps and QR codes in scans are not masked. It works only with Claude Desktop for Windows.
+- **ArthurMask pseudonymises; it does not anonymise.** Detection is probabilistic; dates and amounts are deliberately left unmasked; images, handwriting, signatures, stamps and QR codes in scans are not masked. It works only with Claude Desktop for Windows.
 - Hooks, CLM integration and matter persistence do not exist in Claude.ai Projects (they are available with Claude Code).
 
 ---

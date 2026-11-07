@@ -100,10 +100,10 @@ tr.ReadyLabel1={#UrunAd} kurulmaya hazır ({#FirmaAd}): aşağıdaki modüller v
 en.ReadyLabel1=Setup is ready to install ArthurLegal with the modules below and the research connector.
 tr.ReadyLabel1=Kurulum, ArthurLegal'i kurmaya hazır: aşağıdaki modüller ve araştırma bağlantısı.
 #endif
-en.ReadyLabel2a=Click Install. If you chose Arthur Mask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
-en.ReadyLabel2b=Click Install. If you chose Arthur Mask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
-tr.ReadyLabel2a=Kur düğmesine tıklayın. Arthur Mask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
-tr.ReadyLabel2b=Kur düğmesine tıklayın. Arthur Mask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
+en.ReadyLabel2a=Click Install. If you chose ArthurMask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
+en.ReadyLabel2b=Click Install. If you chose ArthurMask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
+tr.ReadyLabel2a=Kur düğmesine tıklayın. ArthurMask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
+tr.ReadyLabel2b=Kur düğmesine tıklayın. ArthurMask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 en.FinishedLabel={#UrunAd} is installed.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open the interface you chose: with the new interface, Claude Desktop with 'ArthurLegal Masası'nı aç' typed (press Enter); with the classic one, Claude Desktop and the start panel. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose 'Always allow'.%n%nTo add or remove modules or to change the interface, run this setup again.
 tr.FinishedLabel={#UrunAd} kuruldu.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) seçtiğiniz arayüzü açar: yeni arayüzde Claude Desktop 'ArthurLegal Masası'nı aç' yazılı gelir (Enter'a basın), klasikte Claude Desktop ve başlangıç paneli açılır. Claude Desktop'ta yeni bir sohbet açıp sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa 'Always allow' (Her zaman izin ver) seçin.%n%nModül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın.
 
@@ -116,16 +116,16 @@ en.RehberAc=Open the start guide (last step)
 tr.RehberAc=Başlangıç rehberini aç (son adım)
 en.ClaudeBaslat=Start Claude Desktop
 tr.ClaudeBaslat=Claude Desktop'u başlat
-en.MaskIndiriliyor=Downloading Arthur Mask
-tr.MaskIndiriliyor=Arthur Mask indiriliyor
+en.MaskIndiriliyor=Downloading ArthurMask
+tr.MaskIndiriliyor=ArthurMask indiriliyor
 en.MaskAciklama=The privacy gate that masks client documents on your computer (about 1 GB). It takes a few minutes, depending on your connection.
 tr.MaskAciklama=Müvekkil belgelerini bilgisayarınızda maskeleyen gizlilik kapısı (yaklaşık 1 GB). İnternet hızınıza göre birkaç dakika sürer.
-en.MaskIndirilmedi=Arthur Mask could not be downloaded, or the download was stopped.
-tr.MaskIndirilmedi=Arthur Mask indirilemedi ya da indirme durduruldu.
-en.MaskOlmadanKur=Install ArthurLegal without Arthur Mask for now? The UYAP bridge needs Arthur Mask; Arthur Mask is downloaded again in the background at the next update check.
-tr.MaskOlmadanKur=ArthurLegal şimdilik Arthur Mask olmadan kurulsun mu? UYAP bağlantısı Arthur Mask ister; Arthur Mask bir sonraki güncelleme denetiminde arka planda yeniden indirilir.
-en.MaskKuruluyor=Installing Arthur Mask (this may take a few minutes)...
-tr.MaskKuruluyor=Arthur Mask kuruluyor (birkaç dakika sürebilir)...
+en.MaskIndirilmedi=ArthurMask could not be downloaded, or the download was stopped.
+tr.MaskIndirilmedi=ArthurMask indirilemedi ya da indirme durduruldu.
+en.MaskOlmadanKur=Install ArthurLegal without ArthurMask for now? The UYAP bridge needs ArthurMask; ArthurMask is downloaded again in the background at the next update check.
+tr.MaskOlmadanKur=ArthurLegal şimdilik ArthurMask olmadan kurulsun mu? UYAP bağlantısı ArthurMask ister; ArthurMask bir sonraki güncelleme denetiminde arka planda yeniden indirilir.
+en.MaskKuruluyor=Installing ArthurMask (this may take a few minutes)...
+tr.MaskKuruluyor=ArthurMask kuruluyor (birkaç dakika sürebilir)...
 en.ClaudeBaglaniyor=Connecting to Claude Desktop...
 tr.ClaudeBaglaniyor=Claude Desktop'a bağlanıyor...
 ; Son sayfada kalın hatırlatma (yalnız yeni arayüz; Kod: CurPageChanged). Mesaj yazılı gelir ama gönderilmez.
@@ -160,16 +160,16 @@ en.ModulTapu=ArthurLegal Tapu
 tr.ModulTapu=ArthurLegal Tapu
 en.ModulTapuAciklama=Live Turkish land-registry parcels (TKGM) by block/parcel or place name, with sketch.
 tr.ModulTapuAciklama=Ada/parsel ya da yer adıyla TKGM'den canlı parsel bilgisi, kroki ve harç.
-en.ModulMask=Arthur Mask
-tr.ModulMask=Arthur Mask
+en.ModulMask=ArthurMask
+tr.ModulMask=ArthurMask
 en.ModulMaskAciklama=Masks documents on this computer before Claude sees them; about 1 GB download.
 tr.ModulMaskAciklama=Belgeleri Claude'a vermeden önce bu bilgisayarda maskeler; yaklaşık 1 GB indirilir.
 en.ModulHafiza=ArthurLegal Memory
 tr.ModulHafiza=ArthurLegal Hafıza
 en.ModulHafizaAciklama=Keeps your preferences, corrections and last session across chats, in a folder on this computer.
 tr.ModulHafizaAciklama=Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bu bilgisayardaki bir klasörde tutar.
-en.ModulMaskKurulu=Arthur Mask (already installed)
-tr.ModulMaskKurulu=Arthur Mask (bu bilgisayarda kurulu)
+en.ModulMaskKurulu=ArthurMask (already installed)
+tr.ModulMaskKurulu=ArthurMask (bu bilgisayarda kurulu)
 en.ModulMaskKuruluAciklama=Installed on this computer; its updates arrive by themselves.
 tr.ModulMaskKuruluAciklama=Bu bilgisayarda kurulu; güncellemeleri kendiliğinden gelir.
 ; UYAP Dashboard (yalnız Windows; derle.py /DUyapVar): Mask açıklamasının sonuna eklenir. ortak.uyap_acik ile aynı koşul.
@@ -267,7 +267,7 @@ begin
   Result := True;
 end;
 
-{ Modüller ortak.MODULLER sırasıyla: dört paket, sonra Tapu, Arthur Mask ve ArthurLegal Hafıza. }
+{ Modüller ortak.MODULLER sırasıyla: dört paket, sonra Tapu, ArthurMask ve ArthurLegal Hafıza. }
 function ModulKodu(I: Integer): String;
 begin
   case I of
@@ -405,7 +405,7 @@ begin
 end;
 
 { Lisanstan sonraki sayfa: her modül bir onay kutusu (kalın) ve altında kısa açıklama (gri). Açıklamaya tıklamak da
-  kutuyu işaretler. Kurulu Arthur Mask işaretli ve kilitli görünür: kaldırmak bu kurulumun işi değildir. }
+  kutuyu işaretler. Kurulu ArthurMask işaretli ve kilitli görünür: kaldırmak bu kurulumun işi değildir. }
 procedure ModulSayfasiOlustur;
 var
   I, Ust, Girinti: Integer;
@@ -609,7 +609,7 @@ begin
       MaskIndirildi := True;
       Result := True;
     except
-      Log('Arthur Mask indirilemedi: ' + GetExceptionMessage);
+      Log('ArthurMask indirilemedi: ' + GetExceptionMessage);
     end;
     exit;
   end;
@@ -623,7 +623,7 @@ begin
       Result := True;
     except
       if not IndirmeSayfasi.AbortedByUser then
-        Log('Arthur Mask indirilemedi: ' + GetExceptionMessage);
+        Log('ArthurMask indirilemedi: ' + GetExceptionMessage);
     end;
   finally
     IndirmeSayfasi.Hide;
@@ -700,7 +700,7 @@ begin
     WizardForm.StatusLabel.Caption := CustomMessage('MaskKuruluyor');
     if (not Exec(ExpandConstant('{tmp}\ArthurMask-Kurulum.exe'), '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-', '',
                  SW_SHOW, ewWaitUntilTerminated, Sonuc)) or (Sonuc <> 0) then
-      Log('Arthur Mask kurulumu başarısız, çıkış kodu ' + IntToStr(Sonuc));
+      Log('ArthurMask kurulumu başarısız, çıkış kodu ' + IntToStr(Sonuc));
   end;
   WizardForm.StatusLabel.Caption := CustomMessage('ClaudeBaglaniyor');
   { al.py aktif.txt'deki sürümü seçer; üzerine kurulumda o hâlâ önceki sürümdür ve kısayollar önceki sürümün

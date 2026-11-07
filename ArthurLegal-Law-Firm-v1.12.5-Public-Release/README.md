@@ -1,13 +1,13 @@
 # ArthurLegal — Claude Law Firm Assistant
 
 **Version:** v1.12.5 · **Date:** 2026-10-29 · **License:** Proprietary — Non-Commercial (see [LICENSE](LICENSE))
-**Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; Arthur Mask requires Claude Desktop for Windows)
+**Target environment:** [Claude.ai Projects](https://claude.ai/projects) (web and Claude Desktop; ArthurMask requires Claude Desktop for Windows)
 
-> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 129 knowledge files + up to 5 MCP connectors + the optional local Arthur Mask privacy gate, covering **28 jurisdictions**.
+> **Multi-jurisdiction legal assistant package for small-to-mid law firms (0–30 staff)**, built on Claude and packaged as a Claude.ai Projects bundle — `SYSTEM_PROMPT.md` + 129 knowledge files + up to 5 MCP connectors + the optional local ArthurMask privacy gate, covering **28 jurisdictions**.
 >
 > Derived from Anthropic's [claude-for-legal](https://github.com/anthropics/claude-for-legal) reference package.
 
-> ### ⬇ Arthur Mask — mask documents on your own computer before Claude sees them
+> ### ⬇ ArthurMask — mask documents on your own computer before Claude sees them
 > **[Download the installer (Windows, about 1 GB)](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**. The link downloads directly; no GitHub account needed.
 > Double-click the downloaded `ArthurMask-Kurulum.exe`. Step-by-step guide: **[ARTHUR-MASK.md](ARTHUR-MASK.md)** (Türkçe) · English: [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md)
 > Requires Claude Desktop for Windows; it does not work in claude.ai on the web or in the mobile apps.
@@ -42,10 +42,10 @@ Version history and the full v1.0.1 → v1.12.5 progression: [CHANGELOG.md](CHAN
 
 ---
 
-## Arthur Mask — local privacy gate (new in v1.8.0)
+## ArthurMask — local privacy gate (new in v1.8.0)
 
 Client documents can now be masked **on the lawyer's own Windows computer** before Claude
-sees them. **Arthur Mask 1.0.0** is a local app, distributed as a single Windows installer:
+sees them. **ArthurMask 1.0.0** is a local app, distributed as a single Windows installer:
 **[download ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)**
 (about 1 GB, direct download, no GitHub account needed). Drop a Word, UYAP UDF, PDF or scanned
 document into its local browser interface; names, companies, national ID and tax numbers,
@@ -155,7 +155,7 @@ Turkish guide → [KURULUM.md](KURULUM.md)
 2. `SYSTEM_PROMPT.md` → Custom Instructions
 3. `knowledge/` folder → Upload Files
 4. Add the ArthurLegal MCP connector (Türkiye under `tr_` plus 14 jurisdictions, no auth — Step 4); then, per client portfolio, CourtListener · Fedlex · OpenCaseLaw.ch (Step 4a) and, only if ECHR/KİK/Sayıştay work is needed, TR Legal MCP (Step 4b)
-5. Arthur Mask on Windows with Claude Desktop (recommended, optional — Step 5)
+5. ArthurMask on Windows with Claude Desktop (recommended, optional — Step 5)
 6. Sanctions screening: no key or connector needed, official lists (Step 6)
 7. Run `/firm-operations:cold-start-interview`
 8. Run the practice-area cold-starts
@@ -209,8 +209,8 @@ plugin's full skill set.
 ArthurLegal-Law-Firm-v1.12.5-Public-Release/
 ├── INSTALLATION.md         ← English installation guide
 ├── KURULUM.md              ← Turkish installation guide
-├── ARTHUR-MASK.md          ← Arthur Mask user guide (Turkish)
-├── ARTHUR-MASK-EN.md       ← Arthur Mask user guide (English)
+├── ARTHUR-MASK.md          ← ArthurMask user guide (Turkish)
+├── ARTHUR-MASK-EN.md       ← ArthurMask user guide (English)
 ├── SYSTEM_PROMPT.md        ← Claude.ai Custom Instructions text
 ├── README.md               ← This file
 ├── CHANGELOG.md            ← Release notes
@@ -222,7 +222,7 @@ ArthurLegal-Law-Firm-v1.12.5-Public-Release/
     ├── profiles/           ← 10 practice-area profiles (incl. legal-research)
     ├── skills/             ← 16 consolidated skill files
     ├── agents/             ← 7 automation agent definitions
-    └── references/         ← 95 references: legislation + international jurisdictions + MCP guides + Arthur Mask
+    └── references/         ← 95 references: legislation + international jurisdictions + MCP guides + ArthurMask
 ```
 
 > **Note on language:** the knowledge layer and `SYSTEM_PROMPT.md` are written in
@@ -240,7 +240,7 @@ ArthurLegal-Law-Firm-v1.12.5-Public-Release/
 - **Tool calls are cancelled at 100 seconds** and a cancelled call returns nothing. If scope narrowed, the assistant says so; partial research is never presented as complete.
 - **Doctrine and contract precedent are secondary / comparative** — they cannot carry a pleading on their own. Peer-review status is three-valued (`true` / `false` / `null`); US law reviews are student-edited.
 - **In-force status of Azerbaijani legislation** is verified only via `get_act`; a repealed act (`Ləğv olunmuş`) can never be relied on.
-- **Arthur Mask pseudonymises; it does not anonymise.** Detection is probabilistic; dates and amounts are deliberately left unmasked; images, handwriting, signatures, stamps and QR codes in scans are not masked. It works only with Claude Desktop for Windows.
+- **ArthurMask pseudonymises; it does not anonymise.** Detection is probabilistic; dates and amounts are deliberately left unmasked; images, handwriting, signatures, stamps and QR codes in scans are not masked. It works only with Claude Desktop for Windows.
 - **Family / inheritance and specialist maritime law are out of scope** — referral to another specialist is recommended.
 
 ---
@@ -253,7 +253,7 @@ data**. All such fields are marked with `[DOLDUR]` placeholders. The example fir
 
 ⚠️ **Professional secrecy reminder:** when adapting the package to your own firm,
 do not write real client information into the knowledge files. Keep matter folders
-**isolated across matters**. To give Claude a client document, mask it first with Arthur Mask
+**isolated across matters**. To give Claude a client document, mask it first with ArthurMask
 (Claude Desktop, Windows) — see [ARTHUR-MASK-EN.md](ARTHUR-MASK-EN.md).
 
 ---

@@ -256,16 +256,16 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 
 ---
 
-## [1.8.0] — 2026-09-13 — *Arthur Mask: Belgeler Bilgisayardan Çıkmadan Maskelenir*
+## [1.8.0] — 2026-09-13 — *ArthurMask: Belgeler Bilgisayardan Çıkmadan Maskelenir*
 
 > **Gizlilik sürümü.** Şirket belgeleri Claude'a verilmeden önce kullanıcının kendi Windows
-> bilgisayarında maskelenebilir. Yeni yerel program **Arthur Mask 1.0.0**, ArthurLegal GitHub'daki
+> bilgisayarında maskelenebilir. Yeni yerel program **ArthurMask 1.0.0**, ArthurLegal GitHub'daki
 > [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) kurulum dosyası olarak eklendi (`ArthurMask-Kurulum.exe`, yaklaşık 1 GB).
 > Connector adresleri ve mevcut skill'ler değişmedi.
 
 ### Eklendi
 
-1. **Arthur Mask (yerel gizlilik kapısı).** Word, UYAP UDF, PDF, taranmış belge (yerel OCR),
+1. **ArthurMask (yerel gizlilik kapısı).** Word, UYAP UDF, PDF, taranmış belge (yerel OCR),
    .txt ve .md. Adlar, şirketler, TCKN, VKN, IBAN, adres, telefon, e-posta, doğum tarihi, dosya
    numarası, pasaport ve plaka `{{KİŞİ-01}}`, `{{ŞİRKET-02}}`, `{{TCKN-01}}` gibi etiketlere
    dönüşür; gerçek değerler her dosya için ayrı şifreli kasada kalır. Claude yalnız maskeli metni
@@ -277,7 +277,7 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
    stratejisi, uzlaşma sınırı, özel nitelikli veri, içeriden öğrenilen bilgi gerekçe yazılmadan
    gönderilmez), çıkış kapısı (Claude'a giden her yanıt kasaya karşı son kez taranır), "Claude'a
    giden" kaydı ve sızıntı denetimi.
-3. **Sistem talimatında bölüm 9, Arthur Mask.** `arthur_mask_belgeler`, `arthur_mask_belge_getir`,
+3. **Sistem talimatında bölüm 9, ArthurMask.** `arthur_mask_belgeler`, `arthur_mask_belge_getir`,
    `arthur_mask_belgeyi_revize_et`, `arthur_mask_teslim` araçlarının kullanımı: etiketler harfi
    harfine korunur, gerçek değer tahmin edilmez, etiket hiçbir araştırma sorgusuna konmaz, revizyon
    tek paragraf veya hücreden birebir `eski` ile yapılır. Sohbete çalışan, müşteri veya karşı tarafa ait
@@ -293,8 +293,8 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
 ### Değişti
 
 1. Sistem talimatında Araç çağrısı disiplini ve sonraki bölümler 10 ile 14 arası yeniden numaralandı;
-   iç atıflar etkilenmedi. Çekilen içerik kuralına Arthur Mask eklendi.
-2. `ATTRIBUTION.md`: Arthur Mask kurulum dosyasındaki üçüncü taraf açık kaynak bileşenler.
+   iç atıflar etkilenmedi. Çekilen içerik kuralına ArthurMask eklendi.
+2. `ATTRIBUTION.md`: ArthurMask kurulum dosyasındaki üçüncü taraf açık kaynak bileşenler.
 
 ### Sınırlar (bilerek)
 
@@ -308,12 +308,12 @@ Semver: [Semantic Versioning 2.0](https://semver.org/lang/tr/).
    nesneler, taramalardaki el yazısı, imza, kaşe ve QR kod kapsam dışı.
 4. **Kurulum dosyası kod imzalı değil.** SmartScreen uyarısı: Ek bilgi, Yine de çalıştır.
 5. **Sorumluluk kullanıcıdadır.** KVKK, ticari sır, gizlilik sözleşmeleri (NDA) ve şirket avukatı için sır saklama
-   yükümlülüğü Arthur Mask kullanılsa da kullanıcı ve şirket bakımından devam eder.
+   yükümlülüğü ArthurMask kullanılsa da kullanıcı ve şirket bakımından devam eder.
 
 ### Yükleme
 
 `SYSTEM_PROMPT.md` yeniden yapıştırılır. `knowledge/references/arthur-mask-rehberi.md` Project
-knowledge'a eklenir. Arthur Mask için Adım 5; Project Claude Desktop'tan açılır.
+knowledge'a eklenir. ArthurMask için Adım 5; Project Claude Desktop'tan açılır.
 
 ---
 

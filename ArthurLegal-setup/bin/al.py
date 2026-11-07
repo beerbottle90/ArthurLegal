@@ -2,7 +2,7 @@
 
 Claude Desktop yapılandırması, kısayollar ve oturum açılışı hep bu dosyayı çağırır; etkin
 sürüm klasörünü aktif.txt'den bulur. Güncellemeyle değişmez, o yüzden küçük tutulur.
-Python 3.8+: kurulumun Python 3.12'siyle ve Arthur Mask'in 3.11'iyle (UYAP) çalışır.
+Python 3.8+: kurulumun Python 3.12'siyle ve ArthurMask'in 3.11'iyle (UYAP) çalışır.
 Gömülü Python betiğin klasörünü sys.path'e eklemez; hedefin klasörünü burası ekler.
 """
 import os

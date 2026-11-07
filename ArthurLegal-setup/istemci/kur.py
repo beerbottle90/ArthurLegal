@@ -9,8 +9,8 @@
     al.py kur --kaldir       Claude Desktop girdilerini, kısayolları ve Run anahtarını sil
 
 Zip yolu, Windows 11 Akıllı Uygulama Denetimi açık bilgisayarlar içindir: imzasız kurulum motoru
-(.exe içindeki .tmp) orada engellenir, PSF imzalı python.exe engellenmez. O makinelerde Arthur Mask
-de kurulamaz; ArthurLegal paketleri ve Tapu çalışır, UYAP çalışmaz (Arthur Mask'e bağlı).
+(.exe içindeki .tmp) orada engellenir, PSF imzalı python.exe engellenmez. O makinelerde ArthurMask
+de kurulamaz; ArthurLegal paketleri ve Tapu çalışır, UYAP çalışmaz (ArthurMask'e bağlı).
 """
 from __future__ import annotations
 
@@ -182,7 +182,7 @@ def _kisayol_listesi() -> list:
     if ortak.hafiza_acik():
         liste.append((menu / f"{ad} - {m['hafiza']} {s}.lnk", hafiza.kasa(), "", m["hafiza_aciklama"]))
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
-    # olmadan açılmaz: avukat paketi, Arthur Mask ve köprü birlikteyse eklenir (ortak.uyap_acik). Ad kısa
+    # olmadan açılmaz: avukat paketi, ArthurMask ve köprü birlikteyse eklenir (ortak.uyap_acik). Ad kısa
     # addan ("<kısa ad> - UYAP Dashboard").
     if ortak.uyap_acik():
         dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran', m["uyap"].format(s=s))
@@ -193,7 +193,7 @@ def _kisayol_listesi() -> list:
 
 def _mac_kisayol_listesi() -> list:
     """macOS: (yol, hedef, argüman, açıklama). Paket ve Tapu uygulamaları ~/Applications'ta (Launchpad), masaüstünde
-    takma adları (hedefi uygulamadır); yardımcılar ~/Applications/<ürün> klasöründe; Arthur Mask kuruluysa onun da
+    takma adları (hedefi uygulamadır); yardımcılar ~/Applications/<ürün> klasöründe; ArthurMask kuruluysa onun da
     masaüstü takma adı. Masaüstü takma adları Windows'taki gibi sonda çalışan kodun sürümünü taşır ("<ad> 3.0.12",
     "<ad> Tapu 3.0.12"); uygulamaların adları sürüm taşımaz (Dock'a eklenen simge güncellemede kopmasın), sürüm
     uygulamanın bilgisindedir (mac.py)."""
@@ -215,7 +215,7 @@ def _mac_kisayol_listesi() -> list:
               for dosya, _, aciklama in simgeler]
     mask = ortak.mask_uygulamasi()
     if mask and "mask" in secili:
-        liste.append((mac.masaustu() / mask.name, mask, "", "Arthur Mask"))
+        liste.append((mac.masaustu() / mask.name, mask, "", "ArthurMask"))
     acici = Path("/usr/bin/open")
     liste += [
         (menu / f"{m['rehber']}.app", acici, shlex.quote(str(ortak.rehber_dosyasi())), m["rehber_aciklama"]),
@@ -415,20 +415,20 @@ MODUL_METNI = {
            "adliye": ("Courthouse", "hâkim ve kalem için tarafsız taslak: gerekçe, tensip, müzekkere, tebligat"),
            "akademisyen": ("Akademisyen", "hukuk akademisyenleri için literatür, atıf, dergi seçimi, yayın etiği"),
            "tapu": ("ArthurLegal Tapu", "ada/parsel ya da yer adıyla TKGM'den canlı parsel, kroki ve harç"),
-           "mask": ("Arthur Mask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler"),
+           "mask": ("ArthurMask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler"),
            "hafiza": ("ArthurLegal Hafıza", "tercihleri, düzeltmeleri ve son oturumu sohbetler arasında bu bilgisayarda tutar")},
     "en": {"hukuk-burosu": ("Law Firm", "for lawyers: petitions, contracts, case-law and legislation research"),
            "kurumsal": ("Corporate Assistant", "for in-house legal teams: contracts, compliance, data protection"),
            "adliye": ("Courthouse", "for judges and court clerks: neutral drafts of reasoning, orders, writs, service"),
            "akademisyen": ("Academician", "for legal academics: literature, citations, journal choice, ethics"),
            "tapu": ("ArthurLegal Tapu", "live Turkish land-registry parcels (TKGM) with sketch and fees"),
-           "mask": ("Arthur Mask", "masks documents on this computer before Claude sees them"),
+           "mask": ("ArthurMask", "masks documents on this computer before Claude sees them"),
            "hafiza": ("ArthurLegal Memory", "keeps preferences, corrections and the last session on this computer, across chats")},
 }
 
 
 def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
-    """Zip kurulumunda modül seçimi, konsolda numarayla. Arthur Mask bu yolla kurulamaz (Akıllı Uygulama Denetimi imzasız
+    """Zip kurulumunda modül seçimi, konsolda numarayla. ArthurMask bu yolla kurulamaz (Akıllı Uygulama Denetimi imzasız
     kurulumu engeller), sorulmaz. Enter: önceki seçim. Konsol yoksa (girdi okunamıyorsa) önceki seçim, o da yoksa 2.5.0
     öncesinin modülleri; kurulum yarıda kalmaz."""
     secenekler = [m for m in ortak.MODULLER if m != "mask"]
@@ -439,7 +439,7 @@ def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
           else "Hangi modüller kurulsun? İlk dördünden en az biri gerekir.")
     for no, m in enumerate(secenekler, 1):
         print(f"  {no}  {metin[m][0]} - {metin[m][1]}")
-    print("Arthur Mask cannot be installed this way." if en else "Arthur Mask bu yolla kurulamaz.")
+    print("ArthurMask cannot be installed this way." if en else "ArthurMask bu yolla kurulamaz.")
     soru = ("Type the numbers separated by commas (e.g. 3,5)" if en else "Numaraları virgülle yazın (ör. 3,5)")
     if onceki:
         soru += " [Enter: " + ", ".join(metin[m][0] for m in onceki) + "]"
@@ -563,8 +563,8 @@ def main(argv=None) -> int:
         print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
                           f"Installed. {sayi} servers were added to Claude Desktop."))
         if not ortak.mask_python():
-            print(ortak.metin("Arthur Mask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.",
-                              "Arthur Mask is not installed: the gate that masks client documents does not work on "
+            print(ortak.metin("ArthurMask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.",
+                              "ArthurMask is not installed: the gate that masks client documents does not work on "
                               "this computer."))
         print(ortak.metin(f"Masaüstündeki '{simge}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.",
                           f"Double-click the '{simge}' icon on the desktop: it opens Claude Desktop and shows the last step."))

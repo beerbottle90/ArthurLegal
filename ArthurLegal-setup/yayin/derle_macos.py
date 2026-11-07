@@ -54,7 +54,7 @@ def calistir(komut, **k):
     return subprocess.run([str(x) for x in komut], check=True, **k)
 
 
-# Arthur Mask'in Mac sürümünün koşulu: seçenek öteki Mac'lerde soluk gelir, nedeni açıklamasında yazar.
+# ArthurMask'in Mac sürümünün koşulu: seçenek öteki Mac'lerde soluk gelir, nedeni açıklamasında yazar.
 MASK_KOSULU = {"tr": " Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 gerekir.",
                "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14."}
 # Mac'te arayüz tek kutudur: işareti kaldırmak öteki seçeneği seçer.
@@ -150,8 +150,8 @@ Masası'nı açar. İşareti kaldırırsanız <b>Claude Desktop klasik</b> kurul
 <li>Kurulum yalnız sizin kullanıcı hesabınıza yapılır, yönetici şifresi istemez.</li>
 <li><b>Claude Desktop açıksa kurulum sırasında kapatılır</b> ve sonunda yeniden açılır; yazdığınız bir mesaj varsa
 önce gönderin.</li>
-<li>Arthur Mask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
-Arthur Mask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
+<li>ArthurMask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
+ArthurMask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
         "bitis": """<h2>ArthurLegal kuruldu</h2>
 <p>Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe ve masaüstünde. Başlangıç rehberi tarayıcıda açılır.</p>
@@ -181,8 +181,8 @@ ArthurLegal desk) inside Claude Desktop. Untick it for <b>Claude Desktop classic
 <li>Setup installs for your user account only and does not ask for an administrator password.</li>
 <li><b>If Claude Desktop is open, setup quits it</b> and opens it again at the end; send any message you are typing
 first.</li>
-<li>If you choose Arthur Mask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
-when it is ready. On a Mac, Arthur Mask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
+<li>If you choose ArthurMask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
+when it is ready. On a Mac, ArthurMask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
 <li>From now on, updates install themselves in the background after their signatures are verified.</li></ul>""",
         "bitis": """<h2>ArthurLegal is installed</h2>
 <p>The icons of the modules you chose are in the Applications folder and on the desktop. The start guide opens in
@@ -205,7 +205,7 @@ can also open a new chat and type your question. When Claude asks for permission
 
 
 def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
-    """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, Arthur Mask'in koşulu
+    """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, ArthurMask'in koşulu
     (Apple Silicon, macOS 14) ve önceki seçim için Installer JavaScript'i. Bileşenler seçim sırasıyla kurulur: önce çekirdek, sonra işaretler, en son
     postinstall'u çalışan 'son' bileşeni."""
     satirlar = "\n".join(f'    <line choice="{m}"/>' for m in moduller + ["arayuz-yeni"])

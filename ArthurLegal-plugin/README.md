@@ -7,7 +7,7 @@ finance, expert opinions, contract drafting and law firm operations. Statutes an
 text through ArthurLegal MCP, which covers 12 jurisdictions from Türkiye and the EU to the UK, Germany and
 Japan, plus legal-entity identity, open-access legal scholarship and published resource contracts.
 
-Plugin version 1.12.8, built from the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
+Plugin version 1.12.9, built from the ArthurLegal Law Firm package 1.12.5. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
 
 ## What it contains
 
@@ -25,7 +25,7 @@ network connection is ArthurLegal MCP: when Claude calls one of its tools, the t
 statute and article numbers, decision identifiers) go to that server, which queries the official sources and returns
 the result. Interactive views (article card, decision list, the ArthurLegal desk) load the MCP Apps client library from
 unpkg.com. What the server stores and for how long is in its [privacy policy](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md). Do not put client names or
-other confidential facts into requests; mask documents on your own computer first with Arthur Mask.
+other confidential facts into requests; mask documents on your own computer first with ArthurMask.
 
 Some skills also ask Claude to use tools the user already has, through Claude and with the user's own permissions; the
 plugin installs none of them and sends nothing to them by itself:
@@ -35,12 +35,12 @@ plugin installs none of them and sends nothing to them by itself:
 - **Connectors the user has added**, when they are connected: CourtListener and TR Legal MCP for case law; document
   stores such as Google Drive, Box or iManage; Slack for posting a report the user asked for; DocuSign for sending a
   document for signature after the user approves it.
-- **The local ArthurLegal modules** described below (`arthur-tapu`, `arthur-uyap`, Arthur Mask), which run on the
+- **The local ArthurLegal modules** described below (`arthur-tapu`, `arthur-uyap`, ArthurMask), which run on the
   user's computer.
 
 ## Desktop modules (not part of this plugin)
 
-ArthurTapu (land registry), UYAP Dashboard (a read-only bridge to the lawyer's own UYAP account), Arthur Mask and
+ArthurTapu (land registry), UYAP Dashboard (a read-only bridge to the lawyer's own UYAP account), ArthurMask and
 ArthurLegal Hafıza run on the lawyer's computer and come with the ArthurLegal installer ([download](https://github.com/beerbottle90/ArthurLegal#download)).
 When they are installed, the `arthurlegal` skill sends land-registry work to `arthur-tapu` and UYAP work to `arthur-uyap`;
 when they are not, it says the data could not be retrieved instead of guessing.

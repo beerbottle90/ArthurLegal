@@ -145,7 +145,7 @@ def mask_bilgisi(k: dict, alan: str = "mask") -> dict:
         if s:
             m["surum"] = s.group(1)
     except Exception as e:  # noqa: BLE001 — çevrimdışı derlemede sabitlenen değer kullanılır
-        print(f"  Uyarı: Arthur Mask yayın bilgisi okunamadı, kaynaklar.json kullanılıyor ({e})")
+        print(f"  Uyarı: ArthurMask yayın bilgisi okunamadı, kaynaklar.json kullanılıyor ({e})")
     return m
 
 
@@ -237,9 +237,9 @@ def _lisans_metni(k: dict, ad: str, yollar, adres: str = "") -> str:
 
 
 LISANS_BASLIKLARI = {
-    "tr": ("1. ArthurLegal Lisansı", "2. Arthur Mask Lisansı", "3. ArthurLegal Tapu (tkgm-mcp) — MIT Lisansı",
+    "tr": ("1. ArthurLegal Lisansı", "2. ArthurMask Lisansı", "3. ArthurLegal Tapu (tkgm-mcp) — MIT Lisansı",
            "4. Üçüncü taraf bildirimleri (Apache 2.0)"),
-    "en": ("1. ArthurLegal License", "2. Arthur Mask License", "3. ArthurLegal Tapu (tkgm-mcp) — MIT License",
+    "en": ("1. ArthurLegal License", "2. ArthurMask License", "3. ArthurLegal Tapu (tkgm-mcp) — MIT License",
            "4. Third-party notices (Apache 2.0)"),
 }
 
@@ -252,7 +252,7 @@ def lisans_yaz(k: dict, hedef: Path) -> None:
     tapu_klonu = depo_klonu(k, "tapu") if (BURASI / k["depolar"]["tapu"]).is_dir() else None
     govdeler = [
         _lisans_metni(k, "ArthurLegal", [al / "LICENSE"]),
-        _lisans_metni(k, "Arthur Mask", [(BURASI / k["depolar"].get("arthur-mask", "")) / "LICENSE"],
+        _lisans_metni(k, "ArthurMask", [(BURASI / k["depolar"].get("arthur-mask", "")) / "LICENSE"],
                       "https://raw.githubusercontent.com/beerbottle90/arthur-mask/main/LICENSE"),
         _lisans_metni(k, "Tapu", [depo(k, "tapu") / "LICENSE", tapu_klonu and tapu_klonu / "LICENSE"],
                       "https://raw.githubusercontent.com/beerbottle90/arthurlegal-mcp/master/LICENSE"),
@@ -331,7 +331,7 @@ ZIP_BENIOKU = (
     "   onların simgesine) çift tıklayın; Claude Desktop'ta yeni bir sohbet açıp sorunuzu yazın.\r\n\r\n"
     "Bu dosyayı zip'i ayıkladıktan sonra okuyorsanız ve KUR engellenirse: ayıklanan klasörü silin,\r\n"
     "1. adımı yapın ve zip'i yeniden ayıklayın.\r\n\r\n"
-    "Bu yolla Arthur Mask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
+    "Bu yolla ArthurMask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
     "ArthurLegal paketleri, araştırma araçları ve Tapu çalışır.\r\n\r\n"
     "Kaldırmak için: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
     "English: README.txt\r\n"
@@ -350,7 +350,7 @@ ZIP_README = (
     "   Academician icon if you chose those), open a new chat in Claude Desktop and type your question.\r\n\r\n"
     "If you are reading this after extracting the zip and KUR is blocked: delete the extracted folder,\r\n"
     "do step 1 and extract the zip again.\r\n\r\n"
-    "Arthur Mask is not installed this way: client-document masking and the UYAP bridge do not work.\r\n"
+    "ArthurMask is not installed this way: client-document masking and the UYAP bridge do not work.\r\n"
     "The ArthurLegal packages, the research tools and Tapu work.\r\n\r\n"
     "To uninstall: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
     "Türkçe: BENIOKU.txt\r\n"

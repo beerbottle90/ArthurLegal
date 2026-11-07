@@ -79,16 +79,16 @@ API'leri sarar. Kaynakları:
 - **OpenStreetMap Nominatim** — yer adı araması (`tkgm_yer_bul`); © OpenStreetMap katkıcıları, ODbL.
 - WebFetch kaynaklar (auth gerektirmez): legislation.gov.uk · GovInfo · CourtListener · EUR-Lex · HUDOC · gesetze-im-internet.de · Légifrance · Normattiva · e-Gov JP · Fedlex · pravo.gov.ru · constcourt.gov.az · minenergy.gov.az · CODICES (Venice Commission) · NATLEX (ILO) · HuggingFace/twang2218 · paragraf.rs
 
-## Arthur Mask kurulum dosyası (v1.8.0)
+## ArthurMask kurulum dosyası (v1.8.0)
 
-Arthur Mask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
-dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
+ArthurMask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
+dosyasıyla dağıtılan yerel gizlilik kapısıdır. ArthurMask'in kendisi bu paketle aynı
 **ArthurLegal Proprietary Non-Commercial License** kapsamındadır (açık kaynak lisansı değildir); kaynak kodu
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask) adresinde incelenebilir.
 
 Kurulum dosyası aşağıdaki üçüncü taraf açık kaynak bileşenleri içerir. Bu bileşenler kendi
 lisanslarına tabidir. Tam lisans metinleri ve atıf bildirimleri kurulum klasöründe
-(`%LOCALAPPDATA%\Programs\Arthur Mask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
+(`%LOCALAPPDATA%\Programs\ArthurMask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
 birlikte gelir ve kaldırılamaz.
 
 | Bileşen | Lisans |

@@ -4,7 +4,7 @@ Bu kurulum şu bileşenleri bilgisayarınıza kurar:
 
   • ArthurLegal Hukuk Bürosu ve Kurumsal Asistan paketleri ........ ArthurLegal Lisansı (1)
   • ArthurLegal yerel sunucusu ve güncelleyicisi ................... ArthurLegal Lisansı (1)
-  • Arthur Mask yerel gizlilik kapısı (ayrıca indirilir) ........... Arthur Mask Lisansı (2)
+  • ArthurMask yerel gizlilik kapısı (ayrıca indirilir) ........... ArthurMask Lisansı (2)
   • ArthurLegal Tapu (tkgm-mcp) .................................... MIT Lisansı (3)
   • Üçüncü taraf içerik ............................................ Apache 2.0 bildirimi (4)
   • Python 3.12 çalışma ortamı ...................................... PSF Lisansı (runtime\LICENSE.txt)
@@ -17,7 +17,7 @@ Kurulumdan önce bilmeniz gerekenler:
 
   • ArthurLegal bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir. Her
     çıktıyı bir avukat doğrulamalıdır.
-  • Arthur Mask takma adlandırma yapar, anonim hâle getirmez. KVKK, Avukatlık Kanunu m. 36
+  • ArthurMask takma adlandırma yapar, anonim hâle getirmez. KVKK, Avukatlık Kanunu m. 36
     sır saklama yükümlülüğü ve gizlilik sözleşmelerinden doğan sorumluluk kullanıcıdadır.
   • Kurulum, Claude Desktop yapılandırmasına yerel sunucularını ekler (arthurlegal-yerel,
     arthur-tapu; kuruluysa arthur-mask; UYAP köprüsü bu bilgisayarda varsa arthur-uyap) ve

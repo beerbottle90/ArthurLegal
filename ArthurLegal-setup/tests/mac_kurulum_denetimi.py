@@ -2,7 +2,7 @@
 hata verir. GitHub Actions'ta (.github/workflows/macos-kurulum.yml) çalışır; Mac'te elle de çalıştırılabilir:
 
     python3 tests/mac_kurulum_denetimi.py adliye,tapu,mask            kurulumu denetler
-    python3 tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask     Arthur Mask'i kurar ve denetler (~1,2 GB indirir)
+    python3 tests/mac_kurulum_denetimi.py adliye,tapu,mask --mask     ArthurMask'i kurar ve denetler (~1,2 GB indirir)
     python3 tests/mac_kurulum_denetimi.py adliye,tapu,mask --kaldir   kaldırır ve geride bir şey kalmadığını denetler
 
 Denetlenenler: kurulum günlüğü, işlemciye uyan Python ve HTTPS, modül seçimi, Claude Desktop kaydı, uygulamalar ve
@@ -258,32 +258,35 @@ def kurulum(secim: list, surum: str) -> None:
 
 
 def mask(surum: str) -> None:
-    """Güncelleyicinin Mac'teki Arthur Mask kurulumu (guncelle.mac_mask_kur): disk görüntüsü iner, sha256'sı
-    doğrulanır, uygulama Uygulamalar'a kopyalanır, Arthur Mask kendini Claude Desktop'a kaydeder; kısayollar yeniden
+    """Güncelleyicinin Mac'teki ArthurMask kurulumu (guncelle.mac_mask_kur): disk görüntüsü iner, sha256'sı
+    doğrulanır, uygulama Uygulamalar'a kopyalanır, ArthurMask kendini Claude Desktop'a kaydeder; kısayollar yeniden
     yazılınca masaüstünde onun da takma adı olur."""
-    print("\n9. Arthur Mask (macOS)")
+    print("\n9. ArthurMask (macOS)")
     k = json.loads((BURASI / "kaynaklar.json").read_text(encoding="utf-8"))
     t0 = time.time()
     sonuc = kurulu_python(f"import guncelle; print(guncelle.mac_mask_kur({{'mask_macos': {k['mask_macos']!r}}}))",
                           zaman=3600)
     denetle(sonuc.endswith(" kuruldu") or sonuc.startswith("mask: kurulu"),
             f"{sonuc} ({int(time.time() - t0)} sn)")
-    app = next((p for p in (Path("/Applications/Arthur Mask.app"), UYG / "Arthur Mask.app") if p.exists()), None)
+    # Yayındaki Mask 1.1.2 paketi ayrı yazılmış eski adı taşır; 1.1.3 ve sonrası "ArthurMask.app".
+    app = next((k / ad for ad in ("ArthurMask.app", "Arthur Mask.app") for k in (Path("/Applications"), UYG)
+                if (k / ad).exists()), None)
     denetle(app and (app / "Contents" / "Resources" / "runtime" / "bin" / "python3").exists(), f"uygulama: {app}")
     sunucular = json.loads(CLAUDE.read_text(encoding="utf-8")).get("mcpServers", {})
-    denetle("arthur-mask" in sunucular, "Arthur Mask kendini Claude Desktop'a kaydetti: "
+    denetle("arthur-mask" in sunucular, "ArthurMask kendini Claude Desktop'a kaydetti: "
             + json.dumps(sunucular.get("arthur-mask", {}), ensure_ascii=False)[:200])
     r = calistir([PY, "-B", AL, "kur", "--kaydet", "--kisayol"])
-    denetle(r.returncode == 0 and (MASA / "Arthur Mask.app").is_symlink(),
-            f"masaüstünde Arthur Mask simgesi → {os.readlink(MASA / 'Arthur Mask.app') if (MASA / 'Arthur Mask.app').is_symlink() else '-'}")
+    simge = MASA / (app.name if app else "ArthurMask.app")
+    denetle(r.returncode == 0 and simge.is_symlink(),
+            f"masaüstünde ArthurMask simgesi → {os.readlink(simge) if simge.is_symlink() else '-'}")
     if "arthur-mask" in sunucular:
         s = Sunucu(sunucular["arthur-mask"])
         try:
             r = s.el_sikis()
             araclar = [t["name"] for t in s.iste("tools/list", zaman=300)["result"]["tools"]]
-            denetle(araclar, f"Arthur Mask sunucusu: {r.get('serverInfo', {}).get('name')}, {len(araclar)} araç")
+            denetle(araclar, f"ArthurMask sunucusu: {r.get('serverInfo', {}).get('name')}, {len(araclar)} araç")
         except (TimeoutError, KeyError, ValueError) as e:
-            denetle(False, f"Arthur Mask sunucusu: {e!r}")
+            denetle(False, f"ArthurMask sunucusu: {e!r}")
         finally:
             hata = s.kapat()
             if hatalar and hata:
@@ -297,7 +300,7 @@ def kaldir(secim: list) -> None:
     r = calistir([PY, "-B", AL, "kur", "--kaldir"])
     denetle(r.returncode == 0, "kur --kaldir" + ("" if r.returncode == 0 else f": {r.stderr[-300:]}"))
     kalan = [p.name for p in UYG.glob("ArthurLegal*")] + [
-        p.name for p in MASA.glob("*.app") if p.is_symlink() and ("ArthurLegal" in os.readlink(p) or p.name == "Arthur Mask.app")]
+        p.name for p in MASA.glob("*.app") if p.is_symlink() and ("ArthurLegal" in os.readlink(p) or p.name in ("ArthurMask.app", "Arthur Mask.app"))]
     denetle(not kalan, f"uygulamalar ve masaüstü takma adları silindi{': ' + ', '.join(kalan) if kalan else ''}")
     denetle(not AJAN.exists() and calistir(["launchctl", "print", f"gui/{os.getuid()}/com.arthurlegal.guncelleme"]).returncode,
             "LaunchAgent kaldırıldı")

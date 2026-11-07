@@ -125,7 +125,7 @@ Taslak gerekçenin dayandığı hukuki önermenin aksini söyleyen kararları, v
 
 ## Girdi
 
-- Hukuki mesele, soyut ve tarafsız 1-2 cümle (taraf adı, kişisel veri, Arthur Mask etiketi sorguya konmaz)
+- Hukuki mesele, soyut ve tarafsız 1-2 cümle (taraf adı, kişisel veri, ArthurMask etiketi sorguya konmaz)
 - Taslakta benimsenen yön (varsa) ve dayandığı kararlar (önce `/yargi-arastirma:ictihat-dogrulama`)
 - Dal, ilgili daire/kurul, uygulanan norm
 
@@ -200,7 +200,7 @@ user-invocable: true
 
 ## Konum hatırlatması
 
-Emsal, gerekçeyi destekleyen bir ölçüttür; hâkimi bağlayan kararlar (içtihadı birleştirme, AYM) dışında sonucu belirlemez. Asistan kararı yazmaz; emsali okur ve sınıflandırır. Kişisel veri, taraf adı ve Arthur Mask etiketi arama sorgusuna konmaz. Asistan UYAP'a bağlanmaz; dosya bilgisi kullanıcıdan gelir, içtihat yalnız araçla çekilir.
+Emsal, gerekçeyi destekleyen bir ölçüttür; hâkimi bağlayan kararlar (içtihadı birleştirme, AYM) dışında sonucu belirlemez. Asistan kararı yazmaz; emsali okur ve sınıflandırır. Kişisel veri, taraf adı ve ArthurMask etiketi arama sorgusuna konmaz. Asistan UYAP'a bağlanmaz; dosya bilgisi kullanıcıdan gelir, içtihat yalnız araçla çekilir.
 
 ## Amaç
 

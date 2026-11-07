@@ -99,16 +99,16 @@ Bu pakette yeni olarak (Corporate paketinde olmayan) 9 hukuk bürosu spesifik re
 | `kep-etebligat-rehberi.md` | KEP + e-Tebligat | 5070 sayılı K. + TBK m. 117 + 7201 sayılı K. m. 7/A |
 | `masak-kimlik-tespit-rehberi.md` | Avukatın MASAK yükümlülükleri (kapsam, kimlik tespiti, gerçek faydalanıcı, şüpheli işlem) | 5549 sayılı K. m. 2-4, 8, 13-14 + Tedbirler Yönetmeliği m. 4-7, 17/A, 22, 26/A, 28-29 + TCK m. 282 |
 
-## Arthur Mask kurulum dosyası (v1.8.0)
+## ArthurMask kurulum dosyası (v1.8.0)
 
-Arthur Mask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
-dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
+ArthurMask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
+dosyasıyla dağıtılan yerel gizlilik kapısıdır. ArthurMask'in kendisi bu paketle aynı
 **ArthurLegal Proprietary Non-Commercial License** kapsamındadır (açık kaynak lisansı değildir); kaynak kodu
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask) adresinde incelenebilir.
 
 Kurulum dosyası aşağıdaki üçüncü taraf açık kaynak bileşenleri içerir. Bu bileşenler kendi
 lisanslarına tabidir. Tam lisans metinleri ve atıf bildirimleri kurulum klasöründe
-(`%LOCALAPPDATA%\Programs\Arthur Mask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
+(`%LOCALAPPDATA%\Programs\ArthurMask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
 birlikte gelir ve kaldırılamaz.
 
 | Bileşen | Lisans |

@@ -294,7 +294,7 @@ class ClaudeAyariTesti(unittest.TestCase):
             uyap = json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"]["arthur-uyap"]
             self.assertEqual(uyap["command"], str(mask / "python.exe"))
             self.assertEqual(uyap["args"][-1], "uyap")
-            # UYAP avukat paketiyle gelir (3.0.0): yalnız Courthouse ve Arthur Mask seçildiyse kaydedilmez.
+            # UYAP avukat paketiyle gelir (3.0.0): yalnız Courthouse ve ArthurMask seçildiyse kaydedilmez.
             (t / "kok" / "moduller.json").write_text(json.dumps({"moduller": ["adliye", "mask"]}), encoding="utf-8")
             self.calistir("kaydet", t / "kok", appdata, yerel)
             self.assertNotIn("arthur-uyap", json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"],
@@ -310,7 +310,7 @@ class ClaudeAyariTesti(unittest.TestCase):
 
 @SADECE_WINDOWS
 class KisayolTesti(unittest.TestCase):
-    """UYAP için tek simge (UYAP Dashboard) yalnız köprü ve Arthur Mask birlikteyse; Mask'in Python'unda açılır."""
+    """UYAP için tek simge (UYAP Dashboard) yalnız köprü ve ArthurMask birlikteyse; Mask'in Python'unda açılır."""
 
     LISTE = "import kur; print(json.dumps([[y.name, str(h), a] for y, h, a, _ in kur._kisayol_listesi()]))"
     AC = ("import kisayol, ortak; k = []; ortak.arka_planda = lambda a, o=None: k.append([[str(x) for x in a], "
@@ -368,7 +368,7 @@ class KisayolTesti(unittest.TestCase):
             uyap.mkdir()
             (uyap / "ekran.py").write_text("", encoding="utf-8")
             adlar = [s[0] for s in self.calistir(t, self.LISTE)]
-            self.assertFalse([a for a in adlar if "UYAP" in a], "Arthur Mask yokken UYAP simgesi yok")
+            self.assertFalse([a for a in adlar if "UYAP" in a], "ArthurMask yokken UYAP simgesi yok")
             self.assertEqual(self.calistir(t, self.AC), [1, []])
             mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
             mask.mkdir(parents=True)
@@ -715,7 +715,7 @@ class SunucuTesti(unittest.TestCase):
             self.assertNotIn("_meta", araclar[ad], "masanın kendi çağırdığı iç araç görünüm açmaz")
         masa = self.arac("al_masasi", bolum="ictihat")["structuredContent"]
         self.assertEqual((masa["ortam"], masa["bolum"]), ("masaustu", "ictihat"))
-        # Sahte kurulumda UYAP köprüsü yok; Arthur Mask bu bilgisayarda kurulu olabilir (gerçek LOCALAPPDATA).
+        # Sahte kurulumda UYAP köprüsü yok; ArthurMask bu bilgisayarda kurulu olabilir (gerçek LOCALAPPDATA).
         self.assertEqual(masa["moduller"]["uyap"], {"durum": "kurulu-degil"})
         self.assertEqual(set(masa["moduller"]), {"tapu", "beyin", "mask", "uyap", "donna"})
         self.assertIn("tr_ictihat_ara", masa["yetenekler"])
@@ -796,7 +796,7 @@ class KopruTesti(unittest.TestCase):
 
 @SADECE_WINDOWS
 class AkilliDenetimTesti(unittest.TestCase):
-    """Akıllı Uygulama Denetimi açıkken imzasız Arthur Mask kurulumu çalışmaz: güncelleyici onu indirmez."""
+    """Akıllı Uygulama Denetimi açıkken imzasız ArthurMask kurulumu çalışmaz: güncelleyici onu indirmez."""
 
     def test_denetim_acikken_mask_indirilmez(self):
         import guncelle
@@ -817,7 +817,7 @@ class AkilliDenetimTesti(unittest.TestCase):
                 manifest = {"mask": {"surum": "1.0.0", "url": "https://ornek.invalid/m.exe", "sha256": "0" * 64}}
                 self.assertIn("Akıllı Uygulama Denetimi açık", guncelle.mask_guncelle(manifest))
                 self.assertFalse(kalan.exists(), "önceki denemeden kalan 1 GB'lık dosya silinir")
-                # Arthur Mask kurulumu imzalıysa (manifest bunu söylerse) denetim engel değildir: indirmeye çalışır.
+                # ArthurMask kurulumu imzalıysa (manifest bunu söylerse) denetim engel değildir: indirmeye çalışır.
                 manifest["mask"]["imzali"] = True
                 with self.assertRaises(AssertionError):
                     guncelle.mask_guncelle(manifest)
@@ -1231,7 +1231,7 @@ def secim_yaz(kok: Path, *moduller):
 
 class ModulTesti(unittest.TestCase):
     """2.5.0: tek kurulum dosyası, modül ekranı. Seçim kurulum klasöründeki moduller.json'dadır; kısayollar, Claude
-    kaydı, paketler, proje klasörleri ve Arthur Mask indirmesi ona uyar. Seçim dosyası olmayan (2.5.0 öncesi) kurulum
+    kaydı, paketler, proje klasörleri ve ArthurMask indirmesi ona uyar. Seçim dosyası olmayan (2.5.0 öncesi) kurulum
     eski modülleriyle sürer."""
 
     def calistir(self, t, kod, kontrol=True):
@@ -1273,7 +1273,7 @@ class ModulTesti(unittest.TestCase):
 
     @SADECE_WINDOWS
     def test_courthouse_tapu_mask_simgeleri(self):
-        """Kullanıcının istediği: masaüstünde Courthouse, Tapu ve (Arthur Mask'in kendi kurulumundan) Mask simgesi."""
+        """Kullanıcının istediği: masaüstünde Courthouse, Tapu ve (ArthurMask'in kendi kurulumundan) Mask simgesi."""
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
             self.kok(t, "adliye", "tapu", "mask")
@@ -1289,7 +1289,7 @@ class ModulTesti(unittest.TestCase):
             masa = self.calistir(t, "import kur; print(json.dumps(sorted(y.name for y, *_ in kur._kisayol_listesi() "
                                     "if y.parent == kur._masaustu())))")
             self.assertEqual(masa, ["ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Tapu 0.0.1.lnk"],
-                             "Arthur Mask simgesini Arthur Mask'in kendi kurulumu koyar")
+                             "ArthurMask simgesini ArthurMask'in kendi kurulumu koyar")
 
     @SADECE_WINDOWS
     def test_paket_simgeleri_ve_secimden_cikan_temizlenir(self):
@@ -1433,7 +1433,7 @@ class ModulTesti(unittest.TestCase):
             ortak.moduller, ortak.mask_surumu = (lambda: ["adliye"]), (lambda: None)
             manifest = {"mask": {"surum": "1.0.0", "url": "https://ornek.invalid/m.exe", "sha256": "0" * 64}}
             self.assertEqual(guncelle.mask_guncelle(manifest), "mask: kurulumda seçilmedi")
-            ortak.mask_surumu = lambda: "0.9.0"  # kendi kurulumuyla gelmiş eski Arthur Mask güncellenir
+            ortak.mask_surumu = lambda: "0.9.0"  # kendi kurulumuyla gelmiş eski ArthurMask güncellenir
             with self.assertRaises(AssertionError):
                 guncelle.mask_guncelle(manifest)
         finally:
@@ -1445,7 +1445,7 @@ class ModulTesti(unittest.TestCase):
         cevaplar = iter(["", "6", "5", "3,5"])
         with contextlib.redirect_stdout(io.StringIO()) as cikti:
             self.assertEqual(kur.zip_secimi("tr", None, lambda _: next(cevaplar)), ["adliye", "tapu"])
-        self.assertIn("Arthur Mask bu yolla kurulamaz", cikti.getvalue())
+        self.assertIn("ArthurMask bu yolla kurulamaz", cikti.getvalue())
         self.assertEqual(cikti.getvalue().count("en az biri olmalı"), 3, "boş, liste dışı ve paketsiz cevap reddedilir")
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(kur.zip_secimi("en", ["adliye", "mask"], lambda _: ""), ["adliye"], "Enter: önceki seçim")
@@ -1603,7 +1603,7 @@ class KullaniciRehberiTesti(unittest.TestCase):
 class MacKurulumTesti(unittest.TestCase):
     """macOS kurulumu (.pkg, yayin/derle_macos.py): paketler, istemci ve güncelleme kanalı Windows'takiyle aynı; değişen
     yalnız işletim sistemine bağlanan yerler (Python yolu, Claude ayar dosyası, uygulamalar ve masaüstü takma adları,
-    LaunchAgent, Arthur Mask). İşletim sisteminden bağımsız kısımlar her bilgisayarda ortak.MAC = True ile sınanır;
+    LaunchAgent, ArthurMask). İşletim sisteminden bağımsız kısımlar her bilgisayarda ortak.MAC = True ile sınanır;
     sembolik bağ ve sh isteyenler yalnız macOS'ta (GitHub Actions: .github/workflows/macos-kurulum.yml)."""
 
     # (yol, hedef, argüman): ev klasörünün altındakiler ev klasörüne göre, öteki yollar POSIX biçiminde.
@@ -1636,7 +1636,7 @@ class MacKurulumTesti(unittest.TestCase):
             self.kok(t, "adliye", "tapu", "mask")
             py = ((t / "kok").resolve() / "runtime" / "bin" / "python3").as_posix()
             liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
-            liste.pop("Desktop/Arthur Mask.app", None)  # bu Mac'te /Applications'ta kurulu bir Arthur Mask varsa
+            liste.pop("Desktop/ArthurMask.app", None)  # bu Mac'te /Applications'ta kurulu bir ArthurMask varsa
             self.assertEqual(sorted(y for y in liste if not y.startswith("Applications/ArthurLegal/")),
                              ["Applications/ArthurLegal Courthouse.app", "Applications/ArthurLegal Tapu.app",
                               "Desktop/ArthurLegal Courthouse 0.0.1.app", "Desktop/ArthurLegal Tapu 0.0.1.app"],
@@ -1651,17 +1651,17 @@ class MacKurulumTesti(unittest.TestCase):
                                                 "Güncellemeleri Denetle.app", "Proje Klasörleri.app"])
             self.assertEqual((yardimci["Başlangıç Rehberi.app"], yardimci["ArthurLegal'i Kaldır.app"],
                               yardimci["Güncellemeleri Denetle.app"]), ("/usr/bin/open", "/bin/sh", py))
-            # Arthur Mask kuruluysa ve seçildiyse masaüstünde onun da takma adı olur.
-            if not Path("/Applications/Arthur Mask.app").exists():
-                self.assertNotIn("Desktop/Arthur Mask.app", [y for y, *_ in self.calistir(t, self.LISTE)],
-                                 "Arthur Mask kurulu değil")
-            mask = t / "ev" / "Applications" / "Arthur Mask.app" / "Contents" / "Resources" / "runtime" / "bin"
+            # ArthurMask kuruluysa ve seçildiyse masaüstünde onun da takma adı olur.
+            if not Path("/Applications/ArthurMask.app").exists():
+                self.assertNotIn("Desktop/ArthurMask.app", [y for y, *_ in self.calistir(t, self.LISTE)],
+                                 "ArthurMask kurulu değil")
+            mask = t / "ev" / "Applications" / "ArthurMask.app" / "Contents" / "Resources" / "runtime" / "bin"
             mask.mkdir(parents=True)
             (mask / "python3").write_bytes(b"")
             liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
-            self.assertTrue(liste["Desktop/Arthur Mask.app"][0].endswith("Applications/Arthur Mask.app"))
+            self.assertTrue(liste["Desktop/ArthurMask.app"][0].endswith("Applications/ArthurMask.app"))
             secim_yaz(t / "kok", "adliye", "tapu")
-            self.assertNotIn("Desktop/Arthur Mask.app", [y for y, *_ in self.calistir(t, self.LISTE)], "Mask seçilmedi")
+            self.assertNotIn("Desktop/ArthurMask.app", [y for y, *_ in self.calistir(t, self.LISTE)], "Mask seçilmedi")
             # Ana simge (Hukuk Bürosu), İngilizce adlar; seçilmeyen Tapu ve Courthouse yok.
             secim_yaz(t / "kok", "hukuk-burosu", "akademisyen")
             self.calistir(t, "ortak.durum_guncelle(dil='en'); print(1)")
@@ -1806,8 +1806,8 @@ class MacKurulumTesti(unittest.TestCase):
                              "seçimden çıkan Tapu'nun kaydı silinir")
 
     def test_arthur_mask_mac_kosullari(self):
-        """Mac'te Arthur Mask'i güncelleyici ilk kez kurar: yalnız seçildiyse, Apple Silicon ve macOS 14'te, manifestte
-        macOS disk görüntüsü varsa ve sha256'sı tutuyorsa. Kurulu Arthur Mask'in güncellemesine karışılmaz."""
+        """Mac'te ArthurMask'i güncelleyici ilk kez kurar: yalnız seçildiyse, Apple Silicon ve macOS 14'te, manifestte
+        macOS disk görüntüsü varsa ve sha256'sı tutuyorsa. Kurulu ArthurMask'in güncellemesine karışılmaz."""
         import platform
         import guncelle
         import ortak
@@ -1845,7 +1845,7 @@ class MacKurulumTesti(unittest.TestCase):
 
     def test_kurulum_paketi_sihirbazi(self):
         """Distribution.xml: modül ekranı (Özelleştir) Windows sihirbazıyla aynı metinlerle; yalnız ev klasörüne kurulum;
-        kur.py'yi çağıran 'son' bileşeni en son; Arthur Mask yalnız Apple Silicon ve macOS 14'te seçilebilir."""
+        kur.py'yi çağıran 'son' bileşeni en son; ArthurMask yalnız Apple Silicon ve macOS 14'te seçilebilir."""
         import xml.etree.ElementTree as ET
         sys.path.insert(0, str(BURASI / "yayin"))
         import derle_macos

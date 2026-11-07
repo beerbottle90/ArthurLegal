@@ -32,10 +32,10 @@ Adli tatil 20 Temmuz'da başlar, 31 Ağustos'ta biter; yeni adli yıl 1 Eylül'd
 ## 3. Girdi
 
 - **Kaynak, öncelik sırasıyla:**
-  1. **Kullanıcının verdiği liste:** kalem memurunun UYAP'tan dışa aktardığı liste (dosya, yapıştırılan tablo veya CSV), tercihen Arthur Mask'ten geçmiş olarak. Liste bugün dışa aktarılmamışsa listenin tarihi çıktıda belirtilir.
+  1. **Kullanıcının verdiği liste:** kalem memurunun UYAP'tan dışa aktardığı liste (dosya, yapıştırılan tablo veya CSV), tercihen ArthurMask'ten geçmiş olarak. Liste bugün dışa aktarılmamışsa listenin tarihi çıktıda belirtilir.
   2. **Liste yoksa:** liste, tarih veya dosya bilgisi tahminle doldurulmaz, örnek satır uydurulmaz. Çıktı tek satırla durur: `UYARI: veri çekilemedi, teyidiniz gerekli: UYAP'taki kendi ekranınız (adliyede UYAP; dışarıda VPN ile vpn.uyap.gov.tr ya da UYAP Mobil)`
 - İzleyici kendisi UYAP sorgusu yapmaz; kullanıcının verdiği listenin dışına çıkmaz.
-- **Maskeleme:** ad yerine rol etiketi veya sıra numarası yeterlidir. Arthur Mask'in ürettiği `{{DOSYA_NO-01}}`, `{{KİŞİ-01}}` gibi etiketler harfi harfine korunur; gerçek değerler yalnız kullanıcının ekranındadır (`arthur-mask-rehberi.md`).
+- **Maskeleme:** ad yerine rol etiketi veya sıra numarası yeterlidir. ArthurMask'in ürettiği `{{DOSYA_NO-01}}`, `{{KİŞİ-01}}` gibi etiketler harfi harfine korunur; gerçek değerler yalnız kullanıcının ekranındadır (`arthur-mask-rehberi.md`).
 - **Gizli dosyalar:** soruşturma evresindeki usul işlemleri gizlidir (CMK m. 157); müdafiin dosya inceleme yetkisinin kısıtlandığı dosyalar (CMK m. 153/2) kurum kuralları izin vermedikçe listeye konmaz.
 - **Eksik alan:** bilinmeyen alan boş bırakılabilir; izleyici o satırı "olgu eksik" diye ayırır.
 - **Hafıza yok:** izleyici önceki çalıştırmayı hatırlamaz. Karşılaştırma isteniyorsa önceki çıktı kullanıcı tarafından yeniden verilir.

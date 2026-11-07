@@ -131,12 +131,12 @@ def kart_meta(arac: str) -> Optional[Dict[str, Any]]:
 
 
 # Claude Desktop'ta aynı sohbette iki masa olabilir: bilgisayardaki kurulumun (arthurlegal-yerel) ve uzak bağlayıcının
-# (arthurlegal-mcp). Beyin, Arthur Mask ve UYAP yalnız yereldeki masada çalışır; açıklama Claude'u ona yönlendirir.
+# (arthurlegal-mcp). Beyin, ArthurMask ve UYAP yalnız yereldeki masada çalışır; açıklama Claude'u ona yönlendirir.
 MASA_ORTAM_NOTU = {
-    "masaustu": (" Bu, bilgisayardaki ArthurLegal kurulumunun masasıdır: Beyin, Arthur Mask ve UYAP Dashboard burada "
+    "masaustu": (" Bu, bilgisayardaki ArthurLegal kurulumunun masasıdır: Beyin, ArthurMask ve UYAP Dashboard burada "
                  "çalışır. Sohbette uzak arthurlegal-mcp bağlayıcısı da varsa masayı bu araçla açın."),
     "uzak": (" Bu bilgisayarda ArthurLegal kuruluysa (sohbette arthurlegal-yerel sunucusu bağlıysa) masayı onun "
-             "al_masasi aracıyla açın: Beyin, Arthur Mask ve UYAP Dashboard yalnız oradaki masada çalışır. Bu masa "
+             "al_masasi aracıyla açın: Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada çalışır. Bu masa "
              "web ve telefon içindir."),
 }
 
@@ -151,7 +151,7 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
         "title": "ArthurLegal Masası",
         "description": (
             "ArthurLegal Masası'nı açar: mevzuat ve atıf teyidi, içtihat, ArthurTapu, Beyin (hafıza), "
-            "Arthur Mask, UYAP Dashboard, Donna ve kaynak durumu tek panelde. Kullanıcı 'ArthurLegal'i aç', "
+            "ArthurMask, UYAP Dashboard, Donna ve kaynak durumu tek panelde. Kullanıcı 'ArthurLegal'i aç', "
             "'masayı aç', 'AL Masası' ya da bir modülün adını söyleyip onu açmak istediğinde çağırın. "
             "bolum ile belirli bir ekranda açılır. Her açılışta baglayicilar'ı doldurun: masa MCP'ler ve Donna "
             "ekranlarında kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."

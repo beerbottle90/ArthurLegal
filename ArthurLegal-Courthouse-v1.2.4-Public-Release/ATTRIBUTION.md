@@ -10,16 +10,16 @@
 
 Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
 
-## Arthur Mask kurulum dosyası (v1.8.0)
+## ArthurMask kurulum dosyası (v1.8.0)
 
-Arthur Mask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
-dosyasıyla dağıtılan yerel gizlilik kapısıdır. Arthur Mask'in kendisi bu paketle aynı
+ArthurMask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
+dosyasıyla dağıtılan yerel gizlilik kapısıdır. ArthurMask'in kendisi bu paketle aynı
 **ArthurLegal Proprietary Non-Commercial License** kapsamındadır (açık kaynak lisansı değildir); kaynak kodu
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask) adresinde incelenebilir.
 
 Kurulum dosyası aşağıdaki üçüncü taraf açık kaynak bileşenleri içerir. Bu bileşenler kendi
 lisanslarına tabidir. Tam lisans metinleri ve atıf bildirimleri kurulum klasöründe
-(`%LOCALAPPDATA%\Programs\Arthur Mask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
+(`%LOCALAPPDATA%\Programs\ArthurMask\belgeler`) `ATTRIBUTION.md` dosyası ve `ucuncu-taraf-lisanslari` klasörüyle
 birlikte gelir ve kaldırılamaz.
 
 | Bileşen | Lisans |

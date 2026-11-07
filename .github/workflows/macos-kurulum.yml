@@ -5,9 +5,9 @@
 #   1. İstemci testleri (macOS'a özgü olanlar dâhil)
 #   2. Paketin derlenmesi (ArthurLegal-setup/yayin/derle_macos.py): paketler bu depodan, Tapu public
 #      arthurlegal-mcp deposundan; Python Apple Silicon ve Intel için
-#   3. Kurulum: Courthouse, Tapu ve Arthur Mask seçilerek, ev klasörüne, yönetici şifresi olmadan
+#   3. Kurulum: Courthouse, Tapu ve ArthurMask seçilerek, ev klasörüne, yönetici şifresi olmadan
 #   4. Denetim (ArthurLegal-setup/tests/mac_kurulum_denetimi.py): Python, Claude Desktop kaydı, uygulamalar,
-#      masaüstü simgeleri, oturum açılışında güncelleme, yerel sunucu ve Tapu; Arthur Mask'in indirilip
+#      masaüstü simgeleri, oturum açılışında güncelleme, yerel sunucu ve Tapu; ArthurMask'in indirilip
 #      kurulması; kaldırma
 # Paket ve derleme-macos.json işin çıktısıdır (Artifacts). Yayına yayin/yayinla.py ile girer, yalnız Windows
 # derlemesiyle aynı sürümden ve aynı commit'ten derlendiyse.
@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       mask:
-        description: "Arthur Mask'i de indir, kur ve dene (~1,2 GB)"
+        description: "ArthurMask'i de indir, kur ve dene (~1,2 GB)"
         type: boolean
         default: true
 
@@ -75,7 +75,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Kur (Courthouse, Tapu, Arthur Mask, Hafıza; yönetici şifresi olmadan)
+      - name: Kur (Courthouse, Tapu, ArthurMask, Hafıza; yönetici şifresi olmadan)
         run: |
           cat > "$RUNNER_TEMP/secim.xml" <<'XML'
           <?xml version="1.0" encoding="UTF-8"?>
@@ -95,7 +95,7 @@ jobs:
       - name: Kurulumu denetle
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask,hafiza
 
-      - name: Arthur Mask (iner, kurulur, Claude Desktop'a kaydolur)
+      - name: ArthurMask (iner, kurulur, Claude Desktop'a kaydolur)
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.mask }}
         run: uv run --no-project --python 3.12 python tests/mac_kurulum_denetimi.py adliye,tapu,mask,hafiza --mask
 

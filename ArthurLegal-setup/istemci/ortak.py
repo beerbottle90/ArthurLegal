@@ -1,6 +1,6 @@
 """ArthurLegal yerel kurulum: ortak yollar, ayarlar ve yardımcılar.
 
-Yalnız standart kütüphane. Kurulumun kendi Python 3.12'siyle de, Arthur Mask'in
+Yalnız standart kütüphane. Kurulumun kendi Python 3.12'siyle de, ArthurMask'in
 Python 3.11'iyle de çalışır (UYAP sunucusu Mask'in yorumlayıcısında açılır).
 
 Kurulu düzen (Windows: %LOCALAPPDATA%\\Programs\\ArthurLegal; macOS: ~/Library/Application Support/ArthurLegal):
@@ -8,7 +8,7 @@ Kurulu düzen (Windows: %LOCALAPPDATA%\\Programs\\ArthurLegal; macOS: ~/Library/
     bin\\al.py           sabit başlatıcı; Claude Desktop ve kısayollar hep bunu çağırır
     surumler\\<sürüm>\\  istemci\\, paketler\\, tapu\\, uyap\\ (güncelleme yeni klasör açar)
     aktif.txt           etkin sürüm
-    moduller.json       kurulumda seçilen modüller (paketler, Tapu, Arthur Mask, Hafıza); güncelleme dokunmaz
+    moduller.json       kurulumda seçilen modüller (paketler, Tapu, ArthurMask, Hafıza); güncelleme dokunmaz
     firma\\              büro katmanı (yalnız büroya özel kurulumda)
     veri\\               durum, günlük, indirilen dosyalar
 """
@@ -30,11 +30,13 @@ VERI = KOK / "veri"
 RUNTIME = KOK / "runtime"
 AL = KOK / "bin" / "al.py"
 FIRMA = KOK / "firma"
+# ArthurMask'in Windows kurulum klasörü teknik yoldur; ürün adı bitişik yazılsa da klasör adı değişmez.
 MASK_KOK = Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Arthur Mask"
 MASK_KAYIT = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\{8F3C2B7E-4D1A-4E7B-9C55-A7D1E0B3F412}_is1"
+MASK_UYGULAMA_ADLARI = ("ArthurMask.app", "Arthur Mask.app")  # yeni ad, Mask 1.1.2 ve öncesinin adı
 PENCERESIZ = 0x08000000 if sys.platform == "win32" else 0  # CREATE_NO_WINDOW
 # macOS kurulumu (.pkg): paketler, istemci ve güncelleme kanalı Windows'takiyle aynıdır; değişen yalnız işletim
-# sistemine bağlanan yerlerdir (Python yolu, Claude ayar dosyası, kısayollar, oturum açılışı, Arthur Mask).
+# sistemine bağlanan yerlerdir (Python yolu, Claude ayar dosyası, kısayollar, oturum açılışı, ArthurMask).
 MAC = sys.platform == "darwin"
 
 
@@ -64,7 +66,7 @@ PROFILLER = {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal A
              "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"}
 
 # Kurulumda seçilen modüller (2.5.0). Paketler talimat profilleridir; sıraları varsayılan profilin önceliğidir.
-# Bileşenler: ArthurLegal Tapu, Arthur Mask ve ArthurLegal Hafıza (2.6.7; ayrı sunucusu yok, arthurlegal-yerel'in
+# Bileşenler: ArthurLegal Tapu, ArthurMask ve ArthurLegal Hafıza (2.6.7; ayrı sunucusu yok, arthurlegal-yerel'in
 # hafiza_ araçlarıdır: hafiza.py). Seçim kurulum klasörünün kökünde durur (moduller.json): güncelleme yalnız
 # surumler\ altına yazar, seçime dokunmaz.
 PAKETLER = tuple(PROFILLER)
@@ -173,15 +175,15 @@ def hafiza_acik() -> bool:
     return "hafiza" in moduller()
 
 
-# UYAP Dashboard (3.0.0) ayrı bir modül kutusu değildir: avukat paketlerinden biri ve Arthur Mask seçildiyse
+# UYAP Dashboard (3.0.0) ayrı bir modül kutusu değildir: avukat paketlerinden biri ve ArthurMask seçildiyse
 # kendiliğinden gelir. Maskeleme olmadan çalışmaz; Avukat Portal'ı avukat kullanır (Courthouse ve Akademisyen'de
 # simge yok). Yalnız Windows: pencereleri ve arşiv anahtarı Windows'a bağlıdır.
 UYAP_PAKETLERI = ("hukuk-burosu", "kurumsal")
 
 
 def uyap_acik() -> bool:
-    """UYAP köprüsü ve Dashboard bu bilgisayarda açılır mı: Windows, seçimde Arthur Mask ve bir avukat paketi,
-    Arthur Mask kurulu, köprü etkin sürümde."""
+    """UYAP köprüsü ve Dashboard bu bilgisayarda açılır mı: Windows, seçimde ArthurMask ve bir avukat paketi,
+    ArthurMask kurulu, köprü etkin sürümde."""
     if MAC:
         return False
     secim = moduller()
@@ -407,11 +409,13 @@ def claude_calisiyor() -> bool:
 
 
 def mask_uygulamasi() -> Path | None:
-    """macOS'ta kurulu Arthur Mask uygulaması: önce /Applications, sonra ~/Applications."""
+    """macOS'ta kurulu ArthurMask uygulaması: önce /Applications, sonra ~/Applications. Mask 1.1.2 ve öncesi
+    paketi ayrı yazılmış eski adla kurar; 1.1.3 ilk açılışta yeni ada geçer."""
     for kok in (Path("/Applications"), Path.home() / "Applications"):
-        app = kok / "Arthur Mask.app"
-        if (app / "Contents" / "Resources" / "runtime" / "bin" / "python3").exists():
-            return app
+        for ad in MASK_UYGULAMA_ADLARI:
+            app = kok / ad
+            if (app / "Contents" / "Resources" / "runtime" / "bin" / "python3").exists():
+                return app
     return None
 
 

@@ -32,10 +32,10 @@ data-transfer question is one workflow, not four.
 
 | Profile | Version | For | Scope |
 |---|---|---|---|
-| Corporate Assistant | v1.8.0 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 103 knowledge files · Arthur Mask |
-| Law Firm Assistant | v1.8.1 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 128 knowledge files · Arthur Mask |
+| Corporate Assistant | v1.8.0 | In-house legal teams | 12 practice areas · 28 jurisdictions · up to 5 MCP connectors · 103 knowledge files · ArthurMask |
+| Law Firm Assistant | v1.8.1 | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · up to 5 MCP connectors · 128 knowledge files · ArthurMask |
 | Academician | v1.0.1 | Legal academics | Publication strategy, journal selection, promotion track, ethics board |
-| Courthouse | v1.0.3 | Bench and prosecution | Judge and prosecutor workflows · Arthur Mask |
+| Courthouse | v1.0.3 | Bench and prosecution | Judge and prosecutor workflows · ArthurMask |
 
 The two flagship packages are multi-jurisdictional. Academician and Courthouse are
 built around Turkish academic-promotion and Turkish judicial procedure
@@ -85,7 +85,7 @@ All output is a draft for attorney review.
 
 **v1.8.1 (2026-09-17)** corrects criminal-procedure deadlines to the text in force after Law 7499 (objection, objection to non-prosecution, appeal and appeal on points of law: two weeks; appeals run from service of the reasoned judgment) and, in Courthouse v1.0.3, the 15-day objection to a tax payment order.
 
-**v1.8.0 (2026-09-13)** adds **Arthur Mask**, a local privacy gate for Windows. Documents
+**v1.8.0 (2026-09-13)** adds **ArthurMask**, a local privacy gate for Windows. Documents
 (Word, UYAP UDF, PDF, scans via local OCR) are masked on the user's own computer: personal
 data becomes labels such as `{{KİŞİ-01}}`, the real values stay in an encrypted vault per
 matter, Claude receives only the masked text through Claude Desktop, and the answer is
@@ -96,7 +96,7 @@ claude.ai in the browser or the mobile apps, because remote connectors are calle
 Anthropic's cloud and cannot reach a program on the user's computer. Masking is
 pseudonymisation, not anonymisation, and detection is probabilistic. The installer
 (`ArthurMask-Kurulum.exe`) is a direct download from the
-[Arthur Mask release](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask); Arthur Mask
+[ArthurMask release](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask); ArthurMask
 is covered by the proprietary package license (not an open-source license); its source can be read at
 [beerbottle90/arthur-mask](https://github.com/beerbottle90/arthur-mask).
 
@@ -160,7 +160,7 @@ governed by their own license; license
 texts and attribution notices are retained in the release packages and must not
 be removed. In case of conflict, Apache 2.0 governs those components.
 
-The Arthur Mask installer bundles third-party open-source components (among them
+The ArthurMask installer bundles third-party open-source components (among them
 Microsoft Presidio, spaCy, GLiNER with the `urchade/gliner_multi_pii-v1` model, PyTorch,
 Hugging Face Transformers, RapidOCR with PaddleOCR PP-OCRv6 models and ONNX Runtime, under
 MIT, Apache-2.0, BSD-3-Clause and PSF licenses). Their full notices ship inside the

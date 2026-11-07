@@ -86,7 +86,7 @@ Adli tatil 20 Temmuz - 31 Ağustos arasıdır; tatilde görülecek işler HMK m.
 
 - Tazminat dosyalarında sağlık verisi özel nitelikli kişisel veridir (KVKK m. 6/1); çıktıda yalnız gerekli olan tekrarlanır.
 - Duruşmalar aleni; gizli duruşma ancak genel ahlâk veya kamu güvenliğinin kesin olarak gerekli kıldığı hâllerde (HMK m. 28/2). "Korunmaya değer üstün menfaat" ibaresi AYM kararıyla iptal edilmiştir (metin dipnotu).
-- Belgeler Claude'a verilmeden önce Arthur Mask ile maskelenebilir.
+- Belgeler Claude'a verilmeden önce ArthurMask ile maskelenebilir.
 
 ## Mahkemeye özgü alanlar
 

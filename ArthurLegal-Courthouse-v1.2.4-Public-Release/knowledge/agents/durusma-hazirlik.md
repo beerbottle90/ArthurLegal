@@ -39,7 +39,7 @@ Duruşmaların önemli bir kısmı tebligatın dönmemesi, raporun taraflara teb
 
 ## Girdi
 
-Kullanıcının verdiği duruşma listesi (tablo, CSV ya da kalemin UYAP'tan dışa aktardığı liste), mümkünse Arthur Mask ile maskeli. Liste yoksa uydurulmaz: `UYARI: veri çekilemedi, teyidiniz gerekli: UYAP'taki kendi ekranınız (adliyede UYAP; dışarıda VPN ile vpn.uyap.gov.tr ya da UYAP Mobil)`. Ortak kaynak sırası ve UYARI satırı: `references/izleyici-rehberi.md` bölüm 3. Dosya başına:
+Kullanıcının verdiği duruşma listesi (tablo, CSV ya da kalemin UYAP'tan dışa aktardığı liste), mümkünse ArthurMask ile maskeli. Liste yoksa uydurulmaz: `UYARI: veri çekilemedi, teyidiniz gerekli: UYAP'taki kendi ekranınız (adliyede UYAP; dışarıda VPN ile vpn.uyap.gov.tr ya da UYAP Mobil)`. Ortak kaynak sırası ve UYARI satırı: `references/izleyici-rehberi.md` bölüm 3. Dosya başına:
 
 - Dosya no, dal (hukuk / ceza / idari / vergi / icra), usul (yazılı / basit / ivedi), aşama (ön inceleme / tahkikat / sözlü yargılama / hüküm)
 - Duruşma tarihi ve saati; taraflara ve tanıklara tebligat çıkış ve dönüş tarihleri, tebliğ şekli (e-tebligat, bilinen adres, muhtara teslim)
