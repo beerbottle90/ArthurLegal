@@ -711,7 +711,7 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(araclar["ornek_kartli"]["_meta"]["diger"], 1)
         for ad in ("al_masasi", "al_masada_basla", "ornek_kartli", "tr_ictihat_ara", "status", "arthurlegal_talimat"):
             self.assertEqual(araclar[ad]["_meta"]["ui"]["resourceUri"], "ui://arthurlegal/masa.html", ad)
-        for ad in ("al_modul_ac", "al_gecmis"):
+        for ad in ("al_modul_ac", "al_gecmis", "al_dogrulama_kaydi"):
             self.assertNotIn("_meta", araclar[ad], "masanın kendi çağırdığı iç araç görünüm açmaz")
         masa = self.arac("al_masasi", bolum="ictihat")["structuredContent"]
         self.assertEqual((masa["ortam"], masa["bolum"]), ("masaustu", "ictihat"))
@@ -734,6 +734,11 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(self.arac("al_gecmis", islem="getir", id=k["id"])["structuredContent"]["kayit"]["sorgu"], {"q": "kira"})
         self.assertTrue(self.arac("al_gecmis", islem="kaydet", kayit=dict(kayit, ekran="uyap"))["isError"])
         self.assertTrue(self.arac("al_gecmis", islem="getir", id="../ayar")["isError"])
+        # Doğrulama kaydı: geçmişte atıf teyidi yoksa dosya yazılmaz; geçersiz biçim reddedilir.
+        bos = self.arac("al_dogrulama_kaydi", bicim="csv")["structuredContent"]
+        self.assertEqual((bos["dosya"], bos["satir"]), (None, 0))
+        self.assertTrue(self.arac("al_dogrulama_kaydi", bicim="pdf")["isError"])
+        self.assertTrue(self.arac("al_dogrulama_kaydi", baslangic="07.11.2026")["isError"])
         self.assertEqual(self.arac("al_gecmis", islem="temizle")["structuredContent"], {"silinen": 1})
         # Cevap masaya (al_masaya_yaz): sohbet kaydı tam ekran masanın arkasında kalır; sunucu cevabı geri yazmaz.
         r = self.iste("initialize", {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "t"}})["result"]
@@ -1539,7 +1544,7 @@ class ArayuzTesti(unittest.TestCase):
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
                       "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
             self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
-                                                               "al_modul_ac", "al_gecmis"],
+                                                               "al_modul_ac", "al_gecmis", "al_dogrulama_kaydi"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
