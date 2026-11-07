@@ -244,8 +244,8 @@ are under Apache 2.0: [LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-TH
 ## Türkçe
 
 ArthurLegal, Türk hukuku odaklı hukuk bürosu asistanıdır. Bu eklenti çalışma kurallarını ve {beceri_sayisi} beceriyi
-Claude'a ekler; mevzuat ve kararlar ArthurLegal MCP üzerinden resmî metinden alıntılanır. Tapu, UYAP Dashboard, Arthur
-Mask ve ArthurLegal Hafıza bilgisayarınızdaki ArthurLegal kurulumuyla gelir ([indir]({DEPO}#indir)); kuruluysa eklenti
+Claude'a ekler; mevzuat ve kararlar ArthurLegal MCP üzerinden resmî metinden alıntılanır. Tapu, UYAP Dashboard,
+ArthurMask ve ArthurLegal Hafıza bilgisayarınızdaki ArthurLegal kurulumuyla gelir ([indir]({DEPO}#indir)); kuruluysa eklenti
 onlara yönlendirir. Çıktılar avukat incelemesi öncesi taslaktır.
 """
 

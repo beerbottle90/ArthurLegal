@@ -24,8 +24,10 @@ import time
 import traceback
 import urllib.error
 
+import dogrulama_kaydi
 import hafiza
 import ortak
+from pathlib import Path
 
 # ArthurLegal Masası ve sohbet içi kartlar (MCP Apps). Görünümler istemci/arayuz'dadır: kopya, asıl yeri
 # beerbottle90/arthurlegal-app4all (sunucu/esitle.py). Klasör yoksa ya da kurulumda "Claude Desktop klasik"
@@ -452,6 +454,8 @@ def masa_araclari():
     # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "gecmis_araci"):
         araclar.append(al_arayuz.gecmis_araci())
+        # Doğrulama kaydı (al_dogrulama_kaydi): geçmişteki atıf teyitlerini dosyaya döker; görünüm açmaz.
+        araclar.append(dogrulama_kaydi.arac_tanimi())
     return araclar
 
 
@@ -464,6 +468,23 @@ def masa_gecmisi():
     if _GECMIS is None:
         _GECMIS = al_arayuz.Gecmis(str(ortak.VERI / "masa-gecmisi"))
     return _GECMIS
+
+
+def dogrulama_dizini():
+    """Doğrulama kaydı dosyalarının klasörü: ayardaki `dogrulama_dizini`, yoksa kullanıcı klasöründe sabit ad.
+    Claude klasör seçemez; araç yalnız buraya yazar."""
+    ozel = str(ortak.ayar().get("dogrulama_dizini") or "").strip()
+    return Path(os.path.expanduser(ozel)) if ozel else Path.home() / dogrulama_kaydi.VARSAYILAN_AD
+
+
+def dogrulama_kaydi_yaz(a):
+    """al_dogrulama_kaydi: masa geçmişindeki atıf teyitlerini dosyaya yazar; içerik günlüğe yazılmaz."""
+    try:
+        veri = dogrulama_kaydi.disa_aktar(masa_gecmisi().klasor, str(dogrulama_dizini()), a,
+                                          getattr(al_arayuz, "GECMIS_GUN", 90))
+    except (ValueError, OSError) as e:  # KayitHatasi da ValueError'dır
+        return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+    return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
 
 def gorunum_meta(araclar):
@@ -703,6 +724,8 @@ class Sunucu:
             except (ValueError, OSError) as e:  # GecmisHatasi da ValueError'dır; içerik günlüğe yazılmaz
                 return {"content": [{"type": "text", "text": str(e)}], "isError": True}
             return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+        if al_arayuz is not None and ad == "al_dogrulama_kaydi" and hasattr(al_arayuz, "Gecmis"):
+            return dogrulama_kaydi_yaz(a)
         if ad.startswith("al_"):  # uzak ucun masa araçları köprülenmez (kopru_araclari)
             metin = ("ArthurLegal Masası bu kurulumda kapalı (Claude Desktop klasik). Kurulumu yeniden çalıştırıp "
                      "'ArthurLegal yeni arayüz'ü seçebilirsiniz." if al_arayuz is None else f"Bilinmeyen masa aracı: {ad}")

@@ -2,8 +2,8 @@
 
 > Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu kitapçık Anthropic'in `claude-for-legal` deposundaki aynı adlı eklentiden uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10); yabancı yargı çevreleri için yalnız ArthurLegal MCP araçlarına yönlendirir. Üst kaynak ve sürüm izi: ATTRIBUTION.md.
 
-> Alan: Regulasyon - EPDK/SPK/Rekabet, RG digest, yapay zeka ajani onayi
-> Toplam skill: 10
+> Alan: Regulasyon - EPDK/SPK/Rekabet, RG digest, yapay zeka ajani onayi, hukuk birimi yapay zeka politikasi
+> Toplam skill: 11
 > Kullanim: /{plugin}:{skill-adi} komutunu yaz, asagidaki ilgili bolumu uygula.
 
 ## Icindekiler
@@ -18,6 +18,7 @@
 - /regulatory-legal:policy-diff (226 satir)
 - /regulatory-legal:policy-redraft (188 satir)
 - /regulatory-legal:reg-feed-watcher (251 satir)
+- /regulatory-legal:yz-kullanim-politikasi (352 satir)
 
 ---
 
@@ -1882,3 +1883,359 @@ Profildeki `## Outputs` karar ağacıyla bitir. Seçenekleri bu çıktıya uyarl
 - Önemlilik eşiğini değiştirmez. Süzgeç yanlışsa profil düzenlenir.
 - Ücretli kaynak gerektirmez. ArthurLegal araçları tabandır; ek bağlayıcılar derinlik katar.
 - Taslakları kendiliğinden bulmaz. Kurum duyuru sayfası profilde tanımlı değilse taslak ancak kullanıcı yapıştırınca girer.
+
+---
+
+## /regulatory-legal:yz-kullanim-politikasi
+
+---
+name: yz-kullanim-politikasi
+description: >
+  Şirket hukuk biriminin yazılı yapay zekâ kullanım politikası taslağı; TBB'nin "Avukatlar İçin Yapay Zekâ
+  Kullanımı Tavsiye Rehberi" (Ağustos 2026) esas alınır. Şirket profilini ve bu bilgisayardaki ArthurLegal
+  kurulumunu okur, her ArthurLegal aracını rehberin dört kullanım kategorisine yerleştirir; şirket ve ilgili kişi
+  verisi kurallarını (ArthurMask, Hafıza, UYAP Dashboard, Claude planı), doğrulama yükümlülüğünü, avukat onayını,
+  KVKK m. 9 ve m. 12 yönünü, eğitim ve gözden geçirme takvimini yazar. Ayrıca kısa iş birimi bilgilendirme notu,
+  ilgili kişi aydınlatma eki ve hukuk birimi yöneticisinin karar sayfası. Tetikleyiciler: "hukuk birimi yapay
+  zekâ politikası", "TBB yapay zekâ rehberine uyum", "şirket avukatları yapay zekâ kuralları". Taslak hukuki
+  görüş değildir.
+argument-hint: "[şirket ve hukuk birimi, kadro, şirketin Claude planı, kurulu ArthurLegal modülleri]"
+user-invocable: true
+---
+
+# Hukuk Birimi Yapay Zekâ Kullanım Politikası — TBB Rehberine Uyum
+
+## Tetikleyici
+
+- Hukuk birimi ArthurLegal'i ya da başka bir yapay zekâ aracını ilk kez kullanmaya başlıyor.
+- Yeni bir modül kuruldu, şirketin Claude planı değişti ya da yeni bir uygulama (e-posta, takvim, belge deposu)
+  bağlandı.
+- Yıllık gözden geçirme zamanı geldi ya da bir olay yaşandı (yanlış atıf iş birimine ya da mahkemeye gitti, veri
+  yanlış yere gitti).
+
+Şirketin bütün çalışanlarına yönelik genel yapay zekâ politikası bu skill'in konusu değildir:
+`/employment-legal:policy-drafting`. İş birimlerinin kullanacağı yapay zekâ ajanının onayı:
+`/regulatory-legal:ai-ajan-onayi`. Bu skill hukuk biriminin kendi işini düzenler ve şirketin genel politikasıyla
+bilgi güvenliği kurallarına uyumlu yazılır.
+
+## Kaynaklar (07.11.2026'da okundu)
+
+1. TBB Bilişim ve Teknoloji Hukuku Komisyonu, "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi", 2026, 44 sayfa.
+   TBB duyurusu 28.08.2026: https://www.barobirlik.org.tr/Haberler/tbb-avukatlikta-yapay-zeka-kullanimina-iliskin-tavsiye-rehberini-yayimladi-86648
+   Rehber: https://d.barobirlik.org.tr/2026/yapayzekatavsiyerehberi.pdf
+2. KVKK Kurumu, "Üretken Yapay Zekâ ve Kişisel Verilerin Korunması Rehberi (15 Soruda)", Kasım 2025:
+   https://www.kvkk.gov.tr/Icerik/8547/uretken-yapay-zeka-ve-kisisel-verilerin-korunmasi-rehberi-15-soruda
+3. Anthropic şartları: Tüketici Şartları https://www.anthropic.com/legal/consumer-terms · Ticari Şartlar
+   https://www.anthropic.com/legal/commercial-terms · Gizlilik Merkezi, eğitimde kullanım
+   https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training · rol (veri işleyen / veri
+   sorumlusu) https://privacy.claude.com/en/articles/9267385-does-anthropic-act-as-a-data-processor-or-controller
+
+İki rehber de bağlayıcı mevzuat değildir. TBB rehberi kendini tavsiye niteliğinde tanımlar ve avukatlara, stajyer
+avukatlara ve büro çalışanlarına seslenir: baroya kayıtlı şirket avukatının mesleki yükümlülükleri bakımından
+doğrudan, baroya kayıtlı olmayan hukuk birimi çalışanı bakımından şirket kuralı olarak uygulanır. Politikada
+rehbere dayanan cümle "TBB rehberi önerir" diye yazılır, kanun hükmü gibi sunulmaz. Aşağıdaki özet 07.11.2026
+tarihli metne göredir. Rehberin daha yeni bir sürümü çıktıysa ya da sohbette bağlantı açılmıyorsa özeti kullan ve
+İnceleme notuna şunu yaz:
+`UYARI: veri çekilemedi, teyidiniz gerekli: https://d.barobirlik.org.tr/2026/yapayzekatavsiyerehberi.pdf`
+
+## Dayanak (tr_mevzuat_madde_getir ile doğrulandı — 07.11.2026)
+
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 34 — özen, doğruluk ve TBB meslek kurallarına uyma
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 35 — mütalaa vermek, dava etmek ve evrak düzenlemek baroda yazılı avukatlara aittir
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 36 — sır saklama
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 55 — reklam yasağı
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 3 — veri sorumlusu (ı) ve veri işleyen (ğ) tanımı
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 4 — amaçla bağlantılı, sınırlı ve ölçülü işleme (m. 4/2-ç)
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 5 ve m. 6 — işleme şartları; özel nitelikli veri
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 9 — yurt dışına aktarım
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 10 ve m. 11 — aydınlatma; ilgili kişinin hakları
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 12 — veri güvenliği
+
+Bu liste yalnız hangi maddenin çekileceğini gösterir. Taslağa yazmadan önce her maddeyi o sohbette yeniden çek ve
+sistem talimatındaki madde doğrulama kapısından geçir. TBB Meslek Kurallarına madde numarasıyla atıf yapma; bu
+pakette doğrulanmadı.
+
+## TBB rehberinin özü (kendi cümlelerimizle)
+
+- **Temel ilke.** Avukat yapay zekâdan yararlanır; sır saklamayı, kişisel veri sorumluluğunu, müvekkilinin (şirket
+  avukatı için şirketin) menfaatini, son hukuki değerlendirmeyi ve mesleki sorumluluğu ne araca ne de üçüncü kişiye
+  devreder.
+- **Sınıflandırma ölçütleri.** Veri türü, işe ve kişilere etkisi, hukuki sonuca ne kadar yakın olduğu, aracın kapalı
+  ya da açık sistem olması ve verinin yurt dışına gitme ihtimali birlikte tartılır.
+- **Dört kategori:**
+  1. *Serbest yardımcı kullanım.* Şirket ya da kişi verisi olmadan genel mevzuat araştırması, anonim konu planı, dil
+     sadeleştirme, kamuya açık metnin özeti, takvim ve iş akışı yardımı. Şart: şirket ya da kişi verisi girilmez,
+     çıktı görüş sayılmaz, kaynak teyit edilir.
+  2. *Sınırlı ve kontrollü kullanım.* Sözleşme ya da dilekçe iskeleti, anonimleştirilmiş belge özeti, içtihat ön
+     elemesi, iş birimine e-posta taslağı, sözleşme karşılaştırması. Şart: maskeleme, hukuk biriminin onayladığı
+     araç, avukat denetimi, kayıt, ikinci göz.
+  3. *Özel güvenceye ve gerektiğinde onaya bağlı kullanım.* Hassas veri içeren belge incelemesi, dava ya da icra
+     dosyası evrakı, sağlık, adli sicil ve vergi bilgisi, ticari sır, stratejik müzakere belgesi. Şart: kapalı
+     sistem, yazılı yetkilendirme, KVKK kontrolü, yurt dışı aktarım analizi, erişim sınırı ve kullanım kaydı.
+  4. *Yasak kullanım.* Örnekler: anonimleştirilmemiş kişi verisini, dava dosyası içeriğini ya da ticari sırrı
+     güvencesi yetersiz araca girmek; UYAP ve dosya içeriğini yetkisiz ve anonimleştirmeden aktarmak; çıktıyı avukat
+     denetlemeden iş birimine, mahkemeye ya da idareye vermek; uydurma ya da teyitsiz içtihat, madde veya vakıa
+     sunmak; "garantili sonuç" gibi yanıltıcı ifadeler; hâkimlerin kararlarını kimlikleri üzerinden profillemek;
+     şirket dosyalarını onaysız model eğitimi ya da veri seti için paylaşmak.
+- **Kapalı sistem** rehberde şu demektir: veri üçüncü tarafın eğitim setine girmez ve üçüncü kişilerle paylaşılmaz,
+  erişim ve kayıtlar denetlenebilir, sözleşmesel ve teknik güvence vardır.
+- **Yüksek hassasiyetli alanlar:** ceza, çocuk, aile, sağlık, sığınma ve göç, ticari sır, sermaye piyasası. Bu
+  alanlarda kapalı ve denetlenebilir sistem şartı karşılanmıyorsa kullanım genel araştırma ve anonim konu planıyla
+  sınırlı kalır. Şirket için tipik örnekler: içeriden öğrenilen bilgi, birleşme ve devralma müzakeresi, iç
+  soruşturma, çalışanın sağlık ya da disiplin dosyası.
+- **Anonimleştirme** yalnız ad ve kimlik numarasını silmek değildir: tarih, yer, tutar, unvan, dava türü ve olaya
+  özgü ayrıntılar da kişiyi belirlenebilir kılabilir.
+- **Bilgilendirme.** Veri, strateji ya da sonuç etkileniyorsa bilgilendirme yapılır ve kayda geçer.
+- **Politika** rehberin önerdiği unsurlarla yazılır: onaylı araç listesi, yasak veri listesi, yetki matrisi, kritik
+  kullanım kaydı, olay müdahalesi, bilgilendirme usulü, veri ihlali bildirimi.
+- **Eğitim.** Eğitim almamış kişi kritik kullanıma yönlendirilmez; stajyer ve uzmanlar avukatın açık talimatı ve
+  denetimi olmadan kişi verili dosyada yapay zekâ kullanmaz.
+- **Sigorta.** Şirket avukatının ya da şirketin poliçesinin yapay zekâ kaynaklı hatalı çıktı, uydurma atıf ve veri
+  ihlali zararlarını kapsayıp kapsamadığı sigortacıdan yazılı olarak sorulur.
+
+## Girdi (önce oku, eksik kalanı sor, uydurma)
+
+1. **Şirket profili** (`knowledge/company-profile.md`): şirket, sektör, hukuk biriminin yapısı ve onay zinciri,
+   KVKK sorumlusu ya da irtibat kişisi. Profilde `[DOLDUR]` varsa `/regulatory-legal:cold-start-interview` öner ya
+   da yalnız bu skill'in istediği alanları sor.
+2. **ArthurLegal kurulumu.** Claude Desktop yerel kurulumunda `arthurlegal_durum` çağır: seçilen modüller (paketler,
+   `tapu`, `mask`, `hafiza`), ArthurMask sürümü. UYAP Dashboard, Kurumsal paketi ve ArthurMask birlikte seçildiyse
+   Windows'ta kurulur; masa açıksa durumunu masadaki UYAP ekranı gösterir. Araç yoksa (Project, web, eklenti)
+   kullanıcıya sor: hangi modüller kurulu. Bilinmeyen modül tabloda "kurulu değil ya da bilinmiyor" diye kalır.
+3. **Claude planı:** şirketin Team ya da Enterprise hesabı mı, bireysel hesap mı; hukuk biriminde kaç kişi
+   kullanacak. Bilinmiyorsa politika iki seçenekli yazılır ve karar sayfasına girer.
+4. **Şirketin mevcut kuralları:** genel yapay zekâ politikası, bilgi güvenliği politikası, onaylı yazılım listesi.
+   Varsa hukuk birimi politikası bunlara atıf yapar, çelişkiyi açıkça yazar.
+5. **Bağlı uygulamalar:** e-posta, takvim, belge deposu. Masanın MCP'ler ya da Donna ekranındaki liste, yoksa
+   kullanıcı.
+6. **Sorumlular:** politikanın sahibi (hukuk birimi yöneticisi), KVKK irtibat kişisi, bilgi güvenliği sorumlusu, olay
+   bildiriminin gideceği kişi.
+
+Çalışan, müşteri ya da karşı taraf adı istenmez; politika birim düzeyindedir.
+
+## Akış
+
+### 1. ArthurLegal araç haritası (kurulumdan önceden doldur)
+
+Her satırı kurulum durumuna göre doldur; kurulu olmayan bileşeni "kurulu değil" diye bırak. Kategori sütunu TBB
+rehberinin dört kategorisidir.
+
+| ArthurLegal bileşeni | Veri nereye gider | Kategori | Birim kuralı |
+|---|---|---|---|
+| Araştırma bağlantısı: mevzuat, içtihat, kurum kararları, Resmî Gazete, yabancı hukuk (Claude'u resmî kaynaklara bağlayan hat) | Arama ifadesi ArthurLegal araştırma sunucusuna, oradan resmî kaynaklara | Serbest yardımcı | Aramaya şirket içi bilgi, kişi adı ya da karşı taraf yazılmaz; soyut hukuki kavram yazılır |
+| Masa: Mevzuat ve kararlar, İçtihat ekranları | Aynı | Serbest yardımcı | Aynı |
+| Masa: atıf teyidi | Yapıştırılan metin ekranda kalır; sunucuya yalnız kanun ve madde numarası gider | Serbest yardımcı | "Cümleleri Claude'a kontrol ettir" cümleleri Claude'a gönderir: o adım Sınırlı ve kontrollüdür, kişi verisi varsa önce ArthurMask |
+| Claude ile taslak, özet, çeviri (sohbet, Project, masanın Sohbet ekranı) | İçerik Claude'a gider; sağlayıcı Türkiye dışında yerleşiktir (yurt dışına aktarım, Madde 8) | Anonim ya da maskeli veriyle Sınırlı ve kontrollü; maskesiz kişi verisi ya da ticari sırla güvence yoksa Yasak | ArthurMask varsayılan; çıktı avukat onayından geçer |
+| ArthurMask | Belge bu bilgisayarda maskelenir; Claude'a yalnız etiketli metin gider; gerçek değerler bilgisayarda şifreli kasada | Hassas belgeyle iş Özel güvenceye bağlıdır; ArthurMask o güvencenin bir parçasıdır, tamamı değil | Maskeleme takma adlandırmadır, anonimleştirme değildir: maskeli metin kişisel veri sayılmaya devam edebilir, yurt dışı aktarım analizi yine gerekir. Tarih ve tutar maskelenmez; ticari sırrı ve olaya özgü ayrıntıyı avukat ayrıca kontrol eder |
+| UYAP Dashboard ve `arthur-uyap` | UYAP'a hiçbir şey yazmaz; listeler bilgisayarda şifreli arşivde; Claude'a giden ad, esas numarası ve konu etiketlidir | Dashboard tek başına yapay zekâ kullanımı değildir. Claude'a sabah taraması ya da evrak okutma Özel güvenceye bağlıdır | Evrak okuma avukat onayıyla; son günü avukat hesaplar; dosya içeriği maskesiz Claude'a verilmez |
+| ArthurLegal Hafıza (Beyin) | Kasa bu bilgisayarda; Claude okuduğu notu sohbete alır | Sınırlı ve kontrollü | Hafızaya kişi adı, ticari sır ve dosya ayrıntısı yazılmaz; tercih, üslup ve düzeltme yazılır |
+| ArthurTapu: parsel sorgu, kroki, harita | TKGM Parsel Sorgu'nun kamuya açık verisi; malik bilgisi içermez | Serbest yardımcı | Bilgi amaçlıdır, resmî işlemde kullanılmaz |
+| ArthurTapu: tapu kaydı okuma | Kayıt bu bilgisayarda maskelenir | Özel güvenceye bağlı | Şirket belgesi gibi işlem görür |
+| Donna ve bağlı uygulamalar (e-posta, takvim) | Bağlı uygulamadaki içerik Claude'a gider | İş yazışması ve kişi verisi varsa Özel güvenceye bağlı | Hangi uygulamanın bağlanacağına birim yöneticisi bilgi güvenliğiyle birlikte yazılı karar verir; Donna göndermeden önce sorar |
+| Doğrulama kaydı (`al_dogrulama_kaydi`, yerel kurulum) | Masa geçmişinden bu bilgisayarda dosyaya | Kayıt aracı | Kritik kullanım kaydına eklenir |
+
+### 2. Claude planı ve veri işleme notu
+
+Yalnız aşağıdaki, kaynağıyla okunmuş bilgiyi yaz; başka bir saklama süresi, sunucu yeri ya da sertifika iddiası
+ekleme. Şartlar değişebilir: politikaya okunduğu tarihi yaz; o sohbette bağlantıyı yeniden okuyamazsan
+`UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırını koy.
+
+- **Bireysel planlar (Free, Pro, Max): Anthropic Tüketici Şartları.** Şartların "Our use of Materials" bölümüne
+  göre girdiler ve çıktılar, kullanıcı hesap ayarlarından çıkmadıkça model eğitiminde kullanılabilir. Çıkılsa bile
+  geri bildirim verilen (beğeni düğmeleri) ve güvenlik incelemesine işaretlenen içerik eğitimde kullanılabilir.
+  Birim kuralı: şirket verisi bireysel hesapla işlenmez; bireysel hesap yalnız Serbest yardımcı kullanım içindir.
+  Rehberin kapalı sistem tanımını karşıladığı söylenemez; bu bir değerlendirmedir, karar birim yöneticisinindir.
+- **Team ve Enterprise (Claude for Work): Anthropic Ticari Şartlar.** Şartlara göre Anthropic hizmetlerden gelen
+  müşteri içeriğiyle model eğitemez; veriler şartlara eklenen veri işleme ekine (DPA) göre işlenir. Gizlilik
+  Merkezi'ne göre Team ve Enterprise hesaplarında müşteri veri sorumlusu, Anthropic veri işleyendir (sağlayıcının
+  kendi nitelendirmesi; KVKK bakımından rol somut kullanıma göre belirlenir). Geri bildirim istisnası burada da
+  vardır; hesap sahibi üyelerin geri bildirimini Organization settings > Data and Privacy'deki "Rate chats"
+  ayarıyla kapatabilir. Sağlayıcının veri işleme ekini `/privacy-legal:dpa-review` ile incele; KVKK m. 9 dayanağı,
+  alt işleyenler ve saklama süresi şirket tarafından ayrıca belgelenir.
+- **Sağlayıcının eğitim taahhüdü yurt dışı aktarım dayanağı değildir.** KVKK m. 9/4-c'deki güvence Kurulun ilan
+  ettiği standart sözleşmedir; sağlayıcının kendi veri işleme ekinin bunun yerine geçip geçmediği bu pakette
+  doğrulanmadı. Dayanağı şirket belirler (Madde 8).
+- **Kademe önerisi (en ucuz uygun kademe).** Şirketin Team ya da Enterprise hesabı varsa hukuk birimi onu kullanır;
+  yalnız hukuk birimi için yeni hesap açılacaksa Team çoğu birime yeter. Enterprise yalnız kurum çapında saklama
+  süresi ayarı ya da şirket genelinde yayılım gerekiyorsa. Seçilmeyen kademenin neden seçilmediğini yaz. Fiyat
+  yazma; güncel fiyat Anthropic'in sitesinden okunur. Kademeli yayılım: önce bir avukat ve bir iş türüyle pilot,
+  kayıtlar gözden geçirilmeden koltuk artmaz.
+
+### 3. Politika taslağını yaz (madde yapısı)
+
+Birim içi belge "Madde 1, Madde 2…" düzeninde, sade dille yazılır. Model adı, mimari ya da teknik terim kullanma;
+gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiyle doldur; bilinmeyen yeri
+`[DOLDUR — ...]` diye bırak.
+
+- **Madde 1 — Amaç ve kapsam.** Hukuk biriminde yapay zekâ araçlarının meslek kurallarına, sır saklamaya, KVKK'ya ve
+  şirket politikalarına uygun kullanılması. Kapsam: şirket avukatları, hukuk müşavirleri, stajyerler, uzmanlar ve
+  birim adına çalışan dış hizmet sağlayıcılar; dış hukuk büroları Madde 12'deki kurala tabidir.
+- **Madde 2 — Tanımlar.** Yapay zekâ aracı, şirket verisi, kişi verisi, maskeleme, kapalı sistem, kritik kullanım
+  (iş birimine, yönetime, mahkemeye ya da idareye gidecek işte yapay zekâ çıktısının kullanılması).
+- **Madde 3 — Temel ilke.** Son hukuki değerlendirme ve sorumluluk avukattadır, araca devredilmez. Mütalaa vermek,
+  dava etmek ve evrak düzenlemek baroda yazılı avukatların işidir (Av. K. m. 35); yapay zekâ çıktısı iş birimine
+  bağımsız hukuki görüş gibi sunulmaz.
+- **Madde 4 — Onaylı araçlar ve kullanım kategorileri.** Ek 1'deki araç haritası. Haritada olmayan araç birim
+  yöneticisi ve bilgi güvenliği onayı olmadan kullanılmaz.
+- **Madde 5 — Şirket ve kişi verisi.**
+  - Yasak veri listesi: maskesiz çalışan, müşteri ya da karşı taraf kimliği; dosya numarası; sağlık, adli sicil ve
+    disiplin bilgisi; içeriden öğrenilen bilgi; müzakere stratejisi; ticari sır. Güvence yoksa hiçbir araca
+    girilmez.
+  - Kişi verisi içeren belge Claude'a ArthurMask'ten geçerek verilir (varsayılan). ArthurMask kurulu değilse böyle
+    bir belge Claude'a verilmez; yalnız soyut soru sorulur.
+  - Hafıza kasası bu bilgisayardadır; içine kişi verisi ve ticari sır yazılmaz.
+  - UYAP Dashboard UYAP'a yazmaz ve listeleri bu bilgisayarda tutar; Claude'a giden bilgi etiketlidir.
+  - Claude planına göre kural: 2. adımdaki not.
+  - Şirket avukatının sır saklama yükümlülüğü yapay zekâ kullanımıyla daralmaz (Av. K. m. 36).
+- **Madde 6 — Doğrulama yükümlülüğü.**
+  - Her mevzuat atfı resmî kaynaktan teyit edilir: madde numarası, yürürlük ve maddeye yüklenen içerik.
+  - ArthurLegal'in madde atfı kuralı: madde yazılmadan önce resmî metinden çekilir, dönen künye birebir kullanılır
+    ve içerik metinle karşılaştırılır; çekilemeyen madde "UYARI: veri çekilemedi, teyidiniz gerekli" satırıyla
+    işaretlenir.
+  - Masadaki atıf teyidi numarayı ve başlığı doğrular; içerik uyumu avukatın okumasıyla tamamlanır.
+  - İçtihat künyesi (esas, karar, tarih, daire) bağımsız kaynaktan doğrulanır; yapay zekânın eklediği her vakıa,
+    tarih ve tutar belgeyle karşılaştırılır.
+  - Yüksek riskli işte ikinci bir avukat kontrol eder.
+  - Dayanak: Av. K. m. 34 özen ve doğruluk yükümlülüğü.
+- **Madde 7 — Avukat onayı ve sorumluluk.** Yapay zekâ çıktısı, sorumlu avukat okuyup onaylamadan iş birimine,
+  yönetime, mahkemeye, idareye, hakeme, arabulucuya ya da karşı tarafa gitmez. Onay iç kayda yazılır (Madde 10).
+  Merci yapay zekâ kullanımının beyan edilmesini isterse beyan yapılır. Hatalı çıktı dışarı çıktıysa Madde 11 işler.
+- **Madde 8 — KVKK.**
+  - Rol: şirket veri sorumlusudur; hizmet sağlayıcının veri işleyen mi veri sorumlusu mu olduğu somut kullanıma göre
+    belirlenir (m. 3/1-ğ ve ı). Hukuk birimi bu değerlendirmeyi KVKK irtibat kişisiyle birlikte yapar.
+  - Ölçülülük: araca yalnız iş için gerekli veri girilir (m. 4/2-ç). Özel nitelikli veri ancak m. 6/3'teki
+    şartlardan biriyle ve Kurulun belirlediği yeterli önlemlerle işlenir (m. 6/4).
+  - Yurt dışına aktarım (m. 9) sırası:
+    1. Aktarım yapılan ülke ya da sektör için yeterlilik kararı varsa ve m. 5 ya da m. 6'daki şartlardan biri
+       mevcutsa aktarım yapılabilir.
+    2. Yeterlilik kararı yoksa, m. 5 ya da m. 6'daki şartlardan biri ve ilgili kişinin o ülkede de haklarını kullanma
+       ve etkili kanun yollarına başvurma imkânı varsa, m. 9/4'teki uygun güvencelerden biriyle; standart sözleşme
+       imzadan itibaren beş iş günü içinde Kuruma bildirilir (m. 9/5).
+    3. İkisi de yoksa yalnız arızi aktarımda m. 9/6'daki hâller. Şirketin sürekli kullandığı bir hizmet için bu
+       hâllere (ilgili kişinin açık rızası dâhil) dayanmak ayrıca değerlendirilmelidir.
+    Hangi dayanağın kullanıldığı ve Kuruma bildirim tarihi politikaya yazılır; belirsizse "yurt dışı aktarım
+    dayanağı belirsiz" diye işaretlenir ve karar sayfasına girer. Belirli bir ülke için yeterlilik kararının
+    varlığı bu pakette doğrulanmadı.
+  - Veri güvenliği (m. 12): hukuka aykırı işleme ve erişimi önleyen teknik ve idari tedbirler (m. 12/1); şirket
+    adına veri işleyenle müşterek sorumluluk (m. 12/2); şirket içi denetim (m. 12/3); veri kanuni olmayan yollarla
+    başkalarınca elde edilirse en kısa sürede ilgiliye ve Kurula bildirim (m. 12/5).
+  - Aydınlatma (m. 10): şirketin aydınlatma metinlerine yapay zekâ eki (Ek 3). Açık rıza gerekiyorsa aydınlatmadan
+    ayrı alınır.
+  - Yüksek riskli işleme için önce `/privacy-legal:use-case-triage`, gerekiyorsa `/privacy-legal:pia-generation`.
+- **Madde 9 — İş birimine bilgilendirme.** Hukuk biriminin yapay zekâ kullandığı ve çıktının avukat onayından
+  geçtiği iş birimlerine Ek 3'teki notla bildirilir. Bir iş birimi kendi dosyasında yapay zekâ kullanılmamasını
+  isteyebilir; isteği ve sonucu kayda yazılır.
+- **Madde 10 — Kayıt.** Kritik kullanım kaydı: dosya kodu (kişi adı değil), amaç, araç, veri türü, doğrulama sonucu,
+  onaylayan avukat, tarih. Atıf teyitleri için masanın doğrulama kaydı kullanılır (aşağıda).
+- **Madde 11 — Olay müdahalesi.** Yanlış ya da uydurma çıktı dışarı çıktıysa sorumlu avukata ve birim yöneticisine
+  hemen bildirilir, işe etkisi değerlendirilir, mümkünse düzeltilir, gerekiyorsa ilgili merci bilgilendirilir.
+  Veri yanlış yere gittiyse şirketin veri ihlali süreci başlatılır ve m. 12/5 değerlendirmesi yapılır.
+- **Madde 12 — Dış hukuk büroları ve tanıtım.** Dış büroya iş verilirken yapay zekâ kullanımı, şirket verisini nasıl
+  işlediği ve yapay zekânın kazandırdığı sürenin avukat süresi gibi faturalanmayacağı sorulur ve ücret
+  sözleşmesine yazılır. Şirket avukatı da reklam yasağına tabidir (Av. K. m. 55); hukuk biriminin yapay zekâ
+  destekli çalışması "garantili sonuç" gibi ifadelerle sunulmaz.
+- **Madde 13 — Eğitim.** Eğitim almayan kişi kritik kullanım yapmaz. Stajyer ve uzmanlar avukatın açık talimatı ve
+  denetimi olmadan kişi verili dosyada yapay zekâ kullanmaz.
+- **Madde 14 — Gözden geçirme takvimi.** Aşağıdaki öneri; birimin ölçeğine göre değiştirilir. Süreler ArthurLegal'in
+  önerisidir, TBB rehberi süre belirlemez.
+  - Başlangıçta ve işe girişte: kısa temel eğitim (onaylı araçlar, ArthurMask akışı, atıf teyidi, olay bildirimi).
+  - İlk 30 gün: birim yöneticisi kritik kullanım kayıtlarından örnek seçip gözden geçirir (pilot).
+  - Üç ayda bir: araç listesi ve kayıtlar; masanın doğrulama kaydı dökümü alınır (masa geçmişi 90 gün tutulur).
+  - Altı ayda bir: Anthropic şartları ve hesap ayarları yeniden okunur; KVKK duyuruları kontrol edilir.
+  - Yılda bir: politikanın tamamı, TBB rehberinin güncel sürümü, şirketin genel yapay zekâ ve bilgi güvenliği
+    politikalarıyla uyum, sigorta poliçesi, eğitim tazeleme.
+  - Ara gözden geçirme: yeni araç, modül ya da plan değişikliğinde ve her olaydan sonra.
+- **Madde 15 — Yürürlük ve sahip.** Yürürlük tarihi, politikanın sahibi (hukuk birimi yöneticisi), KVKK irtibat
+  kişisi, bilgi güvenliği sorumlusu.
+- **Ek 1 — Araç haritası** (1. adım). **Ek 2 — Tedarikçi soruları:** veri hangi ülkede işleniyor ve saklanıyor;
+  girdi ve çıktı model eğitiminde kullanılıyor mu; alt işleyenler kim, değişince bildiriliyor mu; silme, dışa
+  aktarma ve kayıt imkânı; ihlal bildirim süresi ve sorumluluk; yurt dışı aktarımın güvencesi; hukuki veri
+  kaynaklarının güncelliği; hatalı çıktı ve kesintide düzeltme yolu. **Ek 3 — Bilgilendirme notları** (4. adım).
+
+### 4. Bilgilendirme notları (kısa şablon)
+
+İki kısa metin; sade dille, yarım sayfayı geçmez. Kuruluma ve plana göre köşeli ayraçları doldur; doğru olmayan
+cümleyi çıkar, uydurma güvence yazma.
+
+```markdown
+[ŞİRKET ADI] Hukuk Birimi — Yapay Zekâ Kullanımına İlişkin Bilgilendirme (iş birimlerine)
+
+Hukuk birimi araştırma, sınıflandırma, özetleme ve ilk metin hazırlığı gibi işlerde yapay zekâ destekli
+araçlardan yararlanabilir.
+
+1. Son değerlendirme ve sorumluluk hukuk birimindeki sorumlu avukattadır. Yapay zekâ çıktısı avukat incelemeden
+   size, mahkemeye ya da başka bir kişiye iletilmez.
+2. [ArthurMask kuruluysa] Belgelerdeki kişi bilgileri yapay zekâ aracına verilmeden önce bilgisayarda maskelenir;
+   gerçek bilgiler bilgisayarda kalır.
+3. Kullanılan yapay zekâ hizmetinin sağlayıcısı ([sağlayıcı ve plan]) Türkiye dışında yerleşiktir; araca verilen
+   bilgiler bu nedenle yurt dışına aktarılmış olur. Dayanak: [yeterlilik kararı / standart sözleşme, Kuruma
+   bildirim tarihi / DOLDUR].
+4. [Plana göre] Hizmetin sözleşme şartlarına göre girdiler model eğitiminde kullanılmaz.
+5. Kendi işinizde yapay zekâ kullanılmamasını isteyebilirsiniz; bunun süreye etkisini size açıklarız.
+```
+
+İlgili kişi aydınlatma eki (şirketin çalışan, müşteri ya da tedarikçi aydınlatma metnine eklenecek paragraf; yalnız
+hukuk biriminin bu kişilerin verisini yapay zekâ aracıyla işlemesi söz konusuysa):
+
+```markdown
+Hukuki uyuşmazlık ve uyum işlerinde kişisel verileriniz, [amaç] amacıyla ve ölçülü biçimde, yapay zekâ destekli
+araçlarla da işlenebilir. Bu araçların sağlayıcısı Türkiye dışında yerleşiktir; aktarımın dayanağı: [DOLDUR].
+Kimliğinizi ortaya koyan bilgiler araca verilmeden önce maskelenir [kuruluysa]. Sonuç her durumda bir avukatın
+değerlendirmesine dayanır. Haklarınız ve başvuru yolu: [bağlantı].
+```
+
+Haklar cümlesi KVKK m. 11'e, içerik m. 10'a dayanır; metne madde numarası yazılacaksa o sohbette çekilmiş
+olmalıdır. Aydınlatma metninin tamamını KVKK irtibat kişisi onaylar.
+
+### 5. Birim yöneticisinin karar sayfası ("bugün şu kararlar")
+
+Kısa, karar odaklı; kadro ya da tasarruf rakamı yazılmaz (birime dağıtılan politikada da yazılmaz).
+
+1. Claude hesabı: [şirket hesabı / yeni kademe]; seçilmeyenin nedeni.
+2. Yurt dışı aktarım dayanağı ve sorumlusu (KVKK irtibat kişisiyle).
+3. Özel güvenceye bağlı kullanıma izin var mı; hangi iş türlerinde hiç kullanılmaz.
+4. Bağlanacak uygulamalar (e-posta, takvim, belge deposu) ve bilgi güvenliği onayı.
+5. Politikanın sahibi, eğitim tarihi, ilk gözden geçirme tarihi.
+6. Dış hukuk bürolarına gönderilecek yapay zekâ soruları.
+
+## Doğrulama kaydı (atıf teyitlerinin dökümü)
+
+Claude Desktop yerel kurulumunda masa açılmış ve atıf teyidi yapılmışsa `al_dogrulama_kaydi` aracı, hangi atfın ne
+zaman, hangi sonuçla ve hangi resmî bağlantıyla teyit edildiğini dosyaya yazar: `bicim` md, csv ya da docx;
+isteğe bağlı `baslangic`, `bitis` (YYYY-AA-GG) ve `ara`. Araç dosyanın yolunu döndürür; yolu kullanıcıya ver,
+içeriği sohbete aktarma. Kayıt yalnız bu bilgisayardaki masanın geçmişini (90 gün) kapsar; web ya da telefondaki
+masanın geçmişi o cihazda kalır. Araç yoksa masanın Geçmiş ekranındaki atıf teyitleri elle kayda geçirilir.
+
+## Çıktı
+
+Üç belge, tercihen Word dosyası olarak:
+
+1. **Birim içi politika taslağı.** Üst başlık: `TASLAK — HUKUK BİRİMİ YÖNETİCİSİ ONAYI BEKLİYOR`. İlk paragraf: "Bu
+   taslak şirketin kendi değerlendirmesine yardımcı olmak için hazırlanmıştır; hukuki görüş değildir." Madde 1–15,
+   Ek 1–3.
+2. **Bilgilendirme notları** (4. adım).
+3. **Birim yöneticisinin karar sayfası** (5. adım).
+
+İnceleme notu: doldurulamayan alanlar, okunamayan kaynaklar (UYARI satırıyla) ve "Madde kontrolü:" cümlesi.
+
+## Sınırlar (bu skill ne yapmaz)
+
+- Hukuki görüş vermez; politikayı şirket kendi sorumluluğunda kabul eder.
+- Sağlayıcının sunucu yerini, alt işleyenlerini ve saklama sürelerini doğrulamaz; şartlara bağlantı verir.
+- Bir ülke için KVKK yeterlilik kararının varlığını doğrulamaz.
+- Şirketin bütün çalışanları için genel yapay zekâ politikası yazmaz (`/employment-legal:policy-drafting`).
+- Sigorta poliçesini yorumlamaz; disiplin sonucu hakkında görüş vermez: TBB rehberi tavsiye niteliğindedir.
+
+## Hatalar
+
+- "ArthurMask'ten geçen metin anonimdir": yanlış. Takma adlandırmadır; kişisel veri sayılmaya devam edebilir.
+- "Şirketin Enterprise hesabı var, KVKK m. 9 kendiliğinden çözülür": yanlış. Eğitim taahhüdü aktarım dayanağı
+  değildir.
+- "Masa doğrulandı dediyse atıf doğrudur": eksik. Numara ve başlık doğrulanır; içerik uyumu ayrıca okunur.
+- "Çalışanın açık rızasıyla her dosya yurt dışına gönderilir": m. 9/6'daki hâller arızi aktarım içindir.
+- "Rehber yalnız serbest avukatlar içindir": baroya kayıtlı şirket avukatı da aynı meslek kurallarına tabidir.
+- Politikaya çalışan, müşteri ya da karşı taraf adı yazmak.
+
+İlgili: `/regulatory-legal:ai-ajan-onayi` · `/employment-legal:policy-drafting` · `/privacy-legal:use-case-triage` ·
+`/privacy-legal:pia-generation` · `/privacy-legal:dpa-review` ·
+`references/arthur-mask-rehberi.md`
