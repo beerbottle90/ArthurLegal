@@ -205,8 +205,9 @@ Kullanıcı sana bir dipnot listesi verir ve doğrulamanı isterse →
   belirler. Asla "%X altında sorun yok" deme.
 - **Yazar katkısı** için standart taksonomi: **CRediT** (ANSI/NISO Z39.104-2022), 14 rol.
 - **Bibliyometrinin sınırı:** Hukuk kitap ve ulusal-dil dergisi ağırlıklı bir disiplindir;
-  WoS tarafında büyük ölçüde **AHCI**'da yer alır ve AHCI kayıtlarına Impact Factor /
-  quartile **atanmaz**. JIF ve h-index hukukta düşük kapsama ve yanıltıcı sonuç verir.
+  JCR 2023'ten beri AHCI ve ESCI dergileri de Impact Factor alır; quartile yalnız bilim ve sosyal
+  bilim kategorilerinde verilir, sanat ve beşeri bilim kategorilerinde **verilmez**; dergiyi JCR'den
+  teyit et. JIF ve h-index hukukta düşük kapsama ve yanıltıcı sonuç verir.
   DORA, CoARA ve Leiden Manifesto bu tür disiplinlerde nitel değerlendirmeyi önerir.
 - **Doçentlik (TR, Hukuk Temel Alanı):** puan tablosu **dönemden döneme değişir**.
   Hiçbir hesaplama, kullanıcının başvuru dönemine ait ÜAK PDF'i teyit edilmeden
