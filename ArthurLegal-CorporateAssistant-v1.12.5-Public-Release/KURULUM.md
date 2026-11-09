@@ -80,7 +80,7 @@ Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle 
 | `tr_` | 🇹🇷 Türkiye — Yargıtay, Danıştay, BAM, yerel, KYB (Bedesten) · AYM · Uyuşmazlık Mah. · 12 tür mevzuat, madde ağacı, gerekçe · Resmî Gazete · 8 düzenleyici kurum (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) · 19.498 belgelik semantik arşiv (23 araç) |
 | `es_` | 🇪🇸 İspanya — BOE konsolide mevzuat (12.376 akt, indeksli) |
 | `pl_` | 🇵🇱 Polonya — Dz.U. mevzuat (indeksli) |
-| `nl_` | 🇳🇱 Hollanda — içtihat + mevzuat (KOOP tam metin araması) |
+| `nl_` | 🇳🇱 Hollanda — içtihat + mevzuat (konsolide mevzuatta başlık araması; resmî yayınlarda tam metin) |
 | `fi_` | 🇫🇮 Finlandiya — konsolide kanunlar (indeksli) |
 | `ie_` | 🇮🇪 İrlanda — Acts of the Oireachtas (indeksli) |
 | `at_` | 🇦🇹 Avusturya — RIS mevzuat + içtihat |

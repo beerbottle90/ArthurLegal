@@ -131,7 +131,7 @@ Etkenlerin ağırlığı ve "esas unsur" tespiti **tartışmalı — içtihadı 
 - AB: `eu_get_document_text(celex="32017R1001")` (AB Marka Tüzüğü 2017/1001; nispi ret ve hak kapsamı maddelerini metinden bul).
 - Birleşik Krallık: `uk_get_section(year="1994", number="26", section="5")` (Trade Marks Act 1994 — nispi ret).
 - Almanya: `de_norm_getir(kanun="MarkenG", norm="14")`.
-- Madrid/WIPO ve listede olmayan ülkeler: "ArthurLegal'da bu kaynak yok; yerel marka vekilinin görüşünü alın." Türk ölçütünü sessizce başka ülkeye uygulama.
+- Listede olmayan ülke: önce ArthurLegal önekine bak (`eu_`, `uk_`, `de_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_`) ve o ülkenin marka kanununu araçla ara. Madrid/WIPO ve öneki olmayan ülkeler: "ArthurLegal'da bu kaynak yok; yerel marka vekilinin görüşünü alın." Türk ölçütünü sessizce başka ülkeye uygulama.
 
 ## Önerilen sonraki adımlar
 

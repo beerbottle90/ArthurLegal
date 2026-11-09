@@ -77,11 +77,15 @@ Israr üzerine verilen İDDK ve VDDK kararlarına uyulması zorunludur (İYUK m.
 
 ## ArthurLegal MCP (`tr_`)
 
-Bedesten birleşik API ile alt dereceleri (İdare Mah. + BİM) çekebilirsin:
+`tr_ictihat_ara` idari yargıda yalnız **Danıştay** kararlarını getirir. İdare mahkemesi ve
+bölge idare mahkemesi (BİM) kararları bu araçta **yoktur**: sonuç çıkmaması "karar yok"
+demek değildir. Alt derece kararı gerekiyorsa karar metnini kullanıcıdan iste; elde yoksa
+veri çekilemedi uyarısını yaz.
 
 ```
 tr_ictihat_ara(
   query="<konu>",
+  courts=["DANISTAYKARAR"],
   date_from="2022-01-01"
 )
 ```

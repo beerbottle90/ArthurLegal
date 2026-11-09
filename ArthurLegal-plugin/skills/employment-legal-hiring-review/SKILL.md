@@ -31,7 +31,7 @@ Teklif mektupları çoğunlukla kalıptır; ta ki olmayana kadar. Değer üreten
 
 ### 1. Yer ve uygulanacak hukuk
 
-İş nerede yapılacak — merkezin değil, kişinin bulunduğu yer. Türkiye dışında ise: tarafların seçtiği hukuk, işçinin mutad işyeri hukukunun emredici asgari koruması saklı kalmak üzere uygulanır (MÖHUK 5718 m. 27). Yabancı ülke kuralı ezberden yazılmaz: İngiltere `uk_search_legislation(query="Employment Rights Act 1996")`, Almanya `de_gesetz_ara`, Hollanda `nl_search_legislation`, İrlanda `ie_search_acts`, AB `eu_search_eu_law(query="transparent and predictable working conditions")`, Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al." Ayak izinde olmayan yeni bir ülke ise işaretle: "Bu ülkede ilk işe alım; teklif gitmeden önce araştırma gerekli."
+İş nerede yapılacak — merkezin değil, kişinin bulunduğu yer. Türkiye dışında ise: tarafların seçtiği hukuk, işçinin mutad işyeri hukukunun emredici asgari koruması saklı kalmak üzere uygulanır (MÖHUK 5718 m. 27). Yabancı ülke kuralı ezberden yazılmaz: İngiltere `uk_search_legislation(title="Employment Rights Act", type="ukpga", year="1996")`, Almanya `de_gesetz_ara`, Hollanda `nl_search_legislation`, İrlanda `ie_search_acts`, AB `eu_search_eu_law(query="transparent and predictable working conditions")`, Azerbaycan `az_search_acts(query="Əmək Məcəlləsi", types=[107])`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al." Ayak izinde olmayan yeni bir ülke ise işaretle: "Bu ülkede ilk işe alım; teklif gitmeden önce araştırma gerekli."
 
 ### 2. Sözleşme türü ve şekli (4857 s.K.)
 

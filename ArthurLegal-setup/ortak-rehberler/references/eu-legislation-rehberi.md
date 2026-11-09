@@ -67,8 +67,8 @@ istiyorsan DOC_1 tek başına yetmeyebilir. O durumda:
 | DORA | `32022R2554` | Dijital operasyonel dayanıklılık (finans/enerji) |
 | AB Taksonomi (enerji) | `32021R2139` | Sürdürülebilir enerji sınıflandırması |
 | EU ETS | `32003L0087` | Emisyon ticaret sistemi ([RAFİNERİ]) |
-| 3. Enerji Paketi — Gaz | `32009L0073` | [BORU HATTI PROJESİ]'a uygulanabilir AB gaz direktifi |
-| 3. Enerji Paketi — Elektrik | `32009L0072` | {{AL_SANTRAL}} için AB elektrik direktifi |
+| Gaz ve hidrojen piyasası direktifi | `32024L1788` | [BORU HATTI PROJESİ]'a uygulanabilir AB gaz direktifi; 2009/73/AT'yi (`32009L0073`) yürürlükten kaldırdı |
+| Elektrik piyasası direktifi | `32019L0944` | {{AL_SANTRAL}} için AB elektrik direktifi; 2009/72/AT (`32009L0072`) yürürlükte değil |
 | Gaz Güvenliği Yönetmeliği | `32017R1938` | Tedarik güvenliği ([BORU HATTI PROJESİ] güzergâhı) |
 | Russia Sanctions (son) | `32022R0428` | AB Rusya yaptırımları (temel tüzük) |
 | TFEU (Rekabet m.101/102) | `12012E/TXT` | AB rekabet hukuku |

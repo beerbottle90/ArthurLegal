@@ -108,7 +108,7 @@ Diller arası soru soracaksan semantik kanal şart.
 
 | Araç | Ne yapar |
 |---|---|
-| `nl_search_legislation` | KOOP SRU 2.0 — **gerçek upstream tam metin araması**, tüm külliyat |
+| `nl_search_legislation` | KOOP SRU 2.0 — varsayılan: konsolide mevzuatta (BWB) **başlık, kısaltma ya da BWBR kimliğiyle** arama, bugünkü (ya da `as_of`) sürüm; `source="official_publications"` ile resmî yayınlarda (Staatsblad, Staatscourant, meclis belgeleri) tam metin: ilan ve değişiklik metinleri, yürürlükteki hukuk değil |
 
 **Durum**
 
@@ -129,8 +129,9 @@ Kelimeyle arama `nl_search_caselaw`'dur.
 bu sonuçlarda çıkmaması, var olmadığının kanıtı değildir.** Kapsam dışıysa
 `nl_browse_caselaw` ile tarih/mahkeme daraltıp `nl_get_decision` ile tek tek oku.
 
-**c) İçtihat ile mevzuat farklı davranır.** `nl_search_legislation` **tüm** KOOP
-külliyatını arar (indeks sınırı yok); `nl_search_caselaw` yalnız yerel indeksi.
+**c) İçtihat ile mevzuat farklı davranır.** `nl_search_legislation` canlı KOOP'ta arar
+(indeks sınırı yok) ama varsayılan olarak yalnız **başlıkta**: içerik kelimesiyle sonuç
+çıkmaması "kanun yok" demek değildir. `nl_search_caselaw` yalnız yerel indeksi arar.
 
 **d) Metinsiz karar normaldir.** Rechtspraak, metnini yayımladığından çok daha
 fazla kararın künyesini yayımlar. Boş gövde işaretlenir; davanın yokluğu değildir.

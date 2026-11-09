@@ -32,7 +32,8 @@
 | Entegrasyon | Durum | Alternatif |
 |---|---|---|
 | **ArthurLegal MCP (`tr_`) — Danıştay** | ✓ | UYAP/Lexpera |
-| **ArthurLegal MCP (`tr_`) — KVKK/Rekabet/BDDK/Sayıştay** | ✓ | Kurum siteleri |
+| **ArthurLegal MCP (`tr_`) — KVKK/Rekabet/BDDK** | ✓ | Kurum siteleri |
+| **Sayıştay kararları** | ✗ (ArthurLegal MCP'de yok) | Sayıştay sitesi |
 | **ArthurLegal MCP (`tr_`)** (özellikle İYUK, sektör mevzuatı) | ✓ | mevzuat.gov.tr |
 | **ArthurLegal MCP (`tkgm_`)** (kamulaştırma, imar, kadastro: parsel ve koridor kesişimi; bilgi amaçlı) | ✓ | Parsel Sorgu manuel |
 | **UYAP** (İdare Mh. + Danıştay) | [DOLDUR ✓/✗] | E-tebligat takip |

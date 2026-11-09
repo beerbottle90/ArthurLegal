@@ -95,7 +95,7 @@ tr_ictihat_semantik_ara(initial_keyword="imzalı bordro fazla mesai", query="imz
 
 Sonuç azsa sessizce doldurma: "[araç] [N] sonuç döndü; kapsam ince. Seçenekler: (1) sorguyu genişlet, (2) başka araç, (3) web — `[web — doğrula]` etiketiyle, (4) doğrulanmamış diye işaretle ve dur." Etiketler: `[ArthurLegal TR — 4857 m. X — GG.AA.YYYY]`, `[model bilgisi — doğrula]`, `[kullanıcı verdi]`; etiketleri silme.
 
-Yabancı yargı çevresi: kural ezberden verilmez. AB çalışma süresi: `eu_search_eu_law(query="organisation of working time")`; Azerbaycan: `az_search_acts(query="Əmək Məcəlləsi", types=[107])`; İngiltere: `uk_search_legislation(query="Working Time Regulations")`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
+Yabancı yargı çevresi: kural ezberden verilmez. AB çalışma süresi: `eu_search_eu_law(query="organisation of working time")`; Azerbaycan: `az_search_acts(query="Əmək Məcəlləsi", types=[107])`; İngiltere: `uk_search_legislation(title="Working Time Regulations", type="uksi")`. Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
 ## Çıktı
 

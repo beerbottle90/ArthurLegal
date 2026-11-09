@@ -52,7 +52,7 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **ABD atıfı doğrulama (uydurma savunması)** | **CourtListener** | **ZORUNLU GEÇİŞ** | `abd-atif-dogrulama-rehberi.md` |
 | **TR kanun maddesi doğrulama (teslim öncesi, belge gövdesi dâhil)** | **ArthurLegal MCP `tr_mevzuat_madde_getir`** | **ZORUNLU GEÇİŞ** | `mevzuat-mcp-rehberi.md` bölüm 9 |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
-| UK mevzuatı (yapılandırılmış) | TNA resmî MCP | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
+| UK mevzuatı (yapılandırılmış) | ArthurLegal MCP (`uk_`) | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
 | AB tüzük/direktif/ABAD kimlikleme | EUR-Lex Cellar | BİRİNCİL | `eurlex-cellar-rehberi.md` |
 | JP mevzuatı (as-of-date) | e-Gov API v2 | BİRİNCİL | `japan-egov-api-rehberi.md` |
 | FR mevzuatı | DILA açık veri | BİRİNCİL | `france-dila-rehberi.md` |
@@ -88,8 +88,8 @@ döndürmez.**
 | ResourceContracts MCP | Mevzuat, içtihat, **gizli sözleşmeler** |
 | ArthurLegal MCP (`tr_`) | Yabancı hukuk |
 
-Güney Afrika, Almanya ve pek çok yabancı **birincil** kaynak için connector
-**yoktur**. Bu durumda: "resmî metin çekilmedi" de, literatürü **şerh/yorum**
+Güney Afrika ve pek çok yabancı **birincil** kaynak için connector
+**yoktur** (Almanya için vardır: `de_norm_getir`, `de_gesetz_ara`). Bu durumda: "resmî metin çekilmedi" de, literatürü **şerh/yorum**
 olarak atıfla — resmî kaynağa bakılmış gibi **ima etme**.
 
 ## 5. 🔒 Meslek sırrı sınırı — üç MCP de PUBLIC

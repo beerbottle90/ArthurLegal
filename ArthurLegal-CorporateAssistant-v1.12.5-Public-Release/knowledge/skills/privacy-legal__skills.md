@@ -453,7 +453,7 @@ Sırayla:
 
 - Yurt dışındaki sunucuda barındırmanın yurt dışı aktarım sayılması **yerleşik Kurul uygulaması — kararı çek** (`tr_semantik_ara(kurum="kvkk", query="yurt dışında bulunan sunucu bulut hizmeti aktarım")`).
 - Yurt dışı aktarım var, mekanizma yok → 🔴 (hukuka uygun aktarım yolu yok).
-- **AB tarafı** (veri aktaran AB'de ya da GDPR uygulanıyor): `eu_search_eu_law(query="standard contractual clauses transfer of personal data to third countries")` → CELEX 32021D0914; veri sorumlusu–veri işleyen klozları için `eu_search_eu_law(query="standard contractual clauses controllers processors")`; Türkiye hakkında AB yeterlilik kararı olup olmadığını araçla kontrol et, ezberden söyleme. **İngiltere:** `uk_search_legislation(query="Data Protection Act 2018")`. Aktarım etki değerlendirmesi gerekip gerekmediğini işaretle; değerlendirmeyi bu skill yapmaz.
+- **AB tarafı** (veri aktaran AB'de ya da GDPR uygulanıyor): `eu_search_eu_law(query="standard contractual clauses transfer of personal data to third countries")` → CELEX 32021D0914; veri sorumlusu–veri işleyen klozları için `eu_search_eu_law(query="standard contractual clauses controllers processors")`; Türkiye hakkında AB yeterlilik kararı olup olmadığını araçla kontrol et, ezberden söyleme. **İngiltere:** `uk_search_legislation(title="Data Protection Act", type="ukpga", year="2018")`. Aktarım etki değerlendirmesi gerekip gerekmediğini işaretle; değerlendirmeyi bu skill yapmaz.
 
 ### Veri işleyen olduğumuzda — savunma
 
@@ -751,7 +751,7 @@ Profilin `## Escalation` bölümüne göre, en az şu hâllerde:
 ## Yabancı rejimler
 
 - **AB (GDPR):** `eu_get_document_text(celex="32016R0679")` ile süre ve uzatma (Art. 12), haklar (Art. 15–22) ve sınırlamalar (Art. 23) metnini çek; ezberden yazma. KVKK ile birlikte uygulanıyorsa her hak ve süre için iki rejimi yan yana koy, farkı iç notta yaz.
-- **İngiltere:** `uk_search_legislation(query="Data Protection Act 2018")`, ardından `uk_get_section`.
+- **İngiltere:** `uk_search_legislation(title="Data Protection Act", type="ukpga", year="2018")`, ardından `uk_get_section`.
 - **Almanya ek kuralları:** `de_gesetz_ara(sorgu="Bundesdatenschutzgesetz")`.
 - Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 - *Karşılaştırmalı not:* ABD eyalet gizlilik yasalarının kendi cevap süreleri ve uzatma mekanizmaları vardır; yalnız CourtListener bağlayıcısı kuruluysa `courtlistener-rehberi.md` üzerinden araştırılır, ezberden yazılmaz.
@@ -1652,7 +1652,7 @@ VERBİS istisnası Kurul kararıyla getirilir (m. 16/2) → `tr_semantik_ara(kur
 
 - **KVKK:** zorunlu etki değerlendirmesi yok → bu adım KVKK için "uygulanmaz".
 - **GDPR** `## Regulatory footprint`'te varsa: uygulama alanı için Art. 3'ü, tetikler için Art. 35'i `eu_get_document_text(celex="32016R0679")` ile çek (Art. 3 ≈ offset 156000, Art. 35 ≈ offset 224000). Art. 35(3)'teki hâllerden biri ya da ilgili üye devlet denetim makamının listesi (Art. 35(4)) tetikleniyorsa → **VKED ZORUNLU**. Üye devlet listesi için ilgili ülke aracı (`de_gesetz_ara`, `nl_search_legislation` …); bulunamazsa "ArthurLegal'da bu listenin kaynağı yok; yerel hukukçu görüşü al."
-- **UK GDPR:** `uk_search_legislation(query="Data Protection Act 2018")` → `uk_get_section`.
+- **UK GDPR:** `uk_search_legislation(title="Data Protection Act", type="ukpga", year="2018")` → `uk_get_section`.
 - *Karşılaştırmalı not:* ABD eyalet yasalarının kendi risk değerlendirmesi tetikleri vardır; yalnız CourtListener kuruluysa `courtlistener-rehberi.md` üzerinden, ezberden değil.
 
 **Güçlü göstergeler** (zorunlu olmasa da değerlendirme yap): yeni teknoloji ya da yapay zekâ; çocuk verisi; özel nitelikli veri; ayrı toplanmış veri setlerinin birleştirilmesi; ayrımcılığa elverişli veri ya da çıkarım; münhasıran otomatik analizle kişi aleyhine sonuç (m. 11/1-g); çalışan izleme; ilgili kişinin beklemeyeceği işleme; davranışsal reklam, benzer kitle (lookalike) ve bağlamlar arası takip (aktarım, aydınlatma ve 6563 onay sorunlarını düzenli olarak açığa çıkarır). Zorunlu tetik yok ama gösterge var → **PIA GEREKLİ** (çıktıda göstergeyi belirt).

@@ -273,7 +273,7 @@ Profil dosyası `[DOLDUR]` içeriyorsa: eksik alanı **varsayma**, kullanıcıya
 
 | Sunucu | Kapsam |
 |---|---|
-| **ArthurLegal MCP (`tr_`)** | `arthurlegal-mcp.fly.dev/mcp`, auth yok: TR mevzuat norm metni ve gerekçe + Yargıtay/Danıştay/BAM/yerel/KYB + AYM + Uyuşmazlık + Resmî Gazete + 8 düzenleyici kurum + semantik arşiv; `scholar_` DergiPark doktrini |
+| **ArthurLegal MCP (`tr_`)** | `arthurlegal-mcp.fly.dev/mcp`, auth yok: TR mevzuat norm metni ve gerekçe + Yargıtay/Danıştay/BAM/yerel/KYB + AYM + Uyuşmazlık + Resmî Gazete + 8 düzenleyici kurum + semantik arşiv; `scholar_` DergiPark doktrini; karşılaştırmalı çalışma için yabancı yargı çevreleri: `eu_`, `de_`, `uk_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_` |
 | **ArthurLegal MCP (`tkgm_`)** | Aynı uç: TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki, dayanak köprüsü (bilgi amaçlı; taşınmaz hukuku çalışmalarında örnek parsel için). Rehber: `tapu-kadastro-rehberi.md` |
 | **CourtListener** | ABD federal + eyalet içtihadı, RECAP dockets (resmî MCP) |
 | **Fedlex** | İsviçre federal mevzuatı |

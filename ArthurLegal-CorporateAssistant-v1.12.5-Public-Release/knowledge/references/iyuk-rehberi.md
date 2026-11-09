@@ -19,7 +19,8 @@
 
 ### Dava dilekçesi şekli (m. 3)
 - Dilekçe yetersizse reddedilir (m. 14)
-- Yanlış mahkemeye verilen dava: görevli mahkemeye gönderilir (m. 15) **ama süre durmaz**
+- İdari yargı içinde görevli ya da yetkili olmayan mahkemeye açılan dava: görev veya yetki yönünden reddedilir ve dosya görevli/yetkili mahkemeye gönderilir (m. 15/1-a); yeniden dava açmak gerekmez
+- Adli yargıda açılıp görev yönünden reddedilen dava: kararın kesinleşmesini izleyen günden itibaren 30 gün içinde görevli idari yargı yerinde açılabilir; görevsiz yargı yerine başvurma tarihi başvuru tarihi sayılır (m. 9/1)
 
 ### Görev ve yetki
 - **m. 32:** Genel yetki — davalı idarenin bulunduğu yer

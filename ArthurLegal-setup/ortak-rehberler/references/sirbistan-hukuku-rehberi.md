@@ -124,7 +124,9 @@ ADIM 1: Kişisel Veri Kanunu'nu getir
   → Veri aktarımı koşulları (Madde 64+), yurt dışı transfer
 
 ADIM 2: TR KVKK + SR Kişisel Veri Kanunu paralel yükümlülükleri değerlendir
-  (SR, AB ile yeterlilik kararı aldığından GDPR eşdeğeri)
+  (Sırbistan'ın AB yeterlilik kararı YOKTUR: Komisyon'un yeterlilik kararları listesinde
+  yer almaz. AB/AEA'dan SR'ye aktarım yeterlilik kararına dayanamaz; uygun güvence
+  (standart sözleşme maddeleri vb.) gerekir)
 ```
 
 ### 3.4 Anayasal haklar / mülkiyet ihtilafı
@@ -220,8 +222,8 @@ Türkçe/İngilizce çevirisi birlikte ver. Kritik hukuki metinlerde `[review]` 
 2. **Sırp enerji karşı tarafı** (Srbijagas, EPS, NIS) → resmî yaptırım listeleri + Zakon o
    energetici + Zakon o privrednim društvima (şirket yapısı) birlikte.
 
-3. **Kişisel veri aktarımı (SR → TR)** → Zakon o zaštiti podataka o ličnosti; SR AB
-   yeterlilik kararı aldığından GDPR mekanizmaları geçerli. KVKK + SR kanunu paralel.
+3. **Kişisel veri aktarımı (SR → TR)** → Zakon o zaštiti podataka o ličnosti; Sırbistan'ın
+   AB yeterlilik kararı yoktur, aktarım koşulları SR kanunundan çekilir. KVKK + SR kanunu paralel.
 
 4. **Tahkim klozu — Sırbistan seated** → Zakon o arbitraži + NY Konvansiyonu + {{AL_KURUM}}
    Türkiye icra analizi (MÖHUK 5718 m. 60 vd. — yabancı hakem kararlarının tenfizi).

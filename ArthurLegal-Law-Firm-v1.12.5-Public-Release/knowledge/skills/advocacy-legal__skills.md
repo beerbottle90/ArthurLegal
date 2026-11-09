@@ -291,7 +291,7 @@ Talep şart, otomatik gelmez. **İki şart birlikte:**
 tr_ictihat_ara(query="<konu> iptal yürütmenin durdurulması",
   chamber="13. Daire" /* EPDK/Rekabet */ veya "10. Daire"/"14. Daire" /* ÇED/çevre */,
   date_from="2022-01-01")
-tr_kurum_karari_ara (kurum="rekabet") / tr_kurum_karari_ara (kurum="kik") / tr_kurum_karari_ara (kurum="kvkk")  /* kurum birincil */
+tr_kurum_karari_ara (kurum="rekabet") / tr_kurum_karari_ara (kurum="kvkk")  /* kurum birincil; KİK kararları ArthurLegal MCP'de YOK: kullanıcıya söyle, karar metnini iste */
 ```
 Yalnızca çekileni dilekçeye işle: `[ArthurLegal TR — Danıştay 13.D — Esas/Karar — GG.AA.YYYY]`.
 

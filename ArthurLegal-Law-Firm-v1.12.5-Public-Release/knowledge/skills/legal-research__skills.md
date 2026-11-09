@@ -22,7 +22,7 @@
 - /legal-research:tr-atif-dogrulama (ArthurLegal tr_ - TR karar kunyesi dogrulama)
 - /legal-research:abd-atif-dogrulama (CourtListener - uydurma atif savunmasi)
 - /legal-research:karsi-taraf-kimlik (GLEIF -> resmi yaptirim listeleri - once kimlik, sonra liste)
-- /legal-research:uk-mevzuat (TNA resmi MCP - UK mevzuati)
+- /legal-research:uk-mevzuat (ArthurLegal MCP uk_ - UK mevzuati)
 - /legal-research:ab-mevzuat (EUR-Lex Cellar - CELEX/ELI kimlikleme)
 - /legal-research:jp-mevzuat (e-Gov API v2 - as-of-date cekim)
 - /legal-research:fr-mevzuat (DILA acik veri - Legifrance)
@@ -86,7 +86,7 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **ABD atıfı doğrulama (uydurma savunması)** | **CourtListener** | **ZORUNLU GEÇİŞ** | `abd-atif-dogrulama-rehberi.md` |
 | **TR kanun maddesi doğrulama (teslim öncesi, belge gövdesi dâhil)** | **ArthurLegal MCP `tr_mevzuat_madde_getir`** | **ZORUNLU GEÇİŞ** | `mevzuat-mcp-rehberi.md` bölüm 9 |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
-| UK mevzuatı (yapılandırılmış) | TNA resmî MCP | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
+| UK mevzuatı (yapılandırılmış) | ArthurLegal MCP (`uk_`) | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
 | AB tüzük/direktif/ABAD kimlikleme | EUR-Lex Cellar | BİRİNCİL | `eurlex-cellar-rehberi.md` |
 | JP mevzuatı (as-of-date) | e-Gov API v2 | BİRİNCİL | `japan-egov-api-rehberi.md` |
 | FR mevzuatı | DILA açık veri | BİRİNCİL | `france-dila-rehberi.md` |
@@ -122,8 +122,8 @@ döndürmez.**
 | ResourceContracts MCP | Mevzuat, içtihat, **gizli sözleşmeler** |
 | ArthurLegal MCP (`tr_`) | Yabancı hukuk |
 
-Güney Afrika, Almanya ve pek çok yabancı **birincil** kaynak için connector
-**yoktur**. Bu durumda: "resmî metin çekilmedi" de, literatürü **şerh/yorum**
+Güney Afrika ve pek çok yabancı **birincil** kaynak için connector
+**yoktur** (Almanya için vardır: `de_norm_getir`, `de_gesetz_ara`). Bu durumda: "resmî metin çekilmedi" de, literatürü **şerh/yorum**
 olarak atıfla — resmî kaynağa bakılmış gibi **ima etme**.
 
 ## 5. 🔒 Meslek sırrı sınırı — üç MCP de PUBLIC
@@ -853,7 +853,7 @@ description: >
 user-invocable: true
 ---
 
-# UK Mevzuatı (TNA resmî MCP)
+# UK Mevzuatı (ArthurLegal MCP `uk_`)
 
 ## Ne zaman kullanılır
 
@@ -867,11 +867,14 @@ kullanım için ayrı lisans ister). AB hukuku için → `ab-mevzuat`.
 
 ## Yöntem
 
-1. Aranan enstrümanı tür/yıl/numara ile kimlikle (ör. `ukpga/2006/46`).
-2. Madde düzeyine in; **yürürlük tarihini** kontrol et — UK mevzuatında
-   yürürlüğe girmemiş veya yürürlükten kalkmış hükümler aynı sayfada durur.
-3. Değişiklik notlarını (amendments) oku; konsolide metin ile yürürlükteki metin
-   aynı olmayabilir.
+1. `uk_search_legislation(title="...", type="ukpga", year="2006")` ile enstrümanı bul ve
+   tür/yıl/numara ile kimlikle (ör. `ukpga/2006/46`). Araç `query` almaz: başlık için
+   `title`, metin için `text`.
+2. `uk_get_section(type, year, number, section)` ile madde düzeyine in; **yürürlük
+   tarihini** kontrol et — UK mevzuatında yürürlüğe girmemiş veya yürürlükten kalkmış
+   hükümler aynı sayfada durur.
+3. `uk_get_effects(type, year, number, unapplied_only=true)` ile metne henüz işlenmemiş
+   değişiklikleri (amendments) oku; konsolide metin ile yürürlükteki metin aynı olmayabilir.
 
 ## Sert kurallar
 
@@ -879,7 +882,7 @@ kullanım için ayrı lisans ister). AB hukuku için → `ab-mevzuat`.
 UK'de bir hükmün kabul edilmiş ama yürürlüğe konmamış olması yaygındır.
 
 Ham API XML/Atom döndürür — JSON bekleyen bir istemciye doğrudan bağlanmaz.
-Yapılandırılmış erişim için resmî MCP rotası kullanılır.
+Yapılandırılmış erişim için ArthurLegal MCP `uk_` araçları kullanılır.
 
 Lisans: Open Government Licence v3.0 — atıf yükümlülüğü doğurur.
 
@@ -899,7 +902,7 @@ Lisans: Open Government Licence v3.0 — atıf yükümlülüğü doğurur.
 name: ab-mevzuat
 description: >
   AB enstrumanlarini ve ABAD kararlarini EUR-Lex Cellar uzerinden KESIN olarak
-  kimlikler (CELEX/ELI); metin EUR-Lex'te okunur.
+  kimlikler (CELEX/ELI); metin eu_get_document_text ile cekilir.
 user-invocable: true
 ---
 
@@ -913,10 +916,10 @@ enstrümanını uyguladığı soruluyor.
 
 ## Yöntem
 
-1. Cellar üzerinde SPARQL ile **CELEX numarasını veya ELI'yi** bul.
-2. **Metni EUR-Lex'te oku** — Cellar kimlik ve metadata katmanıdır, operatif
-   metin katmanı değil.
-3. Konsolidasyon durumunu ve yürürlüğü kontrol et.
+1. `eu_search_eu_law(query="...")` ile **CELEX numarasını** bul (gerekirse `eu_sparql`).
+2. **Metni `eu_get_document_text(celex=..., language=...)` ile çek** — EUR-Lex
+   `legal-content` sayfaları WebFetch'te metin döndürmez.
+3. `eu_get_metadata(celex=...)` ile yürürlüğü (`in_force`) ve konsolidasyon durumunu kontrol et.
 
 ## Sert kurallar
 
@@ -960,10 +963,10 @@ karşı taraf veya Japon hukuku uygulanacak bir enstrüman kapsamdaysa.
 
 ## Yöntem
 
-1. `KeywordSearch` ile mevzuatı bul → `law_id` al.
-2. `GetLawData` ile tam metni çek.
-3. `revision_info` alanından yürürlük ve tadil durumunu doğrula.
-4. İmza veya uyuşmazlık tarihindeki metin gerekiyorsa `asof=YYYY-MM-DD` kullan
+1. `jp_search_laws(keyword="...")` ile mevzuatı bul (anahtar kelime Japonca) → `law_id` al.
+2. Tek madde için `jp_get_article(law_id, article)`, tam metin için `jp_get_law_text(law_id)`.
+3. `jp_get_law(law_id)` ile yürürlük ve tadil durumunu doğrula.
+4. İmza veya uyuşmazlık tarihindeki metin gerekiyorsa `as_of="YYYY-MM-DD"` kullan
    **ve bunu atıfta belirt**.
 
 ## Sert kurallar

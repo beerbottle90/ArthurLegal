@@ -65,7 +65,7 @@ Kullanım: `/<plugin>:<skill>` — örn. `/yayin-etigi:uyz-beyani`
 
 | Sunucu | Kapsam |
 |---|---|
-| ArthurLegal MCP (`tr_`, auth yok) | TR mevzuat + gerekçe + Yargıtay / Danıştay / AYM + Resmî Gazete + 8 düzenleyici kurum + semantik arşiv; `scholar_` ile DergiPark doktrini |
+| ArthurLegal MCP (`tr_`, auth yok) | TR mevzuat + gerekçe + Yargıtay / Danıştay / AYM + Resmî Gazete + 8 düzenleyici kurum + semantik arşiv; `scholar_` ile DergiPark doktrini; yabancı yargı çevreleri: `eu_`, `de_`, `uk_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_` |
 | ArthurLegal MCP (`tkgm_`, aynı uç) | Tapu-kadastro: TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki (bilgi amaçlı) |
 | CourtListener | ABD içtihadı + RECAP (resmî MCP) |
 | Fedlex | İsviçre federal mevzuatı |
