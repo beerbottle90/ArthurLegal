@@ -121,11 +121,13 @@ Hızlı kontrol (Think.Check.Submit mantığı):
 
 ## Bibliyometri uyarısı — hukukta
 
-Hukuk **kitap ve ulusal-dil dergisi ağırlıklı** bir disiplindir. WoS tarafında büyük ölçüde
-**AHCI**'da yer alır ve **AHCI kayıtlarına Impact Factor / quartile atanmaz.** Bu nedenle
-"Q1 dergi bul" talebi hukukta çoğu zaman anlamsızdır.
+Hukuk **kitap ve ulusal-dil dergisi ağırlıklı** bir disiplindir. JCR 2023'ten beri AHCI ve ESCI
+dergileri de Impact Factor alır; quartile yalnız bilim ve sosyal bilim kategorilerinde verilir,
+sanat ve beşeri bilimlere özgü kategorilerde verilmez. "Q1 dergi bul" talebi hukukta çoğu zaman
+yanıltıcıdır.
 
-Kullanıcı Q1 isterse: bunu açıkla, SSCI'da hukuk kategorileri olabileceğini söyle, ama
+Kullanıcı Q1 isterse: quartile'ın derginin JCR'deki kategorisine bağlı olduğunu açıkla, dergiyi
+JCR'den teyit ettir, ama
 JIF ve h-index'in hukukta düşük kapsama ve yanıltıcı sonuç verdiğini belirt
 (DORA · CoARA · Leiden Manifesto). → `references/bibliyometri-rehberi.md`
 

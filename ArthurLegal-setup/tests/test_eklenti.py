@@ -26,6 +26,21 @@ class EklentiKlasoru(unittest.TestCase):
         self.assertEqual(sorunlar, [], "\n".join(sorunlar) + "\nEklentiyi elle değil paketten üretin: "
                          "`python ArthurLegal-setup/yayin/eklenti_uret.py`.")
 
+    def test_goreli_baglantilar_eklentide_cozulur(self):
+        """Bir .md dosyasından başka bir .md dosyasına giden göreli bağlantının hedefi eklentide bulunmalı."""
+        import posixpath
+        kalip = re.compile(r"\]\((?!https?:|mailto:|#|\$\{)([^)#\s]+\.md)(?:#[^)]*)?\)")
+        kirik = []
+        for yol, veri in self.dosyalar.items():
+            if not yol.endswith(".md"):
+                continue
+            metin = veri.decode("utf-8") if isinstance(veri, bytes) else veri
+            for hedef in kalip.findall(metin):
+                tam = posixpath.normpath(posixpath.join(posixpath.dirname(yol), hedef))
+                if tam not in self.dosyalar:
+                    kirik.append("%s -> %s" % (yol, hedef))
+        self.assertEqual(kirik, [], "Eklentide hedefi olmayan göreli bağlantı: " + "; ".join(kirik))
+
     def test_dizin_dosya_kurallari(self):
         self.assertLessEqual(len(self.dosyalar), 512)
         for yol, veri in self.dosyalar.items():

@@ -61,8 +61,8 @@ Hız sınırı: Bedesten IP başına 30 saniyede 10 istek kabul eder; sunucu ist
 
 | `kurum` | Canlı arama neyi arar | Filtreler | `id` (getir) | Yerel arşivde (`tr_semantik_ara`) |
 |---|---|---|---|---|
-| `rekabet` | Karar PDF'lerinin metni (rekabet.gov.tr) | `query`, `decision_type` (`birlesme_devralma`, `rekabet_ihlali`, `muafiyet_menfi_tespit`, `ozellestirme`, `diger`), `decision_number`, `decision_date`, `page` | `karar_id` | 10.445 karar, YALNIZ BAŞLIK |
-| `epdk` | Kurul kararları ağacında konu ve kategori satırı: elektrik, doğal gaz, petrol, LPG, denetim | `query`, `market`, `category` (`lisans`, `tarife`, `YEKDEM`), `decision_no`, `year`, `limit` | `documents[0].url` | 3.745 karar; yaklaşık yarısında tam metin, kalanında konu satırı |
+| `rekabet` | Karar PDF'lerinin metni (rekabet.gov.tr) | `query`, `decision_type` (`birlesme_devralma`, `rekabet_ihlali`, `muafiyet_menfi_tespit`, `ozellestirme`, `diger`), `decision_number`, `decision_date`, `page` | `karar_id` | 10.445 karar; neredeyse tamamında karar metni, metni çıkmayan birkaç kararda yalnız başlık |
+| `epdk` | Kurul kararları ağacında konu ve kategori satırı: elektrik, doğal gaz, petrol, LPG, denetim | `query`, `market`, `category` (`lisans`, `tarife`, `YEKDEM`), `decision_no`, `year`, `limit` | `documents[0].url` | 3.745 karar; neredeyse tamamında tam metin, kalanında konu satırı |
 | `spk` | Bülten listesi; içerik için `tr_spk_bulten_icinde_ara` | `year`, `number` | bülten no `2026/27` | 2022 ile 2026 bültenleri, 1.497 bölüm, tam metin |
 | `bddk` | Karar BAŞLIĞI; iki liste (RG'de yayımlanan, yayımlanmayan) | `query` (başlıkta), `list` (`rg`, `diger`), `year`, `limit` | `id` (DokumanGetir kimliği) | 964 karar, tam metin |
 | `kvkk` | Son sayfalardaki karar özetleri | `query`, `scan_pages` | `id` (içerik kimliği) | 291 özet, tam metin |
@@ -75,7 +75,7 @@ Sayılar 20.09.2026 tarihli arşivdir (toplam 19.498 belge). Arşiv dönemsel ta
 Bu tablonun söylediği şey: bir kararın METNİNE dair soru her kurumda aynı araçla sorulmaz.
 
 1. BDDK ve BTK: canlı arama yalnız başlıktadır; başlıkta geçmeyen içerik arşive sorulur. Ölçüldü (20.09.2026): "idari para cezası" 419 BTK kararının metninde geçer, yalnız 9'unun başlığında geçer; "dolaylı pay sahipliği" 60 BDDK kararının metninde geçer, hiçbirinin başlığında geçmez. Bu soruları `tr_semantik_ara(kurum="btk" | "bddk", …)` ile sor. İki kurumun karar metinleri arşive 20.09.2026'da eklendi; o tarihten önce arşiv bu kurumlarda yalnız başlıkları arıyordu.
-2. Rekabet: tersine, metin araması canlı taraftadır (`tr_kurum_karari_ara(kurum="rekabet", query=…)` karar PDF'inin içinde arar). Yerel arşiv Rekabet kararlarının yalnız başlığını taşır; `tr_semantik_ara(kurum="rekabet")` başlıkta kavramsal arama yapar, gerekçede değil. Gerekçeye dair bir sonucu "arşivde yok" diye kapatma; canlı aramayı dene.
+2. Rekabet: metin iki tarafta da aranır. Canlı arama (`tr_kurum_karari_ara(kurum="rekabet", query=…)`) karar PDF'inin içinde arar. Yerel arşiv de kararların metnini taşır (vektörler başlık ve metnin ilk 8.000 karakterinden): `tr_semantik_ara(kurum="rekabet")` gerekçede de arar. Arşivde çıkmayan bir sonucu "karar yok" diye kapatma; canlı aramayı da dene.
 3. KVKK, SPK ve Sigorta Tahkim: başlıklar bilgi taşımaz ("KVKK Kurul Kararı <yıl/sıra>", bülten bölüm adı, K numarası); soru her zaman metne sorulur, `tr_semantik_ara` ve `tr_spk_bulten_icinde_ara` bunun içindir.
 4. EPDK: `market` ve `category` en güçlü süzgeçtir; metni indekslenmemiş kararlar için `tr_kurum_karari_getir` ile belgeyi aç.
 5. Kurum zaten konudur: `kurum="epdk"` enerji, `kurum="kvkk"` kişisel veri demektir. Resmî Gazete ve mevzuattaki `konu` süzgeci (enerji, rekabet, vergi, icra) kurum kararlarında yoktur ve gerekmez; ölçüldü, kurum kararı başlıklarında bu dört konunun kelimeleri kurumun kendi alanı dışında yüzde 2'nin altında geçiyor.

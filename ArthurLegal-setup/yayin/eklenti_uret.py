@@ -119,8 +119,10 @@ def beceri_metni(metin: str, adlar: set, rehberler: set) -> str:
 def rehber_metni(metin: str, adlar: set) -> str:
     """Rehberler düz dosyadır, gövdede değişken çözülmez: yollar eklenti köküne göre kalır."""
     metin = _komutlar(anahtarsiz(metin), adlar)
+    # Pakette rehberler knowledge/references/, profiller knowledge/profiles/ altındadır; eklentide profiller
+    # references/profiles/ altına girer. Rehberden profile giden göreli bağlantı buna göre düzeltilir.
     return (metin.replace("knowledge/references/", "references/").replace("knowledge/profiles/", "references/profiles/")
-            .replace("knowledge/firm-profile.md", "references/firm-profile.md"))
+            .replace("knowledge/firm-profile.md", "references/firm-profile.md").replace("](../profiles/", "](profiles/"))
 
 
 ANA_ACIKLAMA = (

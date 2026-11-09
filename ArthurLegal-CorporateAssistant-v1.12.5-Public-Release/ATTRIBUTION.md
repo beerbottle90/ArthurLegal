@@ -148,5 +148,12 @@ Paketi kendi kurumunuza uyarladığınızda doldurduğunuz gerçek veriler **siz
 - `knowledge/skills/litigation-legal__skills.md`
 - `knowledge/skills/privacy-legal__skills.md`
 - `knowledge/skills/regulatory-legal__skills.md`
+- `knowledge/agents/commercial-legal__deal-debrief.md`
+- `knowledge/agents/commercial-legal__playbook-monitor.md`
+- `knowledge/agents/commercial-legal__renewal-watcher.md`
+- `knowledge/agents/corporate-legal__dataroom-watcher.md`
+- `knowledge/agents/employment-legal__leave-tracker.md`
+- `knowledge/agents/ip-legal__ip-renewal-watcher.md`
+- `knowledge/agents/regulatory-legal__reg-change-monitor.md`
 
-Değişikliklerin niteliği: Türkçeye çeviri, Türk hukukuna uyarlama, ArthurLegal MCP araç yönlendirmesi, yeni skill'ler ve tek kitapçık biçimine dönüştürme. Diğer bütün dosyalar ArthurLegal'e özgüdür.
+Değişikliklerin niteliği: Türkçeye çeviri, Türk hukukuna uyarlama, ArthurLegal MCP araç yönlendirmesi, yeni skill'ler ve tek kitapçık biçimine dönüştürme; ajanlarda Türkçeye yeniden yazım ve Türk hukukuna uyarlama. Diğer bütün dosyalar ArthurLegal'e özgüdür.

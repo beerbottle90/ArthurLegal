@@ -165,4 +165,4 @@ tr_mevzuat_ara(number="5510", types=["KANUN"])  # SGK K.
 
 - [HMK rehberi](hmk-rehberi.md)
 - [ArthurLegal MCP TR rehberi](yargi-mcp-rehberi.md)
-- [Büro profili → dispute-litigation](../profiles/dispute-litigation.md)
+- [Büro profili → dispute-litigation](profiles/dispute-litigation.md)

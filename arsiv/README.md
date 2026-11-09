@@ -9,6 +9,8 @@ they receive no updates. Current versions live at the repository root. To instal
 [download section](https://github.com/beerbottle90/ArthurLegal#indir) on the main page or the current
 package's `KURULUM.md` / `INSTALLATION.md`.
 
+**Üçüncü istisna (12.10.2026):** eski sürümlerde örnek olarak verilen bir madde atfı (SMK m. 120) genel ifadeyle değiştirildi (18 sürüm, 36 dosya); bu yüzden o dosyalar yayımlandıkları günkü metinle birebir aynı değildir. · **Third exception (12.10.2026):** an example statute citation (SMK art. 120) in earlier versions was replaced with a general wording (18 versions, 36 files), so those files no longer match the text as first published.
+
 **İki istisna (07.10.2026):** eski sürümlerin örneklerinde kalan kişi adları rol yer tutucusuna çevrildi (`[CLCO ADI]`, `[CEO ADI]` gibi) ve bir marka ve patent vekili firmasının adı genel ifadeyle değiştirildi; başka hiçbir şey değişmedi. · **Two exceptions (07.10.2026):** person names left in examples of earlier versions were replaced with role placeholders, and the name of a trademark and patent attorney firm was replaced with a generic phrase; nothing else changed.
 
 | Paket · Package | Arşivdeki sürümler · Archived versions |

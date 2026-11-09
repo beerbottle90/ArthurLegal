@@ -10,7 +10,7 @@
 
 Bu paket, ArthurLegal **Law-Firm** ve **Corporate** paketlerinin iskeletinden türetilmiştir; ortak dokümanlar (usul referansları, atıf disiplini, MCP entegrasyon rehberleri) o paketlerden devralınmıştır. Türk hukuku entegrasyonu ArthurLegal MCP'nin Türkiye backend'i [`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp) (MIT) üzerinden çalışır; uç bilgisi [saidsurucu](https://github.com/saidsurucu)'nun yargi-mcp ve mevzuat-mcp projelerinden (MIT) alınmıştır. Ancak konumsal çerçeve **savunucu/taraf-vekili** perspektifinden **yargısal/tarafsız** perspektife çevrilmiştir — bu, Courthouse'u ayrı bir ürün hattı yapan temel farktır.
 
-## ArthurMask kurulum dosyası (v1.8.0)
+## ArthurMask kurulum dosyası (Courthouse v1.0.2)
 
 ArthurMask, ArthurLegal GitHub'daki [`arthur-mask` sürümüne](https://github.com/beerbottle90/ArthurLegal/releases/tag/arthur-mask) eklenen `ArthurMask-Kurulum.exe` kurulum
 dosyasıyla dağıtılan yerel gizlilik kapısıdır. ArthurMask'in kendisi bu paketle aynı

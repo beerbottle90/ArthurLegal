@@ -199,7 +199,7 @@ Teslim edilecek her çıktıda (not, sözleşme, protokol, ihtarname, dilekçe, 
 5. Çekilemiyorsa (connector kurulu değil, hata, iptal) madde numarasını gövdeden çıkar, hükmü numarasız ve genel ifadeyle kur, not içindeki atıfta `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` kullan, açık kalan noktayı İnceleme notunda adıyla yaz.
 6. İnceleme notuna tek cümle ekle: "Madde kontrolü: <kanun m. X ve Y> okundu ve eşleşti; <kanun m. Z> çekilemedi, gövdeden çıkarıldı."
 
-Knowledge dosyalarındaki madde haritaları (`smk-rehberi.md`, `hmk-rehberi.md` ve benzerleri) ve skill şablonlarındaki örnek atıflar yalnız neyin çekileceğini gösterir; doğrulama yerine geçmez.
+Knowledge dosyalarındaki madde haritaları (kanun rehberleri) ve skill şablonlarındaki örnek atıflar yalnız neyin çekileceğini gösterir; doğrulama yerine geçmez.
 
 Örnek hata: bir buluş klozunda hakkı işverene bağlayıp "SMK m. 120" yazmak. SMK m. 120'nin başlığı "Çalışanın önalım hakkı"dır; hak, işveren iflas ettiğinde ve iflas idaresi, işverenin tam hak talebinde bulunduğu buluşu işletmeden ayrı devretmek istediğinde çalışana tanınır. Madde çekilseydi başlık hatayı tek bakışta gösterirdi.
 

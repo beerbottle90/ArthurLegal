@@ -58,7 +58,7 @@ Her yayın için:
 |---|---|
 | Tür | makale / kitap / bölüm / bildiri / patent / ödül / proje / tez danışmanlığı |
 | İndeks | SSCI · AHCI · ESCI · Scopus · TR Dizin · diğer hakemli |
-| Quartile (varsa) | Q1-Q4 (yalnızca IF atanan indekslerde; **AHCI'ya quartile atanmaz**) |
+| Quartile (varsa) | Q1-Q4 (JCR'den teyit edilir; yalnız sanat ve beşeri bilim kategorisindeki dergide quartile yoktur) |
 | Yazar sayısı | Çok yazarlıda puan bölünür |
 | **Doktora öncesi/sonrası** | Puanın büyük kısmı doktora sonrası olmalı |
 | Tezden üretildi mi | Ayrı kategori |
@@ -109,7 +109,7 @@ belgesine dayanır. Nihai değerlendirme ÜAK'a aittir; bu çıktı bir taslakt�
 ## Yapma
 
 - Doğrulama kapısı geçilmeden **sayı verme**.
-- AHCI kayıtlarına quartile **atfetme**.
+- JCR'de teyit etmeden quartile **atfetme**; yalnız sanat ve beşeri bilim kategorisindeki dergide quartile yoktur.
 - "Bu puanla geçersiniz" **deme**. Nihai takdir ÜAK'tadır.
 - Kullanıcının verdiği indeks bilgisini doğrulamadan kabul etme; şüpheliyse teyit ettir.
 
