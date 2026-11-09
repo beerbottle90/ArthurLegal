@@ -1,6 +1,6 @@
 # [Halka Açık İştirak] (BIST: [BIST-KOD]) – İçsel Bilgi + KAP Açıklama Rehberi
 
-> **[Halka Açık İştirak] Petrokimya Holding A.Ş.** halka açık (BIST: [BIST-KOD]). ArthurLegal Holding'nin tek doğrudan halka açık iştiraki. SPK + KAP yükümlülükleri **[Halka Açık İştirak]'i etkileyen her hukuki çalışma** için tetiklenir.
+> **[Halka Açık İştirak] Petrokimya Holding A.Ş.** halka açık (BIST: [BIST-KOD]). Şirket'in tek doğrudan halka açık iştiraki. SPK + KAP yükümlülükleri **[Halka Açık İştirak]'i etkileyen her hukuki çalışma** için tetiklenir.
 
 ---
 
@@ -119,9 +119,9 @@ KAP açıklaması mutlaka içermeli:
 
 ---
 
-## ArthurLegal Holding → [Halka Açık İştirak] üst-iştirak işlemleri
+## Şirket → [Halka Açık İştirak] üst-iştirak işlemleri
 
-**Hassasiyet:** ArthurLegal Holding, [Halka Açık İştirak]'in **hâkim pay sahibi**. Şirket'in [Halka Açık İştirak]'e yönelik işlemleri (sözleşme, satım, hizmet) "ilişkili taraf işlemi" sayılır.
+**Hassasiyet:** Şirket, [Halka Açık İştirak]'in **hâkim pay sahibi**. Şirket'in [Halka Açık İştirak]'e yönelik işlemleri (sözleşme, satım, hizmet) "ilişkili taraf işlemi" sayılır.
 
 ### İlişkili taraf işlem rejimi (TTK + SPK)
 
@@ -180,4 +180,4 @@ KAP açıklamaları için: https://www.kap.org.tr/tr/sirket-bilgileri/ozet/<kap-
 
 ---
 
-*Son güncelleme: 13.05.2026 — [Halka Açık İştirak] halka açık olduğu için tüm ArthurLegal Holding hukuk işlerinde tetiklenebilir.*
+*Son güncelleme: 13.05.2026 — [Halka Açık İştirak] halka açık olduğu için tüm Şirket hukuk işlerinde tetiklenebilir.*

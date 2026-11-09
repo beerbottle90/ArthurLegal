@@ -23,7 +23,7 @@
 | **Mevzuat lafzı + yürürlük statüsü** | **e-qanun MCP** → `eqanun-mcp-rehberi.md` | §1 (yalnız yedek) |
 | Anayasa Mahkemesi kararı | constcourt.gov.az / CODICES | §3, §4 |
 | Enerji sektörü mevzuatı (EN) | minenergy.gov.az | §2 |
-| İş hukuku mevzuatı (EN/RU) | NATLEX (ILO) | §5 |
+| İş hukuku mevzuatı | **e-qanun MCP** (`az_`); NATLEX 403 veriyor, kullanma | §5 |
 | AZ hukuku hakkında doktrin | `lex-scholar-rehberi.md` (İKİNCİL — AZ'de açık erişim hukuk dergisi yok, yalnız OpenAlex) | — |
 | İmzalı AZ sözleşme emsali (PSA/JOA) | `resourcecontracts-rehberi.md` | — |
 
@@ -34,7 +34,7 @@
 | minenergy.gov.az/en/qanunlar | WebFetch | Enerji sektörü kanunları | EN + AZ | P0 — EN okuma |
 | constcourt.gov.az | WebFetch | Anayasa Mahkemesi kararları | AZ + seçili EN | P1 — içtihat |
 | CODICES (Venice Commission) | WebFetch | AY kararları İngilizce özet | EN + FR | P1 — içtihat EN |
-| NATLEX (ILO) | WebFetch | İş hukuku mevzuatı | EN + AZ + RU | P2 — iş hukuku |
+| NATLEX (ILO) | ❌ 403 (30.08.2026), kullanma | İş hukuku mevzuatı; yerine e-qanun MCP | EN + AZ + RU | §5 |
 
 ---
 
@@ -198,7 +198,7 @@ WebFetch:
 >    NATLEX'in verebileceği her şeyi daha güncel ve statü bilgisiyle verir.
 > 2. **e-qanun.az WebFetch** (`https://e-qanun.az/framework/{id}` ✅ 200) — MCP yoksa.
 >    ⚠️ Bu yolda **statü doğrulanmaz**; atıfa `(statü doğrulanmadı)` kaydını düş.
-> 3. **LexScholar MCP** — AZ iş hukuku doktrini (**ikincil** kaynak).
+> 3. **ArthurLegal MCP `scholar_` araçları** — AZ iş hukuku doktrini (**ikincil** kaynak).
 
 *(Aşağıdaki desen arşivdir — çağırma.)*
 
@@ -244,7 +244,6 @@ Bu rehberdeki kaynaklardan alınan atıflar **mutlaka** etiketli olmalı:
 - `[AZ Mevzuat — minenergy.gov.az — {kanun adı} — GG.AA.YYYY]` — Enerji Bakanlığı
 - `[AZ Anayasa Mah. — constcourt.gov.az — {karar no} — GG.AA.YYYY]` — Anayasa Mahkemesi
 - `[AZ Anayasa Mah. — CODICES — {karar adı} — GG.AA.YYYY]` — CODICES üzerinden
-- `[AZ İş Hukuku — NATLEX/ILO — {belge adı} — GG.AA.YYYY]` — ILO NATLEX
 
 **Asla:** Çekmediğin Azerbaycan hukuku kaynağına atıf yapmış gibi davranma.
 Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
@@ -256,7 +255,7 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 
 - **Dil:** Birincil kaynak Azerbaycan Türkçesi (Kiril değil, Latin alfabe). Türkçe
   bilen Claude için kısmen okunabilir ama kesin anlam için İngilizce versiyonu
-  öncelikle kullan (minenergy.gov.az EN sayfası, NATLEX EN, CODICES EN).
+  öncelikle kullan (minenergy.gov.az EN sayfası, CODICES EN).
 - **İçtihat kısıtlı:** AZ iç mahkeme kararları (Yargıtay eşdeğeri — Ali Məhkəmə)
   yapısal olarak erişilebilir değil. Yalnızca Anayasa Mahkemesi kararları açıkta.
   **e-qanun MCP de içtihat tutmaz** — cevap mahkemelerin uygulamasına dayanıyorsa
@@ -278,7 +277,8 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
    → e-qanun.az (Medeni Kanun, Vergi Kanunu ilgili maddeleri).
 
 2. **Azerbaycan'da istihdam edilen personel** → Azerbaycan'da istihdam edilenlerin hakları için
-   NATLEX/ILO (Əmək Məcəlləsi). Türkiye'de çalışıyorlarsa Türk iş hukuku geçerli.
+   e-qanun MCP: `az_search_acts(query="Əmək Məcəlləsi", types=[107])` → `az_get_act` (statü) →
+   `az_get_act_fulltext`. Türkiye'de çalışıyorlarsa Türk iş hukuku geçerli.
 
 3. **Enerji sektörü düzenlemeleri** → minenergy.gov.az/en/qanunlar (EN)
    Azerbaycanlı karşı tarafın tabi olduğu AZ enerji rejimi anlayışı için.
@@ -286,8 +286,8 @@ Azerbaycan hukukunu "biliyorum" diye `[AZ Mevzuat]` etiketi koyamazsın →
 4. **Anayasal haklar / mülkiyet sorunu** → CODICES (EN özetler güvenilir) →
    Gerekirse constcourt.gov.az.
 
-5. **Dil notu:** [Azerbaycanlı karşı taraf] ile yazışma → `SYSTEM_PROMPT.md`: "AZ/EN ikili dil."
-   Azerbaycan mevzuatından alıntı kullanılıyorsa AZ orijinal + EN çevirisi birlikte.
+5. **Dil notu:** yabancı karşı tarafa giden metinde `SYSTEM_PROMPT.md` bölüm 4 madde 2 uygulanır
+   (Türkçe metin, altında İngilizce sürüm). Azerbaycan mevzuatından alıntı kullanılıyorsa AZ orijinal + EN çevirisi birlikte.
 
 ---
 

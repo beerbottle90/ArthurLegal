@@ -155,7 +155,7 @@ HAGB, kurulan hükmün açıklanmasının geri bırakılmasıdır; uygulanıp uy
 - **Denetim süresi 5 yıl** (m. 231/8); denetimli serbestlik tedbiri eklenebilir.
 - Süre içinde kasıtlı suç işlenmez + yükümlülüklere uyulursa → **dava düşer** (m. 231/10).
 - İhlal → **hüküm açıklanır** (m. 231/11).
-- Kanun yolu: **istinaf** (m. 231/12 — 7499 s.K. ile itirazdan istinafa çevrildi; m. 272/3 saklı); BAM kararlarına m. 286 uygulanır. Denetim süresinde açıklanan/yeniden kurulan hükme **itiraz** (m. 231/11).
+- Kanun yolu: **istinaf** (m. 231/12 — 7499 s.K. ile itirazdan istinafa çevrildi, 7589 s.K. ile yeniden düzenlendi; m. 272/3 saklı); BAM kararlarına m. 286 uygulanır. Denetim süresinde açıklanan/yeniden kurulan hükme **itiraz** (m. 231/11).
 
 ## Çıktı
 

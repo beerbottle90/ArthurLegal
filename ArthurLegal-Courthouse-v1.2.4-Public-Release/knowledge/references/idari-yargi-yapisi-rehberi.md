@@ -16,6 +16,8 @@
 
 ### Daire görev haritası (temyiz aşaması)
 
+> Bu dağılım örnek düzeyindedir ve doğrulanmamıştır: daireler arası iş bölümü kararlarla değişir. Daire tahmin edilmez; güncel daire `tr_ictihat_ara(courts=["DANISTAYKARAR"], ...)` sonuçlarındaki daireden okunur ve kullanıcıdan teyit edilir.
+
 | Daire | Kapsam |
 |---|---|
 | **5. Daire** | Genel idari uyuşmazlık, memur statü |
@@ -29,7 +31,7 @@
 
 > Vergi daireleri `vergi-hakim` ve `idari-hakim` plugin'lerini ilgilendirir.
 
-- 1. Daire: Vatandaşlık + nüfus
+- 1. Daire: idari dairedir, dava dairesi değildir (Danıştay K. m. 42)
 - 2. Daire: Atama, görevde yükselme
 - 3. Daire: **Vergi — KDV, ÖTV**
 - 4. Daire: **Vergi — Gelir/Kurumlar vergisi**
@@ -94,7 +96,8 @@ Danıştay daire bazlı:
 
 ```
 tr_ictihat_ara(
-  chamber="13. Daire",
+  courts=["DANISTAYKARAR"],
+  chamber="<yalnız teyit edilmiş daire; emin değilsen boş bırak>",
   query="<konu>"
 )
 

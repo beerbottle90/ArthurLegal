@@ -36,13 +36,14 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 
 | MCP | Endpoint | Auth | Rol | Rehber |
 |---|---|---|---|---|
-| **ArthurLegal MCP (`tr_`)** | `arthurlegal-mcp.fly.dev/mcp` | OAuth (WorkOS) | TR mevzuat + yargı — **BİRİNCİL** | `mevzuat-mcp-rehberi.md`, `yargi-mcp-rehberi.md` |
+| **ArthurLegal MCP (`tr_`)** | `arthurlegal-mcp.fly.dev/mcp` | Yok | TR mevzuat + yargı — **BİRİNCİL** | `mevzuat-mcp-rehberi.md`, `yargi-mcp-rehberi.md` |
 | **OpenCaseLaw.ch** | `mcp.opencaselaw.ch/sse` | Yok | CH içtihat + Fedlex — **BİRİNCİL (CH)** | `switzerland-caselaw-rehberi.md` |
-| **ArthurLegal MCP** | `arthurlegal-mcp.fly.dev/mcp` | Yok | On yargı çevresi tek uçta: AZ mevzuatı + yürürlük statüsü, AT/DE/NL/PL/ES/FI/IE mevzuat ve içtihadı, hukuk doktrini, imzalı sözleşme emsali | `eqanun-mcp-rehberi.md`, `at-ris-mcp-rehberi.md`, `de-eli-mcp-rehberi.md`, `nl-rechtspraak-mcp-rehberi.md`, `pl-sejm-mcp-rehberi.md`, `es-boe-mcp-rehberi.md`, `fi-finlex-mcp-rehberi.md`, `ie-statutebook-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md` |
+| **ArthurLegal MCP** | `arthurlegal-mcp.fly.dev/mcp` | Yok | Türkiye dışındaki yargı çevreleri aynı uçta (güncel liste `status`): AZ mevzuatı + yürürlük statüsü, AT/DE/NL/PL/ES/FI/IE/UK/JP mevzuatı (AT/DE/NL'de içtihat da), AB mevzuatı + CJEU içtihadı, hukuk doktrini, imzalı sözleşme emsali, LEI | `uk-legislation-mcp-rehberi.md`, `eurlex-cellar-rehberi.md`, `japan-egov-api-rehberi.md`, `gleif-rehberi.md`, `eqanun-mcp-rehberi.md`, `at-ris-mcp-rehberi.md`, `de-eli-mcp-rehberi.md`, `nl-rechtspraak-mcp-rehberi.md`, `pl-sejm-mcp-rehberi.md`, `es-boe-mcp-rehberi.md`, `fi-finlex-mcp-rehberi.md`, `ie-statutebook-mcp-rehberi.md`, `lex-scholar-rehberi.md`, `resourcecontracts-rehberi.md` |
 
 > **ArthurLegal MCP auth'suzdur** — adresi bilen herkes tüm araçları çağırabilir;
 > müvekkil adı veya gizli taslak gönderme. Araç adları yargı çevresi önekli
-> (`az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `scholar_` `contracts_`);
+> (`tr_` `az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `uk_` `eu_` `jp_` `gleif_` `scholar_`
+> `contracts_` `tkgm_` `hesap_`);
 > `status` aracı her yargı çevresinin indeks kapsamını verir. Bağlantı koparsa
 > ilgili rehberin yedek yoluna düş.
 >
@@ -108,16 +109,17 @@ yardımcı kaynaktır.
 |---|---|---|
 | Türk kanunu, yönetmeliği, CB kararnamesi | ArthurLegal MCP (`tr_`) (mevzuat) | `mevzuat-mcp-rehberi.md` |
 | Türk/idari yargı kararı, Kurul kararı | ArthurLegal MCP (`tr_`) (yargı) | `yargi-mcp-rehberi.md` |
-| İngiliz hukuku statüsü (governing law = English law) | legislation.gov.uk | `uk-legislation-rehberi.md` |
+| İngiliz hukuku statüsü (governing law = English law) | ArthurLegal MCP `uk_` (`uk_search_legislation` → `uk_get_section`, sonra `uk_get_effects`); yedek legislation.gov.uk WebFetch | `uk-legislation-mcp-rehberi.md` (yedek: `uk-legislation-rehberi.md`) |
 | ABD federal statüsü/yönetmeliği (US/NY hukuku) | GovInfo WebFetch | `us-legislation-rehberi.md` |
 | ABD mahkeme kararı / içtihat | CourtListener REST | `courtlistener-rehberi.md` |
 | Yaptırım taraması | Resmî listeler (OFAC SDN, AB, UK OFSI, BM) WebFetch | `yaptirim-tarama-rehberi.md` |
-| **Azerbaycan mevzuatı + yürürlük statüsü** 🆕 | **e-qanun MCP** | `eqanun-mcp-rehberi.md` |
-| **Yabancı / karşılaştırmalı akademik doktrin** 🆕 | **LexScholar MCP** | `lex-scholar-rehberi.md` |
-| **Türk akademik doktrini (DergiPark)** 🆕 | **LexScholar MCP** (19 TR hukuk dergisi) | `lex-scholar-rehberi.md` |
-| **İmzalı PSA/JOA emsali, kloz benchmark** 🆕 | **ResourceContracts MCP** | `resourcecontracts-rehberi.md` |
+| **Azerbaycan mevzuatı + yürürlük statüsü** 🆕 | **ArthurLegal MCP `az_`** (e-qanun) | `eqanun-mcp-rehberi.md` |
+| **Yabancı / karşılaştırmalı akademik doktrin** 🆕 | **ArthurLegal MCP `scholar_`** | `lex-scholar-rehberi.md` |
+| **Türk akademik doktrini (DergiPark)** 🆕 | **ArthurLegal MCP `scholar_`** (19 TR hukuk dergisi) | `lex-scholar-rehberi.md` |
+| **İmzalı PSA/JOA emsali, kloz benchmark** 🆕 | **ArthurLegal MCP `contracts_`** | `resourcecontracts-rehberi.md` |
 | ABD eyalet hukuku (Delaware, California vb.) | Web search + `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` | — (connector yok) |
-| İngiliz/AB içtihatı | Web search / BAILII + `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` | — (connector yok) |
+| AB içtihadı (CJEU, Genel Mahkeme) | ArthurLegal MCP `eu_` (`eu_search_eu_law` → `eu_get_document_text`) | `eurlex-cellar-rehberi.md` |
+| İngiliz içtihadı | Web search / BAILII + `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` | — (connector yok; `uk_` yalnız mevzuattır) |
 
 **Önce TR.** Bir sorunun Türk hukuku ayağı varsa önce ArthurLegal MCP (`tr_`)'ye git;
 yabancı kaynak ek katmandır.

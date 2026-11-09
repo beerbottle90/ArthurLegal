@@ -47,7 +47,7 @@ yanıtlar. Detay bağlam: `karsilastirmali-hukuk-rehberi.md`.
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `uk_` |
 | **Auth** | **Yok** |
 | **Kaynak** | legislation.gov.uk (The National Archives), Open Government Licence v3.0 |
@@ -102,18 +102,18 @@ uk_get_section: type "ukpga", year "1996", number "23", section "9"
 ```
 
 Tanımlayıcı biçimi (`ukpga/1996/23`) ve fragment yolu, legislation.gov.uk URI
-şemasıyla aynıdır; çağrı parametrelerinin tam JSON adları entegrasyon öncesi
-README'den doğrulanmalı. WebFetch karşılığı (yedek rota, doğrulanmış URL):
+şemasıyla aynıdır; çağrı parametreleri canlı şemadaki adlardır: `type` (varsayılan `ukpga`), `year`,
+`number`, `section`; `uk_get_effects` ayrıca `unapplied_only` ve `max_pages` alır. WebFetch karşılığı (yedek rota, doğrulanmış URL):
 `https://www.legislation.gov.uk/ukpga/1996/23/section/9`.
 
 **Örnek 2 — UCTA 1977 tadil taraması (governing-law risk notu):**
 
 ```
-uk_get_effects: ukpga/1977/50, unapplied_only: true
+uk_get_effects: type "ukpga", year "1977", number "50", unapplied_only: true
 → UCTA 1977'ye işaret eden, henüz metne işlenmemiş tadiller
 
-uk_get_legislation: ukpga/1977/50
-→ konsolide metin ve text_current_to; işlenmemiş tadil varsa çıktıda [review] flag'i
+uk_get_legislation: type "ukpga", year "1977", number "50"
+→ statü ve text_current_to (metin için uk_get_section); işlenmemiş tadil varsa çıktıda [review] flag'i
 ```
 
 Eski rotadaki `/data.rdf` sürüm-zinciri incelemesinin araç karşılığı budur;
@@ -160,8 +160,8 @@ Metin oturumda fiilen bu MCP (veya WebFetch yedeği) ile çekildiyse:
 - **Lisans (kaynakta doğrulandı, 13.08.2026):** Repo — "Licensed under the
   Open Government Licence v3.0"; içerik — "Contains public sector information
   licensed under the Open Government Licence v3.0." OGL atfı her çıktıda taşınır.
-- **Yalnızca loopback:** Ürün, tünel/uzak host'ları reddeder; sunucu yerel
-  stdio süreci olarak çalıştırılır. HTTP modu kullanılmaz.
+- **Yalnızca loopback (TNA `legislation-mcp-ts` için):** Ürün, tünel/uzak host'ları reddeder. ArthurLegal
+  bu sunucuyu çalıştırmaz; `uk_` araçları aynı veriye sitenin açık XML ve Atom uçlarından gider.
 - **Sürüm sabitleme:** 13.08.2026 itibarıyla repoda yayımlanmış release **yok**
   — release çıkana kadar belirli bir **commit'e sabitlenir**; entegrasyonda
   release durumu yeniden kontrol edilir (entegrasyon öncesi doğrulanmalı).
@@ -175,6 +175,9 @@ Metin oturumda fiilen bu MCP (veya WebFetch yedeği) ile çekildiyse:
 ---
 
 ## Karar kaydı (mini-ADR)
+
+> **Güncel durum:** TNA sunucusu barındırılamadığı için kullanılmıyor; birincil yol ArthurLegal MCP `uk_`
+> araçlarıdır (bu rehberin başı). Aşağıdaki kayıt tarihseldir.
 
 **Bağlam.** UK, 14 yargı çevresi içinde WebFetch katmanındaydı: statü metni
 URL kurgusuyla çekiliyor, sürüm/tadil durumu `/data.rdf` üzerinden elle

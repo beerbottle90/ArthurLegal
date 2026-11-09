@@ -59,7 +59,7 @@
 | **KHK/660** | Kamu Gözetimi K. (KGK) | 660 |
 | **SPK Tebliğ II-15.1** | Özel Durum Açıklamaları | — |
 | **SPK Tebliğ VI-104.1** | İçsel Bilgiler | — |
-| **SPK Tebliğ II-23.1** | Önemli İşlemler | — |
+| **SPK Tebliğ II-23.3** | Önemli Nitelikteki İşlemler ve Ayrılma Hakkı | — |
 | **SPK Tebliğ II-17.1** | Kurumsal Yönetim İlkeleri | — |
 | **SPK Tebliğ II-26.1** | Pay Alım Teklifleri | — |
 

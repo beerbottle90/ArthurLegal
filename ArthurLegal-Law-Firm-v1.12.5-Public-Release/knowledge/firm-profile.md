@@ -83,6 +83,10 @@
 | `administrative-legal` | [Evet/Hayır] | [N] |
 | `energy-finance` | [Evet/Hayır] | [N] |
 | `criminal-defense` | [Evet/Hayır] | [N] |
+| `advocacy-legal` | [Evet/Hayır] | [N] |
+| `expert-opinion` | [Evet/Hayır] | [N] |
+| `contract-drafting` | [Evet/Hayır] | [N] |
+| `legal-research` | Evet (kaynak katmanı) | — |
 | `firm-operations` | Evet (her büro) | — |
 
 ---
@@ -192,7 +196,7 @@
 
 - **Resmi Gazete:** https://www.resmigazete.gov.tr/ (günlük 09:30)
 - **ArthurLegal MCP (`tr_`):** Tek connector (`arthurlegal-mcp.fly.dev`, `tr_` öneki) üzerinden yürürlükteki kanun/KHK/yönetmelik/tebliğ + Yargıtay/Danıştay/AYM ve kurul kararları.
-- **ArthurLegal Tapu (`tkgm_`):** Aynı connector'da (Claude Desktop yerel kurulumunda öneksiz) TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki ve dayanak köprüsü; taşınmaz dosyalarında bilgi amaçlı kullanılır. Rehber: `tapu-kadastro-rehberi.md`.
+- **ArthurLegal Tapu (`tkgm_`):** claude.ai'de ArthurLegal connector'ında `tkgm_` önekiyle; Claude Desktop yerel kurulumunda, seçildiyse ayrı ArthurLegal Tapu (`arthur-tapu`) sunucusunda öneksiz (`parsel_sorgula`, `parsel_raporu`, `kroki`). TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki ve dayanak köprüsü; taşınmaz dosyalarında bilgi amaçlı kullanılır. Rehber: `tapu-kadastro-rehberi.md`.
 - **Sektör düzenleyicileri (müvekkil portföyüne göre):**
   - **EPDK** — https://www.epdk.gov.tr
   - **Rekabet Kurumu** — https://www.rekabet.gov.tr

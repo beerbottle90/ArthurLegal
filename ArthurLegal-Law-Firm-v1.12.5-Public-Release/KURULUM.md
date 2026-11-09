@@ -9,9 +9,9 @@
 | Gereksinim | Açıklama |
 |---|---|
 | Claude.ai hesabı | Pro veya Team plan (Projects özelliği için) |
-| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — tek connector, Türkiye + 14 yargı çevresi, auth yok (Adım 4) |
+| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — tek connector, Türkiye + 11 yargı çevresi, auth yok (Adım 4) |
 | TR Legal MCP | yargi-mcp-pro connector — yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK için (isteğe bağlı, Adım 4d) |
-| e-qanun / LexScholar / ResourceContracts MCP | self-hosted, auth yok (isteğe bağlı — Adım 4b) |
+| e-qanun / LexScholar / ResourceContracts | ArthurLegal MCP'nin `az_`, `scholar_`, `contracts_` önekleri; ayrı kurulum gerekmez (Adım 4) |
 | ArthurMask | Belgeleri bilgisayarınızda maskeleyen yerel gizlilik kapısı; Windows 10/11 64 bit + Claude Desktop (önerilir, isteğe bağlı, Adım 5) |
 
 ---
@@ -54,12 +54,6 @@ knowledge/profiles/firm-operations.md
 knowledge/profiles/ip-advisory.md
 knowledge/profiles/tax-litigation.md
 knowledge/profiles/legal-research.md          ← kaynak katmanı (v1.4.0)
-```
-
-### Yeni pratik alanlar (v1.2.0)
-```
-knowledge/profiles/privacy-legal.md       ← KVKK / veri koruma
-knowledge/profiles/regulatory-legal.md    ← Regülasyon / düzenleyici
 ```
 
 ### Skill dosyaları (tüm plugin'ler)
@@ -111,7 +105,7 @@ knowledge/references/mesleki-sir-rehberi.md
 knowledge/references/karsilastirmali-hukuk-rehberi.md
 ```
 
-**Kaynak katmanı MCP rehberleri (v1.4.0 — Adım 4b'yi kurduysanız):**
+**Kaynak katmanı MCP rehberleri (v1.4.0 — ArthurLegal MCP, Adım 4):**
 ```
 knowledge/references/eqanun-mcp-rehberi.md          ← AZ mevzuatı (BİRİNCİL)
 knowledge/references/lex-scholar-rehberi.md         ← akademik doktrin + DergiPark (İKİNCİL)
@@ -157,7 +151,9 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 
 ---
 
-## Adım 4 — ArthurLegal MCP Connector Ekle (Türkiye + 14 yargı çevresi, tek uç)
+## Adım 4 — ArthurLegal MCP Connector Ekle (Türkiye + 11 yargı çevresi, tek uç)
+
+> **Kurulum dosyasıyla (Claude Desktop) kurduysanız bu adımı atlayın.** Yerel köprü (`arthurlegal-yerel`) araştırma araçlarını zaten getirir; aynı uç bir de connector olarak eklenirse araçlar iki kez görünür. Bu adım yalnız claude.ai web ve mobil içindir. Yerel kurulumda tapu araçları, seçildiyse ayrı ArthurLegal Tapu (`arthur-tapu`) sunucusundan öneksiz gelir.
 
 **Customize → Connectors → + Add custom connector**
 
@@ -167,7 +163,7 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** — kimlik doğrulama yok |
 
-Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
+Tek uç, 130 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
 
 | Önek | Kapsam |
 |---|---|
@@ -206,7 +202,7 @@ Türkiye satırında sekiz kurumun kaçar belgesinin indekslendiği görünür.
 "Yargıtay 9. HD iş kazası kararı"             → tr_ictihat_ara(chamber="H9")
 "EPDK lisanssız üretim kararları"             → tr_kurum_karari_ara(kurum="epdk")
 "bir bankanın faaliyet izninin kaldırılması"  → tr_semantik_ara(kurum="bddk", mode="semantic")
-"kişisel verilerin korunması" (İspanya)       → es_search_legislation, LO 15/1999 ve LO 7/2021 dönmeli
+"kişisel verilerin korunması" (İspanya)       → es_search_legislation, LO 3/2018 ve LO 7/2021 dönmeli (LO 15/1999 de dönerse mülgadır: metni "Norma derogada" ile başlar)
 ```
 
 **Kaynak:** `github.com/beerbottle90/arthurlegal-mcp` (Türkiye backend'i: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`) — Fly.io'da barındırılıyor,
@@ -221,7 +217,7 @@ indeksler image'a gömülü, semantik arama Voyage AI (`voyage-4-lite`) ile.
 >
 > Bağlandıktan sonra `status` aracını çağırın. Ayrıntı: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
 
-> **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu on beş yargı çevresi
+> **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu 12 yargı çevresi
 > WebFetch yoluna düşer (Türkiye'de içtihat araması yapılamaz, AZ'de **statü doğrulanmaz**),
 > doktrin ve sözleşme emsali kapsam dışı kalır — asistan bunu çıktısında belirtir.
 
@@ -251,13 +247,15 @@ Müvekkil portföyünüz o yargı çevresine temas ediyorsa ekleyin.
 > `[CourtListener]` etiketi almaz. Dilekçeye giren her ABD atfı bu kontrolden
 > geçer. Ayrıntı: `courtlistener-rehberi.md`.
 
-> Fedlex connector'ı kurulmazsa İsviçre mevzuatı WebFetch ile de çalışır
-> (`fedlex.admin.ch`) — bkz. `switzerland-caselaw-rehberi.md`.
+> Fedlex connector'ı kurulmazsa İsviçre madde metni OpenCaseLaw.ch connector'ının `get_law` aracıyla alınır
+> (`fedlex.admin.ch` sayfaları WebFetch'e metin döndürmez); o da yoksa UYARI satırı yazılır — bkz. `switzerland-caselaw-rehberi.md`.
 
 **Connector gerektirmeyen yargı çevreleri** (WebFetch/doğrudan API ile otomatik):
 🇬🇧 UK · 🇺🇸 US mevzuat (GovInfo — ücretsiz API key) · 🇪🇺 AB/CJEU/ECHR · 🇩🇪 DE ·
 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(yalnız yaptırım/KYC)* · 🇨🇳 CN · 🇷🇸 RS ·
-🇦🇿 AZ *(içtihat/EN — mevzuat için Adım 4b)*
+🇦🇿 AZ *(içtihat/EN — mevzuat için Adım 4)*
+
+🇬🇧 UK, 🇪🇺 AB/CJEU, 🇩🇪 Almanya ve 🇯🇵 Japonya mevzuatı ArthurLegal MCP'dedir (`uk_`, `eu_`, `de_`, `jp_`; Adım 4); WebFetch yolu bunlar için yalnız yedektir.
 
 ---
 

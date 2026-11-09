@@ -1,8 +1,8 @@
 # [Elektrik İştiraki] – Elektrik Üretim Lisans + EPDK Rehberi (Devri Sonrası)
 
-> **[Elektrik İştiraki] = Doğal Gaz Kombine Çevrim Santrali.** [Tesis Lokasyonu]'de [DOLDUR — kapasite] kurulu güçte doğal gaz yakıtlı elektrik üretim. [önceki sahibi]nden ~[DOLDUR — devralma bedeli] karşılığı yakın geçmişte ArthurLegal Holding tarafından devralındı.
+> **[Elektrik İştiraki] = Doğal Gaz Kombine Çevrim Santrali.** [Tesis Lokasyonu]'de [DOLDUR — kapasite] kurulu güçte doğal gaz yakıtlı elektrik üretim. **Örnek senaryo (şirketiniz için geçerliyse doldurun):** santral [önceki sahibi]nden ~[DOLDUR — devralma bedeli] karşılığı [ŞİRKET ADI] tarafından devralınmıştır.
 
-> **Stratejik bağlam:** ArthurLegal Holding, **doğal gaz dağıtım ([Şehir Gazı Dağıtım A]/[Şehir Gazı Dağıtım B])** işinden çıkıp **doğal gaz yakıtlı elektrik üretim** alanına geçiyor. Bu, regülatif çerçeveyi de değiştirir — 4646 Doğal Gaz Piyasası → 6446 Elektrik Piyasası.
+> **Stratejik bağlam (örnek senaryo; gerçek durumu `company-profile.md`'den teyit et):** [ŞİRKET ADI], **doğal gaz dağıtım ([Şehir Gazı Dağıtım A]/[Şehir Gazı Dağıtım B])** işinden çıkıp **doğal gaz yakıtlı elektrik üretim** alanına geçiyor. Bu, regülatif çerçeveyi de değiştirir — 4646 Doğal Gaz Piyasası → 6446 Elektrik Piyasası.
 
 ---
 
@@ -26,7 +26,7 @@
 
 ### Adım 1: EPDK bildirim ve onay
 
-[önceki sahibi]nden ArthurLegal Holding'ye **üretim lisansı devri** EPDK Kurul kararıyla onaylanır. Süreç:
+[önceki sahibi]nden [ŞİRKET ADI] adına **üretim lisansı devri** EPDK Kurul kararıyla onaylanır. Süreç:
 
 1. **Devir başvurusu** (devir öncesinde başvurulur)
 2. **EPDK Kurul kararı** ile onay (yazılı bildirim)
@@ -39,7 +39,7 @@
 ### Adım 2: Bağlantı + sistem kullanım sözleşmesi devri
 
 **TEİAŞ + İletim sistem kullanım sözleşmesi:**
-- Mevcut sözleşmenin ArthurLegal Holding adına revize edilmesi
+- Mevcut sözleşmenin [ŞİRKET ADI] adına revize edilmesi
 - Sistem kullanım bedellerinin Şirket adına faturalanması
 - Teminat mektupları yenilenmesi
 
@@ -107,7 +107,7 @@
 
 ## Dikkat edilmesi gereken regülatif değişiklikler (2026 takip)
 
-- **Karbon Vergisi / ETS** (TR İklim Kanunu taslağı TBMM'de) — doğal gaz yakıtlı elektrik üretim büyük etki
+- **Emisyon Ticaret Sistemi (ETS)** — 7552 sayılı İklim Kanunu (RG sayı 32951) yürürlükte, ETS m. 9'da; ikincil düzenlemeleri `tr_mevzuat_ara(query="emisyon ticaret")` ve `tr_resmi_gazete_tara` ile izleyin — doğal gaz yakıtlı elektrik üretim büyük etki
 - **AB CBAM** elektrik dahil sınırda karbon ayarlama — TR-AB hatları etkili
 - **Yenilenebilir Enerji Garanti Belgesi (YEK-G)** — [Elektrik İştiraki] doğal gaz; YEK-G alamaz ama RES + GES yatırımı entegrasyonu gündeme gelirse
 - **EPDK Kurul Kararı 11400** ve sonrası — kapasite mekanizması ödemeleri (gas fired plants için kritik) (doğrulanmadı)
@@ -144,4 +144,4 @@ EPDK Kurul kararları: `tr_kurum_karari_ara(kurum="epdk", market="elektrik")` (A
 
 ---
 
-*Son güncelleme: 13.05.2026 — [Elektrik İştiraki] devri yakın geçmişte iştirak portföyüne katılan ArthurLegal Holding stratejik dönüşümü.*
+*Son güncelleme: 13.05.2026 — örnek senaryo: [Elektrik İştiraki] devri.*

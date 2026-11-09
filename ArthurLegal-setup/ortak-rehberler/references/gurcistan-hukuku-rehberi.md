@@ -61,7 +61,7 @@ WebFetch:
 | Konu | Kanun | matsne ID | {{AL_KURUM}} bağlantısı |
 |------|-------|-----------|------------------|
 | **Petrol & Gaz** | Law of Georgia on Oil and Gas (1999) | `18424` | BTC/SCP transit, upstream lisans |
-| **Elektrik & Doğal Gaz** | Law on Electricity and Natural Gas | `31744` | Gaz dağıtım, SCP transit, lisans |
+| **Elektrik & Doğal Gaz (mülga)** | Law on Electricity and Natural Gas (1997) | `31744` | matsne kaydında geçerlilik sonu 27.12.2019; yalnız tarihsel işlemler için. Güncel çerçeve alt satırdaki kanundur |
 | **Enerji & Su Temini** | Law on Energy and Water Supply (2019) | `4747785` | Yeni enerji çerçeve kanunu, GNERC düzenleme |
 | **Çevre Etki İzni** | Law on Environmental Impact Permits | `20206` | Boru hattı projeleri ÇED |
 | **Demiryolu Kodu** | Railway Code of Georgia | `14404` | Ham petrol demiryolu taşıma (alternatif) |
@@ -93,7 +93,7 @@ ADIM 3: Atıf → [GE Mevzuat — matsne.gov.ge — {kanun} — GG.AA.YYYY]
 ### 4.2 Gaz dağıtım lisansı
 
 ```
-ADIM 1: Elektrik ve Doğal Gaz Kanunu (31744) + Enerji ve Su Temini (4747785)
+ADIM 1: Enerji ve Su Temini Kanunu (4747785); 27.12.2019 öncesi işlemler için eski Elektrik ve Doğal Gaz Kanunu (31744)
 ADIM 2: GNERC lisans şartları (gnerc.org/en)
 ADIM 3: Türk hukuku ile kıyas gerekiyorsa → EPDK rehberi
 ```

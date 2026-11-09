@@ -140,7 +140,7 @@ JIF ve h-index'in hukukta düşük kapsama ve yanıltıcı sonuç verdiğini bel
 ## Yapma
 
 - Dergi adı, ISSN veya indeks durumu **uydurma**. DOAJ / derginin kendi sayfası ile doğrula;
-  doğrulayamıyorsan `[MANUEL DOĞRULAYIN]` yaz.
+  doğrulayamıyorsan `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` yaz.
 - Kontrol etmeden dergi önerme.
 
 ---

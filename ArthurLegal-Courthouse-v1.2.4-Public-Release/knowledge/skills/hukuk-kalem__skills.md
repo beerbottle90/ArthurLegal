@@ -113,7 +113,7 @@ Dava türüne göre alınacak harç ve avansı doğru belirle. Eksik harç = dav
 
 ## Çıktı
 
-Harç/avans kalem tablosu (`[DOLDUR]` tutarlı) + eksiklik muhtırası taslağı. Güncel tarife için → `damga-vergisi-rehberi.md` ve yıllık Harçlar tarifesi (Resmi Gazete teyidi).
+Harç/avans kalem tablosu (`[DOLDUR]` tutarlı) + eksiklik muhtırası taslağı. Güncel tarife için → `harc-gider-rehberi.md` ve yıllık Harçlar tarifesi (Resmi Gazete teyidi); araç bağlıysa harç hesabını `hesap_yargi_harci` yapar ve tazelik satırı aynen yazılır.
 
 ---
 

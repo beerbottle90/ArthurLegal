@@ -112,23 +112,11 @@ MKK'nın halka açık şirket bilgi portalı. Aşağıdaki bilgileri **public** 
 | Sermaye yapısı | (Aynı sayfa, "Sermaye" sekmesi) |
 | Bilgilendirme dokümanları | (Aynı sayfa, "Dokümanlar" sekmesi) |
 
-### WebFetch örnekleri
+### WebFetch ile okunmaz
 
-**Örnek 1: [HALKA AÇIK İŞTİRAK] sermaye yapısı + son artırım**
-```
-WebFetch:
-  url: "https://e-sirket.mkk.com.tr/.../PartnerShipDetail?ticker=[BIST KOD]"
-  prompt: "List the current çıkarılmış sermaye TL, capital structure changes 
-           in last 24 months (bedelli/bedelsiz/birleşik), and latest GK kararı 
-           regarding capital."
-```
-
-**Örnek 2: Genel Kurul gündem**
-```
-WebFetch:
-  url: "https://e-sirket.mkk.com.tr/.../GeneralAssembly?ticker=[BIST KOD]"
-  prompt: "Latest GK tarih, gündem maddeleri, alınan kararlar özet."
-```
+e-ŞİRKET arayüzü JavaScript SPA'dır; WebFetch içerik döndürmez (aşağıdaki sınırlamalar). Sermaye yapısı ve
+Genel Kurul bilgisini KAP bildirimlerinden çıkar (`https://www.kap.org.tr/tr/search/{TICKER}/1`, bölüm 1) ya da
+kullanıcıdan e-ŞİRKET ekran çıktısı iste.
 
 ---
 

@@ -46,7 +46,8 @@ user-invocable: true
 ## Yöntem — statü doğrulaması opsiyonel DEĞİL
 
 1. `az_search_acts(query, scope="title", status="in_force")` ile ara. Başlık araması
-   zayıf dönerse `scope="text"`e genişlet.
+   zayıf dönerse `scope="text"`e genişlet. Kanun ya da mecelle ararken `types=[107]` (Məcəllələr)
+   ya da `types=[30]` (Qanunlar) ver; süzgeçsiz aramada değişiklik aktları öne çıkar.
 2. Dönen `id` ile **`az_get_act(id)`** çağır ve `statusName` oku:
    - **`Qüvvədədir`** → yürürlükte.
    - **`Ləğv olunmuş`** → **yürürlükten kalkmış — DAYANAK YAPMA.** Ardıl aktı ara.
@@ -57,8 +58,9 @@ user-invocable: true
 4. **Fiilen okuduğun maddeyi alıntıla.** Başlıktan parafraz yapma.
 
 > **Bu skill'in var olma sebebi tek bir hatadır: yürürlükten kalkmış bir aktı
-> yürürlükteymiş gibi göstermek.** `az_search_acts` bunu sana söyleyemez; yalnız
-> `az_get_act` söyler.
+> yürürlükteymiş gibi göstermek.** `az_search_acts` sonuçları `statusName` taşır ve varsayılan
+> `status="in_force"` mülga aktları dışarıda bırakır (tarihsel araştırmada `status="all"`); statüyü ve
+> tarihleri yine de `az_get_act` ile teyit et.
 
 ## Dil
 

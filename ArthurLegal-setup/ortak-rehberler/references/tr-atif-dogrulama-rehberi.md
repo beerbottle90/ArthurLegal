@@ -41,10 +41,13 @@ Dil modelinin en tehlikeli hatası biçimce kusursuz ama var olmayan künyedir. 
 1. **Ayrıştır.** Daire kodu: Yargıtay 9. Hukuk Dairesi → `H9`, 3. Ceza Dairesi → `C3`, Hukuk Genel Kurulu → `HGK`,
    Ceza Genel Kurulu → `CGK`; Danıştay 13. Daire → `D13`, `VDDK`, `IDDK`. BAM için `courts=["ISTINAFHUKUK"]` ve
    `chamber` alanına tam ad yazılır: `"İstanbul Bölge Adliye Mahkemesi 12. Hukuk Dairesi"`.
-2. **Sorgu olarak numaranın yalnız sıra kısmını ver.** "2024/13727" → `query="13727"`.
+2. **Sorguya numarayı yıl ile sıra arasında boşlukla, tırnak içinde yaz.** "2024/13727" → `query='"2024 13727"'`
+   (`yargi-mcp-rehberi.md` bölüm 3 ile aynı yol).
    - Bedesten sorgusunda "/" kabul edilmez: `"2024/13727"` hata döner ("Sadece harf ve rakam içeren aramalar yapılabilir").
-   - `"2024 13727"` gibi iki parçalı sorgu binlerce ilgisiz sonuç döndürür.
-   - Sıra no sorgusu hem esas hem karar numarası alanında eşleşir; bu yüzden sonuçtaki her iki alana da bakılır.
+   - Tırnaksız `2024 13727` de önce tam ifade olarak aranır (`kelime_modu="ifade"`, varsayılan). `kelime_modu="herhangi"`
+     verilirse kelimeler VEYA ile birleşir ve ilgisiz sonuç sayısı çok artar.
+   - Yedek: yalnız sıra kısmı (`query="13727"`), daire ve tarih süzgeciyle birlikte aynı kararı bulur.
+   - Sorgu hem esas hem karar numarası alanında eşleşir; bu yüzden sonuçtaki her iki alana da bakılır.
 3. **Süzgeç:** `chamber` = daire kodu; `date_from` = `date_to` = künyedeki karar tarihi (YYYY-MM-DD).
 4. **Karşılaştır:** sonuçtaki `esas_no`, `karar_no` ve `karar_tarihi` **üçü birden** künyeyle aynıysa → **DOĞRULANDI**.
    Metne yanıttaki `citation` alanı birebir yazılır.

@@ -30,7 +30,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Meslek sirri (Av. K. m. 36):** uc MCP de PUBLIC arama aracidir — muvekkil
+> **Meslek sirri (Av. K. m. 36):** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — muvekkil
 > bilgisi, dosya ozeti, karsi taraf adi veya gizli taslak **gonderilmez**. Sorgu
 > soyut hukuki kavram olur (`mucbir sebep uyarlama`), dosya alintisi olmaz.
 > Ayrica bkz. `references/mesleki-sir-rehberi.md`.

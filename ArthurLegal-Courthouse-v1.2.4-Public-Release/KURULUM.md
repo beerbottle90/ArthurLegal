@@ -39,11 +39,12 @@ aynı paketi kurar.
 3. **`knowledge/`** klasöründeki dosyaları Project Knowledge'a sürükle-bırak ile yükleyin.
 4. **`knowledge/mahkeme-profili.md`** içindeki `[DOLDUR]` alanlarını kendi mahkemenize göre özelleştirin; "Mahkeme türü" alanı `knowledge/profiles/` altındaki profili seçer (opsiyonel ama önerilir).
 
-## ArthurLegal MCP bağlantısı (önerilir)
+## ArthurLegal MCP bağlantısı (yalnız elle kurulumda)
 
-Yargı ve mevzuat araçları için Claude.ai → Settings → Connectors → **Add custom connector**:
+Kurulum dosyasıyla kurduysanız bu adımı atlayın: yerel köprü (`arthurlegal-yerel`) araştırma araçlarını zaten getirir,
+aynı uç bir de connector olarak eklenirse araçlar iki kez görünür. Elle kurulumda yargı ve mevzuat araçları için Claude.ai → Settings → Connectors → **Add custom connector**:
 ad `arthurlegal`, URL `https://arthurlegal-mcp.fly.dev/mcp`, auth yok. Türk hukuku bu
-connector'da `tr_` önekiyle gelir (23 araç: Yargıtay, Danıştay, BAM, yerel, KYB, AYM,
+connector'da `tr_` önekiyle gelir (24 araç: Yargıtay, Danıştay, BAM, yerel, KYB, AYM,
 Uyuşmazlık Mahkemesi, mevzuat, Resmî Gazete, 8 düzenleyici kurum, semantik arşiv). Detay:
 `knowledge/references/yargi-mcp-rehberi.md` ve `mevzuat-mcp-rehberi.md`. MCP olmadan da
 çalışır; ancak güncel içtihat/mevzuat çekimi için MCP şarttır. AİHM, KİK ve Sayıştay bu

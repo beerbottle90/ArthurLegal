@@ -30,7 +30,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -254,7 +254,8 @@ Eğer özelge red gelirse dava açılır → şimdiden Danıştay eğilimini bil
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D3, D4, D7, D9, VDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<konu> mukteza GİB",
   date_from="2022-01-01"
 )
@@ -313,7 +314,7 @@ tr_ictihat_ara(
 name: kdv-otv-iade-review
 description: >
   KDV iadesi ([HALKA AÇIK İŞTİRAK] ihracat) ve ÖTV mahsubu/iadesi ([RAFİNERİ] akaryakıt
-  ihracat) için iade dosyası hazırlık review: KDVK m. 32 + m. 9 KDV iade rejimi,
+  ihracat) için iade dosyası hazırlık review: KDVK m. 11 + m. 32 KDV iade rejimi,
   ÖTV m. 5 ihracat istisnası, YMM raporu gereksinimi, Maliye'nin red gerekçesi
   analizi, dava prep.
 user-invocable: true
@@ -334,7 +335,7 @@ user-invocable: true
 - **Maliye'ye sunulacak iade talep / itiraz dilekçesi** → resmi format
 - **Dış vergi avukatı (iade reddi → dava)** → "VERGİ DAVA BRIEF"
 
-## KDV iadesi (KDVK m. 32 + 9)
+## KDV iadesi (KDVK m. 11 + 32)
 
 ### Genel rejim
 - **m. 11 — İhracat istisnası:** Mal/hizmet ihracatı KDV'den müstesna
@@ -645,13 +646,14 @@ Yürütmenin durdurulması şartları (m. 27/2), ikisi birlikte:
 
 İstisna hallerinde yüksek tutarlarda **telafisi güç zarar** daha kolay gösterilir (nakit etkisi, operasyon).
 
-**Tehir-i icra (AATUHK)** — vergi tahsil aşamasına girdiyse ayrı bir paralel yol.
+**Ödeme emri (6183 m. 58)** — vergi tahsil aşamasına girdiyse ayrı bir paralel yol: ödeme emrine karşı tebliğden itibaren 15 gün içinde dava açılır (6183 uygulamasına ilişkin vergi davalarında görevli mahkeme vergi mahkemesidir, 2576 m. 6/b). Tahsilat işleminden doğan bu dava tahsili kendiliğinden durdurmaz; yürütmenin durdurulması ayrıca istenir (İYUK m. 27/4).
 
 ### 4. ArthurLegal MCP (`tr_`) — emsal Danıştay kararları
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D3, D4, D7, D9, VDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<dava konusu>",
   date_from="2022-01-01"
 )
@@ -992,7 +994,8 @@ user-invocable: true
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D3, D4, D7, D9, VDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<konu>",
   date_from="2022-01-01"
 )
@@ -1195,7 +1198,8 @@ Bu aşama **kritik**. Raporda önerilen tarhiyat fiilen yapılmadan önce:
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D3, D4, D7, D9, VDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<tespitin konusu>",
   date_from="2022-01-01"
 )

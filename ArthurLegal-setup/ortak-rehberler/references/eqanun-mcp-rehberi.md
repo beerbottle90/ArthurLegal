@@ -17,7 +17,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `az_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream public) |
@@ -31,7 +31,7 @@ göre değişmez.
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`az_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on sunucuda `az_get_act` altı ayrı şey demek, önek doğru
+> değişmez — alttaki sunucularda `get_act` altı ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -41,7 +41,7 @@ göre değişmez.
 
 | Araç | Ne yapar | Önemli parametreler |
 |------|----------|---------------------|
-| `az_search_acts` | Akt arama | `query`, `scope` (`title`\|`text`), `status` (`in_force`\|`cancelled`\|`all`), `exact`, `start`, `length` |
+| `az_search_acts` | Akt arama; her sonuçta `statusName` | `query`, `scope` (`title`\|`text`), `status` (`in_force`\|`cancelled`\|`all`), `types` (ör. `[107]` = mecelleler), `exact`, `start`, `length` |
 | `az_count_acts` | Yalnız sonuç sayısı — konuyu ucuza boyutlar | aynı filtreler |
 | `az_get_act` | **Künye + STATÜ** + yürürlük tarihleri + `htmlUrl` | `act_id` |
 | `az_get_act_fulltext` | Temiz tam metin, karakterle sayfalanır | `act_id`, `offset`, `max_chars` |
@@ -53,8 +53,10 @@ göre değişmez.
 ## 2. ⚠️ STATÜ DOĞRULAMA — opsiyonel DEĞİL
 
 **Bu rehberin var olma sebebi tek bir hata:** yürürlükten kalkmış bir aktı
-yürürlükteymiş gibi göstermek. `az_search_acts` bunu sana söyleyemez; **yalnız
-`az_get_act` söyler.**
+yürürlükteymiş gibi göstermek. `az_search_acts` her sonuçta `statusName` verir; varsayılan
+`status="in_force"` mülga aktları gizler, tarihsel araştırmada `status="all"` ver. **Statü ve
+tarihler e-qanun'un kendi etiketleridir, bağımsız doğrulama değildir** (`effectDate` sık sık boş
+döner); künyeyi ve `htmlUrl`'yi `az_get_act` ile al, atıfa statüyü ve çekim tarihini yaz.
 
 Zorunlu sıra:
 

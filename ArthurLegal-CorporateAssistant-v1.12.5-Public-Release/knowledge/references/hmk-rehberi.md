@@ -57,7 +57,7 @@
 - Tahkim: **ISTAC İstanbul** (TL anlaşmazlık) veya **ICC Paris** (uluslararası)
 
 ### [ÖZEL ENDÜSTRİ BÖLGESİ] tesisleri için
-İşyeri mahkemesi (iş davaları): **[İşletme Yeri] İş Mahkemesi**. Bedensel zarar tazminat davası ayrıca **Asliye Hukuk** (Karşıyaka veya Bergama).
+İşyeri mahkemesi (iş davaları): **[İşletme Yeri] İş Mahkemesi**. Bedensel zarar tazminat davası ayrıca **Asliye Hukuk** ([İşletme Yeri] yargı çevresi).
 
 ### [HALKA AÇIK İŞTİRAK] özel
 Yatırımcı davaları **İstanbul ATM** (Anadolu) — ortaklık merkezi. SPK uyuşmazlıkları **Danıştay 13. Daire**.
@@ -68,12 +68,10 @@ Yatırımcı davaları **İstanbul ATM** (Anadolu) — ortaklık merkezi. SPK uy
 ## ArthurLegal MCP (`tr_`) ile çekme
 
 ```
-tr_mevzuat_ara(number="6100", types=["KANUN"])
-→ mevzuatId not
-tr_mevzuat_icindekiler(mevzuat_id=<id>)
-→ Madde ağacı, ilgili maddeye gir
-tr_mevzuat_madde_getir(madde_id=<ağaçtaki madde_id>)   # şemada number ve madde_no varsa: tr_mevzuat_madde_getir(number="6100", madde_no="<no>")
-tr_mevzuat_icinde_ara(mevzuat_id=<id>, query="<konu kelimeleri>")   # konu araması; madde numarasıyla madde bulmaz
+tr_mevzuat_madde_getir(number="6100", madde_no="<no>")   # tek çağrı: madde metni, başlık, hazır atıf
+tr_mevzuat_icinde_ara(number="6100", query="<konu kelimeleri>")   # konu araması; madde numarasıyla madde bulmaz
+# Yalnız madde numarası bilinmiyorsa:
+tr_mevzuat_icindekiler(number="6100", heading_query="<başlık kelimesi>")   # madde ağacı; bulunan madde_no ile ilk çağrı
 ```
 
 Atıf: `[ArthurLegal TR — HMK m. XXX — GG.AA.YYYY]`

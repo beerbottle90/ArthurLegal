@@ -32,7 +32,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -77,7 +77,7 @@ Yeni gelen bir dava materyalini **30 dakikalık ön-okumada** kategorize et:
 - **🔴 Acil dış vekil + üst yönetim eskalasyon** — yaptırım, halka açık, üst yönetim sanık, basın
 - **🟠 Standart dış vekil briefing** — normal dava akışı
 - **🟡 Cevap stratejisi tartışılmalı** — ihtarnameye cevap veya açma kararı henüz net değil
-- **🟢 Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borçlar için iflas erteleme
+- **🟢 Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borca ilişkin takibe itiraz
 
 ## Adımlar
 
@@ -191,7 +191,7 @@ Bu listeden geçir, gereken eskalasyonu tetikle:
 - [ ] **[BORU HATTI PROJESİ] / hükümetlerarası anlaşma alanı?** → Dış hukuk panel + üst yönetim
 - [ ] **Üst yönetim ismi sanık?** → CEO + YK bilgi
 - [ ] **Basına intikal etmiş veya etme riski?** → İletişim Başkanlığı ([İletişim Başkanlığı]) koordinasyon
-- [ ] **Yabancı hukuk / yabancı mahkeme-tahkim ayağı var mı?** → Uyuşmazlık yabancı hukuk yönetimliyse (İngiliz/NY hukuku) veya bir **yabancı mahkeme kararı Türkiye'de tanıma-tenfiz** gerektiriyorsa: MÖHUK 5718 (m. 50 vd. tenfiz, m. 58 vd. tanıma) uygulanır; yabancı hakem kararı için New York Konvansiyonu (`references/istac-rehberi.md`). İngiliz statüsü → `references/uk-legislation-rehberi.md` (legislation.gov.uk WebFetch); ABD statüsü/içtihatı → `references/us-legislation-rehberi.md` (GovInfo) + `references/courtlistener-rehberi.md`. Yönlendirme: `references/karsilastirmali-hukuk-rehberi.md`. Yabancı hukukun kesin yorumu için dış yabancı-hukuk uzmanı flag et.
+- [ ] **Yabancı hukuk / yabancı mahkeme-tahkim ayağı var mı?** → Uyuşmazlık yabancı hukuk yönetimliyse (İngiliz/NY hukuku) veya bir **yabancı mahkeme kararı Türkiye'de tanıma-tenfiz** gerektiriyorsa: MÖHUK 5718 (m. 50 vd. tenfiz, m. 58 vd. tanıma) uygulanır; yabancı hakem kararı için New York Konvansiyonu (`references/istac-rehberi.md`). İngiliz statüsü → ArthurLegal MCP `uk_` araçları (`references/uk-legislation-mcp-rehberi.md`), yedek legislation.gov.uk WebFetch (`references/uk-legislation-rehberi.md`); ABD statüsü/içtihatı → `references/us-legislation-rehberi.md` (GovInfo) + `references/courtlistener-rehberi.md`. Yönlendirme: `references/karsilastirmali-hukuk-rehberi.md`. Yabancı hukukun kesin yorumu için dış yabancı-hukuk uzmanı flag et.
 
 ### 8. Sınıflandırma ve eskalasyon önerisi
 
@@ -960,7 +960,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 - [ ] **Olay öncesi 30 günlük HSE raporu / yakın kaza (near miss) raporları** — pattern olarak gelebilir
 - [ ] **Olay yerine giren her kişi, saat saat log** — savcılık delil ihlali iddiasını önler
 
-#### 2. Bildirimler (KANUNİ ZORUNLU)
+#### 2. Bildirimler (kanuni, lisans ve sözleşme kaynaklı)
 
 | Kuruma | Yasal süre | Kim | Nasıl |
 |---|---|---|---|
@@ -968,12 +968,12 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | **Çalışma ve Sosyal Güvenlik Bakanlığı** | Kanunda süreli bildirim yok — 6331 m. 14/2 bildirimi SGK'ya yapılır | — | — |
 | **Polise/Savcılığa** (ölümlü/ciddi yaralanma) | DERHAL | İşveren / 112 | Telefon + yazılı tutanak |
 | **Çevre Bakanlığı** (çevre etkisi varsa) | DERHAL | Tesis müdürü | İl Çevre Müdürlüğü + telefon |
-| **EPDK** (lisansa konu tesisin durması) | 24 saat (lisans şartlarına göre) | Lisans sahibi | EPDK portal + yazılı |
-| **AKUT/AFAD** (büyük çevre / sosyal etki) | DERHAL | İl Acil Durum | — |
+| **EPDK** (lisansa konu tesisin durması) | Lisans şartına bağlı; süreyi lisanstan ve ilgili yönetmelikten teyit et (24 saat doğrulanmadı) | Lisans sahibi | EPDK portal + yazılı |
+| **AFAD** (büyük çevre / sosyal etki; operasyonel, gerekiyorsa) | Süreyi ilgili mevzuattan teyit et; gerekiyorsa derhal | İl Acil Durum | — |
 | **KAP** (halka açık iştirak ilgili önemli olay) | DERHAL özel durum açıklaması | [HALKA AÇIK İŞTİRAK] | KAP üzerinden, SPK Tebliğ II-15.1 |
-| **[BORU HATTI PROJESİ]** ([BORU HATTI PROJESİ] altyapı etkilendiyse) | 24 saat | İşletmeci | [BORU HATTI PROJESİ] işletme sözleşmesi |
+| **[BORU HATTI PROJESİ]** ([BORU HATTI PROJESİ] altyapı etkilendiyse) | Sözleşmesel: işletme sözleşmesindeki süre | İşletmeci | [BORU HATTI PROJESİ] işletme sözleşmesi |
 
-⚠️ Bu süreler **yasal**, gecikme idari para cezası + ceza dosyasında ağırlatıcı.
+⚠️ Kanuni bildirimlerin (SGK, kolluk/savcılık) süreleri **yasaldır**; gecikme idari para cezası doğurabilir ve ceza dosyasında aleyhe değerlendirilebilir. Diğer satırlar lisans ya da sözleşme şartına bağlıdır; önceliği kanuni bildirimlere ver.
 
 #### 3. Üst yönetim eskalasyon zinciri
 
@@ -1544,7 +1544,7 @@ tr_ictihat_ara(
 |---|---|
 | **Maddi zarar** (tedavi, kayıp ücret) | Belgeli, kesin |
 | **Manevi tazminat** | Yargıtay HGK eğilim (genelde 50K-500K TL arası ölümlü kazada; ağırlık takdiri) (doğrulanmadı) |
-| **Destek tazminatı (TBK m. 53)** | Yaşam süresi × destek oranı × pasif sermaye katsayısı (Yargıtay HGK 2017/123 metod) |
+| **Destek tazminatı (TBK m. 53)** | Yaşam süresi × destek oranı × pasif sermaye katsayısı (güncel Yargıtay hesap yöntemi `tr_ictihat_ara` ile çekilip doğrulanmadan künye yazılmaz) |
 | **Faiz** | Yasal faiz (TBK + 3095 — değişken) |
 | **Vekalet ücreti** | AAÜT (Türkiye Barolar Birliği) — genelde davacı vekiline %12-15 (doğrulanmadı) |
 | **Yargılama gideri** | Bilirkişi, tanık masrafı |

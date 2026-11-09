@@ -1,12 +1,12 @@
-# ArthurLegal Holding – Yaptırım (Sanctions) Tarama Rehberi
+# Yaptırım (Sanctions) Tarama Rehberi
 
-> **ArthurLegal Holding'nin commercial-legal'da "the thing that hurts" olarak işaretlediği konu.** Bu rehber, ticari süreç başında ZORUNLU yapılacak yaptırım kontrolünü tanımlar. Her yeni sözleşme + her vendor onboarding + her M&A diligence + her counterparty değişikliği için tetiklenir.
+> Bu rehber, ticari süreç başında ZORUNLU yapılacak yaptırım kontrolünü tanımlar. Her yeni sözleşme + her vendor onboarding + her M&A diligence + her counterparty değişikliği için tetiklenir.
 
 ---
 
 ## ⚠️ Neden Şirket için kritik
 
-ArthurLegal Holding yaptırım taraması yapısal olarak yüksek riskli — 4 ana faktör:
+Şirket için yaptırım taraması yapısal olarak yüksek riskli — 4 ana faktör:
 
 1. **Yurtdışı ana ortak yapısı** — AB 833/2014 (Rusya enerji sektörü) ve CAATSA m.232 (ABD karşı-yaptırım) için "Russian-related" değerlendirmesi yapan tedarikçi/banka var. Yanlış yaptırım atribüsyonu önemli ticari kayba sebep olur (banka hesabı kapanması, AB tedarikçi reddi).
 2. **Coğrafi bağlam** — Ana ortak ülkesinin **komşu ülke yaptırım/coğrafi bağlamı** → tedarik zincirinde "ikincil yaptırım (secondary sanctions)" riski.
@@ -48,7 +48,7 @@ ArthurLegal Holding yaptırım taraması yapısal olarak yüksek riskli — 4 an
 
 **Kapsam:** ISIL/Al-Qaida, Sudan, DRC, Somali, Yemen, Mali, Lübnan, vs.
 
-**Sorgu:** https://www.un.org/securitycouncil/content/un-sc-consolidated-list
+**Sorgu:** https://scsanctions.un.org/resources/xml/en/consolidated.xml (konsolide XML; un.org liste sayfası ajan erişimine 403 verebilir)
 
 ### 4. UK OFSI (Office of Financial Sanctions Implementation)
 
@@ -178,4 +178,4 @@ Yabancı yaptırım rejimleri (OFAC, AB, BM, UK) ArthurLegal MCP (`tr_`)'de YOK 
 
 ---
 
-*Son güncelleme: 13.05.2026 — ArthurLegal Holding commercial-legal "the thing that hurts" referansı*
+*Son güncelleme: 13.05.2026*

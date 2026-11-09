@@ -130,11 +130,11 @@ Detay: `cmk-gorevli-rehberi.md`
 
 | Tür | Açıklama |
 |---|---|
-| **Uyarı** | Hafif ihlal (Av. K. m. 135) |
-| **Kınama** | Daha ağır ihlal (m. 136) |
-| **Para cezası** | (m. 137) — TL tutarlı |
-| **İşten yasaklama** | Geçici (3 ay - 3 yıl) (m. 138) |
-| **Meslekten çıkarma** | Kalıcı — en ağır (m. 139) |
+| **Uyarma** | Hafif ihlal (Av. K. m. 135) |
+| **Kınama** | Daha ağır ihlal (m. 135) |
+| **Para cezası** | (m. 135) — TL tutarlı |
+| **İşten çıkarma** | Geçici: mesleki faaliyetin 3 aydan az ve 3 yıldan fazla olmamak üzere yasaklanması (m. 135) |
+| **Meslekten çıkarma** | Kalıcı — en ağır (m. 135) |
 
 ### Tipik tetikleyiciler
 

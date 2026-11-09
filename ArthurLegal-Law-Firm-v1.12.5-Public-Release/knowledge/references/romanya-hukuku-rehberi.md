@@ -17,10 +17,9 @@
 > ağından çeker). Almanya'da `de_rii_*` araçlarının, WebFetch'in ulaşamadığı
 > `rechtsprechung-im-internet.de`'ye ulaşması bunun kanıtı.
 >
-> **[Müvekkil] neden gerekli?** `firm-profile.md` B.4: **[Müvekkil] Romania** akaryakıt perakende
-> iştiraki (grupta öz-üretim yenilenebilir raporlayan tek iştirak `[AR-2024 §XVI]`);
-> A.4: metanol/üre ihracatının ana pazarlarından biri RO. Perakende regülasyonu, akaryakıt
-> piyasası ve emtia satış uyuşmazlıkları RO hukukuna dokunur.
+> **Ne zaman gerekir?** Romanya bağlantılı iş varsa (ör. Romanya'da iştirak, akaryakıt perakendesi,
+> Romanya'ya ihracat): perakende regülasyonu, akaryakıt piyasası ve emtia satış uyuşmazlıkları
+> RO hukukuna dokunur.
 
 ---
 
@@ -68,6 +67,9 @@ ID bilinmiyorsa: Google `site:legislatie.just.ro {kanun adı/no}` → DetaliiDoc
 hukuku, rekabet, veri koruma, çevre — RO'nun uyum mevzuatının büyük kısmı AB direktif/
 tüzüklerinin transpozisyonu. CELLAR **Romence tam metni** veriyor (30.08.2026 test ✅).
 
+**Önce MCP:** `eu_get_document_text(celex="32019L0944", language="ro")` Romence tam metni tek çağrıda
+verir (yürürlük için `eu_get_metadata`). ArthurLegal MCP yanıt vermezse aşağıdaki WebFetch zinciri kullanılır.
+
 ⚠️ `eur-lex.europa.eu/legal-content/...` URL'leri **WebFetch ile çalışmaz** — JS kabuğu
 dönüyor, Resmî Gazete indeksi görünüyor. Çalışan zincir (bkz. `eurlex-cellar-rehberi.md`):
 
@@ -83,7 +85,7 @@ Doğrulanmış örnek — Direktif (AB) 2019/944 (elektrik iç pazarı):
 
 **(b) RO mahkeme kararı → `portal.just.ro`** ✅ (dosya/karar sorgu, sunucu-render).
 
-**(c) ANRE enerji düzenlemesi → `https://www.anre.ro/`** ✅ (kök sayfadan gez;
+**(c) ANRE enerji düzenlemesi → `https://anre.ro/`** ✅ (kök sayfadan gez;
 `/legislatie/` gibi tahmini alt yollar 404 veriyor, önce kök sayfayı çek).
 
 **(d) Konsolide olmayan kanun metni → `lege5.ro` ücretsiz katman.**
@@ -117,7 +119,7 @@ AB yaptırım tüzükleri (833/2014 vb.) RO operasyonunda doğrudan bağlayıcı
 ## 3. ANRE — enerji düzenleyicisi
 
 Autoritatea Națională de Reglementare în Domeniul Energiei — lisans kararları, tarife
-metodolojileri, piyasa izleme. `https://anre.ro` `[doğrulayın — agent erişimi test edilmedi]`.
+metodolojileri, piyasa izleme. `https://anre.ro/` (kök sayfa ✅; alt yollar 404 verebilir, `www.` önekiyle sertifika hatası verir).
 Perakende lisans şartı sorularında ANRE kararı + Legea 123/2012 maddesi birlikte okunur.
 
 ## 4. Atıf formatları

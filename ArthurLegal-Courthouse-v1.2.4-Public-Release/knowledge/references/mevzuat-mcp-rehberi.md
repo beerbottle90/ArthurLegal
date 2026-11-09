@@ -9,8 +9,8 @@
 |---|---|---|
 | `tr_mevzuat_ara` | Bedesten (mevzuat.adalet.gov.tr) üzerinde 12 tür mevzuatta arama; sorgu kelimesi olmadan tür ve tarih aralığıyla listeleme | `query` (varsayılan başlıkta; `search_in="fulltext"` ile metinde), `number` (mevzuat numarası, en kesin yol), `types` (tür listesi), `exact_phrase`, `rg_date_from`, `rg_date_to`, `rg_number`, `page`, `page_size` (en çok 20), `konu`, `esik`, `max_pages` (bölüm 4) |
 | `tr_mevzuat_getir` | Tam metin, sayfalı | `mevzuat_id` (aramadan), `page`, `page_chars` |
-| `tr_mevzuat_icindekiler` | Madde ağacı: bölüm ve madde başlıkları, `madde_id`'ler | `mevzuat_id` |
-| `tr_mevzuat_madde_getir` | Tek madde metni (başlık dâhil) | `madde_id` (`tr_mevzuat_icindekiler` sonucundan); yeni sürümde şemada görünüyorsa `number` ve `madde_no` ile tek çağrı, `madde_no` liste olabilir (bölüm 5 ve 9) |
+| `tr_mevzuat_icindekiler` | Madde ağacı: bölüm ve madde başlıkları, `madde_id`'ler | `mevzuat_id` ya da `number` |
+| `tr_mevzuat_madde_getir` | Madde metni, başlık ve hazır atıf tek çağrıda | `number` ve `madde_no` (tek madde ya da en çok 10 maddelik liste; `"geçici 1"`, `"ek 3"`, `"20/A"`), isteğe bağlı `mevzuat_id`, `types`, `tertip`. `madde_id` (`tr_mevzuat_icindekiler` sonucundan) eski kullanımdır, geçerlidir (bölüm 5 ve 9) |
 | `tr_mevzuat_icinde_ara` | Bir mevzuatın maddelerinde anahtar kelime arama; isabete göre sıralı madde listesi | `mevzuat_id`, `query` (düz kelimeler), `limit` |
 | `tr_mevzuat_gerekce` | Kanun gerekçesi: genel gerekçe, komisyon raporları, madde gerekçeleri | `gerekce_id` (aramada `gerekce_id` alanı dolu olan kanunlar), `page` |
 | `tr_resmi_gazete_fihrist` | Bir günün Resmî Gazete fihristi: bölüm, başlık, link | `date` (ISO; verilmezse bugün), `mukerrer`, `query` (başlık filtresi), `konu`, `esik` |
@@ -83,14 +83,14 @@ Kullanım kuralları:
 
 ## 5. Tipik kullanım
 
-Kanun ve madde numarasıyla tek çağrı (yalnız `tr_mevzuat_madde_getir` şemasında `number` ve `madde_no` görünüyorsa):
+Kanun ve madde numarasıyla tek çağrı (birincil yol):
 
 ```
 tr_mevzuat_madde_getir(number="6769", madde_no="120")
-tr_mevzuat_madde_getir(number="6769", madde_no=["115", "117", "119"])   # şema liste kabul ediyorsa
+tr_mevzuat_madde_getir(number="6769", madde_no=["115", "117", "119"])   # en çok 10 maddelik liste
 ```
 
-Kanun numarasıyla madde (şemada yalnız `madde_id` varsa):
+Madde ağacı üzerinden (eski kullanım, geçerli; madde numarası bilinmiyorsa):
 
 ```
 tr_mevzuat_ara(number="6098", types=["KANUN"])
@@ -98,7 +98,7 @@ tr_mevzuat_icindekiler(mevzuat_id="<mevzuat_id>")        # kanun başına sohbet
 tr_mevzuat_madde_getir(madde_id="<madde 350'nin madde_id'si>")
 ```
 
-Aynı kanunun birden çok maddesi aynı ağaçtaki `madde_id`'lerle, aynı turda en çok 5 çağrı olarak istenir. `tr_mevzuat_icinde_ara(query="<madde no>")` madde bulma yolu değildir. Ölçüm (21.09.2026, SMK): `query="30"` ilk sırada m. 129'u, ikinci sırada m. 30'u döndürdü; `query="120"` doğru maddeyi buldu ama alıntı madde başlığını taşımadı ve sonraki maddenin başlığıyla bitti.
+Aynı kanunun birden çok maddesi tek çağrıda `madde_no` listesiyle (en çok 10 madde) istenir. `tr_mevzuat_icinde_ara(query="<madde no>")` madde bulma yolu değildir. Ölçüm (21.09.2026, SMK): `query="30"` ilk sırada m. 129'u, ikinci sırada m. 30'u döndürdü; `query="120"` doğru maddeyi buldu ama alıntı madde başlığını taşımadı ve sonraki maddenin başlığıyla bitti.
 
 Madde içinde kelime araması:
 
@@ -194,7 +194,7 @@ Teslim edilecek her çıktıda (not, sözleşme, protokol, ihtarname, dilekçe, 
 
 1. Çıktıdaki bütün madde atıflarını tara ve listele: kanun, madde, fıkra, bent; belge gövdesindekiler dâhil.
 2. Her kalem için bu sohbette çekim var mı bak: `tr_mevzuat_madde_getir` yanıtı veya `tr_mevzuat_getir` ile okunmuş tam metin. Madde ağacındaki başlık tek başına yetmez; hakkın sahibi, şart ve süre metinden okunur.
-3. Çekilmemişse çek: şemada `number` ve `madde_no` varsa tek çağrı, yoksa arama, ağaç ve madde yolu (bölüm 5).
+3. Çekilmemişse çek: `tr_mevzuat_madde_getir(number=…, madde_no=…)` ile tek çağrı; madde numarası bilinmiyorsa ağaç yolu (bölüm 5).
 4. Eşleştir: çıktının maddeye yüklediği içerik (hakkın veya yükümlülüğün sahibi, doğum şartı, süre, sonuç) madde başlığı ve metniyle örtüşüyor mu? Örtüşmüyorsa numarayı koruyup açıklamayı uydurma; doğru maddeyi bul ve çek ya da cümleyi yeniden yaz.
 5. Çekilemiyorsa (connector kurulu değil, hata, iptal) madde numarasını gövdeden çıkar, hükmü numarasız ve genel ifadeyle kur, not içindeki atıfta `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` kullan, açık kalan noktayı İnceleme notunda adıyla yaz.
 6. İnceleme notuna tek cümle ekle: "Madde kontrolü: <kanun m. X ve Y> okundu ve eşleşti; <kanun m. Z> çekilemedi, gövdeden çıkarıldı."

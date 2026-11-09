@@ -17,7 +17,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `at_` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
@@ -29,7 +29,7 @@ URL'sini gir → auth "None".
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`at_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on dört sunucuda `get_act` altı ayrı şey demek, önek doğru
+> değişmez — alttaki sunucularda `get_act` altı ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 

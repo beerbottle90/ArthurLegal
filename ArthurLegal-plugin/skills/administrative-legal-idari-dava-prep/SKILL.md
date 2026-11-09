@@ -16,7 +16,7 @@ user-invocable: true
 > İdari işlem/karar **tarafa tebliğ tarihi** nedir?
 > İYUK m. 7/1:
 > - **İdare mahkemeleri: 60 GÜN** (özel kanun aksini belirtmedikçe)
-> - **Vergi mahkemeleri: 30 GÜN** (2021 değişikliği)
+> - **Vergi mahkemeleri: 30 GÜN** (İYUK m. 7/1)
 > - **ÇED kararları: 30 GÜN** (İYUK m. 20/A ivedi yargılama — özel rejim)
 > - **Diğer özel rejim** (kamu ihale belirli kategoriler, özelleştirme): m. 20/A kontrolü
 
@@ -53,7 +53,7 @@ Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **D
   - EPDK / Rekabet / KVKK / KİK / BDDK / SPK = **Ankara** (kurumlar Ankara merkez)
   - Bakanlık merkez kararları = **Ankara**
   - İl müdürlüğü kararları (örn. İzmir Çevre İl Müdürlüğü idari ceza) = **İzmir İdare Mahkemesi**
-  - [tesis yeri] Belediyesi imar kararları = **İzmir İdare Mahkemesi** ([TESİS LOKASYONU] bağlı)
+  - [tesis yeri] Belediyesi imar kararları = **taşınmazın bulunduğu yer idare mahkemesi** (İYUK m. 34/1)
 
 - **Özel yetki kuralları (İYUK m. 33-37):**
   - Vergi davası: vergi dairesinin bulunduğu yer (tax-legal kapsamında)
@@ -275,7 +275,7 @@ EKLER:
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

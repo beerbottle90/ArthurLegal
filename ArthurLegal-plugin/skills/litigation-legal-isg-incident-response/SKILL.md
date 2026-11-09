@@ -90,7 +90,7 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 - [ ] **Olay öncesi 30 günlük HSE raporu / yakın kaza (near miss) raporları** — pattern olarak gelebilir
 - [ ] **Olay yerine giren her kişi, saat saat log** — savcılık delil ihlali iddiasını önler
 
-#### 2. Bildirimler (KANUNİ ZORUNLU)
+#### 2. Bildirimler (kanuni, lisans ve sözleşme kaynaklı)
 
 | Kuruma | Yasal süre | Kim | Nasıl |
 |---|---|---|---|
@@ -98,12 +98,12 @@ Operasyonel ekibe (tesis müdürü, ISG uzmanı) **derhal iletilmesi gereken yö
 | **Çalışma ve Sosyal Güvenlik Bakanlığı** | Kanunda süreli bildirim yok — 6331 m. 14/2 bildirimi SGK'ya yapılır | — | — |
 | **Polise/Savcılığa** (ölümlü/ciddi yaralanma) | DERHAL | İşveren / 112 | Telefon + yazılı tutanak |
 | **Çevre Bakanlığı** (çevre etkisi varsa) | DERHAL | Tesis müdürü | İl Çevre Müdürlüğü + telefon |
-| **EPDK** (lisansa konu tesisin durması) | 24 saat (lisans şartlarına göre) | Lisans sahibi | EPDK portal + yazılı |
-| **AKUT/AFAD** (büyük çevre / sosyal etki) | DERHAL | İl Acil Durum | — |
+| **EPDK** (lisansa konu tesisin durması) | Lisans şartına bağlı; süreyi lisanstan ve ilgili yönetmelikten teyit et (24 saat doğrulanmadı) | Lisans sahibi | EPDK portal + yazılı |
+| **AFAD** (büyük çevre / sosyal etki; operasyonel, gerekiyorsa) | Süreyi ilgili mevzuattan teyit et; gerekiyorsa derhal | İl Acil Durum | — |
 | **KAP** (halka açık iştirak ilgili önemli olay) | DERHAL özel durum açıklaması | [HALKA AÇIK İŞTİRAK] | KAP üzerinden, SPK Tebliğ II-15.1 |
-| **[BORU HATTI PROJESİ]** ([BORU HATTI PROJESİ] altyapı etkilendiyse) | 24 saat | İşletmeci | [BORU HATTI PROJESİ] işletme sözleşmesi |
+| **[BORU HATTI PROJESİ]** ([BORU HATTI PROJESİ] altyapı etkilendiyse) | Sözleşmesel: işletme sözleşmesindeki süre | İşletmeci | [BORU HATTI PROJESİ] işletme sözleşmesi |
 
-⚠️ Bu süreler **yasal**, gecikme idari para cezası + ceza dosyasında ağırlatıcı.
+⚠️ Kanuni bildirimlerin (SGK, kolluk/savcılık) süreleri **yasaldır**; gecikme idari para cezası doğurabilir ve ceza dosyasında aleyhe değerlendirilebilir. Diğer satırlar lisans ya da sözleşme şartına bağlıdır; önceliği kanuni bildirimlere ver.
 
 #### 3. Üst yönetim eskalasyon zinciri
 
@@ -331,7 +331,7 @@ Bu skill çalıştığında **Hukuk Direktörü** ve **Hukuk Başkanı** otomati
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

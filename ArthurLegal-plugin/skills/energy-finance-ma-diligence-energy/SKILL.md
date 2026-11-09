@@ -26,7 +26,7 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 - Lisans devri için EPDK izni gerekiyor mu? (genellikle gerekli)
 - Ön bildirim süresi ve koşulları
 - Aktif soruşturma / yaptırım prosedürü var mı?
-- ArthurLegal MCP (`tr_`): `kurum_karari_ara (kurum="rekabet")` (enerji piyasası) çek
+- ArthurLegal MCP (`tr_`): `tr_kurum_karari_ara(kurum="epdk", query="<lisans sahibi ya da ceza konusu>")` çek; enerji piyasasında rekabet ihlali için ayrıca `tr_kurum_karari_ara(kurum="rekabet", query="<şirket ya da pazar>")`
 
 **ÇED ve çevre:**
 - ÇED izni mevcut mu? Kapsamı yeterli mi?
@@ -47,8 +47,8 @@ argument-hint: "[VDR index | due diligence request list | target company profile
 
 ## Adım 3 — Vergi durum tespiti
 
-- Vergi borcunun tespiti: Gelir İdaresi GİB sorgusu (ArthurLegal MCP (`tr_`): `kurum_karari_ara (kurum="gib")`)
-- Aktif Danıştay vergi davaları
+- Vergi borcunun tespiti: hedef şirketten vergi dairesinin "borcu yoktur" yazısı ya da borç dökümü istenir (ArthurLegal MCP'de borç sorgusu yoktur). Vergi pozisyonuna ilişkin GİB görüşleri (özelge) için `tr_kurum_karari_ara(kurum="gib", query="<konu>")`
+- Aktif vergi uyuşmazlıkları: vergi mahkemesi, bölge idare mahkemesi ve Danıştay aşamasındaki davalar, uzlaşma başvuruları, kesinleşmemiş tarhiyatlar
 - Transfer pricing pozisyonu (intra-group bağlantı varsa özel dikkat)
 - KDV iade alacakları — devralma sonrası talep edilebilir mi?
 - Değer artış kazancı — satıcı tarafında vergi yükü → fiyata etkisi
@@ -120,7 +120,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

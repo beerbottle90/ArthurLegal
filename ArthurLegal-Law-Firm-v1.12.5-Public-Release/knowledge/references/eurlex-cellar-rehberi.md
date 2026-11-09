@@ -24,8 +24,8 @@ fazla "work" (eser) RDF olarak modellenmiş ve kalıcı tanımlayıcılarla eri�
 - Hazırlık belgeleri (COM önerileri, görüşler — yasama tarihi)
 - Tüm içerik 24 resmî dilde, çok formatlı (HTML, XML/Formex, PDF, RDF)
 
-**ArthurLegal için neden gerekli?** Mevcut `eu-legislation-rehberi.md` EUR-Lex'in
-HTML arayüzünü WebFetch ile kazır; bu çalışır ama tanımlayıcı disiplini elle kurulur.
+**ArthurLegal için neden gerekli?** EUR-Lex'in HTML arayüzü WebFetch'e belge metni
+vermez (Resmî Gazete tarih dizini döner; bkz. `eu-legislation-rehberi.md` bölüm 1).
 Cellar ise her belgeye **kararlı CELEX/ELI URI'si** ve makine-okunur metadata verir:
 "kaynaksız hukuk yok" ilkesinin istediği kaynak + tarih bilgisi, kazıma yerine
 yapılandırılmış alandan gelir. GDPR, AI Act, NIS2, AB yaptırım tüzükleri gibi sık
@@ -173,7 +173,7 @@ erişilemeyen yargı çevrelerinde **AB-türevli mevzuatı ana dilinde** almanı
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `eu_` |
 | **Auth** | **Yok** |
 
@@ -256,18 +256,24 @@ Court Reports'ta yayımlanan sürümdür.
 
 **Teknik sınırlar:**
 - SPARQL endpoint'inde execution timeout vardır; geniş sorguları CELEX/ELI ile daraltın.
-- WebFetch `Accept` başlığı ayarlayamaz → format seçimi URL parametresiyle
-  (`format=`) veya EUR-Lex HTML sayfası üzerinden yapılır.
+- WebFetch `Accept` başlığı ayarlayamaz → SPARQL çıktısının formatı URL parametresiyle
+  (`format=`), belge metninin dili ve biçimi yukarıdaki üç adımla (manifestation → `/DOC_1`)
+  seçilir. EUR-Lex HTML sayfaları WebFetch'e belge metni vermez.
 - CDM ontolojisi geniştir; buradaki alan adları dışındakiler kullanılmadan önce
   canlı doğrulanır (alan adı uydurulmaz).
-- Endpoint arızasında yedek yol: `eu-legislation-rehberi.md` (EUR-Lex HTML WebFetch).
+- Yedek sırası: `eu_` araçları → bu rehberdeki CELLAR üç adımı (WebFetch) → kullanıcıdan metin.
+  EUR-Lex HTML WebFetch yedek değildir (belge metni vermez).
 
 ---
 
 ## Karar kaydı (mini-ADR)
 
+> **Güncel karar:** birincil yol ArthurLegal MCP `eu_` araçlarıdır. Aşağıdaki kayıt
+> tarihseldir: EUR-Lex HTML kazıması 30.08.2026 testinde belge metni vermedi,
+> cyanheads notu da bugünkü kurulumu anlatmaz.
+
 **Bağlam.** AB/CJEU kaynağı bugüne dek WebFetch katmanındaydı
-(`eu-legislation-rehberi.md`): EUR-Lex HTML kazıması çalışıyor, ancak kalıcı
+(`eu-legislation-rehberi.md`): EUR-Lex HTML kazıması kullanılıyordu, ancak kalıcı
 tanımlayıcı ve çekim metadatası elle kuruluyordu; sürüm (OJ mü konsolide mi)
 ayrımı kazınan sayfanın görünümüne bağlıydı.
 
@@ -279,8 +285,8 @@ kullanılır. Yazarın hosted örneği hiçbir koşulda kullanılmaz.
 
 **Sonuçlar.** Kaynak + tarih artık yapılandırılmış alandan gelir ("kaynaksız
 hukuk yok" için bedava kazanım); konsolide/OJ ayrımı CELEX sektörüyle makine
-düzeyinde görünür. Serbest metin araması ve hızlı madde okuması eski yolda
-(`eu-legislation-rehberi.md`) kalır. Entegrasyon anında yeniden doğrulanacaklar:
+düzeyinde görünür. Başlıkta arama `eu_search_eu_law` ile yapılır; `eu-legislation-rehberi.md`
+MCP'siz yedek zinciri ve CELEX tablosunu tutar. Entegrasyon anında yeniden doğrulanacaklar:
 SPARQL endpoint'in erişilebilirliği, MCP sürümü (pre-1.0 kırılma riski) ve EP
 Open Data lisans rejimi.
 
@@ -288,7 +294,7 @@ Open Data lisans rejimi.
 
 ## İlgili rehberler
 
-- `eu-legislation-rehberi.md` — EUR-Lex/CJEU/ECHR WebFetch yolu (yedek ve serbest arama)
+- `eu-legislation-rehberi.md` — CELEX tablosu, CJEU/ECHR ve MCP'siz WebFetch CELLAR zinciri (yedek)
 - `karsilastirmali-hukuk-rehberi.md` — yabancı hukuk ne zaman devreye girer, atıf çerçevesi
 
 ---
@@ -299,69 +305,9 @@ Open Data lisans rejimi.
 
 ## MCP connector olarak eklemek
 
-**Bugünkü durum:** Bu kaynağın hazır bir MCP sunucusu **yoktur**; yukarıdaki
-prosedür `WebFetch` ile çalışır ve bağlayıcı kurulumu gerektirmez. claude.ai'daki
-"custom connector" **MCP tabanlıdır** — dolayısıyla bu kaynağı connector olarak
-eklemek, önce REST ucunu bir MCP sunucusuyla sarmayı gerektirir.
+Ayrı bir connector ya da sarmalayıcı gerekmez: CELLAR, ArthurLegal MCP'de `eu_` önekiyle hazırdır
+(`eu_search_eu_law`, `eu_get_metadata`, `eu_get_document_text`, `eu_sparql`; yukarıdaki "ArthurLegal MCP"
+bölümü). Önek araç adının parçasıdır ve sunucuda sabittir; araçlar bu adlarla çağrılır.
 
-Aşağıdaki bilgi o sarmalamayı yapabilmeniz içindir. **Hazır bir endpoint
-verilmemiştir; olmayan bir adres yazmak yerine sarmalanacak sözleşme verilmiştir.**
-
-### Sarmalanacak sözleşme
-
-| Alan | Değer |
-|---|---|
-| **Base URL** | ``https://publications.europa.eu/webapi/rdf/sparql`` |
-| **Auth** | **Yok** — kayıt gerekmez |
-| **Hız sınırı** | Ağır SPARQL sorgularında zaman aşımı olur; `LIMIT` kullan |
-| **Yanıt** | SPARQL results JSON (`format=application/sparql-results+json`) |
-| **Lisans** | İçerik **CC BY 4.0**, metadata **CC0** (Komisyon Kararı 2011/833/EU) |
-
-**Açılacak araç yüzeyi:**
-
-| Araç | Uç | Ne döndürür |
-|---|---|---|
-| `cellar_sparql` | `/sparql?query=&format=` | Ham SPARQL sonucu |
-| `cellar_find_celex` | (sarmalayıcı sorgusu) | Başlık/tarih/tipten CELEX numarası |
-| `cellar_get_metadata` | (sarmalayıcı sorgusu) | Bir CELEX'in konsolidasyon ve yürürlük metadatası |
-
-> Cellar **kimlik ve metadata** katmanıdır. Operatif metin EUR-Lex'te okunur;
-> sarmalayıcı bunu araç açıklamasında açıkça söylemelidir, yoksa model metni
-> buradan bekler.
-
-### Kanıtlanmış sarma kalıbı
-
-Bu ekosistemde üç MCP sunucusu (`eqanun-api`, `lex-scholar-api`,
-`resourcecontracts-api`) tam olarak bu işi yapıyor: public bir REST API'yi
-bağımlılıksız (yalnız Python stdlib) bir MCP sunucusuyla sarıyorlar. Kalıp:
-
-- **Transport:** Streamable HTTP, `/mcp` yolunda (`x-ms-agentic-protocol:
-  mcp-streamable-1.0` muadili; claude.ai için düz Streamable HTTP yeterli)
-- **Auth:** yok (upstream public olduğu için)
-- **Port:** her sunucu kendi portunda; bu kaynak için önerilen **`8050`**
-  (mevcutlar: resourcecontracts `8000` · lex-scholar `8010` · e-qanun `8020` ·
-  de-eli `8790`). Aynı porta ikinci sunucu başlatmak açıkça hata verir.
-- **Araç adları:** yukarıdaki yüzeyi birebir yansıt; **jenerik ad kullanma**.
-  Başka bir sunucuda aynı adda bir araç varsa istemci şemaları karıştırır ve
-  çağrılar düşer — bu ekosistemde bir kez yaşandı (`search_articles` çakışması).
-
-Referans uygulamalar: `github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api` ·
-`github.com/beerbottle90/arthurlegal-mcp/tree/master/lex-scholar-api` ·
-`github.com/beerbottle90/arthurlegal-mcp/tree/master/resourcecontracts-api` ·
-`github.com/matematicsolutions/de-eli-mcp`
-
-### claude.ai'a bağlama (sunucu ayağa kalktıktan sonra)
-
-1. Settings → Connectors → **Add custom connector**
-2. MCP endpoint URL'sini gir (`https://arthurlegal-mcp.fly.dev/mcp`)
-3. Auth: **None**
-4. Araçlar bağlantı sonrası otomatik keşfedilir. Tool isim prefiksi verdiğin
-   connector adına göre üretilir — **prefiksi sabit varsayma**, base isimleri kullan.
-
-> ⚠️ Geçici tünel (`*.trycloudflare.com`) kullanıyorsan adres **her yeniden
-> başlatmada değişir** ve connector sessizce kırılır: tanım doğru görünür,
-> çağrılar düşer. Kalıcı kullanım için adlandırılmış tünel veya hosted deploy.
-
-**Sarmadan da çalışır.** Connector zorunlu değildir; yukarıdaki `WebFetch`
-prosedürü bu kaynağın tam işlevini verir. Sarmalama, yapılandırılmış araç
-çağrısı ve tekrarlanabilir parametre disiplini istendiğinde değer katar.
+ArthurLegal MCP yanıt vermezse bu rehberdeki SPARQL ve üç adımlı CELLAR prosedürü `WebFetch` ile çalışır;
+bağlayıcı kurulumu gerektirmez.

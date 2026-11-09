@@ -168,7 +168,7 @@ Usage: `/<plugin>:<skill>` — e.g. `/yayin-etigi:uyz-beyani`
 
 ## Data sources
 
-**Connected MCP servers:** ArthurLegal MCP (`tr_`: Turkish legislation and case law, plus 14 jurisdictions and DergiPark scholarship) · CourtListener
+**Connected MCP servers:** ArthurLegal MCP (`tr_`: Turkish legislation and case law, plus 11 jurisdictions and DergiPark scholarship) · CourtListener
 (US case law, official MCP) · Fedlex (Swiss federal law) · OpenCaseLaw.ch (Swiss case law +
 scholarship bridge)
 

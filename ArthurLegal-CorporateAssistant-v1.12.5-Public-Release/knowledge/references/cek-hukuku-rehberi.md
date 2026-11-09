@@ -86,7 +86,7 @@ get_czech_law_article(
 | **Kişisel Veri** | GDPR + zákon č. 110/2019 Sb. | Çek KVKK eşdeğeri |
 | **Rekabet** | Zákon č. 143/2001 Sb. | Piyasa davranışı |
 | **Vergi (KV)** | Zákon č. 586/1992 Sb. | Çek kurumlar vergisi + TP |
-| **Yabancı Yatırım** | Zákon č. 47/2002 Sb. | Çek'e yabancı sermaye |
+| **Yabancı yatırım taraması** | Zákon č. 34/2021 Sb. (prověřování zahraničních investic) | Çek'e yabancı sermaye |
 
 ---
 

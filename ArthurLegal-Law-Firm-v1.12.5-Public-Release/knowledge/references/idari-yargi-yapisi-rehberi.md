@@ -63,7 +63,7 @@ Her BİM içinde:
 
 [Müvekkil] için ana BİM'ler:
 - **Ankara BİM** — EPDK/Rekabet/KVKK/KİK kararları (kurumlar Ankara merkez)
-- **İzmir BİM** — [TESİS LOKASYONU] kaynaklı il düzeyi davalar
+- **Tesisin bağlı olduğu BİM** — [TESİS LOKASYONU] kaynaklı il düzeyi davalar
 - **İstanbul BİM** — şirket merkezi davalar
 
 ## İDDK (İdari Dava Daireleri Kurulu)

@@ -30,9 +30,9 @@ yalnız ArthurLegal MCP'nin taşımadığı kaynaklar (AİHM, KİK, Sayıştay, 
 HSK) için kullanılır.
 
 
-## Kaynak katmanı MCP sunucuları (v1.7.0–v1.5.0 — self-hosted, auth yok)
+## Kaynak katmanı MCP sunucuları (v1.7.0–v1.5.0 — ArthurLegal MCP'nin arka uçları, auth yok)
 
-Dördü de self-hosted MCP sunucusudur; public upstream
+Dördü de barındırılan ArthurLegal MCP'nin (`arthurlegal-mcp.fly.dev`) arka ucudur (`az_`, `scholar_`, `contracts_`, `de_` önekleri); public upstream
 API'leri sarar. Kaynakları:
 [`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api) ·
 [`lex-scholar-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/lex-scholar-api) ·
@@ -66,10 +66,10 @@ API'leri sarar. Kaynakları:
   veritabanı: `api.openlandcontracts.org`.
 
 > Bu paket bu kaynakları **getirir ve atıf verir**; hiçbirinin içeriğini yeniden
-> yayımlamaz veya model eğitiminde kullanmaz. Sunucular kullanıcı tarafından
-> self-host edilir; paket yalnız kullanım prosedürünü tanımlar.
+> yayımlamaz veya model eğitiminde kullanmaz. Bu arka uçlar
+> `arthurlegal-mcp.fly.dev` üzerinde barındırılır; paket yalnız kullanım prosedürünü tanımlar.
 >
-> ⚠️ **Av. K. m. 36:** üçü de public arama aracıdır — müvekkil bilgisi
+> ⚠️ **Av. K. m. 36:** dördü de public arama aracıdır — müvekkil bilgisi
 > gönderilmez.
 
 ## Üçüncü-taraf veri kaynakları

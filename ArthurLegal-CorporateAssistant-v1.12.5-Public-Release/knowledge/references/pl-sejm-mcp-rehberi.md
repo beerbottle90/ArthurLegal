@@ -15,7 +15,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `pl_` |
 | **Transport** | Streamable HTTP (`POST /mcp`) · stdio da destekli |
 | **Auth** | **Yok** |
@@ -27,7 +27,7 @@ URL'sini gir → auth "None".
 
 > ⚠️ **Araç öneki sabittir.** Bu sunucu artık ArthurLegal MCP toplayıcısının
 > arkasında; araçları **`pl_`** önekiyle çağır. Önek connector adına göre
-> değişmez — alttaki on dört sunucuda `get_act` altı ayrı şey demek, önek doğru
+> değişmez — alttaki sunucularda `get_act` altı ayrı şey demek, önek doğru
 > yargı çevresine yönlendiren tek şeydir.
 
 
@@ -106,18 +106,19 @@ Diller arası soru soracaksan semantik kanal şart.
 
 ## 3. Uyulacak kurallar
 
-**a) Statü atıfın parçasıdır.** Her akt yayıncının kendi etiketini taşır:
-`obowiązujący` = yürürlükte, `uchylony` = ilga. **Statüsüz Polonya atıfı eksik
-atıftır.**
+**a) Yürürlük atıfın parçasıdır.** Yürürlüğü araç çıktısındaki `in_force` alanı söyler
+(`true` = yürürlükte). `status` yayıncının kendi etiketidir ve çoğu zaman konsolidasyonu anlatır
+(ör. `akt posiada tekst jednolity`), yürürlüğü değil; atıfa ayrıca yazılır. **Yürürlük bilgisi
+olmayan Polonya atıfı eksik atıftır.**
 
 ```
-✅ [PL Mevzuat — Dz.U. 2024 poz. 1984 — obowiązujący — 30.08.2026]
+✅ [PL Mevzuat — Dz.U. 2024 poz. 1984 — obowiązujący, in_force: true — 30.08.2026]
 ❌ [PL Mevzuat — Dz.U. 2024 poz. 1984]
 ```
 
 **b) `references` grafiğini oku.** `pl_get_act` yayıncının kendi ilişki adlarını
 döndürür: `Akty zmieniające` (değiştiren aktlar), `Akty uchylone` (ilga edilenler),
-`Akty wykonawcze` (uygulama aktları). Bir akt `obowiązujący` olup **defalarca
+`Akty wykonawcze` (uygulama aktları). Bir akt yürürlükte (`in_force: true`) olup **defalarca
 değiştirilmiş** olabilir — metni güncel saymadan önce grafiğe bak.
 
 **c) Hiçbiri madde metnini aramaz.** Polonya aktlarının çoğu **yalnız PDF**
@@ -133,9 +134,9 @@ alanını kontrol et.
 ## 4. Atıf formatı
 
 ```
-[PL Mevzuat — {displayAddress} — {status} — {başlık} — GG.AA.YYYY]
+[PL Mevzuat — {display_address} — {status}, in_force: {in_force} — {başlık} — GG.AA.YYYY]
 ```
-⚠️ `displayAddress` (ör. `Dz.U. 2024 poz. 1984`) ve `status` alanlarını **API
+⚠️ `display_address` (ör. `Dz.U. 2024 poz. 1984`), `in_force` ve `status` alanlarını **API
 çıktısından birebir kopyala** — Dz.U. numarasını elle kurma.
 
 ---

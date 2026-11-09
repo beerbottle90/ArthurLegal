@@ -47,7 +47,7 @@ Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, büro/şirket
 
 ## Kurulum kapsamı
 
-Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
+Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 

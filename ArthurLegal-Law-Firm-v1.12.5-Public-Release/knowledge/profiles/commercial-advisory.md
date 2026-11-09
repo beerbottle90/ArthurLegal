@@ -92,8 +92,8 @@ Bu sınıflandırma **draft/review yaklaşımını belirler:**
 
 - **TTK m. 18-20 — Tacir vasfı:** Tacir, basiretli iş adamı; sözleşme yorumunda standart yüksek.
 - **TTK m. 8-9 — Ticari iş + faiz:** Ticari işlerde temerrüt faizi yüksek (TBK genel faizinin üstünde)
-- **TTK m. 18/3 — Yazılı şekil:** Tacirler arası bazı sözleşmelerde KEP/yazılı şekil önerilir (delil)
-- **TTK m. 5/A — Zorunlu arabuluculuk:** Para alacağı ticari uyuşmazlıklarda dava şartı; bu plugin **dava değil sözleşme** üretir ama **uyuşmazlık çözüm klozu** yazarken hatırlatır.
+- **TTK m. 18/3 — İhbar ve ihtarların şekli:** Tacirler arasında temerrüde düşürme, fesih ve dönme ihbar/ihtarları noter, taahhütlü mektup, telgraf veya güvenli elektronik imzalı KEP ile yapılır
+- **TTK m. 5/A — Zorunlu arabuluculuk:** Ticari davalardan konusu bir miktar para olan alacak, tazminat, itirazın iptali, menfi tespit ve istirdat davalarında dava şartı (m. 5/A/1); bu plugin **dava değil sözleşme** üretir ama **uyuşmazlık çözüm klozu** yazarken hatırlatır.
 
 ### Damga vergisi (DVK Tablo I)
 
@@ -192,7 +192,7 @@ Sözleşme yazımında **risk-getiri** dengesinin sahibi **müvekkil**. Avukat:
 
 ## Matter workspaces
 
-Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
+Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal/matters/<müvekkil-slug>__<matter-slug>/`
 
 Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sadece müteakip ihtilaf doğarsa yeniden açılır). Matter kapatma zamanlamasını `/commercial-legal:matter-workspace close <slug>` ile (arşivler, silmez).
 

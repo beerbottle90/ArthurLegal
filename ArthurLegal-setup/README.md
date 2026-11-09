@@ -10,7 +10,7 @@ doğrulanarak sessizce kurulur. İki kurulum aynı paketleri, aynı modülleri v
 
 > Paketlerin kendisi (SYSTEM_PROMPT + knowledge) bu deponun kökündedir ve Claude.ai'de elle de
 > kurulabilir: her paketin `KURULUM.md` dosyası. Bu klasör, o kurulumu tek tıka indiren ve
-> güncel tutan Windows paketidir.
+> güncel tutan Windows ve macOS kurulumudur.
 
 ## Ne kurulur
 
@@ -29,15 +29,16 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 | **ArthurMask** | `mask` | ArthurMask (kendi kurulumundan) | Kurulum sırasında indirilir; kuruluysa kutu işaretli ve kilitli görünür |
 | **ArthurLegal Hafıza** | `hafiza` | (yok; Başlat menüsünde Hafıza Klasörü) | Sohbetler arası hafıza: `arthurlegal-yerel`'in `hafiza_` araçları (aşağıda) |
 
-macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır, masaüstünde birer
-takma adları durur; adlarda tire ve sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
-**ArthurLegal Akademisyen**, **ArthurLegal Tapu**. ArthurMask'in masaüstü takma adını da kurulum koyar.
+macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır; adlarında tire ve
+sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
+**ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
+(ör. "ArthurLegal 3.0.13"). ArthurMask'in masaüstü takma adını da kurulum koyar.
 
 Bileşenler:
 
 | Bileşen | Nerede çalışır | Ne yapar |
 |---|---|---|
-| **arthurlegal-yerel** | Claude Desktop · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 14 yargı çevresi, 100+ araç) köprüler. Ayrıca connector eklemeye gerek kalmaz. Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
+| **arthurlegal-yerel** | Claude Desktop · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 11 yargı çevresi, 100+ araç; `tkgm_` dışındakiler) köprüler. Ayrıca connector eklemeye gerek kalmaz. Kurulumda yeni arayüz seçildiyse ArthurLegal Masası'nı da sunar (`al_masasi`, `al_modul_ac`; klasik arayüzde masa ve kartlar kapalıdır, sonuçlar metin gelir). Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
 | **arthur-tapu** | Claude Desktop + masaüstü kısayolu | Yalnız Tapu seçildiyse. tkgm-mcp 0.6.1: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
 | **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil ya da dosya belgelerini bilgisayarda maskeleyen gizlilik kapısı. Seçildiyse kurulum sırasında indirilir (≈1 GB); seçilmediyse güncelleyici de indirmez |
 | **hafiza_ araçları** | `arthurlegal-yerel` içinde | Yalnız ArthurLegal Hafıza seçildiyse (2.6.7, `istemci/hafiza.py`). Kasa `~/ArthurLegal-Hafiza` (ayar.json → `hafiza_dizini` ile var olan bir Beyin kasası da verilebilir); düzen [Beyin](https://github.com/avenoxai/avenoxbeyin)'inkidir: `🔮 850-Companion/` (Core, Kurallar, Last-Session, Threads, Journal), `knowledge/`, `Projeler/<dosya kodu>/`. Beş araç: `hafiza_baslangic`, `hafiza_ara`, `hafiza_getir` (salt okunur), `hafiza_yaz`, `hafiza_oturum_karti` (yazar; Claude Desktop izin sorar). Yazmadan önce kişisel veri kapısı: T.C. kimlik numarası, IBAN, telefon, e-posta reddedilir. Devir kartları 3.000 karakteri aşınca eskileri `Arşiv/`'e taşınır, silinmez. Kaldırma kasayı silmez |
@@ -70,7 +71,9 @@ hazırlar (`Hukuk Bürosu`, `Kurumsal`, `Courthouse`, `Akademisyen`; içinde `CL
 **Instructions** alanına yapıştırılır. (3) Sohbette **+** menüsünden `arthurlegal-yerel` altındaki paketin istemi
 (`hukuk-burosu`, `kurumsal`, `adliye`, `akademisyen`) seçilir.
 
-**Sessiz kurulum.** `ArthurLegal-Kurulum.exe /VERYSILENT /SUPPRESSMSGBOXES /MODULLER=adliye,tapu,mask`. Liste
+**Sessiz kurulum.** `ArthurLegal-Kurulum.exe /VERYSILENT /SUPPRESSMSGBOXES /MODULLER=adliye,tapu,mask /ARAYUZ=klasik`.
+`/ARAYUZ=yeni|klasik` arayüzü seçer (yeni: ArthurLegal Masası; klasik: Claude Desktop'un kendi sohbeti); verilmezse
+önceki kurulumun seçimi, o da yoksa yeni arayüz kullanılır. Liste
 geçersizse (bilinmeyen ad, derlemede olmayan modül ya da hiç paket yok) kurulum hiçbir şey kurmadan durur.
 `/MODULLER` verilmezse önceki kurulumun seçimi, o da yoksa 2.5.0 öncesinin modülleri kullanılır.
 
@@ -111,7 +114,7 @@ macOS 11 ve sonrası; Apple Silicon ve Intel için tek paket. Resimli anlatım
   kendi dosyalarınız kalır.
 - **Sessiz kurulum.** `installer -pkg ArthurLegal-Kurulum.pkg -target CurrentUserHomeDirectory
   -applyChoiceChangesXML secim.xml` (seçim dosyasının biçimi: `installer -showChoicesXML`; modül kimlikleri
-  Windows'takilerle aynı: `adliye`, `tapu`, `mask` ...).
+  Windows'takilerle aynı: `adliye`, `tapu`, `mask` ...; arayüz kutusunun kimliği `arayuz-yeni`).
 
 ## Güncelleme
 
@@ -149,7 +152,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 ```bash
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
-python -m unittest discover -s tests   # 100 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
+python -m unittest discover -s tests   # 132 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
 python yayin/yayinla.py v3.0.13        # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
@@ -214,5 +217,5 @@ asked at start, on a Mac it follows the system; shortcut names and the start gui
 private Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
 the public ArthurLegal research endpoint, plus the Turkish land-registry tools), optionally installs
 the ArthurMask local privacy gate, and keeps itself up to date from signed GitHub releases
-(Ed25519). No admin rights. The only manual step is pasting a short, never-changing bootstrap prompt
-into a Claude Project. Build it yourself with `python yayin/derle.py`.
+(Ed25519). No admin rights. No Project and no pasting are needed: the `arthurlegal_talimat` tool loads the package
+instructions when a legal question is asked. Build it yourself with `python yayin/derle.py`.

@@ -5,11 +5,12 @@
 > Hedef ortam: [Claude.ai Projects](https://claude.ai/projects) (web).
 > Süre: ~15 dakika.
 
-> **Windows'ta tek dosyayla:** [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)
+> **Windows ve Mac'te tek dosyayla:** Windows'ta [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe),
+> Mac'te [ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg) (macOS 11 ve sonrası)
 > dosyasını indirip çalıştırın ve **Modülleri seçin** ekranında **Akademisyen**'i işaretleyin. Paket Claude
 > Desktop'a kendiliğinden bağlanır; aşağıdaki adımlar (proje, talimat, dosya yükleme) gerekmez ve güncellemeler
 > arka planda gelir. Resimli anlatım: [ana sayfanın indirme bölümü](https://github.com/beerbottle90/ArthurLegal#indir).
-> Aşağıdaki elle kurulum Mac ve claude.ai web içindir.
+> Aşağıdaki elle kurulum claude.ai web içindir.
 
 ---
 
@@ -61,7 +62,7 @@ Claude.ai → **Settings → Connectors** üzerinden ekleyin:
 
 | Sunucu | Ne için | Zorunlu mu |
 |---|---|---|
-| **ArthurLegal MCP** (`arthurlegal-mcp.fly.dev/mcp`, auth yok; Türkiye `tr_` önekiyle) | TR mevzuat, gerekçe, Yargıtay/Danıştay/AYM, Resmî Gazete, 8 düzenleyici kurum, semantik arşiv; ayrıca 14 yargı çevresi ve DergiPark dâhil 10 doktrin indeksi (`scholar_`) | TR çalışması için evet |
+| **ArthurLegal MCP** (`arthurlegal-mcp.fly.dev/mcp`, auth yok; Türkiye `tr_` önekiyle) | TR mevzuat, gerekçe, Yargıtay/Danıştay/AYM, Resmî Gazete, 8 düzenleyici kurum, semantik arşiv; ayrıca 11 yargı çevresi ve DergiPark dâhil 10 doktrin indeksi (`scholar_`) | TR çalışması için evet |
 | TR Legal MCP (yargi-mcp-pro, OAuth) | Yalnız AİHM, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK | Hayır |
 | **CourtListener** | ABD içtihadı (karşılaştırmalı hukuk) | Hayır |
 | **Fedlex** | İsviçre federal mevzuatı | Hayır |
@@ -106,7 +107,7 @@ Sonra şunu dene:
 
 ## Sık karşılaşılanlar
 
-**Asistan atıf yapmıyor, "DOĞRULAYIN" diyor.**
+**Asistan atıf yapmıyor, "UYARI: veri çekilemedi" diyor.**
 Beklenen davranış. MCP bağlayıcısı yoksa veya kaynak çekilemediyse asistan **uydurmaz**.
 Bağlayıcıyı ekleyin veya kaynağı kendiniz doğrulayın.
 

@@ -63,7 +63,7 @@ Bu üçü, hukuk gibi kitap/ulusal-dil ağırlıklı disiplinlerde **nitel değe
 - Kullanıcı "Q1 dergi öner" derse: AHCI'ya quartile atanmadığını açıkla, SSCI ihtimalini
   söyle, ama JIF/h-index'in hukukta yanıltıcı olduğunu belirt.
 - Bir derginin indeks bilgisini **uydurma**; derginin kendi sayfasından veya DOAJ'dan
-  doğrula, doğrulayamıyorsan `[MANUEL DOĞRULAYIN]` yaz.
+  doğrula, doğrulayamıyorsan `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` yaz.
 - "Impact Factor" iddiası olan bir dergiyi Clarivate teyidi olmadan kabul etme —
   sahte IF yaygındır. → `yagmaci-dergi-rehberi.md`
 - **AHCI kayıtlarına asla quartile atfetme.**

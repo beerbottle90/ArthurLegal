@@ -30,7 +30,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -348,7 +348,7 @@ TASLAK – DIŞ VEKİL VE BAŞ HUKUK MÜŞAVİRLİĞİ ONAYI ALINMADAN İMZALANM
 ## Sonraki adımlar
 > 1. **Onay/şart kontrolü** — EPDK / SHA / finansör tetiklendiyse ilgili süreç
 > 2. **Redline** — `/contract-drafting:redline-contract` ile son kontrol
-> 3. **Damga vergisi** — DVK hesabı (`tax-legal` / `yazihane-asistani`)
+> 3. **Damga vergisi** — DVK hesabı (`tax-legal` · `references/damga-vergisi-rehberi.md`)
 > 4. **Başka**
 
 **One question I'd ask:** [örn. "Bu tadil tek seferlik mi yoksa ana sözleşmenin dengesini kalıcı değiştiriyor mu? Kalıcıysa yan etkileri (fiyat, teminat, fesih) de gözden geçirmeliyiz."]

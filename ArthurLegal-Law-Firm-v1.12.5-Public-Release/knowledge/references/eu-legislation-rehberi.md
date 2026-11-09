@@ -1,13 +1,17 @@
 # AB Mevzuatı & CJEU/ECHR İçtihatı — Kullanım Rehberi (v1.7.0)
 
-> **Erişim tipi:** WebFetch (GET) — MCP gerekmez
-> **Auth:** Yok (EUR-Lex doğrudan erişim)
+> **Erişim tipi:** ArthurLegal MCP `eu_` araçları (birincil); WebFetch CELLAR zinciri yedek
+> **Auth:** Yok
 > **Kapsam:** Tüm AB tüzükleri, direktifler, CJEU kararları, ECHR içtihadı
 > **[Müvekkil] bağlamı:** [BORU HATTI PROJESİ] AB bağlantısı, GDPR, AB yaptırım rejimleri, enerji direktifleri
 
 ---
 
 ## 1. EUR-Lex — CELEX numarasıyla doğrudan erişim
+
+> **Önce MCP:** `eu_search_eu_law` (başlıkta arar, CELEX döndürür) → `eu_get_metadata` (başlık, tarih,
+> yürürlük bayrağı) → `eu_get_document_text` (tam metin, 24 dil). Ayrıntı: `eurlex-cellar-rehberi.md`.
+> Aşağıdaki WebFetch CELLAR zinciri yalnız `eu_` araçları yanıt vermediğinde yedektir.
 
 > 🔴 **KRİTİK DÜZELTME (30.08.2026):** `eur-lex.europa.eu` sayfaları **WebFetch ile
 > kullanılamaz.** `legal-content/{DIL}/TXT/?uri=CELEX:...`, `.../TXT/HTML/?uri=...`,
@@ -70,7 +74,7 @@ istiyorsan DOC_1 tek başına yetmeyebilir. O durumda:
 | Gaz ve hidrojen piyasası direktifi | `32024L1788` | [BORU HATTI PROJESİ]'a uygulanabilir AB gaz direktifi; 2009/73/AT'yi (`32009L0073`) yürürlükten kaldırdı |
 | Elektrik piyasası direktifi | `32019L0944` | [ELEKTRİK ÜRETİM İŞTİRAKİ] için AB elektrik direktifi; 2009/72/AT (`32009L0072`) yürürlükte değil |
 | Gaz Güvenliği Yönetmeliği | `32017R1938` | Tedarik güvenliği ([BORU HATTI PROJESİ] güzergâhı) |
-| Russia Sanctions (son) | `32022R0428` | AB Rusya yaptırımları (temel tüzük) |
+| Rusya yaptırımları (temel tüzük) | `32014R0833` | AB sektörel Rusya yaptırımları; değişiklik paketleri ayrı CELEX taşır (ör. `32022R0428`) |
 | TFEU (Rekabet m.101/102) | `12012E/TXT` | AB rekabet hukuku |
 
 **Örnek (düzeltilmiş — CELLAR zinciri):**
@@ -90,10 +94,11 @@ istiyorsan DOC_1 tek başına yetmeyebilir. O durumda:
 ❌ **`eur-lex.europa.eu/search.html` WebFetch ile çalışmaz** — OJ tarih indeksi döner
 (30.08.2026 doğrulandı, `text=LNG+terminal+licensing` ile test edildi).
 
-**✅ Çalışan alternatifler:**
+**✅ Çalışan yollar:** önce `eu_search_eu_law(query="...")` (başlıkta arar, CELEX döndürür). MCP yanıt
+vermezse:
 
 ```
-# (a) CELLAR SPARQL ile başlık/konu araması — birincil
+# (a) CELLAR SPARQL ile başlık/konu araması — MCP'siz yedek
 PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
 SELECT ?work ?celex ?title WHERE {
   ?work cdm:resource_legal_id_celex ?celex ;
@@ -106,7 +111,7 @@ SELECT ?work ?celex ?title WHERE {
 
 ```
 # (b) CELEX'i başka yoldan öğren, sonra bölüm 1'deki zinciri kullan:
-#     - LexScholar MCP (doktrin, AB mevzuatına atıf verir)
+#     - ArthurLegal MCP scholar_ araçları (doktrin, AB mevzuatına atıf verir)
 #     - Bu rehberin CELEX tablosu (aşağıda)
 #     - Kullanıcıdan CELEX/başlık iste
 ```
@@ -122,10 +127,12 @@ CJEU kararları EUR-Lex'te CELEX formatıyla indekslenmiştir:
 - Format: `6{YIL}CJ{DAVA_NO}` (ör. `62019CJ0715`)
 - ❌ `https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:6{YIL}CJ{DAVA_NO}`
   **çalışmaz** (OJ indeksi döner)
-- ✅ Bölüm 1'deki **CELLAR üç adımını** aynen uygula — CJEU kararları da `cdm:` ontolojisinde
-  work olarak modellenmiştir, aynı zincir geçerlidir.
+- ✅ **Önce MCP:** `eu_search_eu_law(query="Schrems")` kararı ve CELEX'ini bulur; metin
+  `eu_get_document_text(celex=...)` ile gelir (`eu_` kapsamı CJEU ve Genel Mahkeme içtihadını içerir).
+- ✅ MCP yanıt vermezse Bölüm 1'deki **CELLAR üç adımını** aynen uygula — CJEU kararları da `cdm:`
+  ontolojisinde work olarak modellenmiştir, aynı zincir geçerlidir.
 
-Belirli kararı bulmak için InfoCuria arama:
+MCP yanıt vermezse belirli kararı bulmak için InfoCuria arama (yedek):
 ```
 WebFetch("https://curia.europa.eu/juris/liste.jsf?language=en&td=ALL&text={query}",
          "Enerji piyasası rekabet kararlarını listele")
@@ -141,10 +148,11 @@ WebFetch("https://curia.europa.eu/juris/liste.jsf?language=en&td=ALL&text={query
 GET https://hudoc.echr.coe.int/app/query/results?query=contentsitename:ECHR+AND+doctypebranch:JUDGMENTS+AND+article:P1-1&select=itemid,docname,judgementdate&sort=judgementdate+Descending
 ```
 
-Belirli karar: Bir davayı bulduktan sonra tam metin:
+Belirli karar: Bir davayı bulduktan sonra tam metin (bkz. `echr-hudoc-rehberi.md`):
 ```
-WebFetch("https://hudoc.echr.coe.int/eng#{itemid}", "Kararın özeti ve gerekçesi")
+WebFetch("https://hudoc.echr.coe.int/app/conversion/docx/html/body?library=ECHR&id={itemid}", "Kararın özeti ve gerekçesi")
 ```
+`https://hudoc.echr.coe.int/eng?i={itemid}` adresi JavaScript kabuğudur; yalnız atıf bağlantısı olarak kullanılır.
 
 ---
 

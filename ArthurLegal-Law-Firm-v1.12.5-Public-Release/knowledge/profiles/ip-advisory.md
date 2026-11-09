@@ -185,7 +185,7 @@ IP işlemleri **uzun vadeli koruma** — bir markayı kaybetmek 10 yıllık yat�
 - **Nice Sınıflandırma yıllık güncellenir** — 2025 baskı, 2026 baskı kontrol et (ArthurLegal MCP (`tr_`)'ye değil, WIPO/TÜRKPATENT sitesine bakılır)
 - **Madrid Protokolü ülkeleri** — 130+ ülke; müvekkilin hedef pazarına göre liste değişir
 - **Açık kaynak lisans uyumu** (GPL, MIT, Apache, vd.) — yazılım müvekkillerinde özel dikkat
-- **UDRP** — sadece **kötü niyet + müvekkilin haklı menfaat sahibi olmaması** üçlü test
+- **UDRP** — üçlü test (Politika 4(a)): (i) alan adının markayla aynı ya da karıştırılacak kadar benzer olması, (ii) alan adı sahibinin hak veya meşru menfaatinin bulunmaması, (iii) kötü niyetle tescil ve kullanım; üçü birlikte ispatlanır
 
 ---
 

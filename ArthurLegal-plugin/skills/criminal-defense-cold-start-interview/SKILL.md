@@ -26,7 +26,7 @@ user-invocable: true
 
 - Hangi avukat(lar) baro CMK gönüllüsü listesinde?
 - Aylık tipik CMK atama sayısı
-- 48 saat sınırı içinde ulaşım — coğrafi kapsam (şehir içi / komşu il?)
+- Gözaltı süresi (kural 24 saat, CMK m. 91/1) içinde ulaşım — coğrafi kapsam (şehir içi / komşu il?)
 - CMK ödeme cetveli teslim disiplini (aylık / kümülatif?)
 
 ### 3. Tutukluluk pratik modeli

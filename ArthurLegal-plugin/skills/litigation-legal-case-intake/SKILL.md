@@ -29,7 +29,7 @@ Yeni gelen bir dava materyalini **30 dakikalık ön-okumada** kategorize et:
 - **🔴 Acil dış vekil + üst yönetim eskalasyon** — yaptırım, halka açık, üst yönetim sanık, basın
 - **🟠 Standart dış vekil briefing** — normal dava akışı
 - **🟡 Cevap stratejisi tartışılmalı** — ihtarnameye cevap veya açma kararı henüz net değil
-- **🟢 Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borçlar için iflas erteleme
+- **🟢 Rutin / template ile cevaplanır** — örn. küçük tutarlı icra takipleri, ödenmiş borca ilişkin takibe itiraz
 
 ## Adımlar
 
@@ -143,7 +143,7 @@ Bu listeden geçir, gereken eskalasyonu tetikle:
 - [ ] **[BORU HATTI PROJESİ] / hükümetlerarası anlaşma alanı?** → Dış hukuk panel + üst yönetim
 - [ ] **Üst yönetim ismi sanık?** → CEO + YK bilgi
 - [ ] **Basına intikal etmiş veya etme riski?** → İletişim Başkanlığı ([İletişim Başkanlığı]) koordinasyon
-- [ ] **Yabancı hukuk / yabancı mahkeme-tahkim ayağı var mı?** → Uyuşmazlık yabancı hukuk yönetimliyse (İngiliz/NY hukuku) veya bir **yabancı mahkeme kararı Türkiye'de tanıma-tenfiz** gerektiriyorsa: MÖHUK 5718 (m. 50 vd. tenfiz, m. 58 vd. tanıma) uygulanır; yabancı hakem kararı için New York Konvansiyonu (`${CLAUDE_PLUGIN_ROOT}/references/istac-rehberi.md`). İngiliz statüsü → `${CLAUDE_PLUGIN_ROOT}/references/uk-legislation-rehberi.md` (legislation.gov.uk WebFetch); ABD statüsü/içtihatı → `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` (GovInfo) + `${CLAUDE_PLUGIN_ROOT}/references/courtlistener-rehberi.md`. Yönlendirme: `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`. Yabancı hukukun kesin yorumu için dış yabancı-hukuk uzmanı flag et.
+- [ ] **Yabancı hukuk / yabancı mahkeme-tahkim ayağı var mı?** → Uyuşmazlık yabancı hukuk yönetimliyse (İngiliz/NY hukuku) veya bir **yabancı mahkeme kararı Türkiye'de tanıma-tenfiz** gerektiriyorsa: MÖHUK 5718 (m. 50 vd. tenfiz, m. 58 vd. tanıma) uygulanır; yabancı hakem kararı için New York Konvansiyonu (`${CLAUDE_PLUGIN_ROOT}/references/istac-rehberi.md`). İngiliz statüsü → ArthurLegal MCP `uk_` araçları (`${CLAUDE_PLUGIN_ROOT}/references/uk-legislation-mcp-rehberi.md`), yedek legislation.gov.uk WebFetch (`${CLAUDE_PLUGIN_ROOT}/references/uk-legislation-rehberi.md`); ABD statüsü/içtihatı → `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` (GovInfo) + `${CLAUDE_PLUGIN_ROOT}/references/courtlistener-rehberi.md`. Yönlendirme: `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`. Yabancı hukukun kesin yorumu için dış yabancı-hukuk uzmanı flag et.
 
 ### 8. Sınıflandırma ve eskalasyon önerisi
 
@@ -260,7 +260,7 @@ Bu ön kabuldür — Direktör/Başkan zaten onaylama yapmak için tam paketi g�
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

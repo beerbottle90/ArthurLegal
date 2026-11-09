@@ -7,7 +7,7 @@
 
 | Alan | Değer |
 |------|-------|
-| Endpoint | `https://arthurlegal-mcp.fly.dev/mcp` (tek uç: Türkiye + 14 yargı çevresi) |
+| Endpoint | `https://arthurlegal-mcp.fly.dev/mcp` (tek uç: Türkiye ve diğer yargı çevreleri; güncel liste `status`) |
 | Auth | Yok; adresi bilen herkes çağırabilir, kamuya açık kaynaklarda arar |
 | Önek | `tr_` (23 araç). `status` tek çağrıda TR sürümünü, indeksini, vektör durumunu ve `konu` modelinin varlığını verir |
 | Kaynak | `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp` (MIT); uç bilgisi saidsurucu/yargi-mcp ve mevzuat-mcp'den (MIT), transport yeniden yazıldı |
@@ -70,7 +70,7 @@ Hız sınırı: Bedesten IP başına 30 saniyede 10 istek kabul eder; sunucu ist
 | `gib` | Özelge metni (18.000'den fazla) | `query`, `ozelge_no`, `kanun_id`, `date_from`, `date_to`, `page` | `ozelge_no` | yok; yalnız canlı |
 | `sigorta_tahkim` | Tek dergi sayısının metni | `query`, `issue` (sayı, varsayılan son), `limit` | `"<sayı>:<karar başlığı>"` | 66 sayı, 652 karar, tam metin |
 
-Sayılar 20.09.2026 tarihli arşivdir (toplam 19.498 belge). Arşiv haftalık tazelenir ve yalnız yeni kararlar eklenir; `status` çıktısındaki `local_index` güncel sayıları ve her kurumun son karar tarihini verir.
+Sayılar 20.09.2026 tarihli arşivdir (toplam 19.498 belge). Arşiv dönemsel tazelenir ve yalnız yeni kararlar eklenir; `status` çıktısındaki `local_index` güncel sayıları, son tarama tarihini (`last_crawl`) ve her kurumun son karar tarihini verir.
 
 Bu tablonun söylediği şey: bir kararın METNİNE dair soru her kurumda aynı araçla sorulmaz.
 
@@ -211,7 +211,7 @@ Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Ç
 
 1. Karar metinleri özet değildir; uzun olabilir, sayfalıdır.
 2. Bazı kararlarda gizli kısımlar karartılmıştır (KVKK, AYM bireysel başvuru).
-3. Yeni kararlar yayımdan sonra indekse girer; birkaç gün gecikme olabilir. Yerel arşiv haftalık tazelenir; Rekabet Kurumu gerekçeli kararları aylar sonra yayımladığı için en yeni Rekabet kararları arşivde de canlı listede de geç görünür.
+3. Yeni kararlar yayımdan sonra indekse girer; birkaç gün gecikme olabilir. Yerel arşiv dönemsel tazelenir (son tarama: `status` → `local_index.last_crawl`); Rekabet Kurumu gerekçeli kararları aylar sonra yayımladığı için en yeni Rekabet kararları arşivde de canlı listede de geç görünür.
 4. Araç metni getirir; içtihat ağırlığını ve güncelliğini sen değerlendirirsin.
 5. Yerel ve istinaf kapsamı bölgeye göre değişir; yokluk kanıtı değildir.
 6. Yerel indeks (`tr_semantik_ara`) taranmış kadarıyla vardır ve kurumdan kuruma derinliği farklıdır (bölüm 4); kapsamı `status` söyler.

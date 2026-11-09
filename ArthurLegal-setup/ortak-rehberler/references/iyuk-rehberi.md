@@ -71,7 +71,7 @@ Bunların dışındaki **tüm bireysel idari işlemler** İdare Mahkemesi'nde ba
 
 - ❌ **Bireysel idari işlemi (EPDK Kurul kararı, idari ceza) doğrudan Danıştay'a açmak** — görevsizlik + süre kaybı
 - ❌ **Yürütmenin durdurulması talep etmemek** — tahsil/uygulama paralel
-- ❌ **Üst makama başvuru (m. 11) sonrası süreyi yanlış hesap etmek** — başvuru süreyi durdurur ama cevap/red sonrası yeniden başlar
+- ❌ **Üst makama başvuru (m. 11) sonrası süreyi yanlış hesap etmek** — başvuru süreyi durdurur; ret ya da zımni ret (30 gün içinde cevap verilmezse) üzerine süre kaldığı yerden işler, başvuruya kadar geçen süre de hesaba katılır (m. 11/3)
 - ❌ **İstinaf süresi kaçırma** — m. 45, 30 gün, hak düşürücü
 - ❌ **Temyiz süresi kaçırma** — m. 46, 30 gün
 - ❌ **Kesin kararlar (eşik altı tutar veya özel düzenleme)** istinaf/temyiz kapalı — AYM bireysel başvuru bilinmeli

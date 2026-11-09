@@ -14,12 +14,12 @@ Başvuru geldiğinde:
    a) işlenip işlenmediğini öğrenme
    b) işlenmişse buna ilişkin bilgi talep etme
    c) amaç + amaca uygun kullanım
-   d) yurt içi / yurt dışı üçüncü kişiler
-   e) yanlış işleme düzeltilmesi  
-   f) silme / yok etme (m. 7)
-   g) (e)+(f) bildirim üçüncü kişilere
-   h) otomatik karar analiz aleyhine itiraz
-   i) zarar halinde tazmin
+   ç) yurt içi / yurt dışı üçüncü kişiler
+   d) yanlış işleme düzeltilmesi  
+   e) silme / yok etme (m. 7)
+   f) (d)+(e) bildirim üçüncü kişilere
+   g) otomatik karar analiz aleyhine itiraz
+   ğ) zarar halinde tazmin
 4. m. 28 istisnaları kontrol: m. 28/1 (Kanun hiç uygulanmaz — ör. yargı makamlarınca işleme, kamu güvenliğine yönelik kamu faaliyetleri) ve m. 28/2 (m. 10, 11 — zararın giderilmesi hakkı hariç — ve 16 uygulanmaz: suç önleme/soruşturma, ilgili kişinin alenileştirdiği veri, kamu kurumlarının denetim/düzenleme/disiplin görevi, Devletin ekonomik ve mali çıkarları; Kanunun amacına ve temel ilkelerine uygun ve orantılı olmak kaydıyla)
 5. m. 13/2 — 30 gün içinde cevap
 6. Reddedilirse → cevabı öğrendiği tarihten itibaren 30 gün, her hâlde başvuru tarihinden itibaren 60 gün içinde Kurula şikâyet hakkı bilgisi (m. 14/1)
@@ -63,12 +63,12 @@ b) "İşlenen veriler hakkında bilgi" talebi:
    |---|---|---|---|
    | [örn. iletişim] | [kaynak] | [amaç] | [süre] |
 
-c) "Yurt içi/dışı aktarım" talebi:
+ç) "Yurt içi/dışı aktarım" talebi:
    ☐ Kişisel verileriniz şu üçüncü kişilere aktarılmıştır:
       - [Alıcı 1]: [Aktarım hukuki sebebi]
       - [Alıcı 2]: ...
 
-[Diğer (d)-(i) talepleri için ilgili karşılıklar...]
+[Diğer talepler (m. 11/1-c, d, e, f, g, ğ) için ilgili karşılıklar...]
 
 ────────────────────────────────────────────────────────
 3. KVKK m. 28 İSTİSNALARI

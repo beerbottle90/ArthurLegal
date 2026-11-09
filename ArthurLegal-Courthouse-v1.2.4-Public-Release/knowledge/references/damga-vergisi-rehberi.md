@@ -27,7 +27,7 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 - Bazı kredi sözleşmeleri (BSMV ile değişim)
 - Yargı süreci belgeleri (mahkeme kararı ayrı vergi)
 
-**Pratik:** Bir sözleşmeyi imzalamadan önce DVK (1) ve (2) tablolarına bakmadan "muaf" deme. ArthurLegal MCP (`tr_`)'den `tr_mevzuat_ara(query="488")` ile teyit.
+**Pratik:** Bir sözleşmeyi imzalamadan önce DVK (1) ve (2) tablolarına bakmadan "muaf" deme. ArthurLegal MCP (`tr_`)'den `tr_mevzuat_ara(number="488", types=["KANUN"])` ile teyit.
 
 ## En sık sözleşme türleri ve oranları
 
@@ -41,7 +41,7 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 | Vekalet (ücretli) | binde 9,48 |
 | Hizmet alım/satım | binde 9,48 |
 
-## Hesaplama akışı (her contract review'da)
+## Hesaplama akışı (tarhiyat denetiminde)
 
 1. Sözleşme bedeli netleştir (KDV hariç tutar — DVK matrahı KDV'yi içermez)
 2. Yıllık mı toplam mı belirsizse: süresiz/uzun süreli sözleşme = yıllık matrah × 9,48
@@ -60,9 +60,6 @@ Hesaplanan damga (tek nüsha):   [TL]
 Nüsha sayısı:                   [N]
 Toplam damga:                   [TL]
 
-Paylaşım: [Eşit / Karşı taraf / Bizim] 
-Şirket payı (tahmini):           [TL]
-
 ⚠ İstisnaya tabi mi? [Evet/Hayır — neden]
 ⚠ KDV iadesi varsa damga geri alınamaz (öder, gider yazılır)
 ```
@@ -73,7 +70,7 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 - Damga vergisi azami had (her bir kağıt için): UYARI: veri çekilemedi, teyidiniz gerekli: https://www.gib.gov.tr/
 - Genel oran (binde): UYARI: veri çekilemedi, teyidiniz gerekli: https://www.gib.gov.tr/
-- 488 (1) sayılı Tablo güncel tutarları: [ArthurLegal TR — tr_mevzuat_ara("488")]
+- 488 (1) sayılı Tablo güncel tutarları: [ArthurLegal TR — tr_mevzuat_ara(number="488", types=["KANUN"])]
 
 ---
 
@@ -95,13 +92,8 @@ Aşağıdaki tutarlar yıllık güncellenir — **her yıl Ocak'ta ArthurLegal M
 
 ---
 
-## Damga vergisi karar matrisi
+## İstisna kontrolü
 
-| Sözleşme tutarı | Aksiyon |
+| Konu | Denetim |
 |---|---|
-| < 500K TL | Standart akış, damga = sözleşme bedeli × 0,00948 |
-| 500K - 5M TL | Sözleşmeler Yöneticisi onayında damga maliyeti dahil edilmeli |
-| 5M - 50M TL | Counsel + CFO koordinasyonu; damga optimizasyon kontrolu |
-| > 50M TL | Direktör seviyesi + vergi danışmanı görüşü zorunlu; sözleşme yeri analizi |
-| Yabancı para + büyük | İlişkili taraf işlemi mi? Transfer pricing belgesi + damga birlikte |
 | İhracat | (2) sayılı Tablo istisna kontrolu; **istisna yoksa damga var** |

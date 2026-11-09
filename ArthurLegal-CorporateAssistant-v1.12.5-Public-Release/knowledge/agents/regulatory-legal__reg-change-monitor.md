@@ -8,7 +8,7 @@ description: >
   Tetik ifadeler: "reg digest", "düzenleyicilerden yeni ne var", "bu haftanın Resmî Gazete
   özeti" ya da zamanlanmış çalışma.
 model: sonnet
-tools: ["Read", "Write", "WebFetch", "mcp__*__tr_resmi_gazete_tara", "mcp__*__tr_resmi_gazete_fihrist", "mcp__*__tr_resmi_gazete_getir", "mcp__*__tr_mevzuat_ara", "mcp__*__tr_mevzuat_getir", "mcp__*__tr_mevzuat_madde_getir", "mcp__*__tr_kurum_karari_ara", "mcp__*__tr_kurum_karari_getir", "mcp__*__tr_semantik_ara", "mcp__*__tr_spk_bulten_icinde_ara", "mcp__*__tr_aym_ara", "mcp__*__tr_ictihat_ara", "mcp__*__eu_search_eu_law", "mcp__*__uk_search_legislation", "mcp__*__uk_get_effects", "mcp__*__de_recent_changes", "mcp__*__fi_recent_changes", "mcp__thomson-reuters__*", "mcp__*__slack_send_message"]
+tools: ["Read", "Write", "WebFetch", "mcp__*__tr_resmi_gazete_tara", "mcp__*__tr_resmi_gazete_fihrist", "mcp__*__tr_resmi_gazete_getir", "mcp__*__tr_mevzuat_ara", "mcp__*__tr_mevzuat_getir", "mcp__*__tr_mevzuat_madde_getir", "mcp__*__tr_kurum_karari_ara", "mcp__*__tr_kurum_karari_getir", "mcp__*__tr_semantik_ara", "mcp__*__tr_spk_bulten_icinde_ara", "mcp__*__tr_aym_ara", "mcp__*__tr_ictihat_ara", "mcp__*__eu_search_eu_law", "mcp__*__uk_search_legislation", "mcp__*__uk_get_effects", "mcp__*__de_recent_changes", "mcp__*__fi_recent_changes", "mcp__*__slack_send_message"]
 ---
 
 # Reg Change Monitor Ajanı

@@ -29,7 +29,7 @@ argument-hint: "[--redo | --full | --check-integrations | --side sales|purchasin
 
 `~/.claude/plugins/config/claude-for-legal/firm-profile.md` varsa oku ve tek satırla teyit et ("Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu?"); teyitte ortak soruları (pratik ortamı, ad, sektör, ne sattığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri) atla. Yoksa ilk kurulan eklenti budur: ortak soruları sor, paketteki `${CLAUDE_PLUGIN_ROOT}/references/firm-profile.md` şablonuna göre yaz ve söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak." Playbook, eskalasyon matrisi ve ev üslubu eklentiye özeldir.
 
-**Kurulum kapsamı:** Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden sözleşme okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Onay al. Ev dizinindeysen sessizce geç.
+**Kurulum kapsamı:** Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden sözleşme okumamı isterseniz kullanıcı kapsamında kurun." Onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -83,7 +83,7 @@ Dallanma ve kayıt (`## Who we are` altında `**Practice setting:**` satırı):
 
 Yapılandırılmış ile **çalışan** bağlantıyı karıştırma.
 - **ArthurLegal MCP (`tr_`)** — dene: `tr_mevzuat_madde_getir(number="6098", madde_no="115")`. Cevap geldiyse ✓.
-- **Sözleşme emsali (`contracts_`)** — kloz kıyası için isteğe bağlı: `contracts_search_contracts`.
+- **Sözleşme emsali (`contracts_`)** — yalnız petrol, gaz ve maden sözleşmeleri (ResourceContracts): `contracts_search_contracts`. Ticari NDA/SaaS/tedarik kloz kıyası için uygun değildir.
 - **Yabancı ülke araçları** (`eu_`, `uk_`, `de_` …) — yalnız yabancı hukuka tabi sözleşme varsa; önce `status`.
 - **CLM (Ironclad vb.), e-imza (DocuSign vb.), belge deposu (Drive, SharePoint, Box), Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪. KEP için MCP yoktur; KEP adresi varsa `## House style`'a not et.
 
@@ -289,13 +289,13 @@ Sıcak, meraklı, ödevini yapmış yeni bir meslektaş gibi; form gibi değil. 
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
 |---|---|
 | governing law = Azerbaycan hukuku ise akt lafzi + **yururluk statusu** (`Quvvededir`/`Legv olunmus`) — statusuz akt dayanak yapilmaz | `/arthurlegal:legal-research-az-mevzuat` |
-| kloz benchmark — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani) | `/arthurlegal:legal-research-sozlesme-emsali` |
+| kloz benchmark, yalniz petrol, gaz ve maden sozlesmelerinde (PSA/JOA, imtiyaz) — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani); ticari NDA/SaaS/tedarik klozu icin emsal tabani degildir | `/arthurlegal:legal-research-sozlesme-emsali` |
 | sinir-otesi kavramlarda (mucbir sebep, uyarlama, stabilizasyon) karsilastirmali ogreti — **ikincil**, redline gerekcesi olamaz | `/arthurlegal:legal-research-karsilastirmali-doktrin` |
 
 Rehberler: `${CLAUDE_PLUGIN_ROOT}/references/eqanun-mcp-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/lex-scholar-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/resourcecontracts-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`

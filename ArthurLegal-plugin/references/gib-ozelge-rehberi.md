@@ -1,16 +1,16 @@
 # GİB Özelge (Mukteza) Rehberi
 
-> Belirsiz bir vergi konusunda GİB'den bağlayıcı görüş alma. Türk vergi pratiğinin önemli aracı.
+> Belirsiz bir vergi konusunda GİB'den yazılı görüş (özelge) alma. Türk vergi pratiğinin önemli aracı.
 
 ## Yasal çerçeve
 
 - **VUK m. 413** — Mukteza (özelge) talep hakkı
 - **Mükelleflerin İzahat Taleplerinin Cevaplandırılmasına Dair Yönetmelik** — Özelge format ve usulleri
-- **Özelge "mükellef kişiye özel" bağlayıcıdır** — başka mükellef bunu doğrudan kullanamaz ama emsal referans olabilir
+- **Özelge bağlayıcı değildir; idarenin görüşüdür.** Kendisine yazıyla yanlış izahat verilen mükellefe vergi cezası kesilmez ve gecikme faizi hesaplanmaz (VUK m. 369). Özelge talep eden mükellefe özeldir: başka mükellef bunu doğrudan kullanamaz ama emsal referans olabilir
 
 ## Özelge'nin avantajları
 
-- Bağlayıcı GİB görüşü (sadece talep eden için)
+- Yazılı GİB görüşü; özelgeye uyan mükellef için ceza ve gecikme faizi koruması (VUK m. 369, sadece talep eden için)
 - Sonraki Maliye incelemesinde **kalkan**
 - Belirsiz konuda risk azaltma
 
