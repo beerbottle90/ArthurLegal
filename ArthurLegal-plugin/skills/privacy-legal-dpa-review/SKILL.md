@@ -100,7 +100,7 @@ Sırayla:
 
 - Yurt dışındaki sunucuda barındırmanın yurt dışı aktarım sayılması **yerleşik Kurul uygulaması — kararı çek** (`tr_semantik_ara(kurum="kvkk", query="yurt dışında bulunan sunucu bulut hizmeti aktarım")`).
 - Yurt dışı aktarım var, mekanizma yok → 🔴 (hukuka uygun aktarım yolu yok).
-- **AB tarafı** (veri aktaran AB'de ya da GDPR uygulanıyor): `eu_search_eu_law(query="standard contractual clauses transfer of personal data to third countries")` → CELEX 32021D0914; veri sorumlusu–veri işleyen klozları için `eu_search_eu_law(query="standard contractual clauses controllers processors")`; Türkiye hakkında AB yeterlilik kararı olup olmadığını araçla kontrol et, ezberden söyleme. **İngiltere:** `uk_search_legislation(query="Data Protection Act 2018")`. Aktarım etki değerlendirmesi gerekip gerekmediğini işaretle; değerlendirmeyi bu skill yapmaz.
+- **AB tarafı** (veri aktaran AB'de ya da GDPR uygulanıyor): `eu_search_eu_law(query="standard contractual clauses transfer of personal data to third countries")` → CELEX 32021D0914; veri sorumlusu–veri işleyen klozları için `eu_search_eu_law(query="standard contractual clauses controllers processors")`; Türkiye hakkında AB yeterlilik kararı olup olmadığını araçla kontrol et, ezberden söyleme. **İngiltere:** `uk_search_legislation(title="Data Protection Act", type="ukpga", year="2018")`. Aktarım etki değerlendirmesi gerekip gerekmediğini işaretle; değerlendirmeyi bu skill yapmaz.
 
 ### Veri işleyen olduğumuzda — savunma
 

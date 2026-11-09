@@ -106,7 +106,7 @@ tr_ictihat_ara(
 ### Süreç
 1. Bakanlık denetçileri keşif yapar
 2. **İdari para cezası kararı** tebliğ edilir
-3. **60 gün içinde** Danıştay 10. ve 14. Daire'ye iptal davası
+3. Tebliğden itibaren **30 gün içinde** idare mahkemesinde iptal davası (2872 m. 25/2); dava açmak cezanın tahsilini durdurmaz. İstinaf bölge idare mahkemesi, temyiz Danıştay
 4. Karar: 1-2 yıl
 
 ## 4. EPDK lisans yaptırımı
@@ -117,7 +117,7 @@ tr_ictihat_ara(
 
 ### Süreç
 1. EPDK denetim raporu → kurul kararı
-2. [Müvekkil]'a tebliğ → 60 gün Danıştay
+2. [Müvekkil]'a tebliğ → yetkili idare mahkemesinde dava (4628 m. 12); özel kanunda ayrı süre yoksa 60 gün (İYUK m. 7/1). Danıştay ilk derece değil, temyiz merciidir
 3. **Lisans askıya alma = üretim durur** → büyük gelir kaybı
 
 ## [TESİS LOKASYONU]-özel notlar

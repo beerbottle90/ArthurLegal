@@ -36,7 +36,7 @@ In the project, **Add content / Upload** everything under `knowledge/`:
 knowledge/
 ├─ akademisyen-profili.md      ← fill this in first (Step 4)
 ├─ skills/      (8 files)
-├─ references/  (23 files)
+├─ references/  (24 files)
 └─ agents/      (4 files)
 ```
 

@@ -104,7 +104,7 @@ ABD'deki dava için tescil ön şartını ve "fair use" testini Türk davasına 
 - **Başvuru dönemi:** yayımdan itibaren dava açılabilir; haberdar edilen ya da kötüniyetli tecavüzcü için yayımdan önce de (m. 141/3); mahkeme m. 99/3 ya da /7 yayımından önce karar veremez (m. 141/4).
 - **Savunmalar (bayrak):** m. 85/3 istisnaları; önceki kullanım (m. 87); tüketilme (m. 152); hükümsüzlük nedenleri (m. 138) — karşı dava ya da tecavüzün mevcut olmadığının tespiti davasıyla birlikte (m. 154/3); faydalı modelin verilmesi geçerlilik garantisi değildir (m. 143/13).
 - **Talepler:** tespit, önleme, durdurma, tazminat, elkoyma, imha, ilan (m. 149/1). Yoksun kalınan kazanç hak sahibinin seçimine göre muhtemel gelir, tecavüzcünün net kazancı ya da makul lisans bedeli üzerinden (m. 151/2); patent sahibi kullanma yükümlülüğünü yerine getirmemişse lisans bedeli yöntemi (m. 151/5). Hesap yapma — bilirkişi işidir.
-- **Yabancı ülke:** Almanya `de_norm_getir(kanun="PatG", norm="9")`, Birleşik Krallık `uk_get_section(year="1977", number="37", section="60")`; diğerleri için "ArthurLegal'da kaynak yok".
+- **Yabancı ülke:** Almanya `de_norm_getir(kanun="PatG", norm="9")`, Birleşik Krallık `uk_get_section(year="1977", number="37", section="60")`; diğerleri için önce ArthurLegal önekine bak (`jp_`, `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `az_`, `eu_`) ve ulusal patent kanununu araçla çek; öneki olmayan ülke için "ArthurLegal'da kaynak yok".
 
 Çıktı biçimi `fto-triage` ile aynıdır. Dava için tam istem tablosu (dayanak atıfları, bağımlı istemler, yorum bayrakları) uzmanla hazırlanır; ArthurLegal'da ayrı bir istem tablosu skill'i yok.
 

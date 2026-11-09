@@ -1,4 +1,4 @@
-> **Durum:** ✅ Açık — ArthurLegal MCP (`tr_`) `kurum_karari_ara (kurum="rekabet")` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `corporate-legal:merger-notification`, `energy-finance:ma-diligence-energy`.
+> **Durum:** ✅ Açık — ArthurLegal MCP (`tr_`) `tr_kurum_karari_ara (kurum="rekabet")` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `corporate-legal:merger-notification`, `energy-finance:ma-diligence-energy`.
 
 # Rekabet Hukuku — Pratik Rehber (4054 sayılı Kanun)
 

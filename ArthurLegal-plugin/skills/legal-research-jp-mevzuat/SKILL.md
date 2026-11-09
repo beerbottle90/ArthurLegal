@@ -15,10 +15,10 @@ karşı taraf veya Japon hukuku uygulanacak bir enstrüman kapsamdaysa.
 
 ## Yöntem
 
-1. `KeywordSearch` ile mevzuatı bul → `law_id` al.
-2. `GetLawData` ile tam metni çek.
-3. `revision_info` alanından yürürlük ve tadil durumunu doğrula.
-4. İmza veya uyuşmazlık tarihindeki metin gerekiyorsa `asof=YYYY-MM-DD` kullan
+1. `jp_search_laws(keyword="...")` ile mevzuatı bul (anahtar kelime Japonca) → `law_id` al.
+2. Tek madde için `jp_get_article(law_id, article)`, tam metin için `jp_get_law_text(law_id)`.
+3. `jp_get_law(law_id)` ile yürürlük ve tadil durumunu doğrula.
+4. İmza veya uyuşmazlık tarihindeki metin gerekiyorsa `as_of="YYYY-MM-DD"` kullan
    **ve bunu atıfta belirt**.
 
 ## Sert kurallar

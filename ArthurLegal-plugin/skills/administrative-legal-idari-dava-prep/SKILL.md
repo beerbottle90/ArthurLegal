@@ -130,15 +130,16 @@ tr_ictihat_ara(
   date_from="2022-01-01"
 )
 
-# İdare Mahkemesi/BİM kararları
+# Danıştay kararları (İdare Mahkemesi/BİM kararları bu araçta YOK; gerekirse metni kullanıcıdan iste)
 tr_ictihat_ara(
   query="<konu>",
+  courts=["DANISTAYKARAR"],
   date_from="2022-01-01"
 )
 
 # İdari kurum birincil kararları
 tr_kurum_karari_ara(kurum="rekabet", query="<konu>")
-kurum_karari_ara(kurum="kik", keywords="<konu>")
+# KİK kararları ArthurLegal MCP'de YOK (kurum="kik" geçersiz): kullanıcıya söyle, karar metnini iste
 tr_kurum_karari_ara(kurum="kvkk", query="<konu>")
 ```
 

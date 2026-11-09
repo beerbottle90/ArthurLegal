@@ -5,7 +5,7 @@
 ## Hukuki çerçeve
 
 - **2872 sayılı Çevre Kanunu:** ÇED yükümlülüğünü ve idari yaptırımları düzenleyen hükümler. Bu oturumda madde metni çekilmediği için madde numarası yazılmadı; uygulamadan önce `tr_mevzuat_ara(number="2872", types=["KANUN"])` ile ilgili maddeyi çekin. `UYARI: veri çekilemedi, teyidiniz gerekli: https://www.mevzuat.gov.tr/`
-- **ÇED Yönetmeliği:** karar türleri, kapsamlama, halkın katılımı toplantısı ve inceleme değerlendirme komisyonu usulü yönetmelikte düzenlenir; dava tarihinde yürürlükte olan yönetmelik metni `tr_mevzuat_ara(query="Çevresel Etki Değerlendirmesi", types=["YONETMELIK"])` ile çekilir.
+- **ÇED Yönetmeliği:** karar türleri, kapsamlama, halkın katılımı toplantısı ve inceleme değerlendirme komisyonu usulü yönetmelikte düzenlenir; dava tarihinde yürürlükte olan yönetmelik metni `tr_mevzuat_ara(query="Çevresel Etki Değerlendirmesi", types=["KKY"])` ile çekilir.
 
 ## Usul: İYUK m. 20/A ivedi yargılama
 

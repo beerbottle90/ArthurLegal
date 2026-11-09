@@ -108,7 +108,7 @@ tr_ictihat_ara(
 
 ```
 tr_mevzuat_ara(number="2872", types=["KANUN"])  # Çevre K.
-tr_mevzuat_ara(query="ÇED", types=["YONETMELIK"])  # ÇED Yön.
+tr_mevzuat_ara(query="Çevresel Etki Değerlendirmesi", types=["KKY"])  # ÇED Yön. (bakanlık yönetmeliği türü KKY'dir)
 ```
 
 ## Bağlantılı

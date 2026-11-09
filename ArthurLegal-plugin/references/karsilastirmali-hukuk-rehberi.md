@@ -13,15 +13,15 @@ API/WebFetch jurisdiction connector'larının test sonuçları ve birincil eriş
 
 | Jurisdiction | Birincil | Durum | Çalışan alternatif / yöntem |
 |---|---|---|---|
-| 🇬🇧 UK | legislation.gov.uk | ✅ | — |
+| 🇬🇧 UK | **ArthurLegal MCP `uk_`** (`uk_search_legislation`, `uk_get_section`) | ✅ | legislation.gov.uk (WebFetch yedeği) |
 | 🇺🇸 US mevzuat | api.govinfo.gov | ⚠️ API key | **Cornell LII** `law.cornell.edu/uscode` (no-key, ✅) |
 | 🇺🇸 US içtihat | courtlistener.com/api | ✅ | — |
-| 🇪🇺 AB | eur-lex.europa.eu | ✅ | — |
+| 🇪🇺 AB | **ArthurLegal MCP `eu_`** (`eu_search_eu_law`, `eu_get_document_text`) | ✅ | CELLAR (`eurlex-cellar-rehberi.md`); eur-lex `legal-content` yolları WebFetch'te metin döndürmez |
 | 🇪🇺 ECHR | hudoc.echr.coe.int | ⚠️ JS SPA | Query API `hudoc.echr.coe.int/app/query/results` (özel sözdizimi); düz WebFetch çalışmaz |
-| 🇩🇪 DE | gesetze-im-internet.de | ❌ ECONNREFUSED | **NeuRIS** `testphase.rechtsinformationen.bund.de/v1/legislation` (JSON, ✅) |
+| 🇩🇪 DE | **ArthurLegal MCP `de_`** (`de_norm_getir` madde metni, `de_gesetz_ara`) | ✅ | gesetze-im-internet.de WebFetch ❌ ECONNREFUSED; yedek **NeuRIS** `testphase.rechtsinformationen.bund.de/v1/legislation` (JSON) |
 | 🇫🇷 FR | legifrance.gouv.fr | ✅ | — |
 | 🇮🇹 IT | normattiva.it | ✅ | — |
-| 🇯🇵 JP | laws.e-gov.go.jp/api | ✅ | — |
+| 🇯🇵 JP | **ArthurLegal MCP `jp_`** (`jp_search_laws`, `jp_get_article`) | ✅ | laws.e-gov.go.jp/api (WebFetch yedeği) |
 | 🇷🇺 RU | pravo.gov.ru | ❌ ECONNREFUSED | **consultant.ru** `consultant.ru/document/...` (✅) |
 | 🇦🇿 AZ | ~~e-qanun.az WebFetch~~ | ⬆️ **MCP'ye taşındı** | **e-qanun MCP** (resmî `api.e-qanun.az`, statülü) → `eqanun-mcp-rehberi.md`. WebFetch yedeği hâlâ anti-bot ⚠️ → cis-legislation.com |
 | 🇨🇳 CN | HuggingFace dataset | ⚠️ gated/401 | **flk.npc.gov.cn** (resmî DB) / **gov.cn** (✅) |
@@ -78,8 +78,9 @@ sohbetine gönderildiğinde **iki kez 100 saniyede iptal edildi**. Genel web
 aramasına yalnız hiçbir özel araç o kaynağı kapsamıyorsa git.
 
 **Araçların NE TUTMADIĞINI bil.** LexScholar hukuk *hakkında* literatür
-döndürür — kanunun veya kararın **resmî metnini değil**. Güney Afrika, Almanya
-ve pek çok yabancı birincil kaynak için connector **yoktur**; bu durumda
+döndürür — kanunun veya kararın **resmî metnini değil**. Güney Afrika
+ve pek çok yabancı birincil kaynak için connector **yoktur** (Almanya için vardır:
+`de_norm_getir`, `de_gesetz_ara`); bu durumda
 "resmî metin çekilmedi" de ve literatürü **şerh/yorum** olarak atıfla — resmî
 kaynağa bakılmış gibi **ima etme**.
 

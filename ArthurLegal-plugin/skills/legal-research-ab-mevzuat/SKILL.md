@@ -2,7 +2,7 @@
 name: legal-research-ab-mevzuat
 description: >
   AB enstrumanlarini ve ABAD kararlarini EUR-Lex Cellar uzerinden KESIN olarak
-  kimlikler (CELEX/ELI); metin EUR-Lex'te okunur.
+  kimlikler (CELEX/ELI); metin eu_get_document_text ile cekilir.
 user-invocable: true
 ---
 
@@ -16,10 +16,10 @@ enstrümanını uyguladığı soruluyor.
 
 ## Yöntem
 
-1. Cellar üzerinde SPARQL ile **CELEX numarasını veya ELI'yi** bul.
-2. **Metni EUR-Lex'te oku** — Cellar kimlik ve metadata katmanıdır, operatif
-   metin katmanı değil.
-3. Konsolidasyon durumunu ve yürürlüğü kontrol et.
+1. `eu_search_eu_law(query="...")` ile **CELEX numarasını** bul (gerekirse `eu_sparql`).
+2. **Metni `eu_get_document_text(celex=..., language=...)` ile çek** — EUR-Lex
+   `legal-content` sayfaları WebFetch'te metin döndürmez.
+3. `eu_get_metadata(celex=...)` ile yürürlüğü (`in_force`) ve konsolidasyon durumunu kontrol et.
 
 ## Sert kurallar
 

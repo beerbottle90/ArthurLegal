@@ -433,7 +433,7 @@ Etkenlerin ağırlığı ve "esas unsur" tespiti **tartışmalı — içtihadı 
 - AB: `eu_get_document_text(celex="32017R1001")` (AB Marka Tüzüğü 2017/1001; nispi ret ve hak kapsamı maddelerini metinden bul).
 - Birleşik Krallık: `uk_get_section(year="1994", number="26", section="5")` (Trade Marks Act 1994 — nispi ret).
 - Almanya: `de_norm_getir(kanun="MarkenG", norm="14")`.
-- Madrid/WIPO ve listede olmayan ülkeler: "ArthurLegal'da bu kaynak yok; yerel marka vekilinin görüşünü alın." Türk ölçütünü sessizce başka ülkeye uygulama.
+- Listede olmayan ülke: önce ArthurLegal önekine bak (`eu_`, `uk_`, `de_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_`) ve o ülkenin marka kanununu araçla ara. Madrid/WIPO ve öneki olmayan ülkeler: "ArthurLegal'da bu kaynak yok; yerel marka vekilinin görüşünü alın." Türk ölçütünü sessizce başka ülkeye uygulama.
 
 ## Önerilen sonraki adımlar
 
@@ -955,7 +955,7 @@ Elemenin özü. Ürüne en yakın okunan 2–5 patenti seç; her bağımsız ist
 **Yabancı ülke kapsamdaysa** Türk tablosunu oraya taşıma; kuralı araçla çek:
 - Almanya: `de_norm_getir(kanun="PatG", norm="9")`; kapsam ve dolaylı kullanım normlarını `de_gesetz_ara` ile bul.
 - Birleşik Krallık: `uk_get_section(year="1977", number="37", section="60")` (Patents Act 1977 — tecavüz ve istisnalar).
-- AB üniter patent: `eu_get_document_text(celex="32012R1257")`. Avrupa Patent Sözleşmesi (EPC), Birleşik Patent Mahkemesi Anlaşması, ABD, Çin, Japonya patent hukuku: "ArthurLegal'da doğrulanmış kaynak yok; ilgili ülkenin patent vekilinden görüş alın."
+- AB üniter patent: `eu_get_document_text(celex="32012R1257")`. Japonya: `jp_search_laws(keyword="特許法")` → `jp_get_article(law_id, article)`. İspanya, Hollanda, Polonya, Avusturya, İrlanda, Finlandiya: `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_` mevzuat araçlarıyla ulusal patent kanununu ara. Avrupa Patent Sözleşmesi (EPC), Birleşik Patent Mahkemesi Anlaşması, ABD, Çin patent hukuku: "ArthurLegal'da doğrulanmış kaynak yok; ilgili ülkenin patent vekilinden görüş alın."
 
 **Karar duruşu:** bu skill "tecavüz yok" demez. Şunlardan biri:
 - "Ürün İstem X'in her unsurunu lafzen uyguluyor; ilerlemeden önce uzman incelemesi gerekli."
@@ -1178,7 +1178,7 @@ ABD'deki dava için tescil ön şartını ve "fair use" testini Türk davasına 
 - **Başvuru dönemi:** yayımdan itibaren dava açılabilir; haberdar edilen ya da kötüniyetli tecavüzcü için yayımdan önce de (m. 141/3); mahkeme m. 99/3 ya da /7 yayımından önce karar veremez (m. 141/4).
 - **Savunmalar (bayrak):** m. 85/3 istisnaları; önceki kullanım (m. 87); tüketilme (m. 152); hükümsüzlük nedenleri (m. 138) — karşı dava ya da tecavüzün mevcut olmadığının tespiti davasıyla birlikte (m. 154/3); faydalı modelin verilmesi geçerlilik garantisi değildir (m. 143/13).
 - **Talepler:** tespit, önleme, durdurma, tazminat, elkoyma, imha, ilan (m. 149/1). Yoksun kalınan kazanç hak sahibinin seçimine göre muhtemel gelir, tecavüzcünün net kazancı ya da makul lisans bedeli üzerinden (m. 151/2); patent sahibi kullanma yükümlülüğünü yerine getirmemişse lisans bedeli yöntemi (m. 151/5). Hesap yapma — bilirkişi işidir.
-- **Yabancı ülke:** Almanya `de_norm_getir(kanun="PatG", norm="9")`, Birleşik Krallık `uk_get_section(year="1977", number="37", section="60")`; diğerleri için "ArthurLegal'da kaynak yok".
+- **Yabancı ülke:** Almanya `de_norm_getir(kanun="PatG", norm="9")`, Birleşik Krallık `uk_get_section(year="1977", number="37", section="60")`; diğerleri için önce ArthurLegal önekine bak (`jp_`, `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `az_`, `eu_`) ve ulusal patent kanununu araçla çek; öneki olmayan ülke için "ArthurLegal'da kaynak yok".
 
 Çıktı biçimi `fto-triage` ile aynıdır. Dava için tam istem tablosu (dayanak atıfları, bağımlı istemler, yorum bayrakları) uzmanla hazırlanır; ArthurLegal'da ayrı bir istem tablosu skill'i yok.
 
@@ -1339,7 +1339,7 @@ Elemeye başlamadan önce şu saatleri hesapla; biri 30 gün içinde doluyorsa n
 2. **Yükseköğretim kurumu** buluşlarında 115, 116, 118 ve 119/4 uygulanmaz; buluşu yapan kuruma yazılı ve gecikmeksizin bildirir, kurum hak talep ederse başvuru yapmakla yükümlüdür (m. 121/2-3, 5). **Kamu destekli projede** buluş destek veren kuruma bildirilir; destekten yararlanan kişi bildirimden itibaren **bir yıl** içinde hak sahipliği tercihini yazılı bildirmezse kurum hak sahipliğini alabilir ve süreç bitene kadar patentlenebilirliği etkileyecek açıklama yapılamaz (m. 122/1).
 3. **Açıklama saati** — yenilik dünya çapında mutlaktır: başvuru tarihinden önce herhangi bir yerde toplumca erişilebilir hâle gelen her şey tekniğin bilinen durumudur (m. 83/2). İstisna: başvuru (ya da rüçhan) tarihinden önceki **on iki ay** içinde buluşu yapanın kendisinin, bir patent merciinin (sayılan hâllerde) ya da buluşu yapandan bilgi edinen üçüncü kişinin açıklaması patent/faydalı model verilmesini etkilemez; şartları ileri süren ispat eder (m. 84/1, 4).
 4. **Rüçhan saati** — Türkiye'deki ya da Paris/DTÖ ülkesindeki ilk başvurudan itibaren **on iki ay** içinde aynı buluş için rüçhan hakkı (m. 93/1).
-5. **Yabancı haklar** — zararsız açıklama kuralı ülkeden ülkeye farklıdır. Örneğin Almanya'da yalnız açık kötüye kullanım ya da resmî sergide teşhir kaynaklı ve başvurudan en çok altı ay önceki açıklama dışarıda bırakılır (`de_norm_getir(kanun="PatG", norm="3")`, § 3/5). Avrupa Patent Sözleşmesi, ABD ve diğerleri için ArthurLegal'da kaynak yok: yabancı başvuru planı varsa herhangi bir kamuya açıklamayı "**yabancı haklar risk altında**" diye işaretle ve ilgili ülkenin patent vekiline teyit ettir.
+5. **Yabancı haklar** — zararsız açıklama kuralı ülkeden ülkeye farklıdır. Örneğin Almanya'da yalnız açık kötüye kullanım ya da resmî sergide teşhir kaynaklı ve başvurudan en çok altı ay önceki açıklama dışarıda bırakılır (`de_norm_getir(kanun="PatG", norm="3")`, § 3/5). Japonya ve öneki olan öteki ülkelerde (`jp_`, `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `uk_`) kuralı ulusal patent kanunundan araçla çek. Avrupa Patent Sözleşmesi, ABD ve öneki olmayan ülkeler için ArthurLegal'da kaynak yok: yabancı başvuru planı varsa herhangi bir kamuya açıklamayı "**yabancı haklar risk altında**" diye işaretle ve ilgili ülkenin patent vekiline teyit ettir.
 
 ## Destination check
 
@@ -2062,7 +2062,8 @@ Süresinde yenilenmeyen marka ve tasarımın hakkı sona erer (SMK m. 28/1-a, m.
 - AB markası ve topluluk tasarımı: `eu_get_document_text(celex="32017R1001")` (AB Marka Tüzüğü), `eu_get_document_text(celex="32002R0006")` + değişiklik `32024R2822` (topluluk tasarımları).
 - Birleşik Krallık marka yenilemesi: `uk_get_section(year="1994", number="26", section="43")`.
 - Almanya marka süresi ve yenileme: `de_norm_getir(kanun="MarkenG", norm="47")`.
-- Diğer ülkeler (ABD dahil), EPO yıllık ücretleri, WIPO: "ArthurLegal'da kaynak yok" → `agent_managed: true`, yerel vekile teyit.
+- Öneki olan öteki ülkeler (`jp_`, `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `az_`): süre ve yenileme kuralını ulusal kanundan araçla çek; ücret tutarı için yine yerel vekile teyit.
+- Öneki olmayan ülkeler (ABD dahil), EPO yıllık ücretleri, WIPO: "ArthurLegal'da kaynak yok" → `agent_managed: true`, yerel vekile teyit.
 
 **Alan adları:** kayıt kuruluşunun bitiş tarihini kaydet; ek süre ve geri alma kuralları kayıt kuruluşuna göre değişir — kayıt kuruluşundan teyit et (ArthurLegal'da araç yok).
 

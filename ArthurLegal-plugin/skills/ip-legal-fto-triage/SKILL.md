@@ -105,7 +105,7 @@ Elemenin özü. Ürüne en yakın okunan 2–5 patenti seç; her bağımsız ist
 **Yabancı ülke kapsamdaysa** Türk tablosunu oraya taşıma; kuralı araçla çek:
 - Almanya: `de_norm_getir(kanun="PatG", norm="9")`; kapsam ve dolaylı kullanım normlarını `de_gesetz_ara` ile bul.
 - Birleşik Krallık: `uk_get_section(year="1977", number="37", section="60")` (Patents Act 1977 — tecavüz ve istisnalar).
-- AB üniter patent: `eu_get_document_text(celex="32012R1257")`. Avrupa Patent Sözleşmesi (EPC), Birleşik Patent Mahkemesi Anlaşması, ABD, Çin, Japonya patent hukuku: "ArthurLegal'da doğrulanmış kaynak yok; ilgili ülkenin patent vekilinden görüş alın."
+- AB üniter patent: `eu_get_document_text(celex="32012R1257")`. Japonya: `jp_search_laws(keyword="特許法")` → `jp_get_article(law_id, article)`. İspanya, Hollanda, Polonya, Avusturya, İrlanda, Finlandiya: `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_` mevzuat araçlarıyla ulusal patent kanununu ara. Avrupa Patent Sözleşmesi (EPC), Birleşik Patent Mahkemesi Anlaşması, ABD, Çin patent hukuku: "ArthurLegal'da doğrulanmış kaynak yok; ilgili ülkenin patent vekilinden görüş alın."
 
 **Karar duruşu:** bu skill "tecavüz yok" demez. Şunlardan biri:
 - "Ürün İstem X'in her unsurunu lafzen uyguluyor; ilerlemeden önce uzman incelemesi gerekli."

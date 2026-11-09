@@ -37,9 +37,10 @@
 
 3. **Cevap süresi:** Genelde 6-9 ay; bazen 1 yıl+
 
-4. **Olumsuz cevap → Danıştay dava:**
-   - İlgili Danıştay vergi dairesinde
-   - İYUK m. 7 — 30 gün (özelge tebliğden)
+4. **Olumsuz cevap → dava yolu:**
+   - Özelge bireysel bir işlemdir; Danıştay'ın ilk derece görevi 2575 m. 24'te sayılan işlerle sınırlıdır ve özelge bunlar arasında değildir. Dava açılacaksa görevli yer vergi mahkemesidir; istinaf bölge idare mahkemesi, temyiz Danıştay
+   - Süre: vergi mahkemesinde 30 gün (İYUK m. 7/1), tebliği izleyen günden başlar
+   - Özelgenin tek başına dava konusu olup olamayacağını (kesin ve yürütülmesi gerekli işlem sayılıp sayılmadığını) dava açmadan önce `tr_ictihat_ara(query="özelge kesin ve yürütülmesi gerekli işlem", courts=["DANISTAYKARAR"])` ile güncel kararlardan teyit et
 
 ## ArthurLegal MCP (`tr_`) — benzer özelge tarama
 

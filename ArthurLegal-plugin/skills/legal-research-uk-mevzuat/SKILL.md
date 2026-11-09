@@ -6,7 +6,7 @@ description: >
 user-invocable: true
 ---
 
-# UK Mevzuatı (TNA resmî MCP)
+# UK Mevzuatı (ArthurLegal MCP `uk_`)
 
 ## Ne zaman kullanılır
 
@@ -20,11 +20,14 @@ kullanım için ayrı lisans ister). AB hukuku için → `ab-mevzuat`.
 
 ## Yöntem
 
-1. Aranan enstrümanı tür/yıl/numara ile kimlikle (ör. `ukpga/2006/46`).
-2. Madde düzeyine in; **yürürlük tarihini** kontrol et — UK mevzuatında
-   yürürlüğe girmemiş veya yürürlükten kalkmış hükümler aynı sayfada durur.
-3. Değişiklik notlarını (amendments) oku; konsolide metin ile yürürlükteki metin
-   aynı olmayabilir.
+1. `uk_search_legislation(title="...", type="ukpga", year="2006")` ile enstrümanı bul ve
+   tür/yıl/numara ile kimlikle (ör. `ukpga/2006/46`). Araç `query` almaz: başlık için
+   `title`, metin için `text`.
+2. `uk_get_section(type, year, number, section)` ile madde düzeyine in; **yürürlük
+   tarihini** kontrol et — UK mevzuatında yürürlüğe girmemiş veya yürürlükten kalkmış
+   hükümler aynı sayfada durur.
+3. `uk_get_effects(type, year, number, unapplied_only=true)` ile metne henüz işlenmemiş
+   değişiklikleri (amendments) oku; konsolide metin ile yürürlükteki metin aynı olmayabilir.
 
 ## Sert kurallar
 
@@ -32,7 +35,7 @@ kullanım için ayrı lisans ister). AB hukuku için → `ab-mevzuat`.
 UK'de bir hükmün kabul edilmiş ama yürürlüğe konmamış olması yaygındır.
 
 Ham API XML/Atom döndürür — JSON bekleyen bir istemciye doğrudan bağlanmaz.
-Yapılandırılmış erişim için resmî MCP rotası kullanılır.
+Yapılandırılmış erişim için ArthurLegal MCP `uk_` araçları kullanılır.
 
 Lisans: Open Government Licence v3.0 — atıf yükümlülüğü doğurur.
 

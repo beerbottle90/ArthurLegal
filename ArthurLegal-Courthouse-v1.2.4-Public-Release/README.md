@@ -139,7 +139,7 @@ sorarsa **Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menül
 Bir eklentinin bütün komutlarını görmek için sohbete yalnız adını yazın, örneğin `/hukuk-kalem:`. İzleyiciler
 komutla değil cümleyle çalışır: "yarının duruşmaları", "sabah tutuklu listesi", "kesinleşme kontrolü". Önce
 `knowledge/mahkeme-profili.md` dosyasındaki mahkeme bilgilerini doldurmak isterseniz asistana "mahkeme profilini
-birlikte dolduralım" deyin. Komutların tam listesi: [KURULUM.md](KURULUM.md#komut-haritası-v120).
+birlikte dolduralım" deyin. Komutların tam listesi: [KURULUM.md](KURULUM.md#komut-haritası-v124).
 
 <details>
 <summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>

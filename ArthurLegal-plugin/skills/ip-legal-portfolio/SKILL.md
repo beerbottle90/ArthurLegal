@@ -75,7 +75,8 @@ Süresinde yenilenmeyen marka ve tasarımın hakkı sona erer (SMK m. 28/1-a, m.
 - AB markası ve topluluk tasarımı: `eu_get_document_text(celex="32017R1001")` (AB Marka Tüzüğü), `eu_get_document_text(celex="32002R0006")` + değişiklik `32024R2822` (topluluk tasarımları).
 - Birleşik Krallık marka yenilemesi: `uk_get_section(year="1994", number="26", section="43")`.
 - Almanya marka süresi ve yenileme: `de_norm_getir(kanun="MarkenG", norm="47")`.
-- Diğer ülkeler (ABD dahil), EPO yıllık ücretleri, WIPO: "ArthurLegal'da kaynak yok" → `agent_managed: true`, yerel vekile teyit.
+- Öneki olan öteki ülkeler (`jp_`, `es_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `az_`): süre ve yenileme kuralını ulusal kanundan araçla çek; ücret tutarı için yine yerel vekile teyit.
+- Öneki olmayan ülkeler (ABD dahil), EPO yıllık ücretleri, WIPO: "ArthurLegal'da kaynak yok" → `agent_managed: true`, yerel vekile teyit.
 
 **Alan adları:** kayıt kuruluşunun bitiş tarihini kaydet; ek süre ve geri alma kuralları kayıt kuruluşuna göre değişir — kayıt kuruluşundan teyit et (ArthurLegal'da araç yok).
 

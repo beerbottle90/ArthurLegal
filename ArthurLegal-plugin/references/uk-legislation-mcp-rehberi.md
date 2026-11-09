@@ -91,13 +91,13 @@ uk_search_legislation:
   year: "1996"
 → Arbitration Act 1996 (ukpga/1996/23) bulunur
 
-uk_get_legislation: ukpga/1996/23
+uk_get_legislation: type "ukpga", year "1996", number "23"
 → statü (revised / as enacted), metnin güncel olduğu tarih (text_current_to), extent
 
-uk_get_effects: ukpga/1996/23, unapplied_only: true
+uk_get_effects: type "ukpga", year "1996", number "23", unapplied_only: true
 → metne henüz işlenmemiş tadiller; complete_scan false ise sayı tabandır
 
-uk_get_section: ukpga/1996/23, section 9
+uk_get_section: type "ukpga", year "1996", number "23", section "9"
 → s.9 (stay of legal proceedings) metni
 ```
 

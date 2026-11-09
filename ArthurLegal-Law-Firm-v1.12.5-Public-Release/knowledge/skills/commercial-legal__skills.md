@@ -2133,7 +2133,7 @@ Ciddiyet her zaman eklenti ayarına göre verilir. Bir şart hiçbir pozisyona o
 #### Yargı çevresi farkı
 
 Playbook tek bir hukuk tercihini her yere uygular; geçerlilik hukuka göre değişir. Sözleşme Türk hukuku dışında bir hukuka tabiyse yukarıdaki tablo o hukuka aktarılamaz. Kural ezberden yazılmaz; araçla çekilir ve `/commercial-legal:governing-law-review` ile derinleştirilir:
-- İngiltere: `uk_search_legislation(query="Unfair Contract Terms Act 1977")` → `uk_get_section`
+- İngiltere: `uk_search_legislation(title="Unfair Contract Terms Act", type="ukpga", year="1977")` → `uk_get_section`
 - Almanya: `de_gesetz_ara` / `de_norm_getir` (ör. BGB § 307 standart şart denetimi)
 - AB: `eu_search_eu_law(query="late payment in commercial transactions")`
 - Hollanda `nl_`, Polonya `pl_`, Avusturya `at_`, İrlanda `ie_`, Finlandiya `fi_`, İspanya `es_`, Japonya `jp_`, Azerbaycan `az_`

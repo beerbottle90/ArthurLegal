@@ -83,7 +83,7 @@ VERBİS istisnası Kurul kararıyla getirilir (m. 16/2) → `tr_semantik_ara(kur
 
 - **KVKK:** zorunlu etki değerlendirmesi yok → bu adım KVKK için "uygulanmaz".
 - **GDPR** `## Regulatory footprint`'te varsa: uygulama alanı için Art. 3'ü, tetikler için Art. 35'i `eu_get_document_text(celex="32016R0679")` ile çek (Art. 3 ≈ offset 156000, Art. 35 ≈ offset 224000). Art. 35(3)'teki hâllerden biri ya da ilgili üye devlet denetim makamının listesi (Art. 35(4)) tetikleniyorsa → **VKED ZORUNLU**. Üye devlet listesi için ilgili ülke aracı (`de_gesetz_ara`, `nl_search_legislation` …); bulunamazsa "ArthurLegal'da bu listenin kaynağı yok; yerel hukukçu görüşü al."
-- **UK GDPR:** `uk_search_legislation(query="Data Protection Act 2018")` → `uk_get_section`.
+- **UK GDPR:** `uk_search_legislation(title="Data Protection Act", type="ukpga", year="2018")` → `uk_get_section`.
 - *Karşılaştırmalı not:* ABD eyalet yasalarının kendi risk değerlendirmesi tetikleri vardır; yalnız CourtListener kuruluysa `courtlistener-rehberi.md` üzerinden, ezberden değil.
 
 **Güçlü göstergeler** (zorunlu olmasa da değerlendirme yap): yeni teknoloji ya da yapay zekâ; çocuk verisi; özel nitelikli veri; ayrı toplanmış veri setlerinin birleştirilmesi; ayrımcılığa elverişli veri ya da çıkarım; münhasıran otomatik analizle kişi aleyhine sonuç (m. 11/1-g); çalışan izleme; ilgili kişinin beklemeyeceği işleme; davranışsal reklam, benzer kitle (lookalike) ve bağlamlar arası takip (aktarım, aydınlatma ve 6563 onay sorunlarını düzenli olarak açığa çıkarır). Zorunlu tetik yok ama gösterge var → **PIA GEREKLİ** (çıktıda göstergeyi belirt).

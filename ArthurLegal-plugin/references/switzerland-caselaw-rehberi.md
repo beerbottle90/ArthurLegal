@@ -10,7 +10,7 @@
 ## 1. OpenCaseLaw.ch MCP — İsviçre İçtihadı
 
 **MCP endpoint: `https://mcp.opencaselaw.ch/sse`** ✅ (30.08.2026 test)
-**33 MCP aracı, CC0 lisans, günlük güncelleme, auth yok.**
+**42 MCP aracı, CC0 lisans, günlük güncelleme, auth yok.**
 
 > ⚠️ **REST/WebFetch yedeği YOK.** v1.5.0'a kadar burada
 > `https://mcp.opencaselaw.ch/api/` diye bir REST endpoint'i yazıyordu — **böyle bir
@@ -27,11 +27,12 @@ Kapsam:
 - Fedlex mevzuat entegrasyonu
 
 **MCP araçları (seçili):**
-- `search_cases` — anahtar kelime/konu araması
-- `get_case` — belirli karar tam metin
-- `search_by_statute` — belirli kanun maddesine göre karar
-- `get_related_cases` — atıf ağı
-- `search_arbitration` — tahkim kararları
+- `search_decisions` — anahtar kelime/konu araması (dosya numarasıyla da)
+- `get_decision` — belirli kararın tam metni
+- `find_leading_cases` — konuya ya da kanun maddesine (`law_code` + `article`) göre en çok atıf alan kararlar
+- `find_citations` — atıf ağı (kararın andıkları ve kararı ananlar)
+- `find_appeal_chain` — kanun yolu zinciri (alt ve üst derece kararları)
+- Tahkim için ayrı araç yoktur; tahkim kararları `search_decisions` ile aranır
 
 **Connector yoksa ne yapılır:**
 

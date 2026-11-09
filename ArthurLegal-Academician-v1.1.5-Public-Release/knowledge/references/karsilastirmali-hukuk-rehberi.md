@@ -22,10 +22,13 @@ yabancı çözüm **ithal edilemez**. Aksi 🟠 yöntem hatasıdır ve hakem ora
 | **İsviçre — mevzuat** | Fedlex MCP | MCP | `[Fedlex — SR no — …]` |
 | **İsviçre — içtihat + doktrin** | OpenCaseLaw.ch MCP | MCP | `[OpenCaseLaw.ch — …]` |
 | **ABD** | CourtListener MCP (resmî) | MCP | `[CourtListener — …]` |
-| **Avrupa Birliği** | EUR-Lex (CELEX no) | WebFetch | `[EUR-Lex — CELEX — …]` |
+| **Avrupa Birliği** | ArthurLegal MCP (`eu_`): `eu_search_eu_law` → `eu_get_document_text` (CELEX no) | MCP | `[EUR-Lex — CELEX — …]` |
 | **AİHM** | HUDOC (App. no) | WebFetch | `[HUDOC — App. no — …]` |
-| **Almanya** | Beck-online / juris | **Abonelik, API yok** | `[MANUEL DOĞRULAYIN]` |
-| **Birleşik Krallık** | BAILII | Açık, API yok | `[MANUEL DOĞRULAYIN]` |
+| **Almanya — mevzuat + içtihat** | ArthurLegal MCP (`de_`): `de_gesetz_ara` → `de_norm_getir` (madde); içtihat `de_rii_case_search`, `de_oldp_case_search` | MCP | aracın döndürdüğü `citation` / `source_url` |
+| **Almanya — şerh ve doktrin** | Beck-online / juris | **Abonelik, API yok** | `[MANUEL DOĞRULAYIN]` |
+| **Birleşik Krallık — mevzuat** | ArthurLegal MCP (`uk_`): `uk_search_legislation` → `uk_get_section` | MCP | aracın döndürdüğü `citation` / `source_url` |
+| **Birleşik Krallık — içtihat** | BAILII | Açık, API yok | `[MANUEL DOĞRULAYIN]` |
+| **Hollanda, Polonya, Avusturya, İrlanda, Finlandiya, İspanya, Japonya, Azerbaycan** | ArthurLegal MCP (`nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_`) | MCP | aracın döndürdüğü `citation` / `source_url` |
 | **Kanada** | CanLII | Açık, ücretsiz API | `[MANUEL DOĞRULAYIN]` |
 
 ---

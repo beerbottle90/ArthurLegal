@@ -1,8 +1,11 @@
 # Almanya Mevzuatı & İçtihadı — Kullanım Rehberi (v1.8.4)
 
 > ✅ **Alman hukuku için özel MCP VAR (v1.5.0):** `de-eli-mcp-rehberi.md`.
-> Mevzuat (NeuRIS), içtihat (yedi federal mahkeme tam + 16 eyalet) ve parlamento
-> belgeleri tek uçtan, 14 araçla gelir. **Alman hukuku için birincil yol odur.**
+> **Kanun maddesi için önce `de_norm_getir(kanun, norm)`**: metni sunucu tarafında
+> gesetze-im-internet.de'den çeker; BGB, HGB, StGB, ZPO gibi temel kanunlar buradadır.
+> Kanunun kısaltması bilinmiyorsa `de_gesetz_ara`. Mevzuat araması (NeuRIS), içtihat
+> (federal mahkemeler `de_rii_*`, eyalet mahkemeleri `de_oldp_*`) ve parlamento belgeleri
+> aynı uçtan, `de_` önekli 17 araçla gelir. **Alman hukuku için birincil yol odur.**
 > Aşağıdaki WebFetch rotaları MCP bağlı değilken geçerlidir — ve aşağıda kayıtlı
 > ECONNREFUSED sorunu MCP'de görülmez, çünkü çağrıyı sunucu kendi tarafında yapar.
 
@@ -30,7 +33,7 @@
 > 2. **`testphase.rechtsinformationen.bund.de`** — NeuRIS REST, auth yok (bölüm 2) ✅
 > 3. **`dejure.org`** — mevzuat + içtihat çapraz-referans (bölüm 1) ✅
 > 4. **`bundestag/gesetze` raw GitHub** — tüm kanunlar Markdown (bölüm 1a) ✅
-> AB-türevli Alman hukuku için **EUR-Lex Almanca** (`/DE/TXT/`) da çalışıyor ✅.
+> AB-türevli Alman hukuku için `eu_get_document_text(celex=..., language="de")` kullan; EUR-Lex `legal-content` yolları WebFetch'te metin döndürmez.
 
 ---
 
@@ -101,13 +104,14 @@ varsa bundestag/gesetze raw birincil kalır.
 
 ---
 
-## 1b. AB-türevli Alman hukuku — EUR-Lex Almanca (✅)
+## 1b. AB-türevli Alman hukuku — AB metninin Almancası
 
-GDPR (DSGVO), AB direktiflerinin Alman uyumu vb. için EUR-Lex Almanca versiyonu çalışıyor:
+GDPR (DSGVO), AB direktiflerinin Alman uyumu vb. için AB metninin Almancası ArthurLegal MCP'den çekilir:
 ```
-GET https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0679
+eu_get_document_text(celex="32016R0679", language="de")
 ```
-(Detay: `eu-legislation-rehberi.md` — CELEX pattern aynı, dil kodu `DE`.)
+`eur-lex.europa.eu/legal-content/DE/TXT/...` yolunu WebFetch ile çağırma: metin yerine Resmî Gazete
+dizini döner (`eu-legislation-rehberi.md`). MCP yoksa `eurlex-cellar-rehberi.md`'deki CELLAR adımları.
 
 ---
 
@@ -115,7 +119,7 @@ GET https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0679
 
 **Resmi Alman Federal Adalet Bakanlığı platformu.** Tarayıcıda çalışır; bu ortamdan
 WebFetch **bağlantı kuramıyor** (30.08.2026 yeniden doğrulandı — kalıcı görünüyor).
-**Bu bölümdeki URL'leri çağırma; atıf dizesinde de kaynak olarak gösterme.**
+**Bu bölümdeki URL'leri WebFetch ile çağırma.** Aynı kaynak MCP'den gelir: `de_norm_getir` maddeyi sunucu tarafında buradan çeker ve `source_url` olarak bu adresi döndürür; atıf o `source_url` ile yapılır.
 Erişim sağlanabilen ortamlarda desen şudur:
 
 ```
@@ -125,8 +129,9 @@ GET https://www.gesetze-im-internet.de/{kisaltma}/
 Kısaltmalar küçük harf: `bgb`, `hgb`, `aktg`, `gmbhg`, `enwg_2005`, `gwb`, `uwg_2004`,
 `bdsg_2018`, `inso`, `zpo`.
 
-> **Bunun yerine ne kullan:** madde metni için **dejure.org** (bölüm 1) veya
-> **de-eli MCP `de_get_text`**; her ikisi de 30.08.2026'da test edildi ✅.
+> **Bunun yerine ne kullan:** madde metni için **`de_norm_getir(kanun="BGB", norm="242")`**
+> (kısaltma bilinmiyorsa `de_gesetz_ara`); MCP yoksa **dejure.org** (bölüm 1). `de_get_text`
+> NeuRIS'teki kanunun tam metnini verir; BGB, HGB, StGB, ZPO gibi temel kanunlar NeuRIS'te yoktur.
 
 ---
 
@@ -149,7 +154,7 @@ Swagger: `https://docs.rechtsinformationen.bund.de/` ✅
 
 > **Önce MCP dene.** `de-eli-mcp-rehberi.md` aynı API'yi sarmalar; `eli_uri` +
 > `human_readable_citation` + `source_url` atıf üçlüsünü hazır döndürür ve `de_rii_*`
-> araçlarıyla altı federal mahkemenin **tam** külliyatına ulaşır. Bu WebFetch yolu
+> araçlarıyla federal yüksek mahkemelerin **tam** külliyatına ulaşır. Bu WebFetch yolu
 > yalnızca MCP connector'ı yokken kullanılır.
 
 ⚠️ **NeuRIS BETA'dır** — mevzuat kümesi eksik (~2.400 akt), içtihat kümesi dar bir dilim.
