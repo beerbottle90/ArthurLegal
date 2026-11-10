@@ -415,6 +415,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     tamEkranIste: true,
     yonlendir: null,     // uzak uç masayı bu bilgisayardaki kuruluma devrettiyse { sunucu, arac }
     uzaktaKal: false,    // kullanıcı devir ekranında "bu masayla devam et" dedi
+    devirOlmadi: false,  // devir bu sohbette denendi, Claude yerel masayı açamadı: ikinci kez devredilmez
   };
   const GECMIS = [];
 
@@ -464,10 +465,25 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const MASA_ACIK = "ArthurLegal Masası: ekranda açık.";
   const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabı al_masaya_yaz ile " +
     "teslim edin; sohbete yalnız 'Cevap masada.' yazın.";
+  // Devir aynı sohbette bir kez denenir. Kayıt bu sohbetin pencereleri arasında ortaktır (tarayıcı deposu); depo
+  // kapalıysa kayıt tutulamaz ve kart her çağrıda çizilir, kullanıcı "Bu masayla devam et" ile çıkar.
+  const DEVIR_KAYDI = "al.masa.devir";
+  const DEVIR_OMRU = 10 * 60 * 1000;
+  function devirDenendi() {
+    try {
+      const d = JSON.parse(localStorage.getItem(DEVIR_KAYDI) || "null");
+      return !!d && Date.now() - d.zaman < DEVIR_OMRU;
+    } catch { return false; }
+  }
+  function devriYaz() {
+    try { localStorage.setItem(DEVIR_KAYDI, JSON.stringify({ zaman: Date.now() })); } catch { /* depo kapalı */ }
+  }
+
   // Devirde masa açık değildir: not, masanın açık olduğunu söyleyen önceki notun yerini alır.
   async function yonlendirmeyiBildir() {
     const not = "ArthurLegal Masası bu bağlantıdan açılmadı: bu bilgisayarda ArthurLegal kurulu. arthurlegal-yerel " +
-      "sunucusunun al_masasi aracını çağırın ve bu sohbette masa araçlarını o sunucudan kullanın.";
+      "sunucusunun al_masasi aracını çağırın ve bu sohbette masa araçlarını o sunucudan kullanın. O araç araç " +
+      "listenizde yoksa uzak al_masasi aracını uzakta_kal=true ile çağırın.";
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
   async function bildir(metin) {
@@ -705,9 +721,29 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return b.liste.some((x) => x.durum === "bagli" && YEREL_SUNUCU.test(x.ad.toLowerCase()));
   }
 
+  // Yerelde masa aracı Claude'a kapalı olabilir (araç menüsü) ya da hiç olmayabilir (klasik arayüz): istek çıkmaza
+  // girmez, Claude o durumda uzak masayı açar ve nedenini söyler.
+  const ARAC_MENUSU = "Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalı olabilir; açınca masa bu bilgisayardan açılır ve geçmiş kalıcı olur";
   function yerelMasaIstegi(id) {
     return `ArthurLegal Masası'nı bu bilgisayardaki kurulumdan açın: arthurlegal-yerel sunucusunun al_masasi aracını bolum=${id} ` +
-      "ile çağırın. Bu sohbette arthurlegal-yerel yoksa bunu bir cümleyle söyleyin.";
+      "ile çağırın. O araç araç listenizde yoksa (sunucu bağlı olsa da araçları kapalı olabilir) uzak masayı " +
+      `uzakta_kal=true ve bolum=${id} ile açın ve tek cümleyle şunu söyleyin: ${ARAC_MENUSU}.`;
+  }
+
+  // Uzak masa, sohbette bilgisayardaki kurulum bağlıyken açıksa bunu ve çıkış yolunu söyler. devirOlmadi: devir bu
+  // sohbette denendi ve Claude yerel masayı açamadı.
+  function yerelMasaNotu(id) {
+    if (DURUM.ortam !== "uzak" || yerelBagli() !== true) return null;
+    const kesit = ogesi("div", "kesit");
+    const satir = ogesi("div", "satir");
+    const ac = dugme("Masayı bu bilgisayarda aç", { sinif: DURUM.devirOlmadi ? "" : "birincil", simge: "dis" });
+    ac.onclick = () => claudeaSor(yerelMasaIstegi(id), null);
+    satir.append(ac);
+    kesit.append(bilgi(DURUM.devirOlmadi
+      ? "Masa bu bilgisayardaki kurulumdan açılamadı: Claude, arthurlegal-yerel'in masa aracını göremiyor. Claude'un araç menüsünde arthurlegal-yerel'in araçlarını açın, sonra masayı yeniden açın. Şimdilik uzak masadasınız: geçmiş yalnız bu sohbet boyunca durur."
+      : "Bu masa uzak bağlantıdan açık: geçmiş yalnız bu sohbet boyunca durur. Sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Düğme işe yaramazsa Claude'un araç menüsünde arthurlegal-yerel'in araçlarını açın."),
+      satir);
+    return kesit;
   }
 
   function masaustuTanitimi(ekran, id) {
@@ -763,6 +799,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   // Sohbet: Claude'un cevabı (varsa) en üstte, altında devam sorusu, işe başlama önerileri ve bu oturumda yapılanlar.
   CIZIM.sohbet = (ekran) => {
+    const yerelNot = yerelMasaNotu("sohbet");
+    if (yerelNot) ekran.append(yerelNot);
     const c = gosterilenCevap();
     if (c) {
       const kok = ogesi("div", "cevap-kok");
@@ -2472,7 +2510,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     else if (yerel === false) satir.append(indir);
     else satir.append(ac, indir);
     kesit.append(satir, bilgi(yerel
-      ? "Eski sorgularınız bu bilgisayardaki ArthurLegal kurulumunda, 90 gün boyunca durur. Düğme masayı kurulumun kendi bağlantısıyla (arthurlegal-yerel) açar; geçmişiniz orada."
+      ? "Eski sorgularınız bu bilgisayardaki ArthurLegal kurulumunda, 90 gün boyunca durur. Düğme masayı kurulumun kendi bağlantısıyla (arthurlegal-yerel) açar; geçmişiniz orada. Düğme işe yaramazsa Claude'un araç menüsünde arthurlegal-yerel'in araçlarını açın."
       : "Sorgu geçmişi, ArthurLegal'in kurulu olduğu bilgisayarda 90 gün tutulur ve oradaki masada her sohbette görünür; sorgularınız bu yüzden buluta çıkmaz. " +
         (yerel === false ? "Web'de ve telefonda geçmiş yalnız açık sohbet boyunca durur."
           : "Bilgisayardaysanız masayı kurulumun kendi bağlantısıyla açın; kurulu değilse indirin.")));
@@ -3203,7 +3241,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const sat = ogesi("div", "alt-satir");
     sat.append(ey, ogesi("span", "zaman", `ArthurLegal ${DURUM.surum}`));
     kap.append(ust, ogesi("h2", null, "Masa bu bilgisayardaki ArthurLegal'den açılıyor"), ad,
-      bilgi("Sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Masa birkaç saniyede açılmazsa ilk düğmeye basın. İkinci düğme uzak masayı açar: orada geçmiş yalnız bu sohbet boyunca durur."),
+      bilgi("Sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Masa birkaç saniyede açılmazsa ilk düğmeye basın; yine açılmazsa Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalıdır, açıp yeniden deneyin. İkinci düğme uzak masayı açar: orada geçmiş yalnız bu sohbet boyunca durur."),
       sat);
     $("kok").replaceChildren(kap);
   }
@@ -3278,12 +3316,20 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (Array.isArray(veri.baglayicilar)) baglayicilariAl(veri.baglayicilar);
       if (CEVAP && veri.teslim && typeof veri.teslim.gecmis_id === "string") CEVAP.gecmisId = veri.teslim.gecmis_id;
       if (ROL === "masa" && veri.yonlendir && !DURUM.uzaktaKal) {
-        // Masa burada açılmadı: durum saklanmaz (bu sohbetin öteki pencereleri uzak masayı açık sanmasın).
-        DURUM.yonlendir = veri.yonlendir;
-        DURUM.hazir = true;
-        yonlendirmeCiz();
-        yonlendirmeyiBildir();
-        return;
+        if (devirDenendi()) {
+          // Bu sohbette az önce devredildi ve yine buraya dönüldü: Claude yerel masayı açamıyor (aracı kapalı ya
+          // da yok). İkinci kez devir kartı çizilmez; uzak masa açılır ve çıkış yolunu söyler.
+          DURUM.devirOlmadi = true;
+          DURUM.uzaktaKal = true;
+        } else {
+          // Masa burada açılmadı: durum saklanmaz (bu sohbetin öteki pencereleri uzak masayı açık sanmasın).
+          devriYaz();
+          DURUM.yonlendir = veri.yonlendir;
+          DURUM.hazir = true;
+          yonlendirmeCiz();
+          yonlendirmeyiBildir();
+          return;
+        }
       }
       durumuSakla();
     }
