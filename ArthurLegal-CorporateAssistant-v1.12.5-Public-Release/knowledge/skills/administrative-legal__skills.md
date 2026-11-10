@@ -31,7 +31,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -49,7 +49,7 @@ name: ced-itiraz
 description: >
   ÇED (Çevresel Etki Değerlendirmesi) ret kararı geldiğinde veya ÇED süreci
   sorunlu olduğunda — [İşletme alanı] için kritik. Çevre K. 2872 + ÇED Yön.
-  analizi, ilk derece İdare Mahkemesi (Ankara/İzmir), yürütmenin durdurulması,
+  analizi, ilk derece İdare Mahkemesi (Ankara ya da ilgili il), yürütmenin durdurulması,
   Danıştay 14./10. Daire emsali. Çevre Bakanlığı paralel idari ceza ile koordineli.
 user-invocable: true
 ---
@@ -89,8 +89,8 @@ Paralel: Çevre Bakanlığı idari para cezası (ayrı süreç — `idari-para-c
 
 ## Görevli mahkeme (İYUK m. 20/A — BİM YOK)
 
-- **Bakanlık merkez kararı** (büyük yatırım) → **Ankara İdare Mahkemesi** ilk derece (30 gün) → **DOĞRUDAN Danıştay 14./10./6. Daire temyiz** (15 gün)
-- **İl müdürlüğü kararı** (yerel etkili) → ilgili **İl İdare Mahkemesi** ([İşletme Yeri] için İzmir İdare Mah.) → **DOĞRUDAN Danıştay temyiz**
+- **Bakanlık merkez kararı** (büyük yatırım) → **Ankara İdare Mahkemesi** ilk derece (30 gün; yetki İYUK m. 32 genel kuralına göre, proje yeri bakımından m. 34/1 ile ilişkisi tartışmalı: içtihadı `tr_ictihat_ara(courts=["DANISTAYKARAR"], query="ÇED yetkili idare mahkemesi")` ile teyit et) → **DOĞRUDAN Danıştay 14./10./6. Daire temyiz** (15 gün)
+- **İl müdürlüğü kararı** (yerel etkili) → ilgili **İl İdare Mahkemesi** ([İşletme Yeri] için ilgili il İdare Mah.) → **DOĞRUDAN Danıştay temyiz**
 
 ⚠️ İstinaf (BİM) aşaması ATLANIR — bu önemli, çünkü genel idari davalarda BİM normal kademe.
 
@@ -152,7 +152,7 @@ tr_ictihat_ara(
 
 ## ⚠️ İnceleyen notu
 - **Karar:** ÇED ret / koşullu / süreç sorunlu
-- **Görevli mahkeme:** Ankara İdare Mah. (Bakanlık merkez) / İzmir İdare Mah. (yerel)
+- **Görevli mahkeme:** Ankara İdare Mah. (Bakanlık merkez) / ilgili il İdare Mah. (yerel)
 - **Süre kalan:** [N gün]
 - **Yatırım finansal etkisi:** [TL]
 - **Üretim duruş riski:** [evet/hayır]
@@ -180,7 +180,7 @@ tr_ictihat_ara(
 > 1. **Dış çevre avukatı brief** — `/litigation-legal:outside-counsel-brief`
 > 2. **CLCO eskalasyon** — yatırım blokesi büyük
 > 3. **İletişim Başkanlığı koordinasyon** — basın hazırlığı
-> 4. **Compliance brief** — [UYUM DİREKTÖRÜ]/Arıcı ile teknik koordinasyon
+> 4. **Compliance brief** — [UYUM DİREKTÖRÜ]/[REGULATORY COMPLIANCE MÜDÜRÜ] ile teknik koordinasyon
 > 5. **Daha fazla bilgi** — [...]
 
 **One question I'd ask:** [örn. "Aynı sektörde son 12 ayda Bakanlık ne kadar ÇED onayladı, ne kadar reddetti? Eğilim pozitif mi negatif mi?"]
@@ -473,7 +473,7 @@ user-invocable: true
 > İdari işlem/karar **tarafa tebliğ tarihi** nedir?
 > İYUK m. 7/1:
 > - **İdare mahkemeleri: 60 GÜN** (özel kanun aksini belirtmedikçe)
-> - **Vergi mahkemeleri: 30 GÜN** (2021 değişikliği)
+> - **Vergi mahkemeleri: 30 GÜN** (İYUK m. 7/1)
 > - **ÇED kararları: 30 GÜN** (İYUK m. 20/A ivedi yargılama — özel rejim)
 > - **Diğer özel rejim** (kamu ihale belirli kategoriler, özelleştirme): m. 20/A kontrolü
 
@@ -510,7 +510,7 @@ Türk idari yargı **3 dereceli**: İdare Mahkemesi → BİM → Danıştay. **D
   - EPDK / Rekabet / KVKK / KİK / BDDK / SPK = **Ankara** (kurumlar Ankara merkez)
   - Bakanlık merkez kararları = **Ankara**
   - İl müdürlüğü kararları (örn. İzmir Çevre İl Müdürlüğü idari ceza) = **İzmir İdare Mahkemesi**
-  - [İşletme Yeri] Belediyesi imar kararları = **İzmir İdare Mahkemesi** ([İşletme Yeri] bağlı)
+  - [İşletme Yeri] Belediyesi imar kararları = **taşınmazın bulunduğu yer idare mahkemesi** (İYUK m. 34/1)
 
 - **Özel yetki kuralları (İYUK m. 33-37):**
   - Vergi davası: vergi dairesinin bulunduğu yer (tax-legal kapsamında)
@@ -761,13 +761,13 @@ user-invocable: true
 | Ceza kaynağı | İlk derece |
 |---|---|
 | Çevre Bakanlığı merkez | Ankara İdare Mah. |
-| Çevre İl Müdürlüğü (İzmir-[İşletme Yeri]) | İzmir İdare Mah. |
+| Çevre İl Müdürlüğü ([İşletme Yeri]) | İlgili il İdare Mah. |
 | EPDK Kurul kararı | Ankara İdare Mah. |
 | KVKK Kurul | Ankara İdare Mah. |
 | Rekabet Kurulu | Ankara İdare Mah. |
 | BDDK | Ankara İdare Mah. |
 | SPK | Ankara İdare Mah. |
-| ÇSGB (İSG cezası) | İlgili il İdare Mah. ([İşletme Yeri] için İzmir) — doğrulanmadı: 6331'de özel yol yoksa Kabahatler K. m. 27 (sulh ceza, 15 gün) |
+| ÇSGB (İSG cezası) | İlgili il İdare Mah. ([İşletme Yeri] için ilgili il) — doğrulanmadı: 6331'de özel yol yoksa Kabahatler K. m. 27 (sulh ceza, 15 gün) |
 
 ## Adımlar
 
@@ -786,7 +786,8 @@ user-invocable: true
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D13, IDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<kurum> idari para cezası iptal",
   date_from="2022-01-01"
 )
@@ -827,9 +828,9 @@ tr_ictihat_ara(
 ## ⚠️ İnceleyen notu
 - **Kurum + ceza tutarı:** [...]
 - **Süre kalan:** [N gün] 🔴/🟠
-- **Görevli mahkeme:** [Ankara/İzmir İdare Mah.]
+- **Görevli mahkeme:** [Ankara / ilgili il İdare Mah.]
 - **Yürütmenin durdurulması:** evet (gerekçe: [...])
-- **Tahsil paralel başladı mı:** evet/hayır → AATUHK tehir-i icra ek yol
+- **Tahsil paralel başladı mı:** evet/hayır → ödeme emri geldiyse tebliğden itibaren 15 gün içinde dava (6183 m. 58) ve o davada yürütmenin durdurulması istemi (İYUK m. 27) ek yol
 - **Kaynaklar:** ArthurLegal MCP (`tr_`) (Danıştay [N])
 - **Reviewer bekleyen:** N adet
 
@@ -841,7 +842,7 @@ tr_ictihat_ara(
 > 2. **CLCO + CFO eskalasyon** (büyük tutar)
 > 3. **Compliance koordinasyon** (kurum bazlı)
 > 4. **KAP açıklama metni** ([HALKA AÇIK İŞTİRAK] ilgili)
-> 5. **Tehir-i icra paralel** (tahsil başladıysa)
+> 5. **Ödeme emrine karşı dava paralel** (tahsil başladıysa; 6183 m. 58, 15 gün)
 
 **One question I'd ask:** [örn. "Bu ceza kurumun yıllık ortalamasının üstünde mi? Cezalar genelde benzer ölçekte mi yoksa [ŞİRKET ADI]'a karşı agresif mi?"]
 ```
@@ -1019,7 +1020,8 @@ Danıştay bozdu, dosya BİM'e gönderildi. İki seçenek:
 ```
 # Daire bazlı temyiz emsali
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D13, IDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<konu>",
   date_from="2022-01-01"
 )

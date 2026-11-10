@@ -77,8 +77,9 @@ States and Azerbaijan follow with primary-source MCP access.
 **Design principle: no unsourced law**
 
 Every legal proposition in the output carries its source and retrieval date
-(`[Legislation MCP — date]`, `[Case Law MCP — institution — date]`, `[model
-knowledge — verify]`). Unretrieved text is never presented as retrieved. Tool
+(`[Legislation MCP — date]`, `[Case Law MCP — institution — date]`). What could not be
+retrieved is written as a warning line with the official source link
+(`UYARI: veri çekilemedi, teyidiniz gerekli: <link>`). Unretrieved text is never presented as retrieved. Tool
 calls are cancelled at 100 seconds and a cancelled call returns nothing — when
 scope narrows, the assistant states it instead of filling the gap from memory.
 All output is a draft for attorney review.
@@ -108,7 +109,7 @@ ran, how many documents are indexed, how many are vectorised, and the index's
 date coverage — because a statute outside that coverage is not found, and the
 search returns its nearest neighbour rather than announcing the gap.
 
-The server's 16 backends are open source. Fifteen are published under the MIT
+The server's 18 backends are open source. Seventeen are published under the MIT
 license as folders of the [`arthurlegal-mcp`](https://github.com/beerbottle90/arthurlegal-mcp) repository,
 each with its own `LICENSE` file ([`arthur-tr-hukuk-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp),
 [`eqanun-api`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanun-api),
@@ -124,9 +125,11 @@ each with its own `LICENSE` file ([`arthur-tr-hukuk-mcp`](https://github.com/bee
 [`eu-cellar-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/eu-cellar-mcp),
 [`jp-egov-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/jp-egov-mcp),
 [`gleif-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/gleif-mcp),
-[`tkgm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/tkgm-mcp));
-the German backend is [`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp)
-under the Apache-2.0 license.
+[`tkgm-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/tkgm-mcp),
+[`de-gii-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/de-gii-mcp),
+[`hesap-mcp`](https://github.com/beerbottle90/arthurlegal-mcp/tree/master/hesap-mcp));
+the second German backend (legislation search, case law, parliamentary papers) is
+[`de-eli-mcp`](https://github.com/matematicsolutions/de-eli-mcp) under the Apache-2.0 license.
 The proprietary package license below covers the ArthurLegal packages themselves,
 not these components.
 

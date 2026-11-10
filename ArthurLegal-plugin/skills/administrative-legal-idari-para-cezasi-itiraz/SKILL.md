@@ -39,7 +39,7 @@ user-invocable: true
 | Ceza kaynağı | İlk derece |
 |---|---|
 | Çevre Bakanlığı merkez | Ankara İdare Mah. |
-| Çevre İl Müdürlüğü ([tesis yeri]) | İzmir İdare Mah. |
+| Çevre İl Müdürlüğü ([tesis yeri]) | İlgili il İdare Mah. |
 | EPDK Kurul kararı | Ankara İdare Mah. |
 | KVKK Kurul | Ankara İdare Mah. |
 | Rekabet Kurulu | Ankara İdare Mah. |
@@ -64,7 +64,8 @@ user-invocable: true
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D13, IDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<kurum> idari para cezası iptal",
   date_from="2022-01-01"
 )
@@ -105,9 +106,9 @@ tr_ictihat_ara(
 ## ⚠️ İnceleyen notu
 - **Kurum + ceza tutarı:** [...]
 - **Süre kalan:** [N gün] 🔴/🟠
-- **Görevli mahkeme:** [Ankara/İzmir İdare Mah.]
+- **Görevli mahkeme:** [Ankara / ilgili il İdare Mah.]
 - **Yürütmenin durdurulması:** evet (gerekçe: [...])
-- **Tahsil paralel başladı mı:** evet/hayır → AATUHK tehir-i icra ek yol
+- **Tahsil paralel başladı mı:** evet/hayır → ödeme emri geldiyse tebliğden itibaren 15 gün içinde dava (6183 m. 58) ve o davada yürütmenin durdurulması istemi (İYUK m. 27) ek yol
 - **Kaynaklar:** ArthurLegal MCP (`tr_`) (Danıştay [N])
 - **Reviewer bekleyen:** N adet
 
@@ -119,7 +120,7 @@ tr_ictihat_ara(
 > 2. **CLCO + CFO eskalasyon** (büyük tutar)
 > 3. **Compliance koordinasyon** (kurum bazlı)
 > 4. **KAP açıklama metni** (halka açık iştirak ilgili)
-> 5. **Tehir-i icra paralel** (tahsil başladıysa)
+> 5. **Ödeme emrine karşı dava paralel** (tahsil başladıysa; 6183 m. 58, 15 gün)
 
 **One question I'd ask:** [örn. "Bu ceza kurumun yıllık ortalamasının üstünde mi? Cezalar genelde benzer ölçekte mi yoksa [Müvekkil]'a karşı agresif mi?"]
 ```
@@ -140,7 +141,7 @@ tr_ictihat_ara(
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

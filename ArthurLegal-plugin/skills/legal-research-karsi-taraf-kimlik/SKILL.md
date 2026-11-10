@@ -21,15 +21,16 @@ belirgin) üretir. Taraf önce tescilli kimliğine indirgenir, sonra taranır.
 
 ## Araçlar
 
-GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + resmî yaptırım listeleri
+ArthurLegal MCP `gleif_` araçları (`gleif_autocomplete`, `gleif_search_entities`, `gleif_get_entity`,
+`gleif_get_group_structure`; yedek: GLEIF REST API `api.gleif.org`, WebFetch) + resmî yaptırım listeleri
 (WebFetch; `yaptirim-tarama-rehberi.md`).
 
 ## Yöntem
 
-1. **Kimlik çözümle:** `GET /api/v1/autocompletions?field=fulltext&q={unvan}` →
-   yargı çevresi/adres eşleşen adayı seç → `GET /api/v1/lei-records/{lei}` ile
-   `registration.status` kontrol et (LAPSED kayıtta veri bayat olabilir).
-2. **Grubu haritala:** `/ultimate-parent` ve `/direct-parent`. Hem sözleşme
+1. **Kimlik çözümle:** `gleif_autocomplete(query="{unvan}")` →
+   yargı çevresi/adres eşleşen adayı seç → `gleif_get_entity(lei="{lei}")` ile
+   kayıt statüsünü kontrol et (LAPSED kayıtta veri bayat olabilir).
+2. **Grubu haritala:** `gleif_get_group_structure(lei="{lei}")` (doğrudan ve nihai ana ortak). Hem sözleşme
    tarafını hem nihai ana ortağı **ayrı ayrı** tara.
 3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile resmî yaptırım listeleri
    (OFAC SDN, AB, UK OFSI, BM).

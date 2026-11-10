@@ -2,7 +2,7 @@
 name: tax-legal-kdv-otv-iade-review
 description: >
   KDV iadesi ([HALKA AÇIK İŞTİRAK] ihracat) ve ÖTV mahsubu/iadesi ([büyük enerji tesisi] akaryakıt
-  ihracat) için iade dosyası hazırlık review: KDVK m. 32 + m. 9 KDV iade rejimi,
+  ihracat) için iade dosyası hazırlık review: KDVK m. 11 + m. 32 KDV iade rejimi,
   ÖTV m. 5 ihracat istisnası, YMM raporu gereksinimi, Maliye'nin red gerekçesi
   analizi, dava prep.
 user-invocable: true
@@ -23,7 +23,7 @@ user-invocable: true
 - **Maliye'ye sunulacak iade talep / itiraz dilekçesi** → resmi format
 - **Dış vergi avukatı (iade reddi → dava)** → "VERGİ DAVA BRIEF"
 
-## KDV iadesi (KDVK m. 32 + 9)
+## KDV iadesi (KDVK m. 11 + 32)
 
 ### Genel rejim
 - **m. 11 — İhracat istisnası:** Mal/hizmet ihracatı KDV'den müstesna
@@ -214,7 +214,7 @@ tr_kurum_karari_ara(
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

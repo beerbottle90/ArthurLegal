@@ -1,4 +1,4 @@
-# Çin Hukuku — Kullanım Rehberi (HuggingFace + court.gov.cn + Yuandian MCP)
+# Çin Hukuku — Kullanım Rehberi (HuggingFace + court.gov.cn + flk.npc.gov.cn)
 
 > **Erişim yöntemleri:**
 > 1. **HuggingFace Datasets API** — 22,552 kanun ve düzenlemenin tam metni, filtrelenebilir JSON
@@ -261,7 +261,7 @@ ADIM 3: TR KVKK ile karşılaştır → her iki yükümlülük paralel uygulanı
 ```
 ADIM 1: HF filter → "title" LIKE '%仲裁法%'
 ADIM 2: 中华人民共和国仲裁法 — geçerlilik, itiraz, tenfiz maddeleri
-ADIM 3: NY Konvansiyonu (m.54 tenfiz) + governing-law-review skill
+ADIM 3: NY Konvansiyonu (m. III-V: tanıma ve tenfiz; ret sebepleri m. V) + governing-law-review skill
 ```
 
 ### 6.5 SPC Guiding Case araması (sözleşme uyuşmazlığı)

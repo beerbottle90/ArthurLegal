@@ -284,7 +284,7 @@ user-invocable: true
 
 ## Konum hatırlatması
 
-İdari yargı yetkisi hukuka uygunluk denetimiyle sınırlıdır; yerindelik denetimi yapılamaz, idari eylem ve işlem niteliğinde karar verilemez (İYUK m. 2/2). Bölge idare mahkemesi istinaf incelemesini kendiliğinden yapar ve gereken bilgi ve belgeyi ara kararıyla ister (m. 20/1); istinafta bu ara kararlarını daire başkanı veya dosyanın havale edildiği üye de verebilir (m. 20/6). Karar türü ve sonuç heyet takdiridir. 7589 s.K. ile İYUK m. 45 ve 46'da 16.07.2026 tarihli değişiklikler vardır; metin her dosyada güncel hâliyle çekilir. Asistan UYAP'a bağlanmaz, kayıt eklemez; dosya bilgisi kullanıcıdan gelir. **Karar türünün seçimi için hâkim/heyet takdiri ve onayı şarttır.**
+İdari yargı yetkisi hukuka uygunluk denetimiyle sınırlıdır; yerindelik denetimi yapılamaz, idari eylem ve işlem niteliğinde karar verilemez (İYUK m. 2/2). Bölge idare mahkemesi istinaf incelemesini kendiliğinden yapar ve gereken bilgi ve belgeyi ara kararıyla ister (m. 20/1); istinafta bu ara kararlarını daire başkanı veya dosyanın havale edildiği üye de verebilir (m. 20/6). Karar türü ve sonuç heyet takdiridir. 16.07.2026 tarihli 7589 s.K. ile (RG 31.07.2026/33326) İYUK m. 45 ve 46'da değişiklikler vardır; metin her dosyada güncel hâliyle çekilir. Asistan UYAP'a bağlanmaz, kayıt eklemez; dosya bilgisi kullanıcıdan gelir. **Karar türünün seçimi için hâkim/heyet takdiri ve onayı şarttır.**
 
 ## Amaç
 

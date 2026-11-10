@@ -6,12 +6,12 @@
 Claude.ai Projects üzerinde çalışır.
 
 **İçerik:** 12 birleşik skill dosyası · 84 referans (28 yargı çevresi, tapu-kadastro dâhil) · 7 ajan · company-profile şablonu
-**MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 14 yargı çevresi + tapu-kadastro, 123 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
+**MCP connector:** 5'e kadar — **ArthurLegal** (tek uçta Türkiye + 11 yargı çevresi + tapu-kadastro, 130 araç) · OpenCaseLaw.ch · **CourtListener** · **Fedlex** · TR Legal (isteğe bağlı)
 (ArthurLegal dışındakiler isteğe bağlıdır)
 **Yerel gizlilik kapısı:** ArthurMask (isteğe bağlı, önerilir; Windows 10/11 64 bit + Claude Desktop, Adım 5)
 
 > **28 yargı çevresinin** tam listesi ve her birinin kaynak yolu sistem talimatının bölüm 6'daki kaynak
-> tablosundadır; Türkiye dâhil on beşi ArthurLegal MCP'den tek uçta gelir.
+> tablosundadır; Türkiye dâhil 12'si ArthurLegal MCP'den tek uçta gelir.
 
 ---
 
@@ -19,7 +19,7 @@ Claude.ai Projects üzerinde çalışır.
 
 1. https://claude.ai/projects → **+ New Project**
 2. **İsim:** `TR Legal Assistant` (veya şirketinize özel bir isim)
-3. **Açıklama (opsiyonel):** "Multi-jurisdiction in-house hukuk asistanı — 12 pratik alan, 22 yargı çevresi, 7 MCP connector'a kadar"
+3. **Açıklama (opsiyonel):** "Multi-jurisdiction in-house hukuk asistanı — 12 pratik alan, 28 yargı çevresi, 5 MCP connector'a kadar"
 
 ---
 
@@ -29,8 +29,8 @@ Claude.ai Projects üzerinde çalışır.
 2. `SYSTEM_PROMPT.md` dosyasının tüm içeriğini kopyalayıp yapıştırın
 3. Save.
 
-> Not: Custom instructions limiti ~32K karakter. v1.4.0 SYSTEM_PROMPT.md **~27K** —
-> sığar ama marj daralmıştır. Kendi eklemelerinizi yaparken karakter sayısını kontrol edin.
+> Not: SYSTEM_PROMPT.md yaklaşık **51K karakterdir** (v1.12.5). Yapıştırdıktan sonra metnin sonuna kadar
+> kaydedildiğini kontrol edin; kendi eklemelerinizi yaparken karakter sayısını gözetin.
 
 ---
 
@@ -63,7 +63,9 @@ Project → **+ Add content** → **Files** ekranını açık tutun.
 
 ---
 
-## Adım 4 — ArthurLegal MCP Connector Ekle (Türkiye + 14 yargı çevresi, tek uç)
+## Adım 4 — ArthurLegal MCP Connector Ekle (Türkiye + 11 yargı çevresi, tek uç)
+
+> **Kurulum dosyasıyla (Claude Desktop) kurduysanız bu adımı atlayın.** Yerel köprü (`arthurlegal-yerel`) araştırma araçlarını zaten getirir; aynı uç bir de connector olarak eklenirse araçlar iki kez görünür. Bu adım yalnız claude.ai web ve mobil içindir. Yerel kurulumda tapu araçları, seçildiyse ayrı ArthurLegal Tapu (`arthur-tapu`) sunucusundan öneksiz gelir.
 
 **Customize → Connectors → + Add custom connector**
 
@@ -73,7 +75,7 @@ Project → **+ Add content** → **Files** ekranını açık tutun.
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** — kimlik doğrulama yok |
 
-Tek uç, 16 backend, 123 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
+Tek uç, 130 araç. Türkiye `tr_`, tapu-kadastro `tkgm_` önekiyle bu connector'ın içindedir; ayrı bir Türk hukuku ya da tapu connector'ı gerekmez. Tapu araçlarının ilk canlı sorgusu sohbet başına bir kez onay kartı gösterir; ayrıntı `knowledge/references/tapu-kadastro-rehberi.md`.
 
 | Önek | Kapsam |
 |---|---|
@@ -112,7 +114,7 @@ Türkiye satırında sekiz kurumun kaçar belgesinin indekslendiği görünür.
 "Yargıtay 9. HD iş kazası kararı"             → tr_ictihat_ara(chamber="H9")
 "EPDK lisanssız üretim kararları"             → tr_kurum_karari_ara(kurum="epdk")
 "bir bankanın faaliyet izninin kaldırılması"  → tr_semantik_ara(kurum="bddk", mode="semantic")
-"kişisel verilerin korunması" (İspanya)       → es_search_legislation, LO 15/1999 ve LO 7/2021 dönmeli
+"kişisel verilerin korunması" (İspanya)       → es_search_legislation, LO 3/2018 ve LO 7/2021 dönmeli (LO 15/1999 de dönerse mülgadır: metni "Norma derogada" ile başlar)
 ```
 
 **Kaynak:** `github.com/beerbottle90/arthurlegal-mcp` (Türkiye backend'i: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`) — Fly.io'da barındırılıyor,
@@ -127,7 +129,7 @@ indeksler image'a gömülü, semantik arama Voyage AI (`voyage-4-lite`) ile.
 >
 > Bağlandıktan sonra `status` aracını çağırın. Ayrıntı: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
 
-> **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu on beş yargı çevresi
+> **Kurulmazsa ne olur?** Paket çalışmaya devam eder: Türkiye dâhil bu 12 yargı çevresi
 > WebFetch yoluna düşer (Türkiye'de içtihat araması yapılamaz, AZ'de **statü doğrulanmaz**),
 > doktrin ve sözleşme emsali kapsam dışı kalır — asistan bunu çıktısında belirtir.
 
@@ -177,8 +179,8 @@ Verbatim madde metni ve değişiklik geçmişi için; Anthropic connector dizini
 listesi, başlığa göre arama. Tahkim ve Swiss OR işlerinde madde metninin
 verbatim gerekmesi hâlinde OpenCaseLaw.ch entegrasyonuna göre daha doğrudandır.
 
-> Connector kurulmazsa Fedlex WebFetch ile de çalışır (`fedlex.admin.ch`) —
-> bkz. `switzerland-caselaw-rehberi.md`.
+> Connector kurulmazsa İsviçre madde metni OpenCaseLaw.ch connector'ının `get_law` aracıyla alınır
+> (`fedlex.admin.ch` sayfaları WebFetch'e metin döndürmez); o da yoksa UYARI satırı yazılır — bkz. `switzerland-caselaw-rehberi.md`.
 
 ---
 
@@ -200,6 +202,8 @@ Aşağıdakiler WebFetch veya doğrudan API ile otomatik çalışır:
 | 🇨🇳 Çin (HuggingFace/twang2218) | Yok | `cin-hukuku-rehberi.md` |
 | 🇷🇸 Sırbistan (paragraf.rs) | Yok | `sirbistan-hukuku-rehberi.md` |
 
+> 🇬🇧 UK, 🇪🇺 AB/CJEU, 🇩🇪 Almanya ve 🇯🇵 Japonya mevzuatı ArthurLegal MCP'dedir (`uk_`, `eu_`, `de_`, `jp_`; Adım 4); WebFetch yolu bunlar için yalnız yedektir.
+>
 > 🇺🇸 **ABD içtihadı bu tabloda değildir** — CourtListener MCP connector'ı ile
 > gelir (Adım 4b-2). 🇨🇭 **İsviçre** de öyle: içtihat 4b-1, mevzuat 4b-3.
 
@@ -327,7 +331,7 @@ Her plugin için `knowledge/skills/<plugin>__skills.md` dosyasını açıp `## I
 | Özellik | Claude Code | Claude.ai Projects |
 |---|---|---|
 | `/<plugin>:<skill>` slash command | ✓ resmi | ⚠ simüle (system prompt anlar) |
-| **ArthurLegal MCP** (Türkiye + 14 yargı çevresi + tapu-kadastro, 123 araç) | ✓ `.mcp.json` | ✓ tek custom connector (auth yok) |
+| **ArthurLegal MCP** (Türkiye + 11 yargı çevresi + tapu-kadastro, 130 araç) | ✓ `.mcp.json` | ✓ tek custom connector (auth yok) |
 | **TR Legal MCP** (isteğe bağlı: AİHM, KİK, Sayıştay…) | ✓ `.mcp.json` | ✓ custom connector (OAuth) |
 | **OpenCaseLaw.ch MCP** | ✓ `.mcp.json` | ✓ custom connector |
 | Araç çağrısı zaman aşımı | uzun | **100 saniye — sabit** |

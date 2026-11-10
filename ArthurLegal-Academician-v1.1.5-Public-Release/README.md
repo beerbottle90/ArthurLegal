@@ -97,7 +97,7 @@ Türkçe → [KURULUM.md](KURULUM.md) · English → [INSTALLATION.md](INSTALLAT
 - **Doçentlik ölçütleri dönemden döneme değişir.** Hiçbir puan hesabı, başvuru dönemine ait
   ÜAK PDF'i teyit edilmeden kesin sunulmaz.
 - **Bibliyometrinin sınırı:** Hukuk kitap ve ulusal-dil dergisi ağırlıklı bir disiplindir;
-  WoS'ta büyük ölçüde AHCI'da yer alır ve AHCI'ya Impact Factor / quartile atanmaz.
+  dergi quartile'ı JCR'deki kategoriye bağlıdır ve sanat ve beşeri bilim kategorilerinde verilmez.
   JIF ve h-index hukukta yanıltıcıdır (DORA · CoARA · Leiden Manifesto).
 - Bu paket **gerçek kişi veya kurum verisi içermez**; profil alanları `[DOLDUR]` gelir.
 
@@ -168,7 +168,7 @@ Usage: `/<plugin>:<skill>` — e.g. `/yayin-etigi:uyz-beyani`
 
 ## Data sources
 
-**Connected MCP servers:** ArthurLegal MCP (`tr_`: Turkish legislation and case law, plus 14 jurisdictions and DergiPark scholarship) · CourtListener
+**Connected MCP servers:** ArthurLegal MCP (`tr_`: Turkish legislation and case law, plus 11 jurisdictions and DergiPark scholarship) · CourtListener
 (US case law, official MCP) · Fedlex (Swiss federal law) · OpenCaseLaw.ch (Swiss case law +
 scholarship bridge)
 

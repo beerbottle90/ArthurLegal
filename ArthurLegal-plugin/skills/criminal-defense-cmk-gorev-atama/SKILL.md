@@ -115,7 +115,7 @@ Teslim: Baronun CMK servisine. Ödeme 30-60 g.
 ## ⚠️ İnceleyen notu
 - Atama tipi: m. 150/2-3 zorunlu / m. 150/1 isteğe bağlı
 - Suçlama: TCK m. [X]
-- 48 saat sınırı: T+[N] — kalan [...]
+- Gözaltı süresi sınırı (kural 24 saat, m. 91/1; toplu suçta savcının uzatmasıyla en çok 4 gün, m. 91/3; m. 91/4'teki kolluk gözaltısında 24, toplumsal olay ve toplu suçta 48 saate kadar): T+[N] — kalan [...]
 - Müvekkil durumu: gözaltında / serbest
 
 ## Müvekkil bilgi
@@ -141,7 +141,7 @@ Yer: [karakol / cezaevi]
 ## Hatalar
 
 - **Susma hakkı hatırlatmama** → ifade kanıt değer kaybı + müvekkil zarar
-- **48 saat sınırı kaçırma** → resen salıverme + müdafii hatası iddia
+- **Gözaltı süresi sınırını (kural 24 saat) kaçırma** → resen salıverme + müdafii hatası iddia
 - **Tutukluluk itirazını iki haftalık süreden sonra yapma** → süre kaybı
 - **Baro görevlendirme yazısını (CMK m. 156) dosyaya koymama** → görev dayanağı belgelenmez (görüşme için vekâletname aranmaz, CMK m. 154/1)
 - **CMK ödeme cetvelini geç verme** → ödeme gecikir + yıllık beyana etki

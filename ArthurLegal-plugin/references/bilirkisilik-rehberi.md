@@ -178,7 +178,7 @@ tr_mevzuat_icinde_ara(mevzuat_id=<HMK id>, query="uzman görüşü")  # m. 293
 tr_mevzuat_ara(number="5271", types=["KANUN"])
 tr_mevzuat_icinde_ara(mevzuat_id=<CMK id>, query="bilirkişi")     # m. 62-73
 # Bilirkişilik Yönetmeliği / Ücret Tarifesi
-tr_mevzuat_ara(query="Bilirkişilik Yönetmeliği", types=["YONETMELIK"])
+tr_mevzuat_ara(query="Bilirkişilik Yönetmeliği", types=["KKY"])  # bakanlık yönetmeliği KKY türündedir
 tr_mevzuat_ara(query="Bilirkişilik Ücret Tarifesi")
 ```
 

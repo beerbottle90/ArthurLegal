@@ -50,7 +50,7 @@ programatiktir. Bu, sıfır-halüsinasyon kuralını **fiilen uygulanabilir** k�
    - DOI yoksa      → OpenAlex / Semantic Scholar (başlık + yazar araması)
    - TR karar/mevzuat → Yargı / ArthurLegal MCP (`tr_`)
    - AB / AİHM      → EUR-Lex / HUDOC
-   - Kitap          → genellikle API yok → [MANUEL DOĞRULAYIN]
+   - Kitap          → genellikle API yok → UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>
 3. Künye alanlarını KARŞILAŞTIR (yıl, cilt, sayı, sayfa)
 4. Sonucu işaretle: ✅ / ⚠️ / 🟠 / 🔴
 5. Bulunamayan kaynak için ALTERNATİF ÖNERME — kaldırılmasını söyle
@@ -61,7 +61,7 @@ programatiktir. Bu, sıfır-halüsinasyon kuralını **fiilen uygulanabilir** k�
 ## Kısıtlar
 
 - **Kitaplar ve monografiler** için güvenilir açık API yoktur. Türk hukuk doktrininin
-  büyük kısmı buradadır. `[MANUEL DOĞRULAYIN]`
+  büyük kısmı buradadır. `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`
 - **Crossref**, DOI'si olmayan eseri bilmez. Türk hukuk dergilerinin bir kısmı DOI kullanmaz.
 - **OpenAlex/Semantic Scholar** metadata verir, **tam metin vermez**.
 - **CourtListener** kullanım limitleri vardır; yoğun kullanım için üyelik gerekir.
@@ -70,8 +70,8 @@ programatiktir. Bu, sıfır-halüsinasyon kuralını **fiilen uygulanabilir** k�
 
 ## Kullanım kuralı
 
-Bir kaynağı **çekemediysen, uydurma.** `[MANUEL DOĞRULAYIN]` veya
-`UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` etiketiyle işaretle ve kullanıcıya nasıl doğrulayacağını anlat.
+Bir kaynağı **çekemediysen, uydurma.**
+`UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırıyla işaretle ve kullanıcıya nasıl doğrulayacağını anlat.
 
 ---
 

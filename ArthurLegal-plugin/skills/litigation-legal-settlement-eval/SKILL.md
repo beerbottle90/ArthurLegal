@@ -67,7 +67,7 @@ tr_ictihat_ara(
 |---|---|
 | **Maddi zarar** (tedavi, kayıp ücret) | Belgeli, kesin |
 | **Manevi tazminat** | Yargıtay HGK eğilim (genelde 50K-500K TL arası ölümlü kazada; ağırlık takdiri) (doğrulanmadı) |
-| **Destek tazminatı (TBK m. 53)** | Yaşam süresi × destek oranı × pasif sermaye katsayısı (Yargıtay HGK 2017/123 metod) |
+| **Destek tazminatı (TBK m. 53)** | Yaşam süresi × destek oranı × pasif sermaye katsayısı (güncel Yargıtay hesap yöntemi `tr_ictihat_ara` ile çekilip doğrulanmadan künye yazılmaz) |
 | **Faiz** | Yasal faiz (TBK + 3095 — değişken) |
 | **Vekalet ücreti** | AAÜT (Türkiye Barolar Birliği) — genelde davacı vekiline %12-15 (doğrulanmadı) |
 | **Yargılama gideri** | Bilirkişi, tanık masrafı |
@@ -249,7 +249,7 @@ Reviewer note standardı — sulh kararı **kesinlikle dış vekil görüşü + 
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

@@ -26,7 +26,7 @@
 - Oxford Hukuk Fakültesi tarafından hazırlanır; Hart Publishing yayımlar.
 - **Dipnot temelli**; metin içi atıf veya endnot kullanılmaz.
 - **Minimal noktalama** ilkesi: gereksiz nokta ve virgülden kaçınılır.
-- Uluslararası hukuk için ayrı bir ek kılavuz vardır.
+- Uluslararası hukuk kaynakları 4. baskıda ayrı bir ek kılavuzdaydı; 5. baskıdaki yerini kılavuzun kendisinden teyit edin.
 - Mükerrer atıf: `Yazar (n 12) 40.` — bu biçim bazı **Türk** hukuk dergilerince de
   benimsenmiştir.
 
@@ -36,7 +36,7 @@ Makale   : Author, 'Title' (Year) Volume Journal 100, 105.
 Karar (UK): Case Name [Year] Court Number, [45].
 ```
 
-> Baskı bilgisi (4. baskı, 2012) **doğrulanmalı**; kılavuz periyodik güncellenir.
+> Güncel baskı: **5. baskı (Mart 2026)**. Bazı dergi ve fakülteler geçiş döneminde 4. baskıyı (2012) kullanabilir; hedef derginin istediği baskıyı teyit edin (law.ox.ac.uk/oscola).
 
 ---
 

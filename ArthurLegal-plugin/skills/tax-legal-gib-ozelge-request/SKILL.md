@@ -100,7 +100,8 @@ Eğer özelge red gelirse dava açılır → şimdiden Danıştay eğilimini bil
 
 ```
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D3, D4, D7, D9, VDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<konu> mukteza GİB",
   date_from="2022-01-01"
 )
@@ -167,7 +168,7 @@ tr_ictihat_ara(
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

@@ -14,7 +14,7 @@
 
 1. **Önermeleri ayıkla.** Taslaktaki her hukuki önerme tek satıra yazılır: "X hâlinde Y sonucu doğar."
 2. **Karşı önermeyi yaz.** "X hâlinde Y doğmaz, çünkü ..." Karşı önerme tarafların dilekçelerinden, bilirkişi raporuna itirazlardan ve varsa karşı oydan beslenir.
-3. **Bağlayıcı kaynak.** `tr_ictihat_ara(chamber="IBK" | "HGK" | "CGK" | "IDDK" | "VDDK", query=...)`; AYM için `tr_aym_ara(kind="norm" | "bireysel", query=...)`.
+3. **Bağlayıcı kaynak.** `tr_ictihat_ara(chamber="IBK" | "HGK" | "CGK" | "IDDK" | "VDDK", query=...)` (`chamber="IBK"` 27.09.2026 ölçümünde sonuç vermedi; boş sonuç "karar yok" demek değildir, Danıştay içtihadı birleştirme kararı için `tr_resmi_gazete_tara(query="İçtihatları Birleştirme", date_from=…, date_to=…)`); AYM için `tr_aym_ara(kind="norm" | "bireysel", query=...)`.
 4. **Daire içtihadı.** Aynı dairenin veya diğer dairelerin farklı yönde kararları. Hukuk ve Ceza Genel Kurullarının daireler arasındaki içtihat uyuşmazlıklarına ilişkin görevi 2797 s.K. m. 15'te, Büyük Genel Kurulunki m. 16'dadır; farklılık bulunursa not edilir.
 5. **Bölge adliye mahkemeleri.** Kesin nitelikteki BAM kararları arasında uyuşmazlık varsa başkanlar kurulunun Yargıtaydan karar isteme yolu (5235 s.K. m. 35) not edilir.
 6. **Anlamsal tarama.** `tr_ictihat_semantik_ara(query="<karşı önerme tek cümle>", initial_keyword="<2-3 terim>", courts=[...], max_docs=5)`. Sıralama yalnız anahtar kelimeyle çekilen adaylar üzerindedir; keşif aracı değildir (`yargi-mcp-rehberi.md`).

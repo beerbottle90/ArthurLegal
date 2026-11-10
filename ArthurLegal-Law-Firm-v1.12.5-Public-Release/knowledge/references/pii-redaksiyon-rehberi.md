@@ -16,7 +16,7 @@ Presidio, serbest metin, görüntü ve yapılandırılmış veride kişisel veri
 
 Çok dilli çalışır (`analyzer/languages/` dokümantasyonu), tamamen çevrimdışı ve self-host edilebilir (Python, Docker, Kubernetes) ve özel tanıyıcı (custom recognizer) eklemek doğrudan desteklenir. Doğrulanmış önemli ayrıntı: **`TR_NATIONAL_ID` (TCKN, 11 haneli) ve `TR_LICENSE_PLATE` tanıyıcıları artık yerleşiktir** (çekim: 13.08.2026); vergi kimlik numarası (10 haneli) için hâlâ özel tanıyıcı gerekir.
 
-**ArthurLegal için neden gerekli?** Rekabet Gözcüsü, çalışan iletişimlerini rekabet hukuku riski açısından izler; ArthurLegal paketleri müvekkil dosyalarındaki dilekçe, karar ve yazışmaları işler. Her iki akışta da metin, dış işleyicilere (Anthropic API, ArthurLegal MCP (`tr_`)) aktarılmadan **önce** çalışan/üçüncü kişi PII'sinin maskelenmesi zorunludur. Presidio bu maskeleme katmanının motorudur; TAB ise bu katmanın ne kadar güvenilir olduğunu ölçmenin yöntemidir. Ölçülmemiş bir redaksiyon katmanına üretimde güvenilmez.
+**ArthurLegal için neden gerekli?** ArthurLegal paketleri müvekkil dosyalarındaki dilekçe, karar ve yazışmaları işler. Metin, dış işleyicilere (Anthropic API, ArthurLegal MCP (`tr_`)) aktarılmadan **önce** çalışan/üçüncü kişi PII'sinin maskelenmesi zorunludur. Presidio bu maskeleme katmanının motorudur; TAB ise bu katmanın ne kadar güvenilir olduğunu ölçmenin yöntemidir. Ölçülmemiş bir redaksiyon katmanına üretimde güvenilmez.
 
 ## TAB (Text Anonymization Benchmark) nedir?
 
@@ -52,7 +52,7 @@ pip install presidio-analyzer presidio-anonymizer
 pip install presidio-image-redactor presidio-structured   # gerektiğinde
 ```
 
-Rekabet Gözcüsü / ArthurLegal akışlarında öncelikli varlık türleri:
+ArthurLegal akışlarında öncelikli varlık türleri:
 
 | Varlık kodu | Kapsam | Tespit yöntemi |
 |---|---|---|
@@ -90,12 +90,12 @@ WebFetch:
 
 Korpus dosyaları depo kökündedir: `echr_train.json`, `echr_dev.json`, `echr_test.json`; anotasyon kılavuzu `guidelines.md` içindedir.
 
-**Örnek 3 — Aktarım kapısında maskeleme akışı (kroki).** Rekabet Gözcüsü'nde bir yazışma alıntısı dış işleyiciye gitmeden önce: (1) `AnalyzerEngine.analyze(text, language=...)` ile varlıklar tespit edilir; (2) `AnonymizerEngine.anonymize()` ile her varlık rol etiketiyle değiştirilir (ör. `<CALISAN_1>`, `<TCKN>`); (3) etiket–kimlik eşlemesi yalnızca yerel, erişimi kısıtlı bir kasada tutulur; (4) ancak maskelenmiş metin Anthropic API'ye veya ArthurLegal MCP (`tr_`) sorgusuna girer. Aynı akış, bulgu defterine (append-only ledger) yazılacak alıntılar için de zorunludur.
+**Örnek 3 — Aktarım öncesi maskeleme akışı (kroki).** Bir yazışma alıntısı dış işleyiciye gitmeden önce: (1) `AnalyzerEngine.analyze(text, language=...)` ile varlıklar tespit edilir; (2) `AnonymizerEngine.anonymize()` ile her varlık rol etiketiyle değiştirilir (ör. `<CALISAN_1>`, `<TCKN>`); (3) etiket–kimlik eşlemesi yalnızca yerel, erişimi kısıtlı bir kasada tutulur; (4) ancak maskelenmiş metin Anthropic API'ye veya ArthurLegal MCP (`tr_`) sorgusuna girer. Aynı akış, kalıcı kayda (not, rapor, dosya özeti) yazılacak alıntılar için de zorunludur.
 
 ## Redaksiyon disiplini (bağlayıcı kurallar)
 
-1. **Aktarım öncesi maskeleme:** İzlenen iletişimlerdeki çalışan/kişi PII'si, herhangi bir dış işleyiciye (Anthropic API, ArthurLegal MCP (`tr_`) dahil) aktarılmadan **önce** maskelenir. Bu adım, Rekabet Gözcüsü'nün dört aktarım kapısından biridir; kapı atlanarak ham metin gönderilemez.
-2. **Defter anonimleştirmesi:** Append-only bulgu defterine giren her alıntı anonimleştirilmiş hâliyle yazılır. Defter geri alınamaz olduğundan, maskeleme hatası da geri alınamaz — defter yazımı en yüksek özen eşiğine tabidir.
+1. **Aktarım öncesi maskeleme:** İzlenen iletişimlerdeki çalışan/kişi PII'si, herhangi bir dış işleyiciye (Anthropic API, ArthurLegal MCP (`tr_`) dahil) aktarılmadan **önce** maskelenir. Bu adım atlanarak ham metin gönderilemez.
+2. **Kayıt anonimleştirmesi:** Kalıcı kayda (not, rapor, dosya özeti) giren her alıntı anonimleştirilmiş hâliyle yazılır. Paylaşılmış bir kayıttaki maskeleme hatası geri alınamaz; kalıcı kayıt en yüksek özen eşiğine tabidir.
 3. **Olasılıksal katman, garanti değil:** Presidio'nun kendi uyarısı aynen: "there is no guarantee that Presidio will find all sensitive information. Consequently, additional systems and protections should be employed." Presidio bir **katmandır**; tek başına yeterlilik iddiası kurulamaz. Katmanın performansı ölçülmeden üretime güvenilmez: yöntem doğrulaması TAB ile yapılır; **Türkçe recall için ayrı bir TR değerlendirme seti kurulmadan Türkçe metinde üretim güveni verilemez** (TAB İngilizce'dir ve TR performansına delil oluşturmaz).
 4. **KVKK çerçevesi:** Maskeleme bir **veri minimizasyonu** aracıdır (KVKK m.4 ilkeleri yönünde); yurt dışına aktarımın **hukuki dayanağını ikame etmez**. Maskelenmiş veri aktarımı dahi, aktarım rejiminin (KVKK m.9 ve ilgili kurul kararları) ayrıca değerlendirilmesini gerektirir; bu değerlendirme `kvkk-m11-cevap-sablonu.md` ekseni ile birlikte okunur.
 
@@ -124,5 +124,5 @@ Kritik sınır: **TAB bir değerlendirme veri setidir; asla hukuki atıf kaynağ
 ## İlgili rehberler
 
 - `kvkk-m11-cevap-sablonu.md` — ilgili kişi başvurularında maskelenmiş defter kayıtlarının kullanımı ve KVKK cevap disiplini.
-- `yargi-mcp-rehberi.md` — ArthurLegal MCP (`tr_`)'ye giden sorguların aktarım kapısından geçirilmesi; içtihat atıf disiplini.
+- `yargi-mcp-rehberi.md` — ArthurLegal MCP (`tr_`)'ye giden sorguların aktarımdan önce maskelenmesi; içtihat atıf disiplini.
 - `karsilastirmali-hukuk-rehberi.md` — Türkiye dışı veri koruma rejimlerine temas eden dosyalarda yargı çevresi yönlendirmesi.

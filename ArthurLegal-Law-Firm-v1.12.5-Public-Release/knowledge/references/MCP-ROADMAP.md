@@ -1,6 +1,6 @@
 # MCP Yol Haritası — durum: 6 sunucu yazıldı, test edildi ve ArthurLegal MCP tek ucunda toplandı
 
-> **Güncelleme 05.09.2026:** Altı sunucu ve dört yeni backend (UK, AB, JP, GLEIF) artık tek connector'ın arkasındadır: `https://arthurlegal-mcp.fly.dev/mcp`, 14 backend, 81 araç, önekli adlar. Aşağıdaki tablodaki araç sayıları tekil sunuculara aittir; tek uçta her sunucunun kendi `server_status`'u ortak `status` ile değiştirildiği için birer eksiktir.
+> **Güncelleme 05.09.2026:** Altı sunucu ve dört yeni backend (UK, AB, JP, GLEIF) artık tek connector'ın arkasındadır: `https://arthurlegal-mcp.fly.dev/mcp`, 14 backend, 81 araç, önekli adlar (05.09.2026 itibarıyla; güncel sayılar `status` çıktısında). Aşağıdaki tablodaki araç sayıları tekil sunuculara aittir; tek uçta her sunucunun kendi `server_status`'u ortak `status` ile değiştirildiği için birer eksiktir.
 >
 > **Güncelleme 30.08.2026:** Bu belge bir plan olarak başladı; artık büyük kısmı
 > **uygulanmış** durumda. Altı yargı çevresi için ayrı ayrı MCP sunucusu yazıldı,
@@ -129,14 +129,9 @@ olur. Doğrudan belge çekme ve gezinme indekssiz de çalışır.
 docker build -t es-boe-mcp . && docker run -p 8000:8000 -e PORT=8000 es-boe-mcp
 ```
 
-⚠️ **Railway dağıtımı yapılamadı:** hesabın deneme süresi dolmuş
-("Your trial has expired. Please select a plan"). Plan seçimi bir faturalandırma
-kararı olduğu için beklemede. Plan aktifleştikten sonra her depo için:
-
-```sh
-railway init --name <sunucu-adi> && railway up -d && railway domain
-railway variables --set "CRAWL_ARGS=<crawl argumanlari>"
-```
+✅ **Yayında:** altı sunucu ayrı ayrı dağıtılmadı; ArthurLegal MCP toplayıcısının içinde tek uçta
+çalışır (`https://arthurlegal-mcp.fly.dev/mcp`). Yüklü yargı çevreleri ve indeks kapsamı için `status`.
+Railway'e ayrı dağıtım yapılmadı.
 
 ---
 

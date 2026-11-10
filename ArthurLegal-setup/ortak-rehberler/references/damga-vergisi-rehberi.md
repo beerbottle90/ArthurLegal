@@ -34,8 +34,8 @@ DVK (2) sayılı Tablo bazı işlemleri muaf tutar:
 | Sözleşme türü | Oran |
 |---|---|
 | Genel hizmet/ürün sözleşmesi | binde 9,48 |
-| Kira sözleşmesi | binde 1,89 (yıllık kira bedeli üzerinden) |
-| Süresiz kira | yıllık kira × 9,48 binde |
+| Kira sözleşmesi | binde 1,89 (mukavele süresine göre kira bedeli üzerinden) |
+| Süresiz kira | yıllık kira × binde 1,89 (oran kira sözleşmesiyle aynıdır) |
 | İş sözleşmesi (belirli süreli) | binde 9,48 (toplam bedel üzerinden) |
 | Kefalet sözleşmesi | binde 9,48 (kefalet tutarı) |
 | Vekalet (ücretli) | binde 9,48 |

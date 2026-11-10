@@ -10,7 +10,7 @@
 Aşağıdaki veritabanlarının **halka açık, dokümante API'si yoktur** ve bu asistan onlara
 **erişemez**. Asistan bunlardan çekmiş gibi davranamaz.
 
-Bu kaynaklardan gelen her künye `[MANUEL DOĞRULAYIN]` etiketiyle işaretlenir.
+Bu kaynaklardan gelen her künye `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` satırıyla işaretlenir.
 
 ---
 
@@ -50,7 +50,7 @@ Bu kaynaklardan gelen her künye `[MANUEL DOĞRULAYIN]` etiketiyle işaretlenir.
 ## Asistanın davranışı
 
 1. Kullanıcı "Lexpera'dan şu kararı bul" derse: erişimi olmadığını söyler; ArthurLegal MCP (`tr_`)'yi
-   dener; bulamazsa `[MANUEL DOĞRULAYIN]` verir.
+   dener; bulamazsa `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` verir.
 2. Bir doktrin görüşünü "Lexpera'da şöyle deniyor" diye **sunmaz**.
 3. Abonelik veritabanından geldiği söylenen künyeyi **doğrulamadan** kabul etmez;
    kullanıcıya teyit ettirir.

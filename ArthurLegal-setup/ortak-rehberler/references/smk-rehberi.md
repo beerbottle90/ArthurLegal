@@ -146,7 +146,7 @@ tr_mevzuat_ara(query="Türk Patent", types=["KKY"])             # TÜRKPATENT y�
 ```
 tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H11", query="+marka +iltibas +karıştırılma +ihtimali")
 tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H11", query="+patent +tecavüz")
-tr_ictihat_ara(courts=["DANISTAYKARAR"], query="+TÜRKPATENT +itiraz +iptal")  # idari yargı
+tr_ictihat_ara(courts=["YARGITAYKARARI"], chamber="H11", query="+YİDK +karar +iptal +marka")  # m. 156/2: Ankara FSHHM, temyiz Yargıtay 11. HD
 ```
 
 ## Bağlantılı

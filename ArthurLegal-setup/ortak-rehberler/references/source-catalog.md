@@ -10,7 +10,8 @@
 
 ## Nasıl kullanılır
 
-1. Kullanıcının `CLAUDE.md` → watchlist'indeki **kategorileri** belirle.
+1. Kullanıcının regulatory-legal profilindeki izleme listesinin (`## Regulators we watch`; bkz.
+   `regulatory-legal__skills.md`) **kategorilerini** belirle.
 2. O kategorilerde **yapılandırılmış besleme sayısı sıfır ya da çok azsa**
    boşluğu digest'in başında **bir kez** yüzeye çıkar.
 3. Kullanıcı onaylarsa beslemeyi yapılandırmaya ekle.
@@ -27,7 +28,7 @@
 | Resmî Gazete | `https://www.resmigazete.gov.tr/` ✅ | Günlük. **ArthurLegal MCP `tr_resmi_gazete_fihrist` ve `tr_resmi_gazete_tara` araçlarını tercih et** — yapılandırılmış döner; `konu=…` başlığında konu adı geçmeyen kalemi de bulur (ön eleme, sınırları `mevzuat-mcp-rehberi.md` bölüm 4) |
 | KVKK | `https://www.kvkk.gov.tr/` ✅ | Kurul karar özetleri: `tr_kurum_karari_ara(kurum="kvkk")`; site duyurular için |
 | EPDK | `https://www.epdk.gov.tr/` ✅ | Kurul kararları: `tr_kurum_karari_ara(kurum="epdk", market=…)`; düzenlemeler: `tr_mevzuat_ara(query="Enerji Piyasası", types=["KKY","TEBLIGLER"])` |
-| Rekabet Kurumu | `https://www.rekabet.gov.tr/` ✅ | Kurul kararları: `tr_kurum_karari_ara(kurum="rekabet")` (10.368 karar indeksli); birleşme bildirimleri site |
+| Rekabet Kurumu | `https://www.rekabet.gov.tr/` ✅ | Kurul kararları: `tr_kurum_karari_ara(kurum="rekabet")`; yerel arşivde arama `tr_semantik_ara(kurum="rekabet")` (güncel belge sayısı `status` → `local_index`); birleşme bildirimleri site |
 
 ## 🇪🇺 Avrupa Birliği
 

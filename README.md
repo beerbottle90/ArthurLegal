@@ -450,7 +450,7 @@ opened from the connector offers to reopen itself from your installation, where 
 **Multi-jurisdiction legal AI assistant packages for Claude Desktop (one installer, Windows and Mac), opened as one
 panel inside Claude: [ArthurLegal Masası](#masa).** They also run as [Claude.ai Projects](https://claude.ai/projects):
 each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
-folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus fourteen
+folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus eleven
 jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
 
 <img src="ArthurLegal-setup/varlik/banner-en.png" alt="ArthurLegal — open source legal AI" width="760">
@@ -468,8 +468,8 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.5](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.5](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 14 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
+| **Corporate Assistant** | **[v1.12.5](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.5](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
 | Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
 | **Courthouse** | **[v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
 
@@ -601,8 +601,8 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus fourteen jurisdictions behind one connector, 130 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
-| **Legislation via WebFetch** — no extra connector | 🇬🇧 UK · 🇺🇸 US *(federal legislation, GovInfo)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇯🇵 Japan · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland · 🇬🇧 UK · 🇪🇺 EU / CJEU · 🇯🇵 Japan | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus eleven jurisdictions behind one connector, 130 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Legislation via WebFetch** — no extra connector | 🇺🇸 US *(federal legislation, GovInfo)* · ECHR · 🇫🇷 France · 🇮🇹 Italy · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
 Türkiye currently has the deepest coverage: inside ArthurLegal MCP under the `tr_`

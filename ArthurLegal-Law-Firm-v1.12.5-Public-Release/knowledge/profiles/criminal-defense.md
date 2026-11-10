@@ -202,7 +202,7 @@ Bazı suçlarda **uzlaştırma şart** (örn. kasten yaralama TCK 86/1, taksirle
 
 ## Matter workspaces
 
-Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
+Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal/matters/<müvekkil-slug>__<matter-slug>/`
 
 **Özel:** CMK görevli matter'ları için `matters/cmk-<tarih>__<dosya-no>/` deseni — agregat raporlama (aylık baro CMK ödeme cetveli) için.
 

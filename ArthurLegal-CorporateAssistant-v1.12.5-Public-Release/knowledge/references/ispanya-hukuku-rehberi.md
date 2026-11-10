@@ -1,10 +1,10 @@
 # İspanya Hukuku — Kullanım Rehberi (BOE açık veri yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **`es-boe MCP`** → `references/es-boe-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `es_` araçları** (kurulumla gelir) → `references/es-boe-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
-> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Bu dosya **WebFetch yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.
 > Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
 > **`(MCP kullanılmadı)`** kaydını düş.
 
@@ -77,8 +77,8 @@ Accept: application/xml          ← ZORUNLU
 > 2. AB-türevli konuysa **EUR-Lex CELLAR** `lang:SPA` ile al (konsolide AB metni); ya da
 > 3. Kullanıcıdan metni iste.
 >
-> 🔧 Kendi egress'i olan bir MCP sunucusu bu başlığı gönderebilir — ES konsolide
-> mevzuatı **MCP ile tamamen çözülebilir bir eksiktir** (bkz. `MCP-ROADMAP.md`).
+> 🔧 Konsolide ES metni ArthurLegal MCP'de `es_get_act_text` ile alınır (değişiklikler işlenmiş,
+> yürürlükteki hâli); bu dosyadaki yollar yalnız MCP yanıt vermediğinde yedektir.
 
 **Bilinen konsolide ID'ler (doğrulandı):**
 
@@ -125,4 +125,4 @@ Doğrulandı: `/20260828` → `<status><code>200</code></status>` + `<sumario>` 
 
 *Test: 30.08.2026 — `xml.php?id=BOE-A-2010-1792` ✅ · `sumario/20260828` ✅ ·
 `legislacion-consolidada` `Accept: application/xml` ile 200 ✅ ama başlıksız/json 400 ❌
-(WebFetch ile erişilemez, MCP gerekiyor). Sürüm: v1.6.0 (yeni).*
+(WebFetch ile erişilemez; MCP'de `es_get_act_text`). Sürüm: v1.6.0 (yeni).*

@@ -120,7 +120,7 @@
 
 - **Avukat–müvekkil gizliliği:** 1136 sayılı Avukatlık Kanunu m. 36 kapsamında. İn-house counsel bu korumadan **sınırlı** yararlanır; Rekabet Kurumu in-house yazışmaları için AB Akzo-Nobel paraleli geçerlidir.
 - **TBK m. 396/4, TTK m. 55/1-d — iş/ticari sır** — şirketin hassas ticari bilgilerinin korunması.
-- **KVKK m. 28 — yargı süreci istisnası** — kurul soruşturmalarında savunma hakkı çerçevesinde belgeler açılabilir.
+- **KVKK m. 28/1-d — yargı makamları istisnası** — kişisel verilerin soruşturma, kovuşturma, yargılama veya infaz işlemlerine ilişkin olarak yargı makamları ya da infaz mercilerince işlenmesi Kanun kapsamı dışındadır; şirketin kendi belge paylaşımına dayanak oluşturmaz.
 
 **Önerilen üst başlık (iç memorandumlar için):**
 
@@ -136,7 +136,7 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 - **Resmi Gazete:** https://www.resmigazete.gov.tr/ (günlük 09:30)
 - **ArthurLegal MCP (`tr_`):** arthurlegal-mcp.fly.dev tek connector, `tr_` öneki — kanun/mevzuat + yargı/içtihat + kurum kararı araçları
-- **ArthurLegal Tapu (`tkgm_`):** Aynı connector'da (Claude Desktop yerel kurulumunda öneksiz) TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki ve dayanak köprüsü; taşınmaz dosyalarında bilgi amaçlı kullanılır. Rehber: `tapu-kadastro-rehberi.md`.
+- **ArthurLegal Tapu (`tkgm_`):** claude.ai'de ArthurLegal connector'ında `tkgm_` önekiyle; Claude Desktop yerel kurulumunda, seçildiyse ayrı ArthurLegal Tapu (`arthur-tapu`) sunucusunda öneksiz (`parsel_sorgula`, `parsel_raporu`, `kroki`). TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki ve dayanak köprüsü; taşınmaz dosyalarında bilgi amaçlı kullanılır. Rehber: `tapu-kadastro-rehberi.md`.
 - **Sektör düzenleyicileri:** [DOLDUR — şirketinize göre: EPDK, SPK, BDDK, Rekabet Kurumu, KVKK Kurulu, vs.]
 
 ---

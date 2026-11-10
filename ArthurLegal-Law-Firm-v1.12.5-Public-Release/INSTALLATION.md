@@ -9,7 +9,7 @@
 | Requirement | Details |
 |---|---|
 | Claude.ai account | Pro or Team plan (required for Projects feature) |
-| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 14 jurisdictions + land registry, 123 tools, no auth (Step 4) |
+| ArthurLegal MCP | `https://arthurlegal-mcp.fly.dev/mcp` — one connector, Türkiye + 11 jurisdictions + land registry, 130 tools, no auth (Step 4) |
 | TR Legal MCP | yargi-mcp-pro connector — only for ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK (optional — Step 4b) |
 | ArthurMask | Local privacy gate that masks documents on your computer; Windows 10/11 64-bit + Claude Desktop (recommended, optional — Step 5) |
 
@@ -104,7 +104,7 @@ knowledge/references/mesleki-sir-rehberi.md
 knowledge/references/karsilastirmali-hukuk-rehberi.md
 ```
 
-**Source-layer MCP guides (v1.4.0 — if you set up Step 4b):**
+**Source-layer MCP guides (v1.4.0 — ArthurLegal MCP, Step 4):**
 ```
 knowledge/references/eqanun-mcp-rehberi.md          <- AZ legislation (PRIMARY)
 knowledge/references/lex-scholar-rehberi.md         <- legal scholarship + DergiPark (SECONDARY)
@@ -150,7 +150,7 @@ knowledge/references/karsilastirmali-hukuk-rehberi.md
 
 ---
 
-## Step 4 — Connect ArthurLegal MCP (Türkiye + 14 jurisdictions, one endpoint)
+## Step 4 — Connect ArthurLegal MCP (Türkiye + 11 jurisdictions, one endpoint)
 
 Project → **Customize** → **Connectors** → **+ Add custom connector**
 
@@ -160,8 +160,8 @@ Project → **Customize** → **Connectors** → **+ Add custom connector**
 | **URL** | `https://arthurlegal-mcp.fly.dev/mcp` |
 | **Auth** | **None** |
 
-One endpoint, 16 backends, 123 tools. Türkiye is inside this connector under the `tr_`
-prefix (23 tools) and the Turkish land registry under `tkgm_` (17 tools) — no separate Turkish-law or
+One endpoint, 130 tools. Türkiye is inside this connector under the `tr_`
+prefix (24 tools) and the Turkish land registry under `tkgm_` (17 tools) — no separate Turkish-law or
 land-registry connector is needed. The first live land-registry query in a chat shows a one-time consent card;
 see `knowledge/references/tapu-kadastro-rehberi.md`.
 
@@ -200,7 +200,7 @@ documents each regulator has indexed.
 "TBK m. 6"                                   → tr_mevzuat_ara + tr_mevzuat_madde_getir
 "Yargıtay 9. HD iş kazası"                   → tr_ictihat_ara(chamber="H9")
 "EPDK lisanssız üretim kararları"            → tr_kurum_karari_ara(kurum="epdk")
-"kişisel verilerin korunması" (Spain)        → es_search_legislation → LO 15/1999, LO 7/2021
+"kişisel verilerin korunması" (Spain)        → es_search_legislation → LO 3/2018, LO 7/2021 (LO 15/1999 is repealed)
 ```
 
 **Source:** `github.com/beerbottle90/arthurlegal-mcp` (Turkish backend: `github.com/beerbottle90/arthurlegal-mcp/tree/master/arthur-tr-hukuk-mcp`) — hosted on Fly.io,
@@ -215,7 +215,7 @@ indexes baked into the image, semantic search via Voyage AI (`voyage-4-lite`).
 >
 > Once connected, call the `status` tool. Details: [github.com/beerbottle90/arthurlegal-mcp](https://github.com/beerbottle90/arthurlegal-mcp#use-it-directly)
 
-> **Without it** the package still works: these fifteen jurisdictions fall back to WebFetch
+> **Without it** the package still works: these twelve jurisdictions fall back to WebFetch
 > (no Turkish case-law search; AZ in-force status **unverified**), scholarship and contract
 > precedent drop out — and the assistant says so in its output.
 
@@ -241,17 +241,19 @@ Add these where your client portfolio touches the jurisdiction.
 
 > ⚠️ **Citation verification is mandatory.** Before citing any US decision, verify
 > it in CourtListener — does the case exist, is the citation correct, has it been
-> overruled? An unverified decision is tagged `[model knowledge — verify]` and
+> overruled? An unverified decision is marked `UYARI: veri çekilemedi, teyidiniz gerekli: <link>` and
 > never `[CourtListener]`. Every US citation that goes into a pleading passes this
 > check. See `courtlistener-rehberi.md`.
 
-> Without the Fedlex connector, Swiss legislation still works over WebFetch
-> (`fedlex.admin.ch`) — see `switzerland-caselaw-rehberi.md`.
+> Without the Fedlex connector, Swiss article text comes from the OpenCaseLaw.ch connector's `get_law` tool
+> (`fedlex.admin.ch` pages return no text to WebFetch); failing that, the UYARI line is written — see `switzerland-caselaw-rehberi.md`.
 
 **Jurisdictions needing no connector** (automatic via WebFetch / direct API):
 🇬🇧 UK · 🇺🇸 US legislation (GovInfo — free API key) · 🇪🇺 EU/CJEU/ECHR · 🇩🇪 DE ·
 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(sanctions / KYC only)* · 🇨🇳 CN · 🇷🇸 RS ·
 🇦🇿 AZ *(case law / English sources — legislation via Step 4)*
+
+UK, EU/CJEU, German and Japanese legislation come from ArthurLegal MCP (`uk_`, `eu_`, `de_`, `jp_`; Step 4); WebFetch is only the fallback there.
 
 ---
 

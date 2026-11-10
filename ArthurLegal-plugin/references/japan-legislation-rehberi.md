@@ -1,6 +1,10 @@
 # Japonya Mevzuatı — Kullanım Rehberi (v1.7.0)
 
-> **Erişim tipi:** WebFetch (GET) — e-Gov API v2, auth yok
+> **Birincil yol ArthurLegal MCP `jp_` araçlarıdır** (`jp_search_laws`, `jp_list_laws`, `jp_get_law`,
+> `jp_get_law_text`, `jp_get_article`; ayrıntı `japan-egov-api-rehberi.md`). Bu rehber İngilizce çeviri
+> (JLT), mahkeme kararı ve WebFetch yedeği içindir.
+>
+> **Erişim tipi:** MCP (`jp_`) birincil; WebFetch (GET, e-Gov API v2, auth yok) yedek
 > **Auth:** Yok (e-Gov Digital Agency API — tamamen açık)
 > **Kapsam:** Tüm Japon ulusal mevzuatı; ~1.000 kanun İngilizce çeviri mevcut
 > **[Müvekkil] bağlamı:** Japon trading house karşı tarafları (Mitsui, Mitsubishi, JERA), LNG sözleşmeleri

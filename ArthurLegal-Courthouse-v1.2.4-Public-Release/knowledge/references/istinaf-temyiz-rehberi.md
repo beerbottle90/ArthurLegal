@@ -25,7 +25,7 @@
 
 **Kesinlik.** Taban tutarı üç bin TL'yi geçmeyen malvarlığı davalarına ilişkin kararlar kesindir; manevi tazminat davalarında miktara bakılmaz; kısmi davada sınır alacağın tamamına göre belirlenir (HMK m. 341/2-4). Temyizde taban tutarı kırk bin TL'yi geçmeyen davalar, sulh hukuk mahkemesinin görevine giren davalar (bentteki kira ve kat mülkiyeti istisnalarıyla), yargı çevresi içindeki görev ve yetki ile yargı yeri belirlenmesi kararları, çekişmesiz yargı, soybağı dışındaki nüfus kaydı düzeltme, nakil, geçici hukuki koruma ve m. 353/1-a kararları temyiz edilemez (HMK m. 362/1). 7589 s.K. ile eklenen m. 362/3, BAM'ın istinafı kısmen veya tamamen kabul ederek yeniden esas hakkında verdiği kararların hangi hâlde temyiz edilebileceğini düzenler.
 
-**AYM notları (metin dipnotları).** HMK m. 341/2'nin birinci cümlesi "kamulaştırma bedelinin tespitine ilişkin davalar" yönünden iptal edilmiştir (AYM 24.02.2022, E. 2021/34, K. 2022/21). HMK m. 362/1-a, aynı davalar yönünden iptal edilmiştir; karar 20.10.2026'da yürürlüğe girer (AYM 08.10.2025, E. 2025/124, K. 2025/203). Aynı bent "istinaf başvurusunun kısmen veya tümden kabulü hâli" yönünden de iptal edilmiştir (AYM 26.02.2026, E. 2026/49, K. 2026/48); dipnotta yürürlük tarihi yoktur: `UYARI: veri çekilemedi, teyidiniz gerekli: https://normkararlarbilgibankasi.anayasa.gov.tr/`. Bu iptal ile 7589 s.K.'nın getirdiği m. 362/3 arasındaki ilişkiyi hâkim değerlendirir (`ictihat-ve-aym-izleyici`).
+**AYM notları (metin dipnotları).** HMK m. 341/2'nin birinci cümlesi "kamulaştırma bedelinin tespitine ilişkin davalar" yönünden iptal edilmiştir (AYM 24.02.2022, E. 2021/34, K. 2022/21). HMK m. 362/1-a, aynı davalar yönünden iptal edilmiştir; karar 20.10.2026'da yürürlüğe girdi (AYM 08.10.2025, E. 2025/124, K. 2025/203). Aynı bent "istinaf başvurusunun kısmen veya tümden kabulü hâli" yönünden de iptal edilmiştir (AYM 26.02.2026, E. 2026/49, K. 2026/48); dipnotta yürürlük tarihi yoktur: `UYARI: veri çekilemedi, teyidiniz gerekli: https://normkararlarbilgibankasi.anayasa.gov.tr/`. Bu iptal ile 7589 s.K.'nın getirdiği m. 362/3 arasındaki ilişkiyi hâkim değerlendirir (`ictihat-ve-aym-izleyici`).
 
 **Başvuru ve gönderme.**
 - Dilekçe kararı veren veya başka bir yer mahkemesine verilir; dosya, dilekçede gösterilen daireyle bağlı kalınmadan ilgili BAM'a gönderilir (HMK m. 343/1, 343/4). Dilekçe, başvuranın kimliği ve imzası ile kararı belli edecek kayıtları taşıyorsa diğer eksiklikler nedeniyle reddedilmez (m. 342/3).
@@ -84,7 +84,7 @@
 
 **İtiraz merci ve usul.** Kararına itiraz edilen yerinde görürse düzeltir, görmezse en çok üç gün içinde mercie gönderir (CMK m. 268/2); merciler m. 268/3'te sayılıdır. Merci duruşmasız karar verir, itirazı yerinde görürse işin esasına da karar verir; kararı kesindir, ilk defa merci tarafından verilen tutuklama kararına itiraz edilebilir (CMK m. 271).
 
-**AYM ve 7589 notu.** CMK m. 231/5-14 AYM'nin 10.07.2025 tarihli, E. 2024/98, K. 2025/149 sayılı kararıyla iptal edilmiş, iptal 30.09.2026'da yürürlüğe girer; aynı fıkralar 7589 s.K. ile 31.07.2026'da yeniden düzenlenmiştir (metin şerhi ve dipnotu). Derdest dosyalara etkisini hâkim değerlendirir.
+**AYM ve 7589 notu.** CMK m. 231/5-14 AYM'nin 10.07.2025 tarihli, E. 2024/98, K. 2025/149 sayılı kararıyla iptal edilmiş, iptal 30.09.2026'da yürürlüğe girdi; aynı fıkralar 7589 s.K. ile 31.07.2026'da yeniden düzenlenmiştir (metin şerhi ve dipnotu). Derdest dosyalara etkisini hâkim değerlendirir.
 
 ## 3. İdari yargı (İYUK)
 

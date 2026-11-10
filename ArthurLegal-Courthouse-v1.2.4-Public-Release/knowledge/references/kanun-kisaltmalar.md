@@ -47,7 +47,6 @@
 | **2872** | Çevre Kanunu | 2872 |
 | **4737** | Endüstri Bölgeleri Kanunu | 4737 |
 | **7417** | Elektrik Piyasası K. m.7'ye depolama eklemesi (torba K.) | 7417 |
-| **7406** | Atık Yönetimi K. (2023) (doğrulanmadı — bu numarada kanun bulunamadı) | 7406 |
 
 ## Sermaye piyasası + bağımsız denetim
 
@@ -58,7 +57,7 @@
 | **KHK/660** | Kamu Gözetimi K. (KGK) | 660 |
 | **SPK Tebliğ II-15.1** | Özel Durum Açıklamaları | — |
 | **SPK Tebliğ VI-104.1** | İçsel Bilgiler | — |
-| **SPK Tebliğ II-23.1** | Önemli İşlemler | — |
+| **SPK Tebliğ II-23.3** | Önemli Nitelikteki İşlemler ve Ayrılma Hakkı | — |
 | **SPK Tebliğ II-17.1** | Kurumsal Yönetim İlkeleri | — |
 | **SPK Tebliğ II-26.1** | Pay Alım Teklifleri | — |
 
@@ -80,13 +79,13 @@
 ## Atıf formatı (standart)
 
 **ArthurLegal MCP (`tr_`)'den alınan:**
-> TBK m. 26 [ArthurLegal TR — 13.05.2026]
+> TBK m. 26 [ArthurLegal TR — TBK m. 26 — GG.AA.YYYY]
 
 **Resmi Gazete'den alınan:**
 > KVKK Kurul Kararı 2024/256, RG 15.03.2024 sayı 32517 [Resmi Gazete]
 
 **Yargıtay kararı:**
-> Yargıtay 9. HD, E.2023/4521 K.2024/1245 T.12.04.2024 UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>
+> Yargıtay [N]. HD, E.[yıl]/[no] K.[yıl]/[no] T.[GG.AA.YYYY] UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>
 
 **Çekilemeyen kaynak:**
 > TTK m. 202 — bağlı şirketin kaybı tazmin yükümlülüğü UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>
@@ -102,8 +101,8 @@
 
 `<Mahkeme> <Daire>, E.<yıl>/<no> K.<yıl>/<no> T.<GG.MM.YYYY>`
 
-Örnekler:
-- Yargıtay 11. HD, E.2022/3210 K.2023/2145 T.14.06.2023
-- Danıştay 10. D., E.2021/567 K.2022/890 T.18.05.2022
-- AYM Genel Kurul, 2020/45 başvuru no, T.15.10.2021
-- AİHM, *Ali Riza v. Türkiye*, başv. no 30226/10, T.28.01.2020
+Örnekler (yalnız biçim içindir; künye uydurulmaz, yalnız bu oturumda çekilen karar atıf alır):
+- Yargıtay [N]. HD, E.[yıl]/[no] K.[yıl]/[no] T.[GG.AA.YYYY]
+- Danıştay [N]. D., E.[yıl]/[no] K.[yıl]/[no] T.[GG.AA.YYYY]
+- AYM Genel Kurul, [yıl]/[no] başvuru no, T.[GG.AA.YYYY]
+- AİHM, *[Başvurucu] v. Türkiye*, başv. no [no]/[yy], T.[GG.AA.YYYY]

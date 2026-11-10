@@ -7,10 +7,8 @@
 > **Durum (test 12.06.2026):** UZ lex.uz `/docs/{id}` ✅ sunucu-render · UZ arama SPA ⚠️ ·
 > KZ adilet ❌ (WebFetch TLS) · KZ prg.kz (Paragraf) kısmi ücretsiz ⚠️ paywall
 >
-> **[Müvekkil] neden gerekli?** `firm-profile.md` A.5: **KazMunayGaz JSC** ile Roadmap
-> (22.06.2023) + COP29 Stratejik Dekarbonizasyon Anlaşması; **Uzbekneftegaz JSC** ile
-> Roadmap + **Karakalpak yatırım bloku anlaşması** `[AR-2024]`. Orta Asya karşı tarafları
-> ile JV/arama anlaşmalarında yerel hukuk katmanı bu rehberden kurulur.
+> **Ne zaman gerekir?** Kazakistan ya da Özbekistan karşı taraflı JV, arama veya enerji işi varsa:
+> Orta Asya karşı tarafları ile JV/arama anlaşmalarında yerel hukuk katmanı bu rehberden kurulur.
 
 ---
 
@@ -46,7 +44,7 @@ Doğrulanmış örnek: Anayasa = `lex.uz/docs/20596` ✅ (08.12.1992 tabanlı, v
 
 | Konu | Kanun | Not |
 |------|-------|-----|
-| **PSA rejimi** | "Mahsulot taqsimotiga oid bitimlar to'g'risida" / «О соглашениях о разделе продукции» (2001) | Karakalpak bloku anlaşmasının zemini `UYARI: veri çekilemedi, teyidiniz gerekli: https://lex.uz/` |
+| **PSA rejimi** | "Mahsulot taqsimotiga oid bitimlar to'g'risida" / «О соглашениях о разделе продукции» (2001) | Özbekistan PSA'larının zemini `UYARI: veri çekilemedi, teyidiniz gerekli: https://lex.uz/` |
 | Yer altı kaynakları | Yer osti boyliklari to'g'risida (Subsoil K.) | arama/üretim lisansları |
 | Yatırım | Investitsiyalar va investitsiya faoliyati (ZRU-598, 2019) | yatırımcı korumaları, stabilizasyon |
 | Döviz | Valyuta tartibga solish | repatriasyon/konvertibilite |
@@ -70,7 +68,7 @@ agent çekemez, kullanıcı tarayıcıdan açıp metni yapıştırmalı. URL pat
 | **Yer altı kodu** | "О недрах и недропользовании" Kodeksi (No. 125-VI, 27.12.2017) | arama/üretim sözleşme rejimi (eski PSA'lar grandfathered) |
 | Girişimcilik Kodu | Predprinimatelskiy kodeks (2015) | yatırım sözleşmeleri, devlet destekleri |
 | Medeni Kanun | Grajdanskiy kodeks | sözleşme genel hükümleri |
-| Yerel içerik | Subsoil Code içinde local content yükümlülükleri | KazMunayGaz işbirliklerinde kritik |
+| Yerel içerik | Subsoil Code içinde local content yükümlülükleri | Kazak devlet şirketiyle (ör. KazMunayGaz) işbirliklerinde kritik |
 | **AIFC rejimi** | AIFC Constitutional Statute (2015) | Astana'da **İngiliz common law adacığı**: AIFC Court + IAC tahkim — KZ taraflı sözleşmede dispute resolution alternatifi `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` |
 
 ## 3. Atıf formatları

@@ -20,7 +20,7 @@
 - **Basit yargılama:** sulh hukuk mahkemelerinin görevine giren dava ve işlerde uygulanır (HMK m. 316/1-a). Mahkeme mümkünse dosya üzerinden karar verir; aksi hâlde ilk duruşmada dava şartları, ilk itirazlar, hak düşürücü süre ve zamanaşımı hakkında tarafları dinler; tahkikat iki duruşmada, aralar bir ay, zorunlu hâllerde gerekçeli uzatma (HMK m. 320).
 - **Çekişmesiz yargı:** niteliğine uygun düştüğü ölçüde basit yargılama; aksine hüküm yoksa re'sen araştırma ilkesi (HMK m. 385). Kararlara karşı hukuki yararı bulunanlar kararın öğrenilmesinden itibaren iki hafta içinde istinafa başvurabilir (HMK m. 387).
 - **Ortaklığın giderilmesinde satış:** hâkim satış için memur görevlendirir; satış İİK hükümlerine göre yapılır (HMK m. 322/2). 7589 s.K. ile tüm maliklerin miras yoluyla edindiği ve üçüncü kişilerin mülkiyet hakkı bulunmayan taşınmazlarda birinci artırma yalnız malik mirasçılar arasında ve bir defaya mahsus yapılır (İİK m. 114/2); değişiklik yürürlükten önce ilanı yapılmış artırmalara uygulanmaz (7589 s.K. geçici m. 1/1).
-- **Vesayette satış:** 7589 s.K. ile taşınır ve taşınmazların satışının UYAP'a entegre elektronik satış portalında yapılmasına ilişkin değişiklik 31.10.2026'da yürürlüğe girer (TMK m. 440, 444; geçici m. 1/5). Bu tarihe kadar metin eski hâliyle uygulanır; tarihten sonra `mevzuat-degisiklik-izleyici` ile konsolide metni çekin.
+- **Vesayette satış:** 7589 s.K. ile taşınır ve taşınmazların satışının UYAP'a entegre elektronik satış portalında yapılmasına ilişkin değişiklik 31.10.2026'da yürürlüğe girdi (TMK m. 440, 444; geçici m. 1/5). Yürürlükteki konsolide metni `mevzuat-degisiklik-izleyici` ile çekin.
 
 ## Dava şartı arabuluculuk
 

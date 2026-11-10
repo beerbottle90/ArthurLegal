@@ -187,9 +187,15 @@ counterparty:         [ad]
 agreement:            [başlık]
 signed_date:          [ISO tarih]
 initial_term_end:     [ISO tarih]
+current_term_end:     [ISO tarih — ilk dönemde initial_term_end ile aynı; her yenilemede ileri alınır]
 renewal_mechanism:    [ör. "auto-renew annual"]
 notice_period_days:   [tam sayı]
-cancel_by_effective:  [ISO tarih — initial_term_end eksi notice_period_days]
+notice_method:        [noter / taahhütlü mektup / telgraf / KEP / e-posta / portal / sözleşme m. X]
+transit_buffer_days:  [tam sayı]
+cancel_by_calendar:   [ISO tarih — current_term_end eksi notice_period_days]
+cancel_by_effective:  [ISO tarih — gerekiyorsa son iş gününe geri çekilmiş]
+send_by_effective:    [ISO tarih — cancel_by_effective eksi transit_buffer_days]
+cancel_by_provenance: "[model hesabı — fesih bildirimi klozuyla teyit et]"
 price_on_renewal:     [yazıldığı gibi]
 annual_value:         [tam sayı, belirtilmişse]
 business_owner:       [e-posta, biliniyorsa]
@@ -197,7 +203,7 @@ clm_id:               [varsa]
 status:               active
 ```
 
-Belirlenemeyen alanı boş bırak ve hangilerinin eksik olduğunu yaz (`clm_id`, `annual_value`, `business_owner` çoğu zaman insandan gelir). Bildirim yönteminin TTK m. 18/3'e uyup uymadığını kayıt notuna ekle.
+Tarihler renewal-tracker'ın "Son gün hesabı" ve "Bildirim şekli ve tampon" bölümlerine göre hesaplanır; `cancel_by_*` daima `current_term_end`'den çıkar. Belirlenemeyen alanı boş bırak ve hangilerinin eksik olduğunu yaz (`clm_id`, `annual_value`, `business_owner` çoğu zaman insandan gelir). Bildirim yönteminin TTK m. 18/3'e uyup uymadığını kayıt notuna ekle.
 
 **escalation-flagger'a:** Bir SaaS kontrolü `## Escalation`'daki "asla kabul etme" ya da eskalasyon tetikleyicisine düşerse `/arthurlegal:commercial-legal-escalation-flagger` yönlendirir.
 
@@ -225,13 +231,13 @@ Profilin `## Outputs` bölümündeki sonraki adımlar karar ağacıyla bitir; da
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
 |---|---|
 | governing law = Azerbaycan hukuku ise akt lafzi + **yururluk statusu** (`Quvvededir`/`Legv olunmus`) — statusuz akt dayanak yapilmaz | `/arthurlegal:legal-research-az-mevzuat` |
-| kloz benchmark — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani) | `/arthurlegal:legal-research-sozlesme-emsali` |
+| kloz benchmark, yalniz petrol, gaz ve maden sozlesmelerinde (PSA/JOA, imtiyaz) — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani); ticari NDA/SaaS/tedarik klozu icin emsal tabani degildir | `/arthurlegal:legal-research-sozlesme-emsali` |
 | sinir-otesi kavramlarda (mucbir sebep, uyarlama, stabilizasyon) karsilastirmali ogreti — **ikincil**, redline gerekcesi olamaz | `/arthurlegal:legal-research-karsilastirmali-doktrin` |
 
 Rehberler: `${CLAUDE_PLUGIN_ROOT}/references/eqanun-mcp-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/lex-scholar-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/resourcecontracts-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`

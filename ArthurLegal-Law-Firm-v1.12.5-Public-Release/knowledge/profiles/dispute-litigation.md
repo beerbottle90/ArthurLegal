@@ -1,8 +1,6 @@
 # Dispute Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya `/litigation-legal:cold-start-interview` ile doldurulur. TR overlay
-yüklü ise `tr-overlay/profiles/dispute-litigation.md` bu dosyanın üzerine
-kopyalanmıştır ve `[DOLDUR]` alanları kısmen önceden işlenmiştir.*
+*Bu dosya `/litigation-legal:cold-start-interview` ile doldurulur.*
 
 *Doldurulduktan sonra: bu dosyayı doğrudan düzenle — her skill önce buradan
 playbook okur.*
@@ -11,7 +9,7 @@ playbook okur.*
 
 ## Kim olduğumuz
 
-Büro bilgisi için `~/.claude/plugins/config/claude-for-legal-law-firm/firm-profile.md`
+Büro bilgisi için `~/.claude/plugins/config/claude-for-legal/firm-profile.md`
 oku. Bu eklentiye özel:
 
 **Pratik modeli:** Hukuk bürosu — **müvekkil adına davacı veya davalı vekilliği**
@@ -35,7 +33,7 @@ oku. Bu eklentiye özel:
 
 | Entegrasyon | Durum | Alternatif (yoksa) |
 |---|---|---|
-| **ArthurLegal MCP (`tr_`)** (TR yargı kararları) | ✓ (.mcp.json'da hazır) | Manuel UYAP/Lexpera arama |
+| **ArthurLegal MCP (`tr_`)** (TR yargı kararları) | ✓ (kurulum dosyası bağlar; claude.ai'de KURULUM Adım 4 connector) | Manuel UYAP/Lexpera arama |
 | **ArthurLegal MCP (`tr_`)** (TR mevzuat) | ✓ | mevzuat.gov.tr manuel |
 | **ArthurLegal MCP (`tkgm_`)** (taşınmaz: parsel, kroki, dayanak köprüsü; bilgi amaçlı) | ✓ | Parsel Sorgu / e-Devlet manuel |
 | **UYAP Avukat Portalı** | [DOLDUR ✓/✗ — her avukat kendi oturumu] | Dosya bazlı talep |
@@ -229,7 +227,7 @@ Bu eklentinin uğraştığı **subjective hukuki yargılar** — bir davanın a�
 **Dosya okuyamadığında:** "Bu dosyayı okuyamıyorum [path]. İçeriği yapıştırır mısın veya yolu düzeltir misin?"
 
 **Doğrulama günlüğü:** Bir Yargıtay karar atfı doğrulandığında bir satır yaz:
-`~/.claude/plugins/config/claude-for-legal-law-firm/dispute-litigation/verification-log.md`:
+`~/.claude/plugins/config/claude-for-legal/dispute-litigation/verification-log.md`:
 `[GG.AA.YYYY] [karar adı/esas no] doğrulandı [isim] tarafından [kaynak] üzerinden — [verdict]`
 
 ---
@@ -262,7 +260,7 @@ Bu plugin için **matter workspaces ENABLED varsayılan** — çünkü litigatio
 **Cross-matter context:** **off (default — ZORUNLU)** — Müvekkil A'nın bilgisi Müvekkil B'nin dosyasına asla sızmaz (Av. K. m. 36).
 
 Skill aktif matter context'inde çalışır. Skill bu CLAUDE.md'yi (practice-level) + matter'ın `matter.md`'sini (dava-spesifik) okur. Çıktılar matter klasörüne yazılır:
-`~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
+`~/.claude/plugins/config/claude-for-legal/matters/<müvekkil-slug>__<matter-slug>/`
 
 Dosya açma: `/litigation-legal:case-intake`; büro kaydı: `/firm-operations:matter-open`. `litigation-legal` eklentisinde ayrı bir `matter-workspace` komutu yok; aktif dosya klasörü elle seçilir.
 

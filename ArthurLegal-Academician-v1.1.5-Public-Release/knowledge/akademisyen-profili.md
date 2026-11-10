@@ -85,7 +85,7 @@ Hangilerine **kurumsal aboneliğiniz** olduğunu işaretleyin:
 | iThenticate / Turnitin | `[DOLDUR]` | Benzerlik raporu |
 
 > Ücretsiz ve programatik olanlar (Crossref, OpenAlex, Semantic Scholar, DOAJ, ORCID,
-> EUR-Lex, HUDOC) ile bağlı MCP'ler (TR Legal, CourtListener, Fedlex, OpenCaseLaw.ch)
+> EUR-Lex, HUDOC) ile bağlı MCP'ler (ArthurLegal MCP, CourtListener, Fedlex, OpenCaseLaw.ch)
 > profil doldurulmasa da kullanılabilir.
 
 ## 8. Rol bayrakları (gizlilik açısından kritik)

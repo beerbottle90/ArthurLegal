@@ -24,10 +24,9 @@ description: >
 ```
 /arthurlegal:corporate-legal-tabular-review
 /arthurlegal:corporate-legal-tabular-review --schema .review-schema.yaml --docs ./vdr/02-Sozlesmeler/
-/arthurlegal:corporate-legal-tabular-review --template ma-diligence
 ```
 
-`--schema <yol>` mevcut şemayı kullanır (yeniden çalıştırma, ekleme). `--template <ad>` `references/` altındaki şablondan başlar (şimdilik `ma-diligence`). `--docs <yol>` yerel klasör, Drive klasör kimliği ya da VDR yolu; yoksa sorar. `--output <xlsx|gsheets|csv>` yoksa sorar. `--sample <n>` örnek boyutu (varsayılan 5).
+`--schema <yol>` mevcut şemayı kullanır (yeniden çalıştırma, ekleme). `--docs <yol>` yerel klasör, Drive klasör kimliği ya da VDR yolu; yoksa sorar. `--output <xlsx|gsheets|csv>` yoksa sorar. `--sample <n>` örnek boyutu (varsayılan 5).
 
 ## Matter bağlamı
 
@@ -208,7 +207,7 @@ CLAUDE.md `## Outputs`'taki sonraki adımlar karar ağacıyla bitir; dalları bu
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

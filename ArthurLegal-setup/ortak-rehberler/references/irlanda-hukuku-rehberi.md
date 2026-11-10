@@ -1,10 +1,10 @@
 # İrlanda Hukuku — Kullanım Rehberi (Irish Statute Book ELI yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **`ie-statutebook MCP`** → `references/ie-statutebook-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `ie_` araçları** (kurulumla gelir) → `references/ie-statutebook-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
-> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Bu dosya **WebFetch yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.
 > Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
 > **`(MCP kullanılmadı)`** kaydını düş.
 
@@ -60,7 +60,7 @@ Arama endpoint'i **yok** (`/search` ve `/searchresults.html` → 404). Sıralama
 1. `https://www.irishstatutebook.ie/eli/acts.html` ✅ — yıl bazlı dizin; kanun
    numarasını buradan bul, sonra ELI deseniyle in.
 2. **EUR-Lex CELLAR** (`lang:ENG`) — AB-türevli IE mevzuatı için.
-3. **LexScholar MCP** — IE/common law doktrini.
+3. **ArthurLegal MCP `scholar_` araçları** — IE/common law doktrini.
 4. **CourtListener'a güvenme** — o ABD içtihadıdır, İrlanda değil. IE içtihadı için
    `courts.ie` (manuel) veya BAILII.
 

@@ -14,8 +14,8 @@
 - **Vergi incelemesi (m. 134-141):** Maliye denetimi
 - **Ek m. 1 — Tarhiyat sonrası uzlaşma**
 - **Ek m. 11 — Tarhiyat öncesi uzlaşma**
-- **m. 369 — Mukteza (özelge):** GİB görüşü
-- **m. 376 — Pişmanlık** (kendi beyan)
+- **m. 413 — Özelge (mükelleflerin izahat talebi):** GİB görüşü; m. 369 (yanılma ve görüş değişikliği): yazılı yanlış izahatta ceza ve gecikme faizi yok
+- **m. 371 — Pişmanlık ve ıslah** (kendiliğinden bildirim); m. 376: cezalarda indirme
 
 ## Litigation için kritik
 

@@ -240,7 +240,7 @@ bağımlılıksız (yalnız Python stdlib) bir MCP sunucusuyla sarıyorlar. Kal�
   mcp-streamable-1.0` muadili; claude.ai için düz Streamable HTTP yeterli)
 - **Auth:** yok (upstream public olduğu için)
 - **Port:** her sunucu kendi portunda; bu kaynak için önerilen **`8040`**.
-  Aynı porta ikinci sunucu başlatmak açıkça hata verir. Mevcut on sunucu artık
+  Aynı porta ikinci sunucu başlatmak açıkça hata verir. Mevcut sunucular artık
   tek bir toplayıcının (`arthurlegal-mcp`) içinde süreç içi yükleniyor, ayrı
   portlarda değil.
 - **Araç adları:** yukarıdaki yüzeyi birebir yansıt; **jenerik ad kullanma**.
@@ -263,7 +263,7 @@ Referans uygulamalar: `github.com/beerbottle90/arthurlegal-mcp/tree/master/eqanu
 
 > ⚠️ Geçici tünel (`*.trycloudflare.com`) kullanma: adres **her yeniden
 > başlatmada değişir** ve connector sessizce kırılır — tanım doğru görünür,
-> çağrılar düşer. Bu ekosistemde bir kez yaşandı; on sunucu bu yüzden kalıcı
+> çağrılar düşer. Bu ekosistemde bir kez yaşandı; sunucular bu yüzden kalıcı
 > adresli tek bir deploy'a taşındı (`https://arthurlegal-mcp.fly.dev/mcp`).
 
 **Sarmadan da çalışır.** Connector zorunlu değildir; yukarıdaki `WebFetch`

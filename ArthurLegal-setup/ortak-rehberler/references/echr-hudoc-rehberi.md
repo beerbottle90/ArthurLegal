@@ -8,8 +8,9 @@
 > Birincil yargı çevresi Türkiye'dir; bu kaynak yalnızca işin **AİHS boyutu**
 > olduğunda kullanılır (bireysel başvuru, AYM sonrası Strasbourg aşaması,
 > AİHS standardıyla karşılaştırma — bkz. `karsilastirmali-hukuk-rehberi.md`).
-> AİHM'in **Türkçe çevirili** kararları için birinci durak yargi-mcp'nin
-> `aihm_ictihat_ara` aracıdır; bu rehber **tam korpusa doğrudan** erişimi tanımlar.
+> AİHM'in **Türkçe çevirili** kararları için isteğe bağlı TR Legal MCP kuruluysa
+> `aihm_ictihat_ara` aracı kullanılır (ArthurLegal MCP'de AİHM yoktur); kurulu değilse doğrudan
+> bu rehberdeki HUDOC yolu izlenir. Bu rehber **tam korpusa doğrudan** erişimi tanımlar.
 
 ---
 
@@ -31,7 +32,7 @@ PyPI son sürüm 1.3.1 — 07.07.2026).
 - Kimlik doğrulama yok; `pip install echr-extractor` yeterli
 
 **ArthurLegal için neden gerekli?** Türkiye AİHS tarafıdır ve AİHM içtihadı,
-AY m.90/5 üzerinden iç hukuk yorumunda doğrudan devreye girer. yargi-mcp'nin
+AY m.90/5 üzerinden iç hukuk yorumunda doğrudan devreye girer. İsteğe bağlı TR Legal MCP'nin
 `aihm_ictihat_ara` aracı Türkçe çevirili alt kümeyi tarar; Türkçeye çevrilmemiş
 kararlar (korpusun büyük çoğunluğu), yeni tarihli Daire kararları ve atıf-ağı
 bağlamı ancak HUDOC'un tamamından gelir. echr-extractor bu tam korpusu belge
@@ -191,7 +192,7 @@ PyPI sürümü ve ECHR-OD build durumu.
 
 | Rehber | İlişki |
 |---|---|
-| `yargi-mcp-rehberi.md` | AİHM Türkçe kararları (`aihm_ictihat_ara`) + AYM içtihadı — birinci durak |
+| `yargi-mcp-rehberi.md` | AYM içtihadı (`tr_aym_ara`); AİHM bu connector'da yok, Türkçe çeviriler isteğe bağlı TR Legal MCP `aihm_ictihat_ara` ile |
 | `eu-legislation-rehberi.md` | AB hukuku ayağı; AİHS/AB temel haklar kesişimi |
 | `karsilastirmali-hukuk-rehberi.md` | Yabancı/uluslararası kaynakların ne zaman devreye gireceği |
 

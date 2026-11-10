@@ -51,9 +51,9 @@ Adli tatil 20 Temmuz'da başlar, 31 Ağustos'ta biter; yeni adli yıl 1 Eylül'd
 
 | Tarih | Ne olur | Kaynak |
 |---|---|---|
-| 30.09.2026 | CMK m. 231/5-14 hakkındaki AYM iptal kararı (10.07.2025, E. 2024/98, K. 2025/149) yürürlüğe girer; aynı fıkralar 7589 s.K. ile 31.07.2026'da yeniden düzenlenmiştir | CMK m. 231 dipnotu |
-| 20.10.2026 | HMK m. 362/1-a'nın kamulaştırma bedelinin tespiti davaları yönünden iptali (AYM 08.10.2025, E. 2025/124, K. 2025/203) yürürlüğe girer | HMK m. 362 dipnotu |
-| 31.10.2026 | 7589 s.K.'nın HMK m. 149'a eklediği fıkra ile TMK m. 440 ve 444 değişiklikleri yürürlüğe girer | HMK m. 149 dipnotu; 7589 s.K. m. 26 (RG 31.07.2026/33326) |
+| 30.09.2026 | CMK m. 231/5-14 hakkındaki AYM iptal kararı (10.07.2025, E. 2024/98, K. 2025/149) yürürlüğe girdi; aynı fıkralar 7589 s.K. ile 31.07.2026'da yeniden düzenlenmiştir | CMK m. 231 dipnotu |
+| 20.10.2026 | HMK m. 362/1-a'nın kamulaştırma bedelinin tespiti davaları yönünden iptali (AYM 08.10.2025, E. 2025/124, K. 2025/203) yürürlüğe girdi | HMK m. 362 dipnotu |
+| 31.10.2026 | 7589 s.K.'nın HMK m. 149'a eklediği fıkra ile TMK m. 440 ve 444 değişiklikleri yürürlüğe girdi | HMK m. 149 dipnotu; 7589 s.K. m. 26 (RG 31.07.2026/33326) |
 | 16.04.2027 | CMK m. 226/4 üçüncü cümlesine ilişkin AYM iptal kararı (26.03.2026, E. 2025/18, K. 2026/66) yürürlüğe girer | CMK m. 226 dipnotu |
 | belirsiz | HMK m. 362/1-a'nın "istinaf başvurusunun kısmen veya tümden kabulü hâli" yönünden iptali (AYM 26.02.2026, E. 2026/49, K. 2026/48) ve İYUK m. 45/6 birinci cümlesinin aynı yönden iptali (AYM 27.03.2025, E. 2024/189, K. 2025/83): dipnotta yürürlük tarihi yok | `UYARI: veri çekilemedi, teyidiniz gerekli: https://normkararlarbilgibankasi.anayasa.gov.tr/` |
 

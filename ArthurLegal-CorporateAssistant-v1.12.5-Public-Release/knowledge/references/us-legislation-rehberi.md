@@ -1,7 +1,7 @@
-﻿# US Legislation (GovInfo WebFetch) — Kullanım Rehberi
+﻿# US Legislation (GovInfo MCP + WebFetch) — Kullanım Rehberi
 
-> **Resmi MCP server VAR** — *GovInfo WebFetch*, ABD Government Publishing Office (GPO)
-> tarafından işletilir. Ocak 2026'dan beri **public preview**. Bu rehber hem MCP
+> **Resmi MCP server VAR** — *GovInfo MCP* (`https://api.govinfo.gov/mcp`; araçlar `searchGovInfo`,
+> `describePackageOrGranule`), ABD Government Publishing Office (GPO) tarafından işletilir. Ocak 2026'dan beri **public preview**. Bu rehber hem MCP
 > hem WebFetch fallback prosedürünü tanımlar.
 >
 > **Durum:** ✅ Aktif. **api.data.gov API anahtarı gerekir** (ücretsiz).
@@ -38,14 +38,14 @@ mevzuatın, yönetmeliğin ve kongre belgelerinin otantik (dijital imzalı) kayn
 
 ---
 
-## Bağlantı — Claude Code (.mcp.json)
+## Bağlantı — Claude Code
 
-İlgili plugin'lerin `.mcp.json` dosyasında GovInfo connector'ı tanımlıdır:
+Paketlerde hazır `.mcp.json` yoktur; GovInfo MCP elle eklenir (GPO belgesindeki yapı):
 
 ```jsonc
 "GovInfo": {
   "type": "http",
-  "url": "https://api.govinfo.gov",
+  "url": "https://api.govinfo.gov/mcp",
   "headers": { "x-api-key": "${GOVINFO_API_KEY}" }
 }
 ```
@@ -54,7 +54,7 @@ mevzuatın, yönetmeliğin ve kongre belgelerinin otantik (dijital imzalı) kayn
 - `~/.claude/settings.local.json` → `env` bölümü, **veya**
 - OS ortam değişkeni `GOVINFO_API_KEY`
 
-Anahtar **`.mcp.json`'a, `CLAUDE.md`'ye veya `SYSTEM_PROMPT.md`'ye yazılmaz.**
+Anahtar **yapılandırma dosyasına açık metin olarak, `CLAUDE.md`'ye veya `SYSTEM_PROMPT.md`'ye yazılmaz.**
 
 ## Bağlantı — Claude.ai Projects (WebFetch fallback)
 
@@ -85,7 +85,7 @@ GET https://api.govinfo.gov/packages/{packageId}/summary?api_key={GOVINFO_API_KE
 ## Kullanım kalıbı (Claude)
 
 1. Hangi koleksiyon? (statü → `USCODE`, yönetmelik → `CFR`, güncel kural → `FR`).
-2. GovInfo WebFetch ile `api.govinfo.gov`.
+2. GovInfo MCP (kuruluysa) ya da WebFetch ile `api.govinfo.gov`.
 3. Sonucu **otantik GPO metni** olarak işle; package/granule ID'sini not al.
 4. Çıktıda atıf etiketi koy.
 
@@ -114,7 +114,7 @@ kararları için `courtlistener-rehberi.md`.
 
 ## Sınırlamalar
 
-- **Public preview** — GovInfo WebFetch geliştirme aşamasında; araç şeması
+- **Public preview** — GovInfo MCP geliştirme aşamasında; araç şeması
   değişebilir. Sorun olursa WebFetch fallback'e geç.
 - **api.data.gov kota** — anahtar başına saatlik istek limiti var; toplu işte
   dikkat.
@@ -140,7 +140,7 @@ kararları için `courtlistener-rehberi.md`.
 ## Versiyon disiplini
 
 - Bu rehber **v1.6.0** (*Cross-Border Connectors*) ile eklendi.
-- GovInfo WebFetch public preview olduğundan, araç adları/şeması için GPO'nun resmi
+- GovInfo MCP public preview olduğundan, araç adları/şeması için GPO'nun resmi
   deposu teyit edilir: `https://github.com/usgpo/api` (`docs/mcp.md`).
 
 ---

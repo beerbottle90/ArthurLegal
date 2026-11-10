@@ -167,7 +167,8 @@ Danıştay bozdu, dosya BİM'e gönderildi. İki seçenek:
 ```
 # Daire bazlı temyiz emsali
 tr_ictihat_ara(
-  chamber="<daire kodu, ör. H9, C12, D13, HGK, IDDK>",
+  courts=["DANISTAYKARAR"],
+  chamber="<Danıştay daire kodu, ör. D13, IDDK; iş bölümü değişir, emin değilsen boş bırak>",
   query="<konu>",
   date_from="2022-01-01"
 )
@@ -235,7 +236,7 @@ tr_aym_ara(query="<konu> mülkiyet hakkı ihlali")
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
