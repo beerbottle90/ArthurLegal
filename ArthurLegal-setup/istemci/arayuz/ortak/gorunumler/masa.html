@@ -79,6 +79,8 @@ body { background: var(--zemin); }
 /* Üç simgeli seçenek 252 px'lik panele sığsın; daha geniş bir yazı tipinde yazı taşmaz, kısalır. */
 .tema-secimi button { flex: 1 1 auto; min-width: 0; padding: 0 4px; gap: 4px; font-size: 12.5px; }
 .tema-secimi button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.segment.sar { flex-wrap: wrap; }
+.segment.sar button { flex: 1 1 auto; }
 .segment button[aria-pressed="true"] { background: var(--yuzey); box-shadow: var(--golge); font-weight: 600; }
 .surum { font-size: 12px; color: var(--soluk); padding: 0 6px; }
 
@@ -422,7 +424,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     { id: "ictihat", ad: "İçtihat", simge: "terazi", bolum: "Çalışma",
       baslik: "İçtihat", alt: "Yargıtay ve Danıştay kararlarını künyeleriyle bulun, metni kartın içinde açın." },
     { id: "hesap", ad: "Hesap kartları", simge: "hesap", bolum: "Çalışma",
-      baslik: "Hesap kartları", alt: "Vekâlet ücreti, yargı harcı ve gider avansı. Hesabı kod yapar; her kalem dayanağı ve Resmî Gazete kaynağıyla gelir." },
+      baslik: "Hesap kartları", alt: "Vekâlet ücreti, yargı harcı ve gider avansı, faiz dökümü, kıdem ve ihbar tazminatı. Hesabı kod yapar; her kalem dayanağı ve resmî kaynağıyla gelir." },
     { id: "gecmis", ad: "Geçmiş", simge: "saat", bolum: "Çalışma",
       baslik: "Geçmiş", alt: "Masada yaptığınız aramalar, getirdiğiniz maddeler ve kararlar, o günkü sonuçlarıyla. Yeniden çalıştırınca güncel hali gelir." },
     { id: "tapu", ad: "ArthurTapu", simge: "harita", bolum: "Modüller",
@@ -1191,7 +1193,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     arthurlegal_durum: "Kurulum durumu okunuyor", hafiza_baslangic: "Hafıza yükleniyor", hafiza_ara: "Hafızada aranıyor",
     hafiza_getir: "Hafıza notu okunuyor", hafiza_yaz: "Hafızaya yazılıyor", hafiza_oturum_karti: "Oturum kartı yazılıyor",
     hesap_kalemleri: "Hesap kartı açılıyor", hesap_vekalet_ucreti: "Asgari avukatlık ücreti hesaplanıyor",
-    hesap_yargi_harci: "Yargı harcı hesaplanıyor",
+    hesap_yargi_harci: "Yargı harcı hesaplanıyor", hesap_faiz: "Faiz dökümü hesaplanıyor",
+    hesap_iscilik_alacagi: "Kıdem ve ihbar tazminatı hesaplanıyor",
   };
   // Tutar yazımı (hesap kartları): sunucunun verdiği sayı, Türkçe biçimde; masa yuvarlamaz.
   const tlYaz = (x) => `${Number(x).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TL`;
@@ -1226,7 +1229,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const teyitsiz = tz.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : "";
       const durum = teyitsiz ? "uyar" : "tamam";
       if (typeof veri.asgari_tl === "number") return [durum, `asgari ücret ${tlYaz(veri.asgari_tl)}${teyitsiz}`];
-      if (typeof veri.toplam_tl === "number") return [durum, `toplam ${tlYaz(veri.toplam_tl)}${teyitsiz}`];
+      if (typeof veri.toplam_tl === "number") {
+        return [durum, `${String(veri.toplam_etiketi || "Toplam").toLocaleLowerCase("tr-TR")} ${tlYaz(veri.toplam_tl)}${teyitsiz}`];
+      }
     }
     if (Array.isArray(veri.items) && veri.items.length && "ok" in (veri.items[0] || {})) {
       const ok = veri.items.filter((i) => i && i.ok).length;
@@ -2031,10 +2036,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // ---- Hesap kartları ----
   // Hesabı sunucudaki kod yapar (hesap_ araçları, Resmî Gazete'deki tarife verisiyle); masa işlem seçtirir, yalnız o
   // işlemin istediği kutuları açar ve sonucu her kalemin dayanağıyla gösterir. Hangi işlemde hangi kutunun sorulduğu
-  // hesap_kalemleri'nden (veriden) gelir. Masa tutar hesaplamaz, toplamaz, yuvarlamaz.
+  // hesap_kalemleri'nden (veriden) gelir. Masa tutar hesaplamaz, toplamaz, yuvarlamaz. Faiz ve işçilik kartları, sunucu
+  // o araçları taşıyorsa görünür (eski sunucuda yalnız vekâlet ve harç).
   const HESAP_ARACLARI = ["hesap_kalemleri", "hesap_vekalet_ucreti", "hesap_yargi_harci"];
   const HESAP_KARTLARI = [["vekalet", "Vekâlet ücreti", "hesap_vekalet_ucreti"],
-    ["harc", "Yargı harcı ve gider avansı", "hesap_yargi_harci"]];
+    ["harc", "Harç ve gider avansı", "hesap_yargi_harci"], ["faiz", "Faiz", "hesap_faiz"],
+    ["iscilik", "İşçilik alacağı", "hesap_iscilik_alacagi"]];
+  const HESAP_ADIMI = { vekalet: "Asgari ücret tarifeden hesaplanıyor…", harc: "Harç tarifeden hesaplanıyor…",
+    faiz: "Faiz dönem dönem hesaplanıyor…", iscilik: "Kıdem ve ihbar tazminatı hesaplanıyor…" };
   let hesapMenusu = null;      // hesap_kalemleri cevabı, oturum boyunca
   let hesapKart = "vekalet";
   const hesapSecili = {};      // kart -> son seçilen işlem
@@ -2045,9 +2054,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         "ArthurLegal'in kendi bağlantısında (arthurlegal-mcp) hesaplanır; Claude'a sorarsanız aynı araçlarla hesaplatır."));
       return;
     }
-    const seg = ogesi("div", "segment");
-    seg.style.maxWidth = "520px";
-    for (const [id, yazi] of HESAP_KARTLARI) {
+    const kartlar = HESAP_KARTLARI.filter((k) => DURUM.yetenekler.has(k[2]));
+    if (!kartlar.some((k) => k[0] === hesapKart)) hesapKart = kartlar[0][0];
+    const seg = ogesi("div", "segment sar");
+    seg.style.maxWidth = "720px";
+    for (const [id, yazi] of kartlar) {
       const b = dugme(yazi);
       b.setAttribute("aria-pressed", String(hesapKart === id));
       b.onclick = () => { hesapKart = id; const e = $("ekran"); e.replaceChildren(); CIZIM.hesap(e); };
@@ -2065,6 +2076,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   };
 
   function hesapFormu(govde) {
+    if (!hesapMenusu[hesapKart]) hesapKart = "vekalet";
     const kart = hesapMenusu[hesapKart];
     const arac = HESAP_KARTLARI.find((k) => k[0] === hesapKart)[2];
     const islemler = kart.islemler || [];
@@ -2086,7 +2098,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const ey = ogesi("div", "eylemler sol");
     ey.append(hesapla);
     const kaynak = hesapKart === "vekalet" ? [kart.kaynak] : (kart.kaynaklar || []);
-    const not = kaynak.filter((k) => k && k.rg).map((k) => `${k.ad}, ${k.rg}`).join(" · ");
+    const not = kaynak.filter((k) => k && (k.rg || k.ad)).map((k) => (k.rg ? `${k.ad}, ${k.rg}` : k.ad)).join(" · ");
     const ust = ogesi("div", "satir");
     ust.append(alan("İşlem", secim));
     form.append(ust, kutular, ey);
@@ -2113,7 +2125,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         }
         girdi[ad] = v;
       }
-      const s = adimlar.ekle(hesapKart === "vekalet" ? "Asgari ücret tarifeden hesaplanıyor…" : "Harç tarifeden hesaplanıyor…");
+      const s = adimlar.ekle(HESAP_ADIMI[hesapKart] || "Hesaplanıyor…");
       hesapla.disabled = true;
       try {
         const { veri, hata } = await cagir(app, arac, girdi);
@@ -2123,7 +2135,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         const h = kilitli ? (veri.teyit_bekleyen_tutarlar || {}) : veri;
         const teyitsiz = tz.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : "";
         const ozet = kilitli ? "Resmî Gazete'de yeni düzenleme var; toplam gösterilmiyor"
-          : (hesapKart === "vekalet" ? `Asgari ücret: ${tlYaz(veri.asgari_tl)}` : `Toplam: ${tlYaz(veri.toplam_tl)}`) + teyitsiz;
+          : (hesapKart === "vekalet" ? `Asgari ücret: ${tlYaz(veri.asgari_tl)}`
+            : `${veri.toplam_etiketi || "Toplam"}: ${tlYaz(veri.toplam_tl)}`) + teyitsiz;
         if (kilitli || teyitsiz) s.uyar(ozet); else s.tamam(ozet);
         for (const o of ustKutu) o.remove();
         sonuc.append(hesapSonucu(veri));
@@ -2198,11 +2211,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         kok.append(l);
         deger = () => el.checked;
       } else {
-        el = girdi(g.tur === "sayi" ? "number" : "text", g.tur !== "tutar" ? "" : g.zorunlu || g.ad === "deger" ? "örn. 1.250.000" : "TL",
+        // tutar, sayi, oran (yüzde) ya da tarih (YYYY-AA-GG; sunucu GG.AA.YYYY de kabul eder).
+        const yer = g.tur === "oran" ? "örn. 36" : g.tur !== "tutar" ? "" : g.zorunlu || g.ad === "deger" ? "örn. 1.250.000" : "TL";
+        el = girdi(g.tur === "sayi" ? "number" : g.tur === "tarih" ? "date" : "text", yer,
           g.varsayilan != null ? String(g.varsayilan) : "");
-        if (g.tur === "sayi") { el.min = "1"; el.step = "1"; } else el.inputMode = "decimal";
+        if (g.tur === "sayi") { el.min = "1"; el.step = "1"; } else if (g.tur !== "tarih") el.inputMode = "decimal";
         deger = () => el.value.trim();
-        kok = alan(g.etiket + (g.zorunlu ? "" : " (isteğe bağlı)"), el, g.tur === "sayi" ? "alan dar" : "alan");
+        kok = alan(g.etiket + (g.zorunlu ? "" : " (isteğe bağlı)"), el, ["sayi", "oran"].includes(g.tur) ? "alan dar" : "alan");
       }
       el.addEventListener("input", guncelle);
       el.addEventListener("change", guncelle);
@@ -2308,7 +2323,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     } else {
       const ust = ogesi("div", "hesap-toplam");
       const teyitsiz = !!t && t.durum === "kontrol_edilemedi";
-      ust.append(ogesi("span", "etiket", (vekalet ? "Asgari avukatlık ücreti" : "Toplam") + (teyitsiz ? " (teyit edilmedi)" : "")),
+      ust.append(ogesi("span", "etiket", (vekalet ? "Asgari avukatlık ücreti" : (h.toplam_etiketi || "Toplam")) +
+        (teyitsiz ? " (teyit edilmedi)" : "")),
         ogesi("b", "hesap-tutar", tlYaz(vekalet ? h.asgari_tl : h.toplam_tl)));
       kap.append(ust, ...tazelikOgeleri(t));
     }
@@ -2370,10 +2386,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const s = [];
     if (t && t.uyari) s.push(t.uyari);
     if (kilitli) s.push("Teyit bekleyen hesap (kesin değil):");
-    else s.push(`${vekalet ? "Asgari avukatlık ücreti" : "Toplam"}: ${tlYaz(vekalet ? h.asgari_tl : h.toplam_tl)}` +
+    else s.push(`${vekalet ? "Asgari avukatlık ücreti" : (h.toplam_etiketi || "Toplam")}: ${tlYaz(vekalet ? h.asgari_tl : h.toplam_tl)}` +
       (t && t.durum === "kontrol_edilemedi" ? " (teyit edilmedi)" : ""));
     for (const k of h.kalemler || []) s.push(`- ${k.kalem}: ${tlYaz(k.tutar_tl)} (${k.dayanak})`);
-    for (const x of h.hesap || []) s.push(`  ${x}`);
+    for (const x of Array.isArray(h.hesap) ? h.hesap : []) s.push(`  ${x}`);
+    for (const n of h.notlar || []) s.push(n);
     for (const a of h.ayrica || []) s.push(`Toplama katılmayan: ${a.kalem}: ${tlYaz(a.tutar_tl)}. ${a.teyit || ""}`.trim());
     for (const k of h.kaynak ? [h.kaynak] : (h.kaynaklar || [])) if (k && k.url) s.push(`Kaynak: ${k.ad}, ${k.rg || ""} ${k.url}`);
     if (vekalet && h.asgari_notu && h.asgari_notu.metin) s.push(h.asgari_notu.metin);

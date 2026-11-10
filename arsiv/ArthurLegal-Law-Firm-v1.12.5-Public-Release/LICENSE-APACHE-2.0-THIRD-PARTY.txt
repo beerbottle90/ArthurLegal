@@ -1,0 +1,37 @@
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+Copyright 2026 ArthurLegal Claude Law Firm Assistant contributors
+(Author: Claude / Anthropic, Opus 4.7 — Designer: Ertuğ Demir —
+ Knowledge base: Anthropic claude-for-legal, https://github.com/anthropics/claude-for-legal)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+---
+
+DISCLAIMER
+
+Bu paket bir Türk hukuku odaklı, danışman tarafı (hukuk bürosu) asistan
+ŞABLONUDUR. Çıktıları HUKUKİ TAVSİYE DEĞİLDİR; baroya kayıtlı bir avukat
+(atanan ortak / Yönetici Ortak) tarafından incelenmeden müvekkile veya
+mahkemeye sunulmamalıdır. Mesleki sorumluluk yine avukatındır.
+
+Mevzuat ve içtihat değişebilir; en güncel kaynak için UYAP / Lexpera /
+Resmi Gazete manuel doğrulaması tavsiye edilir.
+
+Conflict check otomasyonu Av. K. m. 38'in yasaklılık nüanslarını TAM olarak
+yakalayamaz; otomatik tarama eşik filter görevi görür — insan yargısı şarttır.
+
+Müvekkil verilerinin Av. K. m. 36 mesleki sır + KVKK m. 12 koruması
+altında tutulması paketten BAĞIMSIZ olarak büronun yükümlülüğüdür.

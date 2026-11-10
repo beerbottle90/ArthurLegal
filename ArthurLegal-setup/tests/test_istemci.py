@@ -1320,7 +1320,65 @@ class ModulTesti(unittest.TestCase):
             masa = self.calistir(t, "import kur; print(json.dumps(sorted(y.name for y, *_ in kur._kisayol_listesi() "
                                     "if y.parent == kur._masaustu())))")
             self.assertEqual(masa, ["ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Tapu 0.0.1.lnk"],
-                             "ArthurMask simgesini ArthurMask'in kendi kurulumu koyar")
+                             "ArthurMask simgesi listede değildir: kendi kısayolundan kopyalanır (mask_kisayolu_esitle)")
+
+    MASK_KOD = ("import ortak; ortak.mask_surumu = lambda: {surum!r}; import kur; "
+                "once = kur.mask_kisayolu_eski_mi(); kur.mask_kisayolu_esitle(); "
+                "print(json.dumps([once, kur.mask_kisayolu_eski_mi()]))")
+
+    @SADECE_WINDOWS
+    def test_arthurmask_masaustu_simgesi_bitisik_ve_surumlu(self):
+        """Kullanıcının istediği (10.11.2026): masaüstündeki ArthurMask simgesi bitişik yazılır ve öteki simgeler gibi
+        sürüm taşır. Simgeyi ArthurMask'in kendi kurulumu sürümsüz koyar (1.1.2 ve öncesi ayrı yazılmış adla); bu
+        kurulum adını "ArthurMask <sürüm>" yapar, içeriğine dokunmaz."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "adliye")
+            masa, menu = t / "ev" / "Desktop", t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs"
+            mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
+            for klasor in (masa, menu, mask):
+                klasor.mkdir(parents=True, exist_ok=True)
+            adlar = lambda k: sorted(p.name for p in k.glob("*Mask*"))  # noqa: E731
+
+            # ArthurMask kurulu değil: dokunulacak bir şey yok.
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum=None)), [False, False])
+            self.assertEqual(adlar(masa), [])
+
+            # ArthurMask 1.1.2: eski adlı kısayollar (kendi kurulumundan).
+            (mask / "python.exe").write_bytes(b"")
+            (masa / "Arthur Mask.lnk").write_bytes(b"eski-masa")
+            (menu / "Arthur Mask.lnk").write_bytes(b"eski-menu")
+            (menu / "Arthur Mask Kullanım Notları.lnk").write_bytes(b"notlar")
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum="1.1.2")), [True, False])
+            self.assertEqual(adlar(masa), ["ArthurMask 1.1.2.lnk"])
+            self.assertEqual((masa / "ArthurMask 1.1.2.lnk").read_bytes(), b"eski-menu", "içerik ArthurMask'in kısayolu")
+            self.assertEqual(adlar(menu), ["ArthurMask Kullanım Notları.lnk", "ArthurMask.lnk"])
+
+            # ArthurMask 1.2.0'a güncellendi: kurulumu sürümsüz simgeyi yeniden koyar.
+            (masa / "ArthurMask.lnk").write_bytes(b"yeni-masa")
+            (menu / "ArthurMask.lnk").write_bytes(b"yeni-menu")
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum="1.2.0")), [True, False])
+            self.assertEqual(adlar(masa), ["ArthurMask 1.2.0.lnk"])
+            self.assertEqual((masa / "ArthurMask 1.2.0.lnk").read_bytes(), b"yeni-menu")
+
+            # Kullanıcı simgeyi sildi ve ArthurMask bu kurulumda seçilmedi: yeniden eklenmez.
+            (masa / "ArthurMask 1.2.0.lnk").unlink()
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum="1.2.0")), [False, False])
+            self.assertEqual(adlar(masa), [])
+            # Seçildiyse kurulum simgeyi koyar.
+            secim_yaz(t / "kok", "adliye", "mask")
+            self.calistir(t, self.MASK_KOD.format(surum="1.2.0"))
+            self.assertEqual(adlar(masa), ["ArthurMask 1.2.0.lnk"])
+
+            # Sürüm okunamadı: sürümsüz ama bitişik ad.
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum="0.0.0")), [True, False])
+            self.assertEqual(adlar(masa), ["ArthurMask.lnk"])
+
+            # ArthurMask kaldırıldı: bizim yazdığımız sürümlü simge artık kalmaz.
+            (masa / "ArthurMask.lnk").rename(masa / "ArthurMask 1.2.0.lnk")
+            (mask / "python.exe").unlink()
+            self.assertEqual(self.calistir(t, self.MASK_KOD.format(surum=None)), [True, False])
+            self.assertEqual(adlar(masa), [])
 
     @SADECE_WINDOWS
     def test_paket_simgeleri_ve_secimden_cikan_temizlenir(self):
@@ -1667,7 +1725,8 @@ class MacKurulumTesti(unittest.TestCase):
             self.kok(t, "adliye", "tapu", "mask")
             py = ((t / "kok").resolve() / "runtime" / "bin" / "python3").as_posix()
             liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
-            liste.pop("Desktop/ArthurMask.app", None)  # bu Mac'te /Applications'ta kurulu bir ArthurMask varsa
+            for anahtar in [a for a in liste if a.startswith("Desktop/ArthurMask")]:
+                liste.pop(anahtar)  # bu Mac'te /Applications'ta kurulu bir ArthurMask varsa (takma adı sürümlüdür)
             self.assertEqual(sorted(y for y in liste if not y.startswith("Applications/ArthurLegal/")),
                              ["Applications/ArthurLegal Courthouse.app", "Applications/ArthurLegal Tapu.app",
                               "Desktop/ArthurLegal Courthouse 0.0.1.app", "Desktop/ArthurLegal Tapu 0.0.1.app"],
@@ -1691,6 +1750,12 @@ class MacKurulumTesti(unittest.TestCase):
             (mask / "python3").write_bytes(b"")
             liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
             self.assertTrue(liste["Desktop/ArthurMask.app"][0].endswith("Applications/ArthurMask.app"))
+            # Sürümü okunan ArthurMask'in takma adı öteki simgeler gibi sürüm taşır.
+            import plistlib
+            (mask.parents[2] / "Info.plist").write_bytes(plistlib.dumps({"CFBundleShortVersionString": "1.2.0"}))
+            liste = {y: (h, a) for y, h, a in self.calistir(t, self.LISTE)}
+            self.assertNotIn("Desktop/ArthurMask.app", liste)
+            self.assertTrue(liste["Desktop/ArthurMask 1.2.0.app"][0].endswith("Applications/ArthurMask.app"))
             secim_yaz(t / "kok", "adliye", "tapu")
             self.assertNotIn("Desktop/ArthurMask.app", [y for y, *_ in self.calistir(t, self.LISTE)], "Mask seçilmedi")
             # Ana simge (Hukuk Bürosu), İngilizce adlar; seçilmeyen Tapu ve Courthouse yok.

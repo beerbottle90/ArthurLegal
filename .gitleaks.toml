@@ -16,3 +16,11 @@ description = "Bir anahtar sözcüğünün yakınında 32 haneli hex (önek taş
 regex = '''(?i)(?:apikey|api[_ -]?key|anahtar|\bkey\b|token|secret|authorization)[^\n]{0,80}?\b([0-9a-f]{32})\b'''
 secretGroup = 1
 keywords = ["key", "anahtar", "token", "secret", "authorization"]
+
+# İstisna: AB konsolide yaptırım listesinin (FSF) herkese açık indirme adresi. Adresteki `token` parçası bir sır
+# değildir: AB'nin belgelerinde ve herkese açık bağlantılarında aynı sabit değer durur (base64 çözümü "token-2017").
+# Yalnız bu adresi taşıyan satır muaftır; başka adresler ve öteki satırlar taranmaya devam eder.
+[[allowlists]]
+description = "AB yaptırım listesi (FSF) herkese açık indirme adresi"
+regexTarget = "line"
+regexes = ['''webgate\.ec\.europa\.eu/fsd/fsf/public/files/[A-Za-z0-9_]+/content\?token=dG9rZW4tMjAxNw\b''']

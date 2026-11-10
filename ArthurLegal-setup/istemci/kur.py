@@ -215,7 +215,9 @@ def _mac_kisayol_listesi() -> list:
               for dosya, _, aciklama in simgeler]
     mask = ortak.mask_uygulamasi()
     if mask and "mask" in secili:
-        liste.append((mac.masaustu() / mask.name, mask, "", "ArthurMask"))
+        # Takma adın adı uygulamanın adından değil buradan gelir: eski adlı uygulamada da bitişik yazılır ve öteki
+        # simgeler gibi sürüm taşır (ArthurMask'in kendi sürümü; okunamadıysa sürümsüz).
+        liste.append((mac.masaustu() / (Path(_mask_masa_adi()).stem + ".app"), mask, "", "ArthurMask"))
     acici = Path("/usr/bin/open")
     liste += [
         (menu / f"{m['rehber']}.app", acici, shlex.quote(str(ortak.rehber_dosyasi())), m["rehber_aciklama"]),
@@ -226,6 +228,78 @@ def _mac_kisayol_listesi() -> list:
     if ortak.hafiza_acik():
         liste.append((menu / f"{m['hafiza']}.app", acici, shlex.quote(str(hafiza.kasa())), m["hafiza_aciklama"]))
     return liste
+
+
+# ArthurMask'in masaüstü simgesi. Windows'ta simgeyi ArthurMask'in kendi kurulumu koyar: sürümsüz ("ArthurMask"),
+# 1.1.2 ve öncesinde ayrı yazılmış eski adla. Bu kurulum onu öteki simgeler gibi adlandırır: "ArthurMask <sürüm>"
+# (ArthurMask'in kendi sürümü). Kısayolun içeriğine dokunulmaz: hedef ve simge ArthurMask'in kısayolundan kopyalanır,
+# yalnız ad değişir. Başlat menüsündeki eski adlı kısayollar da yeni ada çevrilir.
+MASK_KURULUM_ADLARI = ("Arthur Mask.lnk", "ArthurMask.lnk")  # ArthurMask kurulumunun koyduğu (eski ad, yeni ad)
+MASK_MENU_ESKI_ADLARI = (("Arthur Mask.lnk", "ArthurMask.lnk"),
+                         ("Arthur Mask Kullanım Notları.lnk", "ArthurMask Kullanım Notları.lnk"))
+
+
+def _mask_masa_adi() -> str:
+    """Masaüstü simgesinin adı: "ArthurMask <sürüm>.lnk"; sürüm okunamadıysa sürümsüz."""
+    s = ortak.mask_surumu()
+    return f"ArthurMask {s}.lnk" if s and s != "0.0.0" else "ArthurMask.lnk"
+
+
+def _mask_masa_kisayollari() -> list:
+    """Masaüstündeki ArthurMask kısayolları, hangi adla olursa olsun (eski ad, sürümsüz, sürümlü)."""
+    masa = _masaustu()
+    if not masa.is_dir():
+        return []
+    return sorted({y for desen in (*MASK_KURULUM_ADLARI, "ArthurMask [0-9]*.lnk") for y in masa.glob(desen)})
+
+
+def mask_kisayolu_eski_mi() -> bool:
+    """Masaüstündeki ArthurMask simgesi beklenen addan başka bir ad mı taşıyor (eski ad, sürümsüz, önceki sürüm)?
+    Kullanıcının sildiği simge eksik sayılmaz. ArthurMask kaldırıldıysa bizim yazdığımız sürümlü simge artıktır."""
+    if ortak.MAC:
+        return False
+    mevcut = _mask_masa_kisayollari()
+    if not ortak.mask_python():
+        return any(y.name not in MASK_KURULUM_ADLARI for y in mevcut)
+    beklenen = _mask_masa_adi()
+    return any(y.name != beklenen for y in mevcut) or any((_programlar() / e).exists() for e, _ in MASK_MENU_ESKI_ADLARI)
+
+
+def mask_kisayolu_esitle() -> None:
+    """Windows: masaüstündeki ArthurMask simgesini "ArthurMask <sürüm>" yapar, eski adlıları siler; Başlat
+    menüsündeki eski adı yeni ada çevirir. Masaüstünde hiç simge yoksa yalnız ArthurMask bu kurulumda seçildiyse
+    ekler. ArthurMask kaldırıldıysa bizim yazdığımız sürümlü simgeyi siler."""
+    if ortak.MAC:
+        return
+    masa, programlar = _masaustu(), _programlar()
+    mevcut = _mask_masa_kisayollari()
+    try:
+        if not ortak.mask_python():
+            for y in mevcut:
+                if y.name not in MASK_KURULUM_ADLARI:
+                    y.unlink(missing_ok=True)
+            return
+        for eski, yeni in MASK_MENU_ESKI_ADLARI:
+            e, y = programlar / eski, programlar / yeni
+            if e.exists():
+                if y.exists():
+                    e.unlink()
+                else:
+                    e.rename(y)
+        if not mevcut and "mask" not in ortak.moduller():
+            return
+        hedef = masa / _mask_masa_adi()
+        # Kaynak önce Başlat menüsündeki kısayol: ArthurMask her kurulumunda onu yeniden yazar.
+        kaynak = next((p for p in (programlar / "ArthurMask.lnk", *mevcut) if p.exists()), None)
+        if kaynak is None:
+            return
+        if kaynak != hedef:
+            shutil.copy2(kaynak, hedef)
+        for y in mevcut:
+            if y.name != hedef.name:
+                y.unlink(missing_ok=True)
+    except OSError as e:
+        ortak.gunluk("kurulum", f"ArthurMask kısayolu eşitlenemedi: {e!r}")
 
 
 def eski_surumlu_kisayol_var() -> bool:
@@ -240,7 +314,7 @@ def eski_surumlu_kisayol_var() -> bool:
             for y in klasor.glob(desen):
                 if y.suffix.lower() == ".lnk" and y.name != kaldir and not y.stem.endswith(" " + s):
                     return True
-    return False
+    return mask_kisayolu_eski_mi()
 
 
 # Kurulum betiğindeki AppId (kurulum/ArthurLegal.iss) ile aynı olmalı; test karşılaştırır.
@@ -338,6 +412,7 @@ def kisayollar_yaz() -> None:
         _kisayol_cmd_yedegi()
     kalacak = {y for y, *_ in _kisayol_listesi()} | {menu / (_kaldir_adi(ortak.urun_adi()) + ".lnk")}
     eski_kisayollari_temizle(menu, kalacak)
+    mask_kisayolu_esitle()
     kok = "%LOCALAPPDATA%\\Programs\\ArthurLegal"
     (ortak.KOK / "KALDIR.cmd").write_text(
         "@echo off\r\nchcp 65001 >nul\r\n"

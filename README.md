@@ -15,9 +15,9 @@
   <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><img src="docs/rehber/kapak.png" width="300" alt="ArthurLegal Kullanıcı Rehberi, kapak sayfası · ArthurLegal user guide, cover page"></a>
 </p>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 9 sayfa, Türkçe)</b></a><br>
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 10 sayfa, Türkçe)</b></a><br>
   ArthurLegal nedir, kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 9 pages, in Turkish)</a>
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 10 pages, in Turkish)</a>
 </p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
@@ -64,7 +64,7 @@ gelmez. En az bir paket gerekir:
 |---|---|
 | **Hukuk Bürosu** | Avukatlar ve hukuk büroları |
 | **Kurumsal Asistan** | Şirket hukuk birimleri |
-| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.4-Public-Release/)) |
+| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.5-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
 | **ArthurMask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
@@ -252,7 +252,7 @@ short description under it, and nothing is ticked on a first installation. At le
 |---|---|
 | **Law Firm** | Lawyers and law firms |
 | **Corporate Assistant** | In-house legal teams |
-| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.4-Public-Release/), in Turkish) |
+| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.5-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
 | **ArthurMask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
@@ -393,7 +393,7 @@ Link to share this section: **https://github.com/beerbottle90/ArthurLegal#downlo
 
 **Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
 olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
-Geçmiş, ArthurTapu, Beyin (Hafıza), ArthurMask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
+Hesap kartları, Geçmiş, ArthurTapu, Beyin (Hafıza), ArthurMask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
 Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araştırma ve cevap masada canlı görünür. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
 
 - **Soru, her adım ve cevap masada canlı.** Claude'un yazma kutusuna yazdığınız soru hemen masanın Sohbet ekranına
@@ -411,6 +411,10 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
 - **Taslaktaki atıfları tek seferde teyit.** Dilekçe ya da sözleşme metnini yapıştırın: içindeki madde atıfları
   (`TBK m. 344`, `6098 sayılı … 344. maddesi`, `Anayasa m. 35`) bulunur, resmî metinden kontrol edilir ve başlıklarıyla
   "doğrulandı" ya da "bulunamadı" olarak döner. Sunucuya yalnız kanun ve madde numaraları gider, metniniz ekranda kalır.
+- **Hesap kartları.** Vekâlet ücreti, yargı harcı ve gider avansı, faiz dökümü (kanuni, ticari temerrüt, sabit oran)
+  ve işçilik alacağı (kıdem ve ihbar tazminatı, brüt). İşlemi seçin, yalnız gereken kutuları doldurun; hesabı kod
+  yapar, her satırda dayanak ve resmî kaynak vardır. Veri Resmî Gazete'nin günlük denetiminden geçer; kart kaynağını
+  ve son kontrol zamanını gösterir, kontrol yapılamadıysa kesin toplam vermez.
 - **Sohbette kartlar.** Madde ve içtihat sonuçları ArthurLegal kartlarıyla gelir: üst başlıklarıyla birlikte başlık,
   metin, kopyalanacak atıf, resmî metin bağlantısı ve doğrulandı rozeti; kararın metni kartın içinde açılır.
 - **Donna**, masadaki asistan: Claude'a bağladığınız uygulamalarla (e-posta, takvim, Slack, görevler) gününüzü
@@ -432,12 +436,15 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
 
 **English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
 desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
-citations, case law, history, land registry, memory, ArthurMask, the UYAP Dashboard, Donna and connected servers), the
+citations, case law, fee cards, history, land registry, memory, ArthurMask, the UYAP Dashboard, Donna and connected servers), the
 steps of the current task in the middle, Claude's own message box at the bottom. Type only your question in that box: the question, every source Claude checks (a live line each) and the answer appear on the desk, with every article citation in the answer checked against the official text. It runs on your own Claude plan;
 no API key, nothing billed to one. Search the whole of Turkish legislation, from laws to communiqués and repealed
 acts, by name, number or a phrase in the text, open its contents and fetch any article verified against the
 official text. Paste a draft to check every article citation in it against the official text
-(only the law and article numbers leave the page); article and case-law results appear as ArthurLegal cards; Donna
+(only the law and article numbers leave the page); the fee cards work out the minimum attorney fee, court fees and
+the advance on costs, interest (statutory, commercial default, fixed rate) and severance and notice pay (gross) in
+code, with the legal basis and official source on every line and a daily Official Gazette check behind the data;
+article and case-law results appear as ArthurLegal cards; Donna
 summarises your day through the apps you have connected to Claude (their status comes from the same list as the MCP
 screen) and asks before creating or sending anything. On the web and in the Claude mobile app the desk comes from the
 research connector; the desktop-only modules say what they do and link to the download, and in Claude Desktop a desk
@@ -468,14 +475,14 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.5](ArthurLegal-CorporateAssistant-v1.12.5-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.5](ArthurLegal-Law-Firm-v1.12.5-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
-| Academician | [v1.1.5](ArthurLegal-Academician-v1.1.5-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
+| **Corporate Assistant** | **[v1.12.6](ArthurLegal-CorporateAssistant-v1.12.6-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.6](ArthurLegal-Law-Firm-v1.12.6-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
+| Academician | [v1.1.6](ArthurLegal-Academician-v1.1.6-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
-Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.4](ArthurLegal-Courthouse-v1.2.4-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -601,7 +608,7 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 
 | Tier | Jurisdictions | How it is reached |
 |---|---|---|
-| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland · 🇬🇧 UK · 🇪🇺 EU / CJEU · 🇯🇵 Japan | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus eleven jurisdictions behind one connector, 130 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
+| **Primary-source MCP** — verbatim norm text and case law | 🇹🇷 Türkiye · 🇨🇭 Switzerland · 🇺🇸 United States *(case law)* · 🇦🇿 Azerbaijan · 🇦🇹 Austria · 🇩🇪 Germany · 🇳🇱 Netherlands · 🇵🇱 Poland · 🇪🇸 Spain · 🇫🇮 Finland · 🇮🇪 Ireland · 🇬🇧 UK · 🇪🇺 EU / CJEU · 🇯🇵 Japan | **[ArthurLegal MCP](https://github.com/beerbottle90/arthurlegal-mcp)** — Türkiye (`tr_`: courts, legislation with gerekçe, Official Gazette, eight regulators, semantic archive) plus eleven jurisdictions behind one connector, 132 tools, jurisdiction-prefixed, no auth · **OpenCaseLaw.ch** (1,050,000+ decisions, 42 tools) · **CourtListener** (Free Law Project — US federal and state case law, PACER, citation verification) · **Fedlex** (Swiss federal legislation) · **TR Legal MCP** (optional; only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK) |
 | **Legislation via WebFetch** — no extra connector | 🇺🇸 US *(federal legislation, GovInfo)* · ECHR · 🇫🇷 France · 🇮🇹 Italy · 🇷🇺 Russia · 🇨🇳 China · 🇷🇸 Serbia | Official gazette and legislation portals |
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
@@ -658,6 +665,63 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.1.0 — Weekly audit fixes in every package; interest and severance cards on the desk (2026-11-10)
+
+- **Audit fixes in all four packages.** The weekly audit of 9 November compared the package files with the law in force
+  and with the live tools; 214 findings in the packages are closed. Every statute article was fetched from the official
+  text before it was rewritten. Examples: an action against an environmental administrative fine goes to the
+  administrative court within 30 days (Law no. 2872 art. 25/2); a case filed with the wrong administrative court is sent
+  on to the competent one (İYUK art. 15/1-a); mandatory mediation in commercial cases covers the claims listed in TTK
+  art. 5/A/1; the EU electricity and gas market directives in force are 2019/944 and 2024/1788; there is no EU adequacy
+  decision for Serbia. Each package's `CHANGELOG.md` has the list.
+- **Tools as they are today.** Guides and skill books point first to the ArthurLegal MCP prefixes for foreign law
+  (`eu_`, `uk_`, `de_`, `jp_`, `es_`, `at_`, `fi_`, `ie_`, `pl_`, `nl_`, `az_`), with WebFetch as the fallback;
+  Council of State searches use `courts=["DANISTAYKARAR"]`, regulation searches `types=["KKY"]`; the guides say plainly
+  that Public Procurement Authority and Court of Accounts decisions are not on the connector. Fixed tool and document
+  counts give way to "see `status`". Dead links were replaced with checked ones.
+- **Two new fee cards on the desk.** *Faiz* (interest): statutory interest, default interest in commercial matters or a
+  fixed contractual rate, broken down period by period with day counts, simple interest under Law no. 3095. The rates
+  come from the Central Bank communiqués in the Official Gazette, 2006 to 2026. *İşçilik alacağı* (employment claims):
+  severance pay (Law no. 1475 art. 14, capped at the ceiling in force on the exit date) and notice pay (Law no. 4857
+  art. 17), gross, as a first estimate; entitlement and net amounts are not calculated. The severance ceiling is not
+  published in the Official Gazette; it comes from the Ministry of Labour's table. As with the other cards, code does
+  the arithmetic, every line shows its legal basis and source, points the text leaves open are marked *teyit edin*
+  (verify), and the daily Official Gazette watcher applies. After 31.12.2026 these two cards give no final total until
+  the new period's rate and ceiling are entered.
+- Packages: Law Firm and Corporate Assistant 1.12.6, Courthouse 1.2.5, Academician 1.1.6; the previous versions are in
+  `arsiv/`. The system instructions changed, so Claude.ai Projects users paste `SYSTEM_PROMPT.md` again and upload the
+  `knowledge/` folder afresh. Claude plugin 1.12.17. The research connector has 132 tools.
+- **User guide.** The PDF guide has a new page on the fee cards (10 pages) and the start page mentions them.
+- **ArthurMask desktop icon.** The icon is named *ArthurMask* and carries ArthurMask's own version, like the other
+  icons (*ArthurMask 1.2.0*). On Windows the old *Arthur Mask* icon and the Start menu entry are renamed; on a Mac
+  the desktop alias is.
+- How it arrives: the updater installs 3.1.0 on Windows and on a Mac. The desk keeps its number (3.0.13) and gains the
+  two cards; ArthurMask 1.2.0, ArthurTapu and the UYAP bridge are unchanged.
+
+**Türkçe:** Haftalık denetim (9 Kasım) paket dosyalarını yürürlükteki mevzuatla ve canlı araçlarla karşılaştırdı;
+paketlerdeki 214 bulgu kapandı. Her madde yazılmadan önce resmî metinden çekildi. Örnekler: çevre idari para cezasına
+karşı dava 30 gün içinde idare mahkemesinde açılır (2872 sayılı Kanun m. 25/2); görevsiz ya da yetkisiz idari yargı
+merciine açılan davada dosya görevli mahkemeye gönderilir (İYUK m. 15/1-a); ticari davalarda dava şartı arabuluculuk
+TTK m. 5/A/1'deki davaları kapsar; yürürlükteki AB elektrik ve doğal gaz piyasası direktifleri 2019/944 ve
+2024/1788'dir; Sırbistan için AB yeterlilik kararı yoktur. Liste her paketin `CHANGELOG.md` dosyasında. Rehberler ve
+kitapçıklar yabancı hukukta önce ArthurLegal MCP öneklerini gösterir (WebFetch yedek yol); Danıştay aramaları
+`courts=["DANISTAYKARAR"]`, yönetmelik aramaları `types=["KKY"]` ile yapılır; KİK ve Sayıştay kararlarının bağlayıcıda
+bulunmadığı açıkça yazılır; sabit sayılar yerine "güncel liste için `status`". Masada iki yeni hesap kartı: **Faiz**
+(kanuni faiz, ticari işlerde temerrüt faizi ya da sözleşmedeki sabit oran; dönem dönem, gün sayılı, 3095 sayılı Kanun
+uyarınca basit faiz; oranlar Resmî Gazete'deki TCMB tebliğlerinden, 2006–2026) ve **İşçilik alacağı** (kıdem tazminatı
+1475 m. 14, çıkış tarihindeki tavanla sınırlı; ihbar tazminatı 4857 m. 17; brüt ön hesap, hak kazanma ve net tutar
+hesaplanmaz). Kıdem tavanı Resmî Gazete'de yayımlanmaz; ÇSGB tablosundan alınır. Öteki kartlardaki kurallar geçerli:
+hesabı kod yapar, her satırda dayanak ve kaynak vardır, metnin açık bıraktığı noktalar "teyit edin" diye ayrılır,
+günlük Resmî Gazete nöbetçisi çalışır. 31.12.2026'dan sonra bu iki kart yeni dönemin oranı ve tavanı işlenene kadar
+kesin toplam vermez. Paketler: Hukuk Bürosu ve Kurumsal 1.12.6, Courthouse 1.2.5, Akademisyen 1.1.6; önceki sürümler
+`arsiv/`'de. Sistem talimatı değişti: Claude.ai Projects kullananlar `SYSTEM_PROMPT.md`'yi yeniden yapıştırır ve
+`knowledge/` klasörünü baştan yükler. Claude eklentisi 1.12.17; araştırma bağlayıcısında 132 araç var. Kullanıcı rehberi
+PDF'ine hesap kartları sayfası eklendi (10 sayfa); başlangıç sayfası da kartları anar. Masaüstündeki ArthurMask simgesi
+bitişik yazılır ve öteki simgeler gibi sürüm taşır ("ArthurMask 1.2.0"); eski "Arthur Mask" simgesi ve Başlat
+menüsü kısayolu yeni ada çevrilir. Windows'ta ve
+Mac'te güncelleyici 3.1.0'ı kendisi kurar. Masa numarası aynı (3.0.13), iki kart eklendi; ArthurMask 1.2.0, ArthurTapu
+ve UYAP köprüsü aynı.
 
 ## Setup 3.0.13 — Fee cards on the desk, Official Gazette annexes, ArthurMask 1.2.0 (2026-11-07)
 
