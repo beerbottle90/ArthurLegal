@@ -400,7 +400,7 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
   gelir; Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç; madde ya da karar listesi satırın
   altında açılır). Cevap aynı yerde, Claude yazdıkça açılır: biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
   teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
-  masadan sorarsınız; cevaplar ve aramalar Geçmiş'te 90 gün durur (kurulumla bu bilgisayarın diskinde, uzak bağlantıda bu cihazda), yeni sohbette ve güncellemede de. Masa her açılışta Sohbet'le başlar; öneri
+  masadan sorarsınız; cevaplar ve aramalar Geçmiş'te 90 gün durur: bu bilgisayarın diskinde, yeni sohbette ve güncellemede de (bilgisayarda ArthurLegal kuruluysa masa hep oradan açılır; web ve telefonda geçmiş yalnız açık sohbet boyunca durur). Masa her açılışta Sohbet'le başlar; öneri
   kartları cevabın altında durur.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
