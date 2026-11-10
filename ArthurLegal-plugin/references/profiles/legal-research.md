@@ -15,7 +15,7 @@ alanları `/arthurlegal:firm-operations-cold-start-interview` ile doldurulabilir
 
 `firm-profile.md` oku. Bu eklentiye özel:
 
-**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil 12 yargı çevresi ile LEI, doktrin, sözleşme arşivi, tapu-kadastro (`tkgm_`) ve hesap kartları, 130 araç
+**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil 12 yargı çevresi ile LEI, doktrin, sözleşme arşivi, tapu-kadastro (`tkgm_`) ve hesap kartları, 132 araç
 tek connector'da (`az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `uk_` `eu_` `jp_` `scholar_`
 `contracts_`). Kurulum dosyası bu araçları kendiliğinden bağlar; ayrı connector kurmak gerekmez.
 Bir araç görünmüyorsa önce `status` çağrılır; araç erişilemezse AZ mevzuatında **yürürlük statüsü doğrulanmaz**.
@@ -153,5 +153,5 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
 
 ---
 
-*ArthurLegal Law Firm Assistant v1.12.5 — kaynak katmanı profili.
+*ArthurLegal Law Firm Assistant v1.12.6 — kaynak katmanı profili.
 Companion skill: `skills/legal-research__skills.md`.*
