@@ -136,9 +136,31 @@ MASA_ORTAM_NOTU = {
     "masaustu": (" Bu, bilgisayardaki ArthurLegal kurulumunun masasıdır: Beyin, ArthurMask ve UYAP Dashboard burada "
                  "çalışır. Sohbette uzak arthurlegal-mcp bağlayıcısı da varsa masayı bu araçla açın."),
     "uzak": (" Bu bilgisayarda ArthurLegal kuruluysa (sohbette arthurlegal-yerel sunucusu bağlıysa) masayı onun "
-             "al_masasi aracıyla açın: Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada çalışır. Bu masa "
-             "web ve telefon içindir."),
+             "al_masasi aracıyla açın: sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada "
+             "çalışır. Bu masa web ve telefon içindir; arthurlegal-yerel bağlıyken çağrılırsa masayı açmaz, sizi "
+             "oradaki masaya yönlendirir."),
 }
+
+# Uzak bağlayıcının masası geçmişi saklayamaz: Claude masa pencerelerine her sohbette yeni bir tarayıcı deposu verir
+# (10.11.2026 ölçümü: 14 günde 29 ayrı köken), uzak uç da hiçbir sorguyu saklamaz. Kalıcı geçmiş yalnız bilgisayardaki
+# kurulumun diskindedir. Claude iki masa arasında açıklamaya bakarak seçim yapmıyor (02.11'den beri hep uzak masayı
+# açtı); bu yüzden kararı uzak uç verir: arthurlegal-yerel bağlıysa masayı açmaz, Claude'u oraya gönderir.
+YEREL_SUNUCU = "arthurlegal-yerel"
+_YEREL_SUNUCU = re.compile(r"arthur\s*legal[\s_()-]*yerel")
+UZAK_ARAC_NOTU = (" Masa bu sohbette arthurlegal-yerel sunucusundan açıldıysa bu aracı değil, o sunucudaki aynı adlı "
+                  "aracı çağırın.")
+YONLENDIRME_NOTU = (
+    "Masa bu bağlantıdan AÇILMADI: bu bilgisayarda ArthurLegal kurulu (arthurlegal-yerel bağlı). Şimdi, kullanıcıya "
+    "bir şey sormadan, arthurlegal-yerel sunucusunun al_masasi aracını aynı bolum ve baglayicilar ile çağırın; bu "
+    "sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için de arthurlegal-yerel sunucusunu kullanın. "
+    "Sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada çalışır. arthurlegal-yerel'de al_masasi "
+    "aracı yoksa bu aracı uzakta_kal=true ile yeniden çağırın.")
+
+
+def yerel_bagli(baglayicilar: Any) -> bool:
+    """Claude'un bildirdiği listede bilgisayardaki kurulum (arthurlegal-yerel) bağlı mı."""
+    return any(o["durum"] == "bagli" and _YEREL_SUNUCU.search(o["ad"].lower())
+               for o in baglayicilari_duzenle(baglayicilar))
 
 
 def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
@@ -146,6 +168,21 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
     aracı yok, yönlendirme yok). Verilmezse ortam notu eklenmez."""
     teslim = "" if ortam == "dizin" else (
         " Masa açıldıktan sonra bu sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz.")
+    tanim = _masa_tanimi(ortam, teslim)
+    if ortam == "uzak":
+        # Yönlendirme kararı listeye bakar: uzak uçta liste zorunludur (bilinmiyorsa boş liste).
+        sema = tanim["inputSchema"]
+        sema["properties"]["baglayicilar"]["description"] += (
+            " arthurlegal-yerel bağlıysa mutlaka yazın: masa o zaman bu bilgisayardaki kurulumdan açılır.")
+        sema["properties"]["uzakta_kal"] = {
+            "type": "boolean", "default": False,
+            "description": ("Yalnız şu iki durumda true: arthurlegal-yerel sunucusunda al_masasi aracı yoksa ya da "
+                            "kullanıcı masayı açıkça bu uzak bağlantıdan istiyorsa.")}
+        sema["required"] = ["baglayicilar"]
+    return tanim
+
+
+def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
     return {
         "name": "al_masasi",
         "title": "ArthurLegal Masası",
@@ -170,7 +207,7 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
                         "Bu sohbette erişebildiğiniz MCP sunucuları ve Claude bağlayıcıları (Gmail, Google Calendar, "
                         "Slack, Notion, arthurlegal-yerel, arthur-mask ...): her sunucu bir kez, araç adı değil sunucunun "
                         "adı. Giriş isteyen ya da "
-                        "hata veren sunucuyu o durumla yazın. Bilmiyorsanız boş bırakın, uydurmayın."),
+                        "hata veren sunucuyu o durumla yazın. Bilmiyorsanız boş liste verin, uydurmayın."),
                     "items": {
                         "type": "object",
                         "properties": {
@@ -219,12 +256,15 @@ TESLIM_KURALI = (
 
 
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
-                bolum: Optional[str] = None, baglayicilar: Any = None) -> Dict[str, Any]:
+                bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
     moduller: {"tapu": {"durum": "hazir" | "claude" | "masaustu" | "kurulu-degil"}, ...}
     baglayicilar: Claude'un bildirdiği bağlı sunucular (al_masasi girdisi); verilmediyse alan yok.
+    yerele_devret: uzak uç, listede arthurlegal-yerel bağlıysa masayı açmaz; cevap "yonlendir" taşır ve not Claude'u
+        bilgisayardaki masaya gönderir (çağıran, kullanıcı uzakta_kal demediyse True verir). Claude dizini profili
+        vermez: orada araç başka sunucuya yönlendirmez.
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
@@ -243,6 +283,9 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
                        "masada daha önce baktığı bir şeyi sorarsa al_gecmis ile bakabilirsiniz." % GECMIS_GUN)
     if bolum in EKRANLAR:
         out["bolum"] = bolum
+    if yerele_devret and ortam == "uzak" and yerel_bagli(baglayicilar):
+        out["yonlendir"] = {"sunucu": YEREL_SUNUCU, "arac": "al_masasi"}
+        out["not"] = YONLENDIRME_NOTU
     return out
 
 
@@ -254,7 +297,14 @@ class TeslimHatasi(ValueError):
     """Eksik ya da bozuk teslim; çağıran isError olarak döndürür."""
 
 
-def baslangic_araci() -> Dict[str, Any]:
+def baslangic_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
+    tanim = _baslangic_tanimi()
+    if ortam == "uzak":
+        tanim["description"] += UZAK_ARAC_NOTU
+    return tanim
+
+
+def _baslangic_tanimi() -> Dict[str, Any]:
     return {
         "name": "al_masada_basla",
         "title": "Soruyu ArthurLegal Masası'na yaz",
@@ -285,7 +335,14 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     return out
 
 
-def teslim_araci() -> Dict[str, Any]:
+def teslim_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
+    tanim = _teslim_tanimi()
+    if ortam == "uzak":
+        tanim["description"] += UZAK_ARAC_NOTU
+    return tanim
+
+
+def _teslim_tanimi() -> Dict[str, Any]:
     # Özellik sırası akışı belirler: soru ve adımlar cevaptan önce yazılır, masa onları önce gösterir.
     adim = {"type": "object", "properties": {
         "durum": {"type": "string", "enum": list(_GECMIS_ADIM), "default": "tamam"},
@@ -325,10 +382,13 @@ def teslim_araci() -> Dict[str, Any]:
     }
 
 
-def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]:
+def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional["Gecmis"] = None) -> Dict[str, Any]:
     """al_masaya_yaz'ın cevabı: masanın durumu (masa_cevabi, Sohbet ekranında) ve kısa teslim özeti.
 
     Cevap metni geri yazılmaz: masa onu araç girdisinden okur, Claude'un bağlamı ikinci kez dolmaz.
+    gecmis: yerel sunucunun geçmiş deposu. Verilirse cevap teslim anında (girdi doğrulandıktan sonra) diske yazılır
+        ve kaydın kimliği teslim.gecmis_id ile döner; masa atıf teyidini bitirince aynı kaydı tamamlar, ikinci kayıt
+        açmaz. Uzak uç vermez: orada hiçbir sorgu saklanmaz.
     """
     soru, cevap = girdi.get("soru"), girdi.get("cevap")
     if not isinstance(cevap, str) or not cevap.strip():
@@ -342,6 +402,9 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, Any]
     out["bolum"] = "sohbet"
     out["teslim"] = {"soru": _kisalt(soru, 200), "karakter": len(cevap),
                      "adim": len(girdi.get("adimlar") or []), "kaynak": len(girdi.get("kaynaklar") or [])}
+    kimlik = gecmis.cevap_kaydet(girdi) if gecmis is not None else None
+    if kimlik:
+        out["teslim"]["gecmis_id"] = kimlik
     out["not"] = ("Cevap masada gösterildi. Sohbete yalnız 'Cevap masada.' yazın, cevabı yinelemeyin. Masa cevaptaki "
                   "madde atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa "
                   "notuyla bildirir.")
@@ -541,16 +604,67 @@ class Gecmis:
             raise GecmisHatasi("sorgu bir nesne olmalı ve %d karakteri aşmamalı." % _GECMIS_SORGU_SINIRI)
         simdi = datetime.now().astimezone()
         kimlik = simdi.strftime("%Y%m%d-%H%M%S") + "-" + secrets.token_hex(3)
-        tam = {"id": kimlik, "zaman": simdi.isoformat(timespec="seconds"), "ekran": ekran, "kategori": kategori,
+        zaman = simdi.isoformat(timespec="seconds")
+        # Kimlik var olan bir kaydı gösteriyorsa o kayıt tamamlanır (teslim anında yazılan cevaba masanın atıf teyidi
+        # eklenir): kimlik, zaman ve listedeki yeri değişmez. Bilinmeyen kimlik yok sayılır, yeni kayıt açılır.
+        eski = str(kayit.get("id") or "")
+        var_olan = None
+        if _GECMIS_KIMLIK.match(eski):
+            try:
+                with open(self._yol(eski + ".json"), encoding="utf-8") as fh:
+                    var_olan = json.load(fh)
+            except (OSError, ValueError):
+                var_olan = None
+        if isinstance(var_olan, dict):
+            kimlik, zaman = eski, str(var_olan.get("zaman") or zaman)
+        tam = {"id": kimlik, "zaman": zaman, "ekran": ekran, "kategori": kategori,
                "tur": tur, "baslik": baslik, "adimlar": adimlar, "sorgu": sorgu, "anlik": kayit.get("anlik")}
         if len(json.dumps(tam, ensure_ascii=False).encode("utf-8")) > _GECMIS_KAYIT_SINIRI:
             tam["anlik"] = None
             tam["anlik_kesildi"] = True
         onceki = self._dizin()   # kayıt dosyası yazılmadan önce: yeniden kurulan dizin onu iki kez saymasın
         self._yaz(kimlik + ".json", tam)
-        dizin = self._buda([self._ozet(tam)] + onceki)
+        if isinstance(var_olan, dict) and any(k["id"] == kimlik for k in onceki):
+            dizin = self._buda([self._ozet(tam) if k["id"] == kimlik else k for k in onceki])
+            self._yaz("dizin.json", {"surum": 1, "kayitlar": dizin})
+            return {"id": kimlik, "zaman": zaman, "anlik": tam["anlik"] is not None, "saklama_gun": self.gun,
+                    "tamamlandi": True}
+        dizin = self._buda([self._ozet(tam)] + [k for k in onceki if k["id"] != kimlik])
         self._yaz("dizin.json", {"surum": 1, "kayitlar": dizin})
         return {"id": kimlik, "zaman": tam["zaman"], "anlik": tam["anlik"] is not None, "saklama_gun": self.gun}
+
+    def cevap_kaydet(self, girdi: Dict[str, Any]) -> Optional[str]:
+        """al_masaya_yaz'ın girdisi teslim anında geçmişe yazılır; kaydın kimliği döner, yazılamadıysa None.
+
+        Kalıcılık masanın penceresine bağlı kalmaz: pencere atıf teyidi bitmeden kapansa da cevap geçmiştedir.
+        Masa teyidi bitirince aynı kimlikle kaydet çağırır ve kaydı araç adımları ve teyit sonucuyla tamamlar.
+        Biçim masanın yazdığıyla aynıdır; teyit henüz yapılmadığı için "teyit" yoktur (None).
+        """
+        cevap = girdi.get("cevap")
+        if not isinstance(cevap, str) or not cevap.strip():
+            return None
+        soru = _kisalt(girdi.get("soru") if isinstance(girdi.get("soru"), str) else "", 300)
+        adimlar = []
+        for a in girdi.get("adimlar") if isinstance(girdi.get("adimlar"), list) else []:
+            if isinstance(a, dict) and isinstance(a.get("metin"), str) and a["metin"].strip():
+                adimlar.append([a.get("durum") if a.get("durum") in _GECMIS_ADIM else "tamam", a["metin"].strip()])
+        kaynaklar = []
+        for k in girdi.get("kaynaklar") if isinstance(girdi.get("kaynaklar"), list) else []:
+            if not isinstance(k, dict):
+                continue
+            baslik, atif, url = (str(k.get(a) or "").strip() for a in ("baslik", "atif", "url"))
+            if baslik or atif:
+                kaynaklar.append({"baslik": baslik, "atif": atif,
+                                  "url": url if re.match(r"^https?://\S+$", url, re.I) else ""})
+        kayit = {"ekran": "sohbet", "kategori": "claude", "tur": "cevap", "baslik": soru or "Claude'un cevabı",
+                 "adimlar": adimlar[:10] or [["tamam", "Cevap masaya geldi"]],
+                 "sorgu": {"metin": soru} if soru else None,
+                 "anlik": {"cevap": cevap, "adimlar": adimlar, "araclar": [], "kaynaklar": kaynaklar, "teyit": None}}
+        try:
+            with self._kilit:
+                return self.kaydet(kayit)["id"]
+        except (GecmisHatasi, OSError):
+            return None
 
     def sil(self, kimlik: Any) -> Dict[str, Any]:
         kimlik = str(kimlik or "")

@@ -757,6 +757,19 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(teslim["structuredContent"]["bolum"], "sohbet")
         self.assertIn("al_gecmis", teslim["structuredContent"]["yetenekler"], "cevap bu bilgisayardaki geçmişe yazılır")
         self.assertNotIn("TBK m. 344", teslim["content"][0]["text"])
+        # Cevap teslim anında diske yazılır: kayıt masanın penceresine (tarayıcı deposuna, sohbete) bağlı değildir.
+        kimlik = teslim["structuredContent"]["teslim"]["gecmis_id"]
+        yazilan = self.arac("al_gecmis", islem="getir", id=kimlik)["structuredContent"]["kayit"]
+        self.assertEqual((yazilan["baslik"], yazilan["tur"], yazilan["anlik"]["cevap"]),
+                         ("Kira artışı?", "cevap", "TBK m. 344 uyarınca"))
+        self.assertIsNone(yazilan["anlik"]["teyit"])
+        # Masa atıf teyidini bitirince aynı kimlikle yazar: ikinci kayıt açılmaz.
+        tam = self.arac("al_gecmis", islem="kaydet", kayit={
+            "id": kimlik, "ekran": "sohbet", "kategori": "claude", "tur": "cevap", "baslik": "Kira artışı?",
+            "adimlar": [["tamam", "Atıf teyidi: 1 atıftan 1'i doğrulandı"]],
+            "anlik": {"cevap": "TBK m. 344 uyarınca", "teyit": {"toplam": 1, "dogru": 1, "satirlar": []}}})["structuredContent"]
+        self.assertEqual(tam["id"], kimlik)
+        self.assertEqual(self.arac("al_gecmis", islem="listele")["structuredContent"]["toplam"], 1)
         self.assertTrue(self.arac("al_masaya_yaz", soru="s", cevap="")["isError"])
         # Soru araştırmadan önce masada; kural koşulsuz (masanın notuna bağlı değil).
         self.assertIn("al_masada_basla", r["instructions"])

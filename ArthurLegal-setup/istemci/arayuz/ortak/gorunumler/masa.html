@@ -413,6 +413,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     hazir: false,
     acilis: "sohbet",
     tamEkranIste: true,
+    yonlendir: null,     // uzak uç masayı bu bilgisayardaki kuruluma devrettiyse { sunucu, arac }
+    uzaktaKal: false,    // kullanıcı devir ekranında "bu masayla devam et" dedi
   };
   const GECMIS = [];
 
@@ -462,7 +464,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const MASA_ACIK = "ArthurLegal Masası: ekranda açık.";
   const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabı al_masaya_yaz ile " +
     "teslim edin; sohbete yalnız 'Cevap masada.' yazın.";
+  // Devirde masa açık değildir: not, masanın açık olduğunu söyleyen önceki notun yerini alır.
+  async function yonlendirmeyiBildir() {
+    const not = "ArthurLegal Masası bu bağlantıdan açılmadı: bu bilgisayarda ArthurLegal kurulu. arthurlegal-yerel " +
+      "sunucusunun al_masasi aracını çağırın ve bu sohbette masa araçlarını o sunucudan kullanın.";
+    try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
+  }
   async function bildir(metin) {
+    if (DURUM.yonlendir) return;
     const not = MASA_ACIK + (DURUM.yetenekler.has("al_masaya_yaz") ? TESLIM_NOTU : "") + (metin ? " Şu an: " + metin : "");
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
@@ -479,11 +488,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
   }
 
-  // Geçmiş oturumdan ve ArthurLegal sürümünden bağımsızdır, 90 gün durur ve hiçbir sunucuya yazılmaz. Kalıcı depo:
-  //  - disk: yerel AL sunucusu al_gecmis veriyorsa bu bilgisayarın diski (veri/masa-gecmisi, sürüm klasörünün dışında);
-  //  - cihaz: yoksa (uzak bağlantı: Claude Desktop'taki uzak bağlayıcı, web, telefon) masanın bu cihazdaki tarayıcı
-  //    deposu. Ev sahibi masa pencerelerine bağlantı başına sabit bir köken verir: depo yeni sohbette, Claude yeniden
-  //    açılınca ve masa güncellenince de durur; başka cihazda görünmez;
+  // Geçmişin kalıcı olduğu tek yer bilgisayardaki kurulumun diskidir; hiçbir sunucuya yazılmaz. Depolar:
+  //  - disk: yerel AL sunucusu al_gecmis veriyorsa bu bilgisayarın diski (veri/masa-gecmisi, sürüm klasörünün dışında):
+  //    oturumdan ve ArthurLegal sürümünden bağımsız, 90 gün;
+  //  - cihaz: yoksa (uzak bağlantı: Claude Desktop'taki uzak bağlayıcı, web, telefon) masanın tarayıcı deposu. KALICI
+  //    DEĞİLDİR: Claude masa pencerelerine her sohbette yeni bir köken verir (10.11.2026 ölçümü: 14 günde 29 köken),
+  //    depo yalnız aynı sohbetin pencereleri arasında ortaktır. Ekran bunu "bu sohbetin geçmişi" diye söyler ve
+  //    bilgisayardaki masayı gösterir; uzak uç da arthurlegal-yerel bağlıysa masayı baştan oraya devreder;
   //  - pencere: depo kapalıysa (gizli pencere, yalıtılmış çerçeve) liste yalnız bu pencere açıkken (GECMIS).
   // Kayıt biçimi ikisinde aynıdır: { id, zaman, ekran, kategori, tur, baslik, adimlar, sorgu, anlik }.
   // kayit: { kategori, tur, sorgu, anlik, ekran? }. UYAP işleri hiçbir depoya yazılmaz.
@@ -786,7 +797,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const kesit = ogesi("div", "kesit");
     kesit.append(ogesi("h3", null, "Son işler"));
     const liste = ogesi("div");
-    const tum = dugme(gecmisDeposu() === "pencere" ? "Bu pencerenin geçmişi" : "Bütün geçmiş", { sinif: "kucuk", simge: "saat" });
+    const tum = dugme({ disk: "Bütün geçmiş", cihaz: "Bu sohbetin geçmişi", pencere: "Bu pencerenin geçmişi" }[gecmisDeposu()],
+      { sinif: "kucuk", simge: "saat" });
     tum.onclick = () => { gecmisSifirla(); git("gecmis"); };
     const ey = ogesi("div", "eylemler sol");
     ey.append(tum);
@@ -795,8 +807,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     sonIsler(liste, c);
   };
 
-  // Son 6 iş, kalıcı geçmişten: yeni sohbette ve Claude yeniden açıldığında da görünür. Yukarıda açık olan cevap
-  // yinelenmez. Diskteki kayıtların listesi özettir; cevabı açmak için kayıt getirilir.
+  // Son 6 iş. Diskteyse kalıcı geçmişten: yeni sohbette ve Claude yeniden açıldığında da görünür; uzak bağlantıda
+  // yalnız bu sohbetin işleri. Yukarıda açık olan cevap yinelenmez. Diskteki kayıtların listesi özettir; cevabı açmak
+  // için kayıt getirilir.
   async function sonIsler(kap, c) {
     const depo = gecmisDeposu();
     let kayitlar;
@@ -903,7 +916,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       araclar: Array.isArray(a.araclar) ? a.araclar : [],
       kaynaklar: Array.isArray(a.kaynaklar) ? a.kaynaklar : [], tamam: true, kesildi: false,
       zaman: k.zaman || (k.saat && k.saat.toISOString()),
-      teyit: { durum: t.toplam ? "bitti" : "yok", satirlar: t.satirlar || [], dogru: t.dogru || 0, toplam: t.toplam || 0 } };
+      // teyit null: kaydı teslim anında sunucu yazmış, masanın penceresi teyidi bitiremeden kapanmış.
+      teyit: { durum: a.teyit === null ? "yapilmadi" : t.toplam ? "bitti" : "yok", satirlar: t.satirlar || [],
+        dogru: t.dogru || 0, toplam: t.toplam || 0 } };
   }
 
   function gosterilenCevap() {
@@ -962,7 +977,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const satirlar = araclar.map((a) => [a.durum === "suruyor" ? "tamam" : a.durum, [a.baslik, a.ozet].filter(Boolean).join(" · ")]);
     const adimlar = [...satirlar, ...c.adimlar].slice(0, t.toplam ? 9 : 10);
     if (t.toplam) adimlar.push([t.dogru === t.toplam ? "tamam" : "uyar", `Atıf teyidi: ${t.toplam} atıftan ${sayiEki(t.dogru)} doğrulandı`]);
+    // gecmisId: yerel sunucu cevabı teslim anında diske yazdıysa aynı kayıt tamamlanır, ikincisi açılmaz.
     gecmiseEkle(c.soru || "Claude'un cevabı", adimlar.length ? adimlar : [["tamam", "Cevap masaya geldi"]], {
+      ...(c.gecmisId ? { id: c.gecmisId } : {}),
       ekran: "sohbet", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null,
       anlik: { cevap: c.cevap, adimlar: c.adimlar, araclar, kaynaklar: c.kaynaklar,
         teyit: { satirlar: t.satirlar, dogru: t.dogru, toplam: t.toplam } } });
@@ -1007,6 +1024,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const ad = ogesi("div", "adimlar");
       ad.append(adimSatiri("suruyor", t ? `${t.toplam} madde atfı resmî metinden kontrol ediliyor…` : "Atıflar aranıyor…"));
       teyit.append(ad);
+    } else if (t.durum === "yapilmadi") {
+      teyit.append(ogesi("div", "bos", "Bu cevabın atıf teyidi kaydedilmedi: pencere teyit bitmeden kapandı. Atıfları Mevzuat ve kararlar ekranından denetleyebilirsiniz."));
     } else if (!t.toplam) {
       teyit.append(ogesi("div", "bos", "Cevapta tanınan bir madde atfı yok. “TBK m. 344” ya da “6098 sayılı … 344. maddesi” biçimleri tanınır."));
     } else {
@@ -2439,19 +2458,39 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     kategori: g.kategori || "claude", tur: g.tur || "claude", baslik: g.soru, adimlar: g.adimlar,
     sorgu: g.sorgu ?? null, anlik: g.anlik ?? null });
 
+  // Kalıcı geçmiş yalnız bilgisayardaki kurulumun masasındadır: uzak masada oraya giden yol her zaman görünür.
+  function kaliciGecmisYolu() {
+    const yerel = yerelBagli();
+    const kesit = ogesi("div", "kesit");
+    kesit.append(ogesi("h3", null, "Kalıcı geçmiş bilgisayardaki masada"));
+    const satir = ogesi("div", "satir");
+    const ac = dugme("Masayı bu bilgisayarda aç", { sinif: "birincil", simge: "dis" });
+    ac.onclick = () => claudeaSor(yerelMasaIstegi("gecmis"), null);
+    const indir = dugme("ArthurLegal'i indir", { sinif: yerel === false ? "birincil" : "", simge: "dis" });
+    indir.onclick = () => baglantiAc(app, INDIR, ortam.duyuru);
+    if (yerel) satir.append(ac);
+    else if (yerel === false) satir.append(indir);
+    else satir.append(ac, indir);
+    kesit.append(satir, bilgi(yerel
+      ? "Eski sorgularınız bu bilgisayardaki ArthurLegal kurulumunda, 90 gün boyunca durur. Düğme masayı kurulumun kendi bağlantısıyla (arthurlegal-yerel) açar; geçmişiniz orada."
+      : "Sorgu geçmişi, ArthurLegal'in kurulu olduğu bilgisayarda 90 gün tutulur ve oradaki masada her sohbette görünür; sorgularınız bu yüzden buluta çıkmaz. " +
+        (yerel === false ? "Web'de ve telefonda geçmiş yalnız açık sohbet boyunca durur."
+          : "Bilgisayardaysanız masayı kurulumun kendi bağlantısıyla açın; kurulu değilse indirin.")));
+    return kesit;
+  }
+
   CIZIM.gecmis = (ekran) => {
     if (gecmisAcik) { gecmisAyrinti(ekran, gecmisAcik); return; }
     const depo = gecmisDeposu();
-    const kalici = depo !== "pencere";
     const ORTAK = " Atıf teyidinde yapıştırdığınız metin değil, yalnız bulunan atıflar saklanır. UYAP işleri geçmişe yazılmaz.";
     ekran.append(ogesi("p", "kapsam-notu", {
       disk: "Bu bilgisayarda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya gönderilmez. Yeni sohbette " +
         "ve ArthurLegal güncellendiğinde de durur." + ORTAK,
-      cihaz: "Bu cihazda, masanın kendi deposunda tutulur ve 90 gün sonra kendiliğinden silinir; hiçbir sunucuya " +
-        "gönderilmez. Yeni sohbette, Claude yeniden açıldığında ve ArthurLegal güncellendiğinde de durur; başka " +
-        "cihazda görünmez." + ORTAK,
+      cihaz: "Bu masa uzak bağlantıdan açıldı: burada yalnız bu sohbette yaptığınız işler görünür, yeni sohbette liste " +
+        "boş başlar. Hiçbir sunucuya gönderilmez." + ORTAK,
       pencere: "Bu pencerede tarayıcı deposu kapalı: geçmiş yalnız pencere açıkken durur ve hiçbir yere yazılmaz.",
     }[depo]));
+    if (depo !== "disk") ekran.append(kaliciGecmisYolu());
     const seg = ogesi("div", "segment");
     for (const [id, yazi] of Object.entries(KATEGORI_ADI)) {
       const b = dugme(yazi);
@@ -2460,14 +2499,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       seg.append(b);
     }
     const ara = girdi("search", "Başlıkta ara: kira, 6098, EPDK …", gecmisSuzgec.ara);
-    const temizle = dugme(kalici ? "Geçmişi temizle" : "Listeyi temizle", { simge: "sil" });
+    const temizle = dugme(depo === "disk" ? "Geçmişi temizle" : "Listeyi temizle", { simge: "sil" });
     let emin = false;
     temizle.onclick = async () => {
       const yazi = temizle.querySelector("span");
       if (!emin) {
         emin = true;
         yazi.textContent = "Emin misiniz? Bir daha basın";
-        setTimeout(() => { emin = false; yazi.textContent = kalici ? "Geçmişi temizle" : "Listeyi temizle"; }, 4000);
+        setTimeout(() => { emin = false; yazi.textContent = depo === "disk" ? "Geçmişi temizle" : "Listeyi temizle"; }, 4000);
         return;
       }
       temizle.disabled = true;
@@ -3135,6 +3174,40 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     $("kok").replaceChildren(kap);
   }
 
+  // Devir: uzak uç, sohbette arthurlegal-yerel bağlıyken masayı açmaz (geçmiş, Beyin, ArthurMask ve UYAP yalnız
+  // bilgisayardaki masada çalışır) ve Claude'a oradaki al_masasi'yi çağırmasını söyler. Claude çağırınca bu pencerenin
+  // yerini bilgisayardaki masa alır; çağırmazsa kullanıcı iki düğmeden biriyle yoluna devam eder.
+  function yonlendirmeCiz() {
+    document.body.classList.remove("kart-modu");
+    masaKuruldu = false;
+    const kap = ogesi("div", "onizleme");
+    const ust = ogesi("header", "kimlik");
+    const marka = ogesi("span", "marka", "Arthur");
+    marka.append(ogesi("span", null, "Legal"));
+    ust.append(sablon("t-arma"), marka, Object.assign(ogesi("span", "ayrac"), { ariaHidden: "true" }), ogesi("span", "bolum", "Masa"));
+    const ad = ogesi("div", "adimlar");
+    ad.append(adimSatiri("suruyor", "Claude masayı bu bilgisayardaki kurulumdan (arthurlegal-yerel) açıyor…"));
+    const ac = dugme("Masayı bu bilgisayarda aç", { sinif: "birincil", simge: "dis" });
+    ac.onclick = () => claudeaSor(yerelMasaIstegi(DURUM.acilis), null);
+    const kal = dugme("Bu masayla devam et");
+    kal.onclick = () => {
+      DURUM.yonlendir = null;
+      DURUM.uzaktaKal = true;
+      durumuSakla();
+      ciz();
+      bildir("masa uzak bağlantıdan açıldı (kullanıcı böyle istedi).");
+      if (DURUM.tamEkranIste && (app.getHostContext() || {}).displayMode !== "fullscreen") tamEkran();
+    };
+    const ey = ogesi("div", "eylemler sol");
+    ey.append(ac, kal);
+    const sat = ogesi("div", "alt-satir");
+    sat.append(ey, ogesi("span", "zaman", `ArthurLegal ${DURUM.surum}`));
+    kap.append(ust, ogesi("h2", null, "Masa bu bilgisayardaki ArthurLegal'den açılıyor"), ad,
+      bilgi("Sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Masa birkaç saniyede açılmazsa ilk düğmeye basın. İkinci düğme uzak masayı açar: orada geçmiş yalnız bu sohbet boyunca durur."),
+      sat);
+    $("kok").replaceChildren(kap);
+  }
+
   // Açılış ekranı: araç girdisi ya da sunucu bir bölüm istediyse o, istemediyse Sohbet. Son ekran hatırlanmaz:
   // kullanıcı masayı açınca doğrudan sohbete gelir (kullanıcı kararı, 02.11.2026).
   function acilisEkrani() {
@@ -3144,6 +3217,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   let masaKuruldu = false;
   let acilisUygulandi = false;
   function ciz() {
+    if (DURUM.yonlendir) { yonlendirmeCiz(); return; }
     if (ROL === "adim" && !masaModu()) { kartModuCiz(); return; }
     document.body.classList.remove("kart-modu");
     const ctx = app.getHostContext() || {};
@@ -3202,6 +3276,15 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       DURUM.moduller = veri.moduller || {};
       if (veri.bolum && EKRANLAR.some((e) => e.id === veri.bolum)) DURUM.acilis = veri.bolum;
       if (Array.isArray(veri.baglayicilar)) baglayicilariAl(veri.baglayicilar);
+      if (CEVAP && veri.teslim && typeof veri.teslim.gecmis_id === "string") CEVAP.gecmisId = veri.teslim.gecmis_id;
+      if (ROL === "masa" && veri.yonlendir && !DURUM.uzaktaKal) {
+        // Masa burada açılmadı: durum saklanmaz (bu sohbetin öteki pencereleri uzak masayı açık sanmasın).
+        DURUM.yonlendir = veri.yonlendir;
+        DURUM.hazir = true;
+        yonlendirmeCiz();
+        yonlendirmeyiBildir();
+        return;
+      }
       durumuSakla();
     }
     DURUM.hazir = true;
