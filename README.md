@@ -666,7 +666,7 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
-## Setup 3.0.14 — Weekly audit fixes in every package; interest and severance cards on the desk (2026-11-10)
+## Setup 3.1.0 — Weekly audit fixes in every package; interest and severance cards on the desk (2026-11-10)
 
 - **Audit fixes in all four packages.** The weekly audit of 9 November compared the package files with the law in force
   and with the live tools; 214 findings in the packages are closed. Every statute article was fetched from the official
@@ -693,7 +693,7 @@ justify building an MCP server, and which already have a good enough public API.
   `arsiv/`. The system instructions changed, so Claude.ai Projects users paste `SYSTEM_PROMPT.md` again and upload the
   `knowledge/` folder afresh. Claude plugin 1.12.17. The research connector has 132 tools.
 - **User guide.** The PDF guide has a new page on the fee cards (10 pages) and the start page mentions them.
-- How it arrives: the updater installs 3.0.14 on Windows and on a Mac. The desk keeps its number (3.0.13) and gains the
+- How it arrives: the updater installs 3.1.0 on Windows and on a Mac. The desk keeps its number (3.0.13) and gains the
   two cards; ArthurMask 1.2.0, ArthurTapu and the UYAP bridge are unchanged.
 
 **Türkçe:** Haftalık denetim (9 Kasım) paket dosyalarını yürürlükteki mevzuatla ve canlı araçlarla karşılaştırdı;
@@ -715,7 +715,7 @@ kesin toplam vermez. Paketler: Hukuk Bürosu ve Kurumsal 1.12.6, Courthouse 1.2.
 `arsiv/`'de. Sistem talimatı değişti: Claude.ai Projects kullananlar `SYSTEM_PROMPT.md`'yi yeniden yapıştırır ve
 `knowledge/` klasörünü baştan yükler. Claude eklentisi 1.12.17; araştırma bağlayıcısında 132 araç var. Kullanıcı rehberi
 PDF'ine hesap kartları sayfası eklendi (10 sayfa); başlangıç sayfası da kartları anar. Windows'ta ve
-Mac'te güncelleyici 3.0.14'ü kendisi kurar. Masa numarası aynı (3.0.13), iki kart eklendi; ArthurMask 1.2.0, ArthurTapu
+Mac'te güncelleyici 3.1.0'ı kendisi kurar. Masa numarası aynı (3.0.13), iki kart eklendi; ArthurMask 1.2.0, ArthurTapu
 ve UYAP köprüsü aynı.
 
 ## Setup 3.0.13 — Fee cards on the desk, Official Gazette annexes, ArthurMask 1.2.0 (2026-11-07)
