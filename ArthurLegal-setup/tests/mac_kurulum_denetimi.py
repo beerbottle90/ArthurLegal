@@ -276,9 +276,12 @@ def mask(surum: str) -> None:
     denetle("arthur-mask" in sunucular, "ArthurMask kendini Claude Desktop'a kaydetti: "
             + json.dumps(sunucular.get("arthur-mask", {}), ensure_ascii=False)[:200])
     r = calistir([PY, "-B", AL, "kur", "--kaydet", "--kisayol"])
-    simge = MASA / (app.name if app else "ArthurMask.app")
-    denetle(r.returncode == 0 and simge.is_symlink(),
-            f"masaüstünde ArthurMask simgesi → {os.readlink(simge) if simge.is_symlink() else '-'}")
+    # Takma ad bitişik yazılır ve ArthurMask'in sürümünü taşır ("ArthurMask 1.2.0"), uygulamanın adı eski olsa da.
+    simgeler = sorted(p.name for p in MASA.glob("*Mask*.app") if p.is_symlink())
+    surum = kurulu_python("import ortak; print(ortak.mask_surumu())")
+    beklenen = f"ArthurMask {surum}.app"
+    denetle(r.returncode == 0 and simgeler == [beklenen] and os.readlink(MASA / beklenen) == str(app),
+            f"masaüstünde ArthurMask simgesi: {simgeler} (beklenen {beklenen} → {app})")
     if "arthur-mask" in sunucular:
         s = Sunucu(sunucular["arthur-mask"])
         try:
@@ -300,7 +303,7 @@ def kaldir(secim: list) -> None:
     r = calistir([PY, "-B", AL, "kur", "--kaldir"])
     denetle(r.returncode == 0, "kur --kaldir" + ("" if r.returncode == 0 else f": {r.stderr[-300:]}"))
     kalan = [p.name for p in UYG.glob("ArthurLegal*")] + [
-        p.name for p in MASA.glob("*.app") if p.is_symlink() and ("ArthurLegal" in os.readlink(p) or p.name in ("ArthurMask.app", "Arthur Mask.app"))]
+        p.name for p in MASA.glob("*.app") if p.is_symlink() and ("ArthurLegal" in os.readlink(p) or p.name.startswith(("ArthurMask", "Arthur Mask")))]
     denetle(not kalan, f"uygulamalar ve masaüstü takma adları silindi{': ' + ', '.join(kalan) if kalan else ''}")
     denetle(not AJAN.exists() and calistir(["launchctl", "print", f"gui/{os.getuid()}/com.arthurlegal.guncelleme"]).returncode,
             "LaunchAgent kaldırıldı")
