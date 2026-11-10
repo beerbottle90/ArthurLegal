@@ -683,9 +683,17 @@ class Sunucu:
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
     def _teslim(self, a):
-        """al_masaya_yaz: cevap masada açılır; sunucu cevabı saklamaz ve geri yazmaz, masanın durumunu döndürür."""
+        """al_masaya_yaz: cevap masada açılır ve o anda bu bilgisayardaki geçmişe yazılır (veri/masa-gecmisi).
+
+        Kayıt masanın penceresine bağlı değildir: pencere atıf teyidi bitmeden kapansa da cevap geçmiştedir; masa
+        teyidi bitirince aynı kaydı tamamlar. Cevap geri yazılmaz, masanın durumu döner. Geçmiş yazılamazsa teslim
+        yine tamamlanır (kayıt kimliği dönmez, masa kaydı kendisi açar).
+        """
         try:
-            veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
+            if hasattr(al_arayuz.Gecmis, "cevap_kaydet"):
+                veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}), masa_gecmisi())
+            else:  # eski arayüz kopyası: geçmişi yalnız masa yazar
+                veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
         except ValueError as e:  # TeslimHatasi
             return {"content": [{"type": "text", "text": str(e)}], "isError": True}
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
