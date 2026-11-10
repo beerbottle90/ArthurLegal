@@ -201,7 +201,7 @@ gayriresmîlik beyanı kaynağından doğrulandı.*
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `jp_` |
 | **Auth** | **Yok** |
 

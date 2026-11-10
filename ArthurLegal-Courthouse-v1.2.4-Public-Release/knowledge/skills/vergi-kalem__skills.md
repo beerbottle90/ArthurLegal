@@ -132,7 +132,7 @@ Vergi davasında dilekçe ve savunmaların karşılıklı verilmesini ve dosyan�
 - **İYUK m. 19, 20** — duruşmalı işlerde karar; re'sen inceleme ve ara karar; tekemmül sırası ve altı ay (m. 20/5).
 - **İYUK m. 27/4-5** — vergi uyuşmazlıklarında dava açılması dava konusu vergi ve cezaların tahsil işlemlerini durdurur (istisnalarıyla); yürütmenin durdurulması istemli davalarda m. 16 süreleri kısaltılabilir.
 - **İYUK m. 3/2-e** — vergi davalarında dilekçede verginin veya vergi cezasının nevi ve yılı, tebliğ edilen ihbarnamenin tarihi ve numarası ile varsa mükellef hesap numarası gösterilir.
-- **2576 s.K. m. 7/2** — metinde gösterilen toplam değeri aşmayan vergi uyuşmazlıkları vergi mahkemesi hâkimlerinden biri tarafından çözümlenir (tutar 7589 s.K. ile 16.07.2026'da değişti; güncel tutar çekilir).
+- **2576 s.K. m. 7/2** — metinde gösterilen toplam değeri aşmayan vergi uyuşmazlıkları vergi mahkemesi hâkimlerinden biri tarafından çözümlenir (tutar 16.07.2026 tarihli 7589 s.K. ile değişti, RG 31.07.2026/33326; güncel tutar çekilir).
 - **VUK m. 31** (takdir kararının içeriği), **mükerrer m. 30** (idarece tarhta yoklama fişi ve ilan), **m. 378/2** (mükellefler beyan ettikleri matrahlara ve bunlar üzerinden tarh edilen vergilere karşı dava açamaz; vergi hatalarına ilişkin hükümler saklı), **Ek m. 6, Ek m. 11** (uzlaşılan hususlarda dava açılamaz).
 - **6183 s.K. m. 55, 58** — ödeme emri ve ödeme emrine itiraz (on beş gün, sınırlı sebepler).
 

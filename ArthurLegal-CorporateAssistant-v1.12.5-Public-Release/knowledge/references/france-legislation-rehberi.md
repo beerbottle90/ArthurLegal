@@ -28,9 +28,11 @@ GET https://www.legifrance.gouv.fr/codes/section_lc/{KOD_ID}/{BOLUM_ID}
 
 **Belirli madde çekimi** (LEGIARTI numarasıyla):
 ```
-WebFetch("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006436298/",
-         "Code civil m.1134 sözleşmelerin bağlayıcılığı")
+WebFetch("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032040777/",
+         "Code civil m.1103 sözleşmelerin bağlayıcı gücü")
 ```
+2016 reformundan (Ordonnance 2016-131, yürürlük 01.10.2016) önce bu ilke m. 1134'teydi. LEGIARTI numarası
+maddenin sürümüne bağlıdır: numarayı ezberden yazma, madde sayfasından al ve "en vigueur" ibaresini kontrol et.
 
 ---
 

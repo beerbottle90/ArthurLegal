@@ -67,7 +67,7 @@ Facility Agreement'dan çıkar:
 
 - **EPDK:** Lisans devri veya değişikliği gerektiriyor mu? Üretim/iletim/dağıtım lisans türü — kapasite ve sahiplik eşikleri. Rehber: `${CLAUDE_PLUGIN_ROOT}/references/epdk-rehberi.md`.
 - **SPK/KAP:** Müvekkil veya iştiraki halka açıksa — önemli ilişkili taraf işlemi, maddi gelişme bildirimi. Rehber: `${CLAUDE_PLUGIN_ROOT}/references/kap-esirket-webfetch-rehberi.md`.
-- **Yabancı yatırımcı:** FEFTA (Japonya), FIRPA (ABD) — DFI kredi verenlerin uyum yükümlülüğü.
+- **Yabancı yatırımcı:** FEFTA (Japonya), CFIUS incelemesi (FIRRMA 2018, ABD) — DFI kredi verenlerin uyum yükümlülüğü.
 
 ## Adım 6 — Risk matrisi
 
@@ -121,7 +121,7 @@ GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

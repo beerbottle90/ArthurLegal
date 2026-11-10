@@ -58,7 +58,7 @@ Her yayın için:
 |---|---|
 | Tür | makale / kitap / bölüm / bildiri / patent / ödül / proje / tez danışmanlığı |
 | İndeks | SSCI · AHCI · ESCI · Scopus · TR Dizin · diğer hakemli |
-| Quartile (varsa) | Q1-Q4 (yalnızca IF atanan indekslerde; **AHCI'ya quartile atanmaz**) |
+| Quartile (varsa) | Q1-Q4 (JCR'den teyit edilir; yalnız sanat ve beşeri bilim kategorisindeki dergide quartile yoktur) |
 | Yazar sayısı | Çok yazarlıda puan bölünür |
 | **Doktora öncesi/sonrası** | Puanın büyük kısmı doktora sonrası olmalı |
 | Tezden üretildi mi | Ayrı kategori |
@@ -109,7 +109,7 @@ belgesine dayanır. Nihai değerlendirme ÜAK'a aittir; bu çıktı bir taslakt�
 ## Yapma
 
 - Doğrulama kapısı geçilmeden **sayı verme**.
-- AHCI kayıtlarına quartile **atfetme**.
+- JCR'de teyit etmeden quartile **atfetme**; yalnız sanat ve beşeri bilim kategorisindeki dergide quartile yoktur.
 - "Bu puanla geçersiniz" **deme**. Nihai takdir ÜAK'tadır.
 - Kullanıcının verdiği indeks bilgisini doğrulamadan kabul etme; şüpheliyse teyit ettir.
 
@@ -198,7 +198,7 @@ user-invocable: true
 
 | Kadro | Yasal çerçeve (özet) |
 |---|---|
-| **Dr. Öğretim Üyesi** | Doktora / uzmanlık tamamlanmış olmak; yabancı dil; üniversitenin asgari ölçütleri. Süreli atama, uzatmalı. |
+| **Dr. Öğretim Üyesi** | Doktora, tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da belirli sanat dallarında yeterlik (2547 m. 23/b); üniversitenin YÖK onaylı ek koşulları, yabancı dil bunlar arasında olabilir (m. 23/c). En çok dört yıl süreli atama, yeniden atanabilir (m. 23/a). |
 | **Doçent kadrosu** | ÜAK doçentlik unvanı (veya denklik). Unvan ≠ kadro: unvanı alan herkes kadroya atanmaz. |
 | **Profesör** | Doçent unvanından sonra ilgili alanda belirli süre çalışmış olmak; alanında uluslararası düzeyde özgün eserler; bir başlıca araştırma eseri. |
 
@@ -219,4 +219,4 @@ user-invocable: true
 
 - Bir üniversitenin ölçütlerini **ezberden** söyleme.
 - Süre ve sayı gibi mevzuat değerlerini doğrulamadan kesinleştirme; ArthurLegal MCP (`tr_`)'den çek
-  veya `[MANUEL DOĞRULAYIN]` işaretle.
+  veya `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` işaretle.

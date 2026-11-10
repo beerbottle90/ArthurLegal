@@ -5,11 +5,12 @@
 > Target environment: [Claude.ai Projects](https://claude.ai/projects) (web).
 > Time required: ~15 minutes.
 
-> **On Windows, with one file:** download and run [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)
+> **On Windows and Mac, with one file:** download and run [ArthurLegal-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe) (Windows)
+> or [ArthurLegal-Kurulum.pkg](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg) (macOS 11 or later)
 > and tick **Academician** on the **Choose modules** screen. The package connects to Claude Desktop by itself; the
 > steps below (project, instructions, file upload) are not needed and updates arrive in the background.
 > Illustrated guide: [download section of the main page](https://github.com/beerbottle90/ArthurLegal#download).
-> The manual installation below is for Mac and claude.ai on the web.
+> The manual installation below is for claude.ai on the web.
 
 ---
 
@@ -63,7 +64,7 @@ Add via Claude.ai → **Settings → Connectors**:
 
 | Server | Purpose | Required |
 |---|---|---|
-| **ArthurLegal MCP** (`arthurlegal-mcp.fly.dev/mcp`, no auth; Türkiye under the `tr_` prefix) | Turkish legislation with gerekçe, Court of Cassation / Council of State / Constitutional Court, Official Gazette, eight regulators, semantic archive; plus 14 jurisdictions and 10 scholarship indexes incl. DergiPark (`scholar_`) | Yes, for Turkish law work |
+| **ArthurLegal MCP** (`arthurlegal-mcp.fly.dev/mcp`, no auth; Türkiye under the `tr_` prefix) | Turkish legislation with gerekçe, Court of Cassation / Council of State / Constitutional Court, Official Gazette, eight regulators, semantic archive; plus 11 jurisdictions and 10 scholarship indexes incl. DergiPark (`scholar_`) | Yes, for Turkish law work |
 | TR Legal MCP (yargi-mcp-pro, OAuth) | Only ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK | No |
 | **CourtListener** | US case law (comparative work) | No |
 | **Fedlex** | Swiss federal legislation | No |
@@ -109,7 +110,7 @@ It should determine, by questioning, whether your study requires ethics-committe
 
 ## Frequently encountered
 
-**The assistant refuses to cite and says "DOĞRULAYIN".**
+**The assistant refuses to cite and says "UYARI: veri çekilemedi".**
 Expected. If no connector is present, or the source could not be retrieved, the assistant
 does **not** invent one. Add the connector, or verify the source yourself.
 

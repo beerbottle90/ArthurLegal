@@ -33,9 +33,9 @@ Paketin içindeki kopyayı elle düzeltirseniz test kırmızı yanar ve sizi kay
 - Bir rehberin metni bir kitle için baştan yazıldıysa (ör. hâkimler için Courthouse) o paketin kopyası tek kaynağa
   girmez ve bağımsız kalır. Öteki paketler ortak kaynağı paylaşmaya devam eder.
 
-## Durum (07.10.2026)
+## Durum (10.11.2026)
 
-- 87 ortak rehberin 82'si tek kaynakta: 79'u Hukuk Bürosu ile Kurumsal'da, 3'ü dört pakette.
+- 86 ortak rehberin 81'i tek kaynakta: 78'i Hukuk Bürosu ile Kurumsal'da, 3'ü dört pakette.
 - Kalan 5 rehber kararla ayrı: `arthur-mask-rehberi.md` (kitle farkı: avukat / kullanıcı), `epdk-rehberi.md` (Kurumsal
   kendine özgü elektrik üretim rehberine bağlanır), Courthouse'ta hâkim ve kalem için baştan yazılmış
   `bilirkisilik-rehberi.md`, `cmk-rehberi.md`, `kep-etebligat-rehberi.md`. Paket denetimi bunlarda yeni ayrışmayı yine

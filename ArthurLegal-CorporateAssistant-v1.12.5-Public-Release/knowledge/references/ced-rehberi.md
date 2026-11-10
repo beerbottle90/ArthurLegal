@@ -68,7 +68,7 @@ Komisyon inceleme + bakanlık değerlendirme →
 
 **ArthurLegal MCP (`tr_`) doğrulama:**
 ```
-tr_mevzuat_icinde_ara(mevzuat_id="<tr_mevzuat_ara sonucundaki mevzuat_id>", query="20/A")
+tr_mevzuat_madde_getir(number="2577", madde_no="20/A")
 ```
 
 ## Hukuki argümanlar (klasik)

@@ -1,4 +1,4 @@
-> **Durum:** ✅ Açık — ArthurLegal MCP (`tr_`) `tr_kurum_karari_ara (kurum="rekabet")` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `corporate-legal:merger-notification`, `energy-finance:ma-diligence-energy`.
+> **Durum:** ✅ Açık — ArthurLegal MCP (`tr_`) `tr_kurum_karari_ara (kurum="rekabet")` + mevzuat araçları; rekabet.gov.tr WebFetch. Bu rehber 4054 sayılı Kanun'un esas/usul çatısını ve sektörel/örnek senaryoları derler. Bağlantılı skill'ler: `administrative-legal:rekabet-kurulu-itiraz`, `energy-finance:ma-diligence-energy`.
 
 # Rekabet Hukuku — Pratik Rehber (4054 sayılı Kanun)
 
@@ -21,7 +21,7 @@
 
 **Süreç:** Bildirim → **30 iş günü** ön inceleme (Faz I) → şartsız izin / nihai inceleme (Faz II ~6 ay). **Kapanış öncesi izin zorunlu** (gun-jumping = ciro %'si ceza + işlem geçersizliği). Bildirimsiz tamamlama: ayrı idari para cezası.
 
-> **Örnek senaryo:** Bir RES/HES/jeotermal **santral devralma** veya **pay/lisans devri** eşiği aşıyorsa Rekabet Kurumu bildirimi + EPDK pay devri onayı **paralel** yürür (ikisi de kapanış ön şartı). `corporate-legal:merger-notification` ile eşik testi yap.
+> **Örnek senaryo:** Bir RES/HES/jeotermal **santral devralma** veya **pay/lisans devri** eşiği aşıyorsa Rekabet Kurumu bildirimi + EPDK pay devri onayı **paralel** yürür (ikisi de kapanış ön şartı). Eşik testinde yukarıdaki rakamları güncel tebliğden teyit et; emsal için `tr_kurum_karari_ara(kurum="rekabet", decision_type="birlesme_devralma")`.
 
 ## 3. Soruşturma usulü ve ceza
 
@@ -34,7 +34,7 @@
 ## 4. Dava (Kurul kararına itiraz)
 
 - Rekabet Kurulu kararı = **idari işlem** → **iptal davası**: ilk derece **Ankara İdare Mahkemesi → BİM → Danıştay 13. Daire** (temyiz). Süre **İYUK m.7 = 60 gün**.
-- Yürütmeyi durdurma (İYUK m.27): ceza tahsili/yapısal tedbir telafisi güç zarar. Detay: `administrative-legal:rekabet-kurulu-itiraz` + `advocacy-legal:kamu-hukuku-dilekce`.
+- Yürütmeyi durdurma (İYUK m.27): ceza tahsili/yapısal tedbir telafisi güç zarar. Detay: `administrative-legal:rekabet-kurulu-itiraz` (Hukuk Bürosu paketinde ayrıca `advocacy-legal:kamu-hukuku-dilekce`).
 
 ## 5. Enerji sektörüne özgü yakıcı alanlar
 

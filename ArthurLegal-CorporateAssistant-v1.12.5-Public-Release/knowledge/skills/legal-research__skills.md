@@ -85,8 +85,8 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **TR kanun maddesi doğrulama (teslim öncesi, belge gövdesi dâhil)** | **ArthurLegal MCP `tr_mevzuat_madde_getir`** | **ZORUNLU GEÇİŞ** | `mevzuat-mcp-rehberi.md` bölüm 9 |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
 | UK mevzuatı (yapılandırılmış) | ArthurLegal MCP (`uk_`) | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
-| AB tüzük/direktif/ABAD kimlikleme | EUR-Lex Cellar | BİRİNCİL | `eurlex-cellar-rehberi.md` |
-| JP mevzuatı (as-of-date) | e-Gov API v2 | BİRİNCİL | `japan-egov-api-rehberi.md` |
+| AB tüzük/direktif/ABAD kimlikleme | ArthurLegal MCP (`eu_`) | BİRİNCİL | `eurlex-cellar-rehberi.md` |
+| JP mevzuatı (as-of-date) | ArthurLegal MCP (`jp_`) | BİRİNCİL | `japan-egov-api-rehberi.md` |
 | FR mevzuatı | DILA açık veri | BİRİNCİL | `france-dila-rehberi.md` |
 | AİHM kararı | HUDOC | BİRİNCİL | `echr-hudoc-rehberi.md` |
 | ABD şirket beyanı / imzalı sözleşme eki | SEC EDGAR | EMSAL | `edgar-rehberi.md` |
@@ -197,7 +197,8 @@ user-invocable: true
 ## Yöntem — statü doğrulaması opsiyonel DEĞİL
 
 1. `az_search_acts(query, scope="title", status="in_force")` ile ara. Başlık araması
-   zayıf dönerse `scope="text"`e genişlet.
+   zayıf dönerse `scope="text"`e genişlet. Kanun ya da mecelle ararken `types=[107]` (Məcəllələr)
+   ya da `types=[30]` (Qanunlar) ver; süzgeçsiz aramada değişiklik aktları öne çıkar.
 2. Dönen `id` ile **`az_get_act(id)`** çağır ve `statusName` oku:
    - **`Qüvvədədir`** → yürürlükte.
    - **`Ləğv olunmuş`** → **yürürlükten kalkmış — DAYANAK YAPMA.** Ardıl aktı ara.
@@ -208,8 +209,9 @@ user-invocable: true
 4. **Fiilen okuduğun maddeyi alıntıla.** Başlıktan parafraz yapma.
 
 > **Bu skill'in var olma sebebi tek bir hatadır: yürürlükten kalkmış bir aktı
-> yürürlükteymiş gibi göstermek.** `az_search_acts` bunu sana söyleyemez; yalnız
-> `az_get_act` söyler.
+> yürürlükteymiş gibi göstermek.** `az_search_acts` sonuçları `statusName` taşır ve varsayılan
+> `status="in_force"` mülga aktları dışarıda bırakır (tarihsel araştırmada `status="all"`); statüyü ve
+> tarihleri yine de `az_get_act` ile teyit et.
 
 ## Dil
 
@@ -596,21 +598,25 @@ user-invocable: true
   Bu araç birincil kaynak verir, şerh vermez.
 - Başka bir yargı çevresinin hukuku için.
 
-## Araçlar (14)
+## Araçlar (17)
 
-**Mevzuat:** `de_search` · `de_get_act` · `de_get_text` · `de_list_publishers` ·
+**Kanun maddesi (gesetze-im-internet.de):** `de_gesetz_ara` · `de_norm_getir`
+**Mevzuat (NeuRIS):** `de_search` · `de_get_act` · `de_get_text` · `de_list_publishers` ·
 `de_recent_changes`
 **İçtihat (yedi federal mahkeme, TAM):** `de_rii_case_search` · `de_rii_get_case_text`
 **İçtihat (NeuRIS beta dilimi):** `de_case_search` · `de_get_decision` · `de_get_decision_text`
 **İçtihat (eyaletler + tam metin):** `de_oldp_case_search` · `de_oldp_get_case`
 **Parlamento:** `de_dip_search` · `de_dip_get_document`
+**Kapsam:** `de_coverage`
 
 ## Yöntem
 
 1. **İçtihatta önce `de_rii_*`.** Yedi federal mahkeme için RII resmî ve tamdır;
    NeuRIS içtihadı beta bir örneklemdir. Eyalet mahkemesi veya tam metin taraması
    gerekiyorsa `de_oldp_*`.
-2. **Mevzuatta** `de_search` → `de_get_act` (künye) → `de_get_text` (metin).
+2. **Mevzuatta** madde metni için `de_gesetz_ara` (kısaltma bilinmiyorsa) → `de_norm_getir(kanun="BGB", norm="823")`;
+   künye ve ELI için `de_search` → `de_get_act` → `de_get_text` (NeuRIS beta; BGB, HGB, ZPO gibi temel
+   kanunlar orada yoktur). Boş sonuçta `de_coverage`.
 3. Yürürlük tarihi tartışmalıysa `de_recent_changes` ile değişiklik zincirini gör.
 4. Gerekçe gerekiyorsa `de_dip_search` ile Drucksache'yi bul.
 
@@ -797,15 +803,16 @@ belirgin) üretir. Taraf önce tescilli kimliğine indirgenir, sonra taranır.
 
 ## Araçlar
 
-GLEIF REST API (`api.gleif.org`, auth'suz, CC0 — WebFetch) + resmî yaptırım listeleri
+ArthurLegal MCP `gleif_` araçları (`gleif_autocomplete`, `gleif_search_entities`, `gleif_get_entity`,
+`gleif_get_group_structure`; yedek: GLEIF REST API `api.gleif.org`, WebFetch) + resmî yaptırım listeleri
 (WebFetch; `yaptirim-tarama-rehberi.md`).
 
 ## Yöntem
 
-1. **Kimlik çözümle:** `GET /api/v1/autocompletions?field=fulltext&q={unvan}` →
-   yargı çevresi/adres eşleşen adayı seç → `GET /api/v1/lei-records/{lei}` ile
-   `registration.status` kontrol et (LAPSED kayıtta veri bayat olabilir).
-2. **Grubu haritala:** `/ultimate-parent` ve `/direct-parent`. Hem sözleşme
+1. **Kimlik çözümle:** `gleif_autocomplete(query="{unvan}")` →
+   yargı çevresi/adres eşleşen adayı seç → `gleif_get_entity(lei="{lei}")` ile
+   kayıt statüsünü kontrol et (LAPSED kayıtta veri bayat olabilir).
+2. **Grubu haritala:** `gleif_get_group_structure(lei="{lei}")` (doğrudan ve nihai ana ortak). Hem sözleşme
    tarafını hem nihai ana ortağı **ayrı ayrı** tara.
 3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile resmî yaptırım listeleri
    (OFAC SDN, AB, UK OFSI, BM).

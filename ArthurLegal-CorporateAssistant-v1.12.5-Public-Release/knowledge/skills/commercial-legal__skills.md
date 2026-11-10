@@ -38,13 +38,13 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
 |---|---|
 | governing law = Azerbaycan hukuku ise akt lafzi + **yururluk statusu** (`Quvvededir`/`Legv olunmus`) — statusuz akt dayanak yapilmaz | `/legal-research:az-mevzuat` |
-| kloz benchmark — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani) | `/legal-research:sozlesme-emsali` |
+| kloz benchmark, yalniz petrol, gaz ve maden sozlesmelerinde (PSA/JOA, imtiyaz) — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani); ticari NDA/SaaS/tedarik klozu icin emsal tabani degildir | `/legal-research:sozlesme-emsali` |
 | sinir-otesi kavramlarda (mucbir sebep, uyarlama, stabilizasyon) karsilastirmali ogreti — **ikincil**, redline gerekcesi olamaz | `/legal-research:karsilastirmali-doktrin` |
 
 Rehberler: `references/eqanun-mcp-rehberi.md` · `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` · `references/karsilastirmali-hukuk-rehberi.md`
@@ -251,7 +251,7 @@ argument-hint: "[--redo | --full | --check-integrations | --side sales|purchasin
 
 `~/.claude/plugins/config/claude-for-legal/company-profile.md` varsa oku ve tek satırla teyit et ("Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu?"); teyitte ortak soruları (pratik ortamı, ad, sektör, ne sattığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri) atla. Yoksa ilk kurulan eklenti budur: ortak soruları sor, paketteki `knowledge/company-profile.md` şablonuna göre yaz ve söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak." Playbook, eskalasyon matrisi ve ev üslubu eklentiye özeldir.
 
-**Kurulum kapsamı:** Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden sözleşme okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Onay al. Ev dizinindeysen sessizce geç.
+**Kurulum kapsamı:** Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden sözleşme okumamı isterseniz kullanıcı kapsamında kurun." Onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -305,7 +305,7 @@ Dallanma ve kayıt (`## Who we are` altında `**Practice setting:**` satırı):
 
 Yapılandırılmış ile **çalışan** bağlantıyı karıştırma.
 - **ArthurLegal MCP (`tr_`)** — dene: `tr_mevzuat_madde_getir(number="6098", madde_no="115")`. Cevap geldiyse ✓.
-- **Sözleşme emsali (`contracts_`)** — kloz kıyası için isteğe bağlı: `contracts_search_contracts`.
+- **Sözleşme emsali (`contracts_`)** — yalnız petrol, gaz ve maden sözleşmeleri (ResourceContracts): `contracts_search_contracts`. Ticari NDA/SaaS/tedarik kloz kıyası için uygun değildir.
 - **Yabancı ülke araçları** (`eu_`, `uk_`, `de_` …) — yalnız yabancı hukuka tabi sözleşme varsa; önce `status`.
 - **CLM (Ironclad vb.), e-imza (DocuSign vb.), belge deposu (Drive, SharePoint, Box), Slack** — deneyebiliyorsan dene; deneyemiyorsan ⚪. KEP için MCP yoktur; KEP adresi varsa `## House style`'a not et.
 
@@ -773,24 +773,24 @@ Karşı taraf tüzel kişiyi resmî yaptırım listelerinde tara (`yaptirim-tara
 Eşleşme varsa → Adım 3b'ye geçme, dur ve [Uyum Direktörü]'e eskalasyon öner.
 
 ### 3b. Ülke bazlı mevzuat kontrol
-Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yerel mevzuata tabi olabilir. İlgili rehberi oku ve gerekirse WebFetch ile bağımlı kanunu çek:
+Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yerel mevzuata tabi olabilir. İlgili rehberi oku ve bağımlı kanunu önce ArthurLegal MCP'nin ülke önekli aracıyla çek (`uk_`, `eu_`, `de_`, `jp_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `az_`); öneki olmayan ülkede rehberdeki WebFetch yolu yedektir:
 
 | Karşı taraf ülkesi | Rehber | Kritik kontrol |
 |---|---|---|
-| 🇬🇧 İngiltere | `uk-legislation-rehberi.md` | Arbitration Act 1996, UCTA 1977 s.3 |
+| 🇬🇧 İngiltere | ArthurLegal MCP (`uk_`) · `uk-legislation-mcp-rehberi.md` | Arbitration Act 1996, UCTA 1977 s.3 |
 | 🇺🇸 ABD | `us-legislation-rehberi.md` + `courtlistener-rehberi.md` | CISG opt-out, UCC Art.2, FAA §2 |
-| 🇩🇪 Almanya | `germany-legislation-rehberi.md` | BGB §307 standart şart denetimi, HGB |
+| 🇩🇪 Almanya | ArthurLegal MCP (`de_`) · `de-eli-mcp-rehberi.md` | BGB §307 standart şart denetimi, HGB |
 | 🇫🇷 Fransa | `france-legislation-rehberi.md` | Code civil m.1171 (haksız şart), m.1442 |
 | 🇨🇭 İsviçre | `switzerland-caselaw-rehberi.md` | IPRG m.178 tahkim sözleşmesi, OR m.19 |
 | 🇮🇹 İtalya | `italy-legislation-rehberi.md` | Codice Civile, D.Lgs. 231/2001 |
-| 🇯🇵 Japonya | `japan-legislation-rehberi.md` | Companies Act, FEFTA (yabancı taraf ise) |
+| 🇯🇵 Japonya | ArthurLegal MCP (`jp_`) · `japan-egov-api-rehberi.md` | Companies Act, FEFTA (yabancı taraf ise) |
 | 🇳🇱 Hollanda | **`nl-rechtspraak-mcp-rehberi.md`** | BW Boek 6 (borçlar), Boek 2 (şirketler) — holding yapılarının varsayılan yargı çevresi |
 | 🇵🇱 Polonya | **`pl-sejm-mcp-rehberi.md`** | Kodeks cywilny, KSH; **akt statüsü** (`obowiązujący`) atıfın parçası |
 | 🇦🇹 Avusturya | **`at-ris-mcp-rehberi.md`** | ABGB, AktG/GmbHG; Konkurrenzklausel için OGH içtihadı |
 | 🇮🇪 İrlanda | **`ie-statutebook-mcp-rehberi.md`** | Companies Act 2014; AB içi common law forumu |
 | 🇫🇮 Finlandiya | **`fi-finlex-mcp-rehberi.md`** | Osakeyhtiölaki; iki resmî dil eşit yetkili |
 | 🇪🇸 İspanya | **`es-boe-mcp-rehberi.md`** | Código Civil, LSC; LNG terminal erişimi (Ley 34/1998) |
-| 🇪🇺 AB şirketi | `eu-legislation-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
+| 🇪🇺 AB şirketi | ArthurLegal MCP (`eu_`) · `eurlex-cellar-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
 | 🇦🇿 Azerbaycan | ArthurLegal MCP (`az_`) + model | Azerbaycan hukuku — özel dikkat |
 
 Çekilen kanunlara `[DE Mevzuat — ...]` / `[UK Legislation — ...]` vb. atıf koy.
@@ -801,9 +801,9 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 ## Adım 4 — İcra-edilebilirlik: governing law connector teyidi
 
 **Governing law**'u fiilen çek:
-- İngiliz hukuku → `uk-legislation-rehberi.md` → `legislation.gov.uk` WebFetch
+- İngiliz hukuku → ArthurLegal MCP `uk_search_legislation` / `uk_get_section` (`uk-legislation-mcp-rehberi.md`); yedek: `legislation.gov.uk` WebFetch (`uk-legislation-rehberi.md`)
 - ABD hukuku → `us-legislation-rehberi.md` + `courtlistener-rehberi.md` → citation verification zorunlu
-- Alman hukuku → **de-eli MCP** (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
+- Alman hukuku → ArthurLegal MCP (`de_`): madde metni `de_gesetz_ara` → `de_norm_getir`, künye ve ELI `de_search` (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` WebFetch ile bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
 - Hollanda hukuku → **nl-rechtspraak MCP** (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
 - Polonya hukuku → **pl-sejm MCP** (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği
 - Avusturya hukuku → **at-ris MCP** (`at-ris-mcp-rehberi.md`) ⚠️ Rechtssatz karar değildir
@@ -812,7 +812,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 - İspanya hukuku → **es-boe MCP** (`es-boe-mcp-rehberi.md`) ⚠️ konsolide ≠ yayımlandığı hâl
 - Fransız hukuku → `france-legislation-rehberi.md` → Légifrance
 - İsviçre hukuku → `switzerland-caselaw-rehberi.md` → OpenCaseLaw.ch MCP + Fedlex
-- AB hukuku → `eu-legislation-rehberi.md` → EUR-Lex CELEX
+- AB hukuku → ArthurLegal MCP `eu_search_eu_law` → `eu_get_document_text` (CELEX; yürürlük `eu_get_metadata`; `eurlex-cellar-rehberi.md`)
 - Türk hukuku → ArthurLegal MCP (`tr_`) (MÖHUK m.24 — hukuk seçimi)
 
 **Tahkim seat** ayrıca kontrol et: seat ülkesinin tahkim mevzuatı arbitral prosedürü yönetir.
@@ -827,12 +827,12 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 Hüküm/karar Türkiye'de icra edilecekse her iki yol için:
 
 ### 5a. Yabancı mahkeme kararı — MÖHUK m.50-59
-Tenfiz şartları (m.54):
+Tenfiz şartları (m.50/1 ve m.54):
 1. **Mütekabiliyet** — karşı taraf devleti TR kararlarını tanıyor mu? `[verify]`
 2. **Kamu düzeni** — karar TR kamu düzenine aykırı mı? (nişan bozma, faiz vs.)
 3. **Savunma hakkı** — yargılamada usul ihlali var mı?
 4. **Münhasır yetki** — TR mahkemelerinin münhasır yetkisi söz konusu mu? (taşınmaz, miras)
-5. **Kesinleşme** — karar kesinleşmiş mi?
+5. **Kesinleşme** — karar verildiği devletin kanunlarına göre kesinleşmiş mi? (m.50/1)
 
 ### 5b. Yabancı hakem kararı — NY Konvansiyonu + MÖHUK m.60-62
 NY Konvansiyonu Madde V ret gerekçeleri (m.62 kapıları):
@@ -858,7 +858,7 @@ Governing law ≠ seat ≠ counterparty ülkesi ise her katman için:
 ```
 Katman 1 — Governing law [örn. İngiliz hukuku]:
   → Maddi hukuk: sözleşme yorumu, sorumluluk, fesih [Adım 4]
-  → Connector: UK Legislation WebFetch
+  → Connector: ArthurLegal MCP (`uk_`)
 
 Katman 2 — Arbitration seat [örn. Cenevre/İsviçre]:
   → Usul hukuku: tahkim yürütmesi, delil, hakem reddi
@@ -866,7 +866,7 @@ Katman 2 — Arbitration seat [örn. Cenevre/İsviçre]:
 
 Katman 3 — Karşı taraf ülkesi [örn. Almanya]:
   → Taraf yükümlülükleri: iş hukuku, veri, rekabet uyumu
-  → Connector: gesetze-im-internet.de / NeuRIS
+  → Connector: ArthurLegal MCP (`de_`: `de_gesetz_ara`, `de_norm_getir`, `de_search`)
 
 Katman 4 — Türkiye ([Müvekkil] taraf):
   → İcra ayağı: MÖHUK 5718 / NY Konvansiyonu [Adım 5]
@@ -1384,7 +1384,7 @@ Bildirimin "ulaşma" tarihinde mi, tebliğin "yapılmış sayıldığı" tarihte
 
 - **Ticari (B2B):** Otomatik yenileme sözleşme serbestisi içindedir. Ancak karşı tarafın standart metnine gömülü yenileme klozu genel işlem koşuluysa: karşı tarafa açıkça bilgi verilip kabul edilmedikçe yazılmamış sayılır (TBK m. 21), dürüstlük kuralına aykırı aleyhe hüküm konulamaz (m. 25). Kaçırılan pencerede bu bir pazarlık aracıdır, güvence değil.
 - **Tüketiciye satış (B2C abonelik):** tüketici, ticari veya mesleki olmayan amaçlarla hareket eden kişidir (6502 m. 3/1-k). Belirli süreli abonelik sözleşmesine sözleşmenin kendiliğinden uzayacağına ilişkin hüküm konulamaz; uzatma ancak tüketicinin talebi ya da onayıyla olur (m. 52/3). Belirsiz süreli ya da bir yıldan uzun belirli süreli abonelikte tüketici gerekçesiz ve cezai şartsız her zaman feshedebilir; bildirim kâğıt üzerinde ya da kalıcı veri saklayıcısıyla yeterlidir (m. 52/4). Satış tarafı B2C kayıtlarında `renewal_mechanism`'e "otomatik uzama yasak — onay gerekir" yaz. Yönetmeliğin güncel metni: `tr_mevzuat_ara(query="Abonelik Sözleşmeleri Yönetmeliği", types=["YONETMELIK"])`.
-- **Örtülü sürdürme:** süre bitip taraflar ilişkiyi sürdürürse sözleşme belirsiz süreliye dönüşebilir — kira (TBK m. 327/2) ve acentelik (TTK m. 121/2) için açık hüküm var; acentelikte belirsiz süreli sözleşme üç ay önceden ihbarla feshedilir (m. 121/1). **TBK'da belirsiz süreli sürekli sözleşmelerin olağan feshine ilişkin tek bir genel madde yoktur;** sözleşmede fesih hükmü yoksa süre ve usul **tartışmalı — içtihadı kontrol et**: `tr_ictihat_semantik_ara(query="belirsiz süreli sürekli borç ilişkisinin olağan feshi makul bildirim süresi")`. Böyle kayıtlarda `renewal_mechanism: "belirsiz süreli — fesih süresi teyitsiz"` yaz.
+- **Örtülü sürdürme:** süre bitip taraflar ilişkiyi sürdürürse sözleşme belirsiz süreliye dönüşebilir — kira (TBK m. 327/2) ve acentelik (TTK m. 121/2) için açık hüküm var; acentelikte belirsiz süreli sözleşme üç ay önceden ihbarla feshedilir (m. 121/1). **TBK'da belirsiz süreli sürekli sözleşmelerin olağan feshine ilişkin tek bir genel madde yoktur;** sözleşmede fesih hükmü yoksa süre ve usul **tartışmalı — içtihadı kontrol et**: `tr_ictihat_semantik_ara(initial_keyword="belirsiz süreli sözleşme fesih bildirim süresi", query="belirsiz süreli sürekli borç ilişkisinin olağan feshi makul bildirim süresi")`. Böyle kayıtlarda `renewal_mechanism: "belirsiz süreli — fesih süresi teyitsiz"` yaz.
 
 ## Modlar
 
@@ -1804,9 +1804,15 @@ counterparty:         [ad]
 agreement:            [başlık]
 signed_date:          [ISO tarih]
 initial_term_end:     [ISO tarih]
+current_term_end:     [ISO tarih — ilk dönemde initial_term_end ile aynı; her yenilemede ileri alınır]
 renewal_mechanism:    [ör. "auto-renew annual"]
 notice_period_days:   [tam sayı]
-cancel_by_effective:  [ISO tarih — initial_term_end eksi notice_period_days]
+notice_method:        [noter / taahhütlü mektup / telgraf / KEP / e-posta / portal / sözleşme m. X]
+transit_buffer_days:  [tam sayı]
+cancel_by_calendar:   [ISO tarih — current_term_end eksi notice_period_days]
+cancel_by_effective:  [ISO tarih — gerekiyorsa son iş gününe geri çekilmiş]
+send_by_effective:    [ISO tarih — cancel_by_effective eksi transit_buffer_days]
+cancel_by_provenance: "[model hesabı — fesih bildirimi klozuyla teyit et]"
 price_on_renewal:     [yazıldığı gibi]
 annual_value:         [tam sayı, belirtilmişse]
 business_owner:       [e-posta, biliniyorsa]
@@ -1814,7 +1820,7 @@ clm_id:               [varsa]
 status:               active
 ```
 
-Belirlenemeyen alanı boş bırak ve hangilerinin eksik olduğunu yaz (`clm_id`, `annual_value`, `business_owner` çoğu zaman insandan gelir). Bildirim yönteminin TTK m. 18/3'e uyup uymadığını kayıt notuna ekle.
+Tarihler renewal-tracker'ın "Son gün hesabı" ve "Bildirim şekli ve tampon" bölümlerine göre hesaplanır; `cancel_by_*` daima `current_term_end`'den çıkar. Belirlenemeyen alanı boş bırak ve hangilerinin eksik olduğunu yaz (`clm_id`, `annual_value`, `business_owner` çoğu zaman insandan gelir). Bildirim yönteminin TTK m. 18/3'e uyup uymadığını kayıt notuna ekle.
 
 **escalation-flagger'a:** Bir SaaS kontrolü `## Escalation`'daki "asla kabul etme" ya da eskalasyon tetikleyicisine düşerse `/commercial-legal:escalation-flagger` yönlendirir.
 

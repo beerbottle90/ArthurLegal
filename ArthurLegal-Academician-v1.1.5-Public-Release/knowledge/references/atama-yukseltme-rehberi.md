@@ -29,7 +29,7 @@ Akademisyenlerin en sık karıştırdığı nokta:
 
 | Kadro | Yasal çerçeve (özet) |
 |---|---|
-| **Dr. Öğretim Üyesi** | Doktora / uzmanlık tamamlanmış olmak; yabancı dil; üniversitenin asgari ölçütleri. Süreli atama, uzatmalı. |
+| **Dr. Öğretim Üyesi** | Doktora, tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da belirli sanat dallarında yeterlik (2547 m. 23/b); üniversitenin YÖK onaylı ek koşulları, yabancı dil bunlar arasında olabilir (m. 23/c). En çok dört yıl süreli atama, yeniden atanabilir (m. 23/a). |
 | **Doçent** | ÜAK doçentlik unvanı (veya denklik). Kadro için üniversite ölçütü ayrıca aranır. |
 | **Profesör** | Doçent unvanından sonra ilgili alanda belirli bir süre çalışmış olmak; alanında uluslararası düzeyde özgün eserler; bir **başlıca araştırma eseri** sunmak. |
 

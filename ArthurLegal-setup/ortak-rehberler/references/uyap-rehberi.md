@@ -78,9 +78,9 @@ Karşı tarafa tebligat **UYAP/UETS (e-Tebligat — Tebligat K. m. 7/a)** üzeri
 | Karşı taraf vekili UYAP üzerinden değil fiziksel sunmuş | Mahkemenin kabulu vardır ama dış vekilimiz fiziksel kopyaya da bakmalı |
 | e-Duruşma talep ettik ama mahkeme reddetti | Fiziksel duruşma gerekli; dış vekil İstanbul'dan {{AL_TESIS}}'ya gidiyor — maliyet artar |
 
-## ArthurLegal MCP (`tr_`) — UYAP entegre
+## ArthurLegal MCP (`tr_`) — emsal karar arşivi
 
-ArthurLegal MCP (`tr_`)'nin **Emsal (UYAP)** aracı UYAP arşivindeki emsal kararlara erişir:
+`tr_ictihat_ara`, Bedesten'deki yerel hukuk ve istinaf (BAM) hukuk kararlarını arar; UYAP'a bağlanmaz:
 
 ```
 tr_ictihat_ara(
@@ -94,7 +94,7 @@ Bu **karar arşividir**, dava durum sorgulama değildir. Dava durum için her za
 
 ## {{AL_KURUM}}-özel notlar
 
-- **{{AL_TESIS}} İş Mahkemesi** ve **Karşıyaka Asliye Hukuk** — UYAP destekli ama bazı duruşmalar fiziksel yapılır; İzmir'deki yerel vekil önemli.
+- **{{AL_TESIS}} İş Mahkemesi** ve **Asliye Hukuk** — UYAP destekli ama bazı duruşmalar fiziksel yapılır; tesisin bulunduğu ildeki yerel vekil önemli.
 - **Ankara Danıştay** — tamamen UYAP üzerinden; yazılı yargı ağırlıklı.
 - **İstanbul Anadolu ATM** — UYAP + duruşma karması.
 

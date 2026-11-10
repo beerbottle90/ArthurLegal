@@ -26,7 +26,7 @@
 ## Hükmün açıklanmasının geri bırakılması (7589 s.K.)
 
 - 7589 s.K. (RG 31.07.2026) CMK m. 231/5-14'ü yeniden düzenledi: hükmolunan ceza iki yıl veya daha az hapis ya da adli para cezasıysa HAGB'ye karar verilebilir; koşullar arasında zararın aynen iade, eski hâle getirme veya tazmin suretiyle tamamen giderilmesi sayılır; denetim süresi beş yıldır; HAGB kararına karşı istinaf yoluna başvurulabilir (CMK m. 231/5, 231/6, 231/8, 231/12).
-- Aynı fıkralar hakkında AYM'nin 10.07.2025 tarihli, E. 2024/98, K. 2025/149 sayılı iptal kararı metin dipnotuna göre 30.09.2026'da yürürlüğe girer. İki olayın derdest dosyalara etkisini hâkim değerlendirir; `ictihat-ve-aym-izleyici` ve `/ceza-hakim:hagb-degerlendirme` ile birlikte ele alın.
+- Aynı fıkralar hakkında AYM'nin 10.07.2025 tarihli, E. 2024/98, K. 2025/149 sayılı iptal kararı metin dipnotuna göre 30.09.2026'da yürürlüğe girdi. İki olayın derdest dosyalara etkisini hâkim değerlendirir; `ictihat-ve-aym-izleyici` ve `/ceza-hakim:hagb-degerlendirme` ile birlikte ele alın.
 - Çocuklar hakkında HAGB'de denetim süresi üç yıldır; 7593 s.K. ile yönlendirme tedbirleri de uygulanabilir (5395 s.K. m. 23).
 
 ## Kritik süreler

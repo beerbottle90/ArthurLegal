@@ -53,8 +53,8 @@ BİRİNCİL (mevzuat, içtihat)  >  EMSAL (imzalı sözleşme)  >  DOKTRİN (aka
 | **TR kanun maddesi doğrulama (teslim öncesi, belge gövdesi dâhil)** | **ArthurLegal MCP `tr_mevzuat_madde_getir`** | **ZORUNLU GEÇİŞ** | `mevzuat-mcp-rehberi.md` bölüm 9 |
 | **Karşı taraf kimliği (LEI, ana ortak)** | **GLEIF** | **TARAMA ÖN ADIMI** | `gleif-rehberi.md` |
 | UK mevzuatı (yapılandırılmış) | ArthurLegal MCP (`uk_`) | BİRİNCİL | `uk-legislation-mcp-rehberi.md` |
-| AB tüzük/direktif/ABAD kimlikleme | EUR-Lex Cellar | BİRİNCİL | `eurlex-cellar-rehberi.md` |
-| JP mevzuatı (as-of-date) | e-Gov API v2 | BİRİNCİL | `japan-egov-api-rehberi.md` |
+| AB tüzük/direktif/ABAD kimlikleme | ArthurLegal MCP (`eu_`) | BİRİNCİL | `eurlex-cellar-rehberi.md` |
+| JP mevzuatı (as-of-date) | ArthurLegal MCP (`jp_`) | BİRİNCİL | `japan-egov-api-rehberi.md` |
 | FR mevzuatı | DILA açık veri | BİRİNCİL | `france-dila-rehberi.md` |
 | AİHM kararı | HUDOC | BİRİNCİL | `echr-hudoc-rehberi.md` |
 | ABD şirket beyanı / imzalı sözleşme eki | SEC EDGAR | EMSAL | `edgar-rehberi.md` |

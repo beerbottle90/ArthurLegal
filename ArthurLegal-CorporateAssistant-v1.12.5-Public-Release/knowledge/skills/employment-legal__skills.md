@@ -45,7 +45,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -107,7 +107,7 @@ Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, büro/şirket
 
 ## Kurulum kapsamı
 
-Çalışma klasörü kullanıcının ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
+Çalışma klasörü kullanıcının ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -1609,7 +1609,7 @@ argument-hint: "[izni anlatın — çalışan/rol, izin türü, işyeri, başlan
    | Analık — doğum öncesi | Tahmini doğumdan **8 hafta** önce (çoğulda 10); hekim onayı ve işçinin isteğiyle doğuma 2 hafta kalana kadar çalışabilir, çalışılan süre doğum sonrasına eklenir | 4857 m. 74/1 |
    | Analık — doğum sonrası | Doğumdan itibaren **16 hafta**; erken doğumda kullanılamayan doğum öncesi süre eklenir; bitişte işçinin talebini al: yarım çalışma ücretsiz izni (ilk doğumda 60, ikincide 120, sonrakilerde 180 gün; çoğulda +30; engelli doğumda 360) ya da 6 aya kadar ücretsiz izin; süt izni çocuk 1 yaşına kadar günde 1,5 saat | 4857 m. 74/1, 74/2, 74/6, 74/7 |
    | Kısmi süreli çalışma talebi | İşçi en az **1 ay önce** yazılı bildirir; talep karşılanır; mecburi ilköğretim çağının başladığı tarihi izleyen ay başına kadar | 4857 m. 13/5 |
-   | Askerlik / kanuni ödev | İki ayrı saat: (a) sözleşme ayrılıştan **2 ay** sonra (1 yılı aşan her yıl için +2 gün, toplam en çok 90 gün) işverence feshedilmiş sayılır — en az 1 yıl kıdem şartı; (b) ödev bitince işçinin **2 ay** içinde işe dönüş başvurusu | 4857 m. 31 |
+   | Silah altına alınma (muvazzaf askerlik hariç) / kanuni ödev | İki ayrı saat: (a) muvazzaf askerlik dışında manevra ya da başka bir sebeple silah altına alınmada veya kanundan doğan çalışma ödevinde sözleşme ayrılıştan **2 ay** sonra (1 yılı aşan her yıl için +2 gün, toplam en çok 90 gün) işverence feshedilmiş sayılır — en az 1 yıl kıdem şartı; (b) herhangi bir askeri ya da kanuni ödev bitince işçinin **2 ay** içinde işe dönüş başvurusu (m. 31/4) | 4857 m. 31 |
    | Mazeret izni (ücretli) | Evlenme, evlat edinme, ana/baba/eş/kardeş/çocuk ölümü 3 gün; eşin doğumu **10 gün**; %70+ engelli ya da süreğen hastalıklı çocuk için yılda 10 güne kadar (bir ebeveyn) — kaydet, uyarı yok | 4857 ek m. 2 |
    | Uzun izin (6 aydan fazla) | Dönüşten önce İSG bilgi yenileme eğitimi | 6331 m. 17/4 |
 

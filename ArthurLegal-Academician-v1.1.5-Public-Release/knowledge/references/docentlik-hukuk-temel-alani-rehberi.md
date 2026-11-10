@@ -85,12 +85,13 @@ Alternatif olarak, ulusal makale koşulunu sağlayamayan aday için **uluslarara
 
 ## AHCI ve quartile — sık yapılan hata
 
-Hukuk, Web of Science tarafında büyük ölçüde **AHCI** (Arts & Humanities Citation Index)
-kapsamındadır. **AHCI kayıtlarına Impact Factor ve quartile (Q1–Q4) atanmaz.**
+JCR 2023'ten beri **AHCI** (Arts & Humanities Citation Index) ve ESCI dergileri de Impact Factor
+alır. Quartile (Q1–Q4) ise JCR 2024'ten beri bilim ve sosyal bilim kategorilerinde tek sıralamayla
+verilir; sanat ve beşeri bilimlere özgü kategorilerde sıra ve quartile **verilmez**.
 
 Bu nedenle:
-- "AHCI Q1 makale" **diye bir şey yoktur.**
-- Quartile puanlaması yalnızca IF atanan indeksler (SCIE/SSCI) için anlamlıdır.
+- Yalnız sanat ve beşeri bilim kategorisinde yer alan bir AHCI dergisinin quartile'ı yoktur.
+- Quartile'ı dergi adından ya da indeksinden çıkarma; derginin JCR kaydından teyit et.
 - Bir dergi hem SSCI hem AHCI'da olabilir; hangisinden puanlanacağı PDF'in kuralına bağlıdır.
 
 → `bibliyometri-rehberi.md`
@@ -114,7 +115,7 @@ Doçentlik başvurusunda merkezî yabancı dil sınavından asgari bir puan alma
 |---|---|
 | Aynı çalışmayı iki kategoride saymak | Reddedilir; bir çalışma tek kategoride puanlanır |
 | Doktora öncesi yayını doktora sonrası göstermek | 🔴 Beyan hatası |
-| AHCI makalesine quartile atfetmek | Puan hesabı yanlış |
+| JCR'de teyit etmeden quartile atfetmek | Puan hesabı yanlış |
 | Zorunlu koşulu puanla ikame etmeye çalışmak | Başvuru reddedilir |
 | Yağmacı dergideki yayına güvenmek | Kalem geçersiz sayılabilir → `yagmaci-dergi-rehberi.md` |
 | Tezden üretilmiş yayını beyan etmemek | Tekrar yayım şüphesi → `yayin-etigi-rehberi.md` |

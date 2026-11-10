@@ -45,7 +45,7 @@ Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, büro/şirket
 
 ## Kurulum kapsamı
 
-Çalışma klasörü kullanıcının ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
+Çalışma klasörü kullanıcının ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -216,7 +216,7 @@ Kullanıcı görüşmede somut bir iş söylediyse bu listeyi atla. Uygunsa ekle
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

@@ -91,7 +91,7 @@
 **Türk pratiği farkları:**
 - **R&W sigortası** sınırlı — pazar küçük, prim yüksek
 - **Earn-out** tartışmalı — Türk mahkemelerinde uygulama deneyimi sınırlı
-- **Foreign investment screening** — yabancı yatırımcı için Yabancı Yatırımcı Direkt Yatırımlar K. (4875) — onay genelde formalite
+- **Foreign investment screening** — Doğrudan Yabancı Yatırımlar Kanunu (4875): yatırım serbesttir (m. 3/a), izin ve onay sistemi bilgilendirme sistemine dönüşmüştür (m. 1, m. 4); sektörel lisans ve izinler ayrıca kontrol edilir
 - **Rekabet Kurumu onayı** — 2010/4 sayılı Tebliğ eşikleri (doğrulanmadı — güncel TL eşiklerini ArthurLegal MCP'den teyit edin); eşik altında onay yok
 
 ---

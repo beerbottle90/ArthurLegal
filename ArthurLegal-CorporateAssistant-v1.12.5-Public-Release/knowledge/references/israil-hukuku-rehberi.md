@@ -5,10 +5,9 @@
 > Çalışma modeli: **kullanıcı-yapıştırma birincil + WIPO Lex yardımcı** +
 > `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` disiplini.
 >
-> **[ŞİRKET ADI] neden gerekli?** `company-profile.md` A.5: **NewMed Energy + bp ile İsrail
-> offshore ortak arama programı** — detaylar anlaşıldı, yüklenici listesi hazırlandı
-> `[AR-2024]`. Offshore petrol/gaz lisans rejimi, ihracat kısıtları ve İsrail sözleşme
-> hukuku katmanı bu dosyalarda gündeme gelir.
+> **Ne zaman gerekir?** İsrail bağlantılı iş varsa (ör. Doğu Akdeniz offshore arama ortaklığı):
+> offshore petrol/gaz lisans rejimi, ihracat kısıtları ve İsrail sözleşme hukuku katmanı bu
+> dosyalarda gündeme gelir.
 
 ---
 
@@ -37,7 +36,7 @@ kullanıldığında "non-binding translation" notu düş.
 | Doğal kaynak vergisi | Petroleum Profits Taxation Law 5771-2011 ("Sheshinski vergisi") | windfall/levy katmanı — ekonomik modellemede kritik 🟠 |
 | Yabancı yatırım taraması | Hükümet içi danışma komitesi mekanizması | enerji altyapısında devlet onay katmanı `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` |
 
-## Offshore arama programı pratik kontrol listesi (NewMed + bp dosyaları)
+## Offshore arama programı pratik kontrol listesi
 
 1. **Lisans zinciri:** license → lease dönüşüm şartları ve süreleri; Commissioner onayı
    gereken devirler (farm-in/out)

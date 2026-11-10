@@ -41,9 +41,9 @@ platformu. ABD'nin en büyük açık mahkeme kararı arşivi.
 
 ## Bağlantı
 
-**Claude Code:** İlgili plugin'lerin `.mcp.json` dosyasında tanımlı:
-```jsonc
-"CourtListener": { "type": "http", "url": "https://courtlistener.com/api/rest/v4/" }
+**Claude Code:** Bağlayıcı elle eklenir (MCP adresi `https://mcp.courtlistener.com/`; REST kökü değildir):
+```
+claude mcp add --transport http CourtListener https://mcp.courtlistener.com/
 ```
 İlk kullanımda OAuth izin akışı tetiklenir.
 

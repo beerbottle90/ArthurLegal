@@ -30,7 +30,7 @@
 ## Sistem & araçlar
 
 - **UYAP modülleri:** [DOLDUR]
-- **ArthurLegal MCP (`tr_`) bağlı mı:** [DOLDUR — Evet/Hayır] (aynı connector tapu-kadastro `tkgm_` araçlarını da taşır)
+- **ArthurLegal MCP (`tr_`) bağlı mı:** [DOLDUR — Evet/Hayır] (claude.ai connector'ında tapu-kadastro `tkgm_` araçları da gelir; Claude Desktop yerel kurulumunda tapu araçları ayrı ArthurLegal Tapu modülündedir, öneksiz)
 
 ## Özel notlar
 

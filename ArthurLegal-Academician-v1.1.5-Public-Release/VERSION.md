@@ -37,7 +37,7 @@ Tam iki dilli (TR + EN). Kurulum: `KURULUM.md` (TR) + `INSTALLATION.md` (EN).
 
 ## MCP bağlayıcıları
 
-ArthurLegal MCP (`tr_` Türkiye + 14 yargı çevresi + `scholar_` doktrin, auth yok) · CourtListener · Fedlex · OpenCaseLaw.ch · TR Legal MCP (isteğe bağlı)
+ArthurLegal MCP (`tr_` Türkiye + 11 yargı çevresi + `scholar_` doktrin, auth yok) · CourtListener · Fedlex · OpenCaseLaw.ch · TR Legal MCP (isteğe bağlı)
 
 ## Anahtarsız REST
 

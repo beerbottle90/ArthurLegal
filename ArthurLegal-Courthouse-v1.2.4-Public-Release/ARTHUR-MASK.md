@@ -216,5 +216,6 @@ claude.ai'deki bağlantılar Anthropic'in bulutundan çağrılır ve bulut, bilg
 çalışır.
 
 **Kaynak kodu nerede?**
-ArthurMask yalnız kurulum dosyası olarak dağıtılır. İçerdiği üçüncü taraf açık kaynak
+ArthurMask yalnız kurulum dosyası olarak dağıtılır. Kaynak kodu `https://github.com/beerbottle90/arthur-mask`
+adresinde incelenebilir (ticari olmayan kullanım lisansı; açık kaynak değildir). İçerdiği üçüncü taraf açık kaynak
 bileşenlerin bildirimleri kurulum klasöründedir; bkz. [ATTRIBUTION.md](ATTRIBUTION.md).

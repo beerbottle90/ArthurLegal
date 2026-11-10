@@ -1,10 +1,10 @@
 # Hollanda Hukuku — Kullanım Rehberi (açık API yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **`nl-rechtspraak MCP`** → `references/nl-rechtspraak-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `nl_` araçları** (kurulumla gelir) → `references/nl-rechtspraak-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
-> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Bu dosya **WebFetch yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.
 > Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
 > **`(MCP kullanılmadı)`** kaydını düş.
 
@@ -115,18 +115,16 @@ https://data.rechtspraak.nl/Waardelijst/Instanties       ✅ 200
 
 ### Anahtar kelimeyle NL kararı bulmak gerekiyorsa
 
-Açık API veremez. Sıralama:
-1. **Konu + tarih + merci** ile daralt (`subject` + `creator` + `date`), sonra
+Resmî açık API veremez; kelime araması ArthurLegal MCP'nin yerel indeksinde yapılır. Sıralama:
+1. **`nl_search_caselaw`**: yerel indekste kelime ve kavram araması. İndeks dardır (yalnız taranan
+   dönem): yanıttaki `index_coverage` alanını oku; sonuç çıkmaması kararın olmadığını göstermez.
+2. Kapsam dışıysa **konu + tarih + merci** ile daralt (`subject` + `creator` + `date`), sonra
    `content` ile tek tek oku — dar bir sorgu için uygulanabilir.
-2. **LexScholar MCP** — NL doktrini kararlara atıf verir; ECLI'yi oradan yakala,
+3. **`scholar_search_legal_scholarship`** — NL doktrini kararlara atıf verir; ECLI'yi oradan yakala,
    sonra `content` ile tam metni çek.
-3. **Kullanıcıdan ECLI iste.**
-4. ⚠️ `uitspraken.rechtspraak.nl/api/zoek` **kullanma** — POST isteği bir duyuru
+4. **Kullanıcıdan ECLI iste.**
+5. ⚠️ `uitspraken.rechtspraak.nl/api/zoek` **kullanma** — POST isteği bir duyuru
    sayfasına yönlendiriyor (30.08.2026), kullanılabilir değil.
-
-> 🔧 **MCP fırsatı:** NL içtihadında serbest metin/semantik arama eksikliği,
-> kendi indeksini kuran bir `nl-rechtspraak-mcp` için **en güçlü gerekçedir**.
-> Bkz. `MCP-ROADMAP.md`.
 
 ---
 

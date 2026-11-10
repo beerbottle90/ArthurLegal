@@ -124,7 +124,6 @@ ADIM 3: Ticaret kolu eşiği aşıyorsa → yıllık gayrı-finansal rapor yük�
 - `switzerland-caselaw-rehberi.md` — İsviçre içtihat + Fedlex + fedlex-connector MCP
 - `yaptirim-tarama-rehberi.md` — [ŞİRKET ADI] yaptırım prosedürü
 - `karsilastirmali-hukuk-rehberi.md` — governing-law seçimi (CH vs Singapur)
-- energy-finance: `commodity-trade-compliance` skill (bu rehberi operasyonel kullanır)
 
 ---
 

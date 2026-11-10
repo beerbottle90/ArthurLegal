@@ -184,7 +184,7 @@ Konu: [VUK/KDV/KV/ÖTV tarhiyatı] — değerlendirme ve önerilen yol
 
 ## Matter workspaces
 
-Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
+Cross-matter OFF zorunlu. Konum: `~/.claude/plugins/config/claude-for-legal/matters/<müvekkil-slug>__<matter-slug>/`
 
 ---
 

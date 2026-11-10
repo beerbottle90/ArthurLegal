@@ -41,17 +41,17 @@ numarası üretmeye **yapısal olarak eğilimlidir**. Bu skill o eğilime karş�
 | TR mevzuat | ArthurLegal MCP (`tr_`), `tr_mevzuat_madde_getir` | `[ArthurLegal TR — kanun m. X — GG.AA.YYYY]` |
 | Yargıtay / Danıştay / BAM | ArthurLegal MCP (`tr_`) | `[ArthurLegal TR — kurum — Esas/Karar — GG.AA.YYYY]` |
 | AYM (norm / bireysel) | ArthurLegal MCP (`tr_`) | `[ArthurLegal TR — AYM — Esas/Karar veya BB no — GG.AA.YYYY]` |
-| Resmî Gazete | WebFetch resmigazete.gov.tr | `[Resmî Gazete — sayı/tarih]` |
+| Resmî Gazete | ArthurLegal MCP (`tr_`), `tr_resmi_gazete_fihrist` (gün) → `tr_resmi_gazete_getir` (metin); yedek: WebFetch resmigazete.gov.tr | `[Resmî Gazete — sayı/tarih]` |
 | ABD içtihadı | CourtListener MCP | `[CourtListener — mahkeme — citation — GG.AA.YYYY]` |
 | İsviçre içtihadı / doktrin | OpenCaseLaw.ch MCP | `[OpenCaseLaw.ch — mahkeme — ref — GG.AA.YYYY]` |
 | İsviçre federal mevzuat | Fedlex MCP | `[Fedlex — SR no — GG.AA.YYYY]` |
-| AB hukuku | EUR-Lex (CELEX) | `[EUR-Lex — CELEX no — GG.AA.YYYY]` |
+| AB hukuku | ArthurLegal MCP (`eu_`), `eu_get_metadata` / `eu_get_document_text` (CELEX) | `[EUR-Lex — CELEX no — GG.AA.YYYY]` |
 | AİHM | HUDOC (App. no) | `[HUDOC — App. no — GG.AA.YYYY]` |
 | Akademik makale (DOI) | Crossref API | `[Crossref — DOI — GG.AA.YYYY]` |
 | Akademik metadata | OpenAlex / Semantic Scholar | `[OpenAlex — ID — GG.AA.YYYY]` |
 | Açık erişim dergi | DOAJ | `[DOAJ — ISSN — GG.AA.YYYY]` |
 | Abonelik veritabanı | **erişim yok** | `UYARI: veri çekilemedi, teyidiniz gerekli: <abonelik veritabanının adresi>` |
-| Kitap / monografi | genellikle API yok | `[MANUEL DOĞRULAYIN — künye teyidi]` |
+| Kitap / monografi | genellikle API yok | `UYARI: veri çekilemedi, teyidiniz gerekli: <kütüphane kataloğu ya da yayınevi sayfası>` |
 
 Detay → `references/akademik-api-rehberi.md` · `references/ticari-veritabani-rehberi.md`
 

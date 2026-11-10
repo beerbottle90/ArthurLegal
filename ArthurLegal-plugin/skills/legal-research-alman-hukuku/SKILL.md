@@ -26,21 +26,25 @@ user-invocable: true
   Bu araç birincil kaynak verir, şerh vermez.
 - Başka bir yargı çevresinin hukuku için.
 
-## Araçlar (14)
+## Araçlar (17)
 
-**Mevzuat:** `de_search` · `de_get_act` · `de_get_text` · `de_list_publishers` ·
+**Kanun maddesi (gesetze-im-internet.de):** `de_gesetz_ara` · `de_norm_getir`
+**Mevzuat (NeuRIS):** `de_search` · `de_get_act` · `de_get_text` · `de_list_publishers` ·
 `de_recent_changes`
 **İçtihat (yedi federal mahkeme, TAM):** `de_rii_case_search` · `de_rii_get_case_text`
 **İçtihat (NeuRIS beta dilimi):** `de_case_search` · `de_get_decision` · `de_get_decision_text`
 **İçtihat (eyaletler + tam metin):** `de_oldp_case_search` · `de_oldp_get_case`
 **Parlamento:** `de_dip_search` · `de_dip_get_document`
+**Kapsam:** `de_coverage`
 
 ## Yöntem
 
 1. **İçtihatta önce `de_rii_*`.** Yedi federal mahkeme için RII resmî ve tamdır;
    NeuRIS içtihadı beta bir örneklemdir. Eyalet mahkemesi veya tam metin taraması
    gerekiyorsa `de_oldp_*`.
-2. **Mevzuatta** `de_search` → `de_get_act` (künye) → `de_get_text` (metin).
+2. **Mevzuatta** madde metni için `de_gesetz_ara` (kısaltma bilinmiyorsa) → `de_norm_getir(kanun="BGB", norm="823")`;
+   künye ve ELI için `de_search` → `de_get_act` → `de_get_text` (NeuRIS beta; BGB, HGB, ZPO gibi temel
+   kanunlar orada yoktur). Boş sonuçta `de_coverage`.
 3. Yürürlük tarihi tartışmalıysa `de_recent_changes` ile değişiklik zincirini gör.
 4. Gerekçe gerekiyorsa `de_dip_search` ile Drucksache'yi bul.
 

@@ -14,7 +14,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (on dört yargı çevresi tek uçta) |
+| **MCP endpoint** | `https://arthurlegal-mcp.fly.dev/mcp` — ArthurLegal MCP (Türkiye ve diğer yargı çevreleri tek uçta; güncel liste için `status`) |
 | **Araç öneki** | `contracts_` |
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (public endpoint) |
@@ -38,12 +38,12 @@ uzmanların işaretlediği kilit klozlar.
 
 | Yetenek | İçerik |
 |---|---|
-| Sözleşme arama | **5.125 sözleşme, 107 ülke, 141 emtia** — ülke/emtia/yıl/tür/şirket filtreli |
+| Sözleşme arama | **5.100'den fazla sözleşme, 120'den fazla ülke, 141 emtia** (güncel sayı: `contracts_count_contracts`, `contracts_list_countries`) — ülke/emtia/yıl/tür/şirket filtreli |
 | Künye (metadata) | Taraflar + hisse oranları, devlet tarafı, saha, sayfa sayısı, `source_url` |
 | **Kloz anotasyonları** | Uzman kilit kloz çıkarımları — tahkim, uygulanacak hukuk, stabilizasyon, süre, mali şartlar, çevre, yerel içerik |
 | Tam metin | OCR/tam metin (PDF sayfa penceresi, HTML→temiz metin) |
 | Taksonomi | Ülke / emtia / yıl / anotasyon kategorisi (84) sayımlı listeler |
-| Kardeş DB | `api.openlandcontracts.org` (arazi/tarım) — aynı API |
+| Kardeş DB | `openlandcontracts.org` (arazi/tarım; web sitesi açık, `api.openlandcontracts.org` alan adı çözülmüyor) |
 
 **Neden gerekli?**
 - **Sözleşme incelemesi:** PSA/JOA şartlarını (cost recovery, profit split,
@@ -137,7 +137,7 @@ Sözleşme oturumda **fiilen araçtan çekildiyse**:
 > işaretli. Sayılar 24.07.2026 keşif anına aittir; **canlı `contracts_search_contracts`
 > ile teyit et.**
 
-Bu tablo yalnız bir örnektir — aynı desen 107 ülkenin herhangi biri için
+Bu tablo yalnız bir örnektir — aynı desen kapsamdaki ülkelerin herhangi biri için
 çalışır (`contracts_list_countries` ile sayımları gör).
 
 ---
@@ -167,7 +167,7 @@ Bu tablo yalnız bir örnektir — aynı desen 107 ülkenin herhangi biri için
 |---|---|---|
 | ResourceContracts (web) | `https://www.resourcecontracts.org` | Manuel arama |
 | REST API | `https://api.resourcecontracts.org` | WebFetch (auth yok) |
-| OpenLandContracts (kardeş) | `https://api.openlandcontracts.org` | Arazi/tarım, aynı API |
+| OpenLandContracts (kardeş) | `https://openlandcontracts.org` | Arazi/tarım; yalnız web sitesi (`api.openlandcontracts.org` alan adı çözülmüyor, 10.11.2026) |
 | Sunucu repo | `https://github.com/beerbottle90/arthurlegal-mcp/tree/master/resourcecontracts-api` | Self-host |
 
 ---

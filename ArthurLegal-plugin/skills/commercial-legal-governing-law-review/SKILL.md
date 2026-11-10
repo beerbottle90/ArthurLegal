@@ -75,24 +75,24 @@ Karşı taraf tüzel kişiyi resmî yaptırım listelerinde tara (`yaptirim-tara
 Eşleşme varsa → Adım 3b'ye geçme, dur ve [Uyum Direktörü]'e eskalasyon öner.
 
 ### 3b. Ülke bazlı mevzuat kontrol
-Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yerel mevzuata tabi olabilir. İlgili rehberi oku ve gerekirse WebFetch ile bağımlı kanunu çek:
+Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yerel mevzuata tabi olabilir. İlgili rehberi oku ve bağımlı kanunu önce ArthurLegal MCP'nin ülke önekli aracıyla çek (`uk_`, `eu_`, `de_`, `jp_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `az_`); öneki olmayan ülkede rehberdeki WebFetch yolu yedektir:
 
 | Karşı taraf ülkesi | Rehber | Kritik kontrol |
 |---|---|---|
-| 🇬🇧 İngiltere | `uk-legislation-rehberi.md` | Arbitration Act 1996, UCTA 1977 s.3 |
+| 🇬🇧 İngiltere | ArthurLegal MCP (`uk_`) · `uk-legislation-mcp-rehberi.md` | Arbitration Act 1996, UCTA 1977 s.3 |
 | 🇺🇸 ABD | `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` + `courtlistener-rehberi.md` | CISG opt-out, UCC Art.2, FAA §2 |
-| 🇩🇪 Almanya | `germany-legislation-rehberi.md` | BGB §307 standart şart denetimi, HGB |
+| 🇩🇪 Almanya | ArthurLegal MCP (`de_`) · `de-eli-mcp-rehberi.md` | BGB §307 standart şart denetimi, HGB |
 | 🇫🇷 Fransa | `france-legislation-rehberi.md` | Code civil m.1171 (haksız şart), m.1442 |
 | 🇨🇭 İsviçre | `switzerland-caselaw-rehberi.md` | IPRG m.178 tahkim sözleşmesi, OR m.19 |
 | 🇮🇹 İtalya | `italy-legislation-rehberi.md` | Codice Civile, D.Lgs. 231/2001 |
-| 🇯🇵 Japonya | `japan-legislation-rehberi.md` | Companies Act, FEFTA (yabancı taraf ise) |
+| 🇯🇵 Japonya | ArthurLegal MCP (`jp_`) · `japan-egov-api-rehberi.md` | Companies Act, FEFTA (yabancı taraf ise) |
 | 🇳🇱 Hollanda | **`nl-rechtspraak-mcp-rehberi.md`** | BW Boek 6 (borçlar), Boek 2 (şirketler) — holding yapılarının varsayılan yargı çevresi |
 | 🇵🇱 Polonya | **`pl-sejm-mcp-rehberi.md`** | Kodeks cywilny, KSH; **akt statüsü** (`obowiązujący`) atıfın parçası |
 | 🇦🇹 Avusturya | **`at-ris-mcp-rehberi.md`** | ABGB, AktG/GmbHG; Konkurrenzklausel için OGH içtihadı |
 | 🇮🇪 İrlanda | **`ie-statutebook-mcp-rehberi.md`** | Companies Act 2014; AB içi common law forumu |
 | 🇫🇮 Finlandiya | **`fi-finlex-mcp-rehberi.md`** | Osakeyhtiölaki; iki resmî dil eşit yetkili |
 | 🇪🇸 İspanya | **`es-boe-mcp-rehberi.md`** | Código Civil, LSC; LNG terminal erişimi (Ley 34/1998) |
-| 🇪🇺 AB şirketi | `eu-legislation-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
+| 🇪🇺 AB şirketi | ArthurLegal MCP (`eu_`) · `eurlex-cellar-rehberi.md` | GDPR, AI Act, NIS2 uyum yükümlülüğü |
 | 🇦🇿 Azerbaycan | ArthurLegal MCP (`az_`) + model | Azerbaycan hukuku — özel dikkat |
 
 Çekilen kanunlara `[DE Mevzuat — ...]` / `[UK Legislation — ...]` vb. atıf koy.
@@ -103,9 +103,9 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 ## Adım 4 — İcra-edilebilirlik: governing law connector teyidi
 
 **Governing law**'u fiilen çek:
-- İngiliz hukuku → `uk-legislation-rehberi.md` → `legislation.gov.uk` WebFetch
+- İngiliz hukuku → ArthurLegal MCP `uk_search_legislation` / `uk_get_section` (`uk-legislation-mcp-rehberi.md`); yedek: `legislation.gov.uk` WebFetch (`uk-legislation-rehberi.md`)
 - ABD hukuku → `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` + `courtlistener-rehberi.md` → citation verification zorunlu
-- Alman hukuku → **de-eli MCP** (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
+- Alman hukuku → ArthurLegal MCP (`de_`): madde metni `de_gesetz_ara` → `de_norm_getir`, künye ve ELI `de_search` (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` WebFetch ile bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
 - Hollanda hukuku → **nl-rechtspraak MCP** (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
 - Polonya hukuku → **pl-sejm MCP** (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği
 - Avusturya hukuku → **at-ris MCP** (`at-ris-mcp-rehberi.md`) ⚠️ Rechtssatz karar değildir
@@ -114,7 +114,7 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 - İspanya hukuku → **es-boe MCP** (`es-boe-mcp-rehberi.md`) ⚠️ konsolide ≠ yayımlandığı hâl
 - Fransız hukuku → `france-legislation-rehberi.md` → Légifrance
 - İsviçre hukuku → `switzerland-caselaw-rehberi.md` → OpenCaseLaw.ch MCP + Fedlex
-- AB hukuku → `eu-legislation-rehberi.md` → EUR-Lex CELEX
+- AB hukuku → ArthurLegal MCP `eu_search_eu_law` → `eu_get_document_text` (CELEX; yürürlük `eu_get_metadata`; `eurlex-cellar-rehberi.md`)
 - Türk hukuku → ArthurLegal MCP (`tr_`) (MÖHUK m.24 — hukuk seçimi)
 
 **Tahkim seat** ayrıca kontrol et: seat ülkesinin tahkim mevzuatı arbitral prosedürü yönetir.
@@ -129,12 +129,12 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 Hüküm/karar Türkiye'de icra edilecekse her iki yol için:
 
 ### 5a. Yabancı mahkeme kararı — MÖHUK m.50-59
-Tenfiz şartları (m.54):
+Tenfiz şartları (m.50/1 ve m.54):
 1. **Mütekabiliyet** — karşı taraf devleti TR kararlarını tanıyor mu? `[verify]`
 2. **Kamu düzeni** — karar TR kamu düzenine aykırı mı? (nişan bozma, faiz vs.)
 3. **Savunma hakkı** — yargılamada usul ihlali var mı?
 4. **Münhasır yetki** — TR mahkemelerinin münhasır yetkisi söz konusu mu? (taşınmaz, miras)
-5. **Kesinleşme** — karar kesinleşmiş mi?
+5. **Kesinleşme** — karar verildiği devletin kanunlarına göre kesinleşmiş mi? (m.50/1)
 
 ### 5b. Yabancı hakem kararı — NY Konvansiyonu + MÖHUK m.60-62
 NY Konvansiyonu Madde V ret gerekçeleri (m.62 kapıları):
@@ -160,7 +160,7 @@ Governing law ≠ seat ≠ counterparty ülkesi ise her katman için:
 ```
 Katman 1 — Governing law [örn. İngiliz hukuku]:
   → Maddi hukuk: sözleşme yorumu, sorumluluk, fesih [Adım 4]
-  → Connector: UK Legislation WebFetch
+  → Connector: ArthurLegal MCP (`uk_`)
 
 Katman 2 — Arbitration seat [örn. Cenevre/İsviçre]:
   → Usul hukuku: tahkim yürütmesi, delil, hakem reddi
@@ -168,7 +168,7 @@ Katman 2 — Arbitration seat [örn. Cenevre/İsviçre]:
 
 Katman 3 — Karşı taraf ülkesi [örn. Almanya]:
   → Taraf yükümlülükleri: iş hukuku, veri, rekabet uyumu
-  → Connector: gesetze-im-internet.de / NeuRIS
+  → Connector: ArthurLegal MCP (`de_`: `de_gesetz_ara`, `de_norm_getir`, `de_search`)
 
 Katman 4 — Türkiye ([Müvekkil] taraf):
   → İcra ayağı: MÖHUK 5718 / NY Konvansiyonu [Adım 5]
@@ -239,13 +239,13 @@ CLAUDE.md `## Outputs` decision tree ile kapat. Yüksek riskli değişiklik coun
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
 |---|---|
 | governing law = Azerbaycan hukuku ise akt lafzi + **yururluk statusu** (`Quvvededir`/`Legv olunmus`) — statusuz akt dayanak yapilmaz | `/arthurlegal:legal-research-az-mevzuat` |
-| kloz benchmark — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani) | `/arthurlegal:legal-research-sozlesme-emsali` |
+| kloz benchmark, yalniz petrol, gaz ve maden sozlesmelerinde (PSA/JOA, imtiyaz) — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani); ticari NDA/SaaS/tedarik klozu icin emsal tabani degildir | `/arthurlegal:legal-research-sozlesme-emsali` |
 | sinir-otesi kavramlarda (mucbir sebep, uyarlama, stabilizasyon) karsilastirmali ogreti — **ikincil**, redline gerekcesi olamaz | `/arthurlegal:legal-research-karsilastirmali-doktrin` |
 
 Rehberler: `${CLAUDE_PLUGIN_ROOT}/references/eqanun-mcp-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/lex-scholar-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/resourcecontracts-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`

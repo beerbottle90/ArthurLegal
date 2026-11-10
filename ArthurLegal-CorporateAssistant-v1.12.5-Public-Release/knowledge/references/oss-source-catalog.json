@@ -134,7 +134,7 @@
       "provenance": "akademik lab; upstream resmî HUDOC (resmî API sözleşmesi YOK — arayüz habersiz değişebilir)",
       "status": "recommend",
       "conditions": "CoE atıf ibaresi çıktıda; HUDOC kırılganlığı izlenir; atıflar daima HUDOC'a çözülür. ECHR-OD koşullu: build güncelliği doğrulanmadan kullanma — pipeline'ı kendin çalıştır, kendi build tarihini damgala",
-      "role": "AİHM ayağını çekim tarihli yapılandırılmış erişime taşır; yargi-mcp AİHM sonuçlarıyla çapraz referans",
+      "role": "AİHM ayağını çekim tarihli yapılandırılmış erişime taşır; ArthurLegal MCP'de AİHM yoktur; isteğe bağlı TR Legal MCP kuruluysa aihm_ictihat_ara sonuçlarıyla çapraz referans",
       "rehberi": "echr-hudoc-rehberi.md"
     }
   ]

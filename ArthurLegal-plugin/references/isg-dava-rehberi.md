@@ -31,12 +31,12 @@ Bir İSG kazası genelde **3 paralel dava süreci** doğurur — her biri ayrı 
 - İş güvenliği uzmanı (A sınıfı uzman zorunlu — büyük tesis)
 - Vardiya amiri
 - Yönetici sıfatıyla CEO/COO (büyük olaylar)
-- Şirket tüzel kişiliği (TCK m. 60 — tüzel kişiye güvenlik tedbiri)
+- Şirket tüzel kişiliği sanık olmaz: tüzel kişiye ceza yaptırımı uygulanamaz (TCK m. 20/2). TCK m. 60 güvenlik tedbirleri kasıtlı suçlarda ve kanunun ayrıca belirttiği hâllerde uygulanır (m. 60/1, 60/4); taksirli iş kazası suçları (m. 85, 89) bu kapsamda değildir. Şirketin sorumluluğu hukuki (tazminat) ve idaridir (6331 m. 26)
 
 ### Süreç
 1. **Savcılık soruşturma açar** — 6 ay (uzatılabilir 2 ay daha)
 2. **İddianame hazırlanır** — kabul/red mahkemece
-3. **Asliye Ceza Mahkemesi'nde dava** — [TESİS LOKASYONU] veya Karşıyaka (yer)
+3. **Asliye Ceza Mahkemesi'nde dava** — [TESİS LOKASYONU] (yer)
 4. **Karar** — beraat / mahkumiyet / hükmün açıklanmasının geri bırakılması (HAGB)
 5. **İstinaf** (BAM) — 2 hafta
 6. **Temyiz** (Yargıtay Ceza) — 2 hafta
@@ -131,11 +131,10 @@ tr_ictihat_ara(
 ### Yerel mahkemeler
 - **[TESİS LOKASYONU] Asliye Hukuk Mahkemesi**
 - **[TESİS LOKASYONU] İş Mahkemesi**
-- **Karşıyaka Asliye Hukuk / Asliye Ceza** (yetki paylaşımı)
-- **Bergama** (bazı eski dosyalar)
+- **[TESİS LOKASYONU] Asliye Ceza Mahkemesi**
 
 ### Yerel dış vekil
-- İzmir merkezli pratisyenler — uzun süreli mahkeme ilişkisi avantaj
+- Tesisin bulunduğu ildeki pratisyenler — uzun süreli mahkeme ilişkisi avantaj
 - İstanbul'dan büyük büro koordineli; günlük takip için yerel
 
 ### Sendika
@@ -166,4 +165,4 @@ tr_mevzuat_ara(number="5510", types=["KANUN"])  # SGK K.
 
 - [HMK rehberi](hmk-rehberi.md)
 - [ArthurLegal MCP TR rehberi](yargi-mcp-rehberi.md)
-- [Büro profili → dispute-litigation](../profiles/dispute-litigation.md)
+- [Büro profili → dispute-litigation](profiles/dispute-litigation.md)

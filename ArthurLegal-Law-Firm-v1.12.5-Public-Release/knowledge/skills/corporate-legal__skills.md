@@ -38,7 +38,7 @@
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
@@ -607,7 +607,7 @@ Bölüm iskeleti `${CLAUDE_PLUGIN_ROOT}/CLAUDE.md` şablonundadır. Bayraklar: `
 
 `~/.claude/plugins/config/claude-for-legal/firm-profile.md` varsa oku ve tek satırla teyit et: "Siz [ad], [pratik ortamı], [büro/şirket], [sektör], [ülkeler]. Doğru mu? ('güncelle' derseniz ortak profili değiştiririm.)" Teyitte ortak soruları (pratik ortamı, ad, sektör, ne sattığı, büyüklük, ülkeler, düzenleyiciler, risk iştahı, eskalasyon isimleri) atla. Yoksa ilk kurulan eklenti budur: bu soruları sor, paketteki `knowledge/firm-profile.md` şablonuna göre yaz, söyle: "Profilinizi kaydettim — diğer eklentiler okuyup bu soruları atlayacak." Modül soruları eklentiye özeldir.
 
-**Kurulum kapsamı:** çalışma klasörü ev dizini değil bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun (QUICKSTART.md)." Onay al. Ev dizinindeysen sessizce geç.
+**Kurulum kapsamı:** çalışma klasörü ev dizini değil bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Başka klasörlerden belge okumamı isterseniz kullanıcı kapsamında kurun." Onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -1987,10 +1987,9 @@ description: >
 ```
 /corporate-legal:tabular-review
 /corporate-legal:tabular-review --schema .review-schema.yaml --docs ./vdr/02-Sozlesmeler/
-/corporate-legal:tabular-review --template ma-diligence
 ```
 
-`--schema <yol>` mevcut şemayı kullanır (yeniden çalıştırma, ekleme). `--template <ad>` `references/` altındaki şablondan başlar (şimdilik `ma-diligence`). `--docs <yol>` yerel klasör, Drive klasör kimliği ya da VDR yolu; yoksa sorar. `--output <xlsx|gsheets|csv>` yoksa sorar. `--sample <n>` örnek boyutu (varsayılan 5).
+`--schema <yol>` mevcut şemayı kullanır (yeniden çalıştırma, ekleme). `--docs <yol>` yerel klasör, Drive klasör kimliği ya da VDR yolu; yoksa sorar. `--output <xlsx|gsheets|csv>` yoksa sorar. `--sample <n>` örnek boyutu (varsayılan 5).
 
 ## Matter bağlamı
 

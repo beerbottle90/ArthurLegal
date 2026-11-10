@@ -1,8 +1,8 @@
 ﻿# UK Legislation (legislation.gov.uk) — Kullanım Rehberi (WebFetch yöntemi)
 
-> **Custom MCP server YOK** — legislation.gov.uk yalnızca REST API + content
-> negotiation sunar. Bu rehber, Claude'un `WebFetch` aracını UK mevzuatıyla
-> birlikte kullanma prosedürünü tanımlar.
+> **Birincil yol ArthurLegal MCP `uk_` araçlarıdır** (`uk-legislation-mcp-rehberi.md`). Bu rehber
+> WebFetch yedeğini ve legislation.gov.uk'nin URI/RDF şemasını belgeler (site REST API + content
+> negotiation sunar).
 >
 > **Durum:** ✅ Açık erişim — **API anahtarı gerekmez**, kayıt gerekmez. Birincil
 > yargı çevresi Türkiye'dir; bu kaynak yalnızca İngiliz hukuku temas eden işlerde

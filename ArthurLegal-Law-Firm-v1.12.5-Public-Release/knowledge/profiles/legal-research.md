@@ -15,18 +15,17 @@ alanları `/firm-operations:cold-start-interview` ile doldurulabilir.*
 
 `firm-profile.md` oku. Bu eklentiye özel:
 
-**Kurulu MCP sunucuları:** `[DOLDUR — hangileri connector olarak eklendi?]`
-**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil on beş yargı çevresi ve tapu-kadastro (`tkgm_`), 123 araç
-tek connector'da (`az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `scholar_`
-`contracts_`). Kurulu değilse `[DOLDUR — "kurulu değil"]` yaz; o hâlde AZ
-mevzuatı WebFetch yoluna düşer ve **yürürlük statüsü doğrulanmaz**.
+**ArthurLegal MCP:** `https://arthurlegal-mcp.fly.dev/mcp` — Türkiye dâhil 12 yargı çevresi ile LEI, doktrin, sözleşme arşivi, tapu-kadastro (`tkgm_`) ve hesap kartları, 130 araç
+tek connector'da (`az_` `at_` `de_` `nl_` `pl_` `es_` `fi_` `ie_` `uk_` `eu_` `jp_` `scholar_`
+`contracts_`). Kurulum dosyası bu araçları kendiliğinden bağlar; ayrı connector kurmak gerekmez.
+Bir araç görünmüyorsa önce `status` çağrılır; araç erişilemezse AZ mevzuatında **yürürlük statüsü doğrulanmaz**.
 **OpenAlex API key (opsiyonel, ücretsiz):** `[DOLDUR — yoksa bütçe ~100 arama/gün]`
 
 **Araştırma sorumlusu:** `[DOLDUR — örn. kıdemli avukat / stajyer koordinatörü]`
 **Araştırma notu saklama yeri:** `[DOLDUR — örn. dosya klasörü / DMS]`
 
-> Üç MCP de **isteğe bağlıdır.** Kurulu değilse paket çalışmaya devam eder:
-> AZ mevzuatı WebFetch yoluna düşer (**statü doğrulanmaz**), doktrin ve sözleşme
+> `az_`, `scholar_` ve `contracts_` araçları ArthurLegal MCP'nin parçasıdır. Biri erişilemezse
+> AZ mevzuatında **statü doğrulanmaz**, doktrin ve sözleşme
 > emsali kapsam dışı kalır. Bu durumda çıktıda **kapsam notu** zorunludur.
 
 ---
@@ -51,11 +50,11 @@ kullanılır; tek başına gerekçe olmaz.
 
 ## Üç kaynak — kapsam ve rol
 
-| MCP | Rol | Kapsam | Kritik disiplin |
+| Kaynak (ArthurLegal MCP öneki) | Rol | Kapsam | Kritik disiplin |
 |---|---|---|---|
-| **e-qanun** | **BİRİNCİL** | AZ mevzuatı (resmî `api.e-qanun.az`) | **`az_get_act` ile yürürlük statüsü doğrulaması zorunlu** |
-| **LexScholar** | **İKİNCİL** | 10 indeks; **DergiPark 19 TR hukuk dergisi** dâhil | Hakemlilik **üç durumlu**; sorgu dili tuzağı |
-| **ResourceContracts** | **EMSAL** | 5.125 imzalı PSA/JOA, 107 ülke | `page` boş = tüm anotasyonlar; CC BY-SA 4.0 atıf |
+| **e-qanun (`az_`)** | **BİRİNCİL** | AZ mevzuatı (resmî `api.e-qanun.az`) | **`az_get_act` ile yürürlük statüsü doğrulaması zorunlu** |
+| **LexScholar (`scholar_`)** | **İKİNCİL** | 10 indeks; **DergiPark 19 TR hukuk dergisi** dâhil | Hakemlilik **üç durumlu**; sorgu dili tuzağı |
+| **ResourceContracts (`contracts_`)** | **EMSAL** | 5.125 imzalı PSA/JOA, 107 ülke | `page` boş = tüm anotasyonlar; CC BY-SA 4.0 atıf |
 
 **Rehberler:** `references/eqanun-mcp-rehberi.md` ·
 `references/lex-scholar-rehberi.md` · `references/resourcecontracts-rehberi.md` ·
@@ -85,7 +84,7 @@ Router konuya göre seçer; hangi derginin geldiğini **kapsam notunda belirt**:
 
 ## 🔒 Meslek sırrı — Av. K. m. 36 bu araçlara da uygulanır
 
-Üç MCP de **kamuya açık** arama aracıdır. Bir arama sorgusu, karşı tarafa veya
+Bu üç araç ailesi (`az_`, `scholar_`, `contracts_`) **kamuya açık** kaynaklarda arama yapar. Bir arama sorgusu, karşı tarafa veya
 üçüncü kişiye vekâlet ilişkisini ele verebilecek kadar belirginse **yapma**.
 
 **Gönderilmez:** müvekkil adı · dosya numarası · dosya özeti · gizli sözleşme

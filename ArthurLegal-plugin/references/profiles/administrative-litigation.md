@@ -14,7 +14,7 @@
 **Birincil venue:**
 - İdare Mahkemeleri: `[DOLDUR — örn. İstanbul İdare Mh. + Ankara İdare Mh. (sektör kurumları)]`
 - BİM (Bölge İdare Mahkemesi): İstanbul / Ankara
-- Danıştay: Ankara (temyiz mercii — Danıştay K. m. 23+24+30 istisnaları hariç)
+- Danıştay: Ankara (temyiz mercii: Danıştay K. m. 23/a; ilk derece baktığı davalar: m. 24)
 
 **Sorumlu ortak:** `[DOLDUR — örn. Kıdemli Ortak B (Ankara irtibat)]`
 
@@ -75,7 +75,7 @@
 | **Karar düzeltme** | Yok: 2014'te kaldırıldı | İYUK m. 54 (mülga: 6545/103) | — |
 | **Temyiz (Danıştay)** | 30 gün (BİM kararı tebliğden) | İYUK m. 46 | Atanan ortak |
 
-⚠️ **30 vs. 60 gün ayrımı KRİTİK:** 2021/7331 sayılı K. değişikliği ile vergi 30 g, idare 60 g. **Doğru süreyi kontrol et — yanlış dava yanlış süreyle reddedilir.**
+⚠️ **30 vs. 60 gün ayrımı KRİTİK:** İYUK m. 7/1: Danıştay ve idare mahkemelerinde 60 gün, vergi mahkemelerinde 30 gün (özel kanunda ayrı süre yoksa). **Doğru süreyi kontrol et — yanlış dava yanlış süreyle reddedilir.**
 
 ---
 
@@ -175,7 +175,7 @@ Hazırlayan: Claude – avukat incelemesi öncesi
 
 ## Shared guardrails
 
-`dispute-litigation.md` ile aynı (Üç değer kuralı, güncellik tetikleyici, hassas karar ön-kontrol, hedef kontrolü, doğrulama günlüğü). Tekrarlamıyorum — okumak için: `tr-overlay/profiles/dispute-litigation.md`.
+`dispute-litigation.md` ile aynı (Üç değer kuralı, güncellik tetikleyici, hassas karar ön-kontrol, hedef kontrolü, doğrulama günlüğü). Tekrarlamıyorum — okumak için: `profiles/dispute-litigation.md`.
 
 **İlave guardrail (idari yargı özel):**
 
@@ -190,7 +190,7 @@ Hazırlayan: Claude – avukat incelemesi öncesi
 
 `dispute-litigation.md` ile aynı — cross-matter OFF zorunlu.
 
-Konum: `~/.claude/plugins/config/claude-for-legal-law-firm/matters/<müvekkil-slug>__<matter-slug>/`
+Konum: `~/.claude/plugins/config/claude-for-legal/matters/<müvekkil-slug>__<matter-slug>/`
 
 ---
 

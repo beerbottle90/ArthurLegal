@@ -43,7 +43,7 @@ Ortak profile ait sorular (varsa tekrar sorulmaz): pratik ortamı, ad, sektör, 
 
 ## Kurulum kapsamı
 
-Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Politikalarınız başka yerdeyse kullanıcı kapsamında kurun (QUICKSTART.md)." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
+Çalışma klasörü ev dizini değil de bir proje klasörüyse bir kez söyle: "Eklenti proje kapsamında kurulmuş görünüyor; yalnız [klasör] içindeki dosyaları okuyabilirim. Politikalarınız başka yerdeyse kullanıcı kapsamında kurun." Devam mı, yeniden kurulum mu — onay al. Ev dizinindeysen sessizce geç.
 
 ## Başlamadan önce
 
@@ -172,7 +172,7 @@ Dizin yüklenmediyse sonda öner: "Yeni gelen hukuk müdürü ya da uyum yöneti
 
 **Adım 1 — Ücretsiz akışlar (her zaman etkin):** ArthurLegal MCP bağlıysa izleme listesindeki her Türk kurumu için yukarıdaki araç; RG için `tr_resmi_gazete_tara`. Kurumun duyuru sayfası ya da RSS adresini kullanıcıdan al — adresler değişir, ezberden adres yazma. Akışı olmayan kurum için: "Bu kurumu şimdi nasıl takip ediyorsunuz?" diye sor ve manuel girişi kaydet.
 
-**Adım 2 — Ücretli abonelikler (ek, zorunlu değil):** Thomson Reuters Regulatory Intelligence var mı, hangi uyarılar? Ticari mevzuat veri tabanı aboneliği varsa uyarı e-postaları manuel girişle işlenir. CourtListener yalnız ABD izleniyorsa.
+**Adım 2 — Ücretli abonelikler (ek, zorunlu değil):** Thomson Reuters Regulatory Intelligence var mı, hangi uyarılar? Ticari mevzuat veri tabanı aboneliği varsa uyarı e-postaları manuel girişle işlenir. CourtListener ücretli değildir; ABD izleniyorsa abonelik aranmadan kullanılır (`courtlistener-rehberi.md`).
 
 **Adım 3 — Manuel giriş:** "Bülten, meslek kuruluşu duyurusu ya da dış avukat notunda gördüğünüz bir gelişmeyi yapıştırın; politikalarınızla karşılaştırır, açıkları takip ederim." Profilde etkin işaretle.
 
@@ -239,7 +239,6 @@ Dizin yüklenmediyse sonda öner: "Yeni gelen hukuk müdürü ya da uyum yöneti
 | Service | Subscription | Alerts |
 |---|---|---|
 | TR Regulatory Intelligence | [yes/no] | [alert names] |
-| CourtListener | [yes/no] | [yalnız ABD] |
 
 **Manual entry:** Enabled — herhangi bir gelişmeyi yapıştırın; karşılaştırma ve açık takibi başlar.
 **Comment tracking:** [Enabled / Disabled]
@@ -289,7 +288,7 @@ Kaynak etiketi: `[ArthurLegal TR — <citation> — GG.AA.YYYY]`; araç veri get
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

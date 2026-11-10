@@ -1,6 +1,6 @@
 # Dava Dilekçesi Yazım Teknikleri – Pratik Rehber
 
-> **Durum:** 📐 Tasarım referansı — `advocacy-legal` plugin'inin 3 dilekçe skill'ini destekler: **özel hukuk dava dilekçesi** (HMK), **idari dava dilekçesi** (İYUK), **ceza dilekçeleri** (CMK — şikâyet/iddia, savunma, kanun yolu). Plugin bu repoda henüz kurulu değil (mevcut: `litigation-legal`, `administrative-legal`); bu rehber skill'ler için ortak iskelet, zorunlu unsur ve atıf disiplinini sabitler. Mevzuat ve emsal her zaman **ArthurLegal MCP (`tr_`)** (ArthurLegal MCP (`tr_`) + ArthurLegal MCP (`tr_`)) üzerinden doğrulanır — ezbere madde/karar yazılmaz.
+> **Durum:** 📐 Tasarım referansı — `advocacy-legal` plugin'inin 3 dilekçe skill'ini destekler: **özel hukuk dava dilekçesi** (HMK), **idari dava dilekçesi** (İYUK), **ceza dilekçeleri** (CMK — şikâyet/iddia, savunma, kanun yolu). Bu rehber skill'ler için ortak iskelet, zorunlu unsur ve atıf disiplinini sabitler. Mevzuat ve emsal her zaman **ArthurLegal MCP (`tr_`)** (ArthurLegal MCP (`tr_`) + ArthurLegal MCP (`tr_`)) üzerinden doğrulanır — ezbere madde/karar yazılmaz.
 
 ## Üç dilekçe türü hangi skill'e
 

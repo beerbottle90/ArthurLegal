@@ -111,7 +111,7 @@ Genel kurallar:
 
 **Tier 2 — Ek bağlayıcılar (`**Paid feeds (if configured):**`)**
 
-Bağlıysa Thomson Reuters Regulatory Intelligence (son kontrolden bu yana, watchlist kurumlarına süzülmüş), kullanıcının kendi aboneliğiyle bağladığı başka veri tabanları ya da ABD için CourtListener (`courtlistener-rehberi.md`). Aynı belge birden çok kaynaktan gelebilir: teke indir, en zengin kaynağı kullan.
+Bağlıysa Thomson Reuters Regulatory Intelligence (son kontrolden bu yana, watchlist kurumlarına süzülmüş), kullanıcının kendi aboneliğiyle bağladığı başka veri tabanları. ABD izleniyorsa CourtListener da bu adımda sorgulanır; ücretsizdir, abonelik gerekmez (`courtlistener-rehberi.md`). Aynı belge birden çok kaynaktan gelebilir: teke indir, en zengin kaynağı kullan.
 
 **Sessiz tamamlama yok.** Bir watchlist kurumu için akış az ya da hiç sonuç döndürürse bulduğunu raporla ve dur. Boşluğu web araması ya da model bilgisiyle doldurma; sor:
 > "Akış kontrolü [N] kalem döndürdü ([kaynaklar]). [Kurum / konu] için kapsam ince görünüyor. Seçenekler: (1) tarih aralığını genişletmek, (2) başka bir araç ya da kaynak denemek, (3) web araması — sonuçlar `[web araması — doğrula]` etiketi taşır ve kullanılmadan önce kurumun sitesinden kontrol edilmelidir, (4) burada durmak. Hangisi?"
@@ -266,7 +266,7 @@ Profildeki `## Outputs` karar ağacıyla bitir. Seçenekleri bu çıktıya uyarl
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

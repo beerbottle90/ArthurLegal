@@ -3,7 +3,7 @@ name: administrative-legal-ced-itiraz
 description: >
   ÇED (Çevresel Etki Değerlendirmesi) ret kararı geldiğinde veya ÇED süreci
   sorunlu olduğunda — büyük endüstriyel tesis için kritik. Çevre K. 2872 + ÇED Yön.
-  analizi, ilk derece İdare Mahkemesi (Ankara/İzmir), yürütmenin durdurulması,
+  analizi, ilk derece İdare Mahkemesi (Ankara ya da ilgili il), yürütmenin durdurulması,
   Danıştay 14./10. Daire emsali. Çevre Bakanlığı paralel idari ceza ile koordineli.
 user-invocable: true
 ---
@@ -43,7 +43,7 @@ Paralel: Çevre Bakanlığı idari para cezası (ayrı süreç — `idari-para-c
 
 ## Görevli mahkeme (İYUK m. 20/A — BİM YOK)
 
-- **Bakanlık merkez kararı** (büyük yatırım) → **Ankara İdare Mahkemesi** ilk derece (30 gün) → **DOĞRUDAN Danıştay 14./10./6. Daire temyiz** (15 gün)
+- **Bakanlık merkez kararı** (büyük yatırım) → **Ankara İdare Mahkemesi** ilk derece (30 gün; yetki İYUK m. 32 genel kuralına göre, proje yeri bakımından m. 34/1 ile ilişkisi tartışmalı: içtihadı `tr_ictihat_ara(courts=["DANISTAYKARAR"], query="ÇED yetkili idare mahkemesi")` ile teyit et) → **DOĞRUDAN Danıştay 14./10./6. Daire temyiz** (15 gün)
 - **İl müdürlüğü kararı** (yerel etkili) → ilgili **İl İdare Mahkemesi** ([tesis yeri] için ilgili il İdare Mah.) → **DOĞRUDAN Danıştay temyiz**
 
 ⚠️ İstinaf (BİM) aşaması ATLANIR — bu önemli, çünkü genel idari davalarda BİM normal kademe.
@@ -106,7 +106,7 @@ tr_ictihat_ara(
 
 ## ⚠️ İnceleyen notu
 - **Karar:** ÇED ret / koşullu / süreç sorunlu
-- **Görevli mahkeme:** Ankara İdare Mah. (Bakanlık merkez) / İzmir İdare Mah. (yerel)
+- **Görevli mahkeme:** Ankara İdare Mah. (Bakanlık merkez) / ilgili il İdare Mah. (yerel)
 - **Süre kalan:** [N gün]
 - **Yatırım finansal etkisi:** [TL]
 - **Üretim duruş riski:** [evet/hayır]
@@ -156,7 +156,7 @@ tr_ictihat_ara(
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |

@@ -1,10 +1,10 @@
 # Avusturya Hukuku — Kullanım Rehberi (RIS OGD API yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **`at-ris MCP`** → `references/at-ris-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `at_` araçları** (kurulumla gelir) → `references/at-ris-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
-> Bu dosya **WebFetch yedeğidir**: connector bağlı değilse kullanılır.
+> Bu dosya **WebFetch yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.
 > Yedek yol daha dar ve kırılgandır — buradan üretilen atıfa
 > **`(MCP kullanılmadı)`** kaydını düş.
 

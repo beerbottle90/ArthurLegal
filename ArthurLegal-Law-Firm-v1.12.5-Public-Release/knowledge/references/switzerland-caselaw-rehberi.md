@@ -39,12 +39,12 @@ Kapsam:
 1. **Söyle:** "İsviçre içtihat araması için OpenCaseLaw.ch connector'ı gerekiyor:
    Settings → Connectors → Add custom connector → `https://mcp.opencaselaw.ch/sse`,
    auth: None."
-2. **İsviçre *mevzuatı*** için Fedlex yolu açık kalır (bölüm 2) ✅ — içtihat olmadan da
-   OR/ZGB madde metni verilebilir.
+2. **İsviçre *mevzuatı*** için fedlex-connector MCP (bölüm 2a) gerekir; Fedlex `eli/cc` sayfaları
+   WebFetch'te içerik vermez (bölüm 2 erişim notu).
 3. **AB-türevli İsviçre uygulaması** için EUR-Lex karşılaştırması yapılabilir
    (`eurlex-cellar-rehberi.md`).
-4. ⚠️ **BGE/BGer atıfını asla elle kurma.** R1 kuralı: atıf dizesi yalnızca aracın
-   döndürdüğü `citation` alanından birebir kopyalanır. Connector yokken
+4. ⚠️ **BGE/BGer atıfını asla elle kurma.** R1 kuralı: atıf dizesi yalnızca `cite` aracının
+   döndürdüğü `citation_string` (`citation_string_de` / `_fr` / `_it`) alanından birebir kopyalanır. Connector yokken
    "muhtemelen BGE 4A_..." tarzı tahmin **yasaktır**.
 
 ---
@@ -97,10 +97,10 @@ GET https://www.fedlex.admin.ch/eli/cc/{SR_numarası}/de
 | Elektrizitätsgesetz | `734.0` | Elektrik piyasası |
 | DSG (Veri koruma) | `235.1` | İsviçre veri koruma kanunu (nDSG) |
 
-**Örnek — IPRG m.176 (tahkim sözleşmesi geçerlilik):**
+**Örnek — IPRG m.176 (tahkim sözleşmesi geçerlilik):** madde metni fedlex-connector MCP (bölüm 2a) ile
+alınır. Aşağıdaki adres yalnız JS destekli tarayıcıda açılır; WebFetch içerik vermez:
 ```
-WebFetch("https://www.fedlex.admin.ch/eli/cc/1988/1776_1776_1776/en",
-         "IPRG m.176 uluslararası tahkim sözleşmesinin geçerlilik şartları")
+https://www.fedlex.admin.ch/eli/cc/1988/1776_1776_1776/en
 ```
 
 ---

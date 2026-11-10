@@ -86,7 +86,7 @@
    - İnceleyen notuna her tarama için `konu_elenen` ve `konu_belirsiz` sayısını yaz. `konu` kapsam garantisi değildir (`mevzuat-mcp-rehberi.md` bölüm 4); bültende "bu hafta başka düzenleme yok" denmez.
 3. **Sektör kurumu kararlarını ArthurLegal MCP (`tr_`) üzerinden çek:** `tr_kurum_karari_ara(kurum="epdk" | "bddk" | "spk" | "kvkk" | "rekabet" | "btk" | "gib" | "sigorta_tahkim")`; SPK için `tr_spk_bulten_icinde_ara`. Kurum sitesi web fetch yalnız bu sekiz kurumun dışındakiler (KGK, MASAK, TÜRKPATENT, bakanlıklar) içindir.
 4. **Politika kütüphanesi diff:** Her yeni regülasyonun şirket politika kataloğundaki ilgili dokümanı belirle
-5. **Sınıflandır:** 🔴/🟠/🟡/🟢 — bkz. `regulatory-legal` CLAUDE.md eskalasyon
+5. **Sınıflandır:** 🔴/🟠/🟡/🟢 — bkz. `regulatory-legal__skills.md`, önemlilik eşiği (`## Materiality threshold`)
 6. **Önceki haftanın aksiyonlarını çek** (verification-log + tracker)
 7. **Teams kanalı veya KEP'e gönder**
 8. **Pazartesi 12:00 — toplantıda gözden geçir**
@@ -107,7 +107,7 @@
 |---|---|---|
 | **EPDK** | https://www.epdk.gov.tr/Detay/Icerik/3-0-39-3/son-kurul-kararlari/elektrik | Petrol, doğal gaz, elektrik ([HALKA AÇIK İŞTİRAK], [RAFİNERİ], {{AL_SANTRAL}}, dağıtım) — **kritik** |
 | **SPK** | https://www.spk.gov.tr/Sayfa/Index/12/1 | [HALKA AÇIK İŞTİRAK] için (BIST: [BIST KOD]) |
-| **KAP** | https://www.kap.org.tr/tr/Bildirim/[BIST KOD] | [HALKA AÇIK İŞTİRAK] özel durum açıklamaları — günlük |
+| **KAP** | https://www.kap.org.tr/tr/search/[BIST KOD]/1 | [HALKA AÇIK İŞTİRAK] özel durum açıklamaları — günlük |
 | **Rekabet Kurumu** | https://www.rekabet.gov.tr/tr/Sayfa/Kurul-kararlari | Enerji + petrokimya birleşme + dikey entegrasyon |
 | **KGK** | https://www.kgk.gov.tr | [HALKA AÇIK İŞTİRAK] bağımsız denetim |
 | **KVKK Kurulu** | https://www.kvkk.gov.tr/Icerik/4232/Kurul-Kararlari | Veri ihlal kararları, sektörel rehberler |
@@ -124,14 +124,14 @@
 | **OFAC Recent Actions** | https://ofac.treasury.gov/recent-actions | Haftalık SDN List + sectoral updates — **kritik** |
 | **AB Sanctions Map** | https://www.sanctionsmap.eu/ | AB yaptırım rejimleri |
 | **EU Lex (Energy + Climate)** | https://eur-lex.europa.eu/ | CBAM, ETS, Green Deal |
-| **UK OFSI Notice Updates** | https://www.gov.uk/government/collections/financial-sanctions-notices-and-news | UK yaptırım güncellemeleri |
+| **UK OFSI Notice Updates** | https://www.gov.uk/government/organisations/office-of-financial-sanctions-implementation | UK yaptırım güncellemeleri |
 | **{{AL_ANA_ORTAK}} grup compliance bültenleri** | İç dağıtım | Ana ortak grup politikası |
 
 ### {{AL_KURUM}}'a özel kategorik etki alanları (her hafta dön)
 - 🔴 **EPDK kurul kararları** ([HALKA AÇIK İŞTİRAK]/[RAFİNERİ]/{{AL_SANTRAL}} lisansları, doğal gaz pazar dengesi)
 - 🔴 **CBAM güncellemeleri** ([HALKA AÇIK İŞTİRAK] petrokimya ihracatı)
 - 🔴 **OFAC SDN List** + **AB 833/2014** ek listeler
-- 🟠 **TR İklim Kanunu tasarı** + **karbon vergisi rejimi**
+- 🟠 **7552 sayılı İklim Kanunu ikincil düzenlemeleri (ETS)** + **karbon vergisi rejimi**
 - 🟠 **KVKK m.9 yurt dışı aktarım** SCC + yeterlilik kararı duyuruları
 - 🟠 **[HALKA AÇIK İŞTİRAK] KAP açıklamaları** (kendi şirketimiz — içsel bilgi koordinasyonu)
 - 🟡 **6331 ISG yönetmelik değişiklikleri** ({{AL_TESIS}} tesisleri)

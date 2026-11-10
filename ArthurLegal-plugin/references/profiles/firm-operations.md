@@ -283,7 +283,7 @@ Talep özeti: [...]
 Conflict check: ✓ TEMİZ / 🟠 ŞÜPHELİ / ⛔ ÇATIŞMA
 MASAK: ✓ TAMAM / 🟠 İNCELE
 Sanctions: ✓ TEMİZ / ⛔ HIT
-Önerilen plugin: [dispute-litigation / commercial-advisory / vd.]
+Önerilen plugin: [litigation-legal / commercial-legal / vd.]
 Ücret tahmini: [TL aralık]
 KARAR: ✓ KABUL / 🟠 ORTAKLAR KURULU / ⛔ RET
 ```

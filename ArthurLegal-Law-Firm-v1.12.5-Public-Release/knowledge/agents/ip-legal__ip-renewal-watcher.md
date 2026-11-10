@@ -13,6 +13,8 @@ model: sonnet
 tools: ["Read", "Write", "mcp__anaqua__*", "mcp__cpa__*", "mcp__altlegal__*", "mcp__*__slack_send_message", "mcp__*__tr_mevzuat_madde_getir"]
 ---
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu ajan Anthropic'in `claude-for-legal` deposundaki aynı adlı ajandan uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10).
+
 # IP Renewal Watcher Ajanı
 
 ## Amaç

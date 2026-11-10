@@ -97,7 +97,7 @@ Bildirimin "ulaşma" tarihinde mi, tebliğin "yapılmış sayıldığı" tarihte
 
 - **Ticari (B2B):** Otomatik yenileme sözleşme serbestisi içindedir. Ancak karşı tarafın standart metnine gömülü yenileme klozu genel işlem koşuluysa: karşı tarafa açıkça bilgi verilip kabul edilmedikçe yazılmamış sayılır (TBK m. 21), dürüstlük kuralına aykırı aleyhe hüküm konulamaz (m. 25). Kaçırılan pencerede bu bir pazarlık aracıdır, güvence değil.
 - **Tüketiciye satış (B2C abonelik):** tüketici, ticari veya mesleki olmayan amaçlarla hareket eden kişidir (6502 m. 3/1-k). Belirli süreli abonelik sözleşmesine sözleşmenin kendiliğinden uzayacağına ilişkin hüküm konulamaz; uzatma ancak tüketicinin talebi ya da onayıyla olur (m. 52/3). Belirsiz süreli ya da bir yıldan uzun belirli süreli abonelikte tüketici gerekçesiz ve cezai şartsız her zaman feshedebilir; bildirim kâğıt üzerinde ya da kalıcı veri saklayıcısıyla yeterlidir (m. 52/4). Satış tarafı B2C kayıtlarında `renewal_mechanism`'e "otomatik uzama yasak — onay gerekir" yaz. Yönetmeliğin güncel metni: `tr_mevzuat_ara(query="Abonelik Sözleşmeleri Yönetmeliği", types=["YONETMELIK"])`.
-- **Örtülü sürdürme:** süre bitip taraflar ilişkiyi sürdürürse sözleşme belirsiz süreliye dönüşebilir — kira (TBK m. 327/2) ve acentelik (TTK m. 121/2) için açık hüküm var; acentelikte belirsiz süreli sözleşme üç ay önceden ihbarla feshedilir (m. 121/1). **TBK'da belirsiz süreli sürekli sözleşmelerin olağan feshine ilişkin tek bir genel madde yoktur;** sözleşmede fesih hükmü yoksa süre ve usul **tartışmalı — içtihadı kontrol et**: `tr_ictihat_semantik_ara(query="belirsiz süreli sürekli borç ilişkisinin olağan feshi makul bildirim süresi")`. Böyle kayıtlarda `renewal_mechanism: "belirsiz süreli — fesih süresi teyitsiz"` yaz.
+- **Örtülü sürdürme:** süre bitip taraflar ilişkiyi sürdürürse sözleşme belirsiz süreliye dönüşebilir — kira (TBK m. 327/2) ve acentelik (TTK m. 121/2) için açık hüküm var; acentelikte belirsiz süreli sözleşme üç ay önceden ihbarla feshedilir (m. 121/1). **TBK'da belirsiz süreli sürekli sözleşmelerin olağan feshine ilişkin tek bir genel madde yoktur;** sözleşmede fesih hükmü yoksa süre ve usul **tartışmalı — içtihadı kontrol et**: `tr_ictihat_semantik_ara(initial_keyword="belirsiz süreli sözleşme fesih bildirim süresi", query="belirsiz süreli sürekli borç ilişkisinin olağan feshi makul bildirim süresi")`. Böyle kayıtlarda `renewal_mechanism: "belirsiz süreli — fesih süresi teyitsiz"` yaz.
 
 ## Modlar
 
@@ -198,13 +198,13 @@ renewal-watcher ajanı bu skill'i zamanlanmış olarak (varsayılan haftalık) �
 > dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
 > kapsanmadigini soyle.
 >
-> **Gizlilik:** uc MCP de PUBLIC arama aracidir — gizli taslak, muzakere
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
 > pozisyonu veya kisisel veri **gonderilmez**.
 
 | Ihtiyac | Kaynak skill |
 |---|---|
 | governing law = Azerbaycan hukuku ise akt lafzi + **yururluk statusu** (`Quvvededir`/`Legv olunmus`) — statusuz akt dayanak yapilmaz | `/arthurlegal:legal-research-az-mevzuat` |
-| kloz benchmark — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani) | `/arthurlegal:legal-research-sozlesme-emsali` |
+| kloz benchmark, yalniz petrol, gaz ve maden sozlesmelerinde (PSA/JOA, imtiyaz) — bir sartin piyasa/agresif/muhafazakar oldugunu imzali emsallerle olc (tahkim, uygulanacak hukuk, sorumluluk tavani); ticari NDA/SaaS/tedarik klozu icin emsal tabani degildir | `/arthurlegal:legal-research-sozlesme-emsali` |
 | sinir-otesi kavramlarda (mucbir sebep, uyarlama, stabilizasyon) karsilastirmali ogreti — **ikincil**, redline gerekcesi olamaz | `/arthurlegal:legal-research-karsilastirmali-doktrin` |
 
 Rehberler: `${CLAUDE_PLUGIN_ROOT}/references/eqanun-mcp-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/lex-scholar-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/resourcecontracts-rehberi.md` · `${CLAUDE_PLUGIN_ROOT}/references/karsilastirmali-hukuk-rehberi.md`

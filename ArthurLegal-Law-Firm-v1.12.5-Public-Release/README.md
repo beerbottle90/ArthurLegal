@@ -35,7 +35,7 @@ law firm with 0–30 staff and a balanced litigation / advisory practice:
 Output is **always a draft** and requires **assigned partner / managing partner
 approval**. Strict citation discipline is mandatory — every legal proposition
 carries its source and retrieval date (`[Legislation MCP — date]`, `[Case Law MCP
-— institution — date]`, `[model knowledge — verify]`), and unretrieved text is
+— institution — date]`, `UYARI: veri çekilemedi, teyidiniz gerekli: <link>` when a source cannot be retrieved), and unretrieved text is
 never presented as retrieved.
 
 Version history and the full v1.0.1 → v1.12.5 progression: [CHANGELOG.md](CHANGELOG.md).
@@ -107,21 +107,21 @@ troubleshooting questions.
 
 ---
 
-## MCP integrations & 22 jurisdictions
+## MCP integrations & 28 jurisdictions
 
 | Source | Access | Auth | Coverage |
 |---|---|---|---|
 | **OpenCaseLaw.ch** | MCP — `mcp.opencaselaw.ch/sse` | None | Swiss case law — 1,050,000+ federal and cantonal decisions + Fedlex legislation integration (CC0) — 42 tools |
 | **CourtListener** | MCP — official server, Anthropic connector directory | OAuth 2.0 (dynamic client registration) | **United States case law** — federal and state opinions, PACER dockets, citation network, oral arguments, and **citation verification** (fabricated-citation defence). Operated by Free Law Project. See `courtlistener-rehberi.md` |
-| **ArthurLegal MCP** | MCP — `arthurlegal-mcp.fly.dev/mcp` | None | **Türkiye + 14 jurisdictions and the Turkish land registry behind one connector — 123 tools.** 🇹🇷 Türkiye (`tr_`, 23 tools): Yargıtay, Danıştay, regional and local courts, KYB, Constitutional Court, Uyuşmazlık Mahkemesi, 12 legislation types with article tree and gerekçe, Official Gazette, eight regulators (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) and a 19,498-document semantic archive · 🇦🇿 Azerbaijan, in-force status verified (`az_`) · 🇦🇹 Austria (`at_`) · 🇩🇪 Germany (`de_`) · 🇳🇱 Netherlands (`nl_`) · 🇵🇱 Poland (`pl_`) · 🇪🇸 Spain (`es_`) · 🇫🇮 Finland (`fi_`) · 🇮🇪 Ireland (`ie_`) · 🇬🇧 UK (`uk_`) · 🇪🇺 EU/CJEU (`eu_`) · 🇯🇵 Japan (`jp_`) · GLEIF (`gleif_`) · 10 scholarship indexes incl. 19 Turkish law journals (`scholar_`) · 5,125 signed petroleum & mining contracts (`contracts_`) · 🇹🇷 land registry: live parcels from TKGM Parsel Sorgu with parcel report, scaled sketch and legal-basis bridge (`tkgm_`, 17 tools) |
+| **ArthurLegal MCP** | MCP — `arthurlegal-mcp.fly.dev/mcp` | None | **Türkiye + 11 jurisdictions and the Turkish land registry behind one connector — 130 tools.** 🇹🇷 Türkiye (`tr_`, 24 tools): Yargıtay, Danıştay, regional and local courts, KYB, Constitutional Court, Uyuşmazlık Mahkemesi, 12 legislation types with article tree and gerekçe, Official Gazette, eight regulators (Rekabet, EPDK, SPK, BDDK, KVKK, BTK, GİB, Sigorta Tahkim) and a 19,498-document semantic archive · 🇦🇿 Azerbaijan, in-force status verified (`az_`) · 🇦🇹 Austria (`at_`) · 🇩🇪 Germany (`de_`) · 🇳🇱 Netherlands (`nl_`) · 🇵🇱 Poland (`pl_`) · 🇪🇸 Spain (`es_`) · 🇫🇮 Finland (`fi_`) · 🇮🇪 Ireland (`ie_`) · 🇬🇧 UK (`uk_`) · 🇪🇺 EU/CJEU (`eu_`) · 🇯🇵 Japan (`jp_`) · GLEIF (`gleif_`) · 10 scholarship indexes incl. 19 Turkish law journals (`scholar_`) · 5,125 signed petroleum & mining contracts (`contracts_`) · 🇹🇷 land registry: live parcels from TKGM Parsel Sorgu with parcel report, scaled sketch and legal-basis bridge (`tkgm_`, 17 tools) |
 | **TR Legal MCP** (optional) | MCP — `yargi-mcp-pro-production.up.railway.app/mcp` | OAuth (WorkOS) | Only for what the Turkish backend deliberately omits: ECHR, KİK, Sayıştay, Reklam Kurulu, KDK, TBB, HSK. Paid server by [saidsurucu](https://github.com/saidsurucu) |
 | **Official sanctions lists** | WebFetch — OFAC SDN, EU consolidated list, UK OFSI, UN consolidated list | None | Client sanctions screening (`yaptirim-tarama-rehberi.md`) |
-| **Fedlex** | MCP — Anthropic connector directory *(WebFetch fallback: `fedlex.admin.ch`)* | None | **Swiss federal legislation** — article text, full statute text, amendment history, title search |
+| **Fedlex** | MCP — Anthropic connector directory *(fallback: OpenCaseLaw.ch `get_law`; `fedlex.admin.ch` returns no text to WebFetch)* | None | **Swiss federal legislation** — article text, full statute text, amendment history, title search |
 
 **Jurisdictions reached via WebFetch** (no additional connector required):
-🇬🇧 UK · 🇺🇸 US *(federal legislation — GovInfo; case law is via the CourtListener MCP above)* · 🇪🇺 EU / CJEU / ECHR · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU *(sanctions / KYC only)* · 🇨🇳 CN · 🇷🇸 RS · 🇦🇿 AZ *(case law + English-language sources; legislation via ArthurLegal MCP (`az_`))*
+🇺🇸 US *(federal legislation — GovInfo; case law is via the CourtListener MCP above)* · ECHR · 🇫🇷 FR · 🇮🇹 IT · 🇷🇺 RU *(sanctions / KYC only)* · 🇨🇳 CN · 🇷🇸 RS · 🇦🇿 AZ *(case law + English-language sources; legislation via ArthurLegal MCP (`az_`))*. UK, EU/CJEU, German and Japanese legislation come from ArthurLegal MCP (`uk_`, `eu_`, `de_`, `jp_`); WebFetch is only the fallback there.
 
-**The 22 jurisdictions** = 20 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ · 🇬🇧 UK · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS · 🇦🇪 AE · 🇨🇿 CZ · 🇬🇪 GE · 🇮🇱 IL · 🇰🇿 KZ · 🇺🇿 UZ · 🇷🇴 RO · 🇺🇦 UA · 🇬🇷 GR) + 2 supranational legal orders (🇪🇺 EU/CJEU · ECHR).
+**The 28 jurisdictions** = 26 national (🇹🇷 TR · 🇨🇭 CH · 🇺🇸 US · 🇦🇿 AZ · 🇬🇧 UK · 🇩🇪 DE · 🇫🇷 FR · 🇮🇹 IT · 🇯🇵 JP · 🇷🇺 RU · 🇨🇳 CN · 🇷🇸 RS · 🇦🇪 AE · 🇨🇿 CZ · 🇬🇪 GE · 🇮🇱 IL · Central Asia (🇰🇿 KZ and 🇺🇿 UZ, one guide) · 🇷🇴 RO · 🇺🇦 UA · 🇬🇷 GR · 🇳🇱 NL · 🇵🇱 PL · 🇦🇹 AT · 🇮🇪 IE · 🇫🇮 FI · 🇪🇸 ES) + 2 supranational legal orders (🇪🇺 EU/CJEU · ECHR).
 
 **Coverage depth is not uniform**, and the package says so rather than papering
 over it. Türkiye has the deepest coverage (inside ArthurLegal MCP under `tr_`: courts, legislation, Official Gazette, eight regulators and a semantic archive, plus the largest share of the reference layer); Switzerland, the
@@ -154,7 +154,7 @@ Turkish guide → [KURULUM.md](KURULUM.md)
 1. Claude.ai → Projects → New Project
 2. `SYSTEM_PROMPT.md` → Custom Instructions
 3. `knowledge/` folder → Upload Files
-4. Add the ArthurLegal MCP connector (Türkiye under `tr_` plus 14 jurisdictions, no auth — Step 4); then, per client portfolio, CourtListener · Fedlex · OpenCaseLaw.ch (Step 4a) and, only if ECHR/KİK/Sayıştay work is needed, TR Legal MCP (Step 4b)
+4. Add the ArthurLegal MCP connector (Türkiye under `tr_` plus 11 jurisdictions, no auth — Step 4); then, per client portfolio, CourtListener · Fedlex · OpenCaseLaw.ch (Step 4a) and, only if ECHR/KİK/Sayıştay work is needed, TR Legal MCP (Step 4b)
 5. ArthurMask on Windows with Claude Desktop (recommended, optional — Step 5)
 6. Sanctions screening: no key or connector needed, official lists (Step 6)
 7. Run `/firm-operations:cold-start-interview`

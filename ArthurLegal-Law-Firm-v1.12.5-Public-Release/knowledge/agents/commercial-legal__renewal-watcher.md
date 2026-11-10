@@ -10,6 +10,8 @@ model: sonnet
 tools: ["Read", "Write", "mcp__ironclad__*", "mcp__*__slack_send_message"]
 ---
 
+> Değişiklik bildirimi (Apache-2.0 md. 4(b)): Bu ajan Anthropic'in `claude-for-legal` deposundaki aynı adlı ajandan uyarlanmıştır. ArthurLegal tarafından Türk hukuku esas alınarak Türkçe yeniden yazılmıştır (2026-10).
+
 # Renewal Watcher Ajanı
 
 ## Amaç

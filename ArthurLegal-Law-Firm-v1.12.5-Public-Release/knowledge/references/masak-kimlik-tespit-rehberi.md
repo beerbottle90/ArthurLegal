@@ -255,7 +255,7 @@ ihmali aklama suçu m. 282'de **yoktur**. m. 282/2 "bilerek" şartını arar.
 Adresler 24.09.2026'da doğrulanmadı; kullanmadan önce resmi sitelerden teyit et.
 
 - **MASAK** — [https://www.masak.gov.tr/](https://www.masak.gov.tr/)
-- **UYARIS** — [https://uyaris.masak.gov.tr/](https://uyaris.masak.gov.tr/) (şüpheli işlem bildirim portalı)
+- **Şüpheli işlem bildirimi** — bildirim sisteminin güncel giriş adresi MASAK'ın resmî sitesinden alınır: [https://masak.hmb.gov.tr/](https://masak.hmb.gov.tr/) (eski `uyaris.masak.gov.tr` adresi çözülmüyor)
 - **MERSİS** — gerçek faydalanıcı sorgusu
 - **Resmî yaptırım listeleri** — OFAC SDN, AB, UK OFSI, BM ve Türkiye dondurma kararları (paralel kontrol; `yaptirim-tarama-rehberi.md`)
 - **FATF** — [https://www.fatf-gafi.org/](https://www.fatf-gafi.org/) — yüksek riskli ülke listesi

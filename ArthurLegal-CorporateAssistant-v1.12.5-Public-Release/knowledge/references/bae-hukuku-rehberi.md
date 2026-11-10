@@ -5,10 +5,8 @@
 > (test 12.06.2026). Bu yargı çevresi **manuel-tarayıcı + kullanıcı-yapıştırma** modeliyle
 > çalışır; agent çıktılarında `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` disiplini en katı burada uygulanır.
 >
-> **[ŞİRKET ADI] neden gerekli?** `company-profile.md` A.6: **Masdar** (Bilasuvar 445 MW +
-> Neftchala 315 MW + Absheron-Garadagh OWP 240 MW + 2 GW JDA + 3,5 GW offshore MoU) ve
-> **ACWA Power** ortaklıkları `[AR-2024]`. Yenilenebilir paket sözleşmelerinde BAE karşı
-> taraf hukuku ve DIFC/ADGM seçimli uyuşmazlık çözümü gündeme gelir.
+> **Ne zaman gerekir?** BAE karşı taraflı iş varsa (ör. yenilenebilir enerji ortaklığı ya da paket
+> sözleşmesi): BAE karşı taraf hukuku ve DIFC/ADGM seçimli uyuşmazlık çözümü gündeme gelir.
 
 ---
 
@@ -16,9 +14,9 @@
 
 | Düzen | Hukuk ailesi | Mahkeme | Ne zaman karşına çıkar |
 |-------|--------------|---------|------------------------|
-| **Onshore BAE** | Kıta Avrupası/Mısır etkili medeni hukuk + şeriat tamamlayıcı | Yerel mahkemeler (AR) | Masdar/ACWA ana şirket sözleşmeleri, yerel operasyon |
+| **Onshore BAE** | Kıta Avrupası/Mısır etkili medeni hukuk + şeriat tamamlayıcı | Yerel mahkemeler (AR) | BAE'li ana şirketle sözleşmeler, yerel operasyon |
 | **DIFC** (Dubai) | **İngiliz common law** (kendi kanunları) | DIFC Courts (EN) | Finans/yatırım sözleşmelerinde nötr forum seçimi |
-| **ADGM** (Abu Dabi) | **İngiliz common law — English law doğrudan uygulanır** (2015 Regulations) | ADGM Courts (EN) | Abu Dabi bağlantılı işlemler (Masdar = Abu Dabi!) |
+| **ADGM** (Abu Dabi) | **İngiliz common law — English law doğrudan uygulanır** (2015 Regulations) | ADGM Courts (EN) | Abu Dabi bağlantılı işlemler (ör. Abu Dabi merkezli karşı taraf) |
 
 ⚠️ "BAE hukuku" klozu tek başına belirsizdir — onshore mu, hangi free zone mu, **mutlaka netleştir** 🟠.
 
@@ -46,9 +44,9 @@ adımını (hangi portal, hangi kanun no) açıkça tarif et.
 | Tahkim | Federal Decree-Law No. 6/2018 (UNCITRAL bazlı) | onshore tahkim; NY Konv. tarafı ✅ |
 | **DIAC reorganizasyonu** | Dubai Decree No. 34/2021 | **DIFC-LCIA lağvedildi** → davalar DIAC'a; eski DIFC-LCIA klozlarının akıbeti tartışmalı 🟠 `[review]` |
 | ADGM uygulama | ADGM English Law Regulations 2015 | İngiliz hukuku + equity doğrudan uygulanır |
-| Yenilenebilir/enerji | Emirlik bazlı (DEWA/EWEC ihale rejimleri) | Masdar projeleri AZ'de — BAE tarafı kurumsal/finansman katmanı |
+| Yenilenebilir/enerji | Emirlik bazlı (DEWA/EWEC ihale rejimleri) | BAE'li ortakla yürütülen projeler — BAE tarafı kurumsal/finansman katmanı |
 
-## Tahkim klozu pratik kontrolü (Masdar/ACWA paketlerinde)
+## Tahkim klozu pratik kontrolü (BAE karşı taraflı paketlerde)
 
 1. Kurum: ICC / LCIA / DIAC / ADGM Arbitration Centre — **DIFC-LCIA yazıyorsa 🟠 flag** (Decree 34/2021 sonrası geçerlilik sorusu)
 2. Seat: DIFC veya ADGM seçimi → common law usul + EN dil avantajı; onshore seat → AR dil riski

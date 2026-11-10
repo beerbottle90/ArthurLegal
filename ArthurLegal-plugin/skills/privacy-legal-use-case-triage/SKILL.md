@@ -143,8 +143,8 @@ PIA GEREKLİ ya da VKED ZORUNLU sonucundan sonra her zaman sor: "PIA'ya şimdi b
 ### 7. Eklentiler arası devir
 
 Yalnız gerçekten ilgiliyse ekle; ikisini birden kalıp olarak ekleme.
-- **Yapay zekâ kararı:** faaliyette kişiler hakkında karar veren ya da karara etki eden bir yapay zekâ sistemi varsa: "PIA'ya ek olarak yapay zekâ etki değerlendirmesi gerekebilir. `/ai-governance-legal:aia-generation [faaliyet]` (ArthurLegal'de hazırlanıyor: Faz 1 İş 5; o zamana kadar yapay zekâ etki değerlendirmesini bu PIA içinde ayrı bir bölüm olarak yürüt) — ikisi birbirinin yerine geçmez."
-- **Ürün lansmanı:** yeni ürün özelliği ise: "Lansmansa ürün hukukçusunu dahil et. `/product-legal:launch-review` (ArthurLegal'de hazırlanıyor; o zamana kadar ürün hukukçusuyla doğrudan koordine et)."
+- **Yapay zekâ kararı:** faaliyette kişiler hakkında karar veren ya da karara etki eden bir yapay zekâ sistemi varsa: "PIA'ya ek olarak yapay zekâ etki değerlendirmesi gerekebilir. Yapay zekâ etki değerlendirmesi bu PIA içinde ayrı bir bölüm olarak yürütülür; ikisi birbirinin yerine geçmez."
+- **Ürün lansmanı:** yeni ürün özelliği ise: "Lansmansa ürün hukukçusunu dahil et; ürün hukukçusuyla doğrudan koordine et."
 
 ## Toplu triage
 

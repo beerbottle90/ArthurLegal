@@ -8,7 +8,7 @@ Sahte domain (örn. `[marka]-sahte.com`) tespit edildiğinde **3 ayrı hukuki re
 
 ### 1. Marka tecavüzü (SMK)
 - **SMK m. 7/3** — alan adında ticari amaçla marka kullanımı
-- **SMK m. 29-30** — tecavüz halleri + dava türleri
+- **SMK m. 29-30** — tecavüz sayılan fiiller (m. 29) + cezai hükümler (m. 30)
 - **SMK m. 149-150** — tazminat ve hukuki talepler
 
 ### 2. Tüketici yanıltma + haksız rekabet
@@ -123,8 +123,8 @@ Tek bir sahte domain'le yetinmemek için:
 
 | Aksiyon | Onay |
 |---|---|
-| Registrar abuse + 5651 m. 9 (mülga) başvurusu | Senior Legal Counsel [kuran kişi — company-profile: Kullanıcı rolü] |
-| Suç duyurusu hazırlık + savcılığa sunum | Counsel + Direktör imza [company-profile: Doğrudan amir] |
+| Registrar abuse + 5651 m. 9 (mülga) başvurusu | Senior Legal Counsel [kuran kişi — `firm-profile.md`: Kullanıcı rolü] |
+| Suç duyurusu hazırlık + savcılığa sunum | Counsel + Direktör imza [`firm-profile.md`: Doğrudan amir] |
 | Resmi açıklama içeriği | Counsel + [İletişim Başkanı] (İletişim) + [Hukuk Direktörü] onay |
 | UDRP başvurusu (dış avukatla) | [Hukuk Direktörü] + [CLCO] (CLCO) bilgi (tutar < 50K TL) |
 | SMK m. 150 tazminat dava açma | [CLCO] onay (litigation eskalasyon matriksi) |
