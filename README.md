@@ -696,7 +696,7 @@ justify building an MCP server, and which already have a good enough public API.
 - **ArthurMask desktop icon.** The icon is named *ArthurMask* and carries ArthurMask's own version, like the other
   icons (*ArthurMask 1.2.0*). On Windows the old *Arthur Mask* icon and the Start menu entry are renamed; on a Mac
   the desktop alias is.
-- How it arrives: the updater installs 3.1.0 on Windows and on a Mac. The desk keeps its number (3.0.13) and gains the
+- How it arrives: the updater installs 3.1.0 on Windows and on a Mac. The desk is 3.1.0 as well and gains the
   two cards; ArthurMask 1.2.0, ArthurTapu and the UYAP bridge are unchanged.
 
 **Türkçe:** Haftalık denetim (9 Kasım) paket dosyalarını yürürlükteki mevzuatla ve canlı araçlarla karşılaştırdı;
@@ -720,7 +720,7 @@ kesin toplam vermez. Paketler: Hukuk Bürosu ve Kurumsal 1.12.6, Courthouse 1.2.
 PDF'ine hesap kartları sayfası eklendi (10 sayfa); başlangıç sayfası da kartları anar. Masaüstündeki ArthurMask simgesi
 bitişik yazılır ve öteki simgeler gibi sürüm taşır ("ArthurMask 1.2.0"); eski "Arthur Mask" simgesi ve Başlat
 menüsü kısayolu yeni ada çevrilir. Windows'ta ve
-Mac'te güncelleyici 3.1.0'ı kendisi kurar. Masa numarası aynı (3.0.13), iki kart eklendi; ArthurMask 1.2.0, ArthurTapu
+Mac'te güncelleyici 3.1.0'ı kendisi kurar. Masa da 3.1.0, iki kart eklendi; ArthurMask 1.2.0, ArthurTapu
 ve UYAP köprüsü aynı.
 
 ## Setup 3.0.13 — Fee cards on the desk, Official Gazette annexes, ArthurMask 1.2.0 (2026-11-07)
