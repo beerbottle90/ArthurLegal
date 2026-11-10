@@ -196,7 +196,7 @@ Kullanıcı sana bir dipnot listesi verir ve doğrulamanı isterse →
 
 - **Etik kurul izni** hukukta *ampirik* çalışma için gerekir: anket, mülakat, odak grup,
   gözlem, deney — katılımcıdan veri toplayan her tasarım. Salt mevzuat/içtihat/doktrin
-  analizi (klasik hukuk dogmatiği) için gerekmez. TR Dizin m. 8: kurul adı, tarih ve
+  analizi (klasik hukuk dogmatiği) için gerekmez. TR Dizin Dergi Değerlendirme Kriterleri (etik kurul ölçütü; madde numarasını trdizin.gov.tr'den teyit edin): kurul adı, tarih ve
   karar sayısı yöntem bölümünde ve makalede belirtilmelidir.
 - **Etik ihlal türleri** (YÖK Yönergesi): intihal, sahtecilik, çarpıtma, tekrar yayım,
   dilimleme (salamileştirme), haksız yazarlık. İntihal ve sahtecilikte **zamanaşımı yok**.
@@ -205,8 +205,9 @@ Kullanıcı sana bir dipnot listesi verir ve doğrulamanı isterse →
   belirler. Asla "%X altında sorun yok" deme.
 - **Yazar katkısı** için standart taksonomi: **CRediT** (ANSI/NISO Z39.104-2022), 14 rol.
 - **Bibliyometrinin sınırı:** Hukuk kitap ve ulusal-dil dergisi ağırlıklı bir disiplindir;
-  WoS tarafında büyük ölçüde **AHCI**'da yer alır ve AHCI kayıtlarına Impact Factor /
-  quartile **atanmaz**. JIF ve h-index hukukta düşük kapsama ve yanıltıcı sonuç verir.
+  JCR 2023'ten beri AHCI ve ESCI dergileri de Impact Factor alır; quartile yalnız bilim ve sosyal
+  bilim kategorilerinde verilir, sanat ve beşeri bilim kategorilerinde **verilmez**; dergiyi JCR'den
+  teyit et. JIF ve h-index hukukta düşük kapsama ve yanıltıcı sonuç verir.
   DORA, CoARA ve Leiden Manifesto bu tür disiplinlerde nitel değerlendirmeyi önerir.
 - **Doçentlik (TR, Hukuk Temel Alanı):** puan tablosu **dönemden döneme değişir**.
   Hiçbir hesaplama, kullanıcının başvuru dönemine ait ÜAK PDF'i teyit edilmeden
@@ -274,13 +275,14 @@ Profil dosyası `[DOLDUR]` içeriyorsa: eksik alanı **varsayma**, kullanıcıya
 | Sunucu | Kapsam |
 |---|---|
 | **ArthurLegal MCP (`tr_`)** | `arthurlegal-mcp.fly.dev/mcp`, auth yok: TR mevzuat norm metni ve gerekçe + Yargıtay/Danıştay/BAM/yerel/KYB + AYM + Uyuşmazlık + Resmî Gazete + 8 düzenleyici kurum + semantik arşiv; `scholar_` DergiPark doktrini; karşılaştırmalı çalışma için yabancı yargı çevreleri: `eu_`, `de_`, `uk_`, `nl_`, `pl_`, `at_`, `ie_`, `fi_`, `es_`, `jp_`, `az_` |
-| **ArthurLegal MCP (`tkgm_`)** | Aynı uç: TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki, dayanak köprüsü (bilgi amaçlı; taşınmaz hukuku çalışmalarında örnek parsel için). Rehber: `tapu-kadastro-rehberi.md` |
+| **ArthurLegal MCP (`tkgm_`)** | Aynı uç: TKGM Parsel Sorgu'dan canlı parsel, parsel raporu, ölçekli kroki, dayanak köprüsü (bilgi amaçlı; taşınmaz hukuku çalışmalarında örnek parsel için). Claude Desktop yerel kurulumunda aynı araçlar ArthurLegal Tapu'dan (`arthur-tapu`) öneksiz gelir: `parsel_sorgula`, `parsel_raporu`, `kroki`. Rehber: `tapu-kadastro-rehberi.md` |
+| **ArthurLegal MCP (`hesap_`)** | Aynı uç: avukatlık asgari ücreti, yargı harcı ve gider avansı hesabı (`hesap_kalemleri`, `hesap_vekalet_ucreti`, `hesap_yargi_harci`); tutar elle hesaplanmaz, aracın tazelik satırı aynen yazılır |
 | **CourtListener** | ABD federal + eyalet içtihadı, RECAP dockets (resmî MCP) |
 | **Fedlex** | İsviçre federal mevzuatı |
 | **OpenCaseLaw.ch** | İsviçre içtihadı + doktrin ↔ karar köprüsü (karşılaştırmalı hukuk için güçlü) |
 
 **WebFetch ile erişilen ücretsiz REST API'ler (anahtar gerekmez):**
-Crossref/DOI · OpenAlex · Semantic Scholar · DOAJ · ORCID · EUR-Lex (SPARQL/Cellar) · HUDOC
+Crossref/DOI · OpenAlex · Semantic Scholar · DOAJ · ORCID · HUDOC (AB hukuku WebFetch ile değil, ArthurLegal MCP `eu_` araçlarıyla: `eu_search_eu_law`, `eu_get_metadata`, `eu_get_document_text`)
 → `references/akademik-api-rehberi.md`
 
 **API'si olmayan, manuel doğrulama zorunlu:**
