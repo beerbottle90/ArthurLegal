@@ -33,6 +33,9 @@ import proje
 # Claude Desktop'ın resmî bağlantısı yeni sohbeti mesajı yazılmış olarak açar; kullanıcı Enter'a basar
 # (bağlantı mesajı kendiliğinden göndermez). Claude mesajı yerel sunucudaki al_masasi aracına götürür.
 MASA_ISTEMI = "ArthurLegal Masası'nı aç"
+# Bağlantı modeli ya da effort'u seçemez (claude://claude.ai/new yalnız metin taşır). Mesajın ikinci satırı kullanıcıya,
+# Enter'a basmadan önce, tam model menüsünün yanında hatırlatır; Claude son seçimi hatırladığı için bir kez seçmek yeter.
+MODEL_ONERISI = Path(__file__).resolve().parent / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json"
 
 TAPU_ADRES = ("127.0.0.1", 8765)
 
@@ -105,8 +108,26 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
     return yol
 
 
+def model_notu() -> str:
+    """Önerilen model ve effort, masanın okuduğu dosyadan (arayuz/ortak/tasarim/model-onerisi.json). Dosya yoksa
+    ya da okunamıyorsa (eski arayüz kopyası) not eklenmez: mesaj eskisi gibi tek satırdır."""
+    try:
+        o = json.loads(MODEL_ONERISI.read_text(encoding="utf-8"))
+        model = o["onerilen"]["model"]
+        efor = next(e["ad"] for e in o["eforlar"] if e["id"] == o["onerilen"]["efor"])
+    except (OSError, ValueError, KeyError, TypeError, StopIteration):
+        return ""
+    return ortak.metin(
+        f"(Göndermeden önce: bu kutudaki model menüsünde {model} ve effort {efor} seçili olsun. "
+        "Bir kez seçmeniz yeter; Claude hatırlar.)",
+        f"(Before sending: make sure {model} and effort {efor} are selected in the model menu of this box. "
+        "Choosing once is enough; Claude remembers.)")
+
+
 def masa_adresi() -> str:
-    return "claude://claude.ai/new?q=" + urllib.parse.quote(MASA_ISTEMI, safe="")
+    hatirlatma = model_notu()
+    return "claude://claude.ai/new?q=" + urllib.parse.quote(MASA_ISTEMI + ("\n\n" + hatirlatma if hatirlatma else ""),
+                                                            safe="")
 
 
 def masa() -> int:
