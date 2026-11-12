@@ -15,9 +15,9 @@
   <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><img src="docs/rehber/kapak.png" width="300" alt="ArthurLegal Kullanıcı Rehberi, kapak sayfası · ArthurLegal user guide, cover page"></a>
 </p>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 10 sayfa, Türkçe)</b></a><br>
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 10 sayfa)</b></a><br>
   ArthurLegal nedir, kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 10 pages, in Turkish)</a>
+  <a href="docs/rehber/ArthurLegal-User-Guide.pdf">User guide (PDF, English)</a> · <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf">İstifadəçi bələdçisi (PDF, Azərbaycan dili)</a>
 </p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>

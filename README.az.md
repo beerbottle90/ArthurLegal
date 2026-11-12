@@ -21,10 +21,10 @@
 
 <h3 align="center" id="rehber-az">İstifadəçi bələdçisi</h3>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><img src="docs/rehber/kapak.png" width="300" alt="ArthurLegal istifadəçi bələdçisi, üz qabığı"></a>
+  <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><img src="docs/rehber/kapak-az.png" width="300" alt="ArthurLegal istifadəçi bələdçisi, üz qabığı"></a>
 </p>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>İstifadəçi bələdçisi (PDF, 10 səhifə, türk dilində)</b></a><br>
+  <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><b>İstifadəçi bələdçisi (PDF, 10 səhifə)</b></a><br>
   ArthurLegal nədir, quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə.
 </p>
 

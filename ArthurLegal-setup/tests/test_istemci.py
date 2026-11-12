@@ -1961,10 +1961,13 @@ class KullaniciRehberiTesti(unittest.TestCase):
     ve iki derleyici de onu rehber/masa.png olarak pakete koyar."""
 
     PDF = "docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"
+    PDF_EN = "docs/rehber/ArthurLegal-User-Guide.pdf"
+    PDF_AZ = "docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"
 
     def test_pdf_readme_ve_baslangic_sayfasi(self):
         kok = BURASI.parent
-        self.assertTrue((kok / self.PDF).read_bytes().startswith(b"%PDF"))
+        for pdf in (self.PDF, self.PDF_EN, self.PDF_AZ):   # rehber üç dilde (kaynağı arthurlegal-marketing)
+            self.assertTrue((kok / pdf).read_bytes().startswith(b"%PDF"), pdf)
         self.assertTrue((kok / "docs" / "rehber" / "kapak.png").exists())
         readme = (kok / "README.md").read_text(encoding="utf-8")
         ust = readme[:readme.index('<h2 id="kurulum">')]
@@ -1972,7 +1975,8 @@ class KullaniciRehberiTesti(unittest.TestCase):
         self.assertIn(f'<a href="{self.PDF}">', ust)
         for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
-            self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{self.PDF}"', html)
+            pdf = {"rehber.html": self.PDF, "rehber-en.html": self.PDF_EN, "rehber-az.html": self.PDF_AZ}[ad]
+            self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{pdf}"', html)
             self.assertIn('<img src="masa.png"', html)
             self.assertNotIn("banner", html, "eski piksel afiş yerine başlıkta yeni simge (SVG)")
             self.assertIn('<svg class="simge"', html)

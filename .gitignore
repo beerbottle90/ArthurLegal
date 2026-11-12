@@ -19,6 +19,8 @@
 *.pdf
 # Kullanıcı rehberi bilerek depoda: README ve başlangıç sayfası bu adla bağlar (kaynağı arthurlegal-marketing).
 !docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf
+!docs/rehber/ArthurLegal-User-Guide.pdf
+!docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf
 
 # Ofis geçici dosyaları
 ~$*
