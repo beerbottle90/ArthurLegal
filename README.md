@@ -102,7 +102,8 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 
 > [!TIP]
 > **Model ve effort.** Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir. Claude'un yazma
-> kutusundaki model adına tıklayıp modeli ve effort'u bir kez seçin; Claude hatırlar. ArthurLegal'in ölçümünde
+> kutusundaki model adına tıklayıp modeli ve effort'u bir kez seçin; Claude hatırlar.
+> Masa tam ekrandayken bu menü görünmez: masanın **Model ve effort** ekranındaki **Model menüsünü göster** düğmesi masayı küçültür. ArthurLegal'in ölçümünde
 > (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında daha çok ağır hata yaptı; hiçbir
 > model uydurma künye yazmadı. Kotanız daralırsa madde metni, künye teyidi ve hesap işlerini Sonnet 5.5 ile
 > yapabilirsiniz. ArthurLegal her modelle çalışır; masanın **Model ve effort** ekranı ölçüm sonuçlarını gösterir.
@@ -300,7 +301,8 @@ background. On the last page click **Finish**: with the new interface Claude Des
 
 > [!TIP]
 > **Model and effort.** We recommend at least Opus 5.5 with Medium / High effort; this is not binding. Click the
-> model name in Claude's message box and choose the model and effort once; Claude remembers. In ArthurLegal's
+> model name in Claude's message box and choose the model and effort once; Claude remembers.
+> While the desk is full screen this menu is hidden: the **Show the model menu** button on the desk's **Model ve effort** screen makes the desk smaller. In ArthurLegal's
 > measurement (23 hard questions) the smaller models made more critical errors on deadlines, procedure and
 > recently amended law; no model wrote a fabricated citation. If your usage runs low, article text, citation
 > checks and fee calculations can be done with Sonnet 5.5. ArthurLegal works with every model; the desk's
@@ -686,6 +688,27 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.2.1 — The model menu from the desk (2026-11-12)
+
+- **Model menu.** While the desk is full screen, Claude Desktop shows only a message box at the bottom; the model and
+  effort menu is not there. The desk's "Model ve effort" screen and the Haiku notice now have a **Show the model
+  menu** button: the desk shrinks into the chat, you choose the model and effort in the chat's own message box, then
+  press "Open the desk full screen". The steps, the start page and this README say so in all three languages.
+- How it arrives: the updater installs 3.2.1 on Windows and on a Mac; quit Claude Desktop fully once and reopen it.
+  Nothing else changed.
+
+**Türkçe:** Masa tam ekrandayken Claude Desktop altta yalnız mesaj kutusunu gösterir; model ve effort menüsü orada
+yoktur. Masanın "Model ve effort" ekranında ve Haiku uyarısında artık **Model menüsünü göster** düğmesi var: masa
+sohbetin içine küçülür, modeli ve effort'u sohbetin kendi yazma kutusundan seçersiniz, sonra "Masayı tam ekran aç"a
+basarsınız. Adımlar, başlangıç sayfası ve README bunu üç dilde söyler. Güncelleyici 3.2.1'i kendisi kurar; Claude
+Desktop'u bir kez tamamen kapatıp açın. Başka değişiklik yok.
+
+**Azərbaycan dili:** Masa tam ekranda olarkən Claude Desktop aşağıda yalnız mesaj qutusunu göstərir; model və effort
+menyusu orada yoxdur. Masanın "Model və effort" ekranında və Haiku xəbərdarlığında indi **Model menyusunu göstər**
+düyməsi var: masa söhbətin içinə kiçilir, modeli və effort-u söhbətin öz mesaj qutusundan seçirsiniz, sonra "Masanı
+tam ekranda aç" düyməsini basırsınız. Yeniləyici 3.2.1-i özü quraşdırır; Claude Desktop-u bir dəfə tam bağlayıb
+yenidən açın.
 
 ## Setup 3.2.0 — Three languages (Turkish, Azerbaijani, English) and a model recommendation (2026-11-12)
 
