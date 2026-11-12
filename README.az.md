@@ -118,7 +118,8 @@ masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq), klassikdə başla
 
 > [!TIP]
 > **Model və effort.** Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil. Claude-un mesaj
-> qutusundakı model adına klikləyib modeli və effort-u bir dəfə seçin; Claude yadda saxlayır. ArthurLegal-ın
+> qutusundakı model adına klikləyib modeli və effort-u bir dəfə seçin; Claude yadda saxlayır.
+> Masa tam ekranda olarkən bu menyu görünmür: masanın **Model və effort** ekranındakı **Model menyusunu göstər** düyməsi masanı kiçildir. ArthurLegal-ın
 > apardığı ölçmədə (23 çətin sual) kiçik modellər müddətlər, prosessual qaydalar və yeni dəyişmiş qanunvericiliklə
 > bağlı suallarda daha çox ciddi səhv etdi; heç bir model uydurma istinad yazmadı. Limitiniz azalarsa, maddə mətni,
 > istinadların yoxlanması və hesablama işlərini Sonnet 5.5 ilə görə bilərsiniz. ArthurLegal hər modellə işləyir;

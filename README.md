@@ -102,7 +102,8 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 
 > [!TIP]
 > **Model ve effort.** Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir. Claude'un yazma
-> kutusundaki model adına tıklayıp modeli ve effort'u bir kez seçin; Claude hatırlar. ArthurLegal'in ölçümünde
+> kutusundaki model adına tıklayıp modeli ve effort'u bir kez seçin; Claude hatırlar.
+> Masa tam ekrandayken bu menü görünmez: masanın **Model ve effort** ekranındaki **Model menüsünü göster** düğmesi masayı küçültür. ArthurLegal'in ölçümünde
 > (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında daha çok ağır hata yaptı; hiçbir
 > model uydurma künye yazmadı. Kotanız daralırsa madde metni, künye teyidi ve hesap işlerini Sonnet 5.5 ile
 > yapabilirsiniz. ArthurLegal her modelle çalışır; masanın **Model ve effort** ekranı ölçüm sonuçlarını gösterir.
@@ -300,7 +301,8 @@ background. On the last page click **Finish**: with the new interface Claude Des
 
 > [!TIP]
 > **Model and effort.** We recommend at least Opus 5.5 with Medium / High effort; this is not binding. Click the
-> model name in Claude's message box and choose the model and effort once; Claude remembers. In ArthurLegal's
+> model name in Claude's message box and choose the model and effort once; Claude remembers.
+> While the desk is full screen this menu is hidden: the **Show the model menu** button on the desk's **Model ve effort** screen makes the desk smaller. In ArthurLegal's
 > measurement (23 hard questions) the smaller models made more critical errors on deadlines, procedure and
 > recently amended law; no model wrote a fabricated citation. If your usage runs low, article text, citation
 > checks and fee calculations can be done with Sonnet 5.5. ArthurLegal works with every model; the desk's

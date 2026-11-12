@@ -3238,15 +3238,15 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const h = ogesi("h2", null, cev("Bu sohbet {0} ile çalışıyor", modelKisaAdi(m)));
     h.id = "model-pencere-baslik";
     const kapat = () => ortu.remove();
-    const nasil = dugme(cev("Nasıl değiştirilir"), { sinif: "birincil", simge: "ayar" });
-    nasil.onclick = () => { kapat(); git("model"); };
+    const nasil = dugme(cev("Model menüsünü göster"), { sinif: "birincil", simge: "ayar" });
+    nasil.onclick = () => { kapat(); git("model"); modelMenusunuGoster(); };
     const devam = dugme(cev("Bu sohbette böyle devam et"));
     devam.onclick = kapat;
     const ey = ogesi("div", "eylemler sol");
     ey.append(nasil, devam);
     p.append(h,
       ogesi("p", null, cev("{0}. Madde getirme ve künye teyidi gibi mekanik işlerde sorun yok; süre, usul ve görüş gerektiren işte hata riski yüksek.", aileUyarisi(m.aile))),
-      ogesi("p", null, cev("{0} Claude'un yazma kutusundaki model menüsünden bir kez seçmeniz yeter; Claude seçiminizi hatırlar.", oneriCumlesi())),
+      ogesi("p", null, cev("{0} Model menüsü masa tam ekrandayken görünmez: aşağıdaki düğme masayı sohbetin içine küçültür, sohbetin yazma kutusundaki model adından seçersiniz. Bir kez seçmeniz yeter; Claude seçiminizi hatırlar.", oneriCumlesi())),
       ey);
     ortu.append(p);
     ortu.addEventListener("keydown", (e) => { if (e.key === "Escape") kapat(); });
@@ -3285,9 +3285,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     out.push(ogesi("p", "zaman", hucre && hucre.olcum ? cev("Ölçüm: {0}", hucre.olcum)
       : cev("Bu ayar ayrıca ölçülmedi; değerlendirme en yakın ölçülen ayara dayanır.")));
     const ol = ogesi("ol", "adim-listesi");
-    for (const t of [cev("Claude'un yazma kutusundaki model adına tıklayın."), cev("Listeden {0} seçin.", aileAdi(aile)),
+    for (const t of [cev("Model menüsü masa tam ekrandayken görünmez: aşağıdaki \"Model menüsünü göster\" düğmesine basın, masa sohbetin içine küçülür."),
+      cev("Sohbetin yazma kutusundaki model adına tıklayın; listeden {0} seçin.", aileAdi(aile)),
       cev("Aynı menüde Effort: {0} seçin.", eforAdi(efor)),
-      cev("Bir kez seçmeniz yeter: Claude son seçiminizi hatırlar, yeni sohbetler bu ayarla açılır.")]) {
+      cev("Masayı yeniden büyütmek için \"Masayı tam ekran aç\" düğmesine basın. Bir kez seçmeniz yeter: Claude son seçiminizi hatırlar, yeni sohbetler bu ayarla açılır.")]) {
       ol.append(ogesi("li", null, t));
     }
     out.push(ol);
@@ -3297,10 +3298,12 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         ? cev("Bu sohbet zaten {0} ile çalışıyor; effort'u menüden kontrol edin.", modelKisaAdi(m))
         : cev("Bu sohbet şu an {0} ile çalışıyor.", modelKisaAdi(m))));
     }
+    const menu = dugme(cev("Model menüsünü göster"), { sinif: "birincil", simge: "ayar" });
+    menu.onclick = modelMenusunuGoster;
     const dogrula = dugme(cev("Seçtim, Claude doğrulasın"), { simge: "onay" });
     dogrula.onclick = () => claudeaSor(modelIstegi(), null);
     const ey = ogesi("div", "eylemler sol");
-    ey.append(dogrula);
+    ey.append(menu, dogrula);
     out.push(ey);
     return out;
   }
@@ -3596,6 +3599,19 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     } else {
       masaKuruldu = false;
       onizlemeCiz();
+    }
+  }
+
+  // Claude'un model ve effort menüsü yalnız sohbetin kendi yazma kutusunda durur; masa tam ekrandayken alttaki kutu
+  // yalnız mesaj içindir. Masa küçülür (sohbetin içine iner), kullanıcı menüden seçer, sonra masayı yeniden büyütür.
+  // Bu pencerede masa kendiliğinden yeniden tam ekrana geçmez.
+  async function modelMenusunuGoster() {
+    DURUM.tamEkranIste = false;
+    try {
+      await app.requestDisplayMode({ mode: "inline" });
+      ortam.duyuru.textContent = cev("Masa küçüldü: sohbetin yazma kutusundaki model adına tıklayın.");
+    } catch {
+      ortam.duyuru.textContent = cev("Masa küçültülemedi: yeni bir sohbet açıp yazma kutusundaki model adından seçin; Claude seçimi hatırlar.");
     }
   }
 

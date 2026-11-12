@@ -341,7 +341,8 @@ def model_notu(model: Dict[str, str]) -> str:
         return ""
     aile = next((a for a in model_onerisi()["aileler"] if a["aile"] == model.get("aile")), {})
     return (" MODEL: bu sohbet %s ile çalışıyor. %s. Kullanıcıya bu cevabınızda bir kez, tek cümleyle söyleyin: "
-            "yazma kutusundaki model menüsünden %s seçmesi tavsiye edilir, bağlayıcı değildir; Claude seçimi "
+            "yazma kutusundaki model menüsünden %s seçmesi tavsiye edilir, bağlayıcı değildir (masa tam ekrandaysa menü "
+            "görünmez: masanın Model ve effort ekranındaki 'Model menüsünü göster' düğmesi masayı küçültür); Claude seçimi "
             "hatırlar, bir kez seçmek yeter. İşi bu yüzden reddetmeyin ya da ertelemeyin; süreyi ve başvuru yolunu "
             "yazmadan önce ilgili maddeyi resmî metinden okuyun."
             % (model.get("ad") or "önerilenin altında bir model",
