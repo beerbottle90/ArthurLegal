@@ -360,8 +360,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   border-radius: var(--k-alan); background: var(--dolgu); font-size: 12.5px; text-align: left; }
 .model-gosterge:hover { background: var(--dolgu-ust); }
 .model-gosterge .nokta { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--soluk); }
-.model-gosterge.onerilen .nokta, .model-gosterge.yeterli .nokta { background: var(--nane-metin); }
+.model-gosterge.onerilen .nokta { background: var(--nane-metin); }
+.model-gosterge.yeterli .nokta { background: var(--mavi-metin); }
 .model-gosterge.dusuk .nokta { background: var(--kirmizi-metin); }
+.oneri-cumlesi { margin: 0 0 4px; font-size: 17px; font-weight: 600; line-height: 1.4; }
 .model-gosterge .yazi { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .model-serit { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px;
   border-radius: var(--k-alan); background: var(--grup); font-size: 14px; line-height: 1.45; }
@@ -3104,18 +3106,23 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // Claude son seçimi hatırladığı için kullanıcının bir kez seçmesi yeter. Öneri ve ölçüm: tasarim/model-onerisi.json.
   const MODEL_KAYDI = "al.masa.model";
   const MODEL_KAPALI = "al.masa.model.kapali";   // bu sohbette kapatılan hatırlatma, gösterilmiş pencere
-  const MODEL_DUZEYI = { onerilen: ["Önerilen", "nane"], yeterli: ["Yeterli", "mavi"], dusuk: ["Yetersiz", "kirmizi"],
+  // Öneri tavsiyedir, bağlayıcı değildir (MODEL.cumle): masa hiçbir işi model yüzünden durdurmaz. "yeterli" düzeyi,
+  // tavsiye edilen en az modelin altında olup ölçümde mekanik işte sorun çıkarmayan modeldir (Sonnet).
+  const MODEL_DUZEYI = { onerilen: ["Önerilen", "nane"], yeterli: ["Önerinin altında", "mavi"], dusuk: ["Yetersiz", "kirmizi"],
     bilinmiyor: ["Doğrulanmadı", ""] };
-  const AYAR_HUKMU = { onerilen: ["Önerilen ayar", "nane"], yeterli: ["Yeterli", "mavi"], dusuk: ["Önerilmez", "kirmizi"] };
+  const AYAR_HUKMU = { onerilen: ["Önerilen ayar", "nane"], yeterli: ["Önerinin altında", "mavi"], dusuk: ["Önerilmez", "kirmizi"] };
   const AYAR_ACIKLAMASI = {
-    onerilen: "ArthurLegal'in önerdiği ayarın içinde.",
-    yeterli: "Madde, künye ve hesap işleri için yeterli. Süre, usul ve görüş işlerinde önerilen ayara geçin.",
+    onerilen: "ArthurLegal'in tavsiye ettiği ayarın içinde.",
+    yeterli: "Tavsiye edilen en az modelin altında. Madde, künye ve hesap işlerinde ölçümde sorun çıkmadı; süre, usul " +
+      "ve görüş işlerinde tavsiye edilen ayara geçin.",
     dusuk: "ArthurLegal bu ayarı hukuki iş için önermez.",
   };
   const aileBilgisi = (aile) => MODEL.aileler.find((a) => a.aile === aile) || null;
   const aileAdi = (aile) => (aileBilgisi(aile) || { ad: aile }).ad;
   const eforAdi = (id) => (MODEL.eforlar.find((e) => e.id === id) || { ad: id }).ad;
-  const onerilenYazi = () => `${MODEL.onerilen.model} · effort ${eforAdi(MODEL.onerilen.efor)} ya da üstü`;
+  const onerilenEfor = () => [MODEL.onerilen.efor, MODEL.onerilen.efor_ust].filter(Boolean).map(eforAdi);
+  const onerilenYazi = () => `minimum ${MODEL.onerilen.model} · ${onerilenEfor().join(" / ")} effort`;
+  const oneriCumlesi = () => MODEL.cumle || `Tavsiye: ${onerilenYazi()}; bağlayıcı değildir.`;
   const aileUyarisi = (aile) => (aileBilgisi(aile) || {}).uyari ||
     "ArthurLegal'in ölçümünde bu model sınıfı zor sorularda daha çok ağır hata yaptı";
   const modelKisaAdi = (m) => dizgi(m && m.ad).replace(/^claude[\s-]*/i, "").trim() || aileAdi(m && m.aile);
@@ -3151,24 +3158,24 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       : `${modelKisaAdi(m)} · ${MODEL_DUZEYI[duzey][0].toLocaleLowerCase("tr")}`;
     el.className = "model-gosterge " + duzey;
     el.replaceChildren(ogesi("span", "nokta"), ogesi("span", "yazi", yazi));
-    el.setAttribute("aria-label", `Model ve effort. ${yazi}. Önerilen: ${onerilenYazi()}.`);
-    el.title = `Önerilen: ${onerilenYazi()}`;
+    el.setAttribute("aria-label", `Model ve effort. ${yazi}. ${oneriCumlesi()}`);
+    el.title = oneriCumlesi();
   }
 
   function modelCumlesi(m) {
     if (!m || m.duzey === "bilinmiyor") {
-      return `Önerilen ayar: ${onerilenYazi()}. Claude bu sohbetteki modelini masaya henüz bildirmedi.`;
+      return `${oneriCumlesi()} Claude bu sohbetteki modelini masaya henüz bildirmedi.`;
     }
     const ad = modelKisaAdi(m);
     if (m.duzey === "dusuk") {
-      return `Bu sohbet ${ad} ile çalışıyor. ${aileUyarisi(m.aile)}. Önerilen ayar: ${onerilenYazi()}.`;
+      return `Bu sohbet ${ad} ile çalışıyor. ${aileUyarisi(m.aile)}. ${oneriCumlesi()}`;
     }
     if (m.duzey === "yeterli") {
-      return `Bu sohbet ${ad} ile çalışıyor: madde, künye ve hesap işleri için yeterli. Süre, usul ve görüş ` +
-        `işlerinde ${MODEL.onerilen.model} önerilir.`;
+      return `Bu sohbet ${ad} ile çalışıyor: tavsiye edilen en az modelin altında. Madde, künye ve hesap işlerinde ` +
+        `ölçümde sorun çıkmadı; süre, usul ve görüş işlerinde ${MODEL.onerilen.model} tavsiye ederiz, bağlayıcı değildir.`;
     }
-    return `Bu sohbet ${ad} ile çalışıyor: önerilen model. Effort'u masa göremez; Claude'un model menüsünde ` +
-      `${eforAdi(MODEL.onerilen.efor)} ya da üstü seçili olsun.`;
+    return `Bu sohbet ${ad} ile çalışıyor: tavsiye edilen model. Effort'u masa göremez; Claude'un model menüsünde ` +
+      `${onerilenEfor().join(" ya da ")} seçili olsun.`;
   }
 
   // Sohbet ekranının başında tek satır. Yetersiz modelde kapatılamaz; ötekiler bu sohbette bir kez kapatılır.
@@ -3213,7 +3220,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     p.append(h,
       ogesi("p", null, aileUyarisi(m.aile) + ". Madde getirme ve künye teyidi gibi mekanik işlerde sorun yok; " +
         "süre, usul ve görüş gerektiren işte hata riski yüksek."),
-      ogesi("p", null, `Önerilen ayar: ${onerilenYazi()}. Claude'un yazma kutusundaki model menüsünden bir kez seçmeniz ` +
+      ogesi("p", null, `${oneriCumlesi()} Claude'un yazma kutusundaki model menüsünden bir kez seçmeniz ` +
         "yeter; Claude seçiminizi hatırlar."),
       ey);
     ortu.append(p);
@@ -3240,7 +3247,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (hucre && AYAR_HUKMU[hucre.sonuc]) duzey = hucre.sonuc;
     else if ((aileBilgisi(aile) || {}).duzey === "dusuk") duzey = "dusuk";
     else if (a >= oa && e >= oe) duzey = "onerilen";
-    else if (a >= ma && e >= me) duzey = "yeterli";
+    else if (e >= me) duzey = "yeterli";   // en az modelin altında ama ölçümde yetersiz kalmayan aile (ma: yalnız belge)
     return { duzey, hucre };
   }
 
@@ -3278,6 +3285,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const m = DURUM.model;
     const duzey = m ? m.duzey : "bilinmiyor";
 
+    const oneri = ogesi("div", "kesit");
+    oneri.append(ogesi("h3", null, "Tavsiyemiz"), ogesi("p", "oneri-cumlesi", oneriCumlesi()),
+      ogesi("p", "zaman", "Bu bir tavsiyedir: ArthurLegal her modelle çalışır, hiçbir işi model yüzünden durdurmaz. " +
+        "Seçim sizindir."));
+
     const bu = ogesi("div", "kesit");
     bu.append(ogesi("h3", null, "Bu sohbet"));
     const liste = ogesi("div", "liste");
@@ -3286,7 +3298,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     liste.append(
       sunucuSatiri("ayar", duzey === "bilinmiyor" ? "Model doğrulanmadı" : modelKisaAdi(m), modelCumlesi(m), MODEL_DUZEYI[duzey], sor),
       sunucuSatiri("saat", "Effort", "Effort'u masa da Claude da göremez; Claude'un model menüsünde seçili olanı siz " +
-        `kontrol edin. Önerilen: ${eforAdi(MODEL.onerilen.efor)} ya da üstü.`, ["Elle kontrol", ""]));
+        `kontrol edin. Tavsiye: ${onerilenEfor().join(" ya da ")}.`, ["Elle kontrol", ""]));
     liste.querySelectorAll(".liste-ogesi").forEach((o) => o.classList.add("sarar"));   // uzun cümle: dar ekranda düğme alta iner
     bu.append(liste);
 
@@ -3313,7 +3325,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const k = ogesi("button", "eylem-karti senaryo");
       k.type = "button";
       k.dataset.id = s.id;
-      k.append(ogesi("b", null, s.ad), ogesi("span", "ne", s.ornek), ogesi("span", "rozet", `${aileAdi(s.aile)} · ${eforAdi(s.efor)}`));
+      const ayar = ogesi("span", "rozet", `${aileAdi(s.aile)} · ${eforAdi(s.efor)}`);
+      ayar.lang = "en";   // büyük harfe çevrilirken Türkçe kuralı "MEDİUM", "HİGH" yazıyordu; model ve effort adları İngilizce
+      k.append(ogesi("b", null, s.ad), ogesi("span", "ne", s.ornek), ayar);
       k.onclick = () => { Object.assign(MODEL_SECIM, { senaryo: s.id, aile: s.aile, efor: s.efor }); yenile(); };
       kartlar.append(k);
     }
@@ -3343,7 +3357,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     pl.querySelectorAll(".liste-ogesi").forEach((o) => o.classList.add("sarar"));
     plan.append(pl);
 
-    ekran.append(bu, is, sec, plan);
+    ekran.append(oneri, bu, is, sec, plan);
     if (MODEL.olcum && MODEL.olcum.ozet) ekran.append(ogesi("p", "zaman", `Ölçüm (${MODEL.tarih}): ${MODEL.olcum.ozet}`));
     ekran.append(bilgi("Masa, Claude'un modelini ve effort'unu kendisi değiştiremez: seçim Claude'un kendi menüsünden " +
       "yapılır. Bu ekran hangi ayarın ölçümde nasıl sonuç verdiğini ve nasıl seçileceğini gösterir; Claude modelini " +

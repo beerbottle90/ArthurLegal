@@ -113,15 +113,13 @@ def model_notu() -> str:
     ya da okunamıyorsa (eski arayüz kopyası) not eklenmez: mesaj eskisi gibi tek satırdır."""
     try:
         o = json.loads(MODEL_ONERISI.read_text(encoding="utf-8"))
-        model = o["onerilen"]["model"]
-        efor = next(e["ad"] for e in o["eforlar"] if e["id"] == o["onerilen"]["efor"])
-    except (OSError, ValueError, KeyError, TypeError, StopIteration):
+        cumle, cumle_en = str(o["cumle"]), str(o["cumle_en"])
+    except (OSError, ValueError, KeyError, TypeError):
         return ""
+    # Öneri tavsiyedir, bağlayıcı değildir: cümle dosyadaki hâliyle (kullanıcının kesinleştirdiği metin) yazılır.
     return ortak.metin(
-        f"(Göndermeden önce: bu kutudaki model menüsünde {model}, effort en az {efor} seçili olsun. "
-        "Bir kez seçmeniz yeter; Claude hatırlar.)",
-        f"(Before sending: make sure {model} with effort {efor} or higher is selected in the model menu of this box. "
-        "Choosing once is enough; Claude remembers.)")
+        f"({cumle} Bu kutudaki model menüsünden bir kez seçmeniz yeter; Claude hatırlar.)",
+        f"({cumle_en} Choose once in the model menu of this box; Claude remembers.)")
 
 
 def masa_adresi() -> str:

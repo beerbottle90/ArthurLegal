@@ -215,8 +215,10 @@ def model_degerlendir(ad: Any) -> Dict[str, str]:
 
 
 def _onerilen_metni() -> str:
-    o = model_onerisi()
-    return "Claude %s (ya da üstü), effort en az %s" % (o["onerilen"]["model"], _efor_adi(o["onerilen"]["efor"]))
+    """Kısa öneri: "minimum Claude Opus 5.5, effort Medium / High". Tavsiyedir, bağlayıcı değildir (dosyadaki `cumle`)."""
+    o = model_onerisi()["onerilen"]
+    eforlar = " / ".join(_efor_adi(e) for e in (o["efor"], o.get("efor_ust")) if e)
+    return "minimum Claude %s, effort %s" % (o["model"], eforlar)
 
 
 def model_notu(model: Dict[str, str]) -> str:
@@ -224,8 +226,8 @@ def model_notu(model: Dict[str, str]) -> str:
     if model.get("duzey") != "dusuk":
         return ""
     aile = next((a for a in model_onerisi()["aileler"] if a["aile"] == model.get("aile")), {})
-    return (" MODEL: bu sohbet %s ile çalışıyor. %s. Kullanıcıya bu cevabınızda bir kez, tek cümleyle söyleyin: süre, "
-            "usul ve görüş gerektiren işte yazma kutusundaki model menüsünden %s seçmesi önerilir; Claude seçimi "
+    return (" MODEL: bu sohbet %s ile çalışıyor. %s. Kullanıcıya bu cevabınızda bir kez, tek cümleyle söyleyin: "
+            "yazma kutusundaki model menüsünden %s seçmesi tavsiye edilir, bağlayıcı değildir; Claude seçimi "
             "hatırlar, bir kez seçmek yeter. İşi bu yüzden reddetmeyin ya da ertelemeyin; süreyi ve başvuru yolunu "
             "yazmadan önce ilgili maddeyi resmî metinden okuyun."
             % (model.get("ad") or "önerilenin altında bir model",
@@ -237,11 +239,11 @@ def model_kurali() -> str:
     """Sunucu talimatına eklenen kısa kural (masa açılmayan sohbetler ve klasik arayüz için)."""
     o = model_onerisi()
     dusuk = ", ".join(a["ad"].split()[0] for a in o["aileler"] if a["duzey"] == "dusuk")
-    return ("MODEL. ArthurLegal'in ölçümüne göre önerilen: %s; madde, künye ve hesap işinde Claude %s yeterli. %s "
-            "ile çalışıyorsanız ilk cevabınızda bir kez, tek cümleyle söyleyin (kullanıcı yazma kutusundaki model "
-            "menüsünden değiştirebilir; Claude seçimi hatırlar), sonra işe devam edin; işi bu yüzden reddetmeyin. "
+    return ("MODEL. ArthurLegal'in ölçüme dayalı tavsiyesi (bağlayıcı değildir): %s. %s ile çalışıyorsanız ilk "
+            "cevabınızda bir kez, tek cümleyle söyleyin (kullanıcı yazma kutusundaki model menüsünden "
+            "değiştirebilir; Claude seçimi hatırlar), sonra işe devam edin; işi bu yüzden reddetmeyin. "
             "Effort'u göremezsiniz, sormayın."
-            % (_onerilen_metni(), o["asgari"]["model"], dusuk or "Daha düşük bir model"))
+            % (_onerilen_metni(), dusuk or "Daha düşük bir model"))
 
 
 def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:

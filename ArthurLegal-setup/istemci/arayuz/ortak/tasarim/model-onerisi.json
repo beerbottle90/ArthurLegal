@@ -1,7 +1,9 @@
 {
   "tarih": "2026-11-12",
-  "onerilen": {"aile": "opus", "model": "Opus 5.5", "efor": "medium"},
-  "asgari": {"aile": "sonnet", "model": "Sonnet 5.5", "efor": "medium"},
+  "cumle": "Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir.",
+  "cumle_en": "We recommend at least Opus 5.5 with Medium / High effort; this is not binding.",
+  "onerilen": {"aile": "opus", "model": "Opus 5.5", "efor": "medium", "efor_ust": "high"},
+  "asgari": {"aile": "opus", "model": "Opus 5.5", "efor": "medium"},
   "aileler": [
     {"aile": "haiku", "ad": "Haiku 5.5", "duzey": "dusuk",
      "uyari": "ArthurLegal'in vaka ölçümünde bu model 23 zor sorunun 5'inde ağır hata yaptı (yanlış süre, yanlış başvuru yolu, yürürlükten kalkmış kural)"},
@@ -16,16 +18,16 @@
     {"id": "xhigh", "ad": "Extra high"}
   ],
   "senaryolar": [
-    {"id": "hizli", "ad": "Hızlı bakış", "ornek": "Bir maddenin metni, künye teyidi, harç ve ücret hesabı",
-     "aile": "sonnet", "efor": "medium"},
-    {"id": "arastirma", "ad": "Araştırma ve görüş", "ornek": "Vaka çözümü, hukuki görüş, içtihat taraması, sözleşme incelemesi",
+    {"id": "arastirma", "ad": "Günlük iş", "ornek": "Vaka çözümü, hukuki görüş, içtihat taraması, sözleşme incelemesi, madde ve künye",
      "aile": "opus", "efor": "medium"},
-    {"id": "zor", "ad": "Dilekçe ve zor dosya", "ornek": "Süre ve usul tuzakları, yeni değişen mevzuat, çok kaynaklı karmaşık soru. Ölçümde High, Medium'dan farklı sonuç vermedi",
-     "aile": "opus", "efor": "medium"}
+    {"id": "zor", "ad": "Dilekçe ve zor dosya", "ornek": "Süre ve usul tuzakları, yeni değişen mevzuat, çok kaynaklı karmaşık soru",
+     "aile": "opus", "efor": "high"},
+    {"id": "hizli", "ad": "Kota daralınca", "ornek": "Yalnız madde metni, künye teyidi, harç ve ücret hesabı. Tavsiye edilen en az modelin altındadır",
+     "aile": "sonnet", "efor": "medium"}
   ],
   "planlar": [
     {"ad": "Pro",
-     "not": "Opus 5.5 kullanılabilir ama aynı soruda Sonnet 5.5'in yaklaşık iki katı kota harcar. Madde, künye ve hesap işlerinde Sonnet 5.5; süre, usul ve görüş işlerinde Opus 5.5. Sonnet'te effort'u High'a almak Opus'un yerini tutmaz: ölçümde ağır hata sayısı değişmedi."},
+     "not": "Opus 5.5 bu pakette de kullanılır; aynı soruda Sonnet 5.5'in yaklaşık iki katı kota harcar. Kotanız daralırsa madde, künye ve hesap işlerini Sonnet 5.5 ile yapabilirsiniz (ölçümde fark çıkmadı); süre, usul ve görüş işlerinde Opus 5.5'te kalın. Sonnet'te effort'u High'a almak Opus'un yerini tutmaz."},
     {"ad": "Max",
      "not": "Opus 5.5 ile gün boyu rahat çalışılır; ArthurLegal için önerilen paket. Fable 5.2 en zor dosyada seçilebilir, kotayı Opus'un iki katından hızlı tüketir."}
   ],
@@ -48,7 +50,7 @@
        "not": "Low effort hukuki iş için önerilmez; madde ve künye teyidinde sonuç iyi, ama muhakeme gerektiren işte ölçülmedi.",
        "olcum": "madde 19/19, bozuk künye 10/10, 2 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
       {"aile": "sonnet", "efor": "medium", "sonuc": "yeterli",
-       "not": "Madde, künye ve hesap işlerinde yeterli ve kotayı az harcar. Süre, usul ve yeni değişen mevzuat içeren soruda Opus 5.5'e geçin: zor sorularda Opus'tan belirgin geride kaldı.",
+       "not": "Tavsiye edilen en az modelin altında. Madde, künye ve hesap işlerinde ölçümde sorun çıkmadı ve kotayı az harcar. Süre, usul ve yeni değişen mevzuat içeren soruda Opus 5.5'e geçin: zor sorularda Opus'tan belirgin geride kaldı.",
        "olcum": "vaka 78/100, 23 soruda 3 ağır hata; madde 19/19, bozuk künye 10/10, 2 gereksiz alarm"},
       {"aile": "sonnet", "efor": "high", "sonuc": "yeterli",
        "not": "Künye teyidinde en temiz sonuç bu ayarda. Zor vaka sorularında Opus 5.5'in yerini tutmadı: Medium'a göre birkaç soruda iyileşti ama ağır hata sayısı aynı kaldı (3), soru başına kota yaklaşık yüzde 40 arttı.",
@@ -60,7 +62,7 @@
        "not": "ArthurLegal'in ölçülen en dengeli ayarı: zor sorularda tek ağır hata (soruda verilen tarihi atlamak), uydurma atıf yok.",
        "olcum": "vaka 92/100, 23 soruda 1 ağır hata; künye testi bu ayarda koşulmadı"},
       {"aile": "opus", "efor": "high", "sonuc": "onerilen",
-       "not": "Zor vaka sorularında Medium ile aynı sonucu verdi (aynı tek ağır hata); soru başına kota yaklaşık yüzde 30 arttı. Medium yeterli; High isteğe bağlı.",
+       "not": "Zor vaka sorularında Medium ile aynı sonucu verdi (aynı tek ağır hata); soru başına kota yaklaşık yüzde 30 arttı. Tavsiye Medium ya da High; dilekçe ve zor dosyada High seçilebilir.",
        "olcum": "vaka 92/100, 23 soruda 1 ağır hata; madde 19/19, bozuk künye 10/10, 2 gereksiz alarm"},
       {"aile": "fable", "efor": "medium", "sonuc": "onerilen",
        "not": "Ölçümün en yüksek puanı, ağır hata yok. Opus 5.5'ten farkı yanılma payının içinde; soru başına Opus'un iki katından fazla kota harcar. En zor dosyada seçin.",

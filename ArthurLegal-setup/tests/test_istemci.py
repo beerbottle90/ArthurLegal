@@ -372,7 +372,8 @@ class KisayolTesti(unittest.TestCase):
             mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
             self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç")
             oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
-            self.assertIn(oneri["onerilen"]["model"], mesaj)
+            self.assertIn(oneri["cumle"], mesaj, "kesin öneri cümlesi aynen yazılır")
+            self.assertIn("bağlayıcı değildir", mesaj, "öneri tavsiyedir")
             self.assertIn("Claude hatırlar", mesaj)
             self.assertLess(len(adres), 2000, "bağlantı kısa kalır")
 
@@ -1660,6 +1661,17 @@ class ArayuzTesti(unittest.TestCase):
                 html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
                 self.assertIn('<p data-arayuz="yeni">', html)
                 self.assertIn("d.arayuz", html)
+
+    def test_oneri_cumlesi_her_yuzeyde_ayni(self):
+        """Kesin öneri cümlesi (tavsiye, bağlayıcı değil) tek dosyadadır; başlangıç sayfası ve README aynı cümleyi yazar."""
+        oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
+        self.assertIn("bağlayıcı değildir", oneri["cumle"])
+        readme = (BURASI.parent / "README.md").read_text(encoding="utf-8")
+        for ad, cumle in (("rehber.html", oneri["cumle"]), ("rehber-en.html", oneri["cumle_en"])):
+            html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+            self.assertIn('<div class="kart" id="model-efor">', html)
+            self.assertIn(cumle, html)
+            self.assertIn(cumle, readme)
 
     def test_model_kurali_talimatta_ve_masa_modeli_tasir(self):
         """Sunucu Claude'un modelini değiştiremez: kural talimata girer (klasik arayüzde de), masa Claude'un bildirdiği
