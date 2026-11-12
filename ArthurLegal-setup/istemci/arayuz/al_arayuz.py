@@ -61,7 +61,7 @@ MASA_URI = "ui://arthurlegal/masa.html"
 # Claude Desktop'ın tam ekran bölmesi her zaman en son açılan görünümü gösterir. Bir aracın kendi kartı olsaydı masanın
 # yerine geçerdi; bu yüzden bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer.
 # Masanın kendi çağırdığı iç araçlar görünüm açmaz.
-GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac"})
+GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil"})
 # Eski kartlar: Claude dizini profili (talimatsız, masasız) yalnız bu iki aracı kartla gösterir.
 KART_GORUNUMU = {
     "tr_mevzuat_madde_getir": "ui://arthurlegal/madde-karti.html",
@@ -156,6 +156,37 @@ def sozluk() -> Dict[str, Dict[str, str]]:
             except OSError:
                 _SOZLUK[dil] = {}
     return _SOZLUK
+
+
+def dil_araci() -> Dict[str, Any]:
+    """Masanın dili bu bilgisayarda kalıcıdır: kullanıcı bayraklardan seçince masa bu aracı çağırır, kurulum saklar
+    ve masa sonraki sohbetlerde o dilde açılır. Uzak uçta araç yoktur: orada seçim sohbet başınadır (Claude her
+    sohbette masaya yeni tarayıcı deposu verir)."""
+    return {
+        "name": "al_dil",
+        "title": "ArthurLegal Masası dili",
+        "description": (
+            "ArthurLegal Masası'nın dilini bu bilgisayarda kalıcı olarak ayarlar ya da okur: tr (Türkçe), az "
+            "(Azerbaycanca), en (İngilizce). Kullanıcı masanın sağ üstündeki bayraklardan dil seçince masa kendisi "
+            "çağırır; kullanıcı masanın dilini değiştirmenizi isterse siz de çağırabilirsiniz. dil verilmezse kayıtlı "
+            "dili döndürür."),
+        "inputSchema": {"type": "object", "properties": {"dil": {"type": "string", "enum": list(DILLER)}}},
+        "annotations": {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": True,
+                        "openWorldHint": False},
+    }
+
+
+def dil_cevabi(girdi: Dict[str, Any], kayitli: Any, kaydet: Any = None) -> Dict[str, Any]:
+    """al_dil'in cevabı. girdi dil taşıyorsa kaydet(dil) çağrılır (çağıran diske yazar); bilinmeyen dil hatadır."""
+    istenen = (girdi or {}).get("dil")
+    if istenen is None or istenen == "":
+        return {"dil": dil_gecerli(kayitli) or None, "diller": list(DILLER)}
+    dil = dil_gecerli(istenen) if str(istenen).strip().lower() in DILLER else ""
+    if not dil:
+        raise ValueError("dil: tr, az ya da en olmalı")
+    if kaydet is not None:
+        kaydet(dil)
+    return {"dil": dil, "diller": list(DILLER), "kaydedildi": kaydet is not None}
 
 
 def gorunum(sablon: str) -> str:

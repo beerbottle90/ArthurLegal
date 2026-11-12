@@ -1,7 +1,8 @@
 ﻿; ArthurLegal kurulum betiği (Inno Setup 6). Bu dosya UTF-8 BOM ile kaydedilmelidir:
 ; BOM olmazsa Türkçe karakterler bozulur (yayin/derle.py denetler).
 ; Doğrudan derlenmez; yayin/derle.py tanımları (/D...) vererek ISCC'yi çağırır.
-; Kurulum iki dillidir (İngilizce ve Türkçe): açılışta dil sorulur, Windows'un diline uyan dil seçili gelir.
+; Kurulum üç dillidir (İngilizce, Türkçe ve Azerbaycanca): açılışta dil sorulur, Windows'un diline uyan dil seçili
+; gelir. Azerbaycanca iletiler bu betiğin yanındaki Azerbaijani.isl dosyasındadır (Inno Setup'la gelmez).
 ; Seçilen dil kur.py'ye --dil ile geçer; kısayol adları ve başlangıç rehberi aynı dilde yazılır.
 
 #ifndef Kaynak
@@ -28,13 +29,15 @@
 #ifndef TapuVar
   #define TapuVar "1"
 #endif
-; kur.py'deki _kaldir_adi ile aynı olmalı (iki dil).
+; kur.py'deki _kaldir_adi ile aynı olmalı (üç dil).
 #if UrunAd == "ArthurLegal"
   #define KaldirAdiTr "ArthurLegal'i Kaldır"
   #define KaldirAdiEn "Uninstall ArthurLegal"
+  #define KaldirAdiAz "ArthurLegal-ı Sil"
 #else
   #define KaldirAdiTr UrunAd + " - Kaldır"
   #define KaldirAdiEn UrunAd + " - Uninstall"
+  #define KaldirAdiAz UrunAd + " - Sil"
 #endif
 
 [Setup]
@@ -86,9 +89,10 @@ SignToolMinimumTimeBetween=2000
 #endif
 
 [Languages]
-; Lisans sayfası dile göre: önsöz o dilde, lisans metinleri ikisinde de İngilizce asıllarıdır (derle.py lisans_yaz).
+; Lisans sayfası dile göre: önsöz o dilde, lisans metinleri üçünde de İngilizce asıllarıdır (derle.py lisans_yaz).
 Name: "en"; MessagesFile: "compiler:Default.isl"; LicenseFile: "{#Kaynak}\LICENSE.txt"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl"; LicenseFile: "{#Kaynak}\LISANS.txt"
+Name: "az"; MessagesFile: "Azerbaijani.isl"; LicenseFile: "{#Kaynak}\LISENZIYA.txt"
 
 [Messages]
 ; Inno Setup 6 karşılama sayfasını göstermez; kurulum lisans sayfasıyla açılır. Bilgi "Kurulmaya hazır" sayfasında.
@@ -96,110 +100,159 @@ Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl"; LicenseFile: "{#Kayn
 #if FirmaAd != ""
 en.ReadyLabel1={#UrunAd} is ready to install ({#FirmaAd}) with the modules below and the research connector.
 tr.ReadyLabel1={#UrunAd} kurulmaya hazır ({#FirmaAd}): aşağıdaki modüller ve araştırma bağlantısı.
+az.ReadyLabel1={#UrunAd} quraşdırılmağa hazırdır ({#FirmaAd}): aşağıdakı modullar və araşdırma bağlantısı.
 #else
 en.ReadyLabel1=Setup is ready to install ArthurLegal with the modules below and the research connector.
 tr.ReadyLabel1=Kurulum, ArthurLegal'i kurmaya hazır: aşağıdaki modüller ve araştırma bağlantısı.
+az.ReadyLabel1=Quraşdırma ArthurLegal-ı quraşdırmağa hazırdır: aşağıdakı modullar və araşdırma bağlantısı.
 #endif
 en.ReadyLabel2a=Click Install. If you chose ArthurMask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
 en.ReadyLabel2b=Click Install. If you chose ArthurMask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). Claude Desktop is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
 tr.ReadyLabel2a=Kur düğmesine tıklayın. ArthurMask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
 tr.ReadyLabel2b=Kur düğmesine tıklayın. ArthurMask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). Claude Desktop açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
+az.ReadyLabel2a=Quraşdır düyməsinə klikləyin. ArthurMask-ı seçmisinizsə və o, kompüterdə quraşdırılmayıbsa, yüklənir (təxminən 1 GB, bir neçə dəqiqə). Claude Desktop açıqdırsa, bağlanır; yazdığınız mesaj varsa, əvvəlcə göndərin. Administrator hüquqları tələb olunmur; bundan sonra yeniləmələr arxa planda özü quraşdırılır.
+az.ReadyLabel2b=Quraşdır düyməsinə klikləyin. ArthurMask-ı seçmisinizsə və o, kompüterdə quraşdırılmayıbsa, yüklənir (təxminən 1 GB, bir neçə dəqiqə). Claude Desktop açıqdırsa, bağlanır; yazdığınız mesaj varsa, əvvəlcə göndərin. Administrator hüquqları tələb olunmur; bundan sonra yeniləmələr arxa planda özü quraşdırılır.
 en.FinishedLabel={#UrunAd} is installed.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open the interface you chose: with the new interface, Claude Desktop with 'ArthurLegal Masası'nı aç' typed (press Enter); with the classic one, Claude Desktop and the start panel. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose 'Always allow'.%n%nTo add or remove modules or to change the interface, run this setup again.
 tr.FinishedLabel={#UrunAd} kuruldu.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) seçtiğiniz arayüzü açar: yeni arayüzde Claude Desktop 'ArthurLegal Masası'nı aç' yazılı gelir (Enter'a basın), klasikte Claude Desktop ve başlangıç paneli açılır. Claude Desktop'ta yeni bir sohbet açıp sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa 'Always allow' (Her zaman izin ver) seçin.%n%nModül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın.
+az.FinishedLabel={#UrunAd} quraşdırıldı.%n%nİş masasındakı paket nişanları ({#UrunAd}, Courthouse, Akademik) seçdiyiniz interfeysi açır: yeni interfeysdə Claude Desktop 'ArthurLegal Masası'nı aç' yazılmış halda açılır (Enter düyməsini basın), klassikdə Claude Desktop və başlanğıc paneli açılır. Claude Desktop-da yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, 'Always allow' (Həmişə icazə ver) seçin.%n%nModul əlavə etmək, çıxarmaq və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın.
 
 [CustomMessages]
 en.KaldirAdi={#KaldirAdiEn}
 tr.KaldirAdi={#KaldirAdiTr}
+az.KaldirAdi={#KaldirAdiAz}
 en.RehberDosyasi=baslangic-en.html
 tr.RehberDosyasi=baslangic.html
+az.RehberDosyasi=baslangic-az.html
 en.RehberAc=Open the start guide (last step)
 tr.RehberAc=Başlangıç rehberini aç (son adım)
+az.RehberAc=Başlanğıc bələdçisini aç (son addım)
 en.ClaudeBaslat=Start Claude Desktop
 tr.ClaudeBaslat=Claude Desktop'u başlat
+az.ClaudeBaslat=Claude Desktop-u başlat
 en.MaskIndiriliyor=Downloading ArthurMask
 tr.MaskIndiriliyor=ArthurMask indiriliyor
+az.MaskIndiriliyor=ArthurMask yüklənir
 en.MaskAciklama=The privacy gate that masks client documents on your computer (about 1 GB). It takes a few minutes, depending on your connection.
 tr.MaskAciklama=Müvekkil belgelerini bilgisayarınızda maskeleyen gizlilik kapısı (yaklaşık 1 GB). İnternet hızınıza göre birkaç dakika sürer.
+az.MaskAciklama=Müvəkkil sənədlərini kompüterinizdə maskalayan məxfilik qapısı (təxminən 1 GB). İnternet sürətinizdən asılı olaraq bir neçə dəqiqə çəkir.
 en.MaskIndirilmedi=ArthurMask could not be downloaded, or the download was stopped.
 tr.MaskIndirilmedi=ArthurMask indirilemedi ya da indirme durduruldu.
+az.MaskIndirilmedi=ArthurMask yüklənə bilmədi və ya yükləmə dayandırıldı.
 en.MaskOlmadanKur=Install ArthurLegal without ArthurMask for now? The UYAP bridge needs ArthurMask; ArthurMask is downloaded again in the background at the next update check.
 tr.MaskOlmadanKur=ArthurLegal şimdilik ArthurMask olmadan kurulsun mu? UYAP bağlantısı ArthurMask ister; ArthurMask bir sonraki güncelleme denetiminde arka planda yeniden indirilir.
+az.MaskOlmadanKur=ArthurLegal hələlik ArthurMask olmadan quraşdırılsın? UYAP bağlantısı üçün ArthurMask lazımdır; ArthurMask növbəti yeniləmə yoxlamasında arxa planda yenidən yüklənir.
 en.MaskKuruluyor=Installing ArthurMask (this may take a few minutes)...
 tr.MaskKuruluyor=ArthurMask kuruluyor (birkaç dakika sürebilir)...
+az.MaskKuruluyor=ArthurMask quraşdırılır (bir neçə dəqiqə çəkə bilər)...
 en.ClaudeBaglaniyor=Connecting to Claude Desktop...
 tr.ClaudeBaglaniyor=Claude Desktop'a bağlanıyor...
+az.ClaudeBaglaniyor=Claude Desktop-a qoşulur...
 ; Son sayfada kalın hatırlatma (yalnız yeni arayüz; Kod: CurPageChanged). Mesaj yazılı gelir ama gönderilmez.
 en.MasaEnterHatirlatma=Important: when Claude Desktop opens, 'ArthurLegal Masası'nı aç' is already typed in the message box. Press Enter to open the desk; the message is not sent by itself. The same happens every time you click the desktop icon.
 tr.MasaEnterHatirlatma=Önemli: Claude Desktop açıldığında yazma kutusunda 'ArthurLegal Masası'nı aç' yazılı gelir. Masanın açılması için Enter'a basın; mesaj kendiliğinden gönderilmez. Masaüstündeki simgeyle her açılışta da böyledir.
+az.MasaEnterHatirlatma=Vacib: Claude Desktop açılanda mesaj qutusunda 'ArthurLegal Masası'nı aç' (ArthurLegal Masasını aç) yazılmış olur. Masanın açılması üçün Enter düyməsini basın; mesaj öz-özünə göndərilmir. İş masasındakı nişanla hər açılışda da belədir.
 ; Modül ekranı. Kısa açıklamalar istemci/kur.py'deki MODUL_METNI ile aynı tutulur (zip kurulumunun sorusu).
 en.ModulBaslik=Choose modules
 tr.ModulBaslik=Modülleri seçin
+az.ModulBaslik=Modulları seçin
 en.ModulAciklama=Tick what you want to install. At least one package is needed; run setup again later to change.
 tr.ModulAciklama=Kurmak istediklerinizi işaretleyin. En az bir paket gerekir; sonra kurulumu yeniden çalıştırıp değiştirebilirsiniz.
+az.ModulAciklama=Quraşdırmaq istədiklərinizi işarələyin. Ən azı bir paket lazımdır; sonra quraşdırmanı yenidən işə salıb dəyişə bilərsiniz.
 en.ModulPaketler=Assistant packages (choose at least one)
 tr.ModulPaketler=Asistan paketleri (en az birini seçin)
+az.ModulPaketler=Köməkçi paketləri (ən azı birini seçin)
 en.ModulAraclar=Tools
 tr.ModulAraclar=Araçlar
+az.ModulAraclar=Alətlər
 en.ModulHukuk=Law Firm
 tr.ModulHukuk=Hukuk Bürosu
+az.ModulHukuk=Hüquq Bürosu
 en.ModulHukukAciklama=For lawyers: petitions, contracts, case-law and legislation research, deadlines.
 tr.ModulHukukAciklama=Avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması, süre takibi.
+az.ModulHukukAciklama=Vəkillər üçün ərizə, müqavilə, məhkəmə təcrübəsi və qanunvericilik araşdırması, müddətlərin izlənməsi.
 en.ModulKurumsal=Corporate Assistant
 tr.ModulKurumsal=Kurumsal Asistan
+az.ModulKurumsal=Korporativ Köməkçi
 en.ModulKurumsalAciklama=For in-house legal teams: contract review, compliance, data protection, company law.
 tr.ModulKurumsalAciklama=Şirket hukuk birimleri için sözleşme incelemesi, uyum, KVKK ve şirketler hukuku.
+az.ModulKurumsalAciklama=Şirkətlərin hüquq şöbələri üçün müqavilələrin yoxlanması, uyğunluq, KVKK və şirkətlər hüququ.
 en.ModulAdliye=Courthouse
 tr.ModulAdliye=Courthouse
+az.ModulAdliye=Courthouse
 en.ModulAdliyeAciklama=For judges and court clerks: neutral drafts of reasoning, orders, writs and service.
 tr.ModulAdliyeAciklama=Hâkim ve kalem için tarafsız taslak: gerekçe iskeleti, tensip, müzekkere, tebligat.
+az.ModulAdliyeAciklama=Hakim və məhkəmə dəftərxanası üçün neytral qaralamalar: əsaslandırma, qərardadlar, rəsmi sorğular və bildirişlər.
 en.ModulAkademisyen=Academician
 tr.ModulAkademisyen=Akademisyen
+az.ModulAkademisyen=Akademik
 en.ModulAkademisyenAciklama=For legal academics: literature, citation checks, journal choice, publication ethics.
 tr.ModulAkademisyenAciklama=Hukuk akademisyenleri için literatür, atıf doğrulama, dergi seçimi, yayın etiği.
+az.ModulAkademisyenAciklama=Hüquqşünas akademiklər üçün ədəbiyyat, istinadların yoxlanması, jurnal seçimi, nəşr etikası.
 en.ModulTapu=ArthurLegal Tapu
 tr.ModulTapu=ArthurLegal Tapu
+az.ModulTapu=ArthurLegal Tapu
 en.ModulTapuAciklama=Live Turkish land-registry parcels (TKGM) by block/parcel or place name, with sketch.
 tr.ModulTapuAciklama=Ada/parsel ya da yer adıyla TKGM'den canlı parsel bilgisi, kroki ve harç.
+az.ModulTapuAciklama=Ada/parsel və ya yer adı ilə TKGM-dən (Türkiyənin tapu-kadastr idarəsi) canlı parsel məlumatı, kroki və rüsum.
 en.ModulMask=ArthurMask
 tr.ModulMask=ArthurMask
+az.ModulMask=ArthurMask
 en.ModulMaskAciklama=Masks documents on this computer before Claude sees them; about 1 GB download.
 tr.ModulMaskAciklama=Belgeleri Claude'a vermeden önce bu bilgisayarda maskeler; yaklaşık 1 GB indirilir.
+az.ModulMaskAciklama=Sənədləri Claude-a verməzdən əvvəl bu kompüterdə maskalayır; təxminən 1 GB yüklənir.
 en.ModulHafiza=ArthurLegal Memory
 tr.ModulHafiza=ArthurLegal Hafıza
+az.ModulHafiza=ArthurLegal Yaddaş
 en.ModulHafizaAciklama=Keeps your preferences, corrections and last session across chats, in a folder on this computer.
 tr.ModulHafizaAciklama=Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bu bilgisayardaki bir klasörde tutar.
+az.ModulHafizaAciklama=Seçimlərinizi, düzəlişlərinizi və son sessiyanı söhbətlər arasında bu kompüterdəki bir qovluqda saxlayır.
 en.ModulMaskKurulu=ArthurMask (already installed)
 tr.ModulMaskKurulu=ArthurMask (bu bilgisayarda kurulu)
+az.ModulMaskKurulu=ArthurMask (artıq quraşdırılıb)
 en.ModulMaskKuruluAciklama=Installed on this computer; its updates arrive by themselves.
 tr.ModulMaskKuruluAciklama=Bu bilgisayarda kurulu; güncellemeleri kendiliğinden gelir.
+az.ModulMaskKuruluAciklama=Bu kompüterdə quraşdırılıb; yeniləmələri özü gəlir.
 ; UYAP Dashboard (yalnız Windows; derle.py /DUyapVar): Mask açıklamasının sonuna eklenir. ortak.uyap_acik ile aynı koşul.
 en.ModulMaskUyap=With Law Firm or Corporate, the UYAP Dashboard comes too.
 tr.ModulMaskUyap=Hukuk Bürosu ya da Kurumsal ile UYAP Dashboard da gelir.
+az.ModulMaskUyap=Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə UYAP Dashboard da gəlir.
 en.ModulPaketGerekli=Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician.
 tr.ModulPaketGerekli=En az bir paket seçin: Hukuk Bürosu, Kurumsal Asistan, Courthouse ya da Akademisyen.
+az.ModulPaketGerekli=Ən azı bir paket seçin: Hüquq Bürosu, Korporativ Köməkçi, Courthouse və ya Akademik.
 en.ModulGecersiz=Invalid /MODULLER value: %1%n%nUse a comma-separated list with at least one package, for example /MODULLER=adliye,tapu,mask. Modules: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
 tr.ModulGecersiz=Geçersiz /MODULLER değeri: %1%n%nEn az bir paket içeren, virgülle ayrılmış bir liste verin, örneğin /MODULLER=adliye,tapu,mask. Modüller: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
+az.ModulGecersiz=Yanlış /MODULLER dəyəri: %1%n%nƏn azı bir paketi olan, vergüllə ayrılmış siyahı verin, məsələn /MODULLER=adliye,tapu,mask. Modullar: hukuk-burosu, kurumsal, adliye, akademisyen, tapu, mask, hafiza.
 en.ModulOzet=Modules:
 tr.ModulOzet=Modüller:
+az.ModulOzet=Modullar:
 ; Arayüz ekranı (2.7.0), modül ekranından sonra (Kod: ArayuzSayfasiOlustur). macOS kurulumu da bu metinleri okur.
 en.ArayuzBaslik=Choose the interface
 tr.ArayuzBaslik=Arayüzü seçin
+az.ArayuzBaslik=İnterfeysi seçin
 en.ArayuzAciklama=How should ArthurLegal open? Run setup again later to change.
 tr.ArayuzAciklama=ArthurLegal nasıl açılsın? Sonra kurulumu yeniden çalıştırıp değiştirebilirsiniz.
+az.ArayuzAciklama=ArthurLegal necə açılsın? Sonra quraşdırmanı yenidən işə salıb dəyişə bilərsiniz.
 en.ArayuzYeni=ArthurLegal new interface
 tr.ArayuzYeni=ArthurLegal yeni arayüz
+az.ArayuzYeni=ArthurLegal yeni interfeys
 en.ArayuzYeniAciklama=The desktop icon opens ArthurLegal Masası inside Claude Desktop: modules on the left, the steps in the middle; results come as ArthurLegal cards. Recommended.
 tr.ArayuzYeniAciklama=Masaüstündeki simge Claude Desktop'un içinde ArthurLegal Masası'nı açar: solda modüller, ortada iş adımları; sonuçlar ArthurLegal kartlarıyla gelir. Önerilen.
+az.ArayuzYeniAciklama=İş masasındakı nişan Claude Desktop-un içində ArthurLegal Masasını açır: solda modullar, ortada iş addımları; nəticələr ArthurLegal kartları ilə gəlir. Tövsiyə olunur.
 en.ArayuzKlasik=Claude Desktop classic
 tr.ArayuzKlasik=Claude Desktop klasik
+az.ArayuzKlasik=Claude Desktop klassik
 en.ArayuzKlasikAciklama=Claude Desktop opens as usual and you type your question in the chat. No desk and no cards; results come as text.
 tr.ArayuzKlasikAciklama=Claude Desktop her zamanki gibi açılır, sorunuzu sohbete yazarsınız. Masa ve kartlar kapalı; sonuçlar metin olarak gelir.
+az.ArayuzKlasikAciklama=Claude Desktop həmişəki kimi açılır, sualınızı söhbətə yazırsınız. Masa və kartlar bağlıdır; nəticələr mətn kimi gəlir.
 en.ArayuzOzet=Interface:
 tr.ArayuzOzet=Arayüz:
+az.ArayuzOzet=İnterfeys:
 en.ArayuzGecersiz=Invalid /ARAYUZ value: %1%n%nUse yeni (ArthurLegal new interface) or klasik (Claude Desktop classic).
 tr.ArayuzGecersiz=Geçersiz /ARAYUZ değeri: %1%n%nyeni (ArthurLegal yeni arayüz) ya da klasik (Claude Desktop klasik) yazın.
+az.ArayuzGecersiz=Yanlış /ARAYUZ dəyəri: %1%n%nyeni (ArthurLegal yeni interfeys) və ya klasik (Claude Desktop klassik) yazın.
 en.MasaAc=Open ArthurLegal Masası in Claude Desktop
 tr.MasaAc=ArthurLegal Masası'nı Claude Desktop'ta aç
+az.MasaAc=ArthurLegal Masasını Claude Desktop-da aç
 
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -209,6 +262,7 @@ Source: "{#Kaynak}\rehber\*"; DestDir: "{app}\rehber"; Flags: ignoreversion recu
 Source: "{#Kaynak}\ayar.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#Kaynak}\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#Kaynak}\LISANS.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#Kaynak}\LISENZIYA.txt"; DestDir: "{app}"; Flags: ignoreversion
 #if FirmaAd != ""
 Source: "{#Kaynak}\firma\*"; DestDir: "{app}\firma"; Flags: ignoreversion recursesubdirs createallsubdirs
 #endif
@@ -707,7 +761,7 @@ begin
     koduyla (eski adlarla) yazılırdı. aktif.txt yoksa al.py en yeni sürümü seçer, kur.py onu yeniden yazar;
     eski bir kurulum dosyası daha yeni bir sürümün üzerine çalışsa da en yeni sürüm kalır. kur.py doğrudan
     çalıştırılamaz: gömülü Python betiğin klasörünü sys.path'e eklemez (al.py bunun için vardır).
-    --dil: kurulumda seçilen dil (en/tr); kısayol adları ve başlangıç rehberi bu dilde yazılır.
+    --dil: kurulumda seçilen dil (en/tr/az); kısayol adları ve başlangıç rehberi bu dilde yazılır.
     --moduller: modül ekranındaki seçim; kur.py moduller.json'a yazar, kısayollar ve Claude kaydı ona göre olur.
     --arayuz: arayüz ekranındaki seçim; kur.py durum.json'a yazar, simge ve yerel sunucu ona göre açılır. }
   DeleteFile(ExpandConstant('{app}\aktif.txt'));

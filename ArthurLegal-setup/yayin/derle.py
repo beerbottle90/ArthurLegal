@@ -241,12 +241,18 @@ LISANS_BASLIKLARI = {
            "4. Üçüncü taraf bildirimleri (Apache 2.0)"),
     "en": ("1. ArthurLegal License", "2. ArthurMask License", "3. ArthurLegal Tapu (tkgm-mcp) — MIT License",
            "4. Third-party notices (Apache 2.0)"),
+    "az": ("1. ArthurLegal Lisenziyası", "2. ArthurMask Lisenziyası", "3. ArthurLegal Tapu (tkgm-mcp) — MIT Lisenziyası",
+           "4. Üçüncü tərəf bildirişləri (Apache 2.0)"),
 }
+# Lisans sayfasının dosyaları: (dil, önsöz, kurulumdaki ad). Kurulum betiğinin [Languages] ve [Files] bölümleriyle aynı.
+LISANS_DOSYALARI = (("tr", "lisans_onsoz.txt", "LISANS.txt"), ("en", "lisans_onsoz_en.txt", "LICENSE.txt"),
+                    ("az", "lisans_onsoz_az.txt", "LISENZIYA.txt"))
 
 
 def lisans_yaz(k: dict, hedef: Path) -> None:
-    """Kurulumun lisans sayfası, iki dilde: Türkçe sihirbaz LISANS.txt'yi (Türkçe önsöz), İngilizce sihirbaz
-    LICENSE.txt'yi (İngilizce önsöz) gösterir; lisans metinlerinin kendisi ikisinde de aynı İngilizce asıllardır.
+    """Kurulumun lisans sayfası, üç dilde: Türkçe sihirbaz LISANS.txt'yi (Türkçe önsöz), İngilizce sihirbaz
+    LICENSE.txt'yi (İngilizce önsöz), Azerbaycanca sihirbaz LISENZIYA.txt'yi (Azerbaycanca önsöz) gösterir; lisans
+    metinlerinin kendisi üçünde de aynı İngilizce asıllardır.
     UTF-8 BOM ile yazılır; Inno Setup BOM'suz .txt'yi ANSI sanar ve Türkçe bozulur."""
     al = depo(k, "ArthurLegal")
     tapu_klonu = depo_klonu(k, "tapu") if (BURASI / k["depolar"]["tapu"]).is_dir() else None
@@ -258,7 +264,7 @@ def lisans_yaz(k: dict, hedef: Path) -> None:
                       "https://raw.githubusercontent.com/beerbottle90/arthurlegal-mcp/master/LICENSE"),
         _lisans_metni(k, "Apache", [en_yeni_paket(al, k["paketler"]["hukuk-burosu"]) / "LICENSE-APACHE-2.0-THIRD-PARTY.txt"]),
     ]
-    for dil, onsoz, dosya in (("tr", "lisans_onsoz.txt", "LISANS.txt"), ("en", "lisans_onsoz_en.txt", "LICENSE.txt")):
+    for dil, onsoz, dosya in LISANS_DOSYALARI:
         metin = (BURASI / "kurulum" / onsoz).read_text(encoding="utf-8")
         for baslik, govde in zip(LISANS_BASLIKLARI[dil], govdeler):
             metin += f"\n\n{'═' * 70}\n{baslik}\n{'═' * 70}\n\n{govde.strip()}\n"
@@ -270,7 +276,7 @@ KART_BASLIGI = {"tr": {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "
                        "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"},
                 "en": {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate Assistant", "adliye": "Courthouse",
                        "akademisyen": "Academician"},
-                "az": {"hukuk-burosu": "Hüquq Bürosu (Law Firm)", "kurumsal": "Korporativ Assistent (Corporate)",
+                "az": {"hukuk-burosu": "Hüquq Bürosu (Law Firm)", "kurumsal": "Korporativ Köməkçi (Corporate)",
                        "adliye": "Courthouse (Məhkəmə)", "akademisyen": "Akademik (Academician)"}}
 # Talimatın kendisi Claude'a verilir: Azerbaycanca sayfada Türkçe talimat kopyalanır (paketler Türk hukuku içindir).
 KOPYALA_DUGMESI = {"tr": "Talimatı kopyala", "en": "Copy instructions", "az": "Təlimatı kopyala"}
@@ -288,9 +294,8 @@ def onyukleme_kartlari(profiller, dil: str) -> str:
 
 def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_VARSAYILAN) -> None:
     """Başlangıç rehberi üç dilde: baslangic.html (Türkçe), baslangic-az.html (Azerbaycanca) ve baslangic-en.html
-    (İngilizce). Kurulum, seçilen dildeki sayfayı açar (ortak.rehber_dosyasi; sihirbazda Türkçe ve İngilizce var);
-    üç sayfa birbirine bayraklı bağlantı verir, Azerbaycanca sayfa oradan açılır. Derlemedeki her paket için bir kart
-    yazılır; sayfa seçilmeyenleri kendisi gizler."""
+    (İngilizce). Kurulum, sihirbazda seçilen dildeki sayfayı açar (ortak.rehber_dosyasi); üç sayfa birbirine bayraklı
+    bağlantı verir. Derlemedeki her paket için bir kart yazılır; sayfa seçilmeyenleri kendisi gizler."""
     import kur
     (hedef / "rehber").mkdir(parents=True, exist_ok=True)
     # Paket bilgisi olmayan içerik (eski derleme biçimi) iki avukat paketini gösterir.
@@ -340,7 +345,7 @@ ZIP_BENIOKU = (
     "Bu yolla ArthurMask kurulmaz: müvekkil belgesi maskeleme ve UYAP bağlantısı çalışmaz.\r\n"
     "ArthurLegal paketleri, araştırma araçları ve Tapu çalışır.\r\n\r\n"
     "Kaldırmak için: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
-    "English: README.txt\r\n"
+    "English: README.txt · Azərbaycanca: OXU.txt\r\n"
 )
 ZIP_README = (
     "ArthurLegal setup (zip)\r\n\r\n"
@@ -359,7 +364,31 @@ ZIP_README = (
     "ArthurMask is not installed this way: client-document masking and the UYAP bridge do not work.\r\n"
     "The ArthurLegal packages, the research tools and Tapu work.\r\n\r\n"
     "To uninstall: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
-    "Türkçe: BENIOKU.txt\r\n"
+    "Türkçe: BENIOKU.txt · Azərbaycanca: OXU.txt\r\n"
+)
+# Azerbaycanca karşılığı (OXU.txt). Windows'un kendi düğme ve menü adları İngilizce karşılıklarıyla birlikte yazılır:
+# Azerbaycanlı kullanıcının Windows'u çoğunlukla başka bir dildedir.
+ZIP_OXU = (
+    "ArthurLegal quraşdırması (zip)\r\n\r\n"
+    "Bu zip quraşdırma faylı (.exe) Windows tərəfindən bloklananda istifadə olunur: Windows 11-də\r\n"
+    "Smart App Control (Ağıllı Tətbiq Nəzarəti) aktivdirsə, \"Run anyway\" (Yenə də işə sal) düyməsi çıxmır\r\n"
+    "və ya \"Error 4551\" görünür.\r\n\r\n"
+    "1. Arxivdən çıxarmazdan əvvəl zip faylına sağ klikləyib Properties (Xüsusiyyətlər) pəncərəsini açın.\r\n"
+    "   General (Ümumi) vərəqinin aşağısında \"This file came from another computer...\" yazılıbsa,\r\n"
+    "   Unblock (Bloku götür) xanasını işarələyib OK düyməsinə klikləyin.\r\n"
+    "2. Zip faylına sağ klikləyin, Extract All... (Hamısını çıxar...), sonra Extract (Çıxar) seçin\r\n"
+    "   (faylı zip-in içindən işə salmayın).\r\n"
+    "3. Açılan qovluqda KUR faylına (Windows Command Script) iki dəfə klikləyin. Administrator hüquqları\r\n"
+    "   tələb olunmur. Qara pəncərə modulları soruşur: quraşdırmaq istədiklərinizin nömrələrini vergüllə\r\n"
+    "   yazıb Enter düyməsini basın (məs. hakim və məhkəmə dəftərxanası üçün Courthouse və Tapu: 3,5).\r\n"
+    "4. Quraşdırma bitəndə iş masasındakı ArthurLegal nişanına (Courthouse və ya Akademik seçmisinizsə,\r\n"
+    "   onların nişanına) iki dəfə klikləyin; Claude Desktop-da yeni söhbət açıb sualınızı yazın.\r\n\r\n"
+    "Bu faylı zip-i çıxardıqdan sonra oxuyursunuzsa və KUR bloklanırsa: çıxarılmış qovluğu silin,\r\n"
+    "1-ci addımı yerinə yetirin və zip-i yenidən çıxarın.\r\n\r\n"
+    "Bu yolla ArthurMask quraşdırılmır: müvəkkil sənədlərinin maskalanması və UYAP bağlantısı işləmir.\r\n"
+    "ArthurLegal paketləri, araşdırma alətləri və Tapu işləyir.\r\n\r\n"
+    "Silmək üçün: %LOCALAPPDATA%\\Programs\\ArthurLegal\\KALDIR.cmd\r\n"
+    "Türkçe: BENIOKU.txt · English: README.txt\r\n"
 )
 
 
@@ -399,6 +428,9 @@ def main(argv=None) -> int:
     iss = BURASI / "kurulum" / "ArthurLegal.iss"
     if not iss.read_bytes().startswith(BOM):
         sys.exit(f"{iss.name} UTF-8 BOM olmadan kaydedilmiş; Türkçe karakterler bozulur. BOM ile yeniden kaydedin.")
+    isl = iss.with_name("Azerbaijani.isl")  # Azerbaycanca iletiler Inno Setup'la gelmez; betiğin yanında durur
+    if not isl.read_bytes().startswith(BOM):
+        sys.exit(f"{isl.name} UTF-8 BOM olmadan kaydedilmiş; Azerbaycanca harfler bozulur. BOM ile yeniden kaydedin.")
 
     surum = k["surum"]
     ad = "ArthurLegal-Kurulum" + (f"-{ortak.json_oku(BURASI / 'firma' / args.firma / 'firma.json').get('kurulum_adi', args.firma)}" if args.firma else "")
@@ -445,6 +477,7 @@ def main(argv=None) -> int:
         '"%~dp0runtime\\python.exe" -B "%~dp0bin\\al.py" kur --zip-kurulum\r\necho.\r\npause\r\n', encoding="ascii")
     (hazirlik / "BENIOKU.txt").write_text(ZIP_BENIOKU, encoding="utf-8-sig")
     (hazirlik / "README.txt").write_text(ZIP_README, encoding="utf-8-sig")
+    (hazirlik / "OXU.txt").write_text(ZIP_OXU, encoding="utf-8-sig")
     kurulum_zip = CIKTI / f"{ad}.zip"
     zip_yap(hazirlik, kurulum_zip)
     print(f"  yedek kurulum: {kurulum_zip.name} ({kurulum_zip.stat().st_size // (1024 * 1024)} MB)")

@@ -224,7 +224,8 @@ def mac_mask_kur(manifest: dict) -> str:
     import mac
     mac.bildirim("ArthurMask", ortak.metin(
         "ArthurMask kuruldu. Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; araçları o zaman görünür.",
-        "ArthurMask is installed. Quit Claude Desktop with Cmd+Q and open it again to see its tools."))
+        "ArthurMask is installed. Quit Claude Desktop with Cmd+Q and open it again to see its tools.",
+        "ArthurMask quraşdırıldı. Claude Desktop-dan Cmd+Q ilə çıxıb yenidən açın; alətləri onda görünəcək."))
     return f"mask: {m['surum']} kuruldu"
 
 

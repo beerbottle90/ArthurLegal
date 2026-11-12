@@ -49,7 +49,8 @@ done
 rm -rf "$KOK/secim"
 
 DIL=$(defaults read -g AppleLanguages 2>/dev/null | sed -n '2p' | tr -d ' ",' | cut -c1-2)
-[ "$DIL" = "tr" ] || DIL=en
+# Kurulumun dili Mac'in ilk dilidir: Türkçe, Azerbaycanca ya da (ötekilerde) İngilizce.
+case "$DIL" in tr|az) ;; *) DIL=en ;; esac
 
 # Claude Desktop yerel sunucuları (claude_desktop_config.json) yalnız açılışta okur. Açık kalırsa kurulumun yazdığı
 # kaydı görmez: ilk kurulumda ArthurLegal'siz, güncellemede önceki sürümün sunucusuyla sürer ve son adımdaki
@@ -86,7 +87,9 @@ if [ $KOD -eq 0 ]; then
   # Başlangıç rehberi ve Claude Desktop (Windows'taki bitiş sayfasının iki kutusu gibi); arka planda.
   "$KOK/runtime/bin/python3" -B "$KOK/bin/al.py" kisayol baslat >/dev/null 2>&1 &
 elif [ $KOD -eq 2 ]; then
-  if [ "$DIL" = "tr" ]; then METIN="{{PAKET_YOK_TR}}"; DUGME="Tamam"; else METIN="{{PAKET_YOK_EN}}"; DUGME="OK"; fi
+  if [ "$DIL" = "tr" ]; then METIN="{{PAKET_YOK_TR}}"; DUGME="Tamam"
+  elif [ "$DIL" = "az" ]; then METIN="{{PAKET_YOK_AZ}}"; DUGME="OK"
+  else METIN="{{PAKET_YOK_EN}}"; DUGME="OK"; fi
   /usr/bin/osascript -e "display dialog \"$METIN\" buttons {\"$DUGME\"} default button 1 with icon caution" >/dev/null 2>&1 &
 fi
 exit 0

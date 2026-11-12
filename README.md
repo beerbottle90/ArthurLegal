@@ -55,7 +55,8 @@ korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Modülleri seçin.** Kurulum önce dili sorar: **Türkçe**'yi seçip **Tamam**'a (OK) tıklayın.
+**3. Modülleri seçin.** Kurulum önce dili sorar (Türkçe, İngilizce ya da Azerbaycanca): **Türkçe**'yi seçip
+**Tamam**'a (OK) tıklayın.
 **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye tıklayın. **Modülleri seçin** ekranında kurmak
 istediklerinizi işaretleyin; her birinin altında ne işe yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli
 gelmez. En az bir paket gerekir:
@@ -253,7 +254,8 @@ appears. Do not press <kbd>Enter</kbd>: Enter selects **Don't run** and setup do
   <img src="docs/kurulum/smartscreen-2-run-anyway-en.svg" width="400" alt="Example drawing: the Run anyway button that appears after More info (2)">
 </p>
 
-**3. Choose modules.** Setup first asks for a language: choose **English** and click **OK**. Select **I accept the
+**3. Choose modules.** Setup first asks for a language (English, Turkish or Azerbaijani): choose **English** and
+click **OK**. Select **I accept the
 agreement** and click **Next**. On the **Choose modules** screen, tick what you want to install; each module has a
 short description under it, and nothing is ticked on a first installation. At least one package is needed:
 

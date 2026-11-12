@@ -265,13 +265,13 @@ def durum() -> dict:
     return json_oku(VERI / "durum.json")
 
 
-DILLER = ("tr", "en")
+DILLER = ("tr", "en", "az")
 
 
 def dil() -> str:
     """Kurulumun dili: kısayol adları, başlangıç rehberi ve zip kurulumunun mesajları. Kurulum sihirbazında seçilir
-    (kur.py --dil) ve durum.json'a yazılır. Yazılmamışsa (2.4.4'ten önceki kurulumlar) Türkçe: güncellemeyle
-    kimsenin kısayolları başka dile dönmez."""
+    (kur.py --dil; Türkçe, İngilizce ya da Azerbaycanca) ve durum.json'a yazılır. Yazılmamışsa (2.4.4'ten önceki
+    kurulumlar) Türkçe: güncellemeyle kimsenin kısayolları başka dile dönmez."""
     d = durum().get("dil")
     return d if d in DILLER else "tr"
 
@@ -287,34 +287,45 @@ def arayuz() -> str:
     return a if a in ARAYUZLER else "yeni"
 
 
+# Windows arayüz dilinin ana dil kimliği (LANGID'in alt 10 biti): Türkçe 0x1F, Azerbaycanca 0x2C.
+_WINDOWS_DILLERI = {0x1F: "tr", 0x2C: "az"}
+
+
 def sistem_dili() -> str:
-    """Sistemin arayüz dili Türkçeyse "tr", değilse "en". Dil seçilmeden kurulan yollarda kullanılır (Windows zip
-    kurulumu, macOS kurulum paketi)."""
+    """Sistemin arayüz dili Türkçeyse "tr", Azerbaycancaysa "az", değilse "en". Dil seçilmeden kurulan yollarda
+    kullanılır (Windows zip kurulumu, macOS kurulum paketi)."""
     if MAC:
         try:
             r = subprocess.run(["defaults", "read", "-g", "AppleLanguages"], capture_output=True, text=True, timeout=30)
             ilk = next((s.strip(' \t"(),') for s in r.stdout.splitlines() if s.strip(' \t"(),')), "")
-            return "tr" if ilk.lower().startswith("tr") else "en"
+            return next((d for d in ("tr", "az") if ilk.lower().startswith(d)), "en")
         except (OSError, subprocess.SubprocessError):
             return "tr"
     if sys.platform != "win32":
         return "tr"
     try:
         import ctypes
-        return "tr" if ctypes.windll.kernel32.GetUserDefaultUILanguage() & 0x3FF == 0x1F else "en"
+        return _WINDOWS_DILLERI.get(ctypes.windll.kernel32.GetUserDefaultUILanguage() & 0x3FF, "en")
     except (AttributeError, OSError, ValueError):
         return "tr"
 
 
-def metin(tr: str, en: str) -> str:
-    """Kurulumun diline göre metin."""
-    return en if dil() == "en" else tr
+def metin(tr: str, en: str, az: str | None = None) -> str:
+    """Kurulumun diline göre metin. Azerbaycanca karşılık verilmediyse Azerbaycanca kurulumda Türkçesi döner."""
+    d = dil()
+    if d == "en":
+        return en
+    return az if d == "az" and az is not None else tr
+
+
+# Başlangıç rehberinin sayfası, dile göre (derle.py rehber_yaz üçünü de yazar).
+REHBER_SAYFALARI = {"tr": "baslangic.html", "en": "baslangic-en.html", "az": "baslangic-az.html"}
 
 
 def rehber_dosyasi() -> Path:
-    """Başlangıç rehberi, kurulumun dilinde. İngilizce sayfa yoksa (eski kurulumun rehber klasörü) Türkçesi."""
-    en = KOK / "rehber" / "baslangic-en.html"
-    return en if dil() == "en" and en.exists() else KOK / "rehber" / "baslangic.html"
+    """Başlangıç rehberi, kurulumun dilinde. O dildeki sayfa yoksa (eski kurulumun rehber klasörü) Türkçesi."""
+    sayfa = KOK / "rehber" / REHBER_SAYFALARI[dil()]
+    return sayfa if sayfa.exists() else KOK / "rehber" / "baslangic.html"
 
 
 def akilli_denetim_acik() -> bool:

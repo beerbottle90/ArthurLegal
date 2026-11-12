@@ -114,12 +114,15 @@ def model_notu() -> str:
     try:
         o = json.loads(MODEL_ONERISI.read_text(encoding="utf-8"))
         cumle, cumle_en = str(o["cumle"]), str(o["cumle_en"])
+        cumle_az = str(o.get("cumle_az") or "")  # eski arayüz kopyasında yoksa Azerbaycanca kurulumda Türkçesi yazılır
     except (OSError, ValueError, KeyError, TypeError):
         return ""
     # Öneri tavsiyedir, bağlayıcı değildir: cümle dosyadaki hâliyle (kullanıcının kesinleştirdiği metin) yazılır.
     return ortak.metin(
         f"({cumle} Bu kutudaki model menüsünden bir kez seçmeniz yeter; Claude hatırlar.)",
-        f"({cumle_en} Choose once in the model menu of this box; Claude remembers.)")
+        f"({cumle_en} Choose once in the model menu of this box; Claude remembers.)",
+        f"({cumle_az} Bu qutudakı model menyusundan bir dəfə seçməyiniz kifayətdir; Claude yadda saxlayır.)"
+        if cumle_az else None)
 
 
 def masa_adresi() -> str:
@@ -163,13 +166,15 @@ def mask() -> int:
             if lnk.exists():
                 os.startfile(str(lnk))  # noqa: S606 — ArthurMask kurulumunun kendi kısayolu
                 return 0
-    print(ortak.metin("ArthurMask bu bilgisayarda kurulu değil.", "ArthurMask is not installed on this computer."))
+    print(ortak.metin("ArthurMask bu bilgisayarda kurulu değil.", "ArthurMask is not installed on this computer.",
+                      "ArthurMask bu kompüterdə quraşdırılmayıb."))
     return 1
 
 
 def tapu() -> int:
     if not ortak.bilesen_var("tapu"):
-        print(ortak.metin("Bu kurulumda ArthurLegal Tapu seçilmedi.", "ArthurLegal Tapu was not selected in this installation."))
+        print(ortak.metin("Bu kurulumda ArthurLegal Tapu seçilmedi.", "ArthurLegal Tapu was not selected in this installation.",
+                          "Bu quraşdırmada ArthurLegal Tapu seçilməyib."))
         return 1
     try:
         socket.create_connection(TAPU_ADRES, 1).close()
@@ -189,7 +194,8 @@ def uyap_tarayici() -> int:
     brave = any((Path(k) / "BraveSoftware" / "Brave-Browser" / "Application" / "brave.exe").exists() for k in kokler if k)
     betik = ortak.SURUM_DIZINI / "uyap" / "araclar" / "tarayici_uyap.ps1"
     if not betik.exists():
-        print(ortak.metin("Bu kurulumda UYAP köprüsü yok.", "This installation has no UYAP bridge."))
+        print(ortak.metin("Bu kurulumda UYAP köprüsü yok.", "This installation has no UYAP bridge.",
+                          "Bu quraşdırmada UYAP körpüsü yoxdur."))
         return 1
     return subprocess.call(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(betik),
                             "-Tarayici", "brave" if brave else "edge"])
@@ -201,7 +207,8 @@ def uyap_ekran() -> int:
     mask, ekran = ortak.mask_python(), ortak.SURUM_DIZINI / "uyap" / "ekran.py"
     if not mask or not ekran.exists():
         print(ortak.metin("Bu kurulumda UYAP Dashboard yok: UYAP köprüsü ve ArthurMask gerekir.",
-                          "This installation has no UYAP Dashboard: it needs the UYAP bridge and ArthurMask."))
+                          "This installation has no UYAP Dashboard: it needs the UYAP bridge and ArthurMask.",
+                          "Bu quraşdırmada UYAP Dashboard yoxdur: UYAP körpüsü və ArthurMask lazımdır."))
         return 1
     pencereli = mask.with_name("pythonw.exe")
     ortam = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1",

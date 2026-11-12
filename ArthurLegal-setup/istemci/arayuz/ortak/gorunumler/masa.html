@@ -712,6 +712,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   }
   document.addEventListener("al-dil", () => {
     DIL.sabitler();
+    // Bilgisayardaki kurulum seçimi saklar: masa sonraki sohbetlerde de bu dilde açılır. Uzak uçta araç yoktur,
+    // seçim bu sohbette kalır.
+    if (DURUM.yetenekler.has("al_dil")) cagir(app, "al_dil", { dil: DIL.secili }).catch(() => { /* dil yine bu sohbette */ });
     if (masaKuruldu) { iskeletKur(); git(aktif); } else ciz();
   });
 

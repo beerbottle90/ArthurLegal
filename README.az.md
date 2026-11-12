@@ -13,9 +13,11 @@
 <p align="center"><a href="#kurulum-az">Azərbaycanca quraşdırma təlimatı</a> (<a href="#mac-az">Mac</a>) · <a href="README.md#kurulum">Türkçe kurulum anlatımı</a> (<a href="README.md#mac">Mac</a>) · <a href="README.md#download">English installation guide</a> (<a href="README.md#mac-en">Mac</a>)</p>
 
 > [!NOTE]
-> Quraşdırma proqramında Azərbaycan dili seçimi yoxdur: dil ekranında **Türkçe** və ya **English** seçin. Bu
-> səhifədəki şəkillər türkcə quraşdırma ekranlarını göstərir; düymə və ekran adları ekranda göründüyü kimi türkcə,
-> qalın şriftlə yazılıb, ilk dəfə keçəndə mötərizədə Azərbaycan dilində mənası (və ingiliscə qarşılığı) verilir.
+> Windows quraşdırma proqramı Azərbaycan dilindədir: dil ekranında **Azərbaycan dili** seçin (Windows-unuz Azərbaycan
+> dilindədirsə, o özü seçilmiş gəlir). Aşağıda quraşdırma proqramının düymə və ekran adları Azərbaycan dilində, qalın
+> şriftlə yazılıb. Bu səhifədəki şəkillər türkcə quraşdırma ekranlarını göstərir; brauzerin, Windows-un və macOS-un öz
+> pəncərələrindəki adlar ekranda göründüyü kimi (türkcə) yazılıb, mötərizədə Azərbaycan dilində mənası (və ingiliscə
+> qarşılığı) verilir.
 
 <h3 align="center" id="rehber-az">İstifadəçi bələdçisi</h3>
 <p align="center">
@@ -68,44 +70,43 @@ info**) yazısına, sonra görünən **Yine de çalıştır** (Yenə də işə s
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Nümunə şəkil: Ek bilgi-dən sonra görünən Yine de çalıştır düyməsi (2)">
 </p>
 
-**3. Modulları seçin.** Quraşdırma əvvəlcə dili soruşur; Azərbaycan dili seçimi yoxdur. **Türkçe** (və ya
-**English**) seçib **Tamam** (OK) üzərinə klikləyin; aşağıdakı adlar türkcə ekrandakı kimidir.
-**Anlaşmayı kabul ediyorum** (Razılaşmanı qəbul edirəm; ingiliscə quraşdırmada **I accept the agreement**) seçib
-**Sonraki** (Növbəti; **Next**) üzərinə klikləyin. **Modülleri seçin** (Modulları seçin; **Choose modules**)
-ekranında quraşdırmaq istədiklərinizi işarələyin; hər birinin altında nə işə yaradığı yazılır və ilk quraşdırmada
+**3. Modulları seçin.** Quraşdırma əvvəlcə dili soruşur: **Azərbaycan dili** seçib **OK** üzərinə klikləyin
+(türkcə və ingiliscə də var: **Türkçe**, **English**). **Müqaviləni qəbul edirəm** (türkcə quraşdırmada **Anlaşmayı
+kabul ediyorum**, ingiliscə **I accept the agreement**) seçib **Növbəti** (**Sonraki**, **Next**) üzərinə klikləyin.
+**Modulları seçin** (**Modülleri seçin**, **Choose modules**) ekranında quraşdırmaq istədiklərinizi işarələyin; hər birinin altında nə işə yaradığı yazılır və ilk quraşdırmada
 heç bir xana işarələnmiş gəlmir. Ən azı bir paket lazımdır:
 
 | Modul | Kimin üçün |
 |---|---|
-| **Hukuk Bürosu** (Hüquq Bürosu) | Vəkillər və hüquq büroları |
-| **Kurumsal Asistan** (Korporativ Köməkçi) | Şirkətlərin hüquq şöbələri |
+| **Hüquq Bürosu** (Hukuk Bürosu) | Vəkillər və hüquq büroları |
+| **Korporativ Köməkçi** (Kurumsal Asistan) | Şirkətlərin hüquq şöbələri |
 | **Courthouse** | Hakim və məhkəmə dəftərxanası ([Courthouse səhifəsi](ArthurLegal-Courthouse-v1.2.5-Public-Release/), türk dilində) |
-| **Akademisyen** (Akademik) | Hüquqşünas akademiklər |
+| **Akademik** (Akademisyen) | Hüquqşünas akademiklər |
 | **ArthurLegal Tapu** | Ada/parsel (kadastr bloku və sahə nömrəsi) və ya yer adı ilə canlı parsel məlumatı, kroki (sxem) və rüsum |
-| **ArthurMask** | Sənədləri Claude-a verməzdən əvvəl kompüterdə maskalayır (təxminən 1 GB yüklənir). Hukuk Bürosu və ya Kurumsal ilə birlikdə seçilsə, Windows-da [UYAP Dashboard](README.md#uyap) da gəlir |
-| **ArthurLegal Hafıza** (Yaddaş) | Seçimlərinizi, düzəlişlərinizi və son sessiyanı söhbətlər arasında kompüterinizdəki bir qovluqda saxlayır |
+| **ArthurMask** | Sənədləri Claude-a verməzdən əvvəl kompüterdə maskalayır (təxminən 1 GB yüklənir). Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə seçilsə, Windows-da [UYAP Dashboard](README.md#uyap) da gəlir |
+| **ArthurLegal Yaddaş** (ArthurLegal Hafıza) | Seçimlərinizi, düzəlişlərinizi və son sessiyanı söhbətlər arasında kompüterinizdəki bir qovluqda saxlayır |
 
 <p align="center">
-  <img src="docs/kurulum/moduller.svg" width="560" alt="Nümunə şəkil: modul ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib; sonra Sonraki düyməsi (4)">
+  <img src="docs/kurulum/moduller.svg" width="560" alt="Nümunə şəkil (türkcə quraşdırma): modul ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib; sonra Sonraki (Növbəti) düyməsi (4)">
 </p>
 
-**4. İnterfeysi seçin.** **Arayüzü seçin** (İnterfeysi seçin; **Choose the interface**) ekranında iki seçim var,
+**4. İnterfeysi seçin.** **İnterfeysi seçin** (**Arayüzü seçin**, **Choose the interface**) ekranında iki seçim var,
 yalnız biri seçilir; dəyişmək üçün quraşdırmanı sonra yenidən işə sala bilərsiniz:
 
 | İnterfeys | Nə baş verir |
 |---|---|
-| **ArthurLegal yeni arayüz** (ArthurLegal yeni interfeys; **ArthurLegal new interface**; seçilmiş gəlir) | ArthurLegal nişanı Claude Desktop-un içində [ArthurLegal Masası](README.md#masa) panelini açır: solda modullar, ortada iş addımları; maddə və məhkəmə təcrübəsi nəticələri ArthurLegal kartları ilə gəlir |
-| **Claude Desktop klasik** (Claude Desktop klassik; **Claude Desktop classic**) | Claude Desktop həmişəki kimi açılır, sualınızı söhbətə yazırsınız; masa və kartlar bağlıdır, nəticələr mətn kimi gəlir |
+| **ArthurLegal yeni interfeys** (**ArthurLegal yeni arayüz**, **ArthurLegal new interface**; seçilmiş gəlir) | ArthurLegal nişanı Claude Desktop-un içində [ArthurLegal Masası](README.md#masa) panelini açır: solda modullar, ortada iş addımları; maddə və məhkəmə təcrübəsi nəticələri ArthurLegal kartları ilə gəlir |
+| **Claude Desktop klassik** (**Claude Desktop klasik**, **Claude Desktop classic**) | Claude Desktop həmişəki kimi açılır, sualınızı söhbətə yazırsınız; masa və kartlar bağlıdır, nəticələr mətn kimi gəlir |
 
 <p align="center">
-  <img src="docs/kurulum/arayuz.svg" width="560" alt="Nümunə şəkil: interfeys ekranında ArthurLegal yeni arayüz seçilib (1); sonra Sonraki düyməsi (2)">
+  <img src="docs/kurulum/arayuz.svg" width="560" alt="Nümunə şəkil (türkcə quraşdırma): interfeys ekranında ArthurLegal yeni arayüz (ArthurLegal yeni interfeys) seçilib (1); sonra Sonraki (Növbəti) düyməsi (2)">
 </p>
 
-**5. Quraşdırın.** **Sonraki**, sonra **Kur** (Quraşdır; **Install**) üzərinə klikləyin. Claude Desktop açıqdırsa,
+**5. Quraşdırın.** **Növbəti**, sonra **Quraşdır** (**Kur**, **Install**) üzərinə klikləyin. Claude Desktop açıqdırsa,
 quraşdırma onu bağlayır; başlamazdan əvvəl yazdığınız mesajı göndərin. ArthurMask seçmisinizsə, quraşdırma onu da
-yükləyir (təxminən 1 GB, bir neçə dəqiqə); gözləmək istəməsəniz, **İndirmeyi durdur** (Yükləməni dayandır;
-**Stop download**) düyməsini basıb çıxan iki suala **Evet** (Bəli; **Yes**) cavabını verin, ArthurMask sonra arxa
-planda özü yüklənir. Son səhifədə **Bitti** (Bitdi; **Finish**) üzərinə klikləyin: yeni interfeysdə Claude Desktop
+yükləyir (təxminən 1 GB, bir neçə dəqiqə); gözləmək istəməsəniz, **Yükləməni dayandır** (**İndirmeyi
+durdur**, **Stop download**) düyməsini basıb çıxan iki suala **Bəli** (**Evet**, **Yes**) cavabını verin, ArthurMask sonra arxa
+planda özü yüklənir. Son səhifədə **Bitir** (**Bitti**, **Finish**) üzərinə klikləyin: yeni interfeysdə Claude Desktop
 masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq), klassikdə başlanğıc bələdçisi və Claude Desktop açılır.
 
 > [!IMPORTANT]
@@ -123,9 +124,10 @@ masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq), klassikdə başla
 > istinadların yoxlanması və hesablama işlərini Sonnet 5.5 ilə görə bilərsiniz. ArthurLegal hər modellə işləyir;
 > masanın **Model ve effort** ekranı ölçmə nəticələrini göstərir.
 
-İş masasına seçdiyiniz modulların nişanları gəlir: Hukuk Bürosu və ya Kurumsal üçün **ArthurLegal**, həmçinin
-**ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** və **ArthurMask**. Windows-da
-Hukuk Bürosu və ya Kurumsal ilə birlikdə ArthurMask seçmisinizsə, **ArthurLegal - UYAP Dashboard** da gəlir ([UYAP Dashboard](README.md#uyap)).
+İş masasına seçdiyiniz modulların nişanları gəlir: Hüquq Bürosu və ya Korporativ Köməkçi üçün **ArthurLegal**,
+həmçinin **ArthurLegal - Courthouse**, **ArthurLegal - Akademik**, **ArthurLegal - Tapu** və **ArthurMask** (türkcə
+quraşdırmada Akademik nişanının adı **ArthurLegal - Akademisyen**-dir). Windows-da
+Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə ArthurMask seçmisinizsə, **ArthurLegal - UYAP Dashboard** da gəlir ([UYAP Dashboard](README.md#uyap)).
 Yeni interfeysdə **ArthurLegal** nişanı Claude Desktop-u *ArthurLegal Masası'nı aç* mesajı yazılmış halda açır:
 Enter düyməsini basın, masa tam ekranda açılır (solda modullar, ortada iş addımları); klassikdə Claude Desktop-u və
 başlanğıc bələdçisini açır. Claude Desktop-da yeni söhbət açıb sualınızı
@@ -206,14 +208,16 @@ köçür; **Move to Trash**) üzərinə yox. <kbd>Enter</kbd> düyməsini basmay
   <img src="docs/kurulum/mac-2-yine-de-ac.svg" width="400" alt="Nümunə şəkil: Sistem Ayarları-nda Gizlilik ve Güvenlik (2) və Yine de Aç düyməsi (3)">
 </p>
 
-**3. Modulları seçin.** Quraşdırma Mac-inizin dilində açılır; Azərbaycan dili variantı yoxdur, aşağıdakı adlar
-türkcə ekrandakı kimidir. **Sürdür** (Davam et; **Continue**) üzərinə klikləyərək irəliləyin; lisenziya səhifəsindən
+**3. Modulları seçin.** Quraşdırma Mac-inizin dilində açılır: Mac-inizin ilk dili Azərbaycan dilidirsə,
+quraşdırma səhifələri və modulların adları Azərbaycan dilində gəlir. macOS-un öz düymələri isə Azərbaycan dilində
+olmadığı üçün aşağıdakı adlar türkcə ekrandakı kimidir. **Sürdür** (Davam et; **Continue**) üzərinə klikləyərək irəliləyin; lisenziya səhifəsindən
 sonra çıxan pəncərədə **Kabul Ediyorum** (Qəbul edirəm; **Agree**) seçin. **Yükleme Türü** (Quraşdırma növü;
 **Installation Type**) ekranında quraşdırmaq istədiyiniz modulları işarələyib **Sürdür** üzərinə klikləyin: modulun
 adına klikləyəndə nə işə yaradığı aşağıda yazılır. Modullar Windows-dakılarla eynidir
 (yuxarıdakı cədvəl); ilk quraşdırmada heç biri işarələnmiş gəlmir, ən azı bir paket lazımdır. ArthurMask yalnız Apple
-Silicon və macOS 14 (Sonoma) və ya sonrasında seçilə bilər. Modulların altındakı **ArthurLegal yeni arayüz**
-xanası işarələnmiş gəlir (masa və kartlar); işarəni götürsəniz, **Claude Desktop klasik** quraşdırılır.
+Silicon və macOS 14 (Sonoma) və ya sonrasında seçilə bilər. Modulların altındakı **ArthurLegal yeni interfeys**
+(**ArthurLegal yeni arayüz**) xanası işarələnmiş gəlir (masa və kartlar); işarəni götürsəniz, **Claude Desktop
+klassik** quraşdırılır.
 
 <p align="center">
   <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Nümunə şəkil: macOS quraşdırmasının Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib, ArthurLegal yeni arayüz öz-özünə işarələnmiş gəlir; sonra Sürdür düyməsi (4)">
@@ -222,8 +226,9 @@ xanası işarələnmiş gəlir (masa və kartlar); işarəni götürsəniz, **Cl
 **4. Quraşdırın.** Claude Desktop açıqdırsa, quraşdırma onu bağlayır; yazdığınız mesaj varsa, əvvəlcə göndərin. Növbəti səhifədə
 **Yükle** (Quraşdır; **Install**), son səhifədə **Kapat** (Bağla; **Close**) üzərinə klikləyin: başlanğıc bələdçisi
 brauzerdə açılır. Seçdiyiniz modulların nişanları Uygulamalar (Proqramlar; Applications) qovluğunda (Launchpad-də) və
-iş masasındadır: Hukuk Bürosu və ya Kurumsal üçün
-**ArthurLegal**, həmçinin **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** və **ArthurLegal Tapu**. İş masasındakı
+iş masasındadır: Hüquq Bürosu və ya Korporativ Köməkçi üçün
+**ArthurLegal**, həmçinin **ArthurLegal Courthouse**, **ArthurLegal Akademik** (türkcə quraşdırmada **ArthurLegal
+Akademisyen**) və **ArthurLegal Tapu**. İş masasındakı
 nişanlar Windows-dakı kimi versiya nömrəsini daşıyır (məs. **ArthurLegal 3.0.12**) və yeniləmə ilə təzələnir. ArthurMask
 seçmisinizsə, quraşdırmadan sonra arxa planda yüklənir (təxminən 1,2 GB); hazır olanda bildiriş gəlir və iş masasına
 **ArthurMask** nişanı əlavə olunur. Quraşdırma Claude Desktop-u yenidən açır: yeni interfeysdə Claude *ArthurLegal Masası'nı
@@ -232,7 +237,7 @@ açın, sonra **ArthurLegal** nişanına klikləyib Enter düyməsini basın. Ye
 sualınızı birbaşa da yaza bilərsiniz. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, **Always allow** seçin. Claude
 Desktop quraşdırılmayıbsa, [claude.ai/download](https://claude.ai/download) ünvanından quraşdırın. Modul əlavə etmək, çıxarmaq
 və ya interfeysi dəyişmək üçün quraşdırma faylını yenidən açın; son seçiminiz işarələnmiş gəlir. Silmək üçün: Uygulamalar →
-ArthurLegal → **ArthurLegal'i Kaldır** (ArthurLegal-ı sil; **Uninstall ArthurLegal**).
+ArthurLegal → **ArthurLegal-ı Sil** (türkcə quraşdırmada **ArthurLegal'i Kaldır**, ingiliscə **Uninstall ArthurLegal**).
 
 > [!IMPORTANT]
 > **ArthurLegal nişanına kliklədikdən sonra Enter düyməsini basın.** Claude Desktop mesaj qutusunda *ArthurLegal Masası'nı aç*

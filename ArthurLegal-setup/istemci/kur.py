@@ -82,12 +82,15 @@ def _masaustu() -> Path:
 
 
 def _kaldir_adi(ad: str, dil: str | None = None) -> str:
-    """Kaldırma kısayolunun adı, kurulumun dilinde; kurulum betiğindeki KaldirAdiTr/KaldirAdiEn ile aynı olmalı
-    (kurulum/ArthurLegal.iss)."""
-    if (dil or ortak.dil()) == "en":
-        return "Uninstall ArthurLegal" if ad == ortak.URUN_VARSAYILAN else ad + " - Uninstall"
-    return "ArthurLegal'i Kaldır" if ad == ortak.URUN_VARSAYILAN else ad + " - Kaldır"
+    """Kaldırma kısayolunun adı, kurulumun dilinde; kurulum betiğindeki KaldirAdiTr/KaldirAdiEn/KaldirAdiAz ile aynı
+    olmalı (kurulum/ArthurLegal.iss)."""
+    varsayilan, ek = KALDIR_ADLARI[dil or ortak.dil()]
+    return varsayilan if ad == ortak.URUN_VARSAYILAN else ad + ek
 
+
+# Kaldırma kısayolunun adı: (ArthurLegal kurulumunda, büroya özel kurulumda ürün adına eklenen).
+KALDIR_ADLARI = {"tr": ("ArthurLegal'i Kaldır", " - Kaldır"), "en": ("Uninstall ArthurLegal", " - Uninstall"),
+                 "az": ("ArthurLegal-ı Sil", " - Sil")}
 
 # Kısayol adları ve açıklamaları, kurulumun dilinde (ortak.dil). "Tapu", "Courthouse" ve "UYAP Dashboard" özel ad,
 # çevrilmez. Paket simgeleri (ana, Courthouse, Akademisyen) aynı işi yapar: Claude Desktop'ı ve başlangıç panelini açar.
@@ -111,6 +114,17 @@ KISAYOL_METNI = {
            "hafiza": "Memory Folder", "hafiza_aciklama": "ArthurLegal Memory: the notes the assistant keeps on this computer",
            "guncelle": "Check for Updates", "guncelle_aciklama": "Check for updates now",
            "uyap": "UYAP Dashboard: UYAP sign-in, morning scan, deadlines, mismatches and calendar; works without Claude ({s})"},
+    "az": {"ana": "Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "tapu": "ArthurLegal Tapu: Türkiyə tapu-kadastr parsel aləti ({s})",
+           "adliye": "Courthouse",
+           "adliye_aciklama": "Courthouse (hakim və məhkəmə dəftərxanası): Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "akademisyen": "Akademik",
+           "akademisyen_aciklama": "Akademik: Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "rehber": "Başlanğıc Bələdçisi", "rehber_aciklama": "Quraşdırmadan sonrakı addımlar",
+           "proje": "Layihə Qovluqları", "proje_aciklama": "Claude-da 'Use a folder' ilə seçiləcək hazır layihə qovluqları",
+           "hafiza": "Yaddaş Qovluğu", "hafiza_aciklama": "ArthurLegal Yaddaş: köməkçinin bu kompüterdə saxladığı qeydlər",
+           "guncelle": "Yeniləmələri Yoxla", "guncelle_aciklama": "Yeniləmələri indi yoxla",
+           "uyap": "UYAP Dashboard: UYAP-a giriş, səhər yoxlaması, son gün, uyğunsuzluq və təqvim; Claude olmadan ({s})"},
 }
 
 
@@ -142,7 +156,7 @@ def _desenler(ad: str, kisa: str = "") -> list:
     return [d.format(a) for a in adlar
             for d in ("{}.lnk", "{} [0-9]*.lnk", "{}.cmd", "{} [0-9]*.cmd", "{} - *.lnk", "{} - *.cmd",
                       "{} - *.url", "{}*.url")] \
-        + kisa_desen + ["ArthurLegal'i Kaldır.lnk", "Uninstall ArthurLegal.lnk"]
+        + kisa_desen + [varsayilan + ".lnk" for varsayilan, _ in KALDIR_ADLARI.values()]
 
 
 ESKI_KISAYOLLAR = ("ArthurLegal - Tapu.cmd", "ArthurLegal - UYAP Tarayıcısı.cmd",
@@ -499,6 +513,33 @@ MODUL_METNI = {
            "tapu": ("ArthurLegal Tapu", "live Turkish land-registry parcels (TKGM) with sketch and fees"),
            "mask": ("ArthurMask", "masks documents on this computer before Claude sees them"),
            "hafiza": ("ArthurLegal Memory", "keeps preferences, corrections and the last session on this computer, across chats")},
+    "az": {"hukuk-burosu": ("Hüquq Bürosu", "vəkillər üçün ərizə, müqavilə, məhkəmə təcrübəsi və qanunvericilik araşdırması"),
+           "kurumsal": ("Korporativ Köməkçi", "şirkətlərin hüquq şöbələri üçün müqavilə, uyğunluq və KVKK işləri"),
+           "adliye": ("Courthouse", "hakim və məhkəmə dəftərxanası üçün neytral qaralamalar: əsaslandırma, qərardadlar, "
+                                    "rəsmi sorğular, bildirişlər"),
+           "akademisyen": ("Akademik", "hüquqşünas akademiklər üçün ədəbiyyat, istinad, jurnal seçimi, nəşr etikası"),
+           "tapu": ("ArthurLegal Tapu", "ada/parsel və ya yer adı ilə TKGM-dən canlı parsel, kroki və rüsum"),
+           "mask": ("ArthurMask", "sənədləri Claude-a verməzdən əvvəl bu kompüterdə maskalayır"),
+           "hafiza": ("ArthurLegal Yaddaş", "seçimləri, düzəlişləri və son sessiyanı söhbətlər arasında bu kompüterdə saxlayır")},
+}
+
+# Zip kurulumunun konsol metinleri (dil sorulmaz: önceki kurulumun dili, yoksa sistemin dili).
+ZIP_METNI = {
+    "tr": {"soru": "Hangi modüller kurulsun? İlk dördünden en az biri gerekir.",
+           "mask": "ArthurMask bu yolla kurulamaz.",
+           "numara": "Numaraları virgülle yazın (ör. 3,5)",
+           "hata": "Listedeki numaraları yazın; 1-4 arasından en az biri olmalı.",
+           "kuruluyor": "ArthurLegal {s} kuruluyor: {kok}"},
+    "en": {"soru": "Which modules should be installed? At least one of the first four is needed.",
+           "mask": "ArthurMask cannot be installed this way.",
+           "numara": "Type the numbers separated by commas (e.g. 3,5)",
+           "hata": "Please type the numbers from the list, including at least one of 1-4.",
+           "kuruluyor": "ArthurLegal {s} is being installed: {kok}"},
+    "az": {"soru": "Hansı modullar quraşdırılsın? İlk dördündən ən azı biri lazımdır.",
+           "mask": "ArthurMask bu yolla quraşdırıla bilməz.",
+           "numara": "Nömrələri vergüllə yazın (məs. 3,5)",
+           "hata": "Siyahıdakı nömrələri yazın; 1-4 arasından ən azı biri olmalıdır.",
+           "kuruluyor": "ArthurLegal {s} quraşdırılır: {kok}"},
 }
 
 
@@ -508,14 +549,12 @@ def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
     öncesinin modülleri; kurulum yarıda kalmaz."""
     secenekler = [m for m in ortak.MODULLER if m != "mask"]
     onceki = [m for m in (onceki or []) if m in secenekler]
-    metin = MODUL_METNI[dil]
-    en = dil == "en"
-    print("Which modules should be installed? At least one of the first four is needed." if en
-          else "Hangi modüller kurulsun? İlk dördünden en az biri gerekir.")
+    metin, z = MODUL_METNI[dil], ZIP_METNI[dil]
+    print(z["soru"])
     for no, m in enumerate(secenekler, 1):
         print(f"  {no}  {metin[m][0]} - {metin[m][1]}")
-    print("ArthurMask cannot be installed this way." if en else "ArthurMask bu yolla kurulamaz.")
-    soru = ("Type the numbers separated by commas (e.g. 3,5)" if en else "Numaraları virgülle yazın (ör. 3,5)")
+    print(z["mask"])
+    soru = z["numara"]
     if onceki:
         soru += " [Enter: " + ", ".join(metin[m][0] for m in onceki) + "]"
     soru += ": "
@@ -532,8 +571,7 @@ def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
                 raise ValueError(cevap)
             return ortak.secim_coz(",".join(secenekler[n - 1] for n in nolar))
         except ValueError:
-            print("Please type the numbers from the list, including at least one of 1-4." if en
-                  else "Listedeki numaraları yazın; 1-4 arasından en az biri olmalı.")
+            print(z["hata"])
     return onceki or [m for m in ortak.ESKI_SECIM if m != "mask"]
 
 
@@ -547,8 +585,7 @@ def zip_kurulum() -> int:
     secim = ",".join(zip_secimi(dil, onceki if isinstance(onceki, list) else None))
     if kaynak.resolve() == VARSAYILAN_KOK.resolve():
         return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim])
-    print((f"ArthurLegal {ortak.surum()} is being installed: {VARSAYILAN_KOK}" if dil == "en"
-           else f"ArthurLegal {ortak.surum()} kuruluyor: {VARSAYILAN_KOK}"))
+    print(ZIP_METNI[dil]["kuruluyor"].format(s=ortak.surum(), kok=VARSAYILAN_KOK))
     for y in sorted(kaynak.rglob("*")):
         goreli = y.relative_to(kaynak)
         if goreli.parts and goreli.parts[0] == "veri":
@@ -592,7 +629,7 @@ def main(argv=None) -> int:
             ortak.moduller_yaz(args.moduller)
         except ValueError as e:
             ortak.gunluk("kurulum", f"geçersiz modül seçimi: {e}")
-            print(f"Geçersiz modül seçimi / invalid module selection: {e}")
+            print(f"Geçersiz modül seçimi / invalid module selection / yanlış modul seçimi: {e}")
             return 2
 
     if args.zip_kurulum:
@@ -636,13 +673,17 @@ def main(argv=None) -> int:
                      f"{ortak.urun_adi()} {ortak.surum()}")
         sayi, simge = len(claude_ayari.istenen_girdiler()), paket
         print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
-                          f"Installed. {sayi} servers were added to Claude Desktop."))
+                          f"Installed. {sayi} servers were added to Claude Desktop.",
+                          f"Quraşdırıldı. Claude Desktop-a {sayi} server əlavə olundu."))
         if not ortak.mask_python():
             print(ortak.metin("ArthurMask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.",
                               "ArthurMask is not installed: the gate that masks client documents does not work on "
-                              "this computer."))
+                              "this computer.",
+                              "ArthurMask quraşdırılmayıb: müvəkkil sənədlərini maskalayan qapı bu kompüterdə işləmir."))
         print(ortak.metin(f"Masaüstündeki '{simge}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.",
-                          f"Double-click the '{simge}' icon on the desktop: it opens Claude Desktop and shows the last step."))
+                          f"Double-click the '{simge}' icon on the desktop: it opens Claude Desktop and shows the last step.",
+                          f"İş masasındakı '{simge}' nişanına iki dəfə klikləyin: Claude Desktop-u açır və son addımı "
+                          "göstərir."))
     return 0
 
 
