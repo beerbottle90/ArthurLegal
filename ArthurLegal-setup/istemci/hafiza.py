@@ -124,6 +124,34 @@ BASLANGIC_NOTLARI = {
                       "Dropbox).\n",
         "knowledge/index.md": "# Knowledge index\n\nOne line per lasting knowledge note.\n",
     },
+    # Dosya ve klasör adları (Kurallar.md, Projeler/, [kapsam: …]) araçların kullandığı adlardır, çevrilmez.
+    "az": {
+        "Core.md": "# Düşünmə tərəfdaşı\n\nİstifadəçinin seçimləri və iş tərzi. Bilinməyən keçmiş uydurulmur.\n\n"
+                   "## İstifadəçi və iş tərzi\nHələ yazılmayıb: müraciət forması, iş sahəsi və gözləntilər söhbət zamanı "
+                   "öyrənilir.\n\n## Daimi seçimlər\nİstifadəçinin açıq şəkildə bildirdiyi seçimlər, tarixi ilə.\n",
+        "Kurallar.md": "# İstifadəçinin düzəlişləri\n\nHər sətir istifadəçinin açıq bir düzəlişidir: tarix və bir-iki "
+                       "sətir. Tək bir işə aid qayda `Projeler/<iş kodu>/Kurallar.md` faylına yazılır; burada yalnız "
+                       "`[kapsam: <iş kodu>]` ilə başlayan bir sətirlik işarə qalır.\n",
+        "Last-Session.md": "# Son sessiya\n\nHələ kart yoxdur. Mənalı bir iş bitəndə təhvil kartı "
+                           "`## YYYY-MM-DD SS:DD · <etiket> · <kart>` başlığı ilə ən yuxarıya yazılır.\n",
+        "Threads.md": "# Threads\n\n## Active Threads\nHələ açıq mövzu yoxdur.\n\n## Closed Threads\n",
+        "Journal.md": "# Journal\n\nBirgə işdən yaranan müşahidələr və açıq suallar. Ehtimallar dəqiq məlumat kimi "
+                      "yazılmır.\n",
+        "BENIOKU.md": "# ArthurLegal Yaddaş\n\nBu qovluq ArthurLegal-ın yaddaş anbarıdır və yalnız bu kompüterdə saxlanılır. "
+                      "Claude Desktop-dakı ArthurLegal köməkçisi `hafiza_` alətləri ilə bura yazır və buradan oxuyur.\n\n"
+                      f"- `{SUREKLILIK}/`: Core (seçimlər), Kurallar (düzəlişlər), Last-Session (son sessiya kartları), "
+                      "Threads (açıq mövzular), Journal.\n"
+                      f"- `{PROJELER}/<iş kodu>/`: tək bir işə aid qaydalar və qeydlər. Qovluğun adı müvəkkilin adı "
+                      "deyil, işin kodudur.\n- `knowledge/`: daimi bilik qeydləri.\n\n"
+                      "Fayllar sadə Markdown formatındadır; istədiyiniz kimi redaktə edə və ya silə bilərsiniz. Obsidian "
+                      "və ya Beyin (github.com/avenoxai/avenoxbeyin) ilə açıla bilər. ArthurLegal-ı silmək bu qovluğu "
+                      "silmir.\n\n"
+                      "Məxfilik: köməkçi bura yalnız maskalanmış mətn yazır. Türkiyə şəxsiyyət nömrəsi (T.C. kimlik "
+                      "numarası), IBAN, telefon nömrəsi və e-poçt ünvanı olan mətn rədd edilir; şəxslər ArthurMask "
+                      "etiketi ilə ({{KİŞİ-01}}) qeyd olunur. Bu qovluğu bulud sinxronizasiyasına (OneDrive, iCloud, "
+                      "Dropbox) qoymazdan əvvəl büronuzun qaydalarına baxın.\n",
+        "knowledge/index.md": "# Bilik siyahısı\n\nDaimi bilik qeydlərinin bir sətirlik siyahısı.\n",
+    },
 }
 
 

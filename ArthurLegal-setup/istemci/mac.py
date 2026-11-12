@@ -113,6 +113,9 @@ def kaldirma_betigi(kok: Path, urun: str, dil: str) -> str:
     if dil == "en":
         soru = f"Remove {urun} from this Mac? Your own files in the project folders are kept."
         evet, hayir, bitti = "Uninstall", "Cancel", f"{urun} was removed."
+    elif dil == "az":
+        soru = f"{urun} bu Mac-dən silinsin? Layihə qovluqlarınızdakı öz fayllarınız silinmir."
+        evet, hayir, bitti = "Sil", "Ləğv et", f"{urun} silindi."
     else:
         soru = f"{urun} bu Mac'ten kaldırılsın mı? Proje klasörlerinizdeki kendi dosyalarınız silinmez."
         evet, hayir, bitti = "Kaldır", "Vazgeç", f"{urun} kaldırıldı."

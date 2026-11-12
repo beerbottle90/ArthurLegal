@@ -56,18 +56,22 @@ def calistir(komut, **k):
 
 # ArthurMask'in Mac sürümünün koşulu: seçenek öteki Mac'lerde soluk gelir, nedeni açıklamasında yazar.
 MASK_KOSULU = {"tr": " Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 gerekir.",
-               "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14."}
+               "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14.",
+               "az": " Mac-də Apple Silicon (M1 və sonrası) və macOS 14 tələb olunur."}
 # Mac'te arayüz tek kutudur: işareti kaldırmak öteki seçeneği seçer.
 ARAYUZ_KUTUSU = {"tr": " İşareti kaldırırsanız Claude Desktop klasik kurulur: masa ve kartlar kapalı, sonuçlar metin.",
-                 "en": " Untick it for Claude Desktop classic: no desk and no cards, results come as text."}
+                 "en": " Untick it for Claude Desktop classic: no desk and no cards, results come as text.",
+                 "az": " İşarəni götürsəniz, Claude Desktop klassik quraşdırılır: masa və kartlar bağlıdır, nəticələr mətn kimi gəlir."}
+# Sihirbazın dilleri ve her dilin lisans dosyası (derle.lisans_yaz): <dil>.lproj klasörleri bu sırayla yazılır.
+DILLER = (("tr", "LISANS.txt"), ("en", "LICENSE.txt"), ("az", "LISENZIYA.txt"))
 
 
 def iletiler() -> dict:
     """Modül ve arayüz seçiminin metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss [CustomMessages])."""
     iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
-    sonuc = {"tr": {}, "en": {}}
+    sonuc = {dil: {} for dil, _ in DILLER}
     for satir in iss.splitlines():
-        m = re.match(r"^(tr|en)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
+        m = re.match(r"^(tr|en|az)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
         if m:
             sonuc[m.group(1)][m.group(2)] = m.group(3).replace("%n", "\n")
     for dil, ek in MASK_KOSULU.items():
@@ -201,6 +205,39 @@ can also open a new chat and type your question. When Claude asks for permission
         "paket_yok": "Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician. Setup did "
                      "not finish; open the installer again and tick a package.",
     },
+    # macOS'un kendi arayüzü Azerbaycanca değildir: klasör ve düğme adları İngilizce yazılır, karşılığı ayraç içinde.
+    "az": {
+        "baslik": "ArthurLegal",
+        "karsilama": """<h2>ArthurLegal quraşdırması</h2>
+<p>Bu quraşdırma seçdiyiniz hüquq köməkçisi paketlərini və alətləri Claude Desktop-a qoşur.</p>
+<ul><li>Növbəti ekranlardan birində <b>quraşdırmaq istədiyiniz modulları işarələyin</b>. Modulu seçəndə nə işə
+yaradığı aşağıda yazılır. İlk quraşdırmada heç bir xana işarələnmiş gəlmir; <b>ən azı bir paket</b> lazımdır: Hüquq
+Bürosu, Korporativ Köməkçi, Courthouse və ya Akademik.</li>
+<li>Həmin ekranda <b>ArthurLegal yeni interfeys</b> işarələnmiş gəlir: ArthurLegal nişanı Claude Desktop-un içində
+ArthurLegal Masasını açır. İşarəni götürsəniz, <b>Claude Desktop klassik</b> quraşdırılır.</li>
+<li>Quraşdırma yalnız sizin istifadəçi hesabınız üçün aparılır, administrator parolu tələb etmir.</li>
+<li><b>Claude Desktop açıqdırsa, quraşdırma zamanı bağlanır</b> və sonda yenidən açılır; yazdığınız mesaj varsa,
+əvvəlcə göndərin.</li>
+<li>ArthurMask-ı seçmisinizsə, quraşdırmadan sonra arxa planda yüklənir (təxminən 1,2 GB) və hazır olanda bildiriş
+gəlir. ArthurMask Mac-də Apple Silicon (M1 və sonrası) və macOS 14 (Sonoma) və ya daha yenisini tələb edir.</li>
+<li>Bundan sonra yeniləmələr arxa planda, imzaları yoxlanılaraq özü quraşdırılır.</li></ul>""",
+        "bitis": """<h2>ArthurLegal quraşdırıldı</h2>
+<p>Seçdiyiniz modulların nişanları Applications (Proqramlar) qovluğunda və iş masasındadır. Başlanğıc bələdçisi
+brauzerdə açılır.</p>
+<p class="onemli"><b>Vacib: yeni interfeysdə ArthurLegal nişanına klikləyəndə Claude Desktop mesaj qutusunda
+<i>ArthurLegal Masası'nı aç</i> (ArthurLegal Masasını aç) yazılmış halda açılır. Masanın açılması üçün Enter düyməsini
+basın; mesaj öz-özünə göndərilmir.</b></p>
+<ul><li>Quraşdırma Claude Desktop-u yenidən açdı və mesajı mesaj qutusuna yazdı: <b>Enter</b> düyməsini basın. Claude
+masanı tapa bilməsə, Claude Desktop-dan <b>Cmd+Q</b> ilə tamamilə çıxıb yenidən açın; sonra <b>ArthurLegal</b>
+nişanına klikləyib Enter düyməsini basın. Yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz. Claude hər hansı
+aləti ilk dəfə istifadə edərkən icazə soruşsa, <b>Always allow</b> (Həmişə icazə ver) seçin.</li>
+<li>Claude Desktop quraşdırılmayıbsa, <b>claude.ai/download</b> ünvanından quraşdırın.</li>
+<li>Modul əlavə etmək, çıxarmaq və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın; son seçiminiz
+işarələnmiş gəlir.</li></ul>
+<p class="not">Silmək üçün: Applications &gt; ArthurLegal &gt; ArthurLegal-ı Sil.</p>""",
+        "paket_yok": "Ən azı bir paket seçin: Hüquq Bürosu, Korporativ Köməkçi, Courthouse və ya Akademik. Quraşdırma "
+                     "tamamlanmadı; quraşdırma faylını yenidən açıb bir paketi işarələyin.",
+    },
 }
 
 
@@ -324,16 +361,18 @@ def main(argv=None) -> int:
     calistir(["pkgbuild", "--root", isaret.parent, "--identifier", f"{KIMLIK}.arayuz.yeni", "--version", surum,
               "--install-location", KURULUM_YERI, paket_dizini / "arayuz.yeni.pkg"])
     son = (BURASI / "kurulum" / "macos" / "postinstall").read_text(encoding="utf-8").replace("\r\n", "\n")
-    son = son.replace("{{PAKET_YOK_TR}}", METIN["tr"]["paket_yok"]).replace("{{PAKET_YOK_EN}}", METIN["en"]["paket_yok"])
+    for dil, _ in DILLER:  # {{PAKET_YOK_TR}}, {{PAKET_YOK_EN}}, {{PAKET_YOK_AZ}}
+        son = son.replace("{{PAKET_YOK_%s}}" % dil.upper(), METIN[dil]["paket_yok"])
     betik_yaz(hazirlik / "betik-son", "postinstall", son)
     calistir(["pkgbuild", "--nopayload", "--identifier", f"{KIMLIK}.son", "--version", surum,
               "--scripts", hazirlik / "betik-son", paket_dizini / "son.pkg"])
 
-    # 3) Sihirbaz: karşılama, lisans, modül seçimi, bitiş; Türkçe ve İngilizce.
+    # 3) Sihirbaz: karşılama, lisans, modül seçimi, bitiş; Türkçe, İngilizce ve Azerbaycanca (tr.lproj, en.lproj,
+    #    az.lproj). Installer, Mac'in dil sırasına uyan klasörü kendisi seçer.
     kaynak = hazirlik / "kaynak"
     ileti = iletiler()
-    for dil, lisans in (("tr", "LISANS.txt"), ("en", "LICENSE.txt")):
-        d = kaynak / f"{'tr' if dil == 'tr' else 'en'}.lproj"
+    for dil, lisans in DILLER:
+        d = kaynak / f"{dil}.lproj"
         d.mkdir(parents=True)
         (d / "License.txt").write_bytes((kok / lisans).read_bytes().removeprefix(b"\xef\xbb\xbf"))
         (d / "Welcome.html").write_text(SAYFA.format(dil=dil, govde=METIN[dil]["karsilama"]), encoding="utf-8")

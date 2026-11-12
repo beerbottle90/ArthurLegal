@@ -37,6 +37,12 @@ try:
     import al_arayuz
 except ImportError:
     al_arayuz = None
+# Model ve effort önerisi arayüz seçiminden bağımsızdır: klasik arayüzde de sunucu talimatına girer. Sunucu modeli
+# değiştiremez; kural, ölçümde yetersiz kalan modelle çalışan Claude'un kullanıcıya bir kez söylemesini ister.
+try:
+    MODEL_KURALI = al_arayuz.model_kurali() if hasattr(al_arayuz, "model_kurali") else ""
+except (OSError, ValueError, KeyError):
+    MODEL_KURALI = ""
 if ortak.arayuz() != "yeni":
     al_arayuz = None
 
@@ -457,6 +463,9 @@ def masa_araclari():
         araclar.append(al_arayuz.gecmis_araci())
         # Doğrulama kaydı (al_dogrulama_kaydi): geçmişteki atıf teyitlerini dosyaya döker; görünüm açmaz.
         araclar.append(dogrulama_kaydi.arac_tanimi())
+    # Masanın dili (al_dil): kullanıcının bayraklardan seçtiği dil bu bilgisayarda kalır (veri/durum.json, masa_dili).
+    if hasattr(al_arayuz, "dil_araci"):
+        araclar.append(al_arayuz.dil_araci())
     return araclar
 
 
@@ -627,7 +636,8 @@ class Sunucu:
                     "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()},
                     "instructions": TALIMAT + (MASA_TALIMATI + (" " + al_arayuz.TESLIM_KURALI if hasattr(al_arayuz, "TESLIM_KURALI") else "")
                                                if al_arayuz is not None else "")
-                                    + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")}
+                                    + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")
+                                    + (" " + MODEL_KURALI if MODEL_KURALI else "")}
         if metod == "ping":
             return {}
         if metod == "tools/list":
@@ -676,7 +686,16 @@ class Sunucu:
         yetenekler.append("al_masaya_yaz")
         if hasattr(al_arayuz, "baslangic_araci"):
             yetenekler.append("al_masada_basla")
-        return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"))
+        # Claude kendi model adını bildirir (al_masasi girdisi): masa önerilen modelle çalışılıp çalışılmadığını gösterir.
+        ek = {"model": a.get("model")} if hasattr(al_arayuz, "model_degerlendir") else {}
+        # Masa üç dillidir. Sıra: kullanıcının masada seçip bu bilgisayara kaydettiği dil (al_dil), Claude'un
+        # bildirdiği dil, kurulumun dili. Kullanıcı masanın sağ üstündeki bayraklardan değiştirir.
+        if hasattr(al_arayuz, "dil_gecerli"):
+            ek["dil"] = (al_arayuz.dil_gecerli(ortak.durum().get("masa_dili")) or al_arayuz.dil_gecerli(a.get("dil"))
+                         or ortak.dil())
+        if hasattr(al_arayuz, "dil_araci"):
+            yetenekler.append("al_dil")
+        return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"), **ek)
 
     def _masa(self, a):
         veri = self._masa_verisi(a)
@@ -731,6 +750,13 @@ class Sunucu:
             try:
                 veri = masa_gecmisi().cagir(a)
             except (ValueError, OSError) as e:  # GecmisHatasi da ValueError'dır; içerik günlüğe yazılmaz
+                return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+            return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+        if al_arayuz is not None and ad == "al_dil" and hasattr(al_arayuz, "dil_araci"):
+            try:
+                veri = al_arayuz.dil_cevabi(a, ortak.durum().get("masa_dili"),
+                                            lambda d: ortak.durum_guncelle(masa_dili=d))
+            except (ValueError, OSError) as e:
                 return {"content": [{"type": "text", "text": str(e)}], "isError": True}
             return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
         if al_arayuz is not None and ad == "al_dogrulama_kaydi" and hasattr(al_arayuz, "Gecmis"):

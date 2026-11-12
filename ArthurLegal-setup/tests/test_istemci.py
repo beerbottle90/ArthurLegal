@@ -195,15 +195,29 @@ class BuroSimgesiTesti(unittest.TestCase):
         self.assertIn("<i data-os=\"mac\">Örnek Büro Asistanı Tapu</i>", sayfa, "macOS uygulamasının adı")
         self.assertIn("<i>Örnek Büro Asistanı - Kaldır</i>", sayfa, "macOS'taki kaldırma uygulamasının adı (kur._kaldir_adi)")
         self.assertNotIn("{{", sayfa)
-        self.assertIn('<a href="baslangic-en.html">English</a>', sayfa)
+        # Dil bağlantısı üç dilli ve bayraklıdır; açık sayfanın dili işaretlidir.
+        self.assertIn('<a href="baslangic.html" lang="tr" aria-current="page"><svg', sayfa)
+        self.assertIn('<a href="baslangic-az.html" lang="az"><svg', sayfa)
+        self.assertIn('<a href="baslangic-en.html" lang="en"><svg', sayfa)
         self.assertIn("<b>Always allow</b>", sayfa, "Claude Desktop'un arayüzü Türkçe değil")
         en = (self.kok / "rehber" / "baslangic-en.html").read_text(encoding="utf-8")
         self.assertIn("<title>Örnek Büro Asistanı Start</title>", en)
         self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", en)
         self.assertIn("<i>Örnek Büro Asistanı - Uninstall</i>", en)
-        self.assertIn('<a href="baslangic.html">Türkçe</a>', en)
+        self.assertIn('<a href="baslangic.html" lang="tr"><svg', en)
+        self.assertIn('<a href="baslangic-en.html" lang="en" aria-current="page"><svg', en)
+        az = (self.kok / "rehber" / "baslangic-az.html").read_text(encoding="utf-8")
+        self.assertIn('<html lang="az">', az)
+        self.assertIn('<a href="baslangic-az.html" lang="az" aria-current="page"><svg', az)
+        self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", az)
+        self.assertIn("Təlimatı kopyala", az)
+        self.assertIn("<b>Always allow</b>", az, "Claude Desktop'un menüleri çevrilmez")
+        self.assertNotIn("{{", az)
         self.assertIn("You are the ArthurLegal Law Firm assistant.", en, "İngilizce ön yükleme talimatı")
         self.assertNotIn("{{", en)
+        # Azerbaycanca sayfa: kaldırma uygulamasının adı Azerbaycanca; Claude'a verilen talimat Türkçe kalır.
+        self.assertIn("<i>Örnek Büro Asistanı - Sil</i>", az)
+        self.assertIn("Sen ArthurLegal Hukuk Bürosu (Law Firm) asistanısın.", az)
         self.derle.rehber_yaz(self.kok, "", icerik)
         sayfa = (self.kok / "rehber" / "baslangic.html").read_text(encoding="utf-8")
         self.assertIn("<title>ArthurLegal Başlangıç</title>", sayfa)
@@ -216,6 +230,36 @@ class BuroSimgesiTesti(unittest.TestCase):
         self.assertIn("Unblock", self.derle.ZIP_README)
         self.assertIn("Extract All...", self.derle.ZIP_README)
         self.assertLess(self.derle.ZIP_BENIOKU.index("Engellemeyi Kaldır"), self.derle.ZIP_BENIOKU.index("Tümünü Ayıkla"))
+        # Azerbaycanca talimat (OXU.txt): Windows'un düğmeleri İngilizce adlarıyla, aynı sırayla.
+        oxu = self.derle.ZIP_OXU
+        self.assertLess(oxu.index("Unblock (Bloku götür)"), oxu.index("Extract All... (Hamısını çıxar...)"))
+        self.assertIn("3,5", oxu)
+        for metin in (self.derle.ZIP_BENIOKU, self.derle.ZIP_README):
+            self.assertIn("OXU.txt", metin, "öteki iki dosya Azerbaycanca talimatı gösterir")
+        self.assertEqual(oxu.count("\n"), oxu.count("\r\n"), "Not Defteri için CRLF")
+
+    def test_lisans_sayfasi_uc_dilde(self):
+        """Lisans sayfası dile göre: önsöz o dilde, lisans metinleri üçünde de aynı İngilizce asıllar. Azerbaycanca önsöz
+        de bağlayıcı metnin İngilizce lisanslar olduğunu ve kabul düğmesinin sihirbazdaki adını yazar."""
+        import re
+        kurulum = BURASI / "kurulum"
+        self.assertEqual([d for d, _, _ in self.derle.LISANS_DOSYALARI], ["tr", "en", "az"])
+        self.assertEqual(set(self.derle.LISANS_BASLIKLARI), {"tr", "en", "az"})
+        self.assertEqual({len(b) for b in self.derle.LISANS_BASLIKLARI.values()}, {4})
+        iss = (kurulum / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        for dil, onsoz, dosya in self.derle.LISANS_DOSYALARI:
+            ham = (kurulum / onsoz).read_bytes()
+            self.assertFalse(ham.startswith(b"\xef\xbb\xbf"), "önsöz BOM'suzdur; BOM'u lisans_yaz ekler")
+            self.assertIn(f'Name: "{dil}"; MessagesFile:', iss)
+            self.assertIn(f'LicenseFile: "{{#Kaynak}}\\{dosya}"', iss)
+            self.assertIn(f'Source: "{{#Kaynak}}\\{dosya}"; DestDir: "{{app}}"', iss)
+        az = " ".join((kurulum / "lisans_onsoz_az.txt").read_text(encoding="utf-8").split())  # satır kırılımından bağımsız
+        self.assertIn("Hüquqi qüvvəyə malik olan ingiliscə lisenziya mətnləridir", az)
+        self.assertIn("bu xülasə yalnız məlumat məqsədi daşıyır", az)
+        isl = (kurulum / "Azerbaijani.isl").read_text(encoding="utf-8-sig")
+        kabul = re.search(r"(?m)^LicenseAccepted=(.*)$", isl).group(1).replace("&", "")
+        self.assertIn(f'"{kabul}"', az, "önsöz, sihirbazdaki kabul seçeneğinin adını yazar")
+        self.assertEqual(az.count("•"), (kurulum / "lisans_onsoz.txt").read_text(encoding="utf-8").count("•"))
 
 
 class KurulumBetigiTesti(unittest.TestCase):
@@ -226,30 +270,105 @@ class KurulumBetigiTesti(unittest.TestCase):
         self.assertIn("UsePreviousGroup=no", iss, "Inno önceki kurulumun menü klasörünü yeniden kullanırdı")
         sil, kur = iss.find(r"DeleteFile(ExpandConstant('{app}\aktif.txt'))"), iss.find("kur --kurulum --kisayol")
         self.assertTrue(0 < sil < kur, "al.py aktif.txt'deki eski sürümü seçerdi; önce silinmeli")
-        # Kaldırma kısayolunun adı iki dilde de kur._kaldir_adi ile aynı olmalı.
+        # Kaldırma kısayolunun adı üç dilde de kur._kaldir_adi ile aynı olmalı.
         self.assertIn('#define KaldirAdiTr "ArthurLegal\'i Kaldır"', iss)
         self.assertIn('#define KaldirAdiTr UrunAd + " - Kaldır"', iss)
         self.assertIn('#define KaldirAdiEn "Uninstall ArthurLegal"', iss)
         self.assertIn('#define KaldirAdiEn UrunAd + " - Uninstall"', iss)
         self.assertIn('Name: "{group}\\{cm:KaldirAdi}"', iss)
+        import kur
+        for dil, ek in (("tr", "Tr"), ("en", "En"), ("az", "Az")):
+            varsayilan, urun_eki = kur.KALDIR_ADLARI[dil]
+            self.assertIn(f'#define KaldirAdi{ek} "{varsayilan}"', iss)
+            self.assertIn(f'#define KaldirAdi{ek} UrunAd + "{urun_eki}"', iss)
+            self.assertIn(f"{dil}.KaldirAdi={{#KaldirAdi{ek}}}", iss)
 
     def test_iki_dil_ve_dil_kur_py_ye_gecer(self):
-        """Kurulum İngilizce ve Türkçe; dil sorulur, lisans sayfası dile göre, seçilen dil kur.py'ye --dil ile geçer."""
+        """Kurulum İngilizce, Türkçe ve Azerbaycanca; dil sorulur, lisans sayfası dile göre, seçilen dil kur.py'ye
+        --dil ile geçer."""
         iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
         self.assertIn('Name: "en"; MessagesFile: "compiler:Default.isl"; LicenseFile: "{#Kaynak}\\LICENSE.txt"', iss)
         self.assertIn('Name: "tr"; MessagesFile: "compiler:Languages\\Turkish.isl"; LicenseFile: "{#Kaynak}\\LISANS.txt"', iss)
+        self.assertIn('Name: "az"; MessagesFile: "Azerbaijani.isl"; LicenseFile: "{#Kaynak}\\LISENZIYA.txt"', iss)
         self.assertIn("ShowLanguageDialog=yes", iss)
         self.assertIn("kur --kurulum --kisayol --dil ' +\n       ActiveLanguage", iss)
         self.assertIn("en.RehberDosyasi=baslangic-en.html", iss)
         self.assertIn("tr.RehberDosyasi=baslangic.html", iss)
+        self.assertIn("az.RehberDosyasi=baslangic-az.html", iss)
         self.assertNotIn("Her zaman izin ver'i seçin", iss, "Claude Desktop'un düğmesi İngilizce: Always allow")
         import re
-        # Her özel ileti iki dilde de tanımlı olmalı; CustomMessage('X') tanımsız ileti çalışırken hata verir.
-        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr")}
+        import ortak
+        diller = re.findall(r'(?m)^Name: "(\w+)"; MessagesFile:', iss)
+        self.assertEqual(sorted(diller), sorted(ortak.DILLER), "sihirbazın dilleri kur.py --dil seçenekleriyle aynı")
+        self.assertEqual(diller[0], "en", "Windows'un diline uyan dil yoksa ilk dil (İngilizce) seçili gelir")
+        # Her özel ileti üç dilde de tanımlı olmalı; CustomMessage('X') tanımsız ileti çalışırken hata verir.
+        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr", "az")}
         self.assertEqual(tanimli["en"], tanimli["tr"])
         kullanilan = set(re.findall(r"CustomMessage\('(\w+)'\)", iss)) | set(re.findall(r"\{cm:(\w+)\}", iss))
         self.assertTrue(kullanilan, "özel iletiler kullanılıyor")
         self.assertLessEqual(kullanilan, tanimli["en"])
+        self.assertLessEqual(kullanilan, tanimli["az"])
+
+    def test_her_ingilizce_iletinin_azerbaycancasi_var(self):
+        """[Messages] ve [CustomMessages]: her en. satırının (#if dalları dâhil) bir az. karşılığı vardır; yer tutucular
+        (%1, %n, {#UrunAd}) ve sohbete yazılan sabit ifade aynıdır. Eksik ileti sihirbazda İngilizce görünürdü."""
+        import re
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        satirlar = {dil: re.findall(rf"(?m)^{dil}\.(\w+)=(.*)$", iss) for dil in ("en", "tr", "az")}
+        self.assertGreater(len(satirlar["en"]), 40)
+        for dil in ("tr", "az"):  # sayı da aynı: ReadyLabel1 iki #if dalında iki kez
+            self.assertEqual([ad for ad, _ in satirlar[dil]], [ad for ad, _ in satirlar["en"]], dil)
+        yer_tutucu = re.compile(r"%\d|%n|\{#\w+\}|/MODULLER=[\w,]+|'ArthurLegal Masası'nı aç'|'Always allow'")
+        for (ad, en), (_, az) in zip(satirlar["en"], satirlar["az"]):
+            with self.subTest(ileti=ad):
+                self.assertTrue(az.strip(), "boş çeviri")
+                beklenen = [y.replace("KaldirAdiEn", "KaldirAdiAz") for y in yer_tutucu.findall(en)]
+                self.assertEqual(sorted(yer_tutucu.findall(az)), sorted(beklenen))
+        az = dict(satirlar["az"])
+        for ad in ("ModulAdliye", "ModulTapu", "ModulMask"):
+            self.assertEqual(az[ad], dict(satirlar["en"])[ad], "ürün adı çevrilmez")
+        self.assertEqual((az["ArayuzYeni"], az["ArayuzKlasik"]), ("ArthurLegal yeni interfeys", "Claude Desktop klassik"))
+
+    def test_azerbaycanca_ileti_dosyasi(self):
+        """kurulum/Azerbaijani.isl: Inno Setup'la gelmeyen dilin ileti dosyası. UTF-8 BOM'lu (BOM'suz dosyayı Inno ANSI
+        sanar), dil kimliği Azerbaycanca (Latin), ve bu bilgisayarda Inno Setup kuruluysa Default.isl'deki her iletinin
+        aynı yer tutucularla karşılığı var."""
+        import re
+        yol = BURASI / "kurulum" / "Azerbaijani.isl"
+        self.assertTrue(yol.read_bytes().startswith(b"\xef\xbb\xbf"))
+        metin = yol.read_text(encoding="utf-8-sig")
+        self.assertIn("\nLanguageName=Az<0259>rbaycan dili\n", metin.replace("\r\n", "\n"))
+        self.assertIn("\nLanguageID=$042C\n", metin.replace("\r\n", "\n"))
+
+        def iletiler(ham):
+            bolum, sonuc = "", {}
+            for satir in ham.splitlines():
+                if satir.startswith("["):
+                    bolum = satir.strip()
+                elif satir.strip() and not satir.startswith(";") and bolum != "[LangOptions]":
+                    ad, _, deger = satir.partition("=")
+                    sonuc[bolum, ad] = deger
+            return sonuc
+        az = iletiler(metin)
+        self.assertGreater(len(az), 280)
+        for ad in ("ButtonNext", "ButtonBack", "ButtonInstall", "ButtonCancel", "ButtonFinish"):
+            self.assertIn(("[Messages]", ad), az)
+        self.assertEqual([az["[Messages]", ad].replace("&", "") for ad in ("ButtonInstall", "ButtonCancel", "ButtonFinish")],
+                         ["Quraşdır", "Ləğv et", "Bitir"])
+        adaylar = [Path(os.environ.get(v, "")) / "Inno Setup 6" / "Default.isl" for v in ("ProgramFiles(x86)", "ProgramFiles")]
+        adaylar.insert(0, Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Inno Setup 6" / "Default.isl")
+        varsayilan = next((a for a in adaylar if a.is_file()), None)
+        if varsayilan is None:
+            self.skipTest("Inno Setup 6 kurulu değil: Default.isl ile karşılaştırma atlandı")
+        en = iletiler(varsayilan.read_text(encoding="utf-8-sig"))
+        self.assertEqual(set(en) - set(az), set(), "Default.isl'de olup çevrilmemiş ileti")
+        self.assertEqual(set(az) - set(en), set(), "Inno Setup'ın tanımadığı ileti")
+        yer_tutucu = re.compile(r"%\d|%n|\[[a-z/]+\]")
+        for anahtar, deger in en.items():
+            with self.subTest(ileti=anahtar[1]):
+                self.assertEqual(sorted(yer_tutucu.findall(az[anahtar])), sorted(yer_tutucu.findall(deger)))
+                self.assertEqual(az[anahtar].count("&"), deger.count("&"), "kısayol tuşu işareti")
+                self.assertEqual(bool(az[anahtar]), bool(deger))
 
     def test_aktif_yoksa_en_yeni_surum(self):
         """Kurulumun dayandığı kural: aktif.txt silinince al.py en yeni sürüm klasörünü seçer."""
@@ -366,7 +485,16 @@ class KisayolTesti(unittest.TestCase):
             sahte_kok(t / "kok")
             acilan, adres = self.calistir(t, self.BASLAT)
             self.assertEqual(acilan, ["masa", "rehber", "masa", "rehber"], "başlangıç sayfası her tıklamada açılır")
-            self.assertEqual(adres, "claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7")
+            # İlk satır hep aynı mesaj; ikinci satır model ve effort hatırlatması (bağlantı model seçemez).
+            self.assertTrue(adres.startswith("claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7"))
+            import urllib.parse
+            mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
+            self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç")
+            oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
+            self.assertIn(oneri["cumle"], mesaj, "kesin öneri cümlesi aynen yazılır")
+            self.assertIn("bağlayıcı değildir", mesaj, "öneri tavsiyedir")
+            self.assertIn("Claude hatırlar", mesaj)
+            self.assertLess(len(adres), 2000, "bağlantı kısa kalır")
 
     def test_ekran_kisayolu_ve_acilisi(self):
         with tempfile.TemporaryDirectory() as t:
@@ -511,6 +639,80 @@ class KisayolTesti(unittest.TestCase):
             (t / "kok" / "rehber" / "baslangic-en.html").unlink()
             self.assertEqual(self.calistir(t, "import ortak; print(json.dumps(ortak.rehber_dosyasi().name))"),
                              "baslangic.html")
+
+    def test_kisayollar_azerbaycanca(self):
+        """Azerbaycanca kurulum: kısayol adlarında ürün adları aynı kalır (ArthurLegal, Tapu, Courthouse, UYAP
+        Dashboard), genel sözcükler çevrilir; başlangıç rehberi Azerbaycanca sayfadır; mesajlar Azerbaycanca."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            dort_paket(t / "kok")
+            secim_yaz(t / "kok", "hukuk-burosu", "adliye", "akademisyen", "tapu", "mask", "hafiza")
+            (t / "kok" / "surumler" / "0.0.1" / "uyap").mkdir()
+            (t / "kok" / "surumler" / "0.0.1" / "uyap" / "ekran.py").write_text("", encoding="utf-8")
+            mask = t / "Local" / "Programs" / "Arthur Mask" / "runtime"
+            mask.mkdir(parents=True)
+            (mask / "python.exe").write_bytes(b"")
+            (t / "kok" / "rehber").mkdir()
+            (t / "kok" / "rehber" / "baslangic-az.html").write_text("", encoding="utf-8")
+            self.assertEqual(self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'az']))"), 0)
+            self.assertEqual(self.calistir(t, "import ortak; print(json.dumps([ortak.dil(), ortak.metin('tr', 'en', 'az'), "
+                                              "ortak.metin('tr', 'en')]))"), ["az", "az", "tr"],
+                             "Azerbaycanca karşılığı verilmeyen metin Türkçe kalır")
+            # Hafıza kasasının başlangıç notları da kurulumun dilinde; dosya adları araçların kullandığı adlardır.
+            kasa = Path(self.calistir(t, "import hafiza; print(json.dumps(str(hafiza.kasa())))"))
+            self.assertTrue((kasa / "BENIOKU.md").read_text(encoding="utf-8").startswith("# ArthurLegal Yaddaş\n"))
+            self.assertIn("{{KİŞİ-01}}", (kasa / "BENIOKU.md").read_text(encoding="utf-8"))
+            self.assertEqual(self.calistir(t, "import hafiza; print(json.dumps([sorted(n) for n in "
+                                              "hafiza.BASLANGIC_NOTLARI.values()]))").count(
+                                                  sorted(["Core.md", "Kurallar.md", "Last-Session.md", "Threads.md",
+                                                          "Journal.md", "BENIOKU.md", "knowledge/index.md"])), 3)
+            liste = self.calistir(t, self.LISTE)
+            adlar = sorted({s[0] for s in liste})
+            self.assertEqual(adlar, ["ArthurLegal - Akademik 0.0.1.lnk", "ArthurLegal - Başlanğıc Bələdçisi 0.0.1.lnk",
+                                     "ArthurLegal - Courthouse 0.0.1.lnk", "ArthurLegal - Layihə Qovluqları 0.0.1.lnk",
+                                     "ArthurLegal - Tapu 0.0.1.lnk", "ArthurLegal - UYAP Dashboard 0.0.1.lnk",
+                                     "ArthurLegal - Yaddaş Qovluğu 0.0.1.lnk", "ArthurLegal - Yeniləmələri Yoxla 0.0.1.lnk",
+                                     "ArthurLegal 0.0.1.lnk"])
+            rehber = next(s for s in liste if s[0] == "ArthurLegal - Başlanğıc Bələdçisi 0.0.1.lnk")
+            self.assertEqual(Path(rehber[1]).name, "baslangic-az.html")
+            self.assertEqual(self.calistir(t, "import kur; print(json.dumps([kur._kaldir_adi('ArthurLegal'), "
+                                              "kur._kaldir_adi('Örnek'), kur._kaldir_adi('ArthurLegal', 'en')]))"),
+                             ["ArthurLegal-ı Sil", "Örnek - Sil", "Uninstall ArthurLegal"])
+            # Dil değişince öteki dillerdeki kısayollar ve kaldırma kısayolları temizlenir; Azerbaycancadan başka dile de.
+            menu = t / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "ArthurLegal"
+            menu.mkdir(parents=True)
+            temizle = ("import kur; kur.eski_kisayollari_temizle(kur._menu(), {y for y, *_ in kur._kisayol_listesi()} | "
+                       "{kur._menu() / (kur._kaldir_adi(kur.ortak.urun_adi()) + '.lnk')}); print(1)")
+            eskiler = ("ArthurLegal - Başlangıç Rehberi 0.0.1.lnk", "ArthurLegal - Start Guide 0.0.1.lnk",
+                       "ArthurLegal'i Kaldır.lnk", "Uninstall ArthurLegal.lnk", "ArthurLegal-ı Sil.lnk")
+            for ad in eskiler:
+                (menu / ad).write_bytes(b"")
+            self.calistir(t, temizle)
+            self.assertEqual([p.name for p in menu.iterdir()], ["ArthurLegal-ı Sil.lnk"])
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'tr']))")
+            (menu / "ArthurLegal - Başlanğıc Bələdçisi 0.0.1.lnk").write_bytes(b"")
+            (menu / "ArthurLegal'i Kaldır.lnk").write_bytes(b"")
+            self.calistir(t, temizle)
+            self.assertEqual([p.name for p in menu.iterdir()], ["ArthurLegal'i Kaldır.lnk"])
+            # Azerbaycanca sayfa yoksa (eski kurulumun rehber klasörü) Türkçesi açılır.
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'az']))")
+            (t / "kok" / "rehber" / "baslangic-az.html").unlink()
+            self.assertEqual(self.calistir(t, "import ortak; print(json.dumps(ortak.rehber_dosyasi().name))"),
+                             "baslangic.html")
+            # Masa bağlantısının ikinci satırı: kesin öneri cümlesi Azerbaycanca hâliyle (model-onerisi.json cumle_az).
+            import urllib.parse
+            adres = self.calistir(t, "import kisayol; print(json.dumps(kisayol.masa_adresi()))")
+            mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
+            self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç", "sohbete yazılan ifade çevrilmez")
+            self.assertIn("(Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil. ", mesaj)
+            self.assertIn("Claude yadda saxlayır", mesaj)
+            self.assertNotIn("bağlayıcı değildir", mesaj)
+            self.assertLess(len(adres), 2000, "bağlantı kısa kalır")
+            # Simgelerin konsol mesajları (ArthurMask'in Başlat menüsü kısayolu ve UYAP tarayıcı betiği burada yok).
+            self.assertEqual(self.calistir(t, "import kisayol; c = []; kisayol.print = lambda m: c.append(m); "
+                                              "print(json.dumps([kisayol.mask(), kisayol.uyap_tarayici(), c]))"),
+                             [1, 1, ["ArthurMask bu kompüterdə quraşdırılmayıb.", "Bu quraşdırmada UYAP körpüsü yoxdur."]])
 
     def test_eski_numarali_kisayol_taninir(self):
         """Güncelleme yarıda kaldıysa: kısayol çalışan sürümden başka bir numara taşıyor; güncelleyici eşitler."""
@@ -1406,6 +1608,12 @@ class ModulTesti(unittest.TestCase):
             adlar = {s[0] for s in self.calistir(t, KisayolTesti.LISTE)}
             self.assertIn("ArthurLegal - Academician 0.0.1.lnk", adlar)
             self.assertIn("ArthurLegal - Courthouse 0.0.1.lnk", adlar, "Courthouse özel ad, çevrilmez")
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'az']))")
+            adlar = {s[0] for s in self.calistir(t, KisayolTesti.LISTE)}
+            self.assertLessEqual({"ArthurLegal 0.0.1.lnk", "ArthurLegal - Akademik 0.0.1.lnk",
+                                  "ArthurLegal - Courthouse 0.0.1.lnk"}, adlar)
+            self.assertFalse([a for a in adlar if "Akademisyen" in a or "Academician" in a])
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--dil', 'en']))")
             # Courthouse seçimden çıkınca simgesi gider; kullanıcının başka kısayolu kalır.
             masa = t / "ev" / "Desktop"
             masa.mkdir(parents=True)
@@ -1556,6 +1764,37 @@ class ModulTesti(unittest.TestCase):
                 raise EOFError
             self.assertEqual(kur.zip_secimi("tr", None, kapali), ["hukuk-burosu", "kurumsal", "tapu"])
         self.assertEqual(list(kur.MODUL_METNI["tr"]), list(kur.ortak.MODULLER))
+        # Azerbaycanca: soru, modül adları ve hata mesajı o dilde; ürün adları aynı.
+        cevaplar = iter(["9", "4,5"])
+        with contextlib.redirect_stdout(io.StringIO()) as cikti:
+            self.assertEqual(kur.zip_secimi("az", ["adliye"], lambda _: next(cevaplar)), ["akademisyen", "tapu"])
+        for metin in ("Hansı modullar quraşdırılsın?", "  1  Hüquq Bürosu - ", "  3  Courthouse - ", "  4  Akademik - ",
+                      "ArthurMask bu yolla quraşdırıla bilməz.", "ən azı biri olmalıdır"):
+            self.assertIn(metin, cikti.getvalue())
+        self.assertEqual(set(kur.KALDIR_ADLARI), set(kur.ortak.DILLER))
+        for sozluk in (kur.MODUL_METNI, kur.ZIP_METNI, kur.KISAYOL_METNI):
+            self.assertEqual(set(sozluk), set(kur.ortak.DILLER))
+            self.assertEqual(len({tuple(v) for v in sozluk.values()}), 1, "her dilde aynı anahtarlar, aynı sırayla")
+        self.assertEqual({d: kur.MODUL_METNI[d]["adliye"][0] for d in kur.ortak.DILLER},
+                         {"tr": "Courthouse", "en": "Courthouse", "az": "Courthouse"})
+
+    def test_sistem_dili_uc_dilden_biri(self):
+        """Dil sorulmayan yollar (zip kurulumu, macOS paketi) sistemin dilini kullanır: Türkçe, Azerbaycanca, ötekilerde
+        İngilizce. macOS'ta dil sırasının ilki belirler."""
+        import ortak
+        self.assertEqual(ortak.DILLER, ("tr", "en", "az"))
+        self.assertEqual(ortak._WINDOWS_DILLERI, {0x1F: "tr", 0x2C: "az"}, "LANGID'in ana dil kimliği")
+        eski = (ortak.MAC, ortak.subprocess.run)
+        try:
+            ortak.MAC = True
+            for diller, beklenen in ((["az-AZ", "en-AZ"], "az"), (["az-Latn-AZ"], "az"), (["tr-TR", "az-AZ"], "tr"),
+                                     (["ru-AZ", "az-AZ"], "en"), (["en-US"], "en")):
+                cikti = "(\n" + ",\n".join(f'    "{d}"' for d in diller) + "\n)\n"
+                ortak.subprocess.run = lambda *a, **k: subprocess.CompletedProcess(a, 0, stdout=cikti, stderr="")
+                self.assertEqual(ortak.sistem_dili(), beklenen, diller)
+        finally:
+            ortak.MAC, ortak.subprocess.run = eski
+        self.assertIn(ortak.sistem_dili(), ortak.DILLER)
 
     def test_baslangic_sayfasi_dort_paket_karti(self):
         sys.path.insert(0, str(BURASI / "yayin"))
@@ -1565,7 +1804,9 @@ class ModulTesti(unittest.TestCase):
             icerik = {"surum": "0.0.1", "paketler": {"hukuk-burosu": "1", "kurumsal": "1", "adliye": "1", "akademisyen": "1"}}
             derle.rehber_yaz(t, "", icerik)
             for sayfa, metin in (("baslangic.html", "Sen ArthurLegal Courthouse (Adliye) asistanısın"),
-                                 ("baslangic-en.html", "You are the ArthurLegal Courthouse assistant")):
+                                 ("baslangic-en.html", "You are the ArthurLegal Courthouse assistant"),
+                                 # Azerbaycanca sayfada Claude'a verilen talimat Türkçedir (paketler Türk hukuku için)
+                                 ("baslangic-az.html", "Sen ArthurLegal Courthouse (Adliye) asistanısın")):
                 html = (t / "rehber" / sayfa).read_text(encoding="utf-8")
                 self.assertNotIn("{{", html)
                 self.assertIn(metin, html)
@@ -1584,12 +1825,12 @@ class ModulTesti(unittest.TestCase):
         self.assertIn("SetPreviousData(PreviousDataKey, 'Moduller', Secim)", iss)
         self.assertIn("ActiveLanguage + ' --moduller ' + Secim", iss)
         self.assertIn("ESKI_SECIM = 'hukuk-burosu,kurumsal,tapu,mask'", iss)
-        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr")}
+        tanimli = {dil: set(re.findall(rf"^{dil}\.(\w+)=", iss, re.M)) for dil in ("en", "tr", "az")}
         kodlar = re.findall(r"\d: Result := '(\w+)';|else\s+Result := '(Modul\w+)';", iss)
         iletiler = {a or b for a, b in kodlar if (a or b).startswith("Modul")}
         self.assertEqual(len(iletiler), 7)
         for ileti in iletiler:  # CustomMessage(ModulIletisi(I)) ve ... + 'Aciklama' çalışırken çözülür
-            for dil in ("en", "tr"):
+            for dil in ("en", "tr", "az"):
                 self.assertIn(ileti, tanimli[dil])
                 self.assertIn(ileti + "Aciklama", tanimli[dil])
         import ortak
@@ -1641,17 +1882,51 @@ class ArayuzTesti(unittest.TestCase):
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
                       "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
             self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
-                                                               "al_modul_ac", "al_gecmis", "al_dogrulama_kaydi"],
+                                                               "al_modul_ac", "al_gecmis", "al_dogrulama_kaydi",
+                                                               "al_dil"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
             acilan, _ = self.calistir(t, KisayolTesti.BASLAT)
             self.assertEqual(acilan, ["rehber", "rehber"], "klasikte her açılışta panel; masa bağlantısı açılmaz")
             self.assertIn('"arayuz": "klasik"', (t / "kok" / "rehber" / "durum.js").read_text(encoding="utf-8"))
-            for ad in ("rehber.html", "rehber-en.html"):  # panel klasikte masa paragrafını gizler
+            for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):  # panel klasikte masa paragrafını gizler
                 html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
                 self.assertIn('<p data-arayuz="yeni">', html)
                 self.assertIn("d.arayuz", html)
+
+    def test_oneri_cumlesi_her_yuzeyde_ayni(self):
+        """Kesin öneri cümlesi (tavsiye, bağlayıcı değil) tek dosyadadır; başlangıç sayfası ve README aynı cümleyi yazar."""
+        oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
+        self.assertIn("bağlayıcı değildir", oneri["cumle"])
+        # README.md Türkçe ve İngilizce, README.az.md Azerbaycanca kurulum anlatımıdır.
+        readme = "".join((BURASI.parent / ad).read_text(encoding="utf-8") for ad in ("README.md", "README.az.md"))
+        self.assertIn('<a href="README.az.md">', readme)
+        for ad, cumle in (("rehber.html", oneri["cumle"]), ("rehber-en.html", oneri["cumle_en"]),
+                          ("rehber-az.html", oneri["cumle_az"])):
+            html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+            self.assertIn('<div class="kart" id="model-efor">', html)
+            self.assertIn(cumle, html)
+            self.assertIn(cumle, readme)
+
+    def test_model_kurali_talimatta_ve_masa_modeli_tasir(self):
+        """Sunucu Claude'un modelini değiştiremez: kural talimata girer (klasik arayüzde de), masa Claude'un bildirdiği
+        modeli ölçüme dayalı öneriyle karşılaştırır ve ölçümde yetersiz kalan modelde Claude'a bir kez söyletir."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; b = s.Sunucu().isle('initialize', {}); "
+                   "print(json.dumps(['MODEL.' in b['instructions'], len(b['instructions'])]))")
+            var, uzunluk = self.calistir(t, kod)
+            self.assertTrue(var)
+            self.assertLess(uzunluk, 2048, "Claude Desktop uzun talimatın yalnız başını gösterebilir")
+            masa = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                    "d = u._masa_verisi({'model': 'Claude Haiku 5.5'}); o = u._masa_verisi({'model': 'Claude Opus 5.5'}); "
+                    "print(json.dumps([d['model']['duzey'], 'MODEL:' in d['not'], o['model']['duzey'], 'MODEL:' in o['not'], "
+                    "'model' in u._masa_verisi({})]))")
+            self.assertEqual(self.calistir(t, masa), ["dusuk", True, "onerilen", False, False])
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
+            self.assertTrue(self.calistir(t, kod)[0], "klasik arayüzde de model kuralı talimatta")
 
 
 class MasaEnterHatirlatmasiTesti(unittest.TestCase):
@@ -1662,12 +1937,18 @@ class MasaEnterHatirlatmasiTesti(unittest.TestCase):
     def test_hatirlatma_her_yerde(self):
         import re
         iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8")
-        for dil in ("en", "tr"):
-            self.assertRegex(iss, rf"(?m)^{dil}\.MasaEnterHatirlatma=.*Enter")
+        for dil in ("en", "tr", "az"):
+            self.assertRegex(iss, rf"(?m)^{dil}\.MasaEnterHatirlatma=.*'ArthurLegal Masası'nı aç'.*Enter")
         self.assertIn("CustomMessage('MasaEnterHatirlatma')", iss)
         self.assertIn("EnterHatirlatmasi.Font.Style := [fsBold]", iss)
-        self.assertEqual((BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8").count('<p class="onemli"><b>'), 2)
-        for ad in ("rehber.html", "rehber-en.html"):
+        # macOS sihirbazının bitiş sayfası: üç dilde birer vurgulu hatırlatma.
+        self.assertEqual((BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8").count('<p class="onemli"><b>'), 3)
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import derle_macos
+        for dil in ("tr", "en", "az"):
+            self.assertRegex(derle_macos.METIN[dil]["bitis"],
+                             r'<p class="onemli"><b>[^<]*\n?<i>ArthurLegal Masası\'nı aç</i>[^<]*Enter')
+        for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
             self.assertRegex(html, r'<p data-arayuz="yeni" class="onemli"><b>[^<]*Enter')
         readme = (BURASI.parent / "README.md").read_text(encoding="utf-8")
@@ -1680,18 +1961,22 @@ class KullaniciRehberiTesti(unittest.TestCase):
     ve iki derleyici de onu rehber/masa.png olarak pakete koyar."""
 
     PDF = "docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"
+    PDF_EN = "docs/rehber/ArthurLegal-User-Guide.pdf"
+    PDF_AZ = "docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"
 
     def test_pdf_readme_ve_baslangic_sayfasi(self):
         kok = BURASI.parent
-        self.assertTrue((kok / self.PDF).read_bytes().startswith(b"%PDF"))
+        for pdf in (self.PDF, self.PDF_EN, self.PDF_AZ):   # rehber üç dilde (kaynağı arthurlegal-marketing)
+            self.assertTrue((kok / pdf).read_bytes().startswith(b"%PDF"), pdf)
         self.assertTrue((kok / "docs" / "rehber" / "kapak.png").exists())
         readme = (kok / "README.md").read_text(encoding="utf-8")
         ust = readme[:readme.index('<h2 id="kurulum">')]
         self.assertIn('id="rehber"', ust, "rehber bloğu README'nin başında, kurulum anlatımından önce")
         self.assertIn(f'<a href="{self.PDF}">', ust)
-        for ad in ("rehber.html", "rehber-en.html"):
+        for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
-            self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{self.PDF}"', html)
+            pdf = {"rehber.html": self.PDF, "rehber-en.html": self.PDF_EN, "rehber-az.html": self.PDF_AZ}[ad]
+            self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{pdf}"', html)
             self.assertIn('<img src="masa.png"', html)
             self.assertNotIn("banner", html, "eski piksel afiş yerine başlıkta yeni simge (SVG)")
             self.assertIn('<svg class="simge"', html)
@@ -1779,6 +2064,13 @@ class MacKurulumTesti(unittest.TestCase):
                        "Applications/ArthurLegal/Start Guide.app", "Applications/ArthurLegal/Uninstall ArthurLegal.app"):
                 self.assertIn(ad, adlar)
             self.assertFalse([a for a in adlar if "Tapu" in a or "Courthouse" in a])
+            # Azerbaycanca adlar: ürün adı aynı, genel sözcükler çevrilir.
+            self.calistir(t, "ortak.durum_guncelle(dil='az'); print(1)")
+            adlar = [y for y, *_ in self.calistir(t, self.LISTE)]
+            for ad in ("Applications/ArthurLegal.app", "Desktop/ArthurLegal 0.0.1.app", "Applications/ArthurLegal Akademik.app",
+                       "Applications/ArthurLegal/Başlanğıc Bələdçisi.app", "Applications/ArthurLegal/Layihə Qovluqları.app",
+                       "Applications/ArthurLegal/Yeniləmələri Yoxla.app", "Applications/ArthurLegal/ArthurLegal-ı Sil.app"):
+                self.assertIn(ad, adlar)
             durum = self.calistir(t, "import kisayol; y = kisayol.durum_yaz('kurulu'); "
                                      "print(y.read_text(encoding='utf-8').split('=', 1)[1].strip().rstrip(';'))")
             self.assertEqual(durum["isletim"], "mac", "başlangıç sayfası Mac'e özgü cümleleri gösterir")
@@ -1960,7 +2252,18 @@ class MacKurulumTesti(unittest.TestCase):
         import derle_macos
         import ortak
         ileti = derle_macos.iletiler()
+        self.assertEqual(set(ileti), {"tr", "en", "az"})
         self.assertEqual(set(ileti["tr"]), set(ileti["en"]))
+        self.assertEqual(set(ileti["tr"]), set(ileti["az"]))
+        # Sihirbazın dilleri: <dil>.lproj klasörleri ve her dilin lisans dosyası derle.lisans_yaz'ın yazdıklarıdır.
+        self.assertEqual(list(derle_macos.DILLER), [(d, dosya) for d, _, dosya in derle_macos.derle.LISANS_DOSYALARI])
+        for sozluk in (derle_macos.METIN, derle_macos.MASK_KOSULU, derle_macos.ARAYUZ_KUTUSU):
+            self.assertEqual(set(sozluk), {"tr", "en", "az"})
+        self.assertEqual({tuple(m) for m in derle_macos.METIN.values()}, {("baslik", "karsilama", "bitis", "paket_yok")})
+        for dil, m in derle_macos.METIN.items():
+            self.assertNotRegex(m["paket_yok"], r'["$`\\]', "metin kabuk betiğinde çift tırnak içine yazılır")
+            self.assertIn("<b>Always allow</b>", m["bitis"], "Claude Desktop'un menüsü çevrilmez")
+            self.assertIn("Cmd+Q", m["bitis"])
         with tempfile.TemporaryDirectory() as t:
             yol = Path(t) / "Distribution.xml"
             moduller = list(ortak.MODULLER)
@@ -1974,7 +2277,7 @@ class MacKurulumTesti(unittest.TestCase):
                              ["cekirdek", *moduller, "arayuz-yeni", "son"])
             secim = {c.get("id"): c for c in kok.findall("choice")}
             for m in moduller:
-                for dil in ("tr", "en"):
+                for dil in ("tr", "en", "az"):
                     self.assertIn(secim[m].get("title"), ileti[dil])
                     self.assertIn(secim[m].get("description"), ileti[dil])
                 self.assertIn(f"onceki('{m}')", secim[m].get("start_selected"), "önceki seçim işaretli gelir")
@@ -1986,6 +2289,8 @@ class MacKurulumTesti(unittest.TestCase):
             self.assertEqual((secim["arayuz-yeni"].get("title"), secim["arayuz-yeni"].get("start_selected")),
                              ("ArayuzYeni", "!onceki('arayuz-klasik')"))
             self.assertIn("Claude Desktop klasik", ileti["tr"]["ArayuzYeniAciklama"], "işareti kaldırmanın anlamı")
+            self.assertIn("Apple Silicon", ileti["az"]["ModulMaskAciklama"])
+            self.assertIn("Claude Desktop klassik", ileti["az"]["ArayuzYeniAciklama"])
             self.assertTrue(all(p.get("auth") == "none" for p in kok.findall("pkg-ref") if p.text))
             strings = Path(t) / "Localizable.strings"
             derle_macos.strings_yaz(strings, {"A": 'tırnak " ve\nsatır'})
@@ -1997,6 +2302,12 @@ class MacKurulumTesti(unittest.TestCase):
                         "arayüz işareti modül listesine girmez")
         self.assertIn("{{PAKET_YOK_TR}}", son)
         self.assertIn("{{PAKET_YOK_EN}}", son)
+        self.assertIn("{{PAKET_YOK_AZ}}", son)
+        # Kurulumun dili Mac'in ilk dilidir; kur.py'nin tanıdığı dillerden biri değilse İngilizce.
+        self.assertIn('case "$DIL" in tr|az) ;; *) DIL=en ;; esac', son)
+        derleyici = (BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8")
+        self.assertIn('son.replace("{{PAKET_YOK_%s}}" % dil.upper(), METIN[dil]["paket_yok"])', derleyici)
+        self.assertIn('d = kaynak / f"{dil}.lproj"', derleyici, "tr.lproj, en.lproj, az.lproj")
         # Windows'taki ClaudeKapat gibi: Claude Desktop yerel sunucuları yalnız açılışta okur; kayıt (kur) ve masa
         # mesajı (kisayol baslat) ondan sonra gelir. Yalnız bu kullanıcının Claude Desktop'u, Claude Code ("claude") değil.
         kapat = son.index('/usr/bin/pkill -TERM -x -U "$KULLANICI" Claude')
@@ -2015,6 +2326,10 @@ class MacKurulumTesti(unittest.TestCase):
         self.assertIn('Örnek \\"Büro\\"', metin, "AppleScript dizgesinde tırnak kaçışlı")
         self.assertIn("Kaldır", metin)
         self.assertIn("Uninstall", mac.kaldirma_betigi(PurePosixPath("/k"), "ArthurLegal", "en"))
+        az = mac.kaldirma_betigi(PurePosixPath("/k"), "ArthurLegal", "az")
+        self.assertIn('buttons {"Ləğv et", "Sil"} default button "Ləğv et"', az, "varsayılan düğme vazgeçmedir")
+        self.assertIn("[ \"$CEVAP\" = Sil ] || exit 0\n", az)
+        self.assertIn("ArthurLegal silindi.", az)
         if MACOS:
             self.assertEqual(subprocess.run(["sh", "-n"], input=metin, text=True).returncode, 0)
 

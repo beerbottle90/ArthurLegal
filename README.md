@@ -8,16 +8,16 @@
   <b>Windows 10 / 11</b> (64 bit) · <b>macOS 11+</b> (Apple Silicon · Intel) · yönetici şifresi istemez · no admin rights<br>
   <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm%20%C2%B7%20latest&color=14233c" alt="Güncel sürüm · latest version"></a>
 </p>
-<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>)</p>
+<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>) · <a href="README.az.md">Azərbaycanca quraşdırma təlimatı</a></p>
 
 <h3 align="center" id="rehber">Kullanıcı Rehberi · User guide</h3>
 <p align="center">
   <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><img src="docs/rehber/kapak.png" width="300" alt="ArthurLegal Kullanıcı Rehberi, kapak sayfası · ArthurLegal user guide, cover page"></a>
 </p>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 10 sayfa, Türkçe)</b></a><br>
+  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf"><b>Kullanıcı Rehberi (PDF, 10 sayfa)</b></a><br>
   ArthurLegal nedir, kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
-  <a href="docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf">User guide (PDF, 10 pages, in Turkish)</a>
+  <a href="docs/rehber/ArthurLegal-User-Guide.pdf">User guide (PDF, English)</a> · <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf">İstifadəçi bələdçisi (PDF, Azərbaycan dili)</a>
 </p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
@@ -55,7 +55,8 @@ korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Modülleri seçin.** Kurulum önce dili sorar: **Türkçe**'yi seçip **Tamam**'a (OK) tıklayın.
+**3. Modülleri seçin.** Kurulum önce dili sorar (Türkçe, İngilizce ya da Azerbaycanca): **Türkçe**'yi seçip
+**Tamam**'a (OK) tıklayın.
 **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye tıklayın. **Modülleri seçin** ekranında kurmak
 istediklerinizi işaretleyin; her birinin altında ne işe yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli
 gelmez. En az bir paket gerekir:
@@ -96,6 +97,15 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 > **Kurulumdan sonra Enter'a basın.** Claude Desktop açıldığında yazma kutusunda *ArthurLegal Masası'nı aç*
 > yazılı gelir; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez. Masaüstündeki
 > **ArthurLegal** simgesiyle her açılışta da Enter'a basın.
+
+<a id="model"></a>
+
+> [!TIP]
+> **Model ve effort.** Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir. Claude'un yazma
+> kutusundaki model adına tıklayıp modeli ve effort'u bir kez seçin; Claude hatırlar. ArthurLegal'in ölçümünde
+> (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında daha çok ağır hata yaptı; hiçbir
+> model uydurma künye yazmadı. Kotanız daralırsa madde metni, künye teyidi ve hesap işlerini Sonnet 5.5 ile
+> yapabilirsiniz. ArthurLegal her modelle çalışır; masanın **Model ve effort** ekranı ölçüm sonuçlarını gösterir.
 
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
 **ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **ArthurMask**. Windows'ta
@@ -244,7 +254,8 @@ appears. Do not press <kbd>Enter</kbd>: Enter selects **Don't run** and setup do
   <img src="docs/kurulum/smartscreen-2-run-anyway-en.svg" width="400" alt="Example drawing: the Run anyway button that appears after More info (2)">
 </p>
 
-**3. Choose modules.** Setup first asks for a language: choose **English** and click **OK**. Select **I accept the
+**3. Choose modules.** Setup first asks for a language (English, Turkish or Azerbaijani): choose **English** and
+click **OK**. Select **I accept the
 agreement** and click **Next**. On the **Choose modules** screen, tick what you want to install; each module has a
 short description under it, and nothing is ticked on a first installation. At least one package is needed:
 
@@ -284,6 +295,16 @@ background. On the last page click **Finish**: with the new interface Claude Des
 > **Press Enter after setup.** When Claude Desktop opens, *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) is
 > already typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
 > Press Enter every time you open it with the **ArthurLegal** desktop icon, too.
+
+<a id="model-en"></a>
+
+> [!TIP]
+> **Model and effort.** We recommend at least Opus 5.5 with Medium / High effort; this is not binding. Click the
+> model name in Claude's message box and choose the model and effort once; Claude remembers. In ArthurLegal's
+> measurement (23 hard questions) the smaller models made more critical errors on deadlines, procedure and
+> recently amended law; no model wrote a fabricated citation. If your usage runs low, article text, citation
+> checks and fee calculations can be done with Sonnet 5.5. ArthurLegal works with every model; the desk's
+> **Model ve effort** screen shows the measurement results.
 
 The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
@@ -665,6 +686,39 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.2.0 — Three languages (Turkish, Azerbaijani, English) and a model recommendation (2026-11-12)
+
+- **Trilingual desk.** The ArthurLegal desk opens in Turkish, Azerbaijani or English; switch with the flags at the top
+  right. The choice stays on this computer and the desk opens in it next time. Legislation, decisions and Claude's
+  answer are not translated; when the desk is not in Turkish, Claude answers in the desk's language.
+- **Trilingual setup.** The setup wizard offers Azərbaycan dili too (Windows and Mac). The start page, the user guide
+  PDF ([English](docs/rehber/ArthurLegal-User-Guide.pdf), [Azərbaycan dili](docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf))
+  and the installation guide ([README.az.md](README.az.md)) are in all three languages.
+- **Model and effort.** We recommend at least Opus 5.5 with Medium / High effort; this is not binding. In ArthurLegal's
+  own measurement (23 hard questions) the smaller models made more critical errors on deadlines, procedure and recently
+  amended law; no model wrote a fabricated citation. The desk shows which model the chat runs on (bottom left) and has a
+  "Model ve effort" screen; the desktop icon's message, the start page and this README carry the same sentence.
+  ArthurLegal works with every model.
+- How it arrives: the updater installs 3.2.0 on Windows and on a Mac. Quit Claude Desktop fully once and reopen it to
+  load the new desk. The packages (Law Firm and Corporate 1.12.6, Courthouse 1.2.5, Academician 1.1.6), ArthurMask
+  1.2.0, ArthurTapu and the UYAP bridge are unchanged; the system prompt did not change.
+
+**Türkçe:** ArthurLegal Masası Türkçe, Azerbaycanca ve İngilizce açılır; sağ üstteki bayraklardan değişir, seçim bu
+bilgisayarda kalır. Mevzuat, karar metni ve Claude'un cevabı çevrilmez; masa Türkçe değilse Claude cevabı o dilde
+yazar. Kurulum sihirbazında Azərbaycan dili de var (Windows ve Mac); başlangıç sayfası, kullanıcı rehberi PDF'i ve
+kurulum anlatımı üç dilde. Model ve effort: Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı
+değildir. ArthurLegal'in kendi ölçümünde (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında
+daha çok ağır hata yaptı; hiçbir model uydurma künye yazmadı. Masa sohbetin hangi modelle çalıştığını sol altta
+gösterir; "Model ve effort" ekranı iş türüne göre seçimi ve nasıl ayarlanacağını anlatır. Windows'ta ve Mac'te
+güncelleyici 3.2.0'ı kendisi kurar; yeni masa için Claude Desktop'u bir kez tamamen kapatıp açın. Paketler, ArthurMask
+1.2.0, ArthurTapu ve UYAP köprüsü aynı; sistem talimatı değişmedi.
+
+**Azərbaycan dili:** ArthurLegal Masası türk, Azərbaycan və ingilis dillərində açılır; sağ yuxarıdakı bayraqlarla
+dəyişir, seçim bu kompüterdə qalır. Qanunvericilik, qərarlar və Claude-un cavabı tərcümə olunmur. Quraşdırma
+sehrbazında Azərbaycan dili də var (Windows və Mac); başlanğıc səhifəsi, istifadəçi bələdçisi (PDF) və quraşdırma
+təlimatı üç dildədir. Model və effort: Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil.
+Yeniləyici 3.2.0-ı Windows və Mac-da özü quraşdırır; yeni masa üçün Claude Desktop-u bir dəfə tam bağlayıb yenidən açın.
 
 ## Setup 3.1.0 — Weekly audit fixes in every package; interest and severance cards on the desk (2026-11-10)
 

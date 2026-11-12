@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.1.0
+# ArthurLegal Setup v3.2.0
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
@@ -55,9 +55,9 @@ Claude Desktop kurulu değilse Windows'ta `winget` ile kullanıcı kapsamında k
    dosyasını indirin (bağlantı her zaman en son sürümü verir) ve çift tıklayın. Edge ya da Windows uyarı
    verirse resimli anlatım [ana sayfanın indirme bölümünde](https://github.com/beerbottle90/ArthurLegal#indir);
    kısaca Edge'de **⋯ → Sakla**, sonra mavi **Sil** düğmesinin yanındaki ok **→ Yine de sakla**; mavi
-   "Windows kişisel bilgisayarınızı korudu" penceresinde **Ek bilgi → Yine de çalıştır**. Kurulum İngilizce ve
-   Türkçedir: açılışta dil sorulur, Windows'un diline uyan dil seçili gelir. Kısayol adları ve başlangıç rehberi
-   seçilen dilde yazılır. Lisanstan sonra modülleri seçin (yukarıda).
+   "Windows kişisel bilgisayarınızı korudu" penceresinde **Ek bilgi → Yine de çalıştır**. Kurulum İngilizce,
+   Türkçe ve Azerbaycancadır: açılışta dil sorulur, Windows'un diline uyan dil seçili gelir. Kısayol adları ve
+   başlangıç rehberi seçilen dilde yazılır. Lisanstan sonra modülleri seçin (yukarıda).
 2. Claude Desktop'ta **yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın.** Proje ya da yapıştırma
    gerekmez: `arthurlegal_talimat` aracının açıklaması ve sunucunun `instructions` alanı modele "hukukla
    ilgili her soruda önce beni çağır" der; profil verilmezse kurulumdaki varsayılan kullanılır.
@@ -155,7 +155,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 134 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v3.1.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python yayin/yayinla.py v3.2.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta
@@ -177,7 +177,10 @@ aynı sürümün ve aynı commit'lerin (ArthurLegal, Tapu) derlemesiyse yükler.
 
 Derleme her deponun **commitlenmiş HEAD**'inden yapılır; yarım kalan iş kuruluma girmez
 (`--calisma-agaci` ile tersi). `kurulum/ArthurLegal.iss` ve lisans metni **UTF-8 BOM** ile
-kaydedilir, yoksa Inno Setup Türkçe karakterleri bozar (derle.py denetler).
+kaydedilir, yoksa Inno Setup Türkçe karakterleri bozar (derle.py denetler). Sihirbazın Azerbaycanca
+iletileri Inno Setup'la gelmez: `kurulum/Azerbaijani.isl` dosyasındadır (`Default.isl`'in çevirisi, o da
+BOM'lu). Betiğe yeni bir ileti eklerken `en.`, `tr.` ve `az.` satırlarını birlikte yazın; Inno Setup'ın yeni
+bir sürümü `Default.isl`'e ileti eklerse `tests/test_istemci.py` eksik çeviriyi gösterir.
 
 **Kendi bürona özel kurulum.** `firma/<kod>/firma.json` ve `firma/<kod>/knowledge/firm-profile.md`
 oluşturup `python yayin/derle.py --firma <kod>` derlerseniz büro profiliniz kuruluma gömülür ve
@@ -214,8 +217,8 @@ hepsini birlikte gösterir.
 ---
 
 **English.** One-click installer for the ArthurLegal legal-AI packages, for Windows (`ArthurLegal-Kurulum.exe`)
-and macOS (`ArthurLegal-Kurulum.pkg`, Apple Silicon and Intel), in English and Turkish (on Windows the language is
-asked at start, on a Mac it follows the system; shortcut names and the start guide follow it). It installs a
+and macOS (`ArthurLegal-Kurulum.pkg`, Apple Silicon and Intel), in English, Turkish and Azerbaijani (on Windows the
+language is asked at start, on a Mac it follows the system; shortcut names and the start guide follow it). It installs a
 private Python 3.12, registers local MCP servers with Claude Desktop (package knowledge + a bridge to
 the public ArthurLegal research endpoint, plus the Turkish land-registry tools), optionally installs
 the ArthurMask local privacy gate, and keeps itself up to date from signed GitHub releases

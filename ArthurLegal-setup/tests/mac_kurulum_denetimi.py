@@ -194,8 +194,10 @@ def kurulum(secim: list, surum: str) -> None:
             f"ilk güncelleme denetimi: {durum.get('son_sonuc')}", yalniz_uyari=True)
 
     print("\n6. Başlangıç sayfası ve Courthouse simgesi")
-    denetle((KOK / "rehber" / "baslangic.html").exists() and (KOK / "rehber" / "baslangic-en.html").exists(),
-            "başlangıç rehberi (Türkçe ve İngilizce)")
+    denetle(all((KOK / "rehber" / ad).exists() for ad in ("baslangic.html", "baslangic-en.html", "baslangic-az.html")),
+            "başlangıç rehberi (Türkçe, İngilizce ve Azerbaycanca)")
+    denetle(all((KOK / ad).exists() for ad in ("LISANS.txt", "LICENSE.txt", "LISENZIYA.txt")),
+            "lisans dosyaları (üç dilin önsözüyle)")
     if "adliye" in secim:
         betik = UYG / "ArthurLegal Courthouse.app" / "Contents" / "MacOS" / "arthurlegal"
         r = calistir([betik], env={**os.environ, "BROWSER": "/usr/bin/true"})  # tarayıcı açılmasın

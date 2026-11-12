@@ -1,0 +1,34 @@
+ARTHURLEGAL QURAŞDIRMA PAKETİ — LİSENZİYA MÜQAVİLƏSİ
+
+Bu quraşdırma kompüterinizə aşağıdakı komponentləri quraşdırır:
+
+  • ArthurLegal Hüquq Bürosu və Korporativ Köməkçi paketləri ...... ArthurLegal Lisenziyası (1)
+  • ArthurLegal yerli serveri və yeniləyicisi ..................... ArthurLegal Lisenziyası (1)
+  • ArthurMask yerli məxfilik qapısı (ayrıca yüklənir) ............ ArthurMask Lisenziyası (2)
+  • ArthurLegal Tapu (tkgm-mcp) ................................... MIT Lisenziyası (3)
+  • Üçüncü tərəf məzmunu .......................................... Apache 2.0 bildirişi (4)
+  • Python 3.12 icra mühiti ....................................... PSF Lisenziyası (runtime\LICENSE.txt)
+
+"Müqaviləni qəbul edirəm" seçimini işarələməklə aşağıdakı lisenziyaların hamısını qəbul
+etmiş olursunuz. Hüquqi qüvvəyə malik olan ingiliscə lisenziya mətnləridir; Azərbaycan
+dilindəki bu xülasə yalnız məlumat məqsədi daşıyır.
+
+Quraşdırmadan əvvəl bilməli olduqlarınız:
+
+  • ArthurLegal hüquqi araşdırma və qaralama hazırlama alətidir; hüquqi məsləhət deyil. Hər
+    nəticəni bir vəkil yoxlamalıdır.
+  • ArthurMask psevdonimləşdirmə aparır, anonimləşdirmir. KVKK, Avukatlık Kanunu (Türkiyənin
+    Vəkillik Qanunu) m. 36 üzrə sirr saxlama öhdəliyi və məxfilik müqavilələrindən irəli
+    gələn məsuliyyət istifadəçinin üzərindədir.
+  • Quraşdırma Claude Desktop konfiqurasiyasına öz yerli serverlərini əlavə edir
+    (arthurlegal-yerel, arthur-tapu; quraşdırılıbsa arthur-mask; UYAP körpüsü bu kompüterdə
+    varsa arthur-uyap) və dəyişiklik etməzdən əvvəl konfiqurasiyanın ehtiyat nüsxəsini
+    çıxarır.
+  • Yeniləmələr GitHub-dakı ArthurLegal buraxılışlarından arxa planda quraşdırılır. Hər
+    yeniləmə ArthurLegal buraxılış açarı ilə imzalanır; imzası təsdiqlənməyən fayl
+    quraşdırılmır.
+  • Araşdırma alətləri Claude-un yazdığı axtarış sorğularını ArthurLegal araşdırma serverinə
+    (arthurlegal-mcp.fly.dev) ötürür. Bu sorğulara müvəkkilin adı və ya məxfi məlumat
+    yazılmamalıdır.
+  • UYAP körpüsü ayrıca yayılır. Quraşdırılıbsa, yalnız oxuyur; UYAP-a heç nə göndərmir və
+    məlumatları maskalamadan modelə vermir.
