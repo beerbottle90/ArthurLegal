@@ -689,6 +689,27 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.2.1 — The model menu from the desk (2026-11-12)
+
+- **Model menu.** While the desk is full screen, Claude Desktop shows only a message box at the bottom; the model and
+  effort menu is not there. The desk's "Model ve effort" screen and the Haiku notice now have a **Show the model
+  menu** button: the desk shrinks into the chat, you choose the model and effort in the chat's own message box, then
+  press "Open the desk full screen". The steps, the start page and this README say so in all three languages.
+- How it arrives: the updater installs 3.2.1 on Windows and on a Mac; quit Claude Desktop fully once and reopen it.
+  Nothing else changed.
+
+**Türkçe:** Masa tam ekrandayken Claude Desktop altta yalnız mesaj kutusunu gösterir; model ve effort menüsü orada
+yoktur. Masanın "Model ve effort" ekranında ve Haiku uyarısında artık **Model menüsünü göster** düğmesi var: masa
+sohbetin içine küçülür, modeli ve effort'u sohbetin kendi yazma kutusundan seçersiniz, sonra "Masayı tam ekran aç"a
+basarsınız. Adımlar, başlangıç sayfası ve README bunu üç dilde söyler. Güncelleyici 3.2.1'i kendisi kurar; Claude
+Desktop'u bir kez tamamen kapatıp açın. Başka değişiklik yok.
+
+**Azərbaycan dili:** Masa tam ekranda olarkən Claude Desktop aşağıda yalnız mesaj qutusunu göstərir; model və effort
+menyusu orada yoxdur. Masanın "Model və effort" ekranında və Haiku xəbərdarlığında indi **Model menyusunu göstər**
+düyməsi var: masa söhbətin içinə kiçilir, modeli və effort-u söhbətin öz mesaj qutusundan seçirsiniz, sonra "Masanı
+tam ekranda aç" düyməsini basırsınız. Yeniləyici 3.2.1-i özü quraşdırır; Claude Desktop-u bir dəfə tam bağlayıb
+yenidən açın.
+
 ## Setup 3.2.0 — Three languages (Turkish, Azerbaijani, English) and a model recommendation (2026-11-12)
 
 - **Trilingual desk.** The ArthurLegal desk opens in Turkish, Azerbaijani or English; switch with the flags at the top
