@@ -43,6 +43,8 @@ const AL = (() => {
             ["path", { d: "M5.5 5.5h5M5.5 8h3" }]],
     posta: [["rect", { x: 2, y: 3.5, width: 12, height: 9, rx: 1.5 }], ["path", { d: "M2.5 4.5 8 8.5l5.5-4" }]],
     takvim: [["rect", { x: 2.5, y: 3.5, width: 11, height: 10, rx: 1.5 }], ["path", { d: "M2.5 6.5h11M5.5 2v3M10.5 2v3" }]],
+    ayar: [["path", { d: "M2.5 4.5h4M9.5 4.5h4M2.5 11.5h7M12.5 11.5h1" }], ["circle", { cx: 8, cy: 4.5, r: 1.5 }],
+           ["circle", { cx: 11, cy: 11.5, r: 1.5 }]],
     hesap: [["rect", { x: 3, y: 1.5, width: 10, height: 13, rx: 2 }], ["path", { d: "M5.5 4.5h5M5.5 8h.1M8 8h.1M10.5 8h.1M5.5 11h.1M8 11h.1M10.5 11h.1" }]],
   };
 

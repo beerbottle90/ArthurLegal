@@ -1,0 +1,70 @@
+{
+  "tarih": "2026-11-12",
+  "onerilen": {"aile": "opus", "model": "Opus 5.5", "efor": "medium"},
+  "asgari": {"aile": "sonnet", "model": "Sonnet 5.5", "efor": "medium"},
+  "aileler": [
+    {"aile": "haiku", "ad": "Haiku 5.5", "duzey": "dusuk",
+     "uyari": "ArthurLegal'in vaka ölçümünde bu model 23 zor sorunun 5'inde ağır hata yaptı (yanlış süre, yanlış başvuru yolu, yürürlükten kalkmış kural)"},
+    {"aile": "sonnet", "ad": "Sonnet 5.5", "duzey": "yeterli"},
+    {"aile": "opus", "ad": "Opus 5.5", "duzey": "onerilen"},
+    {"aile": "fable", "ad": "Fable 5.2", "duzey": "onerilen", "takma": ["mythos"]}
+  ],
+  "eforlar": [
+    {"id": "low", "ad": "Low"},
+    {"id": "medium", "ad": "Medium"},
+    {"id": "high", "ad": "High"},
+    {"id": "xhigh", "ad": "Extra high"}
+  ],
+  "senaryolar": [
+    {"id": "hizli", "ad": "Hızlı bakış", "ornek": "Bir maddenin metni, künye teyidi, harç ve ücret hesabı",
+     "aile": "sonnet", "efor": "medium"},
+    {"id": "arastirma", "ad": "Araştırma ve görüş", "ornek": "Vaka çözümü, hukuki görüş, içtihat taraması, sözleşme incelemesi",
+     "aile": "opus", "efor": "medium"},
+    {"id": "zor", "ad": "Dilekçe ve zor dosya", "ornek": "Süre ve usul tuzakları, yeni değişen mevzuat, çok kaynaklı karmaşık soru",
+     "aile": "opus", "efor": "high"}
+  ],
+  "planlar": [
+    {"ad": "Pro",
+     "not": "Opus 5.5 kullanılabilir ama aynı soruda Sonnet 5.5'in yaklaşık iki katı kota harcar. Madde, künye ve hesap işlerinde Sonnet 5.5; süre, usul ve görüş işlerinde Opus 5.5."},
+    {"ad": "Max",
+     "not": "Opus 5.5 ile gün boyu rahat çalışılır; ArthurLegal için önerilen paket. Fable 5.2 en zor dosyada seçilebilir, kotayı Opus'un iki katından hızlı tüketir."}
+  ],
+  "olcum": {
+    "ozet": "23 zor vaka sorusunda (ArthurLegal bağlı, effort Medium) 100 üzerinden: Haiku 5.5 70, Sonnet 5.5 78, Opus 5.5 92, Fable 5.2 96. Ağır hata sayısı sırasıyla 5, 3, 1, 0. Aynı sorularda ArthurLegal'siz Sonnet 33 ve 13 ağır hata. Madde ve künye testinde (39 soru, 12 koşu) hiçbir model ve effort uydurma künye yazmadı. Tek koşu; yanılma payı vardır.",
+    "hucreler": [
+      {"aile": "haiku", "efor": "low", "sonuc": "dusuk",
+       "not": "Sohbetin ana modeli olarak önerilmez. Madde getirme ve künye teyidi gibi mekanik işlerde sorunsuz.",
+       "olcum": "madde 19/19, bozuk künye 10/10 yakalandı, 5 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "haiku", "efor": "medium", "sonuc": "dusuk",
+       "not": "Sohbetin ana modeli olarak önerilmez: zor sorularda yanlış süre, yanlış başvuru yolu ve yürürlükten kalkmış kural hataları yaptı. Madde getirme ve künye teyidinde sorunsuz.",
+       "olcum": "vaka 70/100, 23 soruda 5 ağır hata; madde 19/19, bozuk künye 10/10, 6 gereksiz alarm"},
+      {"aile": "haiku", "efor": "high", "sonuc": "dusuk",
+       "not": "Sohbetin ana modeli olarak önerilmez. Madde getirme ve künye teyidi gibi mekanik işlerde sorunsuz.",
+       "olcum": "madde 19/19, bozuk künye 10/10, 2 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "haiku", "efor": "xhigh", "sonuc": "dusuk",
+       "not": "Sohbetin ana modeli olarak önerilmez. Madde getirme ve künye teyidi gibi mekanik işlerde sorunsuz.",
+       "olcum": "madde 19/19, bozuk künye 10/10, iki koşuda 1 ve 5 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "sonnet", "efor": "low", "sonuc": "dusuk",
+       "not": "Low effort hukuki iş için önerilmez; madde ve künye teyidinde sonuç iyi, ama muhakeme gerektiren işte ölçülmedi.",
+       "olcum": "madde 19/19, bozuk künye 10/10, 2 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "sonnet", "efor": "medium", "sonuc": "yeterli",
+       "not": "Madde, künye ve hesap işlerinde yeterli ve kotayı az harcar. Süre, usul ve yeni değişen mevzuat içeren soruda Opus 5.5'e geçin: zor sorularda Opus'tan belirgin geride kaldı.",
+       "olcum": "vaka 78/100, 23 soruda 3 ağır hata; madde 19/19, bozuk künye 10/10, 2 gereksiz alarm"},
+      {"aile": "sonnet", "efor": "high", "sonuc": "yeterli",
+       "not": "Künye teyidinde en temiz sonuç bu ayarda. Zor vaka sorularında bu ayar ölçülmedi; Opus 5.5'in yerini tuttuğu söylenemez.",
+       "olcum": "madde 19/19, bozuk künye 10/10, iki koşuda 0 ve 1 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "opus", "efor": "low", "sonuc": "dusuk",
+       "not": "Low effort hukuki iş için önerilmez: künye teyidinde gereksiz alarm arttı, muhakeme gerektiren işte ölçülmedi.",
+       "olcum": "madde 19/19, bozuk künye 10/10, 5 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "opus", "efor": "medium", "sonuc": "onerilen",
+       "not": "ArthurLegal'in ölçülen en dengeli ayarı: zor sorularda tek ağır hata (soruda verilen tarihi atlamak), uydurma atıf yok.",
+       "olcum": "vaka 92/100, 23 soruda 1 ağır hata; künye testi bu ayarda koşulmadı"},
+      {"aile": "opus", "efor": "high", "sonuc": "onerilen",
+       "not": "Dilekçe ve zor dosya için. Künye teyidinde gereksiz alarm Low'a göre azaldı; vaka testi Medium'da yapıldı, bu ayar ondan düşük değildir ama ayrıca ölçülmedi.",
+       "olcum": "madde 19/19, bozuk künye 10/10, 2 gereksiz alarm; vaka testi bu ayarda koşulmadı"},
+      {"aile": "fable", "efor": "medium", "sonuc": "onerilen",
+       "not": "Ölçümün en yüksek puanı, ağır hata yok. Opus 5.5'ten farkı yanılma payının içinde; soru başına Opus'un iki katından fazla kota harcar. En zor dosyada seçin.",
+       "olcum": "vaka 96/100, 23 soruda ağır hata yok; madde 19/19, bozuk künye 10/10, 4 gereksiz alarm"}
+    ]
+  }
+}

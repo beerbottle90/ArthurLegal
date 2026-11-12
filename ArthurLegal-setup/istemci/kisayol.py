@@ -118,9 +118,9 @@ def model_notu() -> str:
     except (OSError, ValueError, KeyError, TypeError, StopIteration):
         return ""
     return ortak.metin(
-        f"(Göndermeden önce: bu kutudaki model menüsünde {model} ve effort {efor} seçili olsun. "
+        f"(Göndermeden önce: bu kutudaki model menüsünde {model}, effort en az {efor} seçili olsun. "
         "Bir kez seçmeniz yeter; Claude hatırlar.)",
-        f"(Before sending: make sure {model} and effort {efor} are selected in the model menu of this box. "
+        f"(Before sending: make sure {model} with effort {efor} or higher is selected in the model menu of this box. "
         "Choosing once is enough; Claude remembers.)")
 
 

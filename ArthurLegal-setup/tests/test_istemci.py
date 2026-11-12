@@ -366,7 +366,15 @@ class KisayolTesti(unittest.TestCase):
             sahte_kok(t / "kok")
             acilan, adres = self.calistir(t, self.BASLAT)
             self.assertEqual(acilan, ["masa", "rehber", "masa", "rehber"], "başlangıç sayfası her tıklamada açılır")
-            self.assertEqual(adres, "claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7")
+            # İlk satır hep aynı mesaj; ikinci satır model ve effort hatırlatması (bağlantı model seçemez).
+            self.assertTrue(adres.startswith("claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7"))
+            import urllib.parse
+            mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
+            self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç")
+            oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
+            self.assertIn(oneri["onerilen"]["model"], mesaj)
+            self.assertIn("Claude hatırlar", mesaj)
+            self.assertLess(len(adres), 2000, "bağlantı kısa kalır")
 
     def test_ekran_kisayolu_ve_acilisi(self):
         with tempfile.TemporaryDirectory() as t:
@@ -1652,6 +1660,25 @@ class ArayuzTesti(unittest.TestCase):
                 html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
                 self.assertIn('<p data-arayuz="yeni">', html)
                 self.assertIn("d.arayuz", html)
+
+    def test_model_kurali_talimatta_ve_masa_modeli_tasir(self):
+        """Sunucu Claude'un modelini değiştiremez: kural talimata girer (klasik arayüzde de), masa Claude'un bildirdiği
+        modeli ölçüme dayalı öneriyle karşılaştırır ve ölçümde yetersiz kalan modelde Claude'a bir kez söyletir."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; b = s.Sunucu().isle('initialize', {}); "
+                   "print(json.dumps(['MODEL.' in b['instructions'], len(b['instructions'])]))")
+            var, uzunluk = self.calistir(t, kod)
+            self.assertTrue(var)
+            self.assertLess(uzunluk, 2048, "Claude Desktop uzun talimatın yalnız başını gösterebilir")
+            masa = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                    "d = u._masa_verisi({'model': 'Claude Haiku 5.5'}); o = u._masa_verisi({'model': 'Claude Opus 5.5'}); "
+                    "print(json.dumps([d['model']['duzey'], 'MODEL:' in d['not'], o['model']['duzey'], 'MODEL:' in o['not'], "
+                    "'model' in u._masa_verisi({})]))")
+            self.assertEqual(self.calistir(t, masa), ["dusuk", True, "onerilen", False, False])
+            self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
+            self.assertTrue(self.calistir(t, kod)[0], "klasik arayüzde de model kuralı talimatta")
 
 
 class MasaEnterHatirlatmasiTesti(unittest.TestCase):

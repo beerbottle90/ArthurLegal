@@ -13,12 +13,14 @@ yalnız standart kütüphaneyle çalışır.
 - ``baslangic_araci()``: ``al_masada_basla``; Claude soruyu alır almaz masaya yazar, masa çalışmayı başlatır.
 - ``teslim_araci()``: ``al_masaya_yaz``; Claude sohbet kutusuna yazılan sorunun cevabını masaya teslim eder.
   Cevabı ``teslim_cevabi(girdi, masa)`` kurar; masa cevabı araç girdisinden (yazıldıkça) okur, sunucu saklamaz.
+- ``model_onerisi()``, ``model_degerlendir(ad)``, ``model_kurali()``: ölçüme dayalı model ve effort önerisi
+  (``ortak/tasarim/model-onerisi.json``). Claude model adını ``al_masasi`` ve ``al_masada_basla`` girdisinde bildirir.
 - ``gecmis_araci()`` ve ``Gecmis(klasor)``: masa geçmişi (``al_gecmis``). Yalnız yerel AL sunucusu klasör
   verir; uzak uç geçmiş tutmaz, masa orada oturumluk listeyle çalışır.
 
 Görünümler ``ortak/gorunumler/*.html`` şablonlarıdır. Ortak tasarım ve kod tek geçişte gömülür:
-``/*AL:CSS*/`` ``/*AL:JS*/`` ``/*AL:KARTLAR*/`` ``/*AL:ATIF*/`` ``/*AL:ISTEK*/`` ``/*AL:MD*/`` ``<!--AL:ARMA-->``
-``<!--AL:DONNA-->``.
+``/*AL:CSS*/`` ``/*AL:JS*/`` ``/*AL:KARTLAR*/`` ``/*AL:ATIF*/`` ``/*AL:ISTEK*/`` ``/*AL:MD*/`` ``/*AL:MODEL*/``
+``<!--AL:ARMA-->`` ``<!--AL:DONNA-->``.
 Gömülen içerik yeniden taranmaz; bir dosyanın kendi yorumunda yer tutucu adı geçse de bozulmaz.
 """
 from __future__ import annotations
@@ -73,13 +75,15 @@ _PARCALAR = {
     "ATIF": ("tasarim", "atif.js"),
     "ISTEK": ("tasarim", "istek.js"),
     "MD": ("tasarim", "md.js"),
+    "MODEL": ("tasarim", "model-onerisi.json"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }
 _YER_TUTUCU = re.compile(r"/\*AL:([A-Z]+)\*/|<!--AL:([A-Z]+)-->")
 
 # Masanın ekranları; al_masasi(bolum=...) bunlardan biriyle açılır.
-EKRANLAR = ("sohbet", "mevzuat", "ictihat", "hesap", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp")
+EKRANLAR = ("sohbet", "mevzuat", "ictihat", "hesap", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp",
+            "model")
 
 
 def _oku(*yol: str) -> str:
@@ -157,7 +161,7 @@ UZAK_ARAC_NOTU = (" Masa bu sohbette arthurlegal-yerel sunucusundan açıldıysa
                   "aracı çağırın.")
 YONLENDIRME_NOTU = (
     "Masa bu bağlantıdan AÇILMADI: bu bilgisayarda ArthurLegal kurulu (arthurlegal-yerel bağlı). Şimdi, kullanıcıya "
-    "bir şey sormadan, arthurlegal-yerel sunucusunun al_masasi aracını aynı bolum ve baglayicilar ile çağırın; bu "
+    "bir şey sormadan, arthurlegal-yerel sunucusunun al_masasi aracını aynı bolum, baglayicilar ve model ile çağırın; bu "
     "sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için de arthurlegal-yerel sunucusunu kullanın. "
     "Sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada çalışır. arthurlegal-yerel'in "
     "al_masasi aracı araç listenizde YOKSA (sunucu bağlı olsa da araçları kapalı olabilir) beklemeyin ve kullanıcıya "
@@ -172,6 +176,72 @@ def yerel_bagli(baglayicilar: Any) -> bool:
     """Claude'un bildirdiği listede bilgisayardaki kurulum (arthurlegal-yerel) bağlı mı."""
     return any(o["durum"] == "bagli" and _YEREL_SUNUCU.search(o["ad"].lower())
                for o in baglayicilari_duzenle(baglayicilar))
+
+
+# --------------------------------------------------------------------------- model ve effort
+# Ne sunucu ne masa Claude'un modelini ya da effort'unu değiştirebilir: MCP'de ve MCP Apps'te böyle bir yol yoktur,
+# kısayolun açtığı bağlantı da yalnız metin taşır. Yapılabilen şudur: Claude kendi model adını al_masasi ve
+# al_masada_basla girdisinde bildirir; sunucu bunu ölçüme dayalı öneriyle (ortak/tasarim/model-onerisi.json)
+# karşılaştırır; masa sonucu gösterir, ölçümde yetersiz kalan modelde Claude kullanıcıya bir kez söyler. Effort'u model
+# de göremez: yalnız hatırlatılır. Claude son seçimi hatırladığı için kullanıcının bir kez seçmesi yeter.
+MODEL_DUZEYLERI = ("onerilen", "yeterli", "dusuk", "bilinmiyor")
+MODEL_GIRDISI = {"type": "string", "description": (
+    "Bu sohbette çalışan Claude modelinin adı, kendi bilginizde yazdığı gibi (ör. 'Claude Opus 5.5'). Masa "
+    "kullanıcıya ArthurLegal'in önerdiği modelle çalışıp çalışmadığını gösterir. Bilmiyorsanız boş bırakın, "
+    "tahmin etmeyin.")}
+_MODEL_ONERISI: Optional[Dict[str, Any]] = None
+
+
+def model_onerisi() -> Dict[str, Any]:
+    """Önerilen ve en az model/effort, aileler, kullanım senaryoları ve ölçüm özeti (masa aynı dosyayı gömer)."""
+    global _MODEL_ONERISI
+    if _MODEL_ONERISI is None:
+        _MODEL_ONERISI = json.loads(_oku("tasarim", "model-onerisi.json"))
+    return _MODEL_ONERISI
+
+
+def _efor_adi(efor: str) -> str:
+    return next((e["ad"] for e in model_onerisi()["eforlar"] if e["id"] == efor), efor)
+
+
+def model_degerlendir(ad: Any) -> Dict[str, str]:
+    """Claude'un bildirdiği ad -> {ad, aile, duzey}. Boş ya da tanınmayan ad "bilinmiyor"dur; ad tahmin edilmez."""
+    metin = _kisalt(ad if isinstance(ad, str) else "", 60)
+    katli = _katla(metin)
+    for a in model_onerisi()["aileler"]:
+        if any(k in katli for k in [a["aile"]] + list(a.get("takma") or [])):
+            return {"ad": metin, "aile": a["aile"], "duzey": a["duzey"]}
+    return {"ad": metin, "aile": "", "duzey": "bilinmiyor"}
+
+
+def _onerilen_metni() -> str:
+    o = model_onerisi()
+    return "Claude %s (ya da üstü), effort en az %s" % (o["onerilen"]["model"], _efor_adi(o["onerilen"]["efor"]))
+
+
+def model_notu(model: Dict[str, str]) -> str:
+    """al_masasi notuna eklenir: yalnız ölçümde yetersiz kalan modelde, Claude kullanıcıya bir kez söylesin diye."""
+    if model.get("duzey") != "dusuk":
+        return ""
+    aile = next((a for a in model_onerisi()["aileler"] if a["aile"] == model.get("aile")), {})
+    return (" MODEL: bu sohbet %s ile çalışıyor. %s. Kullanıcıya bu cevabınızda bir kez, tek cümleyle söyleyin: süre, "
+            "usul ve görüş gerektiren işte yazma kutusundaki model menüsünden %s seçmesi önerilir; Claude seçimi "
+            "hatırlar, bir kez seçmek yeter. İşi bu yüzden reddetmeyin ya da ertelemeyin; süreyi ve başvuru yolunu "
+            "yazmadan önce ilgili maddeyi resmî metinden okuyun."
+            % (model.get("ad") or "önerilenin altında bir model",
+               aile.get("uyari") or "ArthurLegal'in ölçümünde bu model sınıfı zor sorularda daha çok ağır hata yaptı",
+               _onerilen_metni()))
+
+
+def model_kurali() -> str:
+    """Sunucu talimatına eklenen kısa kural (masa açılmayan sohbetler ve klasik arayüz için)."""
+    o = model_onerisi()
+    dusuk = ", ".join(a["ad"].split()[0] for a in o["aileler"] if a["duzey"] == "dusuk")
+    return ("MODEL. ArthurLegal'in ölçümüne göre önerilen: %s; madde, künye ve hesap işinde Claude %s yeterli. %s "
+            "ile çalışıyorsanız ilk cevabınızda bir kez, tek cümleyle söyleyin (kullanıcı yazma kutusundaki model "
+            "menüsünden değiştirebilir; Claude seçimi hatırlar), sonra işe devam edin; işi bu yüzden reddetmeyin. "
+            "Effort'u göremezsiniz, sormayın."
+            % (_onerilen_metni(), o["asgari"]["model"], dusuk or "Daha düşük bir model"))
 
 
 def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
@@ -195,6 +265,19 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
 
 
 def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
+    tanim = _masa_govdesi(ortam, teslim)
+    if ortam != "dizin":   # Claude dizini profili başvurudaki tanımla aynı kalır: model alanı ve cümlesi yok
+        tanim["description"] = tanim["description"].replace(
+            _BAGLAYICI_CUMLESI, _BAGLAYICI_CUMLESI + " model'e kendi model adınızı yazın: masa bunu da yalnız sizden "
+                                                     "öğrenebilir.", 1)
+        tanim["inputSchema"]["properties"]["model"] = dict(MODEL_GIRDISI)
+    return tanim
+
+
+_BAGLAYICI_CUMLESI = "ekranlarında kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."
+
+
+def _masa_govdesi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
     return {
         "name": "al_masasi",
         "title": "ArthurLegal Masası",
@@ -268,7 +351,8 @@ TESLIM_KURALI = (
 
 
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
-                bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False) -> Dict[str, Any]:
+                bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False,
+                model: Any = None) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
@@ -277,6 +361,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
     yerele_devret: uzak uç, listede arthurlegal-yerel bağlıysa masayı açmaz; cevap "yonlendir" taşır ve not Claude'u
         bilgisayardaki masaya gönderir (çağıran, kullanıcı uzakta_kal demediyse True verir). Claude dizini profili
         vermez: orada araç başka sunucuya yönlendirmez.
+    model: Claude'un bildirdiği model adı (al_masasi girdisi). Verildiyse cevap "model" taşır ({ad, aile, duzey});
+        ölçümde yetersiz kalan modelde not Claude'a kullanıcıyı bir kez uyarmasını söyler. Verilmediyse alan yok.
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
@@ -295,6 +381,10 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
                        "masada daha önce baktığı bir şeyi sorarsa al_gecmis ile bakabilirsiniz." % GECMIS_GUN)
     if bolum in EKRANLAR:
         out["bolum"] = bolum
+    if model is not None:
+        out["model"] = model_degerlendir(model)
+        if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, Claude'a talimat yok
+            out["not"] += model_notu(out["model"])
     if ortam == "uzak" and yerel_bagli(baglayicilar):
         if yerele_devret:
             out["yonlendir"] = {"sunucu": YEREL_SUNUCU, "arac": "al_masasi"}
@@ -329,7 +419,8 @@ def _baslangic_tanimi() -> Dict[str, Any]:
             "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın."),
         "inputSchema": {
             "type": "object",
-            "properties": {"soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."}},
+            "properties": {"soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."},
+                           "model": dict(MODEL_GIRDISI)},
             "required": ["soru"],
         },
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True,
@@ -345,6 +436,8 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     out = dict(masa)
     out["bolum"] = "sohbet"
     out["basla"] = {"soru": _kisalt(soru, 200)}
+    if isinstance(girdi.get("model"), str):   # kullanıcı sohbet içinde model değiştirmiş olabilir: masa güncel kalır
+        out["model"] = model_degerlendir(girdi["model"])
     out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabı "
                   "al_masaya_yaz ile teslim edin ve sohbete yalnız 'Cevap masada.' yazın.")
     return out

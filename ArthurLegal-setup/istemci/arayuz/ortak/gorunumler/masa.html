@@ -355,6 +355,37 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 body.kart-modu { background: transparent; }
 body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli-sag) + 4px)
   calc(var(--guvenli-alt) + 12px) calc(var(--guvenli-sol) + 4px); }
+/* Model ve effort: sol altta gösterge, Sohbet'te tek satırlık hatırlatma, kendi ekranı, yetersiz modelde pencere */
+.model-gosterge { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 4px 10px;
+  border-radius: var(--k-alan); background: var(--dolgu); font-size: 12.5px; text-align: left; }
+.model-gosterge:hover { background: var(--dolgu-ust); }
+.model-gosterge .nokta { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--soluk); }
+.model-gosterge.onerilen .nokta, .model-gosterge.yeterli .nokta { background: var(--nane-metin); }
+.model-gosterge.dusuk .nokta { background: var(--kirmizi-metin); }
+.model-gosterge .yazi { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.model-serit { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px;
+  border-radius: var(--k-alan); background: var(--grup); font-size: 14px; line-height: 1.45; }
+.model-serit .yazi { flex: 1 1 320px; min-width: 0; }
+.model-serit.dusuk { background: var(--kirmizi-zemin); color: var(--kirmizi-metin); }
+.senaryolar { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.senaryo .rozet { align-self: flex-start; }
+.senaryo[aria-pressed="true"] { border-color: var(--birincil); background: var(--secili); }
+.model-secim { display: flex; flex-direction: column; gap: 8px; }
+.model-sonuc { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: var(--k-grup);
+  background: var(--grup); }
+.liste-ogesi.sarar { flex-wrap: wrap; }
+.liste-ogesi.sarar .metinler { flex: 1 1 220px; }
+.adim-listesi { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.ortu { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px;
+  background: rgb(10 20 48 / 0.42); }
+.pencere { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; padding: 22px 24px;
+  border-radius: var(--k-kart); background: var(--zemin); color: var(--metin); box-shadow: 0 12px 40px rgb(10 20 48 / 0.28); }
+.pencere h2 { font-size: 19px; }
+.pencere p { margin: 0; font-size: 14.5px; line-height: 1.5; }
+@media (max-width: 760px) {
+  .model-gosterge { width: auto; }
+  .model-gosterge .yazi { max-width: 110px; }
+}
 .serit .adim { font-size: 14px; }
 </style>
 </head>
@@ -403,6 +434,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const app = new App({ name: "ArthurLegal Masası", version: AL.SURUM });
   const ortam = { app, duyuru: $("duyuru") };
   const BAGLAYICILAR = "https://claude.ai/customize/connectors";
+  const MODEL = /*AL:MODEL*/;
 
   // Sunucunun al_masasi cevabı gelene kadar en temkinli varsayım: uzak uç, yerel modül yok.
   const DURUM = {
@@ -416,6 +448,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     yonlendir: null,     // uzak uç masayı bu bilgisayardaki kuruluma devrettiyse { sunucu, arac }
     uzaktaKal: false,    // kullanıcı devir ekranında "bu masayla devam et" dedi
     devirOlmadi: false,  // devir bu sohbette denendi, Claude yerel masayı açamadı: ikinci kez devredilmez
+    model: null,         // Claude'un bildirdiği model, sunucunun değerlendirmesiyle: { ad, aile, duzey }
   };
   const GECMIS = [];
 
@@ -442,6 +475,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       baslik: "Donna", alt: "İşlerinizi bağlı uygulamalarınızdan toplar, hatırlatır ve planlar." },
     { id: "mcp", ad: "MCP'ler", simge: "fis", bolum: "Bağlantılar",
       baslik: "MCP'ler", alt: "Bağlı sunucularınız ve durumları: ArthurLegal ve Claude bağlayıcılarınız (Gmail, Takvim, Slack …)." },
+    { id: "model", ad: "Model ve effort", simge: "ayar", bolum: "Bağlantılar",
+      baslik: "Model ve effort", alt: "ArthurLegal hangi Claude modeli ve effort ile en güvenilir sonucu verir, bu sohbet hangisiyle çalışıyor, nasıl değiştirilir." },
   ];
 
   // Modülün bu uçta kullanılabilirliği: hazir | claude (masa Claude'a bırakır) | masaustu | kurulu-degil
@@ -610,7 +645,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       b.onclick = () => AL.tema.sec(deger);
       seg.append(b);
     }
-    alt.append(seg, ogesi("div", "surum", `ArthurLegal ${DURUM.surum}`));
+    const mg = ogesi("button", "model-gosterge");
+    mg.type = "button";
+    mg.id = "model-gosterge";
+    mg.onclick = () => git("model");
+    alt.append(mg, seg, ogesi("div", "surum", `ArthurLegal ${DURUM.surum}`));
     panel.append(ust, nav, alt);
 
     const icerik = ogesi("main", "icerik");
@@ -625,6 +664,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     masa.append(panel, icerik);
     $("kok").replaceChildren(masa);
     temaDugmeleri();
+    modelGostergesi();
     panelYenile();
   }
 
@@ -660,7 +700,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     document.querySelector(".icerik-ust h1").textContent = e.baslik;
     document.querySelector(".icerik-ust .alt-yazi").textContent = e.alt;
     const gb = document.querySelector(".gecmis-bag");
-    if (gb) gb.hidden = ["gecmis", "uyap", "mcp", "hesap"].includes(id);
+    if (gb) gb.hidden = ["gecmis", "uyap", "mcp", "hesap", "model"].includes(id);
     if (id !== "gecmis") gecmisAcik = null;
     const ekran = $("ekran");
     ekran.replaceChildren();
@@ -801,6 +841,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   CIZIM.sohbet = (ekran) => {
     const yerelNot = yerelMasaNotu("sohbet");
     if (yerelNot) ekran.append(yerelNot);
+    const ms = modelSeridi();
+    if (ms) ekran.append(ms);
     const c = gosterilenCevap();
     if (c) {
       const kok = ogesi("div", "cevap-kok");
@@ -1206,7 +1248,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function durumuSakla() {
     try {
       localStorage.setItem(DURUM_KAYDI, JSON.stringify({ surum: DURUM.surum, ortam: DURUM.ortam,
-        yetenekler: [...DURUM.yetenekler], moduller: DURUM.moduller }));
+        yetenekler: [...DURUM.yetenekler], moduller: DURUM.moduller, model: DURUM.model }));
     } catch { /* yok */ }
   }
   function durumuYukle() {
@@ -1216,6 +1258,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       DURUM.ortam = d.ortam || DURUM.ortam;
       if (Array.isArray(d.yetenekler)) DURUM.yetenekler = new Set(d.yetenekler);
       DURUM.moduller = d.moduller || {};
+      if (d.model && typeof d.model === "object" && !DURUM.model) DURUM.model = d.model;
     } catch { /* yok */ }
   }
 
@@ -3054,6 +3097,259 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     ["sohbet", "Slack", /slack|teams/, "Ekipten gelen istekler"],
     ["onay", "Görev uygulaması", /notion|todoist|asana|trello|clickup|linear|tasks|görev/, "Todoist, Asana, Notion ya da kullandığınız uygulama"],
   ];
+  // ---------------------------------------------------------------- model ve effort
+  // Masa Claude'un modelini ya da effort'unu değiştiremez ve kendi başına göremez (MCP Apps'te böyle bir yol yok).
+  // Claude model adını al_masasi ve al_masada_basla girdisinde bildirir; sunucu ölçüme dayalı öneriyle karşılaştırıp
+  // { ad, aile, duzey } döndürür. Effort'u Claude da göremez: masa ne seçileceğini ve nasıl seçileceğini gösterir.
+  // Claude son seçimi hatırladığı için kullanıcının bir kez seçmesi yeter. Öneri ve ölçüm: tasarim/model-onerisi.json.
+  const MODEL_KAYDI = "al.masa.model";
+  const MODEL_KAPALI = "al.masa.model.kapali";   // bu sohbette kapatılan hatırlatma, gösterilmiş pencere
+  const MODEL_DUZEYI = { onerilen: ["Önerilen", "nane"], yeterli: ["Yeterli", "mavi"], dusuk: ["Yetersiz", "kirmizi"],
+    bilinmiyor: ["Doğrulanmadı", ""] };
+  const AYAR_HUKMU = { onerilen: ["Önerilen ayar", "nane"], yeterli: ["Yeterli", "mavi"], dusuk: ["Önerilmez", "kirmizi"] };
+  const AYAR_ACIKLAMASI = {
+    onerilen: "ArthurLegal'in önerdiği ayarın içinde.",
+    yeterli: "Madde, künye ve hesap işleri için yeterli. Süre, usul ve görüş işlerinde önerilen ayara geçin.",
+    dusuk: "ArthurLegal bu ayarı hukuki iş için önermez.",
+  };
+  const aileBilgisi = (aile) => MODEL.aileler.find((a) => a.aile === aile) || null;
+  const aileAdi = (aile) => (aileBilgisi(aile) || { ad: aile }).ad;
+  const eforAdi = (id) => (MODEL.eforlar.find((e) => e.id === id) || { ad: id }).ad;
+  const onerilenYazi = () => `${MODEL.onerilen.model} · effort ${eforAdi(MODEL.onerilen.efor)} ya da üstü`;
+  const aileUyarisi = (aile) => (aileBilgisi(aile) || {}).uyari ||
+    "ArthurLegal'in ölçümünde bu model sınıfı zor sorularda daha çok ağır hata yaptı";
+  const modelKisaAdi = (m) => dizgi(m && m.ad).replace(/^claude[\s-]*/i, "").trim() || aileAdi(m && m.aile);
+
+  function modelAl(m) {
+    const duzey = MODEL_DUZEYI[m.duzey] ? m.duzey : "bilinmiyor";
+    DURUM.model = { ad: dizgi(m.ad).slice(0, 60), aile: dizgi(m.aile), duzey, zaman: new Date().toISOString() };
+    try { localStorage.setItem(MODEL_KAYDI, JSON.stringify(DURUM.model)); } catch { /* yalnız bu pencere */ }
+    modelGostergesi();
+  }
+  try {
+    const k = JSON.parse(localStorage.getItem(MODEL_KAYDI) || "null");
+    if (k && MODEL_DUZEYI[k.duzey]) DURUM.model = k;
+  } catch { /* depolama kapalı */ }
+
+  function modelKapali(ne) {
+    try { return JSON.parse(localStorage.getItem(MODEL_KAPALI) || "{}")[ne] === true; } catch { return false; }
+  }
+  function modelKapat(ne) {
+    try {
+      const k = JSON.parse(localStorage.getItem(MODEL_KAPALI) || "{}");
+      k[ne] = true;
+      localStorage.setItem(MODEL_KAPALI, JSON.stringify(k));
+    } catch { /* depolama kapalı: hatırlatma bu pencerede yeniden görünür */ }
+  }
+
+  function modelGostergesi() {
+    const el = $("model-gosterge");
+    if (!el) return;
+    const m = DURUM.model;
+    const duzey = m ? m.duzey : "bilinmiyor";
+    const yazi = duzey === "bilinmiyor" ? "Model doğrulanmadı"
+      : `${modelKisaAdi(m)} · ${MODEL_DUZEYI[duzey][0].toLocaleLowerCase("tr")}`;
+    el.className = "model-gosterge " + duzey;
+    el.replaceChildren(ogesi("span", "nokta"), ogesi("span", "yazi", yazi));
+    el.setAttribute("aria-label", `Model ve effort. ${yazi}. Önerilen: ${onerilenYazi()}.`);
+    el.title = `Önerilen: ${onerilenYazi()}`;
+  }
+
+  function modelCumlesi(m) {
+    if (!m || m.duzey === "bilinmiyor") {
+      return `Önerilen ayar: ${onerilenYazi()}. Claude bu sohbetteki modelini masaya henüz bildirmedi.`;
+    }
+    const ad = modelKisaAdi(m);
+    if (m.duzey === "dusuk") {
+      return `Bu sohbet ${ad} ile çalışıyor. ${aileUyarisi(m.aile)}. Önerilen ayar: ${onerilenYazi()}.`;
+    }
+    if (m.duzey === "yeterli") {
+      return `Bu sohbet ${ad} ile çalışıyor: madde, künye ve hesap işleri için yeterli. Süre, usul ve görüş ` +
+        `işlerinde ${MODEL.onerilen.model} önerilir.`;
+    }
+    return `Bu sohbet ${ad} ile çalışıyor: önerilen model. Effort'u masa göremez; Claude'un model menüsünde ` +
+      `${eforAdi(MODEL.onerilen.efor)} ya da üstü seçili olsun.`;
+  }
+
+  // Sohbet ekranının başında tek satır. Yetersiz modelde kapatılamaz; ötekiler bu sohbette bir kez kapatılır.
+  function modelSeridi() {
+    const m = DURUM.model;
+    const duzey = m ? m.duzey : "bilinmiyor";
+    if (duzey !== "dusuk" && modelKapali("serit")) return null;
+    const s = ogesi("div", "model-serit " + duzey);
+    s.setAttribute("role", duzey === "dusuk" ? "alert" : "note");
+    const ey = ogesi("div", "eylemler");
+    const ac = dugme(duzey === "dusuk" ? "Nasıl değiştirilir" : "Model ve effort", { sinif: "kucuk", simge: "ayar" });
+    ac.onclick = () => git("model");
+    ey.append(ac);
+    if (duzey !== "dusuk") {
+      const kapat = dugme("Kapat", { sinif: "kucuk", simge: "carpi", baslik: "Hatırlatmayı bu sohbette kapat" });
+      kapat.onclick = () => { modelKapat("serit"); s.remove(); };
+      ey.append(kapat);
+    }
+    s.append(ogesi("span", "yazi", modelCumlesi(m)), ey);
+    return s;
+  }
+
+  // Ölçümde yetersiz kalan modelle açılan masada, sohbet başına bir kez.
+  function modelPenceresi() {
+    const m = DURUM.model;
+    if (!m || m.duzey !== "dusuk" || !masaKuruldu || modelKapali("pencere") || document.querySelector(".ortu")) return;
+    modelKapat("pencere");
+    const ortu = ogesi("div", "ortu");
+    const p = ogesi("div", "pencere");
+    p.setAttribute("role", "alertdialog");
+    p.setAttribute("aria-modal", "true");
+    p.setAttribute("aria-labelledby", "model-pencere-baslik");
+    const h = ogesi("h2", null, `Bu sohbet ${modelKisaAdi(m)} ile çalışıyor`);
+    h.id = "model-pencere-baslik";
+    const kapat = () => ortu.remove();
+    const nasil = dugme("Nasıl değiştirilir", { sinif: "birincil", simge: "ayar" });
+    nasil.onclick = () => { kapat(); git("model"); };
+    const devam = dugme("Bu sohbette böyle devam et");
+    devam.onclick = kapat;
+    const ey = ogesi("div", "eylemler sol");
+    ey.append(nasil, devam);
+    p.append(h,
+      ogesi("p", null, aileUyarisi(m.aile) + ". Madde getirme ve künye teyidi gibi mekanik işlerde sorun yok; " +
+        "süre, usul ve görüş gerektiren işte hata riski yüksek."),
+      ogesi("p", null, `Önerilen ayar: ${onerilenYazi()}. Claude'un yazma kutusundaki model menüsünden bir kez seçmeniz ` +
+        "yeter; Claude seçiminizi hatırlar."),
+      ey);
+    ortu.append(p);
+    ortu.addEventListener("keydown", (e) => { if (e.key === "Escape") kapat(); });
+    document.body.append(ortu);
+    nasil.focus();
+  }
+
+  function modelIstegi() {
+    return "ArthurLegal Masası: bu sohbette hangi Claude modeliyle çalıştığınızı masaya bildirin. al_masasi'yi " +
+      "bolum=model ile yeniden açın ve model alanına kendi model adınızı yazın.";
+  }
+
+  // Seçilen model + effort için hüküm: ölçülmüş hücre varsa onun sonucu, yoksa öneri ve en az ayara göre.
+  const MODEL_SECIM = { aile: MODEL.onerilen.aile, efor: MODEL.onerilen.efor, senaryo: "" };
+  function ayarHukmu(aile, efor) {
+    const hucre = ((MODEL.olcum && MODEL.olcum.hucreler) || []).find((h) => h.aile === aile && h.efor === efor) || null;
+    const a = MODEL.aileler.findIndex((x) => x.aile === aile);
+    const e = MODEL.eforlar.findIndex((x) => x.id === efor);
+    const esik = (o) => [MODEL.aileler.findIndex((x) => x.aile === o.aile), MODEL.eforlar.findIndex((x) => x.id === o.efor)];
+    const [oa, oe] = esik(MODEL.onerilen);
+    const [ma, me] = esik(MODEL.asgari);
+    let duzey = "dusuk";
+    if (hucre && AYAR_HUKMU[hucre.sonuc]) duzey = hucre.sonuc;
+    else if ((aileBilgisi(aile) || {}).duzey === "dusuk") duzey = "dusuk";
+    else if (a >= oa && e >= oe) duzey = "onerilen";
+    else if (a >= ma && e >= me) duzey = "yeterli";
+    return { duzey, hucre };
+  }
+
+  function ayarSonucu() {
+    const { aile, efor } = MODEL_SECIM;
+    const { duzey, hucre } = ayarHukmu(aile, efor);
+    const [etiket, renk] = AYAR_HUKMU[duzey];
+    const bas = ogesi("div", "son-is-ust");
+    bas.append(ogesi("b", null, `${aileAdi(aile)} · effort ${eforAdi(efor)}`), ogesi("span", "rozet nokta " + renk, etiket));
+    const out = [bas, ogesi("p", "aciklama", (hucre && hucre.not) || AYAR_ACIKLAMASI[duzey])];
+    out.push(ogesi("p", "zaman", hucre && hucre.olcum ? "Ölçüm: " + hucre.olcum
+      : "Bu ayar ayrıca ölçülmedi; değerlendirme en yakın ölçülen ayara dayanır."));
+    const ol = ogesi("ol", "adim-listesi");
+    for (const t of ["Claude'un yazma kutusundaki model adına tıklayın.", `Listeden ${aileAdi(aile)} seçin.`,
+      `Aynı menüde Effort: ${eforAdi(efor)} seçin.`,
+      "Bir kez seçmeniz yeter: Claude son seçiminizi hatırlar, yeni sohbetler bu ayarla açılır."]) {
+      ol.append(ogesi("li", null, t));
+    }
+    out.push(ol);
+    const m = DURUM.model;
+    if (m && m.aile) {
+      out.push(ogesi("p", "zaman", m.aile === aile
+        ? `Bu sohbet zaten ${modelKisaAdi(m)} ile çalışıyor; effort'u menüden kontrol edin.`
+        : `Bu sohbet şu an ${modelKisaAdi(m)} ile çalışıyor.`));
+    }
+    const dogrula = dugme("Seçtim, Claude doğrulasın", { simge: "onay" });
+    dogrula.onclick = () => claudeaSor(modelIstegi(), null);
+    const ey = ogesi("div", "eylemler sol");
+    ey.append(dogrula);
+    out.push(ey);
+    return out;
+  }
+
+  CIZIM.model = (ekran) => {
+    const m = DURUM.model;
+    const duzey = m ? m.duzey : "bilinmiyor";
+
+    const bu = ogesi("div", "kesit");
+    bu.append(ogesi("h3", null, "Bu sohbet"));
+    const liste = ogesi("div", "liste");
+    const sor = dugme(m ? "Claude'a yeniden sor" : "Claude'a sor", { sinif: "kucuk", simge: "yenile" });
+    sor.onclick = () => claudeaSor(modelIstegi(), null);
+    liste.append(
+      sunucuSatiri("ayar", duzey === "bilinmiyor" ? "Model doğrulanmadı" : modelKisaAdi(m), modelCumlesi(m), MODEL_DUZEYI[duzey], sor),
+      sunucuSatiri("saat", "Effort", "Effort'u masa da Claude da göremez; Claude'un model menüsünde seçili olanı siz " +
+        `kontrol edin. Önerilen: ${eforAdi(MODEL.onerilen.efor)} ya da üstü.`, ["Elle kontrol", ""]));
+    liste.querySelectorAll(".liste-ogesi").forEach((o) => o.classList.add("sarar"));   // uzun cümle: dar ekranda düğme alta iner
+    bu.append(liste);
+
+    const is = ogesi("div", "kesit");
+    is.append(ogesi("h3", null, "İşinize göre seçin"));
+    const kartlar = ogesi("div", "senaryolar");
+    const sec = ogesi("div", "kesit");
+    sec.append(ogesi("h3", null, "Model ve effort"));
+    const mSeg = ogesi("div", "segment sar");
+    mSeg.setAttribute("role", "group");
+    mSeg.setAttribute("aria-label", "Model");
+    const eSeg = ogesi("div", "segment sar");
+    eSeg.setAttribute("role", "group");
+    eSeg.setAttribute("aria-label", "Effort");
+    const sonuc = ogesi("div", "model-sonuc");
+    sonuc.setAttribute("aria-live", "polite");
+    const yenile = () => {
+      kartlar.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.id === MODEL_SECIM.senaryo)));
+      mSeg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.aile === MODEL_SECIM.aile)));
+      eSeg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.efor === MODEL_SECIM.efor)));
+      sonuc.replaceChildren(...ayarSonucu());
+    };
+    for (const s of MODEL.senaryolar) {
+      const k = ogesi("button", "eylem-karti senaryo");
+      k.type = "button";
+      k.dataset.id = s.id;
+      k.append(ogesi("b", null, s.ad), ogesi("span", "ne", s.ornek), ogesi("span", "rozet", `${aileAdi(s.aile)} · ${eforAdi(s.efor)}`));
+      k.onclick = () => { Object.assign(MODEL_SECIM, { senaryo: s.id, aile: s.aile, efor: s.efor }); yenile(); };
+      kartlar.append(k);
+    }
+    for (const a of MODEL.aileler) {
+      const b = dugme(a.ad);
+      b.dataset.aile = a.aile;
+      b.onclick = () => { Object.assign(MODEL_SECIM, { aile: a.aile, senaryo: "" }); yenile(); };
+      mSeg.append(b);
+    }
+    for (const e of MODEL.eforlar) {
+      const b = dugme(e.ad);
+      b.dataset.efor = e.id;
+      b.onclick = () => { Object.assign(MODEL_SECIM, { efor: e.id, senaryo: "" }); yenile(); };
+      eSeg.append(b);
+    }
+    is.append(kartlar);
+    const secim = ogesi("div", "model-secim");
+    secim.append(mSeg, eSeg);
+    sec.append(secim, sonuc);
+    yenile();
+
+    const plan = ogesi("div", "kesit");
+    plan.append(ogesi("h3", null, "Paketinize göre"));
+    const pl = ogesi("div", "liste");
+    for (const p of MODEL.planlar) pl.append(sunucuSatiri("hesap", "Claude " + p.ad, p.not, ["", ""]));
+    pl.querySelectorAll(".rozet").forEach((r) => r.remove());
+    pl.querySelectorAll(".liste-ogesi").forEach((o) => o.classList.add("sarar"));
+    plan.append(pl);
+
+    ekran.append(bu, is, sec, plan);
+    if (MODEL.olcum && MODEL.olcum.ozet) ekran.append(ogesi("p", "zaman", `Ölçüm (${MODEL.tarih}): ${MODEL.olcum.ozet}`));
+    ekran.append(bilgi("Masa, Claude'un modelini ve effort'unu kendisi değiştiremez: seçim Claude'un kendi menüsünden " +
+      "yapılır. Bu ekran hangi ayarın ölçümde nasıl sonuç verdiğini ve nasıl seçileceğini gösterir; Claude modelini " +
+      "masaya bildirdiğinde sol alttaki gösterge güncellenir."));
+  };
+
   function listeIstegi(bolum) {
     return "ArthurLegal Masası: bu sohbette bağlı MCP sunucularımı ve Claude bağlayıcılarımı masada göster. " +
       `al_masasi'yi bolum=${bolum} ile yeniden açın ve baglayicilar'a sunucu adlarını durumlarıyla yazın.`;
@@ -3314,6 +3610,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       DURUM.moduller = veri.moduller || {};
       if (veri.bolum && EKRANLAR.some((e) => e.id === veri.bolum)) DURUM.acilis = veri.bolum;
       if (Array.isArray(veri.baglayicilar)) baglayicilariAl(veri.baglayicilar);
+      if (veri.model && typeof veri.model === "object") modelAl(veri.model);
       if (CEVAP && veri.teslim && typeof veri.teslim.gecmis_id === "string") CEVAP.gecmisId = veri.teslim.gecmis_id;
       if (ROL === "masa" && veri.yonlendir && !DURUM.uzaktaKal) {
         if (devirDenendi()) {
@@ -3339,6 +3636,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (masaKuruldu) { git(acilisUygulandi ? aktif : acilisEkrani()); acilisUygulandi = true; }
     else { ciz(); bildir(CEVAP ? "Sohbet ekranında, cevap açık." : "masa açıldı."); }   // yetenekler artık belli: not kuralla yinelenir
     cevapKaydet();   // teslim: geçmiş, sunucunun bildirdiği yerde (bu bilgisayar ya da oturum) tutulur
+    if (ROL === "masa") modelPenceresi();
   };
   app.addEventListener("hostcontextchanged", (d) => {
     AL.tema.baglamdan(d);
