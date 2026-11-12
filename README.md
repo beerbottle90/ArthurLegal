@@ -8,7 +8,7 @@
   <b>Windows 10 / 11</b> (64 bit) · <b>macOS 11+</b> (Apple Silicon · Intel) · yönetici şifresi istemez · no admin rights<br>
   <a href="https://github.com/beerbottle90/ArthurLegal/releases/latest"><img src="https://img.shields.io/github/v/release/beerbottle90/ArthurLegal?label=g%C3%BCncel%20s%C3%BCr%C3%BCm%20%C2%B7%20latest&color=14233c" alt="Güncel sürüm · latest version"></a>
 </p>
-<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>)</p>
+<p align="center"><a href="#kurulum">Türkçe kurulum anlatımı</a> (<a href="#mac">Mac</a>) · <a href="#download">English installation guide</a> (<a href="#mac-en">Mac</a>) · <a href="README.az.md">Azərbaycanca quraşdırma təlimatı</a></p>
 
 <h3 align="center" id="rehber">Kullanıcı Rehberi · User guide</h3>
 <p align="center">

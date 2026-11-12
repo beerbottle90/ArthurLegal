@@ -91,20 +91,99 @@ def _oku(*yol: str) -> str:
         return fh.read()
 
 
+# Dil. Arayüz üç dillidir: Türkçe (kaynak), Azerbaycanca, İngilizce. Görünüm kodunda metin cev("...") / cevN("...")
+# ile yazılır; Türkçe metin sözlüğün anahtarıdır (tasarim/dil-az.json, dil-en.json). Ekrana veri olarak gelen
+# metinler (model önerisi dosyası) de anahtardır. Mevzuat, karar metni ve Claude'un cevabı çevrilmez.
+DILLER = ("tr", "az", "en")
+_CEV = re.compile(r'\bcevN?\(\s*"((?:[^"\\]|\\.)*)"')
+_CEV_SABIT = re.compile(r"\bdata-cev>([^<]+)<")   # görünümün sabit HTML metni
+_CEVN = re.compile(r'\bcevN\(\s*"((?:[^"\\]|\\.)*)"')   # tablo ve sabit: ekrana yazılırken çevrilir
+_DIL_YERI = "/*AL:DIL*/"
+_SOZLUK: Optional[Dict[str, Dict[str, str]]] = None
+
+
+def dil_gecerli(dil: Any) -> str:
+    """Bilinen bir dil kodu ya da boş dizgi (bilinmeyen değer tahmin edilmez)."""
+    d = str(dil or "").strip().lower()[:2]
+    return d if d in DILLER else ""
+
+
+def dil_anahtarlari(kod: str) -> List[str]:
+    """Görünüm kodunda cev()/cevN() ile işaretlenmiş Türkçe metinler, geçiş sırasıyla ve yinelenmeden."""
+    out: Dict[str, None] = {}
+    for m in _CEV.finditer(kod):
+        out.setdefault(json.loads('"%s"' % m.group(1)), None)
+    for m in _CEV_SABIT.finditer(kod):
+        out.setdefault(m.group(1), None)
+    return list(out)
+
+
+def tablo_anahtarlari(kod: str) -> List[str]:
+    """cevN() ile işaretli metinler: tanımlandığı yerde değil, ekrana yazılırken çevrilir (cevVeri)."""
+    out: Dict[str, None] = {}
+    for m in _CEVN.finditer(kod):
+        out.setdefault(json.loads('"%s"' % m.group(1)), None)
+    return list(out)
+
+
+def veri_anahtarlari() -> List[str]:
+    """Kodda işaretli olmayan ama ekrana yazılan veri metinleri: model önerisi dosyasındaki açıklamalar."""
+    o = model_onerisi()
+    out: Dict[str, None] = {o["cumle"]: None}
+    for a in o["aileler"]:
+        if a.get("uyari"):
+            out.setdefault(a["uyari"], None)
+    for s in o["senaryolar"]:
+        out.setdefault(s["ad"], None)
+        out.setdefault(s["ornek"], None)
+    for p in o["planlar"]:
+        out.setdefault(p["not"], None)
+    out.setdefault(o["olcum"]["ozet"], None)
+    for h in o["olcum"]["hucreler"]:
+        out.setdefault(h["not"], None)
+        out.setdefault(h["olcum"], None)
+    return list(out)
+
+
+def sozluk() -> Dict[str, Dict[str, str]]:
+    """{"az": {türkçe: karşılık}, "en": {...}}. Dosyası olmayan dil boş sözlüktür: metin Türkçe kalır."""
+    global _SOZLUK
+    if _SOZLUK is None:
+        _SOZLUK = {}
+        for dil in DILLER[1:]:
+            try:
+                _SOZLUK[dil] = json.loads(_oku("tasarim", "dil-%s.json" % dil))
+            except OSError:
+                _SOZLUK[dil] = {}
+    return _SOZLUK
+
+
 def gorunum(sablon: str) -> str:
-    """Şablonu ortak parçalarla birleştirir. Bilinmeyen yer tutucu hatadır, sessizce kalmaz."""
+    """Şablonu ortak parçalarla birleştirir. Bilinmeyen yer tutucu hatadır, sessizce kalmaz. Sözlükten yalnız o
+    görünümde geçen metinlerin karşılıkları gömülür (AL:DIL)."""
     metin = _oku("gorunumler", sablon)
     onbellek: Dict[str, str] = {}
 
     def koy(m: "re.Match[str]") -> str:
         ad = m.group(1) or m.group(2)
+        if ad == "DIL":
+            return _DIL_YERI
         if ad not in _PARCALAR:
             raise KeyError("bilinmeyen yer tutucu: %s (%s)" % (ad, sablon))
         if ad not in onbellek:
             onbellek[ad] = _oku(*_PARCALAR[ad]).strip()
         return onbellek[ad]
 
-    return _YER_TUTUCU.sub(koy, metin)
+    birlesik = _YER_TUTUCU.sub(koy, metin)
+    if _DIL_YERI not in metin:
+        return birlesik
+    veri = veri_anahtarlari() if "/*AL:MODEL*/" in metin else []
+    anahtarlar = dil_anahtarlari(birlesik) + veri
+    gomulen: Dict[str, Any] = {dil: {a: s[a] for a in anahtarlar if a in s} for dil, s in sozluk().items()}
+    # Ekrana yazılırken çevrilen metinler (cevVeri yalnız bunlara bakar).
+    gomulen["_veri"] = list(dict.fromkeys(tablo_anahtarlari(birlesik) + veri))
+    # "</" betik bloğunu erken kapatmasın.
+    return birlesik.replace(_DIL_YERI, json.dumps(gomulen, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
 
 
 def kaynaklar() -> List[Dict[str, Any]]:
@@ -190,6 +269,10 @@ MODEL_GIRDISI = {"type": "string", "description": (
     "kullanıcıya ArthurLegal'in önerdiği modelle çalışıp çalışmadığını gösterir. Bilmiyorsanız boş bırakın, "
     "tahmin etmeyin.")}
 _MODEL_ONERISI: Optional[Dict[str, Any]] = None
+# Masa üç dillidir. Claude kullanıcının yazdığı dili bildirir; masa o dilde açılır, kullanıcı sağ üstten değiştirir.
+DIL_GIRDISI = {"type": "string", "enum": ["tr", "az", "en"], "description": (
+    "Kullanıcının bu sohbette yazdığı dil: tr (Türkçe), az (Azerbaycanca) ya da en (İngilizce). Masa bu dilde açılır; "
+    "kullanıcı masanın sağ üstündeki bayraklardan değiştirebilir. Emin değilseniz boş bırakın.")}
 
 
 def model_onerisi() -> Dict[str, Any]:
@@ -273,6 +356,7 @@ def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
             _BAGLAYICI_CUMLESI, _BAGLAYICI_CUMLESI + " model'e kendi model adınızı yazın: masa bunu da yalnız sizden "
                                                      "öğrenebilir.", 1)
         tanim["inputSchema"]["properties"]["model"] = dict(MODEL_GIRDISI)
+        tanim["inputSchema"]["properties"]["dil"] = dict(DIL_GIRDISI)
     return tanim
 
 
@@ -354,7 +438,7 @@ TESLIM_KURALI = (
 
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
                 bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False,
-                model: Any = None) -> Dict[str, Any]:
+                model: Any = None, dil: Any = None) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
@@ -365,6 +449,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         vermez: orada araç başka sunucuya yönlendirmez.
     model: Claude'un bildirdiği model adı (al_masasi girdisi). Verildiyse cevap "model" taşır ({ad, aile, duzey});
         ölçümde yetersiz kalan modelde not Claude'a kullanıcıyı bir kez uyarmasını söyler. Verilmediyse alan yok.
+    dil: masanın açılacağı dil ("tr", "az", "en"): Claude'un bildirdiği ya da kurulumun dili. Bilinmeyen değer
+        yok sayılır; kullanıcı bu sohbette masadan dil seçtiyse masa onu kullanır.
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
@@ -383,6 +469,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
                        "masada daha önce baktığı bir şeyi sorarsa al_gecmis ile bakabilirsiniz." % GECMIS_GUN)
     if bolum in EKRANLAR:
         out["bolum"] = bolum
+    if dil_gecerli(dil):
+        out["dil"] = dil_gecerli(dil)
     if model is not None:
         out["model"] = model_degerlendir(model)
         if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, Claude'a talimat yok

@@ -4,9 +4,65 @@
 //
 // Araç sonucundaki hiçbir değer HTML olarak yazılmaz: her şey textContent ya da createElementNS.
 
+// Dil: Türkçe, Azerbaycanca, İngilizce. Kaynak metin Türkçedir ve sözlüğün anahtarıdır (tasarim/dil-az.json,
+// dil-en.json; sunucu yalnız o görünümde geçen anahtarları AL:DIL yer tutucusuna gömer).
+//   cev(metin, değer…)   o anki dile çevirir, {n} yerlerine değerleri koyar (işlev içinde)
+//   cevN(metin)          yalnız işaretler (tablo ve sabitlerde); ekrana yazılırken çevrilir
+//   cevVeri(x)           tablo ya da veri metniyse (cevN ile işaretli, model önerisi dosyası) çevirir, değilse
+//                        aynen bırakır. Yalnız bu metinlere bakar: çevrilmiş bir metin başka bir Türkçe metinle
+//                        aynı yazılabilir (Azerbaycanca "Bağla" = Türkçe "Kapat"), yeniden çevrilmemelidir.
+// Karşılığı olmayan anahtar Türkçe kalır: eksik çeviri ekranı bozmaz. Mevzuat, karar ve Claude'un cevabı çevrilmez.
+const DIL = (() => {
+  const DILLER = ["tr", "az", "en"];
+  const ANAHTAR = "al.dil";
+  let sozluk = {};
+  let veri = new Set();   // ekrana yazılırken çevrilen tablo ve veri metinleri
+  let secili = "tr";
+  const gecerli = (d) => (DILLER.includes(d) ? d : null);
+  // Bu sohbette kullanıcının seçtiği dil (tarayıcı deposu yalnız aynı sohbetin pencereleri arasında ortaktır).
+  function kayitli() {
+    try { return gecerli(localStorage.getItem(ANAHTAR)); } catch { return null; }
+  }
+  function sec(d, { kaydet = true, sessiz = false } = {}) {
+    if (!gecerli(d) || d === secili) return false;
+    secili = d;
+    document.documentElement.lang = d;
+    if (kaydet) { try { localStorage.setItem(ANAHTAR, d); } catch { /* depo kapalı: yalnız bu pencere */ } }
+    if (!sessiz) document.dispatchEvent(new CustomEvent("al-dil", { detail: d }));
+    return true;
+  }
+  const karsilik = (anahtar) => (secili === "tr" ? undefined : (sozluk[secili] || {})[anahtar]);
+  const ilk = kayitli();
+  if (ilk) { secili = ilk; document.documentElement.lang = ilk; }
+  // Sayfanın sabit HTML metinleri: data-cev ile işaretli öğe; Türkçesi öğede saklanır, dil değişince yeniden yazılır.
+  function sabitler() {
+    document.querySelectorAll("[data-cev]").forEach((el) => {
+      if (!el.dataset.cev) el.dataset.cev = el.textContent;
+      const k = karsilik(el.dataset.cev);
+      el.textContent = k == null ? el.dataset.cev : k;
+    });
+  }
+  // Tarih ve saat seçili dilin alışkanlığıyla yazılır. Tutarlar (TL) Türkçe biçimde kalır: resmî metindeki yazım.
+  const YEREL = { tr: "tr-TR", az: "az-AZ", en: "en-GB" };
+  return { DILLER, gecerli, kayitli, sec, karsilik, sabitler, yerel: () => YEREL[secili], veriMi: (x) => veri.has(x),
+    yukle: (s) => { sozluk = s || {}; veri = new Set(sozluk._veri || []); }, get secili() { return secili; } };
+})();
+function cevVeri(x) {
+  if (typeof x !== "string") return x;
+  const k = DIL.veriMi(x) ? DIL.karsilik(x) : undefined;
+  return k == null ? x : k;
+}
+function cev(anahtar, ...deger) {
+  const kalip = DIL.karsilik(anahtar) ?? anahtar;
+  if (!deger.length) return kalip;
+  return kalip.replace(/\{(\d+)\}/g, (m, i) => (+i < deger.length ? String(cevVeri(deger[+i])) : m));
+}
+const cevN = (anahtar) => anahtar;
+
 const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
-  const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";
+  const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";   // Claude'a giden metinlerde aynen (Türkçe)
+  const uyari = (adres) => cev("UYARI: veri çekilemedi, teyidiniz gerekli: {0}", adres);   // ekrandaki satır, seçili dilde
   const SURUM = "3.1.0";
   const NS = "http://www.w3.org/2000/svg";
 
@@ -65,7 +121,7 @@ const AL = (() => {
   function ogesi(etiket, sinif, metin) {
     const el = document.createElement(etiket);
     if (sinif) el.className = sinif;
-    if (metin != null) el.textContent = metin;
+    if (metin != null) el.textContent = cevVeri(metin);   // tablo ve sunucu verisinden gelen bilinen metin de çevrilir
     return el;
   }
 
@@ -74,7 +130,7 @@ const AL = (() => {
     b.type = "button";
     if (simge) b.append(ikon(simge));
     b.append(ogesi("span", null, yazi));
-    if (baslik) b.setAttribute("aria-label", baslik);
+    if (baslik) b.setAttribute("aria-label", cevVeri(baslik));
     return b;
   }
 
@@ -121,6 +177,7 @@ const AL = (() => {
   const ONLAR = { 1: "u", 2: "si", 3: "u", 4: "ı", 5: "si", 6: "ı", 7: "i", 8: "i", 9: "ı" };
   function sayiEki(n) {
     const s = Math.abs(Math.trunc(Number(n) || 0));
+    if (DIL.secili !== "tr") return String(s);   // ek Türkçeye özgüdür; öteki dillerde çeviri cümlesi sayıyı yalın alır
     const ek = s === 0 ? "ı" : s % 10 ? BIRLER[s % 10] : s % 100 ? ONLAR[(s / 10) % 10] : s % 1000 ? "ü" : "i";
     return `${s}'${ek}`;
   }
@@ -132,7 +189,7 @@ const AL = (() => {
 
   function zaman(iso) {
     const d = new Date(iso);
-    return Number.isNaN(d.getTime()) ? "" : d.toLocaleString("tr-TR", { dateStyle: "short", timeStyle: "short" });
+    return Number.isNaN(d.getTime()) ? "" : d.toLocaleString(DIL.yerel(), { dateStyle: "short", timeStyle: "short" });
   }
 
   // Araç sonucunu okur: önce structuredContent, yoksa metin bloğundaki JSON.
@@ -142,8 +199,8 @@ const AL = (() => {
     }
     const metin = sonuc && Array.isArray(sonuc.content)
       ? sonuc.content.filter((b) => b && b.type === "text").map((b) => b.text).join("\n") : "";
-    if (sonuc && sonuc.isError) return { hata: metin.replace(/^ERROR:\s*/, "") || "Araç hata döndürdü." };
-    try { return { veri: JSON.parse(metin) }; } catch { return { hata: metin || "Araç sonucu okunamadı." }; }
+    if (sonuc && sonuc.isError) return { hata: metin.replace(/^ERROR:\s*/, "") || cev("Araç hata döndürdü.") };
+    try { return { veri: JSON.parse(metin) }; } catch { return { hata: metin || cev("Araç sonucu okunamadı.") }; }
   }
 
   // Panoya kopyalama: çerçeve izin vermeyebilir. Clipboard API, sonra eski yol; ikisi de olmazsa
@@ -173,10 +230,10 @@ const AL = (() => {
     const yazi = dugmeEl && dugmeEl.querySelector("span");
     if (yazi) {
       const eski = yazi.textContent;
-      yazi.textContent = oldu ? "Kopyalandı" : "Seçildi, Ctrl+C";
+      yazi.textContent = oldu ? cev("Kopyalandı") : cev("Seçildi, Ctrl+C");
       setTimeout(() => { yazi.textContent = eski; }, 1800);
     }
-    if (duyuru) duyuru.textContent = oldu ? "Panoya kopyalandı." : "Kopyalanamadı; metin seçildi, klavyeyle kopyalayın.";
+    if (duyuru) duyuru.textContent = oldu ? cev("Panoya kopyalandı.") : cev("Kopyalanamadı; metin seçildi, klavyeyle kopyalayın.");
     return oldu;
   }
 
@@ -252,19 +309,19 @@ const AL = (() => {
   // Dil gerektiren işi Claude'a bırakır: mesaj sohbete kullanıcı adına düşer, cevap sohbette gelir.
   async function sor(app, metin) {
     const sonuc = await app.sendMessage({ role: "user", content: [{ type: "text", text: metin }] });
-    if (sonuc && sonuc.isError) throw new Error("Claude mesajı kabul etmedi.");
+    if (sonuc && sonuc.isError) throw new Error(cev("Claude mesajı kabul etmedi."));
   }
 
   async function baglantiAc(app, url, duyuru) {
     try {
       await app.openLink({ url });
     } catch {
-      if (duyuru) duyuru.textContent = `Bağlantı açılamadı: ${url}`;
+      if (duyuru) duyuru.textContent = cev("Bağlantı açılamadı: {0}", url);
     }
   }
 
   return {
-    RESMI_GIRIS, UYARI, SURUM, ikon, ogesi, dugme, baslikDuzeni, baslikGoster, baslikYolu, sayiEki, tarih, zaman,
+    RESMI_GIRIS, UYARI, uyari, SURUM, ikon, ogesi, dugme, baslikDuzeni, baslikGoster, baslikYolu, sayiEki, tarih, zaman,
     veriAl, kopyala,
     tema, adimlar, cagir, sor, baglantiAc,
   };

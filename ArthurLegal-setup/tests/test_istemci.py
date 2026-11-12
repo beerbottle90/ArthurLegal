@@ -195,13 +195,24 @@ class BuroSimgesiTesti(unittest.TestCase):
         self.assertIn("<i data-os=\"mac\">Örnek Büro Asistanı Tapu</i>", sayfa, "macOS uygulamasının adı")
         self.assertIn("<i>Örnek Büro Asistanı - Kaldır</i>", sayfa, "macOS'taki kaldırma uygulamasının adı (kur._kaldir_adi)")
         self.assertNotIn("{{", sayfa)
-        self.assertIn('<a href="baslangic-en.html">English</a>', sayfa)
+        # Dil bağlantısı üç dilli ve bayraklıdır; açık sayfanın dili işaretlidir.
+        self.assertIn('<a href="baslangic.html" lang="tr" aria-current="page"><svg', sayfa)
+        self.assertIn('<a href="baslangic-az.html" lang="az"><svg', sayfa)
+        self.assertIn('<a href="baslangic-en.html" lang="en"><svg', sayfa)
         self.assertIn("<b>Always allow</b>", sayfa, "Claude Desktop'un arayüzü Türkçe değil")
         en = (self.kok / "rehber" / "baslangic-en.html").read_text(encoding="utf-8")
         self.assertIn("<title>Örnek Büro Asistanı Start</title>", en)
         self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", en)
         self.assertIn("<i>Örnek Büro Asistanı - Uninstall</i>", en)
-        self.assertIn('<a href="baslangic.html">Türkçe</a>', en)
+        self.assertIn('<a href="baslangic.html" lang="tr"><svg', en)
+        self.assertIn('<a href="baslangic-en.html" lang="en" aria-current="page"><svg', en)
+        az = (self.kok / "rehber" / "baslangic-az.html").read_text(encoding="utf-8")
+        self.assertIn('<html lang="az">', az)
+        self.assertIn('<a href="baslangic-az.html" lang="az" aria-current="page"><svg', az)
+        self.assertIn("<i data-os=\"windows\">Örnek Büro Asistanı - Tapu</i>", az)
+        self.assertIn("Təlimatı kopyala", az)
+        self.assertIn("<b>Always allow</b>", az, "Claude Desktop'un menüleri çevrilmez")
+        self.assertNotIn("{{", az)
         self.assertIn("You are the ArthurLegal Law Firm assistant.", en, "İngilizce ön yükleme talimatı")
         self.assertNotIn("{{", en)
         self.derle.rehber_yaz(self.kok, "", icerik)
@@ -1657,7 +1668,7 @@ class ArayuzTesti(unittest.TestCase):
             acilan, _ = self.calistir(t, KisayolTesti.BASLAT)
             self.assertEqual(acilan, ["rehber", "rehber"], "klasikte her açılışta panel; masa bağlantısı açılmaz")
             self.assertIn('"arayuz": "klasik"', (t / "kok" / "rehber" / "durum.js").read_text(encoding="utf-8"))
-            for ad in ("rehber.html", "rehber-en.html"):  # panel klasikte masa paragrafını gizler
+            for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):  # panel klasikte masa paragrafını gizler
                 html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
                 self.assertIn('<p data-arayuz="yeni">', html)
                 self.assertIn("d.arayuz", html)
@@ -1666,8 +1677,11 @@ class ArayuzTesti(unittest.TestCase):
         """Kesin öneri cümlesi (tavsiye, bağlayıcı değil) tek dosyadadır; başlangıç sayfası ve README aynı cümleyi yazar."""
         oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
         self.assertIn("bağlayıcı değildir", oneri["cumle"])
-        readme = (BURASI.parent / "README.md").read_text(encoding="utf-8")
-        for ad, cumle in (("rehber.html", oneri["cumle"]), ("rehber-en.html", oneri["cumle_en"])):
+        # README.md Türkçe ve İngilizce, README.az.md Azerbaycanca kurulum anlatımıdır.
+        readme = "".join((BURASI.parent / ad).read_text(encoding="utf-8") for ad in ("README.md", "README.az.md"))
+        self.assertIn('<a href="README.az.md">', readme)
+        for ad, cumle in (("rehber.html", oneri["cumle"]), ("rehber-en.html", oneri["cumle_en"]),
+                          ("rehber-az.html", oneri["cumle_az"])):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
             self.assertIn('<div class="kart" id="model-efor">', html)
             self.assertIn(cumle, html)
@@ -1706,7 +1720,7 @@ class MasaEnterHatirlatmasiTesti(unittest.TestCase):
         self.assertIn("CustomMessage('MasaEnterHatirlatma')", iss)
         self.assertIn("EnterHatirlatmasi.Font.Style := [fsBold]", iss)
         self.assertEqual((BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8").count('<p class="onemli"><b>'), 2)
-        for ad in ("rehber.html", "rehber-en.html"):
+        for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
             self.assertRegex(html, r'<p data-arayuz="yeni" class="onemli"><b>[^<]*Enter')
         readme = (BURASI.parent / "README.md").read_text(encoding="utf-8")
@@ -1728,7 +1742,7 @@ class KullaniciRehberiTesti(unittest.TestCase):
         ust = readme[:readme.index('<h2 id="kurulum">')]
         self.assertIn('id="rehber"', ust, "rehber bloğu README'nin başında, kurulum anlatımından önce")
         self.assertIn(f'<a href="{self.PDF}">', ust)
-        for ad in ("rehber.html", "rehber-en.html"):
+        for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
             self.assertIn(f'class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/{self.PDF}"', html)
             self.assertIn('<img src="masa.png"', html)

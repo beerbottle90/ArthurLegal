@@ -685,6 +685,10 @@ class Sunucu:
             yetenekler.append("al_masada_basla")
         # Claude kendi model adını bildirir (al_masasi girdisi): masa önerilen modelle çalışılıp çalışılmadığını gösterir.
         ek = {"model": a.get("model")} if hasattr(al_arayuz, "model_degerlendir") else {}
+        # Masa üç dillidir: Claude kullanıcının yazdığı dili bildirir; bildirmediyse kurulumun dili. Kullanıcı masanın
+        # sağ üstündeki bayraklardan değiştirir.
+        if hasattr(al_arayuz, "dil_gecerli"):
+            ek["dil"] = al_arayuz.dil_gecerli(a.get("dil")) or ortak.dil()
         return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"), **ek)
 
     def _masa(self, a):

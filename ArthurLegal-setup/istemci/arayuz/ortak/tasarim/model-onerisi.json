@@ -2,6 +2,7 @@
   "tarih": "2026-11-12",
   "cumle": "Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir.",
   "cumle_en": "We recommend at least Opus 5.5 with Medium / High effort; this is not binding.",
+  "cumle_az": "Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil.",
   "onerilen": {"aile": "opus", "model": "Opus 5.5", "efor": "medium", "efor_ust": "high"},
   "asgari": {"aile": "opus", "model": "Opus 5.5", "efor": "medium"},
   "aileler": [

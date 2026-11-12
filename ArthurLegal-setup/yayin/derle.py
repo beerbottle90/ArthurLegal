@@ -269,13 +269,17 @@ REHBER_KIMLIGI = {"hukuk-burosu": "hukuk", "kurumsal": "kurumsal", "adliye": "ad
 KART_BASLIGI = {"tr": {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal Asistan (Corporate)",
                        "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"},
                 "en": {"hukuk-burosu": "Law Firm", "kurumsal": "Corporate Assistant", "adliye": "Courthouse",
-                       "akademisyen": "Academician"}}
+                       "akademisyen": "Academician"},
+                "az": {"hukuk-burosu": "Hüquq Bürosu (Law Firm)", "kurumsal": "Korporativ Assistent (Corporate)",
+                       "adliye": "Courthouse (Məhkəmə)", "akademisyen": "Akademik (Academician)"}}
+# Talimatın kendisi Claude'a verilir: Azerbaycanca sayfada Türkçe talimat kopyalanır (paketler Türk hukuku içindir).
+KOPYALA_DUGMESI = {"tr": "Talimatı kopyala", "en": "Copy instructions", "az": "Təlimatı kopyala"}
 
 
 def onyukleme_kartlari(profiller, dil: str) -> str:
     """Başlangıç sayfasındaki "talimatı kopyala" kartları, derlemedeki her paket için. Kart data-modul taşır: sayfa,
     kurulumda seçilmeyen paketin kartını gizler (durum.js → moduller)."""
-    metinler, dugme = (ortak.ONYUKLEME, "Talimatı kopyala") if dil == "tr" else (ortak.ONYUKLEME_EN, "Copy instructions")
+    metinler, dugme = (ortak.ONYUKLEME_EN if dil == "en" else ortak.ONYUKLEME), KOPYALA_DUGMESI[dil]
     return "\n".join(
         f'<div class="kart" data-modul="{p}">\n  <h3>{html.escape(KART_BASLIGI[dil][p])}</h3>\n'
         f'  <textarea id="{REHBER_KIMLIGI[p]}" readonly>{html.escape(metinler[p])}</textarea>\n'
@@ -283,14 +287,16 @@ def onyukleme_kartlari(profiller, dil: str) -> str:
 
 
 def rehber_yaz(hedef: Path, firma_ad: str, icerik: dict, urun: str = ortak.URUN_VARSAYILAN) -> None:
-    """Başlangıç rehberi iki dilde: baslangic.html (Türkçe) ve baslangic-en.html (İngilizce). Kurulum, seçilen dildeki
-    sayfayı açar (ortak.rehber_dosyasi); iki sayfa birbirine bağlantı verir. Derlemedeki her paket için bir kart
+    """Başlangıç rehberi üç dilde: baslangic.html (Türkçe), baslangic-az.html (Azerbaycanca) ve baslangic-en.html
+    (İngilizce). Kurulum, seçilen dildeki sayfayı açar (ortak.rehber_dosyasi; sihirbazda Türkçe ve İngilizce var);
+    üç sayfa birbirine bayraklı bağlantı verir, Azerbaycanca sayfa oradan açılır. Derlemedeki her paket için bir kart
     yazılır; sayfa seçilmeyenleri kendisi gizler."""
     import kur
     (hedef / "rehber").mkdir(parents=True, exist_ok=True)
     # Paket bilgisi olmayan içerik (eski derleme biçimi) iki avukat paketini gösterir.
     profiller = [p for p in ortak.PAKETLER if p in icerik.get("paketler", {})] or ["hukuk-burosu", "kurumsal"]
-    for sablon_adi, sayfa, dil in (("rehber.html", "baslangic.html", "tr"), ("rehber-en.html", "baslangic-en.html", "en")):
+    for sablon_adi, sayfa, dil in (("rehber.html", "baslangic.html", "tr"), ("rehber-en.html", "baslangic-en.html", "en"),
+                                   ("rehber-az.html", "baslangic-az.html", "az")):
         sablon = (BURASI / "kurulum" / sablon_adi).read_text(encoding="utf-8")
         degerler = {
             "{{URUN}}": html.escape(urun),

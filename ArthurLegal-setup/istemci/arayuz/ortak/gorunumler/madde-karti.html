@@ -24,10 +24,10 @@ body {
     <!--AL:ARMA-->
     <span class="marka">Arthur<span>Legal</span></span>
     <span class="ayrac" aria-hidden="true"></span>
-    <span class="bolum">Mevzuat</span>
+    <span class="bolum" data-cev>Mevzuat</span>
   </header>
   <div id="govde">
-    <div class="sonuc-baslik"><h2>Madde getiriliyor…</h2><div class="kunye" id="kunye"></div></div>
+    <div class="sonuc-baslik"><h2 data-cev>Madde getiriliyor…</h2><div class="kunye" id="kunye"></div></div>
     <div class="iskelet" aria-hidden="true" style="margin-top:12px"><i></i><i></i><i></i><i></i></div>
   </div>
   <div class="gizli" aria-live="polite" id="duyuru"></div>
@@ -54,6 +54,8 @@ body {
   import { App } from "https://unpkg.com/@modelcontextprotocol/ext-apps@1.7.5/dist/src/app-with-deps.js";
   /*AL:JS*/
   /*AL:KARTLAR*/
+  DIL.yukle(/*AL:DIL*/);
+  DIL.sabitler();
 
   const app = new App({ name: "ArthurLegal Madde Kartı", version: AL.SURUM });
   const ortam = { app, duyuru: document.getElementById("duyuru") };
@@ -62,8 +64,8 @@ body {
 
   function hata(mesaj) {
     const g = AL.ogesi("section", "grup");
-    g.append(AL.ogesi("p", "aciklama", mesaj), AL.ogesi("p", "uyari", AL.UYARI + AL.RESMI_GIRIS));
-    govde.replaceChildren(AL.ogesi("h2", null, "Madde getirilemedi"), g);
+    g.append(AL.ogesi("p", "aciklama", mesaj), AL.ogesi("p", "uyari", AL.uyari(AL.RESMI_GIRIS)));
+    govde.replaceChildren(AL.ogesi("h2", null, cev("Madde getirilemedi")), g);
     document.getElementById("kart").removeAttribute("aria-busy");
   }
 
@@ -72,7 +74,7 @@ body {
     if (cizildi || !arg) return;
     const no = Array.isArray(arg.madde_no) ? arg.madde_no.join(", ") : (arg.madde_no || "");
     const k = document.getElementById("kunye");
-    if (k) k.textContent = [arg.number ? `Kanun No. ${arg.number}` : "", no ? `m. ${no}` : ""].filter(Boolean).join(" · ");
+    if (k) k.textContent = [arg.number ? cev("Kanun No. {0}", arg.number) : "", no ? `m. ${no}` : ""].filter(Boolean).join(" · ");
   };
   app.ontoolresult = (sonuc) => {
     const { veri, hata: h } = AL.veriAl(sonuc);
@@ -81,7 +83,7 @@ body {
     govde.replaceChildren(KART.madde(veri, ortam));
     document.getElementById("kart").removeAttribute("aria-busy");
   };
-  app.ontoolcancelled = () => hata("Araç çağrısı iptal edildi.");
+  app.ontoolcancelled = () => hata(cev("Araç çağrısı iptal edildi."));
   app.addEventListener("hostcontextchanged", (d) => AL.tema.baglamdan(d));
 
   await app.connect();

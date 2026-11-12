@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{URUN}} Başlanğıc</title>
+<style>
+:root{--zemin:#f6f4ee;--kart:#fff;--yazi:#1b2433;--soluk:#5b6576;--lacivert:#12285a;--altin:#b58300;--cizgi:#e3dfd3;--kod:#f1eee6;--yesil:#2e7d4f}
+@media (prefers-color-scheme:dark){:root{--zemin:#0a1430;--kart:#0e1d3d;--yazi:#e8e4da;--soluk:#9aa4b4;--lacivert:#e8e4da;--altin:#f7c948;--cizgi:#22396a;--kod:#142749;--yesil:#57c08a}}
+*{box-sizing:border-box}body{margin:0;background:var(--zemin);color:var(--yazi);font:16px/1.6 "Segoe UI",system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding:36px 16px 64px}
+.baslik-kart{display:flex;align-items:center;gap:18px;max-width:840px;background:var(--kart);border:1px solid var(--cizgi);border-bottom:0;border-radius:14px 14px 0 0;padding:20px 24px}
+.baslik-kart svg{width:64px;height:64px;flex:none}
+.baslik-kart .ad{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lacivert)}
+.baslik-kart .ad span{color:var(--altin)}.baslik-kart .alt{font-size:15px;color:var(--soluk);margin-top:2px}
+a.rehber-pdf{display:flex;align-items:center;gap:18px;margin:22px 0 0;padding:22px 26px;background:#12285a;color:#fff;border:2px solid #f7c948;border-radius:14px;text-decoration:none}
+a.rehber-pdf:hover{background:#1a3470}a.rehber-pdf svg{width:46px;height:46px;flex:none}
+a.rehber-pdf b{display:block;font-size:24px;line-height:1.25}
+a.rehber-pdf small{display:block;font-size:15px;line-height:1.45;color:#c9d3e0;margin-top:4px}
+a.rehber-pdf .ok{margin-left:auto;font-size:30px;color:#f7c948}
+figure.masa{margin:16px 0 0}figure.masa img{display:block;width:100%;height:auto;border:1px solid var(--cizgi);border-radius:12px;box-shadow:0 6px 24px rgba(13,24,38,.08)}
+figure.masa figcaption{font-size:14px;color:var(--soluk);margin-top:6px}
+.serit{display:flex;height:8px;border-radius:0 0 8px 8px;overflow:hidden;max-width:840px}.serit i{flex:1}
+h2{font-size:20px;margin:34px 0 10px;color:var(--lacivert)}
+.adim{display:flex;gap:14px;margin:14px 0}
+.no{flex:0 0 32px;height:32px;background:var(--altin);color:#12202f;font-weight:700;display:grid;place-items:center;font-family:Consolas,monospace}
+.a2 .no{background:#3fae6a;color:#fff}.a3 .no{background:#5ec8e5;color:#12202f}.a4 .no{background:#7b5cc4;color:#fff}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:10px;padding:16px 18px;margin:12px 0}
+.kart h3{margin:0 0 8px;font-size:17px}
+textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--cizgi);border-radius:8px;background:var(--kod);color:var(--yazi);font:14px/1.5 Consolas,monospace;padding:10px}
+button,a.dugme{display:inline-block;margin:10px 8px 0 0;background:var(--lacivert);color:var(--zemin);border:0;border-radius:8px;padding:10px 18px;font:600 15px "Segoe UI",sans-serif;cursor:pointer;text-decoration:none}
+a.dugme.ikincil{background:transparent;color:var(--lacivert);border:1px solid var(--cizgi)}
+button.tamam{background:var(--yesil);color:#fff}
+.uyari{border-left:4px solid var(--altin);padding:10px 14px;background:var(--kart);border-radius:0 8px 8px 0}
+.onemli{border-left:4px solid var(--altin);padding:12px 16px;background:var(--kart);border-radius:0 8px 8px 0;font-size:17px;margin:18px 0 0}
+code{background:var(--kod);padding:1px 6px;border-radius:4px;font-size:14px}
+li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
+#durum{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+#durum div{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:10px 12px}
+#durum b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:600}
+#durum span{font-size:15px}
+.dil{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px 16px;margin:0 0 10px;font-size:14px}.dil a{display:inline-flex;align-items:center;gap:6px;color:var(--lacivert);text-decoration:none}.dil a[aria-current]{font-weight:700}.dil svg{width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px var(--cizgi)}
+#paketler .kart{margin:8px 0}.odak{border:2px solid var(--altin)!important;box-shadow:0 0 0 3px rgba(181,131,0,.2)}
+</style>
+</head>
+<body>
+<main>
+<nav class="dil" aria-label="Dil"><a href="baslangic.html" lang="tr"><svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path fill="#E30A17" d="M0 0h1200v800H0z"/><circle cx="425" cy="400" r="200" fill="#fff"/><circle cx="475" cy="400" r="160" fill="#E30A17"/><path fill="#fff" d="M583.334 400l180.901 58.779-111.804-153.885v190.212l111.804-153.885z"/></svg>Türkçe</a><a href="baslangic-az.html" lang="az" aria-current="page"><svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path fill="#00B5E2" d="M0 0h1200v200H0z"/><path fill="#EF3340" d="M0 200h1200v200H0z"/><path fill="#509E2F" d="M0 400h1200v200H0z"/><circle cx="580" cy="300" r="90" fill="#fff"/><circle cx="600" cy="300" r="75" fill="#EF3340"/><path fill="#fff" d="M680.000 250.000L689.567 276.903L715.355 264.645L703.097 290.433L730.000 300.000L703.097 309.567L715.355 335.355L689.567 323.097L680.000 350.000L670.433 323.097L644.645 335.355L656.903 309.567L630.000 300.000L656.903 290.433L644.645 264.645L670.433 276.903z"/></svg>Azərbaycan dili</a><a href="baslangic-en.html" lang="en"><svg viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><clipPath id="bayrak-en-k"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><path fill="#012169" d="M0 0v30h60V0z"/><path stroke="#fff" stroke-width="6" d="M0 0l60 30m0-30L0 30"/><path stroke="#C8102E" stroke-width="4" clip-path="url(#bayrak-en-k)" d="M0 0l60 30m0-30L0 30"/><path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60"/><path stroke="#C8102E" stroke-width="6" d="M30 0v30M0 15h60"/></svg>English</a></nav>
+<header>
+  <div class="baslik-kart"><svg class="simge" viewBox="0 0 100 100" role="img" aria-label="ArthurLegal emblemi"><defs><linearGradient id="alArmaZ" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#183064"/><stop offset="1" stop-color="#071230"/></linearGradient><linearGradient id="alArmaA" x1="0" y1="0.2" x2="0" y2="0.8"><stop offset="0" stop-color="#FFE48A"/><stop offset="1" stop-color="#F7BE2D"/></linearGradient></defs><path fill="url(#alArmaZ)" d="M100.00 50.00L99.90 69.75L99.61 76.01L99.13 80.49L98.44 84.05L97.55 87.01L96.44 89.52L95.11 91.68L93.53 93.53L91.68 95.11L89.52 96.44L87.01 97.55L84.05 98.44L80.49 99.13L76.01 99.61L69.75 99.90L50.00 100.00L30.25 99.90L23.99 99.61L19.51 99.13L15.95 98.44L12.99 97.55L10.48 96.44L8.32 95.11L6.47 93.53L4.89 91.68L3.56 89.52L2.45 87.01L1.56 84.05L0.87 80.49L0.39 76.01L0.10 69.75L0.00 50.00L0.10 30.25L0.39 23.99L0.87 19.51L1.56 15.95L2.45 12.99L3.56 10.48L4.89 8.32L6.47 6.47L8.32 4.89L10.48 3.56L12.99 2.45L15.95 1.56L19.51 0.87L23.99 0.39L30.25 0.10L50.00 0.00L69.75 0.10L76.01 0.39L80.49 0.87L84.05 1.56L87.01 2.45L89.52 3.56L91.68 4.89L93.53 6.47L95.11 8.32L96.44 10.48L97.55 12.99L98.44 15.95L99.13 19.51L99.61 23.99L99.90 30.25Z"/><path fill="url(#alArmaA)" d="M43.75 23.50L56.25 23.50L35.00 77.50L22.50 77.50ZM43.75 23.50L56.25 23.50L77.50 77.50L65.00 77.50ZM30.50 57.50L69.50 57.50L69.50 66.75L30.50 66.75Z"/></svg><div><div class="ad">Arthur<span>Legal</span></div><div class="alt">Açıq mənbəli hüquqi süni intellekt</div></div></div>
+  <div class="serit"><i style="background:#c8453b"></i><i style="background:#f29b4b"></i><i style="background:#ffe066"></i><i style="background:#3fae6a"></i><i style="background:#5ec8e5"></i><i style="background:#3b7dd8"></i><i style="background:#7b5cc4"></i><i style="background:#b45a9a"></i></div>
+</header>
+
+<div id="durum"></div>
+
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Quraşdırma tamamlandı. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, <b>Always allow</b> (Həmişə icazə ver) seçin; Claude Desktop-un menyuları ingilis dilindədir. Aşağıdakı ehtiyat yollar məcburi deyil: profili daimi etmək və ya layihəyə fayl əlavə etmək istəyənlər üçündür.</p>
+
+<p data-arayuz="yeni" class="onemli"><b>Vacib: masanı açmaq üçün Enter düyməsini basın.</b> Claude Desktop açılanda mesaj qutusunda <i>ArthurLegal Masası'nı aç</i> (ArthurLegal Masasını aç) yazılmış olur; mesaj öz-özünə göndərilmir. İş masasındakı <i>{{URUN}}</i> nişanı ilə hər açılışda da Enter düyməsini basın.</p>
+
+<div class="kart" id="model-efor"><h3>Model və effort</h3>
+<p style="margin:0 0 8px;font-size:17px"><b>Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil.</b></p>
+<p style="margin:0">Claude-un mesaj qutusundakı model adına klikləyin; model olaraq <b>Opus 5.5</b>, effort olaraq <b>Medium</b> və ya <b>High</b> seçin. Bir dəfə seçməyiniz kifayətdir, Claude yadda saxlayır. ArthurLegal-ın apardığı ölçmədə (23 çətin sual) kiçik modellər müddətlər, prosessual qaydalar və yeni dəyişmiş qanunvericiliklə bağlı suallarda daha çox ciddi səhv etdi; heç bir model uydurma istinad yazmadı. Limitiniz azalarsa, maddə mətni, istinadların yoxlanması və hesablama işlərini Sonnet 5.5 ilə görə bilərsiniz. ArthurLegal hər modellə işləyir, seçim sizindir.<span data-arayuz="yeni"> Ölçmə nəticələri və addım-addım izah masanın <b>Model ve effort</b> ekranındadır.</span></p></div>
+
+<a class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#f7c948" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg><span><b>İstifadəçi bələdçisi (PDF, türk dilində)</b><small>Quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə · GitHub-da açılır</small></span><span class="ok" aria-hidden="true">→</span></a>
+
+<p data-arayuz="yeni"><b>ArthurLegal Masası.</b> İş masasındakı <i>{{URUN}}</i> nişanı Claude Desktop-u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış halda açır; Enter düyməsini basanda masa tam ekranda açılır: solda modullar (qanunvericilik və istinad, məhkəmə təcrübəsi, hesablama kartları, Tapu, Hafıza (Yaddaş), ArthurMask, UYAP, Donna), ortada iş addımları, aşağıda Claude-un mesaj qutusu. Həmin qutuya yalnız sualınızı yazın: sual dərhal masanın <b>Sohbet</b> (Söhbət) ekranına düşür, Claude-un baxdığı hər mənbə canlı sətir kimi görünür, cavab öz mənbələri və maddə istinadlarının rəsmi mətnlə yoxlanması ilə birlikdə eyni yerdə açılır (təkliflər aşağıda qalır). <b>Hesablama kartları</b> (<i>Hesap kartları</i>) vəkil haqqını, məhkəmə rüsumunu və xərc avansını, faizi, eləcə də Türkiyə əmək hüququndakı <i>kıdem tazminatı</i> və <i>ihbar tazminatı</i> məbləğlərini (iş stajına və xəbərdarlıq müddətinə görə təzminatlar) hesablayır: əməliyyatı seçin, yalnız tələb olunan xanaları doldurun; hər sətirdə hüquqi əsas və rəsmi mənbə göstərilir. <b>MCP'ler</b> (MCP-lər) ekranı qoşulmuş serverlərinizi və onların vəziyyətini göstərir. Nişana hər klik bu səhifəni də brauzerdə açır.</p>
+<figure data-arayuz="yeni" class="masa"><img src="masa.png" width="1200" height="879" alt="ArthurLegal Masasının açılış ekranı: solda modullar, ortada işə başlama kartları"><figcaption>Masanın açılış ekranı (açıq tema; tünd və avtomatik tema sol aşağıdadır).</figcaption></figure>
+
+<p data-arayuz="klasik"><b>Claude Desktop klassik.</b> Claude Desktop-da yeni söhbət açıb hüquqi sualınızı birbaşa yazın: köməkçi ArthurLegal təlimatını və bilik fayllarını özü yükləyir. Masadan istifadə etmək istəsəniz, quraşdırma faylını yenidən işə salıb <b>ArthurLegal yeni arayüz</b> (ArthurLegal yeni interfeys; ingiliscə quraşdırmada <b>ArthurLegal new interface</b>) seçin.</p>
+
+<h2>Quraşdırılmış paketlər</h2>
+<div id="paketler">
+<div class="kart" data-modul="hukuk-burosu"><b>Hüquq Bürosu</b> (Hukuk Bürosu) — vəkillər üçün ərizə, müqavilə, məhkəmə təcrübəsi və qanunvericilik araşdırması, müddətlərin izlənməsi. Əmrləri görmək üçün söhbətə <code>/litigation-legal:</code> kimi bir plaqin adı yazın; və ya işi birbaşa təsvir edin.</div>
+<div class="kart" data-modul="kurumsal"><b>Korporativ Köməkçi</b> (Kurumsal Asistan) — şirkətlərin hüquq şöbələri üçün müqavilələrin yoxlanması, uyğunluq (komplayens), KVKK (Türkiyənin fərdi məlumatların qorunması qanunu) və şirkətlər hüququ. İşi birbaşa təsvir edin; köməkçi uyğun addımları özü seçir.</div>
+<div class="kart" data-modul="adliye"><b>Courthouse</b> — hakim və məhkəmə dəftərxanası üçün neytral qaralamalar. Nümunə: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izləyicilər üçün "yarının duruşmaları" (sabahkı məhkəmə iclasları) və ya "kesinleşme kontrolü" (qərarın qanuni qüvvəyə minməsinin yoxlanması) yazın. Məhkəmə işi sənədlərini söhbətə birbaşa əlavə etməyin, əvvəlcə ArthurMask-a buraxın. Hər nəticə qaralamadır, hakimin və ya məhkəmə heyətinin təsdiqindən keçir.</div>
+<div class="kart" data-modul="akademisyen"><b>Akademik</b> (Akademisyen) — hüquqşünas akademiklər üçün ədəbiyyat, istinadların yoxlanması, jurnal seçimi, nəşr etikası və layihə müraciəti. Nümunə: <code>/atif-kaynak:</code> və ya <code>/makale-yazim:</code> yazın. Qiymətləndirmədə olan məxfi əlyazma və rəyçi materialı söhbətə verilmir.</div>
+</div>
+
+<h2>Ehtiyat yol 1: hazır layihə qovluğu</h2>
+<p>Claude-da <b>Projects → New project</b> (Layihələr → Yeni layihə) pəncərəsində <b>Use a folder</b> (Qovluqdan istifadə et) düyməsini basın və aşağıdakı qovluqlardan birini
+seçin. Qovluqda təlimat (<code>CLAUDE.md</code>), sistem təlimatı və bütün bilik faylları hazırdır; hər yeniləmədə
+öz-özünə təzələnir. Öz qaralamalarınızı qovluqdakı <code>calismalar</code> alt qovluğuna qoyun.</p>
+<div id="klasorler" class="kart"><span style="color:var(--soluk)">Qovluq yolları quraşdırmadan sonra burada görünür.</span></div>
+
+<h2>Ehtiyat yol 2: layihə və təlimat</h2>
+<div class="adim a1"><div class="no">1</div><div><b>Claude Desktop açıq olmalıdır.</b> Bağlıdırsa, bu səhifəni açan <i>{{URUN}}</i> nişanı onu da açır.
+  Quraşdırılmayıbsa: <a href="https://claude.ai/download">claude.ai/download</a>.</div></div>
+<div class="adim a2"><div class="no">2</div><div><b>Yeni layihə:</b> sol menyuda <b>Projects → New project</b>, ad olaraq məsələn <code>{{URUN}} – Hüquq Bürosu</code> və ya <code>{{URUN}} – Courthouse</code>.
+  <a class="dugme ikincil" href="https://claude.ai/projects" target="_blank">Layihələr səhifəsini aç</a></div></div>
+<div class="adim a3"><div class="no">3</div><div><b>Təlimatı yapışdırın:</b> layihədə <b>Instructions</b> (təlimatlar) sahəsini açın, aşağıdakı mətni kopyalayıb
+  yapışdırın və yadda saxlayın. <b>Knowledge faylı yükləməyin</b>; fayllar alətlər vasitəsilə oxunur və aktual qalır.</div></div>
+
+{{ONYUKLEME_KARTLARI}}
+
+<div class="adim a4"><div class="no">4</div><div><b>Sınayın:</b> layihədə yeni söhbət açıb bir hüquq sualı yazın. Köməkçi əvvəlcə
+  <code>arthurlegal_talimat</code> alətini çağırır. Claude alət üçün icazə soruşsa, <b>Always allow</b> seçin.</div></div>
+
+<h2>Köməkçi təlimatı yükləməsə</h2>
+<p>Nadir hallarda model ilk sualda təlimat alətini çağırmadan cavab verməyə başlaya bilər. Belə olduqda mesaj qutusunun yanındakı <b>+</b> düyməsini basın, <b>arthurlegal-yerel</b> altında paketinizin adını daşıyan promptu seçin (<b>hukuk-burosu</b> = Hüquq Bürosu, <b>kurumsal</b> = Korporativ, <b>adliye</b> = Courthouse, <b>akademisyen</b> = Akademik); və ya yuxarıdakı layihə addımını bir dəfə yerinə yetirin.</p>
+
+<h2>Digər komponentlər</h2>
+<ul>
+  <li data-modul="mask"><b>ArthurMask</b> — Müvəkkil və ya məhkəmə işi sənədlərini söhbətə birbaşa əlavə etməyin; əvvəlcə ArthurMask-a buraxın.
+    İlk açılışda <b>Kurtarma anahtarı</b> adlı bərpa açarını çap edib saxlayın.</li>
+  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hüquq Bürosu və ya Korporativ paketi ilə birlikdə ArthurMask seçilibsə, iş masasındakı <i>{{URUN}} - UYAP Dashboard</i> nişanı UYAP Avukat Portal səhifəsini (Türkiyənin vəkil portalı) ayrıca brauzer profilində açır; girişi e-imza və ya e-Devlet ilə özünüz edirsiniz. Tebligatlar (rəsmi bildirişlər) və Duruşmalarım (məhkəmə iclaslarım) ekranlarını açıb <b>Tara</b> (Skan et) düyməsini basın. Yalnız oxuyur: UYAP-a heç nə yazmır, əlavə sorğu göndərmir; adlar və iş nömrələri Claude-a getməzdən əvvəl ArthurMask-da etiketlənir.</li>
+  <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Türkiyənin tapu-kadastr məlumatları. Söhbətdə "İstanbul Kadıköy Caferağa 123 ada 45 parsel" və ya bir yer adı yazmağınız kifayətdir:
+    parsel TKGM Parsel Sorgu xidmətinin hamıya açıq məlumatlarından gəlir (ilk sorğuda bir dəfə razılıq istənilir). İş masasındakı
+    <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> nişanı eyni işi görən parsel interfeysini açır.
+    Tapu qeydinin mətni bu kompüterdən kənara çıxmır.</li>
+  <li data-modul="hafiza"><b>ArthurLegal Hafıza</b> (Yaddaş) — Köməkçi seçimlərinizi, düzəlişlərinizi və son sessiyanın xülasəsini bu
+    kompüterdəki bir qovluqda saxlayır; yeni söhbətdə hər şeyi əvvəldən izah etməyə ehtiyac qalmır. "Bunu yadda saxla" deməyiniz kifayətdir; "yaddaşa
+    yazma" desəniz, həmin söhbətdə yazmır. Yalnız maskalanmış mətn yazılır: şəxsiyyət nömrəsi, IBAN, telefon və e-poçt rədd edilir.
+    Qovluğu <span data-os="windows">«Başlat» (Start) menyusundakı <i>{{URUN}} - Hafıza Klasörü</i> (ingiliscə quraşdırmada Memory Folder)</span><span data-os="mac">Applications (Uygulamalar)
+    &gt; {{URUN}} qovluğundakı <i>Hafıza Klasörü</i> (ingiliscə quraşdırmada Memory Folder)</span> açır; qeydləri istədiyiniz kimi redaktə edə bilərsiniz.</li>
+  <li><b>Layihə qovluqları</b> — <span data-os="windows">«Başlat» (Start) menyusundakı <i>{{URUN}} - Proje Klasörleri</i> (ingiliscə quraşdırmada Project Folders) qısayolu hazır
+    qovluqları Fayl Bələdçisində (File Explorer) açır.</span><span data-os="mac">Applications (Uygulamalar) &gt; {{URUN}} qovluğundakı <i>Proje Klasörleri</i> (ingiliscə quraşdırmada Project Folders) hazır
+    qovluqları Finder-də açır.</span> Faylları layihəyə əl ilə sürükləsəniz, həmin nüsxə yenilənmir; aktual qalan yollar
+    alətlər və "Use a folder" seçimidir.</li>
+  <li><b>Yeniləmə</b> — Arxa planda quraşdırılır. Əl ilə yoxlamaq üçün <span data-os="windows">«Başlat» (Start) menyusunda
+    <i>{{URUN}} - Güncellemeleri Denetle</i> (Yeniləmələri yoxla; ingiliscə quraşdırmada Check for Updates).</span><span data-os="mac">Applications (Uygulamalar) &gt; {{URUN}} qovluğunda
+    <i>Güncellemeleri Denetle</i> (Yeniləmələri yoxla; ingiliscə quraşdırmada Check for Updates).</span></li>
+  <li data-os="mac"><b>Silmə</b> — Applications (Uygulamalar) &gt; {{URUN}} qovluğunda <i>{{KALDIR}}</i>.</li>
+</ul>
+
+<h2>Problemlərin həlli</h2>
+<div class="uyari">Alətlər görünmürsə, Claude Desktop-u <span data-os="windows">sistem treyindəki (saatın yanındakı) nişan da daxil olmaqla
+<b>tamamilə bağlayıb</b></span><span data-os="mac"><b>Cmd+Q</b> ilə tamamilə bağlayıb</span> yenidən açın.
+<b>Settings → Developer</b> bölməsində <code>arthurlegal-yerel</code> və (seçmisinizsə) <code>arthur-tapu</code>,
+<code>arthur-mask</code> və <code>arthur-uyap</code> işlək vəziyyətdə görünməlidir. Modul əlavə etmək və ya çıxarmaq üçün quraşdırma faylını yenidən işə salın. İlk alət siyahısı uzaq serveri də yoxladığına görə bir neçə saniyə çəkə bilər.</div>
+
+<footer>{{URUN}} hüquqi araşdırma və qaralama hazırlama alətidir; hüquqi məsləhət deyil və qərar vermir. Hər nəticəni ondan istifadə edən
+hüquqşünas (vəkil, hakim, məhkəmə dəftərxanası əməkdaşı və ya akademik) yoxlamalıdır. ArthurMask psevdonimləşdirmə aparır, anonimləşdirmir;
+məxfilik və peşə sirrinin qorunması üzrə məsuliyyət istifadəçinin üzərindədir.</footer>
+</main>
+<script src="durum.js" onerror="void 0"></script>
+<script>
+(function () {
+  var d = window.ARTHURLEGAL_DURUM || {};
+  // İşletim sistemine özgü cümleler: durum.js yoksa tarayıcıya bakılır.
+  var mac = d.isletim ? d.isletim === "mac" : /Mac/.test(navigator.platform || "");
+  document.querySelectorAll("[data-os]").forEach(function (el) {
+    if (el.getAttribute("data-os") !== (mac ? "mac" : "windows")) el.style.display = "none";
+  });
+  if (!window.ARTHURLEGAL_DURUM) return;
+  // durum.js'yi kurulu istemci Türkçe yazar; bilinen değerler burada Azerbaycan dilinde gösterilir (rehber-en.html'deki kalıp).
+  var claude = {"açık": "açıqdır", "kurulu": "quraşdırılıb", "bulunamadı": "quraşdırılmayıb", "zaten açık": "artıq açıqdır",
+                "başlatıldı": "işə salındı"};
+  var ceviriler = [
+    [/^paket (\S+) kuruldu$/, "paket $1 quraşdırıldı"],
+    [/^paket güncel \((.*)\)$/, "paket aktualdır ($1)"],
+    [/^mask: güncel \((.*)\)$/, "ArthurMask aktualdır ($1)"],
+    [/^mask: (\S+) kuruldu$/, "ArthurMask $1 quraşdırıldı"],
+    [/^mask: indirildi, Claude Desktop kapanınca kurulacak$/, "ArthurMask yükləndi, Claude Desktop bağlananda quraşdırılacaq"],
+    [/^mask: Akıllı Uygulama Denetimi açık.*$/, "ArthurMask ötürüldü: Smart App Control aktivdir"],
+    [/^mask: kurulumda seçilmedi$/, "ArthurMask quraşdırmada seçilməyib"],
+    [/^mask: kurulu \((.*)\)$/, "ArthurMask quraşdırılıb ($1)"],
+    [/^ArthurMask Mac'te güncellemesini kendisi yapar$/, "ArthurMask Mac-də özü yenilənir"],
+    [/^mask: ArthurMask Mac'te yalnız Apple Silicon'da çalışır$/, "ArthurMask Mac-də yalnız Apple Silicon-da işləyir"],
+    [/^mask: ArthurMask Mac'te macOS 14 \(Sonoma\) ya da sonrasını ister$/, "ArthurMask Mac-də macOS 14 (Sonoma) və ya daha yenisini tələb edir"],
+    [/^mask: manifest'te macOS sürümü yok$/, "bu buraxılışda macOS üçün ArthurMask yoxdur"],
+    [/^mask: manifest'te yok$/, "ArthurMask bu buraxılışa daxil deyil"],
+    [/^yayında manifest yok$/, "son buraxılışda yeniləmə manifesti yoxdur"],
+    [/^hata: (.*)$/, "xəta: $1"]
+  ];
+  var cevir = function (metin) {
+    return String(metin || "").split("; ").map(function (parca) {
+      for (var i = 0; i < ceviriler.length; i++) {
+        if (ceviriler[i][0].test(parca)) return parca.replace(ceviriler[i][0], ceviriler[i][1]);
+      }
+      return parca;
+    }).join("; ");
+  };
+  var ad = {"hukuk-burosu": "Hüquq Bürosu", "kurumsal": "Korporativ", "adliye": "Courthouse", "akademisyen": "Akademik"};
+  // Seçilmeyen modüllerin bölümleri gizlenir; Courthouse ya da Akademisyen simgesi o paketin kartını öne çıkarır.
+  if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
+    if (d.moduller.indexOf(el.getAttribute("data-modul")) < 0) el.style.display = "none";
+  });
+  // Kurulumda "Claude Desktop klasik" seçildiyse masa paragrafı gizlenir.
+  if (d.arayuz) document.querySelectorAll("[data-arayuz]").forEach(function (el) {
+    if (el.getAttribute("data-arayuz") !== d.arayuz) el.style.display = "none";
+  });
+  // UYAP Dashboard yalnız kurulduğu bilgisayarda anlatılır (ortak.uyap_acik; eski durum.js'de alan yok, gösterilir).
+  if (d.uyap === false) document.querySelectorAll("[data-uyap]").forEach(function (el) { el.style.display = "none"; });
+  if (d.odak) document.querySelectorAll('#paketler [data-modul="' + d.odak + '"]').forEach(function (el) { el.classList.add("odak"); });
+  var paket = Object.keys(d.paketler || {}).map(function (k) { return (ad[k] || k) + " " + d.paketler[k]; }).join(" · ");
+  if (d.surum) document.title = (d.urun || "{{URUN}}") + " " + d.surum + " — Başlanğıc";
+  // Claude Desktop'ın gerçekte çalıştırdığı sürüm; güncelleme kurulu ama Claude yeniden açılmadıysa eski numara.
+  // Claude Desktop'u bu tıklama (ya da kurulumun son adımı) yeni açtıysa sunucusu henüz başlamamıştır: kayıtlı numara
+  // önceki açılışındır, Claude bu kurulumun sürümüyle açılır.
+  var calisan = d.calisan_surum === d.surum ? d.calisan_surum + " (aktual)"
+      : d.claude === "başlatıldı" ? "Claude Desktop indi açılır; " + d.surum + " ilə işləyəcək"
+      : !d.calisan_surum ? "hələ açılmayıb"
+      : d.calisan_surum + (mac ? " — Claude Desktop-dan Cmd+Q ilə çıxıb yenidən açın; "
+                               : " — Claude Desktop-u sistem treyindəki nişan da daxil olmaqla bağlayıb yenidən açın; ") + d.surum + " işə düşsün";
+  var satirlar = [
+    ["Quraşdırma", d.surum],
+    ["Son yeniləmə", d.son_guncelleme || "yoxdur (quraşdırmadan bəri)"],
+    ["Claude Desktop-da işləyən versiya", calisan],
+    ["Paketlər", paket || "-"],
+    ["Claude Desktop", claude[d.claude] || d.claude],
+    ["Qoşulmuş serverlər", (d.sunucular || []).join(", ") || "-"],
+    ["ArthurMask", d.mask || "quraşdırılmayıb"],
+    ["Son yeniləmə yoxlaması", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + cevir(d.son_sonuc) : "") : "hələ yoxdur"]
+  ];
+  var k = d.proje_klasorleri || {};
+  var liste = Object.keys(k).map(function (p) {
+    return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";
+  }).join("");
+  if (liste) document.getElementById("klasorler").innerHTML = liste;
+  document.getElementById("durum").innerHTML = satirlar.map(function (s) {
+    return "<div><b>" + s[0] + "</b><span>" + String(s[1]).replace(/</g, "&lt;") + "</span></div>";
+  }).join("");
+})();
+document.querySelectorAll("button[data-hedef]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var alan = document.getElementById(b.dataset.hedef);
+    var bitti = function () { b.textContent = "Kopyalandı ✓"; b.classList.add("tamam"); };
+    var yedek = function () { alan.select(); document.execCommand("copy"); bitti(); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(alan.value).then(bitti, yedek);
+    else yedek();
+  });
+});
+</script>
+</body>
+</html>

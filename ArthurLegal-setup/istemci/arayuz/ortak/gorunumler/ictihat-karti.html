@@ -25,10 +25,10 @@ body {
     <!--AL:ARMA-->
     <span class="marka">Arthur<span>Legal</span></span>
     <span class="ayrac" aria-hidden="true"></span>
-    <span class="bolum">İçtihat</span>
+    <span class="bolum" data-cev>İçtihat</span>
   </header>
   <div id="govde">
-    <div class="sonuc-baslik"><h2 id="sorgu">Kararlar aranıyor…</h2><div class="kunye">Yargıtay · Danıştay</div></div>
+    <div class="sonuc-baslik"><h2 id="sorgu" data-cev>Kararlar aranıyor…</h2><div class="kunye">Yargıtay · Danıştay</div></div>
     <div class="iskelet" aria-hidden="true" style="margin-top:12px"><i></i><i></i><i></i><i></i></div>
   </div>
   <div class="gizli" aria-live="polite" id="duyuru"></div>
@@ -54,6 +54,8 @@ body {
   import { App } from "https://unpkg.com/@modelcontextprotocol/ext-apps@1.7.5/dist/src/app-with-deps.js";
   /*AL:JS*/
   /*AL:KARTLAR*/
+  DIL.yukle(/*AL:DIL*/);
+  DIL.sabitler();
 
   const app = new App({ name: "ArthurLegal İçtihat Kartı", version: AL.SURUM });
   const ortam = { app, duyuru: document.getElementById("duyuru") };
@@ -63,15 +65,15 @@ body {
   function hata(mesaj) {
     const g = AL.ogesi("section", "grup");
     g.append(AL.ogesi("p", "aciklama", mesaj),
-      AL.ogesi("p", "uyari", AL.UYARI + "https://karararama.yargitay.gov.tr/"));
-    govde.replaceChildren(AL.ogesi("h2", null, "Kararlar getirilemedi"), g);
+      AL.ogesi("p", "uyari", AL.uyari("https://karararama.yargitay.gov.tr/")));
+    govde.replaceChildren(AL.ogesi("h2", null, cev("Kararlar getirilemedi")), g);
     document.getElementById("kart").removeAttribute("aria-busy");
   }
 
   app.ontoolinput = ({ arguments: arg }) => {
     if (cizildi || !arg || !arg.query) return;
     const s = document.getElementById("sorgu");
-    if (s) s.textContent = `“${arg.query}” aranıyor…`;
+    if (s) s.textContent = cev("“{0}” aranıyor…", arg.query);
   };
   app.ontoolresult = (sonuc) => {
     const { veri, hata: h } = AL.veriAl(sonuc);
@@ -80,7 +82,7 @@ body {
     govde.replaceChildren(KART.ictihat(veri, ortam));
     document.getElementById("kart").removeAttribute("aria-busy");
   };
-  app.ontoolcancelled = () => hata("Araç çağrısı iptal edildi.");
+  app.ontoolcancelled = () => hata(cev("Araç çağrısı iptal edildi."));
   app.addEventListener("hostcontextchanged", (d) => AL.tema.baglamdan(d));
 
   await app.connect();
