@@ -99,8 +99,7 @@ tr_mevzuat_ara(number="5015", types=["KANUN"])  # PPK
 tr_mevzuat_ara(number="4646", types=["KANUN"])  # DGPK
 tr_mevzuat_ara(number="6446", types=["KANUN"])  # EPK
 tr_mevzuat_ara(number="4628", types=["KANUN"])  # EPDK K.
-tr_mevzuat_ara(query="EPDK", types=["YONETMELIK"])
-tr_mevzuat_ara(query="EPDK", types=["TEBLIGLER"])
+tr_mevzuat_ara(query="Enerji Piyasası", types=["KKY","TEBLIGLER"])  # EPDK yönetmelik ve tebliğleri; kurum yönetmeliği KKY türündedir, başlıkta "EPDK" kısaltması geçmez
 ```
 
 ## Bağlantılı

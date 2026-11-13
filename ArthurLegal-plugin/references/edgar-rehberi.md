@@ -29,9 +29,9 @@ dönemsel raporlarını ve özel durum bildirimlerini EDGAR'a elektronik verir.
 **ArthurLegal için neden gerekli?** ABD paketinde birincil kaynak kurumsal
 beyan delili sağlar: birleşme duyurusu `8-K`'ları, `10-K` risk faktörlerindeki
 antitrust/HSR (Hart-Scott-Rodino) dili, `EX-10` önemli sözleşme ekleri.
-**Rekabet Gözcüsü** için karşı taraf / pazar bağlamı üretir (ABD'de işlem
+Rekabet hukuku işlerinde karşı taraf / pazar bağlamı üretir (ABD'de işlem
 gören bir grubun birleşme geçmişi, beyan edilmiş rekabet soruşturmaları) —
-**yalnızca bağlam olarak: EDGAR verisi deterministik skora asla girmez.**
+**yalnızca bağlam olarak: şirket beyanıdır, hukuki sonuç ya da delil yerine geçmez.**
 
 ---
 
@@ -84,7 +84,7 @@ User-Agent: Sirket/Uygulama Adi iletisim@alanadi.com
 
 > ⚠️ Beyansız/varsayılan User-Agent ile `www.sec.gov` sayfaları **HTTP 403**
 > dönebilir (13.08.2026'da doğrulandı). WebFetch 403 alırsa neden büyük
-> olasılıkla budur; uygulama tarafında (Rekabet Gözcüsü dahil) header'ı
+> olasılıkla budur; kendi betiğinde ya da uygulamanda header'ı
 > açıkça ayarla. `efts.sec.gov` ve `data.sec.gov` uçları beyan edilmiş
 > User-Agent ile sorunsuz JSON döndürür.
 
@@ -178,8 +178,8 @@ fiilen çekildiyse etiket:
 - **Beyanlar, beyan sahibinin ifadeleridir** — yargısal olarak tespit edilmiş
   vaka değildir. Bir 10-K'daki "soruşturma riski" ifadesi hukuki sonuç olarak
   değil, şirket beyanı olarak aktarılır.
-- **Rekabet Gözcüsü sınırı:** EDGAR verisi yalnızca bağlam katmanındadır;
-  deterministik skora hiçbir koşulda girmez.
+- **Bağlam sınırı:** EDGAR verisi yalnızca bağlam katmanındadır;
+  hiçbir risk puanına ya da hukuki sonuca dayanak yapılmaz.
 - **Uygulama tarafı kütüphane:** `dgunning/edgartools` (**MIT lisansı**;
   13.08.2026 itibarıyla aktif geliştirme, 2.500+ yıldız) — AGPL lisanslı
   `sec-edgar-mcp`'ye permissive alternatif olarak tercih edilir.

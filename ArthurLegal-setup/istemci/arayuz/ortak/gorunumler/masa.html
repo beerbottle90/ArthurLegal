@@ -553,8 +553,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (kayit) gecmiseEkle(kayit, [["tamam", cev("Claude'a iletildi; cevap masaya gelir.")]],
         { kategori: "claude", tur: "claude", sorgu: metinSaklanmaz ? null : { metin } });
       ortam.duyuru.textContent = cev("Mesaj Claude'a gönderildi.");
+      return true;
     } catch {
       ortam.duyuru.textContent = cev("Mesaj gönderilemedi; aynı metni aşağıdaki kutuya yazabilirsiniz.");
+      return false;
     }
   }
 
@@ -1213,10 +1215,16 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const m = soru.value.trim();
       if (!m) return;
       gonder.disabled = true;
-      await claudeaSor(m, null);
+      const gitti = await claudeaSor(m, null);
       gonder.disabled = false;
-      soru.value = "";
-      durum.textContent = cev("Gönderildi. Claude'un cevabı masada açılacak.");
+      if (gitti) {
+        soru.value = "";
+        durum.textContent = cev("Gönderildi. Claude'un cevabı masada açılacak.");
+      } else {
+        // Gönderim başarısızsa soru silinmez ve başarı yazılmaz: avukat metni kopyalayıp Claude'a yazabilir.
+        durum.textContent = cev("Gönderilemedi; sorunuz kutuda duruyor. Kopyalayıp Claude'un yazma kutusuna yapıştırabilirsiniz.");
+        soru.focus();
+      }
     };
     return form;
   }
@@ -3075,12 +3083,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     hat.type = "submit";
     satir.append(alan(cev("Neyi, ne zaman hatırlatayım?"), ne), hat);
     form.append(satir);
-    form.onsubmit = (e) => {
+    form.onsubmit = async (e) => {
       e.preventDefault();
       const m = ne.value.trim();
       if (!m) return;
-      claudeaSor(cev("{0}Şunu takvimime ya da görev uygulamama hatırlatma olarak ekle; eklemeden önce bana göster: {1}", DONNA, m), cev("Donna: hatırlatma · {0}", m));
-      ne.value = "";
+      if (await claudeaSor(cev("{0}Şunu takvimime ya da görev uygulamama hatırlatma olarak ekle; eklemeden önce bana göster: {1}", DONNA, m), cev("Donna: hatırlatma · {0}", m))) ne.value = "";
     };
     ekran.append(form);
 

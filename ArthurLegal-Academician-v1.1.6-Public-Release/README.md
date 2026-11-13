@@ -196,8 +196,8 @@ English → [INSTALLATION.md](INSTALLATION.md) · Türkçe → [KURULUM.md](KURU
   institution sets it.
 - **Associate-professorship criteria change between application periods.** No score is
   presented as definitive without confirming the ÜAK PDF for your period.
-- **Limits of bibliometrics:** law is a book- and national-language-heavy discipline, largely
-  indexed in AHCI, to which no Impact Factor or quartile is assigned. JIF and h-index are
-  misleading in law (DORA · CoARA · Leiden Manifesto).
+- **Limits of bibliometrics:** law is a book- and national-language-heavy discipline. Since
+  JCR 2023, AHCI and ESCI journals also receive a JIF, but journals listed only in arts &
+  humanities categories have no quartile. JIF and h-index are misleading in law (DORA · CoARA · Leiden Manifesto).
 - This package contains **no real personal or institutional data**; profile fields ship as
   `[DOLDUR]` placeholders.

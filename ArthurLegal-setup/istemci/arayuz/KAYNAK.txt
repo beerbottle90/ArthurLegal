@@ -1,2 +1,2 @@
 Bu klasör kopyadır; elle düzenlemeyin. Asıl yeri: beerbottle90/arthurlegal-app4all
-Kopyalayan: sunucu/esitle.py · kaynak commit: a4d1787
+Kopyalayan: sunucu/esitle.py · kaynak commit: 6e1b1d1

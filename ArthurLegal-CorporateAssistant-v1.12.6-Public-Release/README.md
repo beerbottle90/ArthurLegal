@@ -52,7 +52,7 @@ applied to the original as tracked changes.
   Claude against the vault; a log of everything sent and a one-click leak check.
 - **Fully offline.** Detection and OCR models ship inside the installer. The only other
   network call is a once-a-day update check that reads the latest version number.
-- **Claude Desktop for Windows only.** Not supported in claude.ai on the web or in the
+- **Claude Desktop only** (Windows; on a Mac, Apple Silicon and macOS 14 or later). Not supported in claude.ai on the web or in the
   mobile apps: remote connectors there are called from Anthropic's cloud, which cannot reach
   a program on your computer. Open the ArthurLegal Project from Claude Desktop.
 - **Pseudonymisation, not anonymisation.** Detection is probabilistic, and data-protection,

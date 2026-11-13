@@ -100,7 +100,7 @@ Yönetmeliğin Ek-1'inde tehlikeli madde miktarı eşiklerine göre:
 ## ArthurLegal MCP (`tr_`)
 
 ```
-tr_mevzuat_ara(query="Büyük Endüstriyel Kaza", types=["YONETMELIK"])
+tr_mevzuat_ara(query="Endüstriyel Kazaların", types=["KKY","TEBLIGLER"])  # yönetmelik (KKY) ve dört tebliğ; başlık araması ifadeyi birebir arar
 tr_mevzuat_ara(number="2872", types=["KANUN"])  # Çevre K. m. 10/A
 ```
 

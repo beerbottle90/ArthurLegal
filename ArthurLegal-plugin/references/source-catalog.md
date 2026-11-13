@@ -54,7 +54,7 @@
 |---|---|---|
 | Federal Register | `https://www.federalregister.gov/api/v1/documents.json` ✅ | **JSON API** — filtrelenebilir, en kullanışlısı |
 | SEC | `https://www.sec.gov/news/pressreleases.rss` ✅ | Basın açıklamaları |
-| FTC | `https://www.ftc.gov/feeds/press-release.xml` ✅ | Rekabet + tüketici |
+| FTC | `https://www.federalregister.gov/api/v1/documents.json?conditions[agencies][]=federal-trade-commission` ✅ | Kural ve duyurular (Federal Register, 13.11.2026'da denendi). Eski basın bülteni beslemesi `ftc.gov/feeds/press-release.xml` 404 veriyor; ftc.gov otomatik isteklere kapalı, basın bültenleri sitede elle kontrol edilir |
 
 ## 🌍 Yaptırım (STOP-RULE kaynakları)
 

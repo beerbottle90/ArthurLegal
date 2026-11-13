@@ -331,9 +331,9 @@ Her plugin için `knowledge/skills/<plugin>__skills.md` dosyasını açıp `## I
 | Özellik | Claude Code | Claude.ai Projects |
 |---|---|---|
 | `/<plugin>:<skill>` slash command | ✓ resmi | ⚠ simüle (system prompt anlar) |
-| **ArthurLegal MCP** (Türkiye + 11 yargı çevresi + tapu-kadastro, 132 araç) | ✓ `.mcp.json` | ✓ tek custom connector (auth yok) |
-| **TR Legal MCP** (isteğe bağlı: AİHM, KİK, Sayıştay…) | ✓ `.mcp.json` | ✓ custom connector (OAuth) |
-| **OpenCaseLaw.ch MCP** | ✓ `.mcp.json` | ✓ custom connector |
+| **ArthurLegal MCP** (Türkiye + 11 yargı çevresi + tapu-kadastro, 132 araç) | ✓ `claude mcp add` ile (pakette `.mcp.json` yoktur) | ✓ tek custom connector (auth yok) |
+| **TR Legal MCP** (isteğe bağlı: AİHM, KİK, Sayıştay…) | ✓ `claude mcp add` ile (pakette `.mcp.json` yoktur) | ✓ custom connector (OAuth) |
+| **OpenCaseLaw.ch MCP** | ✓ `claude mcp add` ile (pakette `.mcp.json` yoktur) | ✓ custom connector |
 | Araç çağrısı zaman aşımı | uzun | **100 saniye — sabit** |
 | Tüm WebFetch kaynakları | ✓ | ✓ |
 | Hook'lar (pre/post tool) | ✓ | ✗ |

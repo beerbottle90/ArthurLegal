@@ -17,7 +17,7 @@ Rehberler: `karsilastirmali-hukuk-rehberi.md` (bağlayıcı) + ilgili yargı çe
 ## Precondition
 
 `commercial-legal/CLAUDE.md` → `Governing law and venue` bölümünü oku.
-Placeholder ise "provisional" modda devam et: varsayılan tercih → İngiliz hukuku + ICC/LCIA **veya** Türk hukuku + ISTAC.
+Placeholder ise "provisional" modda devam et: varsayılan tercih → Türk hukuku + İstanbul mahkemeleri **veya** kurumsal tahkim (ISTAC ya da ICC). Yabancı hukuk seçimi tercih dışıdır ve aşağıdaki adımlarla ayrıca değerlendirilir.
 
 ---
 
@@ -58,8 +58,8 @@ CLAUDE.md `Governing law and venue` ile karşılaştır. Severity:
 
 | Durum | Severity |
 |---|---|
-| Tercih listesinde (İngiliz/Türk + ICC/LCIA/ISTAC) | 🟢 |
-| Tercih dışı ama kabul edilebilir (Fransız, İsviçre OR + ICC) | 🟡 |
+| Tercih listesinde (playbook'taki tercih; yoksa Türk hukuku + İstanbul mahkemeleri ya da ISTAC/ICC tahkimi) | 🟢 |
+| Tercih dışı ama kabul edilebilir (İngiliz hukuku + LCIA/ICC, İsviçre OR + ICC, Fransız hukuku) | 🟡 |
 | Asimetrik venue — tek tarafa mahkeme seçim hakkı | 🟠 |
 | Karanlık yargı çevresi (belirsiz devlet hukuku, kısıtlı mahkeme erişimi) | 🔴 |
 | Rusya, İran, OFAC yaptırım altındaki ülke mahkemesi | 🔴 — dur, [Uyum Direktörü]'e sor |
@@ -106,16 +106,17 @@ Karşı tarafın hukuku governing law değilse bile taraf yükümlülükleri yer
 - İngiliz hukuku → ArthurLegal MCP `uk_search_legislation` / `uk_get_section` (`uk-legislation-mcp-rehberi.md`); yedek: `legislation.gov.uk` WebFetch (`uk-legislation-rehberi.md`)
 - ABD hukuku → `us-legislation-rehberi.md (bu eklentide yok: kullanıcı API anahtarı ister)` + `courtlistener-rehberi.md` → citation verification zorunlu
 - Alman hukuku → ArthurLegal MCP (`de_`): madde metni `de_gesetz_ara` → `de_norm_getir`, künye ve ELI `de_search` (`de-eli-mcp-rehberi.md`) ⚠️ `gesetze-im-internet.de` WebFetch ile bu ortamdan **erişilemez**; MCP kendi egress'inden çeker
-- Hollanda hukuku → **nl-rechtspraak MCP** (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
-- Polonya hukuku → **pl-sejm MCP** (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği
-- Avusturya hukuku → **at-ris MCP** (`at-ris-mcp-rehberi.md`) ⚠️ Rechtssatz karar değildir
-- İrlanda hukuku → **ie-statutebook MCP** (`ie-statutebook-mcp-rehberi.md`) ⚠️ varsayılan metin *as enacted*
-- Finlandiya hukuku → **fi-finlex MCP** (`fi-finlex-mcp-rehberi.md`) ⚠️ `statute` ≠ `statute-consolidated`
-- İspanya hukuku → **es-boe MCP** (`es-boe-mcp-rehberi.md`) ⚠️ konsolide ≠ yayımlandığı hâl
-- Fransız hukuku → `france-legislation-rehberi.md` → Légifrance
+- Hollanda hukuku → ArthurLegal MCP (`nl_`) (`nl-rechtspraak-mcp-rehberi.md`) ⚠️ içtihat resmî API'den kelimeyle **aranamaz**
+- Polonya hukuku → ArthurLegal MCP (`pl_`) (`pl-sejm-mcp-rehberi.md`) — statü + değişiklik grafiği
+- Avusturya hukuku → ArthurLegal MCP (`at_`) (`at-ris-mcp-rehberi.md`) ⚠️ Rechtssatz karar değildir
+- İrlanda hukuku → ArthurLegal MCP (`ie_`) (`ie-statutebook-mcp-rehberi.md`) ⚠️ varsayılan metin *as enacted*
+- Finlandiya hukuku → ArthurLegal MCP (`fi_`) (`fi-finlex-mcp-rehberi.md`) ⚠️ `statute` ≠ `statute-consolidated`
+- İspanya hukuku → ArthurLegal MCP (`es_`) (`es-boe-mcp-rehberi.md`) ⚠️ konsolide ≠ yayımlandığı hâl
+- Fransız hukuku → ArthurLegal'da öneki yok: `france-legislation-rehberi.md` → Légifrance (resmî kaynak, yalnız yedek yol); çekilemezse UYARI satırı ve yerel hukukçu görüşü
 - İsviçre hukuku → `switzerland-caselaw-rehberi.md` → OpenCaseLaw.ch MCP + Fedlex
 - AB hukuku → ArthurLegal MCP `eu_search_eu_law` → `eu_get_document_text` (CELEX; yürürlük `eu_get_metadata`; `eurlex-cellar-rehberi.md`)
 - Türk hukuku → ArthurLegal MCP (`tr_`) (MÖHUK m.24 — hukuk seçimi)
+- Listede olmayan ülke: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al."
 
 **Tahkim seat** ayrıca kontrol et: seat ülkesinin tahkim mevzuatı arbitral prosedürü yönetir.
 - İsviçre seat → IPRG m.176-194 (OpenCaseLaw.ch)
@@ -225,7 +226,7 @@ CLAUDE.md `## Outputs` decision tree ile kapat. Yüksek riskli değişiklik coun
 
 ---
 
-## Kaynak katmani — /legal-research (v1.4.0)
+## Kaynak katmanı — /legal-research
 
 > Bu plugin'in skill'leri **birincil kaynagi kendileri uretmez**. Mevzuat,
 > ictihat, emsal sozlesme veya akademik doktrin gerektiginde asagidaki kaynak

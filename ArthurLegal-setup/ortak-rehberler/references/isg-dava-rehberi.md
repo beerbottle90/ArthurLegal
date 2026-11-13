@@ -79,7 +79,7 @@ tr_ictihat_ara(
 |---|---|
 | Maddi zarar (tedavi) | Faturalar, geçici işgöremezlik geliri farkı |
 | Maluliyet (varsa) | Pasif sermaye yöntemi (Yargıtay HGK) |
-| **Destek tazminatı (ölüm)** | (Beklenen yaşam süresi - mevcut yaş) × destek oranı × pasif sermaye katsayısı (Yargıtay HGK 2017/123 metod) |
+| **Destek tazminatı (ölüm)** | (Beklenen yaşam süresi - mevcut yaş) × destek oranı × pasif sermaye katsayısı; güncel Yargıtay hesap yöntemi `tr_ictihat_ara` ile çekilip doğrulanmadan künye yazılmaz |
 | **Manevi tazminat** | Yargıtay HGK eğilim: ölümlü kazada 50K-500K TL aralık, ağırlık takdiri |
 | **Faiz** | Yasal faiz (TBK 88 + 3095 → değişken; 2026'da yıllık ~%X) |
 | Vekalet ücreti | AAÜT — davacı vekiline %12-15 (mahkemece) |

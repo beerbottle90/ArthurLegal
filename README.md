@@ -636,8 +636,8 @@ guides in `knowledge/references/`) and 6 added in v1.6.0 (🇳🇱 NL · 🇵�
 | **Cross-cutting corpora** — precedent, doctrine, screening | 107 countries (signed contracts) · 10 open-access scholarship indexes · official sanctions lists (OFAC, EU, UK OFSI, UN) | **ArthurLegal MCP** (`contracts_`, `scholar_`) · **official sanctions lists** (WebFetch, no key) |
 
 Türkiye currently has the deepest coverage: inside ArthurLegal MCP under the `tr_`
-prefix — courts, legislation, Official Gazette, eight regulators and a 19,498-document
-semantic archive — plus the largest share of the reference layer.
+prefix — courts, legislation, Official Gazette, eight regulators and a semantic archive
+of regulator decisions (current size: `status`) — plus the largest share of the reference layer.
 Switzerland (1,050,000+ decisions and Fedlex legislation) and Azerbaijan (official
 `api.e-qanun.az` with in-force status verification) follow. Seven more European
 jurisdictions are also reached through ArthurLegal MCP, whose `status` tool reports

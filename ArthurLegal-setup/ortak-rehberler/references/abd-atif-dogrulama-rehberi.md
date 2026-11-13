@@ -20,7 +20,7 @@ Free Law Project (kâr amacı gütmeyen, CourtListener'ın işletmecisi) tarafı
 
 1. **Çıkar → doğrula → sonra göster.** Taslak cevaptaki her ABD atfı eyecite ile çıkarılır ve CourtListener'a karşı doğrulanır. Doğrulama başarısız olursa (status 404/400) atıf otorite olarak **sunulmaz**; asistan "bu atfı doğrulayamadım" der ve atfı doğrulanmamış olarak işaretler. Status 300 (birden çok eşleşme) belirsizlik demektir — eşleşme adayları gösterilmeden atıf tekilmiş gibi sunulmaz.
 2. **Deterministik normalizasyon.** Reporter ve mahkeme adları reporters-db / courts-db üzerinden kanonik forma çevrilir; böylece bulgu defterine (ledger) yazılan kayıtlar deterministiktir — aynı atıf iki farklı yazımla iki kayıt üretmez.
-3. **PDF girişinde x-ray QA.** Rekabet Gözcüsü intake hattına giren her PDF, salt-ekleme (append-only) bulgu defterine yazılmadan önce x-ray'den geçirilir. Kötü redaksiyon tespit edilirse belge karantinaya alınır ve tespit defterde ayrı bir olay olarak kaydedilir; redaksiyon altındaki metin bulgu olarak kullanılmaz.
+3. **PDF girişinde x-ray QA.** Dışarıdan gelen her PDF (indirilen dava dosyası, karşı taraf belgesi) analize alınmadan önce x-ray'den geçirilir. Kötü redaksiyon tespit edilirse belge kenara ayrılır ve yalnız "kötü redaksiyon var" tespiti not edilir; redaksiyon altındaki metin bulgu olarak kullanılmaz.
 
 ## Endpoint / URI şeması
 
@@ -96,13 +96,13 @@ WebFetch:
 
 (Not: `courtlistener.com/help/api/rest/citation-lookup/` adresi `wiki.free.law` üzerine 301 ile yönlenir; güncel doküman oradadır.)
 
-**Örnek 3 — Rekabet Gözcüsü intake'inde redaksiyon QA (yerel):**
+**Örnek 3 — PDF girişinde redaksiyon QA (yerel):**
 
 ```
 xray indirilen-dava-dosyasi.pdf
 # → JSON: sayfa numarası, şüpheli kutunun koordinatları, kutunun ALTINDAKİ metin
-# Boş sonuç → belge ledger'a girebilir.
-# Dolu sonuç → karantina + ledger'a "bad redaction detected" olayı.
+# Boş sonuç → belge analize alınabilir.
+# Dolu sonuç → belge kenara ayrılır; yalnız "kötü redaksiyon var" tespiti not edilir.
 ```
 
 ## Türkçe atıf ayrıştırıcısına şablon
@@ -129,7 +129,7 @@ Kurallar:
 - **Lisans:** eyecite, reporters-db, courts-db ve x-ray'in tamamı **BSD-2-Clause** (kaynak depolarında doğrulandı, 13.08.2026). Ticari kullanım ve yeniden dağıtım serbesttir; lisans ve telif notunun korunması gerekir.
 - **API tarafı:** citation-lookup uç noktası token ister; dakikada 60 geçerli atıf throttle'ı ve istek başına 250 atıf limiti vardır. Toplu doğrulama işleri buna göre parçalanmalıdır.
 - **Kapsam sınırı:** CourtListener 404'ü "karar hiç var olmamış" demek değildir — "veritabanında yok" demektir. Bu yüzden 404, atfı çürütmez; yalnızca **doğrulanamadığını** kanıtlar ve doğrulanamayan atıf otorite olarak sunulmaz. Bu ayrım kullanıcıya da aynen aktarılır.
-- **Governance bayrakları (yumuşatılamaz):** (1) doğrulamadan geçmemiş metin hiçbir zaman "doğrulanmış" gibi sunulmaz; (2) x-ray QA'sından geçmemiş PDF Rekabet Gözcüsü bulgu defterine giremez; (3) x-ray'in ortaya çıkardığı, redaksiyon altındaki içerik bulgu veya delil olarak kullanılamaz — yalnızca "kötü redaksiyon var" tespiti kaydedilir; (4) eval verisi atıf kaynağı değildir.
+- **Governance bayrakları (yumuşatılamaz):** (1) doğrulamadan geçmemiş metin hiçbir zaman "doğrulanmış" gibi sunulmaz; (2) x-ray QA'sından geçmemiş PDF analize alınmaz; (3) x-ray'in ortaya çıkardığı, redaksiyon altındaki içerik bulgu veya delil olarak kullanılamaz — yalnızca "kötü redaksiyon var" tespiti kaydedilir; (4) eval verisi atıf kaynağı değildir.
 - **Sürüm bağımlılığı:** reporters-db/courts-db sayıları (1.167 reporter, 2.102 varyasyon) sürüme bağlıdır (v3.2.32 itibarıyla); pin'lenen sürüm ledger meta verisine yazılmalıdır (entegrasyon öncesi doğrulanmalı).
 
 ## İlgili rehberler

@@ -98,7 +98,7 @@ Diller arası soru soracaksan semantik kanal şart.
 
 | Araç | Ne yapar |
 |---|---|
-| `es_search_legislation` | Yerel indekste arama — **künye düzeyi** (başlık, resmî numara, bakanlık, tarih) |
+| `es_search_legislation` | Yerel indekste arama — **künye + yürürlükteki metnin ilk 8.000 karakteri** (başlık, resmî numara, bakanlık, tarih) |
 | `es_get_act` | Konsolide akt künyesi + **ilga/iptal statü bayrakları** |
 | `es_get_act_text` | **Konsolide** tam metin (değişiklikler uygulanmış) |
 | `es_get_document` | Aktın **yayımlandığı hâli** (`consolidated: false` işaretli) |
@@ -109,8 +109,8 @@ Diller arası soru soracaksan semantik kanal şart.
 
 ## 3. Uyulacak kurallar
 
-**a) 🔴 İndeks madde metnini KAPSAMAZ.** Yalnız künye indekslidir (başlık, resmî
-numara, bakanlık, tarih). Sebep: tek bir konsolide akt ~1 milyon karakterdir
+**a) 🔴 İndeks madde metninin tamamını KAPSAMAZ.** İndeks künyeyi (başlık, resmî
+numara, bakanlık, tarih) ve yürürlükteki metnin ilk 8.000 karakterini tutar, gerisini değil. Sebep: tek bir konsolide akt ~1 milyon karakterdir
 (Ley de Sociedades de Capital 960.963). **348 bis maddesinin içindeki bir ifade
 aranarak bulunamaz** — önce aktı bul, sonra `es_get_act_text` ile oku.
 
