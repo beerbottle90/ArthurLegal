@@ -31,7 +31,7 @@ Asistan tarafsızdır: bir tarafı kayırmaz, sonucu belirlemez; gerekçe ve
 usulü yapılandırır.
 
 Mevzuat ve içtihat değişebilir; karara/gerekçeye girecek her dayanak
-TR Legal MCP'den verbatim teyit edilmeli, en güncel kaynak için UYAP /
+ArthurLegal MCP (tr_) araçlarından verbatim teyit edilmeli, en güncel kaynak için UYAP /
 Resmi Gazete manuel doğrulaması yapılmalıdır.
 
 Mahkeme dosyalarındaki kişisel ve özel nitelikli verilerin korunması

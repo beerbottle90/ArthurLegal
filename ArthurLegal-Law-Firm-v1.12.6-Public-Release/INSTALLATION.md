@@ -285,12 +285,12 @@ file numbers become labels such as `{{KİŞİ-01}}` or `{{ŞİRKET-02}}`, and th
 an encrypted vault on your computer. Claude receives only the masked text; its answer is turned
 back into real names locally and opened in Word or as a UDF file. The app works offline.
 
-> ⚠️ **Claude Desktop for Windows only.** It does not work in claude.ai on the web or in the
+> ⚠️ **Claude Desktop only** (Windows; on a Mac, Apple Silicon and macOS 14 or later). It does not work in claude.ai on the web or in the
 > mobile apps: remote connectors on claude.ai are called from Anthropic's cloud, which cannot
 > reach a program on your computer. Open your ArthurLegal Project from Claude Desktop; Projects
 > are shared between web and desktop.
 
-**Requirements:** Windows 10 or 11 (64-bit) · [Claude Desktop](https://claude.ai/download) ·
+**Requirements:** Windows 10 or 11 (64-bit), or a Mac with Apple Silicon and macOS 14 or later · [Claude Desktop](https://claude.ai/download) ·
 about 4 GB free disk · 8 GB RAM recommended.
 
 1. **Download.** **[⬇ Click here to download the ArthurMask installer](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (Windows, about 1 GB).

@@ -41,6 +41,53 @@ DESTEK_EPOSTA = "ertug@datsproject.io"
 # MCP_URL'deki dizin profilinin yargı çevresi sayısı (LEI, doktrin ve sözleşme arşivi yargı çevresi değildir); bağlayıcının
 # dizin ilanı da bu sayıyı yazar. Haftalık dizin denetimi (tests/dizin_denetimi.py) canlı uçtaki öneklerle karşılaştırır.
 YARGI_CEVRESI = 12
+# Dizin profilinin araç sayısı ve tam uçta olup dizinde olmayan araçlar (arthurlegal-mcp server.py
+# DIRECTORY_EXCLUDED_PREFIXES, DIRECTORY_EXCLUDED_TOOLS, build_directory). Tam uç 132 araç; dizin 107.
+DIZIN_ARAC = 107
+DIZIN_DISI = "`tkgm_`, `hesap_`, `tr_resmi_gazete_ek_sayfa`, `al_masada_basla` ve `al_masaya_yaz`"
+
+# Ana beceri Law Firm SYSTEM_PROMPT'undan üretilir; talimat tam uç (/mcp) için yazılmıştır. Eklenti dizin profiline
+# bağlandığı için tam uca ait cümleler burada dizine göre değiştirilir. Her kalıp metinde birebir bulunmalıdır:
+# talimat değişip kalıp tutmazsa üretim durur (dizinde olmayan aracı öğreten metin sessizce eklentiye girmesin).
+DIZIN_UYARLAMALARI: List[Tuple[str, str]] = [
+    ("`https://arthurlegal-mcp.fly.dev/mcp`, auth yok, 132 araç, 17 önek.",
+     "`%s` (bu eklentinin bağlantısı, Claude dizin profili), auth yok, %d araç, 15 önek; tam uçtaki %s bu "
+     "profilde yoktur." % (MCP_URL, DIZIN_ARAC, DIZIN_DISI)),
+    ("`tr_` 24 (bölüm 7)", "`tr_` 23 (bölüm 7; `tr_resmi_gazete_ek_sayfa` dizinde yok)"),
+    (", `tkgm_` 17 (tapu-kadastro, madde 16), `hesap_` 5 (avukatlık asgari ücreti, yargı harcı, gider avansı, faiz "
+     "dökümü, kıdem ve ihbar tazminatı); artı `status` ve ArthurLegal Masası'nın `al_masasi`, `al_masada_basla`, "
+     "`al_masaya_yaz` araçları.",
+     "; artı `status` ve ArthurLegal Masası'nın `al_masasi` aracı (dizinde masa cevabı sohbette kalır)."),
+    ("hesabında tutarı ve oranı kendin hesaplama: `hesap_kalemleri` (işlem menüsü), `hesap_vekalet_ucreti`, "
+     "`hesap_yargi_harci`, `hesap_faiz`, `hesap_iscilik_alacagi` araçlarını kullan ve aracın tazelik satırını "
+     "(kaynak Resmî Gazete tarih ve sayısı, son kontrol) cevapta aynen yaz; durum `guncel` değilse toplamı kesin "
+     "sonuç gibi sunma.",
+     "hesabında tutarı ve oranı kendin hesaplama. Hesap kartları (`hesap_` araçları) bu eklentinin bağlantısında "
+     "yoktur: ArthurLegal masaüstü kurulumu varsa yerel `arthurlegal-yerel` sunucusundaki `hesap_kalemleri` "
+     "(işlem menüsü), `hesap_vekalet_ucreti`, `hesap_yargi_harci`, `hesap_faiz`, `hesap_iscilik_alacagi` "
+     "araçlarını kullan ve aracın tazelik satırını (kaynak Resmî Gazete tarih ve sayısı, son kontrol) cevapta aynen "
+     "yaz; durum `guncel` değilse toplamı kesin sonuç gibi sunma. Yerel sunucu yoksa toplam verme; "
+     "`UYARI: veri çekilemedi, teyidiniz gerekli: https://www.barobirlik.org.tr/` (avukatlık ücreti) ya da "
+     "`UYARI: veri çekilemedi, teyidiniz gerekli: https://www.resmigazete.gov.tr/` (harç, faiz, tavan) yaz."),
+    ("(hesap için önce `hesap_vekalet_ucreti`)",
+     "(masaüstü kurulumunda hesap için önce yerel `hesap_vekalet_ucreti`)"),
+    ("`tr_resmi_gazete_ek_sayfa` (`url`, `sayfa`: ek PDF'inin tek sayfası, tarife ve cetveller için; taranmış sayfa "
+     "görüntü döner)",
+     "`tr_resmi_gazete_ek_sayfa` (`url`, `sayfa`: ek PDF'inin tek sayfası, tarife ve cetveller için; taranmış sayfa "
+     "görüntü döner; yalnız masaüstü kurulumunun yerel sunucusunda, bu eklentide yoktur: ekin bağlantısını ver, "
+     "içeriğini yazma)"),
+    ("16. `tkgm_`: ",
+     "16. `tkgm_` (bu eklentinin bağlantısında yoktur; yalnız masaüstü kurulumunda, en baştaki eklenti farklarının "
+     "4. maddesine göre): "),
+]
+
+
+def dizine_uyarla(metin: str) -> str:
+    for eski, yeni in DIZIN_UYARLAMALARI:
+        if metin.count(eski) != 1:
+            raise EklentiHata("dizin uyarlaması tutmadı (%d eşleşme): %s" % (metin.count(eski), eski[:70]))
+        metin = metin.replace(eski, yeni)
+    return metin
 
 PAKET = re.compile(r"^ArthurLegal-Law-Firm-v(\d+\.\d+\.\d+)-Public-Release$")
 SURUM = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
@@ -154,8 +201,10 @@ Talimat claude.ai Project için yazıldığından bu eklentideki farklar şunlar
 2. Metinde geçen `~/.claude/plugins/config/...` yolları bu eklentide yoktur; büro bilgisi büro profilindedir. Profil
    doldurulmamışsa varsayım yapma, eksik bilgiyi kullanıcıya sor.
 3. Araştırma araçları (`tr_`, `az_`, `eu_`, `uk_` ... önekli) ve `status` eklentinin ArthurLegal MCP bağlantısından
-   gelir ({MCP_URL}). ArthurLegal masaüstü kurulumu varsa aynı araçlar yerel `arthurlegal-yerel` sunucusundan da
-   gelir; o durumda yerel sunucudakini kullan.
+   gelir ({MCP_URL}). Bu bağlantı Claude dizin profilidir ({DIZIN_ARAC} araç); şu araçlar burada yoktur:
+   {DIZIN_DISI}. ArthurLegal masaüstü kurulumu varsa araştırma araçları da bunlar da yerel
+   `arthurlegal-yerel` sunucusundan gelir; o durumda yerel sunucudakini kullan. Yerel sunucu yoksa aşağıdaki
+   metinde bu araçlar geçse de onları çağırma; o işte veri çekilemediği için UYARI satırı yazılır.
 4. Tapu, parsel ve harç işlerinde ArthurLegal kurulumunun yerel `arthur-tapu` araçlarını kullan (`parsel_sorgula`,
    `konumdan_parsel`, `yer_bul`); sohbetteki ilk canlı çağrının onay kartını olduğu gibi göster. `tkgm_` önekli uzak
    araçlar bu eklentide yoktur ve kullanılmaz. `arthur-tapu` kurulu değilse taşınmaz ya da parsel bilgisini uydurma;
@@ -169,7 +218,7 @@ Talimat claude.ai Project için yazıldığından bu eklentideki farklar şunlar
 ---
 
 """
-    return on + beceri_metni(govde.strip(), adlar, rehberler) + "\n"
+    return on + beceri_metni(dizine_uyarla(govde.strip()), adlar, rehberler) + "\n"
 
 
 def beceri_dosyasi(alan: str, skill: str, govde: str, alan_notu: str, adlar: set, rehberler: set) -> str:

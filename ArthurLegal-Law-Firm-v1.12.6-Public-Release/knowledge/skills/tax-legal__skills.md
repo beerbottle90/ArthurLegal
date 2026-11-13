@@ -16,7 +16,7 @@
 
 ---
 
-## Kaynak katmani — /legal-research (v1.4.0)
+## Kaynak katmanı — /legal-research
 
 > Bu plugin'in skill'leri **birincil kaynagi kendileri uretmez**. Mevzuat,
 > ictihat, emsal sozlesme veya akademik doktrin gerektiginde asagidaki kaynak
@@ -165,10 +165,10 @@ user-invocable: true
 
 ## Amaç
 
-Vergi mevzuatında belirsiz bir konuda **bağlayıcı yorum** almak için GİB'den özelge talep edilir (VUK m. 413 — mükelleflerin izahat talebi; 395 Sıra No.lu VUK Genel Tebliği (doğrulanmadı)).
+Vergi mevzuatında belirsiz bir konuda idarenin **yazılı görüşünü** almak için GİB'den özelge talep edilir (VUK m. 413 — mükelleflerin izahat talebi; 395 Sıra No.lu VUK Genel Tebliği (doğrulanmadı)). Özelge idarenin görüşüdür; mükellefi ve yargıyı bağlamaz. Yetkili makamın mükellefe yazıyla verdiği izahat yanlış çıkarsa vergi cezası kesilmez ve gecikme faizi hesaplanmaz (VUK m. 369).
 
 **Önemli:**
-- GİB özelgesi **sadece talep eden mükellefi** bağlar (kişiye özel)
+- Özelge **talep eden mükellefin** somut durumu için verilir; VUK m. 369 koruması yalnız onun bakımından doğar (başka mükellef aynı özelgeye dayanamaz)
 - Süre: ortalama 6-9 ay
 - Olumsuz cevap halinde **idari itiraz yolu var değil**, ama **dava açılabilir**
 - **Risk:** GİB olumsuz cevap verirse pozisyon zayıflar

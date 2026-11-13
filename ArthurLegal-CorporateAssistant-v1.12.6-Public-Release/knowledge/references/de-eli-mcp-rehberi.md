@@ -23,7 +23,18 @@
 | **Transport** | Streamable HTTP (`/mcp`, SSE-or-JSON) |
 | **Auth** | **Yok** (upstream'lerin hepsi public) |
 | **Sunucu kaynağı** | `github.com/matematicsolutions/de-eli-mcp` |
-| **Doğrulanmış sürüm** | `de-eli-mcp` v3.4.6 — 15 araç |
+| **Doğrulanmış sürüm** | `de-eli-mcp` 0.5.4 — 15 araç. ArthurLegal MCP'deki `de_` önekinin 17 aracı bu 15 araç ile `de-gii-mcp`'nin (`gesetze-im-internet.de`) `de_norm_getir` ve `de_gesetz_ara` araçlarıdır. |
+
+> 🔴 **Kanun maddesi için önce `de_norm_getir`.** NeuRIS'in mevzuat kümesi henüz
+> eksiktir ve temel kanunları (BGB, HGB, StGB, ZPO, StPO, AO …) taşımaz; `de_search`
+> bunlar için boş dönebilir. Federal bir kanunun maddesini (`§ 823 BGB`, `Art. 1 GG`)
+> `de_norm_getir(kanun, norm)` ile `gesetze-im-internet.de`'den yürürlükteki hâliyle
+> çek; kısaltmasını bilmediğin kanunu önce `de_gesetz_ara(sorgu)` ile bul. Atıfta
+> yanıttaki `citation` ve `source_url` alanlarını birebir kullan:
+> `[DE, citation, source_url, GG.AA.YYYY]`. Metin konsolidedir, resmî (otantik) metin
+> yalnız Bundesgesetzblatt'tır. NeuRIS araçları (`de_search`, `de_get_act`,
+> `de_get_text`) ELI ile künye, sürüm ve LegalDocML metni gerektiğinde kullanılır;
+> onların atıf etiketi `[DE, human_readable_citation, eli_uri, GG.AA.YYYY]`'dir.
 
 **claude.ai kurulumu:** Settings → Connectors → *Add custom connector* → MCP
 endpoint URL'sini gir → auth "None". Araçlar bağlantı sonrası otomatik keşfedilir.
@@ -44,7 +55,7 @@ göre değişmez.
 |---|---|---|
 | **NeuRIS** (`rechtsinformationen.bund.de`, BMJV) | Federal mevzuat | **RESMÎ ama BETA** — mevzuat kümesi **eksik** (~2.413 akt). Her yanıt bir `dataset_note` taşır. |
 | **rechtsprechung-im-internet.de** (BMJ/juris) | BVerfG, BGH, BAG, BFH, BVerwG, BSG, BPatG | **RESMÎ ve bu yedi mahkeme için TAM** (~83.300 karar) |
-| **Open Legal Data** | ~424.000 karar, ~1.119 mahkeme, 16 eyalet dahil | **TOPLULUK agregatörü** (ODbL v1.0), resmî servis **değil**. Buradaki tek tam metin araması. |
+| **Open Legal Data** | ~424.000 karar, ~1.119 mahkeme, 16 eyalet dahil | **TOPLULUK agregatörü** (ODbL v1.0), resmî servis **değil**. Eyalet mahkemeleri için tek tam metin araması; federal yüksek mahkemelerde NeuRIS'in `de_case_search`'ü de tam metin arar ve resmîdir, onu öne al. |
 | **Bundestag DIP** | ~287.000 Drucksache (Gesetzesbegründungen dahil), genel kurul tutanakları, yasama süreçleri | Resmî parlamento kaydı |
 
 ---

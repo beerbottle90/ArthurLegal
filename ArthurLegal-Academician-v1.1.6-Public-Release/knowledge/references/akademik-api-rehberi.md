@@ -22,11 +22,12 @@ programatiktir. Bu, sıfır-halüsinasyon kuralını **fiilen uygulanabilir** k�
 | **Semantic Scholar** | Makale metadata, atıf/referans grafiği | Gerekmez (anahtarla yüksek limit) | `[Semantic Scholar — ID — GG.AA.YYYY]` |
 | **DOAJ** | Denetlenmiş açık erişim dergiler | Gerekmez | `[DOAJ — ISSN — GG.AA.YYYY]` |
 | **ORCID** | Araştırmacı kimliği ve eser listesi | Public API ücretsiz | `[ORCID — iD — GG.AA.YYYY]` |
-| **EUR-Lex** | AB hukuku (CELEX no ile) | Gerekmez | `[EUR-Lex — CELEX — GG.AA.YYYY]` |
+| **EUR-Lex** | AB hukuku (CELEX no ile); birincil yol ArthurLegal MCP `eu_` araçları | Gerekmez | `[EUR-Lex — CELEX — GG.AA.YYYY]` |
 | **HUDOC** | AİHM kararları (App. no ile) | Gerekmez | `[HUDOC — App. no — GG.AA.YYYY]` |
 
 > **HUDOC ve CURIA'nın resmî belgelenmiş API durumu net değildir; doğrulanmalıdır.**
-> AB hukukunda en sağlam programatik yol EUR-Lex'tir (CELEX / SPARQL-Cellar).
+> AB hukukunda birincil yol ArthurLegal MCP `eu_` araçlarıdır (`eu_search_eu_law` →
+> `eu_get_metadata` / `eu_get_document_text`, CELEX ile); MCP yoksa EUR-Lex CELLAR (SPARQL).
 
 ---
 

@@ -124,10 +124,10 @@ Güney Afrika ve pek çok yabancı **birincil** kaynak için connector
 **yoktur** (Almanya için vardır: `de_norm_getir`, `de_gesetz_ara`). Bu durumda: "resmî metin çekilmedi" de, literatürü **şerh/yorum**
 olarak atıfla — resmî kaynağa bakılmış gibi **ima etme**.
 
-## 5. 🔒 Gizlilik sınırı — üç MCP de PUBLIC
+## 5. 🔒 Gizlilik sınırı — `az_`, `scholar_` ve `contracts_` araçları PUBLIC
 
-e-qanun, LexScholar ve ResourceContracts **kamuya açık kaynak arama
-araçlarıdır.** Bunlara **gönderilmez**:
+ArthurLegal MCP'nin `az_` (e-qanun), `scholar_` (LexScholar) ve `contracts_` (ResourceContracts)
+araçları **kamuya açık kaynaklarda arama yapar.** Bunlara **gönderilmez**:
 
 - Kuruma ait gizli sözleşme taslağı veya kloz metni
 - Müzakere pozisyonu, iç fiyat/eşik bilgisi

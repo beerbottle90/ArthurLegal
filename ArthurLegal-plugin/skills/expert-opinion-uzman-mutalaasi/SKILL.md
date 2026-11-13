@@ -95,7 +95,7 @@ Karşı/mahkeme bilirkişi raporu zayıfsa, **uzman görüşü** o raporu çür�
 
 ---
 
-## Kaynak katmani — /legal-research (v1.4.0)
+## Kaynak katmanı — /legal-research
 
 > Bu plugin'in skill'leri **birincil kaynagi kendileri uretmez**. Mevzuat,
 > ictihat, emsal sozlesme veya akademik doktrin gerektiginde asagidaki kaynak
