@@ -32,7 +32,7 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır; adlarında tire ve
 sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
 **ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
-(ör. "ArthurLegal 3.1.0"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
+(ör. "ArthurLegal 3.2.1"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
 ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.2.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
 kendi kısayolunun adı düzeltilir (eski "Arthur Mask" adı ve sürümsüz ad gider), içeriğine dokunulmaz.
 
