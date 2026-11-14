@@ -1,7 +1,7 @@
 # firm-operations - Skill Referans Kitapçığı
 
-> Alan: Büro operasyonları — müvekkil intake, çıkar çatışması, MASAK, KVKK, ücret, vekalet, yapay zekâ politikası
-> Toplam skill: 11
+> Alan: Büro operasyonları — müvekkil intake, çıkar çatışması, MASAK, KVKK, ücret, vekalet, yapay zekâ politikası, müvekkil bilgilendirme
+> Toplam skill: 12
 > Kullanım: /{plugin}:{skill-adı} komutunu yaz, aşağıdaki ilgili bölümü uygula.
 > Yeni müvekkil akışı: new-client-intake → conflict-check → masak-kontrol → sanctions-check → kvkk-aydinlatma → fee-agreement → vekalet-sablon → matter-open. Ay sonu: monthly-billing.
 > Madde atıfları 24.09.2026'da `tr_mevzuat_madde_getir` ile doğrulandı; her skill'in "Dayanak" bloğu atfın tam künyesini verir. "doğrulanmadı" yazan bilgi ezberden tamamlanmaz.
@@ -15,6 +15,7 @@
 - /firm-operations:masak-kontrol
 - /firm-operations:matter-open
 - /firm-operations:monthly-billing
+- /firm-operations:muvekkil-bilgilendirme
 - /firm-operations:new-client-intake
 - /firm-operations:sanctions-check
 - /firm-operations:vekalet-sablon
@@ -829,6 +830,84 @@ Kararla karşı tarafa yüklenen vekâlet ücreti avukata aittir; iş sahibinin 
 - Her müvekkilin tevkifat yapacağını varsaymak
 - TTK m. 1530'u doğrulamadan avukatlık ücretine uygulamak
 - Makbuz açıklamasına dosya ayrıntısı yazmak
+
+---
+
+## /firm-operations:muvekkil-bilgilendirme
+
+---
+name: muvekkil-bilgilendirme
+description: >
+  Müvekkile dosyanın durumunu sade dille anlatan bilgilendirme yazısı: ne oldu, ne anlama geliyor,
+  sırada ne var, sizden hangi karar ya da belge bekleniyor. Avukatın onayından geçmeden gönderilmez;
+  müvekkil adları ArthurMask etiketleriyle korunur, belge Word olarak avukata teslim edilir. Portal ya
+  da müvekkile doğrudan açılan bir yüzey değildir.
+user-invocable: true
+---
+
+# Müvekkil Bilgilendirme Yazısı
+
+## Tetikleyici
+
+Duruşma, tebligat, karar, bilirkişi raporu ya da karşı tarafın yeni bir adımı sonrası avukat müvekkile durumu
+anlatmak istediğinde; ya da müvekkil "dosyam ne durumda?" diye sorduğunda.
+
+## Dayanak (tr_mevzuat_madde_getir ile doğrulandı — 14.11.2026)
+
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 36: avukat, görevi dolayısıyla öğrendiklerini açığa vuramaz.
+  Yazı yalnız müvekkile gider; üçüncü kişiye, gruba ya da paylaşılan bir sayfaya konmaz.
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 55: iş elde etmek için reklam sayılabilecek teşebbüs yasaktır.
+  Yazı mevcut müvekkile dosyası hakkında bilgi verir; başka hizmetlerin tanıtımını, başarı vaadini ya da kampanya dilini içermez.
+
+## ADIM 0 — Girdi
+
+1. **Dosya:** ArthurMask'li belge ya da avukatın özeti. Gerçek ad ve dosya numarası yazılmaz; etiketler (`{{KİŞİ-01}}`,
+   `{{DOSYA_NO-01}}`) korunur, teslimde yerelde çözülür.
+2. **Son gelişme:** ne oldu, hangi tarihte (tebliğ, duruşma, karar, rapor).
+3. **Sırada ne var:** sonraki adım ve tarihi. Süre hesabı yapılmaz: avukatın girdiği son gün yazılır; avukat vermediyse
+   `[avukat dolduracak]` bırakılır.
+4. **Müvekkilden beklenen:** karar, belge, ödeme ya da bilgi. Yoksa "sizden bir şey beklenmiyor" yazılır.
+
+Eksik varsa **seçenekli sorun** (ör. "Müvekkilden karar mı bekleniyor, yalnız bilgi mi veriyoruz?").
+
+## ADIM 1 — Üslup
+
+- Hukukçu olmayan okura yazın: terim kullanmanız gerekiyorsa aynı cümlede açıklayın ("istinaf, yani bir üst mahkemeye başvuru").
+- Kısa paragraflar, en çok bir sayfa. İlk cümle sonucu söyler.
+- Sınırları yazın: kesin olmayanı kesin gibi anlatmayın; sonuç vaadi yok.
+- Tutarları (harç, masraf, talep edilen bedel) ayrı bir satırda, kaynağıyla verin; hesap gerekiyorsa hesap kartlarından ve
+  tazelik satırıyla.
+- Kanun maddesi gerekiyorsa `tr_mevzuat_madde_getir` ile çekin; müvekkile madde numarası yerine ne anlama geldiğini yazın.
+
+## ADIM 2 — Çıktı
+
+```markdown
+TASLAK — AVUKAT ONAYI ALINMADAN GÖNDERİLMEZ
+
+Sayın {{KİŞİ-01}},
+
+[Bir cümlelik sonuç: dosyanızda ne oldu.]
+
+**Ne oldu:** [tarih — gelişme, sade dille]
+**Ne anlama geliyor:** [iki üç cümle; kesin olmayan kısım açıkça belirtilir]
+**Sırada ne var:** [adım — tarih ya da [avukat dolduracak]]
+
+**Sizden beklenen:** [karar / belge / bilgi — son tarihiyle] · ya da: Şu an sizden bir şey beklenmiyor.
+
+[Tutar varsa ayrı satır: kalem — tutar — kaynak]
+
+Sorularınız için bana ulaşabilirsiniz.
+[Avukat adı]
+```
+
+Teslim: `arthur_mask_teslim` ile Word olarak avukatın bilgisayarına; etiketler orada çözülür. Gönderimi avukat yapar.
+
+## Hatalar
+
+- Avukat onayı olmadan müvekkile göndermek ya da göndermeyi önermek
+- Süre ya da son günü kendiniz hesaplayıp yazmak
+- Başarı vaadi, "kesin kazanırız" gibi ifade, başka hizmetin tanıtımı
+- Gerçek ad ya da dosya numarasını etiket yerine yazmak
 
 ---
 
