@@ -33,7 +33,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.2.1"
+SURUM = "3.3.0"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -76,13 +76,14 @@ _PARCALAR = {
     "ISTEK": ("tasarim", "istek.js"),
     "MD": ("tasarim", "md.js"),
     "MODEL": ("tasarim", "model-onerisi.json"),
+    "AKIS": ("tasarim", "is-akislari.json"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }
 _YER_TUTUCU = re.compile(r"/\*AL:([A-Z]+)\*/|<!--AL:([A-Z]+)-->")
 
 # Masanın ekranları; al_masasi(bolum=...) bunlardan biriyle açılır.
-EKRANLAR = ("sohbet", "mevzuat", "ictihat", "hesap", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp",
+EKRANLAR = ("sohbet", "mevzuat", "ictihat", "hesap", "akislar", "izleme", "gecmis", "tapu", "beyin", "mask", "uyap", "donna", "mcp",
             "model")
 
 
@@ -538,11 +539,28 @@ def _baslangic_tanimi() -> Dict[str, Any]:
         "description": (
             "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının her yeni sorusunda İLK iş "
             "bunu çağırın: masa soruyu ve 'Claude çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
-            "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın."),
+            "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. "
+            "Birden çok adımlı işte plan'ı yazın (masada planlanan adımlar olarak görünür). Cevabı değiştiren bir olgu "
+            "belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) araştırmadan ÖNCE sorular ile en çok "
+            "3 seçenekli soru sorun: masa bunları kart olarak gösterir. Soru sorduysanız araştırmaya başlamayın; sohbete "
+            "yalnız 'Sorular masada.' yazıp turu bitirin. Kullanıcının seçimi sonraki mesajla gelir; o zaman bunu özgün "
+            "soru ve planla yeniden çağırıp araştırın. Gereksiz soru sormayın: olgular yeterliyse doğrudan araştırın."),
         "inputSchema": {
             "type": "object",
-            "properties": {"soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."},
-                           "model": dict(MODEL_GIRDISI)},
+            "properties": {
+                "soru": {"type": "string", "description": "Kullanıcının sorusu, kendi sözleriyle."},
+                "plan": {"type": "array", "maxItems": PLAN_AZAMI, "items": {"type": "string"},
+                         "description": "Yapacağınız araştırmanın adımları, kısa ve sırayla (ör. 'TBK m. 352'yi getir')."},
+                "sorular": {
+                    "type": "array", "maxItems": SORU_AZAMI,
+                    "description": "Araştırmadan önce sorulacak netleştirme soruları; yalnız cevabı değiştiren olgu için.",
+                    "items": {"type": "object", "properties": {
+                        "soru": {"type": "string"},
+                        "secenekler": {"type": "array", "minItems": 2, "maxItems": 4, "items": {"type": "string"}},
+                        "onerilen": {"type": "integer", "minimum": 0,
+                                     "description": "Önerdiğiniz seçeneğin sırası (0'dan); öneriniz yoksa vermeyin."}},
+                        "required": ["soru", "secenekler"]}},
+                "model": dict(MODEL_GIRDISI)},
             "required": ["soru"],
         },
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True,
@@ -558,11 +576,52 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     out = dict(masa)
     out["bolum"] = "sohbet"
     out["basla"] = {"soru": _kisalt(soru, 200)}
+    plan, sorular = plan_ve_sorular(girdi)
+    if plan:
+        out["basla"]["plan"] = plan
+    if sorular:
+        out["basla"]["sorular"] = sorular
     if isinstance(girdi.get("model"), str):   # kullanıcı sohbet içinde model değiştirmiş olabilir: masa güncel kalır
         out["model"] = model_degerlendir(girdi["model"])
-    out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabı "
-                  "al_masaya_yaz ile teslim edin ve sohbete yalnız 'Cevap masada.' yazın.")
+    if sorular:
+        out["not"] = ("Sorular masada. Araştırmaya başlamayın; sohbete yalnız 'Sorular masada.' yazıp turu bitirin. "
+                      "Kullanıcının seçimi sonraki mesajla gelir; o zaman al_masada_basla'yı özgün soru ve planla yeniden "
+                      "çağırıp araştırın, cevabı al_masaya_yaz ile teslim edin.")
+    else:
+        out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabı "
+                      "al_masaya_yaz ile teslim edin ve sohbete yalnız 'Cevap masada.' yazın.")
     return out
+
+
+PLAN_AZAMI = 6
+SORU_AZAMI = 3
+
+
+def plan_ve_sorular(girdi: Dict[str, Any]) -> "tuple[List[str], List[Dict[str, Any]]]":
+    """al_masada_basla girdisindeki plan ve netleştirme soruları, temizlenmiş. Bozuk öğe atlanır, hata değildir:
+    masa soruyu her durumda gösterir. Sınırlar: plan 6 adım, 3 soru, soru başına 2-4 seçenek."""
+    plan = []
+    for p in girdi.get("plan") or []:
+        if isinstance(p, str) and p.strip():
+            plan.append(_kisalt(p.strip(), 140))
+        if len(plan) == PLAN_AZAMI:
+            break
+    sorular: List[Dict[str, Any]] = []
+    for s in girdi.get("sorular") or []:
+        if not isinstance(s, dict) or not isinstance(s.get("soru"), str) or not s["soru"].strip():
+            continue
+        secenekler = [_kisalt(x.strip(), 120) for x in (s.get("secenekler") or [])
+                      if isinstance(x, str) and x.strip()][:4]
+        if len(secenekler) < 2:
+            continue
+        o: Dict[str, Any] = {"soru": _kisalt(s["soru"].strip(), 200), "secenekler": secenekler}
+        oner = s.get("onerilen")
+        if isinstance(oner, int) and not isinstance(oner, bool) and 0 <= oner < len(secenekler):
+            o["onerilen"] = oner
+        sorular.append(o)
+        if len(sorular) == SORU_AZAMI:
+            break
+    return plan, sorular
 
 
 def teslim_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
@@ -647,8 +706,11 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional[
 # UYAP işi hiç yazılmaz. Günlüğe sorgu metni yazılmaz.
 GECMIS_GUN = 90
 GECMIS_AZAMI = 2000
-GECMIS_KATEGORILER = ("mevzuat", "ictihat", "atif", "claude")
-GECMIS_TURLERI = ("mevzuat-liste", "kurum", "madde", "atif", "ictihat", "claude", "cevap")
+GECMIS_KATEGORILER = ("mevzuat", "ictihat", "atif", "claude", "akis")
+# Kaydedilmiş iş akışları (kategori "akis") geçmiş değildir: süre ve sayı sınırına girmez, "temizle" onları silmez;
+# yalnız kullanıcı tek tek siler.
+AKIS_AZAMI = 200
+GECMIS_TURLERI = ("mevzuat-liste", "kurum", "madde", "atif", "ictihat", "claude", "cevap", "akis")
 _GECMIS_ADIM = ("tamam", "uyar", "hata")
 _GECMIS_KAYIT_SINIRI = 600_000   # bayt; anlık sonuç bundan büyükse kayıt sonuçsuz saklanır
 _GECMIS_SORGU_SINIRI = 20_000
@@ -667,7 +729,8 @@ def gecmis_araci() -> Dict[str, Any]:
         "description": (
             "ArthurLegal Masası'nda yapılan işlerin bu bilgisayardaki geçmişi (%d gün): mevzuat ve kurum kararı "
             "aramaları, getirilen maddeler, içtihat aramaları, atıf teyitleri, masadan Claude'a gönderilen "
-            "istekler ve masaya teslim edilen cevaplar, o anki sonuçlarıyla. islem: listele (kategori, ara), getir (id), kaydet (kayit; masa "
+            "istekler ve masaya teslim edilen cevaplar, o anki sonuçlarıyla; ayrıca kullanıcının kaydettiği iş "
+            "akışları (kategori akis: süresiz, temizle onları silmez). islem: listele (kategori, ara), getir (id), kaydet (kayit; masa "
             "kullanır), sil (id), temizle. Kullanıcı masada daha önce baktığı bir şeyi sorarsa listele ve getir "
             "ile bakın; kayıttaki sonuç o günkü haldir, güncel hali için kaynağı yeniden sorgulayın. kaydet, sil ve "
             "temizle'yi yalnız kullanıcı isterse çağırın." % GECMIS_GUN),
@@ -758,8 +821,15 @@ class Gecmis:
     def _buda(self, dizin: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         sinir = (datetime.now() - timedelta(days=self.gun)).strftime("%Y%m%d-%H%M%S")
         kalan, silinecek = [], []
+        gecmis_sayisi = akis_sayisi = 0
         for k in dizin:
-            (kalan if k["id"][:15] >= sinir and len(kalan) < self.azami else silinecek).append(k)
+            if k.get("kategori") == "akis":
+                tut = akis_sayisi < AKIS_AZAMI
+                akis_sayisi += tut
+            else:
+                tut = k["id"][:15] >= sinir and gecmis_sayisi < self.azami
+                gecmis_sayisi += tut
+            (kalan if tut else silinecek).append(k)
         for k in silinecek:
             try:
                 os.remove(self._yol(k["id"] + ".json"))
@@ -911,16 +981,24 @@ class Gecmis:
         return {"silindi": silindi}
 
     def temizle(self) -> Dict[str, Any]:
+        """Geçmişi siler; kaydedilmiş iş akışları kalır."""
         n = 0
+        korunan = [k for k in self._dizin() if k.get("kategori") == "akis"]
+        koru = {k["id"] + ".json" for k in korunan}
         try:
             adlar = os.listdir(self.klasor)
         except OSError:
             adlar = []
         for ad in adlar:
+            if ad in koru:
+                continue
             if ad.endswith(".json") and (ad == "dizin.json" or _GECMIS_KIMLIK.match(ad[:-5])):
                 try:
                     os.remove(self._yol(ad))
                     n += ad != "dizin.json"
                 except OSError:
                     pass
+        if korunan:
+            self._yaz("dizin.json", {"surum": 1, "kayitlar": korunan})
+            return {"silinen": n, "korunan_is_akisi": len(korunan)}
         return {"silinen": n}

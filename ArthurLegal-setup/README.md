@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.2.1
+# ArthurLegal Setup v3.3.0
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
@@ -32,8 +32,8 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır; adlarında tire ve
 sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
 **ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
-(ör. "ArthurLegal 3.2.1"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
-ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.2.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
+(ör. "ArthurLegal 3.3.0"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
+ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.3.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
 kendi kısayolunun adı düzeltilir (eski "Arthur Mask" adı ve sürümsüz ad gider), içeriğine dokunulmaz.
 
 Bileşenler:
@@ -155,7 +155,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 134 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v3.2.1         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python yayin/yayinla.py v3.3.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta

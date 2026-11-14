@@ -126,6 +126,9 @@ body { background: var(--zemin); }
 .eylem-karti .simge svg { width: 18px; height: 18px; }
 .eylem-karti b { font-weight: 600; font-size: 15px; }
 .eylem-karti .ne { font-size: 13px; color: var(--ikincil); }
+.akis-karti { cursor: default; }
+.akis-karti .ne { flex: 1; }
+.akis-karti button { margin-top: 6px; }
 
 .form {
   display: flex;
@@ -191,6 +194,36 @@ body { background: var(--zemin); }
 }
 .teyit-satiri .ne { font-weight: 600; white-space: nowrap; }
 .teyit-satiri .baslik-k { flex: 1 1 200px; min-width: 0; color: var(--ikincil); font-size: 14px; }
+.teyit-oge { display: flex; flex-direction: column; gap: 6px; }
+/* Plan ve netleştirme kartı */
+.plan { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: var(--k-grup); background: var(--grup); }
+.plan ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.plan li.bitti { color: var(--ikincil); text-decoration: line-through; }
+.netlestirme fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.netlestirme legend { font-weight: 600; margin-bottom: 4px; padding: 0; }
+.secenek-satiri { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 12px; border-radius: var(--k-alan);
+  border: 0.5px solid var(--cizgi-guclu); background: var(--yuzey); cursor: pointer; }
+.secenek-satiri:has(input:checked) { border-color: var(--birincil); background: var(--secili); }
+.secenek-satiri input { accent-color: var(--birincil); margin: 0; flex: none; }
+.secenek-satiri .yazi { flex: 1; min-width: 0; }
+.diger-dugme { display: none !important; }
+.masa.telefon .diger-dugme { display: flex !important; }
+.masa.telefon nav:not(.hepsi) .git.telefonda-gizli:not([aria-current]) { display: none; }
+.masa.telefon nav .bolum-adi { display: none; }
+.secim-alani { display: flex; flex-direction: column; gap: 6px; }
+.secim-alani .etiket-kucuk { font-size: 12px; font-weight: 600; color: var(--ikincil); }
+.bu-cevapta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.bu-cevapta .etiket-kucuk { font-size: 12px; font-weight: 600; color: var(--ikincil); margin-right: 2px; }
+.bu-cevapta .hap { display: inline-flex; padding: 2px 10px; border-radius: var(--k-hap); background: var(--dolgu); color: var(--ikincil); font-size: 12px; }
+.kutu-satiri { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ikincil); cursor: pointer; }
+.kutu-satiri input { accent-color: var(--birincil); margin: 0; }
+.netlestirme .eylemler { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.teyit-ayrinti { display: flex; flex-direction: column; gap: 8px; padding: 2px 4px 6px; }
+.yan-yana { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.yan-yana .yan { background: var(--yuzey); border: 0.5px solid var(--cizgi); border-radius: var(--k-alan); padding: 12px 14px; min-width: 0; }
+.yan-yana .etiket { margin-bottom: 6px; }
+.vurgulu { margin: 0; font-size: 14px; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.vurgulu mark { background: var(--secili); color: inherit; border-radius: 3px; padding: 0 1px; }
 
 /* Bağlantılar (Donna) ve kaynaklar (MCP'ler) */
 .liste { display: flex; flex-direction: column; gap: 8px; }
@@ -446,6 +479,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const ortam = { app, duyuru: $("duyuru") };
   const BAGLAYICILAR = "https://claude.ai/customize/connectors";
   const MODEL = /*AL:MODEL*/;
+  const AKISLAR = /*AL:AKIS*/;   // ArthurLegal eklentisinin iş becerileri, üç dilde (tasarim/is-akislari.json)
 
   // Sunucunun al_masasi cevabı gelene kadar en temkinli varsayım: uzak uç, yerel modül yok.
   const DURUM = {
@@ -472,6 +506,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       baslik: cevN("İçtihat"), alt: cevN("Yargıtay ve Danıştay kararlarını künyeleriyle bulun, metni kartın içinde açın.") },
     { id: "hesap", ad: cevN("Hesap kartları"), simge: "hesap", bolum: cevN("Çalışma"),
       baslik: cevN("Hesap kartları"), alt: cevN("Vekâlet ücreti, yargı harcı ve gider avansı, faiz dökümü, kıdem ve ihbar tazminatı. Hesabı kod yapar; her kalem dayanağı ve resmî kaynağıyla gelir.") },
+    { id: "akislar", ad: cevN("İş akışları"), simge: "liste", bolum: cevN("Çalışma"),
+      baslik: cevN("İş akışları"), alt: cevN("ArthurLegal'in hazır iş akışları: dilekçe, sözleşme incelemesi, şirket ve büro işleri. Birini seçin; Claude adım adım yürütür, cevap bu masaya gelir.") },
+    { id: "izleme", ad: cevN("İzleme"), simge: "takvim", bolum: cevN("Çalışma"),
+      baslik: cevN("İzleme"), alt: cevN("Resmî Gazete'de ve kurum kararlarında ne çıktı: bir gün ya da son 7 gün, konu süzgeciyle; isterseniz Claude haftalık özet yazar.") },
     { id: "gecmis", ad: cevN("Geçmiş"), simge: "saat", bolum: cevN("Çalışma"),
       baslik: cevN("Geçmiş"), alt: cevN("Masada yaptığınız aramalar, getirdiğiniz maddeler ve kararlar, o günkü sonuçlarıyla. Yeniden çalıştırınca güncel hali gelir.") },
     { id: "tapu", ad: "ArthurTapu", simge: "harita", bolum: cevN("Modüller"),
@@ -637,8 +675,18 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // ---------------------------------------------------------------- iskelet
   let aktif = "sohbet";
 
+  // Telefonda masa bilerek dar kapsamlıdır: şeritte telefonda işe yarayan ekranlar durur, ötekiler "Diğer"in
+  // arkasındadır (masaüstü modülleri telefonda çalışmaz; bağlantı ekranları seyrek açılır). Açık ekran her zaman görünür.
+  const TELEFON_EKRANLARI = new Set(["sohbet", "mevzuat", "ictihat", "hesap", "akislar", "izleme", "gecmis", "donna"]);
+  function telefonMu() {
+    const h = (app && app.getHostContext && app.getHostContext()) || {};
+    if (h.platform === "mobile") return true;
+    try { return matchMedia("(pointer: coarse)").matches && matchMedia("(max-width: 760px)").matches; } catch { return false; }
+  }
+
   function iskeletKur() {
     const masa = ogesi("div", "masa");
+    if (telefonMu()) masa.classList.add("telefon");
     const panel = ogesi("aside", "panel");
     const ust = ogesi("div", "panel-ust");
     const marka = ogesi("span", "marka", "Arthur");
@@ -654,8 +702,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       b.dataset.ekran = e.id;
       b.append(e.donna ? sablon("t-donna") : ikon(e.simge), ogesi("span", null, e.ad));
       b.onclick = () => { if (e.id === "gecmis") gecmisSifirla(); git(e.id); };
+      if (!TELEFON_EKRANLARI.has(e.id)) b.classList.add("telefonda-gizli");
       nav.append(b);
     }
+    const diger = dugme(cev("Diğer"), { sinif: "git diger-dugme", simge: "genislet" });
+    diger.setAttribute("aria-expanded", "false");
+    diger.onclick = () => { const ac = nav.classList.toggle("hepsi"); diger.setAttribute("aria-expanded", String(ac)); };
+    nav.append(diger);
     const alt = ogesi("div", "panel-alt");
     const seg = ogesi("div", "segment tema-secimi");
     seg.setAttribute("role", "group");
@@ -752,7 +805,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     document.querySelector(".icerik-ust h1").textContent = cevVeri(e.baslik);
     document.querySelector(".icerik-ust .alt-yazi").textContent = cevVeri(e.alt);
     const gb = document.querySelector(".gecmis-bag");
-    if (gb) gb.hidden = ["gecmis", "uyap", "mcp", "hesap", "model"].includes(id);
+    if (gb) gb.hidden = ["gecmis", "uyap", "mcp", "hesap", "model", "akislar", "izleme"].includes(id);
     if (id !== "gecmis") gecmisAcik = null;
     const ekran = $("ekran");
     ekran.replaceChildren();
@@ -902,6 +955,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const izgara = ogesi("div", "izgara");
     const kartlar = [
       ["kitap", cev("Mevzuatta ara, madde getir"), cev("Kanundan tebliğe bütün mevzuat; resmî metin ve birebir atıf."), () => git("mevzuat")],
+      ["liste", cev("Hazır iş akışı başlat"), cev("Dilekçeden sözleşme incelemesine {0} iş akışı.", AKISLAR.akislar.length), () => git("akislar")],
       ["onay", cev("Taslaktaki atıfları teyit et"), cev("Metni yapıştırın, her atıf tek tek kontrol edilir."), () => { git("mevzuat"); mevzuatSekme("teyit"); }],
       ["terazi", cev("Konuyla ilgili kararları bul"), cev("Yargıtay ve Danıştay, künyeleriyle."), () => git("ictihat")],
       ["harita", cev("Parsel sorgula"), cev("Ada/parsel ya da yer adıyla."), () => git("tapu")],
@@ -943,9 +997,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const depo = gecmisDeposu();
     let kayitlar;
     if (depo === "disk") {
-      const { veri } = await cagir(app, "al_gecmis", { islem: "listele", en_fazla: 7 }).catch(() => ({}));
+      const { veri } = await cagir(app, "al_gecmis", { islem: "listele", en_fazla: 20 }).catch(() => ({}));
       if (!kap.isConnected) return;
-      kayitlar = veri && Array.isArray(veri.kayitlar) ? veri.kayitlar : GECMIS.map(oturumKaydi);
+      kayitlar = veri && Array.isArray(veri.kayitlar)
+        ? veri.kayitlar.filter((k) => k.kategori !== "akis").slice(0, 7)   // kayıtlı iş akışı geçmiş değildir
+        : GECMIS.map(oturumKaydi);
     } else {
       kayitlar = depo === "cihaz" ? cihazGecmisi() : GECMIS.map(oturumKaydi);
     }
@@ -1000,6 +1056,279 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return s;
   }
 
+  // ---- İş akışları ----
+  // ArthurLegal eklentisinin iş becerileri alanlarına göre. Liste kısaltılmaz: arama ve alan süzgeci yalnız daraltır.
+  // "Başlat" işi Claude'a mesajla gönderir (masa beceri çalıştıramaz); Claude beceriyi ya da bilgisayardaki
+  // kurulumun bilgi dosyasındaki adımları izler, eksik bilgiyi sorar ve cevabı masaya yazar.
+  let akisAlani = "";
+  let akisArama = "";
+  const akisMetni = (a) => a[DIL.secili] || a.tr;
+  const kucukHarf = (s) => String(s).toLocaleLowerCase(DIL.secili === "en" ? "en" : "tr");
+
+  async function akisBaslat(a, dugmeEl) {
+    const [ad, ne] = akisMetni(a);
+    dugmeEl.disabled = true;
+    const gitti = await claudeaSor(
+      cev("ArthurLegal iş akışını başlat: {0} ({1}). {2} Bu iş akışının adımlarını izleyin: beceri yüklüyse onu kullanın, değilse arthurlegal_bilgi_ara ile “{1}” arayıp bilgi dosyasındaki adımları uygulayın. Başlamadan önce eksik bilgileri bana seçenekli sorularla sorun.", ad, a.id, ne),
+      cev("İş akışı başlatıldı: {0}", ad));
+    dugmeEl.disabled = false;
+    if (gitti) dugmeEl.lastElementChild.textContent = cev("Gönderildi");
+  }
+
+  // Kendi iş akışlarım: iyi giden bir sorudan kaydedilir, yalnız bu bilgisayardaki kurulumun diskinde durur
+  // (al_gecmis, kategori akis: süresiz, geçmiş temizlenince silinmez). Uzak masada kalıcı yer olmadığı için önerilmez.
+  function akisKaydetFormu(c) {
+    const form = ogesi("form", "form akis-kaydet");
+    const ad = girdi("text", cev("İş akışının adı"), kisalt(c.soru, 80));
+    const kaydet = dugme(cev("Kaydet"), { sinif: "birincil", simge: "onay" });
+    kaydet.type = "submit";
+    const satir = ogesi("div", "satir");
+    satir.append(alan(cev("Ad"), ad), kaydet);
+    const durum = ogesi("span", "zaman", "");
+    form.append(satir, bilgi(cev("Soru ve planı bu bilgisayarda saklanır; İş akışları ekranından tek tıkla yeniden başlatılır. Müvekkile özgü bilgi varsa önce soruyu genelleştirin.")), durum);
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const baslik = ad.value.trim();
+      if (!baslik) { ad.focus(); return; }
+      kaydet.disabled = true;
+      const { veri, hata } = await cagir(app, "al_gecmis", { islem: "kaydet", kayit: {
+        ekran: "akislar", kategori: "akis", tur: "akis", baslik, adimlar: [["tamam", kisalt(c.soru, 280)]],
+        sorgu: { metin: c.soru, plan: Array.isArray(c.plan) ? c.plan : [] } } }).catch((h) => ({ hata: h }));
+      kaydet.disabled = false;
+      durum.textContent = veri ? cev("Kaydedildi. İş akışları ekranında “İş akışlarım” altında.") : cev("Kaydedilemedi.");
+      if (veri) kaydet.disabled = true;
+    };
+    return form;
+  }
+
+  async function akislarimCiz(kap) {
+    if (gecmisDeposu() !== "disk") {
+      kap.append(bilgi(cev("Kendi iş akışlarınızı kaydetmek için masayı bilgisayarınızdaki ArthurLegal'den açın; bu masada kalıcı bir yer yok.")));
+      return;
+    }
+    const { veri } = await cagir(app, "al_gecmis", { islem: "listele", kategori: "akis", en_fazla: 200 }).catch(() => ({}));
+    const kayitlar = (veri && veri.kayitlar) || [];
+    if (!kayitlar.length) {
+      kap.append(ogesi("div", "bos", cev("Henüz kayıtlı iş akışınız yok. İyi giden bir cevabın altındaki “İş akışı olarak kaydet” ile ekleyin.")));
+      return;
+    }
+    const izgara = ogesi("div", "izgara");
+    for (const k of kayitlar) {
+      const kart = ogesi("div", "eylem-karti akis-karti");
+      const ozet = (k.adimlar && k.adimlar[0] && k.adimlar[0][1]) || "";
+      const bas = dugme(cev("Başlat"), { sinif: "kucuk", simge: "sohbet" });
+      const sil = dugme(cev("Sil"), { sinif: "kucuk", simge: "sil" });
+      bas.onclick = async () => {
+        bas.disabled = true;
+        const { veri: v } = await cagir(app, "al_gecmis", { islem: "getir", id: k.id }).catch(() => ({}));
+        const s = (v && v.kayit && v.kayit.sorgu) || {};
+        const plan = Array.isArray(s.plan) && s.plan.length ? cev("\nÖnceki plan: {0}", s.plan.join(" → ")) : "";
+        await claudeaSor(cev("ArthurLegal kayıtlı iş akışım: {0}\n\n{1}{2}", k.baslik, s.metin || ozet, plan), cev("İş akışı başlatıldı: {0}", k.baslik));
+        bas.disabled = false;
+      };
+      sil.onclick = async () => {
+        sil.disabled = true;
+        const { hata } = await cagir(app, "al_gecmis", { islem: "sil", id: k.id }).catch((h) => ({ hata: h }));
+        if (!hata) kart.remove(); else sil.disabled = false;
+      };
+      const ey = ogesi("div", "eylemler");
+      ey.append(bas, sil);
+      kart.append(ogesi("b", null, k.baslik), ogesi("span", "ne", ozet), ey);
+      izgara.append(kart);
+    }
+    kap.append(izgara);
+  }
+
+  CIZIM.akislar = (ekran) => {
+    const benim = ogesi("div", "kesit");
+    benim.append(ogesi("h3", null, cev("İş akışlarım")));
+    ekran.append(benim);
+    akislarimCiz(benim);
+    const ust = ogesi("div", "form");
+    const ara = girdi("search", cev("İş akışlarında ara: dilekçe, fesih, marka, vergi …"), akisArama);
+    ara.setAttribute("aria-label", cev("İş akışlarında ara"));
+    const alanlar = ogesi("div", "segment sar");
+    alanlar.setAttribute("role", "group");
+    alanlar.setAttribute("aria-label", cev("Alan"));
+    const secenekler = [["", cev("Tümü")], ...AKISLAR.kategoriler.map((k) => [k.id, k[DIL.secili] || k.tr])];
+    for (const [id, yazi] of secenekler) {
+      const b = dugme(yazi);
+      b.setAttribute("aria-pressed", String(id === akisAlani));
+      b.onclick = () => { akisAlani = id; for (const x of alanlar.children) x.setAttribute("aria-pressed", String(x === b)); listeyiCiz(); };
+      alanlar.append(b);
+    }
+    ust.append(ara, alanlar);
+    const sayac = ogesi("div", "kunye");
+    const liste = ogesi("div");
+    ekran.append(ust, sayac, liste,
+      bilgi(cev("Başlat, işi Claude'a gönderir; Claude adımları yürütür, eksik bilgiyi sorar ve cevabı bu masaya yazar. Bilgisayarınızda ArthurLegal kuruluysa iş akışının ayrıntılı adımları oradan okunur.")));
+
+    function listeyiCiz() {
+      liste.replaceChildren();
+      const q = kucukHarf(akisArama.trim());
+      const uyan = AKISLAR.akislar.filter((a) => (!akisAlani || a.k === akisAlani) &&
+        (!q || kucukHarf([a.id, ...a.tr, ...a.az, ...a.en].join(" ")).includes(q)));   // dilden bağımsız ara
+      sayac.textContent = uyan.length === AKISLAR.akislar.length
+        ? cev("{0} iş akışı", uyan.length)
+        : cev("{0} iş akışından {1} tanesi", AKISLAR.akislar.length, uyan.length);
+      if (!uyan.length) { liste.append(ogesi("div", "bos", cev("Bu aramaya uyan iş akışı yok. Başka bir sözcük deneyin ya da işinizi Claude'a doğrudan yazın."))); return; }
+      for (const k of AKISLAR.kategoriler) {
+        const grup = uyan.filter((a) => a.k === k.id);
+        if (!grup.length) continue;
+        const kesit = ogesi("div", "kesit");
+        const izgara = ogesi("div", "izgara");
+        for (const a of grup) {
+          const [ad, ne] = akisMetni(a);
+          const kart = ogesi("div", "eylem-karti akis-karti");
+          const bas = dugme(cev("Başlat"), { sinif: "kucuk", simge: "sohbet" });
+          bas.setAttribute("aria-label", cev("Başlat: {0}", ad));
+          bas.onclick = () => akisBaslat(a, bas);
+          kart.append(ogesi("b", null, ad), ogesi("span", "ne", ne), bas);
+          izgara.append(kart);
+        }
+        kesit.append(ogesi("h3", null, k[DIL.secili] || k.tr), izgara);
+        liste.append(kesit);
+      }
+    }
+    ara.oninput = () => { akisArama = ara.value; listeyiCiz(); };
+    listeyiCiz();
+  };
+
+  // ---- İzleme ----
+  // Resmî Gazete fihristi (bir gün ya da son 7 gün; konu ön elemesi ve başlıkta sözcük) ve kurum kararlarına kısayol.
+  // Kurum kısayolu Mevzuat ve kararlar ekranının doğal dil isteğini doldurur (aynı çözücü, aynı liste). Seçimler bu
+  // sohbette kalır: masa kalıcı bir izleme listesi tutmaz, bunu vaat etmez. Haftalık özet Claude'a bırakılır.
+  const IZLEME_KURUMLARI = [
+    ["epdk", "EPDK", cevN("son 10 EPDK kurul kararı")], ["rekabet", "Rekabet Kurulu", cevN("Rekabet Kurulu son 10 kararı")],
+    ["spk", "SPK", cevN("SPK son 3 bülten")], ["bddk", "BDDK", cevN("son 10 BDDK kararı")],
+    ["kvkk", "KVKK", cevN("son 10 KVKK kurul kararı")], ["btk", "BTK", cevN("son 10 BTK kurul kararı")],
+    ["gib", cevN("GİB özelgeleri"), cevN("son 10 GİB özelgesi")], ["sigorta_tahkim", cevN("Sigorta Tahkim"), cevN("son 10 Sigorta Tahkim Komisyonu kararı")],
+  ];
+  const IZLEME_KONULARI = [["", cevN("Hepsi")], ["enerji", cevN("Enerji")], ["rekabet", cevN("Rekabet")], ["vergi", cevN("Vergi")], ["icra", cevN("İcra")]];
+  const izleme = { konu: "", aralik: 1 };
+  const yerelGun = (geri = 0) => { const d = new Date(Date.now() - geri * 864e5); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+
+  function secimSeridi(secenekler, secili, sec) {
+    const s = ogesi("div", "segment sar");
+    s.setAttribute("role", "group");
+    for (const [id, yazi] of secenekler) {
+      const b = dugme(cevVeri(yazi));
+      b.setAttribute("aria-pressed", String(id === secili));
+      b.onclick = () => { for (const x of s.children) x.setAttribute("aria-pressed", String(x === b)); sec(id); };
+      s.append(b);
+    }
+    return s;
+  }
+
+  CIZIM.izleme = (ekran) => {
+    // Resmî Gazete
+    const rg = ogesi("div", "kesit");
+    rg.append(ogesi("h3", null, cev("Resmî Gazete")));
+    const form = ogesi("form", "form");
+    const tarih = girdi("date", "", yerelGun());
+    const sozcuk = girdi("search", cev("Başlıkta geçen sözcük (isteğe bağlı)"));
+    const getir = dugme(cev("Fihristi getir"), { sinif: "birincil", simge: "arama" });
+    getir.type = "submit";
+    const satir = ogesi("div", "satir");
+    satir.append(alan(cev("Gün"), tarih, "alan dar"), alan(cev("Sözcük"), sozcuk), getir);
+    const aralik = secimSeridi([[1, cev("Seçilen gün")], [7, cev("Son 7 gün")]], izleme.aralik, (v) => { izleme.aralik = v; tarih.disabled = v === 7; });
+    tarih.disabled = izleme.aralik === 7;
+    const konu = secimSeridi(IZLEME_KONULARI, izleme.konu, (v) => { izleme.konu = v; });
+    const secimAlani = (etiket, el) => { const k = ogesi("div", "secim-alani"); k.append(ogesi("span", "etiket-kucuk", etiket), el); return k; };
+    form.append(secimAlani(cev("Aralık"), aralik), secimAlani(cev("Konu"), konu), satir);
+    const sonuc = ogesi("div", "kesit");
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      sonuc.replaceChildren();
+      if (!DURUM.yetenekler.has("tr_resmi_gazete_fihrist")) {
+        sonuc.append(bilgi(cev("Bu masa Resmî Gazete fihristini kendisi açamıyor. İsteği Claude'a bırakın; Claude fihristi tarayıp sonucu masaya yazar.")));
+        const q = cev("Resmî Gazete fihristi: {0}{1}{2}", izleme.aralik === 7 ? cev("son 7 gün") : tarih.value,
+          izleme.konu ? cev(", konu {0}", izleme.konu) : "", sozcuk.value.trim() ? cev(", başlıkta “{0}”", sozcuk.value.trim()) : "");
+        claudeaBirak(sonuc, q, cev("Claude'a bırak"), true);
+        return;
+      }
+      const gunler = izleme.aralik === 7 ? [0, 1, 2, 3, 4, 5, 6].map((g) => yerelGun(g)) : [tarih.value || yerelGun()];
+      const adimlar = AL.adimlar(sonuc);
+      getir.disabled = true;
+      let toplam = 0;
+      try {
+        for (const gun of gunler) {
+          const a = adimlar.ekle(cev("{0} fihristi okunuyor…", gun));
+          const girdiler = { date: gun };
+          if (izleme.konu) girdiler.konu = izleme.konu;
+          if (sozcuk.value.trim()) girdiler.query = sozcuk.value.trim();
+          const { veri } = await cagir(app, "tr_resmi_gazete_fihrist", girdiler);
+          if (!veri || !Array.isArray(veri.items)) { a.hata(cev("{0}: fihrist okunamadı.", gun)); continue; }
+          toplam += veri.items.length;
+          (veri.items.length ? a.tamam : a.uyar)(cev("{0}: {1} kalem", veri.citation || gun, veri.items.length));
+          if (!veri.items.length) continue;
+          const kap = ogesi("div", "sonuc-kabi");
+          const ust = ogesi("div", "sonuc-ust");
+          const bk = ogesi("div", "sonuc-baslik");
+          bk.append(ogesi("h2", null, veri.citation || gun));
+          ust.append(bk);
+          if (veri.url) { const ac = dugme(cev("Resmî Gazete'de aç"), { sinif: "kucuk", simge: "dis" }); ac.onclick = () => baglantiAc(app, veri.url, ortam.duyuru); ust.append(ac); }
+          kap.append(ust);
+          const liste = ogesi("div", "liste");
+          for (const k of veri.items) {
+            const o = ogesi("div", "liste-ogesi");
+            const mt = ogesi("div", "metinler");
+            mt.append(ogesi("span", "ad", String(k.title || "").replace(/\s+/g, " ").trim()), ogesi("span", "ne", AL.baslikDuzeni(k.section || "")));
+            const ey = ogesi("div", "eylemler");
+            if (/^https?:\/\//i.test(k.url || "")) { const ac = dugme(cev("Aç"), { sinif: "kucuk", simge: "dis" }); ac.onclick = () => baglantiAc(app, k.url, ortam.duyuru); ey.append(ac); }
+            o.append(mt, ey);
+            liste.append(o);
+          }
+          kap.append(liste);
+          sonuc.append(kap);
+        }
+        if (izleme.konu) sonuc.append(bilgi(cev("Konu süzgeci bir ön elemedir, kapsam garantisi değildir: başlıkta konu adı geçmeyen ilgili bir kalem dışarıda kalabilir. Eksiksiz kontrol için konuyu “Hepsi” seçin.")));
+        if (!toplam) sonuc.append(ogesi("div", "bos", cev("Seçilen aralıkta bu süzgece uyan kalem yok.")));
+      } finally {
+        getir.disabled = false;
+      }
+    };
+    rg.append(form, sonuc);
+
+    // Kurum kararları
+    const kr = ogesi("div", "kesit");
+    kr.append(ogesi("h3", null, cev("Kurum kararları")));
+    const izgara = ogesi("div", "izgara");
+    for (const [id, ad, q] of IZLEME_KURUMLARI) {
+      const k = ogesi("button", "eylem-karti");
+      k.type = "button";
+      const sim = ogesi("span", "simge");
+      sim.append(ikon("terazi"));
+      k.append(sim, ogesi("b", null, cevVeri(ad)), ogesi("span", "ne", cevVeri(q)));
+      // İstek çözücüsü Türkçe çalışır: arama kutusuna Türkçe istek gider, kartta seçili dildeki karşılığı görünür.
+      k.onclick = () => { bekleyen = { sekme: "ara", q }; mevzuatAktif = "ara"; git("mevzuat"); };
+      k.dataset.kurum = id;
+      izgara.append(k);
+    }
+    kr.append(izgara);
+
+    // Haftalık özet
+    const oz = ogesi("div", "kesit");
+    oz.append(ogesi("h3", null, cev("Haftalık özet")));
+    const ozForm = ogesi("form", "form");
+    const ozKonu = girdi("text", cev("Konu ya da müvekkil sektörü: elektrik piyasası, kişisel veri, kira …"));
+    const ozDugme = dugme(cev("Claude'dan özet iste"), { sinif: "birincil", simge: "sohbet" });
+    ozDugme.type = "submit";
+    const ozSatir = ogesi("div", "satir");
+    ozSatir.append(alan(cev("Konu"), ozKonu), ozDugme);
+    ozForm.append(ozSatir, bilgi(cev("Claude son 7 günün Resmî Gazete fihristini ve ilgili kurum kararlarını tarar; her kalemi bağlantısı ve künyesiyle masaya yazar. Konu süzgeci bir ön elemedir; özet eksiksizlik garantisi değildir.")));
+    ozForm.onsubmit = (e) => {
+      e.preventDefault();
+      const k = ozKonu.value.trim();
+      if (!k) { ozKonu.focus(); return; }
+      claudeaSor(cev("ArthurLegal haftalık izleme özeti: “{0}”. Son 7 günün Resmî Gazete fihristini (tr_resmi_gazete_fihrist, her gün) ve ilgili kurumların son kararlarını (tr_kurum_karari_ara) tarayın; ilgili her kalemi künyesi ve resmî bağlantısıyla, bir cümlelik önemiyle yazın. İlgili kalem yoksa bunu açıkça söyleyin.", k),
+        cev("Haftalık izleme özeti istendi: {0}", k));
+    };
+    oz.append(ozForm);
+
+    ekran.append(rg, kr, oz);
+  };
+
   // ---- Cevap ----
   // Claude sohbet kutusuna yazılan sorunun cevabını al_masaya_yaz ile teslim eder; ev sahibi bu görünümü o aracın
   // girdisiyle yeni bir pencerede açar ve girdiyi yazıldıkça (parça parça) gönderir. Cevap bitince masa içindeki madde
@@ -1027,7 +1356,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function cevapAl(arg, tamam) {
     if (CEVAP && CEVAP.tamam) return;   // tam girdiden sonra gelen geç parça cevabı bozmasın
     const calisma = acikCalisma();
-    CEVAP = { ...cevapDuzenle(arg), araclar: calisma ? calisma.adimlar : [], tamam, kesildi: false, teyit: null };
+    CEVAP = { ...cevapDuzenle(arg), araclar: calisma ? calisma.adimlar : [], plan: (calisma && calisma.plan) || [],
+      tamam, kesildi: false, teyit: null };
     if (!CEVAP.soru && calisma) CEVAP.soru = calisma.soru;
     if (tamam) calismaBitir();
     acikCevap = null;
@@ -1056,7 +1386,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (ROL === "basla" || ROL === "adim") {   // soru masada, cevap gelmedi: çalışma sürüyor
       const c = acikCalisma();
       if (c) return { soru: c.soru, araclar: c.adimlar, adimlar: [], kaynaklar: [], cevap: "", tamam: false,
-        kesildi: false, teyit: null, calisiyor: true };
+        kesildi: false, teyit: null, calisiyor: true, plan: c.plan || [], sorular: c.sorular || [], calismaId: c.id };
     }
     const g = GECMIS.find((x) => x.tur === "cevap" && x.anlik);
     return g ? cevapKaydindan(g) : null;
@@ -1118,12 +1448,16 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function cevapIcerik(kap, c, { soruYok = false, adimYok = false } = {}) {
     if (!soruYok && c.soru) kap.append(ogesi("div", "balon", c.soru));
     const yaziliyor = !c.tamam && !c.kesildi;
+    if (!adimYok && Array.isArray(c.plan) && c.plan.length) kap.append(planListesi(c));
+    const soruBekliyor = yaziliyor && !c.cevap && Array.isArray(c.sorular) && c.sorular.length > 0 && !(c.araclar || []).length;
+    if (soruBekliyor) kap.append(netlestirmeKarti(c));
     const araclar = c.araclar || [];
     if (!adimYok && (araclar.length || c.adimlar.length || (yaziliyor && !c.cevap))) {
       const ad = ogesi("div", "adimlar");
       for (const a of araclar) ad.append(aracSatiri(a));
       for (const [tur, m] of c.adimlar) ad.append(adimSatiri(tur, m));
-      if (yaziliyor && !c.cevap) ad.append(adimSatiri("suruyor", c.calisiyor ? cev("Claude çalışıyor…") : cev("Claude cevabı yazıyor…")));
+      if (soruBekliyor) ad.append(adimSatiri("uyar", cev("Claude seçiminizi bekliyor; araştırma sorulardan sonra başlar.")));
+      else if (yaziliyor && !c.cevap) ad.append(adimSatiri("suruyor", c.calisiyor ? cev("Claude çalışıyor…") : cev("Claude cevabı yazıyor…")));
       kap.append(ad);
     }
     if (c.cevap || !yaziliyor) {
@@ -1139,12 +1473,19 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         const kp = dugme(cev("Kopyala"), { sinif: "kucuk", simge: "kopya" });
         kp.onclick = () => kopyala(MD.duzMetin(c.cevap), kp, govde, ortam.duyuru);
         ey.append(kp);
+        if (c.soru && gecmisDeposu() === "disk") {
+          const ky = dugme(cev("İş akışı olarak kaydet"), { sinif: "kucuk", simge: "liste" });
+          ky.onclick = () => { if (!kart.querySelector(".akis-kaydet")) kart.append(akisKaydetFormu(c)); };
+          ey.append(ky);
+        }
         alt.append(ey);
       }
       kart.append(govde, alt);
       kap.append(kart);
     }
     if (!c.tamam || c.kesildi) return;
+    const bc = buCevapta(c);
+    if (bc) kap.append(bc);
 
     const t = c.teyit;
     const teyit = ogesi("div", "kesit");
@@ -1163,7 +1504,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       bk.append(ogesi("div", "kunye", cev("{0} atıf · {1} doğrulandı", t.toplam, t.dogru)));
       ust.append(bk, KART.durumRozeti(t.dogru, t.toplam));
       const tablo = ogesi("div", "teyit");
-      for (const s of t.satirlar) tablo.append(teyitSatiri(s));
+      const cumleler = new Map(atiflariBul(MD.duzMetin(c.cevap)).map((x) => [x.kanun + "/" + x.madde, x.cumle]));
+      for (const s of t.satirlar) tablo.append(teyitSatiri(s, cumleler.get(s.kanun + "/" + s.madde) || ""));
       teyit.append(ust, tablo, bilgi(cev("Bu kontrol, madde numarasının resmî metinde var olduğunu ve başlığını gösterir. Maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini ayrıca okuyun.")));
     }
     kap.append(teyit);
@@ -1198,6 +1540,101 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
   }
 
+  // Planlanan adımlar: Claude al_masada_basla ile yazar. Adım adım ilerleme izlenmez (araçlar plana bağlı değildir);
+  // canlı adımlar altında akar, cevap gelince plan tamamlanmış görünür.
+  function planListesi(c) {
+    const kesit = ogesi("div", "plan");
+    const bitti = !!c.tamam && !c.kesildi;
+    kesit.append(ogesi("div", "etiket", bitti ? cev("Plan · {0} adım tamamlandı", c.plan.length) : cev("Planlanan adımlar · {0}", c.plan.length)));
+    const ol = ogesi("ol");
+    for (const p of c.plan) ol.append(ogesi("li", bitti ? "bitti" : null, p));
+    kesit.append(ol);
+    return kesit;
+  }
+
+  // Netleştirme kartı: Claude araştırmadan önce cevabı değiştiren olguyu sorar. Seçim sohbete mesaj olarak gider;
+  // önerilen seçenek işaretlidir ama önceden seçili gelmez (avukat bilerek seçer). Seçim yeniden çizimde korunur.
+  const NETLESTIRME = new Map();   // çalışma -> { secim: [sıra | -1], gonderildi }
+  function netlestirmeKarti(c) {
+    const anahtar = String(c.calismaId || c.soru || "");
+    const ad = anahtar.replace(/[^A-Za-z0-9]/g, "").slice(0, 24) || "s";
+    const d = NETLESTIRME.get(anahtar) || { secim: c.sorular.map(() => -1), gonderildi: false };
+    NETLESTIRME.set(anahtar, d);
+    const kart = ogesi("form", "form netlestirme");
+    kart.append(ogesi("div", "etiket", cev("Claude araştırmadan önce soruyor")));
+    c.sorular.forEach((s, i) => {
+      const fs = ogesi("fieldset", "secim-grubu");
+      fs.append(ogesi("legend", null, c.sorular.length > 1 ? `${i + 1}/${c.sorular.length} · ${s.soru}` : s.soru));
+      s.secenekler.forEach((x, j) => {
+        const satir = ogesi("label", "secenek-satiri");
+        const r = document.createElement("input");
+        r.type = "radio";
+        r.name = `ns-${ad}-${i}`;
+        r.checked = d.secim[i] === j;
+        r.disabled = d.gonderildi;
+        r.onchange = () => { d.secim[i] = j; };
+        satir.append(r, ogesi("span", "yazi", x));
+        if (j === s.onerilen) satir.append(ogesi("span", "hap-altin", cev("Önerilen")));
+        fs.append(satir);
+      });
+      kart.append(fs);
+    });
+    const ey = ogesi("div", "eylemler");
+    const gonder = dugme(cev("Seçimleri gönder"), { sinif: "birincil", simge: "sohbet" });
+    gonder.type = "submit";
+    const gec = dugme(cev("Soruları geç"));
+    const durum = ogesi("span", "zaman", d.gonderildi ? cev("Gönderildi. Claude araştırmaya başlıyor.") : "");
+    gonder.disabled = gec.disabled = d.gonderildi;
+    ey.append(gonder, gec, durum);
+    kart.append(ey);
+    const yolla = async (metin, kayit) => {
+      gonder.disabled = gec.disabled = true;
+      const gitti = await claudeaSor(metin, kayit);
+      if (gitti) {
+        d.gonderildi = true;
+        durum.textContent = cev("Gönderildi. Claude araştırmaya başlıyor.");
+        kart.querySelectorAll("input").forEach((x) => { x.disabled = true; });
+      } else {
+        gonder.disabled = gec.disabled = false;
+        durum.textContent = cev("Gönderilemedi; seçiminizi Claude'un yazma kutusuna yazabilirsiniz.");
+      }
+    };
+    kart.onsubmit = (e) => {
+      e.preventDefault();
+      const satirlar = c.sorular.map((s, i) => `${i + 1}. ${s.soru} → ${d.secim[i] >= 0 ? s.secenekler[d.secim[i]] : cev("(cevapsız)")}`);
+      yolla(cev("Netleştirme cevaplarım:\n{0}\nŞimdi araştırıp cevabı masaya yazın.", satirlar.join("\n")), cev("Netleştirme cevapları gönderildi"));
+    };
+    gec.onclick = () => yolla(cev("Soruları geçiyorum. En olası varsayımla araştırın ve varsayımı cevapta açıkça yazın."), cev("Netleştirme soruları geçildi"));
+    return kart;
+  }
+
+  // "Bu cevapta": cevap hangi resmî kaynaklara bakılarak ve kaç araç adımıyla yazıldı; Claude bildirdiyse model.
+  // Yalnız masanın gördüğü araç adımlarından çıkar; bilmediği şeyi (hafıza, büro tercihi) yazmaz.
+  const KAYNAK_ADLARI = [
+    [/^tr_mevzuat_|^tr_semantik_ara$|^tr_belge_getir$/, cevN("Mevzuat (mevzuat.gov.tr)")],
+    [/^tr_ictihat_/, cevN("Yargıtay ve Danıştay kararları")], [/^tr_aym_/, cevN("Anayasa Mahkemesi")],
+    [/^tr_uyusmazlik_/, cevN("Uyuşmazlık Mahkemesi")], [/^tr_kurum_karari_|^tr_spk_/, cevN("Kurum kararları")],
+    [/^tr_resmi_gazete_/, cevN("Resmî Gazete")], [/^hesap_/, cevN("Hesap kartları")], [/^tkgm_/, cevN("TKGM Parsel Sorgu")],
+    [/^(eu|uk|de|at|nl|pl|fi|ie|es|jp|az)_/, cevN("Yabancı ve AB hukuku")], [/^scholar_/, cevN("Doktrin")],
+  ];
+  function buCevapta(c) {
+    const araclar = (c.araclar || []).filter((a) => a && a.arac);
+    const kaynaklar = [];
+    for (const a of araclar) {
+      const k = KAYNAK_ADLARI.find(([d]) => d.test(a.arac));
+      if (k && !kaynaklar.includes(k[1])) kaynaklar.push(k[1]);
+    }
+    // Model yalnız bu sohbette şimdi teslim edilen cevapta yazılır; geçmişten açılan cevabın modeli bilinmez.
+    const model = c === CEVAP && DURUM.model && DURUM.model.ad;
+    if (!araclar.length && !model) return null;
+    const satir = ogesi("div", "bu-cevapta");
+    satir.append(ogesi("span", "etiket-kucuk", cev("Bu cevapta")));
+    if (araclar.length) satir.append(ogesi("span", "hap", cev("{0} araç adımı", araclar.length)));
+    for (const k of kaynaklar) satir.append(ogesi("span", "hap", cevVeri(k)));
+    if (model) satir.append(ogesi("span", "hap", cev("Model: {0}", model)));
+    return satir;
+  }
+
   // Devam sorusu sohbete gider; cevabı yine masaya gelir (yeni bir masa penceresinde).
   function devamFormu(c) {
     const form = ogesi("form", "form devam");
@@ -1208,14 +1645,22 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const satir = ogesi("div", "satir");
     satir.append(alan(c ? cev("Devam sorusu") : cev("Soru"), soru), gonder);
     const durum = ogesi("span", "zaman", "");
-    form.append(satir, durum);
+    const netlestir = document.createElement("input");
+    netlestir.type = "checkbox";
+    netlestir.id = "devam-netlestir";
+    const nl = ogesi("label", "kutu-satiri");
+    nl.htmlFor = netlestir.id;
+    nl.append(netlestir, ogesi("span", null, cev("Önce netleştir: eksik olgu varsa Claude araştırmadan önce seçenekli sorsun")));
+    form.append(satir, nl, durum);
     soru.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } };
     form.onsubmit = async (e) => {
       e.preventDefault();
       const m = soru.value.trim();
       if (!m) return;
       gonder.disabled = true;
-      const gitti = await claudeaSor(m, null);
+      const gitti = await claudeaSor(netlestir.checked
+        ? cev("{0}\n\nAraştırmadan önce sorumu netleştirin: cevabı değiştiren eksik bir olgu varsa al_masada_basla'nın sorular alanıyla seçenekli sorun.", m)
+        : m, null);
       gonder.disabled = false;
       if (gitti) {
         soru.value = "";
@@ -1279,11 +1724,23 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
   }
   const acikCalisma = () => { const c = calismaOku(); return c && !c.bitti ? c : null; };
-  function calismaBaslat(soru) {
+  // Plan ve netleştirme soruları al_masada_basla girdisinden; sunucu da temizler, masa yine sınırlar.
+  function planVeSorular(g) {
+    const plan = (Array.isArray(g && g.plan) ? g.plan : []).filter((x) => typeof x === "string" && x.trim())
+      .slice(0, 6).map((x) => kisalt(x, 140));
+    const sorular = (Array.isArray(g && g.sorular) ? g.sorular : []).filter((s) => s && typeof s.soru === "string" && s.soru.trim())
+      .map((s) => ({ soru: kisalt(s.soru, 200),
+        secenekler: (Array.isArray(s.secenekler) ? s.secenekler : []).filter((x) => typeof x === "string" && x.trim()).slice(0, 4).map((x) => kisalt(x, 120)),
+        onerilen: Number.isInteger(s.onerilen) ? s.onerilen : -1 }))
+      .filter((s) => s.secenekler.length >= 2).slice(0, 3);
+    return { plan, sorular };
+  }
+  function calismaBaslat(soru, girdi = null) {
+    const { plan, sorular } = planVeSorular(girdi);
     // Sorudan önce başlamış adımlar (ör. talimat) sorusuz bir çalışmada birikmişse aynı çalışma soruyu alır.
     const c = acikCalisma();
-    if (c && !c.soru && Date.now() - c.basla < 5 * 60 * 1000) { c.soru = dizgi(soru).trim(); calismaYaz(c); return c; }
-    const yeni = { id: yeniKimlik(), soru: dizgi(soru).trim(), basla: Date.now(), adimlar: [], bitti: 0 };
+    if (c && !c.soru && Date.now() - c.basla < 5 * 60 * 1000) { Object.assign(c, { soru: dizgi(soru).trim(), plan, sorular }); calismaYaz(c); return c; }
+    const yeni = { id: yeniKimlik(), soru: dizgi(soru).trim(), basla: Date.now(), adimlar: [], bitti: 0, plan, sorular };
     calismaYaz(yeni);
     return yeni;
   }
@@ -2040,7 +2497,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
               citation: it.citation || "", hata: it.ok ? "" : (it.error_code || "") };
             if (s.ok) ok++;
             satirlar.push(s);
-            tablo.append(teyitSatiri(s));
+            tablo.append(teyitSatiri(s, p.cumle || ""));   // cümle yalnız ekranda; satırda (geçmişte) yok
           });
           dogru += ok;
           (ok === parca.length ? ad.tamam : ad.uyar)(cev("{0}: {1} atıftan {2} doğru.", kanunAdi(kanun), parca.length, sayiEki(ok)));
@@ -2052,19 +2509,77 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return { tablo, satirlar, dogru };
   }
 
-  function teyitSatiri(s) {
+  // Teyit satırı; doğrulanan atıfta "Metni göster" atfın geçtiği cümleyi (varsa) ve maddenin resmî metnini yan yana
+  // açar, ortak sözcükleri işaretler. Madde metni düğmeye basılınca çekilir; ne metin ne cümle geçmişe yazılır.
+  const MADDE_METNI = new Map();   // "kanun/madde" -> resmî metin (bu pencerede)
+  function teyitSatiri(s, cumle = "") {
     const satirEl = ogesi("div", "teyit-satiri");
     if (s.ok) {
       satirEl.append(ogesi("span", "rozet nane", cev("Doğrulandı")), ogesi("span", "ne", `${kisaAd(s.kanun)} m. ${s.madde}`),
         ogesi("span", "baslik-k", s.baslik || cev("başlık kaynakta yok")));
+      const goster = dugme(cev("Metni göster"), { sinif: "kucuk", simge: "kitap" });
+      goster.setAttribute("aria-expanded", "false");
       const kp = dugme(cev("Atfı kopyala"), { sinif: "kucuk", simge: "kopya" });
       kp.onclick = () => kopyala(s.citation, kp, null, ortam.duyuru);
-      satirEl.append(kp);
+      satirEl.append(goster, kp);
+      const oge = ogesi("div", "teyit-oge");
+      const ayrinti = ogesi("div", "teyit-ayrinti");
+      ayrinti.hidden = true;
+      goster.onclick = async () => {
+        const ac = ayrinti.hidden;
+        ayrinti.hidden = !ac;
+        goster.setAttribute("aria-expanded", String(ac));
+        goster.lastElementChild.textContent = ac ? cev("Metni gizle") : cev("Metni göster");
+        if (ac && !ayrinti.childElementCount) await atifAyrintisi(ayrinti, s, cumle);
+      };
+      oge.append(satirEl, ayrinti);
+      return oge;
     } else {
       satirEl.append(ogesi("span", "rozet amber", s.hata === "NOT_FOUND" ? cev("Bulunamadı") : cev("Doğrulanamadı")),
         ogesi("span", "ne", `${kisaAd(s.kanun)} m. ${s.madde}`), ogesi("span", "baslik-k", cev("Atıf olarak kullanmayın; resmî metinden teyit edin.")));
     }
     return satirEl;
+  }
+
+  // Parçaları (vurguParcalari) metin düğümü ve <mark> olarak çizer; HTML yorumlanmaz.
+  function vurguluMetin(parcalar) {
+    const p = ogesi("p", "vurgulu");
+    for (const [metin, vur] of parcalar) p.append(vur ? ogesi("mark", null, metin) : document.createTextNode(metin));
+    return p;
+  }
+
+  async function atifAyrintisi(kap, s, cumle) {
+    const anahtar = s.kanun + "/" + s.madde;
+    const adimlar = AL.adimlar(kap);
+    let metin = MADDE_METNI.get(anahtar);
+    if (metin == null) {
+      const a = adimlar.ekle(cev("{0} m. {1} resmî metinden getiriliyor…", kisaAd(s.kanun), s.madde));
+      try {
+        const { veri, hata } = await cagir(app, "tr_mevzuat_madde_getir", { number: s.kanun, madde_no: s.madde });
+        const it = ((veri && veri.items) || [])[0] || {};
+        if (!it.ok || !it.text) throw new Error(hata || "metin yok");
+        metin = String(it.text);
+        MADDE_METNI.set(anahtar, metin);
+        a.tamam(cev("Resmî metin getirildi."));
+      } catch {
+        a.hata(cev("Madde metni getirilemedi."));
+        kap.append(ogesi("p", "uyari", AL.uyari(MEVZUAT_KAYNAK)));
+        return;
+      }
+    }
+    const izgara = ogesi("div", "yan-yana");
+    if (cumle) {
+      const sol = ogesi("div", "yan");
+      sol.append(ogesi("div", "etiket", cev("Atfın geçtiği cümle")), vurguluMetin(ATIF.vurguParcalari(cumle, metin)));
+      izgara.append(sol);
+    }
+    const sag = ogesi("div", "yan");
+    sag.append(ogesi("div", "etiket", cev("Resmî metin · {0}", s.citation || `${kisaAd(s.kanun)} m. ${s.madde}`)),
+      vurguluMetin(ATIF.vurguParcalari(metin, cumle)));
+    izgara.append(sag);
+    kap.append(izgara, bilgi(cumle
+      ? cev("İkisinde ortak geçen sözcükler işaretlendi. İşaret yalnız okumayı kolaylaştırır: maddenin, cümlede ona yüklenen içeriği (hakkın sahibi, şart, süre, sonuç) gerçekten söyleyip söylemediğine siz karar verin.")
+      : cev("Maddenin resmî metni. Atfın geçtiği cümle bu kayıtta saklanmadığı için yan yana gösterilemiyor.")));
   }
 
   function atifTeyidi(ekran) {
@@ -2684,7 +3199,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         if (s.ara.trim()) arg.ara = s.ara.trim();
         const { veri, hata } = await cagir(app, "al_gecmis", arg);
         if (!veri) throw new Error(hata);
-        kayitlar = veri.kayitlar || [];
+        kayitlar = (veri.kayitlar || []).filter((k) => k.kategori !== "akis");
       } catch {
         adim.hata(cev("Geçmiş okunamadı."));
         return;
@@ -3636,7 +4151,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const rol = rolBelirle(arg);
     if (rol === "teslim") { if (arg) cevapAl(arg, true); return; }
     if (rol === "basla") {
-      if (!baslaAlindi) { baslaAlindi = true; calismaBaslat(arg && arg.soru); DURUM.acilis = "sohbet"; cevapYenile(); }
+      if (!baslaAlindi) { baslaAlindi = true; calismaBaslat(arg && arg.soru, arg); DURUM.acilis = "sohbet"; cevapYenile(); }
       return;
     }
     if (rol === "adim") { adimBasladi(arg); return; }
@@ -3658,7 +4173,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       CEVAP = null;
     }
     if (ROL === "adim") { DURUM.hazir = true; adimBitti(sonuc, veri, hata); return; }
-    if (ROL === "basla" && !baslaAlindi && masaVerisi && veri.basla) { baslaAlindi = true; calismaBaslat(veri.basla.soru); }
+    if (ROL === "basla" && !baslaAlindi && masaVerisi && veri.basla) { baslaAlindi = true; calismaBaslat(veri.basla.soru, veri.basla); }
     if (masaVerisi) {
       DURUM.surum = veri.surum || DURUM.surum;
       DURUM.ortam = veri.ortam || DURUM.ortam;
