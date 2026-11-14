@@ -24,7 +24,8 @@
   Ne bilgisayarınızda kalır, ne Claude'a ve resmî kaynaklara gider; Claude'un gizlilik ayarı ve çıktı hakkında üç cümle.
 </p>
 <p align="center">
-  <a href="docs/katki.md"><b>Katkı: iş akışı ve playbook önerin</b></a> · <a href="docs/contributing.md">Contribute a workflow or playbook</a> · <a href="docs/tohfe.md">Töhfə: iş axını və playbook təklif edin</a>
+  <a href="docs/katki.md"><b>Katkı: iş akışı ve playbook önerin</b></a> · <a href="docs/contributing.md">Contribute a workflow or playbook</a> · <a href="docs/tohfe.md">Töhfə: iş axını və playbook təklif edin</a><br>
+  <a href="docs/word-rehberi.md"><b>Word'de ArthurLegal</b></a> · <a href="docs/word-guide.md">ArthurLegal in Word</a> · <a href="docs/word-beledcisi.md">Word-də ArthurLegal</a>
 </p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
@@ -719,6 +720,8 @@ justify building an MCP server, and which already have a good enough public API.
 - **Where your data goes** ([English](docs/your-data.md), [Türkçe](docs/verileriniz.md),
   [Azərbaycan dili](docs/melumatlariniz.md)) and a form to **contribute a workflow or playbook**
   ([English](docs/contributing.md), [Türkçe](docs/katki.md), [Azərbaycan dili](docs/tohfe.md)).
+- **ArthurLegal in Word** ([English](docs/word-guide.md), [Türkçe](docs/word-rehberi.md),
+  [Azərbaycan dili](docs/word-beledcisi.md)): using the ArthurLegal connector from Claude in Microsoft Word.
 - Weekly audit fixes (W46). How it arrives: the updater installs 3.3.0 on Windows and on a Mac; quit Claude Desktop
   fully once and reopen it. The system prompts of the packages did not change.
 
@@ -733,7 +736,8 @@ hiçbiri seçili değil). Teyit edilen her atıfta **Metni göster** cümleyle r
 gösterir. Yeni beceriler: `/contract-drafting:playbook-inceleme` (Hukuk Bürosu ve Kurumsal; kira, hizmet/eser, iş,
 gizlilik sözleşmesi playbook'ları) ve `/firm-operations:muvekkil-bilgilendirme` (Hukuk Bürosu); eklenti 1.12.20.
 **ArthurMask 1.3.0:** belgeyi revize ederken her değişikliğin gerekçesi izli değişikliğin yanına Word yorumu olarak
-eklenir. Yeni sayfalar: [Verileriniz nereye gider](docs/verileriniz.md) ve [Katkı](docs/katki.md). Haftalık denetim
+eklenir. Yeni sayfalar: [Verileriniz nereye gider](docs/verileriniz.md), [Katkı](docs/katki.md) ve
+[Word'de ArthurLegal](docs/word-rehberi.md). Haftalık denetim
 (W46) düzeltmeleri. Güncelleyici 3.3.0'ı kendisi kurar; Claude Desktop'u bir kez tamamen kapatıp açın. Paketlerin
 sistem talimatı değişmedi.
 
@@ -745,7 +749,8 @@ səkkiz qurumun son qərarlarına qısayol verir; istəsəniz Claude həftəlik 
 masada göstərir, sorğu qeyri-müəyyəndirsə seçimli qısa sual verir. Təsdiqlənən hər istinadda **Mətni göstər** cümləni
 və rəsmi mətni yan-yana açır; cavabın altında **Bu cavabda** istifadə olunan addımları və rəsmi mənbələri göstərir.
 **ArthurMask 1.3.0:** sənədə düzəliş edərkən hər dəyişikliyin səbəbi Word şərhi kimi əlavə olunur. Yeni səhifələr:
-[Məlumatlarınız hara gedir](docs/melumatlariniz.md) və [Töhfə](docs/tohfe.md). Yeniləyici 3.3.0-ı özü quraşdırır;
+[Məlumatlarınız hara gedir](docs/melumatlariniz.md), [Töhfə](docs/tohfe.md) və
+[Word-də ArthurLegal](docs/word-beledcisi.md). Yeniləyici 3.3.0-ı özü quraşdırır;
 Claude Desktop-u bir dəfə tam bağlayıb yenidən açın.
 
 ## Setup 3.2.1 — The model menu from the desk (2026-11-12)
