@@ -19,6 +19,10 @@
   ArthurLegal nedir, kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede.<br>
   <a href="docs/rehber/ArthurLegal-User-Guide.pdf">User guide (PDF, English)</a> · <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf">İstifadəçi bələdçisi (PDF, Azərbaycan dili)</a>
 </p>
+<p align="center">
+  <a href="docs/verileriniz.md"><b>Verileriniz nereye gider</b></a> · <a href="docs/your-data.md">Where your data goes</a> · <a href="docs/melumatlariniz.md">Məlumatlarınız hara gedir</a><br>
+  Ne bilgisayarınızda kalır, ne Claude'a ve resmî kaynaklara gider; Claude'un gizlilik ayarı ve çıktı hakkında üç cümle.
+</p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
