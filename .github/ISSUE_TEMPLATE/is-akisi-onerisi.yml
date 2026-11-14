@@ -1,0 +1,77 @@
+name: İş akışı önerisi · Workflow proposal · İş axını təklifi
+description: ArthurLegal'e yeni bir iş akışı, playbook pozisyonu ya da var olan bir iş akışında düzeltme önerin.
+title: "[İş akışı] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Türkiye'deki avukatların ortak, açık ve ücretsiz bilgi birikimine katkınız için teşekkürler. Rehber: [docs/katki.md](https://github.com/beerbottle90/ArthurLegal/blob/main/docs/katki.md) · [English](https://github.com/beerbottle90/ArthurLegal/blob/main/docs/contributing.md) · [Azərbaycan dili](https://github.com/beerbottle90/ArthurLegal/blob/main/docs/tohfe.md)
+
+        **Müvekkil adı, dosya numarası, büro adı ya da gizli bilgi yazmayın.** Örnek gerekiyorsa kurgusal ya da genelleştirilmiş yazın.
+  - type: input
+    id: ad
+    attributes:
+      label: İş akışının adı · Name
+      placeholder: "ör. Kira tespit davası ön değerlendirmesi"
+    validations:
+      required: true
+  - type: dropdown
+    id: tur
+    attributes:
+      label: Öneri türü · Type
+      options:
+        - Yeni iş akışı · New workflow
+        - Playbook pozisyonu (sözleşme) · Playbook position
+        - Var olan iş akışında düzeltme · Fix to an existing workflow
+    validations:
+      required: true
+  - type: dropdown
+    id: alan
+    attributes:
+      label: Hukuk alanı · Area
+      options:
+        - Dava ve dilekçe
+        - İdare ve düzenleyici kurumlar
+        - Sözleşme
+        - Şirketler ve birleşme
+        - İş hukuku
+        - Fikrî mülkiyet
+        - Kişisel veriler
+        - Vergi
+        - Enerji ve proje finansmanı
+        - Büro işleri
+        - Araştırma ve atıf
+        - Diğer · Other
+    validations:
+      required: true
+  - type: textarea
+    id: ne
+    attributes:
+      label: Ne işe yarar? · What is it for?
+      description: Hangi durumda kullanılır, avukatın hangi işini kolaylaştırır?
+    validations:
+      required: true
+  - type: textarea
+    id: adimlar
+    attributes:
+      label: Adımlar · Steps
+      description: Sırasıyla; avukatın vermesi gereken bilgi ve kararın verildiği noktalar dahil. Playbook önerisinde konu, başlangıç pozisyonu, vazgeçilmez ve geri çekilme noktası.
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: dayanak
+    attributes:
+      label: Dayanak · Legal basis
+      description: Kanun maddeleri ve kararlar, mümkünse resmî bağlantısıyla (mevzuat.gov.tr, karar arama). Eklemeden önce her madde resmî metinden okunur.
+  - type: checkboxes
+    id: onay
+    attributes:
+      label: Onay · Confirmation
+      options:
+        - label: Önerimde müvekkil bilgisi, dosya numarası, büro adı ya da gizli bilgi yok. · No client data, case numbers, firm names or confidential information.
+          required: true
+        - label: Önerimin ArthurLegal'e eklenmesine ve bu depoda yayımlanmasına onay veriyorum. · I agree that my proposal may be added to ArthurLegal and published in this repository.
+          required: true
