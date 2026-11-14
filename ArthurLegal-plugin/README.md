@@ -1,19 +1,19 @@
 # ArthurLegal for Claude
 
 ArthurLegal is a Turkish-law-first legal assistant for law firms. This plugin brings its working rules and
-143 practice skills to Claude: contracts and NDAs, corporate and M&A, employment, KVKK and privacy,
+144 practice skills to Claude: contracts and NDAs, corporate and M&A, employment, KVKK and privacy,
 regulatory, intellectual property, litigation and petitions, tax, administrative law, criminal defense, energy and
 finance, expert opinions, contract drafting and law firm operations. Statutes and decisions are quoted from the official
 text through ArthurLegal MCP, which covers 12 jurisdictions from Türkiye and the EU to the UK, Germany and
 Japan, plus legal-entity identity, open-access legal scholarship and published resource contracts.
 
-Plugin version 1.12.18, built from the ArthurLegal Law Firm package 1.12.6. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
+Plugin version 1.12.19, built from the ArthurLegal Law Firm package 1.12.6. Source: [https://github.com/beerbottle90/ArthurLegal](https://github.com/beerbottle90/ArthurLegal).
 
 ## What it contains
 
 - **`/arthurlegal:arthurlegal`**: the working rules: output format, citation and statute-verification gates, and the `UYARI` line
   that replaces any fact a live source could not return. Claude loads it before any legal task.
-- **143 practice skills**, called as `/arthurlegal:<area>-<skill>`, for example
+- **144 practice skills**, called as `/arthurlegal:<area>-<skill>`, for example
   `/arthurlegal:commercial-legal-nda-review` or `/arthurlegal:tax-legal-gib-ozelge-request`. Areas: `administrative-legal`, `advocacy-legal`, `commercial-legal`, `contract-drafting`, `corporate-legal`, `criminal-defense`, `employment-legal`, `energy-finance`, `expert-opinion`, `firm-operations`, `ip-legal`, `legal-research`, `litigation-legal`, `privacy-legal`, `regulatory-legal`, `tax-legal`.
 - **`references/`**: 104 guides, practice profiles and a firm profile template that the skills read.
 - **One connector: ArthurLegal MCP** (`https://arthurlegal-mcp.fly.dev/directory/mcp`), read-only legal research with no account.
@@ -58,7 +58,7 @@ are under Apache 2.0: [LICENSE-APACHE-2.0-THIRD-PARTY.txt](LICENSE-APACHE-2.0-TH
 
 ## Türkçe
 
-ArthurLegal, Türk hukuku odaklı hukuk bürosu asistanıdır. Bu eklenti çalışma kurallarını ve 143 beceriyi
+ArthurLegal, Türk hukuku odaklı hukuk bürosu asistanıdır. Bu eklenti çalışma kurallarını ve 144 beceriyi
 Claude'a ekler; mevzuat ve kararlar ArthurLegal MCP üzerinden resmî metinden alıntılanır. Tapu, UYAP Dashboard,
 ArthurMask ve ArthurLegal Hafıza bilgisayarınızdaki ArthurLegal kurulumuyla gelir ([indir](https://github.com/beerbottle90/ArthurLegal#indir)); kuruluysa eklenti
 onlara yönlendirir. Çıktılar avukat incelemesi öncesi taslaktır.
