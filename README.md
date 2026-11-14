@@ -23,6 +23,9 @@
   <a href="docs/verileriniz.md"><b>Verileriniz nereye gider</b></a> · <a href="docs/your-data.md">Where your data goes</a> · <a href="docs/melumatlariniz.md">Məlumatlarınız hara gedir</a><br>
   Ne bilgisayarınızda kalır, ne Claude'a ve resmî kaynaklara gider; Claude'un gizlilik ayarı ve çıktı hakkında üç cümle.
 </p>
+<p align="center">
+  <a href="docs/katki.md"><b>Katkı: iş akışı ve playbook önerin</b></a> · <a href="docs/contributing.md">Contribute a workflow or playbook</a> · <a href="docs/tohfe.md">Töhfə: iş axını və playbook təklif edin</a>
+</p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
@@ -692,6 +695,58 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+## Setup 3.3.0 — Workflows and monitoring on the desk; ArthurMask explains its changes (2026-11-14)
+
+- **Workflows.** A new **İş akışları** (Workflows) screen on the desk lists 112 ready-made workflows in 11 areas
+  (petitions, contract review, company and firm work), in all three languages. Choose one and Claude runs it step
+  by step; the answer comes back to the desk. A question you ask often can be saved with **Save as workflow** and
+  found again under **My workflows**; saved workflows stay only on your computer.
+- **Monitoring.** A new **İzleme** (Monitoring) screen shows what appeared in the Official Gazette on one day or in
+  the last 7 days, filtered by topic, with shortcuts to eight regulators' latest decisions. Claude can write a weekly
+  summary on request. Nothing is watched in the background and no list is kept.
+- **Plan and clarifying questions.** Before a larger piece of work Claude shows its plan on the desk and, where the
+  request is ambiguous, a short question with options (the suggested one marked, none pre-selected).
+- **Show text.** Next to each verified citation, **Show text** puts the sentence and the official text side
+  by side, with the words they share highlighted. Under the answer, **In this answer** lists the tool steps and the
+  official sources used.
+- **On a phone** the desk shows the eight screens that work there and keeps the rest under "More".
+- **Skills.** Law Firm and Corporate: `/contract-drafting:playbook-inceleme` reviews a contract against Turkish-law
+  playbooks (lease, services and works, employment, NDA, common clauses). Law Firm:
+  `/firm-operations:muvekkil-bilgilendirme` drafts client updates. Claude plugin 1.12.20.
+- **ArthurMask 1.3.0.** When ArthurMask revises a document, the reason for each change is added as a Word comment
+  next to the tracked change.
+- **Where your data goes** ([English](docs/your-data.md), [Türkçe](docs/verileriniz.md),
+  [Azərbaycan dili](docs/melumatlariniz.md)) and a form to **contribute a workflow or playbook**
+  ([English](docs/contributing.md), [Türkçe](docs/katki.md), [Azərbaycan dili](docs/tohfe.md)).
+- Weekly audit fixes (W46). How it arrives: the updater installs 3.3.0 on Windows and on a Mac; quit Claude Desktop
+  fully once and reopen it. The system prompts of the packages did not change.
+
+**Türkçe:** Masada yeni **İş akışları** ekranı: 11 alanda 112 hazır iş akışı (dilekçe, sözleşme incelemesi, şirket
+ve büro işleri), üç dilde. Birini seçersiniz, Claude adım adım yürütür, cevap masaya gelir. Sık sorduğunuz bir işi
+**İş akışı olarak kaydet** ile saklayıp **İş akışlarım**'da bulursunuz; kayıtlar yalnız bilgisayarınızda kalır. Yeni
+**İzleme** ekranı Resmî Gazete'de bir günde ya da son 7 günde çıkanları konu süzgeciyle gösterir, sekiz kurumun son
+kararlarına kısayol verir; isterseniz Claude haftalık özet yazar (arka planda izleme yapılmaz, liste tutulmaz). Büyük
+bir işten önce Claude planını masada gösterir; istek belirsizse seçenekli kısa bir soru sorar (önerilen işaretli,
+hiçbiri seçili değil). Teyit edilen her atıfta **Metni göster** cümleyle resmî metni yan yana açar; cevabın altında
+**Bu cevapta** kullanılan araç adımlarını ve resmî kaynakları listeler. Telefonda masa orada çalışan sekiz ekranı
+gösterir. Yeni beceriler: `/contract-drafting:playbook-inceleme` (Hukuk Bürosu ve Kurumsal; kira, hizmet/eser, iş,
+gizlilik sözleşmesi playbook'ları) ve `/firm-operations:muvekkil-bilgilendirme` (Hukuk Bürosu); eklenti 1.12.20.
+**ArthurMask 1.3.0:** belgeyi revize ederken her değişikliğin gerekçesi izli değişikliğin yanına Word yorumu olarak
+eklenir. Yeni sayfalar: [Verileriniz nereye gider](docs/verileriniz.md) ve [Katkı](docs/katki.md). Haftalık denetim
+(W46) düzeltmeleri. Güncelleyici 3.3.0'ı kendisi kurar; Claude Desktop'u bir kez tamamen kapatıp açın. Paketlerin
+sistem talimatı değişmedi.
+
+**Azərbaycan dili:** Masada yeni **İş axınları** ekranı: 11 sahədə 112 hazır iş axını (ərizə, müqavilə yoxlaması,
+şirkət və büro işləri), üç dildə. Birini seçirsiniz, Claude addım-addım icra edir, cavab masaya gəlir. Tez-tez
+verdiyiniz sualı **İş axını kimi yadda saxla** ilə saxlayıb **İş axınlarım**-da tapırsınız; qeydlər yalnız kompüterinizdə
+qalır. Yeni **İzləmə** ekranı Rəsmi Qəzetdə bir gündə və ya son 7 gündə dərc olunanları mövzu filtri ilə göstərir və
+səkkiz qurumun son qərarlarına qısayol verir; istəsəniz Claude həftəlik xülasə yazır. Böyük işdən əvvəl Claude planını
+masada göstərir, sorğu qeyri-müəyyəndirsə seçimli qısa sual verir. Təsdiqlənən hər istinadda **Mətni göstər** cümləni
+və rəsmi mətni yan-yana açır; cavabın altında **Bu cavabda** istifadə olunan addımları və rəsmi mənbələri göstərir.
+**ArthurMask 1.3.0:** sənədə düzəliş edərkən hər dəyişikliyin səbəbi Word şərhi kimi əlavə olunur. Yeni səhifələr:
+[Məlumatlarınız hara gedir](docs/melumatlariniz.md) və [Töhfə](docs/tohfe.md). Yeniləyici 3.3.0-ı özü quraşdırır;
+Claude Desktop-u bir dəfə tam bağlayıb yenidən açın.
 
 ## Setup 3.2.1 — The model menu from the desk (2026-11-12)
 
