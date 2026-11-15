@@ -1,0 +1,25 @@
+{
+ "3.3.1": {
+  "tr": [
+   "Her ekranın sağ üstünde \"Güncellemeleri denetle\": yeni sürüm varsa tek tıkla güncelleyin.",
+   "ArthurMask, UYAP Dashboard ve ArthurTapu artık Türkçe, Azerbaycanca ve İngilizce.",
+   "Aa menüsünden yazı boyutu ve yüksek karşıtlık seçimi.",
+   "\"Sistem bilgisini kopyala\": destek isterken sürüm bilgisini tek tıkla paylaşın.",
+   "Bağlantı durumu üst şeritte: bağlı, kısıtlı ya da çevrimdışı."
+  ],
+  "az": [
+   "Hər ekranın sağ yuxarı küncündə \"Yeniləmələri yoxla\": yeni versiya varsa bir kliklə yeniləyin.",
+   "ArthurMask, UYAP Dashboard və ArthurTapu artıq türk, Azərbaycan və ingilis dillərindədir.",
+   "Aa menyusundan şrift ölçüsü və yüksək kontrast seçimi.",
+   "\"Sistem məlumatını kopyala\": dəstək istəyərkən versiya məlumatını bir kliklə paylaşın.",
+   "Bağlantı vəziyyəti yuxarı zolaqda: qoşulub, məhdud və ya oflayn."
+  ],
+  "en": [
+   "\"Check for updates\" at the top right of every screen: update in one click when a new version is out.",
+   "ArthurMask, UYAP Dashboard and ArthurTapu now speak Turkish, Azerbaijani and English.",
+   "Text size and high contrast in the Aa menu.",
+   "\"Copy system info\": share your version details in one click when asking for support.",
+   "Connection status in the top bar: connected, limited or offline."
+  ]
+ }
+}

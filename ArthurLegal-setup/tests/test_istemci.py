@@ -1883,7 +1883,7 @@ class ArayuzTesti(unittest.TestCase):
                       "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
             self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
                                                                "al_modul_ac", "al_gecmis", "al_dogrulama_kaydi",
-                                                               "al_dil"],
+                                                               "al_dil", "al_guncelleme"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])

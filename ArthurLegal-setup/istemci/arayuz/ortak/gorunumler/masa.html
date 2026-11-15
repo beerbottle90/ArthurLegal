@@ -342,6 +342,42 @@ body { background: var(--zemin); }
 .dil-secimi button { flex: none; min-height: 28px; padding: 0 8px; gap: 6px; font-size: 12.5px; font-weight: 600; letter-spacing: .02em; }
 .dil-secimi svg { flex: none; width: 21px; height: 14px; border-radius: 2px; box-shadow: 0 0 0 1px var(--cizgi); }
 @media (max-width: 760px) { .dil-secimi button { padding: 0 6px; } .dil-secimi button span { display: none; } }
+/* ---- Üst şerit (3.3.1): durum, sürüm, güncelleme, görünüm, yardım, dil ---- */
+.ust-serit-satiri { display: flex; justify-content: flex-end; padding: 14px 32px 0; }
+.ust-serit-satiri + .icerik-ust { padding-top: 4px; }
+.ust-menu button.birincil { background: var(--birincil); color: var(--birincil-yazi); border-color: transparent; }
+@media (max-width: 760px) { .ust-serit-satiri { padding: 10px 16px 0; } }
+.ust-serit { position: relative; flex: none; display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+.durum-nokta { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 6px; border: 0;
+  background: transparent; box-shadow: none; color: var(--ikincil); font: inherit; font-size: 12.5px; cursor: pointer; }
+.durum-nokta i { width: 8px; height: 8px; border-radius: 50%; background: var(--nane-metin); }
+.durum-nokta.sari i { background: var(--amber-metin); }
+.durum-nokta.gri i { background: var(--soluk); }
+.ust-surum { font-size: 12px; color: var(--soluk); font-variant-numeric: tabular-nums; }
+.guncelleme-dugme { position: relative; gap: 6px; }
+.guncelleme-dugme svg, .simge-dugme svg { width: 15px; height: 15px; }
+.guncelleme-dugme.yeni-var::after { content: ""; position: absolute; top: 3px; right: 3px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--altin); box-shadow: 0 0 0 2px var(--yuzey); }
+.guncelleme-dugme.dondur svg { animation: al-don 1s linear infinite; }
+@keyframes al-don { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .guncelleme-dugme.dondur svg { animation: none; } }
+button.simge-dugme { min-width: 32px; padding: 0 8px; }
+.ust-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; width: min(360px, calc(100vw - 32px));
+  display: flex; flex-direction: column; gap: 10px; padding: 14px; background: var(--yuzey);
+  border: 1px solid var(--cizgi-guclu); border-radius: var(--k-grup); box-shadow: var(--golge); }
+.ust-menu h3 { margin: 0; font-size: 15px; }
+.ust-menu p { margin: 0; color: var(--ikincil); font-size: 13.5px; }
+.ust-menu p.not { font-size: 12.5px; }
+.ust-menu .menu-baslik { color: var(--ikincil); font-size: 12px; font-weight: 600; }
+.ust-menu .eylemler { display: flex; flex-wrap: wrap; gap: 8px; }
+.ust-menu button.menu-satiri { width: 100%; justify-content: flex-start; gap: 8px; }
+.ust-menu .segment button { flex: 1 1 auto; }
+.yenilik-listesi { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; }
+@media (max-width: 760px) { .guncelleme-dugme span, .durum-nokta span, .ust-surum { display: none; } }
+/* Yüksek karşıtlık: ikincil yazı ve çizgiler koyulaşır, odak halkası belirginleşir; lacivert maviye kaymaz. */
+:root.karsitlik { --ikincil: #1f2733; --soluk: #3d4654; --cizgi: rgb(13 24 38 / 0.45); --cizgi-guclu: #12285a; --halka: #12285a; }
+:root.karsitlik[data-tema="koyu"] { --ikincil: #e2e8f2; --soluk: #c3ccda; --cizgi: rgb(255 255 255 / 0.40); --cizgi-guclu: #f7c948; --halka: #f7c948; }
+:root.karsitlik :focus-visible { outline: 2px solid var(--halka); outline-offset: 2px; }
 .gecmis-gun { margin: 8px 2px 0; color: var(--ikincil); font-size: 13px; font-weight: 600; }
 button.liste-ogesi { width: 100%; min-height: 0; font: inherit; color: var(--metin); text-align: left; cursor: pointer;
   box-shadow: none; }
@@ -733,8 +769,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     // Her ekranın başlığında o ekranın işlerine süzülmüş geçmiş (UYAP ve kaynak durumu geçmiş tutmaz).
     const gb = dugme(cev("Geçmiş"), { sinif: "kucuk gecmis-bag", simge: "saat", baslik: cev("Bu ekranın geçmişi") });
     gb.onclick = () => { gecmisSifirla(ekraninSuzgeci(aktif)); git("gecmis"); };
-    iust.append(metinler, gb, dilSecici());
-    icerik.append(iust, Object.assign(ogesi("section"), { id: "ekran" }));
+    iust.append(metinler, gb);
+    // Üst şerit başlığın üstünde kendi satırındadır: dar pencerede başlık sıkışmaz.
+    const seritSatiri = ogesi("div", "ust-serit-satiri");
+    seritSatiri.append(ustSerit());
+    icerik.append(seritSatiri, iust, Object.assign(ogesi("section"), { id: "ekran" }));
     masa.append(panel, icerik);
     $("kok").replaceChildren(masa);
     temaDugmeleri();
@@ -765,6 +804,397 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
     return seg;
   }
+  // ---- Üst şerit (3.3.1): durum, sürüm, Güncellemeleri denetle, Görünüm (Aa), Yardım (ⓘ), dil ----
+  // Dört arayüzde (masa, ArthurMask, UYAP Dashboard, ArthurTapu) aynı sıra. Masa çerçevesi GitHub'a bağlanamaz:
+  // denetim, güncelleme ve sistem bilgisi bu bilgisayardaki al_guncelleme aracından gelir. Uzak uçta araç yoktur;
+  // orada masa sunucuda çalışır ve her açılışta en son sürüm gelir.
+  const GUVENLI_ONEK = "https://github.com/beerbottle90/";
+  const KURULUM_SAYFASI = GUVENLI_ONEK + "ArthurLegal#indir";
+  const REHBER_SAYFASI = GUVENLI_ONEK + "ArthurLegal/tree/main/docs/rehber";
+  const GUNCELLEME = { durum: "bos", veri: null, zamanlayici: null, baslangic: 0, yapildi: false };
+  const GORUNUM_KAYDI = "al.masa.gorunum";
+  const YAZI_OLCEGI = { normal: 1, buyuk: 1.15, "cok-buyuk": 1.3 };
+  const GORUNUM = { yazi: "normal", karsitlik: false };
+  let acikMenu = null;
+
+  function yerelGuncelleme() { return DURUM.yetenekler.has("al_guncelleme"); }
+
+  function ustSerit() {
+    const s = ogesi("div", "ust-serit");
+    const surum = ogesi("span", "ust-surum", "v" + DURUM.surum);
+    surum.id = "ust-surum";
+    s.append(durumNoktasi(), surum, guncellemeDugmesi(), gorunumDugmesi(),
+      yardimDugmesi(), dilSecici());
+    return s;
+  }
+
+  // Durum noktası yalnız ölçtüğünü söyler: tarayıcı çevrimdışıysa gri; araştırma ucunda (MCP ekranı) hata varsa sarı.
+  function durumNoktasi() {
+    const b = ogesi("button", "durum-nokta");
+    b.type = "button";
+    b.id = "durum-nokta";
+    b.onclick = () => git("mcp");
+    durumNoktasiYenile(b);
+    return b;
+  }
+  function durumNoktasiYenile(b = $("durum-nokta")) {
+    if (!b) return;
+    let sinif = "yesil", yazi = DURUM.ortam === "masaustu" ? cev("Bu bilgisayarda") : cev("Sunucuda");
+    let aciklama = cev("Bağlantılar çalışıyor. Ayrıntı için MCP'ler ekranı.");
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+      sinif = "gri"; yazi = cev("Çevrimdışı"); aciklama = cev("İnternet bağlantısı yok; araştırma araçları cevap vermez.");
+    } else if (DURUM.mcpSaglik === "kirmizi") {
+      sinif = "sari"; yazi = cev("Kısıtlı"); aciklama = cev("Bazı kaynaklar cevap vermiyor. Ayrıntı için MCP'ler ekranı.");
+    }
+    b.className = "durum-nokta " + sinif;
+    b.replaceChildren(ogesi("i"), ogesi("span", null, yazi));
+    b.title = aciklama;
+    b.setAttribute("aria-label", yazi + ": " + aciklama);
+  }
+  window.addEventListener("online", () => durumNoktasiYenile());
+  window.addEventListener("offline", () => durumNoktasiYenile());
+
+  function menuKapat(odakGeri = true) {
+    if (!acikMenu) return;
+    const d = acikMenu.dugme;
+    acikMenu.remove();
+    acikMenu = null;
+    if (d) { d.setAttribute("aria-expanded", "false"); if (odakGeri && d.isConnected) d.focus(); }
+  }
+  function menuAc(dugmeEl, kur) {
+    if (acikMenu && acikMenu.dugme === dugmeEl) { menuKapat(); return; }
+    menuKapat(false);
+    const m = ogesi("div", "ust-menu");
+    m.setAttribute("role", "dialog");
+    m.dugme = dugmeEl;
+    kur(m);
+    const serit = dugmeEl.closest(".ust-serit");
+    if (!serit) return;
+    serit.append(m);
+    acikMenu = m;
+    dugmeEl.setAttribute("aria-expanded", "true");
+    const ilk = m.querySelector("button");
+    if (ilk) ilk.focus();
+  }
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && acikMenu) { e.preventDefault(); menuKapat(); } });
+  document.addEventListener("click", (e) => {
+    if (acikMenu && !acikMenu.contains(e.target) && !(acikMenu.dugme && acikMenu.dugme.contains(e.target))) menuKapat(false);
+  });
+  function eylemler(...dugmeler) {
+    const e = ogesi("div", "eylemler");
+    e.append(...dugmeler.filter(Boolean));
+    return e;
+  }
+  function guvenliAc(url) {
+    if (typeof url === "string" && url.startsWith(GUVENLI_ONEK)) baglantiAc(app, url, ortam.duyuru);
+  }
+  function kurulumDugmesi() {
+    const v = GUNCELLEME.veri;
+    const url = (v && v.baglanti && v.baglanti.al) || KURULUM_SAYFASI;
+    const k = dugme(cev("Kurulum sayfasını aç"), { sinif: "kucuk", simge: "dis" });
+    k.onclick = () => guvenliAc(url);
+    return k;
+  }
+
+  // -- Güncellemeleri denetle --
+  function bendeYeni(v) { return !!v && Array.isArray(v.yeni) && (v.yeni.includes("masa") || v.yeni.includes("al")); }
+  function sonSurum(v) { return (v && v.son && (v.son.masa || v.son.al)) || ""; }
+  function saatYaz(epoch) {
+    try { return new Date(epoch * 1000).toLocaleTimeString(DIL.secili, { hour: "2-digit", minute: "2-digit" }); }
+    catch { return ""; }
+  }
+  function guncellemeDugmesi() {
+    const b = ogesi("button", "kucuk guncelleme-dugme");
+    b.type = "button";
+    b.id = "guncelleme-dugme";
+    b.setAttribute("aria-haspopup", "dialog");
+    b.setAttribute("aria-expanded", "false");
+    b.onclick = () => guncellemeTikla(b);
+    guncellemeDugmesiYenile(b);
+    return b;
+  }
+  function guncellemeDugmesiYenile(b = $("guncelleme-dugme")) {
+    if (!b) return;
+    const g = GUNCELLEME, v = g.veri;
+    let yazi = cev("Güncellemeleri denetle"), simge = "yenile";
+    if (!yerelGuncelleme()) yazi = DURUM.ortam === "uzak" ? cev("Sunucuda, her zaman güncel") : cev("Güncellemeleri denetle");
+    else if (g.durum === "denetleniyor") yazi = cev("Denetleniyor…");
+    else if (g.durum === "guncel") yazi = cev("Güncelsiniz (v{0}) · son denetim {1}", DURUM.surum, saatYaz(v && v.denetim));
+    else if (g.durum === "guncelleniyor") yazi = cev("Güncelleniyor…");
+    else if (g.durum === "bitti") { yazi = cev("Yeni sürüm indi"); simge = "onay"; }
+    else if (g.durum === "hata") { yazi = cev("Denetlenemedi"); simge = "uyari"; }
+    else if (bendeYeni(v)) yazi = cev("Yeni sürüm var");
+    b.replaceChildren(ikon(simge), ogesi("span", null, yazi));
+    const yeniVar = bendeYeni(v) && !["guncelleniyor", "bitti"].includes(g.durum);
+    b.classList.toggle("yeni-var", yeniVar);
+    b.classList.toggle("dondur", g.durum === "denetleniyor" || g.durum === "guncelleniyor");
+    b.disabled = g.durum === "denetleniyor";
+    b.setAttribute("aria-busy", String(g.durum === "denetleniyor" || g.durum === "guncelleniyor"));
+    b.setAttribute("aria-label", yeniVar ? cev("Yeni sürüm var: v{0}", sonSurum(v)) : yazi);
+  }
+  async function denetle(zorla) {
+    if (!yerelGuncelleme()) return;
+    const sessiz = !zorla;
+    if (!sessiz) { GUNCELLEME.durum = "denetleniyor"; guncellemeDugmesiYenile(); }
+    try {
+      const { veri, hata } = await cagir(app, "al_guncelleme", { islem: "denetle", zorla: !!zorla });
+      if (hata || !veri) throw new Error(hata || "");
+      GUNCELLEME.veri = veri;
+      if (veri.guncelleme && veri.guncelleme.calisiyor) { GUNCELLEME.durum = "guncelleniyor"; izle(); }
+      else if (veri.durum === "hata") GUNCELLEME.durum = sessiz ? "bos" : "hata";
+      else GUNCELLEME.durum = !sessiz && !bendeYeni(veri) ? "guncel" : "bos";
+    } catch {
+      GUNCELLEME.durum = sessiz ? "bos" : "hata";
+    }
+    guncellemeDugmesiYenile();
+    if (GUNCELLEME.durum === "guncel") {
+      clearTimeout(GUNCELLEME.zamanlayici);
+      GUNCELLEME.zamanlayici = setTimeout(() => {
+        if (GUNCELLEME.durum === "guncel") { GUNCELLEME.durum = "bos"; guncellemeDugmesiYenile(); }
+      }, 5000);
+    }
+  }
+  async function guncellemeTikla(b) {
+    if (!yerelGuncelleme()) {
+      menuAc(b, (m) => {
+        m.append(ogesi("p", null, DURUM.ortam === "uzak"
+          ? cev("Bu masa ArthurLegal sunucusunda çalışıyor; her açılışta en son sürüm gelir. Bu bilgisayardaki kurulum için kurulum sayfasına bakın.")
+          : cev("ArthurLegal kurulumu bulunamadı.")), eylemler(kurulumDugmesi()));
+      });
+      return;
+    }
+    if (GUNCELLEME.durum === "denetleniyor") return;
+    if (bendeYeni(GUNCELLEME.veri) || ["hata", "bitti", "guncelleniyor"].includes(GUNCELLEME.durum)) {
+      guncellemePaneli(b);
+      return;
+    }
+    await denetle(true);
+    if (bendeYeni(GUNCELLEME.veri) || GUNCELLEME.durum === "hata") guncellemePaneli(b);
+  }
+  function yenilikMaddeleri(y) {
+    if (!y || typeof y !== "object") return [];
+    return (y[DIL.secili] || y.tr || []).filter((x) => typeof x === "string").slice(0, 5);
+  }
+  function yenilikListesi(maddeler) {
+    const ul = ogesi("ul", "yenilik-listesi");
+    for (const x of maddeler) ul.append(ogesi("li", null, x));
+    return ul;
+  }
+  function guncellemePaneli(b) {
+    menuAc(b, (m) => {
+      m.classList.add("guncelleme-paneli");
+      m.setAttribute("aria-label", cev("Güncellemeler"));
+      const v = GUNCELLEME.veri || {};
+      if (GUNCELLEME.durum === "hata") {
+        const t = dugme(cev("Tekrar dene"), { sinif: "kucuk", simge: "yenile" });
+        t.onclick = async () => { menuKapat(false); await denetle(true); if (bendeYeni(GUNCELLEME.veri) || GUNCELLEME.durum === "hata") guncellemePaneli(b); };
+        m.append(ogesi("h3", null, cev("Denetlenemedi")),
+          ogesi("p", null, cev("İnternet yok ya da GitHub yanıt vermedi. Biraz sonra yeniden deneyin ya da kurulum sayfasından indirin.")),
+          eylemler(t, kurulumDugmesi()));
+        return;
+      }
+      if (GUNCELLEME.durum === "guncelleniyor") {
+        m.append(ogesi("h3", null, cev("Güncelleniyor…")),
+          ogesi("p", null, cev("Yeni sürüm arka planda iniyor ve imzası doğrulanıyor. Bu pencereyi kapatıp çalışmaya devam edebilirsiniz.")));
+        return;
+      }
+      if (GUNCELLEME.durum === "bitti") {
+        const g = v.guncelleme || {};
+        m.append(ogesi("h3", null, cev("Yeni sürüm indi")),
+          ogesi("p", null, g.yeniden_baslat
+            ? cev("Claude Desktop'u tamamen kapatıp yeniden açınca devreye girer.")
+            : cev("Güncelleme bitti. Değişiklikler Claude Desktop yeniden açılınca görünür.")));
+        return;
+      }
+      m.append(ogesi("h3", null, cev("v{0} hazır", sonSurum(v))));
+      const maddeler = yenilikMaddeleri(v.yenilikler);
+      if (maddeler.length) m.append(ogesi("div", "menu-baslik", cev("Yenilikler")), yenilikListesi(maddeler));
+      const sim = dugme(cev("Şimdi güncelle"), { sinif: "kucuk birincil", simge: "yenile" });
+      sim.onclick = () => simdiGuncelle();
+      m.append(ogesi("p", "not", cev("Güncelleme imzası doğrulanarak kurulur; yeni sürüm Claude Desktop yeniden açılınca devreye girer.")),
+        eylemler(sim, kurulumDugmesi()));
+    });
+  }
+  async function simdiGuncelle() {
+    menuKapat(false);
+    GUNCELLEME.durum = "guncelleniyor";
+    guncellemeDugmesiYenile();
+    try {
+      const { hata } = await cagir(app, "al_guncelleme", { islem: "guncelle" });
+      if (hata) throw new Error(hata);
+    } catch {
+      GUNCELLEME.durum = "hata";
+      guncellemeDugmesiYenile();
+      return;
+    }
+    GUNCELLEME.baslangic = Date.now();
+    ortam.duyuru.textContent = cev("Güncelleme başladı.");
+    izle();
+  }
+  // Güncelleyici ayrı süreçte çalışır: 3 saniyede bir sorulur, en çok 15 dakika.
+  function izle() {
+    clearTimeout(GUNCELLEME.zamanlayici);
+    if (!GUNCELLEME.baslangic) GUNCELLEME.baslangic = Date.now();
+    GUNCELLEME.zamanlayici = setTimeout(async () => {
+      let v = null;
+      try { v = (await cagir(app, "al_guncelleme", { islem: "denetle" })).veri; } catch { /* bir sonraki turda */ }
+      const g = v && v.guncelleme;
+      if (g && !g.calisiyor) {
+        GUNCELLEME.veri = v;
+        GUNCELLEME.durum = /(^|; )hata/.test(g.son_sonuc || "") ? "hata" : "bitti";
+        GUNCELLEME.baslangic = 0;
+        guncellemeDugmesiYenile();
+        ortam.duyuru.textContent = GUNCELLEME.durum === "bitti" ? cev("Yeni sürüm indi") : cev("Denetlenemedi");
+        return;
+      }
+      if (Date.now() - GUNCELLEME.baslangic > 15 * 60 * 1000) {
+        GUNCELLEME.durum = "hata";
+        GUNCELLEME.baslangic = 0;
+        guncellemeDugmesiYenile();
+        return;
+      }
+      izle();
+    }, 3000);
+  }
+
+  // -- Görünüm (Aa): yazı boyutu ve yüksek karşıtlık --
+  function gorunumUygula() {
+    const kok = document.documentElement;
+    kok.style.zoom = String(YAZI_OLCEGI[GORUNUM.yazi] || 1);
+    kok.classList.toggle("karsitlik", !!GORUNUM.karsitlik);
+  }
+  function gorunumAl(t) {
+    if (t && YAZI_OLCEGI[t.yazi]) GORUNUM.yazi = t.yazi;
+    if (t && typeof t.karsitlik === "boolean") GORUNUM.karsitlik = t.karsitlik;
+    gorunumUygula();
+  }
+  try { gorunumAl(JSON.parse(localStorage.getItem(GORUNUM_KAYDI) || "null")); } catch { /* depo kapalı */ }
+  function gorunumKaydet() {
+    gorunumUygula();
+    try { localStorage.setItem(GORUNUM_KAYDI, JSON.stringify(GORUNUM)); } catch { /* depo kapalı */ }
+    // Bu bilgisayarda dört arayüzün ortak tercihi: ArthurMask, UYAP Dashboard ve ArthurTapu da aynı boyutla açılır.
+    if (yerelGuncelleme()) {
+      cagir(app, "al_guncelleme", { islem: "tercih", yazi: GORUNUM.yazi, karsitlik: GORUNUM.karsitlik }).catch(() => { /* bu sohbette kalır */ });
+    }
+  }
+  function gorunumDugmesi() {
+    const b = ogesi("button", "kucuk simge-dugme aa-dugme");
+    b.type = "button";
+    b.append(ikon("yazi"));
+    b.title = cev("Görünüm: yazı boyutu ve karşıtlık");
+    b.setAttribute("aria-label", b.title);
+    b.setAttribute("aria-haspopup", "dialog");
+    b.setAttribute("aria-expanded", "false");
+    b.onclick = () => menuAc(b, (m) => {
+      m.setAttribute("aria-label", cev("Görünüm"));
+      m.append(ogesi("div", "menu-baslik", cev("Yazı boyutu")));
+      const seg = ogesi("div", "segment");
+      seg.setAttribute("role", "group");
+      seg.setAttribute("aria-label", cev("Yazı boyutu"));
+      for (const [deger, yazi] of [["normal", cev("Normal")], ["buyuk", cev("Büyük")], ["cok-buyuk", cev("Çok büyük")]]) {
+        const d = dugme(yazi);
+        d.setAttribute("aria-pressed", String(GORUNUM.yazi === deger));
+        d.onclick = () => {
+          GORUNUM.yazi = deger;
+          seg.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === d)));
+          gorunumKaydet();
+        };
+        seg.append(d);
+      }
+      const k = dugme(cev("Yüksek karşıtlık"), { sinif: "kucuk menu-satiri", simge: GORUNUM.karsitlik ? "onay" : null });
+      k.setAttribute("aria-pressed", String(GORUNUM.karsitlik));
+      k.onclick = () => {
+        GORUNUM.karsitlik = !GORUNUM.karsitlik;
+        k.setAttribute("aria-pressed", String(GORUNUM.karsitlik));
+        k.replaceChildren(...(GORUNUM.karsitlik ? [ikon("onay")] : []), ogesi("span", null, cev("Yüksek karşıtlık")));
+        gorunumKaydet();
+      };
+      m.append(seg, k);
+    });
+    return b;
+  }
+
+  // -- Yardım (ⓘ): Yenilikler, Sistem bilgisini kopyala, Kullanıcı rehberi --
+  function yardimDugmesi() {
+    const b = ogesi("button", "kucuk simge-dugme yardim-dugme");
+    b.type = "button";
+    b.id = "yardim-dugme";
+    b.append(ikon("bilgi"));
+    b.title = cev("Yardım");
+    b.setAttribute("aria-label", cev("Yardım"));
+    b.setAttribute("aria-haspopup", "dialog");
+    b.setAttribute("aria-expanded", "false");
+    b.onclick = () => menuAc(b, (m) => {
+      m.setAttribute("aria-label", cev("Yardım"));
+      const y = dugme(cev("Yenilikler"), { sinif: "kucuk menu-satiri", simge: "liste" });
+      y.onclick = () => yenilikleriGoster(false);
+      const s = dugme(cev("Sistem bilgisini kopyala"), { sinif: "kucuk menu-satiri", simge: "kopya" });
+      s.onclick = () => sistemBilgisiKopyala(s);
+      const r = dugme(cev("Kullanıcı rehberi"), { sinif: "kucuk menu-satiri", simge: "kitap" });
+      r.onclick = () => { menuKapat(false); guvenliAc(REHBER_SAYFASI); };
+      m.append(y, s, r);
+    });
+    return b;
+  }
+  async function yenilikleriGoster(otomatik) {
+    let veri = null;
+    if (yerelGuncelleme()) {
+      try { veri = (await cagir(app, "al_guncelleme", { islem: "yenilikler" })).veri; } catch { /* yerel araç yok */ }
+    }
+    if (veri && veri.tercih) gorunumAl(veri.tercih);
+    const maddeler = yenilikMaddeleri(veri && veri.yenilikler);
+    if (otomatik) {
+      const gorulen = veri && veri.tercih && veri.tercih.gorulen_yenilikler && veri.tercih.gorulen_yenilikler.masa;
+      if (!maddeler.length || gorulen === DURUM.surum) return;
+    }
+    const b = $("yardim-dugme");
+    if (!b) return;
+    if (acikMenu && acikMenu.dugme === b) menuKapat(false);
+    menuAc(b, (m) => {
+      m.setAttribute("aria-label", cev("Yenilikler"));
+      m.append(ogesi("h3", null, cev("v{0} ile gelenler", DURUM.surum)));
+      m.append(maddeler.length ? yenilikListesi(maddeler) : ogesi("p", null, cev("Bu sürüm için yenilik notu yok.")));
+      const t = dugme(cev("Tamam"), { sinif: "kucuk birincil" });
+      t.onclick = () => menuKapat();
+      m.append(eylemler(t));
+    });
+    if (yerelGuncelleme() && maddeler.length) {
+      cagir(app, "al_guncelleme", { islem: "tercih", gorulen: DURUM.surum }).catch(() => { /* bir sonraki açılışta yine gösterilir */ });
+    }
+  }
+  async function sistemBilgisiKopyala(dugmeEl) {
+    let t = {};
+    if (yerelGuncelleme()) {
+      try { t = (await cagir(app, "al_guncelleme", { islem: "tani" })).veri || {}; } catch { /* yalnız masanın bildikleri */ }
+    }
+    const s = t.surumler || {};
+    const ADLAR = { al: "ArthurLegal", masa: cev("masa"), tapu: "ArthurTapu", uyap: "UYAP", mask: "ArthurMask" };
+    const surumler = Object.keys(ADLAR).filter((k) => s[k]).map((k) => ADLAR[k] + " " + s[k]).join(" · ");
+    const satirlar = [
+      cev("ArthurLegal sistem bilgisi"),
+      cev("Arayüz: {0}", cev("ArthurLegal Masası") + " v" + DURUM.surum + " (" + (DURUM.ortam === "masaustu" ? cev("bu bilgisayar") : cev("sunucu")) + ")"),
+    ];
+    if (surumler) satirlar.push(cev("Sürümler: {0}", surumler));
+    if (t.isletim_sistemi) satirlar.push(cev("İşletim sistemi: {0}", t.isletim_sistemi + (t.mimari ? " (" + t.mimari + ")" : "")));
+    satirlar.push(cev("Dil: {0}", DIL.secili) + (Array.isArray(t.moduller) && t.moduller.length ? " · " + cev("Modüller: {0}", t.moduller.join(", ")) : ""));
+    if (DURUM.model && DURUM.model.ad) satirlar.push(cev("Model: {0}", DURUM.model.ad));
+    if (t.son_denetim) satirlar.push(cev("Son denetim: {0}", t.son_denetim + (t.son_sonuc ? " · " + t.son_sonuc : "")));
+    satirlar.push(cev("Son hatalar: {0}", Array.isArray(t.son_hatalar) && t.son_hatalar.length ? "\n  " + t.son_hatalar.join("\n  ") : cev("(yok)")));
+    await kopyala(satirlar.join("\n"), dugmeEl, null, ortam.duyuru);
+  }
+  // Masa açılınca bir kez: kayıtlı görünüm, ağa çıkmadan son denetim ve güncellemeden sonraki ilk açılışta Yenilikler.
+  async function ustSeritBaslat() {
+    // Masa verisi geldi: ortam, sürüm ve yetenekler artık belli; şerit varsayımla çizilmiş olabilir.
+    durumNoktasiYenile();
+    guncellemeDugmesiYenile();
+    const us = $("ust-surum");
+    if (us) us.textContent = "v" + DURUM.surum;
+    if (GUNCELLEME.yapildi || ROL !== "masa" || !yerelGuncelleme()) return;
+    GUNCELLEME.yapildi = true;
+    await denetle(false);
+    await yenilikleriGoster(true);
+  }
+
   document.addEventListener("al-dil", () => {
     DIL.sabitler();
     // Bilgisayardaki kurulum seçimi saklar: masa sonraki sohbetlerde de bu dilde açılır. Uzak uçta araç yoktur,
@@ -4014,6 +4444,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         const yuklu = veri.backends_loaded || [];
         const hatali = veri.backends_failed || [];
         DURUM.mcpSaglik = hatali.length ? "kirmizi" : "yesil";
+        durumNoktasiYenile();
         const ne = [alNe, veri.version && cev("sürüm {0}", veri.version)].filter(Boolean).join(" · ");
         yeni = sunucuSatiri("arma", cev("ArthurLegal araştırma"), ne,
           hatali.length ? [cev("{0}/{1} kaynak", yuklu.length, yuklu.length + hatali.length), "amber"] : [cev("Çalışıyor"), "nane"]);
@@ -4214,6 +4645,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     else { ciz(); bildir(CEVAP ? "Sohbet ekranında, cevap açık." : "masa açıldı."); }   // yetenekler artık belli: not kuralla yinelenir
     cevapKaydet();   // teslim: geçmiş, sunucunun bildirdiği yerde (bu bilgisayar ya da oturum) tutulur
     if (ROL === "masa") modelPenceresi();
+    ustSeritBaslat();
   };
   app.addEventListener("hostcontextchanged", (d) => {
     AL.tema.baglamdan(d);

@@ -275,12 +275,190 @@ def _claude_kaydet(guncellendi: bool = False) -> None:
                        creationflags=ortak.PENCERESIZ, timeout=180)
 
 
+# --- Arayüzlerin "Güncellemeleri denetle" düğmesi (3.3.1) -------------------------------------------------------
+# Dört arayüz (masa, ArthurMask, UYAP Dashboard, ArthurTapu) GitHub'a kendileri bağlanmaz: bu komutu alt süreç olarak
+# çağırır (al.py guncelle --denetle --json). Hiçbir şey indirilmez ya da kurulmaz; yalnız imzalı manifest okunur ve
+# kurulu sürümlerle karşılaştırılır. Sonuç bir saat saklanır: bürodaki bilgisayarlar aynı IP'yi paylaşsa da GitHub'a
+# her düğme basışında gidilmez (--zorla hariç).
+DENETIM_DOSYASI = "guncelleme-denetimi.json"
+DENETIM_ONBELLEK_SN = 3600
+MODUL_ADLARI = ("al", "masa", "tapu", "uyap", "mask")
+GUVENLI_ONEK = "https://github.com/beerbottle90/"
+KURULUM_SAYFASI = GUVENLI_ONEK + "ArthurLegal#indir"
+KURULUM_SAYFASI_MAC = GUVENLI_ONEK + "ArthurLegal#mac"
+MASK_SAYFASI = GUVENLI_ONEK + "ArthurLegal/releases/tag/arthur-mask"
+YENILIK_SINIRI = 5
+
+
+def _masa_surumu() -> str | None:
+    """Kurulu masanın sürümü: paketin icerik.json'u (3.3.1+), yoksa masa kodundaki SURUM sabiti."""
+    s = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json").get("bilesenler", {}).get("masa")
+    if s:
+        return str(s)
+    try:
+        import re
+        kod = (ortak.SURUM_DIZINI / "istemci" / "arayuz" / "al_arayuz.py").read_text(encoding="utf-8")
+        m = re.search(r'^SURUM\s*=\s*"([^"]+)"', kod, re.M)
+        return m.group(1) if m else None
+    except OSError:
+        return None
+
+
+def kurulu_surumler() -> dict:
+    bilesen = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json").get("bilesenler", {})
+    kurulu = {"al": ortak.surum(), "masa": _masa_surumu(), "tapu": bilesen.get("tapu"), "uyap": bilesen.get("uyap")}
+    try:
+        kurulu["mask"] = ortak.mask_surumu()
+    except OSError:
+        kurulu["mask"] = None
+    return {k: str(v) for k, v in kurulu.items() if v and v not in ("?", "0.0.0")}
+
+
+def yenilikleri_temizle(veri) -> dict:
+    """{"tr": [...], "az": [...], "en": [...]}: yalnız tanınan diller, en çok beş kısa madde."""
+    if not isinstance(veri, dict):
+        return {}
+    temiz = {}
+    for d in ortak.DILLER:
+        liste = veri.get(d)
+        if isinstance(liste, list):
+            maddeler = [" ".join(str(m).split())[:200] for m in liste if isinstance(m, str) and m.strip()]
+            if maddeler:
+                temiz[d] = maddeler[:YENILIK_SINIRI]
+    return temiz
+
+
+def _son_surumler(manifest: dict) -> dict:
+    bilesen = (manifest.get("icerik") or {}).get("bilesenler") or {}
+    mask = manifest.get("mask_macos" if ortak.MAC else "mask") or {}
+    son = {"al": manifest.get("surum"), "masa": bilesen.get("masa"), "tapu": bilesen.get("tapu"),
+           "uyap": bilesen.get("uyap"), "mask": mask.get("surum")}
+    return {k: str(v) for k, v in son.items() if v}
+
+
+def _baglantilar() -> dict:
+    baglanti = {"al": KURULUM_SAYFASI_MAC if ortak.MAC else KURULUM_SAYFASI, "mask": MASK_SAYFASI}
+    return {k: v for k, v in baglanti.items() if v.startswith(GUVENLI_ONEK)}
+
+
+def _guncelleme_durumu() -> dict:
+    kilit = ortak.VERI / "guncelle.kilit"
+    try:
+        calisiyor = kilit.exists() and time.time() - kilit.stat().st_mtime < 7200
+    except OSError:
+        calisiyor = False
+    d = ortak.durum()
+    sonuc = {"calisiyor": calisiyor, "son_sonuc": str(d.get("son_sonuc") or "")}
+    son = d.get("son_guncelleme")
+    if isinstance(son, dict):
+        sonuc["son_guncelleme"] = son
+    # Yeni paket indi ama çalışan sunucu hâlâ eskisiyse: Claude Desktop yeniden açılınca devreye girer.
+    calisan = d.get("calisan_surum")
+    etkin = ortak.aktif()
+    sonuc["yeniden_baslat"] = bool(calisan and etkin and ortak.surum_demeti(etkin) > ortak.surum_demeti(calisan))
+    return sonuc
+
+
+def denetle(zorla: bool = False, ayar: dict | None = None) -> dict:
+    """Arayüzlerin düğmesi için sürüm karşılaştırması (bkz. sözleşme: SOZLESME ust serit). Hata da sözlük döner."""
+    yol = ortak.VERI / DENETIM_DOSYASI
+    kayit = ortak.json_oku(yol)
+    kayit = kayit if isinstance(kayit, dict) else {}
+    onbellek = (not zorla and isinstance(kayit.get("denetim"), (int, float)) and not kayit.get("hata")
+                and 0 <= time.time() - kayit["denetim"] < DENETIM_ONBELLEK_SN and isinstance(kayit.get("son"), dict))
+    hata = ""
+    if not onbellek:
+        try:
+            manifest, _ = manifest_getir(ayar or ortak.ayar())
+            if manifest is None:
+                hata = "yayında manifest yok"
+            else:
+                kayit = {"denetim": time.time(), "son": _son_surumler(manifest),
+                         "yenilikler": yenilikleri_temizle(manifest.get("yenilikler"))}
+        except GuncellemeHatasi as e:
+            hata = str(e)
+        except (OSError, ValueError, KeyError) as e:
+            hata = "internet yok ya da GitHub yanıt vermedi" if isinstance(e, OSError) else f"manifest okunamadı ({e})"
+        if hata:
+            ortak.gunluk("guncelle", f"denetim hatası: {hata}")
+            kayit = {**{k: kayit[k] for k in ("son", "yenilikler") if k in kayit}, "denetim": time.time(), "hata": hata}
+        try:
+            ortak.json_yaz(yol, kayit)
+        except OSError:
+            pass
+    kurulu = kurulu_surumler()
+    son = kayit.get("son") if isinstance(kayit.get("son"), dict) else {}
+    yeni = [m for m in MODUL_ADLARI
+            if m in kurulu and son.get(m) and ortak.surum_demeti(son[m]) > ortak.surum_demeti(kurulu[m])]
+    sonuc = {"durum": "hata" if hata else ("yeni" if yeni else "guncel"), "denetim": int(kayit.get("denetim") or 0),
+             "onbellek": onbellek, "kurulu": kurulu, "son": son, "yeni": yeni,
+             "yenilikler": kayit.get("yenilikler") or {}, "baglanti": _baglantilar(),
+             "guncelleme": _guncelleme_durumu()}
+    if hata:
+        sonuc["hata"] = hata
+    return sonuc
+
+
+def kurulu_yenilikler() -> dict:
+    """Kurulu paketin "Yenilikler"i (yenilikler.json; derle.py etkin sürümün maddelerini koyar)."""
+    veri = ortak.json_oku(ortak.SURUM_DIZINI / "yenilikler.json")
+    return {"surum": ortak.surum(), "yenilikler": yenilikleri_temizle(veri)}
+
+
+def _ev_gizle(metin: str) -> str:
+    ev = str(Path.home())
+    return metin.replace(ev, "~").replace(ev.replace("\\", "/"), "~")
+
+
+def son_hatalar(sinir: int = 5) -> list:
+    """Günlükten destek için son hata satırları: yalnız güncelleyici ve sunucu, kısaltılmış, ev klasörü gizli."""
+    satirlar = []
+    for ad in ("guncelle", "sunucu"):
+        try:
+            metin = (ortak.VERI / "gunluk" / f"{ad}.log").read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for s in metin.splitlines():
+            if "hata" in s.lower() or "error" in s.lower():
+                satirlar.append(f"{s[:19]} {ad}: {_ev_gizle(s[20:])[:200]}")
+    return sorted(satirlar)[-sinir:]
+
+
+def tani() -> dict:
+    """"Sistem bilgisini kopyala" için: sürümler, işletim sistemi, dil, modüller, son denetim. Belge, müvekkil ya da
+    UYAP dosya bilgisi girmez."""
+    import platform
+    d = ortak.durum()
+    if ortak.MAC:
+        isletim = f"macOS {platform.mac_ver()[0]}"
+    elif sys.platform == "win32":
+        isletim = f"Windows {platform.release()} {platform.version()}"
+    else:
+        isletim = f"{platform.system()} {platform.release()}"
+    son_denetim = d.get("son_denetim")
+    return {"urun": ortak.urun_adi(), "surumler": kurulu_surumler(), "isletim_sistemi": isletim,
+            "mimari": platform.machine(), "python": platform.python_version(), "dil": ortak.arayuz_dili(),
+            "moduller": ortak.moduller(),
+            "son_denetim": time.strftime("%Y-%m-%d %H:%M", time.localtime(son_denetim))
+            if isinstance(son_denetim, (int, float)) else "",
+            "son_sonuc": _ev_gizle(str(d.get("son_sonuc") or ""))[:300], "son_hatalar": son_hatalar()}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="ArthurLegal güncelleyici")
     ap.add_argument("--sessiz", action="store_true", help="arka plan çalıştırması")
     ap.add_argument("--mask-yok", action="store_true", help="ArthurMask'e dokunma")
     ap.add_argument("--bildir", action="store_true", help="sonucu bildirimle göster (macOS: Güncellemeleri Denetle)")
+    ap.add_argument("--denetle", action="store_true", help="yalnız denetle (indirmez, kurmaz); arayüz düğmesi için")
+    ap.add_argument("--zorla", action="store_true", help="--denetle: bir saatlik saklanan sonucu kullanma")
+    ap.add_argument("--tani", action="store_true", help="destek için sistem bilgisi")
+    ap.add_argument("--yenilikler", action="store_true", help="kurulu sürümün Yenilikler'i")
+    ap.add_argument("--json", action="store_true", help="--denetle/--tani/--yenilikler: tek satır JSON")
     args = ap.parse_args(argv)
+    if args.denetle or args.tani or args.yenilikler:
+        veri = denetle(args.zorla) if args.denetle else (tani() if args.tani else kurulu_yenilikler())
+        print(json.dumps(veri, ensure_ascii=False) if args.json else json.dumps(veri, ensure_ascii=False, indent=1))
+        return 0
 
     kilit = ortak.VERI / "guncelle.kilit"
     kilit.parent.mkdir(parents=True, exist_ok=True)

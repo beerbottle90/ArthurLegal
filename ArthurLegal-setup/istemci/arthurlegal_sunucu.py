@@ -18,6 +18,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 import threading
 import time
@@ -467,7 +468,60 @@ def masa_araclari():
     # Masanın dili (al_dil): kullanıcının bayraklardan seçtiği dil bu bilgisayarda kalır (veri/durum.json, masa_dili).
     if hasattr(al_arayuz, "dil_araci"):
         araclar.append(al_arayuz.dil_araci())
+    # Masanın sağ üstündeki "Güncellemeleri denetle", Görünüm (Aa) ve Yardım (ⓘ) menüleri (3.3.1): masa çerçevesi
+    # GitHub'a bağlanamaz; denetimi, güncellemeyi başlatmayı ve sistem bilgisini bu yerel araç yapar.
+    araclar.append(GUNCELLEME_ARACI)
     return araclar
+
+
+GUNCELLEME_ARACI = {
+    "name": "al_guncelleme",
+    "title": "ArthurLegal güncelleme ve görünüm",
+    "description": (
+        "ArthurLegal Masası'nın sağ üstündeki düğmelerin yerel aracı; masa kendisi çağırır. islem: denetle (yeni sürüm "
+        "var mı; indirmez, kurmaz), guncelle (imzalı güncelleyiciyi arka planda başlatır; yeni sürüm Claude Desktop "
+        "yeniden açılınca devreye girer), tani (destek için sistem bilgisi; belge ya da müvekkil bilgisi içermez), "
+        "yenilikler (kurulu sürümün yenilikleri), tercih (yazı boyutu, yüksek karşıtlık, görülen yenilikler). "
+        "Kullanıcı güncelleme isterse guncelle'yi ancak onun açık isteğiyle çağırın."),
+    "inputSchema": {"type": "object", "properties": {
+        "islem": {"type": "string", "enum": ["denetle", "guncelle", "tani", "yenilikler", "tercih"]},
+        "zorla": {"type": "boolean", "description": "denetle: bir saatlik saklanan sonucu kullanma"},
+        "yazi": {"type": "string", "enum": ["normal", "buyuk", "cok-buyuk"]},
+        "karsitlik": {"type": "boolean"},
+        "gorulen": {"type": "string", "description": "tercih: Yenilikler'i görülen masa sürümü"}},
+        "required": ["islem"]},
+    "annotations": {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": True},
+}
+
+
+def guncelleme_islemi(a: dict) -> dict:
+    """al_guncelleme'nin işi. guncelleyici aynı süreçte değil, ayrı süreçte çalışır: sunucu cevap vermeyi sürdürür ve
+    güncelleyicinin kilidi ikinci bir başlatmayı zaten engeller."""
+    import guncelle
+    islem = a.get("islem")
+    if islem == "denetle":
+        return guncelle.denetle(bool(a.get("zorla")))
+    if islem == "tani":
+        return guncelle.tani()
+    if islem == "yenilikler":
+        return {**guncelle.kurulu_yenilikler(), "tercih": ortak.tercihler()}
+    if islem == "tercih":
+        alanlar = {k: a[k] for k in ("yazi", "karsitlik") if k in a}
+        if a.get("gorulen"):
+            alanlar["gorulen_yenilikler"] = {"masa": str(a["gorulen"])}
+        return {"tercih": ortak.tercih_yaz(**alanlar) if alanlar else ortak.tercihler()}
+    if islem == "guncelle":
+        durum = guncelle.denetle()["guncelleme"]
+        if durum["calisiyor"]:
+            return {"basladi": False, "calisiyor": True}
+        py = ortak.python_yolu()
+        komut = [str(py if py.exists() else sys.executable), "-B", str(ortak.AL), "guncelle", "--sessiz"]
+        ek = {"creationflags": ortak.PENCERESIZ | 0x00000200} if sys.platform == "win32" else {"start_new_session": True}
+        subprocess.Popen(komut, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                         close_fds=True, **ek)
+        ortak.gunluk("guncelle", "masadan elle başlatıldı")
+        return {"basladi": True, "calisiyor": True}
+    raise ValueError("islem: denetle, guncelle, tani, yenilikler ya da tercih olmalı")
 
 
 _GECMIS = None
@@ -696,6 +750,7 @@ class Sunucu:
                          or ortak.dil())
         if hasattr(al_arayuz, "dil_araci"):
             yetenekler.append("al_dil")
+        yetenekler.append("al_guncelleme")
         return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"), **ek)
 
     def _masa(self, a):
@@ -755,9 +810,16 @@ class Sunucu:
             return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
         if al_arayuz is not None and ad == "al_dil" and hasattr(al_arayuz, "dil_araci"):
             try:
+                # Dil dört arayüzün ortak tercihidir (3.3.1): ArthurMask, UYAP Dashboard ve ArthurTapu da aynı dili açar.
                 veri = al_arayuz.dil_cevabi(a, ortak.durum().get("masa_dili"),
-                                            lambda d: ortak.durum_guncelle(masa_dili=d))
+                                            lambda d: (ortak.durum_guncelle(masa_dili=d), ortak.tercih_yaz(dil=d)))
             except (ValueError, OSError) as e:
+                return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+            return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+        if ad == "al_guncelleme":
+            try:
+                veri = guncelleme_islemi(a)
+            except (ValueError, OSError, subprocess.SubprocessError) as e:
                 return {"content": [{"type": "text", "text": str(e)}], "isError": True}
             return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
         if al_arayuz is not None and ad == "al_dogrulama_kaydi" and hasattr(al_arayuz, "Gecmis"):

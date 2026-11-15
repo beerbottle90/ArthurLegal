@@ -387,6 +387,7 @@ def main(argv=None) -> int:
     ozet = hashlib.sha256(pkg.read_bytes()).hexdigest()
     ortak.json_yaz(CIKTI / "derleme-macos.json", {
         "surum": surum, "icerik": {"paketler": icerik["paketler"], "bilesenler": icerik["bilesenler"]},
+        "yenilikler": icerik.get("yenilikler") or {},
         "kaynak": icerik["kaynak"], "python": python_surumleri, "moduller": moduller,
         "kurulum": {pkg.name: ozet}})
     print(f"  kurulum: {pkg} ({pkg.stat().st_size // (1024 * 1024)} MB, sha256 {ozet[:16]}…)")

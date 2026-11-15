@@ -113,6 +113,15 @@ def modul_surumu(dosya: Path) -> str:
     return m.group(1) if m else "?"
 
 
+def modul_surumu_sabit(dosya: Path, ad: str) -> str | None:
+    """Bir Python dosyasındaki SABIT = "x.y.z" değerini okur (ör. masanın SURUM'u); yoksa None."""
+    try:
+        m = re.search(rf'^{ad}\s*=\s*"([^"]+)"', dosya.read_text(encoding="utf-8"), re.M)
+    except OSError:
+        return None
+    return m.group(1) if m else None
+
+
 def python_hazirla(k: dict, hedef: Path) -> None:
     p = k["python"]
     arsiv = ONBELLEK / Path(p["url"]).name
@@ -184,6 +193,16 @@ def paket_hazirla(k: dict, hedef: Path, *, uyap: bool = True) -> dict:
         if bilgi["commitlenmemis_dosya"]:
             print(f"  Not: {ad} deposunda {bilgi['commitlenmemis_dosya']} commitlenmemiş dosya var; "
                   + ("derlemeye GİRDİ (--calisma-agaci)." if CALISMA_AGACI else f"derlemeye girmedi (HEAD {bilgi['commit']})."))
+    # Masanın sürümü (3.3.1): arayüzlerin "Güncellemeleri denetle" düğmesi masa için bunu karşılaştırır.
+    masa = modul_surumu_sabit(BURASI / "istemci" / "arayuz" / "al_arayuz.py", "SURUM")
+    if masa:
+        icerik["bilesenler"]["masa"] = masa
+    # Yenilikler (3.3.1): bu sürümün en çok beş maddesi, üç dilde; paketle gider (arayüzlerin "Yenilikler" menüsü)
+    # ve imzalı manifestte taşınır ("yeni sürüm var" paneli).
+    yenilikler = ortak.json_oku(BURASI / "yenilikler.json").get(k["surum"]) or {}
+    if yenilikler:
+        icerik["yenilikler"] = yenilikler
+        ortak.json_yaz(hedef / "yenilikler.json", yenilikler)
     (hedef / "surum.txt").write_text(k["surum"], encoding="utf-8")
     ortak.json_yaz(hedef / "icerik.json", icerik)
     return icerik
@@ -487,6 +506,7 @@ def main(argv=None) -> int:
     mask = mask_bilgisi(k)
     ortak.json_yaz(CIKTI / "derleme.json", {
         "surum": surum, "icerik": {"paketler": icerik["paketler"], "bilesenler": icerik["bilesenler"]},
+        "yenilikler": icerik.get("yenilikler") or {},
         "kaynak": icerik["kaynak"], "mask": mask, "mask_macos": mask_bilgisi(k, "mask_macos"),
         "anahtarlar": icerik["anahtarlar"],
         # yayinla.py yalnız bu derlemenin kurulum dosyalarını yükler: özetler burada (exe ISCC'den sonra eklenir)
