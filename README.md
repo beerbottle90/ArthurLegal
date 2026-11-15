@@ -697,6 +697,38 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.3.1 — Check for updates on every screen; ArthurMask, UYAP Dashboard and ArthurTapu in three languages (2026-11-15)
+
+- **Check for updates.** The desk, ArthurMask, UYAP Dashboard and ArthurTapu now share the same bar at the top
+  right: connection status, version, **Check for updates**, **Aa** and **ⓘ**, and the language selector. When a newer
+  version is out, a gold dot appears; the panel lists what is new and offers **Update now** (the signed updater
+  installs it; it takes effect when Claude Desktop is reopened) or the download page. The screens never contact
+  GitHub themselves: one local check reads the signed release manifest and keeps the result for an hour.
+- **Three languages.** Every screen of ArthurMask, UYAP Dashboard and ArthurTapu is now in Turkish, Azerbaijani and
+  English, following the language chosen on the desk. What the tools return to Claude stays as before.
+- **Text size and high contrast** (Aa), the same on all four screens.
+- **Copy system info** (ⓘ): versions, operating system and recent errors in one click for support; no documents,
+  names or folder paths. **What's new** opens once after an update.
+- ArthurMask 1.4.0, UYAP bridge 2.1.0, ArthurTapu 0.7.0, desk 3.3.1. How it arrives: the updater installs 3.3.1 on
+  Windows and on a Mac; quit Claude Desktop fully once and reopen it. The system prompts of the packages did not change.
+
+**Türkçe:** Masa, ArthurMask, UYAP Dashboard ve ArthurTapu artık sağ üstte aynı şeridi taşır: bağlantı durumu,
+sürüm, **Güncellemeleri denetle**, **Aa**, **ⓘ** ve dil seçici. Yeni sürüm çıkınca düğmede altın bir nokta belirir;
+panel yenilikleri listeler, **Şimdi güncelle** (imzalı güncelleyici kurar, Claude Desktop yeniden açılınca devreye
+girer) ya da kurulum sayfasını önerir. Ekranlar GitHub'a kendileri bağlanmaz; tek yerel denetim imzalı yayın
+manifestini okur, sonucu bir saat saklar. ArthurMask, UYAP Dashboard ve ArthurTapu'nun bütün ekranları Türkçe,
+Azerbaycanca ve İngilizce; masada seçilen dili izler. **Aa** ile yazı boyutu ve yüksek karşıtlık, **ⓘ** ile
+Yenilikler ve **Sistem bilgisini kopyala** (sürümler, işletim sistemi, son hatalar; belge, ad ya da klasör yolu
+girmez). ArthurMask 1.4.0, UYAP köprüsü 2.1.0, ArthurTapu 0.7.0, masa 3.3.1. Güncelleyici 3.3.1'i kendisi kurar;
+Claude Desktop'u bir kez tamamen kapatıp açın. Paketlerin sistem talimatı değişmedi.
+
+**Azərbaycan dili:** Masa, ArthurMask, UYAP Dashboard və ArthurTapu indi sağ yuxarıda eyni zolağı daşıyır: bağlantı
+vəziyyəti, versiya, **Yeniləmələri yoxla**, **Aa**, **ⓘ** və dil seçimi. Yeni versiya çıxanda düymədə qızılı nöqtə
+görünür; panel yenilikləri sadalayır, **İndi yenilə** (imzalı yeniləyici quraşdırır, Claude Desktop yenidən açılanda
+qüvvəyə minir) və ya yükləmə səhifəsini təklif edir. ArthurMask, UYAP Dashboard və ArthurTapu-nun bütün ekranları
+türk, Azərbaycan və ingilis dillərindədir. **Aa** ilə şrift ölçüsü və yüksək kontrast, **ⓘ** ilə Yeniliklər və
+**Sistem məlumatını kopyala**. Yeniləyici 3.3.1-i özü quraşdırır; Claude Desktop-u bir dəfə tam bağlayıb yenidən açın.
+
 ## Setup 3.3.0 — Workflows and monitoring on the desk; ArthurMask explains its changes (2026-11-14)
 
 - **Workflows.** A new **İş akışları** (Workflows) screen on the desk lists 112 ready-made workflows in 11 areas

@@ -350,6 +350,8 @@ def main(argv=None) -> int:
         "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,
         "taban": f"https://github.com/{depo}/releases/download/{args.etiket}/",
         "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
+        # Yenilikler (3.3.1): arayüzlerin "yeni sürüm var" paneli bu maddeleri gösterir (en çok beş, üç dil).
+        **({"yenilikler": d["yenilikler"]} if d.get("yenilikler") else {}),
         # macOS: güncelleyici ArthurMask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
         **({"mask_macos": d["mask_macos"]} if d.get("mask_macos") else {}),
     }

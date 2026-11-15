@@ -346,6 +346,54 @@ def durum_guncelle(**alanlar) -> None:
     json_yaz(VERI / "durum.json", {**durum(), **alanlar})
 
 
+# Dört arayüzün (masa, ArthurMask, UYAP Dashboard, ArthurTapu) ortak görünüm tercihleri (3.3.1): dil, yazı boyutu,
+# yüksek karşıtlık ve hangi sürümün "Yenilikler"inin görüldüğü. Arayüzler ayrı süreçlerdir; her biri yalnız kendi
+# değiştirdiği anahtarı yazar, ötekileri korur.
+TERCIH_DOSYASI = "arayuz-tercihleri.json"
+YAZI_BOYUTLARI = ("normal", "buyuk", "cok-buyuk")
+
+
+def tercihler() -> dict:
+    t = json_oku(VERI / TERCIH_DOSYASI)
+    t = t if isinstance(t, dict) else {}
+    temiz = {}
+    if t.get("dil") in DILLER:
+        temiz["dil"] = t["dil"]
+    if t.get("yazi") in YAZI_BOYUTLARI:
+        temiz["yazi"] = t["yazi"]
+    if isinstance(t.get("karsitlik"), bool):
+        temiz["karsitlik"] = t["karsitlik"]
+    gorulen = t.get("gorulen_yenilikler")
+    if isinstance(gorulen, dict):
+        temiz["gorulen_yenilikler"] = {str(k): str(v) for k, v in gorulen.items()
+                                       if isinstance(v, str) and re.fullmatch(r"[\w.-]{1,40}", k)}
+    return temiz
+
+
+def tercih_yaz(**alanlar) -> dict:
+    """Yalnız verilen anahtarları değiştirir; geçersiz değer ValueError. gorulen_yenilikler birleştirilir."""
+    t = tercihler()
+    for ad, deger in alanlar.items():
+        if ad == "dil" and deger in DILLER:
+            t["dil"] = deger
+        elif ad == "yazi" and deger in YAZI_BOYUTLARI:
+            t["yazi"] = deger
+        elif ad == "karsitlik" and isinstance(deger, bool):
+            t["karsitlik"] = deger
+        elif ad == "gorulen_yenilikler" and isinstance(deger, dict):
+            t.setdefault("gorulen_yenilikler", {}).update(
+                {str(k): str(v) for k, v in deger.items() if isinstance(v, str) and re.fullmatch(r"[\w.-]{1,40}", str(k))})
+        else:
+            raise ValueError(f"geçersiz tercih: {ad}={deger!r}")
+    json_yaz(VERI / TERCIH_DOSYASI, t)
+    return t
+
+
+def arayuz_dili() -> str:
+    """Arayüzlerin dili: ortak tercih → masada seçilen dil → kurulumun dili."""
+    return tercihler().get("dil") or (durum().get("masa_dili") if durum().get("masa_dili") in DILLER else None) or dil()
+
+
 def gunluk(ad: str, mesaj: str) -> None:
     """veri\\gunluk\\<ad>.log dosyasına yazar (1 MB'ta döner). Kişisel veri yazılmaz."""
     try:

@@ -33,7 +33,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.3.0"
+SURUM = "3.3.1"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -61,7 +61,7 @@ MASA_URI = "ui://arthurlegal/masa.html"
 # Claude Desktop'ın tam ekran bölmesi her zaman en son açılan görünümü gösterir. Bir aracın kendi kartı olsaydı masanın
 # yerine geçerdi; bu yüzden bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer.
 # Masanın kendi çağırdığı iç araçlar görünüm açmaz.
-GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil"})
+GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme"})
 # Eski kartlar: Claude dizini profili (talimatsız, masasız) yalnız bu iki aracı kartla gösterir.
 KART_GORUNUMU = {
     "tr_mevzuat_madde_getir": "ui://arthurlegal/madde-karti.html",

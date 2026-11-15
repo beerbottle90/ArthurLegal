@@ -63,11 +63,13 @@ const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
   const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";   // Claude'a giden metinlerde aynen (Türkçe)
   const uyari = (adres) => cev("UYARI: veri çekilemedi, teyidiniz gerekli: {0}", adres);   // ekrandaki satır, seçili dilde
-  const SURUM = "3.3.0";
+  const SURUM = "3.3.1";
   const NS = "http://www.w3.org/2000/svg";
 
   // 16x16 çizgi simgeleri; tek kalınlık, tek köşe biçimi.
   const IKONLAR = {
+    bilgi: [["circle", { cx: 8, cy: 8, r: 6.25 }], ["path", { d: "M8 7.25v4M8 4.9v.1" }]],
+    yazi: [["path", { d: "M1.75 12.5 4.75 4l3 8.5M2.8 9.6h3.9M10 12.5V9.4a1.9 1.9 0 0 1 3.8 0v3.1M13.8 10.6c-1.9-.4-3.8 0-3.8 1.1" }]],
     kopya: [["rect", { x: 5.5, y: 5.5, width: 8, height: 8, rx: 2 }],
             ["path", { d: "M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" }]],
     dis: [["path", { d: "M9.5 2.5h4v4M13.5 2.5 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3" }]],
