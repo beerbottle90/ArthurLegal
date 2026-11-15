@@ -438,6 +438,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 .model-gosterge.dusuk .nokta { background: var(--kirmizi-metin); }
 .oneri-cumlesi { margin: 0 0 4px; font-size: 17px; font-weight: 600; line-height: 1.4; }
 .model-gosterge .yazi { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Dar pencerede menü üst satıra geçer: göstergenin yazısı kesilmez, iki satıra iner. */
+@media (max-width: 760px) { .model-gosterge .yazi { white-space: normal; } }
 .model-serit { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px;
   border-radius: var(--k-alan); background: var(--grup); font-size: 14px; line-height: 1.45; }
 .model-serit .yazi { flex: 1 1 320px; min-width: 0; }
@@ -515,6 +517,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const ortam = { app, duyuru: $("duyuru") };
   const BAGLAYICILAR = "https://claude.ai/customize/connectors";
   const MODEL = /*AL:MODEL*/;
+  // Masanın her sürümünün "Yenilikler"i, üç dilde (tasarim/yenilikler.json): uzak masada da ⓘ menüsü boş kalmaz.
+  const YENILIKLER = /*AL:YENILIK*/;
   const AKISLAR = /*AL:AKIS*/;   // ArthurLegal eklentisinin iş becerileri, üç dilde (tasarim/is-akislari.json)
 
   // Sunucunun al_masasi cevabı gelene kadar en temkinli varsayım: uzak uç, yerel modül yok.
@@ -608,9 +612,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   // Devirde masa açık değildir: not, masanın açık olduğunu söyleyen önceki notun yerini alır.
   async function yonlendirmeyiBildir() {
-    const not = "ArthurLegal Masası bu bağlantıdan açılmadı: bu bilgisayarda ArthurLegal kurulu. arthurlegal-yerel " +
-      "sunucusunun al_masasi aracını çağırın ve bu sohbette masa araçlarını o sunucudan kullanın. O araç araç " +
-      "listenizde yoksa uzak al_masasi aracını uzakta_kal=true ile çağırın.";
+    const not = (DURUM.yoklama
+      ? "ArthurLegal Masası bu bağlantıdan henüz açılmadı: önce bilgisayardaki kurulum deneniyor. "
+      : "ArthurLegal Masası bu bağlantıdan açılmadı: bu bilgisayarda ArthurLegal kurulu. ") +
+      "arthurlegal-yerel sunucusunun al_masasi aracını çağırın ve bu sohbette masa araçlarını o sunucudan kullanın. " +
+      "O araç araç listenizde yoksa uzak al_masasi aracını uzakta_kal=true ile hemen yeniden çağırın.";
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
   async function bildir(metin) {
@@ -1142,7 +1148,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       try { veri = (await cagir(app, "al_guncelleme", { islem: "yenilikler" })).veri; } catch { /* yerel araç yok */ }
     }
     if (veri && veri.tercih) gorunumAl(veri.tercih);
-    const maddeler = yenilikMaddeleri(veri && veri.yenilikler);
+    // Kurulumun notları (bütün modüller) varsa onlar; yoksa masanın kendi notları.
+    let maddeler = yenilikMaddeleri(veri && veri.yenilikler);
+    if (!maddeler.length) maddeler = yenilikMaddeleri(YENILIKLER[DURUM.surum]);
     if (otomatik) {
       const gorulen = veri && veri.tercih && veri.tercih.gorulen_yenilikler && veri.tercih.gorulen_yenilikler.masa;
       if (!maddeler.length || gorulen === DURUM.surum) return;
@@ -1189,7 +1197,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     guncellemeDugmesiYenile();
     const us = $("ust-surum");
     if (us) us.textContent = "v" + DURUM.surum;
-    if (GUNCELLEME.yapildi || ROL !== "masa" || !yerelGuncelleme()) return;
+    if (GUNCELLEME.yapildi || !["masa", "basla"].includes(ROL) || !yerelGuncelleme()) return;
     GUNCELLEME.yapildi = true;
     await denetle(false);
     await yenilikleriGoster(true);
@@ -4509,7 +4517,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     marka.append(ogesi("span", null, "Legal"));
     ust.append(sablon("t-arma"), marka, Object.assign(ogesi("span", "ayrac"), { ariaHidden: "true" }), ogesi("span", "bolum", cev("Masa")));
     const ad = ogesi("div", "adimlar");
-    ad.append(adimSatiri("suruyor", cev("Claude masayı bu bilgisayardaki kurulumdan (arthurlegal-yerel) açıyor…")));
+    ad.append(adimSatiri("suruyor", DURUM.yoklama
+      ? cev("Masa açılıyor: önce bu bilgisayardaki ArthurLegal kurulumu deneniyor…")
+      : cev("Claude masayı bu bilgisayardaki kurulumdan (arthurlegal-yerel) açıyor…")));
     const ac = dugme(cev("Masayı bu bilgisayarda aç"), { sinif: "birincil", simge: "dis" });
     ac.onclick = () => claudeaSor(yerelMasaIstegi(DURUM.acilis), null);
     const kal = dugme(cev("Bu masayla devam et"));
@@ -4525,8 +4535,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     ey.append(ac, kal);
     const sat = ogesi("div", "alt-satir");
     sat.append(ey, ogesi("span", "zaman", `ArthurLegal ${DURUM.surum}`));
-    kap.append(ust, ogesi("h2", null, cev("Masa bu bilgisayardaki ArthurLegal'den açılıyor")), ad,
-      bilgi(cev("Sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Masa birkaç saniyede açılmazsa ilk düğmeye basın; yine açılmazsa Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalıdır, açıp yeniden deneyin. İkinci düğme uzak masayı açar: orada geçmiş yalnız bu sohbet boyunca durur.")),
+    if (DURUM.yoklama) ey.replaceChildren(kal);   // kurulum olmayabilir: "bu bilgisayarda aç" sözü verilmez
+    kap.append(ust, ogesi("h2", null, DURUM.yoklama ? cev("Masa açılıyor") : cev("Masa bu bilgisayardaki ArthurLegal'den açılıyor")), ad,
+      bilgi(DURUM.yoklama
+        ? cev("Bilgisayarınızda ArthurLegal kuruluysa masa oradan açılır; sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard orada çalışır. Kurulu değilse (web, telefon) masa birkaç saniye içinde burada açılır.")
+        : cev("Sorgu geçmişiniz, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Masa birkaç saniyede açılmazsa ilk düğmeye basın; yine açılmazsa Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalıdır, açıp yeniden deneyin. İkinci düğme uzak masayı açar: orada geçmiş yalnız bu sohbet boyunca durur.")),
       sat);
     $("kok").replaceChildren(kap);
   }
@@ -4630,6 +4643,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
           // Masa burada açılmadı: durum saklanmaz (bu sohbetin öteki pencereleri uzak masayı açık sanmasın).
           devriYaz();
           DURUM.yonlendir = veri.yonlendir;
+          DURUM.yoklama = veri.yoklama === true;   // yerelin bağlı olduğu bilinmiyor: önce yerel deneniyor
           DURUM.hazir = true;
           yonlendirmeCiz();
           yonlendirmeyiBildir();

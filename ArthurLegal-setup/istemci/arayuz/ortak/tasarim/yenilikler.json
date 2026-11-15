@@ -1,0 +1,45 @@
+{
+ "3.3.2": {
+  "tr": [
+   "Geçmişiniz güncellemeden sonra da yerinde: masa, uzak bağlantıdan istense bile önce bu bilgisayardaki kurulumdan açılır.",
+   "Güncellemeden sonraki ilk açılışta Yenilikler, masa bir soruyla açıldığında da bir kez gösterilir.",
+   "Masa açılırken \"Masa açılıyor\" ekranı kurulumun durumunu doğru söyler; web ve telefonda masa birkaç saniyede açılır.",
+   "Görsel ve kullanılabilirlik düzeltmeleri (dar pencere, düğmeler, yazılar)."
+  ],
+  "az": [
+   "Tarixçəniz yeniləmədən sonra da yerindədir: masa uzaq bağlantıdan istənsə belə, əvvəlcə bu kompüterdəki quraşdırmadan açılır.",
+   "Yeniləmədən sonrakı ilk açılışda Yeniliklər, masa sualla açıldıqda da bir dəfə göstərilir.",
+   "Masa açılarkən \"Masa açılır\" ekranı quraşdırmanın vəziyyətini düzgün göstərir; veb və telefonda masa bir neçə saniyəyə açılır.",
+   "Görünüş və istifadə rahatlığı düzəlişləri (dar pəncərə, düymələr, mətnlər)."
+  ],
+  "en": [
+   "Your history stays after an update: the desk opens from the installation on this computer first, even when requested over the remote connection.",
+   "After an update, What's new is shown once on first opening, also when the desk opens with a question.",
+   "While the desk opens, the \"Opening the desk\" screen states the installation status correctly; on the web and on a phone the desk opens in a few seconds.",
+   "Visual and usability fixes (narrow windows, buttons, text)."
+  ]
+ },
+ "3.3.1": {
+  "tr": [
+   "Her ekranın sağ üstünde \"Güncellemeleri denetle\": yeni sürüm varsa tek tıkla güncelleyin.",
+   "ArthurMask, UYAP Dashboard ve ArthurTapu artık Türkçe, Azerbaycanca ve İngilizce.",
+   "Aa menüsünden yazı boyutu ve yüksek karşıtlık seçimi.",
+   "\"Sistem bilgisini kopyala\": destek isterken sürüm bilgisini tek tıkla paylaşın.",
+   "Bağlantı durumu üst şeritte: bağlı, kısıtlı ya da çevrimdışı."
+  ],
+  "az": [
+   "Hər ekranın sağ yuxarı küncündə \"Yeniləmələri yoxla\": yeni versiya varsa bir kliklə yeniləyin.",
+   "ArthurMask, UYAP Dashboard və ArthurTapu artıq türk, Azərbaycan və ingilis dillərindədir.",
+   "Aa menyusundan şrift ölçüsü və yüksək kontrast seçimi.",
+   "\"Sistem məlumatını kopyala\": dəstək istəyərkən versiya məlumatını bir kliklə paylaşın.",
+   "Bağlantı vəziyyəti yuxarı zolaqda: qoşulub, məhdud və ya oflayn."
+  ],
+  "en": [
+   "\"Check for updates\" at the top right of every screen: update in one click when a new version is out.",
+   "ArthurMask, UYAP Dashboard and ArthurTapu now speak Turkish, Azerbaijani and English.",
+   "Text size and high contrast in the Aa menu.",
+   "\"Copy system info\": share your version details in one click when asking for support.",
+   "Connection status in the top bar: connected, limited or offline."
+  ]
+ }
+}
