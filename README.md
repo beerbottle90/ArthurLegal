@@ -697,6 +697,38 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+## Setup 3.3.2 — Your desk history stays after an update; usability fixes (2026-11-15)
+
+- **History stays.** After an update, Claude Desktop sometimes opened the desk over the remote connection, where
+  history lasts only for that chat; your saved queries were still on your computer but did not show. The remote desk
+  now always tries the installation on your computer first, so the desk opens with your history. On the web and on a
+  phone it opens over the remote connection within a few seconds, as before.
+- **What's new** opens once after an update also when the desk opens with a question, and the ⓘ menu shows it on
+  the remote desk too.
+- **Usability.** UYAP Dashboard 2.1.1: tooltips open next to the window, the top bar and list rows no longer spill
+  out of narrow windows. ArthurTapu 0.7.1: the TKGM status board and the selected parcel card stay readable in
+  narrow windows and high contrast. On every screen faint grey text is darker, and a new version reads
+  "Update available" with a gold dot.
+- How it arrives: the updater installs 3.3.2 on Windows and on a Mac; quit Claude Desktop fully once and reopen it.
+  ArthurMask stays 1.4.0. The system prompts of the packages did not change.
+
+**Türkçe:** Güncellemeden sonra Claude Desktop masayı bazen uzak bağlantıdan açıyordu; orada geçmiş yalnız o sohbet
+boyunca durduğu için kayıtlarınız bilgisayarınızda dursa da görünmüyordu. Uzak masa artık her zaman önce
+bilgisayarınızdaki kurulumu dener; masa geçmişinizle açılır. Web'de ve telefonda masa eskisi gibi birkaç saniyede uzak
+bağlantıdan açılır. Güncellemeden sonraki ilk açılışta **Yenilikler**, masa bir soruyla açıldığında da bir kez çıkar;
+ⓘ menüsü uzak masada da Yenilikler'i gösterir. UYAP Dashboard 2.1.1: açıklama balonları pencerenin yanında açılır,
+dar pencerede şerit ve liste satırları taşmaz. ArthurTapu 0.7.1: dar pencerede ve yüksek karşıtlıkta TKGM durum
+panosu ve seçili parsel kartı okunur. Bütün ekranlarda soluk gri yazılar koyulaştı; yeni sürümde düğme
+"Yeni sürüm var" der ve altın nokta gösterir. Güncelleyici 3.3.2'yi kendisi kurar; Claude Desktop'u bir kez tamamen
+kapatıp açın. ArthurMask 1.4.0'da kalır. Paketlerin sistem talimatı değişmedi.
+
+**Azərbaycan dili:** Yeniləmədən sonra Claude Desktop masanı bəzən uzaq bağlantıdan açırdı; orada tarixçə yalnız həmin
+söhbət boyu qaldığı üçün qeydləriniz kompüterinizdə olsa da görünmürdü. Uzaq masa indi həmişə əvvəlcə kompüterinizdəki
+quraşdırmanı yoxlayır; masa tarixçənizlə açılır. Vebdə və telefonda masa əvvəlki kimi bir neçə saniyəyə uzaq
+bağlantıdan açılır. Yeniləmədən sonra **Yeniliklər** masa sualla açıldıqda da bir dəfə göstərilir. UYAP Dashboard
+2.1.1 və ArthurTapu 0.7.1 dar pəncərədə və yüksək kontrastda oxunaqlıdır; solğun boz mətnlər tündləşdi. Yeniləyici
+3.3.2-ni özü quraşdırır; Claude Desktop-u bir dəfə tam bağlayıb yenidən açın.
+
 ## Setup 3.3.1 — Check for updates on every screen; ArthurMask, UYAP Dashboard and ArthurTapu in three languages (2026-11-15)
 
 - **Check for updates.** The desk, ArthurMask, UYAP Dashboard and ArthurTapu now share the same bar at the top

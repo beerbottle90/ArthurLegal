@@ -33,7 +33,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.3.1"
+SURUM = "3.3.2"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -77,6 +77,7 @@ _PARCALAR = {
     "MD": ("tasarim", "md.js"),
     "MODEL": ("tasarim", "model-onerisi.json"),
     "AKIS": ("tasarim", "is-akislari.json"),
+    "YENILIK": ("tasarim", "yenilikler.json"),
     "ARMA": ("tasarim", "arma.svg"),
     "DONNA": ("tasarim", "donna.svg"),
 }
@@ -278,9 +279,28 @@ YONLENDIRME_NOTU = (
     "al_masasi aracı araç listenizde YOKSA (sunucu bağlı olsa da araçları kapalı olabilir) beklemeyin ve kullanıcıya "
     "sormayın: hemen bu aracı uzakta_kal=true ile yeniden çağırın, sonra kullanıcıya tek cümleyle şunu söyleyin: "
     "Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalı olabilir; açınca masa bu bilgisayardan açılır ve geçmiş kalıcı olur.")
+# 15.11.2026 (üçüncü tur): devir artık Claude'un bağlantı listesine bağlı değil. Claude listeye arthurlegal-yerel'i
+# her zaman yazmıyor; güncellemeden sonra masa uzaktan açılıp geçmiş "kayboluyordu" (diskteki kayıtlar yerindeydi).
+# Liste yereli bağlı göstermese de uzak uç önce yereli dener: Claude araç listesinde yerel al_masasi'yi görüyorsa onu
+# çağırır, göremiyorsa (web, telefon, kurulum yok, araçlar kapalı) bu aracı uzakta_kal=true ile hemen yeniden çağırır.
+YOKLAMA_NOTU = (
+    "Masa bu bağlantıdan henüz AÇILMADI: önce bilgisayardaki ArthurLegal kurulumu denenir. Araç listenizde "
+    "arthurlegal-yerel sunucusunun al_masasi aracı VARSA şimdi, kullanıcıya bir şey sormadan, onu aynı bolum, "
+    "baglayicilar ve model ile çağırın; bu sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için de "
+    "arthurlegal-yerel sunucusunu kullanın (sorgu geçmişi yalnız orada kalıcıdır). O araç araç listenizde YOKSA (web, "
+    "telefon, ArthurLegal kurulu değil ya da araçları kapalı) beklemeyin ve kullanıcıya bir şey söylemeyin: hemen bu "
+    "aracı aynı girdilerle ve uzakta_kal=true ile yeniden çağırın.")
 YEREL_KAPALI_NOTU = (
     " arthurlegal-yerel bağlı ama masa bu uzak bağlantıdan açıldı. Oradaki al_masasi aracı araç listenizde olmadığı "
     "için buradan açtıysanız kullanıcıya tek cümleyle söyleyin: Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalı olabilir; açınca masa bu bilgisayardan açılır ve geçmiş kalıcı olur.")
+
+
+def yerel_durumu(baglayicilar: Any) -> Optional[str]:
+    """Claude'un listesinde bilgisayardaki kurulum: "bagli", listede ama sorunlu ("sorunlu") ya da yok (None)."""
+    yerel = [o for o in baglayicilari_duzenle(baglayicilar) if _YEREL_SUNUCU.search(o["ad"].lower())]
+    if any(o["durum"] == "bagli" for o in yerel):
+        return "bagli"
+    return "sorunlu" if yerel else None
 
 
 def yerel_bagli(baglayicilar: Any) -> bool:
@@ -376,8 +396,9 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
         sema["properties"]["uzakta_kal"] = {
             "type": "boolean", "default": False,
             "description": ("Yalnız şu iki durumda true: arthurlegal-yerel sunucusunun al_masasi aracı araç "
-                            "listenizde yoksa (sunucu bağlı olsa da araçları kapalı olabilir) ya da kullanıcı masayı "
-                            "açıkça bu uzak bağlantıdan istiyorsa.")}
+                            "listenizde yoksa (web, telefon, ArthurLegal kurulu değil ya da sunucu bağlı olsa da "
+                            "araçları kapalı) ya da kullanıcı masayı açıkça bu uzak bağlantıdan istiyorsa. Verilmezse "
+                            "masa önce bilgisayardaki kurulumdan açılmayı dener.")}
         sema["required"] = ["baglayicilar"]
     return tanim
 
@@ -508,11 +529,17 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         out["model"] = model_degerlendir(model)
         if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, Claude'a talimat yok
             out["not"] += model_notu(out["model"])
-    if ortam == "uzak" and yerel_bagli(baglayicilar):
-        if yerele_devret:
+    if ortam == "uzak":
+        yerel = yerel_durumu(baglayicilar)
+        ana_uc = "al_masaya_yaz" in out["yetenekler"]   # dizin profili başka sunucudan söz etmez, devretmez
+        # Claude yereli "bağlı" bildirdiyse kesin devir; hiç bildirmediyse yoklama (önce yerel denenir). Yereli
+        # sorunlu bildirdiyse (hata, giriş gerekli) masa burada açılır.
+        if yerele_devret and (yerel == "bagli" or (yerel is None and ana_uc)):
             out["yonlendir"] = {"sunucu": YEREL_SUNUCU, "arac": "al_masasi"}
-            out["not"] = YONLENDIRME_NOTU
-        elif "al_masaya_yaz" in out["yetenekler"]:   # ana uç; dizin profili başka sunucudan söz etmez
+            out["not"] = YONLENDIRME_NOTU if yerel == "bagli" else YOKLAMA_NOTU
+            if yerel != "bagli":
+                out["yoklama"] = True
+        elif yerel == "bagli" and ana_uc:
             out["not"] += YEREL_KAPALI_NOTU
     return out
 
