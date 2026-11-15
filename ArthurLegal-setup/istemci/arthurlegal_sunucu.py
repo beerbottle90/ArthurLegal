@@ -516,9 +516,18 @@ def guncelleme_islemi(a: dict) -> dict:
             return {"basladi": False, "calisiyor": True}
         py = ortak.python_yolu()
         komut = [str(py if py.exists() else sys.executable), "-B", str(ortak.AL), "guncelle", "--sessiz"]
-        ek = {"creationflags": ortak.PENCERESIZ | 0x00000200} if sys.platform == "win32" else {"start_new_session": True}
-        subprocess.Popen(komut, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                         close_fds=True, **ek)
+        ortak_ek = {"stdin": subprocess.DEVNULL, "stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL, "close_fds": True}
+        if sys.platform == "win32":
+            # Claude Desktop sunucuyu bir iş nesnesinde (job) başlatabilir; kapanınca alt süreçleri de sonlandırır.
+            # Güncelleyici işten koparılarak başlatılır (CREATE_BREAKAWAY_FROM_JOB); iş buna izin vermezse yarıda kalan
+            # güncelleme zararsızdır (kilit iki saatte düşer, paket yeni klasöre açılır), bir sonraki denetim tamamlar.
+            temel = ortak.PENCERESIZ | 0x00000200  # CREATE_NEW_PROCESS_GROUP
+            try:
+                subprocess.Popen(komut, creationflags=temel | 0x01000000, **ortak_ek)
+            except OSError:
+                subprocess.Popen(komut, creationflags=temel, **ortak_ek)
+        else:
+            subprocess.Popen(komut, start_new_session=True, **ortak_ek)
         ortak.gunluk("guncelle", "masadan elle başlatıldı")
         return {"basladi": True, "calisiyor": True}
     raise ValueError("islem: denetle, guncelle, tani, yenilikler ya da tercih olmalı")

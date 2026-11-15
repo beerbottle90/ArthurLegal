@@ -170,6 +170,30 @@ class MasaAraciTesti(unittest.TestCase):
         self.assertIn('"name": "al_guncelleme"', kod)
         self.assertIn('yetenekler.append("al_guncelleme")', kod)
 
+    def test_simdi_guncelle_isten_koparilir_izin_yoksa_yine_baslar(self):
+        """Claude kapanınca güncelleyici ölmesin: önce işten koparılarak; iş izin vermezse koparmadan başlatılır."""
+        with tempfile.TemporaryDirectory() as t:
+            kok = Path(t) / "kok"
+            sahte_kok(kok)
+            kod = ("import json, subprocess, arthurlegal_sunucu as s\n"
+                   "bayraklar = []\n"
+                   "def sahte(komut, **k):\n"
+                   "    bayraklar.append(k.get('creationflags', 0))\n"
+                   "    if len(bayraklar) == 1 and k.get('creationflags', 0) & 0x01000000:\n"
+                   "        raise OSError('erişim engellendi')\n"
+                   "s.subprocess.Popen = sahte\n"
+                   "print(json.dumps([s.guncelleme_islemi({'islem': 'guncelle'}), bayraklar]))")
+            r = subprocess.run([sys.executable, "-B", "-c", kod], cwd=str(kok / "surumler" / "0.0.1" / "istemci"),
+                               env={**ENV, "ARTHURLEGAL_KOK": str(kok)}, capture_output=True, text=True,
+                               encoding="utf-8", timeout=60)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            sonuc, bayraklar = json.loads(r.stdout)
+            self.assertTrue(sonuc["basladi"])
+            if sys.platform == "win32":
+                self.assertEqual(len(bayraklar), 2)
+                self.assertTrue(bayraklar[0] & 0x01000000)
+                self.assertFalse(bayraklar[1] & 0x01000000)
+
 
 if __name__ == "__main__":
     unittest.main()
