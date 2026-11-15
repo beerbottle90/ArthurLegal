@@ -429,7 +429,8 @@ KARTLI_UZAK = ("tr_mevzuat_madde_getir", "tr_ictihat_ara")
 MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_mevzuat_ara", "tr_mevzuat_icindekiler", "tr_ictihat_ara", "tr_ictihat_getir",
              "tr_kurum_karari_ara", "tr_kurum_karari_getir", "tr_semantik_ara", "tr_belge_getir",
              "tr_spk_bulten_icinde_ara", "status",
-             "hesap_kalemleri", "hesap_vekalet_ucreti", "hesap_yargi_harci", "hesap_faiz", "hesap_iscilik_alacagi")
+             "hesap_kalemleri", "hesap_vekalet_ucreti", "hesap_yargi_harci", "hesap_faiz", "hesap_iscilik_alacagi",
+             "tr_resmi_gazete_fihrist")
 MODUL_KOMUTU = {"tapu": "tapu", "uyap": "uyap-ekran", "mask": "mask"}
 
 
