@@ -656,6 +656,44 @@ def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
     return onceki or [m for m in ortak.ESKI_SECIM if m != "mask"]
 
 
+# Zip kurulumunun yapay zekâ uygulaması sorusu (K21; kurulum sihirbazındaki asistan ekranının konsol karşılığı).
+ASISTAN_METNI = {
+    "tr": {"soru": "ArthurLegal hangi yapay zekâ uygulamasında çalışsın?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "İkisi"), "numara": "Numarayı yazın", "hata": "1, 2 ya da 3 yazın."},
+    "en": {"soru": "Which AI app should ArthurLegal work in?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "Both"), "numara": "Type the number", "hata": "Type 1, 2 or 3."},
+    "az": {"soru": "ArthurLegal hansı süni intellekt tətbiqində işləsin?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "Hər ikisi"), "numara": "Nömrəni yazın", "hata": "1, 2 və ya 3 yazın."},
+}
+
+
+def zip_asistan(dil: str, onceki: str | None = None, girdi=input) -> str:
+    """Zip kurulumunda uygulama seçimi, konsolda numarayla. Enter: önceki seçim; yoksa bu bilgisayarda kurulu olan(lar),
+    hiçbiri yoksa Claude Desktop (sihirbazdaki ön işaretle aynı). Konsol yoksa Enter gibi."""
+    kodlar = ortak.ASISTAN_SECIMLERI
+    if onceki in kodlar:
+        varsayilan = onceki
+    else:
+        c, g = claude_kurulu(), ortak.chatgpt_kurulu()
+        varsayilan = "ikisi" if c and g else ("chatgpt" if g else "claude")
+    m = ASISTAN_METNI[dil]
+    print(m["soru"])
+    for no, ad in enumerate(m["secenekler"], 1):
+        print(f"  {no}  {ad}")
+    soru = f"{m['numara']} [Enter: {m['secenekler'][kodlar.index(varsayilan)]}]: "
+    for _ in range(20):
+        try:
+            cevap = girdi(soru).strip()
+        except (EOFError, OSError):
+            return varsayilan
+        if not cevap:
+            return varsayilan
+        if cevap in ("1", "2", "3"):
+            return kodlar[int(cevap) - 1]
+        print(m["hata"])
+    return varsayilan
+
+
 def zip_kurulum() -> int:
     """Zip'ten çalıştırılınca içeriği kurulum klasörüne taşır ve kurulumu oradan sürdürür. Dil sorulmaz: önceki
     kurulumun dili, yoksa Windows'un arayüz dili (ortak.sistem_dili). Modüller konsolda sorulur (zip_secimi)."""
@@ -664,8 +702,9 @@ def zip_kurulum() -> int:
     dil = dil if dil in ortak.DILLER else ortak.sistem_dili()
     onceki = ortak.json_oku(VARSAYILAN_KOK / "moduller.json").get("moduller")
     secim = ",".join(zip_secimi(dil, onceki if isinstance(onceki, list) else None))
+    asistan = zip_asistan(dil, ortak.json_oku(VARSAYILAN_KOK / "veri" / "durum.json").get("asistan"))
     if kaynak.resolve() == VARSAYILAN_KOK.resolve():
-        return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim])
+        return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim, "--asistan", asistan])
     print(ZIP_METNI[dil]["kuruluyor"].format(s=ortak.surum(), kok=VARSAYILAN_KOK))
     for y in sorted(kaynak.rglob("*")):
         goreli = y.relative_to(kaynak)
@@ -682,7 +721,7 @@ def zip_kurulum() -> int:
     (VARSAYILAN_KOK / "aktif.txt").unlink(missing_ok=True)
     sonuc = subprocess.run([str(VARSAYILAN_KOK / "runtime" / "python.exe"), "-B",
                             str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol", "--dil", dil,
-                            "--moduller", secim])
+                            "--moduller", secim, "--asistan", asistan])
     return sonuc.returncode
 
 

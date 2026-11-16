@@ -321,6 +321,22 @@ class BaslangicSayfasiTesti(unittest.TestCase):
 
 
 class KurulumMetniTesti(unittest.TestCase):
+    def test_zip_kurulumu_uygulamayi_sorar(self):
+        import io as _io
+        import contextlib
+        import kur
+        cevaplar = iter(["9", "2"])
+        with contextlib.redirect_stdout(_io.StringIO()):
+            self.assertEqual(kur.zip_asistan("tr", "claude", lambda s: next(cevaplar)), "chatgpt",
+                             "geçersiz numara yeniden sorulur")
+            self.assertEqual(kur.zip_asistan("en", "ikisi", lambda s: ""), "ikisi", "Enter önceki seçimi tutar")
+
+            def kapali(s):
+                raise EOFError
+            self.assertEqual(kur.zip_asistan("az", "chatgpt", kapali), "chatgpt", "konsol yoksa önceki seçim")
+        for m in kur.ASISTAN_METNI.values():
+            self.assertEqual(len(m["secenekler"]), len(kur.ortak.ASISTAN_SECIMLERI))
+
     def test_uc_dilde_her_secim(self):
         import kur
         for sozluk in (kur.ACILIS_METNI, kur.UYAP_SIZ, kur.UYGULAMA_ADI):
