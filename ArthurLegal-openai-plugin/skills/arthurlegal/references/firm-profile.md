@@ -3,7 +3,7 @@
 > Bu dosya tüm plugin'ler tarafından okunur. Büro ve kullanıcı seviyesindeki temel bilgiler buraya yazılır.
 >
 > **`[DOLDUR]` etiketli alanlar kurulum sırasında doldurulmalıdır.**
-> Doldurmak için: ``firm-operations-cold-start-interview` iş akışı (`buro-isleri` becerisi, `references/firm-operations-cold-start-interview.md`)` komutunu çalıştırın.
+> Doldurmak için: ``firm-operations-cold-start-interview` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-cold-start-interview.md`)` komutunu çalıştırın.
 >
 > **Kaynak etiketleri:**
 > - `[büro]` — Büronun kendi verisi (iç bilgi)
@@ -236,4 +236,4 @@ Bu belge yalnızca hukuk müşavirliği değerlendirmesi içindir.
 
 *Kurulum tarihi:* [DOLDUR — GG.AA.YYYY]
 *Son güncelleme:* [DOLDUR — GG.AA.YYYY]
-*Bu dosyayı dolduran:* [DOLDUR — `firm-operations-cold-start-interview` iş akışı (`buro-isleri` becerisi, `references/firm-operations-cold-start-interview.md`) çıktısı]
+*Bu dosyayı dolduran:* [DOLDUR — `firm-operations-cold-start-interview` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-cold-start-interview.md`) çıktısı]

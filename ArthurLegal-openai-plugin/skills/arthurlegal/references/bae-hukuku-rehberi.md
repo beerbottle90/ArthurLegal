@@ -51,7 +51,7 @@ adımını (hangi portal, hangi kanun no) açıkça tarif et.
 1. Kurum: ICC / LCIA / DIAC / ADGM Arbitration Centre — **DIFC-LCIA yazıyorsa 🟠 flag** (Decree 34/2021 sonrası geçerlilik sorusu)
 2. Seat: DIFC veya ADGM seçimi → common law usul + EN dil avantajı; onshore seat → AR dil riski
 3. İcra: BAE NY Konvansiyonu tarafı; DIFC "conduit" içtihadı `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`
-4. Ev entitesi icra ayağı → ``commercial-legal-governing-law-review` iş akışı (`sozlesme` becerisi, `references/commercial-legal-governing-law-review.md`)` Adım 5
+4. Ev entitesi icra ayağı → ``commercial-legal-governing-law-review` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-governing-law-review.md`)` Adım 5
 
 ## Atıf formatı
 

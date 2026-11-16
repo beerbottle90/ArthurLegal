@@ -1,6 +1,6 @@
 # Firm Operations Practice Profile (Türk Hukuku — Büro işletim ekseni)
 
-*Bu dosya ``firm-operations-cold-start-interview` iş akışı (`buro-isleri` becerisi, `references/firm-operations-cold-start-interview.md`)` ile doldurulur. **Bu plugin, diğer 15 plugin'in ÜZERİNDE çalışan büro-seviye operasyon ekseni.** firm-profile.md ile birlikte tüm büronun davranış zeminini belirler.*
+*Bu dosya ``firm-operations-cold-start-interview` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-cold-start-interview.md`)` ile doldurulur. **Bu plugin, diğer 15 plugin'in ÜZERİNDE çalışan büro-seviye operasyon ekseni.** firm-profile.md ile birlikte tüm büronun davranış zeminini belirler.*
 
 ---
 
@@ -46,47 +46,47 @@ Diğer 15 plugin **müvekkil matter'larında çalışır** (dispute, advisory, .
    ↓
 2. Ön sohbet (avukat - en geç 24 saat içinde randevu)
    ↓
-3. `firm-operations-new-client-intake` iş akışı (`buro-isleri` becerisi, `references/firm-operations-new-client-intake.md`)
+3. `firm-operations-new-client-intake` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-new-client-intake.md`)
    - Müvekkil bilgisi (kimlik / tüzel kişi)
    - Talep özeti (matter tipi belirler)
    - Aciliyet (süre kontrol)
    ↓
-4. `firm-operations-conflict-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-conflict-check.md`)  (ZORUNLU)
+4. `firm-operations-conflict-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-conflict-check.md`)  (ZORUNLU)
    ⛔ Conflict bulundu → ret
    🟠 Şüpheli → Yönetici Ortak değerlendirme
    ✓ Temiz → devam
    ↓
-5. `firm-operations-masak-kontrol` iş akışı (`buro-isleri` becerisi, `references/firm-operations-masak-kontrol.md`)
+5. `firm-operations-masak-kontrol` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-masak-kontrol.md`)
    - Kimlik tespit (TC kimlik / pasaport / şirket sicil)
    - Gerçek faydalanıcı sorgu (tüzel kişi)
    - Şüpheli işlem sinyali kontrol
    ↓
-6. `firm-operations-sanctions-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-sanctions-check.md`)
+6. `firm-operations-sanctions-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-sanctions-check.md`)
    - Müvekkil + (varsa) yurtdışı bağlantı
    - Resmî yaptırım listeleri (OFAC SDN, AB, UK OFSI, BM) + TR dondurma kararları (6415, 7262)
    ⛔ Hit → Yönetici Ortak + ret değerlendirme
    ↓
-7. `firm-operations-kvkk-aydinlatma` iş akışı (`buro-isleri` becerisi, `references/firm-operations-kvkk-aydinlatma.md`)
+7. `firm-operations-kvkk-aydinlatma` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-kvkk-aydinlatma.md`)
    - Aydınlatma metni sunma + imza
    - VERBİS sicili kontrol (büro)
    ↓
-8. `firm-operations-fee-agreement` iş akışı (`buro-isleri` becerisi, `references/firm-operations-fee-agreement.md`)
+8. `firm-operations-fee-agreement` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-fee-agreement.md`)
    - Matter tipine göre ücret modeli
    - AAÜT + KDV + Stopaj + Damga hesap
    - Av. K. m. 164 başarı bonusu sınırı kontrol
    ↓
-9. `firm-operations-vekalet-sablon` iş akışı (`buro-isleri` becerisi, `references/firm-operations-vekalet-sablon.md`)
+9. `firm-operations-vekalet-sablon` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-vekalet-sablon.md`)
    - Genel / özel / sınırlı yetki
    - Noter randevusu (varsa)
    ↓
-10. `firm-operations-matter-open` iş akışı (`buro-isleri` becerisi, `references/firm-operations-matter-open.md`)
+10. `firm-operations-matter-open` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-matter-open.md`)
     - matter-slug oluştur
     - Matter klasörü açma
     - Drive/iManage paylaşım ayarı
     - UYAP'a vekalet sunumu (dava matter'larında)
    ↓
 11. İlgili plugin'e devir (matter-spesifik)
-    - dava: `litigation-legal-case-intake` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-case-intake.md`)
+    - dava: `litigation-legal-case-intake` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-case-intake.md`)
     - diğer işler: ilgili plugin'in skill listesi (profil boşsa önce o plugin'in cold-start-interview'u)
 ```
 
@@ -135,7 +135,7 @@ Dayanak: AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 38 (metin 24.09.20
 3. Ortaklar Kurulu kararı
 4. **Reddet** (çoğu zaman en güvenli)
 
-Detay: `skills/arthurlegal/references/conflict-check-rehberi.md`
+Detay: `../arthurlegal/references/conflict-check-rehberi.md`
 
 ---
 
@@ -159,9 +159,9 @@ Kapsamdaki işte:
 - **Şüpheli işlem bildirimi:** şüphenin oluştuğu tarihten itibaren en geç on iş günü içinde (Yön. m. 28/2); bildirim müvekkil dahil kimseye açıklanamaz (5549 m. 4/2)
 - **Muhafaza:** kimlik tespiti belgeleri son işlem tarihinden itibaren **sekiz yıl** (5549 m. 8)
 
-Uygulama: ``firm-operations-masak-kontrol` iş akışı (`buro-isleri` becerisi, `references/firm-operations-masak-kontrol.md`)`.
+Uygulama: ``firm-operations-masak-kontrol` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-masak-kontrol.md`)`.
 
-Detay: `skills/arthurlegal/references/masak-kimlik-tespit-rehberi.md`
+Detay: `../arthurlegal/references/masak-kimlik-tespit-rehberi.md`
 
 ---
 
@@ -184,9 +184,9 @@ Dayanak: AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 163, m. 164 (24.09
 - Kanun metni "sözleşmede aksi yazılmadıkça" istisnası içermez. Farklı bir paylaşım yazılacaksa geçerliliği içtihatla doğrulanmalı (doğrulanmadı).
 - Sözleşmede **açıkça** belirt.
 
-Uygulama: ``firm-operations-fee-agreement` iş akışı (`buro-isleri` becerisi, `references/firm-operations-fee-agreement.md`)`.
+Uygulama: ``firm-operations-fee-agreement` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-fee-agreement.md`)`.
 
-Detay: `skills/arthurlegal/references/ucret-sozlesmesi-rehberi.md` + `skills/arthurlegal/references/aaut-rehberi.md`
+Detay: `../arthurlegal/references/ucret-sozlesmesi-rehberi.md` + `../arthurlegal/references/aaut-rehberi.md`
 
 ---
 
@@ -209,9 +209,9 @@ Dayanak: HUKUK MUHAKEMELERİ KANUNU (Kanun No. 6100, RG sayı 27836) m. 74, m. 7
 - Azilde ücretin tamamı ödenir; kusur veya ihmal nedeniyle azilde ödenmez (Av. K. m. 174/2).
 - Avukat çekilirse vekâlet görevi, durumun müvekkile **tebliğinden itibaren 15 gün** devam eder (Av. K. m. 41/1).
 
-Uygulama: ``firm-operations-vekalet-sablon` iş akışı (`buro-isleri` becerisi, `references/firm-operations-vekalet-sablon.md`)`.
+Uygulama: ``firm-operations-vekalet-sablon` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-vekalet-sablon.md`)`.
 
-Detay: `skills/arthurlegal/references/vekalet-uyap-rehberi.md`
+Detay: `../arthurlegal/references/vekalet-uyap-rehberi.md`
 
 ---
 
@@ -228,7 +228,7 @@ Detay: `skills/arthurlegal/references/vekalet-uyap-rehberi.md`
 | Hizmet süresi belgesi (HSB) talebi | Olayda (örn. yeni avukat alımı) | İlgili avukat |
 | Staj evrakı (stajyer) | Periyodik | Sorumlu ortak |
 
-Detay: `skills/arthurlegal/references/baro-islemleri-rehberi.md`
+Detay: `../arthurlegal/references/baro-islemleri-rehberi.md`
 
 ---
 
@@ -237,7 +237,7 @@ Detay: `skills/arthurlegal/references/baro-islemleri-rehberi.md`
 ```
 1. Ay sonu — tüm avukatlar matter bazlı süre + matter notlarını kapatır
    ↓
-2. `firm-operations-monthly-billing` iş akışı (`buro-isleri` becerisi, `references/firm-operations-monthly-billing.md`)
+2. `firm-operations-monthly-billing` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-monthly-billing.md`)
    - Matter listesi (aktif)
    - Süre toplamı (avukat × matter)
    - AAÜT eşik kontrol (her matter için)
@@ -343,4 +343,4 @@ Bu plugin'in çıktıları matter klasörü açılmadan önce **`pre-matter/<tar
 
 ---
 
-*Re-run interview:* ``firm-operations-cold-start-interview` iş akışı (`buro-isleri` becerisi, `references/firm-operations-cold-start-interview.md`) --redo*
+*Re-run interview:* ``firm-operations-cold-start-interview` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-cold-start-interview.md`) --redo*

@@ -1,7 +1,7 @@
 # Avusturya Hukuku — Kullanım Rehberi (RIS OGD API yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **ArthurLegal MCP'nin `at_` araçları** (kurulumla gelir) → `skills/arthurlegal/references/at-ris-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `at_` araçları** (kurulumla gelir) → `../arthurlegal/references/at-ris-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
 > Bu dosya **web erişimi yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.

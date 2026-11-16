@@ -144,7 +144,7 @@ tr_ictihat_ara(
 
 ## In-house akış (İSG kazası sonrası, ilk 72 saat)
 
-``litigation-legal-isg-incident-response` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-isg-incident-response.md`)` skill'i detaylı runbook verir. Özet:
+``litigation-legal-isg-incident-response` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-isg-incident-response.md`)` skill'i detaylı runbook verir. Özet:
 
 1. **0-1 saat:** Delil koruma, yasal bildirimler, üst yönetim, dış vekil mobilize
 2. **1-24 saat:** Savcılık beklenti planlaması, çalışan vekalet, belge kontrol, iletişim

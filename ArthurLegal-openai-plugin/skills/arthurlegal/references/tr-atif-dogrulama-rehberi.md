@@ -4,7 +4,7 @@
 > bulunmadıkça metne yazılmaz. Bulunamayan künye **"doğrulanmadı"** diye işaretlenir; tamamlanmaz, düzeltilmez,
 > tahmin edilmez. Bu, SYSTEM_PROMPT bölüm 4'teki madde doğrulama kapısının içtihat karşılığıdır.
 >
-> Uygulama skill'i: ``legal-research-tr-atif-dogrulama` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-tr-atif-dogrulama.md`)`. Yöntem 24.09.2026'da ArthurLegal MCP'nin canlı ucunda
+> Uygulama skill'i: ``legal-research-tr-atif-dogrulama` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-tr-atif-dogrulama.md`)`. Yöntem 24.09.2026'da ArthurLegal MCP'nin canlı ucunda
 > denendi; aşağıdaki davranışlar o denemeden. ABD karşılığı: `abd-atif-dogrulama-rehberi.md`.
 
 ---

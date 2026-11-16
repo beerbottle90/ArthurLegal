@@ -1,7 +1,7 @@
 # İspanya Hukuku — Kullanım Rehberi (BOE açık veri yöntemi)
 
 > ✅ **Bu yargı çevresi için artık custom MCP server VAR (v1.6.0):**
-> **ArthurLegal MCP'nin `es_` araçları** (kurulumla gelir) → `skills/arthurlegal/references/es-boe-mcp-rehberi.md`. **Önce onu kullan** —
+> **ArthurLegal MCP'nin `es_` araçları** (kurulumla gelir) → `../arthurlegal/references/es-boe-mcp-rehberi.md`. **Önce onu kullan** —
 > arama, atıf sözleşmesi ve statü disiplini orada hazırdır.
 >
 > Bu dosya **web erişimi yedeğidir**: ArthurLegal MCP yanıt vermezse kullanılır.

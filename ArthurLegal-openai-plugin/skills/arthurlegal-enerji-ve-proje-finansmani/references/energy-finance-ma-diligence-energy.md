@@ -1,0 +1,128 @@
+# energy-finance-ma-diligence-energy
+
+Enerji sektörü M&A durum tespiti — EPDK lisans, ÇED, yaptırım, vergi borcu, iş güvenliği sicil, rekabet eşiği ve SPK bildirim kontrolü içerir.
+
+# /ma-diligence-energy — Enerji M&A Due Diligence
+
+## Adım 0 — Hedef şirket profili
+
+| Unsur | Değer |
+|---|---|
+| Hedef şirket adı + tüzel kişilik | |
+| Varlık türü | Elektrik üretim / doğal gaz / rafineri / terminal / karma |
+| EPDK lisans türü | Üretim / Dağıtım / İletim / Depolama / İhracat-İthalat |
+| Kapasite (MW / m³/yıl) | |
+| Halka açık mı? (BIST) | |
+| Tahmini işlem büyüklüğü (USD) | |
+
+## Adım 1 — Düzenleyici & lisans tarama (KRİTİK)
+
+**EPDK:**
+- Lisans geçerliliği + süresi + kapasite kısıtları
+- Lisans devri için EPDK izni gerekiyor mu? (genellikle gerekli)
+- Ön bildirim süresi ve koşulları
+- Aktif soruşturma / yaptırım prosedürü var mı?
+- ArthurLegal MCP (`tr_`): `tr_kurum_karari_ara(kurum="epdk", query="<lisans sahibi ya da ceza konusu>")` çek; enerji piyasasında rekabet ihlali için ayrıca `tr_kurum_karari_ara(kurum="rekabet", query="<şirket ya da pazar>")`
+
+**ÇED ve çevre:**
+- ÇED izni mevcut mu? Kapsamı yeterli mi?
+- Emisyon, atık, izin şartları ihlali var mı?
+- Seveso/Büyük Endüstriyel Kaza statüsü? (Rehber: `../arthurlegal/references/seveso-buyuk-kaza-rehberi.md`)
+
+**Rekabet:**
+- İşlem rekabet eşiği aşıyor mu? (Rekabet Kurulundan İzin Alınması Gereken Birleşme ve Devralmalar Hakkında Tebliğ, Tebliğ No: 2010/4)
+- Müvekkilin/alıcının halihazırdaki pazar payı + hedef = eşik aşımı?
+- Avrupa Komisyonu AB Birleşme Tüzüğü (ECMR) — AB cirosu eşiği kontrolü
+
+## Adım 2 — Yaptırım & KYC taraması
+
+1. Hedef şirket ve gerçek yararlanan sahipleri resmî yaptırım listelerinde tara (`yaptirim-tarama-rehberi.md`)
+2. Türk ortaklar: MKK teyit
+3. Yabancı ortak: CAATSA m.232 riski değerlendirmesi (Rusya/CIS bağlantılı ise)
+4. Yaptırım eşleşmesi → **Yönetici Ortak / Uyum görevlisine eskalasyon, işleme devam etme**
+
+## Adım 3 — Vergi durum tespiti
+
+- Vergi borcunun tespiti: hedef şirketten vergi dairesinin "borcu yoktur" yazısı ya da borç dökümü istenir (ArthurLegal MCP'de borç sorgusu yoktur). Vergi pozisyonuna ilişkin GİB görüşleri (özelge) için `tr_kurum_karari_ara(kurum="gib", query="<konu>")`
+- Aktif vergi uyuşmazlıkları: vergi mahkemesi, bölge idare mahkemesi ve Danıştay aşamasındaki davalar, uzlaşma başvuruları, kesinleşmemiş tarhiyatlar
+- Transfer pricing pozisyonu (intra-group bağlantı varsa özel dikkat)
+- KDV iade alacakları — devralma sonrası talep edilebilir mi?
+- Değer artış kazancı — satıcı tarafında vergi yükü → fiyata etkisi
+
+## Adım 4 — İş güvenliği & iş hukuku
+
+- İSGK 6331 iş güvenliği sicil — son 5 yıl kaza kaydı
+- İş kazası + meslek hastalığı davaları — HMK süreçleri
+- Sendika yapısı: TİS döngüsü, grev/lokavt tarihi
+- Toplu işçi çıkarma geçmişi
+- Yabancı çalışan varsa çalışma izni uyumu
+
+## Adım 5 — Sözleşme portföyü & bağlı yükümlülükler
+
+- Temel offtake / satış sözleşmeleri: change of control klozu var mı?
+- EPC, O&M sözleşmeleri: devir halinde yeniden müzakere tetikler mi?
+- Finansman sözleşmeleri: cross-default, prepayment riski
+- Kilit personel tutma anlaşmaları
+- Çevresel yükümlülükler (atık bertaraf, restorasyon)
+
+## Adım 6 — Findings tablosu
+
+| # | Bulgu | Kategori | Severity | Eylem |
+|---|---|---|---|---|
+| 1 | | Lisans / Vergi / Yaptırım / ISG / Sözleşme | 🔴/🟠/🟡/🟢 | |
+
+## Çıktı şablonu
+
+```markdown
+GİZLİDİR – HUKUK MÜŞAVİRLİĞİ DAHİLİ ÇALIŞMA NOTU
+
+# Enerji M&A Due Diligence — [Hedef şirket / tarih]
+
+## ⚠️ Reviewer note
+- Kapsam: [okunan belgeler, erişilemeyen alanlar]
+- Bloklayıcı bulgu: [evet/hayır]
+- [review] sayısı: N
+
+## Bottom line
+
+## Findings tablosu (özet)
+
+## Düzenleyici & lisans (EPDK/ÇED/Rekabet)
+
+## Yaptırım & KYC
+
+## Vergi
+
+## İş güvenliği & iş hukuku
+
+## Sözleşme portföyü
+
+## Önerilen adımlar
+```
+
+---
+
+## Kaynak katmanı — /legal-research
+
+> Bu plugin'in skill'leri **birincil kaynagi kendileri uretmez**. Mevzuat,
+> ictihat, emsal sozlesme veya akademik doktrin gerektiginde asagidaki kaynak
+> skill'lerine gec; sonucu bu plugin'in cikti formatina geri tasi.
+>
+> **Kaynak hiyerarsisi:** BIRINCIL (mevzuat/ictihat) → EMSAL (imzali
+> sozlesme) → DOKTRIN (akademik). Cakisma halinde birincil ustundur —
+> cakismayi raporla, ikincil kaynak lehine sessizce cozme.
+>
+> **100 saniye:** her arac cagrisi 100 saniyede iptal edilir ve *hicbir sey*
+> dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
+> kapsanmadigini soyle.
+>
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
+> pozisyonu veya kisisel veri **gonderilmez**.
+
+| Ihtiyac | Kaynak skill |
+|---|---|
+| **bu plugin icin birincil kullanim** — PSA/JOA, cost recovery, profit split, stabilizasyon, DMO, decommissioning, yerel icerik benchmark'i | ``legal-research-sozlesme-emsali` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-sozlesme-emsali.md`)` |
+| AZ upstream/yer alti serveti rejimi, JV ve enerji mevzuati — akt + statu | ``legal-research-az-mevzuat` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-az-mevzuat.md`)` |
+| Energy Charter Treaty, yatirim tahkimi, stabilizasyon klozu ogretisi — **ikincil** | ``legal-research-karsilastirmali-doktrin` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-karsilastirmali-doktrin.md`)` |
+
+Rehberler: `../arthurlegal/references/eqanun-mcp-rehberi.md` · `../arthurlegal/references/lex-scholar-rehberi.md` · `../arthurlegal/references/resourcecontracts-rehberi.md` · `../arthurlegal/references/karsilastirmali-hukuk-rehberi.md` · `../arthurlegal/references/nl-rechtspraak-mcp-rehberi.md` · `../arthurlegal/references/pl-sejm-mcp-rehberi.md` · `../arthurlegal/references/at-ris-mcp-rehberi.md` · `../arthurlegal/references/ie-statutebook-mcp-rehberi.md` · `../arthurlegal/references/fi-finlex-mcp-rehberi.md` · `../arthurlegal/references/es-boe-mcp-rehberi.md`

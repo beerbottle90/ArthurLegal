@@ -129,7 +129,7 @@
 ### Yabancı tüzel kişi
 
 - Yabancı sicil no + Türkiye'deki şube/iştirak
-- **Yaptırım** taraması (paralel olarak ``firm-operations-sanctions-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-sanctions-check.md`)`)
+- **Yaptırım** taraması (paralel olarak ``firm-operations-sanctions-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-sanctions-check.md`)`)
 
 ---
 

@@ -43,7 +43,10 @@ CIKTI = "ArthurLegal-openai-plugin"
 AD = "arthurlegal"
 MCP_URL = "https://arthurlegal-mcp.fly.dev/openai/mcp"
 AKISLAR = KOK / "ArthurLegal-setup" / "istemci" / "arayuz" / "ortak" / "tasarim" / "is-akislari.json"
-KURAL_YOLU = "skills/%s/references/" % AD
+# Dosya yolları becerinin kendi klasörüne göredir (eklenti içinde de, ~/.codex/skills altına tek tek kurulumda da
+# beceriler kardeş klasördür): kural becerisinin başvuru klasörü her beceriden ../arthurlegal/references/.
+KURAL_DOSYASI = "skills/%s/references/" % AD
+KURAL_YOLU = "../%s/references/" % AD
 SEMA_EKLENTI = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 SEMA_MCP = "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
 LACIVERT = "#12285a"
@@ -56,10 +59,10 @@ ALAN_KATEGORISI = {
     "corporate-legal": "sirket", "employment-legal": "is", "ip-legal": "fsmh", "privacy-legal": "kvkk",
     "tax-legal": "vergi", "energy-finance": "enerji", "firm-operations": "buro", "legal-research": "arastirma",
 }
-KATEGORI_ADI = {   # beceri adı (küçük harf, tire): ChatGPT'de görünen, okunur
-    "dava": "dava-ve-dilekce", "idare": "idare-ve-duzenleyici-kurumlar", "sozlesme": "sozlesme",
-    "sirket": "sirketler-ve-birlesme", "is": "is-hukuku", "fsmh": "fikri-mulkiyet", "kvkk": "kisisel-veriler",
-    "vergi": "vergi", "enerji": "enerji-ve-proje-finansmani", "buro": "buro-isleri", "arastirma": "arastirma-ve-atif",
+KATEGORI_ADI = {   # beceri adı, arthurlegal- önekli: ~/.codex/skills ortak klasördür, "vergi" gibi ad çakışmasın
+    "dava": "arthurlegal-dava-ve-dilekce", "idare": "arthurlegal-idare-ve-duzenleyici-kurumlar", "sozlesme": "arthurlegal-sozlesme",
+    "sirket": "arthurlegal-sirketler-ve-birlesme", "is": "arthurlegal-is-hukuku", "fsmh": "arthurlegal-fikri-mulkiyet", "kvkk": "arthurlegal-kisisel-veriler",
+    "vergi": "arthurlegal-vergi", "enerji": "arthurlegal-enerji-ve-proje-finansmani", "buro": "arthurlegal-buro-isleri", "arastirma": "arthurlegal-arastirma-ve-atif",
 }
 
 # SYSTEM_PROMPT tam uç (/mcp) için yazılmıştır; OpenAI profilinde olmayan araçlar burada söylenir. Her kalıp metinde
@@ -155,12 +158,13 @@ def _komutlar(metin: str, adlar: set, beceri_alani: Dict[str, str]) -> str:
         ad = "%s-%s" % (m.group(1), m.group(2))
         if ad not in adlar:
             return m.group(0)
-        return "`%s` iş akışı (`%s` becerisi, `references/%s.md`)" % (ad, KATEGORI_ADI[beceri_alani[ad]], ad)
+        alan = KATEGORI_ADI[beceri_alani[ad]]
+        return "`%s` iş akışı (`%s` becerisi, `../%s/references/%s.md`)" % (ad, alan, alan, ad)
     return EK.KOMUT.sub(degistir, metin)
 
 
 def _yollar(metin: str, rehberler: set) -> str:
-    """Rehber, profil ve büro profili kural becerisinin references/ klasöründedir (eklenti köküne göre yol)."""
+    """Rehber, profil ve büro profili kural becerisinin references/ klasöründedir (becerinin klasörüne göre yol)."""
     metin = metin.replace("knowledge/firm-profile.md", KURAL_YOLU + "firm-profile.md")
     metin = metin.replace("knowledge/profiles/", KURAL_YOLU + "profiles/").replace("](../profiles/", "](profiles/")
     return EK.REHBER.sub(lambda m: KURAL_YOLU + m.group(1) if m.group(1) in rehberler else m.group(0), metin)
@@ -203,7 +207,9 @@ farklar şunlardır:
    kendi alan becerisinin `references/<iş-akışı>.md` dosyasındadır:
 {alanlar}
    Rehberler `{KURAL_YOLU}`, pratik profilleri `{KURAL_YOLU}profiles/`, büro profili
-   `{KURAL_YOLU}firm-profile.md` dosyasındadır. Okumadığın dosyanın içeriğini varsayma.
+   `{KURAL_YOLU}firm-profile.md` dosyasındadır. Bu paketteki bütün dosya yolları becerinin kendi klasörüne göredir
+   (`../arthurlegal/references/` her beceriden kural becerisinin başvuru klasörüdür). Okumadığın dosyanın içeriğini
+   varsayma.
 3. **Hafıza (pratik profili ve dosya çalışma alanları).** Metinde `Hafıza › <yol>` diye geçen dosya ArthurLegal Hafıza
    kasasındaki nottur (`Hafıza › Pratik/<alan>/PROFIL.md` pratik profili, `matters/` altı dosya çalışma alanları):
    okumak için `hafiza_getir(yol="Pratik/...")`, aramak ve listelemek için `hafiza_ara`, yazmak için kullanıcının
@@ -300,10 +306,10 @@ def uret(kok: Path = KOK, surum: Optional[str] = None) -> Dict[str, bytes]:
                                                          rehberler, beceri_alani, kategoriler)
     for p in sorted((knowledge / "references").glob("*.md")):
         if p.name in rehberler:
-            dosyalar[KURAL_YOLU + p.name] = metin_uyarla(EK._oku(p), adlar, rehberler, beceri_alani)
+            dosyalar[KURAL_DOSYASI + p.name] = metin_uyarla(EK._oku(p), adlar, rehberler, beceri_alani)
     for p in sorted((knowledge / "profiles").glob("*.md")):
-        dosyalar[KURAL_YOLU + "profiles/" + p.name] = metin_uyarla(EK._oku(p), adlar, rehberler, beceri_alani)
-    dosyalar[KURAL_YOLU + "firm-profile.md"] = metin_uyarla(EK._oku(knowledge / "firm-profile.md"), adlar, rehberler,
+        dosyalar[KURAL_DOSYASI + "profiles/" + p.name] = metin_uyarla(EK._oku(p), adlar, rehberler, beceri_alani)
+    dosyalar[KURAL_DOSYASI + "firm-profile.md"] = metin_uyarla(EK._oku(knowledge / "firm-profile.md"), adlar, rehberler,
                                                             beceri_alani)
     isler: Dict[str, List[Tuple[str, str, str]]] = {k["id"]: [] for k in kategoriler}
     yardimcilar: Dict[str, List[Tuple[str, str]]] = {k["id"]: [] for k in kategoriler}

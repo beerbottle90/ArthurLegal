@@ -95,10 +95,20 @@ class OpenAIEklentisi(unittest.TestCase):
         self.assertNotIn(".claude-plugin/plugin.json", self.dosyalar)
 
     def test_kural_becerisinin_dosya_yollari_cozulur(self):
-        """Metindeki skills/arthurlegal/references/... yolları pakette bulunur."""
+        """Yollar becerinin klasörüne göredir: metindeki ../<beceri>/references/... yolları pakette bulunur (eklentide de,
+        ~/.codex/skills altına tek tek kurulumda da beceriler kardeş klasördür)."""
+        sayi = 0
         for yol, metin in self.metin.items():
-            for hedef in re.findall(r"skills/arthurlegal/references/[\w./-]+\.md", metin):
-                self.assertIn(hedef, self.dosyalar, "%s -> %s" % (yol, hedef))
+            for beceri, dosya in re.findall(r"\.\./([a-z0-9-]+)/references/([\w./-]+\.md)", metin):
+                self.assertIn("skills/%s/references/%s" % (beceri, dosya), self.dosyalar, "%s -> %s" % (yol, dosya))
+                sayi += 1
+            self.assertNotIn("skills/arthurlegal/references/", metin, yol)
+        self.assertGreater(sayi, 100)
+
+    def test_alan_becerileri_onekli(self):
+        """~/.codex/skills ortak klasördür: alan becerilerinin adı arthurlegal- ile başlar."""
+        for ad in oe.KATEGORI_ADI.values():
+            self.assertTrue(ad.startswith("arthurlegal-"), ad)
 
     def test_claude_eklentisi_degismez(self):
         """K6: Claude eklentisi 146 beceriyle kalır; ChatGPT üreticisi onun klasörüne yazmaz."""

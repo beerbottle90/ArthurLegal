@@ -135,7 +135,7 @@ Perakende lisans şartı sorularında ANRE kararı + Legea 123/2012 maddesi birl
 - RO mahkeme kararları için merkezi ücretsiz tam-metin DB sınırlıdır (ReJust/portal.just.ro
   `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`); uyuşmazlık analizinde yerel vekil teyidi şart.
 - NY Konvansiyonu + AB üyesi: tenfiz ayağı görece öngörülebilir →
-  ``commercial-legal-governing-law-review` iş akışı (`sozlesme` becerisi, `references/commercial-legal-governing-law-review.md`)` Adım 5.
+  ``commercial-legal-governing-law-review` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-governing-law-review.md`)` Adım 5.
 
 ---
 

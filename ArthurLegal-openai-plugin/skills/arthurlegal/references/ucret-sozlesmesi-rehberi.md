@@ -1,7 +1,7 @@
 # Avukatlık Ücret Sözleşmesi Rehberi
 
 > Av. K. m. 163-174 + AAÜT + vergi kalemleri (KDV / tevkifat / damga). Büronun **gelirini** belgeleyen ana sözleşme.
-> Uygulama skill'i: ``firm-operations-fee-agreement` iş akışı (`buro-isleri` becerisi, `references/firm-operations-fee-agreement.md`)`.
+> Uygulama skill'i: ``firm-operations-fee-agreement` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-fee-agreement.md`)`.
 
 ---
 
@@ -208,7 +208,7 @@ borcuna takas ve mahsup edilmez.
 - Aylık (retainer) veya matter sonunda (sabit / yüzde ücret)
 - Her tahsilat için iki nüsha serbest meslek makbuzu, bir nüshası müvekkile (VUK m. 236)
 - Geç ödeme → temerrüt (TBK m. 117) ve faiz (TBK m. 120; 3095 m. 1-2). TTK m. 1530'un avukatlık ücretine
-  uygulanıp uygulanmadığı doğrulanmadı. Ayrıntı: ``firm-operations-monthly-billing` iş akışı (`buro-isleri` becerisi, `references/firm-operations-monthly-billing.md`)`.
+  uygulanıp uygulanmadığı doğrulanmadı. Ayrıntı: ``firm-operations-monthly-billing` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-monthly-billing.md`)`.
 
 ### 2. Hapis hakkı ve rüçhan (Av. K. m. 166)
 

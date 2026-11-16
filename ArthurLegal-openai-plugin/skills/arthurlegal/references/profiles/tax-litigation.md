@@ -1,6 +1,6 @@
 # Tax Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``tax-legal-cold-start-interview` iş akışı (`vergi` becerisi, `references/tax-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``tax-legal-cold-start-interview` iş akışı (`arthurlegal-vergi` becerisi, `../arthurlegal-vergi/references/tax-legal-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -196,4 +196,4 @@ Cross-matter OFF zorunlu. Konum: `Hafıza › Pratik/matters/<müvekkil-slug>__<
 
 ---
 
-*Re-run interview:* ``tax-legal-cold-start-interview` iş akışı (`vergi` becerisi, `references/tax-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``tax-legal-cold-start-interview` iş akışı (`arthurlegal-vergi` becerisi, `../arthurlegal-vergi/references/tax-legal-cold-start-interview.md`) --redo`

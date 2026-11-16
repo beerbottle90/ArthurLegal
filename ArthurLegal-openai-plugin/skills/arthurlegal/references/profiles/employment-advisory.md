@@ -1,6 +1,6 @@
 # Employment Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``employment-legal-cold-start-interview` iş akışı (`is-hukuku` becerisi, `references/employment-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``employment-legal-cold-start-interview` iş akışı (`arthurlegal-is-hukuku` becerisi, `../arthurlegal-is-hukuku/references/employment-legal-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -26,7 +26,7 @@
 - İşveren X'in işçisi A bize gelir — X bizim eski/sürekli müvekkilimiz mi?
 - İşçi A bize geldi — A'nın iddiası X'e ilişkin sorunu büromuzun başka matter'larında bilgilenmemize neden olabilir mi?
 
-``firm-operations-conflict-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-conflict-check.md`)` **özellikle iş davası matter'larında sıkı çalıştırılır.**
+``firm-operations-conflict-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-conflict-check.md`)` **özellikle iş davası matter'larında sıkı çalıştırılır.**
 
 ---
 
@@ -210,4 +210,4 @@ Cross-matter OFF zorunlu. **Conflict check ekstra sıkı** (işveren-işçi tara
 
 ---
 
-*Re-run interview:* ``employment-legal-cold-start-interview` iş akışı (`is-hukuku` becerisi, `references/employment-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``employment-legal-cold-start-interview` iş akışı (`arthurlegal-is-hukuku` becerisi, `../arthurlegal-is-hukuku/references/employment-legal-cold-start-interview.md`) --redo`

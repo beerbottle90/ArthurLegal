@@ -8,7 +8,7 @@ areas), connected to ArthurLegal MCP at `https://arthurlegal-mcp.fly.dev/openai/
 installer has no ChatGPT option yet. It has been tested in the ChatGPT desktop app and is generated from the same
 package as ArthurLegal's other plugin, so the two stay in step.
 
-Version 1.12.7, generated from the ArthurLegal Law Firm package 1.12.6 by
+Version 1.12.8, generated from the ArthurLegal Law Firm package 1.12.6 by
 `ArthurLegal-setup/yayin/openai_eklenti_uret.py`. Do not edit this folder by hand.
 
 ChatGPT and OpenAI are trademarks of OpenAI.
@@ -16,17 +16,17 @@ ChatGPT and OpenAI are trademarks of OpenAI.
 ## Skills
 
 - `arthurlegal`: working rules, citation checks, the warning line for unreachable sources, the ArthurLegal desk.
-- `dava-ve-dilekce`: Litigation and pleadings
-- `idare-ve-duzenleyici-kurumlar`: Administrative and regulatory
-- `sozlesme`: Contracts
-- `sirketler-ve-birlesme`: Corporate and M&A
-- `is-hukuku`: Employment
-- `fikri-mulkiyet`: Intellectual property
-- `kisisel-veriler`: Personal data
-- `vergi`: Tax
-- `enerji-ve-proje-finansmani`: Energy and project finance
-- `buro-isleri`: Firm operations
-- `arastirma-ve-atif`: Research and citations
+- `arthurlegal-dava-ve-dilekce`: Litigation and pleadings
+- `arthurlegal-idare-ve-duzenleyici-kurumlar`: Administrative and regulatory
+- `arthurlegal-sozlesme`: Contracts
+- `arthurlegal-sirketler-ve-birlesme`: Corporate and M&A
+- `arthurlegal-is-hukuku`: Employment
+- `arthurlegal-fikri-mulkiyet`: Intellectual property
+- `arthurlegal-kisisel-veriler`: Personal data
+- `arthurlegal-vergi`: Tax
+- `arthurlegal-enerji-ve-proje-finansmani`: Energy and project finance
+- `arthurlegal-buro-isleri`: Firm operations
+- `arthurlegal-arastirma-ve-atif`: Research and citations
 
 Each practice-area skill lists its workflows; the full steps are in that skill's `references/` folder.
 

@@ -1,6 +1,6 @@
 # Corporate Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``corporate-legal-cold-start-interview` iş akışı (`sirketler-ve-birlesme` becerisi, `references/corporate-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``corporate-legal-cold-start-interview` iş akışı (`arthurlegal-sirketler-ve-birlesme` becerisi, `../arthurlegal-sirketler-ve-birlesme/references/corporate-legal-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -69,7 +69,7 @@
 ## Küçük M&A pratiği
 
 **Tipik akış (share deal, KOBİ alış):**
-1. **NDA + LOI** (Letter of Intent) — ``contract-drafting-belge-turet` iş akışı (`sozlesme` becerisi, `references/contract-drafting-belge-turet.md`)` (emsal NDA'dan türetme) + LOI taslağı
+1. **NDA + LOI** (Letter of Intent) — ``contract-drafting-belge-turet` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/contract-drafting-belge-turet.md`)` (emsal NDA'dan türetme) + LOI taslağı
 2. **Diligence** — finansal (YMM) + hukuki (biz):
    - Esas sözleşme + sicil + ortak yapı
    - Aktif/pasif (gayrimenkul, kira, kredi)
@@ -162,7 +162,7 @@ Kurumsal işlemler **uzun vadeli** — taslakta hata ileride milyonlarca TL'lik 
 
 ## Matter workspaces
 
-Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 yıl) — kapatma ``corporate-legal-matter-workspace` iş akışı (`sirketler-ve-birlesme` becerisi, `references/corporate-legal-matter-workspace.md`) close <slug>` ile, post-closing kontrol bittiğinde (arşivler, silmez).
+Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 yıl) — kapatma ``corporate-legal-matter-workspace` iş akışı (`arthurlegal-sirketler-ve-birlesme` becerisi, `../arthurlegal-sirketler-ve-birlesme/references/corporate-legal-matter-workspace.md`) close <slug>` ile, post-closing kontrol bittiğinde (arşivler, silmez).
 
 ---
 
@@ -174,4 +174,4 @@ Cross-matter OFF zorunlu. M&A matter'ları genelde **uzun ömürlü** (6 ay - 2 
 
 ---
 
-*Re-run interview:* ``corporate-legal-cold-start-interview` iş akışı (`sirketler-ve-birlesme` becerisi, `references/corporate-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``corporate-legal-cold-start-interview` iş akışı (`arthurlegal-sirketler-ve-birlesme` becerisi, `../arthurlegal-sirketler-ve-birlesme/references/corporate-legal-cold-start-interview.md`) --redo`
