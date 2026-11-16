@@ -28,8 +28,8 @@
   <a href="docs/word-rehberi.md"><b>Word'de ArthurLegal</b></a> · <a href="docs/word-guide.md">ArthurLegal in Word</a> · <a href="docs/word-beledcisi.md">Word-də ArthurLegal</a>
 </p>
 <p align="center">
-  <b>ArthurLegal artık ChatGPT'de de çalışır.</b> v3.4.0 ile ArthurLegal Masası, araştırma araçları ve iş akışları ChatGPT masaüstü uygulamasında da (Windows ve macOS) çalışır. Kurulumda uygulamanızı seçersiniz: Claude Desktop, ChatGPT ya da ikisi (<a href="#kurulum">kurulum</a>, <a href="#setup-340">yenilikler</a>). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.<br>
-  <b>ArthurLegal now also works in ChatGPT.</b> From v3.4.0 the ArthurLegal desk, research tools and workflows also run in the ChatGPT desktop app (Windows and macOS). During setup you choose your app: Claude Desktop, ChatGPT or both (<a href="#download">installation</a>, <a href="#setup-340">what's new</a>). Use in ChatGPT on the web and on phones is in preparation.<br>
+  <b>ArthurLegal artık ChatGPT masaüstü uygulamasında da çalışır.</b> v3.4.0 ile ArthurLegal Masası, araştırma araçları ve iş akışları ChatGPT masaüstü uygulamasında da (Windows ve macOS) çalışır. Kurulumda uygulamanızı seçersiniz: Claude Desktop, ChatGPT ya da ikisi (<a href="#kurulum">kurulum</a>, <a href="#setup-340">yenilikler</a>). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.<br>
+  <b>ArthurLegal now also works in the ChatGPT desktop app.</b> From v3.4.0 the ArthurLegal desk, research tools and workflows also run in the ChatGPT desktop app (Windows and macOS). During setup you choose your app: Claude Desktop, ChatGPT or both (<a href="#download">installation</a>, <a href="#setup-340">what's new</a>). Use in ChatGPT on the web and on phones is in preparation.<br>
   <sub>ChatGPT ve OpenAI, OpenAI'ın markalarıdır · ChatGPT and OpenAI are trademarks of OpenAI.</sub>
 </p>
 
