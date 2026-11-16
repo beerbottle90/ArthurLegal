@@ -144,9 +144,6 @@ az.MaskOlmadanKur=ArthurLegal hələlik ArthurMask olmadan quraşdırılsın? UY
 en.MaskKuruluyor=Installing ArthurMask (this may take a few minutes)...
 tr.MaskKuruluyor=ArthurMask kuruluyor (birkaç dakika sürebilir)...
 az.MaskKuruluyor=ArthurMask quraşdırılır (bir neçə dəqiqə çəkə bilər)...
-en.ClaudeBaglaniyor=Connecting to Claude Desktop...
-tr.ClaudeBaglaniyor=Claude Desktop'a bağlanıyor...
-az.ClaudeBaglaniyor=Claude Desktop-a qoşulur...
 ; Son sayfada kalın hatırlatma (yalnız yeni arayüz; Kod: CurPageChanged). Mesaj yazılı gelir ama gönderilmez.
 en.MasaEnterHatirlatma=Important: when Claude Desktop opens, 'ArthurLegal Masası'nı aç' is already typed in the message box. Press Enter to open the desk; the message is not sent by itself. The same happens every time you click the desktop icon.
 tr.MasaEnterHatirlatma=Önemli: Claude Desktop açıldığında yazma kutusunda 'ArthurLegal Masası'nı aç' yazılı gelir. Masanın açılması için Enter'a basın; mesaj kendiliğinden gönderilmez. Masaüstündeki simgeyle her açılışta da böyledir.
@@ -197,9 +194,9 @@ az.ModulTapuAciklama=Ada/parsel və ya yer adı ilə TKGM-dən (Türkiyənin tap
 en.ModulMask=ArthurMask
 tr.ModulMask=ArthurMask
 az.ModulMask=ArthurMask
-en.ModulMaskAciklama=Masks documents on this computer before Claude sees them; about 1 GB download.
-tr.ModulMaskAciklama=Belgeleri Claude'a vermeden önce bu bilgisayarda maskeler; yaklaşık 1 GB indirilir.
-az.ModulMaskAciklama=Sənədləri Claude-a verməzdən əvvəl bu kompüterdə maskalayır; təxminən 1 GB yüklənir.
+en.ModulMaskAciklama=Masks documents on this computer before the AI sees them; about 1 GB download.
+tr.ModulMaskAciklama=Belgeleri yapay zekâya vermeden önce bu bilgisayarda maskeler; yaklaşık 1 GB indirilir.
+az.ModulMaskAciklama=Sənədləri süni intellektə verməzdən əvvəl bu kompüterdə maskalayır; təxminən 1 GB yüklənir.
 en.ModulHafiza=ArthurLegal Memory
 tr.ModulHafiza=ArthurLegal Hafıza
 az.ModulHafiza=ArthurLegal Yaddaş
@@ -235,24 +232,118 @@ az.ArayuzAciklama=ArthurLegal necə açılsın? Sonra quraşdırmanı yenidən i
 en.ArayuzYeni=ArthurLegal new interface
 tr.ArayuzYeni=ArthurLegal yeni arayüz
 az.ArayuzYeni=ArthurLegal yeni interfeys
-en.ArayuzYeniAciklama=The desktop icon opens ArthurLegal Masası inside Claude Desktop: modules on the left, the steps in the middle; results come as ArthurLegal cards. Recommended.
-tr.ArayuzYeniAciklama=Masaüstündeki simge Claude Desktop'un içinde ArthurLegal Masası'nı açar: solda modüller, ortada iş adımları; sonuçlar ArthurLegal kartlarıyla gelir. Önerilen.
-az.ArayuzYeniAciklama=İş masasındakı nişan Claude Desktop-un içində ArthurLegal Masasını açır: solda modullar, ortada iş addımları; nəticələr ArthurLegal kartları ilə gəlir. Tövsiyə olunur.
-en.ArayuzKlasik=Claude Desktop classic
-tr.ArayuzKlasik=Claude Desktop klasik
-az.ArayuzKlasik=Claude Desktop klassik
-en.ArayuzKlasikAciklama=Claude Desktop opens as usual and you type your question in the chat. No desk and no cards; results come as text.
-tr.ArayuzKlasikAciklama=Claude Desktop her zamanki gibi açılır, sorunuzu sohbete yazarsınız. Masa ve kartlar kapalı; sonuçlar metin olarak gelir.
-az.ArayuzKlasikAciklama=Claude Desktop həmişəki kimi açılır, sualınızı söhbətə yazırsınız. Masa və kartlar bağlıdır; nəticələr mətn kimi gəlir.
+en.ArayuzYeniAciklama=The desktop icon opens ArthurLegal Masası inside the app you chose (Claude Desktop or ChatGPT): modules on the left, the steps in the middle; results come as ArthurLegal cards. Recommended.
+tr.ArayuzYeniAciklama=Masaüstündeki simge ArthurLegal Masası'nı seçtiğiniz uygulamanın (Claude Desktop ya da ChatGPT) içinde açar: solda modüller, ortada iş adımları; sonuçlar ArthurLegal kartlarıyla gelir. Önerilen.
+az.ArayuzYeniAciklama=İş masasındakı nişan ArthurLegal Masasını seçdiyiniz tətbiqin (Claude Desktop və ya ChatGPT) içində açır: solda modullar, ortada iş addımları; nəticələr ArthurLegal kartları ilə gəlir. Tövsiyə olunur.
+en.ArayuzKlasik=The app's own chat (classic)
+tr.ArayuzKlasik=Uygulamanın kendi sohbeti (klasik)
+az.ArayuzKlasik=Tətbiqin öz söhbəti (klassik)
+en.ArayuzKlasikAciklama=The app you chose opens as usual and you type your question in the chat. No desk and no cards; results come as text.
+tr.ArayuzKlasikAciklama=Seçtiğiniz uygulama her zamanki gibi açılır, sorunuzu sohbete yazarsınız. Masa ve kartlar kapalı; sonuçlar metin olarak gelir.
+az.ArayuzKlasikAciklama=Seçdiyiniz tətbiq həmişəki kimi açılır, sualınızı söhbətə yazırsınız. Masa və kartlar bağlıdır; nəticələr mətn kimi gəlir.
 en.ArayuzOzet=Interface:
 tr.ArayuzOzet=Arayüz:
 az.ArayuzOzet=İnterfeys:
-en.ArayuzGecersiz=Invalid /ARAYUZ value: %1%n%nUse yeni (ArthurLegal new interface) or klasik (Claude Desktop classic).
-tr.ArayuzGecersiz=Geçersiz /ARAYUZ değeri: %1%n%nyeni (ArthurLegal yeni arayüz) ya da klasik (Claude Desktop klasik) yazın.
-az.ArayuzGecersiz=Yanlış /ARAYUZ dəyəri: %1%n%nyeni (ArthurLegal yeni interfeys) və ya klasik (Claude Desktop klassik) yazın.
-en.MasaAc=Open ArthurLegal Masası in Claude Desktop
-tr.MasaAc=ArthurLegal Masası'nı Claude Desktop'ta aç
-az.MasaAc=ArthurLegal Masasını Claude Desktop-da aç
+en.ArayuzGecersiz=Invalid /ARAYUZ value: %1%n%nUse yeni (ArthurLegal new interface) or klasik (the app's own chat).
+tr.ArayuzGecersiz=Geçersiz /ARAYUZ değeri: %1%n%nyeni (ArthurLegal yeni arayüz) ya da klasik (uygulamanın kendi sohbeti) yazın.
+az.ArayuzGecersiz=Yanlış /ARAYUZ dəyəri: %1%n%nyeni (ArthurLegal yeni interfeys) və ya klasik (tətbiqin öz söhbəti) yazın.
+; Bitiş sayfasındaki kutu, seçilen uygulamaya göre (Kod: MasaAcMetni). İkisi seçildiyse simge başlangıç panelini açar,
+; masa oradaki iki düğmeyle seçilen uygulamada açılır (K29).
+en.MasaAc_claude=Open ArthurLegal Masası in Claude Desktop
+tr.MasaAc_claude=ArthurLegal Masası'nı Claude Desktop'ta aç
+az.MasaAc_claude=ArthurLegal Masasını Claude Desktop-da aç
+en.MasaAc_chatgpt=Open ArthurLegal Masası in ChatGPT
+tr.MasaAc_chatgpt=ArthurLegal Masası'nı ChatGPT'de aç
+az.MasaAc_chatgpt=ArthurLegal Masasını ChatGPT-də aç
+en.MasaAc_ikisi=Open the start panel (the desk opens in Claude Desktop or ChatGPT)
+tr.MasaAc_ikisi=Başlangıç panelini aç (masa Claude Desktop'ta ya da ChatGPT'de açılır)
+az.MasaAc_ikisi=Başlanğıc panelini aç (masa Claude Desktop-da və ya ChatGPT-də açılır)
+en.ChatGPTBaslat=Start ChatGPT
+tr.ChatGPTBaslat=ChatGPT'yi başlat
+az.ChatGPTBaslat=ChatGPT-ni başlat
+; Asistan ekranı (16.11.2026, K21): lisanstan sonra, modüllerden önce (Kod: AsistanSayfasiOlustur). Bu bilgisayarda
+; kurulu olan önden işaretli gelir; en az biri gerekir. macOS kurulumu da Asistan* metinlerini okur.
+en.AsistanBaslik=Choose your AI app
+tr.AsistanBaslik=Yapay zekâ uygulamanızı seçin
+az.AsistanBaslik=Süni intellekt tətbiqinizi seçin
+en.AsistanAciklama=ArthurLegal works inside the app you choose. Tick at least one; run setup again later to change.
+tr.AsistanAciklama=ArthurLegal seçtiğiniz uygulamanın içinde çalışır. En az birini işaretleyin; sonra kurulumu yeniden çalıştırıp değiştirebilirsiniz.
+az.AsistanAciklama=ArthurLegal seçdiyiniz tətbiqin içində işləyir. Ən azı birini işarələyin; sonra quraşdırmanı yenidən işə salıb dəyişə bilərsiniz.
+en.AsistanClaude=Claude Desktop
+tr.AsistanClaude=Claude Desktop
+az.AsistanClaude=Claude Desktop
+en.AsistanClaudeAciklama=Anthropic's desktop app. If it is not installed, setup installs it too.
+tr.AsistanClaudeAciklama=Anthropic'in masaüstü uygulaması. Kurulu değilse kurulum onu da kurar.
+az.AsistanClaudeAciklama=Anthropic-in masaüstü tətbiqi. Quraşdırılmayıbsa, quraşdırma onu da quraşdırır.
+en.AsistanChatGPT=ChatGPT
+tr.AsistanChatGPT=ChatGPT
+az.AsistanChatGPT=ChatGPT
+en.AsistanChatGPTAciklama=OpenAI's desktop app. If it is not installed, setup installs it from the Microsoft Store; if that is not possible, the desktop icon opens the official download page.
+tr.AsistanChatGPTAciklama=OpenAI'ın masaüstü uygulaması. Kurulu değilse kurulum onu Microsoft Store'dan kurar; olmazsa masaüstündeki simge resmî indirme sayfasını açar.
+az.AsistanChatGPTAciklama=OpenAI-ın masaüstü tətbiqi. Quraşdırılmayıbsa, quraşdırma onu Microsoft Store-dan quraşdırır; alınmasa, iş masasındakı nişan rəsmi yükləmə səhifəsini açır.
+en.AsistanKurulu=(installed on this computer)
+tr.AsistanKurulu=(bu bilgisayarda kurulu)
+az.AsistanKurulu=(bu kompüterdə quraşdırılıb)
+en.AsistanMarka=Claude is a trademark of Anthropic; ChatGPT and OpenAI are trademarks of OpenAI.
+tr.AsistanMarka=Claude, Anthropic'in; ChatGPT ve OpenAI, OpenAI'ın markalarıdır.
+az.AsistanMarka=Claude Anthropic-in, ChatGPT və OpenAI isə OpenAI-ın ticarət nişanlarıdır.
+en.AsistanGerekli=Choose at least one app: Claude Desktop or ChatGPT.
+tr.AsistanGerekli=En az bir uygulama seçin: Claude Desktop ya da ChatGPT.
+az.AsistanGerekli=Ən azı bir tətbiq seçin: Claude Desktop və ya ChatGPT.
+en.AsistanGecersiz=Invalid /ASISTAN value: %1%n%nUse claude, chatgpt or ikisi (both).
+tr.AsistanGecersiz=Geçersiz /ASISTAN değeri: %1%n%nclaude, chatgpt ya da ikisi yazın.
+az.AsistanGecersiz=Yanlış /ASISTAN dəyəri: %1%n%nclaude, chatgpt və ya ikisi (hər ikisi) yazın.
+en.AsistanOzet=AI app:
+tr.AsistanOzet=Yapay zekâ uygulaması:
+az.AsistanOzet=Süni intellekt tətbiqi:
+; Seçimin adı: hazır sayfasının listesi (Uyg_) ve cümle içinde (UygYa_: "... açıksa kapatılır").
+en.Uyg_claude=Claude Desktop
+tr.Uyg_claude=Claude Desktop
+az.Uyg_claude=Claude Desktop
+en.Uyg_chatgpt=ChatGPT
+tr.Uyg_chatgpt=ChatGPT
+az.Uyg_chatgpt=ChatGPT
+en.Uyg_ikisi=Claude Desktop and ChatGPT
+tr.Uyg_ikisi=Claude Desktop ve ChatGPT
+az.Uyg_ikisi=Claude Desktop və ChatGPT
+en.UygYa_claude=Claude Desktop
+tr.UygYa_claude=Claude Desktop
+az.UygYa_claude=Claude Desktop
+en.UygYa_chatgpt=ChatGPT
+tr.UygYa_chatgpt=ChatGPT
+az.UygYa_chatgpt=ChatGPT
+en.UygYa_ikisi=Claude Desktop or ChatGPT
+tr.UygYa_ikisi=Claude Desktop ya da ChatGPT
+az.UygYa_ikisi=Claude Desktop və ya ChatGPT
+; "Kurulmaya hazır" sayfasının metni (Kod: CurPageChanged), %1 seçilen uygulama. [Messages] ReadyLabel2a/b Claude
+; Desktop'lu hâliyle yedek olarak durur.
+en.HazirMetni=Click Install. If you chose ArthurMask and it is not installed yet, it is downloaded (about 1 GB, a few minutes). %1 is closed if it is open, so send any message you are typing first. No administrator rights are needed; from now on updates install themselves in the background.
+tr.HazirMetni=Kur düğmesine tıklayın. ArthurMask'i seçtiyseniz ve bilgisayarda kurulu değilse indirilir (yaklaşık 1 GB, birkaç dakika). %1 açıksa kapatılır; yazdığınız bir mesaj varsa önce gönderin. Yönetici yetkisi gerekmez; güncellemeler bundan sonra arka planda kendiliğinden kurulur.
+az.HazirMetni=Quraşdır düyməsinə klikləyin. ArthurMask-ı seçmisinizsə və o, kompüterdə quraşdırılmayıbsa, yüklənir (təxminən 1 GB, bir neçə dəqiqə). %1 açıqdırsa, bağlanır; yazdığınız mesaj varsa, əvvəlcə göndərin. Administrator hüquqları tələb olunmur; bundan sonra yeniləmələr arxa planda özü quraşdırılır.
+; Bitiş sayfası, ChatGPT ya da ikisi seçildiyse (Kod: CurPageChanged); yalnız Claude'da [Messages] FinishedLabel.
+en.Bitti_chatgpt={#UrunAd} is installed.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open the interface you chose: with the new interface, ChatGPT with 'ArthurLegal Masası'nı aç' typed (press Enter); with the classic one, ChatGPT and the start panel. You can also open a new chat in ChatGPT and type your question. If ChatGPT asks for permission the first time it uses a tool, allow it.%n%nTo add or remove modules, or to change the app or the interface, run this setup again.
+tr.Bitti_chatgpt={#UrunAd} kuruldu.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) seçtiğiniz arayüzü açar: yeni arayüzde ChatGPT 'ArthurLegal Masası'nı aç' yazılı gelir (Enter'a basın), klasikte ChatGPT ve başlangıç paneli açılır. ChatGPT'de yeni bir sohbet açıp sorunuzu doğrudan da yazabilirsiniz. ChatGPT bir aracı ilk kez kullanırken izin sorarsa izin verin.%n%nModül eklemek, çıkarmak, uygulamayı ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın.
+az.Bitti_chatgpt={#UrunAd} quraşdırıldı.%n%nİş masasındakı paket nişanları ({#UrunAd}, Courthouse, Akademik) seçdiyiniz interfeysi açır: yeni interfeysdə ChatGPT 'ArthurLegal Masası'nı aç' yazılmış halda açılır (Enter düyməsini basın), klassikdə ChatGPT və başlanğıc paneli açılır. ChatGPT-də yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz. ChatGPT hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, icazə verin.%n%nModul əlavə etmək, çıxarmaq, tətbiqi və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın.
+en.Bitti_ikisi={#UrunAd} is installed.%n%nThe package icons on the desktop ({#UrunAd}, Courthouse, Academician) open the start panel. Its two buttons open ArthurLegal in Claude Desktop or in ChatGPT: with the new interface, 'ArthurLegal Masası'nı aç' is typed (press Enter). If the app asks for permission the first time it uses a tool, allow it ('Always allow' in Claude Desktop).%n%nTo add or remove modules, or to change the apps or the interface, run this setup again.
+tr.Bitti_ikisi={#UrunAd} kuruldu.%n%nMasaüstündeki paket simgeleri ({#UrunAd}, Courthouse, Akademisyen) başlangıç panelini açar. Paneldeki iki düğme ArthurLegal'i Claude Desktop'ta ya da ChatGPT'de açar: yeni arayüzde 'ArthurLegal Masası'nı aç' yazılı gelir (Enter'a basın). Uygulama bir aracı ilk kez kullanırken izin sorarsa izin verin (Claude Desktop'ta 'Always allow').%n%nModül eklemek, çıkarmak, uygulamaları ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın.
+az.Bitti_ikisi={#UrunAd} quraşdırıldı.%n%nİş masasındakı paket nişanları ({#UrunAd}, Courthouse, Akademik) başlanğıc panelini açır. Paneldəki iki düymə ArthurLegal-ı Claude Desktop-da və ya ChatGPT-də açır: yeni interfeysdə 'ArthurLegal Masası'nı aç' yazılmış olur (Enter düyməsini basın). Tətbiq hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, icazə verin (Claude Desktop-da 'Always allow').%n%nModul əlavə etmək, çıxarmaq, tətbiqləri və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın.
+; Son sayfadaki kalın hatırlatma, ChatGPT ya da ikisi seçildiyse (yalnız Claude'da MasaEnterHatirlatma).
+en.Enter_chatgpt=Important: when ChatGPT opens, 'ArthurLegal Masası'nı aç' is already typed in the message box. Press Enter to open the desk; the message is not sent by itself. The same happens every time you click the desktop icon.
+tr.Enter_chatgpt=Önemli: ChatGPT açıldığında yazma kutusunda 'ArthurLegal Masası'nı aç' yazılı gelir. Masanın açılması için Enter'a basın; mesaj kendiliğinden gönderilmez. Masaüstündeki simgeyle her açılışta da böyledir.
+az.Enter_chatgpt=Vacib: ChatGPT açılanda mesaj qutusunda 'ArthurLegal Masası'nı aç' (ArthurLegal Masasını aç) yazılmış olur. Masanın açılması üçün Enter düyməsini basın; mesaj öz-özünə göndərilmir. İş masasındakı nişanla hər açılışda da belədir.
+en.Enter_ikisi=Important: click the Claude Desktop or ChatGPT button on the start panel; the app opens with 'ArthurLegal Masası'nı aç' typed in the message box. Press Enter to open the desk; the message is not sent by itself.
+tr.Enter_ikisi=Önemli: Başlangıç panelindeki Claude Desktop ya da ChatGPT düğmesine tıklayın; uygulama yazma kutusunda 'ArthurLegal Masası'nı aç' yazılı açılır. Masanın açılması için Enter'a basın; mesaj kendiliğinden gönderilmez.
+az.Enter_ikisi=Vacib: başlanğıc panelindəki Claude Desktop və ya ChatGPT düyməsinə klikləyin; tətbiq mesaj qutusunda 'ArthurLegal Masası'nı aç' yazılmış halda açılır. Masanın açılması üçün Enter düyməsini basın; mesaj öz-özünə göndərilmir.
+; Kurulumun son adımında durum satırı (Kod: CurStepChanged).
+en.Baglaniyor_claude=Connecting to Claude Desktop...
+tr.Baglaniyor_claude=Claude Desktop'a bağlanıyor...
+az.Baglaniyor_claude=Claude Desktop-a qoşulur...
+en.Baglaniyor_chatgpt=Connecting to ChatGPT...
+tr.Baglaniyor_chatgpt=ChatGPT'ye bağlanıyor...
+az.Baglaniyor_chatgpt=ChatGPT-yə qoşulur...
+en.Baglaniyor_ikisi=Connecting to Claude Desktop and ChatGPT...
+tr.Baglaniyor_ikisi=Claude Desktop'a ve ChatGPT'ye bağlanıyor...
+az.Baglaniyor_ikisi=Claude Desktop-a və ChatGPT-yə qoşulur...
 
 [Files]
 Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -276,11 +367,13 @@ Name: "{group}\{cm:KaldirAdi}"; Filename: "{uninstallexe}"
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "ArthurLegalGuncelleme"; ValueData: """{app}\runtime\pythonw.exe"" -B ""{app}\bin\al.py"" guncelle --sessiz"; Flags: uninsdeletevalue
 
 [Run]
-; Yeni arayüzde tek kutu: ana simgenin işi (al.py kisayol baslat), Claude Desktop'u masa mesajıyla açar, rehber ilk
-; açılışta kendiliğinden gelir. Klasikte 2.6'daki iki kutu: başlangıç rehberi ve Claude Desktop.
-Filename: "{app}\runtime\pythonw.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol baslat"; Description: "{cm:MasaAc}"; Flags: postinstall nowait skipifsilent; Check: ArayuzYeni
+; Yeni arayüzde tek kutu: ana simgenin işi (al.py kisayol baslat), seçilen uygulamayı masa mesajıyla açar (ikisi
+; seçildiyse başlangıç panelini), rehber ilk açılışta kendiliğinden gelir. Klasikte başlangıç rehberi ve seçilen
+; uygulama(lar). ChatGPT kurulamadıysa kutusu çıkmaz; simge resmî indirme sayfasını açar (K28).
+Filename: "{app}\runtime\pythonw.exe"; Parameters: "-B ""{app}\bin\al.py"" kisayol baslat"; Description: "{code:MasaAcMetni}"; Flags: postinstall nowait skipifsilent; Check: ArayuzYeni
 Filename: "{app}\rehber\{cm:RehberDosyasi}"; Description: "{cm:RehberAc}"; Flags: postinstall shellexec nowait skipifsilent; Check: not ArayuzYeni
-Filename: "claude://"; Description: "{cm:ClaudeBaslat}"; Flags: postinstall shellexec nowait skipifsilent; Check: not ArayuzYeni
+Filename: "claude://"; Description: "{cm:ClaudeBaslat}"; Flags: postinstall shellexec nowait skipifsilent; Check: (not ArayuzYeni) and AsistanVar('claude')
+Filename: "{win}\explorer.exe"; Parameters: "shell:AppsFolder\OpenAI.Codex_2p2nqsd0c76g0!App"; Description: "{cm:ChatGPTBaslat}"; Flags: postinstall nowait skipifsilent; Check: (not ArayuzYeni) and AsistanVar('chatgpt') and ChatGPTKurulu
 
 [UninstallRun]
 Filename: "{app}\runtime\python.exe"; Parameters: "-B ""{app}\bin\al.py"" kur --kaldir"; Flags: runhidden waituntilterminated; RunOnceId: "ClaudeKaydiniSil"
@@ -310,10 +403,53 @@ var
     veri olarak saklanır. İlk kurulumda yeni seçili gelir. }
   Arayuz: String;
   EnterHatirlatmasi: TNewStaticText;
+  AsistanSayfasi: TWizardPage;
+  AsistanKutusu: array[0..1] of TNewCheckBox;
+  { Seçilen yapay zekâ uygulaması (K21): 'claude', 'chatgpt' ya da 'ikisi'. kur.py'ye --asistan ile geçer; önceki veri
+    olarak saklanır. İlk kurulumda bu bilgisayarda kurulu olan önden işaretli gelir; hiçbiri yoksa Claude Desktop. }
+  Asistan: String;
+  OncekiAsistan: String;
 
 function MaskKurulu: Boolean;
 begin
   Result := FileExists(ExpandConstant('{localappdata}\Programs\Arthur Mask\runtime\python.exe'));
+end;
+
+function PaketKlasoruVar(const Desen: String): Boolean;
+var
+  F: TFindRec;
+begin
+  Result := FindFirst(ExpandConstant('{localappdata}\Packages\') + Desen, F);
+  if Result then
+    FindClose(F);
+end;
+
+{ kur.claude_kurulu ve ortak.chatgpt_kurulu ile aynı ölçüt. ChatGPT: Microsoft Store paketi OpenAI.Codex (yerel MCP
+  sunucularını çalıştıran sürüm; eski "ChatGPT Classic" sayılmaz). }
+function ClaudeKurulu: Boolean;
+begin
+  Result := DirExists(ExpandConstant('{localappdata}\AnthropicClaude')) or PaketKlasoruVar('Claude_*');
+end;
+
+function ChatGPTKurulu: Boolean;
+begin
+  Result := PaketKlasoruVar('OpenAI.Codex_*');
+end;
+
+function AsistanGecerli(const Kod: String): Boolean;
+begin
+  Result := (Kod = 'claude') or (Kod = 'chatgpt') or (Kod = 'ikisi');
+end;
+
+{ [Run] Check'i ve kapatma: seçimde bu uygulama var mı. }
+function AsistanVar(const Kod: String): Boolean;
+begin
+  Result := (Asistan = Kod) or (Asistan = 'ikisi');
+end;
+
+function MasaAcMetni(Param: String): String;
+begin
+  Result := CustomMessage('MasaAc_' + Asistan);
 end;
 
 function IndirmeIlerlemesi(const Url, DosyaAdi: String; const Ilerleme, Toplam: Int64): Boolean;
@@ -417,12 +553,26 @@ begin
   Result := Result and (Artan = '') and PaketVar(Temiz);
 end;
 
-{ BT'nin sessiz dağıtımı için: ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask /ARAYUZ=klasik }
+{ BT'nin sessiz dağıtımı için: ArthurLegal-Kurulum.exe /VERYSILENT /MODULLER=adliye,tapu,mask /ARAYUZ=klasik
+  /ASISTAN=claude|chatgpt|ikisi }
 function InitializeSetup: Boolean;
 var
   Param, Temiz: String;
 begin
   Result := True;
+  Param := Lowercase(Trim(ExpandConstant('{param:ASISTAN|}')));
+  if Param <> '' then
+  begin
+    if AsistanGecerli(Param) then
+      Asistan := Param
+    else
+    begin
+      Log('Geçersiz /ASISTAN: ' + Param);
+      SuppressibleMsgBox(FmtMessage(CustomMessage('AsistanGecersiz'), [Param]), mbCriticalError, MB_OK, IDOK);
+      Result := False;
+      exit;
+    end;
+  end;
   Param := Lowercase(Trim(ExpandConstant('{param:ARAYUZ|}')));
   if Param <> '' then
   begin
@@ -467,7 +617,7 @@ var
   Baslik, Aciklama: TNewStaticText;
   Kutu: TNewCheckBox;
 begin
-  ModulSayfasi := CreateCustomPage(wpLicense, CustomMessage('ModulBaslik'), CustomMessage('ModulAciklama'));
+  ModulSayfasi := CreateCustomPage(AsistanSayfasi.ID, CustomMessage('ModulBaslik'), CustomMessage('ModulAciklama'));
   Ust := 0;
   Girinti := ScaleX(18);
   PaketBasligi := False;
@@ -532,6 +682,78 @@ begin
     Ust := Aciklama.Top + Aciklama.Height + ScaleY(5);
   end;
   Log(Format('Modül sayfası: içerik %d, yüzey %d piksel yüksekliğinde', [Ust, ModulSayfasi.SurfaceHeight]));
+end;
+
+procedure AsistanAciklamasiTiklandi(Sender: TObject);
+var
+  I: Integer;
+begin
+  I := TNewStaticText(Sender).Tag;
+  AsistanKutusu[I].Checked := not AsistanKutusu[I].Checked;
+end;
+
+{ Lisanstan sonraki sayfa (K21): Claude Desktop ve ChatGPT, iki onay kutusu (kalın) ve altlarında kısa açıklama (gri).
+  Bu bilgisayarda kurulu olanın adının yanında "(kurulu)" yazar. En az biri gerekir (NextButtonClick). En altta marka
+  satırı: adlar düz yazıdır, logo yoktur. }
+procedure AsistanSayfasiOlustur;
+var
+  I, Ust, Girinti: Integer;
+  Kutu: TNewCheckBox;
+  Aciklama, Marka: TNewStaticText;
+  Kurulu: Boolean;
+begin
+  AsistanSayfasi := CreateCustomPage(wpLicense, CustomMessage('AsistanBaslik'), CustomMessage('AsistanAciklama'));
+  Ust := 0;
+  Girinti := ScaleX(18);
+  for I := 0 to 1 do
+  begin
+    Kutu := TNewCheckBox.Create(AsistanSayfasi);
+    Kutu.Parent := AsistanSayfasi.Surface;
+    Kutu.Left := 0;
+    Kutu.Top := Ust;
+    Kutu.Width := AsistanSayfasi.SurfaceWidth;
+    Kutu.Height := ScaleY(17);
+    Kutu.Font.Style := [fsBold];
+    Aciklama := TNewStaticText.Create(AsistanSayfasi);
+    Aciklama.Parent := AsistanSayfasi.Surface;
+    Aciklama.Left := Girinti;
+    Aciklama.Top := Ust + Kutu.Height;
+    Aciklama.Width := AsistanSayfasi.SurfaceWidth - Girinti;
+    Aciklama.AutoSize := False;
+    Aciklama.WordWrap := True;
+    Aciklama.Font.Color := clGrayText;
+    Aciklama.Tag := I;
+    Aciklama.OnClick := @AsistanAciklamasiTiklandi;
+    if I = 0 then
+    begin
+      Kutu.Caption := CustomMessage('AsistanClaude');
+      Aciklama.Caption := CustomMessage('AsistanClaudeAciklama');
+      Kurulu := ClaudeKurulu;
+      Kutu.Checked := AsistanVar('claude');
+    end
+    else
+    begin
+      Kutu.Caption := CustomMessage('AsistanChatGPT');
+      Aciklama.Caption := CustomMessage('AsistanChatGPTAciklama');
+      Kurulu := ChatGPTKurulu;
+      Kutu.Checked := AsistanVar('chatgpt');
+    end;
+    if Kurulu then
+      Kutu.Caption := Kutu.Caption + ' ' + CustomMessage('AsistanKurulu');
+    AsistanKutusu[I] := Kutu;
+    Aciklama.AdjustHeight;
+    Ust := Aciklama.Top + Aciklama.Height + ScaleY(12);
+  end;
+  Marka := TNewStaticText.Create(AsistanSayfasi);
+  Marka.Parent := AsistanSayfasi.Surface;
+  Marka.Left := 0;
+  Marka.Top := Ust + ScaleY(8);
+  Marka.Width := AsistanSayfasi.SurfaceWidth;
+  Marka.AutoSize := False;
+  Marka.WordWrap := True;
+  Marka.Font.Color := clGrayText;
+  Marka.Caption := CustomMessage('AsistanMarka');
+  Marka.AdjustHeight;
 end;
 
 procedure ArayuzAciklamasiTiklandi(Sender: TObject);
@@ -604,17 +826,56 @@ begin
     Arayuz := GetPreviousData('Arayuz', ArayuzKodu(0));
   if Arayuz <> ArayuzKodu(1) then
     Arayuz := ArayuzKodu(0);
+  { /ASISTAN verilmediyse önceki kurulumun seçimi. O da yoksa (ilk kurulum, ChatGPT desteğinden önceki kurulum): sessiz
+    kurulumda Claude Desktop (kimseye sessizce yeni uygulama eklenmez), sihirbazda bu bilgisayarda kurulu olan(lar). }
+  OncekiAsistan := GetPreviousData('Asistan', '');
+  if Asistan = '' then
+  begin
+    if AsistanGecerli(OncekiAsistan) then
+      Asistan := OncekiAsistan
+    else if WizardSilent then
+      Asistan := 'claude'
+    else if ClaudeKurulu and ChatGPTKurulu then
+      Asistan := 'ikisi'
+    else if ChatGPTKurulu then
+      Asistan := 'chatgpt'
+    else
+      Asistan := 'claude';
+  end;
+  AsistanSayfasiOlustur;
   ModulSayfasiOlustur;
   ArayuzSayfasiOlustur;
   IndirmeSayfasi := CreateDownloadPage(CustomMessage('MaskIndiriliyor'), CustomMessage('MaskAciklama'),
     @IndirmeIlerlemesi);
 end;
 
-{ Son sayfa, yeni arayüz: Claude Desktop mesaj yazılmış olarak açılır ama gönderilmez; kullanıcı Enter'a basmazsa
-  masa açılmaz. FinishedLabel kalın yazamaz: altına kalın bir satır konur, "Masayı aç" kutusu onun altına kayar. }
+{ "Kurulmaya hazır" sayfası: metin seçilen uygulamayı söyler ("... açıksa kapatılır"); uzarsa liste aşağı kayar.
+  Son sayfa: ChatGPT ya da ikisi seçildiyse bitiş metni onlara göre. Yeni arayüzde uygulama mesaj yazılmış olarak
+  açılır ama gönderilmez; kullanıcı Enter'a basmazsa masa açılmaz. FinishedLabel kalın yazamaz: altına kalın bir satır
+  konur, "Masayı aç" kutusu onun altına kayar. }
 procedure CurPageChanged(CurPageID: Integer);
+var
+  Eski, Fark: Integer;
 begin
-  if (CurPageID <> wpFinished) or (not ArayuzYeni) or (EnterHatirlatmasi <> nil) then
+  if CurPageID = wpReady then
+  begin
+    Eski := WizardForm.ReadyLabel.Height;
+    WizardForm.ReadyLabel.Caption := FmtMessage(CustomMessage('HazirMetni'), [CustomMessage('UygYa_' + Asistan)]);
+    WizardForm.AdjustLabelHeight(WizardForm.ReadyLabel);
+    Fark := WizardForm.ReadyLabel.Height - Eski;
+    WizardForm.ReadyMemo.Top := WizardForm.ReadyMemo.Top + Fark;
+    WizardForm.ReadyMemo.Height := WizardForm.ReadyMemo.Height - Fark;
+    exit;
+  end;
+  if CurPageID <> wpFinished then
+    exit;
+  if (Asistan = 'chatgpt') or (Asistan = 'ikisi') then
+  begin
+    WizardForm.FinishedLabel.Caption := CustomMessage('Bitti_' + Asistan);
+    WizardForm.AdjustLabelHeight(WizardForm.FinishedLabel);
+    WizardForm.RunList.Top := WizardForm.FinishedLabel.Top + WizardForm.FinishedLabel.Height + ScaleY(12);
+  end;
+  if (not ArayuzYeni) or (EnterHatirlatmasi <> nil) then
     exit;
   EnterHatirlatmasi := TNewStaticText.Create(WizardForm.FinishedPage);
   EnterHatirlatmasi.Parent := WizardForm.FinishedPage;
@@ -624,7 +885,10 @@ begin
   EnterHatirlatmasi.Width := WizardForm.FinishedLabel.Width;
   EnterHatirlatmasi.Top := WizardForm.FinishedLabel.Top + WizardForm.FinishedLabel.Height + ScaleY(12);
   EnterHatirlatmasi.Font.Style := [fsBold];
-  EnterHatirlatmasi.Caption := CustomMessage('MasaEnterHatirlatma');
+  if Asistan = 'claude' then
+    EnterHatirlatmasi.Caption := CustomMessage('MasaEnterHatirlatma')
+  else
+    EnterHatirlatmasi.Caption := CustomMessage('Enter_' + Asistan);
   EnterHatirlatmasi.AdjustHeight;
   WizardForm.RunList.Top := EnterHatirlatmasi.Top + EnterHatirlatmasi.Height + ScaleY(12);
 end;
@@ -633,6 +897,7 @@ procedure RegisterPreviousData(PreviousDataKey: Integer);
 begin
   SetPreviousData(PreviousDataKey, 'Moduller', Secim);
   SetPreviousData(PreviousDataKey, 'Arayuz', Arayuz);
+  SetPreviousData(PreviousDataKey, 'Asistan', Asistan);
 end;
 
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo,
@@ -640,7 +905,8 @@ function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoType
 var
   I: Integer;
 begin
-  Result := CustomMessage('ModulOzet');
+  Result := CustomMessage('AsistanOzet') + NewLine + Space + CustomMessage('Uyg_' + Asistan) + NewLine + NewLine +
+    CustomMessage('ModulOzet');
   for I := 0 to MODUL_SAYISI - 1 do
     if ListedeVar(Secim, ModulKodu(I)) then
       Result := Result + NewLine + Space + CustomMessage(ModulIletisi(I));
@@ -690,6 +956,21 @@ var
   Liste: String;
 begin
   Result := True;
+  if CurPageID = AsistanSayfasi.ID then
+  begin
+    if AsistanKutusu[0].Checked and AsistanKutusu[1].Checked then
+      Asistan := 'ikisi'
+    else if AsistanKutusu[1].Checked then
+      Asistan := 'chatgpt'
+    else if AsistanKutusu[0].Checked then
+      Asistan := 'claude'
+    else
+    begin
+      MsgBox(CustomMessage('AsistanGerekli'), mbError, MB_OK);
+      Result := False;
+      exit;
+    end;
+  end;
   if CurPageID = ModulSayfasi.ID then
   begin
     Liste := '';
@@ -735,12 +1016,30 @@ begin
     '', SW_HIDE, ewWaitUntilTerminated, Sonuc);
 end;
 
+{ ChatGPT masaüstü (OpenAI.Codex) ayarını ve yerel sunucuları yalnız açılışta okur; açık kalırsa ArthurLegal'in
+  Python'u (sunucu) kurulumun değiştireceği dosyaları tutar. Seçimde ChatGPT varsa ya da önceki seçimde vardıysa (K30:
+  kaldırılıyor) kapatılır. Yola bakılır: eski "ChatGPT Classic" (OpenAI.ChatGPT-Desktop) da ChatGPT.exe'dir. Uygulama
+  sistem tepsisine küçülebilir: pencere kapanmazsa süreçleri (codex.exe dahil) sonlandırılır. }
+procedure ChatGPTKapat;
+var
+  Sonuc: Integer;
+begin
+  Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'),
+    '-NoProfile -ExecutionPolicy Bypass -Command "$d = @(Get-Process -ErrorAction SilentlyContinue | ' +
+    'Where-Object { $_.Path -match ''WindowsApps\\OpenAI\.Codex_'' }); ' +
+    '$d | ForEach-Object { [void]$_.CloseMainWindow() }; if ($d.Count) { Start-Sleep -Seconds 3 }; ' +
+    '$d | Where-Object { -not $_.HasExited } | Stop-Process -Force -ErrorAction SilentlyContinue"',
+    '', SW_HIDE, ewWaitUntilTerminated, Sonuc);
+end;
+
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   Result := '';
   if WizardSilent and ListedeVar(Secim, 'mask') then
     MaskIndir(True);
   ClaudeKapat;
+  if AsistanVar('chatgpt') or (OncekiAsistan = 'chatgpt') or (OncekiAsistan = 'ikisi') then
+    ChatGPTKapat;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -756,17 +1055,19 @@ begin
                  SW_SHOW, ewWaitUntilTerminated, Sonuc)) or (Sonuc <> 0) then
       Log('ArthurMask kurulumu başarısız, çıkış kodu ' + IntToStr(Sonuc));
   end;
-  WizardForm.StatusLabel.Caption := CustomMessage('ClaudeBaglaniyor');
+  WizardForm.StatusLabel.Caption := CustomMessage('Baglaniyor_' + Asistan);
   { al.py aktif.txt'deki sürümü seçer; üzerine kurulumda o hâlâ önceki sürümdür ve kısayollar önceki sürümün
     koduyla (eski adlarla) yazılırdı. aktif.txt yoksa al.py en yeni sürümü seçer, kur.py onu yeniden yazar;
     eski bir kurulum dosyası daha yeni bir sürümün üzerine çalışsa da en yeni sürüm kalır. kur.py doğrudan
     çalıştırılamaz: gömülü Python betiğin klasörünü sys.path'e eklemez (al.py bunun için vardır).
     --dil: kurulumda seçilen dil (en/tr/az); kısayol adları ve başlangıç rehberi bu dilde yazılır.
     --moduller: modül ekranındaki seçim; kur.py moduller.json'a yazar, kısayollar ve Claude kaydı ona göre olur.
-    --arayuz: arayüz ekranındaki seçim; kur.py durum.json'a yazar, simge ve yerel sunucu ona göre açılır. }
+    --arayuz: arayüz ekranındaki seçim; kur.py durum.json'a yazar, simge ve yerel sunucu ona göre açılır.
+    --asistan: asistan ekranındaki seçim (claude, chatgpt, ikisi); kur.py durum.json'a yazar, ArthurLegal'i seçilen
+    uygulama(lar)a kaydeder, seçimden çıkandan siler, ChatGPT kurulu değilse Microsoft Store'dan kurmayı dener. }
   DeleteFile(ExpandConstant('{app}\aktif.txt'));
   Exec(ExpandConstant('{app}\runtime\python.exe'), '-B "' + ExpandConstant('{app}\bin\al.py') + '" kur --kurulum --kisayol --dil ' +
-       ActiveLanguage + ' --moduller ' + Secim + ' --arayuz ' + Arayuz, ExpandConstant('{app}'), SW_HIDE,
+       ActiveLanguage + ' --moduller ' + Secim + ' --arayuz ' + Arayuz + ' --asistan ' + Asistan, ExpandConstant('{app}'), SW_HIDE,
        ewWaitUntilTerminated, Sonuc);
   if Sonuc <> 0 then
     Log('kur --kurulum çıkış kodu ' + IntToStr(Sonuc));

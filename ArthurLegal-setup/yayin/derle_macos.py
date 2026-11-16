@@ -18,8 +18,11 @@ hazırlanır (derle.py); güncelleme kanalı da aynıdır (releases/latest, ayn�
 - Modül başlıkları ve açıklamaları Windows sihirbazınınkiyle aynıdır: kurulum/ArthurLegal.iss'teki Modul*
   iletilerinden okunur.
 - Arayüz (2.7.0): Windows'taki iki seçenekli sayfanın karşılığı, modüllerin altında işaretli gelen tek kutu
-  "ArthurLegal yeni arayüz" (Installer'da özel sayfa yok). İşaretliyse ArthurLegal Masası, değilse Claude Desktop
-  klasik; postinstall kur.py'ye --arayuz olarak geçirir. Klasik seçildiyse onceki/arayuz-klasik kalır.
+  "ArthurLegal yeni arayüz" (Installer'da özel sayfa yok). İşaretliyse ArthurLegal Masası, değilse uygulamanın kendi
+  sohbeti (klasik); postinstall kur.py'ye --arayuz olarak geçirir. Klasik seçildiyse onceki/arayuz-klasik kalır.
+- Yapay zekâ uygulaması (16.11.2026, K21): Windows'taki asistan sayfasının karşılığı, listenin başında iki kutu
+  (Claude Desktop, ChatGPT). Önceki seçim (onceki/asistan-*) yoksa bu Mac'te kurulu olan işaretli gelir, hiçbiri
+  yoksa Claude Desktop. postinstall kur.py'ye --asistan olarak geçirir; ikisi de kaldırılırsa önceki seçim sürer.
 """
 from __future__ import annotations
 
@@ -59,25 +62,43 @@ MASK_KOSULU = {"tr": " Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 gerekir
                "en": " On a Mac it needs Apple Silicon (M1 or later) and macOS 14.",
                "az": " Mac-də Apple Silicon (M1 və sonrası) və macOS 14 tələb olunur."}
 # Mac'te arayüz tek kutudur: işareti kaldırmak öteki seçeneği seçer.
-ARAYUZ_KUTUSU = {"tr": " İşareti kaldırırsanız Claude Desktop klasik kurulur: masa ve kartlar kapalı, sonuçlar metin.",
-                 "en": " Untick it for Claude Desktop classic: no desk and no cards, results come as text.",
-                 "az": " İşarəni götürsəniz, Claude Desktop klassik quraşdırılır: masa və kartlar bağlıdır, nəticələr mətn kimi gəlir."}
+ARAYUZ_KUTUSU = {"tr": " İşareti kaldırırsanız uygulamanın kendi sohbeti (klasik) kurulur: masa ve kartlar kapalı, sonuçlar metin.",
+                 "en": " Untick it for the app's own chat (classic): no desk and no cards, results come as text.",
+                 "az": " İşarəni götürsəniz, tətbiqin öz söhbəti (klassik) quraşdırılır: masa və kartlar bağlıdır, nəticələr mətn kimi gəlir."}
+# Mac'te uygulamaları kurulum kurmaz (winget yok): açıklamalar Windows'takinin yerine bunları söyler.
+ASISTAN_MAC = {
+    "tr": {"AsistanClaudeAciklama": "Anthropic'in masaüstü uygulaması. Kurulu değilse claude.ai/download adresinden kurun.",
+           "AsistanChatGPTAciklama": "OpenAI'ın masaüstü uygulaması. Kurulu değilse ArthurLegal simgesi resmî indirme "
+                                     "sayfasını açar (chatgpt.com/download)."},
+    "en": {"AsistanClaudeAciklama": "Anthropic's desktop app. If it is not installed, get it from claude.ai/download.",
+           "AsistanChatGPTAciklama": "OpenAI's desktop app. If it is not installed, the ArthurLegal icon opens the official "
+                                     "download page (chatgpt.com/download)."},
+    "az": {"AsistanClaudeAciklama": "Anthropic-in masaüstü tətbiqi. Quraşdırılmayıbsa, claude.ai/download ünvanından "
+                                    "quraşdırın.",
+           "AsistanChatGPTAciklama": "OpenAI-ın masaüstü tətbiqi. Quraşdırılmayıbsa, ArthurLegal nişanı rəsmi yükləmə "
+                                     "səhifəsini açır (chatgpt.com/download)."},
+}
+ASISTANLAR = ("claude", "chatgpt")
+ASISTAN_ILETISI = {"claude": "AsistanClaude", "chatgpt": "AsistanChatGPT"}
 # Sihirbazın dilleri ve her dilin lisans dosyası (derle.lisans_yaz): <dil>.lproj klasörleri bu sırayla yazılır.
 DILLER = (("tr", "LISANS.txt"), ("en", "LICENSE.txt"), ("az", "LISENZIYA.txt"))
 
 
 def iletiler() -> dict:
-    """Modül ve arayüz seçiminin metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss [CustomMessages])."""
+    """Modül, arayüz ve asistan seçiminin metinleri, Windows sihirbazıyla aynı kaynaktan (ArthurLegal.iss
+    [CustomMessages]); Mac'e özgü olanlar (ASISTAN_MAC, MASK_KOSULU, ARAYUZ_KUTUSU) üstüne yazılır ya da eklenir."""
     iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
     sonuc = {dil: {} for dil, _ in DILLER}
     for satir in iss.splitlines():
-        m = re.match(r"^(tr|en|az)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
+        m = re.match(r"^(tr|en|az)\.((?:Modul|Arayuz|Asistan)\w+)=(.*)$", satir)
         if m:
             sonuc[m.group(1)][m.group(2)] = m.group(3).replace("%n", "\n")
     for dil, ek in MASK_KOSULU.items():
         sonuc[dil]["ModulMaskAciklama"] = sonuc[dil].get("ModulMaskAciklama", "") + ek
     for dil, ek in ARAYUZ_KUTUSU.items():
         sonuc[dil]["ArayuzYeniAciklama"] = sonuc[dil].get("ArayuzYeniAciklama", "") + ek
+    for dil, metinler in ASISTAN_MAC.items():
+        sonuc[dil].update(metinler)
     return sonuc
 
 
@@ -145,30 +166,34 @@ METIN = {
     "tr": {
         "baslik": "ArthurLegal",
         "karsilama": """<h2>ArthurLegal kurulumu</h2>
-<p>Bu kurulum, seçtiğiniz hukuk asistanı paketlerini ve araçları Claude Desktop'a bağlar.</p>
-<ul><li>Bir sonraki ekranlardan birinde <b>kurmak istediğiniz modülleri işaretleyin</b>. Bir modülü seçince ne işe
+<p>Bu kurulum, seçtiğiniz hukuk asistanı paketlerini ve araçları Claude Desktop'a ya da ChatGPT'ye bağlar.</p>
+<ul><li>Listenin başında <b>yapay zekâ uygulamanızı</b> seçin: Claude Desktop, ChatGPT ya da ikisi. Bu Mac'te kurulu
+olan işaretli gelir.</li>
+<li>Bir sonraki ekranlardan birinde <b>kurmak istediğiniz modülleri işaretleyin</b>. Bir modülü seçince ne işe
 yaradığı altta yazar. İlk kurulumda hiçbir kutu işaretli gelmez; <b>en az bir paket</b> gerekir: Hukuk Bürosu,
 Kurumsal Asistan, Courthouse ya da Akademisyen.</li>
-<li>Aynı ekranda <b>ArthurLegal yeni arayüz</b> işaretli gelir: ArthurLegal simgesi Claude Desktop'un içinde ArthurLegal
-Masası'nı açar. İşareti kaldırırsanız <b>Claude Desktop klasik</b> kurulur.</li>
+<li>Aynı ekranda <b>ArthurLegal yeni arayüz</b> işaretli gelir: ArthurLegal simgesi ArthurLegal Masası'nı seçtiğiniz
+uygulamanın içinde açar. İşareti kaldırırsanız <b>uygulamanın kendi sohbeti (klasik)</b> kurulur.</li>
 <li>Kurulum yalnız sizin kullanıcı hesabınıza yapılır, yönetici şifresi istemez.</li>
-<li><b>Claude Desktop açıksa kurulum sırasında kapatılır</b> ve sonunda yeniden açılır; yazdığınız bir mesaj varsa
-önce gönderin.</li>
+<li><b>Seçtiğiniz uygulama açıksa kurulum sırasında kapatılır</b> ve sonunda yeniden açılır; yazdığınız bir mesaj
+varsa önce gönderin.</li>
 <li>ArthurMask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB) ve hazır olunca bildirim gelir.
 ArthurMask Mac'te Apple Silicon (M1 ve sonrası) ve macOS 14 (Sonoma) ya da sonrasını ister.</li>
 <li>Güncellemeler bundan sonra arka planda, imzaları doğrulanarak kendiliğinden kurulur.</li></ul>""",
         "bitis": """<h2>ArthurLegal kuruldu</h2>
 <p>Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe ve masaüstünde. Başlangıç rehberi tarayıcıda açılır.</p>
-<p class="onemli"><b>Önemli: yeni arayüzde ArthurLegal simgesine tıkladığınızda Claude Desktop, yazma kutusunda
-<i>ArthurLegal Masası'nı aç</i> yazılı açılır. Masanın açılması için Enter'a basın; mesaj kendiliğinden
-gönderilmez.</b></p>
-<ul><li>Kurulum Claude Desktop'u yeniden açtı ve mesajı yazma kutusuna yazdı: <b>Enter</b>'a basın. Claude masayı
-bulamazsa Claude Desktop'tan <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine
-tıklayın ve Enter'a basın. Yeni bir sohbet açıp
-sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u seçin.</li>
-<li>Claude Desktop kurulu değilse <b>claude.ai/download</b> adresinden kurun.</li>
-<li>Modül eklemek, çıkarmak ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın; son seçiminiz işaretli
-gelir.</li></ul>
+<p class="onemli"><b>Önemli: yeni arayüzde ArthurLegal simgesine tıkladığınızda seçtiğiniz uygulama (Claude Desktop
+ya da ChatGPT), yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı açılır. Masanın açılması için Enter'a basın;
+mesaj kendiliğinden gönderilmez. İkisini de seçtiyseniz simge başlangıç panelini açar; masayı oradaki düğmeyle
+istediğiniz uygulamada açarsınız.</b></p>
+<ul><li>Kurulum uygulamayı yeniden açtı ve mesajı yazma kutusuna yazdı: <b>Enter</b>'a basın. Masa bulunamazsa
+uygulamadan <b>Cmd+Q</b> ile tamamen çıkıp yeniden açın; sonra <b>ArthurLegal</b> simgesine tıklayın ve Enter'a basın.
+Yeni bir sohbet açıp sorunuzu doğrudan da yazabilirsiniz. Uygulama bir aracı ilk kez kullanırken izin sorarsa izin
+verin (Claude Desktop'ta <b>Always allow</b>).</li>
+<li>Claude Desktop kurulu değilse <b>claude.ai/download</b>, ChatGPT kurulu değilse <b>chatgpt.com/download</b>
+adresinden kurun.</li>
+<li>Modül eklemek, çıkarmak, uygulamayı ya da arayüzü değiştirmek için bu kurulumu yeniden çalıştırın; son seçiminiz
+işaretli gelir.</li></ul>
 <p class="not">Kaldırmak için: Uygulamalar &gt; ArthurLegal &gt; ArthurLegal'i Kaldır.</p>""",
         "paket_yok": "En az bir paket seçin: Hukuk Bürosu, Kurumsal Asistan, Courthouse ya da Akademisyen. "
                      "Kurulum tamamlanmadı; kurulum dosyasını yeniden açıp bir paket işaretleyin.",
@@ -176,31 +201,34 @@ gelir.</li></ul>
     "en": {
         "baslik": "ArthurLegal",
         "karsilama": """<h2>ArthurLegal setup</h2>
-<p>This setup connects the legal assistant packages and tools you choose to Claude Desktop.</p>
-<ul><li>On one of the next screens, <b>tick the modules you want to install</b>. Select a module to see what it does
+<p>This setup connects the legal assistant packages and tools you choose to Claude Desktop or ChatGPT.</p>
+<ul><li>At the top of the list, <b>choose your AI app</b>: Claude Desktop, ChatGPT or both. The one installed on this
+Mac comes ticked.</li>
+<li>On one of the next screens, <b>tick the modules you want to install</b>. Select a module to see what it does
 below the list. Nothing is ticked on a first installation; <b>at least one package</b> is needed: Law Firm, Corporate
 Assistant, Courthouse or Academician.</li>
 <li>On the same screen <b>ArthurLegal new interface</b> comes ticked: the ArthurLegal icon opens ArthurLegal Masası (the
-ArthurLegal desk) inside Claude Desktop. Untick it for <b>Claude Desktop classic</b>.</li>
+ArthurLegal desk) inside the app you chose. Untick it for <b>the app's own chat (classic)</b>.</li>
 <li>Setup installs for your user account only and does not ask for an administrator password.</li>
-<li><b>If Claude Desktop is open, setup quits it</b> and opens it again at the end; send any message you are typing
-first.</li>
+<li><b>If the app you chose is open, setup quits it</b> and opens it again at the end; send any message you are
+typing first.</li>
 <li>If you choose ArthurMask, it downloads in the background after setup (about 1.2 GB) and a notification tells you
 when it is ready. On a Mac, ArthurMask needs Apple Silicon (M1 or later) and macOS 14 (Sonoma) or later.</li>
 <li>From now on, updates install themselves in the background after their signatures are verified.</li></ul>""",
         "bitis": """<h2>ArthurLegal is installed</h2>
 <p>The icons of the modules you chose are in the Applications folder and on the desktop. The start guide opens in
 your browser.</p>
-<p class="onemli"><b>Important: with the new interface, clicking the ArthurLegal icon opens Claude Desktop with
-<i>ArthurLegal Masası'nı aç</i> already typed in the message box. Press Enter to open the desk; the message is not
-sent by itself.</b></p>
-<ul><li>Setup has reopened Claude Desktop with the message typed in the message box: press <b>Enter</b>. If Claude
-cannot find the desk, quit Claude Desktop completely with <b>Cmd+Q</b> and open it again; then click the
-<b>ArthurLegal</b> icon and press Enter. You
-can also open a new chat and type your question. When Claude asks for permission the first time it uses a tool, choose
-<b>Always allow</b>.</li>
-<li>If Claude Desktop is not installed, get it from <b>claude.ai/download</b>.</li>
-<li>To add or remove modules or to change the interface, run this setup again; your last choice comes pre-ticked.</li></ul>
+<p class="onemli"><b>Important: with the new interface, clicking the ArthurLegal icon opens the app you chose (Claude
+Desktop or ChatGPT) with <i>ArthurLegal Masası'nı aç</i> already typed in the message box. Press Enter to open the
+desk; the message is not sent by itself. If you chose both, the icon opens the start panel; its buttons open the desk in
+the app you want.</b></p>
+<ul><li>Setup has reopened the app with the message typed in the message box: press <b>Enter</b>. If the desk cannot be
+found, quit the app completely with <b>Cmd+Q</b> and open it again; then click the <b>ArthurLegal</b> icon and press
+Enter. You can also open a new chat and type your question. If the app asks for permission the first time it uses a
+tool, allow it (<b>Always allow</b> in Claude Desktop).</li>
+<li>If Claude Desktop is not installed, get it from <b>claude.ai/download</b>; for ChatGPT, <b>chatgpt.com/download</b>.</li>
+<li>To add or remove modules, or to change the app or the interface, run this setup again; your last choice comes
+pre-ticked.</li></ul>
 <p class="not">To uninstall: Applications &gt; ArthurLegal &gt; Uninstall ArthurLegal.</p>""",
         "paket_yok": "Choose at least one package: Law Firm, Corporate Assistant, Courthouse or Academician. Setup did "
                      "not finish; open the installer again and tick a package.",
@@ -209,31 +237,35 @@ can also open a new chat and type your question. When Claude asks for permission
     "az": {
         "baslik": "ArthurLegal",
         "karsilama": """<h2>ArthurLegal quraşdırması</h2>
-<p>Bu quraşdırma seçdiyiniz hüquq köməkçisi paketlərini və alətləri Claude Desktop-a qoşur.</p>
-<ul><li>Növbəti ekranlardan birində <b>quraşdırmaq istədiyiniz modulları işarələyin</b>. Modulu seçəndə nə işə
+<p>Bu quraşdırma seçdiyiniz hüquq köməkçisi paketlərini və alətləri Claude Desktop-a və ya ChatGPT-yə qoşur.</p>
+<ul><li>Siyahının əvvəlində <b>süni intellekt tətbiqinizi</b> seçin: Claude Desktop, ChatGPT və ya hər ikisi. Bu Mac-də
+quraşdırılmış olan işarələnmiş gəlir.</li>
+<li>Növbəti ekranlardan birində <b>quraşdırmaq istədiyiniz modulları işarələyin</b>. Modulu seçəndə nə işə
 yaradığı aşağıda yazılır. İlk quraşdırmada heç bir xana işarələnmiş gəlmir; <b>ən azı bir paket</b> lazımdır: Hüquq
 Bürosu, Korporativ Köməkçi, Courthouse və ya Akademik.</li>
-<li>Həmin ekranda <b>ArthurLegal yeni interfeys</b> işarələnmiş gəlir: ArthurLegal nişanı Claude Desktop-un içində
-ArthurLegal Masasını açır. İşarəni götürsəniz, <b>Claude Desktop klassik</b> quraşdırılır.</li>
+<li>Həmin ekranda <b>ArthurLegal yeni interfeys</b> işarələnmiş gəlir: ArthurLegal nişanı ArthurLegal Masasını
+seçdiyiniz tətbiqin içində açır. İşarəni götürsəniz, <b>tətbiqin öz söhbəti (klassik)</b> quraşdırılır.</li>
 <li>Quraşdırma yalnız sizin istifadəçi hesabınız üçün aparılır, administrator parolu tələb etmir.</li>
-<li><b>Claude Desktop açıqdırsa, quraşdırma zamanı bağlanır</b> və sonda yenidən açılır; yazdığınız mesaj varsa,
-əvvəlcə göndərin.</li>
+<li><b>Seçdiyiniz tətbiq açıqdırsa, quraşdırma zamanı bağlanır</b> və sonda yenidən açılır; yazdığınız mesaj
+varsa, əvvəlcə göndərin.</li>
 <li>ArthurMask-ı seçmisinizsə, quraşdırmadan sonra arxa planda yüklənir (təxminən 1,2 GB) və hazır olanda bildiriş
 gəlir. ArthurMask Mac-də Apple Silicon (M1 və sonrası) və macOS 14 (Sonoma) və ya daha yenisini tələb edir.</li>
 <li>Bundan sonra yeniləmələr arxa planda, imzaları yoxlanılaraq özü quraşdırılır.</li></ul>""",
         "bitis": """<h2>ArthurLegal quraşdırıldı</h2>
 <p>Seçdiyiniz modulların nişanları Applications (Proqramlar) qovluğunda və iş masasındadır. Başlanğıc bələdçisi
 brauzerdə açılır.</p>
-<p class="onemli"><b>Vacib: yeni interfeysdə ArthurLegal nişanına klikləyəndə Claude Desktop mesaj qutusunda
-<i>ArthurLegal Masası'nı aç</i> (ArthurLegal Masasını aç) yazılmış halda açılır. Masanın açılması üçün Enter düyməsini
-basın; mesaj öz-özünə göndərilmir.</b></p>
-<ul><li>Quraşdırma Claude Desktop-u yenidən açdı və mesajı mesaj qutusuna yazdı: <b>Enter</b> düyməsini basın. Claude
-masanı tapa bilməsə, Claude Desktop-dan <b>Cmd+Q</b> ilə tamamilə çıxıb yenidən açın; sonra <b>ArthurLegal</b>
-nişanına klikləyib Enter düyməsini basın. Yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz. Claude hər hansı
-aləti ilk dəfə istifadə edərkən icazə soruşsa, <b>Always allow</b> (Həmişə icazə ver) seçin.</li>
-<li>Claude Desktop quraşdırılmayıbsa, <b>claude.ai/download</b> ünvanından quraşdırın.</li>
-<li>Modul əlavə etmək, çıxarmaq və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın; son seçiminiz
-işarələnmiş gəlir.</li></ul>
+<p class="onemli"><b>Vacib: yeni interfeysdə ArthurLegal nişanına klikləyəndə seçdiyiniz tətbiq (Claude Desktop və
+ya ChatGPT) mesaj qutusunda <i>ArthurLegal Masası'nı aç</i> (ArthurLegal Masasını aç) yazılmış halda açılır. Masanın
+açılması üçün Enter düyməsini basın; mesaj öz-özünə göndərilmir. Hər ikisini seçmisinizsə, nişan başlanğıc panelini
+açır; masanı oradakı düymə ilə istədiyiniz tətbiqdə açırsınız.</b></p>
+<ul><li>Quraşdırma tətbiqi yenidən açdı və mesajı mesaj qutusuna yazdı: <b>Enter</b> düyməsini basın. Masa tapılmasa,
+tətbiqdən <b>Cmd+Q</b> ilə tamamilə çıxıb yenidən açın; sonra <b>ArthurLegal</b> nişanına klikləyib Enter düyməsini
+basın. Yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz. Tətbiq hər hansı aləti ilk dəfə istifadə edərkən icazə
+soruşsa, icazə verin (Claude Desktop-da <b>Always allow</b>, Həmişə icazə ver).</li>
+<li>Claude Desktop quraşdırılmayıbsa, <b>claude.ai/download</b>, ChatGPT quraşdırılmayıbsa, <b>chatgpt.com/download</b>
+ünvanından quraşdırın.</li>
+<li>Modul əlavə etmək, çıxarmaq, tətbiqi və ya interfeysi dəyişmək üçün bu quraşdırmanı yenidən işə salın; son
+seçiminiz işarələnmiş gəlir.</li></ul>
 <p class="not">Silmək üçün: Applications &gt; ArthurLegal &gt; ArthurLegal-ı Sil.</p>""",
         "paket_yok": "Ən azı bir paket seçin: Hüquq Bürosu, Korporativ Köməkçi, Courthouse və ya Akademik. Quraşdırma "
                      "tamamlanmadı; quraşdırma faylını yenidən açıb bir paketi işarələyin.",
@@ -245,8 +277,12 @@ def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
     """Distribution.xml: modül seçimi (Özelleştir her zaman açılır), yalnız ev klasörüne kurulum, ArthurMask'in koşulu
     (Apple Silicon, macOS 14) ve önceki seçim için Installer JavaScript'i. Bileşenler seçim sırasıyla kurulur: önce çekirdek, sonra işaretler, en son
     postinstall'u çalışan 'son' bileşeni."""
-    satirlar = "\n".join(f'    <line choice="{m}"/>' for m in moduller + ["arayuz-yeni"])
-    secimler = []
+    satirlar = "\n".join(f'    <line choice="{m}"/>' for m in [f"asistan-{a}" for a in ASISTANLAR] + moduller
+                         + ["arayuz-yeni"])
+    # Yapay zekâ uygulaması (K21): önceki seçim, yoksa bu Mac'te kurulu olan, hiçbiri yoksa Claude Desktop.
+    secimler = [f'  <choice id="asistan-{a}" title="{ASISTAN_ILETISI[a]}" description="{ASISTAN_ILETISI[a]}Aciklama" '
+                f'start_selected="asistan_sec(\'{a}\')">\n    <pkg-ref id="{KIMLIK}.asistan.{a}"/>\n  </choice>'
+                for a in ASISTANLAR]
     for m in moduller:
         ek = ' start_enabled="mask_uygun()"' if m == "mask" else ""
         secili = f"onceki('{m}') &amp;&amp; mask_uygun()" if m == "mask" else f"onceki('{m}')"
@@ -256,7 +292,8 @@ def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
     secimler.append(f'  <choice id="arayuz-yeni" title="ArayuzYeni" description="ArayuzYeniAciklama" '
                     f'start_selected="!onceki(\'arayuz-klasik\')">\n    <pkg-ref id="{KIMLIK}.arayuz.yeni"/>\n  </choice>')
     paketler = "\n".join(f'  <pkg-ref id="{KIMLIK}.{ad}" version="{surum}" auth="none">{ad}.pkg</pkg-ref>'
-                         for ad in ["cekirdek", "son"] + [f"modul.{m}" for m in moduller] + ["arayuz.yeni"])
+                         for ad in ["cekirdek", "son"] + [f"modul.{m}" for m in moduller] + ["arayuz.yeni"]
+                         + [f"asistan.{a}" for a in ASISTANLAR])
     yol.write_text(f"""<?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="2">
   <title>KurulumBasligi</title>
@@ -272,6 +309,21 @@ def dagitim_yaz(yol: Path, surum: str, moduller: list) -> None:
 function onceki(kod) {{
   try {{ return system.files.fileExistsAtPath(system.env.HOME + '/Library/Application Support/ArthurLegal/onceki/' + kod); }}
   catch (e) {{ return false; }}
+}}
+function kurulu(ad) {{
+  var adlar = ad == 'claude' ? ['Claude.app'] : ['ChatGPT.app', 'Codex.app'];
+  var kokler = ['/Applications/', system.env.HOME + '/Applications/'];
+  for (var i = 0; i < kokler.length; i++)
+    for (var j = 0; j < adlar.length; j++)
+      try {{ if (system.files.fileExistsAtPath(kokler[i] + adlar[j])) return true; }} catch (e) {{}}
+  return false;
+}}
+function asistan_sec(ad) {{
+  var c = onceki('asistan-claude'), g = onceki('asistan-chatgpt');
+  if (c || g) return ad == 'claude' ? c : g;
+  var kc = kurulu('claude'), kg = kurulu('chatgpt');
+  if (!kc && !kg) return ad == 'claude';
+  return ad == 'claude' ? kc : kg;
 }}
 function mask_uygun() {{
   var arm = true, surum = true;
@@ -355,6 +407,12 @@ def main(argv=None) -> int:
         (isaret / m).write_text("", encoding="utf-8")
         calistir(["pkgbuild", "--root", isaret.parent, "--identifier", f"{KIMLIK}.modul.{m}", "--version", surum,
                   "--install-location", KURULUM_YERI, paket_dizini / f"modul.{m}.pkg"])
+    for a in ASISTANLAR:  # yapay zekâ uygulaması kutuları (K21); postinstall --asistan'a çevirir
+        isaret = hazirlik / f"isaret-asistan-{a}" / "secim"
+        isaret.mkdir(parents=True)
+        (isaret / f"asistan-{a}").write_text("", encoding="utf-8")
+        calistir(["pkgbuild", "--root", isaret.parent, "--identifier", f"{KIMLIK}.asistan.{a}", "--version", surum,
+                  "--install-location", KURULUM_YERI, paket_dizini / f"asistan.{a}.pkg"])
     isaret = hazirlik / "isaret-arayuz-yeni" / "secim"
     isaret.mkdir(parents=True)
     (isaret / "arayuz-yeni").write_text("", encoding="utf-8")

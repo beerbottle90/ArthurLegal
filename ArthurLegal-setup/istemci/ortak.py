@@ -287,6 +287,32 @@ def arayuz() -> str:
     return a if a in ARAYUZLER else "yeni"
 
 
+ASISTANLAR = ("claude", "chatgpt")
+ASISTAN_SECIMLERI = ("claude", "chatgpt", "ikisi")
+
+
+def asistanlar() -> list:
+    """Kurulumda seçilen yapay zekâ uygulamaları (16.11.2026, K21): Claude Desktop, ChatGPT masaüstü ya da ikisi.
+    Kurulum sihirbazında seçilir (kur.py --asistan) ve durum.json'a yazılır. Yazılmamışsa yalnız Claude: önceki
+    kurulumlar güncellemeyle olduğu gibi sürer."""
+    a = durum().get("asistan")
+    if a == "ikisi":
+        return list(ASISTANLAR)
+    return [a] if a in ASISTANLAR else ["claude"]
+
+
+def asistan_anahtari() -> str:
+    """Seçimin metinlerdeki anahtarı: "claude", "chatgpt" ya da "ikisi"."""
+    secim = asistanlar()
+    return "ikisi" if len(secim) > 1 else secim[0]
+
+
+def asistan_secildi() -> bool:
+    """Asistan seçimi kurulumda açıkça yapıldı mı. Yapılmadıysa (önceki kurulumlar) seçilmeyen uygulamadaki
+    ArthurLegal girdileri silinmez: güncelleyici kimsenin elle yaptığı ayara dokunmaz (K30 yalnız seçimle)."""
+    return durum().get("asistan") in ASISTAN_SECIMLERI
+
+
 # Windows arayüz dilinin ana dil kimliği (LANGID'in alt 10 biti): Türkçe 0x1F, Azerbaycanca 0x2C.
 _WINDOWS_DILLERI = {0x1F: "tr", 0x2C: "az"}
 
@@ -465,6 +491,50 @@ def claude_calisiyor() -> bool:
         return r.returncode != 0 or int(r.stdout.strip() or b"-1") != 0
     except (OSError, subprocess.SubprocessError, ValueError):
         return True  # emin olunamıyorsa açık say: Mask kurulumu ertelenir, zarar vermez
+
+
+# ChatGPT masaüstü (16.11.2026): Windows'ta Microsoft Store paketi OpenAI.Codex, süreç adı ChatGPT.exe. Eski uygulama
+# ("ChatGPT Classic", OpenAI.ChatGPT-Desktop) da ChatGPT.exe'dir ve yerel MCP sunucusu çalıştırmaz: yola bakılır.
+CHATGPT_YOLU = r"WindowsApps\\OpenAI\.Codex_"
+CHATGPT_UYGULAMA_KIMLIGI = "OpenAI.Codex_2p2nqsd0c76g0!App"   # Get-StartApps; yayıncı özeti değişirse oradan okunur
+CHATGPT_STORE_KIMLIGI = "9PLM9XGG6VKS"                        # Microsoft Store: "ChatGPT", yayıncı OpenAI
+CHATGPT_INDIRME = "https://chatgpt.com/download/"
+CHATGPT_MAC_ADLARI = ("ChatGPT.app", "Codex.app")
+
+
+def chatgpt_kurulu() -> bool:
+    """ChatGPT masaüstü uygulaması (yerel MCP sunucularını çalıştıran sürüm) bu bilgisayarda var mı."""
+    if MAC:
+        return any((k / ad).exists() for k in (Path("/Applications"), Path.home() / "Applications")
+                   for ad in CHATGPT_MAC_ADLARI)
+    yerel = Path(os.environ.get("LOCALAPPDATA", ""))
+    return any((yerel / "Packages").glob("OpenAI.Codex_*"))
+
+
+def chatgpt_calisiyor() -> bool:
+    """ChatGPT masaüstü açık mı. Emin olunamıyorsa açık sayılır (claude_calisiyor gibi)."""
+    if MAC:
+        try:
+            return any(subprocess.run(["pgrep", "-x", ad], capture_output=True, timeout=30).returncode == 0
+                       for ad in ("ChatGPT", "Codex"))
+        except (OSError, subprocess.SubprocessError):
+            return True
+    if sys.platform != "win32":
+        return False
+    komut = (f"@(Get-Process ChatGPT -ErrorAction SilentlyContinue | Where-Object {{ $_.Path -match '{CHATGPT_YOLU}' }})"
+             ".Count")
+    try:
+        r = subprocess.run(["powershell", "-NoProfile", "-Command", komut], capture_output=True,
+                           creationflags=PENCERESIZ, timeout=60)
+        return r.returncode != 0 or int(r.stdout.strip() or b"-1") != 0
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return True
+
+
+def asistan_calisiyor() -> bool:
+    """Seçilen asistanlardan biri açık mı: ArthurMask kurulumu açık uygulamanın sunucusunu kesmemek için bekler."""
+    secim = asistanlar()
+    return ("claude" in secim and claude_calisiyor()) or ("chatgpt" in secim and chatgpt_calisiyor())
 
 
 def mask_uygulamasi() -> Path | None:

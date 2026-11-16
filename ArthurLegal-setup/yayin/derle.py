@@ -174,6 +174,18 @@ def paket_hazirla(k: dict, hedef: Path, *, uyap: bool = True) -> dict:
         sayi = kopyala(klasor, hedef / "paketler" / profil)
         icerik["paketler"][profil] = re.search(r"v(\d+\.\d+\.\d+)", klasor.name).group(1)
         print(f"  {profil}: {klasor.name} ({sayi} dosya)")
+    # ChatGPT masaüstü (16.11.2026, K6/K21): kural becerisi ve 11 alan becerisi. Kurulumda ChatGPT seçildiyse
+    # ~/.codex/skills altına kurulur (codex_ayari.beceriler_kur). Klasör paketten üretilir (openai_eklenti_uret.py) ve
+    # CI üretilmiş hâliyle aynı olduğunu denetler; burada yalnız kopyalanır.
+    eklenti = al / "ArthurLegal-openai-plugin"
+    if (eklenti / "skills").is_dir():
+        sayi = kopyala(eklenti / "skills", hedef / "chatgpt" / "skills")
+        surum = ortak.json_oku(eklenti / "plugin.json").get("version", "?")
+        icerik["chatgpt"] = {"beceriler": len([d for d in (eklenti / "skills").iterdir() if (d / "SKILL.md").exists()]),
+                             "eklenti": surum}
+        print(f"  chatgpt: {icerik['chatgpt']['beceriler']} beceri, eklenti {surum} ({sayi} dosya)")
+    else:
+        print("  Uyarı: ArthurLegal-openai-plugin/skills yok; ChatGPT becerileri pakete girmedi")
     kullanilan = ["ArthurLegal"]
     if k["bilesenler"].get("tapu"):
         tapu = depo(k, "tapu")

@@ -491,6 +491,10 @@ def masa_araclari(ev=None):
         return []
     # Açıklama bunun bilgisayardaki masa olduğunu söyler: aynı sohbette uzak arthurlegal-mcp de varsa Claude bunu seçer.
     masa = dict(al_arayuz.masa_araci("masaustu") if hasattr(al_arayuz, "MASA_ORTAM_NOTU") else al_arayuz.masa_araci())
+    # ChatGPT'de model alanı yok (K14): modeller ölçülmedi, modelin kendi beyanı güvenilir değildir.
+    modelsiz = getattr(al_arayuz, "modelsiz", None) if ev == "chatgpt" else None
+    if modelsiz:
+        masa = modelsiz(masa)
     masa["_meta"] = _arac_meta("al_masasi", ev)
     ac = {"name": "al_modul_ac", "title": "ArthurLegal modülünü aç",
           "description": "Bu bilgisayarda kurulu bir ArthurLegal modülünün penceresini açar: tapu (Tapu arayüzü), "
@@ -510,6 +514,8 @@ def masa_araclari(ev=None):
         # Soru araştırmadan önce masada (al_masada_basla); araçların adımları ve cevap ona eklenir.
         if hasattr(al_arayuz, "baslangic_araci"):
             basla = dict(al_arayuz.baslangic_araci())
+            if modelsiz:
+                basla = modelsiz(basla)
             meta = _arac_meta("al_masada_basla", ev)
             if meta:
                 basla["_meta"] = meta
@@ -933,7 +939,7 @@ class Sunucu:
         if al_arayuz is not None and ad == "al_dogrulama_kaydi" and hasattr(al_arayuz, "Gecmis"):
             return dogrulama_kaydi_yaz(a)
         if ad.startswith("al_"):  # uzak ucun masa araçları köprülenmez (kopru_araclari)
-            metin = ("ArthurLegal Masası bu kurulumda kapalı (Claude Desktop klasik). Kurulumu yeniden çalıştırıp "
+            metin = ("ArthurLegal Masası bu kurulumda kapalı (klasik arayüz). Kurulumu yeniden çalıştırıp "
                      "'ArthurLegal yeni arayüz'ü seçebilirsiniz." if al_arayuz is None else f"Bilinmeyen masa aracı: {ad}")
             return {"content": [{"type": "text", "text": metin}], "isError": True}
         yerel = {

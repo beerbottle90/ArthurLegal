@@ -442,9 +442,7 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
 def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
     tanim = _masa_govdesi(ortam, teslim)
     if ortam not in ("dizin", "openai"):   # dizin profilleri: model alanı ve cümlesi yok
-        tanim["description"] = tanim["description"].replace(
-            _BAGLAYICI_CUMLESI, _BAGLAYICI_CUMLESI + " model'e kendi model adınızı yazın: masa bunu da yalnız sizden "
-                                                     "öğrenebilir.", 1)
+        tanim["description"] = tanim["description"].replace(_BAGLAYICI_CUMLESI, _BAGLAYICI_CUMLESI + _MODEL_CUMLESI, 1)
         tanim["inputSchema"]["properties"]["model"] = dict(MODEL_GIRDISI)
     if ortam != "dizin":   # Claude dizini profili başvurudaki tanımla aynı kalır
         tanim["inputSchema"]["properties"]["dil"] = dict(DIL_GIRDISI)
@@ -452,6 +450,16 @@ def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
 
 
 _BAGLAYICI_CUMLESI = "ekranlarında kullanıcının bağlı sunucularını gösterir ve bunu yalnız sizden öğrenebilir."
+_MODEL_CUMLESI = " model'e kendi model adınızı yazın: masa bunu da yalnız sizden öğrenebilir."
+
+
+def modelsiz(tanim: Dict[str, Any]) -> Dict[str, Any]:
+    """Aracın ChatGPT'deki tanımı (K14): model alanı ve onu isteyen cümle çıkar. Bilgisayardaki sunucu ChatGPT'ye
+    bağlandığında al_masasi ve al_masada_basla için kullanır (uzak /openai/mcp profili zaten modelsizdir)."""
+    t = json.loads(json.dumps(tanim))
+    t.get("inputSchema", {}).get("properties", {}).pop("model", None)
+    t["description"] = t.get("description", "").replace(_MODEL_CUMLESI, "")
+    return t
 
 
 def _masa_govdesi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
@@ -566,9 +574,11 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         out["bolum"] = bolum
     if dil_gecerli(dil):
         out["dil"] = dil_gecerli(dil)
-    if model is not None:
+    # ChatGPT'de model göstergesi yok (K14): modeller ölçülmedi ve modelin kendi beyanı güvenilir değildir (17.11.2026
+    # canlı denemede 5.6 Terra kendini "GPT-5" bildirdi). Tanımlarda da alan yoktur (modelsiz).
+    if model is not None and not ev_chatgpt(ev):
         out["model"] = model_degerlendir(model)
-        if "al_masaya_yaz" in out["yetenekler"] and not ev_chatgpt(ev):   # dizin profili: gösterge var, talimat yok
+        if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, talimat yok
             out["not"] += model_notu(out["model"])
     if ortam == "uzak":
         yerel = yerel_durumu(baglayicilar)
@@ -649,7 +659,8 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
         out["basla"]["plan"] = plan
     if sorular:
         out["basla"]["sorular"] = sorular
-    if isinstance(girdi.get("model"), str):   # kullanıcı sohbet içinde model değiştirmiş olabilir: masa güncel kalır
+    # Kullanıcı sohbet içinde model değiştirmiş olabilir: masa güncel kalır. ChatGPT'de model göstergesi yok (K14).
+    if isinstance(girdi.get("model"), str) and masa.get("ev") != "chatgpt":
         out["model"] = model_degerlendir(girdi["model"])
     if sorular:
         out["not"] = ("Sorular masada. Araştırmaya başlamayın; sohbete yalnız 'Sorular masada.' yazıp turu bitirin. "

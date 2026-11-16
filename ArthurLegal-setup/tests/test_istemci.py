@@ -327,7 +327,9 @@ class KurulumBetigiTesti(unittest.TestCase):
         az = dict(satirlar["az"])
         for ad in ("ModulAdliye", "ModulTapu", "ModulMask"):
             self.assertEqual(az[ad], dict(satirlar["en"])[ad], "ürün adı çevrilmez")
-        self.assertEqual((az["ArayuzYeni"], az["ArayuzKlasik"]), ("ArthurLegal yeni interfeys", "Claude Desktop klassik"))
+        self.assertEqual((az["ArayuzYeni"], az["ArayuzKlasik"]), ("ArthurLegal yeni interfeys", "Tətbiqin öz söhbəti (klassik)"))
+        for ad in ("AsistanClaude", "AsistanChatGPT"):
+            self.assertEqual(az[ad], dict(satirlar["en"])[ad], "uygulama adı çevrilmez")
 
     def test_azerbaycanca_ileti_dosyasi(self):
         """kurulum/Azerbaijani.isl: Inno Setup'la gelmeyen dilin ileti dosyası. UTF-8 BOM'lu (BOM'suz dosyayı Inno ANSI
@@ -1858,11 +1860,14 @@ class ArayuzTesti(unittest.TestCase):
         self.assertIn("{param:ARAYUZ|}", iss)
         self.assertIn("' --moduller ' + Secim + ' --arayuz ' + Arayuz", iss)
         self.assertIn("tr.ArayuzYeni=ArthurLegal yeni arayüz", iss)
-        self.assertIn("tr.ArayuzKlasik=Claude Desktop klasik", iss)
+        self.assertIn("tr.ArayuzKlasik=Uygulamanın kendi sohbeti (klasik)", iss)
         calis = iss.split("\n[Run]")[1].split("\n[UninstallRun]")[0]
-        self.assertIn('kisayol baslat"; Description: "{cm:MasaAc}"; Flags: postinstall nowait skipifsilent; '
+        self.assertIn('kisayol baslat"; Description: "{code:MasaAcMetni}"; Flags: postinstall nowait skipifsilent; '
                       'Check: ArayuzYeni', calis)
-        self.assertEqual(calis.count("Check: not ArayuzYeni"), 2, "klasikte rehber ve Claude Desktop kutuları")
+        self.assertEqual(calis.count("Check: not ArayuzYeni"), 1, "klasikte rehber kutusu")
+        # Klasikte seçilen uygulama(lar)ın kutusu (K21): Claude Desktop ve ChatGPT ayrı ayrı.
+        self.assertIn("Check: (not ArayuzYeni) and AsistanVar('claude')", calis)
+        self.assertIn("Check: (not ArayuzYeni) and AsistanVar('chatgpt') and ChatGPTKurulu", calis)
 
     def test_secim_yazilir_varsayilan_yeni(self):
         with tempfile.TemporaryDirectory() as t:
@@ -2277,7 +2282,7 @@ class MacKurulumTesti(unittest.TestCase):
             self.assertEqual((alan.get("enable_currentUserHome"), alan.get("enable_localSystem"),
                               alan.get("enable_anywhere")), ("true", "false", "false"), "yönetici şifresi istemez")
             self.assertEqual([s.get("choice") for s in kok.find("choices-outline")],
-                             ["cekirdek", *moduller, "arayuz-yeni", "son"])
+                             ["cekirdek", "asistan-claude", "asistan-chatgpt", *moduller, "arayuz-yeni", "son"])
             secim = {c.get("id"): c for c in kok.findall("choice")}
             for m in moduller:
                 for dil in ("tr", "en", "az"):
@@ -2291,9 +2296,19 @@ class MacKurulumTesti(unittest.TestCase):
             # Arayüz: Windows'taki iki seçeneğin karşılığı tek kutu; ilk kurulumda işaretli, klasik seçildiyse işaretsiz.
             self.assertEqual((secim["arayuz-yeni"].get("title"), secim["arayuz-yeni"].get("start_selected")),
                              ("ArayuzYeni", "!onceki('arayuz-klasik')"))
-            self.assertIn("Claude Desktop klasik", ileti["tr"]["ArayuzYeniAciklama"], "işareti kaldırmanın anlamı")
+            self.assertIn("uygulamanın kendi sohbeti (klasik)", ileti["tr"]["ArayuzYeniAciklama"], "işareti kaldırmanın anlamı")
             self.assertIn("Apple Silicon", ileti["az"]["ModulMaskAciklama"])
-            self.assertIn("Claude Desktop klassik", ileti["az"]["ArayuzYeniAciklama"])
+            self.assertIn("tətbiqin öz söhbəti (klassik)", ileti["az"]["ArayuzYeniAciklama"])
+            # Yapay zekâ uygulaması (K21): iki kutu, önceki seçim ya da bu Mac'te kurulu olan işaretli; Mac'te uygulama
+            # kurulmaz, açıklama indirme adresini söyler (Windows'taki Microsoft Store cümlesi değil).
+            for a, ileti_adi in (("claude", "AsistanClaude"), ("chatgpt", "AsistanChatGPT")):
+                c = secim[f"asistan-{a}"]
+                self.assertEqual((c.get("title"), c.get("start_selected")), (ileti_adi, f"asistan_sec('{a}')"))
+                for dil in ("tr", "en", "az"):
+                    self.assertIn(ileti_adi + "Aciklama", ileti[dil])
+                    self.assertNotIn("Microsoft Store", ileti[dil][ileti_adi + "Aciklama"])
+            self.assertIn("function asistan_sec(ad)", kok.find("script").text)
+            self.assertIn("chatgpt.com/download", ileti["tr"]["AsistanChatGPTAciklama"])
             self.assertTrue(all(p.get("auth") == "none" for p in kok.findall("pkg-ref") if p.text))
             strings = Path(t) / "Localizable.strings"
             derle_macos.strings_yaz(strings, {"A": 'tırnak " ve\nsatır'})
@@ -2301,6 +2316,9 @@ class MacKurulumTesti(unittest.TestCase):
             self.assertEqual(strings.read_bytes().decode("utf-16"), '"A" = "tırnak \\" ve\\nsatır";\n')
         son = (BURASI / "kurulum" / "macos" / "postinstall").read_text(encoding="utf-8")
         self.assertIn('kur --kurulum --kisayol --dil "$DIL" --moduller "$SECIM" --arayuz "$ARAYUZ"', son)
+        self.assertIn('${ASISTAN:+--asistan "$ASISTAN"}', son)
+        self.assertLess(son.index('rm -f "$KOK/secim/asistan-claude" "$KOK/secim/asistan-chatgpt"'),
+                        son.index('for f in "$KOK"/secim/*'), "uygulama işaretleri modül listesine girmez")
         self.assertLess(son.index('rm -f "$KOK/secim/arayuz-yeni"'), son.index('for f in "$KOK"/secim/*'),
                         "arayüz işareti modül listesine girmez")
         self.assertIn("{{PAKET_YOK_TR}}", son)
@@ -2317,8 +2335,10 @@ class MacKurulumTesti(unittest.TestCase):
         self.assertLess(kapat, son.index('al.py" kur --kurulum'), "Claude Desktop kayıttan önce kapatılır")
         self.assertLess(kapat, son.index('al.py" kisayol baslat'))
         for satir in son.splitlines():
-            if "pkill" in satir or "pgrep" in satir:
-                self.assertRegex(satir, r'-x -U "\$KULLANICI" Claude\b', satir)
+            if "pkill" in satir or "pgrep" in satir:  # Claude Desktop ya da ChatGPT ($AD: ChatGPT, Codex), tam adla
+                self.assertRegex(satir, r'-x -U "\$KULLANICI" (Claude\b|"\$AD")', satir)
+        self.assertIn("for AD in ChatGPT Codex; do", son)
+        self.assertLess(son.index('pkill -TERM -x -U "$KULLANICI" "$AD"'), son.index('al.py" kur --kurulum'))
 
     def test_kaldirma_betigi(self):
         from pathlib import PurePosixPath
@@ -2373,6 +2393,17 @@ class ChatGPTKipiTesti(unittest.TestCase):
                    "u.isle('initialize', {'clientInfo': {'name': 'bilinmeyen'}}); "
                    "v = u._masa_verisi({}); print(json.dumps([u.ev, v.get('ev'), 'al_masa_durumu' in v['yetenekler']]))")
             self.assertEqual(self.calistir(t, kod), ["chatgpt", "chatgpt", True])
+
+    def test_chatgptde_model_alani_yok(self):
+        """K14: ChatGPT'de masa model istemez ve göstermez (17.11 canlı denemede model kendini yanlış adla bildirdi)."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; "
+                   "m = lambda ev: sorted(a['name'] for a in s.masa_araclari(ev) if 'model' in a['inputSchema']['properties']); "
+                   "u = s.Sunucu(); u.isle('initialize', {'clientInfo': {'name': 'codex-mcp-client'}}); "
+                   "v = u._masa_verisi({'model': 'GPT-5'}); print(json.dumps([m(None), m('chatgpt'), 'model' in v]))")
+            self.assertEqual(self.calistir(t, kod), [["al_masada_basla", "al_masasi"], [], False])
 
     def test_soru_adim_ve_cevap_canli_masada(self):
         with tempfile.TemporaryDirectory() as t:
