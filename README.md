@@ -27,6 +27,11 @@
   <a href="docs/katki.md"><b>Katkı: iş akışı ve playbook önerin</b></a> · <a href="docs/contributing.md">Contribute a workflow or playbook</a> · <a href="docs/tohfe.md">Töhfə: iş axını və playbook təklif edin</a><br>
   <a href="docs/word-rehberi.md"><b>Word'de ArthurLegal</b></a> · <a href="docs/word-guide.md">ArthurLegal in Word</a> · <a href="docs/word-beledcisi.md">Word-də ArthurLegal</a>
 </p>
+<p align="center">
+  <b>ChatGPT desteği hazırlanıyor.</b> ArthurLegal Masası, araştırma araçları ve iş akışları OpenAI'ın ChatGPT'si için de uyarlanıyor ve ChatGPT masaüstü uygulamasında denendi. Kurulumdaki ChatGPT seçeneği hazır olunca burada duyurulacak; bugün ArthurLegal Claude ile çalışır.<br>
+  <b>ChatGPT support in preparation.</b> The ArthurLegal desk, research tools and workflows are being adapted for OpenAI's ChatGPT and have been tested in the ChatGPT desktop app. The ChatGPT option in the installer will be announced here when it is ready; today ArthurLegal runs with Claude.<br>
+  <sub>ChatGPT ve OpenAI, OpenAI'ın markalarıdır · ChatGPT and OpenAI are trademarks of OpenAI.</sub>
+</p>
 
 <h2 id="kurulum">Türkçe: indirme ve kurulum</h2>
 
