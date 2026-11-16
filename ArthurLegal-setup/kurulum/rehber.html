@@ -41,6 +41,7 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 #durum span{font-size:15px}
 .dil{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px 16px;margin:0 0 10px;font-size:14px}.dil a{display:inline-flex;align-items:center;gap:6px;color:var(--lacivert);text-decoration:none}.dil a[aria-current]{font-weight:700}.dil svg{width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px var(--cizgi)}
 #paketler .kart{margin:8px 0}.odak{border:2px solid var(--altin)!important;box-shadow:0 0 0 3px rgba(181,131,0,.2)}
+#masa-ac{display:none}#masa-ac.var{display:block}#masa-ac h3{margin:0 0 6px}#masa-dugmeleri a.dugme{font-size:16px;padding:12px 22px}
 </style>
 </head>
 <body>
@@ -53,29 +54,37 @@ li{margin:6px 0}footer{margin-top:44px;color:var(--soluk);font-size:14px}
 
 <div id="durum"></div>
 
-<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki yedek yollar isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir.</p>
+<div class="kart" id="masa-ac"><h3>ArthurLegal Masası'nı açın</h3><p style="margin:0">Düğme seçtiğiniz uygulamayı yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı açar; masanın açılması için Enter'a basın.</p><div id="masa-dugmeleri"></div></div>
 
-<p data-arayuz="yeni" class="onemli"><b>Önemli: masayı açmak için Enter'a basın.</b> Claude Desktop açıldığında yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı gelir; mesaj kendiliğinden gönderilmez. Masaüstündeki <i>{{URUN}}</i> simgesiyle her açılışta da Enter'a basın.</p>
+<p style="margin-top:22px">{{FIRMA_SATIRI}}Kurulum tamamlandı. <span data-asistan="claude">Claude bir aracı ilk kez kullanırken izin sorarsa <b>Always allow</b>'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Aşağıdaki yedek yollar isteğe bağlıdır: profili kalıcı yapmak ya da projeye dosya eklemek isteyenler içindir. </span><span data-asistan="chatgpt">ChatGPT bir aracı ilk kez kullanırken izin sorarsa izin verin.</span></p>
 
-<div class="kart" id="model-efor"><h3>Model ve effort</h3>
+<p data-arayuz="yeni" class="onemli"><b>Önemli: masayı açmak için Enter'a basın.</b> <span class="uyg-adi">Claude Desktop</span> açıldığında yazma kutusunda <i>ArthurLegal Masası'nı aç</i> yazılı gelir; mesaj kendiliğinden gönderilmez. Masaüstündeki <i>{{URUN}}</i> simgesiyle her açılışta da Enter'a basın.</p>
+
+<div class="kart" id="model-efor" data-asistan="claude"><h3>Model ve effort</h3>
 <p style="margin:0 0 8px;font-size:17px"><b>Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir.</b></p>
 <p style="margin:0">Claude'un yazma kutusundaki model adına tıklayın; modeli <b>Opus 5.5</b>, effort'u <b>Medium</b> ya da <b>High</b> seçin. Bir kez seçmeniz yeter, Claude hatırlar. Masa tam ekrandayken bu menü görünmez: masanın <b>Model ve effort</b> ekranındaki <b>Model menüsünü göster</b> düğmesi masayı küçültür. ArthurLegal'in ölçümünde (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında daha çok ağır hata yaptı; hiçbir model uydurma künye yazmadı. Kotanız daralırsa madde metni, künye teyidi ve hesap işlerini Sonnet 5.5 ile yapabilirsiniz. ArthurLegal her modelle çalışır, seçim sizindir.<span data-arayuz="yeni"> Ölçüm sonuçları ve adım adım anlatım masanın <b>Model ve effort</b> ekranında.</span></p></div>
 
+<div class="kart" id="model-chatgpt" data-asistan="chatgpt"><h3>ChatGPT'de model</h3>
+<p style="margin:0 0 8px;font-size:17px"><b>ChatGPT modelleriyle henüz ölçüm yapmadık; en yetenekli güncel modeli seçmenizi tavsiye ederiz, bağlayıcı değildir.</b></p>
+<p style="margin:0">Modeli ChatGPT'nin yazma kutusunun altındaki model menüsünden seçin. ArthurLegal'in model ölçümü Anthropic modelleriyle yapıldı; ChatGPT modelleri için sonuç henüz yok. ArthurLegal her modelle çalışır, seçim sizindir.</p></div>
+
 <a class="rehber-pdf" href="https://github.com/beerbottle90/ArthurLegal/blob/main/docs/rehber/ArthurLegal-Kullanici-Rehberi.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#f7c948" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg><span><b>Kullanıcı Rehberi (PDF)</b><small>Kurulum, ArthurLegal Masası, ArthurMask, UYAP Dashboard ve sık sorulanlar tek belgede · GitHub'da açılır</small></span><span class="ok" aria-hidden="true">→</span></a>
 
-<p data-arayuz="yeni"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, hesap kartları, Tapu, Hafıza, ArthurMask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. O kutuya yalnız sorunuzu yazın: soru hemen masanın <b>Sohbet</b> ekranına gelir, Claude'un baktığı her kaynak canlı bir satır olarak belirir, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı yerde açılır (öneriler altında kalır). <b>Hesap kartları</b> vekâlet ücretini, yargı harcını ve gider avansını, faizi, kıdem ve ihbar tazminatını hesaplar: işlemi seçin, yalnız gereken kutuları doldurun; her satırda dayanak ve resmî kaynak vardır. <b>MCP'ler</b> ekranı bağlı sunucularınızı ve durumlarını gösterir. Simge her tıklamada bu sayfayı da tarayıcıda açar.</p>
+<p data-arayuz="yeni" data-asistan="claude"><b>ArthurLegal Masası.</b> Masaüstündeki <i>{{URUN}}</i> simgesi Claude Desktop'u <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa tam ekran açılır: solda modüller (mevzuat ve atıf, içtihat, hesap kartları, Tapu, Hafıza, ArthurMask, UYAP, Donna), ortada iş adımları, altta Claude'un yazma kutusu. O kutuya yalnız sorunuzu yazın: soru hemen masanın <b>Sohbet</b> ekranına gelir, Claude'un baktığı her kaynak canlı bir satır olarak belirir, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı yerde açılır (öneriler altında kalır). <b>Hesap kartları</b> vekâlet ücretini, yargı harcını ve gider avansını, faizi, kıdem ve ihbar tazminatını hesaplar: işlemi seçin, yalnız gereken kutuları doldurun; her satırda dayanak ve resmî kaynak vardır. <b>MCP'ler</b> ekranı bağlı sunucularınızı ve durumlarını gösterir. Simge her tıklamada bu sayfayı da tarayıcıda açar.</p>
+<p data-arayuz="yeni" data-asistan="chatgpt"><b>ArthurLegal Masası ChatGPT'de.</b> Masaüstündeki <i>{{URUN}}</i> simgesi ChatGPT'yi <i>ArthurLegal Masası'nı aç</i> mesajı yazılmış olarak açar; Enter'a basınca masa ChatGPT'nin yan panelinde açılır: solda modüller, ortada iş adımları; hesap kartları ve MCP'ler ekranı da oradadır. Sorunuzu ChatGPT'nin yazma kutusuna yazın: soru masanın <b>Sohbet</b> ekranına gelir, ChatGPT'nin baktığı her kaynak canlı bir satır olarak belirir, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı masada açılır; sohbete yalnız <i>Cevap masada.</i> yazılır. Kurulum ArthurLegal'in kural becerisini ve 11 iş alanı becerisini de ChatGPT'ye kurar.</p>
 <figure data-arayuz="yeni" class="masa"><img src="masa.png" width="1200" height="879" alt="ArthurLegal Masası'nın açılış ekranı: solda modüller, ortada işe başlama kartları"><figcaption>Masanın açılış ekranı (açık tema; koyu ve otomatik sol altta).</figcaption></figure>
 
-<p data-arayuz="klasik"><b>Claude Desktop klasik.</b> Claude Desktop'ta yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın: asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Masayı kullanmak isterseniz kurulum dosyasını yeniden çalıştırıp <b>ArthurLegal yeni arayüz</b>'ü seçin.</p>
+<p data-arayuz="klasik"><b>Klasik arayüz.</b> <span class="uyg-adi">Claude Desktop</span> uygulamasında yeni bir sohbet açıp hukuki sorunuzu doğrudan yazın: asistan ArthurLegal talimatını ve bilgi dosyalarını kendisi yükler. Masayı kullanmak isterseniz kurulum dosyasını yeniden çalıştırıp <b>ArthurLegal yeni arayüz</b>'ü seçin.</p>
 
 <h2>Kurulu paketler</h2>
 <div id="paketler">
-<div class="kart" data-modul="hukuk-burosu"><b>Hukuk Bürosu</b> — avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması, süre takibi. Komutları görmek için sohbete <code>/litigation-legal:</code> gibi bir eklenti adı yazın; ya da işi doğrudan anlatın.</div>
+<div class="kart" data-modul="hukuk-burosu"><b>Hukuk Bürosu</b> — avukatlar için dilekçe, sözleşme, içtihat ve mevzuat araştırması, süre takibi. <span data-asistan="claude">Komutları görmek için sohbete <code>/litigation-legal:</code> gibi bir eklenti adı yazın; ya da işi doğrudan anlatın.</span><span data-asistan="chatgpt"> ChatGPT'de işi doğrudan anlatın ya da masanın <b>İş akışları</b> ekranından seçin.</span></div>
 <div class="kart" data-modul="kurumsal"><b>Kurumsal Asistan</b> — şirket hukuk birimleri için sözleşme incelemesi, uyum, KVKK ve şirketler hukuku. İşi doğrudan anlatın; asistan uygun adımları kendisi seçer.</div>
-<div class="kart" data-modul="adliye"><b>Courthouse</b> — hâkim ve kalem için tarafsız taslak. Örnek: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izleyiciler için "yarının duruşmaları" ya da "kesinleşme kontrolü" yazın. Dosya belgelerini sohbete doğrudan eklemeyin, önce ArthurMask'e bırakın. Her çıktı taslaktır, hâkim ya da heyet onayından geçer.</div>
-<div class="kart" data-modul="akademisyen"><b>Akademisyen</b> — hukuk akademisyenleri için literatür, atıf doğrulama, dergi seçimi, yayın etiği ve proje başvurusu. Örnek: <code>/atif-kaynak:</code> ya da <code>/makale-yazim:</code> yazın. Değerlendirme altındaki gizli müsvedde ve hakem materyali sohbete verilmez.</div>
+<div class="kart" data-modul="adliye"><b>Courthouse</b> — hâkim ve kalem için tarafsız taslak. <span data-asistan="claude">Örnek: <code>/hukuk-hakim:on-inceleme</code>, <code>/hukuk-kalem:tensip-zapti</code>, <code>/ceza-hakim:hukum-taslagi</code>; izleyiciler için "yarının duruşmaları" ya da "kesinleşme kontrolü" yazın.</span><span data-asistan="chatgpt"> ChatGPT'de işi doğrudan anlatın (ör. "ön inceleme taslağı" ya da "yarının duruşmaları").</span> Dosya belgelerini sohbete doğrudan eklemeyin, önce ArthurMask'e bırakın. Her çıktı taslaktır, hâkim ya da heyet onayından geçer.</div>
+<div class="kart" data-modul="akademisyen"><b>Akademisyen</b> — hukuk akademisyenleri için literatür, atıf doğrulama, dergi seçimi, yayın etiği ve proje başvurusu. <span data-asistan="claude">Örnek: <code>/atif-kaynak:</code> ya da <code>/makale-yazim:</code> yazın.</span><span data-asistan="chatgpt"> ChatGPT'de işi doğrudan anlatın (ör. atıf doğrulama ya da dergi seçimi).</span> Değerlendirme altındaki gizli müsvedde ve hakem materyali sohbete verilmez.</div>
 </div>
 
+<div data-asistan="claude">
 <h2>Yedek yol 1: hazır proje klasörü</h2>
 <p>Claude'da <b>Projects → New project</b> penceresinde <b>Use a folder</b> düğmesine basın ve aşağıdaki klasörlerden birini
 seçin. Klasörde talimat (<code>CLAUDE.md</code>), sistem talimatı ve bütün bilgi dosyaları hazırdır; her güncellemede
@@ -98,11 +107,19 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 <h2>Asistan talimatı yüklemezse</h2>
 <p>Nadiren model ilk soruda talimat aracını çağırmadan cevaplamaya başlayabilir. O durumda yazma kutusunun yanındaki <b>+</b> düğmesine basın, <b>arthurlegal-yerel</b> altında paketinizin adını taşıyan istemi seçin (<b>hukuk-burosu</b>, <b>kurumsal</b>, <b>adliye</b> ya da <b>akademisyen</b>); ya da yukarıdaki proje adımını bir kez yapın.</p>
 
+</div>
+
+<div data-asistan="chatgpt">
+<h2>ChatGPT'de beceriler ve sunucular</h2>
+<p>Kurulum ArthurLegal'in kural becerisini ve 11 iş alanı becerisini ChatGPT'ye kurar, yerel sunucuları da ChatGPT'nin ayarına yazar. ChatGPT'de <b>Settings › Plugins</b> sayfasının <b>Skills</b> sekmesinde adı <code>arthurlegal</code> ile başlayan beceriler, <b>MCPs</b> sekmesinde <code>arthurlegal-yerel</code> ve seçtiğiniz modüllerin sunucuları (<code>arthur-tapu</code>, <code>arthur-mask</code>, <code>arthur-uyap</code>) görünür. Hepsi her güncellemede kendiliğinden yenilenir; ChatGPT'ye ayrıca dosya ya da talimat yüklemeniz gerekmez.<span data-modul="hafiza"> Büro profiliniz ve tercihleriniz ArthurLegal Hafıza'da durur.</span></p>
+<p>Asistan masayı ya da araçları kullanmadan cevaplamaya başlarsa mesajınızın başına <i>ArthurLegal ile</i> yazın ya da masayı simgeden yeniden açın.</p>
+</div>
+
 <h2>Diğer bileşenler</h2>
 <ul>
   <li data-modul="mask"><b>ArthurMask</b> — Müvekkil ya da dosya belgelerini sohbete doğrudan eklemeyin; önce ArthurMask'e bırakın.
     İlk açılışta <b>Kurtarma anahtarı</b>'nı yazdırıp saklayın.</li>
-  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hukuk Bürosu ya da Kurumsal ile ArthurMask seçildiyse masaüstündeki <i>{{URUN}} - UYAP Dashboard</i> simgesi UYAP Avukat Portal'ı ayrı bir tarayıcı profilinde açar; girişi e-imza ya da e-Devlet ile siz yaparsınız. Tebligatlar ve Duruşmalarım ekranlarını açıp <b>Tara</b>'ya basın. Salt okunurdur: UYAP'a bir şey yazmaz, ek istek göndermez; adlar ve esas numaraları Claude'a gitmeden ArthurMask'te etiketlenir.</li>
+  <li data-os="windows" data-uyap><b>UYAP Dashboard</b> — Hukuk Bürosu ya da Kurumsal ile ArthurMask seçildiyse masaüstündeki <i>{{URUN}} - UYAP Dashboard</i> simgesi UYAP Avukat Portal'ı ayrı bir tarayıcı profilinde açar; girişi e-imza ya da e-Devlet ile siz yaparsınız. Tebligatlar ve Duruşmalarım ekranlarını açıp <b>Tara</b>'ya basın. Salt okunurdur: UYAP'a bir şey yazmaz, ek istek göndermez; adlar ve esas numaraları yapay zekâya gitmeden ArthurMask'te etiketlenir.</li>
   <li data-modul="tapu"><b>ArthurLegal Tapu</b> — Sohbette "İstanbul Kadıköy Caferağa 123 ada 45 parsel" ya da bir yer adı yazmanız yeter:
     parsel TKGM Parsel Sorgu'nun herkese açık verisinden gelir (ilk sorguda bir kez onay istenir). Masaüstündeki
     <i data-os="windows">{{URUN}} - Tapu</i><i data-os="mac">{{URUN}} Tapu</i> simgesi aynı işi yapan parsel arayüzünü açar.
@@ -112,7 +129,7 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
     yazma" derseniz o sohbette yazmaz. Yalnız maskeli metin yazılır: kimlik numarası, IBAN, telefon ve e-posta reddedilir.
     Klasörü <span data-os="windows">Başlat menüsündeki <i>{{URUN}} - Hafıza Klasörü</i></span><span data-os="mac">Uygulamalar
     &gt; {{URUN}} klasöründeki <i>Hafıza Klasörü</i></span> açar; notları dilediğiniz gibi düzenleyebilirsiniz.</li>
-  <li><b>Proje klasörleri</b> — <span data-os="windows">Başlat menüsündeki <i>{{URUN}} - Proje Klasörleri</i> kısayolu hazır
+  <li data-asistan="claude"><b>Proje klasörleri</b> — <span data-os="windows">Başlat menüsündeki <i>{{URUN}} - Proje Klasörleri</i> kısayolu hazır
     klasörleri Gezgin'de açar.</span><span data-os="mac">Uygulamalar &gt; {{URUN}} klasöründeki <i>Proje Klasörleri</i> hazır
     klasörleri Finder'da açar.</span> Dosyaları bir projeye elle sürüklerseniz o kopya güncellenmez; güncel kalan yollar
     araçlar ve "Use a folder"dır.</li>
@@ -123,10 +140,11 @@ kendiliğinden yenilenir. Kendi taslaklarınızı klasördeki <code>calismalar</
 </ul>
 
 <h2>Sorun giderme</h2>
-<div class="uyari">Araçlar görünmüyorsa Claude Desktop'u <span data-os="windows">sistem tepsisindeki simge dâhil
+<div class="uyari" data-asistan="claude">Araçlar görünmüyorsa Claude Desktop'u <span data-os="windows">sistem tepsisindeki simge dâhil
 <b>tamamen kapatıp</b></span><span data-os="mac"><b>Cmd+Q</b> ile tamamen kapatıp</span> yeniden açın.
 <b>Settings → Developer</b> bölümünde <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code>,
 <code>arthur-mask</code> ile <code>arthur-uyap</code> çalışıyor görünmelidir. Modül eklemek ya da çıkarmak için kurulum dosyasını yeniden çalıştırın. İlk araç listesi uzak sunucuyu da yokladığı için birkaç saniye sürebilir.</div>
+<div class="uyari" data-asistan="chatgpt" style="margin-top:10px">ChatGPT'de araçlar görünmüyorsa ChatGPT'yi <span data-os="windows">sistem tepsisindeki simge dâhil <b>tamamen kapatıp</b></span><span data-os="mac"><b>Cmd+Q</b> ile tamamen kapatıp</span> yeniden açın. <b>Settings › Plugins › MCPs</b> sayfasında <code>arthurlegal-yerel</code> ve (seçtiyseniz) <code>arthur-tapu</code>, <code>arthur-mask</code> ile <code>arthur-uyap</code> açık görünmelidir; beceriler <b>Skills</b> sekmesindedir. Modül eklemek, çıkarmak ya da uygulamayı değiştirmek için kurulum dosyasını yeniden çalıştırın.</div>
 
 <footer>{{URUN}} bir hukuk araştırma ve taslak aracıdır; hukuki danışmanlık değildir ve karar vermez. Her çıktıyı onu kullanan
 hukukçu (avukat, hâkim, kalem ya da akademisyen) doğrulamalıdır. ArthurMask takma adlandırma yapar, anonim hâle getirmez;
@@ -141,13 +159,20 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
   document.querySelectorAll("[data-os]").forEach(function (el) {
     if (el.getAttribute("data-os") !== (mac ? "mac" : "windows")) el.style.display = "none";
   });
+  // Kurulumda seçilen uygulama(lar) (K21): seçilmeyenin bölümleri gizlenir; durum.js yoksa ya da eskiyse Claude Desktop.
+  var asist = d.asistanlar && d.asistanlar.length ? d.asistanlar : ["claude"];
+  document.querySelectorAll("[data-asistan]").forEach(function (el) {
+    if (asist.indexOf(el.getAttribute("data-asistan")) < 0) el.style.display = "none";
+  });
+  var uygAd = asist.map(function (a) { return {claude: "Claude Desktop", chatgpt: "ChatGPT"}[a]; }).join(" ya da ");
+  document.querySelectorAll(".uyg-adi").forEach(function (el) { el.textContent = uygAd; });
   if (!window.ARTHURLEGAL_DURUM) return;
   var ad = {"hukuk-burosu": "Hukuk Bürosu", "kurumsal": "Kurumsal", "adliye": "Courthouse", "akademisyen": "Akademisyen"};
   // Seçilmeyen modüllerin bölümleri gizlenir; Courthouse ya da Akademisyen simgesi o paketin kartını öne çıkarır.
   if (d.moduller) document.querySelectorAll("[data-modul]").forEach(function (el) {
     if (d.moduller.indexOf(el.getAttribute("data-modul")) < 0) el.style.display = "none";
   });
-  // Kurulumda "Claude Desktop klasik" seçildiyse masa paragrafı gizlenir.
+  // Kurulumda klasik arayüz seçildiyse masa paragrafı gizlenir.
   if (d.arayuz) document.querySelectorAll("[data-arayuz]").forEach(function (el) {
     if (el.getAttribute("data-arayuz") !== d.arayuz) el.style.display = "none";
   });
@@ -159,21 +184,46 @@ gizlilik ve sır saklama sorumluluğu kullanıcıdadır.</footer>
   // Claude Desktop'ın gerçekte çalıştırdığı sürüm; güncelleme kurulu ama Claude yeniden açılmadıysa eski numara.
   // Claude Desktop'u bu tıklama (ya da kurulumun son adımı) yeni açtıysa sunucusu henüz başlamamıştır: kayıtlı numara
   // önceki açılışındır, Claude bu kurulumun sürümüyle açılır.
+  var yeniden = asist.indexOf("claude") >= 0
+      ? (mac ? " — Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; " : " — Claude Desktop'u sistem tepsisindeki simge dâhil kapatıp açın; ")
+      : (mac ? " — ChatGPT'den Cmd+Q ile çıkıp yeniden açın; " : " — ChatGPT'yi sistem tepsisindeki simge dâhil kapatıp açın; ");
   var calisan = d.calisan_surum === d.surum ? d.calisan_surum + " (güncel)"
       : d.claude === "başlatıldı" ? "Claude Desktop şimdi açılıyor; " + d.surum + " ile çalışacak"
+      : d.chatgpt === "başlatıldı" ? "ChatGPT şimdi açılıyor; " + d.surum + " ile çalışacak"
       : !d.calisan_surum ? "henüz açılmadı"
-      : d.calisan_surum + (mac ? " — Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; "
-                               : " — Claude Desktop'u sistem tepsisindeki simge dâhil kapatıp açın; ") + d.surum + " devreye girsin";
+      : d.calisan_surum + yeniden + d.surum + " devreye girsin";
   var satirlar = [
     ["Kurulum", d.surum],
     ["Son güncelleme", d.son_guncelleme || "yok (kurulumdan beri)"],
-    ["Claude Desktop'ta çalışan", calisan],
-    ["Paketler", paket || "-"],
-    ["Claude Desktop", d.claude === "bulunamadı" ? "kurulu değil" : d.claude],
-    ["Bağlı sunucular", (d.sunucular || []).join(", ") || "-"],
-    ["ArthurMask", d.mask || "kurulu değil"],
-    ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]
+    ["Çalışan sunucu", calisan],
+    ["Paketler", paket || "-"]
   ];
+  if (asist.indexOf("claude") >= 0) satirlar.push(
+    ["Claude Desktop", d.claude === "bulunamadı" ? "kurulu değil" : d.claude],
+    ["Claude Desktop'taki sunucular", (d.sunucular || []).join(", ") || "-"]);
+  if (asist.indexOf("chatgpt") >= 0) satirlar.push(
+    ["ChatGPT", d.chatgpt === "bulunamadı" ? "kurulu değil" : d.chatgpt],
+    ["ChatGPT'deki sunucular", (d.chatgpt_sunucular || []).join(", ") || "-"],
+    ["ChatGPT becerileri", d.chatgpt_beceriler ? String(d.chatgpt_beceriler) : "-"]);
+  satirlar.push(
+    ["ArthurMask", d.mask || "kurulu değil"],
+    ["Son güncelleme denetimi", d.son_denetim ? d.son_denetim + (d.son_sonuc ? " — " + d.son_sonuc : "") : "henüz yok"]);
+  // Masa düğmeleri (K29): seçilen her uygulama için bir düğme; uygulama kurulu değilse resmî indirme sayfası. İkisi
+  // seçildiyse simge yalnız bu sayfayı açar, masa buradan açılır.
+  var T = {"claude_masa": "Claude Desktop'ta aç", "chatgpt_masa": "ChatGPT'de aç", "claude_ac": "Claude Desktop'u aç", "chatgpt_ac": "ChatGPT'yi aç", "claude_indir": "Claude Desktop'u indir", "chatgpt_indir": "ChatGPT'yi indir", "baslik_klasik": "Uygulamanızı açın", "metin_klasik": "Düğme seçtiğiniz uygulamayı açar; hukuki sorunuzu yeni bir sohbete yazın."};
+  var klasik = d.arayuz === "klasik", dugmeler = [];
+  if (d.masa_claude) dugmeler.push(d.claude === "bulunamadı" ? ["https://claude.ai/download", T.claude_indir]
+      : [d.masa_claude, klasik ? T.claude_ac : T.claude_masa]);
+  if (d.masa_chatgpt) dugmeler.push(d.chatgpt === "bulunamadı" ? [d.chatgpt_indirme || "https://chatgpt.com/download/", T.chatgpt_indir]
+      : [d.masa_chatgpt, klasik ? T.chatgpt_ac : T.chatgpt_masa]);
+  if (dugmeler.length) {
+    var kart = document.getElementById("masa-ac");
+    kart.classList.add("var");
+    if (klasik) { kart.querySelector("h3").textContent = T.baslik_klasik; kart.querySelector("p").textContent = T.metin_klasik; }
+    document.getElementById("masa-dugmeleri").innerHTML = dugmeler.map(function (b) {
+      return '<a class="dugme" href="' + String(b[0]).replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '">' + b[1] + "</a>";
+    }).join("");
+  }
   var k = d.proje_klasorleri || {};
   var liste = Object.keys(k).map(function (p) {
     return "<div style=\"margin:4px 0\"><b>" + (ad[p] || p) + ":</b> <code>" + String(k[p]).replace(/</g, "&lt;") + "</code></div>";

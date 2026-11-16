@@ -1900,7 +1900,8 @@ class ArayuzTesti(unittest.TestCase):
             self.assertIn('"arayuz": "klasik"', (t / "kok" / "rehber" / "durum.js").read_text(encoding="utf-8"))
             for ad in ("rehber.html", "rehber-en.html", "rehber-az.html"):  # panel klasikte masa paragrafını gizler
                 html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
-                self.assertIn('<p data-arayuz="yeni">', html)
+                self.assertIn('<p data-arayuz="yeni" data-asistan="claude">', html)
+                self.assertIn('<p data-arayuz="yeni" data-asistan="chatgpt">', html)
                 self.assertIn("d.arayuz", html)
 
     def test_oneri_cumlesi_her_yuzeyde_ayni(self):
@@ -1913,7 +1914,7 @@ class ArayuzTesti(unittest.TestCase):
         for ad, cumle in (("rehber.html", oneri["cumle"]), ("rehber-en.html", oneri["cumle_en"]),
                           ("rehber-az.html", oneri["cumle_az"])):
             html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
-            self.assertIn('<div class="kart" id="model-efor">', html)
+            self.assertIn('<div class="kart" id="model-efor" data-asistan="claude">', html)
             self.assertIn(cumle, html)
             self.assertIn(cumle, readme)
 

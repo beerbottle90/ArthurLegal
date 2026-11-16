@@ -294,6 +294,32 @@ class ChatGPTSimgesiTesti(_Ortam, unittest.TestCase):
             self.assertIn("Claude Desktop'ta ya da ChatGPT'de", ikisi["ArthurLegal 0.0.1.lnk"])
 
 
+class BaslangicSayfasiTesti(unittest.TestCase):
+    """Başlangıç sayfası üç dilde: seçilen uygulamanın bölümleri (data-asistan), masa düğmeleri (K29), ChatGPT'de model
+    cümlesi (K14). Seçim yoksa (eski durum.js) yalnız Claude Desktop bölümleri görünür."""
+
+    def test_uc_dilde_chatgpt_bolumleri(self):
+        oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json")
+                           .read_text(encoding="utf-8"))
+        for ad, cumle in (("rehber.html", oneri["cumle_chatgpt"]), ("rehber-en.html", oneri["cumle_chatgpt_en"]),
+                          ("rehber-az.html", oneri["cumle_chatgpt_az"])):
+            with self.subTest(ad=ad):
+                html = (BURASI / "kurulum" / ad).read_text(encoding="utf-8")
+                self.assertIn('<div class="kart" id="masa-ac">', html)
+                self.assertIn('<div id="masa-dugmeleri"></div>', html)
+                self.assertIn('id="model-chatgpt" data-asistan="chatgpt"', html)
+                self.assertIn(cumle, html)
+                self.assertGreaterEqual(html.count('data-asistan="chatgpt"'), 8)
+                self.assertGreaterEqual(html.count('data-asistan="claude"'), 8)
+                self.assertIn('var asist = d.asistanlar && d.asistanlar.length ? d.asistanlar : ["claude"];', html)
+                self.assertIn("d.masa_chatgpt", html)
+                self.assertIn("Settings › Plugins", html)
+                self.assertNotIn("Claude Desktop klasik", html)
+                self.assertNotIn("Claude Desktop classic", html)
+                # Asistan süzgeci durum.js olmadan da çalışır: erken dönüşten önce.
+                self.assertLess(html.index("var asist = "), html.index("if (!window.ARTHURLEGAL_DURUM) return;"))
+
+
 class KurulumMetniTesti(unittest.TestCase):
     def test_uc_dilde_her_secim(self):
         import kur

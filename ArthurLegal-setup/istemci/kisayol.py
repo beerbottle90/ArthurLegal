@@ -109,8 +109,10 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "", chatgpt: str | N
         chatgpt = chatgpt_durumu()
     bilgi = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json")
     d = ortak.durum()
+    klasik = ortak.arayuz() == "klasik"
     kayitli = claude_ayari.kayitli()
-    sunucular = sorted({s for adlar in kayitli.values() for s in adlar if s.startswith("arthur")})
+    # Yalnız ArthurLegal'in sunucuları (adı "arthur" ile başlayan başka bir araç, ör. arthurball, sayılmaz).
+    sunucular = sorted({s for adlar in kayitli.values() for s in adlar if s in codex_ayari.ADLAR})
     sg = d.get("son_guncelleme") if isinstance(d.get("son_guncelleme"), dict) else {}
     veri = {
         "surum": ortak.surum(),
@@ -135,11 +137,12 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "", chatgpt: str | N
         # masa düğmelerinin bağlantıları (ikisi seçildiyse panel iki düğme gösterir).
         "asistanlar": asistanlar,
         "chatgpt": chatgpt or "",
-        "chatgpt_sunucular": [s for s in codex_ayari.kayitli() if s.startswith("arthur")] if chatgpt else [],
+        "chatgpt_sunucular": [s for s in codex_ayari.kayitli() if s in codex_ayari.ADLAR] if chatgpt else [],
         "chatgpt_beceriler": len(codex_ayari.beceriler_kayitli()) if chatgpt else 0,
         "chatgpt_indirme": ortak.CHATGPT_INDIRME,
-        "masa_claude": masa_adresi() if "claude" in asistanlar else "",
-        "masa_chatgpt": chatgpt_masa_adresi() if "chatgpt" in asistanlar else "",
+        # Klasik arayüzde düğme yalnız uygulamayı açar (masa mesajı yazılmaz).
+        "masa_claude": ("claude://" if klasik else masa_adresi()) if "claude" in asistanlar else "",
+        "masa_chatgpt": ("codex://" if klasik else chatgpt_masa_adresi()) if "chatgpt" in asistanlar else "",
         "son_denetim": time.strftime("%d.%m.%Y %H:%M", time.localtime(d["son_denetim"])) if d.get("son_denetim") else "",
         "son_sonuc": d.get("son_sonuc", ""),
         "proje_klasorleri": proje.durum(),
