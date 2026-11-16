@@ -28,8 +28,8 @@
   ArthurLegal nədir, quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə.
 </p>
 <p align="center">
-  <b>ChatGPT dəstəyi hazırlanır.</b> ArthurLegal Masası, araşdırma alətləri və iş axınları OpenAI-ın ChatGPT-si üçün də uyğunlaşdırılır və ChatGPT masaüstü tətbiqində sınaqdan keçirilib. Quraşdırmada ChatGPT seçimi hazır olanda burada elan ediləcək; bu gün ArthurLegal Claude ilə işləyir.<br>
-  <sub>ChatGPT və OpenAI OpenAI-ın əmtəə nişanlarıdır.</sub>
+  <b>ArthurLegal indi ChatGPT masaüstü tətbiqində də işləyir.</b> v3.4.0 ilə ArthurLegal Masası, araşdırma alətləri və iş axınları ChatGPT masaüstü tətbiqində də (Windows və macOS) işləyir. Quraşdırmada tətbiqinizi seçirsiniz: Claude Desktop, ChatGPT və ya hər ikisi (<a href="#kurulum-az">quraşdırma</a>, <a href="README.md#setup-340">yeniliklər</a>). ChatGPT-nin veb və telefon versiyasında istifadə hazırlanır.<br>
+  <sub>ChatGPT və OpenAI OpenAI-ın ticarət nişanlarıdır.</sub>
 </p>
 
 <h2 id="kurulum-az">Azərbaycan dilində: yükləmə və quraşdırma</h2>
@@ -74,11 +74,32 @@ info**) yazısına, sonra görünən **Yine de çalıştır** (Yenə də işə s
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Nümunə şəkil: Ek bilgi-dən sonra görünən Yine de çalıştır düyməsi (2)">
 </p>
 
-**3. Modulları seçin.** Quraşdırma əvvəlcə dili soruşur: **Azərbaycan dili** seçib **OK** üzərinə klikləyin
-(türkcə və ingiliscə də var: **Türkçe**, **English**). **Müqaviləni qəbul edirəm** (türkcə quraşdırmada **Anlaşmayı
-kabul ediyorum**, ingiliscə **I accept the agreement**) seçib **Növbəti** (**Sonraki**, **Next**) üzərinə klikləyin.
-**Modulları seçin** (**Modülleri seçin**, **Choose modules**) ekranında quraşdırmaq istədiklərinizi işarələyin; hər birinin altında nə işə yaradığı yazılır və ilk quraşdırmada
-heç bir xana işarələnmiş gəlmir. Ən azı bir paket lazımdır:
+**3. Süni intellekt tətbiqinizi seçin.** Quraşdırma əvvəlcə dili soruşur: **Azərbaycan dili** seçib **OK** üzərinə
+klikləyin (türkcə və ingiliscə də var: **Türkçe**, **English**). **Müqaviləni qəbul edirəm** (türkcə quraşdırmada
+**Anlaşmayı kabul ediyorum**, ingiliscə **I accept the agreement**) seçib **Növbəti** (**Sonraki**, **Next**) üzərinə
+klikləyin. **Süni intellekt tətbiqinizi seçin** (**Yapay zekâ uygulamanızı seçin**, **Choose your AI app**) ekranında
+ArthurLegal-ın hansı tətbiqin içində işləyəcəyini işarələyin: **Claude Desktop**, **ChatGPT** və ya hər ikisi. Ən azı
+biri lazımdır. Bu kompüterdə quraşdırılmış olanın yanında "(bu kompüterdə quraşdırılıb)" (türkcə quraşdırmada "(bu
+bilgisayarda kurulu)") yazılır və işarələnmiş gəlir; heç biri quraşdırılmayıbsa, Claude Desktop işarələnmiş gəlir.
+Sonra **Növbəti** üzərinə klikləyin.
+
+| Tətbiq | Quraşdırılmayıbsa |
+|---|---|
+| **Claude Desktop** | Quraşdırma onu da quraşdırmağa çalışır; alınmasa, [claude.ai/download](https://claude.ai/download) ünvanından quraşdırın |
+| **ChatGPT** | Quraşdırma rəsmi **ChatGPT** tətbiqini (naşir OpenAI) Microsoft Store-dan quraşdırmağa çalışır; alınmasa, iş masasındakı **ArthurLegal** nişanı rəsmi yükləmə səhifəsini açır: [chatgpt.com/download](https://chatgpt.com/download/) |
+
+ChatGPT-də ChatGPT-nin **yeni masaüstü tətbiqi** lazımdır (Windows-da Microsoft Store-dakı **ChatGPT**). Köhnə
+**ChatGPT Classic** tətbiqi ArthurLegal-ın bu kompüterdə işləyən serverlərini işə salmır. Seçimi sonra dəyişmək üçün
+quraşdırmanı yenidən işə salıb işarəni dəyişin: işarəsini götürdüyünüz tətbiqdən ArthurLegal-ın serverləri
+(ChatGPT-də bacarıqları da) çıxarılır.
+
+<p align="center">
+  <img src="docs/kurulum/asistan.svg" width="560" alt="Nümunə şəkil (türkcə quraşdırma): süni intellekt tətbiqi ekranında Claude Desktop (bu bilgisayarda kurulu, yəni bu kompüterdə quraşdırılıb) əvvəlcədən işarələnib (1), ChatGPT də işarələnib (2); biri də kifayətdir. Sonra Sonraki (Növbəti) düyməsi (3)">
+</p>
+
+**4. Modulları seçin.** **Modulları seçin** (**Modülleri seçin**, **Choose modules**) ekranında quraşdırmaq
+istədiklərinizi işarələyin; hər birinin altında nə işə yaradığı yazılır və ilk quraşdırmada heç bir xana işarələnmiş
+gəlmir. Ən azı bir paket lazımdır:
 
 | Modul | Kimin üçün |
 |---|---|
@@ -87,36 +108,39 @@ heç bir xana işarələnmiş gəlmir. Ən azı bir paket lazımdır:
 | **Courthouse** | Hakim və məhkəmə dəftərxanası ([Courthouse səhifəsi](ArthurLegal-Courthouse-v1.2.5-Public-Release/), türk dilində) |
 | **Akademik** (Akademisyen) | Hüquqşünas akademiklər |
 | **ArthurLegal Tapu** | Ada/parsel (kadastr bloku və sahə nömrəsi) və ya yer adı ilə canlı parsel məlumatı, kroki (sxem) və rüsum |
-| **ArthurMask** | Sənədləri Claude-a verməzdən əvvəl kompüterdə maskalayır (təxminən 1 GB yüklənir). Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə seçilsə, Windows-da [UYAP Dashboard](README.md#uyap) da gəlir |
+| **ArthurMask** | Sənədləri süni intellektə (Claude və ya ChatGPT) verməzdən əvvəl bu kompüterdə maskalayır (təxminən 1 GB yüklənir). Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə seçilsə, Windows-da [UYAP Dashboard](README.md#uyap) da gəlir |
 | **ArthurLegal Yaddaş** (ArthurLegal Hafıza) | Seçimlərinizi, düzəlişlərinizi və son sessiyanı söhbətlər arasında kompüterinizdəki bir qovluqda saxlayır |
 
 <p align="center">
   <img src="docs/kurulum/moduller.svg" width="560" alt="Nümunə şəkil (türkcə quraşdırma): modul ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib; sonra Sonraki (Növbəti) düyməsi (4)">
 </p>
 
-**4. İnterfeysi seçin.** **İnterfeysi seçin** (**Arayüzü seçin**, **Choose the interface**) ekranında iki seçim var,
+**5. İnterfeysi seçin.** **İnterfeysi seçin** (**Arayüzü seçin**, **Choose the interface**) ekranında iki seçim var,
 yalnız biri seçilir; dəyişmək üçün quraşdırmanı sonra yenidən işə sala bilərsiniz:
 
 | İnterfeys | Nə baş verir |
 |---|---|
-| **ArthurLegal yeni interfeys** (**ArthurLegal yeni arayüz**, **ArthurLegal new interface**; seçilmiş gəlir) | ArthurLegal nişanı Claude Desktop-un içində [ArthurLegal Masası](README.md#masa) panelini açır: solda modullar, ortada iş addımları; maddə və məhkəmə təcrübəsi nəticələri ArthurLegal kartları ilə gəlir |
-| **Claude Desktop klassik** (**Claude Desktop klasik**, **Claude Desktop classic**) | Claude Desktop həmişəki kimi açılır, sualınızı söhbətə yazırsınız; masa və kartlar bağlıdır, nəticələr mətn kimi gəlir |
+| **ArthurLegal yeni interfeys** (**ArthurLegal yeni arayüz**, **ArthurLegal new interface**; seçilmiş gəlir) | ArthurLegal nişanı seçdiyiniz tətbiqin içində [ArthurLegal Masası](README.md#masa) panelini açır (Claude Desktop-da tam ekranda, ChatGPT-də yan paneldə): solda modullar, ortada iş addımları; maddə və məhkəmə təcrübəsi nəticələri ArthurLegal kartları ilə gəlir |
+| **Tətbiqin öz söhbəti (klassik)** (**Uygulamanın kendi sohbeti (klasik)**, **The app's own chat (classic)**) | Seçdiyiniz tətbiq həmişəki kimi açılır, sualınızı söhbətə yazırsınız; masa və kartlar bağlıdır, nəticələr mətn kimi gəlir |
 
 <p align="center">
   <img src="docs/kurulum/arayuz.svg" width="560" alt="Nümunə şəkil (türkcə quraşdırma): interfeys ekranında ArthurLegal yeni arayüz (ArthurLegal yeni interfeys) seçilib (1); sonra Sonraki (Növbəti) düyməsi (2)">
 </p>
 
-**5. Quraşdırın.** **Növbəti**, sonra **Quraşdır** (**Kur**, **Install**) üzərinə klikləyin. Claude Desktop açıqdırsa,
-quraşdırma onu bağlayır; başlamazdan əvvəl yazdığınız mesajı göndərin. ArthurMask seçmisinizsə, quraşdırma onu da
-yükləyir (təxminən 1 GB, bir neçə dəqiqə); gözləmək istəməsəniz, **Yükləməni dayandır** (**İndirmeyi
-durdur**, **Stop download**) düyməsini basıb çıxan iki suala **Bəli** (**Evet**, **Yes**) cavabını verin, ArthurMask sonra arxa
-planda özü yüklənir. Son səhifədə **Bitir** (**Bitti**, **Finish**) üzərinə klikləyin: yeni interfeysdə Claude Desktop
-masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq), klassikdə başlanğıc bələdçisi və Claude Desktop açılır.
+**6. Quraşdırın.** **Növbəti**, sonra **Quraşdır** (**Kur**, **Install**) üzərinə klikləyin. Seçdiyiniz tətbiq (Claude
+Desktop, ChatGPT və ya hər ikisi) açıqdırsa, quraşdırma onu bağlayır; başlamazdan əvvəl yazdığınız mesajı göndərin.
+ArthurMask seçmisinizsə, quraşdırma onu da yükləyir (təxminən 1 GB, bir neçə dəqiqə); gözləmək istəməsəniz,
+**Yükləməni dayandır** (**İndirmeyi durdur**, **Stop download**) düyməsini basıb çıxan iki suala **Bəli** (**Evet**,
+**Yes**) cavabını verin, ArthurMask sonra arxa planda özü yüklənir. Son səhifədə **Bitir** (**Bitti**, **Finish**)
+üzərinə klikləyin: yeni interfeysdə seçdiyiniz tətbiq masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq); hər iki
+tətbiqi seçmisinizsə, başlanğıc səhifəsi açılır. Klassikdə başlanğıc səhifəsi və seçdiyiniz tətbiq açılır.
 
 > [!IMPORTANT]
-> **Quraşdırmadan sonra Enter düyməsini basın.** Claude Desktop açılanda mesaj qutusunda *ArthurLegal Masası'nı aç*
-> (ArthurLegal Masasını aç) yazılmış olur; masa siz **Enter** düyməsini basanda açılır. Mesaj öz-özünə göndərilmir.
-> İş masasındakı **ArthurLegal** nişanı ilə hər açılışda da Enter düyməsini basın.
+> **Quraşdırmadan sonra Enter düyməsini basın.** Claude Desktop və ya ChatGPT açılanda mesaj qutusunda *ArthurLegal
+> Masası'nı aç* (ArthurLegal Masasını aç) yazılmış olur; masa siz **Enter** düyməsini basanda açılır. Mesaj öz-özünə
+> göndərilmir. İş masasındakı **ArthurLegal** nişanı ilə hər açılışda da Enter düyməsini basın. Hər iki tətbiqi
+> seçmisinizsə, əvvəlcə başlanğıc səhifəsindəki **Claude Desktop-da aç** və ya **ChatGPT-də aç** düyməsinə klikləyin,
+> sonra Enter düyməsini basın.
 
 <a id="model-az"></a>
 
@@ -128,19 +152,27 @@ masanı açmağa hazır gəlir (aşağıdakı xəbərdarlıq), klassikdə başla
 > bağlı suallarda daha çox ciddi səhv etdi; heç bir model uydurma istinad yazmadı. Limitiniz azalarsa, maddə mətni,
 > istinadların yoxlanması və hesablama işlərini Sonnet 5.5 ilə görə bilərsiniz. ArthurLegal hər modellə işləyir;
 > masanın **Model ve effort** ekranı ölçmə nəticələrini göstərir.
+>
+> **ChatGPT-də model.** ChatGPT modelləri ilə hələ ölçmə aparmamışıq; ən bacarıqlı cari modeli seçməyinizi tövsiyə edirik, məcburi deyil.
+> Modeli ChatGPT-nin mesaj qutusunun altındakı model menyusundan seçin. ChatGPT-də masa modeli soruşmur və göstərmir;
+> yuxarıdakı ölçmə Anthropic modelləri ilə aparılıb.
 
 İş masasına seçdiyiniz modulların nişanları gəlir: Hüquq Bürosu və ya Korporativ Köməkçi üçün **ArthurLegal**,
 həmçinin **ArthurLegal - Courthouse**, **ArthurLegal - Akademik**, **ArthurLegal - Tapu** və **ArthurMask** (türkcə
 quraşdırmada Akademik nişanının adı **ArthurLegal - Akademisyen**-dir). Windows-da
 Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə ArthurMask seçmisinizsə, **ArthurLegal - UYAP Dashboard** da gəlir ([UYAP Dashboard](README.md#uyap)).
-Yeni interfeysdə **ArthurLegal** nişanı Claude Desktop-u *ArthurLegal Masası'nı aç* mesajı yazılmış halda açır:
-Enter düyməsini basın, masa tam ekranda açılır (solda modullar, ortada iş addımları); klassikdə Claude Desktop-u və
-başlanğıc bələdçisini açır. Claude Desktop-da yeni söhbət açıb sualınızı
-birbaşa da yaza bilərsiniz. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa,
-**Always allow** (Həmişə icazə ver) seçin; Claude Desktop-un menyuları ingilis dilindədir. Claude Desktop
-quraşdırılmayıbsa, quraşdırma onu da quraşdırmağa çalışır; açılmasa, [claude.ai/download](https://claude.ai/download) ünvanından quraşdırın.
-Modul əlavə etmək, çıxarmaq və ya interfeysi dəyişmək üçün quraşdırma faylını yenidən işə salın; son seçiminiz
-işarələnmiş gəlir.
+Yeni interfeysdə **ArthurLegal** nişanı seçdiyiniz tətbiqi *ArthurLegal Masası'nı aç* mesajı yazılmış halda açır:
+Enter düyməsini basın; masa Claude Desktop-da tam ekranda, ChatGPT-də ChatGPT-nin yan panelində açılır (solda
+modullar, ortada iş addımları). Hər iki tətbiqi seçmisinizsə, nişan yalnız başlanğıc səhifəsini açır; səhifənin
+əvvəlindəki **Claude Desktop-da aç** və **ChatGPT-də aç** düymələri masanı həmin tətbiqdə açır. Klassikdə nişan
+seçdiyiniz tətbiqi və başlanğıc səhifəsini açır; hər iki tətbiq seçilibsə, yalnız başlanğıc səhifəsini açır, düymələr
+də yalnız tətbiqi açır. Nişan hər klikdə başlanğıc səhifəsini brauzerdə də açır. Tətbiqdə yeni söhbət açıb sualınızı
+birbaşa da yaza bilərsiniz. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, **Always allow** (Həmişə
+icazə ver) seçin; ChatGPT icazə soruşsa, icazə verin. Claude Desktop-un və ChatGPT-nin menyuları ingilis dilindədir.
+ChatGPT-də ArthurLegal-ın bacarıqları və serverləri **Settings › Plugins** səhifəsindədir: **Skills** bölməsində adı
+`arthurlegal` ilə başlayan bacarıqlar, **MCPs** bölməsində `arthurlegal-yerel` və seçdiyiniz modulların serverləri.
+Tətbiq quraşdırılmayıbsa, yuxarıdakı cədvələ baxın. Modul əlavə etmək, çıxarmaq, tətbiqi və ya interfeysi dəyişmək
+üçün quraşdırma faylını yenidən işə salın; son seçiminiz işarələnmiş gəlir.
 
 <details>
 <summary><b>Bu xəbərdarlıqlar niyə çıxır, fayl təhlükəsizdirmi?</b></summary>
@@ -176,7 +208,9 @@ Nəzarəti söndürməyinizə ehtiyac yoxdur; eyni quraşdırmanın zip yolundan
    **Tümünü Ayıkla** seçin.
 4. Açılan qovluqda **KUR** faylına (növü: Windows Komut Dosyası, yəni Windows əmr faylı) iki dəfə klikləyin. Qara
    pəncərə əvvəlcə modulları soruşur: quraşdırmaq istədiklərinizin nömrələrini vergüllə yazıb <kbd>Enter</kbd>
-   düyməsini basın (məs. Hukuk Bürosu və Tapu üçün `1,5`). Sizdən bir düyməni basmağınızı istəyəndə quraşdırma
+   düyməsini basın (məs. Hukuk Bürosu və Tapu üçün `1,5`). Sonra süni intellekt tətbiqini soruşur: **1** Claude
+   Desktop, **2** ChatGPT, **3** Hər ikisi; nömrəni yazıb <kbd>Enter</kbd> düyməsini basın (yalnız Enter əvvəlki
+   seçiminizi və ya bu kompüterdə quraşdırılmış olanı seçir). Sizdən bir düyməni basmağınızı istəyəndə quraşdırma
    bitmişdir.
 
 Bu yolla ArthurMask quraşdırılmır (sənəd maskalama və UYAP bağlantısı işləmir); ArthurLegal paketləri, araşdırma
@@ -213,40 +247,49 @@ köçür; **Move to Trash**) üzərinə yox. <kbd>Enter</kbd> düyməsini basmay
   <img src="docs/kurulum/mac-2-yine-de-ac.svg" width="400" alt="Nümunə şəkil: Sistem Ayarları-nda Gizlilik ve Güvenlik (2) və Yine de Aç düyməsi (3)">
 </p>
 
-**3. Modulları seçin.** Quraşdırma Mac-inizin dilində açılır: Mac-inizin ilk dili Azərbaycan dilidirsə,
-quraşdırma səhifələri və modulların adları Azərbaycan dilində gəlir. macOS-un öz düymələri isə Azərbaycan dilində
-olmadığı üçün aşağıdakı adlar türkcə ekrandakı kimidir. **Sürdür** (Davam et; **Continue**) üzərinə klikləyərək irəliləyin; lisenziya səhifəsindən
-sonra çıxan pəncərədə **Kabul Ediyorum** (Qəbul edirəm; **Agree**) seçin. **Yükleme Türü** (Quraşdırma növü;
-**Installation Type**) ekranında quraşdırmaq istədiyiniz modulları işarələyib **Sürdür** üzərinə klikləyin: modulun
-adına klikləyəndə nə işə yaradığı aşağıda yazılır. Modullar Windows-dakılarla eynidir
-(yuxarıdakı cədvəl); ilk quraşdırmada heç biri işarələnmiş gəlmir, ən azı bir paket lazımdır. ArthurMask yalnız Apple
-Silicon və macOS 14 (Sonoma) və ya sonrasında seçilə bilər. Modulların altındakı **ArthurLegal yeni interfeys**
-(**ArthurLegal yeni arayüz**) xanası işarələnmiş gəlir (masa və kartlar); işarəni götürsəniz, **Claude Desktop
-klassik** quraşdırılır.
+**3. Süni intellekt tətbiqinizi və modulları seçin.** Quraşdırma Mac-inizin dilində açılır: Mac-inizin ilk dili
+Azərbaycan dilidirsə, quraşdırma səhifələri və modulların adları Azərbaycan dilində gəlir. macOS-un öz düymələri isə
+Azərbaycan dilində olmadığı üçün aşağıdakı adlar türkcə ekrandakı kimidir. **Sürdür** (Davam et; **Continue**)
+üzərinə klikləyərək irəliləyin; lisenziya səhifəsindən sonra çıxan pəncərədə **Kabul Ediyorum** (Qəbul edirəm;
+**Agree**) seçin. **Yükleme Türü** (Quraşdırma növü; **Installation Type**) ekranında siyahının əvvəlində iki xana
+var: **Claude Desktop** və **ChatGPT**. ArthurLegal-ın hansı tətbiqin içində işləyəcəyini işarələyin; hər ikisini də
+seçə bilərsiniz. Bu Mac-də quraşdırılmış olan işarələnmiş gəlir, heç biri quraşdırılmayıbsa, Claude Desktop. Mac-də
+quraşdırma bu tətbiqləri quraşdırmır: Claude Desktop quraşdırılmayıbsa, [claude.ai/download](https://claude.ai/download)
+ünvanından quraşdırın; ChatGPT quraşdırılmayıbsa, **ArthurLegal** nişanı rəsmi yükləmə səhifəsini açır
+([chatgpt.com/download](https://chatgpt.com/download/)). ChatGPT-də ChatGPT-nin yeni masaüstü tətbiqi lazımdır; köhnə
+**ChatGPT Classic** ArthurLegal-ın bu kompüterdə işləyən serverlərini işə salmır. Aşağıda quraşdırmaq istədiyiniz
+modulları işarələyib **Sürdür** üzərinə klikləyin: modulun adına klikləyəndə nə işə yaradığı aşağıda yazılır.
+Modullar Windows-dakılarla eynidir (yuxarıdakı cədvəl); ilk quraşdırmada heç biri işarələnmiş gəlmir, ən azı bir paket
+lazımdır. ArthurMask yalnız Apple Silicon və macOS 14 (Sonoma) və ya sonrasında seçilə bilər. Modulların altındakı
+**ArthurLegal yeni interfeys** (**ArthurLegal yeni arayüz**) xanası işarələnmiş gəlir (masa və kartlar); işarəni
+götürsəniz, **tətbiqin öz söhbəti (klassik)** quraşdırılır.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Nümunə şəkil: macOS quraşdırmasının Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib, ArthurLegal yeni arayüz öz-özünə işarələnmiş gəlir; sonra Sürdür düyməsi (4)">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Nümunə şəkil: macOS quraşdırmasının Yükleme Türü ekranında siyahının əvvəlində Claude Desktop və ChatGPT xanaları (burada Claude Desktop işarələnib); Hukuk Bürosu (1), ArthurLegal Tapu (2) və ArthurMask (3) işarələnib, ArthurLegal yeni arayüz öz-özünə işarələnmiş gəlir; sonra Sürdür düyməsi (4)">
 </p>
 
-**4. Quraşdırın.** Claude Desktop açıqdırsa, quraşdırma onu bağlayır; yazdığınız mesaj varsa, əvvəlcə göndərin. Növbəti səhifədə
-**Yükle** (Quraşdır; **Install**), son səhifədə **Kapat** (Bağla; **Close**) üzərinə klikləyin: başlanğıc bələdçisi
-brauzerdə açılır. Seçdiyiniz modulların nişanları Uygulamalar (Proqramlar; Applications) qovluğunda (Launchpad-də) və
-iş masasındadır: Hüquq Bürosu və ya Korporativ Köməkçi üçün
+**4. Quraşdırın.** Seçdiyiniz tətbiq (Claude Desktop və ya ChatGPT) açıqdırsa, quraşdırma onu bağlayır; yazdığınız
+mesaj varsa, əvvəlcə göndərin. Növbəti səhifədə **Yükle** (Quraşdır; **Install**), son səhifədə **Kapat** (Bağla;
+**Close**) üzərinə klikləyin: başlanğıc səhifəsi brauzerdə açılır. Seçdiyiniz modulların nişanları Uygulamalar
+(Proqramlar; Applications) qovluğunda (Launchpad-də) və iş masasındadır: Hüquq Bürosu və ya Korporativ Köməkçi üçün
 **ArthurLegal**, həmçinin **ArthurLegal Courthouse**, **ArthurLegal Akademik** (türkcə quraşdırmada **ArthurLegal
-Akademisyen**) və **ArthurLegal Tapu**. İş masasındakı
-nişanlar Windows-dakı kimi versiya nömrəsini daşıyır (məs. **ArthurLegal 3.0.12**) və yeniləmə ilə təzələnir. ArthurMask
-seçmisinizsə, quraşdırmadan sonra arxa planda yüklənir (təxminən 1,2 GB); hazır olanda bildiriş gəlir və iş masasına
-**ArthurMask** nişanı əlavə olunur. Quraşdırma Claude Desktop-u yenidən açır: yeni interfeysdə Claude *ArthurLegal Masası'nı
-aç* mesajı ilə açılır, Enter düyməsini basın. Claude masanı tapa bilməsə, Claude Desktop-dan **Cmd+Q** ilə tamamilə çıxıb yenidən
-açın, sonra **ArthurLegal** nişanına klikləyib Enter düyməsini basın. Yeni söhbət açıb
-sualınızı birbaşa da yaza bilərsiniz. Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, **Always allow** seçin. Claude
-Desktop quraşdırılmayıbsa, [claude.ai/download](https://claude.ai/download) ünvanından quraşdırın. Modul əlavə etmək, çıxarmaq
-və ya interfeysi dəyişmək üçün quraşdırma faylını yenidən açın; son seçiminiz işarələnmiş gəlir. Silmək üçün: Uygulamalar →
-ArthurLegal → **ArthurLegal-ı Sil** (türkcə quraşdırmada **ArthurLegal'i Kaldır**, ingiliscə **Uninstall ArthurLegal**).
+Akademisyen**) və **ArthurLegal Tapu**. İş masasındakı nişanlar Windows-dakı kimi versiya nömrəsini daşıyır (məs.
+**ArthurLegal 3.0.12**) və yeniləmə ilə təzələnir. ArthurMask seçmisinizsə, quraşdırmadan sonra arxa planda yüklənir
+(təxminən 1,2 GB); hazır olanda bildiriş gəlir və iş masasına **ArthurMask** nişanı əlavə olunur. Quraşdırma
+seçdiyiniz tətbiqi yenidən açır: yeni interfeysdə tətbiq *ArthurLegal Masası'nı aç* mesajı ilə açılır, Enter
+düyməsini basın; masa Claude Desktop-da tam ekranda, ChatGPT-də yan paneldə açılır. Hər iki tətbiqi seçmisinizsə,
+**ArthurLegal** nişanı başlanğıc səhifəsini açır; masanı oradakı **Claude Desktop-da aç** və ya **ChatGPT-də aç**
+düyməsi ilə açırsınız. Tətbiq masanı tapa bilməsə, ondan **Cmd+Q** ilə tamamilə çıxıb yenidən açın, sonra
+**ArthurLegal** nişanına klikləyib Enter düyməsini basın. Yeni söhbət açıb sualınızı birbaşa da yaza bilərsiniz.
+Claude hər hansı aləti ilk dəfə istifadə edərkən icazə soruşsa, **Always allow** seçin; ChatGPT icazə soruşsa, icazə
+verin. Modul əlavə etmək, çıxarmaq, tətbiqi və ya interfeysi dəyişmək üçün quraşdırma faylını yenidən açın; son
+seçiminiz işarələnmiş gəlir. Silmək üçün: Uygulamalar → ArthurLegal → **ArthurLegal-ı Sil** (türkcə quraşdırmada
+**ArthurLegal'i Kaldır**, ingiliscə **Uninstall ArthurLegal**).
 
 > [!IMPORTANT]
-> **ArthurLegal nişanına kliklədikdən sonra Enter düyməsini basın.** Claude Desktop mesaj qutusunda *ArthurLegal Masası'nı aç*
-> yazılmış halda açılır; masa siz **Enter** düyməsini basanda açılır. Mesaj öz-özünə göndərilmir.
+> **ArthurLegal nişanına kliklədikdən sonra Enter düyməsini basın.** Claude Desktop və ya ChatGPT mesaj qutusunda
+> *ArthurLegal Masası'nı aç* yazılmış halda açılır; masa siz **Enter** düyməsini basanda açılır. Mesaj öz-özünə
+> göndərilmir. Hər iki tətbiqi seçmisinizsə, əvvəlcə başlanğıc səhifəsindəki düyməyə klikləyin.
 
 Bu bölməni paylaşmaq üçün keçid: **https://github.com/beerbottle90/ArthurLegal/blob/main/README.az.md** (türkcə səhifə:
 **https://github.com/beerbottle90/ArthurLegal#indir**, Mac: **https://github.com/beerbottle90/ArthurLegal#mac**)
