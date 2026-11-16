@@ -1,11 +1,12 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.3.2
+# ArthurLegal Setup v3.4.0
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
 Courthouse, Akademisyen) ve araçları (ArthurLegal Tapu, ArthurMask, ArthurLegal Hafıza) seçer; seçtikleri, araştırma bağlantısıyla
-birlikte Claude Desktop'a kendiliğinden bağlanır. Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası
+birlikte seçtiği yapay zekâ uygulamasına (Claude Desktop, ChatGPT masaüstü ya da ikisi; 3.4.0) kendiliğinden bağlanır.
+Yönetici yetkisi gerekmez. Sonraki sürümler arka planda, imzası
 doğrulanarak sessizce kurulur. İki kurulum aynı paketleri, aynı modülleri ve aynı güncelleme kanalını kullanır.
 
 > Paketlerin kendisi (SYSTEM_PROMPT + knowledge) bu deponun kökündedir ve Claude.ai'de elle de
@@ -32,7 +33,7 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır; adlarında tire ve
 sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
 **ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
-(ör. "ArthurLegal 3.3.2"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
+(ör. "ArthurLegal 3.4.0"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
 ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.4.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
 kendi kısayolunun adı düzeltilir (eski "Arthur Mask" adı ve sürümsüz ad gider), içeriğine dokunulmaz.
 
@@ -40,7 +41,7 @@ Bileşenler:
 
 | Bileşen | Nerede çalışır | Ne yapar |
 |---|---|---|
-| **arthurlegal-yerel** | Claude Desktop · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 11 yargı çevresi, 100+ araç; `tkgm_` dışındakiler) köprüler. Ayrıca connector eklemeye gerek kalmaz. Kurulumda yeni arayüz seçildiyse ArthurLegal Masası'nı da sunar (`al_masasi`, `al_modul_ac`; klasik arayüzde masa ve kartlar kapalıdır, sonuçlar metin gelir). Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
+| **arthurlegal-yerel** | Claude Desktop ve/veya ChatGPT · kurulumun Python 3.12'si | Seçilen paketlerin sistem talimatını ve bilgi dosyalarını araç olarak sunar; `arthurlegal-mcp.fly.dev` araştırma araçlarını (TR + 11 yargı çevresi, 100+ araç; `tkgm_` dışındakiler) köprüler. Ayrıca connector eklemeye gerek kalmaz. Kurulumda yeni arayüz seçildiyse ArthurLegal Masası'nı da sunar (`al_masasi`, `al_modul_ac`; klasik arayüzde masa ve kartlar kapalıdır, sonuçlar metin gelir). Tek paket seçildiyse o varsayılandır; birden çoksa talimat, hangi işte hangi profilin çağrılacağını söyler |
 | **arthur-tapu** | Claude Desktop + masaüstü kısayolu | Yalnız Tapu seçildiyse. tkgm-mcp 0.6.1: TKGM Parsel Sorgu'dan canlı parsel (il/ilçe/mahalle listeden, ada/parsel ayrı kutularda) (dakikada en çok 30 istek, sohbet başına onay kartı), parsel raporu, kroki, harç, tapu kaydı maskeleme, Word/Excel çıktı, yerel tarayıcı arayüzü |
 | **arthur-mask** | Claude Desktop + kendi arayüzü | Müvekkil ya da dosya belgelerini bilgisayarda maskeleyen gizlilik kapısı. Seçildiyse kurulum sırasında indirilir (≈1 GB); seçilmediyse güncelleyici de indirmez |
 | **hafiza_ araçları** | `arthurlegal-yerel` içinde | Yalnız ArthurLegal Hafıza seçildiyse (2.6.7, `istemci/hafiza.py`). Kasa `~/ArthurLegal-Hafiza` (ayar.json → `hafiza_dizini` ile var olan bir Beyin kasası da verilebilir); düzen [Beyin](https://github.com/avenoxai/avenoxbeyin)'inkidir: `🔮 850-Companion/` (Core, Kurallar, Last-Session, Threads, Journal), `knowledge/`, `Projeler/<dosya kodu>/`. Beş araç: `hafiza_baslangic`, `hafiza_ara`, `hafiza_getir` (salt okunur), `hafiza_yaz`, `hafiza_oturum_karti` (yazar; Claude Desktop izin sorar). Yazmadan önce kişisel veri kapısı: T.C. kimlik numarası, IBAN, telefon, e-posta reddedilir. Devir kartları 3.000 karakteri aşınca eskileri `Arşiv/`'e taşınır, silinmez. Kaldırma kasayı silmez |
@@ -48,6 +49,34 @@ Bileşenler:
 
 Claude Desktop kurulu değilse Windows'ta `winget` ile kullanıcı kapsamında kurulur; Mac'te başlangıç paneli
 [claude.ai/download](https://claude.ai/download) adresini gösterir.
+
+## Yapay zekâ uygulaması: Claude Desktop, ChatGPT ya da ikisi (3.4.0)
+
+Lisanstan hemen sonraki **Yapay zekâ uygulamanızı seçin** ekranında iki kutu vardır: **Claude Desktop** ve **ChatGPT**
+(ChatGPT'nin yeni masaüstü uygulaması; Windows'ta Microsoft Store paketi `OpenAI.Codex`, eski "ChatGPT Classic" yerel
+sunucu çalıştırmaz). Bu bilgisayarda kurulu olan önden işaretli gelir, hiçbiri kurulu değilse Claude Desktop; en az biri
+gerekir. Seçim `durum.json`'a (`asistan`: `claude`, `chatgpt`, `ikisi`) ve kurulumun önceki verisine yazılır. macOS
+paketinde iki kutu Özelleştir ekranında listenin başındadır; zip kurulumu konsolda sorar. Sessiz kurulum:
+`/ASISTAN=claude|chatgpt|ikisi` (verilmezse önceki seçim, o da yoksa Claude Desktop).
+
+| Seçim | Kurulum ne yazar | Masaüstü simgesi |
+|---|---|---|
+| Claude Desktop | `claude_desktop_config.json`'a yerel sunucular (`istemci/claude_ayari.py`) | Claude Desktop'u masa mesajıyla açar (`claude://claude.ai/new?q=…`) |
+| ChatGPT | `~/.codex/config.toml`'a yerel sunucular ve `~/.codex/skills`'e kural + 11 alan becerisi (`istemci/codex_ayari.py`) | ChatGPT'yi masa mesajıyla açar (`codex://new?prompt=…`); masa ChatGPT'nin yan panelinde |
+| İkisi | İkisini de | Yalnız başlangıç panelini açar; panelde "Claude Desktop'ta aç" ve "ChatGPT'de aç" düğmeleri |
+
+- `codex_ayari.py` TOML dosyasında yalnız ArthurLegal'in tablolarını (`[mcp_servers.arthurlegal-yerel]`, `arthur-tapu`,
+  `arthur-uyap`, `arthur-mask`) yazar; öteki satırlar bayt bayt kalır, önce yedek alınır (son 5), kullanıcının
+  ChatGPT'de kapattığı sunucu kapalı kalır, bozuk dosyaya dokunulmaz. Yerel sunucu ChatGPT'de `AL_EV=chatgpt` ile
+  açılır (masa model sormaz; ChatGPT modelleri ölçülmedi). ArthurMask'in kendi kurulumu yalnız Claude Desktop'a
+  yazdığı için ChatGPT'deki `arthur-mask` girdisini bu kurulum yazar.
+- ChatGPT kurulu değilse Windows'ta Microsoft Store'dan (`winget install --id 9PLM9XGG6VKS --source msstore`) kurulmaya
+  çalışılır; olmazsa simge resmî indirme sayfasını ([chatgpt.com/download](https://chatgpt.com/download/)) açar. Mac'te
+  kurulum ChatGPT'yi kurmaz.
+- Seçim değişirse işareti kaldırılan uygulamadan ArthurLegal sunucuları (ChatGPT'de becerileri de) silinir; yalnız seçim
+  kurulumda açıkça yapıldıysa (seçim kaydı olmayan eski kurulumlarda güncelleyici elle yapılmış ayara dokunmaz).
+- Güncelleyici her sürümde ikisini de tazeler (`kur --kaydet`); ArthurMask güncellemesi seçilen uygulama(lar) açıkken
+  bekler. ChatGPT seçildiyse kurulum ChatGPT'yi de kapatır (yerel sunucu dosyaları tutmasın).
 
 ## Kurulum
 
@@ -155,7 +184,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 134 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v3.3.2         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python yayin/yayinla.py v3.4.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta

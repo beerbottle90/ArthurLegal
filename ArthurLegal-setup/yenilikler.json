@@ -1,4 +1,27 @@
 {
+ "3.4.0": {
+  "tr": [
+   "ArthurLegal artık ChatGPT masaüstü uygulamasında da çalışır: kurulumda Claude Desktop, ChatGPT ya da ikisini seçin.",
+   "ChatGPT'de masa yan panelde açılır: soru, her araç adımı ve atıfları resmî metinden teyitli cevap aynı masada.",
+   "Kural becerisi ve 11 iş alanı becerisi ChatGPT'ye kendiliğinden kurulur ve her güncellemede yenilenir.",
+   "İkisini de seçtiyseniz başlangıç sayfasındaki düğmeyle masayı istediğiniz uygulamada açın.",
+   "ChatGPT modelleriyle henüz ölçüm yapmadık; en yetenekli güncel modeli seçmenizi tavsiye ederiz, bağlayıcı değildir."
+  ],
+  "az": [
+   "ArthurLegal artıq ChatGPT masaüstü tətbiqində də işləyir: quraşdırmada Claude Desktop, ChatGPT və ya hər ikisini seçin.",
+   "ChatGPT-də masa yan paneldə açılır: sual, hər alət addımı və istinadları rəsmi mətnlə yoxlanmış cavab eyni masada.",
+   "Qayda bacarığı və 11 iş sahəsi bacarığı ChatGPT-yə avtomatik quraşdırılır və hər yeniləmədə təzələnir.",
+   "Hər ikisini seçmisinizsə, başlanğıc səhifəsindəki düymə ilə masanı istədiyiniz tətbiqdə açın.",
+   "ChatGPT modelləri ilə hələ ölçmə aparmamışıq; ən bacarıqlı cari modeli seçməyinizi tövsiyə edirik, məcburi deyil."
+  ],
+  "en": [
+   "ArthurLegal now works in the ChatGPT desktop app too: choose Claude Desktop, ChatGPT or both during setup.",
+   "In ChatGPT the desk opens in the side panel: the question, every tool step and the answer with citations checked against the official text, on one desk.",
+   "The rules skill and the 11 practice-area skills are installed in ChatGPT automatically and refreshed with every update.",
+   "If you chose both, open the desk in the app you want with the buttons on the start page.",
+   "We have not yet measured ChatGPT models; we recommend choosing the most capable current model. This is not binding."
+  ]
+ },
  "3.3.2": {
   "tr": [
    "Geçmişiniz güncellemeden sonra da yerinde: masa, uzak bağlantıdan istense bile önce bu bilgisayardaki kurulumdan açılır.",
