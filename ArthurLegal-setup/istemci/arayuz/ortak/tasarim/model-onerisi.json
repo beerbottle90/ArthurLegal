@@ -3,6 +3,9 @@
   "cumle": "Minimum Opus 5.5 · Medium / High effort tavsiye ederiz, bağlayıcı değildir.",
   "cumle_en": "We recommend at least Opus 5.5 with Medium / High effort; this is not binding.",
   "cumle_az": "Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil.",
+  "cumle_chatgpt": "ChatGPT modelleriyle henüz ölçüm yapmadık; en yetenekli güncel modeli seçmenizi tavsiye ederiz, bağlayıcı değildir.",
+  "cumle_chatgpt_en": "We have not yet measured ChatGPT models; we recommend choosing the most capable current model. This is not binding.",
+  "cumle_chatgpt_az": "ChatGPT modelləri ilə hələ ölçmə aparmamışıq; ən bacarıqlı cari modeli seçməyinizi tövsiyə edirik, məcburi deyil.",
   "onerilen": {"aile": "opus", "model": "Opus 5.5", "efor": "medium", "efor_ust": "high"},
   "asgari": {"aile": "opus", "model": "Opus 5.5", "efor": "medium"},
   "aileler": [

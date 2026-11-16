@@ -491,7 +491,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (window.__alBagli) return;
     var p = document.createElement("p");
     p.className = "aciklama";
-    p.textContent = "Masa yüklenemedi. Claude Desktop'u güncelleyip tekrar deneyin; araştırma araçları sohbette çalışmaya devam eder.";
+    p.textContent = "Masa yüklenemedi. Uygulamayı güncelleyip tekrar deneyin; araştırma araçları sohbette çalışmaya devam eder.";
     var k = document.querySelector(".onizleme");
     if (k) { k.querySelector(".iskelet").replaceWith(p); k.removeAttribute("aria-busy"); }
   }, 12000);
@@ -509,6 +509,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   /*AL:ISTEK*/
   /*AL:MD*/
   DIL.yukle(/*AL:DIL*/);
+  // ChatGPT'de adı değişince doğru olmayan metinlerin karşılıkları (EV, tasarim/al.js).
+  EV.ozel(cevN("Bağlayıcıları Claude'da Customize › Connectors ekranında bir kez kurarsınız; telefonda da çalışır. Masa sunucuları ve durumlarını gösterir, araçlarını göstermez."),
+    cevN("Uygulamaları ve MCP sunucularını ChatGPT'de Ayarlar › Plugins bölümünden (Apps ve MCPs sekmeleri) bir kez bağlarsınız. Masa sunucuları ve durumlarını gösterir, araçlarını göstermez."));
+  EV.ozel(cevN("ArthurLegal hangi Claude modeli ve effort ile en güvenilir sonucu verir, bu sohbet hangisiyle çalışıyor, nasıl değiştirilir."),
+    cevN("ArthurLegal'in model tavsiyesi ve ChatGPT'de modelin nasıl seçildiği."));
   DIL.sabitler();
 
   const { ogesi, ikon, dugme, cagir, sor, baglantiAc, kopyala, sayiEki } = AL;
@@ -516,6 +521,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const app = new App({ name: "ArthurLegal Masası", version: AL.SURUM });
   const ortam = { app, duyuru: $("duyuru") };
   const BAGLAYICILAR = "https://claude.ai/customize/connectors";
+  const BAGLAYICILAR_CHATGPT = "https://chatgpt.com/#settings/Connectors";
+  const baglayiciAdresi = () => (EV.chatgpt ? BAGLAYICILAR_CHATGPT : BAGLAYICILAR);
   const MODEL = /*AL:MODEL*/;
   // Masanın her sürümünün "Yenilikler"i, üç dilde (tasarim/yenilikler.json): uzak masada da ⓘ menüsü boş kalmaz.
   const YENILIKLER = /*AL:YENILIK*/;
@@ -1186,6 +1193,12 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (t.isletim_sistemi) satirlar.push(cev("İşletim sistemi: {0}", t.isletim_sistemi + (t.mimari ? " (" + t.mimari + ")" : "")));
     satirlar.push(cev("Dil: {0}", DIL.secili) + (Array.isArray(t.moduller) && t.moduller.length ? " · " + cev("Modüller: {0}", t.moduller.join(", ")) : ""));
     if (DURUM.model && DURUM.model.ad) satirlar.push(cev("Model: {0}", DURUM.model.ad));
+    // Ev sahibi ve görünüm: ChatGPT ile Claude arasındaki farkları tanılamak için (tam ekran verildi mi).
+    const ev = (app.getHostVersion && app.getHostVersion()) || {};
+    const bag = app.getHostContext() || {};
+    satirlar.push(cev("Ev sahibi: {0}", [EV.asistan, [ev.name, ev.version].filter(Boolean).join(" "),
+      [bag.displayMode, "[" + (bag.availableDisplayModes || []).join(", ") + "]"].filter(Boolean).join(" "), bag.platform]
+      .filter(Boolean).join(" · ")));
     if (t.son_denetim) satirlar.push(cev("Son denetim: {0}", t.son_denetim + (t.son_sonuc ? " · " + t.son_sonuc : "")));
     satirlar.push(cev("Son hatalar: {0}", Array.isArray(t.son_hatalar) && t.son_hatalar.length ? "\n  " + t.son_hatalar.join("\n  ") : cev("(yok)")));
     await kopyala(satirlar.join("\n"), dugmeEl, null, ortam.duyuru);
@@ -1793,7 +1806,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   function cevapAl(arg, tamam) {
     if (CEVAP && CEVAP.tamam) return;   // tam girdiden sonra gelen geç parça cevabı bozmasın
-    const calisma = acikCalisma();
+    const calisma = canliTakip() ? canliCalisma : acikCalisma();
     CEVAP = { ...cevapDuzenle(arg), araclar: calisma ? calisma.adimlar : [], plan: (calisma && calisma.plan) || [],
       tamam, kesildi: false, teyit: null };
     if (!CEVAP.soru && calisma) CEVAP.soru = calisma.soru;
@@ -1821,8 +1834,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function gosterilenCevap() {
     if (acikCevap) return acikCevap;
     if (CEVAP) return CEVAP;
-    if (ROL === "basla" || ROL === "adim") {   // soru masada, cevap gelmedi: çalışma sürüyor
-      const c = acikCalisma();
+    if (ROL === "basla" || ROL === "adim" || canliTakip()) {   // soru masada, cevap gelmedi: çalışma sürüyor
+      const c = canliTakip() ? (canliCalisma && !canliCalisma.bitti ? canliCalisma : null) : acikCalisma();
       if (c) return { soru: c.soru, araclar: c.adimlar, adimlar: [], kaynaklar: [], cevap: "", tamam: false,
         kesildi: false, teyit: null, calisiyor: true, plan: c.plan || [], sorular: c.sorular || [], calismaId: c.id };
     }
@@ -1906,7 +1919,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (yaziliyor) alt.append(ogesi("span", "yaziyor", cev("Claude yazıyor")));
       else {
         alt.append(ogesi("span", "zaman", c.kesildi ? cev("Cevap yarıda kesildi") :
-          ["Claude", c.zaman && AL.zaman(c.zaman)].filter(Boolean).join(" · ")));
+          [EV.asistan, c.zaman && AL.zaman(c.zaman)].filter(Boolean).join(" · ")));
         const ey = ogesi("div", "eylemler");
         const kp = dugme(cev("Kopyala"), { sinif: "kucuk", simge: "kopya" });
         kp.onclick = () => kopyala(MD.duzMetin(c.cevap), kp, govde, ortam.duyuru);
@@ -2197,7 +2210,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // Masanın durumu (ortam, yetenekler, modüller) masa pencerelerinden gelir; adım penceresi son bilineni kullanır.
   function durumuSakla() {
     try {
-      localStorage.setItem(DURUM_KAYDI, JSON.stringify({ surum: DURUM.surum, ortam: DURUM.ortam,
+      localStorage.setItem(DURUM_KAYDI, JSON.stringify({ surum: DURUM.surum, ortam: DURUM.ortam, ev: EV.ad,
         yetenekler: [...DURUM.yetenekler], moduller: DURUM.moduller, model: DURUM.model }));
     } catch { /* yok */ }
   }
@@ -2206,10 +2219,77 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const d = JSON.parse(localStorage.getItem(DURUM_KAYDI) || "null");
       if (!d) return;
       DURUM.ortam = d.ortam || DURUM.ortam;
+      if (d.ev && EV.ayarla(d.ev)) DIL.sabitler();
       if (Array.isArray(d.yetenekler)) DURUM.yetenekler = new Set(d.yetenekler);
       DURUM.moduller = d.moduller || {};
       if (d.model && typeof d.model === "object" && !DURUM.model) DURUM.model = d.model;
     } catch { /* yok */ }
+  }
+
+  // ---- ChatGPT masaüstünde tek masa (K25, 16.11.2026) ----
+  // ChatGPT arayüzlü her araç çağrısını yeni bir panel sekmesinde açar; Claude'daki "en yeni pencere masadır" düzeni
+  // orada sekme yığar. Bilgisayardaki kurulum ChatGPT'de yalnız al_masasi'ye görünüm verir ve soruyu, adımları, cevabı
+  // kendi belleğinde tutar (cevap zaten bu bilgisayardaki geçmişe yazılıyor); açık masa bunu yalnız kendisinin
+  // çağırabildiği al_masa_durumu ile yoklar. Uzak uçta (web, telefon) bu araç yoktur: orada her cevap kendi kartıdır.
+  const CANLI = "al_masa_durumu";
+  const MASA_ACILISI = Date.now();
+  let canliSurum = -1;
+  let canliCalisma = null;    // { id, soru, basla, bitti, plan, sorular, adimlar }
+  let canliCevapId = "";
+  let canliZamanlayici = 0;
+  const canliTakip = () => ROL === "masa" && DURUM.yetenekler.has(CANLI) && !DURUM.yonlendir;
+  function canliBaslat() { if (!canliZamanlayici) canliYokla(); }
+  async function canliYokla() {
+    canliZamanlayici = 0;
+    if (!canliTakip()) return;
+    try {
+      const { veri } = await cagir(app, CANLI, { surum: canliSurum });
+      if (veri && typeof veri.surum === "number" && !veri.degismedi) {
+        const ilk = canliSurum < 0;
+        canliSurum = veri.surum;
+        canliUygula(veri, ilk);
+      }
+    } catch { /* geçici hata: bir sonraki yoklamada */ }
+    canliZamanlayici = setTimeout(canliYokla, document.hidden ? 5000 : 1500);
+  }
+  function canliAdim(a) {
+    const arac = dizgi(a.arac);
+    const [durum, ozet] = a.durum === "suruyor" ? ["suruyor", ""]
+      : sonucOzeti(arac, a.hata ? { isError: true } : null, a.veri && typeof a.veri === "object" ? a.veri : null, dizgi(a.hata));
+    const adim = { id: String(a.id), arac, baslik: adimMetni(arac, a.girdi && typeof a.girdi === "object" ? a.girdi : null),
+      durum, ozet, zaman: a.zaman || Date.now() };
+    if (KARTLI[arac] && a.veri && !a.hata) adim.sonuc = a.veri;
+    return adim;
+  }
+  function canliUygula(d, ilk) {
+    const c = d.calisma;
+    const cv = d.cevap;
+    // Masa açılmadan önceki iş (aynı kurulumda önceki bir sohbet) bu masaya taşınmaz: yalnız işaretlenir.
+    if (ilk && (!c || (c.basla || 0) < MASA_ACILISI - 3000)) {
+      if (cv && cv.id) canliCevapId = cv.id;
+      if (c && c.id) canliCalisma = { id: String(c.id), soru: "", basla: c.basla || 0, bitti: 1, plan: [], sorular: [], adimlar: [] };
+      return;
+    }
+    if (c && c.id) {
+      const yeni = !canliCalisma || canliCalisma.id !== String(c.id);
+      const { plan, sorular } = planVeSorular(c);
+      canliCalisma = { id: String(c.id), soru: dizgi(c.soru).trim(), basla: c.basla || Date.now(), bitti: c.bitti || 0,
+        plan, sorular, adimlar: (Array.isArray(c.adimlar) ? c.adimlar : []).filter((a) => a && a.arac).map(canliAdim) };
+      if (yeni) {   // yeni soru: önceki cevap ekrandan kalkar
+        CEVAP = null; acikCevap = null; cevapKaydedildi = false; cevapAcildi = false;
+        DURUM.acilis = "sohbet";
+        if (masaKuruldu && aktif !== "sohbet") git("sohbet");
+      }
+    }
+    if (cv && cv.id && cv.id !== canliCevapId && cv.girdi && typeof cv.girdi === "object") {
+      canliCevapId = cv.id;
+      CEVAP = null;
+      cevapAl(cv.girdi, true);
+      if (CEVAP && typeof cv.gecmis_id === "string") CEVAP.gecmisId = cv.gecmis_id;
+      return;
+    }
+    if (CEVAP && !CEVAP.tamam && canliCalisma) CEVAP.araclar = canliCalisma.adimlar;
+    cevapYenile();
   }
 
   // Adım penceresi masa mı olur? Tam ekran bölmesindeyse ya da masada bir çalışma sürüyorsa evet; masa açılmamış
@@ -4111,7 +4191,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const eforAdi = (id) => (MODEL.eforlar.find((e) => e.id === id) || { ad: id }).ad;
   const onerilenEfor = () => [MODEL.onerilen.efor, MODEL.onerilen.efor_ust].filter(Boolean).map(eforAdi);
   const onerilenYazi = () => `minimum ${MODEL.onerilen.model} · ${onerilenEfor().join(" / ")} effort`;
-  const oneriCumlesi = () => cevVeri(MODEL.cumle) || cev("Tavsiye: {0}; bağlayıcı değildir.", onerilenYazi());
+  // ChatGPT modelleri ölçülmedi (K7, K14): orada model adı vermeyen nötr cümle durur.
+  const oneriCumlesi = () => (EV.chatgpt && MODEL.cumle_chatgpt ? cevVeri(MODEL.cumle_chatgpt)
+    : cevVeri(MODEL.cumle) || cev("Tavsiye: {0}; bağlayıcı değildir.", onerilenYazi()));
   const aileUyarisi = (aile) => (aileBilgisi(aile) || {}).uyari ||
     cev("ArthurLegal'in ölçümünde bu model sınıfı zor sorularda daha çok ağır hata yaptı");
   const modelKisaAdi = (m) => dizgi(m && m.ad).replace(/^claude[\s-]*/i, "").trim() || aileAdi(m && m.aile);
@@ -4141,9 +4223,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function modelGostergesi() {
     const el = $("model-gosterge");
     if (!el) return;
-    const m = DURUM.model;
+    const m = EV.chatgpt ? null : DURUM.model;
     const duzey = m ? m.duzey : "bilinmiyor";
-    const yazi = duzey === "bilinmiyor" ? cev("Model doğrulanmadı")
+    const yazi = EV.chatgpt ? cev("Model ve effort") : duzey === "bilinmiyor" ? cev("Model doğrulanmadı")
       : `${modelKisaAdi(m)} · ${cevVeri(MODEL_DUZEYI[duzey][0]).toLocaleLowerCase(DIL.secili)}`;
     el.className = "model-gosterge " + duzey;
     el.replaceChildren(ogesi("span", "nokta"), ogesi("span", "yazi", yazi));
@@ -4152,6 +4234,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   }
 
   function modelCumlesi(m) {
+    if (EV.chatgpt) return oneriCumlesi();
     if (!m || m.duzey === "bilinmiyor") {
       return cev("{0} Claude bu sohbetteki modelini masaya henüz bildirmedi.", oneriCumlesi());
     }
@@ -4275,6 +4358,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const oneri = ogesi("div", "kesit");
     oneri.append(ogesi("h3", null, cev("Tavsiyemiz")), ogesi("p", "oneri-cumlesi", oneriCumlesi()),
       ogesi("p", "zaman", cev("Bu bir tavsiyedir: ArthurLegal her modelle çalışır, hiçbir işi model yüzünden durdurmaz. Seçim sizindir.")));
+    // ChatGPT: ölçüm tabloları Claude içindir; yalnız nötr tavsiye ve seçimin nerede yapıldığı.
+    if (EV.chatgpt) {
+      ekran.append(oneri, bilgi(cev("ChatGPT'de modeli ve düşünme düzeyini yazma kutusundaki model menüsünden seçersiniz. ArthurLegal'in model ve effort ölçümleri şimdiye kadar yalnız Anthropic modelleriyle yapıldı; ChatGPT modelleri henüz ölçülmedi.")));
+      return;
+    }
 
     const bu = ogesi("div", "kesit");
     bu.append(ogesi("h3", null, cev("Bu sohbet")));
@@ -4384,14 +4472,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   function baglaDugmesi(ad) {
     const b = dugme(cev("Bağla"), { sinif: "kucuk", simge: "bag", baslik: cev("{0} bağla", ad) });
-    b.onclick = () => baglantiAc(app, BAGLAYICILAR, ortam.duyuru);
+    b.onclick = () => baglantiAc(app, baglayiciAdresi(), ortam.duyuru);
     return b;
   }
 
   CIZIM.mcp = (ekran) => {
     const ust = ogesi("div", "satir");
     const yonet = dugme(cev("Bağlayıcıları yönet"), { sinif: "birincil", simge: "dis" });
-    yonet.onclick = () => baglantiAc(app, BAGLAYICILAR, ortam.duyuru);
+    yonet.onclick = () => baglantiAc(app, baglayiciAdresi(), ortam.duyuru);
     const yenile = dugme(cev("Durumu yenile"), { simge: "yenile" });
     ust.append(yonet, yenile);
 
@@ -4621,6 +4709,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (masaVerisi) {
       DURUM.surum = veri.surum || DURUM.surum;
       DURUM.ortam = veri.ortam || DURUM.ortam;
+      // Sunucu ev sahibini biliyor (ChatGPT için ayrı profil ya da kurulumun ayarı): adlar ve ekranlar ona göre kurulur.
+      if (typeof veri.ev === "string" && EV.ayarla(veri.ev)) { DIL.sabitler(); masaKuruldu = false; }
       if (Array.isArray(veri.yetenekler)) DURUM.yetenekler = new Set(veri.yetenekler);
       DURUM.moduller = veri.moduller || {};
       if (veri.bolum && EKRANLAR.some((e) => e.id === veri.bolum)) DURUM.acilis = veri.bolum;
@@ -4660,6 +4750,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     cevapKaydet();   // teslim: geçmiş, sunucunun bildirdiği yerde (bu bilgisayar ya da oturum) tutulur
     if (ROL === "masa") modelPenceresi();
     ustSeritBaslat();
+    if (canliTakip()) canliBaslat();
   };
   app.addEventListener("hostcontextchanged", (d) => {
     AL.tema.baglamdan(d);
@@ -4669,6 +4760,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   await app.connect();
   window.__alBagli = true;
   const ilkBaglam = app.getHostContext() || {};
+  // Sunucu cevabından önce ev sahibinin kendini tanıtması: ChatGPT'de adlar baştan doğru çizilir.
+  const evTahmini = EV.tani(app.getHostVersion && app.getHostVersion(), ilkBaglam);
+  if (evTahmini && EV.ayarla(evTahmini)) DIL.sabitler();
   AL.tema.baglamdan(ilkBaglam);
   rolBelirle(null);
   if (ROL !== "masa") durumuYukle();   // adım, soru ve cevap pencereleri son bilinen masa durumuyla başlar; sonuç gelince güncellenir

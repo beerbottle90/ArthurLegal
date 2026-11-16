@@ -61,7 +61,31 @@ MASA_URI = "ui://arthurlegal/masa.html"
 # Claude Desktop'ın tam ekran bölmesi her zaman en son açılan görünümü gösterir. Bir aracın kendi kartı olsaydı masanın
 # yerine geçerdi; bu yüzden bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer.
 # Masanın kendi çağırdığı iç araçlar görünüm açmaz.
-GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme"})
+GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme", "al_masa_durumu"})
+
+# Ev sahibi (16.11.2026, K3/K25). ChatGPT arayüzlü her araç çağrısını yeni bir sekmede (masaüstü) ya da yeni bir kartta
+# (web) açar; OpenAI de görünümün yalnız onu gösterecek araca bağlanmasını ister. Bu yüzden:
+#   claude            bugünkü düzen: her araç masayı açar (en yeni pencere masadır).
+#   chatgpt-masaustu  yalnız al_masasi; soru, adımlar ve cevap kurulumun belleğinden (CanliMasa) al_masa_durumu ile gelir.
+#   chatgpt-web       al_masasi ve al_masaya_yaz: her cevap sohbette kendi masa kartıdır, sunucu hiçbir şey tutmaz (K15).
+EV_CLAUDE = "claude"
+CHATGPT_MASAUSTU = "chatgpt-masaustu"
+CHATGPT_WEB = "chatgpt-web"
+EVLER = (EV_CLAUDE, CHATGPT_MASAUSTU, CHATGPT_WEB)
+
+
+def ev_chatgpt(ev: Optional[str]) -> bool:
+    return ev in (CHATGPT_MASAUSTU, CHATGPT_WEB)
+
+
+def ev_tani(istemci: Any) -> Optional[str]:
+    """MCP initialize'daki clientInfo.name'den ev sahibi: ChatGPT/Codex "chatgpt", Claude "claude", bilinmiyorsa None."""
+    ad = str((istemci or {}).get("name") or "") if isinstance(istemci, dict) else str(istemci or "")
+    if re.search(r"codex|openai|chatgpt", ad, re.I):
+        return "chatgpt"
+    if re.search(r"claude|anthropic", ad, re.I):
+        return "claude"
+    return None
 # Eski kartlar: Claude dizini profili (talimatsız, masasız) yalnız bu iki aracı kartla gösterir.
 KART_GORUNUMU = {
     "tr_mevzuat_madde_getir": "ui://arthurlegal/madde-karti.html",
@@ -132,6 +156,8 @@ def veri_anahtarlari() -> List[str]:
     """Kodda işaretli olmayan ama ekrana yazılan veri metinleri: model önerisi dosyasındaki açıklamalar."""
     o = model_onerisi()
     out: Dict[str, None] = {o["cumle"]: None}
+    if o.get("cumle_chatgpt"):   # ChatGPT yüzeylerindeki nötr cümle (K14)
+        out.setdefault(o["cumle_chatgpt"], None)
     for a in o["aileler"]:
         if a.get("uyari"):
             out.setdefault(a["uyari"], None)
@@ -219,12 +245,17 @@ def gorunum(sablon: str) -> str:
     return birlesik.replace(_DIL_YERI, json.dumps(gomulen, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
 
 
-def kaynaklar() -> List[Dict[str, Any]]:
-    """Her görünüm: uri, ad, mimeType, açıklama, _meta ve birleşmiş HTML (text)."""
+def kaynaklar(alan: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Her görünüm: uri, ad, mimeType, açıklama, _meta ve birleşmiş HTML (text).
+
+    alan: görünümün kendine ait kökeni (MCP Apps ui.domain). OpenAI dizini ister (ChatGPT web); verilmezse yazılmaz."""
+    meta = META
+    if alan:
+        meta = {"ui": dict(META["ui"], domain=alan)}
     out = []
     for uri, (sablon, ad, aciklama) in GORUNUMLER.items():
         out.append({"uri": uri, "name": ad, "mimeType": MIME, "description": aciklama,
-                    "_meta": META, "text": gorunum(sablon)})
+                    "_meta": meta, "text": gorunum(sablon)})
     return out
 
 
@@ -233,9 +264,13 @@ def _meta(uri: str) -> Dict[str, Any]:
     return {"ui": {"resourceUri": uri}, "ui/resourceUri": uri}
 
 
-def arac_meta(arac: str) -> Optional[Dict[str, Any]]:
-    """Masanın iç araçları dışında her araç masayı açar."""
+def arac_meta(arac: str, ev: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    """Claude'da masanın iç araçları dışında her araç masayı açar; ChatGPT'de yalnız masa (ve web'de teslim) açar."""
     if not arac or arac in GORUNUMSUZ:
+        return None
+    if ev == CHATGPT_MASAUSTU and arac != "al_masasi":
+        return None
+    if ev == CHATGPT_WEB and arac not in ("al_masasi", "al_masaya_yaz"):
         return None
     return _meta(MASA_URI)
 
@@ -383,8 +418,9 @@ def model_kurali() -> str:
 
 
 def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
-    """ortam: "masaustu" (yerel AL sunucusu), "uzak" (arthurlegal-mcp) ya da "dizin" (Claude dizini profili: teslim
-    aracı yok, yönlendirme yok). Verilmezse ortam notu eklenmez."""
+    """ortam: "masaustu" (yerel AL sunucusu), "uzak" (arthurlegal-mcp), "dizin" (Claude dizini profili: teslim
+    aracı yok, yönlendirme yok) ya da "openai" (OpenAI dizini profili: teslim var, yönlendirme ve model alanı yok;
+    ChatGPT modelleri ölçülmedi, K7). Verilmezse ortam notu eklenmez."""
     teslim = "" if ortam == "dizin" else (
         " Masa açıldıktan sonra bu sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz.")
     tanim = _masa_tanimi(ortam, teslim)
@@ -405,11 +441,12 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
 
 def _masa_tanimi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
     tanim = _masa_govdesi(ortam, teslim)
-    if ortam != "dizin":   # Claude dizini profili başvurudaki tanımla aynı kalır: model alanı ve cümlesi yok
+    if ortam not in ("dizin", "openai"):   # dizin profilleri: model alanı ve cümlesi yok
         tanim["description"] = tanim["description"].replace(
             _BAGLAYICI_CUMLESI, _BAGLAYICI_CUMLESI + " model'e kendi model adınızı yazın: masa bunu da yalnız sizden "
                                                      "öğrenebilir.", 1)
         tanim["inputSchema"]["properties"]["model"] = dict(MODEL_GIRDISI)
+    if ortam != "dizin":   # Claude dizini profili başvurudaki tanımla aynı kalır
         tanim["inputSchema"]["properties"]["dil"] = dict(DIL_GIRDISI)
     return tanim
 
@@ -439,7 +476,7 @@ def _masa_govdesi(ortam: Optional[str], teslim: str) -> Dict[str, Any]:
                 "baglayicilar": {
                     "type": "array", "maxItems": BAGLAYICI_AZAMI,
                     "description": (
-                        "Bu sohbette erişebildiğiniz MCP sunucuları ve Claude bağlayıcıları (Gmail, Google Calendar, "
+                        "Bu sohbette erişebildiğiniz MCP sunucuları ve bağlı uygulamalar (Gmail, Google Calendar, "
                         "Slack, Notion, arthurlegal-yerel, arthur-mask ...): her sunucu bir kez, araç adı değil sunucunun "
                         "adı. Giriş isteyen ya da "
                         "hata veren sunucuyu o durumla yazın. Bilmiyorsanız boş liste verin, uydurmayın."),
@@ -492,7 +529,7 @@ TESLIM_KURALI = (
 
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
                 bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False,
-                model: Any = None, dil: Any = None) -> Dict[str, Any]:
+                model: Any = None, dil: Any = None, ev: Optional[str] = None) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
@@ -505,6 +542,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         ölçümde yetersiz kalan modelde not Claude'a kullanıcıyı bir kez uyarmasını söyler. Verilmediyse alan yok.
     dil: masanın açılacağı dil ("tr", "az", "en"): Claude'un bildirdiği ya da kurulumun dili. Bilinmeyen değer
         yok sayılır; kullanıcı bu sohbette masadan dil seçtiyse masa onu kullanır.
+    ev: ev sahibi (EVLER). ChatGPT'deyse cevap "ev": "chatgpt" taşır: masa adları ve ekranları ona göre kurar; Claude
+        modellerine göre yazılmış model notu eklenmez (ChatGPT modelleri ölçülmedi, K7).
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
@@ -513,6 +552,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         "moduller": moduller,
         "not": "Masa açıldı. Kullanıcı masada çalışırken yaptığı işi size ArthurLegal Masası notlarıyla bildirir.",
     }
+    if ev_chatgpt(ev):
+        out["ev"] = "chatgpt"
     # Teslim aracı olmayan uçta (Claude dizini profili) kural söylenmez; cevap sohbette kalır.
     if "al_masaya_yaz" in out["yetenekler"]:
         out["not"] = "Masa açıldı. " + TESLIM_KURALI + out["not"][len("Masa açıldı."):]
@@ -527,7 +568,7 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         out["dil"] = dil_gecerli(dil)
     if model is not None:
         out["model"] = model_degerlendir(model)
-        if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, Claude'a talimat yok
+        if "al_masaya_yaz" in out["yetenekler"] and not ev_chatgpt(ev):   # dizin profili: gösterge var, talimat yok
             out["not"] += model_notu(out["model"])
     if ortam == "uzak":
         yerel = yerel_durumu(baglayicilar)
@@ -565,7 +606,7 @@ def _baslangic_tanimi() -> Dict[str, Any]:
         "title": "Soruyu ArthurLegal Masası'na yaz",
         "description": (
             "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının her yeni sorusunda İLK iş "
-            "bunu çağırın: masa soruyu ve 'Claude çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
+            "bunu çağırın: masa soruyu ve 'çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
             "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. "
             "Birden çok adımlı işte plan'ı yazın (masada planlanan adımlar olarak görünür). Cevabı değiştiren bir olgu "
             "belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) araştırmadan ÖNCE sorular ile en çok "
@@ -725,6 +766,122 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional[
                   "madde atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa "
                   "notuyla bildirir.")
     return out
+
+
+# --------------------------------------------------------------------------- ChatGPT masaüstünde tek masa (K25)
+# ChatGPT'de arayüzü yalnız al_masasi taşır (arac_meta, CHATGPT_MASAUSTU). Açık masa soruyu, araştırma adımlarını ve
+# cevabı göremez; bilgisayardaki kurulum bunları bu süreçte bellekte tutar, masa al_masa_durumu ile yoklar. Hiçbiri
+# diske yazılmaz (cevap zaten teslim anında yerel geçmişe yazılıyor) ve hiçbir sunucuya gitmez. Uzak uç bunu kullanmaz.
+class CanliMasa:
+    ADIM_AZAMI = 40
+    SONUC_SINIRI = 30000   # karakter: kartlı adımın sonucu bundan büyükse masaya gitmez, satır özetsiz kalır
+
+    def __init__(self) -> None:
+        self._kilit = threading.Lock()
+        self._surum = 0
+        self._sayac = 0
+        self._calisma: Optional[Dict[str, Any]] = None
+        self._cevap: Optional[Dict[str, Any]] = None
+
+    @staticmethod
+    def _simdi() -> int:
+        return int(datetime.now().timestamp() * 1000)
+
+    @staticmethod
+    def _girdi_ozeti(girdi: Any) -> Dict[str, Any]:
+        out: Dict[str, Any] = {}
+        for k, v in (girdi.items() if isinstance(girdi, dict) else []):
+            if isinstance(v, str) and v.strip():
+                out[k] = _kisalt(v, 200)
+            elif isinstance(v, (int, float)) and not isinstance(v, bool):
+                out[k] = v
+            if len(out) >= 8:
+                break
+        return out
+
+    def _yeni_calisma(self, soru: str = "", plan: Any = None, sorular: Any = None) -> Dict[str, Any]:
+        self._sayac += 1
+        return {"id": "%x-%d" % (self._simdi(), self._sayac), "soru": soru, "plan": plan or [], "sorular": sorular or [],
+                "basla": self._simdi(), "bitti": 0, "adimlar": []}
+
+    def basla(self, girdi: Dict[str, Any]) -> None:
+        plan, sorular = plan_ve_sorular(girdi or {})
+        soru = _kisalt((girdi or {}).get("soru"), 200)
+        with self._kilit:
+            c = self._calisma
+            # Netleştirme sorusundan sonra aynı soru yeniden başlatılırsa (kullanıcı seçimi geldi) aynı çalışma sürer.
+            if c and not c["bitti"] and c["soru"] == soru and soru:
+                c.update(plan=plan, sorular=sorular)
+            else:
+                self._calisma = self._yeni_calisma(soru, plan, sorular)
+            self._cevap = None
+            self._surum += 1
+
+    def adim_basladi(self, arac: str, girdi: Any) -> str:
+        """Açık bir soru varken adımı yazar ve kimliğini döndürür; yoksa "" (yazılmaz). Masanın kendi çağrıları
+        (atıf teyidi, arama ekranı) cevaptan sonra gelir: yeni çalışma açıp cevabı ekrandan kaldırmamalı."""
+        with self._kilit:
+            if self._calisma is None or self._calisma["bitti"]:
+                return ""
+            self._sayac += 1
+            kimlik = "a%d" % self._sayac
+            adimlar = self._calisma["adimlar"]
+            if len(adimlar) < self.ADIM_AZAMI:
+                adimlar.append({"id": kimlik, "arac": arac, "girdi": self._girdi_ozeti(girdi), "durum": "suruyor",
+                                "zaman": self._simdi()})
+            self._surum += 1
+            return kimlik
+
+    def adim_bitti(self, kimlik: str, veri: Any = None, hata: Optional[str] = None) -> None:
+        with self._kilit:
+            if self._calisma is None:
+                return
+            for a in self._calisma["adimlar"]:
+                if a["id"] == kimlik:
+                    a["durum"] = "hata" if hata else "bitti"
+                    if hata:
+                        a["hata"] = _kisalt(hata, 200)
+                    elif isinstance(veri, dict):
+                        try:
+                            if len(json.dumps(veri, ensure_ascii=False)) <= self.SONUC_SINIRI:
+                                a["veri"] = veri
+                        except (TypeError, ValueError):
+                            pass
+                    self._surum += 1
+                    return
+
+    def teslim(self, girdi: Dict[str, Any], gecmis_id: Optional[str] = None) -> None:
+        g = girdi or {}
+        with self._kilit:
+            if self._calisma is None:
+                self._calisma = self._yeni_calisma(_kisalt(g.get("soru"), 200))
+            self._calisma["bitti"] = self._simdi()
+            self._sayac += 1
+            self._cevap = {"id": "c%d" % self._sayac, "gecmis_id": gecmis_id,
+                           "girdi": {k: g.get(k) for k in ("soru", "adimlar", "cevap", "kaynaklar") if g.get(k) is not None}}
+            self._surum += 1
+
+    def durum(self, girdi: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        bilinen = (girdi or {}).get("surum")
+        with self._kilit:
+            if isinstance(bilinen, int) and bilinen == self._surum:
+                return {"surum": self._surum, "degismedi": True}
+            return {"surum": self._surum, "calisma": json.loads(json.dumps(self._calisma)) if self._calisma else None,
+                    "cevap": json.loads(json.dumps(self._cevap)) if self._cevap else None}
+
+
+def canli_araci() -> Dict[str, Any]:
+    """al_masa_durumu: yalnız masa çağırır (MCP Apps görünürlüğü "app"); model listesinde görünmemelidir."""
+    return {
+        "name": "al_masa_durumu",
+        "title": "ArthurLegal Masası durumu",
+        "description": ("Yalnız ArthurLegal Masası kendisi çağırır: ChatGPT masaüstünde açık masa soruyu, araştırma "
+                        "adımlarını ve cevabı bununla gösterir. Siz çağırmayın."),
+        "inputSchema": {"type": "object", "properties": {
+            "surum": {"type": "integer", "description": "Masanın bildiği son durum sürümü; aynıysa yalnız sürüm döner."}}},
+        "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False},
+        "_meta": {"ui": {"visibility": ["app"]}},
+    }
 
 
 # --------------------------------------------------------------------------- masa geçmişi

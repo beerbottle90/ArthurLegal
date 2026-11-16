@@ -402,7 +402,7 @@ def yerel_araclar(profiller, varsayilan):
          "inputSchema": {"type": "object", "properties": {}}},
     ]
     for a in araclar:
-        a["annotations"] = {"readOnlyHint": True, "openWorldHint": False}
+        a["annotations"] = {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False}
     # Hafıza araçları kendi işaretleriyle gelir: yazanlar salt okunur değildir, Claude Desktop izin sorar.
     return araclar + (hafiza.araclar() if ortak.hafiza_acik() else [])
 
@@ -417,10 +417,50 @@ def salt_okunur_isaretle(araclar):
         isaret = dict(arac.get("annotations") or {})
         if "readOnlyHint" not in isaret and not isaret.get("destructiveHint"):
             isaret["readOnlyHint"] = True
-            isaret.setdefault("openWorldHint", True)
+        # Üç işaret her araçta açıkça yazılır (OpenAI dizin kuralı): araştırma araçları resmî kaynaklara, yani açık
+        # dünyaya gider; uzak sunucunun açıkça koyduğu değere dokunulmaz.
+        isaret.setdefault("readOnlyHint", False)   # yıkıcı işaretli araç salt okunur değildir
+        isaret.setdefault("destructiveHint", False)
+        isaret.setdefault("openWorldHint", True)
         arac["annotations"] = isaret
         sonuc.append(arac)
     return sonuc
+
+
+def isaretleri_tamamla(araclar):
+    """Bu bilgisayardaki araçlar: eksik işaret temkinli değerle yazılır (salt okunur sayılmaz, yıkıcı değil, dışarı
+    çıkmaz). Açıkça konmuş işarete dokunulmaz; sözlükler kopyalanır."""
+    sonuc = []
+    for arac in araclar or []:
+        isaret = {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False, **(arac.get("annotations") or {})}
+        sonuc.append({**arac, "annotations": isaret})
+    return sonuc
+
+
+# ChatGPT (16.11.2026, K25). Kurulumun ChatGPT ayarı AL_EV=chatgpt yazar; yazmasa da ChatGPT/Codex kendini initialize'da
+# tanıtır. ChatGPT'de görünümü yalnız al_masasi taşır, soru/adımlar/cevap bu süreçte bellekte tutulur (al_arayuz.CanliMasa).
+def ev_ayari():
+    return "chatgpt" if str(os.environ.get("AL_EV") or "").strip().lower() == "chatgpt" else None
+
+
+def sonuc_verisi(sonuc):
+    """Araç sonucunun JSON verisi (yapılandırılmış ya da metin bloğundaki), adım özeti için; yoksa None."""
+    if not isinstance(sonuc, dict) or sonuc.get("isError"):
+        return None
+    if isinstance(sonuc.get("structuredContent"), dict):
+        return sonuc["structuredContent"]
+    metin = "".join(b.get("text", "") for b in sonuc.get("content") or [] if isinstance(b, dict) and b.get("type") == "text")
+    try:
+        veri = json.loads(metin)
+    except ValueError:
+        return None
+    return veri if isinstance(veri, dict) else None
+
+
+def sonuc_hatasi(sonuc):
+    if isinstance(sonuc, dict) and sonuc.get("isError"):
+        return "".join(b.get("text", "") for b in sonuc.get("content") or [] if isinstance(b, dict))[:200] or "hata"
+    return None
 
 
 # ---------------------------------------------------------------------------- AL Masası
@@ -435,13 +475,23 @@ MASA_UZAK = ("tr_mevzuat_madde_getir", "tr_mevzuat_ara", "tr_mevzuat_icindekiler
 MODUL_KOMUTU = {"tapu": "tapu", "uyap": "uyap-ekran", "mask": "mask"}
 
 
-def masa_araclari():
+def gorunum_ev(ev):
+    """al_arayuz.arac_meta'ya verilecek ev değeri: ChatGPT'de masaüstü düzeni; eski arayüz kopyasında hiç verilmez."""
+    return getattr(al_arayuz, "CHATGPT_MASAUSTU", None) if ev == "chatgpt" else None
+
+
+def _arac_meta(ad, ev=None):
+    gev = gorunum_ev(ev)
+    return al_arayuz.arac_meta(ad, gev) if gev else al_arayuz.arac_meta(ad)
+
+
+def masa_araclari(ev=None):
     """al_masasi (masayı açar) ve al_modul_ac (yerel modül penceresi). Arayüz klasörü yoksa yok."""
     if al_arayuz is None:
         return []
     # Açıklama bunun bilgisayardaki masa olduğunu söyler: aynı sohbette uzak arthurlegal-mcp de varsa Claude bunu seçer.
     masa = dict(al_arayuz.masa_araci("masaustu") if hasattr(al_arayuz, "MASA_ORTAM_NOTU") else al_arayuz.masa_araci())
-    masa["_meta"] = al_arayuz.arac_meta("al_masasi")
+    masa["_meta"] = _arac_meta("al_masasi", ev)
     ac = {"name": "al_modul_ac", "title": "ArthurLegal modülünü aç",
           "description": "Bu bilgisayarda kurulu bir ArthurLegal modülünün penceresini açar: tapu (Tapu arayüzü), "
                          "uyap (UYAP Dashboard), mask (ArthurMask). Masadaki düğmeler kullanır.",
@@ -453,13 +503,20 @@ def masa_araclari():
     # Eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "teslim_araci"):
         teslim = dict(al_arayuz.teslim_araci())
-        teslim["_meta"] = al_arayuz.arac_meta("al_masaya_yaz")
+        meta = _arac_meta("al_masaya_yaz", ev)
+        if meta:
+            teslim["_meta"] = meta
         araclar.insert(1, teslim)
         # Soru araştırmadan önce masada (al_masada_basla); araçların adımları ve cevap ona eklenir.
         if hasattr(al_arayuz, "baslangic_araci"):
             basla = dict(al_arayuz.baslangic_araci())
-            basla["_meta"] = al_arayuz.arac_meta("al_masada_basla")
+            meta = _arac_meta("al_masada_basla", ev)
+            if meta:
+                basla["_meta"] = meta
             araclar.insert(1, basla)
+    # ChatGPT'de açık masa soruyu, adımları ve cevabı bu araçla yoklar (yalnız masa çağırır).
+    if ev == "chatgpt" and hasattr(al_arayuz, "canli_araci"):
+        araclar.append(al_arayuz.canli_araci())
     # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "gecmis_araci"):
         araclar.append(al_arayuz.gecmis_araci())
@@ -561,15 +618,21 @@ def dogrulama_kaydi_yaz(a):
     return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
 
-def gorunum_meta(araclar):
-    """Araçlara _meta.ui.resourceUri (al_arayuz.arac_meta): bütün araçlar masayı açar, çünkü Claude'un tam ekran
+def gorunum_meta(araclar, ev=None):
+    """Araçlara _meta.ui.resourceUri (al_arayuz.arac_meta): Claude'da bütün araçlar masayı açar, çünkü tam ekran
     bölmesi en son açılan görünümü gösterir ve kendi kartı olan araç masanın yerine geçerdi. Masa açıksa çağrı
-    masada canlı adım olur; açık değilse aynı görünüm madde ve içtihatta kartı, ötekilerde tek satırı çizer."""
+    masada canlı adım olur; açık değilse aynı görünüm madde ve içtihatta kartı, ötekilerde tek satırı çizer.
+    ChatGPT'de (ev="chatgpt") araştırma araçları görünüm açmaz: adım masaya bu süreçten gelir."""
     if al_arayuz is None:
         return araclar
     sonuc = []
     for arac in araclar:
-        meta = al_arayuz.arac_meta(arac.get("name", ""))
+        meta = _arac_meta(arac.get("name", ""), ev)
+        if ev == "chatgpt" and not meta:   # köprülenen araçta uzak ucun görünüm işareti de kalkar
+            kalan = {k: v for k, v in (arac.get("_meta") or {}).items() if k not in ("ui", "ui/resourceUri")}
+            arac = {k: v for k, v in arac.items() if k != "_meta"}
+            if kalan:
+                arac["_meta"] = kalan
         sonuc.append({**arac, "_meta": {**(arac.get("_meta") or {}), **meta}} if meta else arac)
     return sonuc
 
@@ -643,6 +706,8 @@ class Sunucu:
         self.uzak_araclar = None if onbellek is None else salt_okunur_isaretle(onbellek)
         self.uzak_hata, self.baslatildi = None, False
         self._gorunum_onbellek = None
+        self.ev = ev_ayari()   # "chatgpt" ya da None (Claude); initialize'daki clientInfo da belirler
+        self.canli = al_arayuz.CanliMasa() if al_arayuz is not None and hasattr(al_arayuz, "CanliMasa") else None
         self._yaz_kilit, self._yenile_kilit = threading.Lock(), threading.Lock()
         self.havuz = concurrent.futures.ThreadPoolExecutor(8)
 
@@ -695,21 +760,26 @@ class Sunucu:
             yetenek = {"tools": {"listChanged": True}, "prompts": {"listChanged": False}}
             if al_arayuz is not None:
                 yetenek["resources"] = {"listChanged": False}
+            if self.ev is None and al_arayuz is not None and hasattr(al_arayuz, "ev_tani"):
+                self.ev = "chatgpt" if al_arayuz.ev_tani(p.get("clientInfo")) == "chatgpt" else None
+            # Model kuralı Claude'un ölçümüne dayanır; ChatGPT modelleri ölçülmedi (K7): orada yazılmaz.
+            model = "" if self.ev == "chatgpt" else (" " + MODEL_KURALI if MODEL_KURALI else "")
             return {"protocolVersion": istenen if istenen in PROTOKOLLER else PROTOKOLLER[0],
                     "capabilities": yetenek,
                     "serverInfo": {"name": "arthurlegal-yerel", "version": ortak.surum()},
                     "instructions": TALIMAT + (MASA_TALIMATI + (" " + al_arayuz.TESLIM_KURALI if hasattr(al_arayuz, "TESLIM_KURALI") else "")
                                                if al_arayuz is not None else "")
                                     + (HAFIZA_TALIMATI if ortak.hafiza_acik() else "")
-                                    + (" " + MODEL_KURALI if MODEL_KURALI else "")}
+                                    + model}
         if metod == "ping":
             return {}
         if metod == "tools/list":
             if self.uzak_araclar is None:
                 self._uzak_yenile(zaman_asimi=True)
             profiller = self.bilgi.profiller()
-            return {"tools": gorunum_meta(yerel_araclar(profiller, self.bilgi.varsayilan(profiller))) + masa_araclari()
-                    + gorunum_meta(kopru_araclari(self.uzak_araclar))}
+            return {"tools": isaretleri_tamamla(
+                gorunum_meta(yerel_araclar(profiller, self.bilgi.varsayilan(profiller)), self.ev) + masa_araclari(self.ev))
+                    + gorunum_meta(kopru_araclari(self.uzak_araclar), self.ev)}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
@@ -760,6 +830,9 @@ class Sunucu:
         if hasattr(al_arayuz, "dil_araci"):
             yetenekler.append("al_dil")
         yetenekler.append("al_guncelleme")
+        if self.ev == "chatgpt" and self.canli is not None:
+            yetenekler.append("al_masa_durumu")
+            ek["ev"] = al_arayuz.CHATGPT_MASAUSTU
         return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"), **ek)
 
     def _masa(self, a):
@@ -803,6 +876,32 @@ class Sunucu:
                 "structuredContent": {"mesaj": mesaj[modul]}}
 
     def _arac(self, ad, a):
+        """ChatGPT'de (K25) açık masa soruyu, adımları ve cevabı bu süreçten okur: her çağrı canlı masaya işlenir.
+        Claude'da hiçbir şey tutulmaz (her araç kendi penceresinde masayı açar)."""
+        canli = self.canli if self.ev == "chatgpt" else None
+        if canli is None:
+            return self._arac_calistir(ad, a)
+        if ad == "al_masa_durumu":
+            veri = canli.durum(a)
+            return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+        kimlik = None if ad.startswith("al_") else canli.adim_basladi(ad, a)
+        try:
+            sonuc = self._arac_calistir(ad, a)
+        except Exception as e:
+            if kimlik:
+                canli.adim_bitti(kimlik, hata=str(e) or "hata")
+            raise
+        if kimlik:
+            canli.adim_bitti(kimlik, sonuc_verisi(sonuc), sonuc_hatasi(sonuc))
+        elif not (isinstance(sonuc, dict) and sonuc.get("isError")):
+            if ad == "al_masada_basla":
+                canli.basla(a)
+            elif ad == "al_masaya_yaz":
+                teslim = (sonuc.get("structuredContent") or {}).get("teslim") or {}
+                canli.teslim(a, teslim.get("gecmis_id"))
+        return sonuc
+
+    def _arac_calistir(self, ad, a):
         if al_arayuz is not None and ad == "al_masasi":
             return self._masa(a)
         if al_arayuz is not None and ad == "al_modul_ac":
