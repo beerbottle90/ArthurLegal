@@ -27,6 +27,10 @@
   <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><b>İstifadəçi bələdçisi (PDF, 10 səhifə)</b></a><br>
   ArthurLegal nədir, quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə.
 </p>
+<p align="center">
+  <b>ChatGPT dəstəyi hazırlanır.</b> ArthurLegal Masası, araşdırma alətləri və iş axınları OpenAI-ın ChatGPT-si üçün də uyğunlaşdırılır və ChatGPT masaüstü tətbiqində sınaqdan keçirilib. Quraşdırmada ChatGPT seçimi hazır olanda burada elan ediləcək; bu gün ArthurLegal Claude ilə işləyir.<br>
+  <sub>ChatGPT və OpenAI OpenAI-ın əmtəə nişanlarıdır.</sub>
+</p>
 
 <h2 id="kurulum-az">Azərbaycan dilində: yükləmə və quraşdırma</h2>
 
