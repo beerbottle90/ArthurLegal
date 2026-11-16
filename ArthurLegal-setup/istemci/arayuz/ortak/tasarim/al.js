@@ -38,8 +38,9 @@ const DIL = (() => {
   function sabitler() {
     document.querySelectorAll("[data-cev]").forEach((el) => {
       if (!el.dataset.cev) el.dataset.cev = el.textContent;
-      const k = karsilik(el.dataset.cev);
-      el.textContent = k == null ? el.dataset.cev : k;
+      const a = EV.anahtar(el.dataset.cev);
+      const k = karsilik(a);
+      el.textContent = EV.uyarla(k == null ? a : k, secili);
     });
   }
   // Tarih ve saat seçili dilin alışkanlığıyla yazılır. Tutarlar (TL) Türkçe biçimde kalır: resmî metindeki yazım.
@@ -47,13 +48,55 @@ const DIL = (() => {
   return { DILLER, gecerli, kayitli, sec, karsilik, sabitler, yerel: () => YEREL[secili], veriMi: (x) => veri.has(x),
     yukle: (s) => { sozluk = s || {}; veri = new Set(sozluk._veri || []); }, get secili() { return secili; } };
 })();
+// Ev sahibi: masa Claude'da ve ChatGPT'de aynı kaynaktan çalışır (16.11.2026, K3). Metinler Claude adıyla yazılır;
+// ChatGPT'de ad ekiyle birlikte değişir (Türkçe "Claude'a" → "ChatGPT'ye", Azerbaycanca "Claude-a" → "ChatGPT-yə").
+// Adın değişmesiyle doğru olmayan metnin (menü yolu, bağlantı) ChatGPT karşılığı ayrıca kayıtlıdır: EV.ozel(claude, chatgpt),
+// ikisi de cevN ile işaretlenir ki sözlük üç dilde gömülsün. Ev sahibi sunucunun cevabından (ev) ya da ev sahibinin
+// kendini tanıtmasından (hostInfo, window.openai) öğrenilir; bilinmiyorsa Claude varsayılır.
+const EV = (() => {
+  let ad = "claude";
+  const OZEL = {};
+  const EKLER = {
+    tr: [["Claude Desktop'taki", "ChatGPT uygulamasındaki"], ["Claude Desktop'ta", "ChatGPT uygulamasında"],
+      ["Claude Desktop'u", "ChatGPT uygulamasını"], ["Claude Desktop", "ChatGPT uygulaması"], ["Claude'undur", "ChatGPT'nindir"],
+      ["Claude'un", "ChatGPT'nin"], ["Claude'dan", "ChatGPT'den"], ["Claude'da", "ChatGPT'de"], ["Claude'la", "ChatGPT'yle"],
+      ["Claude'u", "ChatGPT'yi"], ["Claude'a", "ChatGPT'ye"]],
+    az: [["Claude-un", "ChatGPT-nin"], ["Claude-dan", "ChatGPT-dən"], ["Claude-da", "ChatGPT-də"], ["Claude-la", "ChatGPT-lə"],
+      ["Claude-u", "ChatGPT-ni"], ["Claude-a", "ChatGPT-yə"]],
+  };
+  const kac = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const desen = (liste) => liste.map(([k, v]) => [new RegExp(kac(k) + "(?!\\p{L})", "gu"), v]);
+  const DESEN = { tr: desen(EKLER.tr), az: desen([...EKLER.az, ...EKLER.tr]), en: desen(EKLER.tr) };
+  function uyarla(s, dil) {
+    if (ad !== "chatgpt" || typeof s !== "string" || !s.includes("Claude")) return s;
+    for (const [d, v] of DESEN[dil] || DESEN.tr) s = s.replace(d, v);
+    return s.replace(/Claude/g, "ChatGPT");
+  }
+  return {
+    get ad() { return ad; },
+    get chatgpt() { return ad === "chatgpt"; },
+    get asistan() { return ad === "chatgpt" ? "ChatGPT" : "Claude"; },
+    // Değiştiyse true: çağıran ekranı yeniden kurar.
+    ayarla(x) { const y = x === "chatgpt" ? "chatgpt" : "claude"; if (y === ad) return false; ad = y; return true; },
+    // Ev sahibinin kendini tanıtmasından tahmin (sunucu ev bildirmediyse): ChatGPT window.openai takma adını verir.
+    tani(surum, ctx) {
+      const iz = [surum && surum.name, ctx && ctx.userAgent].filter(Boolean).join(" ");
+      return (typeof window !== "undefined" && typeof window.openai !== "undefined") || /openai|chatgpt|codex/i.test(iz)
+        ? "chatgpt" : null;
+    },
+    ozel(claude, chatgpt) { OZEL[claude] = chatgpt; },
+    anahtar(k) { return ad === "chatgpt" && OZEL[k] ? OZEL[k] : k; },
+    uyarla,
+  };
+})();
 function cevVeri(x) {
   if (typeof x !== "string") return x;
   const k = DIL.veriMi(x) ? DIL.karsilik(x) : undefined;
-  return k == null ? x : k;
+  return EV.uyarla(k == null ? x : k, DIL.secili);
 }
 function cev(anahtar, ...deger) {
-  const kalip = DIL.karsilik(anahtar) ?? anahtar;
+  const a = EV.anahtar(anahtar);
+  const kalip = EV.uyarla(DIL.karsilik(a) ?? a, DIL.secili);
   if (!deger.length) return kalip;
   return kalip.replace(/\{(\d+)\}/g, (m, i) => (+i < deger.length ? String(cevVeri(deger[+i])) : m));
 }

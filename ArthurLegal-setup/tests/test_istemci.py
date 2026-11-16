@@ -860,8 +860,11 @@ class SunucuTesti(unittest.TestCase):
         self.assertIn("tr_ictihat_ara", adlar)
         self.assertNotIn("tkgm_tapu_kaydi_oku", adlar, "tapu kaydı aracı buluta aktarılmamalı")
         # Araştırma araçları salt okunur: Claude Desktop kalıcı "Always allow" sunabilsin.
-        self.assertEqual(araclar["tr_ictihat_ara"]["annotations"], {"readOnlyHint": True, "openWorldHint": True})
-        self.assertEqual(araclar["ornek_yazan"]["annotations"], {"readOnlyHint": False}, "uzak işaret korunur")
+        # Üç işaret her araçta açıkça (OpenAI dizin kuralı, 16.11.2026); uzak ucun açık değerine dokunulmaz.
+        self.assertEqual(araclar["tr_ictihat_ara"]["annotations"],
+                         {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": True})
+        self.assertEqual(araclar["ornek_yazan"]["annotations"],
+                         {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": True}, "uzak işaret korunur")
 
     def test_2_talimat_buro_katmani(self):
         metin = self.arac("arthurlegal_talimat", profil="hukuk-burosu")["content"][0]["text"]
@@ -995,10 +998,10 @@ class SaltOkunurTesti(unittest.TestCase):
         girdi = [{"name": "a"}, {"name": "b", "annotations": {"title": "B"}},
                  {"name": "c", "annotations": {"readOnlyHint": False}}, {"name": "d", "annotations": {"destructiveHint": True}}]
         cikti = {t["name"]: t["annotations"] for t in s.salt_okunur_isaretle(girdi)}
-        self.assertEqual(cikti["a"], {"readOnlyHint": True, "openWorldHint": True})
-        self.assertEqual(cikti["b"], {"title": "B", "readOnlyHint": True, "openWorldHint": True})
-        self.assertEqual(cikti["c"], {"readOnlyHint": False})
-        self.assertEqual(cikti["d"], {"destructiveHint": True})
+        self.assertEqual(cikti["a"], {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": True})
+        self.assertEqual(cikti["b"], {"title": "B", "readOnlyHint": True, "destructiveHint": False, "openWorldHint": True})
+        self.assertEqual(cikti["c"], {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": True})
+        self.assertEqual(cikti["d"], {"destructiveHint": True, "readOnlyHint": False, "openWorldHint": True})
         self.assertNotIn("annotations", girdi[0], "girdi değiştirilmez")
         self.assertEqual(s.salt_okunur_isaretle(None), [])
 
@@ -2332,6 +2335,67 @@ class MacKurulumTesti(unittest.TestCase):
         self.assertIn("ArthurLegal silindi.", az)
         if MACOS:
             self.assertEqual(subprocess.run(["sh", "-n"], input=metin, text=True).returncode, 0)
+
+
+class ChatGPTKipiTesti(unittest.TestCase):
+    """16.11.2026 (K25): ChatGPT'de görünümü yalnız al_masasi taşır; soru, adımlar ve cevap bu süreçte bellekte
+    tutulur, açık masa al_masa_durumu ile yoklar. Claude'da düzen değişmez."""
+
+    calistir = ModulTesti.calistir
+    UZAK = ("u.uzak_araclar = s.salt_okunur_isaretle([{'name': 'tr_ictihat_ara', 'annotations': {'readOnlyHint': True}, "
+            "'_meta': {'ui': {'resourceUri': 'ui://arthurlegal/masa.html'}}}]); ")
+    LISTE = ("l = u.isle('tools/list', {})['tools']; "
+             "gor = sorted(a['name'] for a in l if ((a.get('_meta') or {}).get('ui') or {}).get('resourceUri')); "
+             "isaret = all(isinstance((a.get('annotations') or {}).get(k), bool) for a in l "
+             "for k in ('readOnlyHint', 'destructiveHint', 'openWorldHint')); ")
+
+    def test_ev_tanima_arac_listesi_ve_talimat(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                   "b = u.isle('initialize', {'clientInfo': {'name': 'codex-mcp-client'}}); " + self.UZAK + self.LISTE +
+                   "print(json.dumps([u.ev, 'MODEL.' in b['instructions'], 'Cevap masada' in b['instructions'], gor, "
+                   "'al_masa_durumu' in [a['name'] for a in l], isaret, "
+                   "next(a for a in l if a['name'] == 'tr_ictihat_ara')['annotations']['openWorldHint']]))")
+            self.assertEqual(self.calistir(t, kod), ["chatgpt", False, True, ["al_masasi"], True, True, True])
+            claude = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                      "b = u.isle('initialize', {'clientInfo': {'name': 'claude-ai'}}); " + self.UZAK + self.LISTE +
+                      "print(json.dumps([u.ev, 'MODEL.' in b['instructions'], 'al_masaya_yaz' in gor, "
+                      "'tr_ictihat_ara' in gor, 'al_masa_durumu' in [a['name'] for a in l], isaret]))")
+            self.assertEqual(self.calistir(t, claude), [None, True, True, True, False, True])
+
+    def test_kurulum_ayari_ev_sahibini_belirler(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import os; os.environ['AL_EV'] = 'chatgpt'; import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                   "u.isle('initialize', {'clientInfo': {'name': 'bilinmeyen'}}); "
+                   "v = u._masa_verisi({}); print(json.dumps([u.ev, v.get('ev'), 'al_masa_durumu' in v['yetenekler']]))")
+            self.assertEqual(self.calistir(t, kod), ["chatgpt", "chatgpt", True])
+
+    def test_soru_adim_ve_cevap_canli_masada(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; u = s.Sunucu(); u.ev = 'chatgpt'; "
+                   "u.uzak.cagir = lambda *x, **k: {'content': [{'type': 'text', 'text': json.dumps({'items': [{'ok': True}]})}]}; "
+                   "u._arac('arthurlegal_durum', {}); "
+                   "u._arac('al_masada_basla', {'soru': 'TBK m. 49?'}); "
+                   "u._arac('tr_mevzuat_madde_getir', {'number': '6098', 'madde_no': '49'}); "
+                   "u._arac('al_masaya_yaz', {'soru': 'TBK m. 49?', 'cevap': '## C'}); "
+                   "u._arac('tr_mevzuat_madde_getir', {'number': '6098', 'madde_no': '49'}); "
+                   "d = u._arac('al_masa_durumu', {})['structuredContent']; c = d['calisma']; "
+                   "print(json.dumps([c['soru'], [a['arac'] for a in c['adimlar']], c['adimlar'][0].get('veri'), "
+                   "bool(c['bitti']), d['cevap']['girdi']['cevap'], bool(d['cevap']['gecmis_id']), "
+                   "u._arac('al_masa_durumu', {'surum': d['surum']})['structuredContent']]))")
+            soru, adimlar, veri, bitti, cevap, gecmis, ayni = self.calistir(t, kod)
+            self.assertEqual([soru, adimlar, veri, bitti, cevap, gecmis],
+                             ["TBK m. 49?", ["tr_mevzuat_madde_getir"], {"items": [{"ok": True}]}, True, "## C", True])
+            self.assertTrue(ayni["degismedi"])
+            claude = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                      "print(json.dumps(u._arac('al_masa_durumu', {}).get('isError')))")
+            self.assertTrue(self.calistir(t, claude), "Claude'da canlı masa yok")
 
 
 if __name__ == "__main__":

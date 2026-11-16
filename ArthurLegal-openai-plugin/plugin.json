@@ -1,0 +1,40 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "arthurlegal",
+  "version": "1.12.6",
+  "description": "Turkish-law-first legal assistant for lawyers in Türkiye: 112 workflows in 11 practice areas, with citations checked against the official text through ArthurLegal MCP (12 jurisdictions).",
+  "author": {
+    "name": "ArthurLegal",
+    "url": "https://github.com/beerbottle90/ArthurLegal"
+  },
+  "homepage": "https://github.com/beerbottle90/ArthurLegal/tree/main/ArthurLegal-openai-plugin",
+  "repository": "https://github.com/beerbottle90/ArthurLegal",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "legal",
+    "law-firm",
+    "turkish-law",
+    "citations",
+    "kvkk",
+    "contracts"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ArthurLegal",
+        "shortDescription": "Turkish legal research with citations checked against the official text",
+        "longDescription": "Legislation, case law and regulator decisions from official sources in twelve jurisdictions, Turkish first; 112 law-firm workflows in 11 practice areas; the ArthurLegal desk shows the question, every research step and the answer with its citations checked. Free and open source for lawyers in Türkiye.",
+        "developerName": "ArthurLegal",
+        "websiteURL": "https://github.com/beerbottle90/ArthurLegal",
+        "privacyPolicyURL": "https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md",
+        "defaultPrompt": [
+          "ArthurLegal Masası'nı aç",
+          "TBK m. 49'un başlığı ve ilk cümlesi nedir?"
+        ],
+        "brandColor": "#12285a",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

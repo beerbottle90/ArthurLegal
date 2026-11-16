@@ -67,6 +67,10 @@ const ATIF = (() => {
       // JavaScript'te \b Türkçe harfleri tanımaz ("sayılı" ı ile biter): sınırlar \p{L} ile yazılır.
       [/(\d{3,5})\s+sayılı(?!\p{L})[^\n.;]{0,110}?(?:(?<!\p{L})(?:m|md)\.\s*(\d{1,4})|(?<![\p{L}\d])(\d{1,4})\s*\.\s*madde)/giu,
         (m) => [m[1], m[2] || m[3]]],
+      // Aracın kendi künyesi: "TÜRK BORÇLAR KANUNU (Kanun No. 6098, RG sayı 27836) m. 49" (tr_mevzuat_madde_getir
+      // citation alanı; al_masaya_yaz bunu birebir yazdırır). Arada nokta olabilir ("No."), satır sonu olamaz.
+      [/(?<!\p{L})(?:Kanun|Law)\s+(?:No|Numarası|Sayısı)\s*[.:]?\s*(\d{3,5})(?!\d)[^\n]{0,120}?(?:(?<!\p{L})(?:m|md|Art)\.\s*(\d{1,4})|(?<![\p{L}\d])(\d{1,4})\s*\.\s*madde)/giu,
+        (m) => [m[1], m[2] || m[3]]],
     ];
   }
 
