@@ -21,15 +21,15 @@
 </p>
 <p align="center">
   <a href="docs/verileriniz.md"><b>Verileriniz nereye gider</b></a> · <a href="docs/your-data.md">Where your data goes</a> · <a href="docs/melumatlariniz.md">Məlumatlarınız hara gedir</a><br>
-  Ne bilgisayarınızda kalır, ne Claude'a ve resmî kaynaklara gider; Claude'un gizlilik ayarı ve çıktı hakkında üç cümle.
+  Ne bilgisayarınızda kalır, ne Claude'a ya da ChatGPT'ye ve resmî kaynaklara gider; Claude'un ve ChatGPT'nin gizlilik ayarları ve çıktı hakkında üç cümle.
 </p>
 <p align="center">
   <a href="docs/katki.md"><b>Katkı: iş akışı ve playbook önerin</b></a> · <a href="docs/contributing.md">Contribute a workflow or playbook</a> · <a href="docs/tohfe.md">Töhfə: iş axını və playbook təklif edin</a><br>
   <a href="docs/word-rehberi.md"><b>Word'de ArthurLegal</b></a> · <a href="docs/word-guide.md">ArthurLegal in Word</a> · <a href="docs/word-beledcisi.md">Word-də ArthurLegal</a>
 </p>
 <p align="center">
-  <b>ChatGPT desteği hazırlanıyor.</b> ArthurLegal Masası, araştırma araçları ve iş akışları OpenAI'ın ChatGPT'si için de uyarlanıyor ve ChatGPT masaüstü uygulamasında denendi. Kurulumdaki ChatGPT seçeneği hazır olunca burada duyurulacak; bugün ArthurLegal Claude ile çalışır.<br>
-  <b>ChatGPT support in preparation.</b> The ArthurLegal desk, research tools and workflows are being adapted for OpenAI's ChatGPT and have been tested in the ChatGPT desktop app. The ChatGPT option in the installer will be announced here when it is ready; today ArthurLegal runs with Claude.<br>
+  <b>ArthurLegal artık ChatGPT'de de çalışır.</b> v3.4.0 ile ArthurLegal Masası, araştırma araçları ve iş akışları ChatGPT masaüstü uygulamasında da (Windows ve macOS) çalışır. Kurulumda uygulamanızı seçersiniz: Claude Desktop, ChatGPT ya da ikisi (<a href="#kurulum">kurulum</a>, <a href="#setup-340">yenilikler</a>). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.<br>
+  <b>ArthurLegal now also works in ChatGPT.</b> From v3.4.0 the ArthurLegal desk, research tools and workflows also run in the ChatGPT desktop app (Windows and macOS). During setup you choose your app: Claude Desktop, ChatGPT or both (<a href="#download">installation</a>, <a href="#setup-340">what's new</a>). Use in ChatGPT on the web and on phones is in preparation.<br>
   <sub>ChatGPT ve OpenAI, OpenAI'ın markalarıdır · ChatGPT and OpenAI are trademarks of OpenAI.</sub>
 </p>
 
@@ -68,11 +68,28 @@ korkmayın, kod imzası taşımayan her yeni programda çıkar. Fareyle önce **
   <img src="docs/kurulum/smartscreen-2-yine-de-calistir.svg" width="400" alt="Örnek çizim: Ek bilgi'den sonra beliren Yine de çalıştır düğmesi (2)">
 </p>
 
-**3. Modülleri seçin.** Kurulum önce dili sorar (Türkçe, İngilizce ya da Azerbaycanca): **Türkçe**'yi seçip
-**Tamam**'a (OK) tıklayın.
-**Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye tıklayın. **Modülleri seçin** ekranında kurmak
-istediklerinizi işaretleyin; her birinin altında ne işe yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli
-gelmez. En az bir paket gerekir:
+**3. Yapay zekâ uygulamanızı seçin.** Kurulum önce dili sorar (Türkçe, İngilizce ya da Azerbaycanca): **Türkçe**'yi
+seçip **Tamam**'a (OK) tıklayın. **Anlaşmayı kabul ediyorum**'u seçip **Sonraki**'ye tıklayın. **Yapay zekâ
+uygulamanızı seçin** ekranında ArthurLegal'in hangi uygulamanın içinde çalışacağını işaretleyin: **Claude Desktop**,
+**ChatGPT** ya da ikisi. En az biri gerekir. Bu bilgisayarda kurulu olanın yanında "(bu bilgisayarda kurulu)" yazar ve
+işaretli gelir; hiçbiri kurulu değilse Claude Desktop işaretli gelir. Sonra **Sonraki**'ye tıklayın.
+
+| Uygulama | Kurulu değilse |
+|---|---|
+| **Claude Desktop** | Kurulum onu da kurmayı dener; olmazsa [claude.ai/download](https://claude.ai/download) adresinden kurun |
+| **ChatGPT** | Kurulum resmî **ChatGPT** uygulamasını (yayıncı OpenAI) Microsoft Store'dan kurmayı dener; olmazsa masaüstündeki **ArthurLegal** simgesi resmî indirme sayfasını açar: [chatgpt.com/download](https://chatgpt.com/download/) |
+
+ChatGPT'de gereken, ChatGPT'nin **yeni masaüstü uygulamasıdır** (Windows'ta Microsoft Store'daki **ChatGPT**). Eski
+**ChatGPT Classic** uygulaması ArthurLegal'in bu bilgisayarda çalışan sunucularını çalıştırmaz. Seçimi sonra
+değiştirmek için kurulumu yeniden çalıştırıp işareti değiştirin: işaretini kaldırdığınız uygulamadan ArthurLegal'in
+sunucuları (ChatGPT'de becerileri de) çıkarılır.
+
+<p align="center">
+  <img src="docs/kurulum/asistan.svg" width="560" alt="Örnek çizim: yapay zekâ uygulaması ekranında Claude Desktop (bu bilgisayarda kurulu) önden işaretli (1), ChatGPT de işaretlendi (2); biri de yeter. Sonra Sonraki düğmesi (3)">
+</p>
+
+**4. Modülleri seçin.** **Modülleri seçin** ekranında kurmak istediklerinizi işaretleyin; her birinin altında ne işe
+yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli gelmez. En az bir paket gerekir:
 
 | Modül | Kimin için |
 |---|---|
@@ -81,35 +98,37 @@ gelmez. En az bir paket gerekir:
 | **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.5-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
-| **ArthurMask** | Belgeleri Claude'a vermeden önce bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
+| **ArthurMask** | Belgeleri yapay zekâya (Claude ya da ChatGPT) vermeden önce bu bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
 | **ArthurLegal Hafıza** | Tercihlerinizi, düzeltmelerinizi ve son oturumu sohbetler arasında bilgisayarınızdaki bir klasörde tutar |
 
 <p align="center">
   <img src="docs/kurulum/moduller.svg" width="560" alt="Örnek çizim: modül ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli; sonra Sonraki düğmesi (4)">
 </p>
 
-**4. Arayüzü seçin.** **Arayüzü seçin** ekranında iki seçenek vardır, yalnız biri seçilir; değiştirmek için
+**5. Arayüzü seçin.** **Arayüzü seçin** ekranında iki seçenek vardır, yalnız biri seçilir; değiştirmek için
 kurulumu sonra yeniden çalıştırabilirsiniz:
 
 | Arayüz | Ne olur |
 |---|---|
-| **ArthurLegal yeni arayüz** (seçili gelir) | ArthurLegal simgesi Claude Desktop'un içinde [ArthurLegal Masası](#masa)'nı açar: solda modüller, ortada iş adımları; madde ve içtihat sonuçları ArthurLegal kartlarıyla gelir |
-| **Claude Desktop klasik** | Claude Desktop her zamanki gibi açılır, sorunuzu sohbete yazarsınız; masa ve kartlar kapalı, sonuçlar metin olarak gelir |
+| **ArthurLegal yeni arayüz** (seçili gelir) | ArthurLegal simgesi seçtiğiniz uygulamanın içinde [ArthurLegal Masası](#masa)'nı açar (Claude Desktop'ta tam ekran, ChatGPT'de yan panelde): solda modüller, ortada iş adımları; madde ve içtihat sonuçları ArthurLegal kartlarıyla gelir |
+| **Uygulamanın kendi sohbeti (klasik)** | Seçtiğiniz uygulama her zamanki gibi açılır, sorunuzu sohbete yazarsınız; masa ve kartlar kapalı, sonuçlar metin olarak gelir |
 
 <p align="center">
   <img src="docs/kurulum/arayuz.svg" width="560" alt="Örnek çizim: arayüz ekranında ArthurLegal yeni arayüz seçili (1); sonra Sonraki düğmesi (2)">
 </p>
 
-**5. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Claude Desktop açıksa kurulum onu kapatır; başlamadan
-önce yazdığınız mesajı gönderin. ArthurMask'i seçtiyseniz kurulum onu da indirir (yaklaşık 1 GB, birkaç dakika);
-beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet** deyin, ArthurMask sonra arka
-planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde Claude Desktop masayı açmaya hazır
-gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop açılır.
+**6. Kurun.** **Sonraki**'ye, sonra **Kur**'a tıklayın. Seçtiğiniz uygulama (Claude Desktop, ChatGPT ya da ikisi)
+açıksa kurulum onu kapatır; başlamadan önce yazdığınız mesajı gönderin. ArthurMask'i seçtiyseniz kurulum onu da
+indirir (yaklaşık 1 GB, birkaç dakika); beklemek istemezseniz **İndirmeyi durdur**'a basıp çıkan iki soruya **Evet**
+deyin, ArthurMask sonra arka planda kendiliğinden iner. Son sayfada **Bitti**'ye tıklayın: yeni arayüzde seçtiğiniz
+uygulama masayı açmaya hazır gelir (aşağıdaki uyarı); iki uygulamayı da seçtiyseniz başlangıç sayfası açılır. Klasikte
+başlangıç sayfası ve seçtiğiniz uygulama açılır.
 
 > [!IMPORTANT]
-> **Kurulumdan sonra Enter'a basın.** Claude Desktop açıldığında yazma kutusunda *ArthurLegal Masası'nı aç*
-> yazılı gelir; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez. Masaüstündeki
-> **ArthurLegal** simgesiyle her açılışta da Enter'a basın.
+> **Kurulumdan sonra Enter'a basın.** Claude Desktop ya da ChatGPT açıldığında yazma kutusunda *ArthurLegal Masası'nı
+> aç* yazılı gelir; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez. Masaüstündeki
+> **ArthurLegal** simgesiyle her açılışta da Enter'a basın. İki uygulamayı da seçtiyseniz önce başlangıç sayfasındaki
+> **Claude Desktop'ta aç** ya da **ChatGPT'de aç** düğmesine tıklayın, sonra Enter'a basın.
 
 <a id="model"></a>
 
@@ -120,18 +139,26 @@ gelir (aşağıdaki uyarı), klasikte başlangıç rehberi ve Claude Desktop aç
 > (23 zor soru) küçük modeller süre, usul ve yeni değişen mevzuat sorularında daha çok ağır hata yaptı; hiçbir
 > model uydurma künye yazmadı. Kotanız daralırsa madde metni, künye teyidi ve hesap işlerini Sonnet 5.5 ile
 > yapabilirsiniz. ArthurLegal her modelle çalışır; masanın **Model ve effort** ekranı ölçüm sonuçlarını gösterir.
+>
+> **ChatGPT'de model.** ChatGPT modelleriyle henüz ölçüm yapmadık; en yetenekli güncel modeli seçmenizi tavsiye ederiz, bağlayıcı değildir.
+> Modeli ChatGPT'nin yazma kutusunun altındaki model menüsünden seçin. ChatGPT'de masa modeli sormaz ve göstermez;
+> yukarıdaki ölçüm Anthropic modelleriyle yapıldı.
 
 Masaüstüne seçtiğiniz modüllerin simgeleri gelir: Hukuk Bürosu ya da Kurumsal için **ArthurLegal**, ayrıca
 **ArthurLegal - Courthouse**, **ArthurLegal - Akademisyen**, **ArthurLegal - Tapu** ve **ArthurMask**. Windows'ta
 Hukuk Bürosu ya da Kurumsal ile ArthurMask'i seçtiyseniz **ArthurLegal - UYAP Dashboard** da gelir ([UYAP Dashboard](#uyap)).
-Yeni arayüzde **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar:
-Enter'a basın, masa tam ekran açılır (solda modüller, ortada iş adımları); klasikte Claude Desktop'u ve
-başlangıç rehberini açar. Claude Desktop'ta yeni bir sohbet açıp sorunuzu
-doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa
-**Always allow**'u (Her zaman izin ver) seçin; Claude Desktop'un menüleri İngilizcedir. Claude Desktop kurulu
-değilse kurulum onu da kurmayı dener; açılmazsa [claude.ai/download](https://claude.ai/download) adresinden kurun.
-Modül eklemek, çıkarmak ya da arayüzü değiştirmek için kurulum dosyasını yeniden çalıştırın; son seçiminiz
-işaretli gelir.
+Yeni arayüzde **ArthurLegal** simgesi seçtiğiniz uygulamayı *ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar:
+Enter'a basın; masa Claude Desktop'ta tam ekran, ChatGPT'de ChatGPT'nin yan panelinde açılır (solda modüller, ortada
+iş adımları). İki uygulamayı da seçtiyseniz simge yalnız başlangıç sayfasını açar; sayfanın başındaki **Claude
+Desktop'ta aç** ve **ChatGPT'de aç** düğmeleri masayı o uygulamada açar. Klasikte simge seçtiğiniz uygulamayı ve
+başlangıç sayfasını açar; iki uygulama seçildiyse yalnız başlangıç sayfasını açar, düğmeler de yalnız uygulamayı
+açar. Simge her tıklamada başlangıç sayfasını tarayıcıda da açar. Uygulamada yeni bir sohbet açıp
+sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u (Her zaman
+izin ver) seçin; ChatGPT izin sorarsa izin verin. Claude Desktop'un ve ChatGPT'nin menüleri İngilizcedir. ChatGPT'de
+ArthurLegal'in becerileri ve sunucuları **Settings › Plugins** sayfasındadır: **Skills** sekmesinde adı `arthurlegal`
+ile başlayan beceriler, **MCPs** sekmesinde `arthurlegal-yerel` ve seçtiğiniz modüllerin sunucuları. Uygulama kurulu
+değilse yukarıdaki tabloya bakın. Modül eklemek, çıkarmak, uygulamayı ya da arayüzü değiştirmek için kurulum
+dosyasını yeniden çalıştırın; son seçiminiz işaretli gelir.
 
 <details>
 <summary><b>Bu uyarılar neden çıkıyor, dosya güvenli mi?</b></summary>
@@ -164,7 +191,9 @@ yolunu kullanın:
    doğrudan çift tıklamayın; Windows sorarsa **Tümünü Ayıkla**'yı seçin.
 4. Açılan klasörde **KUR** dosyasına (türü: Windows Komut Dosyası) çift tıklayın. Siyah pencere önce modülleri
    sorar: kurmak istediklerinizin numaralarını virgülle yazıp <kbd>Enter</kbd>'a basın (ör. Hukuk Bürosu ve Tapu
-   için `1,5`). Sizden bir tuşa basmanızı isteyince kurulum bitmiştir.
+   için `1,5`). Sonra yapay zekâ uygulamasını sorar: **1** Claude Desktop, **2** ChatGPT, **3** İkisi; numarayı
+   yazıp <kbd>Enter</kbd>'a basın (yalnız Enter, önceki seçiminizi ya da bu bilgisayarda kurulu olanı seçer). Sizden
+   bir tuşa basmanızı isteyince kurulum bitmiştir.
 
 Bu yolla ArthurMask kurulmaz (belge maskeleme ve UYAP bağlantısı çalışmaz); ArthurLegal paketleri, araştırma
 araçları ve Tapu çalışır.
@@ -197,34 +226,43 @@ tıklayın; mavi **Çöp Sepeti’ne Taşı**'ya değil. <kbd>Enter</kbd>'a basm
   <img src="docs/kurulum/mac-2-yine-de-ac.svg" width="400" alt="Örnek çizim: Sistem Ayarları'nda Gizlilik ve Güvenlik (2) ve Yine de Aç düğmesi (3)">
 </p>
 
-**3. Modülleri seçin.** Kurulum Mac'inizin dilinde açılır. **Sürdür**'e tıklayarak ilerleyin; lisans sayfasından
-sonra çıkan pencerede **Kabul Ediyorum**'u seçin. **Yükleme Türü** ekranında kurmak istediğiniz modülleri
-işaretleyip **Sürdür**'e tıklayın: bir modülün adına tıklayınca ne işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır
-(yukarıdaki tablo); ilk kurulumda hiçbiri işaretli gelmez, en az bir paket gerekir. ArthurMask yalnız Apple
-Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir. Modüllerin altındaki **ArthurLegal yeni arayüz**
-kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız **Claude Desktop klasik** kurulur.
+**3. Yapay zekâ uygulamanızı ve modülleri seçin.** Kurulum Mac'inizin dilinde açılır. **Sürdür**'e tıklayarak
+ilerleyin; lisans sayfasından sonra çıkan pencerede **Kabul Ediyorum**'u seçin. **Yükleme Türü** ekranında listenin
+başında iki kutu durur: **Claude Desktop** ve **ChatGPT**. ArthurLegal'in hangi uygulamanın içinde çalışacağını
+işaretleyin; ikisini birden de seçebilirsiniz. Bu Mac'te kurulu olan işaretli gelir, hiçbiri kurulu değilse Claude
+Desktop. Mac'te kurulum bu uygulamaları kurmaz: Claude Desktop kurulu değilse
+[claude.ai/download](https://claude.ai/download) adresinden kurun; ChatGPT kurulu değilse **ArthurLegal** simgesi
+resmî indirme sayfasını açar ([chatgpt.com/download](https://chatgpt.com/download/)). ChatGPT'de gereken, ChatGPT'nin
+yeni masaüstü uygulamasıdır; eski **ChatGPT Classic** ArthurLegal'in bu bilgisayarda çalışan sunucularını
+çalıştırmaz. Altta kurmak istediğiniz modülleri işaretleyip **Sürdür**'e tıklayın: bir modülün adına tıklayınca ne
+işe yaradığı altta yazar. Modüller Windows'takilerle aynıdır (yukarıdaki tablo); ilk kurulumda hiçbiri işaretli
+gelmez, en az bir paket gerekir. ArthurMask yalnız Apple Silicon ve macOS 14 (Sonoma) ya da sonrasında seçilebilir.
+Modüllerin altındaki **ArthurLegal yeni arayüz** kutusu işaretli gelir (masa ve kartlar); işaretini kaldırırsanız
+**uygulamanın kendi sohbeti (klasik)** kurulur.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında Hukuk Bürosu (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
+  <img src="docs/kurulum/mac-3-moduller.svg" width="560" alt="Örnek çizim: macOS kurulumunun Yükleme Türü ekranında listenin başında Claude Desktop ve ChatGPT kutuları (burada Claude Desktop işaretli); Hukuk Bürosu (1), ArthurLegal Tapu (2) ve ArthurMask (3) işaretli, ArthurLegal yeni arayüz kendiliğinden işaretli; sonra Sürdür düğmesi (4)">
 </p>
 
-**4. Kurun.** Claude Desktop açıksa kurulum onu kapatır; yazdığınız bir mesaj varsa önce gönderin. Sonraki sayfada
-**Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç rehberi tarayıcıda açılır. Seçtiğiniz
-modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da Kurumsal için
-**ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal Tapu**. Masaüstündeki
-simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle yenilenir. ArthurMask'i
-seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir ve masaüstüne
-**ArthurMask** simgesi eklenir. Kurulum Claude Desktop'u yeniden açar: yeni arayüzde Claude *ArthurLegal Masası'nı
-aç* mesajıyla açılır, Enter'a basın. Claude masayı bulamazsa Claude Desktop'tan **Cmd+Q** ile tamamen çıkıp yeniden
-açın, sonra **ArthurLegal** simgesine tıklayıp Enter'a basın. Yeni bir sohbet açıp
-sorunuzu doğrudan da yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin. Claude
-Desktop kurulu değilse [claude.ai/download](https://claude.ai/download) adresinden kurun. Modül eklemek, çıkarmak
-ya da arayüzü değiştirmek için kurulum dosyasını yeniden açın; son seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar →
-ArthurLegal → **ArthurLegal'i Kaldır**.
+**4. Kurun.** Seçtiğiniz uygulama (Claude Desktop ya da ChatGPT) açıksa kurulum onu kapatır; yazdığınız bir mesaj
+varsa önce gönderin. Sonraki sayfada **Yükle**'ye, son sayfada **Kapat**'a tıklayın: başlangıç sayfası tarayıcıda
+açılır. Seçtiğiniz modüllerin simgeleri Uygulamalar klasöründe (Launchpad'de) ve masaüstündedir: Hukuk Bürosu ya da
+Kurumsal için **ArthurLegal**, ayrıca **ArthurLegal Courthouse**, **ArthurLegal Akademisyen** ve **ArthurLegal
+Tapu**. Masaüstündeki simgeler Windows'taki gibi sürüm numarasını taşır (ör. **ArthurLegal 3.0.12**) ve güncellemeyle
+yenilenir. ArthurMask'i seçtiyseniz kurulumdan sonra arka planda iner (yaklaşık 1,2 GB); hazır olunca bildirim gelir
+ve masaüstüne **ArthurMask** simgesi eklenir. Kurulum seçtiğiniz uygulamayı yeniden açar: yeni arayüzde uygulama
+*ArthurLegal Masası'nı aç* mesajıyla açılır, Enter'a basın; masa Claude Desktop'ta tam ekran, ChatGPT'de yan panelde
+açılır. İki uygulamayı da seçtiyseniz **ArthurLegal** simgesi başlangıç sayfasını açar; masayı oradaki **Claude
+Desktop'ta aç** ya da **ChatGPT'de aç** düğmesiyle açarsınız. Uygulama masayı bulamazsa ondan **Cmd+Q** ile tamamen
+çıkıp yeniden açın, sonra **ArthurLegal** simgesine tıklayıp Enter'a basın. Yeni bir sohbet açıp sorunuzu doğrudan da
+yazabilirsiniz. Claude bir aracı ilk kez kullanırken izin sorarsa **Always allow**'u seçin; ChatGPT izin sorarsa izin
+verin. Modül eklemek, çıkarmak, uygulamayı ya da arayüzü değiştirmek için kurulum dosyasını yeniden açın; son
+seçiminiz işaretli gelir. Kaldırmak için: Uygulamalar → ArthurLegal → **ArthurLegal'i Kaldır**.
 
 > [!IMPORTANT]
-> **ArthurLegal simgesine tıkladıktan sonra Enter'a basın.** Claude Desktop yazma kutusunda *ArthurLegal Masası'nı aç*
-> yazılı açılır; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez.
+> **ArthurLegal simgesine tıkladıktan sonra Enter'a basın.** Claude Desktop ya da ChatGPT yazma kutusunda
+> *ArthurLegal Masası'nı aç* yazılı açılır; masa siz **Enter**'a basınca açılır. Mesaj kendiliğinden gönderilmez.
+> İki uygulamayı da seçtiyseniz önce başlangıç sayfasındaki düğmeye tıklayın.
 
 Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/ArthurLegal#indir** (Mac:
 **https://github.com/beerbottle90/ArthurLegal#mac**)
@@ -233,12 +271,12 @@ Bu bölümü paylaşmak için bağlantı: **https://github.com/beerbottle90/Arth
 
 **[⬇ Download the Windows installer (ArthurLegal-Kurulum.exe)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.exe)**
 · **[⬇ Download the Mac installer (ArthurLegal-Kurulum.pkg)](https://github.com/beerbottle90/ArthurLegal/releases/latest/download/ArthurLegal-Kurulum.pkg)** ([Mac steps](#mac-en)).
-The links always download the latest release. One installer lets you choose the packages (Law Firm, Corporate
-Assistant, Courthouse, Academician), the tools (the Turkish land registry, ArthurMask, ArthurLegal Memory) and the
-interface (the [ArthurLegal desk](#masa) inside Claude Desktop, or Claude Desktop classic) you want and puts them
-into Claude Desktop with the research connector; after that, ArthurLegal installs new versions itself in the
-background and verifies their signatures, so you never need to download this file again. No administrator
-rights are needed.
+The links always download the latest release. One installer lets you choose the AI app (Claude Desktop, the
+ChatGPT desktop app or both), the packages (Law Firm, Corporate Assistant, Courthouse, Academician), the tools (the
+Turkish land registry, ArthurMask, ArthurLegal Memory) and the interface (the [ArthurLegal desk](#masa) inside the app,
+or the app's own chat) you want, and connects them to the app you chose together with the research tools; after that,
+ArthurLegal installs new versions itself in the background and verifies their signatures, so you never need to
+download this file again. No administrator rights are needed.
 
 **1. Download.** Click the button above. The file goes to your browser's downloads list at the top right; if
 the list closes, press <kbd>Ctrl</kbd> + <kbd>J</kbd>.
@@ -268,10 +306,27 @@ appears. Do not press <kbd>Enter</kbd>: Enter selects **Don't run** and setup do
   <img src="docs/kurulum/smartscreen-2-run-anyway-en.svg" width="400" alt="Example drawing: the Run anyway button that appears after More info (2)">
 </p>
 
-**3. Choose modules.** Setup first asks for a language (English, Turkish or Azerbaijani): choose **English** and
-click **OK**. Select **I accept the
-agreement** and click **Next**. On the **Choose modules** screen, tick what you want to install; each module has a
-short description under it, and nothing is ticked on a first installation. At least one package is needed:
+**3. Choose your AI app.** Setup first asks for a language (English, Turkish or Azerbaijani): choose **English** and
+click **OK**. Select **I accept the agreement** and click **Next**. On the **Choose your AI app** screen, tick the app
+ArthurLegal should work in: **Claude Desktop**, **ChatGPT** or both. At least one is needed. The app installed on
+this computer says "(installed on this computer)" and comes ticked; if neither is installed, Claude Desktop comes
+ticked. Then click **Next**.
+
+| App | If it is not installed |
+|---|---|
+| **Claude Desktop** | Setup tries to install it too; if that does not work, get it from [claude.ai/download](https://claude.ai/download) |
+| **ChatGPT** | Setup tries to install the official **ChatGPT** app (publisher OpenAI) from the Microsoft Store; if that is not possible, the **ArthurLegal** desktop icon opens the official download page: [chatgpt.com/download](https://chatgpt.com/download/) |
+
+In ChatGPT, ArthurLegal needs ChatGPT's **new desktop app** (on Windows, **ChatGPT** in the Microsoft Store). The older
+**ChatGPT Classic** app does not run ArthurLegal's servers on this computer. To change your choice later, run setup
+again and change the ticks: ArthurLegal's servers (and in ChatGPT its skills) are taken out of an app you untick.
+
+<p align="center">
+  <img src="docs/kurulum/ai-app-en.svg" width="560" alt="Example drawing: on the AI app screen Claude Desktop (installed on this computer) comes ticked (1) and ChatGPT is ticked too (2); one is enough. Then the Next button (3)">
+</p>
+
+**4. Choose modules.** On the **Choose modules** screen, tick what you want to install; each module has a short
+description under it, and nothing is ticked on a first installation. At least one package is needed:
 
 | Module | For |
 |---|---|
@@ -280,35 +335,37 @@ short description under it, and nothing is ticked on a first installation. At le
 | **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.5-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
-| **ArthurMask** | Masks documents on this computer before Claude sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
+| **ArthurMask** | Masks documents on this computer before the AI (Claude or ChatGPT) sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
 | **ArthurLegal Memory** | Keeps your preferences, corrections and last session across chats, in a folder on your computer |
 
 <p align="center">
   <img src="docs/kurulum/modules-en.svg" width="560" alt="Example drawing: on the module screen Law Firm (1), ArthurLegal Tapu (2) and ArthurMask (3) are ticked; then the Next button (4)">
 </p>
 
-**4. Choose the interface.** The **Choose the interface** screen has two options and only one can be selected; run
+**5. Choose the interface.** The **Choose the interface** screen has two options and only one can be selected; run
 setup again later to change it:
 
 | Interface | What happens |
 |---|---|
-| **ArthurLegal new interface** (selected by default) | The ArthurLegal icon opens [ArthurLegal Masası](#masa) (the ArthurLegal desk) inside Claude Desktop: modules on the left, the steps in the middle; article and case-law results come as ArthurLegal cards |
-| **Claude Desktop classic** | Claude Desktop opens as usual and you type your question in the chat; no desk and no cards, results come as text |
+| **ArthurLegal new interface** (selected by default) | The ArthurLegal icon opens [ArthurLegal Masası](#masa) (the ArthurLegal desk) inside the app you chose (full screen in Claude Desktop, in the side panel in ChatGPT): modules on the left, the steps in the middle; article and case-law results come as ArthurLegal cards |
+| **The app's own chat (classic)** | The app you chose opens as usual and you type your question in the chat; no desk and no cards, results come as text |
 
 <p align="center">
   <img src="docs/kurulum/interface-en.svg" width="560" alt="Example drawing: on the interface screen ArthurLegal new interface is selected (1); then the Next button (2)">
 </p>
 
-**5. Install.** Click **Next**, then **Install**. If Claude Desktop is open, setup closes it, so send any message
-you are typing first. If you chose ArthurMask, setup also downloads it (about 1 GB, a few minutes); if you don't
-want to wait, click **Stop download** and answer **Yes** to both questions, and ArthurMask downloads later in the
-background. On the last page click **Finish**: with the new interface Claude Desktop opens ready to open the desk
-(see the note below), with the classic one the start guide and Claude Desktop.
+**6. Install.** Click **Next**, then **Install**. If the app you chose (Claude Desktop, ChatGPT or both) is open,
+setup closes it, so send any message you are typing first. If you chose ArthurMask, setup also downloads it (about
+1 GB, a few minutes); if you don't want to wait, click **Stop download** and answer **Yes** to both questions, and
+ArthurMask downloads later in the background. On the last page click **Finish**: with the new interface the app you
+chose opens ready to open the desk (see the note below); if you chose both apps, the start page opens. With the
+classic interface the start page and the app you chose open.
 
 > [!IMPORTANT]
-> **Press Enter after setup.** When Claude Desktop opens, *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) is
-> already typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
-> Press Enter every time you open it with the **ArthurLegal** desktop icon, too.
+> **Press Enter after setup.** When Claude Desktop or ChatGPT opens, *ArthurLegal Masası'nı aç* (open the ArthurLegal
+> desk) is already typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
+> Press Enter every time you open it with the **ArthurLegal** desktop icon, too. If you chose both apps, first click
+> **Open in Claude Desktop** or **Open in ChatGPT** on the start page, then press Enter.
 
 <a id="model-en"></a>
 
@@ -320,16 +377,26 @@ background. On the last page click **Finish**: with the new interface Claude Des
 > recently amended law; no model wrote a fabricated citation. If your usage runs low, article text, citation
 > checks and fee calculations can be done with Sonnet 5.5. ArthurLegal works with every model; the desk's
 > **Model ve effort** screen shows the measurement results.
+>
+> **Model in ChatGPT.** We have not yet measured ChatGPT models; we recommend choosing the most capable current model. This is not binding.
+> Choose it in the model menu below ChatGPT's message box. In ChatGPT the desk does not ask for or show the model;
+> the measurement above was done with Anthropic models.
 
 The desktop gets an icon
 for each module you chose: **ArthurLegal** for Law Firm or Corporate, plus **ArthurLegal - Courthouse**,
 **ArthurLegal - Academician**, **ArthurLegal - Tapu** and **ArthurMask**; on Windows, Law Firm or Corporate
-together with ArthurMask also adds **ArthurLegal - UYAP Dashboard** ([UYAP Dashboard](#uyap-en)). With the new interface the
-**ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk) already
-typed: press Enter and the desk opens full screen; with the classic one it opens Claude Desktop and the start guide. You can also open a new chat in Claude Desktop and type your question. When Claude asks for permission the first time it uses a tool, choose **Always allow**.
-If Claude Desktop is not installed, setup tries to install it; if it does not open, get it from
-[claude.ai/download](https://claude.ai/download). To add or remove modules or to change the interface, run the
-installer again; your last choice comes pre-ticked.
+together with ArthurMask also adds **ArthurLegal - UYAP Dashboard** ([UYAP Dashboard](#uyap-en)). With the new
+interface the **ArthurLegal** icon opens the app you chose with *ArthurLegal Masası'nı aç* (open the ArthurLegal desk)
+already typed: press Enter and the desk opens, full screen in Claude Desktop and in ChatGPT's side panel. If you chose
+both apps, the icon opens only the start page; its **Open in Claude Desktop** and **Open in ChatGPT** buttons open the
+desk in that app. With the classic interface the icon opens the app you chose and the start page; with both apps it
+opens only the start page and the buttons just open the app. Every click on the icon also opens the start page in
+your browser. You can also open a new chat in the app and type your question. When Claude asks for permission the
+first time it uses a tool, choose **Always allow**; when ChatGPT asks, allow it. The menus of Claude Desktop and
+ChatGPT are in English. In ChatGPT, ArthurLegal's skills and servers are on **Settings › Plugins**: the **Skills** tab
+lists the skills whose names start with `arthurlegal`, the **MCPs** tab lists `arthurlegal-yerel` and the servers of
+the modules you chose. If an app is not installed, see the table above. To add or remove modules or to change the
+app or the interface, run the installer again; your last choice comes pre-ticked.
 
 <details>
 <summary><b>Why do these warnings appear? Is the file safe?</b></summary>
@@ -361,7 +428,9 @@ You do not need to turn it off; use the zip version of the same setup:
    file inside it; if Windows asks, choose **Extract all**.
 4. In the folder that opens, double-click **KUR** (type: Windows Command Script). The black window first asks
    for the modules: type the numbers of the ones you want, separated by commas, and press <kbd>Enter</kbd>
-   (e.g. `1,5` for Law Firm and Tapu). When it asks you to press a key, setup has finished.
+   (e.g. `1,5` for Law Firm and Tapu). Then it asks for the AI app: **1** Claude Desktop, **2** ChatGPT, **3** Both;
+   type the number and press <kbd>Enter</kbd> (Enter alone keeps your previous choice or picks the app installed on
+   this computer). When it asks you to press a key, setup has finished.
 
 ArthurMask is not installed this way (document masking and the UYAP bridge do not work); the ArthurLegal
 packages, the research tools and Tapu work.
@@ -390,47 +459,57 @@ press <kbd>Enter</kbd>: Enter moves the file to the Trash. Then:
   <img src="docs/kurulum/mac-2-open-anyway-en.svg" width="400" alt="Example drawing: Privacy & Security in System Settings (2) and the Open Anyway button (3)">
 </p>
 
-**3. Choose modules.** Setup opens in your Mac's language. Click **Continue** to move on, and **Agree** in the
-window that follows the licence page. On the **Installation Type** screen, tick the modules you want and click
-**Continue**; click a module's name to see what it does below the list. The modules are the same as on Windows (table above); nothing is
-ticked on a first installation and at least one package is needed. ArthurMask can be chosen on Apple Silicon with
-macOS 14 (Sonoma) or later only. The **ArthurLegal new interface** box below the modules comes ticked (the desk
-and cards); untick it for **Claude Desktop classic**.
+**3. Choose your AI app and modules.** Setup opens in your Mac's language. Click **Continue** to move on, and
+**Agree** in the window that follows the licence page. On the **Installation Type** screen, two boxes sit at the top
+of the list: **Claude Desktop** and **ChatGPT**. Tick the app ArthurLegal should work in; you can tick both. The app
+installed on this Mac comes ticked; if neither is installed, Claude Desktop. On a Mac, setup does not install these
+apps: if Claude Desktop is not installed, get it from [claude.ai/download](https://claude.ai/download); if ChatGPT is
+not installed, the **ArthurLegal** icon opens the official download page
+([chatgpt.com/download](https://chatgpt.com/download/)). In ChatGPT, ArthurLegal needs ChatGPT's new desktop app; the
+older **ChatGPT Classic** does not run ArthurLegal's servers on this computer. Below them, tick the modules you want
+and click **Continue**; click a module's name to see what it does below the list. The modules are the same as on
+Windows (table above); nothing is ticked on a first installation and at least one package is needed. ArthurMask can
+be chosen on Apple Silicon with macOS 14 (Sonoma) or later only. The **ArthurLegal new interface** box below the
+modules comes ticked (the desk and cards); untick it for **the app's own chat (classic)**.
 
 <p align="center">
-  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer Law Firm (1), ArthurLegal Tapu (2) and ArthurMask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
+  <img src="docs/kurulum/mac-3-modules-en.svg" width="560" alt="Example drawing: on the Installation Type screen of the Mac installer the Claude Desktop and ChatGPT boxes are at the top of the list (here Claude Desktop is ticked); Law Firm (1), ArthurLegal Tapu (2) and ArthurMask (3) are ticked and ArthurLegal new interface comes ticked; then the Continue button (4)">
 </p>
 
-**4. Install.** If Claude Desktop is open, setup quits it; send any message you are typing first. On the next page
-click **Install**, then **Close** on the last page: the start guide opens in your browser. The
-modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal** for Law
-Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. As on
-Windows, the desktop icons carry the version number (e.g. **ArthurLegal 3.0.12**) and are renamed by updates. If you
-chose ArthurMask, it downloads in the background after setup (about 1.2 GB); a notification says when it is
-ready and an **ArthurMask** icon appears on the desktop. Setup reopens Claude Desktop: with the new interface
-Claude opens with *ArthurLegal Masası'nı aç* typed, press Enter. If Claude cannot find the desk, quit Claude Desktop
-completely with **Cmd+Q**, open it again, click the **ArthurLegal** icon and press Enter. You can also open a new chat and type your question. When Claude asks for permission the
-first time it uses a tool, choose **Always allow**. If Claude Desktop is not installed, get it from
-[claude.ai/download](https://claude.ai/download). To add or remove modules or to change the interface, open the
-installer again; your last choice comes pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
+**4. Install.** If the app you chose (Claude Desktop or ChatGPT) is open, setup quits it; send any message you are
+typing first. On the next page click **Install**, then **Close** on the last page: the start page opens in your
+browser. The modules you chose have icons in the Applications folder (Launchpad) and on the desktop: **ArthurLegal**
+for Law Firm or Corporate, plus **ArthurLegal Courthouse**, **ArthurLegal Academician** and **ArthurLegal Tapu**. As
+on Windows, the desktop icons carry the version number (e.g. **ArthurLegal 3.0.12**) and are renamed by updates. If
+you chose ArthurMask, it downloads in the background after setup (about 1.2 GB); a notification says when it is ready
+and an **ArthurMask** icon appears on the desktop. Setup reopens the app you chose: with the new interface it opens
+with *ArthurLegal Masası'nı aç* typed, press Enter; the desk opens full screen in Claude Desktop and in the side panel
+in ChatGPT. If you chose both apps, the **ArthurLegal** icon opens the start page; open the desk with its **Open in
+Claude Desktop** or **Open in ChatGPT** button. If the app cannot find the desk, quit it completely with **Cmd+Q**,
+open it again, click the **ArthurLegal** icon and press Enter. You can also open a new chat and type your question.
+When Claude asks for permission the first time it uses a tool, choose **Always allow**; when ChatGPT asks, allow it.
+To add or remove modules or to change the app or the interface, open the installer again; your last choice comes
+pre-ticked. To uninstall: Applications → ArthurLegal → **Uninstall ArthurLegal**.
 
 > [!IMPORTANT]
-> **Press Enter after clicking the ArthurLegal icon.** Claude Desktop opens with *ArthurLegal Masası'nı aç* already
-> typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself.
+> **Press Enter after clicking the ArthurLegal icon.** Claude Desktop or ChatGPT opens with *ArthurLegal Masası'nı aç*
+> already typed in the message box; the desk opens when you press **Enter**. The message is not sent by itself. If you
+> chose both apps, first click the button on the start page.
 
 Link to share this section: **https://github.com/beerbottle90/ArthurLegal#download** (Mac:
 **https://github.com/beerbottle90/ArthurLegal#mac-en**)
 
-<h2 id="masa">ArthurLegal Masası — one panel inside Claude</h2>
+<h2 id="masa">ArthurLegal Masası — one panel inside Claude or ChatGPT</h2>
 
 <p align="center">
   <img src="docs/masa/masa-cevap.png" width="760" alt="ArthurLegal Masası, Sohbet ekranı: Claude'un yazma kutusuna yazılan soru, canlı araştırma adımları (madde ve içtihat) ve TBK m. 344-345'e dayanan cevap masada. Solda Sohbet, Mevzuat ve kararlar, İçtihat, Geçmiş, ArthurTapu, Beyin, ArthurMask, UYAP Dashboard, Donna ve MCP'ler">
 </p>
 
-**Türkçe.** Masaüstündeki **ArthurLegal** simgesi Claude Desktop'u *ArthurLegal Masası'nı aç* mesajı yazılmış
-olarak açar; Enter'a basınca masa tam ekran açılır. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
+**Türkçe.** Masaüstündeki **ArthurLegal** simgesi kurulumda seçtiğiniz uygulamayı (Claude Desktop ya da ChatGPT)
+*ArthurLegal Masası'nı aç* mesajı yazılmış olarak açar; Enter'a basınca masa açılır: Claude Desktop'ta tam ekran,
+ChatGPT'de ChatGPT'nin yan panelinde. Solda tek panel: Sohbet, Mevzuat ve kararlar, İçtihat,
 Hesap kartları, Geçmiş, ArthurTapu, Beyin (Hafıza), ArthurMask, UYAP Dashboard, Donna ve MCP'ler. Ortada yapılan iş adım adım, altta
-Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araştırma ve cevap masada canlı görünür. Her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz.
+uygulamanın kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araştırma ve cevap masada canlı görünür. Claude Desktop'ta her şey kendi Claude planınızla çalışır; bir API anahtarı gerekmez, faturası çıkmaz. Aşağıdaki anlatım Claude Desktop'u örnek alır; ChatGPT'deki farklar ayrı maddede.
 
 - **Soru, her adım ve cevap masada canlı.** Claude'un yazma kutusuna yazdığınız soru hemen masanın Sohbet ekranına
   gelir; Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç; madde ya da karar listesi satırın
@@ -463,14 +542,23 @@ Claude'un kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, araşt�
   Claude'un telefon uygulamasında da açılır; Hafıza, ArthurMask ve UYAP tasarım gereği bilgisayarınızda kalır. Masa
   bu ekranlarda modülün ne işe yaradığını ve indirme bağlantısını gösterir. Claude Desktop'ta masa araştırma
   bağlantısından açıldıysa **Masayı bu bilgisayarda aç** onu kurulumdan yeniden açar; bu üç modül orada çalışır.
-- Klasik görünümü tercih ederseniz kurulumda **Claude Desktop klasik**'i seçin: masa ve kartlar kapanır, sonuçlar
-  metin olarak gelir. Açık tema varsayılandır; koyu ve otomatik masanın sol altından seçilir.
+- **ChatGPT'de.** Kurulumda ChatGPT'yi seçtiyseniz simge ChatGPT'yi yeni bir sohbetle, yazma kutusunda *ArthurLegal
+  Masası'nı aç* yazılı açar; Enter'a basınca masa ChatGPT'nin yan panelinde açılır (ChatGPT masaüstünde tam ekran
+  görünümü yan paneldir). Sorunuzu ChatGPT'nin yazma kutusuna yazın: soru masanın Sohbet ekranına gelir, her araç
+  adımı canlı satır olarak görünür, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı masada açılır;
+  sohbete yalnız "Cevap masada." yazılır. Modüller, hesap kartları, MCP'ler ekranı, Hafıza, ArthurMask, UYAP Dashboard
+  ve Tapu ChatGPT'de de aynı masadadır; yerel modüller bu bilgisayarda çalışır. Kurulum ArthurLegal'in kural becerisini
+  ve 11 iş alanı becerisini ChatGPT'ye kurar, her güncellemede yeniler. Masa ChatGPT'de model sormaz ve göstermez
+  ([model](#model)). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.
+- Klasik görünümü tercih ederseniz kurulumda **Uygulamanın kendi sohbeti (klasik)**'ni seçin: masa ve kartlar
+  kapanır, sonuçlar metin olarak gelir. Açık tema varsayılandır; koyu ve otomatik masanın sol altından seçilir.
 
 <p align="center">
   <img src="docs/masa/masa-atif.png" width="760" alt="Masada atıf teyidi: yapıştırılan paragraftaki TBK m. 344, TBK m. 347 ve AY m. 35 atıfları başlıklarıyla doğrulandı">
 </p>
 
-**English.** The **ArthurLegal** icon opens Claude Desktop with *ArthurLegal Masası'nı aç* (open the ArthurLegal
+**English.** The **ArthurLegal** icon opens the app you chose during setup (Claude Desktop or ChatGPT; ChatGPT is
+described below). In Claude Desktop it opens with *ArthurLegal Masası'nı aç* (open the ArthurLegal
 desk) already typed; press Enter and the desk opens full screen. One panel on the left (chat, legislation and
 citations, case law, fee cards, history, land registry, memory, ArthurMask, the UYAP Dashboard, Donna and connected servers), the
 steps of the current task in the middle, Claude's own message box at the bottom. Type only your question in that box: the question, every source Claude checks (a live line each) and the answer appear on the desk, with every article citation in the answer checked against the official text. It runs on your own Claude plan;
@@ -484,14 +572,25 @@ article and case-law results appear as ArthurLegal cards; Donna
 summarises your day through the apps you have connected to Claude (their status comes from the same list as the MCP
 screen) and asks before creating or sending anything. On the web and in the Claude mobile app the desk comes from the
 research connector; the desktop-only modules say what they do and link to the download, and in Claude Desktop a desk
-opened from the connector offers to reopen itself from your installation, where those modules work. The MCP screen lists your connected servers and their status, ArthurLegal and your Claude connectors, with a button to connect more. Prefer plain Claude Desktop? Choose **Claude Desktop classic** during setup.
+opened from the connector offers to reopen itself from your installation, where those modules work. The MCP screen lists your connected servers and their status, ArthurLegal and your Claude connectors, with a button to connect more.
+
+**In ChatGPT.** If you chose ChatGPT during setup, the icon opens ChatGPT in a new chat with *ArthurLegal Masası'nı
+aç* typed in the message box; press Enter and the desk opens in ChatGPT's side panel (in the ChatGPT desktop app the
+full-screen view is the side panel). Type your question in ChatGPT's message box: it appears on the desk's Chat
+screen, every tool step shows as a live line, and the answer opens on the same desk with its sources and every
+article citation checked against the official text; the chat itself only says "Cevap masada." (the answer is on the
+desk). Modules, fee cards, the MCP screen, Memory, ArthurMask, the UYAP Dashboard and Tapu are on the same desk in
+ChatGPT; the local modules run on this computer. Setup installs ArthurLegal's rules skill and its 11 practice-area
+skills in ChatGPT and refreshes them with every update. In ChatGPT the desk does not ask for or show the model
+([model](#model-en)). Use in ChatGPT on the web and on phones is in preparation. Prefer the app's plain chat? Choose
+**The app's own chat (classic)** during setup.
 
 ---
 
 > **Proprietary — Non-Commercial Use Only. All Rights Reserved. See [LICENSE](LICENSE).**
 
-**Multi-jurisdiction legal AI assistant packages for Claude Desktop (one installer, Windows and Mac), opened as one
-panel inside Claude: [ArthurLegal Masası](#masa).** They also run as [Claude.ai Projects](https://claude.ai/projects):
+**Multi-jurisdiction legal AI assistant packages that run in Claude Desktop and in the ChatGPT desktop app (one
+installer, Windows and Mac), opened as one panel inside the app: [ArthurLegal Masası](#masa).** They also run as [Claude.ai Projects](https://claude.ai/projects):
 each package is a `SYSTEM_PROMPT.md` (Custom Instructions) plus a `knowledge/`
 folder, and reaches **28 jurisdictions** through **one primary MCP connector** (Türkiye plus eleven
 jurisdictions and the Turkish land registry, no auth), up to four optional ones, and a curated primary-source reference layer.
@@ -500,8 +599,8 @@ jurisdictions and the Turkish land registry, no auth), up to four optional ones,
 
 > ### ⬇ ArthurMask — local privacy gate for Claude Desktop (Windows and macOS)
 > **[Download for Windows: ArthurMask-Kurulum.exe](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe)** (about 1 GB) · **[Download for macOS: ArthurMask-Kurulum.dmg](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg)** (Apple Silicon, macOS 14+, about 1.2 GB). The links download directly; no GitHub account needed.
-> Windows: double-click the downloaded file. macOS: open the DMG, drag ArthurMask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. The ArthurLegal installers (Windows and Mac) can also install it for you: tick ArthurMask on their module screen. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
-> **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): ArthurMask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında.
+> Windows: double-click the downloaded file. macOS: open the DMG, drag ArthurMask to Applications, then allow it once under System Settings → Privacy & Security → Open Anyway. The ArthurLegal installers (Windows and Mac) can also install it for you: tick ArthurMask on their module screen; installed that way, it also works in ChatGPT. Use it for any document that names a client, party, witness or employee; plain legal research questions do not need it. Guide: `ARTHUR-MASK.md` in the Law Firm, Corporate or Courthouse package.
+> **Türkçe:** [Windows kurulum dosyası](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.exe): inen dosyaya çift tıklayın. [macOS disk görüntüsü](https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum.dmg): ArthurMask'i Uygulamalar'a sürükleyin, ilk açılışta Gizlilik ve Güvenlik → Yine de Aç ile onaylayın; anlatım paketlerdeki `ARTHUR-MASK.md` dosyasında. ArthurLegal kurulumunda ArthurMask'i işaretlerseniz ChatGPT'de de çalışır.
 
 Built for legal teams that work across borders: a contract governed by English
 law, arbitrated in Geneva, with an Azerbaijani counterparty and an EU data-transfer
@@ -573,14 +672,15 @@ yoktur. Masaüstünde tek simge olur: **ArthurLegal - UYAP Dashboard**.
   nedeni yazılır.
 - **Hata olursa Tekrar dene.** Tarayıcı kapalıysa, giriş yapılmadıysa ya da liste henüz görülmediyse Dashboard ne
   yapılacağını yazar ve **Tekrar dene** düğmesini gösterir. Yenileme olmazsa son görülen liste saatiyle gelir.
-- **Gerçek değerler yalnız ekranınızda.** Ad, esas numarası ve tebligat konusu Claude'a gitmeden önce ArthurMask'te
+- **Gerçek değerler yalnız ekranınızda.** Ad, esas numarası ve tebligat konusu yapay zekâya (Claude ya da ChatGPT) gitmeden önce ArthurMask'te
   etiketlenir (`{{KİŞİ-01}}`, `{{DOSYA_NO-01}}`). Gerçek liste yalnız Dashboard penceresinde açılır, kopyalanamaz ve
   10 dakika kullanılmazsa gizlenir.
 - **Son gün çift kayıtla.** Son günü önce siz yazarsınız; sistemin hesabı sonra çalışır ve yalnız uyuşmazlıkta
   uyarır, modele gün gitmez. Takvim kaydı bilgisayarınızda oluşur (üç gün ve bir gün önce, 09.00).
 - **Claude'da ve masada.** Aynı köprü Claude Desktop'ta `arthur-uyap` olarak görünür; **+** menüsündeki *Sabah
   taraması* Bugün listesini Claude'a maskeli verir. [ArthurLegal Masası](#masa)'nın UYAP ekranı son işin saatini,
-  görülen listeleri ve bugünkü sayacı gösterir.
+  görülen listeleri ve bugünkü sayacı gösterir. Kurulumda ChatGPT'yi seçtiyseniz köprü ChatGPT'de de `arthur-uyap`
+  olarak görünür (**Settings › Plugins**, **MCPs** sekmesi); UYAP ekranı ChatGPT'deki masada da vardır.
 
 **Sınırlar.** UYAP'ın sunucusuna bir insanın portaldaki yükünden fazlası gitmez. Ortam değişkenleriyle yalnız
 daraltılabilir, gevşetilemez:
@@ -590,7 +690,7 @@ daraltılabilir, gevşetilemez:
 | Okuma | UYAP'a ek istek yok: yalnız avukatın açtığı listeler okunur |
 | Yenileme (Tara) | yalnız `GET` ile gelmiş ve 10 dakikadan eski liste, aynı adresle bir kez |
 | İki istek arası | en az 2 sn, tek sıradan (dakikada en çok 30) |
-| Günlük | en çok 200 istek (Dashboard ve Claude birlikte) |
+| Günlük | en çok 200 istek (Dashboard ve yapay zekâ uygulaması birlikte) |
 | Tarama başına | en çok 40 istek ve 3 dakika |
 | UYAP yoğunluk bildirirse (429, 503) ya da üst üste 3 hata | 10 dakika istek yok |
 | UYAP erişimi reddederse (403) | o gün istek yok |
@@ -620,7 +720,7 @@ It sends **no extra requests** to UYAP: it reads what UYAP already sent to your 
 Lists are recognised from their field names; a list it cannot recognise with confidence is not used, and a row with
 an unreadable date rejects the whole list with the reason. Every error says what to do next and offers **Retry**;
 if a refresh fails, the last list seen comes back with its time. Names, case numbers and notification subjects are
-masked before anything reaches Claude; the real list opens only in the Dashboard window. The lawyer enters a
+masked before anything reaches Claude or ChatGPT; the real list opens only in the Dashboard window. The lawyer enters a
 deadline first; the bridge's own calculation runs afterwards and warns only on a mismatch.
 
 Limits (they can only be tightened): a refresh only for lists that arrived by `GET` and are older than 10 minutes;
@@ -701,6 +801,78 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+<a id="setup-340"></a>
+
+## Setup 3.4.0 — ArthurLegal in the ChatGPT desktop app (2026-11-17)
+
+- **Choose your AI app.** A new screen right after the licence: **Choose your AI app**, with two boxes, **Claude
+  Desktop** and **ChatGPT**. Tick one or both; at least one is needed. The app installed on this computer says
+  "(installed on this computer)" and comes ticked; if neither is installed, Claude Desktop comes ticked. On a Mac the
+  two boxes are at the top of the list on the Installation Type screen; the zip setup asks in the black window after
+  the modules; a silent installation takes `/ASISTAN=claude|chatgpt|ikisi`.
+- **If ChatGPT is not installed.** On Windows, setup tries to install the official ChatGPT app (publisher OpenAI) from
+  the Microsoft Store; if that is not possible, the ArthurLegal desktop icon opens the official download page,
+  [chatgpt.com/download](https://chatgpt.com/download/). On a Mac, setup does not install ChatGPT; the icon opens the
+  download page. ArthurLegal needs ChatGPT's new desktop app; the older ChatGPT Classic does not run local servers.
+- **The desk in ChatGPT.** The ArthurLegal icon opens ChatGPT in a new chat with *ArthurLegal Masası'nı aç* typed in
+  the message box; press Enter and the desk opens in ChatGPT's side panel. Type your question in ChatGPT's message box:
+  it appears on the desk's Chat screen, every tool step shows as a live line, and the answer opens on the same desk
+  with its sources and every article citation checked against the official text; the chat itself only says "Cevap
+  masada." (the answer is on the desk). Modules, fee cards, the MCP screen, Memory, ArthurMask, the UYAP Dashboard and
+  Tapu are on the same desk in ChatGPT; the local modules run on this computer.
+- **Skills and servers.** Setup adds ArthurLegal's local servers to ChatGPT's settings (only ArthurLegal's lines; your
+  other settings stay as they are, and a backup is made first) and installs ArthurLegal's rules skill and its 11
+  practice-area skills in ChatGPT. You find them on **Settings › Plugins**: the **Skills** tab (names start with
+  `arthurlegal`) and the **MCPs** tab (`arthurlegal-yerel` and, if you chose them, `arthur-tapu`, `arthur-mask`,
+  `arthur-uyap`). Every update refreshes them by itself. ChatGPT's menus are in English.
+- **Both apps.** If you tick both, the icon opens only the start page, with **Open in Claude Desktop** and **Open in
+  ChatGPT** at the top. With one app, the icon opens that app with the desk message. With the classic interface the
+  buttons just open the app.
+- **Model in ChatGPT.** We have not yet measured ChatGPT models; we recommend choosing the most capable current model. This is not binding.
+  Choose it in the model menu below ChatGPT's message box; in ChatGPT the desk does not ask for or show the model.
+- **Interface screen.** "Claude Desktop classic" is now called **The app's own chat (classic)**, and ArthurMask "masks
+  documents on this computer before the AI sees them".
+- How it arrives: the updater installs 3.4.0 on Windows and on a Mac; existing installations keep working with
+  Claude. To add ChatGPT, run the installer again and tick ChatGPT; ArthurLegal's servers (and in ChatGPT its skills)
+  are taken out of an app you untick. Use in ChatGPT on the web and on phones is in preparation.
+
+**Türkçe:** Kurulumda lisanstan hemen sonra yeni bir ekran var: **Yapay zekâ uygulamanızı seçin**. **Claude
+Desktop**'u, **ChatGPT**'yi ya da ikisini işaretleyin; en az biri gerekir. Bu bilgisayarda kurulu olanın yanında
+"(bu bilgisayarda kurulu)" yazar ve işaretli gelir; hiçbiri kurulu değilse Claude Desktop işaretli gelir. Mac'te iki
+kutu Yükleme Türü ekranında listenin başındadır; zip kurulumunda siyah pencere modüllerden sonra sorar. ChatGPT kurulu
+değilse Windows'ta kurulum resmî ChatGPT uygulamasını (yayıncı OpenAI) Microsoft Store'dan kurmayı dener; olmazsa
+masaüstündeki ArthurLegal simgesi resmî indirme sayfasını açar. Mac'te kurulum ChatGPT'yi kurmaz, simge bu sayfayı
+açar. Gereken, ChatGPT'nin yeni masaüstü uygulamasıdır; eski ChatGPT Classic yerel sunucu çalıştırmaz. ChatGPT'de
+simge yeni bir sohbeti *ArthurLegal Masası'nı aç* yazılı açar; Enter'a basınca masa ChatGPT'nin yan panelinde açılır.
+Soru, her araç adımı ve cevap (kaynakları ve madde atıflarının resmî metinden teyidiyle) aynı masada görünür; sohbete
+yalnız "Cevap masada." yazılır. Modüller, hesap kartları, MCP'ler ekranı, Hafıza, ArthurMask, UYAP Dashboard ve Tapu
+ChatGPT'de de aynı masadadır. Kurulum ArthurLegal'in yerel sunucularını ChatGPT'nin ayarına yazar (yalnız
+ArthurLegal'in satırları; öteki ayarlarınız aynen kalır, önce yedek alınır) ve kural becerisiyle 11 iş alanı
+becerisini ChatGPT'ye kurar. Hepsi ChatGPT'de **Settings › Plugins** sayfasının **Skills** ve **MCPs** sekmelerinde
+görünür ve her güncellemede kendiliğinden yenilenir. İki uygulama seçildiyse simge başlangıç sayfasını açar; sayfanın
+başındaki **Claude Desktop'ta aç** ve **ChatGPT'de aç** düğmeleri masayı o uygulamada açar. ChatGPT'de model: ChatGPT modelleriyle henüz ölçüm yapmadık; en yetenekli güncel modeli seçmenizi tavsiye ederiz, bağlayıcı değildir.
+Arayüz ekranındaki "Claude Desktop klasik" seçeneğinin yeni adı: **Uygulamanın kendi sohbeti (klasik)**. Güncelleyici
+3.4.0'ı kendisi kurar; mevcut kurulumlar Claude ile sürer. ChatGPT'yi eklemek için kurulum dosyasını yeniden
+çalıştırıp ChatGPT'yi işaretleyin; işaretini kaldırdığınız uygulamadan ArthurLegal'in sunucuları (ChatGPT'de
+becerileri de) çıkarılır. ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.
+
+**Azərbaycan dili:** Quraşdırmada lisenziyadan dərhal sonra yeni ekran var: **Süni intellekt tətbiqinizi seçin**.
+**Claude Desktop**, **ChatGPT** və ya hər ikisini işarələyin; ən azı biri lazımdır. Bu kompüterdə quraşdırılmış
+olanın yanında "(bu kompüterdə quraşdırılıb)" yazılır və işarələnmiş gəlir; heç biri quraşdırılmayıbsa, Claude
+Desktop işarələnmiş gəlir. Mac-də iki xana Yükleme Türü (Quraşdırma növü) ekranında siyahının əvvəlindədir. ChatGPT
+quraşdırılmayıbsa, Windows-da quraşdırma rəsmi ChatGPT tətbiqini (naşir OpenAI) Microsoft Store-dan quraşdırmağa
+çalışır; alınmasa, iş masasındakı ArthurLegal nişanı rəsmi yükləmə səhifəsini açır (Mac-də quraşdırma ChatGPT-ni
+quraşdırmır, nişan bu səhifəni açır). ChatGPT-də nişan yeni söhbəti *ArthurLegal Masası'nı aç* yazılmış halda açır;
+Enter düyməsini basanda masa ChatGPT-nin yan panelində açılır. Sual, hər alət addımı və cavab eyni masada görünür;
+söhbətə yalnız "Cevap masada." (Cavab masadadır) yazılır. Quraşdırma ArthurLegal-ın qayda bacarığını və 11 iş sahəsi
+bacarığını ChatGPT-yə quraşdırır; onlar **Settings › Plugins** səhifəsinin **Skills** və **MCPs** bölmələrində
+görünür və hər yeniləmədə öz-özünə təzələnir. Hər iki tətbiq seçilibsə, nişan başlanğıc səhifəsini açır; oradakı
+**Claude Desktop-da aç** və **ChatGPT-də aç** düymələri masanı həmin tətbiqdə açır. ChatGPT-də model: ChatGPT modelləri ilə hələ ölçmə aparmamışıq; ən bacarıqlı cari modeli seçməyinizi tövsiyə edirik, məcburi deyil.
+İnterfeys ekranındakı "Claude Desktop klassik" seçiminin yeni adı: **Tətbiqin öz söhbəti (klassik)**. Yeniləyici
+3.4.0-ı özü quraşdırır; mövcud quraşdırmalar Claude ilə davam edir. ChatGPT-ni əlavə etmək üçün quraşdırma faylını
+yenidən işə salıb ChatGPT-ni işarələyin; işarəsini götürdüyünüz tətbiqdən ArthurLegal serverləri (ChatGPT-də
+bacarıqları da) çıxarılır. ChatGPT-nin veb və telefon versiyasında istifadə hazırlanır.
 
 ## Setup 3.3.2 — Your desk history stays after an update; usability fixes (2026-11-15)
 

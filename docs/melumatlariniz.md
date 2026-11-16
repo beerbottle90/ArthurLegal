@@ -5,15 +5,19 @@
 ArthurLegal pulsuz və açıq mənbəlidir; sizinlə xidmət müqaviləsi bağlamır. Buna görə aşağıdakılar müqavilə öhdəliyi
 deyil, **dizaynın özüdür**: hər sətrin əsası açıq koddadır və yoxlanıla bilər.
 
+ArthurLegal quraşdırmada seçdiyiniz süni intellekt tətbiqinin içində işləyir: Claude Desktop, ChatGPT masaüstü tətbiqi
+və ya hər ikisi. Cədvəl hər ikisini əhatə edir; yalnız ChatGPT-yə aid olanlar ayrıca yazılıb.
+
 ## Bir cədvəldə
 
 | Nə | Harada qalır | Kimə gedir |
 |---|---|---|
 | Sualınız və Claude-un cavabı | Claude-da (Anthropic). Masanın tarixçəsi isə öz cihazınızda: kompüterinizdə ArthurLegal quraşdırılıbsa quraşdırma qovluğunda, əks halda masanın brauzer yaddaşında; 90 gündən sonra silinir. | Anthropic-ə, Claude istifadənizin öz şərtləri ilə (aşağıda "Claude ayarınız"). |
+| Sualınız və ChatGPT-nin cavabı (ChatGPT-ni seçmisinizsə) | ChatGPT-də (OpenAI). Masanın tarixçəsi isə kompüterinizdə, quraşdırma qovluğunda; 90 gündən sonra silinir. | OpenAI-a, ChatGPT istifadənizin öz şərtləri ilə (aşağıda "ChatGPT ayarınız"). Sualınızla birlikdə ChatGPT-nin alətlərdən aldığı nəticələr də (qanunvericilik, məhkəmə təcrübəsi, qərarlar kimi rəsmi mənbələrdən gələn mətnlər) ChatGPT-yə gedir. |
 | Araşdırma sorğusu (axtarış sözləri, qanun və maddə nömrəsi, qərar məlumatları) | ArthurLegal serveri axtarış mətnini saxlamır və sorğu jurnalı aparmır. İstisnalar (Almaniya və Azərbaycan alətlərinin qısa keşi) [serverin məxfilik sənədindədir](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md). | ArthurLegal MCP serverinə (Fly.io, Amsterdam), oradan yalnız lazımi parametrlərlə rəsmi mənbəyə: mevzuat.gov.tr, Rəsmi Qəzet, Yargıtay, Danıştay, Konstitusiya Məhkəməsi və qurumlar. Semantik axtarışda axtarış mətni mənasının hesablanması üçün Voyage AI-a gedir. |
-| Müştəri sənədi (ArthurMask ilə) | Əsl sənəd və real adlar, nömrələr yalnız kompüterinizdə. | Claude-a yalnız etiketli mətn gedir (məs. `{{KİŞİ-01}}`). Etiketin real qarşılığı Claude-a göndərilmir. |
-| UYAP | ArthurLegal UYAP-a heç nə yazmır; UYAP-da açdığınız siyahıları kompüterinizdə oxuyur. | Claude-a iş nömrələri etiketli gedir; real dəyərlər yalnız sizin ekranınızda görünür. |
-| ArthurLegal Yaddaş (Beyin) | Kompüterinizdə. | Claude-a, söhbət açılarkən yalnız seçimləriniz, düzəlişləriniz və son sessiya xülasəsi. |
+| Müştəri sənədi (ArthurMask ilə) | Əsl sənəd və real adlar, nömrələr (ArthurMask-ın real adlar cədvəli) yalnız kompüterinizdə. | Claude-a və ya ChatGPT-yə yalnız etiketli mətn gedir (məs. `{{KİŞİ-01}}`). Etiketin real qarşılığı süni intellektə göndərilmir. |
+| UYAP | ArthurLegal UYAP-a heç nə yazmır; UYAP-da açdığınız siyahıları kompüterinizdə oxuyur. | Claude-a və ya ChatGPT-yə iş nömrələri etiketli gedir; real dəyərlər yalnız sizin ekranınızda görünür. |
+| ArthurLegal Yaddaş (Beyin) | Kompüterinizdə. | Claude-a və ya ChatGPT-yə, söhbət açılarkən yalnız seçimləriniz, düzəlişləriniz və son sessiya xülasəsi. |
 | Torpaq reyestri (TKGM) parsel sorğusu | Parsel identifikatoru və məlumatı serverin yaddaşında ən çox 24 saat; diskə və ya jurnala yazılmır. | Serverdən TKGM Parsel Sorğusuna. |
 | Masanın dili və mövzusu | Cihazınızda. | Heç yerə. |
 
@@ -25,9 +29,24 @@ müddətdə yeni söhbətləriniz Anthropic-in modellərinin təkmilləşdirilm�
 daxil etməzdən əvvəl bu ayarı yoxlayın və müştəri sənədini ArthurMask-dən keçirin. Team, Enterprise və API istifadəsi
 Anthropic-in kommersiya şərtlərinə tabedir. Mənbə: [Anthropic, model təkmilləşdirmə məxfilik ayarı](https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings).
 
+## ChatGPT ayarınız
+
+Quraşdırmada ChatGPT-ni seçmisinizsə, ArthurLegal sizin ChatGPT hesabınızla, ChatGPT masaüstü tətbiqində işləyir.
+ChatGPT-yə sualınız, ChatGPT-nin alətlərdən aldığı nəticələr (qanunvericilik, məhkəmə təcrübəsi, qərarlar kimi rəsmi
+mənbələrdən gələn mətnlər) və ArthurMask ilə **maskalanmış** sənəd mətni gedir. ArthurMask-ın real adlar cədvəli,
+Yaddaş qovluğu, masanın tarixçəsi, UYAP məlumatları və Tapu qeydinin mətni Claude-da olduğu kimi kompüterinizdə qalır.
+ArthurLegal-ın uzaq araşdırma serveri sualın məzmununu qeydə almır. ChatGPT-nin məlumat və məxfilik ayarları
+OpenAI-ın hesabınıza tətbiq etdiyi şərtlərə tabedir; ArthurLegal onları dəyişmir. Quraşdırma ChatGPT-yə yalnız
+ArthurLegal-ın serverlərini və bacarıqlarını əlavə edir. Müştəri məlumatı daxil etməzdən əvvəl ChatGPT-nin məlumat və
+məxfilik ayarlarını yoxlayın.
+
+Fərdi məlumatların xaricə ötürülməsi (Türkiyənin 6698 saylı Kişisel Verilerin Korunması Kanunu, KVKK, 9-cu maddə)
+baxımından qiymətləndirmə Claude-da olduğu kimi ChatGPT-də də istifadəçiyə aiddir; müştəri sənədini ArthurMask-dən
+keçirin.
+
 ## Nəticə haqqında
 
-- ArthurLegal-ın və Claude-un nəticəsi **hüquqi rəy deyil**.
+- ArthurLegal-ın, Claude-un və ChatGPT-nin nəticəsi **hüquqi rəy deyil**.
 - Nəticə **səhv və ya natamam ola bilər**.
 - **Vəkil istifadə etməzdən əvvəl rəsmi mənbədən yoxlayır**; peşə məsuliyyəti vəkildədir.
 
@@ -40,6 +59,9 @@ düyməsi cümləni və rəsmi mətni yan-yana açır. Mənbə məlumat verməs�
 
 - Uzaq serverin ətraflı məxfilik sənədi: [arthurlegal-mcp/PRIVACY.md](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md)
 - ArthurMask necə işləyir: [arthur-mask](https://github.com/beerbottle90/arthur-mask)
+- Quraşdırmanın ChatGPT-yə nə yazdığı: [codex_ayari.py](../ArthurLegal-setup/istemci/codex_ayari.py) (ayar faylına yalnız ArthurLegal-ın sətirləri yazılır, fayl dəyişdirilməzdən əvvəl ehtiyat nüsxəsi çıxarılır; bacarıqlar adı `arthurlegal` ilə başlayan qovluqlardır)
 - Bu depo: quraşdırmanın və masanın bütün kodu.
 
 Bu səhifə hər buraxılışla yenidən nəzərdən keçirilir; dəyişiklik tarixçəsi depodadır.
+
+<sub>ChatGPT və OpenAI OpenAI-ın ticarət nişanlarıdır.</sub>

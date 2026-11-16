@@ -7,14 +7,15 @@ yer kırmızı çerçeve ve numarayla gösterilir. Üzerindeki yazılar Windows'
 metinleridir; Microsoft bir metni değiştirirse yalnız aşağıdaki METIN sözlüğü düzeltilip bu betik
 yeniden çalıştırılır. SVG dosyaları elle düzenlenmez.
 
-Modül ve arayüz ekranı çizimlerinin (moduller.svg, modules-en.svg, moduller-courthouse.svg, arayuz.svg,
-interface-en.svg) yazıları ArthurLegal kurulum betiğinden okunur (ArthurLegal-setup/kurulum/ArthurLegal.iss, Modul*
-ve Arayuz* iletileri).
+Yapay zekâ uygulaması, modül ve arayüz ekranı çizimlerinin (asistan.svg, ai-app-en.svg, moduller.svg,
+modules-en.svg, moduller-courthouse.svg, arayuz.svg, interface-en.svg) yazıları ArthurLegal kurulum betiğinden okunur
+(ArthurLegal-setup/kurulum/ArthurLegal.iss, Asistan*, Modul* ve Arayuz* iletileri).
 
 Mac çizimleri (mac-*.svg): macOS'un ilk açılış uyarısı, Sistem Ayarları'ndaki Yine de Aç ve kurulum sihirbazının
 Yükleme Türü ekranı. Üzerindeki macOS yazıları macOS'un kendi Türkçe ve İngilizce metinleridir (MAC_METIN; kaynağı
-mac_metinleri.py); modül adları ve açıklamaları yine ArthurLegal.iss'ten, Mac'e özgü ArthurMask koşuluyla
-(ArthurLegal-setup/yayin/derle_macos.py, MASK_KOSULU).
+mac_metinleri.py); uygulama ve modül adları, açıklamaları yine ArthurLegal.iss'ten, Mac'e özgü ArthurMask koşuluyla
+(ArthurLegal-setup/yayin/derle_macos.py, MASK_KOSULU). Listenin başında yapay zekâ uygulamasının iki kutusu durur
+(Claude Desktop, ChatGPT; v3.4.0).
 """
 from __future__ import annotations
 
@@ -287,12 +288,12 @@ def edge_dialog(m: dict) -> str:
 
 
 def kurulum_metinleri() -> dict:
-    """Modül ve arayüz ekranlarının yazıları kurulum betiğinden okunur ([CustomMessages] Modul*, Arayuz*): çizim
-    kurulumla aynı kalır, metin bir yerde değişince yalnız bu betik yeniden çalıştırılır."""
+    """Uygulama, modül ve arayüz ekranlarının yazıları kurulum betiğinden okunur ([CustomMessages] Asistan*, Modul*,
+    Arayuz*): çizim kurulumla aynı kalır, metin bir yerde değişince yalnız bu betik yeniden çalıştırılır."""
     iss = (BURASI.parents[1] / "ArthurLegal-setup" / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
     metin = {"tr": {}, "en": {}}
     for satir in iss.splitlines():
-        m = re.match(r"^(tr|en)\.((?:Modul|Arayuz)\w+)=(.*)$", satir)
+        m = re.match(r"^(tr|en)\.((?:Modul|Arayuz|Asistan)\w+)=(.*)$", satir)
         if m:
             metin[m.group(1)][m.group(2)] = m.group(3)
     return metin
@@ -302,10 +303,12 @@ def kurulum_metinleri() -> dict:
 SIHIRBAZ = {
     "tr": {"pencere": "ArthurLegal - Kurulum yardımcısı", "onceki": "Önceki", "sonraki": "Sonraki", "iptal": "İptal",
            "dipnot": "Çizim · ArthurLegal kurulumunun modül ekranı (örnek görünüm)",
-           "dipnot_arayuz": "Çizim · ArthurLegal kurulumunun arayüz ekranı (örnek görünüm)"},
+           "dipnot_arayuz": "Çizim · ArthurLegal kurulumunun arayüz ekranı (örnek görünüm)",
+           "dipnot_asistan": "Çizim · ArthurLegal kurulumunun yapay zekâ uygulaması ekranı (örnek görünüm)"},
     "en": {"pencere": "Setup - ArthurLegal", "onceki": "Back", "sonraki": "Next", "iptal": "Cancel",
            "dipnot": "Drawing · the module screen of ArthurLegal Setup (example)",
-           "dipnot_arayuz": "Drawing · the interface screen of ArthurLegal Setup (example)"},
+           "dipnot_arayuz": "Drawing · the interface screen of ArthurLegal Setup (example)",
+           "dipnot_asistan": "Drawing · the AI app screen of ArthurLegal Setup (example)"},
 }
 MODUL_SIRASI = ("ModulHukuk", "ModulKurumsal", "ModulAdliye", "ModulAkademisyen", "ModulTapu", "ModulMask", "ModulHafiza")
 
@@ -339,6 +342,40 @@ def sihirbaz_dugmeleri(x0: int, g: int, by: int, s: dict) -> str:
                   f'stroke="{"#0f6cbd" if ad == s["sonraki"] else "#adadad"}"/>'
                   + t(bx + 39, by + 17, ad, 12.5, "#1f2328", hiza="middle"))
     return govde
+
+
+def asistan(dil: str, isaretli: tuple, kurulu: tuple, numaralar: tuple, baslik: str) -> str:
+    """Kurulumun yapay zekâ uygulaması ekranı (v3.4.0, K21; Kod: AsistanSayfasiOlustur): lisanstan sonra, modüllerden
+    önce iki onay kutusu (kalın), altlarında gri açıklama, en altta marka satırı. Bu bilgisayarda kurulu olanın adının
+    yanında AsistanKurulu yazar. ``isaretli`` işaretli kutular, ``kurulu`` kurulu sayılan uygulamalar; ``numaralar``
+    sırayla kırmızı çerçeve alan kutular ("AsistanClaude", "AsistanChatGPT") ya da "sonraki". Logo çizilmez."""
+    m, s = kurulum_metinleri()[dil], SIHIRBAZ[dil]
+    gen, yuk = 600, 372
+    x0, y0, g, h = 10, 10, 580, 336
+    govde = sihirbaz_ust(x0, y0, g, h, s, m["AsistanBaslik"], m["AsistanAciklama"])
+    ky = y0 + 120
+    cerceveler = {}
+    for ileti in ("AsistanClaude", "AsistanChatGPT"):
+        kx = x0 + 24
+        ad = m[ileti] + (" " + m["AsistanKurulu"] if ileti in kurulu else "")
+        govde += (f'<rect x="{kx}" y="{ky}" width="13" height="13" fill="#ffffff" stroke="#333333"/>'
+                  + (f'<path d="M{kx + 2.5} {ky + 6.5} l3 3 l5.5 -6" stroke="#1f2328" stroke-width="1.8" fill="none" '
+                     f'stroke-linecap="round" stroke-linejoin="round"/>' if ileti in isaretli else "")
+                  + t(kx + 20, ky + 11, ad, 13, "#1f2328", 700))
+        aciklama = sar(m[ileti + "Aciklama"], 82)
+        govde += satirlar(kx + 20, ky + 29, aciklama, 12, "#6e7781", 16)
+        cerceveler[ileti] = (kx - 5, ky - 5, 26 + len(ad) * 8, 23)
+        ky += 29 + 16 * (len(aciklama) - 1) + 26
+    govde += satirlar(x0 + 24, ky + 8, sar(m["AsistanMarka"], 90), 12, "#6e7781", 16)
+    by = y0 + h - 44
+    govde += sihirbaz_dugmeleri(x0, g, by, s)
+    for no, ileti in enumerate(numaralar, 1):
+        if ileti == "sonraki":
+            govde += isaret(x0 + g - 188, by - 4, 86, 34, no, rozet="ust")
+        else:
+            govde += isaret(*cerceveler[ileti], no, rozet="sag")
+    govde += dipnot(gen, yuk, s["dipnot_asistan"])
+    return svg(gen, yuk, govde, baslik)
 
 
 def arayuz(dil: str, numaralar: tuple, baslik: str) -> str:
@@ -564,8 +601,11 @@ def mac_metinleri_kurulum(dil: str) -> dict:
     return m
 
 
-# Mac'te arayüz (2.7.0) modüllerin altında işaretli gelen tek kutudur; tabloda son satır.
-MAC_SATIRLARI = MODUL_SIRASI + ("ArayuzYeni",)
+# Mac'te yapay zekâ uygulamasının iki kutusu (v3.4.0, K21) listenin başında durur; bu Mac'te kurulu olan, hiçbiri
+# yoksa Claude Desktop işaretli gelir. Arayüz (2.7.0) modüllerin altında işaretli gelen tek kutudur; tabloda son satır.
+# Uygulama satırlarının Mac açıklaması (derle_macos.py, ASISTAN_MAC) Windows'takinden farklıdır: örneklerde o satırlar
+# seçili gösterilmediği için çizilmez.
+MAC_SATIRLARI = ("AsistanClaude", "AsistanChatGPT") + MODUL_SIRASI + ("ArayuzYeni",)
 
 
 def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> str:
@@ -574,8 +614,8 @@ def mac_moduller(dil: str, isaretli: tuple, numaralar: tuple, baslik: str) -> st
     sayfadadır)."""
     mm, m = MAC_METIN[dil], mac_metinleri_kurulum(dil)
     isaretli = tuple(isaretli) + ("ArayuzYeni",)  # arayüz kutusu kurulumda işaretli gelir
-    gen, yuk = 640, 524
-    x0, y0, g, h = 10, 10, 620, 486
+    gen, yuk = 640, 572
+    x0, y0, g, h = 10, 10, 620, 534
     govde = mac_pencere(x0, y0, g, h, "#ececec")
     # sol: adımlar
     ay = y0 + 70
@@ -668,29 +708,43 @@ def main() -> int:
                                             ("ModulAdliye", "ModulTapu", "ModulMask", "sonraki"),
                                             "Örnek: modül ekranında Courthouse, ArthurLegal Tapu ve ArthurMask'i "
                                             "işaretleyip Sonraki'ye tıklayın"),
+        # Yapay zekâ uygulaması ekranı (v3.4.0): Claude Desktop bu bilgisayarda kurulu ve önden işaretli, ChatGPT de
+        # işaretlendi (ikisi birden seçilebilir, en az biri gerekir); Sonraki.
+        "asistan.svg": asistan("tr", ("AsistanClaude", "AsistanChatGPT"), ("AsistanClaude",),
+                               ("AsistanClaude", "AsistanChatGPT", "sonraki"),
+                               "Örnek: yapay zekâ uygulaması ekranında Claude Desktop (bu bilgisayarda kurulu) önden "
+                               "işaretli, ChatGPT de işaretlendi; biri de yeter. Sonraki'ye tıklayın"),
+        "ai-app-en.svg": asistan("en", ("AsistanClaude", "AsistanChatGPT"), ("AsistanClaude",),
+                                 ("AsistanClaude", "AsistanChatGPT", "sonraki"),
+                                 "Example: on the AI app screen Claude Desktop (installed on this computer) comes ticked "
+                                 "and ChatGPT is ticked too; one is enough. Click Next"),
         # Arayüz ekranı (2.7.0): yeni arayüz seçili gelir, Sonraki.
         "arayuz.svg": arayuz("tr", ("ArayuzYeni", "sonraki"),
-                             "Örnek: arayüz ekranında ArthurLegal yeni arayüz seçili gelir; Claude Desktop klasik de "
-                             "seçilebilir. Sonraki'ye tıklayın"),
+                             "Örnek: arayüz ekranında ArthurLegal yeni arayüz seçili gelir; uygulamanın kendi sohbeti "
+                             "(klasik) de seçilebilir. Sonraki'ye tıklayın"),
         "interface-en.svg": arayuz("en", ("ArayuzYeni", "sonraki"),
-                                   "Example: on the interface screen ArthurLegal new interface comes selected; Claude "
-                                   "Desktop classic can be chosen instead. Click Next"),
+                                   "Example: on the interface screen ArthurLegal new interface comes selected; the app's "
+                                   "own chat (classic) can be chosen instead. Click Next"),
     })
     for dil, (ad1, ad2) in MAC_DOSYALAR.items():
         ciktilar.update({ad1: mac_acilmadi(MAC_METIN[dil]), ad2: mac_yine_de_ac(MAC_METIN[dil])})
+    # Mac örneklerinde listenin başındaki uygulama kutularından Claude Desktop işaretli gelir (bu Mac'te kurulu olan).
     ciktilar.update({
-        "mac-3-moduller.svg": mac_moduller("tr", ("ModulHukuk", "ModulTapu", "ModulMask"),
+        "mac-3-moduller.svg": mac_moduller("tr", ("AsistanClaude", "ModulHukuk", "ModulTapu", "ModulMask"),
                                            ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
-                                           "Örnek: Yükleme Türü ekranında paketinizi (burada Hukuk Bürosu), isterseniz Tapu "
-                                           "ve ArthurMask'i işaretleyip Sürdür'e tıklayın"),
-        "mac-3-modules-en.svg": mac_moduller("en", ("ModulHukuk", "ModulTapu", "ModulMask"),
+                                           "Örnek: Yükleme Türü ekranında listenin başında yapay zekâ uygulamanız (burada "
+                                           "Claude Desktop), altta paketiniz (burada Hukuk Bürosu), isterseniz Tapu ve "
+                                           "ArthurMask işaretli; Sürdür'e tıklayın"),
+        "mac-3-modules-en.svg": mac_moduller("en", ("AsistanClaude", "ModulHukuk", "ModulTapu", "ModulMask"),
                                              ("ModulHukuk", "ModulTapu", "ModulMask", "surdur"),
-                                             "Example: on the Installation Type screen tick your package (here Law Firm), "
-                                             "optionally Tapu and ArthurMask, then click Continue"),
-        "mac-3-moduller-courthouse.svg": mac_moduller("tr", ("ModulAdliye", "ModulTapu", "ModulMask"),
+                                             "Example: on the Installation Type screen your AI app (here Claude Desktop) "
+                                             "at the top of the list, then your package (here Law Firm), optionally Tapu "
+                                             "and ArthurMask are ticked; click Continue"),
+        "mac-3-moduller-courthouse.svg": mac_moduller("tr", ("AsistanClaude", "ModulAdliye", "ModulTapu", "ModulMask"),
                                                       ("ModulAdliye", "ModulTapu", "ModulMask", "surdur"),
-                                                      "Örnek: Yükleme Türü ekranında Courthouse, ArthurLegal Tapu ve "
-                                                      "ArthurMask'i işaretleyip Sürdür'e tıklayın"),
+                                                      "Örnek: Yükleme Türü ekranında listenin başında yapay zekâ "
+                                                      "uygulamanız (burada Claude Desktop), altta Courthouse, ArthurLegal "
+                                                      "Tapu ve ArthurMask işaretli; Sürdür'e tıklayın"),
     })
     for ad, icerik in ciktilar.items():
         (BURASI / ad).write_text(icerik, encoding="utf-8", newline="\n")
