@@ -1,0 +1,46 @@
+# legal-research-karsi-taraf-kimlik
+
+Karsi tarafin KIM oldugunu (LEI, tescilli unvan, yargi cevresi, ana ortaklik zinciri) yaptirim taramasindan ONCE sabitler. Sira degismez.
+
+# Karşı Taraf Kimlik Çözümleme ve Tarama (GLEIF → Resmî Yaptırım Listeleri)
+
+## Ne zaman kullanılır
+
+Yeni karşı taraf KYC dosyası; imza öncesi kontrol; grup yapısı soruları ("kimin
+iştiraki?", "nihai ana ortak kim?"); **her yaptırım taramasının ön adımı olarak.**
+
+## Sıra sabittir: önce kimlik, sonra listeler
+
+Serbest metin unvanla yaptırım taraması **hem yanlış pozitif** (aynı adlı
+şirketler) **hem yanlış negatif** (transliterasyon kayması — AZ/RU/CN adlarında
+belirgin) üretir. Taraf önce tescilli kimliğine indirgenir, sonra taranır.
+
+## Araçlar
+
+ArthurLegal MCP `gleif_` araçları (`gleif_autocomplete`, `gleif_search_entities`, `gleif_get_entity`,
+`gleif_get_group_structure`; yedek: GLEIF REST API `api.gleif.org`, web erişimi) + resmî yaptırım listeleri
+(web erişimi; `yaptirim-tarama-rehberi.md`).
+
+## Yöntem
+
+1. **Kimlik çözümle:** `gleif_autocomplete(query="{unvan}")` →
+   yargı çevresi/adres eşleşen adayı seç → `gleif_get_entity(lei="{lei}")` ile
+   kayıt statüsünü kontrol et (LAPSED kayıtta veri bayat olabilir).
+2. **Grubu haritala:** `gleif_get_group_structure(lei="{lei}")` (doğrudan ve nihai ana ortak). Hem sözleşme
+   tarafını hem nihai ana ortağı **ayrı ayrı** tara.
+3. **Tara:** doğrulanmış unvan + yargı çevresi + sicil no ile resmî yaptırım listeleri
+   (OFAC SDN, AB, UK OFSI, BM).
+4. **Raporla:** `[GLEIF — LEI {lei} — çekim: GG.AA.YYYY]` +
+   `[Yaptırım listesi — {liste} — {taraf} — çekim: GG.AA.YYYY]`
+
+## Sert sınırlar (her raporda beyan edilir)
+
+- **GLEIF Level 2 = muhasebe konsolidasyonu ana ortaklığı, gerçek kişi UBO DEĞİL.**
+  MASAK/AML gerçek faydalanıcı tespiti yerel sicil veya beyan ister.
+- **LEI yokluğu ≠ şirket yokluğu.** Kapsam düzenlenmiş işlemlere eğiktir.
+- **İlişki kaydının yokluğu bağımsızlık kanıtı değildir.**
+- Yaptırım çıktısı, aleyhe işlemden önce **insan uyum incelemesinden** geçer.
+
+## Bilgi tabanı
+
+`gleif-rehberi.md` · `yaptirim-tarama-rehberi.md`

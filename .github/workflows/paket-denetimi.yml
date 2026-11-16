@@ -17,6 +17,8 @@
 #      mu (yayin/eklenti_uret.py, tests/test_eklenti.py); paket değişip eklenti üretilmediyse kırmızı
 #   7. Eklenti sürümü: eklenti tabandakinden (PR'da hedef dal, push'ta önceki commit) farklıysa sürümü artmış mı.
 #      Kurulu kopyalar ve Claude dizini güncellemeyi sürümden anlar; eklenti_uret.py sürümü kendisi artırır
+#   8. ChatGPT eklentisi: ArthurLegal-openai-plugin/ aynı paketten üretilmiş mi, OpenAI biçimine uyuyor mu, Claude izi
+#      kalmamış mı (yayin/openai_eklenti_uret.py, tests/test_openai_eklenti.py); sürümü 7. maddedeki gibi denetlenir
 # Bilinen eski sorunlar ArthurLegal-setup/tests/paket_denetimi_taban.json'dadır; iş yalnız yeni bir sorunda
 # kırmızı biter. Ayrıntılı rapor: python ArthurLegal-setup/yayin/paket_denetimi.py --ayrinti
 
@@ -49,6 +51,9 @@ jobs:
       - name: Claude eklentisi
         run: python -m unittest ArthurLegal-setup/tests/test_eklenti.py ArthurLegal-setup/tests/test_dizin.py -v
 
+      - name: ChatGPT eklentisi
+        run: python -m unittest ArthurLegal-setup/tests/test_openai_eklenti.py -v
+
       # Taban: PR'da hedef dalın ucu, push'ta önceki commit; yeni açılan dalda (önceki commit yok) main
       - name: Eklenti sürümü
         env:
@@ -61,3 +66,4 @@ jobs:
             git fetch --no-tags --depth=1 origin "$TABAN"
           fi
           python ArthurLegal-setup/yayin/eklenti_uret.py --denetle --taban "$TABAN"
+          python ArthurLegal-setup/yayin/openai_eklenti_uret.py --denetle --taban "$TABAN"

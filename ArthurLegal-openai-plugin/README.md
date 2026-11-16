@@ -1,0 +1,33 @@
+# ArthurLegal plugin (ChatGPT)
+
+ArthurLegal is a Turkish-law-first legal assistant for lawyers in Türkiye. This plugin brings its working rules,
+112 law-firm workflows and 33 setup helpers to ChatGPT as 12 skills (one rule skill and 11 practice
+areas), connected to ArthurLegal MCP at `https://arthurlegal-mcp.fly.dev/openai/mcp`.
+
+Version 1.12.6, generated from the ArthurLegal Law Firm package 1.12.6 by
+`ArthurLegal-setup/yayin/openai_eklenti_uret.py`. Do not edit this folder by hand.
+
+## Skills
+
+- `arthurlegal`: working rules, citation checks, the warning line for unreachable sources, the ArthurLegal desk.
+- `dava-ve-dilekce`: Litigation and pleadings
+- `idare-ve-duzenleyici-kurumlar`: Administrative and regulatory
+- `sozlesme`: Contracts
+- `sirketler-ve-birlesme`: Corporate and M&A
+- `is-hukuku`: Employment
+- `fikri-mulkiyet`: Intellectual property
+- `kisisel-veriler`: Personal data
+- `vergi`: Tax
+- `enerji-ve-proje-finansmani`: Energy and project finance
+- `buro-isleri`: Firm operations
+- `arastirma-ve-atif`: Research and citations
+
+Each practice-area skill lists its workflows; the full steps are in that skill's `references/` folder.
+
+## Notes
+
+- Free and open source for lawyers in Türkiye; non-commercial use. See `LICENSE`.
+- Land-registry tools that take coordinates, an address or a geometry file are not on this connection; parcels are
+  found by province, district, neighbourhood, block and parcel.
+- UYAP, ArthurMask and ArthurLegal Memory run only with the ArthurLegal desktop install.
+- Outputs are drafts for review by a lawyer.

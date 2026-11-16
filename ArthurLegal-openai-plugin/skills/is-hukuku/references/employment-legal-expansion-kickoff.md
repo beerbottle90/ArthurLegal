@@ -1,0 +1,62 @@
+# employment-legal-expansion-kickoff
+
+Yeni bir ülke için uluslararası genişleme planlamasını başlat — yönü belirler (Türkiye'den dışarı / dışarıdan Türkiye'ye), ön bilgiyi toplar, yapı seçeneklerini çerçeveler (Türkiye'de İş K. m. 7 sınırları), vergi/finans/İK sorularını taslaklar, ArthurLegal MCP ile hedef ülke mevzuatını arar ya da kaynak yoksa yerel avukata yönlendirir ve kalıcı takip dosyası oluşturur. "[Ülke]de işe alıyoruz", "[ülke]ye genişleme", "[ülke]de ilk çalışan" ya da "yabancı şirket Türkiye'de işe alacak" denildiğinde kullan.
+
+# /expansion-kickoff
+
+Yeni bir ülke için genişleme projesini başlatır: yön ve ön bilgi, yapı çerçevesi, paydaş soruları, ülke kaynağı ya da yerel avukat brifi, kalıcı takip dosyası.
+
+## Talimat
+
+1. `Hafıza › Pratik/employment-legal/PROFIL.md` → eşik tablosu (yurt dışı satırları), eskalasyon. Matter workspace etkinse aktif matter'ı teyit et.
+2. `international-expansion` referans skill'ini yükle ve tüm akışı uygula (Adım 0 yön → Adım 6 çıktı).
+3. Takip dosyası yolu: matter workspace kapalıysa `Hafıza › Pratik/employment-legal/expansion-<ulke-slug>.yaml`; açıksa aktif matter klasöründe aynı ad. Bu ülke için dosya zaten varsa uyar: "[Ülke] için bir genişleme takip dosyası zaten var. Güncellemek için ``employment-legal-expansion-update` iş akışı (`is-hukuku` becerisi, `references/employment-legal-expansion-update.md`) [ülke]` kullanın ya da baştan başlamak istediğinizi teyit edin."
+4. Hedef ülke ArthurLegal MCP kapsamında değilse (önek tablosunda yoksa) açıkça yaz: "ArthurLegal'da bu ülkenin kaynağı yok; yerel hukukçu görüşü al." Kural uydurma.
+5. Türkiye'ye ilişkin her madde atfını yazmadan önce `tr_mevzuat_madde_getir` ile çek; çekilemeyen için UYARI satırı.
+6. Bitişte takip dosyasını oluştur ve yolunu göster.
+
+## Örnekler
+
+```
+`employment-legal-expansion-kickoff` iş akışı (`is-hukuku` becerisi, `references/employment-legal-expansion-kickoff.md`) Almanya disari
+```
+
+```
+`employment-legal-expansion-kickoff` iş akışı (`is-hukuku` becerisi, `references/employment-legal-expansion-kickoff.md`) Türkiye turkiye
+(yabancı ana şirket İstanbul'da ilk iki mühendisi işe alacak)
+```
+
+```
+`employment-legal-expansion-kickoff` iş akışı (`is-hukuku` becerisi, `references/employment-legal-expansion-kickoff.md`)
+(skill ülkeyi ve yönü soracak)
+```
+
+> Yapı çerçevesi, paydaş soruları, ArthurLegal önek tablosu, brif şablonu ve takip dosyası
+> şeması `international-expansion` referans skill'indedir — esaslı işe başlamadan önce yükle.
+
+---
+
+## Kaynak katmanı — /legal-research
+
+> Bu plugin'in skill'leri **birincil kaynagi kendileri uretmez**. Mevzuat,
+> ictihat, emsal sozlesme veya akademik doktrin gerektiginde asagidaki kaynak
+> skill'lerine gec; sonucu bu plugin'in cikti formatina geri tasi.
+>
+> **Kaynak hiyerarsisi:** BIRINCIL (mevzuat/ictihat) → EMSAL (imzali
+> sozlesme) → DOKTRIN (akademik). Cakisma halinde birincil ustundur —
+> cakismayi raporla, ikincil kaynak lehine sessizce cozme.
+>
+> **100 saniye:** her arac cagrisi 100 saniyede iptal edilir ve *hicbir sey*
+> dondurmez. Dar sorgu; iptal olursa ayni sorguyu tekrarlama, bol ve hangi kismin
+> kapsanmadigini soyle.
+>
+> **Gizlilik:** az_, scholar_ ve contracts_ araclari kamuya acik kaynaklarda arama yapar — gizli taslak, muzakere
+> pozisyonu veya kisisel veri **gonderilmez**.
+
+| Ihtiyac | Kaynak skill |
+|---|---|
+| Azerbaycan'da istihdam edilen personel — Emek Mecellesi, akt + statu | ``legal-research-az-mevzuat` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-az-mevzuat.md`)` |
+
+Rehberler: `skills/arthurlegal/references/eqanun-mcp-rehberi.md` · `skills/arthurlegal/references/lex-scholar-rehberi.md` · `skills/arthurlegal/references/resourcecontracts-rehberi.md` · `skills/arthurlegal/references/karsilastirmali-hukuk-rehberi.md`
+
+---
