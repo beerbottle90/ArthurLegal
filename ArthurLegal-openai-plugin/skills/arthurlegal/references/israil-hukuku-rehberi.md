@@ -40,13 +40,13 @@ kullanıldığında "non-binding translation" notu düş.
 
 1. **Lisans zinciri:** license → lease dönüşüm şartları ve süreleri; Commissioner onayı
    gereken devirler (farm-in/out)
-2. **Ortaklık yapısı:** İsrail JOA pratiği AIPN modeline yakındır — ``energy-finance-jv-agreement-review` iş akışı (`enerji-ve-proje-finansmani` becerisi, `references/energy-finance-jv-agreement-review.md`)`
+2. **Ortaklık yapısı:** İsrail JOA pratiği AIPN modeline yakındır — ``energy-finance-jv-agreement-review` iş akışı (`arthurlegal-enerji-ve-proje-finansmani` becerisi, `../arthurlegal-enerji-ve-proje-finansmani/references/energy-finance-jv-agreement-review.md`)`
    JOA adımını uygula (İsrail'de PSA değil **vergi-royalty rejimi** geçerli; profit split yok)
 3. **İhracat izni:** kota/iç pazar yükümlülüğü — Türkiye/AB'ye gaz ihracat senaryosunda 🟠
 4. **Güvenlik/jeopolitik FM:** bölgesel çatışma force majeure klozu — sigorta (war risk) katmanı
 5. **Yaptırım/uyum:** Arap Ligi boykot mevzuatı ile etkileşim — çok-uluslu konsorsiyumda
    ortakların kendi rejimleri çelişebilir 🟠 grup uyum birimi görüşü
-6. İcra ayağı → ``commercial-legal-governing-law-review` iş akışı (`sozlesme` becerisi, `references/commercial-legal-governing-law-review.md`)` Adım 5 (ev = aktif entite)
+6. İcra ayağı → ``commercial-legal-governing-law-review` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-governing-law-review.md`)` Adım 5 (ev = aktif entite)
 
 ## Atıf formatı
 

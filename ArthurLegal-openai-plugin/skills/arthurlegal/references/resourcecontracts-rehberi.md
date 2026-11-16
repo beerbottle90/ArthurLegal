@@ -194,4 +194,4 @@ Bu tablo yalnız bir örnektir — aynı desen kapsamdaki ülkelerin herhangi bi
 
 *Son güncelleme: 26.07.2026 — v1.4.0. resourcecontracts MCP — self-hosted,
 bağımlılıksız (stdlib). İçerik CC BY-SA 4.0 (NRGI/CCSI). Companion skill:
-`skills/legal-research__skills.md` → ``legal-research-sozlesme-emsali` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-sozlesme-emsali.md`)`.*
+`skills/legal-research__skills.md` → ``legal-research-sozlesme-emsali` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-sozlesme-emsali.md`)`.*

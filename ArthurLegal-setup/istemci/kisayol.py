@@ -6,6 +6,8 @@
     al.py kisayol baslat adliye   Courthouse simgesi (akademisyen: Akademisyen simgesi): aynı iş; panel o paketin
                                   kartını öne çıkarır
     al.py kisayol masa            yalnız masa bağlantısı (claude://claude.ai/new?q=…)
+    al.py kisayol chatgpt-masa    ChatGPT masaüstünde masa bağlantısı (codex://new?prompt=…); kurulu değilse indirme sayfası
+                                  (kurulumda ChatGPT seçildiyse ana simge de bunu açar; ikisi seçildiyse panel iki düğmeyle)
     al.py kisayol mask            ArthurMask uygulamasını açar (masadaki düğme)
     al.py kisayol tapu            Tapu arayüzü açıksa tarayıcıda gösterir, değilse başlatır
     al.py kisayol uyap-tarayici   UYAP için ayrı profilli tarayıcı (Brave varsa Brave, yoksa Edge). Kısayolu
@@ -68,16 +70,49 @@ def claude_ac() -> str:
     return "bulunamadı"
 
 
-def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
+def chatgpt_ac() -> str:
+    """ChatGPT masaüstünü başlatır (16.11.2026). Zaten açıksa yalnız durumu döndürür; kurulu değilse "bulunamadı"."""
+    if not ortak.chatgpt_kurulu():
+        return "bulunamadı"
+    if ortak.chatgpt_calisiyor():
+        return "zaten açık"
+    if ortak.MAC:
+        for ad in ("ChatGPT", "Codex"):
+            if subprocess.run(["open", "-a", ad], capture_output=True, timeout=60).returncode == 0:
+                return "başlatıldı"
+        return "bulunamadı"
+    try:
+        kimlik = subprocess.run(["powershell", "-NoProfile", "-Command",
+                                 "(Get-StartApps | Where-Object { $_.AppID -like 'OpenAI.Codex_*' } | Select-Object -First 1).AppID"],
+                                capture_output=True, text=True, creationflags=ortak.PENCERESIZ, timeout=60).stdout.strip()
+        subprocess.Popen(["explorer.exe", f"shell:AppsFolder\\{kimlik or ortak.CHATGPT_UYGULAMA_KIMLIGI}"],
+                         creationflags=ortak.PENCERESIZ)
+        return "başlatıldı"
+    except (OSError, subprocess.SubprocessError):
+        return "bulunamadı"
+
+
+def chatgpt_durumu() -> str:
+    return "açık" if ortak.chatgpt_calisiyor() else ("kurulu" if ortak.chatgpt_kurulu() else "bulunamadı")
+
+
+def durum_yaz(claude_durumu: str | None = None, odak: str = "", chatgpt: str | None = None) -> Path:
     """Başlat panelinin okuduğu durum dosyası (rehber/durum.js). Panel seçilmeyen modüllerin bölümlerini gizler;
-    ``odak`` (Courthouse ya da Akademisyen simgesi) o paketin kartını öne çıkarır."""
-    if claude_durumu is None:
+    ``odak`` (Courthouse ya da Akademisyen simgesi) o paketin kartını öne çıkarır. Seçilen asistanlar
+    (ortak.asistanlar) panelde hangi uygulamanın adımlarının ve masa düğmelerinin görüneceğini belirler."""
+    import codex_ayari
+    asistanlar = ortak.asistanlar()
+    if claude_durumu is None and "claude" in asistanlar:
         import kur
         claude_durumu = "açık" if ortak.claude_calisiyor() else ("kurulu" if kur.claude_kurulu() else "bulunamadı")
+    if chatgpt is None and "chatgpt" in asistanlar:
+        chatgpt = chatgpt_durumu()
     bilgi = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json")
     d = ortak.durum()
+    klasik = ortak.arayuz() == "klasik"
     kayitli = claude_ayari.kayitli()
-    sunucular = sorted({s for adlar in kayitli.values() for s in adlar if s.startswith("arthur")})
+    # Yalnız ArthurLegal'in sunucuları (adı "arthur" ile başlayan başka bir araç, ör. arthurball, sayılmaz).
+    sunucular = sorted({s for adlar in kayitli.values() for s in adlar if s in codex_ayari.ADLAR})
     sg = d.get("son_guncelleme") if isinstance(d.get("son_guncelleme"), dict) else {}
     veri = {
         "surum": ortak.surum(),
@@ -97,7 +132,17 @@ def durum_yaz(claude_durumu: str | None = None, odak: str = "") -> Path:
         "isletim": "mac" if ortak.MAC else "windows",  # sayfa Mac'e özgü cümleleri buna göre gösterir
         "mask": ortak.mask_surumu() or "",
         "sunucular": sunucular,
-        "claude": claude_durumu,
+        "claude": claude_durumu or "",
+        # ChatGPT masaüstü (K21, K29): seçilen uygulamalar, ChatGPT'nin durumu, oradaki AL sunucuları ve becerileri,
+        # masa düğmelerinin bağlantıları (ikisi seçildiyse panel iki düğme gösterir).
+        "asistanlar": asistanlar,
+        "chatgpt": chatgpt or "",
+        "chatgpt_sunucular": [s for s in codex_ayari.kayitli() if s in codex_ayari.ADLAR] if chatgpt else [],
+        "chatgpt_beceriler": len(codex_ayari.beceriler_kayitli()) if chatgpt else 0,
+        "chatgpt_indirme": ortak.CHATGPT_INDIRME,
+        # Klasik arayüzde düğme yalnız uygulamayı açar (masa mesajı yazılmaz).
+        "masa_claude": ("claude://" if klasik else masa_adresi()) if "claude" in asistanlar else "",
+        "masa_chatgpt": ("codex://" if klasik else chatgpt_masa_adresi()) if "chatgpt" in asistanlar else "",
         "son_denetim": time.strftime("%d.%m.%Y %H:%M", time.localtime(d["son_denetim"])) if d.get("son_denetim") else "",
         "son_sonuc": d.get("son_sonuc", ""),
         "proje_klasorleri": proje.durum(),
@@ -131,24 +176,71 @@ def masa_adresi() -> str:
                                                             safe="")
 
 
-def masa() -> int:
-    """Claude Desktop'ı ArthurLegal Masası mesajıyla açar. Açılamazsa 1 (Claude Desktop yok ya da eski)."""
+def chatgpt_model_notu() -> str:
+    """ChatGPT için model cümlesi (K14): ChatGPT modelleriyle ölçüm yapılmadı, en yetenekli güncel model tavsiye
+    edilir. Dosyada yoksa not eklenmez."""
+    try:
+        o = json.loads(MODEL_ONERISI.read_text(encoding="utf-8"))
+        cumle, cumle_en = str(o["cumle_chatgpt"]), str(o["cumle_chatgpt_en"])
+        cumle_az = str(o.get("cumle_chatgpt_az") or "")
+    except (OSError, ValueError, KeyError, TypeError):
+        return ""
+    return "(" + ortak.metin(cumle, cumle_en, cumle_az or None) + ")"
+
+
+def chatgpt_masa_adresi() -> str:
+    """ChatGPT masaüstünün resmî bağlantısı (codex://new?prompt=…) yeni sohbeti mesajı yazılmış olarak açar; kullanıcı
+    Enter'a basar. ChatGPT mesajı ArthurLegal kural becerisi ve yerel sunucudaki al_masasi aracına götürür (K24)."""
+    hatirlatma = chatgpt_model_notu()
+    return "codex://new?prompt=" + urllib.parse.quote(MASA_ISTEMI + ("\n\n" + hatirlatma if hatirlatma else ""), safe="")
+
+
+def _ac(adres: str) -> int:
     try:
         if ortak.MAC:
-            return 0 if subprocess.run(["open", masa_adresi()], capture_output=True, timeout=60).returncode == 0 else 1
-        os.startfile(masa_adresi())  # noqa: S606 — Claude Desktop'ın kendi protokolü
+            return 0 if subprocess.run(["open", adres], capture_output=True, timeout=60).returncode == 0 else 1
+        os.startfile(adres)  # noqa: S606 — uygulamanın kendi protokolü (claude://, codex://)
         return 0
     except (OSError, subprocess.SubprocessError):
         return 1
 
 
+def masa() -> int:
+    """Claude Desktop'ı ArthurLegal Masası mesajıyla açar. Açılamazsa 1 (Claude Desktop yok ya da eski)."""
+    return _ac(masa_adresi())
+
+
+def chatgpt_masa() -> int:
+    """ChatGPT masaüstünü ArthurLegal Masası mesajıyla açar. Kurulu değilse resmî indirme sayfası açılır (K28)."""
+    if not ortak.chatgpt_kurulu():
+        webbrowser.open(ortak.CHATGPT_INDIRME)
+        return 1
+    return _ac(chatgpt_masa_adresi())
+
+
 def baslat(profil: str = "") -> int:
     """Setup → Çalıştır → AL Masası. Başlat paneli (başlangıç sayfası) simgeye her tıklamada tarayıcıda açılır;
     yeni arayüzde önce masa bağlantısı açılır. Kurulumda "Claude Desktop klasik" seçildiyse 2.6'daki gibi yalnız
-    Claude Desktop'ı ve başlat panelini açar."""
-    durum_yaz(claude_ac(), profil)
-    if ortak.arayuz() != "klasik":
-        masa()
+    uygulamayı ve başlat panelini açar. Kurulumda seçilen uygulamada açılır (ortak.asistanlar): Claude ya da ChatGPT;
+    ikisi seçildiyse yalnız panel açılır, masa orada iki düğmeyle seçilen uygulamada açılır (K29, 16.11.2026).
+    ChatGPT seçilip kurulu değilse resmî indirme sayfası da açılır (K28)."""
+    secim = ortak.asistan_anahtari()
+    klasik = ortak.arayuz() == "klasik"
+    if secim == "claude":
+        durum_yaz(claude_ac(), profil)
+        if not klasik:
+            masa()
+    elif secim == "chatgpt":
+        if not ortak.chatgpt_kurulu():
+            durum_yaz(odak=profil, chatgpt="bulunamadı")
+            webbrowser.open(ortak.CHATGPT_INDIRME)
+        elif klasik:
+            durum_yaz(odak=profil, chatgpt=chatgpt_ac())
+        else:
+            durum_yaz(odak=profil, chatgpt=chatgpt_durumu())
+            chatgpt_masa()
+    else:
+        durum_yaz(odak=profil)
     webbrowser.open(ortak.rehber_dosyasi().as_uri())
     return 0
 
@@ -228,8 +320,10 @@ def knowledge() -> int:
 
 
 if __name__ == "__main__":
-    islem = {"baslat": baslat, "masa": masa, "tapu": tapu, "mask": mask, "uyap-tarayici": uyap_tarayici,
-             "uyap-ekran": uyap_ekran, "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
+    islem = {"baslat": baslat, "masa": masa, "chatgpt-masa": chatgpt_masa, "tapu": tapu, "mask": mask,
+             "uyap-tarayici": uyap_tarayici, "uyap-ekran": uyap_ekran,
+             "knowledge": knowledge}.get(sys.argv[1] if len(sys.argv) > 1 else "")
     if not islem:
-        sys.exit("kullanım: al.py kisayol baslat [adliye|akademisyen]|masa|tapu|mask|uyap-tarayici|uyap-ekran|knowledge")
+        sys.exit("kullanım: al.py kisayol baslat [adliye|akademisyen]|masa|chatgpt-masa|tapu|mask|uyap-tarayici|"
+                 "uyap-ekran|knowledge")
     sys.exit(islem(*sys.argv[2:3]) if islem is baslat else islem())

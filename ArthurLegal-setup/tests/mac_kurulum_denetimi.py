@@ -132,10 +132,20 @@ def kurulum(secim: list, surum: str) -> None:
     moduller = json.loads((KOK / "moduller.json").read_text(encoding="utf-8")).get("moduller")
     denetle(moduller == secim, f"moduller.json: {moduller}")
     onceki = sorted(p.name for p in (KOK / "onceki").iterdir()) if (KOK / "onceki").is_dir() else []
-    denetle(onceki == sorted(secim), f"önceki seçim (kurulum yeniden açılınca işaretli gelir): {onceki}")
+    # Uygulama işaretleri (K21: asistan-claude, asistan-chatgpt) modül değildir; ayrı denetlenir.
+    onceki_modul = [p for p in onceki if not p.startswith("asistan-")]
+    denetle(onceki_modul == sorted(secim), f"önceki seçim (kurulum yeniden açılınca işaretli gelir): {onceki_modul}")
     denetle(not (KOK / "secim").exists(), "kurulumun seçim işaretleri temizlendi")
     ilk_durum = json.loads((KOK / "veri" / "durum.json").read_text(encoding="utf-8") or "{}")
     denetle(ilk_durum.get("arayuz") == "yeni", f"arayüz (kutu işaretli gelir): {ilk_durum.get('arayuz')}")
+    # Bu Mac'te Claude Desktop da ChatGPT de kurulu değil: kutu Claude Desktop işaretli gelir, seçim kaydedilir.
+    denetle(ilk_durum.get("asistan") == "claude" and "asistan-claude" in onceki,
+            f"yapay zekâ uygulaması (Claude Desktop işaretli gelir): {ilk_durum.get('asistan')}, "
+            f"önceki: {[p for p in onceki if p.startswith('asistan-')]}")
+    codex = Path(os.environ.get("CODEX_HOME") or (Path.home() / ".codex"))
+    denetle(not (codex / "skills" / "arthurlegal").exists() and "arthurlegal-yerel" not in (
+        (codex / "config.toml").read_text(encoding="utf-8") if (codex / "config.toml").exists() else ""),
+        "ChatGPT seçilmedi: ChatGPT ayarına ve becerilerine bir şey yazılmadı")
     aktif = (KOK / "aktif.txt").read_text(encoding="utf-8").strip() if (KOK / "aktif.txt").exists() else ""
     denetle(aktif == surum, f"etkin sürüm: {aktif}")
 

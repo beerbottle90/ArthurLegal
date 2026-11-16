@@ -1,6 +1,6 @@
 # Criminal Defense Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``criminal-defense-cold-start-interview` iş akışı (`dava-ve-dilekce` becerisi, `references/criminal-defense-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``criminal-defense-cold-start-interview` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/criminal-defense-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -74,7 +74,7 @@ Bu plugin'in **ayırt edici** bölümü:
 - Tarife: Adalet Bakanlığı her yıl yayımlar (genelde AAÜT'nin altında)
 - **Vergi:** CMK ödemesi gelir vergisine tabi (matrah avukatın yıllık beyanına gider)
 
-Detay: `skills/arthurlegal/references/cmk-gorevli-rehberi.md`
+Detay: `../arthurlegal/references/cmk-gorevli-rehberi.md`
 
 ---
 
@@ -165,7 +165,7 @@ Hazırlayan: model – avukat incelemesi öncesi
 
 ### Müdafii vs. müdahil ayrımı
 
-Aynı olayda hem sanık hem mağdur müvekkili **EŞZAMANLI** alamayız — net çıkar çatışması, Av. K. m. 38. Her matter intake'inde ``firm-operations-conflict-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-conflict-check.md`)` çalıştır.
+Aynı olayda hem sanık hem mağdur müvekkili **EŞZAMANLI** alamayız — net çıkar çatışması, Av. K. m. 38. Her matter intake'inde ``firm-operations-conflict-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-conflict-check.md`)` çalıştır.
 
 ### "Suç işleniyor" durumu
 
@@ -216,4 +216,4 @@ Cross-matter OFF zorunlu. Konum: `Hafıza › Pratik/matters/<müvekkil-slug>__<
 
 ---
 
-*Re-run interview:* ``criminal-defense-cold-start-interview` iş akışı (`dava-ve-dilekce` becerisi, `references/criminal-defense-cold-start-interview.md`) --redo`
+*Re-run interview:* ``criminal-defense-cold-start-interview` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/criminal-defense-cold-start-interview.md`) --redo`

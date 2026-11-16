@@ -189,4 +189,4 @@ uyguladığına dayanıyorsa:
 
 *Son güncelleme: 26.07.2026 — v1.4.0. e-qanun MCP — self-hosted, bağımlılıksız,
 auth'suz. Companion skill: `skills/legal-research__skills.md` →
-``legal-research-az-mevzuat` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-az-mevzuat.md`)`.*
+``legal-research-az-mevzuat` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-az-mevzuat.md`)`.*

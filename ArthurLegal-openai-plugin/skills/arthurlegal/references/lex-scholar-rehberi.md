@@ -222,7 +222,7 @@ Her kayıt hazır bir **`citation`** alanı taşır → **BİREBİR kullan**:
 | İhtiyaç | Kaynak |
 |---|---|
 | **Türk** doktrini / akademik makale | **bu MCP** (DergiPark 19 dergi + DOAJ TR 20) |
-| **Türkiye dışı + karşılaştırmalı** doktrin | **bu MCP** + ``legal-research-karsilastirmali-doktrin` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-karsilastirmali-doktrin.md`)` |
+| **Türkiye dışı + karşılaştırmalı** doktrin | **bu MCP** + ``legal-research-karsilastirmali-doktrin` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-karsilastirmali-doktrin.md`)` |
 | TR mevzuat / içtihat | `mevzuat-mcp-rehberi.md`, `yargi-mcp-rehberi.md` (BİRİNCİL) |
 | AZ mevzuatı | `eqanun-mcp-rehberi.md` (BİRİNCİL) |
 | İmzalı sözleşme emsali (PSA/JOA) | `resourcecontracts-rehberi.md` |
@@ -261,4 +261,4 @@ Her kayıt hazır bir **`citation`** alanı taşır → **BİREBİR kullan**:
 
 *Son güncelleme: 26.07.2026 — v1.4.0. LexScholar MCP — self-hosted,
 bağımlılıksız, auth'suz. Companion skill: `skills/legal-research__skills.md` →
-``legal-research-karsilastirmali-doktrin` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-karsilastirmali-doktrin.md`)`.*
+``legal-research-karsilastirmali-doktrin` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-karsilastirmali-doktrin.md`)`.*

@@ -79,9 +79,9 @@ agent çekemez, kullanıcı tarayıcıdan açıp metni yapıştırmalı. URL pat
 
 ## 4. Pratik notlar
 
-- Her iki ülke **NY Konvansiyonu tarafı**; tenfiz ayağı için ``commercial-legal-governing-law-review` iş akışı (`sozlesme` becerisi, `references/commercial-legal-governing-law-review.md`)` Adım 5.
+- Her iki ülke **NY Konvansiyonu tarafı**; tenfiz ayağı için ``commercial-legal-governing-law-review` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-governing-law-review.md`)` Adım 5.
 - KazMunayGaz/Uzbekneftegaz **devlet şirketleri** — sözleşmede sovereign immunity feragati ve
-  devlet onay şartlarını kontrol et (PSA/JV işlerinde ``energy-finance-jv-agreement-review` iş akışı (`enerji-ve-proje-finansmani` becerisi, `references/energy-finance-jv-agreement-review.md`)`).
+  devlet onay şartlarını kontrol et (PSA/JV işlerinde ``energy-finance-jv-agreement-review` iş akışı (`arthurlegal-enerji-ve-proje-finansmani` becerisi, `../arthurlegal-enerji-ve-proje-finansmani/references/energy-finance-jv-agreement-review.md`)`).
 - Yaptırım taraması: her iki ülke karşı tarafında RU bağlantılı ortak/UBO riski yüksek —
   resmî listelerde tarama zorunlu (`yaptirim-tarama-rehberi.md`).
 

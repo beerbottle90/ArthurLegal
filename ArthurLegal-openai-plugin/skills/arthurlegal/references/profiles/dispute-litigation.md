@@ -1,6 +1,6 @@
 # Dispute Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``litigation-legal-cold-start-interview` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``litigation-legal-cold-start-interview` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-cold-start-interview.md`)` ile doldurulur.*
 
 *Doldurulduktan sonra: bu dosyayı doğrudan düzenle — her skill önce buradan
 playbook okur.*
@@ -9,7 +9,7 @@ playbook okur.*
 
 ## Kim olduğumuz
 
-Büro bilgisi için `skills/arthurlegal/references/firm-profile.md`
+Büro bilgisi için `../arthurlegal/references/firm-profile.md`
 oku. Bu eklentiye özel:
 
 **Pratik modeli:** Hukuk bürosu — **müvekkil adına davacı veya davalı vekilliği**
@@ -118,7 +118,7 @@ Pratiğimiz:
 - Anlaşmama → son tutanak dava dilekçesine eklenir; eklenmemişse 1 haftalık kesin süre, sunulmazsa usulden ret; hiç başvurulmamışsa doğrudan usulden ret (**HUAK m. 18/A/2**)
 - **İhtiyati tedbir (HMK m. 389 vd.) / ihtiyati haciz (İİK m. 257 vd.)** arabuluculuktan önce talep edilebilir (dava açma süresi arabuluculukta işlemez — HUAK m. 18/A/16), ana dava arabuluculuk sonrası
 
-**Skill ``litigation-legal-case-intake` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-case-intake.md`)` bunu otomatik kontrol eder** — ticari + alacak/tazminat sinyali görürse arabuluculuk öncesi flag çıkarır.
+**Skill ``litigation-legal-case-intake` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-case-intake.md`)` bunu otomatik kontrol eder** — ticari + alacak/tazminat sinyali görürse arabuluculuk öncesi flag çıkarır.
 
 ---
 
@@ -262,7 +262,7 @@ Bu plugin için **matter workspaces ENABLED varsayılan** — çünkü litigatio
 Skill aktif matter context'inde çalışır. Skill bu PROFIL.md'yi (practice-level) + matter'ın `matter.md`'sini (dava-spesifik) okur. Çıktılar matter klasörüne yazılır:
 `Hafıza › Pratik/matters/<müvekkil-slug>__<matter-slug>/`
 
-Dosya açma: ``litigation-legal-case-intake` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-case-intake.md`)`; büro kaydı: ``firm-operations-matter-open` iş akışı (`buro-isleri` becerisi, `references/firm-operations-matter-open.md`)`. `litigation-legal` eklentisinde ayrı bir `matter-workspace` komutu yok; aktif dosya klasörü elle seçilir.
+Dosya açma: ``litigation-legal-case-intake` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-case-intake.md`)`; büro kaydı: ``firm-operations-matter-open` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-matter-open.md`)`. `litigation-legal` eklentisinde ayrı bir `matter-workspace` komutu yok; aktif dosya klasörü elle seçilir.
 
 ---
 
@@ -270,14 +270,14 @@ Dosya açma: ``litigation-legal-case-intake` iş akışı (`dava-ve-dilekce` bec
 
 ### Av. K. m. 38 — İşin reddi zorunluluğu (conflict check tetikleyici)
 
-Yeni bir matter açılırken veya mevcut matter'da **karşı yanın gerçek kimliği netleştiğinde** (örn. ortak şirket, holding bağlantısı), **``firm-operations-conflict-check` iş akışı (`buro-isleri` becerisi, `references/firm-operations-conflict-check.md`)`** zorunlu çalıştırılır. Sonuç:
+Yeni bir matter açılırken veya mevcut matter'da **karşı yanın gerçek kimliği netleştiğinde** (örn. ortak şirket, holding bağlantısı), **``firm-operations-conflict-check` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-conflict-check.md`)`** zorunlu çalıştırılır. Sonuç:
 - **⛔ Conflict bulundu** — matter ret veya ortaklar kurulu kararıyla yazılı feragat
 - **🟠 Şüpheli — incele** — Yönetici Ortak değerlendirmesi
 - **✓ Temiz** — devam
 
 ### AAÜT (Avukatlık Asgari Ücret Tarifesi)
 
-Sulh teklif değerlendirmesinde, vekalet ücreti hesabında **AAÜT** bağlayıcıdır. Detay: `skills/arthurlegal/references/aaut-rehberi.md`. Karşı yan vekalet ücreti AAÜT üzerinden hesaplanır ve **Av. K. m. 164/5** gereği avukata aittir.
+Sulh teklif değerlendirmesinde, vekalet ücreti hesabında **AAÜT** bağlayıcıdır. Detay: `../arthurlegal/references/aaut-rehberi.md`. Karşı yan vekalet ücreti AAÜT üzerinden hesaplanır ve **Av. K. m. 164/5** gereği avukata aittir.
 
 ### Damga vergisi (sulh anlaşması)
 
@@ -318,4 +318,4 @@ closing_action: "Sulh anlaşması veya tahkim ön-protokol taslakları için bu 
 
 ---
 
-*Re-run interview:* ``litigation-legal-cold-start-interview` iş akışı (`dava-ve-dilekce` becerisi, `references/litigation-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``litigation-legal-cold-start-interview` iş akışı (`arthurlegal-dava-ve-dilekce` becerisi, `../arthurlegal-dava-ve-dilekce/references/litigation-legal-cold-start-interview.md`) --redo`

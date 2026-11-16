@@ -162,7 +162,7 @@ Format:
 
 ## 6. [HALKA AÇIK İŞTİRAK] için haftalık otomatik akış öneri
 
-``regulatory-legal-reg-feed-watcher` iş akışı (`idare-ve-duzenleyici-kurumlar` becerisi, `references/regulatory-legal-reg-feed-watcher.md`)` çalıştığında otomatik dahil:
+``regulatory-legal-reg-feed-watcher` iş akışı (`arthurlegal-idare-ve-duzenleyici-kurumlar` becerisi, `../arthurlegal-idare-ve-duzenleyici-kurumlar/references/regulatory-legal-reg-feed-watcher.md`)` çalıştığında otomatik dahil:
 
 ```
 Her Pazartesi 08:00:

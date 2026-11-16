@@ -1,6 +1,6 @@
 # Administrative Litigation Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``administrative-legal-cold-start-interview` iş akışı (`idare-ve-duzenleyici-kurumlar` becerisi, `references/administrative-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``administrative-legal-cold-start-interview` iş akışı (`arthurlegal-idare-ve-duzenleyici-kurumlar` becerisi, `../arthurlegal-idare-ve-duzenleyici-kurumlar/references/administrative-legal-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -101,7 +101,7 @@
 
 **Danıştay K. m. 30** mülgadır (6110/14); bu maddeye dayanan "belirli kamu personel davaları doğrudan Danıştay'da" kuralı için güncel dayanak doğrulanmadı.
 
-Detay: `skills/arthurlegal/references/idari-yargi-yapisi-rehberi.md`
+Detay: `../arthurlegal/references/idari-yargi-yapisi-rehberi.md`
 
 ---
 
@@ -131,7 +131,7 @@ Sektör kurumlarıyla (özellikle EPDK) dava öncesi **proaktif dialog** modeli:
 3. **Sektör platformu** (örn. EPDK Müşavir Kurulu) görüş alışverişi
 4. Hiçbiri çalışmazsa **dava açma** + paralel **yürütmenin durdurulması**
 
-Detay: `skills/arthurlegal/references/epdk-rehberi.md`
+Detay: `../arthurlegal/references/epdk-rehberi.md`
 
 ---
 
@@ -202,4 +202,4 @@ Konum: `Hafıza › Pratik/matters/<müvekkil-slug>__<matter-slug>/`
 
 ---
 
-*Re-run interview:* ``administrative-legal-cold-start-interview` iş akışı (`idare-ve-duzenleyici-kurumlar` becerisi, `references/administrative-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``administrative-legal-cold-start-interview` iş akışı (`arthurlegal-idare-ve-duzenleyici-kurumlar` becerisi, `../arthurlegal-idare-ve-duzenleyici-kurumlar/references/administrative-legal-cold-start-interview.md`) --redo`

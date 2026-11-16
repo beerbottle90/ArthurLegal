@@ -1,6 +1,6 @@
 # Commercial Advisory Practice Profile (Türk Hukuku — Büro tarafı)
 
-*Bu dosya ``commercial-legal-cold-start-interview` iş akışı (`sozlesme` becerisi, `references/commercial-legal-cold-start-interview.md`)` ile doldurulur.*
+*Bu dosya ``commercial-legal-cold-start-interview` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-cold-start-interview.md`)` ile doldurulur.*
 
 ---
 
@@ -106,7 +106,7 @@ Sözleşme imzalanması → damga vergisi doğar. Tipik oranlar:
 
 ⚠️ **Damga vergisini ödemeyen taraf** sözleşme delil olarak ileri sürmek istediğinde **damga vergisi aslı + bir katı vergi ziyaı cezası** ödemek zorunda — yani **sözleşmeyi imzalayan herkes** kendi nüsha damgasını ödemeli. Maliye sıkı kontrol etmez ama dava açıldığında çıkar.
 
-Detay: `skills/arthurlegal/references/damga-vergisi-rehberi.md`
+Detay: `../arthurlegal/references/damga-vergisi-rehberi.md`
 
 ### KEP teslim (5070 sayılı K.)
 
@@ -123,7 +123,7 @@ Karşı yanın KEP adresi varsa, ihtarname **KEP üzerinden** çekilebilir — n
 | Büyük kurumsal - uluslararası | **ICC** Paris (TR/EN) veya ISTAC |
 | Yatırımcı korumalı (BIT) | ICSID kapsamı kontrol |
 
-Detay: `skills/arthurlegal/references/istac-rehberi.md`
+Detay: `../arthurlegal/references/istac-rehberi.md`
 
 ---
 
@@ -194,7 +194,7 @@ Sözleşme yazımında **risk-getiri** dengesinin sahibi **müvekkil**. Avukat:
 
 Cross-matter OFF zorunlu. Konum: `Hafıza › Pratik/matters/<müvekkil-slug>__<matter-slug>/`
 
-Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sadece müteakip ihtilaf doğarsa yeniden açılır). Matter kapatma zamanlamasını ``commercial-legal-matter-workspace` iş akışı (`sozlesme` becerisi, `references/commercial-legal-matter-workspace.md`) close <slug>` ile (arşivler, silmez).
+Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sadece müteakip ihtilaf doğarsa yeniden açılır). Matter kapatma zamanlamasını ``commercial-legal-matter-workspace` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-matter-workspace.md`) close <slug>` ile (arşivler, silmez).
 
 ---
 
@@ -206,4 +206,4 @@ Sözleşme matter'ları genelde **kısa ömürlü** (imza sonrası kapanır, sad
 
 ---
 
-*Re-run interview:* ``commercial-legal-cold-start-interview` iş akışı (`sozlesme` becerisi, `references/commercial-legal-cold-start-interview.md`) --redo`
+*Re-run interview:* ``commercial-legal-cold-start-interview` iş akışı (`arthurlegal-sozlesme` becerisi, `../arthurlegal-sozlesme/references/commercial-legal-cold-start-interview.md`) --redo`

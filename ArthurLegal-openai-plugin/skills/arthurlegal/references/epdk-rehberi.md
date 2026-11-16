@@ -40,7 +40,7 @@
 5. **Sorunlu konularda:** Dava ÖNCESİ pozisyon sunma + diyalog
 6. **Son çare:** Kurul kararına karşı dava (Ankara İdare Mah. → BİM → Danıştay 13. Daire)
 
-``administrative-legal-epdk-proaktif-gorus` iş akışı (`idare-ve-duzenleyici-kurumlar` becerisi, `references/administrative-legal-epdk-proaktif-gorus.md`)` skill — operasyonel araç.
+``administrative-legal-epdk-proaktif-gorus` iş akışı (`arthurlegal-idare-ve-duzenleyici-kurumlar` becerisi, `../arthurlegal-idare-ve-duzenleyici-kurumlar/references/administrative-legal-epdk-proaktif-gorus.md`)` skill — operasyonel araç.
 
 ## EPDK Kurul kararı tipleri
 

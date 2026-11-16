@@ -1,7 +1,7 @@
 # MASAK — Avukatın Kimlik Tespiti ve Şüpheli İşlem Bildirimi Rehberi
 
 > 5549 sayılı Kanun + Tedbirler Yönetmeliği. Serbest avukat yalnız sayılan finansal işlemlerde yükümlüdür.
-> Uygulama skill'i: ``firm-operations-masak-kontrol` iş akışı (`buro-isleri` becerisi, `references/firm-operations-masak-kontrol.md`)`.
+> Uygulama skill'i: ``firm-operations-masak-kontrol` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-masak-kontrol.md`)`.
 
 ---
 
@@ -225,7 +225,7 @@ ihmali aklama suçu m. 282'de **yoktur**. m. 282/2 "bilerek" şartını arar.
 
 ---
 
-## Pratik akış (``firm-operations-masak-kontrol` iş akışı (`buro-isleri` becerisi, `references/firm-operations-masak-kontrol.md`)` skill)
+## Pratik akış (``firm-operations-masak-kontrol` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-masak-kontrol.md`)` skill)
 
 ```
 1. Kapsam testi (5549 m. 2/1-d) — kapsam dışıysa gerekçeyi yaz, sanctions-check'e geç

@@ -222,10 +222,15 @@ def mac_mask_kur(manifest: dict) -> str:
     dmg.unlink(missing_ok=True)
     ortak.gunluk("guncelle", f"ArthurMask (macOS) {m['surum']} kuruldu: {hedef}")
     import mac
+    # ChatGPT seçildiyse arthur-mask girdisini ChatGPT ayarına kur --kaydet yazar (codex_ayari; güncelleme sonunda).
+    uyg = {"claude": ("Claude Desktop'tan", "Claude Desktop", "Claude Desktop-dan"),
+           "chatgpt": ("ChatGPT'den", "ChatGPT", "ChatGPT-dən"),
+           "ikisi": ("Claude Desktop'tan ve ChatGPT'den", "Claude Desktop and ChatGPT", "Claude Desktop-dan və ChatGPT-dən")
+           }[ortak.asistan_anahtari()]
     mac.bildirim("ArthurMask", ortak.metin(
-        "ArthurMask kuruldu. Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın; araçları o zaman görünür.",
-        "ArthurMask is installed. Quit Claude Desktop with Cmd+Q and open it again to see its tools.",
-        "ArthurMask quraşdırıldı. Claude Desktop-dan Cmd+Q ilə çıxıb yenidən açın; alətləri onda görünəcək."))
+        f"ArthurMask kuruldu. {uyg[0]} Cmd+Q ile çıkıp yeniden açın; araçları o zaman görünür.",
+        f"ArthurMask is installed. Quit {uyg[1]} with Cmd+Q and open it again to see its tools.",
+        f"ArthurMask quraşdırıldı. {uyg[2]} Cmd+Q ilə çıxıb yenidən açın; alətləri onda görünəcək."))
     return f"mask: {m['surum']} kuruldu"
 
 
@@ -253,8 +258,9 @@ def mask_guncelle(manifest: dict) -> str:
         if ortak.indir(m["url"], exe, zaman=120) != m["sha256"]:
             exe.unlink(missing_ok=True)
             raise GuncellemeHatasi("ArthurMask sha256 uyuşmadı")
-    if ortak.claude_calisiyor():
-        return "mask: indirildi, Claude Desktop kapanınca kurulacak"
+    if ortak.asistan_calisiyor():  # açık uygulama ArthurMask köprüsünü kullanıyor olabilir (Claude ya da ChatGPT)
+        return "mask: indirildi, " + {"claude": "Claude Desktop", "chatgpt": "ChatGPT",
+                                       "ikisi": "Claude Desktop ve ChatGPT"}[ortak.asistan_anahtari()] + " kapanınca kurulacak"
     sonuc = subprocess.run([str(exe), "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-"],
                            creationflags=ortak.PENCERESIZ, timeout=3600)
     if sonuc.returncode != 0:
@@ -265,7 +271,8 @@ def mask_guncelle(manifest: dict) -> str:
 
 
 def _claude_kaydet(guncellendi: bool = False) -> None:
-    """Etkin (belki yeni) sürümün kodu ile Claude Desktop kaydını tazeler. Paket güncellendiyse kısayollar ve
+    """Etkin (belki yeni) sürümün kodu ile Claude Desktop kaydını (ChatGPT seçildiyse ChatGPT ayarını ve becerilerini
+    de; kur.asistan_kayitlari) tazeler. Paket güncellendiyse kısayollar ve
     programlar listesi yeni sürümün koduyla, onun numarasıyla yeniden yazılır; güncellenmediyse yalnız başka
     numara taşıyan (yarım kalmış bir güncellemeden kalan) kısayollar çalışan sürüme eşitlenir. Numara hep
     çalışan kodun surum.txt'sinden gelir: güncelleme olmadıysa ad değişmez."""

@@ -2,7 +2,7 @@
 
 > Avukatın müvekkili adına işlem yapma yetkisini düzenler.
 > Vekalet türleri, özel yetkiler, ibraz, UYAP'a sunum, azil ve çekilme.
-> Uygulama skill'i: ``firm-operations-vekalet-sablon` iş akışı (`buro-isleri` becerisi, `references/firm-operations-vekalet-sablon.md`)`.
+> Uygulama skill'i: ``firm-operations-vekalet-sablon` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-vekalet-sablon.md`)`.
 
 ---
 
@@ -75,7 +75,7 @@ Vekaletnamede bu yetkiler **açıkça** yer almıyorsa vekil bu işlemleri yapam
 ### Süreç
 
 1. Müvekkille noter randevusu (genelde 30-60 dk)
-2. Yetki listesi önceden hazırlanır (``firm-operations-vekalet-sablon` iş akışı (`buro-isleri` becerisi, `references/firm-operations-vekalet-sablon.md`)`)
+2. Yetki listesi önceden hazırlanır (``firm-operations-vekalet-sablon` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-vekalet-sablon.md`)`)
 3. Noterde müvekkil + (varsa) tercüman, **kimlikle** imza
 4. Noter ücreti: `[DOLDUR — TL aralık]`
 5. Noterin mühürlü ve numaralı nüshası alınır

@@ -1,7 +1,7 @@
 # Legal Research Practice Profile (Kaynak katmanı — Büro tarafı)
 
-*Bu dosya ``legal-research-kaynak-secimi` iş akışı (`arastirma-ve-atif` becerisi, `references/legal-research-kaynak-secimi.md`)` ile birlikte okunur. `[DOLDUR]`
-alanları ``firm-operations-cold-start-interview` iş akışı (`buro-isleri` becerisi, `references/firm-operations-cold-start-interview.md`)` ile doldurulabilir.*
+*Bu dosya ``legal-research-kaynak-secimi` iş akışı (`arthurlegal-arastirma-ve-atif` becerisi, `../arthurlegal-arastirma-ve-atif/references/legal-research-kaynak-secimi.md`)` ile birlikte okunur. `[DOLDUR]`
+alanları ``firm-operations-cold-start-interview` iş akışı (`arthurlegal-buro-isleri` becerisi, `../arthurlegal-buro-isleri/references/firm-operations-cold-start-interview.md`)` ile doldurulabilir.*
 
 > **Bu bir pratik alan değil, kaynak katmanıdır.** Tek başına müvekkile giden
 > bir iş ürünü üretmez; diğer eklentilerin (advocacy, litigation, commercial,
@@ -56,9 +56,9 @@ kullanılır; tek başına gerekçe olmaz.
 | **LexScholar (`scholar_`)** | **İKİNCİL** | 10 indeks; **DergiPark 19 TR hukuk dergisi** dâhil | Hakemlilik **üç durumlu**; sorgu dili tuzağı |
 | **ResourceContracts (`contracts_`)** | **EMSAL** | 5.125 imzalı PSA/JOA, 107 ülke | `page` boş = tüm anotasyonlar; CC BY-SA 4.0 atıf |
 
-**Rehberler:** `skills/arthurlegal/references/eqanun-mcp-rehberi.md` ·
-`skills/arthurlegal/references/lex-scholar-rehberi.md` · `skills/arthurlegal/references/resourcecontracts-rehberi.md` ·
-`skills/arthurlegal/references/karsilastirmali-hukuk-rehberi.md`
+**Rehberler:** `../arthurlegal/references/eqanun-mcp-rehberi.md` ·
+`../arthurlegal/references/lex-scholar-rehberi.md` · `../arthurlegal/references/resourcecontracts-rehberi.md` ·
+`../arthurlegal/references/karsilastirmali-hukuk-rehberi.md`
 
 ---
 
@@ -94,7 +94,7 @@ adının somut bir dosyayla birlikte geçtiği ifade · kişisel veri (KVKK).
 **Gönderilir:** soyut hukukî kavram — `stabilization clause cost recovery cap`,
 `mücbir sebep uyarlama`, `investor-state arbitration jurisdiction`.
 
-Detay: `skills/arthurlegal/references/mesleki-sir-rehberi.md`, `skills/arthurlegal/references/conflict-check-rehberi.md`.
+Detay: `../arthurlegal/references/mesleki-sir-rehberi.md`, `../arthurlegal/references/conflict-check-rehberi.md`.
 
 ---
 
@@ -147,7 +147,7 @@ Bir dosyaya konan araştırma notu şunları taşımalı:
   → dosya sorumlusu avukata bildir, dış kaynak (yabancı hukuk uzmanı, Lexpera/
   UYAP manuel doğrulama) öner.
 - **Yaptırım eşleşmesi** görülürse → dur, `firm-operations:conflict-check` ve
-  `skills/arthurlegal/references/yaptirim-tarama-rehberi.md` akışına geç.
+  `../arthurlegal/references/yaptirim-tarama-rehberi.md` akışına geç.
 - Bir MCP sürekli erişilemiyorsa → `[DOLDUR — teknik sorumlu]`'ya bildir; o arada
   yedek yolu kullan ve kapsam notu ekle.
 

@@ -2,11 +2,13 @@
 
     al.py kur --kurulum      etkin sürümü seç, Claude Desktop yoksa winget ile kur, sunucuları kaydet
                              (--moduller adliye,tapu,mask: kurulumda seçilen modüller; moduller.json'a yazılır.
-                             --arayuz yeni|klasik: ArthurLegal Masası ya da Claude Desktop klasik; durum.json'a)
+                             --arayuz yeni|klasik: ArthurLegal Masası ya da uygulamanın kendi sohbeti; durum.json'a.
+                             --asistan claude|chatgpt|ikisi: ArthurLegal'in kaydedileceği uygulama(lar); durum.json'a,
+                             seçimden çıkandan silinir. ChatGPT kurulu değilse Microsoft Store'dan kurmayı dener)
     al.py kur --zip-kurulum  zip'ten kurulum: modülleri konsolda sorar, içeriği %LOCALAPPDATA%\\Programs\\ArthurLegal'e
                              taşır, kısayolları ve oturum açılışı güncellemesini de kendisi yazar
-    al.py kur --kaydet       yalnız Claude Desktop kaydını tazele (güncelleyici kullanır)
-    al.py kur --kaldir       Claude Desktop girdilerini, kısayolları ve Run anahtarını sil
+    al.py kur --kaydet       yalnız Claude Desktop ve/veya ChatGPT kaydını tazele (güncelleyici kullanır)
+    al.py kur --kaldir       Claude Desktop ve ChatGPT girdilerini (becerilerle), kısayolları ve Run anahtarını sil
 
 Zip yolu, Windows 11 Akıllı Uygulama Denetimi açık bilgisayarlar içindir: imzasız kurulum motoru
 (.exe içindeki .tmp) orada engellenir, PSF imzalı python.exe engellenmez. O makinelerde ArthurMask
@@ -57,6 +59,47 @@ def claude_kur() -> bool:
     return sonuc.returncode == 0 or claude_kurulu()
 
 
+def chatgpt_kur() -> bool:
+    """ChatGPT masaüstünü Microsoft Store'dan (9PLM9XGG6VKS, yayıncı OpenAI) winget ile kurmayı dener (K28, 16.11.2026;
+    Store uygulaması kullanıcı kapsamındadır, yönetici gerekmez). Olmazsa False: başlangıç simgesi resmî indirme
+    sayfasını açar (kisayol.baslat). macOS'ta kurulmaz, indirme sayfası açılır."""
+    if ortak.MAC:
+        ortak.gunluk("kurulum", "ChatGPT masaüstü kurulu değil (macOS: " + ortak.CHATGPT_INDIRME + ")")
+        return False
+    try:
+        sonuc = subprocess.run(["winget", "install", "--id", ortak.CHATGPT_STORE_KIMLIGI, "--source", "msstore",
+                                "--silent", "--accept-package-agreements", "--accept-source-agreements",
+                                "--disable-interactivity"],
+                               capture_output=True, creationflags=ortak.PENCERESIZ, timeout=900)
+    except (OSError, subprocess.SubprocessError) as e:
+        ortak.gunluk("kurulum", f"winget çalıştırılamadı (ChatGPT): {e!r}")
+        return False
+    ortak.gunluk("kurulum", f"winget {ortak.CHATGPT_STORE_KIMLIGI} (ChatGPT) çıkış kodu {sonuc.returncode}")
+    return ortak.chatgpt_kurulu()
+
+
+def asistan_kayitlari(secim: list | None = None, kaldir: bool = False) -> dict:
+    """Seçilen uygulamalara ArthurLegal'i yazar, seçimden çıkarılanlardan siler (K30; yalnız seçim açıkça
+    yapıldıysa). {uygulama: değişen dosya sayısı}. ChatGPT'de sunucularla birlikte beceriler de kurulur."""
+    import codex_ayari
+    secim = ortak.asistanlar() if secim is None else secim
+    silinsin = set(ortak.ASISTANLAR) if kaldir else \
+        (set(ortak.ASISTANLAR) - set(secim) if ortak.asistan_secildi() else set())
+    sonuc = {}
+    if "claude" in silinsin:
+        sonuc["claude"] = len(claude_ayari.sil())
+    elif "claude" in secim:
+        sonuc["claude"] = len(claude_ayari.kaydet())
+    try:
+        if "chatgpt" in silinsin:
+            sonuc["chatgpt"] = len(codex_ayari.sil()) + len(codex_ayari.beceriler_sil())
+        elif "chatgpt" in secim:
+            sonuc["chatgpt"] = len(codex_ayari.kaydet()) + len(codex_ayari.beceriler_kur())
+    except OSError as e:
+        ortak.gunluk("kurulum", f"ChatGPT kaydı yazılamadı: {e!r}")
+    return sonuc
+
+
 VARSAYILAN_KOK = (Path.home() / "Library" / "Application Support" / "ArthurLegal" if ortak.MAC
                   else Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "ArthurLegal")
 RUN_ANAHTARI = r"Software\Microsoft\Windows\CurrentVersion\Run"
@@ -92,39 +135,75 @@ def _kaldir_adi(ad: str, dil: str | None = None) -> str:
 KALDIR_ADLARI = {"tr": ("ArthurLegal'i Kaldır", " - Kaldır"), "en": ("Uninstall ArthurLegal", " - Uninstall"),
                  "az": ("ArthurLegal-ı Sil", " - Sil")}
 
+# Paket simgelerinin açtığı uygulama (kurulumda seçilen asistan, ortak.asistan_anahtari) ve UYAP Dashboard'un neye
+# gerek duymadığı; KISAYOL_METNI'ndeki {u}/{U} ve {y} bunlarla dolar (_metin). İkisi seçildiyse simge başlangıç
+# panelini açar, masa orada seçilen uygulamada açılır (K29, 16.11.2026).
+ACILIS_METNI = {
+    "tr": {"claude": "Claude Desktop'ı ve başlangıç panelini açar", "chatgpt": "ChatGPT'yi ve başlangıç panelini açar",
+           "ikisi": "başlangıç panelini açar; masa Claude Desktop'ta ya da ChatGPT'de açılır"},
+    "en": {"claude": "opens Claude Desktop and the start panel", "chatgpt": "opens ChatGPT and the start panel",
+           "ikisi": "opens the start panel; the desk opens in Claude Desktop or ChatGPT"},
+    "az": {"claude": "Claude Desktop-u və başlanğıc panelini açır", "chatgpt": "ChatGPT-ni və başlanğıc panelini açır",
+           "ikisi": "başlanğıc panelini açır; masa Claude Desktop-da və ya ChatGPT-də açılır"},
+}
+UYAP_SIZ = {
+    "tr": {"claude": "Claude'suz", "chatgpt": "ChatGPT'siz", "ikisi": "Claude ve ChatGPT olmadan"},
+    "en": {"claude": "works without Claude", "chatgpt": "works without ChatGPT", "ikisi": "works without Claude or ChatGPT"},
+    "az": {"claude": "Claude olmadan", "chatgpt": "ChatGPT olmadan", "ikisi": "Claude və ChatGPT olmadan"},
+}
+# Kurulum sonu konsol mesajında simgenin açtığı ("... çift tıklayın: Claude Desktop'u açar").
+UYGULAMA_ADI = {
+    "tr": {"claude": "Claude Desktop'u", "chatgpt": "ChatGPT'yi", "ikisi": "başlangıç panelini"},
+    "en": {"claude": "Claude Desktop", "chatgpt": "ChatGPT", "ikisi": "the start panel"},
+    "az": {"claude": "Claude Desktop-u", "chatgpt": "ChatGPT-ni", "ikisi": "başlanğıc panelini"},
+}
+
+
+def uygulama_adi() -> dict:
+    a = ortak.asistan_anahtari()
+    return {dil: adlar[a] for dil, adlar in UYGULAMA_ADI.items()}
+
+
+def _metin(m: dict, anahtar: str, s: str) -> str:
+    """KISAYOL_METNI satırını sürüm ve seçilen asistanla doldurur."""
+    dil, a = ortak.dil(), ortak.asistan_anahtari()
+    u = ACILIS_METNI[dil][a]
+    return m[anahtar].format(s=s, u=u, U=u[:1].upper() + u[1:], y=UYAP_SIZ[dil][a])
+
+
 # Kısayol adları ve açıklamaları, kurulumun dilinde (ortak.dil). "Tapu", "Courthouse" ve "UYAP Dashboard" özel ad,
 # çevrilmez. Paket simgeleri (ana, Courthouse, Akademisyen) aynı işi yapar: Claude Desktop'ı ve başlangıç panelini açar.
 KISAYOL_METNI = {
-    "tr": {"ana": "Claude Desktop'ı ve başlangıç panelini açar ({s})", "tapu": "ArthurLegal Tapu arayüzü ({s})",
-           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (hâkim ve kalem): Claude Desktop'ı ve başlangıç panelini açar ({s})",
+    "tr": {"ana": "{U} ({s})", "tapu": "ArthurLegal Tapu arayüzü ({s})",
+           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (hâkim ve kalem): {u} ({s})",
            "akademisyen": "Akademisyen",
-           "akademisyen_aciklama": "Akademisyen: Claude Desktop'ı ve başlangıç panelini açar ({s})",
+           "akademisyen_aciklama": "Akademisyen: {u} ({s})",
            "rehber": "Başlangıç Rehberi", "rehber_aciklama": "Kurulum sonrası adımlar",
            "proje": "Proje Klasörleri", "proje_aciklama": "Claude'da 'Use a folder' ile seçilecek hazır proje klasörleri",
            "hafiza": "Hafıza Klasörü", "hafiza_aciklama": "ArthurLegal Hafıza: asistanın bu bilgisayarda tuttuğu notlar",
            "guncelle": "Güncellemeleri Denetle", "guncelle_aciklama": "Güncellemeleri şimdi denetle",
-           "uyap": "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; Claude'suz ({s})"},
-    "en": {"ana": "Opens Claude Desktop and the start panel ({s})",
+           "uyap": "UYAP Dashboard: UYAP'a giriş, sabah taraması, son gün, uyuşmazlık ve takvim; {y} ({s})"},
+    "en": {"ana": "{U} ({s})",
            "tapu": "ArthurLegal Tapu: Turkish land-registry parcel tool ({s})",
-           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (judges and court clerks): opens Claude Desktop and the start panel ({s})",
+           "adliye": "Courthouse", "adliye_aciklama": "Courthouse (judges and court clerks): {u} ({s})",
            "akademisyen": "Academician",
-           "akademisyen_aciklama": "Academician: opens Claude Desktop and the start panel ({s})",
+           "akademisyen_aciklama": "Academician: {u} ({s})",
            "rehber": "Start Guide", "rehber_aciklama": "Steps after setup",
            "proje": "Project Folders", "proje_aciklama": "Ready-made project folders to choose with 'Use a folder' in Claude",
            "hafiza": "Memory Folder", "hafiza_aciklama": "ArthurLegal Memory: the notes the assistant keeps on this computer",
            "guncelle": "Check for Updates", "guncelle_aciklama": "Check for updates now",
-           "uyap": "UYAP Dashboard: UYAP sign-in, morning scan, deadlines, mismatches and calendar; works without Claude ({s})"},
-    "az": {"ana": "Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "uyap": "UYAP Dashboard: UYAP sign-in, morning scan, deadlines, mismatches and calendar; {y} ({s})"},
+    "az": {"ana": "{U} ({s})",
            "tapu": "ArthurLegal Tapu: Türkiyə tapu-kadastr parsel aləti ({s})",
            "adliye": "Courthouse",
-           "adliye_aciklama": "Courthouse (hakim və məhkəmə dəftərxanası): Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "adliye_aciklama": "Courthouse (hakim və məhkəmə dəftərxanası): {u} ({s})",
            "akademisyen": "Akademik",
-           "akademisyen_aciklama": "Akademik: Claude Desktop-u və başlanğıc panelini açır ({s})",
+           "akademisyen_aciklama": "Akademik: {u} ({s})",
            "rehber": "Başlanğıc Bələdçisi", "rehber_aciklama": "Quraşdırmadan sonrakı addımlar",
            "proje": "Layihə Qovluqları", "proje_aciklama": "Claude-da 'Use a folder' ilə seçiləcək hazır layihə qovluqları",
            "hafiza": "Yaddaş Qovluğu", "hafiza_aciklama": "ArthurLegal Yaddaş: köməkçinin bu kompüterdə saxladığı qeydlər",
            "guncelle": "Yeniləmələri Yoxla", "guncelle_aciklama": "Yeniləmələri indi yoxla",
-           "uyap": "UYAP Dashboard: UYAP-a giriş, səhər yoxlaması, son gün, uyğunsuzluq və təqvim; Claude olmadan ({s})"},
+           "uyap": "UYAP Dashboard: UYAP-a giriş, səhər yoxlaması, son gün, uyğunsuzluq və təqvim; {y} ({s})"},
 }
 
 
@@ -181,25 +260,26 @@ def _kisayol_listesi() -> list:
     # çıkarılan modülün simgesi eski_kisayollari_temizle'de gider ("<ad> - *" deseni).
     simgeler = []
     if {"hukuk-burosu", "kurumsal"} & set(secili):
-        simgeler.append((f"{ad} {s}.lnk", (pyw, f'-B "{al}" kisayol baslat', m["ana"].format(s=s))))
+        simgeler.append((f"{ad} {s}.lnk", (pyw, f'-B "{al}" kisayol baslat', _metin(m, "ana", s))))
     for profil in ("adliye", "akademisyen"):
         if profil in secili:
             simgeler.append((f"{ad} - {m[profil]} {s}.lnk",
-                             (pyw, f'-B "{al}" kisayol baslat {profil}', m[profil + "_aciklama"].format(s=s))))
+                             (pyw, f'-B "{al}" kisayol baslat {profil}', _metin(m, profil + "_aciklama", s))))
     if ortak.bilesen_var("tapu"):
         simgeler.append((f"{ad} - Tapu {s}.lnk", (pyw, f'-B "{al}" kisayol tapu', m["tapu"].format(s=s))))
     liste = [(klasor / dosya, *hedef) for klasor in (masa, menu) for dosya, hedef in simgeler] + [
         (menu / f"{ad} - {m['rehber']} {s}.lnk", ortak.rehber_dosyasi(), "", m["rehber_aciklama"]),
-        (menu / f"{ad} - {m['proje']} {s}.lnk", proje.kok(), "", m["proje_aciklama"]),
         (menu / f"{ad} - {m['guncelle']} {s}.lnk", py, f'-B "{al}" guncelle', m["guncelle_aciklama"]),
     ]
+    if "claude" in ortak.asistanlar():  # 'Use a folder' Claude Desktop'ındır (ChatGPT'de Projects paketi yok, K22)
+        liste.insert(len(liste) - 1, (menu / f"{ad} - {m['proje']} {s}.lnk", proje.kok(), "", m["proje_aciklama"]))
     if ortak.hafiza_acik():
         liste.append((menu / f"{ad} - {m['hafiza']} {s}.lnk", hafiza.kasa(), "", m["hafiza_aciklama"]))
     # UYAP için tek simge: UYAP Dashboard. UYAP'a giriş tarayıcısını Dashboard kendisi açar. Maskeleme
     # olmadan açılmaz: avukat paketi, ArthurMask ve köprü birlikteyse eklenir (ortak.uyap_acik). Ad kısa
     # addan ("<kısa ad> - UYAP Dashboard").
     if ortak.uyap_acik():
-        dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran', m["uyap"].format(s=s))
+        dashboard = (pyw, f'-B "{al}" kisayol uyap-ekran', _metin(m, "uyap", s))
         liste += [(masa / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard),
                   (menu / f"{kisa} - UYAP Dashboard {s}.lnk", *dashboard)]
     return liste
@@ -216,11 +296,11 @@ def _mac_kisayol_listesi() -> list:
     py, al, secili = ortak.python_yolu(), shlex.quote(str(ortak.AL)), ortak.moduller()
     simgeler = []
     if {"hukuk-burosu", "kurumsal"} & set(secili):
-        simgeler.append((f"{ad}.app", f"-B {al} kisayol baslat", m["ana"].format(s=s)))
+        simgeler.append((f"{ad}.app", f"-B {al} kisayol baslat", _metin(m, "ana", s)))
     for profil in ("adliye", "akademisyen"):
         if profil in secili:
             simgeler.append((f"{ad} {m[profil]}.app", f"-B {al} kisayol baslat {profil}",
-                             m[profil + "_aciklama"].format(s=s)))
+                             _metin(m, profil + "_aciklama", s)))
     if ortak.bilesen_var("tapu"):
         simgeler.append((f"{ad} Tapu.app", f"-B {al} kisayol tapu", m["tapu"].format(s=s)))
     uyg = mac.uygulamalar()
@@ -235,7 +315,8 @@ def _mac_kisayol_listesi() -> list:
     acici = Path("/usr/bin/open")
     liste += [
         (menu / f"{m['rehber']}.app", acici, shlex.quote(str(ortak.rehber_dosyasi())), m["rehber_aciklama"]),
-        (menu / f"{m['proje']}.app", acici, shlex.quote(str(proje.kok())), m["proje_aciklama"]),
+        *([(menu / f"{m['proje']}.app", acici, shlex.quote(str(proje.kok())), m["proje_aciklama"])]
+          if "claude" in ortak.asistanlar() else []),
         (menu / f"{m['guncelle']}.app", py, f"-B {al} guncelle --bildir", m["guncelle_aciklama"]),
         (menu / f"{_kaldir_adi(ad)}.app", Path("/bin/sh"), shlex.quote(str(ortak.KOK / "KALDIR.command")), _kaldir_adi(ad)),
     ]
@@ -504,14 +585,14 @@ MODUL_METNI = {
            "adliye": ("Courthouse", "hâkim ve kalem için tarafsız taslak: gerekçe, tensip, müzekkere, tebligat"),
            "akademisyen": ("Akademisyen", "hukuk akademisyenleri için literatür, atıf, dergi seçimi, yayın etiği"),
            "tapu": ("ArthurLegal Tapu", "ada/parsel ya da yer adıyla TKGM'den canlı parsel, kroki ve harç"),
-           "mask": ("ArthurMask", "belgeleri Claude'a vermeden önce bu bilgisayarda maskeler"),
+           "mask": ("ArthurMask", "belgeleri yapay zekâya vermeden önce bu bilgisayarda maskeler"),
            "hafiza": ("ArthurLegal Hafıza", "tercihleri, düzeltmeleri ve son oturumu sohbetler arasında bu bilgisayarda tutar")},
     "en": {"hukuk-burosu": ("Law Firm", "for lawyers: petitions, contracts, case-law and legislation research"),
            "kurumsal": ("Corporate Assistant", "for in-house legal teams: contracts, compliance, data protection"),
            "adliye": ("Courthouse", "for judges and court clerks: neutral drafts of reasoning, orders, writs, service"),
            "akademisyen": ("Academician", "for legal academics: literature, citations, journal choice, ethics"),
            "tapu": ("ArthurLegal Tapu", "live Turkish land-registry parcels (TKGM) with sketch and fees"),
-           "mask": ("ArthurMask", "masks documents on this computer before Claude sees them"),
+           "mask": ("ArthurMask", "masks documents on this computer before the AI sees them"),
            "hafiza": ("ArthurLegal Memory", "keeps preferences, corrections and the last session on this computer, across chats")},
     "az": {"hukuk-burosu": ("Hüquq Bürosu", "vəkillər üçün ərizə, müqavilə, məhkəmə təcrübəsi və qanunvericilik araşdırması"),
            "kurumsal": ("Korporativ Köməkçi", "şirkətlərin hüquq şöbələri üçün müqavilə, uyğunluq və KVKK işləri"),
@@ -519,7 +600,7 @@ MODUL_METNI = {
                                     "rəsmi sorğular, bildirişlər"),
            "akademisyen": ("Akademik", "hüquqşünas akademiklər üçün ədəbiyyat, istinad, jurnal seçimi, nəşr etikası"),
            "tapu": ("ArthurLegal Tapu", "ada/parsel və ya yer adı ilə TKGM-dən canlı parsel, kroki və rüsum"),
-           "mask": ("ArthurMask", "sənədləri Claude-a verməzdən əvvəl bu kompüterdə maskalayır"),
+           "mask": ("ArthurMask", "sənədləri süni intellektə verməzdən əvvəl bu kompüterdə maskalayır"),
            "hafiza": ("ArthurLegal Yaddaş", "seçimləri, düzəlişləri və son sessiyanı söhbətlər arasında bu kompüterdə saxlayır")},
 }
 
@@ -575,6 +656,44 @@ def zip_secimi(dil: str, onceki: list | None = None, girdi=input) -> list:
     return onceki or [m for m in ortak.ESKI_SECIM if m != "mask"]
 
 
+# Zip kurulumunun yapay zekâ uygulaması sorusu (K21; kurulum sihirbazındaki asistan ekranının konsol karşılığı).
+ASISTAN_METNI = {
+    "tr": {"soru": "ArthurLegal hangi yapay zekâ uygulamasında çalışsın?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "İkisi"), "numara": "Numarayı yazın", "hata": "1, 2 ya da 3 yazın."},
+    "en": {"soru": "Which AI app should ArthurLegal work in?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "Both"), "numara": "Type the number", "hata": "Type 1, 2 or 3."},
+    "az": {"soru": "ArthurLegal hansı süni intellekt tətbiqində işləsin?",
+           "secenekler": ("Claude Desktop", "ChatGPT", "Hər ikisi"), "numara": "Nömrəni yazın", "hata": "1, 2 və ya 3 yazın."},
+}
+
+
+def zip_asistan(dil: str, onceki: str | None = None, girdi=input) -> str:
+    """Zip kurulumunda uygulama seçimi, konsolda numarayla. Enter: önceki seçim; yoksa bu bilgisayarda kurulu olan(lar),
+    hiçbiri yoksa Claude Desktop (sihirbazdaki ön işaretle aynı). Konsol yoksa Enter gibi."""
+    kodlar = ortak.ASISTAN_SECIMLERI
+    if onceki in kodlar:
+        varsayilan = onceki
+    else:
+        c, g = claude_kurulu(), ortak.chatgpt_kurulu()
+        varsayilan = "ikisi" if c and g else ("chatgpt" if g else "claude")
+    m = ASISTAN_METNI[dil]
+    print(m["soru"])
+    for no, ad in enumerate(m["secenekler"], 1):
+        print(f"  {no}  {ad}")
+    soru = f"{m['numara']} [Enter: {m['secenekler'][kodlar.index(varsayilan)]}]: "
+    for _ in range(20):
+        try:
+            cevap = girdi(soru).strip()
+        except (EOFError, OSError):
+            return varsayilan
+        if not cevap:
+            return varsayilan
+        if cevap in ("1", "2", "3"):
+            return kodlar[int(cevap) - 1]
+        print(m["hata"])
+    return varsayilan
+
+
 def zip_kurulum() -> int:
     """Zip'ten çalıştırılınca içeriği kurulum klasörüne taşır ve kurulumu oradan sürdürür. Dil sorulmaz: önceki
     kurulumun dili, yoksa Windows'un arayüz dili (ortak.sistem_dili). Modüller konsolda sorulur (zip_secimi)."""
@@ -583,8 +702,9 @@ def zip_kurulum() -> int:
     dil = dil if dil in ortak.DILLER else ortak.sistem_dili()
     onceki = ortak.json_oku(VARSAYILAN_KOK / "moduller.json").get("moduller")
     secim = ",".join(zip_secimi(dil, onceki if isinstance(onceki, list) else None))
+    asistan = zip_asistan(dil, ortak.json_oku(VARSAYILAN_KOK / "veri" / "durum.json").get("asistan"))
     if kaynak.resolve() == VARSAYILAN_KOK.resolve():
-        return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim])
+        return main(["--kurulum", "--kisayol", "--dil", dil, "--moduller", secim, "--asistan", asistan])
     print(ZIP_METNI[dil]["kuruluyor"].format(s=ortak.surum(), kok=VARSAYILAN_KOK))
     for y in sorted(kaynak.rglob("*")):
         goreli = y.relative_to(kaynak)
@@ -601,7 +721,7 @@ def zip_kurulum() -> int:
     (VARSAYILAN_KOK / "aktif.txt").unlink(missing_ok=True)
     sonuc = subprocess.run([str(VARSAYILAN_KOK / "runtime" / "python.exe"), "-B",
                             str(VARSAYILAN_KOK / "bin" / "al.py"), "kur", "--kurulum", "--kisayol", "--dil", dil,
-                            "--moduller", secim])
+                            "--moduller", secim, "--asistan", asistan])
     return sonuc.returncode
 
 
@@ -619,11 +739,15 @@ def main(argv=None) -> int:
     ap.add_argument("--moduller", help="kurulumda seçilen modüller, virgülle: " + ",".join(ortak.MODULLER))
     ap.add_argument("--arayuz", choices=ortak.ARAYUZLER,
                     help="kurulumda seçilen arayüz: yeni (ArthurLegal Masası) ya da klasik (Claude Desktop)")
+    ap.add_argument("--asistan", choices=ortak.ASISTAN_SECIMLERI,
+                    help="kurulumda seçilen yapay zekâ uygulaması: claude, chatgpt ya da ikisi")
     args = ap.parse_args(argv)
     if args.dil and not args.zip_kurulum:
         ortak.durum_guncelle(dil=args.dil)
     if args.arayuz and not args.zip_kurulum:
         ortak.durum_guncelle(arayuz=args.arayuz)
+    if args.asistan and not args.zip_kurulum:
+        ortak.durum_guncelle(asistan=args.asistan)
     if args.moduller and not args.zip_kurulum:
         try:
             ortak.moduller_yaz(args.moduller)
@@ -635,18 +759,21 @@ def main(argv=None) -> int:
     if args.zip_kurulum:
         return zip_kurulum()
     if args.kaldir:
-        silinen = claude_ayari.sil()
+        silinen = asistan_kayitlari(kaldir=True)
         kisayollar_sil()
         run_anahtari(False)
         proje.kaldir()
-        ortak.gunluk("kurulum", f"kaldırma: {len(silinen)} yapılandırmadan silindi")
+        ortak.gunluk("kurulum", f"kaldırma: {sum(silinen.values())} yapılandırmadan silindi")
         return 0
     if args.kurulum:
         mevcut = ortak.surumler()
         if mevcut:  # eski bir kurulum dosyası yeniden çalıştırılsa da daha yeni sürüme geri dönülmez
             ortak.aktif_yaz(mevcut[-1])
-        if not claude_kurulu():
+        secim = ortak.asistanlar()
+        if "claude" in secim and not claude_kurulu():
             ortak.durum_guncelle(claude_winget=claude_kur())
+        if "chatgpt" in secim and not ortak.chatgpt_kurulu():
+            ortak.durum_guncelle(chatgpt_winget=chatgpt_kur())
         ortak.durum_guncelle(kurulum_zamani=time.time(), kurulum_surumu=ortak.surum())
     if ortak.hafiza_acik():
         try:  # kasa kullanıcının verisidir: yalnız eksik başlangıç notları yazılır; kaldırma kasayı silmez
@@ -659,12 +786,12 @@ def main(argv=None) -> int:
         programlar_listesi_yaz()
         import kisayol  # başlangıç panelinin durum kartı ilk açılışta dolu gelsin
         kisayol.durum_yaz()
-    degisen = claude_ayari.kaydet()
+    degisen = asistan_kayitlari()
     try:  # "Use a folder" proje klasörleri; güncelleyici her sürümde buradan tazeler
         proje.esitle()
     except OSError as e:
         ortak.gunluk("kurulum", f"proje klasörleri yazılamadı: {e!r}")
-    ortak.gunluk("kurulum", f"Claude Desktop kaydı: {len(degisen)} dosya güncellendi; modüller "
+    ortak.gunluk("kurulum", f"asistan kaydı ({','.join(ortak.asistanlar())}): {degisen} dosya güncellendi; modüller "
                             f"{','.join(ortak.moduller())}; Mask {'var' if ortak.mask_python() else 'yok'}")
     if args.kurulum and args.kisayol:  # zip yolu: kullanıcı konsolda okuyor
         # macOS'ta masaüstündeki takma adın adı uygulamanın adı ve sürüm ("<ad> 3.0.12"; _mac_kisayol_listesi).
@@ -672,17 +799,31 @@ def main(argv=None) -> int:
                       if (ortak.MAC or y.parent == _masaustu()) and "kisayol baslat" in a),
                      f"{ortak.urun_adi()} {ortak.surum()}")
         sayi, simge = len(claude_ayari.istenen_girdiler()), paket
-        print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
-                          f"Installed. {sayi} servers were added to Claude Desktop.",
-                          f"Quraşdırıldı. Claude Desktop-a {sayi} server əlavə olundu."))
+        if "claude" in ortak.asistanlar():
+            print(ortak.metin(f"Kuruldu. Claude Desktop'a {sayi} sunucu eklendi.",
+                              f"Installed. {sayi} servers were added to Claude Desktop.",
+                              f"Quraşdırıldı. Claude Desktop-a {sayi} server əlavə olundu."))
+        if "chatgpt" in ortak.asistanlar():
+            import codex_ayari
+            c = len(codex_ayari.istenen_girdiler())
+            print(ortak.metin(f"Kuruldu. ChatGPT masaüstüne {c} sunucu ve ArthurLegal becerileri eklendi.",
+                              f"Installed. {c} servers and the ArthurLegal skills were added to the ChatGPT desktop app.",
+                              f"Quraşdırıldı. ChatGPT masaüstünə {c} server və ArthurLegal bacarıqları əlavə olundu."))
+            if not ortak.chatgpt_kurulu():
+                print(ortak.metin("ChatGPT masaüstü kurulamadı; simge resmî indirme sayfasını açar: " + ortak.CHATGPT_INDIRME,
+                                  "The ChatGPT desktop app could not be installed; the icon opens the official download "
+                                  "page: " + ortak.CHATGPT_INDIRME,
+                                  "ChatGPT masaüstü quraşdırıla bilmədi; nişan rəsmi yükləmə səhifəsini açır: "
+                                  + ortak.CHATGPT_INDIRME))
         if not ortak.mask_python():
             print(ortak.metin("ArthurMask kurulu değil: müvekkil belgelerini maskeleyen kapı bu bilgisayarda çalışmaz.",
                               "ArthurMask is not installed: the gate that masks client documents does not work on "
                               "this computer.",
                               "ArthurMask quraşdırılmayıb: müvəkkil sənədlərini maskalayan qapı bu kompüterdə işləmir."))
-        print(ortak.metin(f"Masaüstündeki '{simge}' simgesine çift tıklayın: Claude Desktop'u açar ve son adımı gösterir.",
-                          f"Double-click the '{simge}' icon on the desktop: it opens Claude Desktop and shows the last step.",
-                          f"İş masasındakı '{simge}' nişanına iki dəfə klikləyin: Claude Desktop-u açır və son addımı "
+        u = uygulama_adi()
+        print(ortak.metin(f"Masaüstündeki '{simge}' simgesine çift tıklayın: {u['tr']} açar ve son adımı gösterir.",
+                          f"Double-click the '{simge}' icon on the desktop: it opens {u['en']} and shows the last step.",
+                          f"İş masasındakı '{simge}' nişanına iki dəfə klikləyin: {u['az']} açır və son addımı "
                           "göstərir."))
     return 0
 
