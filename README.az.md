@@ -24,7 +24,7 @@
   <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><img src="docs/rehber/kapak-az.png" width="300" alt="ArthurLegal istifadəçi bələdçisi, üz qabığı"></a>
 </p>
 <p align="center">
-  <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><b>İstifadəçi bələdçisi (PDF, 10 səhifə)</b></a><br>
+  <a href="docs/rehber/ArthurLegal-Istifadeci-Beledcisi.pdf"><b>İstifadəçi bələdçisi (PDF, 11 səhifə)</b></a><br>
   ArthurLegal nədir, quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə.
 </p>
 <p align="center">
