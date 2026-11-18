@@ -9,6 +9,7 @@ import io
 import json
 import os
 import queue
+import re
 import shutil
 import subprocess
 import sys
@@ -1197,6 +1198,31 @@ class YayimlamaTesti(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 hatali()
 
+    def test_gecis_provasi_yayinin_kapisi(self):
+        """Prova sınavdan önce çalışır (ucuz olan önce); düşerse yayın durur, sonucu yayın notunda tek satırdır."""
+        kayit, _ = self.sahte_github()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, False, public=True, sinav="19/19", prova="eski 9.9.8 → 9.9.9 ✓")
+        govde = next(v for y, u, v in kayit if y == "POST" and u == "R")["body"]
+        self.assertLess(govde.index("Geçiş provası: eski 9.9.8 → 9.9.9 ✓"), govde.index("Sürüm sınavı: 19/19"))
+        kaynak = (BURASI / "yayin" / "yayinla.py").read_text(encoding="utf-8")
+        self.assertLess(kaynak.index("gecis_provasi_kapisi(k, d, depo, args.etiket)"),
+                        kaynak.index("surum_sinavi(args.etiket, args.sinav_kabul)"))
+        self.assertIn('"atlandı (--provasiz)"', kaynak, "bilerek atlanan prova notta görünür")
+        import gecis_provasi as gp
+
+        def dusen(*a, **k):
+            raise gp.ProvaHatasi("Geçiş provası düştü: 9.9.8 → 9.9.9\n  uygulama açık: çalışan sunucu paketsiz")
+        eski = gp.yayindaki_surumler
+        gp.yayindaki_surumler = dusen
+        try:
+            with contextlib.redirect_stdout(io.StringIO()), self.assertRaises(SystemExit) as h:
+                self.y.gecis_provasi_kapisi({"yayin_deposu": "o/r"}, self.d, "o/r", "v9.9.9")
+        finally:
+            gp.yayindaki_surumler = eski
+        self.assertIn("Yayın durdu", str(h.exception.code))
+        self.assertIn("--provasiz", str(h.exception.code))
+
     def test_yayin_sonrasi_deneme_listesi(self):
         """Üç ortam (Windows Claude Desktop, macOS, ChatGPT masaüstü), her birinde: arthurlegal_durum → paket yüklü,
         bir içtihat sorusu, masa açılıyor ve sürümü AL ile aynı. yayinla.py yayından sonra yazdırır."""
@@ -1887,6 +1913,133 @@ class ModulTesti(unittest.TestCase):
         import ortak
         sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["hafiza"]
         self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
+
+
+# 3.4.0'a kadarki güncelleyici: uygulama açıkken de "etkin + bir önceki" dışındaki klasörleri siler ve bunu bir kez,
+# kayıt adımından (kur --kaydet) önce yapar. 19.11.2026'da yayımlanmış paketlerle yapılan provada 3.4.0'ın bu sırası
+# görüldü. (Silme ikinci kez, kayıttan sonra çağrılırsa geri konan klasörü de siler: o sıra hiç yayımlanmadı.)
+ESKI_SILME = ("    if not fazla or (ortak.asistan_calisiyor() if acik is None else acik):\n", "    if not fazla:\n")
+ESKI_SIRA = ("        _claude_kaydet(guncellendi or mask_kuruldu)\n"
+             "        try:  # yalnız uygulama kapalıyken; açıkken bir sonraki denetime kalır\n"
+             "            eski_surumleri_sil()\n",
+             "        eski_surumleri_sil()\n"
+             "        _claude_kaydet(guncellendi or mask_kuruldu)\n"
+             "        try:\n"
+             "            pass\n")
+
+
+def olay_oncesi_guncelleyici(s: Path):
+    yol = s / "istemci" / "guncelle.py"
+    metin = yol.read_text(encoding="utf-8")
+    for eski, yeni in (ESKI_SILME, ESKI_SIRA):
+        assert metin.count(eski) == 1, f"guncelle.py değişti, test güncellenmeli: {eski!r}"
+        metin = metin.replace(eski, yeni)
+    yol.write_text(metin, encoding="utf-8")
+
+
+def korumasiz_kur(s: Path):
+    """3.4.0'ın kur.py'si: açık sunucunun paketini geri koyan adım yok."""
+    with open(s / "istemci" / "kur.py", "a", encoding="utf-8") as f:
+        f.write("\n\ndef calisan_sunucuyu_onar(acik=None):\n    return \"\"\n")
+
+
+class GecisProvasiTesti(unittest.TestCase):
+    """yayin/gecis_provasi.py (kalite süreci 4): sürüm geçişini kullanıcının bilgisayarındaki ESKİ güncelleyici yapar;
+    prova yayından önce "eski güncelleyici + aday"ı geçici kurulumda, uygulama açık ve kapalıyken dener. Ağa çıkmaz
+    (eski sürümler zip'ten, aday yerel HTTP'den); gerçek kuruluma ve Claude Desktop ayarına dokunmaz (sarmalayıcı)."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(BURASI / "yayin"))
+        import gecis_provasi
+        cls.gp = gecis_provasi
+        cls.ortak_dizin = Path(tempfile.mkdtemp(prefix="al-prova-test-"))
+        cls.runtime = gecis_provasi.runtime_kur(cls.ortak_dizin / "runtime", "sistem").parent
+        if MACOS:
+            cls.runtime = cls.runtime.parent
+        cls.aday = json.loads((BURASI / "kaynaklar.json").read_text(encoding="utf-8"))["surum"]  # masa sürümüyle aynı
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.ortak_dizin, ignore_errors=True)
+
+    def surum_zip(self, t: Path, surum: str, degistir=None) -> Path:
+        s = Path(tempfile.mkdtemp(prefix=f"kaynak-{surum}-", dir=t))
+        shutil.rmtree(s)
+        paket_yaz(s, surum)
+        p = s / "paketler" / "hukuk-burosu"
+        p.mkdir(parents=True)
+        (p / "SYSTEM_PROMPT.md").write_text("# SİSTEM\nArthurLegal Hukuk Bürosu talimatı.", encoding="utf-8")
+        (s / "icerik.json").write_text(json.dumps({"paketler": {"hukuk-burosu": "1.9.1"}}), encoding="utf-8")
+        for d in degistir or ():
+            d(s)
+        z = t / f"{s.name}.zip"
+        with zipfile.ZipFile(z, "w") as arsiv:
+            for y in s.rglob("*"):
+                if "__pycache__" not in y.parts:
+                    arsiv.write(y, y.relative_to(s).as_posix())
+        return z
+
+    def prova(self, t: Path, eski_degistir=(), aday_degistir=(), aday=None, **k):
+        import ortak
+        aday = aday or self.aday
+        az = self.surum_zip(t, aday, aday_degistir)
+        manifest = {"urun": "arthurlegal-yerel", "surum": aday, "paket": {"dosya": az.name, "sha256": ortak.sha256_dosya(az)}}
+        eski = {"surum": "0.0.2", "zip": self.surum_zip(t, "0.0.2", eski_degistir)}
+        onceki = {"surum": "0.0.1", "zip": self.surum_zip(t, "0.0.1")}
+        with contextlib.redirect_stdout(io.StringIO()):
+            return self.gp.prova(az, manifest, eski, onceki, self.runtime, **k)
+
+    def test_gecis_iki_senaryoda_gecer_ve_gercek_bilgisayara_dokunmaz(self):
+        with tempfile.TemporaryDirectory() as t:
+            sonuc = self.prova(Path(t), sakla=True)
+            self.assertEqual(sonuc["durum"], "gecti")
+            self.assertEqual(sonuc["ozet"], f"eski güncelleyici 0.0.2 (çalışan sunucu 0.0.1) → {self.aday}: "
+                                            "uygulama açık ✓ · kapalı ✓")
+            klasor = Path(sonuc["klasor"])
+            try:
+                for senaryo in ("acik", "kapali"):
+                    kok = klasor / senaryo
+                    self.assertEqual((kok / "aktif.txt").read_text(encoding="utf-8"), self.aday)
+                    cagrilar = self.gp.kur_cagrilari(kok)
+                    kur = [c for c in cagrilar if c["hedef"] == "kur"]
+                    self.assertTrue(kur and "--kaydet" in kur[0]["argumanlar"], "eski güncelleyici kayıt adımını çağırdı")
+                    self.assertEqual(kur[0]["surum"], self.aday, "kayıt adımı yeni sürümün koduyla")
+                    self.assertTrue(any(c["hedef"] == "kur-onar" for c in cagrilar))
+                    gunluk = kok / "veri" / "gunluk" / "kurulum.log"
+                    self.assertFalse(gunluk.exists() and "asistan kaydı" in gunluk.read_text(encoding="utf-8"),
+                                     "Claude/ChatGPT kaydı, kısayol, kayıt defteri yazılmadı")
+                self.assertTrue((klasor / "acik" / "surumler" / "0.0.1" / "paketler").exists(),
+                                "uygulama açıkken çalışan sunucunun klasörü silinmedi")
+                self.assertFalse((klasor / "kapali" / "surumler" / "0.0.1").exists(), "uygulama kapalı: eskisi silindi")
+            finally:
+                shutil.rmtree(klasor, ignore_errors=True)
+
+    def test_olay_oncesi_gecis_duser(self):
+        """18.11.2026'nın yolu: eski güncelleyici açık uygulamanın sunucusunun klasörünü siler, yeni sürümde onu geri
+        koyan adım yoktur. Prova yayından önce düşer (yayımlanmış 3.3.2 → 3.4.0 paketleriyle de düşüyor)."""
+        with tempfile.TemporaryDirectory() as t:
+            with self.assertRaises(self.gp.ProvaHatasi) as h:
+                self.prova(Path(t), eski_degistir=[olay_oncesi_guncelleyici], aday_degistir=[korumasiz_kur])
+            ileti = str(h.exception)
+            self.assertIn("uygulama açık: uygulama açıkken çalışan sunucu (0.0.1) geçişten sonra", ileti)
+            self.assertIn("paket", ileti)
+            self.assertNotIn("uygulama kapalı:", ileti, "uygulama kapalıyken sunucu yoktur, geçiş sağlam")
+            klasor = re.search(r"duruyor: (.+)$", ileti, re.M).group(1).strip()
+            shutil.rmtree(klasor, ignore_errors=True)
+
+    def test_yeni_surumun_korumasi_eski_guncelleyicinin_sildigini_geri_koyar(self):
+        """3.4.0 → 3.4.1'in yolu: eski güncelleyici klasörü siler, adayın kayıt adımı paketleri geri koyar."""
+        with tempfile.TemporaryDirectory() as t:
+            sonuc = self.prova(Path(t), eski_degistir=[olay_oncesi_guncelleyici])
+            self.assertEqual(sonuc["durum"], "gecti")
+            self.assertIn("uygulama açık: çalışan sunucunun (0.0.1) paketleri geri kondu", sonuc["notlar"])
+
+    def test_aday_yayindakinden_yeni_degilse_atlanir(self):
+        with tempfile.TemporaryDirectory() as t:
+            sonuc = self.prova(Path(t), aday="0.0.2")
+            self.assertEqual(sonuc["durum"], "atlandi")
+            self.assertIn("yeni değil", sonuc["ozet"])
 
 
 class PaketYokTesti(unittest.TestCase):

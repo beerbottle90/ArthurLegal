@@ -7,6 +7,7 @@
     python yayin/yayinla.py v2.0.0                latest olarak yayımla: kurulu bilgisayarlar 6 saat içinde alır
     python yayin/yayinla.py v2.0.0 --kasa         günlük anahtar kayıpsa kasadaki yedekle imzala
     python yayin/yayinla.py v2.0.0 --sinavsiz     sürüm sınavını bilerek atla
+    python yayin/yayinla.py v2.0.0 --provasiz     geçiş provasını bilerek atla (yayın notunda görünür)
     python yayin/yayinla.py v2.0.0 --deneme win,mac,chatgpt   yayın sonrası denemede geçen ortamları nota yaz
     python yayin/yayinla.py v2.0.0 --deneme-kaldi mac         kalan ortamı nota yaz (✗)
     python yayin/yayinla.py v2.0.0 --deneme-listesi           yayın sonrası deneme listesini yeniden yazdır
@@ -14,6 +15,10 @@
 Yayın sonrası deneme (kalite süreci 4, kurulum sağlığı): yayın notu "Yayın sonrası deneme: Win … Mac … ChatGPT …"
 satırıyla açılır ve yayından sonra deneme listesi yazdırılır. Üç ortamda (Windows Claude Desktop, macOS Claude
 Desktop, ChatGPT masaüstü) aynı üç deneme yapılır; sonuç --deneme ile aynı satıra işlenir: "Win ✓ Mac ✓ ChatGPT ✓".
+
+Geçiş provası (kurulum sağlığı): yayından önce, sınavdan da önce, aday yayındaki son sürümün güncelleyicisiyle geçici
+bir kurulumda kurulur (uygulama açık ve kapalı); çalışan sunucu paketini kaybederse, yeni sürüm başlamazsa ya da paketi
+yüklenemezse yayın durur (bkz. gecis_provasi.py). Sonuç yayın notuna tek satır yazılır.
 
 Sürüm sınavı (Katman 2): %USERPROFILE%/.arthurlegal/sinav.json varsa yayından önce bir kalite sınavı çalışır ve
 kalite önceki sürüme göre düştüyse yayın durur (bkz. surum_sinavi). Ayar yoksa sınavsız devam edilir.
@@ -378,7 +383,36 @@ def deneme_isle(depo: str, etiket: str, gecen: list, kalan: list) -> dict:
     return sonuc
 
 
-def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav: str | None = None) -> dict:
+def manifest_olustur(d: dict, etiket: str, depo: str) -> dict:
+    """Yayının manifesti (imzasız). Geçiş provası aynı manifesti deneme anahtarıyla imzalayıp yerelden verir."""
+    return {
+        "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": etiket,
+        "taban": f"https://github.com/{depo}/releases/download/{etiket}/",
+        "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
+        # Yenilikler (3.3.1): arayüzlerin "yeni sürüm var" paneli bu maddeleri gösterir (en çok beş, üç dil).
+        **({"yenilikler": d["yenilikler"]} if d.get("yenilikler") else {}),
+        # macOS: güncelleyici ArthurMask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
+        **({"mask_macos": d["mask_macos"]} if d.get("mask_macos") else {}),
+    }
+
+
+def gecis_provasi_kapisi(k: dict, d: dict, depo: str, etiket: str) -> str:
+    """Yayından önce: aday, yayındaki son sürümün güncelleyicisiyle geçici bir kurulumda kurulur (gecis_provasi.py).
+    Düşerse yayın durur; özet satırı yayın notuna girer. Gerçek kuruluma ve bu bilgisayarın ayarlarına dokunmaz."""
+    import gecis_provasi as gp
+    print("Geçiş provası çalışıyor (yayındaki son sürümün güncelleyicisiyle; uygulama açık ve kapalı)...")
+    try:
+        surumler = gp.yayindaki_surumler(depo, gp.yayin_anahtarlari(k), github_jetonu() if k.get("dagitim_deposu") else "")
+        sonuc = gp.prova(CIKTI / d["paket"]["dosya"], manifest_olustur(d, etiket, depo), surumler[0],
+                         surumler[1] if len(surumler) > 1 else None, "gomulu", k.get("python"))
+    except gp.ProvaHatasi as e:
+        sys.exit(f"{e}\nYayın durdu. Nedeni bulun; bilerek geçmek için: --provasiz (yayın notunda görünür).")
+    print("Geçiş provası: " + sonuc["ozet"])
+    return sonuc["ozet"]
+
+
+def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav: str | None = None,
+            prova: str | None = None) -> dict:
     """Dosyaları yükler ve yayını yayımlar; yayının son hâlini döndürür."""
     # Sıra: paket ve kurulum dosyaları önce, imzalı manifest en son. Var olan bir yayında dosyalar tek tek değişirken
     # güncelleyici hiçbir an henüz yüklenmemiş bir paketi gösteren manifest görmez.
@@ -392,6 +426,8 @@ def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav
     kurulum = ("Windows ArthurLegal-Kurulum.exe · macOS ArthurLegal-Kurulum.pkg" if "ArthurLegal-Kurulum.pkg" in dosyalar
                else "ArthurLegal-Kurulum.exe")
     govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: {kurulum}"
+    if prova:
+        govde += f"\n\nGeçiş provası: {prova}"
     if sinav:
         govde += f"\n\nSürüm sınavı: {sinav}"
     govde += "\n\n" + deneme_satiri({})   # denemeler yayından sonra yapılır: --deneme işler
@@ -415,6 +451,7 @@ def main(argv=None) -> int:
     ap.add_argument("--kasa", action="store_true", help="günlük anahtar kayıpsa kasadaki yedek anahtarla imzala")
     ap.add_argument("--sinavsiz", action="store_true", help="sürüm sınavını atla (bilinçli; yayın notunda görünmez)")
     ap.add_argument("--sinav-kabul", metavar="NEDEN", help="sınavdaki kalite düşüşünü bilerek kabul et ve yayımla")
+    ap.add_argument("--provasiz", action="store_true", help="geçiş provasını atla (bilinçli; yayın notunda görünür)")
     ap.add_argument("--deneme", metavar="ORTAMLAR", help="yayın sonrası denemede geçen ortamlar (win,mac,chatgpt): yayın notuna ✓")
     ap.add_argument("--deneme-kaldi", metavar="ORTAMLAR", help="yayın sonrası denemede kalan ortamlar: yayın notuna ✗")
     ap.add_argument("--deneme-listesi", action="store_true", help="yayın sonrası deneme listesini yazdır (yayımlamaz)")
@@ -459,16 +496,12 @@ def main(argv=None) -> int:
         sys.exit("Önce derleyin: python yayin/derle.py")
     depo = k.get("dagitim_deposu") or k["yayin_deposu"]
     eklenti_denetimi()
+    # Sıra ucuzdan pahalıya: geçiş provası (yarım dakika, ücretsiz) sınavdan (dakikalar, ücretli) önce.
+    prova = None
+    if not args.kuru:
+        prova = "atlandı (--provasiz)" if args.provasiz else gecis_provasi_kapisi(k, d, depo, args.etiket)
     sinav = None if (args.kuru or args.sinavsiz) else surum_sinavi(args.etiket, args.sinav_kabul)
-    manifest = {
-        "urun": "arthurlegal-yerel", "surum": d["surum"], "etiket": args.etiket,
-        "taban": f"https://github.com/{depo}/releases/download/{args.etiket}/",
-        "tarih": time.strftime("%Y-%m-%d"), "paket": d["paket"], "mask": d["mask"], "icerik": d["icerik"],
-        # Yenilikler (3.3.1): arayüzlerin "yeni sürüm var" paneli bu maddeleri gösterir (en çok beş, üç dil).
-        **({"yenilikler": d["yenilikler"]} if d.get("yenilikler") else {}),
-        # macOS: güncelleyici ArthurMask'i ilk kurulumda bu disk görüntüsünden kurar (guncelle.mac_mask_kur).
-        **({"mask_macos": d["mask_macos"]} if d.get("mask_macos") else {}),
-    }
+    manifest = manifest_olustur(d, args.etiket, depo)
     ham = json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8")
     dosya, alan = (KASA, "kasa_anahtari") if args.kasa else (ANAHTAR, "yayin_anahtari")
     if not dosya.exists():
@@ -488,7 +521,8 @@ def main(argv=None) -> int:
     if args.kuru:
         return 0
 
-    yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"), sinav=sinav)
+    yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"), sinav=sinav,
+                    prova=prova)
     print(f"Yayın: {yayin['html_url']}")
     print("\n" + deneme_listesi(args.etiket, d["surum"]))
     return 0
