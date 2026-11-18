@@ -2601,6 +2601,108 @@ class MacKurulumTesti(unittest.TestCase):
             self.assertEqual(subprocess.run(["sh", "-n"], input=metin, text=True).returncode, 0)
 
 
+class YavasUzak(SahteUzak):
+    """Geç cevap veren ArthurLegal MCP taklidi: ağı yavaş ya da uzak ucu ağır bilgisayar."""
+    GECIKME = 2.0
+
+    def do_POST(self):
+        time.sleep(self.GECIKME)
+        super().do_POST()
+
+
+class DusenUzak(SahteUzak):
+    """İlk isteklerde 503 veren, sonra düzelen uzak uç: açılışta ağ yok, biraz sonra geliyor."""
+    kalan = 2
+
+    def do_POST(self):
+        if DusenUzak.kalan > 0:
+            DusenUzak.kalan -= 1
+            self.rfile.read(int(self.headers["Content-Length"]))
+            self.send_response(503)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        super().do_POST()
+
+
+class IlkAcilisTesti(unittest.TestCase):
+    """18.11.2026: araç önbelleği yokken tools/list uzak ucu sınırsız bekliyordu. Uca ulaşılamayan bilgisayarda cevap
+    40 sn sürüyor, ChatGPT sunucunun açılışına tanıdığı 30 sn dolunca bağlantıyı kesiyor, önbellek hiç yazılmıyor ve
+    masa hiçbir denemede açılmıyordu. Artık tools/list sınırlı bekler, yerel araçlar ve masa hemen gelir; uzak araçlar
+    arkada alınınca istemciye tools/list_changed gider."""
+
+    calistir = ModulTesti.calistir
+    SENARYO = """
+import threading, time
+import arthurlegal_sunucu as s
+s.ILK_LISTE_BEKLEME, s.YENIDEN_DENEME = 0.5, (0.2,)
+u = s.Sunucu()
+yazilan = []
+u.yaz = yazilan.append
+u.isle('initialize', {'clientInfo': {'name': 'codex-mcp-client'}})
+u.baslatildi = True
+threading.Thread(target=u._uzak_baglan, daemon=True).start()
+t0 = time.monotonic()
+ilk = [a['name'] for a in u.isle('tools/list', {})['tools']]
+sure = time.monotonic() - t0
+son = time.monotonic() + BILDIRIM_BEKLE
+while not yazilan and time.monotonic() < son:
+    time.sleep(0.05)
+sonra = [a['name'] for a in u.isle('tools/list', {})['tools']]
+print(json.dumps({'sure': sure, 'ilk': ilk, 'sonra': sonra, 'yazilan': yazilan, 'hata': u.uzak_hata,
+                  'onbellek': u.onbellek.exists()}))
+"""
+
+    def senaryo(self, t, bildirim_bekle):
+        (t / "senaryo.py").write_text(f"BILDIRIM_BEKLE = {bildirim_bekle}\n" + self.SENARYO, encoding="utf-8")
+        return self.calistir(t, f"exec(open(r'{t / 'senaryo.py'}', encoding='utf-8').read())")
+
+    def uzakla(self, isleyici):
+        uzak, url = sunucu_baslat(isleyici)
+        self.addCleanup(uzak.server_close)
+        self.addCleanup(uzak.shutdown)
+        return url + "/mcp"
+
+    def test_yavas_uzak_uc_acilisi_bekletmez(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok", uzak=self.uzakla(YavasUzak))
+            r = self.senaryo(t, 30)
+        self.assertLess(r["sure"], YavasUzak.GECIKME, "tools/list uzak ucun cevabını beklemeden döner")
+        self.assertIn("al_masasi", r["ilk"], "masa ve yerel araçlar hemen gelir")
+        self.assertIn("arthurlegal_talimat", r["ilk"])
+        self.assertNotIn("tr_ictihat_ara", r["ilk"])
+        self.assertEqual(r["yazilan"], [{"jsonrpc": "2.0", "method": "notifications/tools/list_changed"}],
+                         "liste gelince istemciye haber verilir")
+        self.assertIn("tr_ictihat_ara", r["sonra"])
+        self.assertTrue(r["onbellek"], "liste diske yazılır: sonraki açılış hiç beklemez")
+        self.assertIsNone(r["hata"])
+
+    def test_ulasilamayan_uzak_uc_arkada_yeniden_denenir(self):
+        DusenUzak.kalan = 2
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok", uzak=self.uzakla(DusenUzak))
+            r = self.senaryo(t, 30)
+        self.assertIn("al_masasi", r["ilk"])
+        self.assertNotIn("tr_ictihat_ara", r["ilk"], "ilk deneme düştü: liste yerel araçlarla verilir")
+        self.assertEqual(len(r["yazilan"]), 1, "ağ gelince tek bildirim")
+        self.assertIn("tr_ictihat_ara", r["sonra"])
+        self.assertTrue(r["onbellek"])
+
+    def test_onbellek_varsa_uzak_uc_beklenmez(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok", uzak=self.uzakla(YavasUzak))
+            (t / "kok" / "veri").mkdir()
+            (t / "kok" / "veri" / "uzak_araclar.json").write_text(json.dumps({"zaman": 1, "araclar": [
+                {"name": "tr_onbellekten", "description": "x", "inputSchema": {"type": "object"}}]}), encoding="utf-8")
+            r = self.senaryo(t, 0)
+        self.assertLess(r["sure"], YavasUzak.GECIKME)
+        self.assertIn("tr_onbellekten", r["ilk"])
+        self.assertEqual(r["yazilan"], [], "liste değişmeden bildirim gitmez")
+
+
 class ChatGPTKipiTesti(unittest.TestCase):
     """16.11.2026 (K25): ChatGPT'de görünümü yalnız al_masasi taşır; soru, adımlar ve cevap bu süreçte bellekte
     tutulur, açık masa al_masa_durumu ile yoklar. Claude'da düzen değişmez."""
