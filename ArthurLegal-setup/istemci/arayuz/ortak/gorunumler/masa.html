@@ -444,6 +444,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   border-radius: var(--k-alan); background: var(--grup); font-size: 14px; line-height: 1.45; }
 .model-serit .yazi { flex: 1 1 320px; min-width: 0; }
 .model-serit.dusuk { background: var(--kirmizi-zemin); color: var(--kirmizi-metin); }
+/* Paket yüklenemiyor (kurulum sağlığı): her ekranın başında, kapatılamaz; adımlar ve kurulum düğmesi */
+.paket-serit { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px; border-radius: var(--k-alan);
+  background: var(--kirmizi-zemin); color: var(--kirmizi-metin); font-size: 14px; line-height: 1.45; }
+.paket-serit .paket-baslik { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.paket-serit .paket-baslik svg { flex: none; width: 16px; height: 16px; }
+.paket-serit p { margin: 0; }
+.paket-serit .adim-listesi { color: var(--metin); }
 .senaryolar { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .senaryo .rozet { align-self: flex-start; }
 .senaryo[aria-pressed="true"] { border-color: var(--birincil); background: var(--secili); }
@@ -541,6 +548,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     uzaktaKal: false,    // kullanıcı devir ekranında "bu masayla devam et" dedi
     devirOlmadi: false,  // devir bu sohbette denendi, Claude yerel masayı açamadı: ikinci kez devredilmez
     model: null,         // Claude'un bildirdiği model, sunucunun değerlendirmesiyle: { ad, aile, duzey }
+    paket: null,         // bilgisayardaki paket yüklenemiyorsa sunucunun bildirdiği sorun ve onarım adımları
   };
   const GECMIS = [];
 
@@ -1193,6 +1201,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (t.isletim_sistemi) satirlar.push(cev("İşletim sistemi: {0}", t.isletim_sistemi + (t.mimari ? " (" + t.mimari + ")" : "")));
     satirlar.push(cev("Dil: {0}", DIL.secili) + (Array.isArray(t.moduller) && t.moduller.length ? " · " + cev("Modüller: {0}", t.moduller.join(", ")) : ""));
     if (DURUM.model && DURUM.model.ad) satirlar.push(cev("Model: {0}", DURUM.model.ad));
+    if (DURUM.paket) satirlar.push(cev("Paket: yüklenemiyor ({0})", DURUM.paket.sorun));
     // Ev sahibi ve görünüm: ChatGPT ile Claude arasındaki farkları tanılamak için (tam ekran verildi mi).
     const ev = (app.getHostVersion && app.getHostVersion()) || {};
     const bag = app.getHostContext() || {};
@@ -1260,6 +1269,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (id !== "gecmis") gecmisAcik = null;
     const ekran = $("ekran");
     ekran.replaceChildren();
+    const ps = paketSeridi();
+    if (ps) ekran.append(ps);
     (CIZIM[id] || CIZIM.sohbet)(ekran);
     panelYenile();
     bildir(`kullanıcı "${e.ad}" ekranında.`);
@@ -1338,6 +1349,34 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       : cev("Bu masa uzak bağlantıdan açık: geçmiş yalnız bu sohbet boyunca durur. Sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard bu bilgisayardaki kurulumun masasında çalışır. Düğme işe yaramazsa Claude'un araç menüsünde arthurlegal-yerel'in araçlarını açın.")),
       satir);
     return kesit;
+  }
+
+  // Kurulum sağlığı (18.11.2026): bilgisayardaki paket yüklenemiyorsa asistan bu sohbette yalnız çekirdek kurallarla
+  // çalışır. Olayda bunu kimse fark etmemişti; uyarı her ekranın başında durur ve kapatılamaz. Onarım adımları
+  // sunucudandır (işletim sistemi, uygulama ve kurulum türüne göre), masanın dilinde; yoksa Türkçesi.
+  function paketSeridi() {
+    const p = DURUM.paket;
+    if (!p) return null;
+    const a = (p.adimlar && (p.adimlar[DIL.secili] || p.adimlar.tr)) || {};
+    const s = ogesi("div", "paket-serit");
+    s.setAttribute("role", "alert");
+    const bas = ogesi("div", "paket-baslik");
+    bas.append(ikon("uyari"), ogesi("b", null, cev("ArthurLegal paketi bu kurulumda yüklenemedi")));
+    s.append(bas, ogesi("p", null, cev("{0} bu sohbette paketin tam kuralları olmadan, yalnız çekirdek kurallarla çalışıyor. Süreli bir işe başlamadan önce onarın:", EV.asistan)));
+    const buyuk = (t) => t.charAt(0).toLocaleUpperCase(DIL.secili) + t.slice(1);
+    const kurulum = a.kurulum || cev("güncel ArthurLegal kurulumunu yeniden çalıştırıp en az bir asistan paketi seçin");
+    const ol = ogesi("ol", "adim-listesi");
+    if (a.kapat_ac) ol.append(ogesi("li", null, buyuk(a.kapat_ac) + "."), ogesi("li", null, cev("Sorun sürerse {0}.", kurulum)));
+    else ol.append(ogesi("li", null, buyuk(kurulum) + "."));
+    s.append(ol);
+    if (p.adres) {
+      const ey = ogesi("div", "eylemler sol");
+      const ac = dugme(cev("Kurulum sayfasını aç"), { sinif: "kucuk", simge: "dis" });
+      ac.onclick = () => baglantiAc(app, p.adres, ortam.duyuru);
+      ey.append(ac);
+      s.append(ey);
+    }
+    return s;
   }
 
   function masaustuTanitimi(ekran, id) {
@@ -2211,7 +2250,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function durumuSakla() {
     try {
       localStorage.setItem(DURUM_KAYDI, JSON.stringify({ surum: DURUM.surum, ortam: DURUM.ortam, ev: EV.ad,
-        yetenekler: [...DURUM.yetenekler], moduller: DURUM.moduller, model: DURUM.model }));
+        yetenekler: [...DURUM.yetenekler], moduller: DURUM.moduller, model: DURUM.model, paket: DURUM.paket }));
     } catch { /* yok */ }
   }
   function durumuYukle() {
@@ -2223,6 +2262,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (Array.isArray(d.yetenekler)) DURUM.yetenekler = new Set(d.yetenekler);
       DURUM.moduller = d.moduller || {};
       if (d.model && typeof d.model === "object" && !DURUM.model) DURUM.model = d.model;
+      DURUM.paket = d.paket && typeof d.paket === "object" ? d.paket : null;
     } catch { /* yok */ }
   }
 
@@ -4716,6 +4756,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (veri.bolum && EKRANLAR.some((e) => e.id === veri.bolum)) DURUM.acilis = veri.bolum;
       if (Array.isArray(veri.baglayicilar)) baglayicilariAl(veri.baglayicilar);
       if (veri.model && typeof veri.model === "object") modelAl(veri.model);
+      // Paket sorunu her masa verisiyle yeniden bildirilir: alan yoksa paket yükleniyor (onarıldıysa uyarı kalkar).
+      DURUM.paket = veri.paket && typeof veri.paket === "object" ? veri.paket : null;
       // Sunucunun bildirdiği dil (kurulum dili ya da Claude'un yazdığı), kullanıcı bu sohbette seçim yapmadıysa:
       // olay yayılmaz, masa aşağıdaki çizimde o dilde baştan kurulur.
       if (DIL.gecerli(veri.dil) && !DIL.kayitli() && DIL.sec(veri.dil, { kaydet: false, sessiz: true })) {

@@ -376,13 +376,15 @@ _KAPAT_AC = {
 # (kurulum/ArthurLegal.iss ModulPaketGerekli; kur.py --moduller, ortak.secim_coz). Güncelleme denetimi bu durumu
 # onarmaz: güncelleyici yalnız daha yeni bir sürüm varsa paket indirir (guncelle.paket_guncelle). Eski bir kurulum
 # dosyası da onarmaz, çünkü kurulum en yeni sürüm klasörünü etkin bırakır (kur.py --kurulum): cümle güncel kurulumu ister.
+# Çiftin ilki genel kurulum (cümlede ardından ": <indirme sayfası>"), ikincisi büroya özel kurulum (ardından nokta);
+# masanın paket uyarısı aynı metni adım olarak, adresi düğme olarak gösterir (paket_bilgisi).
 _KURULUM = {
-    "tr": ("güncel {urun} kurulumunu yeniden çalıştırıp en az bir asistan paketi seçin: {adres}",
-           "{urun} kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin."),
-    "en": ("run the current {urun} installer again and select at least one assistant package: {adres}",
-           "run the {urun} installer again and select at least one assistant package."),
-    "az": ("cari {urun} quraşdırmasını yenidən işə salıb ən azı bir köməkçi paketi seçin: {adres}",
-           "{urun} quraşdırma faylını yenidən işə salıb ən azı bir köməkçi paketi seçin."),
+    "tr": ("güncel {urun} kurulumunu yeniden çalıştırıp en az bir asistan paketi seçin",
+           "{urun} kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin"),
+    "en": ("run the current {urun} installer again and select at least one assistant package",
+           "run the {urun} installer again and select at least one assistant package"),
+    "az": ("cari {urun} quraşdırmasını yenidən işə salıb ən azı bir köməkçi paketi seçin",
+           "{urun} quraşdırma faylını yenidən işə salıb ən azı bir köməkçi paketi seçin"),
 }
 _ONARIM = {
     "tr": ("{urun} paketi bu oturumda yüklenemedi, bu cevap paketin tam kuralları olmadan hazırlandı; onarmak için "
@@ -418,15 +420,36 @@ def onarim_cumlesi(sorun: dict, ev=None, dil=None) -> str:
     Bu yol sürüm klasörü silinmişken de çalışmalıdır: yalnız süreç başlarken yüklenmiş modüllere dayanır, burada yeni
     bir modül içe aktarılmaz (silinmiş klasörden içe aktarma başarısız olur)."""
     dil = dil if dil in ortak.DILLER else ortak.arayuz_dili()
-    urun = ortak.urun_adi()
-    if ortak.ayar().get("dagitim_deposu") or urun != ortak.URUN_VARSAYILAN:
-        kurulum = _KURULUM[dil][1].format(urun=urun)
-    else:
-        kurulum = _KURULUM[dil][0].format(
-            urun=urun, adres=ortak.KURULUM_SAYFASI_MAC if ortak.MAC else ortak.KURULUM_SAYFASI)
+    urun, adres = ortak.urun_adi(), _kurulum_adresi()
+    kurulum = _KURULUM[dil][0 if adres else 1].format(urun=urun) + (": " + adres if adres else ".")
     if sorun.get("yeniden_acmak_yeter"):
         return _ONARIM[dil][0].format(urun=urun, kapat_ac=_KAPAT_AC[dil][(ev == "chatgpt", ortak.MAC)], kurulum=kurulum)
     return _ONARIM[dil][1].format(urun=urun, kurulum=kurulum)
+
+
+def _kurulum_adresi():
+    """Genel kurulumda indirme sayfası; büroya özel kurulumda (kendi dağıtımı ya da adı olan) None."""
+    if ortak.ayar().get("dagitim_deposu") or ortak.urun_adi() != ortak.URUN_VARSAYILAN:
+        return None
+    return ortak.KURULUM_SAYFASI_MAC if ortak.MAC else ortak.KURULUM_SAYFASI
+
+
+def paket_bilgisi(sorun: dict, ev=None) -> dict:
+    """Masanın paket uyarısı için (al_arayuz.paket_uyarisi): sorun ve onarım adımları, üç dilde. Adımlar onarım
+    cümlesiyle aynı parçalardır; kapat_ac yalnız uygulamayı yeniden açmak yetiyorsa vardır. Masa, kullanıcının
+    seçtiği dile göre birini gösterir. onarim_cumlesi gibi yalnız bellekteki modüllere dayanır."""
+    urun, adres = ortak.urun_adi(), _kurulum_adresi()
+    yeter = bool(sorun.get("yeniden_acmak_yeter"))
+    adimlar = {}
+    for dil in ortak.DILLER:
+        adim = {"kurulum": _KURULUM[dil][0 if adres else 1].format(urun=urun)}
+        if yeter:
+            adim["kapat_ac"] = _KAPAT_AC[dil][(ev == "chatgpt", ortak.MAC)]
+        adimlar[dil] = adim
+    out = {"sorun": sorun["sorun"], "yeniden_acmak_yeter": yeter, "adimlar": adimlar}
+    if adres:
+        out["adres"] = adres
+    return out
 
 
 def cekirdek_talimat(sorun: dict, ev=None) -> str:
@@ -873,7 +896,7 @@ class Sunucu:
         self.uzak_araclar = None if onbellek is None else salt_okunur_isaretle(onbellek)
         self.uzak_hata, self.baslatildi = None, False
         self._paket_sorunu_yazildi = False
-        self._gorunum_onbellek = None
+        self._gorunum_onbellek, self._gorunum_kilit = None, threading.Lock()
         self.ev = ev_ayari()   # "chatgpt" ya da None (Claude); initialize'daki clientInfo da belirler
         self.canli = al_arayuz.CanliMasa() if al_arayuz is not None and hasattr(al_arayuz, "CanliMasa") else None
         self._yaz_kilit, self._yenile_kilit, self._liste_kilit = threading.Lock(), threading.Lock(), threading.Lock()
@@ -898,6 +921,8 @@ class Sunucu:
             ortak.durum_guncelle(calisan_surum=ortak.surum(), calisan_zaman=time.time())
         except OSError:
             pass
+        if al_arayuz is not None:
+            threading.Thread(target=self._gorunumleri_hazirla, daemon=True).start()
         for satir in sys.stdin:
             if not satir.strip():
                 continue
@@ -977,12 +1002,21 @@ class Sunucu:
         raise Hata(-32601, f"Desteklenmeyen yöntem: {metod}")
 
     def _gorunumler(self):
-        """Masa ve kartların birleşmiş HTML'i; ilk istekte bir kez kurulur."""
+        """Masa ve kartların birleşmiş HTML'i; bir kez kurulur (açılışta _gorunumleri_hazirla)."""
         if al_arayuz is None:
             return []
-        if self._gorunum_onbellek is None:
-            self._gorunum_onbellek = al_arayuz.kaynaklar()
+        with self._gorunum_kilit:
+            if self._gorunum_onbellek is None:
+                self._gorunum_onbellek = al_arayuz.kaynaklar()
         return self._gorunum_onbellek
+
+    def _gorunumleri_hazirla(self):
+        """Görünümler açılışta belleğe alınır. Sunucu açıkken sürüm klasörü silinirse (paketin yüklenemediği en olası
+        yol) masa dosyaları da gider; bellekteki masa yine açılır ve paket uyarısını gösterir."""
+        try:
+            self._gorunumler()
+        except (OSError, ValueError, KeyError) as e:
+            ortak.gunluk("sunucu", f"görünümler hazırlanamadı: {e!r}")
 
     def _masa_verisi(self, a):
         yetenekler = [t["name"] for t in (self.uzak_araclar or []) if t.get("name") in MASA_UZAK] + ["al_modul_ac"]
@@ -1008,6 +1042,16 @@ class Sunucu:
         if self.ev == "chatgpt" and self.canli is not None:
             yetenekler.append("al_masa_durumu")
             ek["ev"] = al_arayuz.CHATGPT_MASAUSTU
+        # Kurulum sağlığı (kalite süreci 4): paket yüklenemiyorsa masa her ekranda uyarır ve onarım adımlarını
+        # gösterir. 18.11.2026 olayında paket hiç yüklenmemişti ve kimse fark etmemişti.
+        if hasattr(al_arayuz, "paket_uyarisi"):
+            try:
+                sorun = self.bilgi.paket_sorunu()
+            except (OSError, ValueError) as e:   # masa açılışı bu denetim yüzünden düşmez
+                ortak.gunluk("sunucu", f"paket durumu okunamadı: {e!r}")
+                sorun = None
+            if sorun:
+                ek["paket"] = paket_bilgisi(sorun, self.ev)
         return al_arayuz.masa_cevabi("masaustu", yetenekler, masa_modulleri(), a.get("bolum"), a.get("baglayicilar"), **ek)
 
     def _masa(self, a):
