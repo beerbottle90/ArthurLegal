@@ -28,6 +28,21 @@ class OrtakRehberler(unittest.TestCase):
         self.assertEqual(sorted(set(tablo["degiskenler"]) - kullanilan), [])
 
 
+class MasaSurumu(unittest.TestCase):
+    """Masa şeridindeki "v…" GitHub'daki sürümle aynı okunur (18.11.2026): masanın sürümü kurulumunkiyle aynıdır."""
+
+    def test_masa_kurulumla_ayni_surumde(self):
+        import re
+        kurulum = json.loads((BURASI / "kaynaklar.json").read_text(encoding="utf-8"))["surum"]
+        arayuz = BURASI / "istemci" / "arayuz"
+        masa = re.search(r'^SURUM\s*=\s*"([^"]+)"', (arayuz / "al_arayuz.py").read_text(encoding="utf-8"), re.M)
+        self.assertIsNotNone(masa)
+        self.assertEqual(masa.group(1), kurulum, "app4all'da masanın SURUM'unu kurulum sürümüne getirip "
+                         "sunucu/esitle.py ile kopyalayın.")
+        yenilikler = json.loads((arayuz / "ortak" / "tasarim" / "yenilikler.json").read_text(encoding="utf-8"))
+        self.assertIn(kurulum, yenilikler, "masanın Yenilikler'inde bu sürümün maddeleri olmalı")
+
+
 class Turetme(unittest.TestCase):
     def setUp(self):
         self._gecici = tempfile.TemporaryDirectory()
