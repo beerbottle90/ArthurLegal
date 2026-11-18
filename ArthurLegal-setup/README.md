@@ -230,6 +230,20 @@ Sonuç notun aynı satırına işlenir: `python yayin/yayinla.py v3.4.2 --deneme
 `--deneme-kaldi mac`); hepsi geçince `Yayın sonrası deneme: Win ✓ Mac ✓ ChatGPT ✓`. Liste yeniden:
 `--deneme-listesi`.
 
+**Geçiş provası (kurulum sağlığı).** Sürüm geçişini yeni sürüm değil, kullanıcının bilgisayarında kurulu eski
+güncelleyici yapar; 18.11.2026'daki "paket yok" olayı bu geçişte çıktı. `yayinla.py` yayından önce (sınavdan da önce)
+[`yayin/gecis_provasi.py`](yayin/gecis_provasi.py)'yi çalıştırır: yayındaki son iki sürüm indirilir (imza ve sha256
+doğrulanır), geçici bir kurulumda adayı eski güncelleyiciye kurdurur. İki senaryo dener: uygulama iki güncelleme
+boyunca açık kaldı (sunucu bir önceki sürümden çalışıyor) ve uygulama kapalı. Çalışan sunucu paketini kaybederse, yeni
+sürüm başlamazsa, `paket_durumu` "tamam" değilse ya da masanın sürümü AL'ninkiyle aynı değilse yayın durur (bilerek
+geçmek: `--provasiz`, notta görünür). Gerçek kuruluma, Claude Desktop/ChatGPT ayarına, kısayollara ve kayıt defterine
+dokunmaz: geçici kökte `bin/al.py` bir sarmalayıcıdır ve `kur` adımından yalnız açık sunucunun paketini geri koyan
+kısmı çalıştırır. Adayın manifesti bir kerelik deneme anahtarıyla imzalanıp yerelden verilir. Yaklaşık 15 saniye
+sürer; tek başına: `python yayin/gecis_provasi.py` (`--eski` / `--onceki` ile yerel zip'ler, `--sakla` inceleme için).
+Yayımlanmış paketlerle denendi: 3.3.2 → 3.4.0 geçişinde (olayın sürümü) "Bu kurulumda paket yok" ile düşüyor;
+3.4.0 → 3.4.1'de çalışan sunucunun paketi geri konuyor (masa denetimi düşüyor, çünkü 3.4.1'de masa 3.4.0 kalmıştı;
+"masa sürümü AL ile aynı" kuralı o yayından sonra geldi).
+
 **Sürüm sınavı (Katman 2).** Bu bilgisayarda `%USERPROFILE%/.arthurlegal/sinav.json` tanımlıysa `yayinla.py` yayından önce bir kalite sınavı çalıştırır: aday paketin sistem talimatıyla gerçek Claude oturumları mevzuat ve karar künyesi sorularını cevaplar, sonuç önceki sürümle kıyaslanır ve kalite düştüyse yayın durur (`--sinav-kabul NEDEN` bilerek geçer, `--sinavsiz` atlar). Sınavın özeti yayın notuna yazılır. Ayar yoksa yayın sınavsız sürer; kendi derleyenlerin akışı değişmez.
 
 **Ortak rehberler.** Birden çok pakete giren rehberlerin tek kaynağı [`ortak-rehberler/`](ortak-rehberler/README.md)'dadır; paketlerdeki kopyalar `python yayin/ortak_uret.py` ile oradan üretilir. Paketin içindeki kopyayı elle düzeltmek `tests/test_ortak.py`'de yakalanır.
