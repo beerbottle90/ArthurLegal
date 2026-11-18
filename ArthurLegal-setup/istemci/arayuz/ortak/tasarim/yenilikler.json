@@ -1,4 +1,24 @@
 {
+ "3.4.2": {
+  "tr": [
+   "Paket yüklenemezse masa her ekranın başında bir uyarı ve onarım adımı gösterir; paket yeniden yüklenince uyarı kendiliğinden kalkar.",
+   "ChatGPT'de ilk açılış hızlandı: uzak araç listesi gelmezse en çok 6 saniye beklenir, masa ve yerel araçlar hemen açılır; liste gelince kaydedilir ve uygulamaya bildirilir, sonraki açılışlar beklemez.",
+   "Araştırma: kesme işaretli ya da noktalı sorgular (\"TBK'nin\", \"01.04.1974\") içtihat aramasında artık hata vermez; Resmî Gazete fihristi kanunları da listeler.",
+   "Hatalı ya da eksik bir cevabı ertug@datsproject.io adresine bildirebilirsiniz."
+  ],
+  "az": [
+   "Paket yüklənməsə, masa hər ekranın yuxarısında xəbərdarlıq və düzəltmə addımı göstərir; paket yenidən yüklənəndə xəbərdarlıq özü yox olur.",
+   "ChatGPT-də ilk açılış sürətləndi: uzaq alətlər siyahısı gəlməsə, ən çox 6 saniyə gözlənilir, masa və yerli alətlər dərhal açılır; siyahı gələndə yadda saxlanılır və tətbiqə bildirilir, sonrakı açılışlar gözləmir.",
+   "Araşdırma: apostrof və ya nöqtə olan sorğular (\"TBK'nin\", \"01.04.1974\") məhkəmə təcrübəsi axtarışında artıq xəta vermir; Rəsmi Qəzetin mündəricatı qanunları da göstərir.",
+   "Səhv və ya natamam cavabı ertug@datsproject.io ünvanına bildirə bilərsiniz."
+  ],
+  "en": [
+   "If the package cannot be loaded, the desk shows a warning and a repair step at the top of every screen; the warning clears by itself once the package loads.",
+   "Faster first start in ChatGPT: if the remote tool list does not arrive, ArthurLegal waits at most 6 seconds and opens the desk and local tools right away; the list is saved and announced to the app when it arrives, so later starts do not wait.",
+   "Research: case-law searches with apostrophes or dots (\"TBK'nin\", \"01.04.1974\") no longer fail; the Official Gazette index also lists laws.",
+   "You can report a wrong or incomplete answer to ertug@datsproject.io."
+  ]
+ },
  "3.4.1": {
   "tr": [
    "Güncellemeden sonra görülen \"paket yok\" hatası giderildi: uygulama açıkken eski sürüm klasörleri silinmez, açık sohbetler talimatını kaybetmez.",
