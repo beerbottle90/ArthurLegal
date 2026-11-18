@@ -109,6 +109,29 @@ class Bilgi:
         istenen = ortak.ayar().get("varsayilan_profil")
         return istenen if istenen in mevcut else (mevcut[0] if mevcut else "")
 
+    def paket_sorunu(self):
+        """Hiçbir paket yüklenemiyorsa nedeni; en az biri yüklenebiliyorsa None.
+
+        profiller() iki şeyi birlikte ister: paket seçilmiş olmalı (moduller.json) ve çalışan sunucunun sürüm
+        klasöründe durmalı. Üç yol boş listeye götürür:
+        - "surum": sürüm klasöründe hiç paket yok. Sunucu açıkken klasörü silinmiştir (iki güncelleme arasında
+          uygulama hiç kapanmadıysa güncelleyici "iki önceki" diye çalışan sunucunun klasörünü siliyordu; bkz.
+          guncelle.eski_surumleri_sil) ya da klasör eksik açılmıştır.
+        - "secim": seçim dosyasında paket yok (elle düzenlenmiş ya da başka bir araçla yazılmış moduller.json;
+          ortak.moduller_yaz bunu reddeder ama ortak.moduller okurken denetlemez).
+        - "uyusmazlik": seçilen paket bu sürümde yok (paketlerin bir kısmıyla derlenmiş kurulum; seçim dosyası
+          yokken varsayılan sayılan Hukuk Bürosu ve Kurumsal'ın derlemede bulunmaması).
+        yeniden_acmak_yeter: uygulama yeniden açılınca başlayacak sürümde (bin/al.py'nin seçeceği) seçili paket var."""
+        if self.profiller():
+            return None
+        secili = [p for p in ortak.PAKETLER if p in ortak.moduller()]
+        surumde = [p for p in ortak.PAKETLER if (self.paketler / p / "SYSTEM_PROMPT.md").exists()]
+        sonraki = sonraki_surum_dizini()
+        return {"sorun": "surum" if not surumde else ("secim" if not secili else "uyusmazlik"),
+                "secilen": secili, "surumde": surumde,
+                "yeniden_acmak_yeter": bool(sonraki and sonraki.resolve() != self.paketler.parent.resolve() and any(
+                    (sonraki / "paketler" / p / "SYSTEM_PROMPT.md").exists() for p in secili))}
+
     def profil(self, istenen):
         mevcut = self.profiller()
         if not mevcut:
@@ -286,6 +309,136 @@ class Bilgi:
         return ust + sp
 
 
+# ---------------------------------------------------------------------------- paket yüklenemediğinde
+
+# Paket (sistem talimatı ve bilgi dosyaları) okunamıyorsa arthurlegal_talimat hata döndürmez. Hata, asistanın cevabın
+# sonuna düştüğü tek satırlık bir nota dönüşüyor ve sohbet ArthurLegal'in hiçbir kuralı olmadan sürüyordu. Bunun yerine
+# (a) en ağır hataları önleyen kısa bir çekirdek kural metni ve (b) asistanın ilk cevabının başında kullanıcıya aynen
+# ileteceği onarım cümlesi döner. Metin paketin yerine geçmez; paketteki karşılıkları SYSTEM_PROMPT'un "Üretim
+# ilkeleri"ndedir (madde doğrulama kapısı, karar künyesi kapısı, canlı veri uyarısı, içtihat araştırma disiplini).
+CEKIRDEK_KURALLAR = (
+    "1. Taslak. Her çıktı taslaktır: hukukçunun değerlendirmesi için malzemedir, kendi başına hukuki tavsiye değildir.\n"
+    "2. Madde atfı kapısı. Bir kanun maddesini (not, sözleşme, dilekçe ya da karar gövdesi dâhil) yazmadan önce "
+    "`tr_mevzuat_madde_getir` ile metnini ve başlığını çek; yanıttaki `citation` birebir yazılır. Maddeye yüklediğin "
+    "içerik (hakkın ya da yükümlülüğün sahibi, şart, süre, sonuç) okunan başlık ve metinle örtüşmeli, madde mülga "
+    "olmamalıdır. Çekilemeyen madde ezberden yazılmaz.\n"
+    "3. Karar künyesi kapısı. Çıktıda geçen her Türk yargı kararı künyesi (mahkeme ya da daire, esas, karar, tarih) bu "
+    "sohbette `tr_` araçlarıyla bulunmuş olmalıdır: esas, karar ve tarih aynı kayıtta eşleşir, yanıttaki `citation` "
+    "birebir yazılır. Yalnız esas numarasının bulunması doğrulama değildir. Bulunamayan künye tamamlanmaz, düzeltilmez, "
+    "tahmin edilmez.\n"
+    "4. UYARI satırı. Bir hukuki bilgi bu sohbette araçla çekilemediyse (araç yok, hata, iptal, onay yok ya da bilgi "
+    "hafızadan geliyor) boşluk tahminle doldurulmaz; bilginin hemen ardından açıkça ve tam olarak şu yazılır: "
+    "`UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>`. Bağlantı aracın `source_url`'si ya da kaynağın resmî giriş "
+    "sayfasıdır (mevzuat: https://www.mevzuat.gov.tr/ ; Yargıtay kararları: https://karararama.yargitay.gov.tr/). "
+    "Bağlantı uydurulmaz, köşeli ayraçlı etiket (\"[doğrulayın]\" gibi) kullanılmaz.\n"
+    "5. İçtihat araması. (a) `tr_ictihat_ara` ilgiye göre sıralar (`sort=\"ilgi\"`, varsayılan); güncel uygulama için "
+    "aynı sorguyu `sort=\"yeni\"` ile yinele. `tr_ictihat_semantik_ara` keşif aracı değildir: yalnız ilk 5 ile 10 adayı "
+    "okur, orada sonuç çıkmaması karar olmadığını göstermez. (b) Soruyu mahkemenin kendi diliyle kur ve en az üç farklı "
+    "ifadeyle ara; bulduğun ilgili kararın kalıp cümlesini tırnak içinde yeniden arat. (c) Kullanıcının istediği sonucu "
+    "destekleyen kararla yetinme: aksi yöndeki kararı ayrıca ara ve bulduğunu yaz; \"şunu çürüt\" isteğinde bile önce "
+    "karşı görüşün doğru olup olmadığını ara. (d) \"Karar bulunamadı\" derken kaç sorgu yaptığını, hangi ifadeleri "
+    "kullandığını ve kaç adaydan kaçını okuduğunu yaz; bulunamaması kararın yokluğu sayılmaz. (e) Kıyasla ya da genel "
+    "hükümden vardığın sonucu yerleşik içtihat gibi sunma. (f) Süreli işte (itiraz, dava, istinaf, temyiz) dilekçeyi "
+    "teyit edilmemiş bir önermeye dayandırmadan önce bunu kullanıcıya açıkça söyle.")
+
+SORUN_ACIKLAMASI = {
+    "surum": "çalışan sunucunun sürüm klasöründe paket dosyaları yok (klasör güncelleme sırasında silinmiş ya da eksik "
+             "açılmış)",
+    "secim": "seçim dosyasında (moduller.json) asistan paketi yok",
+    "uyusmazlik": "seçilen paket bu sürümde yok",
+}
+
+# Onarım cümlesinin parçaları, arayüzün dilinde (ortak.arayuz_dili). Uygulama, bu sunucuyu çalıştıran uygulamadır
+# (Claude Desktop ya da ChatGPT). Windows'ta ikisi de sistem tepsisinde açık kalır; macOS'ta Cmd+Q ile çıkılır
+# (kurulum/rehber*.html'deki anlatımla aynı).
+_KAPAT_AC = {
+    "tr": {(False, False): "Claude Desktop'u sistem tepsisindeki simge dâhil tamamen kapatıp yeniden açın",
+           (False, True): "Claude Desktop'tan Cmd+Q ile çıkıp yeniden açın",
+           (True, False): "ChatGPT'yi sistem tepsisindeki simge dâhil tamamen kapatıp yeniden açın",
+           (True, True): "ChatGPT'den Cmd+Q ile çıkıp yeniden açın"},
+    "en": {(False, False): "quit Claude Desktop completely, including the system tray icon, and open it again",
+           (False, True): "quit Claude Desktop with Cmd+Q and open it again",
+           (True, False): "quit ChatGPT completely, including the system tray icon, and open it again",
+           (True, True): "quit ChatGPT with Cmd+Q and open it again"},
+    "az": {(False, False): "Claude Desktop-u sistem treyindəki nişan da daxil olmaqla tamamilə bağlayıb yenidən açın",
+           (False, True): "Claude Desktop-dan Cmd+Q ilə çıxıb yenidən açın",
+           (True, False): "ChatGPT-ni sistem treyindəki nişan da daxil olmaqla tamamilə bağlayıb yenidən açın",
+           (True, True): "ChatGPT-dən Cmd+Q ilə çıxıb yenidən açın"},
+}
+# Kurulum yeniden çalışınca sürüm klasörünü paketleriyle yeniden yazar ve modül ekranında en az bir paket ister
+# (kurulum/ArthurLegal.iss ModulPaketGerekli; kur.py --moduller, ortak.secim_coz). Güncelleme denetimi bu durumu
+# onarmaz: güncelleyici yalnız daha yeni bir sürüm varsa paket indirir (guncelle.paket_guncelle). Eski bir kurulum
+# dosyası da onarmaz, çünkü kurulum en yeni sürüm klasörünü etkin bırakır (kur.py --kurulum): cümle güncel kurulumu ister.
+_KURULUM = {
+    "tr": ("güncel {urun} kurulumunu yeniden çalıştırıp en az bir asistan paketi seçin: {adres}",
+           "{urun} kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin."),
+    "en": ("run the current {urun} installer again and select at least one assistant package: {adres}",
+           "run the {urun} installer again and select at least one assistant package."),
+    "az": ("cari {urun} quraşdırmasını yenidən işə salıb ən azı bir köməkçi paketi seçin: {adres}",
+           "{urun} quraşdırma faylını yenidən işə salıb ən azı bir köməkçi paketi seçin."),
+}
+_ONARIM = {
+    "tr": ("{urun} paketi bu oturumda yüklenemedi, bu cevap paketin tam kuralları olmadan hazırlandı; onarmak için "
+           "{kapat_ac}, sorun sürerse {kurulum}",
+           "{urun} paketi bu kurulumda yüklenemiyor, bu cevap paketin tam kuralları olmadan hazırlandı; onarmak için "
+           "{kurulum}"),
+    "en": ("The {urun} package could not be loaded in this session, so this answer was prepared without the package's "
+           "full rules; to repair it, {kapat_ac}, and if the problem continues {kurulum}",
+           "The {urun} package cannot be loaded in this installation, so this answer was prepared without the package's "
+           "full rules; to repair it, {kurulum}"),
+    "az": ("{urun} paketi bu sessiyada yüklənə bilmədi, bu cavab paketin tam qaydaları olmadan hazırlanıb; düzəltmək "
+           "üçün {kapat_ac}, problem davam edərsə {kurulum}",
+           "{urun} paketi bu quraşdırmada yüklənə bilmir, bu cavab paketin tam qaydaları olmadan hazırlanıb; düzəltmək "
+           "üçün {kurulum}"),
+}
+
+
+def sonraki_surum_dizini():
+    """Uygulama yeniden açılınca başlayacak sürüm klasörü (bin/al.py etkin_dizin ile aynı kural): aktif.txt'deki
+    sürüm geçerliyse o, değilse en yeni geçerli sürüm; hiç yoksa None."""
+    gecerli = ortak.surumler()
+    etkin = ortak.aktif()
+    ad = etkin if etkin in gecerli else (gecerli[-1] if gecerli else "")
+    return ortak.KOK / "surumler" / ad if ad else None
+
+
+def onarim_cumlesi(sorun: dict, ev=None, dil=None) -> str:
+    """Kullanıcıya aynen iletilecek onarım cümlesi. Sunucunun klasörü silinmişse ve diskte paketi olan daha yeni bir
+    sürüm bekliyorsa önce uygulamayı kapatıp açmak yeter (yeni sunucu o sürümden başlar); öteki hâllerde kurulum
+    yeniden çalıştırılır. Genel kurulumda indirme sayfasının adresi verilir; büroya özel kurulumda (kendi dağıtımı
+    olan) adres verilmez, büronun kurulum dosyası istenir.
+
+    Bu yol sürüm klasörü silinmişken de çalışmalıdır: yalnız süreç başlarken yüklenmiş modüllere dayanır, burada yeni
+    bir modül içe aktarılmaz (silinmiş klasörden içe aktarma başarısız olur)."""
+    dil = dil if dil in ortak.DILLER else ortak.arayuz_dili()
+    urun = ortak.urun_adi()
+    if ortak.ayar().get("dagitim_deposu") or urun != ortak.URUN_VARSAYILAN:
+        kurulum = _KURULUM[dil][1].format(urun=urun)
+    else:
+        kurulum = _KURULUM[dil][0].format(
+            urun=urun, adres=ortak.KURULUM_SAYFASI_MAC if ortak.MAC else ortak.KURULUM_SAYFASI)
+    if sorun.get("yeniden_acmak_yeter"):
+        return _ONARIM[dil][0].format(urun=urun, kapat_ac=_KAPAT_AC[dil][(ev == "chatgpt", ortak.MAC)], kurulum=kurulum)
+    return _ONARIM[dil][1].format(urun=urun, kurulum=kurulum)
+
+
+def cekirdek_talimat(sorun: dict, ev=None) -> str:
+    """arthurlegal_talimat'ın paket yüklenemediğindeki cevabı: onarım cümlesi ve çekirdek kurallar."""
+    return (
+        "# ArthurLegal — çekirdek kurallar (paket yüklenemedi)\n"
+        f"Yerel kurulum {ortak.SURUM_DIZINI.name}. Bu bilgisayardaki ArthurLegal paketi (sistem talimatı ve bilgi "
+        f"dosyaları) okunamadı: {SORUN_ACIKLAMASI[sorun['sorun']]}. Paketin tam kuralları, becerileri ve rehberleri bu "
+        "sohbette YOK; `arthurlegal_bilgi_ara` ve `arthurlegal_bilgi_getir` de çalışmaz. Aşağıdaki çekirdek kurallar "
+        "onların yerine geçmez, yalnız en ağır hataları önler; bu sohbetin sistem talimatı olarak uygula. Araştırma "
+        "araçları (`tr_`, `eu_` ... önekli) bu durumdan etkilenmez.\n\n"
+        "KULLANICIYA BİLDİRİM (zorunlu). İlk cevabının EN BAŞINA, başka hiçbir şeyden önce, aşağıdaki cümleyi aynen yaz: "
+        "kısaltma, başka dile çevirme, cevabın sonuna ya da dipnota taşıma. Kullanıcı sonraki mesajlarda süreli bir iş "
+        "(itiraz, dava, istinaf, temyiz) için belge isterse aynı cümleyi o cevabın başında yinele. Kullanıcı onardığını "
+        "söylerse `arthurlegal_talimat`'ı yeniden çağır.\n\n"
+        f"> {onarim_cumlesi(sorun, ev)}\n\n"
+        "## Çekirdek kurallar\n" + CEKIRDEK_KURALLAR + "\n")
+
+
 # ---------------------------------------------------------------------------- uzak köprü
 
 class Uzak:
@@ -397,8 +550,9 @@ def yerel_araclar(profiller, varsayilan):
              "yol": {"type": "string"}, "profil": ozellik, "bolum": {"type": "string"},
              "baslangic": {"type": "integer", "minimum": 0}}, "required": ["yol"]}},
         {"name": "arthurlegal_durum",
-         "description": "Yerel kurulumun durumu: seçilen modüller, paket ve bileşen sürümleri, son güncelleme denetimi, "
-                        "araştırma sunucusu bağlantısı.",
+         "description": "Yerel kurulumun durumu: seçilen modüller, paket ve bileşen sürümleri, paketin yüklenip "
+                        "yüklenemediği (yüklenemiyorsa nedeni ve onarım adımı), son güncelleme denetimi, araştırma "
+                        "sunucusu bağlantısı.",
          "inputSchema": {"type": "object", "properties": {}}},
     ]
     for a in araclar:
@@ -711,6 +865,7 @@ class Sunucu:
         onbellek = ortak.json_oku(self.onbellek, {}).get("araclar")
         self.uzak_araclar = None if onbellek is None else salt_okunur_isaretle(onbellek)
         self.uzak_hata, self.baslatildi = None, False
+        self._paket_sorunu_yazildi = False
         self._gorunum_onbellek = None
         self.ev = ev_ayari()   # "chatgpt" ya da None (Claude); initialize'daki clientInfo da belirler
         self.canli = al_arayuz.CanliMasa() if al_arayuz is not None and hasattr(al_arayuz, "CanliMasa") else None
@@ -951,6 +1106,9 @@ class Sunucu:
             "arthurlegal_durum": self._durum,
         }
         if ad in yerel:
+            sorun = self.bilgi.paket_sorunu() if ad != "arthurlegal_durum" else None
+            if sorun:
+                return self._paketsiz(ad, sorun)
             try:
                 return {"content": [{"type": "text", "text": yerel[ad]()}]}
             except Hata as e:
@@ -1013,13 +1171,42 @@ class Sunucu:
                     ortak.gunluk("sunucu", f"güncelleyici başlatılamadı: {e!r}")
             time.sleep(1800)
 
+    def _paketsiz(self, ad, sorun):
+        """Paket yüklenemiyorken talimat ve bilgi araçları. Talimat hata değildir: çekirdek kurallar ve kullanıcıya
+        iletilecek onarım cümlesi döner (cekirdek_talimat). Bilgi araçlarının okuyacağı dosya yoktur; hata metni aynı
+        onarım cümlesini taşır. Neden günlüğe bir kez yazılır (yalnız modül adları ve sürüm numaraları): bu durum
+        önceden hiçbir iz bırakmıyordu."""
+        if not self._paket_sorunu_yazildi:
+            self._paket_sorunu_yazildi = True
+            ortak.gunluk("sunucu", f"hata: paket yüklenemedi ({sorun['sorun']}); seçilen {sorun['secilen']}, sürüm "
+                                   f"klasöründe {sorun['surumde']}; çalışan {ortak.SURUM_DIZINI.name}, etkin "
+                                   f"{ortak.aktif() or '-'}, sürümler {ortak.surumler()}")
+        if ad == "arthurlegal_talimat":
+            return {"content": [{"type": "text", "text": cekirdek_talimat(sorun, self.ev)}]}
+        metin = ("ArthurLegal paketi yüklenemediği için bilgi dosyaları okunamıyor (" + SORUN_ACIKLAMASI[sorun["sorun"]]
+                 + "). Okunamayan dosyanın içeriğini varsaymayın; `arthurlegal_talimat` çekirdek kuralları verir. "
+                 "Kullanıcıya aynen iletilecek onarım adımı: " + onarim_cumlesi(sorun, self.ev))
+        return {"content": [{"type": "text", "text": metin}], "isError": True}
+
+    def _paket_durumu(self):
+        """arthurlegal_durum için: paket yüklenebiliyorsa "tamam", yüklenemiyorsa nedeni ve onarım adımı."""
+        sorun = self.bilgi.paket_sorunu()
+        if not sorun:
+            return "tamam"
+        return {"durum": "PAKET YÜKLENEMİYOR: arthurlegal_talimat yalnız çekirdek kuralları verir",
+                "neden": SORUN_ACIKLAMASI[sorun["sorun"]],
+                "secilen_paketler": sorun["secilen"], "surum_klasorundeki_paketler": sorun["surumde"],
+                "calisan_surum_klasoru": ortak.SURUM_DIZINI.name, "etkin_surum": ortak.aktif() or "-",
+                "onarim": onarim_cumlesi(sorun, self.ev)}
+
     def _durum(self):
         d = ortak.durum()
         icerik = ortak.json_oku(ortak.SURUM_DIZINI / "icerik.json")
         return json.dumps({
             "yerel_kurulum": ortak.surum(),
             "secilen_moduller": ortak.moduller(),
-            "paketler": {p: self.bilgi.paket_surumu(p) for p in self.bilgi.profiller()},
+            "paket_durumu": self._paket_durumu(),
+            "paketler":{p: self.bilgi.paket_surumu(p) for p in self.bilgi.profiller()},
             "bilesenler": icerik.get("bilesenler", {}),
             "arthur_mask": ortak.mask_surumu() or "kurulu değil",
             "buro": self.bilgi.firma_bilgi.get("ad") or "yok (standart paket)",

@@ -62,6 +62,12 @@ VARSAYILAN_AYAR = {
     "denetim_araligi_saat": 6,
 }
 
+# Genel kurulumun indirme sayfası (README'deki kalıcı çapalar). Arayüzlerin "Güncellemeleri denetle" düğmesi
+# (guncelle.py) ve paket yüklenemediğinde kullanıcıya iletilen onarım cümlesi (arthurlegal_sunucu.py) aynı adresi verir.
+GUVENLI_ONEK = "https://github.com/beerbottle90/"
+KURULUM_SAYFASI = GUVENLI_ONEK + "ArthurLegal#indir"
+KURULUM_SAYFASI_MAC = GUVENLI_ONEK + "ArthurLegal#mac"
+
 PROFILLER = {"hukuk-burosu": "Hukuk Bürosu (Law Firm)", "kurumsal": "Kurumsal Asistan (Corporate)",
              "adliye": "Courthouse (Adliye)", "akademisyen": "Akademisyen (Academician)"}
 
