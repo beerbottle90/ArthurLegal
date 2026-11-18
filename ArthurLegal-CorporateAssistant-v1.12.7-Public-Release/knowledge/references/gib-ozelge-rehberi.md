@@ -1,0 +1,77 @@
+# GİB Özelge (Mukteza) Rehberi
+
+> Belirsiz bir vergi konusunda GİB'den yazılı görüş (özelge) alma. Türk vergi pratiğinin önemli aracı.
+
+## Yasal çerçeve
+
+- **VUK m. 413** — Mukteza (özelge) talep hakkı
+- **Mükelleflerin İzahat Taleplerinin Cevaplandırılmasına Dair Yönetmelik** — Özelge format ve usulleri
+- **Özelge bağlayıcı değildir; idarenin görüşüdür.** Kendisine yazıyla yanlış izahat verilen mükellefe vergi cezası kesilmez ve gecikme faizi hesaplanmaz (VUK m. 369). Özelge talep eden mükellefe özeldir: başka mükellef bunu doğrudan kullanamaz ama emsal referans olabilir
+
+## Özelge'nin avantajları
+
+- Yazılı GİB görüşü; özelgeye uyan mükellef için ceza ve gecikme faizi koruması (VUK m. 369, sadece talep eden için)
+- Sonraki Maliye incelemesinde **kalkan**
+- Belirsiz konuda risk azaltma
+
+## Dezavantajları / riskler
+
+- **Süre:** 6-9 ay ortalama
+- **Olumsuz cevap → pozisyonu zayıflatır** (sonraki incelemede Maliye bu kararı kullanır)
+- **Konunun açığa çıkması** — Maliye'nin dikkatini çekebilir
+- Olumsuz özelgeye **idari itiraz yolu yok**, sadece dava
+
+## Özelge talep süreci
+
+1. **Yetkili otorite:**
+   - Büyük şirket → İstanbul/Ankara Vergi Dairesi Başkanlığı veya GİB Genel Müdürlüğü
+   - Genelde belirsizliğin önemine göre
+
+2. **Dilekçe formatı (İzahat Yönetmeliği):**
+   - Mükellef bilgileri (VKN, ünvan, adres)
+   - Konu (kısa)
+   - Fiili durum (ayrıntılı)
+   - Hukuki değerlendirme
+   - Talep
+   - Ekler (sözleşme örneği, benzer özelge, vs.)
+
+3. **Cevap süresi:** Genelde 6-9 ay; bazen 1 yıl+
+
+4. **Olumsuz cevap → dava yolu:**
+   - Özelge bireysel bir işlemdir; Danıştay'ın ilk derece görevi 2575 m. 24'te sayılan işlerle sınırlıdır ve özelge bunlar arasında değildir. Dava açılacaksa görevli yer vergi mahkemesidir; istinaf bölge idare mahkemesi, temyiz Danıştay
+   - Süre: vergi mahkemesinde 30 gün (İYUK m. 7/1), tebliği izleyen günden başlar
+   - Özelgenin tek başına dava konusu olup olamayacağını (kesin ve yürütülmesi gerekli işlem sayılıp sayılmadığını) dava açmadan önce `tr_ictihat_ara(query="özelge kesin ve yürütülmesi gerekli işlem", courts=["DANISTAYKARAR"])` ile güncel kararlardan teyit et
+
+## ArthurLegal MCP (`tr_`) — benzer özelge tarama
+
+**Özelge talep etmeden ÖNCE** mutlaka mevcut özelgelerde aynı/benzer konu var mı bak:
+
+```
+tr_kurum_karari_ara(
+  kurum="gib",
+  query="<konu anahtar kelimeleri>"
+)
+```
+
+GİB özelge veri tabanı 18.000+ özelge — büyük ihtimal benzer konu var. Eğer:
+- **Bizim lehimize karar** varsa: Özelge talep etmeye gerek yok; mevcut özelgeyi referans olarak kullan.
+- **Aleyhe karar** varsa: Özelge talep etme; pozisyon zayıflar.
+- **Belirsiz / yok** ise: Özelge talep mantıklı (risk değerlendirmesiyle).
+
+## [ŞİRKET ADI]-özel kontroller
+
+- **[HALKA AÇIK İŞTİRAK] ilgili büyük etki:** KAP açıklama gerekebilir (özelge cevabı önemli mali sonuç doğurur)
+- **[BORU HATTI PROJESİ] işlem özelgesi:** Hükümetlerarası anlaşma + GİB ortak yorum
+- **[ANA ORTAK] intra-group:** Özelge talep edersek Maliye dikkati çekiyor — risk
+- **EPDK paralel:** Enerji vergisi konusunda EPDK görüşü de paralel etkili
+
+## ArthurLegal MCP (`tr_`)
+
+```
+tr_mevzuat_ara(number="213", types=["KANUN"])  # VUK m. 413
+```
+
+## Bağlantılı
+
+- [VUK rehberi](vuk-rehberi.md)
+- [ArthurLegal MCP TR rehberi](yargi-mcp-rehberi.md) — GİB araç detayı

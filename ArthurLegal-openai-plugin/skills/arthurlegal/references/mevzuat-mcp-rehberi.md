@@ -186,7 +186,7 @@ Alanlar virgülle ayrılır. Araç çıktısında URL varsa eklenir; mevzuat mad
 
 ## 8. Birlikte kullanım
 
-Bir hukuki soru çoğunlukla üç adımdır: `tr_mevzuat_ara`, `tr_mevzuat_icindekiler` ve `tr_mevzuat_madde_getir` ile ilgili madde; `tr_ictihat_ara` veya `tr_ictihat_semantik_ara` ile o maddenin yargı yorumu; skill playbook'u ile sentez. Atıf etiketleri korunur. Düzenleme takibinde sıra tersinedir: `tr_resmi_gazete_tara` ile akış (önce `konu`, sonra `query` ile tamamlama), `tr_resmi_gazete_getir` ile değişiklik hükmü, `tr_mevzuat_ara(number=…)` ile konsolide metin.
+Bir hukuki soru çoğunlukla üç adımdır: `tr_mevzuat_ara`, `tr_mevzuat_icindekiler` ve `tr_mevzuat_madde_getir` ile ilgili madde; `tr_ictihat_ara` ile o maddenin yargı yorumu (keşif bu araçladır; `tr_ictihat_semantik_ara` yalnız bulunan kısa listeyi soruya göre yeniden sıralar); skill playbook'u ile sentez. Atıf etiketleri korunur. Düzenleme takibinde sıra tersinedir: `tr_resmi_gazete_tara` ile akış (önce `konu`, sonra `query` ile tamamlama), `tr_resmi_gazete_getir` ile değişiklik hükmü, `tr_mevzuat_ara(number=…)` ile konsolide metin.
 
 ## 9. Madde doğrulama kapısı (teslim öncesi)
 
