@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.4.0
+# ArthurLegal Setup v3.4.1
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
@@ -33,7 +33,7 @@ kurulumlarda bu dosya yoktur; onlar eski modülleriyle (Hukuk Bürosu, Kurumsal,
 macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) küçük uygulamalardır; adlarında tire ve
 sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
 **ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
-(ör. "ArthurLegal 3.4.0"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
+(ör. "ArthurLegal 3.4.1"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
 ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.4.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
 kendi kısayolunun adı düzeltilir (eski "Arthur Mask" adı ve sürümsüz ad gider), içeriğine dokunulmaz.
 
@@ -154,6 +154,21 @@ denetlenir. Manifest **Ed25519** ile imzalıdır: imza güvenilen anahtarlardan 
 şey kurulmaz. Yeni sürüm ayrı bir klasöre açılır, `aktif.txt` tek adımda değişir, bir önceki sürüm geri
 dönüş için kalır ve yeni sürüm Claude Desktop'ın bir sonraki açılışında devreye girer.
 
+**Eski sürüm klasörleri ve açık uygulama (3.4.1).** Açık uygulamanın sunucusu, başlatıldığı sürüm klasöründen
+okumayı sürdürür. Bu yüzden etkin sürüm ve bir öncekinden eski klasörler yalnız seçilen uygulama (Claude Desktop,
+ChatGPT) kapalıyken silinir (`guncelle.eski_surumleri_sil`); 3.4.0'a kadar her güncellemede siliniyordu ve uygulama
+iki güncelleme boyunca açık kaldıysa çalışan sunucu paketini kaybedip "Bu kurulumda paket yok." diyordu. 3.4.0'dan
+geçişi eski güncelleyici yaptığı için yeni sürümün kayıt adımı (`kur --kaydet`), çalışan sunucunun klasöründe paket
+kalmadıysa etkin sürümün paketlerini oraya geri koyar (`kur.calisan_sunucuyu_onar`; klasör `gecici-paketler.txt`
+işaretini taşır, sürüm sayılmaz, uygulama kapanınca silinir).
+
+**Paket yüklenemezse (3.4.1).** `arthurlegal_talimat` hata döndürmez: kısa bir çekirdek kural metni (madde atfı
+kapısı, karar künyesi kapısı, UYARI satırı, içtihat arama yöntemi) ve asistanın ilk cevabının başında aynen ileteceği
+onarım cümlesi döner (Türkçe, İngilizce, Azerbaycanca; Claude Desktop ya da ChatGPT adıyla). `arthurlegal_durum`
+`paket_durumu` alanında nedeni gösterir: çalışan sunucunun sürüm klasöründe paket yok, seçim dosyasında paket yok ya
+da seçilen paket sürümde yok. Onarım: uygulamayı tamamen kapatıp açmak; sürerse güncel kurulumu yeniden çalıştırıp
+en az bir paket seçmek. Güncelleme denetimi aynı sürümü yeniden indirmez, bu durumu onarmaz.
+
 **İki anahtar (2.4.3).** Kurulumlar iki anahtara güvenir: günlük yayın anahtarı ve kasada duran yedek
 anahtar. Liste paketin içinde, imzalı güncellemeyle gelir. Günlük anahtar kaybolursa yayın kasadaki
 anahtarla imzalanır; anahtar değişikliği de yeniden kurulum gerektirmez. Adımlar `yayin/yayinla.py`'nin
@@ -184,7 +199,7 @@ Gerekenler: Python 3.10+, git, [Inno Setup 6](https://jrsoftware.org/isinfo.php)
 python varlik/gorseller.py             # pixel art simge ve görseller
 python yayin/derle.py                  # yayin/cikti/ArthurLegal-Kurulum.exe + .zip + güncelleme paketi
 python -m unittest discover -s tests   # 134 test, ağa çıkmaz (macOS'a özgü olanlar Windows'ta da sınanır)
-python yayin/yayinla.py v3.4.0         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
+python yayin/yayinla.py v3.4.1         # imzalı manifest + dosyalar → taslak yayın → yayımla (Latest)
 ```
 
 **Paket denetimi.** `yayin/paket_denetimi.py`, paketlere dokunan her push'ta ve PR'da GitHub Actions'ta
