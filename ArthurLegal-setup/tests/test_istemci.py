@@ -1937,6 +1937,64 @@ class PaketYokTesti(unittest.TestCase):
                 surec.stderr.close()
                 surec.stdout.close()
 
+    def test_gecis_surumunde_calisan_sunucunun_paketleri_geri_konur(self):
+        """Bu düzeltmeyi taşıyan sürüme geçişi kurulu (eski) güncelleyici yapar ve eski kuralla siler. Silmeden hemen
+        sonra yeni sürümün `kur --kaydet` adımını çalıştırır: o adım, açık sunucunun kaybolan paketlerini geri koyar.
+        Klasör sürüm sayılmaz ve uygulama kapanınca silinir."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            kok = t / "kok"
+            sahte_kok(kok)
+            surec = subprocess.Popen([sys.executable, "-B", str(kok / "bin" / "al.py"), "sunucu"], stdin=subprocess.PIPE,
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV, text=True, encoding="utf-8")
+            kuyruk = queue.Queue()
+            threading.Thread(target=lambda: [kuyruk.put(json.loads(s)) for s in surec.stdout], daemon=True).start()
+            no = [0]
+
+            def talimat():
+                no[0] += 1
+                surec.stdin.write(json.dumps({"jsonrpc": "2.0", "id": no[0], "method": "tools/call",
+                                              "params": {"name": "arthurlegal_talimat", "arguments": {}}}) + "\n")
+                surec.stdin.flush()
+                while True:
+                    m = kuyruk.get(timeout=20)
+                    if m.get("id") == no[0]:
+                        return m["result"]["content"][0]["text"]
+
+            yeni_kod = "sys.path[0] = sys.path[0].replace('0.0.1', '0.0.2'); "
+            onar = yeni_kod + "import kur; print(json.dumps(kur.calisan_sunucuyu_onar(acik={acik})))"
+            sil = yeni_kod + "import guncelle, ortak; print(json.dumps([guncelle.eski_surumleri_sil(acik={acik}), ortak.surumler()]))"
+            try:
+                self.assertIn("ArthurLegal Hukuk Bürosu talimatı", talimat())  # sunucu 0.0.1'den çalışıyor
+                paket_yaz(kok / "surumler" / "0.0.2", "0.0.2")
+                shutil.copytree(kok / "surumler" / "0.0.1" / "paketler", kok / "surumler" / "0.0.2" / "paketler")
+                (kok / "aktif.txt").write_text("0.0.2", encoding="utf-8")
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "", "klasör yerindeyken dokunulmaz")
+                shutil.rmtree(kok / "surumler" / "0.0.1", ignore_errors=True)  # eski güncelleyicinin sildiği klasör
+                self.assertIn("çekirdek kurallar", talimat())
+                self.assertEqual(self.calistir(t, onar.format(acik=False)), "", "uygulama kapalı: çalışan sunucu yok")
+                self.assertFalse((kok / "surumler" / "0.0.1").exists())
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "0.0.1")
+                metin = talimat()
+                self.assertIn("ArthurLegal Hukuk Bürosu talimatı", metin, "aynı sunucu talimatı yeniden bulur")
+                self.assertNotIn("çekirdek kurallar", metin)
+                eski = kok / "surumler" / "0.0.1"
+                self.assertTrue((eski / "gecici-paketler.txt").exists())
+                self.assertFalse((eski / "istemci").exists(), "istemci kodu konmaz: sürüm sayılmaz")
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "", "paket yerindeyken yinelenmez")
+                # Uygulama açıkken klasör kalır; kapanınca güncelleyici siler. İşaretsiz klasöre dokunulmaz.
+                (kok / "surumler" / "0.0.3").mkdir()  # kurulumun o sırada kopyaladığı yeni sürüm olabilir
+                self.assertEqual(self.calistir(t, sil.format(acik=True)), [[], ["0.0.2"]])
+                self.assertTrue(eski.exists())
+                self.assertEqual(self.calistir(t, sil.format(acik=False)), [["0.0.1"], ["0.0.2"]])
+                self.assertFalse(eski.exists())
+                self.assertTrue((kok / "surumler" / "0.0.3").exists())
+            finally:
+                surec.stdin.close()
+                surec.wait(10)
+                surec.stderr.close()
+                surec.stdout.close()
+
     def test_secimde_paket_yoksa_kurulum_istenir(self):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)

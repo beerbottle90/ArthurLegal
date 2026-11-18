@@ -170,13 +170,20 @@ def eski_surumleri_sil(acik=None) -> list:
     masanın görünümleri ilk istekte okunur. Uygulama iki güncelleme boyunca hiç kapanmadıysa "iki önceki" klasör çalışan
     sunucunun klasörüdür; silinince sunucu yaşar ama paketini bulamaz ("Bu kurulumda paket yok", 3.4.0'a kadar).
     Silme, uygulamanın kapalı olduğu ilk denetime kalır (çoğunlukla oturum açılışındaki denetim). ``acik`` testler
-    içindir; verilmezse ortak.asistan_calisiyor sorulur (emin olunamıyorsa açık sayar)."""
-    etkin = ortak.aktif()
-    fazla = [s for s in ortak.surumler()[:-2] if s != etkin]
+    içindir; verilmezse ortak.asistan_calisiyor sorulur (emin olunamıyorsa açık sayar).
+
+    Aynı anda, açık bir sunucu için paketleri geri konmuş klasörler de silinir (kur.calisan_sunucuyu_onar; işaret
+    dosyası taşırlar ve istemci kodu taşımadıkları için sürüm sayılmazlar). İşareti olmayan klasöre dokunulmaz:
+    kurulumun o sırada dosya kopyaladığı yeni bir sürüm klasörü olabilir."""
+    etkin, kok = ortak.aktif(), ortak.KOK / "surumler"
+    gecerli = ortak.surumler()
+    fazla = [s for s in gecerli[:-2] if s != etkin]
+    fazla += sorted(k.name for k in (kok.iterdir() if kok.is_dir() else [])
+                    if k.is_dir() and k.name not in gecerli and (k / ortak.GECICI_PAKET_ISARETI).exists())
     if not fazla or (ortak.asistan_calisiyor() if acik is None else acik):
         return []
     for eski in fazla:
-        shutil.rmtree(ortak.KOK / "surumler" / eski, ignore_errors=True)
+        shutil.rmtree(kok / eski, ignore_errors=True)
     ortak.gunluk("guncelle", "eski sürüm klasörleri silindi: " + ", ".join(fazla))
     return fazla
 

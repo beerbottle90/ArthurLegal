@@ -33,6 +33,39 @@ import ortak
 import proje
 
 
+def calisan_sunucuyu_onar(acik=None) -> str:
+    """Açık uygulamanın sunucusu paketini kaybettiyse geri koyar; onarılan sürümü döndürür (onarım yoksa "").
+
+    3.4.0'a kadarki güncelleyici, yeni sürümü kurduktan sonra "etkin + bir önceki" dışındaki sürüm klasörlerini
+    siliyordu. Uygulama iki güncelleme boyunca hiç kapanmadıysa silinen klasör çalışan sunucunun klasörüdür ve sunucu
+    "Bu kurulumda paket yok" der. O güncelleyici, silmeden hemen sonra bu adımı (kur --kaydet) YENİ sürümün koduyla
+    çalıştırır: çalışan sunucunun sürüm klasöründe (durum.json: calisan_surum) paket kalmadıysa etkin sürümün
+    paketleri oraya kopyalanır ve sunucu talimatı yeniden bulur. Klasöre istemci kodu konmaz: sürüm sayılmaz
+    (ortak.surumler, bin/al.py), uygulama yeniden açılınca etkin sürüm başlar. İşaret dosyası taşıyan bu klasörü
+    güncelleyici uygulama kapalıyken siler (guncelle.eski_surumleri_sil). Uygulama kapalıysa çalışan sunucu yoktur,
+    dokunulmaz. ``acik`` testler içindir."""
+    import re
+    calisan = str(ortak.durum().get("calisan_surum") or "")
+    if not re.fullmatch(r"\d+(\.\d+)*", calisan) or calisan == ortak.SURUM_DIZINI.name:
+        return ""
+    hedef, kaynak = ortak.KOK / "surumler" / calisan, ortak.SURUM_DIZINI / "paketler"
+    if not kaynak.is_dir() or any((hedef / "paketler" / p / "SYSTEM_PROMPT.md").exists() for p in ortak.PAKETLER):
+        return ""
+    if not (ortak.asistan_calisiyor() if acik is None else acik):
+        return ""
+    shutil.copytree(kaynak, hedef / "paketler", dirs_exist_ok=True)
+    if (ortak.SURUM_DIZINI / "icerik.json").exists() and not (hedef / "icerik.json").exists():
+        shutil.copy2(ortak.SURUM_DIZINI / "icerik.json", hedef / "icerik.json")  # talimat başlığındaki paket sürümü
+    if not (hedef / "surum.txt").exists():
+        (hedef / "surum.txt").write_text(calisan, encoding="utf-8")
+    (hedef / ortak.GECICI_PAKET_ISARETI).write_text(
+        f"Çalışan sunucu için {ortak.SURUM_DIZINI.name} sürümünün paketleri geri kondu; uygulama kapanınca silinir.\n",
+        encoding="utf-8")
+    ortak.gunluk("kurulum", f"çalışan sunucunun ({calisan}) paketleri geri kondu: sürüm klasörü güncelleme sırasında "
+                            f"silinmişti (etkin {ortak.SURUM_DIZINI.name})")
+    return calisan
+
+
 def claude_kurulu() -> bool:
     if ortak.MAC:
         return any((k / "Claude.app").exists() for k in (Path("/Applications"), Path.home() / "Applications")) \
@@ -775,6 +808,10 @@ def main(argv=None) -> int:
         if "chatgpt" in secim and not ortak.chatgpt_kurulu():
             ortak.durum_guncelle(chatgpt_winget=chatgpt_kur())
         ortak.durum_guncelle(kurulum_zamani=time.time(), kurulum_surumu=ortak.surum())
+    try:  # güncelleyici her çalışmasında bu adımı çağırır: açık sunucunun paketi kaybolduysa geri konur
+        calisan_sunucuyu_onar()
+    except OSError as e:
+        ortak.gunluk("kurulum", f"çalışan sunucunun paketleri geri konamadı: {e!r}")
     if ortak.hafiza_acik():
         try:  # kasa kullanıcının verisidir: yalnız eksik başlangıç notları yazılır; kaldırma kasayı silmez
             hafiza.hazirla()
