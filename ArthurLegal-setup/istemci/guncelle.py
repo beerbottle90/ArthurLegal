@@ -7,8 +7,9 @@ Oturum açılışında (HKCU Run) ve yerel sunucu açıkken 6 saatte bir çalı�
 2. Manifest'teki paket sürümü etkin sürümden yeniyse zip indirilir, sha256 doğrulanır, yeni
    bir surumler\\<sürüm> klasörüne açılır ve aktif.txt tek adımda değiştirilir. Çalışan
    sunucular eski klasörle devam eder; yeni sürüm Claude Desktop'ın bir sonraki açılışında
-   devreye girer. Bir önceki sürüm geri dönüş için saklanır. Yerel derlemeyle kurulmuş, pakette
-   olmayan UYAP köprüsü yeni sürüme kopyalanır.
+   devreye girer. Bir önceki sürüm geri dönüş için saklanır; daha eskiler yalnız uygulama
+   kapalıyken silinir (eski_surumleri_sil). Yerel derlemeyle kurulmuş, pakette olmayan UYAP
+   köprüsü yeni sürüme kopyalanır.
 3. ArthurMask kurulu sürümden yeniyse (≈1 GB) arka planda indirilir, Claude Desktop kapalıyken
    sessiz kurulur. Windows 11 Akıllı Uygulama Denetimi açıksa indirilmez: imzasız kurulum orada hiç çalışmaz.
    Kurulu değilse yalnız kurulumda seçildiyse (ortak.moduller) indirilir.
@@ -157,10 +158,34 @@ def paket_guncelle(manifest: dict, indirici) -> bool:
     os.replace(gecici, surumler / yeni)
     ortak.aktif_yaz(yeni)
     indirilen.unlink(missing_ok=True)
-    for eski in ortak.surumler()[:-2]:  # etkin + bir önceki kalır
-        shutil.rmtree(surumler / eski, ignore_errors=True)
     ortak.gunluk("guncelle", f"paket {etkin} -> {yeni}" + (f"; yerel bileşen taşındı: {', '.join(tasinan)}" if tasinan else ""))
     return True
+
+
+def eski_surumleri_sil(acik=None) -> list:
+    """Etkin sürüm ve bir öncekinden eski sürüm klasörlerini siler (etkin + bir önceki kalır); silinenleri döndürür.
+
+    Seçilen uygulama (Claude Desktop, ChatGPT) açıkken hiçbir klasör silinmez. Açık uygulamanın sunucuları
+    başlatıldıkları sürüm klasöründen okumayı sürdürür: paketin varlığı her talimat çağrısında diskten denetlenir,
+    masanın görünümleri ilk istekte okunur. Uygulama iki güncelleme boyunca hiç kapanmadıysa "iki önceki" klasör çalışan
+    sunucunun klasörüdür; silinince sunucu yaşar ama paketini bulamaz ("Bu kurulumda paket yok", 3.4.0'a kadar).
+    Silme, uygulamanın kapalı olduğu ilk denetime kalır (çoğunlukla oturum açılışındaki denetim). ``acik`` testler
+    içindir; verilmezse ortak.asistan_calisiyor sorulur (emin olunamıyorsa açık sayar).
+
+    Aynı anda, açık bir sunucu için paketleri geri konmuş klasörler de silinir (kur.calisan_sunucuyu_onar; işaret
+    dosyası taşırlar ve istemci kodu taşımadıkları için sürüm sayılmazlar). İşareti olmayan klasöre dokunulmaz:
+    kurulumun o sırada dosya kopyaladığı yeni bir sürüm klasörü olabilir."""
+    etkin, kok = ortak.aktif(), ortak.KOK / "surumler"
+    gecerli = ortak.surumler()
+    fazla = [s for s in gecerli[:-2] if s != etkin]
+    fazla += sorted(k.name for k in (kok.iterdir() if kok.is_dir() else [])
+                    if k.is_dir() and k.name not in gecerli and (k / ortak.GECICI_PAKET_ISARETI).exists())
+    if not fazla or (ortak.asistan_calisiyor() if acik is None else acik):
+        return []
+    for eski in fazla:
+        shutil.rmtree(kok / eski, ignore_errors=True)
+    ortak.gunluk("guncelle", "eski sürüm klasörleri silindi: " + ", ".join(fazla))
+    return fazla
 
 
 def mask_mac_engeli() -> str:
@@ -290,9 +315,9 @@ def _claude_kaydet(guncellendi: bool = False) -> None:
 DENETIM_DOSYASI = "guncelleme-denetimi.json"
 DENETIM_ONBELLEK_SN = 3600
 MODUL_ADLARI = ("al", "masa", "tapu", "uyap", "mask")
-GUVENLI_ONEK = "https://github.com/beerbottle90/"
-KURULUM_SAYFASI = GUVENLI_ONEK + "ArthurLegal#indir"
-KURULUM_SAYFASI_MAC = GUVENLI_ONEK + "ArthurLegal#mac"
+GUVENLI_ONEK = ortak.GUVENLI_ONEK
+KURULUM_SAYFASI = ortak.KURULUM_SAYFASI
+KURULUM_SAYFASI_MAC = ortak.KURULUM_SAYFASI_MAC
 MASK_SAYFASI = GUVENLI_ONEK + "ArthurLegal/releases/tag/arthur-mask"
 YENILIK_SINIRI = 5
 
@@ -502,6 +527,10 @@ def main(argv=None) -> int:
         # macOS'ta ArthurMask'i bu kurulum kurar: masaüstü takma adı için kısayollar yeniden yazılır.
         mask_kuruldu = ortak.MAC and any(s.startswith("mask: ") and s.endswith(" kuruldu") for s in sonuclar)
         _claude_kaydet(guncellendi or mask_kuruldu)
+        try:  # yalnız uygulama kapalıyken; açıkken bir sonraki denetime kalır
+            eski_surumleri_sil()
+        except OSError as e:
+            ortak.gunluk("guncelle", f"eski sürüm klasörleri silinemedi: {e!r}")
         ortak.durum_guncelle(son_sonuc="; ".join(sonuclar))
         if not args.sessiz:
             print("\n".join(sonuclar))

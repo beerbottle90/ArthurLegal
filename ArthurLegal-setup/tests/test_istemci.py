@@ -901,7 +901,9 @@ class SunucuTesti(unittest.TestCase):
         r = self.arac("arthurlegal_bilgi_getir", yol="../../ayar.json")
         self.assertTrue(r["isError"])
         self.assertEqual(self.iste("yok/boyle")["error"]["code"], -32601)
-        self.assertIn("uzak_arac_sayisi", self.arac("arthurlegal_durum")["content"][0]["text"])
+        durum = self.arac("arthurlegal_durum")["content"][0]["text"]
+        self.assertIn("uzak_arac_sayisi", durum)
+        self.assertEqual(json.loads(durum)["paket_durumu"], "tamam")
 
     def test_7_masa_ve_kartlar(self):
         """AL Masası (MCP Apps): görünümler kaynak olarak, masa araçları ve kartlı araştırma araçları."""
@@ -1841,6 +1843,247 @@ class ModulTesti(unittest.TestCase):
         import ortak
         sira = re.findall(r"\d: Result := '([a-z-]+)';", iss) + ["hafiza"]
         self.assertEqual(tuple(sira), ortak.MODULLER, "Pascal ve Python aynı sırada")
+
+
+class PaketYokTesti(unittest.TestCase):
+    """18.11.2026: `arthurlegal_talimat` "Bu kurulumda paket yok." hatası veriyordu; asistan bunu cevabın sonuna tek
+    satır not düşüyor, sohbet ArthurLegal'in hiçbir kuralı olmadan sürüyordu. Artık hata yerine çekirdek kurallar ve
+    kullanıcıya ilk cevabın başında aynen iletilecek onarım cümlesi döner; `arthurlegal_durum` durumu açıkça gösterir.
+    Boş pakete götüren yollar: çalışan sunucunun sürüm klasörünün silinmesi (güncelleyici), paketsiz seçim dosyası,
+    seçilen paketin sürümde bulunmaması."""
+
+    calistir = ModulTesti.calistir
+    KOD = ("import arthurlegal_sunucu as s; u = s.Sunucu(); u.ev = {ev!r}; "
+           "t = u._arac('arthurlegal_talimat', {{}}); g = u._arac('arthurlegal_bilgi_getir', {{'yol': 'hmk-rehberi.md'}}); "
+           "d = json.loads(u._arac('arthurlegal_durum', {{}})['content'][0]['text']); "
+           "print(json.dumps([t.get('isError', False), t['content'][0]['text'], g.get('isError', False), "
+           "g['content'][0]['text'], d['paket_durumu'], d['paketler']]))")
+    INDIRME = "https://github.com/beerbottle90/ArthurLegal#" + ("mac" if MACOS else "indir")  # kurulumun kendi sayfası
+
+    def sor(self, t, ev=None):
+        return self.calistir(t, self.KOD.format(ev=ev))
+
+    def cekirdek_mi(self, hata, talimat):
+        self.assertFalse(hata, "talimat hata döndürmez: asistan kuralları uygulayabilmeli")
+        self.assertTrue(talimat.startswith("# ArthurLegal — çekirdek kurallar (paket yüklenemedi)"), talimat[:80])
+        for parca in ("İlk cevabının EN BAŞINA", "Madde atfı kapısı", "tr_mevzuat_madde_getir", "Karar künyesi kapısı",
+                      "UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>", 'sort="ilgi"', 'sort="yeni"',
+                      "en az üç farklı ifadeyle", "aksi yöndeki kararı ayrıca ara", "kaç adaydan kaçını okuduğunu",
+                      "yerleşik içtihat gibi sunma", "Süreli işte"):
+            self.assertIn(parca, talimat)
+        cumle = next(s[2:] for s in talimat.splitlines() if s.startswith("> "))
+        self.assertNotIn("\n", cumle)
+        return cumle
+
+    def test_paket_varken_degismez(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            hata, talimat, getir_hata, _, durum, paketler = self.sor(t)
+            self.assertFalse(hata or getir_hata)
+            self.assertIn("ArthurLegal Hukuk Bürosu talimatı", talimat)
+            self.assertNotIn("çekirdek kurallar", talimat)
+            self.assertEqual((durum, paketler), ("tamam", {"hukuk-burosu": "1.9.1"}))
+
+    def test_calisan_sunucunun_surum_klasoru_silinince(self):
+        """Sahadaki en olası yol, uçtan uca: sunucu 0.0.1'den çalışırken iki güncelleme iner ve 3.4.0'a kadarki
+        güncelleyici "iki önceki" klasörü siler. Sunucu yaşar (kodu bellekte), araştırma köprüsü çalışır, paket yoktur."""
+        with tempfile.TemporaryDirectory() as t:
+            kok = Path(t) / "kok"
+            sahte_kok(kok)
+            surec = subprocess.Popen([sys.executable, "-B", str(kok / "bin" / "al.py"), "sunucu"], stdin=subprocess.PIPE,
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV, text=True, encoding="utf-8")
+            kuyruk = queue.Queue()
+            threading.Thread(target=lambda: [kuyruk.put(json.loads(s)) for s in surec.stdout], daemon=True).start()
+            no = [0]
+
+            def arac(ad, **arg):
+                no[0] += 1
+                surec.stdin.write(json.dumps({"jsonrpc": "2.0", "id": no[0], "method": "tools/call",
+                                              "params": {"name": ad, "arguments": arg}}) + "\n")
+                surec.stdin.flush()
+                while True:
+                    m = kuyruk.get(timeout=20)
+                    if m.get("id") == no[0]:
+                        return m["result"]
+
+            try:
+                self.assertIn("ArthurLegal Hukuk Bürosu talimatı", arac("arthurlegal_talimat")["content"][0]["text"])
+                for yeni in ("0.0.2", "0.0.3"):  # iki güncelleme; uygulama hiç kapanmadı
+                    paket_yaz(kok / "surumler" / yeni, yeni)
+                    shutil.copytree(kok / "surumler" / "0.0.1" / "paketler", kok / "surumler" / yeni / "paketler")
+                (kok / "aktif.txt").write_text("0.0.3", encoding="utf-8")
+                shutil.rmtree(kok / "surumler" / "0.0.1", ignore_errors=True)  # eski kural: surumler()[:-2]
+                self.assertFalse((kok / "surumler" / "0.0.1" / "paketler").exists())
+
+                r = arac("arthurlegal_talimat")
+                cumle = self.cekirdek_mi(r.get("isError", False), r["content"][0]["text"])
+                self.assertIn("yeniden açın", cumle, "paketi olan yeni sürüm diskte: uygulamayı kapatıp açmak yeter")
+                self.assertIn("Claude Desktop", cumle)
+                self.assertTrue(cumle.endswith(self.INDIRME), "sürerse: güncel kurulum")
+                durum = json.loads(arac("arthurlegal_durum")["content"][0]["text"])
+                self.assertEqual(durum["paketler"], {})
+                self.assertEqual((durum["paket_durumu"]["calisan_surum_klasoru"], durum["paket_durumu"]["etkin_surum"],
+                                  durum["paket_durumu"]["surum_klasorundeki_paketler"], durum["paket_durumu"]["onarim"]),
+                                 ("0.0.1", "0.0.3", [], cumle))
+                getir = arac("arthurlegal_bilgi_getir", yol="hmk-rehberi.md")
+                self.assertTrue(getir["isError"])
+                self.assertIn(cumle, getir["content"][0]["text"])
+                gunluk = (kok / "veri" / "gunluk" / "sunucu.log").read_text(encoding="utf-8")
+                self.assertEqual(gunluk.count("paket yüklenemedi (surum)"), 1, "neden günlüğe bir kez yazılır")
+            finally:
+                surec.stdin.close()
+                surec.wait(10)
+                surec.stderr.close()
+                surec.stdout.close()
+
+    def test_gecis_surumunde_calisan_sunucunun_paketleri_geri_konur(self):
+        """Bu düzeltmeyi taşıyan sürüme geçişi kurulu (eski) güncelleyici yapar ve eski kuralla siler. Silmeden hemen
+        sonra yeni sürümün `kur --kaydet` adımını çalıştırır: o adım, açık sunucunun kaybolan paketlerini geri koyar.
+        Klasör sürüm sayılmaz ve uygulama kapanınca silinir."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            kok = t / "kok"
+            sahte_kok(kok)
+            surec = subprocess.Popen([sys.executable, "-B", str(kok / "bin" / "al.py"), "sunucu"], stdin=subprocess.PIPE,
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV, text=True, encoding="utf-8")
+            kuyruk = queue.Queue()
+            threading.Thread(target=lambda: [kuyruk.put(json.loads(s)) for s in surec.stdout], daemon=True).start()
+            no = [0]
+
+            def talimat():
+                no[0] += 1
+                surec.stdin.write(json.dumps({"jsonrpc": "2.0", "id": no[0], "method": "tools/call",
+                                              "params": {"name": "arthurlegal_talimat", "arguments": {}}}) + "\n")
+                surec.stdin.flush()
+                while True:
+                    m = kuyruk.get(timeout=20)
+                    if m.get("id") == no[0]:
+                        return m["result"]["content"][0]["text"]
+
+            yeni_kod = "sys.path[0] = sys.path[0].replace('0.0.1', '0.0.2'); "
+            onar = yeni_kod + "import kur; print(json.dumps(kur.calisan_sunucuyu_onar(acik={acik})))"
+            sil = yeni_kod + "import guncelle, ortak; print(json.dumps([guncelle.eski_surumleri_sil(acik={acik}), ortak.surumler()]))"
+            try:
+                self.assertIn("ArthurLegal Hukuk Bürosu talimatı", talimat())  # sunucu 0.0.1'den çalışıyor
+                paket_yaz(kok / "surumler" / "0.0.2", "0.0.2")
+                shutil.copytree(kok / "surumler" / "0.0.1" / "paketler", kok / "surumler" / "0.0.2" / "paketler")
+                (kok / "aktif.txt").write_text("0.0.2", encoding="utf-8")
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "", "klasör yerindeyken dokunulmaz")
+                shutil.rmtree(kok / "surumler" / "0.0.1", ignore_errors=True)  # eski güncelleyicinin sildiği klasör
+                self.assertIn("çekirdek kurallar", talimat())
+                self.assertEqual(self.calistir(t, onar.format(acik=False)), "", "uygulama kapalı: çalışan sunucu yok")
+                self.assertFalse((kok / "surumler" / "0.0.1").exists())
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "0.0.1")
+                metin = talimat()
+                self.assertIn("ArthurLegal Hukuk Bürosu talimatı", metin, "aynı sunucu talimatı yeniden bulur")
+                self.assertNotIn("çekirdek kurallar", metin)
+                eski = kok / "surumler" / "0.0.1"
+                self.assertTrue((eski / "gecici-paketler.txt").exists())
+                self.assertFalse((eski / "istemci").exists(), "istemci kodu konmaz: sürüm sayılmaz")
+                self.assertEqual(self.calistir(t, onar.format(acik=True)), "", "paket yerindeyken yinelenmez")
+                # Uygulama açıkken klasör kalır; kapanınca güncelleyici siler. İşaretsiz klasöre dokunulmaz.
+                (kok / "surumler" / "0.0.3").mkdir()  # kurulumun o sırada kopyaladığı yeni sürüm olabilir
+                self.assertEqual(self.calistir(t, sil.format(acik=True)), [[], ["0.0.2"]])
+                self.assertTrue(eski.exists())
+                self.assertEqual(self.calistir(t, sil.format(acik=False)), [["0.0.1"], ["0.0.2"]])
+                self.assertFalse(eski.exists())
+                self.assertTrue((kok / "surumler" / "0.0.3").exists())
+            finally:
+                surec.stdin.close()
+                surec.wait(10)
+                surec.stderr.close()
+                surec.stdout.close()
+
+    def test_secimde_paket_yoksa_kurulum_istenir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            dort_paket(t / "kok")
+            secim_yaz(t / "kok", "tapu", "mask")  # elle ya da başka bir araçla yazılmış seçim: paket yok
+            hata, talimat, getir_hata, getir, durum, paketler = self.sor(t)
+            cumle = self.cekirdek_mi(hata, talimat)
+            self.assertEqual(cumle, "ArthurLegal paketi bu kurulumda yüklenemiyor, bu cevap paketin tam kuralları olmadan "
+                                    "hazırlandı; onarmak için güncel ArthurLegal kurulumunu yeniden çalıştırıp en az bir "
+                                    "asistan paketi seçin: " + self.INDIRME)
+            self.assertNotIn("kapatıp", cumle, "uygulamayı kapatıp açmak bu durumu onarmaz")
+            self.assertTrue(getir_hata)
+            self.assertIn(cumle, getir)
+            self.assertEqual((durum["neden"], durum["secilen_paketler"], durum["onarim"], paketler),
+                             ("seçim dosyasında (moduller.json) asistan paketi yok", [], cumle, {}))
+            self.assertEqual(durum["surum_klasorundeki_paketler"], ["hukuk-burosu", "kurumsal", "adliye", "akademisyen"])
+
+    def test_secilen_paket_surumde_yoksa(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")  # sürümde yalnız Hukuk Bürosu
+            secim_yaz(t / "kok", "adliye", "mask")
+            hata, talimat, _, _, durum, _ = self.sor(t)
+            self.cekirdek_mi(hata, talimat)
+            self.assertEqual((durum["neden"], durum["secilen_paketler"], durum["surum_klasorundeki_paketler"]),
+                             ("seçilen paket bu sürümde yok", ["adliye"], ["hukuk-burosu"]))
+            # Seçim dosyası yok: 2.5.0 öncesinin modülleri (Hukuk Bürosu, Kurumsal) sayılır; sürümde ikisi de yoksa aynı yol.
+            (t / "kok" / "moduller.json").unlink()
+            (t / "kok" / "surumler" / "0.0.1" / "paketler" / "hukuk-burosu" / "SYSTEM_PROMPT.md").unlink()
+            hata, talimat, _, _, durum, _ = self.sor(t)
+            cumle = self.cekirdek_mi(hata, talimat)
+            self.assertNotIn("kapatıp", cumle, "başka sürüm yok: kurulum yeniden çalıştırılır")
+            self.assertEqual(durum["secilen_paketler"], ["hukuk-burosu", "kurumsal"])
+            self.assertIn("sürüm klasöründe paket dosyaları yok", durum["neden"])
+
+    def test_onarim_cumlesi_dile_uygulamaya_ve_kuruluma_gore(self):
+        """Cümle arayüzün dilindedir (TR, EN, AZ), sunucuyu çalıştıran uygulamayı adıyla söyler; büroya özel kurulumda
+        genel indirme sayfasına göndermez."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            kok = t / "kok"
+            sahte_kok(kok)
+            paket_yaz(kok / "surumler" / "0.0.2", "0.0.2")
+            shutil.copytree(kok / "surumler" / "0.0.1" / "paketler", kok / "surumler" / "0.0.2" / "paketler")
+            (kok / "aktif.txt").write_text("0.0.2", encoding="utf-8")
+            shutil.rmtree(kok / "surumler" / "0.0.1" / "paketler")  # kod 0.0.1'den çalışır (calistir)
+            (kok / "veri").mkdir(exist_ok=True)
+            beklenen = {
+                "tr": ("yeniden açın, sorun sürerse güncel ArthurLegal kurulumunu yeniden çalıştırıp", "ChatGPT'"),
+                "en": ("and open it again, and if the problem continues run the current ArthurLegal installer again",
+                       "quit ChatGPT "),
+                "az": ("yenidən açın, problem davam edərsə cari ArthurLegal quraşdırmasını yenidən işə salıb", "ChatGPT-"),
+            }
+            for dil, (parca, chatgpt) in beklenen.items():
+                with self.subTest(dil=dil):
+                    (kok / "veri" / "durum.json").write_text(json.dumps({"dil": dil}), encoding="utf-8")
+                    cumle = self.cekirdek_mi(*self.sor(t)[:2])
+                    self.assertIn(parca, cumle)
+                    self.assertIn("Claude Desktop", cumle)
+                    self.assertTrue(cumle.endswith(self.INDIRME))
+                    cumle = self.cekirdek_mi(*self.sor(t, ev="chatgpt")[:2])
+                    self.assertIn(chatgpt, cumle)
+                    self.assertNotIn("Claude", cumle)
+            (kok / "veri" / "durum.json").write_text(json.dumps({"dil": "tr"}), encoding="utf-8")
+            (kok / "firma" / "marka").mkdir()
+            (kok / "firma" / "marka" / "tema.json").write_text(json.dumps({"urun": "Test Hukuk"}), encoding="utf-8")
+            cumle = self.cekirdek_mi(*self.sor(t)[:2])
+            self.assertIn("Test Hukuk paketi bu oturumda yüklenemedi", cumle)
+            self.assertTrue(cumle.endswith("Test Hukuk kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin."))
+            self.assertNotIn("github.com", cumle)
+
+    def test_guncelleyici_uygulama_acikken_surum_klasoru_silmez(self):
+        """Kök neden: etkin + bir önceki kalır, daha eskiler silinir; ama uygulama açıkken hiçbiri silinmez, çünkü açık
+        uygulamanın sunucusu başlatıldığı klasörden okumayı sürdürür. Silme uygulama kapalıyken yapılır."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            for yeni in ("0.0.2", "0.0.3"):
+                paket_yaz(t / "kok" / "surumler" / yeni, yeni)
+            (t / "kok" / "aktif.txt").write_text("0.0.3", encoding="utf-8")
+            kod = "import guncelle; print(json.dumps(guncelle.eski_surumleri_sil(acik={acik})))"
+            self.assertEqual(self.calistir(t, kod.format(acik=True)), [])
+            self.assertTrue((t / "kok" / "surumler" / "0.0.1" / "paketler" / "hukuk-burosu" / "SYSTEM_PROMPT.md").exists())
+            self.assertEqual(self.calistir(t, kod.format(acik=False)), ["0.0.1"])
+            self.assertEqual(sorted(p.name for p in (t / "kok" / "surumler").iterdir()), ["0.0.2", "0.0.3"])
+            # 0.0.1 silindi: aynı çağrı etkin sürümün kodundan yinelenir.
+            self.assertEqual(self.calistir(t, "sys.path[0] = sys.path[0].replace('0.0.1', '0.0.3'); "
+                                           + kod.format(acik=False)), [], "etkin ve bir önceki kalır")
 
 
 class ArayuzTesti(unittest.TestCase):

@@ -95,7 +95,7 @@ yaradığı yazar ve ilk kurulumda hiçbir kutu işaretli gelmez. En az bir pake
 |---|---|
 | **Hukuk Bürosu** | Avukatlar ve hukuk büroları |
 | **Kurumsal Asistan** | Şirket hukuk birimleri |
-| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.5-Public-Release/)) |
+| **Courthouse** | Hâkim ve kalem ([Courthouse sayfası](ArthurLegal-Courthouse-v1.2.6-Public-Release/)) |
 | **Akademisyen** | Hukuk akademisyenleri |
 | **ArthurLegal Tapu** | Ada/parsel ya da yer adıyla canlı parsel bilgisi, kroki ve harç |
 | **ArthurMask** | Belgeleri yapay zekâya (Claude ya da ChatGPT) vermeden önce bu bilgisayarda maskeler (yaklaşık 1 GB indirilir). Hukuk Bürosu ya da Kurumsal ile birlikte seçilirse Windows'ta [UYAP Dashboard](#uyap) da gelir |
@@ -332,7 +332,7 @@ description under it, and nothing is ticked on a first installation. At least on
 |---|---|
 | **Law Firm** | Lawyers and law firms |
 | **Corporate Assistant** | In-house legal teams |
-| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.5-Public-Release/), in Turkish) |
+| **Courthouse** | Judges and court clerks (Turkish procedure; [Courthouse page](ArthurLegal-Courthouse-v1.2.6-Public-Release/), in Turkish) |
 | **Academician** | Legal academics |
 | **ArthurLegal Tapu** | Live Turkish land-registry parcels by block/parcel or place name, with sketch and fees |
 | **ArthurMask** | Masks documents on this computer before the AI (Claude or ChatGPT) sees them (about 1 GB download). Ticked together with Law Firm or Corporate, it also brings the [UYAP Dashboard](#uyap-en) on Windows |
@@ -610,14 +610,14 @@ question is one workflow, not four.
 
 | Profile | Current version | For | Scope |
 |---|---|---|---|
-| **Corporate Assistant** | **[v1.12.6](ArthurLegal-CorporateAssistant-v1.12.6-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
-| **Law Firm Assistant** | **[v1.12.6](ArthurLegal-Law-Firm-v1.12.6-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
-| Academician | [v1.1.6](ArthurLegal-Academician-v1.1.6-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
-| **Courthouse** | **[v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
+| **Corporate Assistant** | **[v1.12.7](ArthurLegal-CorporateAssistant-v1.12.7-Public-Release/)** | In-house legal teams | 12 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 104 knowledge files · ArthurMask local privacy gate |
+| **Law Firm Assistant** | **[v1.12.7](ArthurLegal-Law-Firm-v1.12.7-Public-Release/)** | Law firms, 0–30 staff | 16 practice areas · 28 jurisdictions · one primary MCP connector (Türkiye + 11 jurisdictions + land registry) · 129 knowledge files · ArthurMask local privacy gate |
+| Academician | [v1.1.7](ArthurLegal-Academician-v1.1.7-Public-Release/) | Legal academics | Publication strategy, journal selection, associate-professorship track, ethics board · installer module (Windows, macOS) |
+| **Courthouse** | **[v1.2.6](ArthurLegal-Courthouse-v1.2.6-Public-Release/)** | Judges and court clerks | 12 plugins, 56 skills · 10 court-type profiles · 7 reminder watchers · neutral drafts for the judge or panel to approve · installer module (Windows, macOS) · ArthurMask local privacy gate |
 
 <h3 id="courthouse">Courthouse</h3>
 
-Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.5](ArthurLegal-Courthouse-v1.2.5-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
+Hâkim ve kalem için paket; güncel sürüm **[Courthouse v1.2.6](ArthurLegal-Courthouse-v1.2.6-Public-Release/)** (Türkçe sayfa). · Package for judges and court clerks; current version **[Courthouse v1.2.6](ArthurLegal-Courthouse-v1.2.6-Public-Release/)** (page in Turkish). Bu bölümün bağlantısı sürüm değişse de aynı kalır: https://github.com/beerbottle90/ArthurLegal#courthouse
 
 The two flagship packages (Corporate, Law Firm) are multi-jurisdictional. The
 Academician and Courthouse packages are built around Turkish academic-promotion
@@ -801,6 +801,66 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+<a id="setup-341"></a>
+
+## Setup 3.4.1 — The "no package" error after updates is fixed; case-law research discipline (2026-11-18)
+
+- **The "no package" error.** On some computers the assistant answered "Bu kurulumda paket yok." (there is no package
+  in this installation) and went on without ArthurLegal's rules. The most likely cause: when two updates arrived
+  without the app being closed in between, the updater removed the version folder that the open app's server was
+  still running from. Old version folders are now removed only while the app is closed.
+- **During this update.** The step from 3.4.0 is carried out by the updater already on your computer. If your app has
+  been open since before 3.4.0, the new version puts the packages back for the running server right after the update,
+  so open chats keep working. Closing the app completely and opening it again starts the new version.
+- **If the package still cannot be loaded.** The assistant no longer carries on silently. It works with a short set of
+  core rules (article check, decision-citation check, the UYARI line, the case-law search method) and tells you the
+  repair step at the start of its first answer: close the app completely and open it again; if that does not help,
+  run the current installer again and select at least one assistant package. `arthurlegal_durum` shows the reason.
+- **Case-law research discipline (packages).** `tr_ictihat_ara` now sorts by relevance, and `sort="yeni"` gives the
+  newest decisions. The packages teach the method: search in the court's own words and in at least three phrasings;
+  search again for the wording of the decision you found; search for the opposing decision too and write what you
+  find; when nothing is found, say how many searches were run and how many candidates were read; do not present a
+  conclusion reached by analogy as settled case law; say so before a time-limited filing rests on an unverified
+  proposition. `tr_ictihat_semantik_ara` is not a discovery tool: it only re-ranks a shortlist.
+- Packages: Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7; the previous versions are in
+  `arsiv/`. Plugins: Claude 1.12.21, ChatGPT 1.12.10.
+- How it arrives: the updater installs 3.4.1 on Windows and on a Mac by itself.
+
+**Türkçe:** Bazı bilgisayarlarda asistan "Bu kurulumda paket yok." deyip ArthurLegal'in kuralları olmadan devam
+ediyordu. En olası neden: uygulama hiç kapatılmadan iki güncelleme gelince güncelleyici, açık uygulamanın sunucusunun
+hâlâ çalıştığı sürüm klasörünü siliyordu. Eski sürüm klasörleri artık yalnız uygulama kapalıyken silinir. Bu
+güncellemeyi bilgisayarınızda kurulu olan güncelleyici yapar; uygulamanız 3.4.0'dan öncesinden beri açıksa yeni sürüm,
+güncellemenin hemen ardından çalışan sunucu için paketleri geri koyar ve açık sohbetler çalışmayı sürdürür. Uygulamayı
+tamamen kapatıp açınca yeni sürüm devreye girer. Paket yine de yüklenemezse asistan artık sessizce devam etmez: kısa
+bir çekirdek kural metniyle (madde kontrolü, karar künyesi kontrolü, UYARI satırı, içtihat arama yöntemi) çalışır ve
+ilk cevabının başında onarım adımını söyler: uygulamayı tamamen kapatıp açın; düzelmezse güncel kurulumu yeniden
+çalıştırıp en az bir asistan paketi seçin. Nedeni `arthurlegal_durum` gösterir. İçtihat araştırma disiplini
+(paketler): `tr_ictihat_ara` artık ilgiye göre sıralar, en yeni kararlar için `sort="yeni"`. Paketler yöntemi öğretir:
+soru mahkemenin kendi diliyle ve en az üç farklı ifadeyle aranır; bulunan kararın kalıp cümlesi yeniden aratılır; aksi
+yöndeki karar da aranır ve bulunan yazılır; karar bulunamadığında kaç sorgu yapıldığı ve kaç adayın okunduğu yazılır;
+kıyasla varılan sonuç yerleşik içtihat gibi sunulmaz; süreli bir iş teyit edilmemiş bir önermeye dayandırılmadan önce
+bu açıkça söylenir. `tr_ictihat_semantik_ara` keşif aracı değildir, yalnız kısa listeyi yeniden sıralar. Paketler:
+Hukuk Bürosu ve Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7; önceki sürümler `arsiv/` klasöründe. Eklentiler:
+Claude 1.12.21, ChatGPT 1.12.10. Güncelleyici 3.4.1'i Windows'ta ve Mac'te kendisi kurar.
+
+**Azərbaycan dili:** Bəzi kompüterlərdə köməkçi "Bu kurulumda paket yok." (bu quraşdırmada paket yoxdur) deyib
+ArthurLegal-ın qaydaları olmadan davam edirdi. Ən ehtimal olunan səbəb: tətbiq heç bağlanmadan iki yeniləmə gələndə
+yeniləyici açıq tətbiqin serverinin hələ işlədiyi versiya qovluğunu silirdi. Köhnə versiya qovluqları artıq yalnız
+tətbiq bağlı olarkən silinir. Bu yeniləməni kompüterinizdə quraşdırılmış yeniləyici edir; tətbiqiniz 3.4.0-dan
+əvvəldən açıqdırsa, yeni versiya yeniləmədən dərhal sonra işləyən server üçün paketləri geri qoyur və açıq söhbətlər
+işləməyə davam edir. Tətbiqi tam bağlayıb açanda yeni versiya işə düşür. Paket yenə də yüklənməsə, köməkçi artıq
+səssizcə davam etmir: qısa əsas qaydalarla (maddə yoxlaması, qərar rekvizitləri yoxlaması, UYARI sətri, məhkəmə
+təcrübəsi axtarış üsulu) işləyir və ilk cavabının əvvəlində düzəltmə addımını deyir: tətbiqi tam bağlayıb açın; kömək
+etməsə, cari quraşdırmanı yenidən işə salıb ən azı bir köməkçi paketi seçin. Səbəbi `arthurlegal_durum` göstərir.
+Məhkəmə təcrübəsi araşdırma intizamı (paketlər): `tr_ictihat_ara` artıq uyğunluğa görə sıralayır, ən yeni qərarlar
+üçün `sort="yeni"`. Paketlər üsulu öyrədir: sual məhkəmənin öz dili ilə və ən azı üç fərqli ifadə ilə axtarılır;
+tapılan qərarın qəlib cümləsi yenidən axtarılır; əks istiqamətli qərar da axtarılır və tapılan yazılır; qərar
+tapılmayanda neçə sorğu edildiyi və neçə namizədin oxunduğu yazılır; analogiya ilə gəlinən nəticə formalaşmış təcrübə
+kimi təqdim edilmir; müddətli iş yoxlanmamış müddəaya əsaslandırılmazdan əvvəl bu açıq deyilir.
+`tr_ictihat_semantik_ara` kəşf aləti deyil, yalnız qısa siyahını yenidən sıralayır. Paketlər: Hüquq Bürosu və
+Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7; əvvəlki versiyalar `arsiv/` qovluğundadır. Plaginlər: Claude
+1.12.21, ChatGPT 1.12.10. Yeniləyici 3.4.1-i Windows-da və Mac-də özü quraşdırır.
 
 <a id="setup-340"></a>
 

@@ -17,9 +17,9 @@
 
 | Araç | Ne yapar | Kritik parametreler |
 |---|---|---|
-| `tr_ictihat_ara` | Yargıtay, Danıştay, yerel hukuk, istinaf hukuk ve KYB kararlarında arama (Bedesten) | `query` (Bedesten diyalekti), `courts` (`YARGITAYKARARI`, `DANISTAYKARAR`, `YERELHUKUK`, `ISTINAFHUKUK`, `KYB`; varsayılan ilk ikisi), `chamber` (daire kodu), `date_from`, `date_to` (ISO; bölüm 3), `page`, `page_size` (en çok 10), `sort` |
+| `tr_ictihat_ara` | Yargıtay, Danıştay, yerel hukuk, istinaf hukuk ve KYB kararlarında arama (Bedesten) | `query` (Bedesten diyalekti), `courts` (`YARGITAYKARARI`, `DANISTAYKARAR`, `YERELHUKUK`, `ISTINAFHUKUK`, `KYB`; varsayılan ilk ikisi), `chamber` (daire kodu), `date_from`, `date_to` (ISO; bölüm 3), `page`, `page_size` (en çok 10), `sort` (`ilgi` varsayılan: konuyla en ilgili karar önce; `yeni`: en yeni karar önce; `eski`: en eski önce; bölüm 2 madde 5) |
 | `tr_ictihat_getir` | Bir kararın tam metni, sayfalı | `document_id` (aramadan), `page`, `page_chars` |
-| `tr_ictihat_semantik_ara` | Anahtar kelimeyle bulunan ilk kararları (en çok 10) çekip doğal dil sorusuna göre anlamsal sıralar | `query` (doğal dil cümle), `initial_keyword` (Bedesten'e gidecek 1 ile 3 terim), `courts`, `chamber`, `date_from`, `date_to`, `max_docs` (varsayılan 5; karar başına 4 saniye) |
+| `tr_ictihat_semantik_ara` | Keşif aracı değildir: `initial_keyword` ile ilgiye göre gelen ilk kararları (en çok 10) okuyup doğal dil sorusuna göre yeniden sıralar; okunmayan aday kalırsa yanıtta `uyari` | `query` (doğal dil cümle), `initial_keyword` (Bedesten'e gidecek 1 ile 3 terim), `courts`, `chamber`, `date_from`, `date_to`, `max_docs` (varsayılan 5; karar başına 4 saniye) |
 | `tr_aym_ara` | Anayasa Mahkemesi norm denetimi veya bireysel başvuru | `query` (düz kelime), `kind` (`norm` veya `bireysel`), `page`, `page_size` |
 | `tr_aym_getir` | AYM karar tam metni | `id` (aramadan, UUID), `kind`, `page` |
 | `tr_uyusmazlik_ara` | Uyuşmazlık Mahkemesi kararları (adli, idari görev uyuşmazlığı) | `query`, `scope` (`All`, `EsasNo`, `KararNo`), `page` |
@@ -40,8 +40,9 @@ Bu connector'da olmayanlar ve neden: KİK (EKAP v2 imzalı API 500 döndürüyor
 
 1. `tr_ictihat_ara.query` Bedesten diyalektidir: çıplak kelimeler, `"tam öbek"`, `+zorunlu`, `-hariç`, büyük harf `AND`, `OR`, `NOT`; joker ve yakınlık operatörü yoktur. Kullanıcının cümlesini yapıştırma; 2 ile 5 hukuki terim çıkar ve kavramları `+` ile zorunlu kıl: `+"işe iade" +"kıdem tazminatı"`.
 2. `tr_aym_ara.query` düz kelime alır; operatör yok. Her ek kelime kümeyi daraltır.
-3. `tr_ictihat_semantik_ara.query` operatör almaz; hukuki fikri tek cümleyle anlat. `initial_keyword` Bedesten'e gider ve adayları belirler; anlamsal sıralama yalnız çekilen metinler üzerindedir, keşif aracı değildir.
+3. `tr_ictihat_semantik_ara.query` operatör almaz; hukuki fikri tek cümleyle anlat. `initial_keyword` Bedesten'e gider ve adayları belirler; anlamsal sıralama yalnız çekilen metinler üzerindedir, keşif aracı değildir. Yanıttaki `uyari` ("N adaydan yalnız ilk M karar okundu") okunmayan adayı söyler: burada sonuç çıkmaması karar olmadığını göstermez; keşif `tr_ictihat_ara` ile yapılır.
 4. `tr_semantik_ara.query` doğal dil; kelime paylaşmayan belgeyi de bulur. Yanıttaki `retrieval.semantic` alanı `off` ise sonuçlar anahtar kelime eşleşmesidir; `mode="semantic"` ile tekrar dene veya eş anlamlı terim kullan.
+5. Sıralama ve arama yöntemi (arthur-tr-hukuk-mcp 0.8.0). `tr_ictihat_ara` sonuçları ilgiye göre sıralar (`sort="ilgi"`, varsayılan); önceki sürümler tarihe göre sıralıyordu ve konuyu çözen eski tarihli karar ilk sayfada çıkmayabiliyordu. Güncel uygulama için aynı sorgu `sort="yeni"` ile yinelenir; yanıttaki `siralama` uygulanan sırayı, `siralama_notu` öteki sıralamayı söyler. Soru mahkemenin kendi diliyle ve en az üç farklı ifadeyle aranır; bulunan ilgili kararın kalıp cümlesi tırnak içinde yeniden aratılır. İstenen sonucu destekleyen kararla yetinilmez, aksi yöndeki karar ayrıca aranır. Tırnaklı ifadenin yanındaki işaretsiz kelimeyi Bedesten VEYA ile birleştirir; hepsi geçsin diye her terime `+` konur (yanıt bunu `onerilen_sorgu` ile önerir). `status`'ta `backend_status.tr.version` 0.8.0'dan küçükse sıralama tarihe göredir ve `sort` yalnız `desc` ya da `asc` alır.
 
 Türkçe diyakritikler korunur; klavyesiz yazılan `aydinlatma` da `aydınlatma`yı bulur (noktasız ı genişletmesi yalnız yerel indekste).
 
@@ -217,4 +218,4 @@ Araç çıktısında `source_url` varsa atıfa eklenir; yoksa URL uydurulmaz. Ç
 6. Yerel indeks (`tr_semantik_ara`) taranmış kadarıyla vardır ve kurumdan kuruma derinliği farklıdır (bölüm 4); kapsamı `status` söyler.
 7. İçtihatta konu süzgeci yoktur. Bedesten karar listesi metin taşımaz; yerel bir modelin eleyeceği bir girdi bulunmaz. Konuya göre daraltma `chamber` ve `query` ile yapılır.
 
-*Son güncelleme: 23.09.2026: araç adları ve örnek çağrı parametreleri 0.5.0'ın canlı şemasıyla karşılaştırıldı, EPDK örneğinde `category` `params` içine alındı. Önceki: 20.09.2026. Araç listesi ve parametreler arthur-tr-hukuk-mcp (eski adı ArthurLegalTR) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten, BTK ve GİB çağrılarıyla doğrulandı.*
+*Son güncelleme: 18.11.2026: `tr_ictihat_ara` sıralaması (`sort`: `ilgi`, `yeni`, `eski`) ve `tr_ictihat_semantik_ara`'nın `uyari` alanı arthur-tr-hukuk-mcp 0.8.0'a göre işlendi (bölüm 1 ve 2). Önceki: 23.09.2026: araç adları ve örnek çağrı parametreleri 0.5.0'ın canlı şemasıyla karşılaştırıldı, EPDK örneğinde `category` `params` içine alındı. Önceki: 20.09.2026. Araç listesi ve parametreler arthur-tr-hukuk-mcp (eski adı ArthurLegalTR) 0.4.0 kaynak kodu, 33 çevrimdışı test ve canlı Bedesten, BTK ve GİB çağrılarıyla doğrulandı.*

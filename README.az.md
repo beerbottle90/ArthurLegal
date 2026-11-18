@@ -105,7 +105,7 @@ gəlmir. Ən azı bir paket lazımdır:
 |---|---|
 | **Hüquq Bürosu** (Hukuk Bürosu) | Vəkillər və hüquq büroları |
 | **Korporativ Köməkçi** (Kurumsal Asistan) | Şirkətlərin hüquq şöbələri |
-| **Courthouse** | Hakim və məhkəmə dəftərxanası ([Courthouse səhifəsi](ArthurLegal-Courthouse-v1.2.5-Public-Release/), türk dilində) |
+| **Courthouse** | Hakim və məhkəmə dəftərxanası ([Courthouse səhifəsi](ArthurLegal-Courthouse-v1.2.6-Public-Release/), türk dilində) |
 | **Akademik** (Akademisyen) | Hüquqşünas akademiklər |
 | **ArthurLegal Tapu** | Ada/parsel (kadastr bloku və sahə nömrəsi) və ya yer adı ilə canlı parsel məlumatı, kroki (sxem) və rüsum |
 | **ArthurMask** | Sənədləri süni intellektə (Claude və ya ChatGPT) verməzdən əvvəl bu kompüterdə maskalayır (təxminən 1 GB yüklənir). Hüquq Bürosu və ya Korporativ Köməkçi ilə birlikdə seçilsə, Windows-da [UYAP Dashboard](README.md#uyap) da gəlir |
