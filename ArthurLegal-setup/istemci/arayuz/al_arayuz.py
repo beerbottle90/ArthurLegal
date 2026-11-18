@@ -535,9 +535,45 @@ TESLIM_KURALI = (
     "3) cevabı al_masaya_yaz ile teslim edin. Cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' yazın.")
 
 
+# Kurulum sağlığı (kalite süreci 4, 18.11.2026). Bilgisayardaki kurulumun paketi (sistem talimatı ve bilgi dosyaları)
+# yüklenemiyorsa yerel sunucu bunu masa verisine koyar (arthurlegal_durum'daki paket_durumu); masa her ekranın başında
+# kapatılamaz bir uyarı ve onarım adımlarını gösterir. Olayda paket hiç yüklenmemişti, asistan iki hafta çekirdek
+# kurallarla çalıştı ve kimse fark etmedi. Uzak uç bu alanı hiç vermez: onun paketi yoktur.
+PAKET_SORUNLARI = ("surum", "secim", "uyusmazlik")
+PAKET_NOTU = (" PAKET: bu bilgisayardaki ArthurLegal paketi yüklenemiyor; masa kullanıcıya onarım adımlarını "
+              "gösteriyor. Cevaptan önce arthurlegal_talimat'ı çağırın: çekirdek kuralları ve cevabın başına aynen "
+              "yazılacak onarım cümlesini verir.")
+
+
+def paket_uyarisi(paket: Any) -> Optional[Dict[str, Any]]:
+    """Yerel sunucunun bildirdiği paket sorunu, masanın uyarısı için; sorun yoksa ya da bozuksa None.
+
+    paket: {"sorun": PAKET_SORUNLARI'ndan biri, "yeniden_acmak_yeter": bool, "adres": kurulum sayfası (https),
+        "adimlar": {dil: {"kapat_ac": ..., "kurulum": ...}}}. Adımlar sunucudandır, çünkü işletim sistemini (Windows'ta
+        sistem tepsisi, macOS'ta Cmd+Q), uygulamayı (Claude Desktop, ChatGPT) ve kurulum türünü (genel, büroya özel)
+        o bilir. kapat_ac yalnız yeniden açmak yetiyorsa kalır; metinler kısaltılır, bilinmeyen alan alınmaz."""
+    if not isinstance(paket, dict) or paket.get("sorun") not in PAKET_SORUNLARI:
+        return None
+    yeter = paket.get("yeniden_acmak_yeter") is True
+    out: Dict[str, Any] = {"sorun": paket["sorun"], "yeniden_acmak_yeter": yeter, "adimlar": {}}
+    adres = paket.get("adres")
+    if isinstance(adres, str) and adres.startswith("https://") and len(adres) <= 300:
+        out["adres"] = adres
+    adimlar = paket.get("adimlar") if isinstance(paket.get("adimlar"), dict) else {}
+    for dil in DILLER:
+        a = adimlar.get(dil)
+        if not isinstance(a, dict) or not isinstance(a.get("kurulum"), str) or not a["kurulum"].strip():
+            continue
+        adim = {"kurulum": _kisalt(a["kurulum"], 300)}
+        if yeter and isinstance(a.get("kapat_ac"), str) and a["kapat_ac"].strip():
+            adim["kapat_ac"] = _kisalt(a["kapat_ac"], 300)
+        out["adimlar"][dil] = adim
+    return out
+
+
 def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str, str]],
                 bolum: Optional[str] = None, baglayicilar: Any = None, yerele_devret: bool = False,
-                model: Any = None, dil: Any = None, ev: Optional[str] = None) -> Dict[str, Any]:
+                model: Any = None, dil: Any = None, ev: Optional[str] = None, paket: Any = None) -> Dict[str, Any]:
     """al_masasi'nin cevabı: masa neyin çalıştığını buradan bilir.
 
     ortam: "masaustu" (yerel AL sunucusu) ya da "uzak" (web ve telefon).
@@ -552,6 +588,8 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         yok sayılır; kullanıcı bu sohbette masadan dil seçtiyse masa onu kullanır.
     ev: ev sahibi (EVLER). ChatGPT'deyse cevap "ev": "chatgpt" taşır: masa adları ve ekranları ona göre kurar; Claude
         modellerine göre yazılmış model notu eklenmez (ChatGPT modelleri ölçülmedi, K7).
+    paket: yerel sunucunun paket sorunu (paket_uyarisi). Sorun varsa cevap "paket" taşır ve not Claude'a söyler;
+        sorun yoksa (ya da uzak uçta) alan yok.
     """
     out: Dict[str, Any] = {
         "surum": SURUM,
@@ -580,6 +618,10 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         out["model"] = model_degerlendir(model)
         if "al_masaya_yaz" in out["yetenekler"]:   # dizin profili: gösterge var, talimat yok
             out["not"] += model_notu(out["model"])
+    uyari = paket_uyarisi(paket)
+    if uyari:
+        out["paket"] = uyari
+        out["not"] += PAKET_NOTU
     if ortam == "uzak":
         yerel = yerel_durumu(baglayicilar)
         ana_uc = "al_masaya_yaz" in out["yetenekler"]   # dizin profili başka sunucudan söz etmez, devretmez

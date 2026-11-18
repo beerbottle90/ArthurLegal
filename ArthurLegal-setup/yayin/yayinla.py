@@ -7,6 +7,13 @@
     python yayin/yayinla.py v2.0.0                latest olarak yayımla: kurulu bilgisayarlar 6 saat içinde alır
     python yayin/yayinla.py v2.0.0 --kasa         günlük anahtar kayıpsa kasadaki yedekle imzala
     python yayin/yayinla.py v2.0.0 --sinavsiz     sürüm sınavını bilerek atla
+    python yayin/yayinla.py v2.0.0 --deneme win,mac,chatgpt   yayın sonrası denemede geçen ortamları nota yaz
+    python yayin/yayinla.py v2.0.0 --deneme-kaldi mac         kalan ortamı nota yaz (✗)
+    python yayin/yayinla.py v2.0.0 --deneme-listesi           yayın sonrası deneme listesini yeniden yazdır
+
+Yayın sonrası deneme (kalite süreci 4, kurulum sağlığı): yayın notu "Yayın sonrası deneme: Win … Mac … ChatGPT …"
+satırıyla açılır ve yayından sonra deneme listesi yazdırılır. Üç ortamda (Windows Claude Desktop, macOS Claude
+Desktop, ChatGPT masaüstü) aynı üç deneme yapılır; sonuç --deneme ile aynı satıra işlenir: "Win ✓ Mac ✓ ChatGPT ✓".
 
 Sürüm sınavı (Katman 2): %USERPROFILE%/.arthurlegal/sinav.json varsa yayından önce bir kalite sınavı çalışır ve
 kalite önceki sürüme göre düştüyse yayın durur (bkz. surum_sinavi). Ayar yoksa sınavsız devam edilir.
@@ -34,6 +41,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -284,6 +292,92 @@ def surum_sinavi(etiket: str, kabul: str | None, ayar_yolu: Path = SINAV_AYARI) 
     sys.exit(f"Sürüm sınavı çalışmadı (çıkış {p.returncode}); yayın durdu. Sınavsız yayın için: --sinavsiz")
 
 
+# Yayın sonrası deneme (kalite süreci 4, kurulum sağlığı). Otomatik testler kodun doğru olduğunu söyler, kullanıcının
+# bilgisayarında paketin yüklendiğini söylemez: 18.11.2026 olayında bir kurulumda paket hiç yüklenmemişti ve kimse fark
+# etmemişti. Her yayından sonra üç ortamda gerçek kurulumla aynı üç deneme yapılır; sonuç yayın notunun tek satırıdır.
+DENEME_ORTAMLARI = {"win": ("Win", "Windows · Claude Desktop"),
+                    "mac": ("Mac", "macOS · Claude Desktop"),
+                    "chatgpt": ("ChatGPT", "ChatGPT masaüstü")}
+DENEME_ISARETI = {"gecti": "✓", "kaldi": "✗", "bekliyor": "…"}
+DENEME_BASI = "Yayın sonrası deneme:"
+DENEME_ICTIHAT = "Dosya alacağına konulan haciz takası engeller mi? Yargıtay kararlarıyla cevaplayın."
+DENEME_ADIMLARI = (
+    "Uygulamayı tamamen kapatıp açın (Windows'ta sistem tepsisi dâhil, macOS'ta Cmd+Q; güncelleme yeniden açılışta "
+    "devreye girer). Yeni sohbette arthurlegal_durum'u isteyin: yerel_kurulum {surum}, paket_durumu \"tamam\", "
+    "araştırma sunucusu bağlı.",
+    "İçtihat sorusu: \"{ictihat}\" → tr_ictihat_ara çağrılır, künyeli Yargıtay kararları gelir; cevabın başında "
+    "paket onarım cümlesi yoktur.",
+    "\"ArthurLegal Masası'nı aç\" → masa açılır, kırmızı paket uyarısı yoktur, şeritteki sürüm v{surum} (AL ile aynı).",
+)
+
+
+def deneme_sonuclari(govde: str) -> dict:
+    """Yayın notundaki deneme satırı → {ortam: "gecti" | "kaldi" | "bekliyor"}; satır yoksa hepsi bekliyor."""
+    sonuc = {o: "bekliyor" for o in DENEME_ORTAMLARI}
+    satir = next((s for s in (govde or "").splitlines() if s.startswith(DENEME_BASI)), "")
+    durum = {v: k for k, v in DENEME_ISARETI.items()}
+    for o, (kisa, _) in DENEME_ORTAMLARI.items():
+        m = re.search(r"(?:^|\s)" + re.escape(kisa) + r" (\S)", satir[len(DENEME_BASI):])
+        if m and m.group(1) in durum:
+            sonuc[o] = durum[m.group(1)]
+    return sonuc
+
+
+def deneme_satiri(sonuc: dict) -> str:
+    """"Yayın sonrası deneme: Win ✓ Mac ✓ ChatGPT ✓" (bekleyen …, kalan ✗)."""
+    return DENEME_BASI + " " + " ".join(f"{kisa} {DENEME_ISARETI[sonuc.get(o, 'bekliyor')]}"
+                                        for o, (kisa, _) in DENEME_ORTAMLARI.items())
+
+
+def deneme_notu(govde: str, sonuc: dict) -> str:
+    """Yayın notunda deneme satırını yazar: varsa yerinde değiştirir, yoksa sona ekler; notun geri kalanı aynen kalır."""
+    govde = govde or ""
+    satirlar = govde.splitlines()
+    for i, s in enumerate(satirlar):
+        if s.startswith(DENEME_BASI):
+            satirlar[i] = deneme_satiri(sonuc)
+            return "\n".join(satirlar)
+    return (govde.rstrip() + "\n\n" if govde.strip() else "") + deneme_satiri(sonuc)
+
+
+def deneme_listesi(etiket: str, surum: str) -> str:
+    """Yayından sonra yazdırılan liste: üç ortam, her birinde aynı üç deneme ve sonucun nota nasıl yazılacağı."""
+    satirlar = [f"YAYIN SONRASI DENEME · {etiket} · her ortamda gerçek kurulumla:"]
+    satirlar += [f"  [ ] {ad}" for _, ad in DENEME_ORTAMLARI.values()]
+    satirlar.append("  Her birinde:")
+    satirlar += [f"    {i}. " + a.format(surum=surum, ictihat=DENEME_ICTIHAT) for i, a in enumerate(DENEME_ADIMLARI, 1)]
+    satirlar.append(f"  Geçenleri yayın notuna yazın:  python yayin/yayinla.py {etiket} --deneme win,mac,chatgpt")
+    satirlar.append(f"  Kalan ortam:                   python yayin/yayinla.py {etiket} --deneme-kaldi mac")
+    satirlar.append("  Hepsi geçince notta: " + deneme_satiri({o: "gecti" for o in DENEME_ORTAMLARI}))
+    return "\n".join(satirlar)
+
+
+def deneme_ortamlari(metin: str | None) -> list:
+    """"win,mac" → ["win", "mac"]; bilinmeyen ad hatadır."""
+    ortamlar = [o.strip().lower() for o in (metin or "").split(",") if o.strip()]
+    bilinmeyen = [o for o in ortamlar if o not in DENEME_ORTAMLARI]
+    if bilinmeyen:
+        sys.exit(f"Bilinmeyen deneme ortamı: {', '.join(bilinmeyen)} (geçerli: {', '.join(DENEME_ORTAMLARI)})")
+    return ortamlar
+
+
+def deneme_isle(depo: str, etiket: str, gecen: list, kalan: list) -> dict:
+    """Yayın sonrası deneme sonucunu yayının notuna işler; önceki sonuçlar korunur (ortamlar ayrı günlerde
+    denenebilir). Notun yalnız deneme satırı değişir."""
+    if set(gecen) & set(kalan):
+        sys.exit("Aynı ortam hem geçti hem kaldı olamaz.")
+    jeton = github_jetonu()
+    yayin = api("GET", f"https://api.github.com/repos/{depo}/releases/tags/{etiket}", jeton)
+    eski = yayin.get("body") or ""
+    sonuc = deneme_sonuclari(eski)
+    sonuc.update({o: "gecti" for o in gecen})
+    sonuc.update({o: "kaldi" for o in kalan})
+    govde = deneme_notu(eski, sonuc)
+    if govde != eski:
+        api("PATCH", yayin["url"], jeton, {"body": govde})
+    return sonuc
+
+
 def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav: str | None = None) -> dict:
     """Dosyaları yükler ve yayını yayımlar; yayının son hâlini döndürür."""
     # Sıra: paket ve kurulum dosyaları önce, imzalı manifest en son. Var olan bir yayında dosyalar tek tek değişirken
@@ -300,6 +394,7 @@ def yayimla(depo: str, etiket: str, d: dict, on_surum: bool, public: bool, sinav
     govde = f"Yerel kurulum {d['surum']} · {paketler}\n\nKurulum: {kurulum}"
     if sinav:
         govde += f"\n\nSürüm sınavı: {sinav}"
+    govde += "\n\n" + deneme_satiri({})   # denemeler yayından sonra yapılır: --deneme işler
     yayin, yeni = yayin_ac(taban, jeton, etiket, govde, on_surum)
     dosyalari_yukle(yayin, jeton, dosyalar, yeni)
     if yeni:  # bütün dosyalar yerinde: tek adımda yayımla (ön sürüm Latest olmaz)
@@ -320,9 +415,28 @@ def main(argv=None) -> int:
     ap.add_argument("--kasa", action="store_true", help="günlük anahtar kayıpsa kasadaki yedek anahtarla imzala")
     ap.add_argument("--sinavsiz", action="store_true", help="sürüm sınavını atla (bilinçli; yayın notunda görünmez)")
     ap.add_argument("--sinav-kabul", metavar="NEDEN", help="sınavdaki kalite düşüşünü bilerek kabul et ve yayımla")
+    ap.add_argument("--deneme", metavar="ORTAMLAR", help="yayın sonrası denemede geçen ortamlar (win,mac,chatgpt): yayın notuna ✓")
+    ap.add_argument("--deneme-kaldi", metavar="ORTAMLAR", help="yayın sonrası denemede kalan ortamlar: yayın notuna ✗")
+    ap.add_argument("--deneme-listesi", action="store_true", help="yayın sonrası deneme listesini yazdır (yayımlamaz)")
     args = ap.parse_args(argv)
+    if hasattr(sys.stdout, "reconfigure"):   # cp1254 konsolu ✓ ve ✗ basamaz: "?" olur, yayın yarıda kalmaz
+        sys.stdout.reconfigure(errors="replace")
     if args.anahtar_uret or args.kasa_anahtari_uret:
         return anahtar_uret(kasa=args.kasa_anahtari_uret)
+    if args.deneme or args.deneme_kaldi or args.deneme_listesi:
+        if not args.etiket:
+            ap.error("etiket gerekli: python yayin/yayinla.py v2.0.0 --deneme win,mac,chatgpt")
+        if args.deneme_listesi:
+            print(deneme_listesi(args.etiket, args.etiket.lstrip("v")))
+            return 0
+        k = kaynaklar()
+        sonuc = deneme_isle(k.get("dagitim_deposu") or k["yayin_deposu"], args.etiket,
+                            deneme_ortamlari(args.deneme), deneme_ortamlari(args.deneme_kaldi))
+        print(f"{args.etiket} yayın notu: {deneme_satiri(sonuc)}")
+        if "kaldi" in sonuc.values():
+            print("Kalan ortam var: kullanıcılar etkileniyor olabilir. Nedeni bulun; düzeltme sürümü çıkana kadar "
+                  "yayını ön sürüme çevirmeyi düşünün (kurulu bilgisayarlar Latest'e bakar).")
+        return 0
     if args.link:
         if not args.etiket:
             ap.error("etiket gerekli: python yayin/yayinla.py v2.0.0 --link ArthurLegal-Kurulum.exe")
@@ -376,6 +490,7 @@ def main(argv=None) -> int:
 
     yayin = yayimla(depo, args.etiket, d, args.on_surum, public=depo == k.get("yayin_deposu"), sinav=sinav)
     print(f"Yayın: {yayin['html_url']}")
+    print("\n" + deneme_listesi(args.etiket, d["surum"]))
     return 0
 
 

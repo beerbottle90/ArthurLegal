@@ -169,6 +169,12 @@ onarım cümlesi döner (Türkçe, İngilizce, Azerbaycanca; Claude Desktop ya d
 da seçilen paket sürümde yok. Onarım: uygulamayı tamamen kapatıp açmak; sürerse güncel kurulumu yeniden çalıştırıp
 en az bir paket seçmek. Güncelleme denetimi aynı sürümü yeniden indirmez, bu durumu onarmaz.
 
+**Masada paket uyarısı (kurulum sağlığı).** Sorun asistanın tek cümlesine kalmaz: masa verisi aynı durumu `paket`
+alanıyla taşır (`paket_bilgisi`) ve AL Masası her ekranın başında kapatılamaz kırmızı bir şerit gösterir; onarım
+adımları masanın dilinde (TR, AZ, EN), işletim sistemine ve uygulamaya göre, genel kurulumda kurulum sayfası
+düğmesiyle. Masa görünümleri sunucu açılırken belleğe alınır: sürüm klasörü sunucu açıkken silinse de masa açılır ve
+uyarıyı gösterir. Paket yeniden yüklenince alan gelmez, şerit kalkar.
+
 **İki anahtar (2.4.3).** Kurulumlar iki anahtara güvenir: günlük yayın anahtarı ve kasada duran yedek
 anahtar. Liste paketin içinde, imzalı güncellemeyle gelir. Günlük anahtar kaybolursa yayın kasadaki
 anahtarla imzalanır; anahtar değişikliği de yeniden kurulum gerektirmez. Adımlar `yayin/yayinla.py`'nin
@@ -214,6 +220,15 @@ yapar ([`macos-kurulum.yml`](../.github/workflows/macos-kurulum.yml)): her derle
 kurar (Courthouse, Tapu ve ArthurMask seçili), `tests/mac_kurulum_denetimi.py` ile denetler, kaldırır ve paketi iş
 çıktısı olarak saklar. Yayında `.pkg`'yi `yayin/cikti`'ye koymak yeter: `yayinla.py` onu yalnız Windows derlemesiyle
 aynı sürümün ve aynı commit'lerin (ArthurLegal, Tapu) derlemesiyse yükler.
+
+**Yayın sonrası deneme (kurulum sağlığı).** Otomatik testler kodun doğru olduğunu söyler, kullanıcının bilgisayarında
+paketin yüklendiğini söylemez. Yayın notu `Yayın sonrası deneme: Win … Mac … ChatGPT …` satırıyla açılır ve
+`yayinla.py` yayından sonra bir liste yazdırır: Windows'ta Claude Desktop, macOS'ta Claude Desktop ve ChatGPT
+masaüstünde gerçek kurulumla (1) `arthurlegal_durum` → `paket_durumu` "tamam" ve doğru sürüm, (2) bir içtihat
+sorusu → künyeli kararlar, onarım cümlesi yok, (3) masa açılıyor, paket uyarısı yok, şeritteki sürüm AL ile aynı.
+Sonuç notun aynı satırına işlenir: `python yayin/yayinla.py v3.4.2 --deneme win,mac,chatgpt` (kalan ortam
+`--deneme-kaldi mac`); hepsi geçince `Yayın sonrası deneme: Win ✓ Mac ✓ ChatGPT ✓`. Liste yeniden:
+`--deneme-listesi`.
 
 **Sürüm sınavı (Katman 2).** Bu bilgisayarda `%USERPROFILE%/.arthurlegal/sinav.json` tanımlıysa `yayinla.py` yayından önce bir kalite sınavı çalıştırır: aday paketin sistem talimatıyla gerçek Claude oturumları mevzuat ve karar künyesi sorularını cevaplar, sonuç önceki sürümle kıyaslanır ve kalite düştüyse yayın durur (`--sinav-kabul NEDEN` bilerek geçer, `--sinavsiz` atlar). Sınavın özeti yayın notuna yazılır. Ayar yoksa yayın sınavsız sürer; kendi derleyenlerin akışı değişmez.
 

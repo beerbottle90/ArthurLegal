@@ -1170,6 +1170,50 @@ class YayimlamaTesti(unittest.TestCase):
             self.y.yayimla("o/r", "v9.9.9", self.d, True, public=True)
         self.assertEqual(kayit[-1][2], {"draft": False, "prerelease": True, "make_latest": "false"})
 
+    def test_yayin_sonrasi_deneme_notta_bekler_sonra_islenir(self):
+        """Kalite süreci 4 (kurulum sağlığı): yayın notu deneme satırıyla açılır; ortamlar ayrı ayrı denenip işlenir,
+        notun geri kalanı değişmez. Bitince tek satır: "Yayın sonrası deneme: Win ✓ Mac ✓ ChatGPT ✓"."""
+        kayit, yayin = self.sahte_github()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.y.yayimla("o/r", "v9.9.9", self.d, False, public=True, sinav="19/19")
+        govde = next(v for y, u, v in kayit if y == "POST" and u == "R")["body"]
+        self.assertTrue(govde.endswith("Sürüm sınavı: 19/19\n\nYayın sonrası deneme: Win … Mac … ChatGPT …"), govde)
+        self.assertEqual(set(self.y.deneme_sonuclari(govde).values()), {"bekliyor"})
+        sonuc = self.y.deneme_isle("o/r", "v9.9.9", ["win", "chatgpt"], ["mac"])
+        self.assertEqual(sonuc, {"win": "gecti", "mac": "kaldi", "chatgpt": "gecti"})
+        self.assertTrue(yayin["body"].endswith("Yayın sonrası deneme: Win ✓ Mac ✗ ChatGPT ✓"))
+        self.y.deneme_isle("o/r", "v9.9.9", ["mac"], [])   # Mac ertesi gün, düzeltmeden sonra
+        self.assertEqual(yayin["body"], govde.replace("Win … Mac … ChatGPT …", "Win ✓ Mac ✓ ChatGPT ✓"),
+                         "önceki sonuçlar korunur, notun geri kalanı aynen kalır")
+        patch = len([1 for y, u, v in kayit if y == "PATCH" and u == "R/1"])
+        self.y.deneme_isle("o/r", "v9.9.9", ["win"], [])
+        self.assertEqual(len([1 for y, u, v in kayit if y == "PATCH" and u == "R/1"]), patch, "değişmeyen not yazılmaz")
+        # Elle açılmış, satırı olmayan yayın: satır sona eklenir.
+        yayin["body"] = "Elle yazılmış not"
+        self.y.deneme_isle("o/r", "v9.9.9", ["win"], [])
+        self.assertEqual(yayin["body"], "Elle yazılmış not\n\nYayın sonrası deneme: Win ✓ Mac … ChatGPT …")
+        for hatali in (lambda: self.y.deneme_ortamlari("win,linux"),
+                       lambda: self.y.deneme_isle("o/r", "v9.9.9", ["mac"], ["mac"])):
+            with self.assertRaises(SystemExit):
+                hatali()
+
+    def test_yayin_sonrasi_deneme_listesi(self):
+        """Üç ortam (Windows Claude Desktop, macOS, ChatGPT masaüstü), her birinde: arthurlegal_durum → paket yüklü,
+        bir içtihat sorusu, masa açılıyor ve sürümü AL ile aynı. yayinla.py yayından sonra yazdırır."""
+        liste = self.y.deneme_listesi("v9.9.9", "9.9.9")
+        for parca in ("Windows · Claude Desktop", "macOS · Claude Desktop", "ChatGPT masaüstü", "arthurlegal_durum",
+                      'paket_durumu "tamam"', "yerel_kurulum 9.9.9", "tr_ictihat_ara", "haciz takası",
+                      "Masası'nı aç", "şeritteki sürüm v9.9.9 (AL ile aynı)", "kırmızı paket uyarısı yoktur",
+                      "--deneme win,mac,chatgpt", "Yayın sonrası deneme: Win ✓ Mac ✓ ChatGPT ✓"):
+            self.assertIn(parca, liste)
+        cikti = io.StringIO()
+        with contextlib.redirect_stdout(cikti):
+            self.assertEqual(self.y.main(["v9.9.9", "--deneme-listesi"]), 0)
+        self.assertIn("şeritteki sürüm v9.9.9", cikti.getvalue())
+        kaynak = (BURASI / "yayin" / "yayinla.py").read_text(encoding="utf-8")
+        self.assertIn('print("\\n" + deneme_listesi(args.etiket, d["surum"]))\n    return 0\n', kaynak,
+                      "yayımlama bitince liste yazdırılır")
+
     def test_var_olan_yayinda_dosya_gecici_adla_degisir(self):
         adlar = ["arthurlegal-paket-9.9.9.zip", *self.KURULUMLAR, "arthurlegal-manifest.sig", "arthurlegal-manifest.json"]
         kayit, yayin = self.sahte_github(var_olan=adlar)
@@ -1897,18 +1941,23 @@ class PaketYokTesti(unittest.TestCase):
             threading.Thread(target=lambda: [kuyruk.put(json.loads(s)) for s in surec.stdout], daemon=True).start()
             no = [0]
 
-            def arac(ad, **arg):
+            def istek(metod, params):
                 no[0] += 1
-                surec.stdin.write(json.dumps({"jsonrpc": "2.0", "id": no[0], "method": "tools/call",
-                                              "params": {"name": ad, "arguments": arg}}) + "\n")
+                surec.stdin.write(json.dumps({"jsonrpc": "2.0", "id": no[0], "method": metod, "params": params}) + "\n")
                 surec.stdin.flush()
                 while True:
                     m = kuyruk.get(timeout=20)
                     if m.get("id") == no[0]:
-                        return m["result"]
+                        return m.get("result", m.get("error"))
+
+            def arac(ad, **arg):
+                return istek("tools/call", {"name": ad, "arguments": arg})
 
             try:
                 self.assertIn("ArthurLegal Hukuk Bürosu talimatı", arac("arthurlegal_talimat")["content"][0]["text"])
+                masa = arac("al_masasi")["structuredContent"]
+                self.assertNotIn("paket", masa, "paket yüklenirken masa uyarmaz")
+                time.sleep(0.5)  # görünümler açılışta arka planda belleğe alınır (~50 ms)
                 for yeni in ("0.0.2", "0.0.3"):  # iki güncelleme; uygulama hiç kapanmadı
                     paket_yaz(kok / "surumler" / yeni, yeni)
                     shutil.copytree(kok / "surumler" / "0.0.1" / "paketler", kok / "surumler" / yeni / "paketler")
@@ -1931,6 +1980,21 @@ class PaketYokTesti(unittest.TestCase):
                 self.assertIn(cumle, getir["content"][0]["text"])
                 gunluk = (kok / "veri" / "gunluk" / "sunucu.log").read_text(encoding="utf-8")
                 self.assertEqual(gunluk.count("paket yüklenemedi (surum)"), 1, "neden günlüğe bir kez yazılır")
+
+                # Kurulum sağlığı (kalite süreci 4): masa açılır ve her ekranda onarım adımlarıyla uyarır. Masa
+                # dosyaları da silinen klasördeydi: görünüm açılışta belleğe alındığı için yine okunur.
+                p = arac("al_masasi")["structuredContent"]["paket"]
+                self.assertEqual((p["sorun"], p["yeniden_acmak_yeter"], p["adres"]), ("surum", True, self.INDIRME))
+                self.assertEqual(sorted(p["adimlar"]), ["az", "en", "tr"])
+                self.assertIn(p["adimlar"]["tr"]["kapat_ac"], cumle, "masa ve asistan aynı adımı söyler")
+                self.assertIn(p["adimlar"]["tr"]["kurulum"], cumle)
+                self.assertIn("Claude Desktop", p["adimlar"]["en"]["kapat_ac"])
+                self.assertIn("PAKET:", arac("al_masasi")["structuredContent"]["not"])
+                basla = arac("al_masada_basla", soru="Kira artışı?")["structuredContent"]
+                self.assertEqual(basla["paket"]["sorun"], "surum", "soru ve cevap pencereleri de uyarır")
+                uri = "ui://arthurlegal/masa.html"
+                html = istek("resources/read", {"uri": uri})["contents"][0]["text"]
+                self.assertIn("function paketSeridi()", html)
             finally:
                 surec.stdin.close()
                 surec.wait(10)
@@ -2012,6 +2076,15 @@ class PaketYokTesti(unittest.TestCase):
             self.assertEqual((durum["neden"], durum["secilen_paketler"], durum["onarim"], paketler),
                              ("seçim dosyasında (moduller.json) asistan paketi yok", [], cumle, {}))
             self.assertEqual(durum["surum_klasorundeki_paketler"], ["hukuk-burosu", "kurumsal", "adliye", "akademisyen"])
+            # Masa da uyarır; uygulamayı kapatıp açmak onarmadığı için o adım yok, kurulum adımı var.
+            p = self.calistir(t, "import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                                 "print(json.dumps(u._arac('al_masasi', {})['structuredContent'].get('paket')))")
+            self.assertEqual((p["sorun"], p["yeniden_acmak_yeter"], p["adres"]), ("secim", False, self.INDIRME))
+            self.assertNotIn("kapat_ac", p["adimlar"]["tr"])
+            self.assertEqual(p["adimlar"]["tr"]["kurulum"],
+                             "güncel ArthurLegal kurulumunu yeniden çalıştırıp en az bir asistan paketi seçin")
+            self.assertEqual(p["adimlar"]["az"]["kurulum"],
+                             "cari ArthurLegal quraşdırmasını yenidən işə salıb ən azı bir köməkçi paketi seçin")
 
     def test_secilen_paket_surumde_yoksa(self):
         with tempfile.TemporaryDirectory() as t:
@@ -2066,6 +2139,15 @@ class PaketYokTesti(unittest.TestCase):
             self.assertIn("Test Hukuk paketi bu oturumda yüklenemedi", cumle)
             self.assertTrue(cumle.endswith("Test Hukuk kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin."))
             self.assertNotIn("github.com", cumle)
+            # Masanın paket uyarısı aynı adımları verir: büroda indirme sayfası (düğme) yok, ChatGPT'de uygulama adı.
+            kod = ("import arthurlegal_sunucu as s; u = s.Sunucu(); u.ev = {ev!r}; "
+                   "print(json.dumps(u._arac('al_masasi', {{}})['structuredContent'].get('paket')))")
+            p = self.calistir(t, kod.format(ev=None))
+            self.assertNotIn("adres", p)
+            self.assertEqual(p["adimlar"]["tr"]["kurulum"], "Test Hukuk kurulum dosyasını yeniden çalıştırıp en az bir asistan paketi seçin")
+            p = self.calistir(t, kod.format(ev="chatgpt"))
+            self.assertIn("ChatGPT", p["adimlar"]["tr"]["kapat_ac"])
+            self.assertNotIn("Claude", json.dumps(p, ensure_ascii=False))
 
     def test_guncelleyici_uygulama_acikken_surum_klasoru_silmez(self):
         """Kök neden: etkin + bir önceki kalır, daha eskiler silinir; ama uygulama açıkken hiçbiri silinmez, çünkü açık
