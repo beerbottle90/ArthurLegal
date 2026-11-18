@@ -206,7 +206,13 @@ def paket_hazirla(k: dict, hedef: Path, *, uyap: bool = True) -> dict:
             print(f"  Not: {ad} deposunda {bilgi['commitlenmemis_dosya']} commitlenmemiş dosya var; "
                   + ("derlemeye GİRDİ (--calisma-agaci)." if CALISMA_AGACI else f"derlemeye girmedi (HEAD {bilgi['commit']})."))
     # Masanın sürümü (3.3.1): arayüzlerin "Güncellemeleri denetle" düğmesi masa için bunu karşılaştırır.
+    # 18.11.2026'dan beri masanın sürümü her yayında AL sürümüyle aynıdır: masa şeridindeki "v…" GitHub'daki sürümle
+    # aynı okunur. Eşit değilse derleme durur; masa app4all'da yükseltilip esitle.py ile buraya kopyalanır.
     masa = modul_surumu_sabit(BURASI / "istemci" / "arayuz" / "al_arayuz.py", "SURUM")
+    if masa != k["surum"]:
+        sys.exit(f"Masanın sürümü ({masa}) kurulumla ({k['surum']}) aynı değil. app4all'da sunucu/al_arayuz.py ve "
+                 "ortak/tasarim/al.js SURUM'unu ve tasarim/yenilikler.json'u bu sürüme getirip "
+                 "`python sunucu/esitle.py <AL>/ArthurLegal-setup/istemci/arayuz` çalıştırın.")
     if masa:
         icerik["bilesenler"]["masa"] = masa
     # Yenilikler (3.3.1): bu sürümün en çok beş maddesi, üç dilde; paketle gider (arayüzlerin "Yenilikler" menüsü)

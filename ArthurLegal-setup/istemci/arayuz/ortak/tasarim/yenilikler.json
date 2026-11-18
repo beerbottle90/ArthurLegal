@@ -1,4 +1,27 @@
 {
+ "3.4.1": {
+  "tr": [
+   "Güncellemeden sonra görülen \"paket yok\" hatası giderildi: uygulama açıkken eski sürüm klasörleri silinmez, açık sohbetler talimatını kaybetmez.",
+   "Paket yine de yüklenemezse asistan temel kurallarla çalışır ve ilk cevabının başında onarım adımını söyler.",
+   "İçtihat araması konuyla en ilgili kararı öne alır; en yeni kararlar için aynı arama tarihe göre yinelenir.",
+   "Yeni araştırma kuralı: aksi yöndeki karar da aranır; \"karar bulunamadı\" denirken kaç sorgu yapıldığı yazılır; kıyasla varılan sonuç yerleşik içtihat gibi sunulmaz.",
+   "Model ve effort ekranı: künye testinin sayıları yeniden puanlamaya göre güncellendi; tavsiye değişmedi. Masa artık her yayında ArthurLegal'in sürüm numarasını taşır."
+  ],
+  "az": [
+   "Yeniləmədən sonra görünən \"paket yok\" xətası aradan qaldırıldı: tətbiq açıq olarkən köhnə versiya qovluqları silinmir, açıq söhbətlər təlimatını itirmir.",
+   "Paket yenə də yüklənməsə, köməkçi əsas qaydalarla işləyir və ilk cavabının əvvəlində düzəltmə addımını deyir.",
+   "Məhkəmə təcrübəsi axtarışı mövzuya ən uyğun qərarı önə çıxarır; ən yeni qərarlar üçün eyni axtarış tarixə görə təkrarlanır.",
+   "Yeni araşdırma qaydası: əks istiqamətli qərar da axtarılır; \"qərar tapılmadı\" deyiləndə neçə sorğu edildiyi yazılır; analogiya ilə gəlinən nəticə formalaşmış təcrübə kimi təqdim edilmir.",
+   "Model və effort ekranı: rekvizit testinin rəqəmləri yenidən qiymətləndirməyə görə yeniləndi; tövsiyə dəyişmədi. Masa artıq hər buraxılışda ArthurLegal-ın versiya nömrəsini daşıyır."
+  ],
+  "en": [
+   "Fixed the \"no package\" error seen after updates: old version folders are no longer removed while the app is open, so open chats keep their instructions.",
+   "If the package still cannot be loaded, the assistant works with the core rules and tells you the repair step at the start of its first answer.",
+   "Case-law search now puts the most relevant decision first; for the newest decisions the same search is repeated in date order.",
+   "New research rule: the opposing decision is searched for too; \"no decision found\" states how many searches were run; a conclusion reached by analogy is not presented as settled case law.",
+   "Model and effort screen: the case citation test figures were updated after re-scoring; the recommendation is unchanged. The desk now carries ArthurLegal's version number in every release."
+  ]
+ },
  "3.4.0": {
   "tr": [
    "ArthurLegal artık ChatGPT masaüstü uygulamasında da çalışır: kurulumda Claude Desktop, ChatGPT ya da ikisini seçin.",
