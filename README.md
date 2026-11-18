@@ -807,6 +807,53 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-342"></a>
+
+## Setup 3.4.2 — The desk warns when the package is missing; faster first start in ChatGPT (2026-11-19)
+
+- **A visible warning on the desk.** If the assistant package cannot be loaded, the desk shows a warning and the
+  repair step at the top of every screen, in your language: close the app completely and open it again; if that does
+  not help, run the current installer again. The warning clears by itself once the package loads. The desk now keeps
+  its own pages in memory when it opens, so it still opens if its version folder is removed while the app is running.
+- **Faster first start in ChatGPT.** If the remote tool list cannot be fetched, the local server no longer keeps
+  ChatGPT waiting for up to 40 seconds: it waits at most 6 seconds and opens the desk and the local tools; the list is
+  saved and announced to the app when it arrives, so later starts do not wait.
+- **Tried before release.** Every new version is now installed over the previous one with the updater that is already
+  on users' computers before it is published; the release stops if the packages do not survive the step.
+- **Report a wrong answer** to ertug@datsproject.io: the question, the answer you got and how you know the correct
+  one. Leave out client names, case numbers and personal data.
+- Server side, live since 19.11 without an update: case-law searches with apostrophes or dots no longer fail, and the
+  Official Gazette index also lists laws.
+- Packages unchanged: Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7. Desk 3.4.2. How it
+  arrives: the updater installs 3.4.2 on Windows and on a Mac by itself.
+
+**Türkçe:** Asistan paketi yüklenemezse masa artık her ekranın başında, seçtiğiniz dilde bir uyarı ve onarım adımı
+gösterir: uygulamayı tamamen kapatıp açın; düzelmezse güncel kurulumu yeniden çalıştırın. Paket yüklenince uyarı
+kendiliğinden kalkar. Masa açılışta kendi sayfalarını belleğe alır; uygulama açıkken sürüm klasörü silinse de açılır.
+ChatGPT'de ilk açılış hızlandı: uzak araç listesi alınamazsa yerel sunucu ChatGPT'yi 40 saniyeye kadar bekletmez, en
+çok 6 saniye bekleyip masayı ve yerel araçları açar; liste gelince kaydedilir ve uygulamaya bildirilir, sonraki
+açılışlar beklemez. Her yeni sürüm artık yayımlanmadan önce, kullanıcıların bilgisayarındaki güncelleyiciyle bir
+önceki sürümün üstüne kurularak denenir; paketler geçişte korunmazsa yayın durur. Hatalı ya da eksik bir cevabı
+ertug@datsproject.io adresine bildirebilirsiniz: sorduğunuz soru, aldığınız cevap ve doğrusunu nereden bildiğiniz;
+müvekkil adı, dosya numarası ve kişisel veri yazmayın. Sunucu tarafında (19.11'den beri, güncelleme gerekmeden): kesme
+işaretli ya da noktalı içtihat sorguları artık hata vermez, Resmî Gazete fihristi kanunları da listeler. Paketler
+değişmedi (Hukuk Bürosu ve Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7); masa 3.4.2. Güncelleyici 3.4.2'yi
+Windows'ta ve Mac'te kendisi kurar.
+
+**Azərbaycan dili:** Köməkçi paketi yüklənməsə, masa artıq hər ekranın yuxarısında seçdiyiniz dildə xəbərdarlıq və
+düzəltmə addımı göstərir: tətbiqi tam bağlayıb açın; kömək etməsə, cari quraşdırmanı yenidən işə salın. Paket
+yüklənəndə xəbərdarlıq özü yox olur. Masa açılanda öz səhifələrini yaddaşa alır; tətbiq açıq olarkən versiya qovluğu
+silinsə də açılır. ChatGPT-də ilk açılış sürətləndi: uzaq alətlər siyahısı alınmasa, yerli server ChatGPT-ni 40
+saniyəyə qədər gözlətmir, ən çox 6 saniyə gözləyib masanı və yerli alətləri açır; siyahı gələndə yadda saxlanılır və
+tətbiqə bildirilir, sonrakı açılışlar gözləmir. Hər yeni versiya artıq yayımlanmazdan əvvəl istifadəçilərin
+kompüterindəki yeniləyici ilə əvvəlki versiyanın üzərinə quraşdırılaraq sınaqdan keçirilir; paketlər keçiddə
+qorunmazsa, yayım dayanır. Səhv və ya natamam cavabı ertug@datsproject.io ünvanına bildirə bilərsiniz: verdiyiniz
+sual, aldığınız cavab və doğrusunu haradan bildiyiniz; müvəkkil adlarını, iş nömrələrini və şəxsi məlumatları
+yazmayın. Server tərəfində (19.11-dən bəri, yeniləmə tələb etmədən): apostrof və ya nöqtə olan məhkəmə təcrübəsi
+sorğuları artıq xəta vermir, Rəsmi Qəzetin mündəricatı qanunları da göstərir. Paketlər dəyişmədi (Hüquq Bürosu və
+Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7); masa 3.4.2. Yeniləyici 3.4.2-ni Windows-da və Mac-də özü
+quraşdırır.
+
 <a id="setup-341"></a>
 
 ## Setup 3.4.1 — The "no package" error after updates is fixed; case-law research discipline (2026-11-18)
