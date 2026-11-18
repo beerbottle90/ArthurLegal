@@ -28,6 +28,9 @@
   ArthurLegal nədir, quraşdırma, ArthurLegal Masası, ArthurMask, UYAP Dashboard və tez-tez verilən suallar bir sənəddə.
 </p>
 <p align="center">
+  <b>Səhv və ya natamam cavab gördünüz?</b> Sualınızı, aldığınız cavabı və doğrusunu haradan bildiyinizi <a href="mailto:ertug@datsproject.io">ertug@datsproject.io</a> ünvanına yazın. Müvəkkil adlarını, iş nömrələrini və şəxsi məlumatları yazmayın; söhbəti paylaşırsınızsa, əvvəlcə bunları çıxarın. Hər bildiriş yoxlanılır; təsdiqlənən səhv düzəldilir və eyni səhv geri qayıtmasın deyə daimi testə əlavə olunur.
+</p>
+<p align="center">
   <b>ArthurLegal indi ChatGPT masaüstü tətbiqində də işləyir.</b> v3.4.0 ilə ArthurLegal Masası, araşdırma alətləri və iş axınları ChatGPT masaüstü tətbiqində də (Windows və macOS) işləyir. Quraşdırmada tətbiqinizi seçirsiniz: Claude Desktop, ChatGPT və ya hər ikisi (<a href="#kurulum-az">quraşdırma</a>, <a href="README.md#setup-340">yeniliklər</a>). ChatGPT-nin veb və telefon versiyasında istifadə hazırlanır.<br>
   <sub>ChatGPT və OpenAI OpenAI-ın ticarət nişanlarıdır.</sub>
 </p>
