@@ -1858,7 +1858,7 @@ class PaketYokTesti(unittest.TestCase):
            "d = json.loads(u._arac('arthurlegal_durum', {{}})['content'][0]['text']); "
            "print(json.dumps([t.get('isError', False), t['content'][0]['text'], g.get('isError', False), "
            "g['content'][0]['text'], d['paket_durumu'], d['paketler']]))")
-    INDIRME = "https://github.com/beerbottle90/ArthurLegal#indir"
+    INDIRME = "https://github.com/beerbottle90/ArthurLegal#" + ("mac" if MACOS else "indir")  # kurulumun kendi sayfası
 
     def sor(self, t, ev=None):
         return self.calistir(t, self.KOD.format(ev=ev))
