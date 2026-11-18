@@ -28,6 +28,11 @@
   <a href="docs/word-rehberi.md"><b>Word'de ArthurLegal</b></a> · <a href="docs/word-guide.md">ArthurLegal in Word</a> · <a href="docs/word-beledcisi.md">Word-də ArthurLegal</a>
 </p>
 <p align="center">
+  <b>Hatalı ya da eksik bir cevap mı gördünüz?</b> Sorduğunuz soruyu, aldığınız cevabı ve doğrusunu nereden bildiğinizi <a href="mailto:ertug@datsproject.io">ertug@datsproject.io</a> adresine yazın. Müvekkil adı, dosya numarası ya da kişisel veri yazmayın; sohbeti paylaşıyorsanız önce bunları çıkarın. Her bildirim incelenir; doğrulanan hata düzeltilir ve aynı hata geri gelmesin diye kalıcı teste eklenir.<br>
+  <b>Seen a wrong or incomplete answer?</b> Write to <a href="mailto:ertug@datsproject.io">ertug@datsproject.io</a> with your question, the answer you got and how you know the correct one. Leave out client names, case numbers and personal data; if you share the chat, remove them first. Every report is reviewed; a confirmed error is fixed and added to a permanent test so it does not come back.<br>
+  <b>Səhv və ya natamam cavab gördünüz?</b> Sualınızı, aldığınız cavabı və doğrusunu haradan bildiyinizi <a href="mailto:ertug@datsproject.io">ertug@datsproject.io</a> ünvanına yazın. Müvəkkil adlarını, iş nömrələrini və şəxsi məlumatları yazmayın; söhbəti paylaşırsınızsa, əvvəlcə bunları çıxarın. Hər bildiriş yoxlanılır; təsdiqlənən səhv düzəldilir və eyni səhv geri qayıtmasın deyə daimi testə əlavə olunur.
+</p>
+<p align="center">
   <b>ArthurLegal artık ChatGPT masaüstü uygulamasında da çalışır.</b> v3.4.0 ile ArthurLegal Masası, araştırma araçları ve iş akışları ChatGPT masaüstü uygulamasında da (Windows ve macOS) çalışır. Kurulumda uygulamanızı seçersiniz: Claude Desktop, ChatGPT ya da ikisi (<a href="#kurulum">kurulum</a>, <a href="#setup-340">yenilikler</a>). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.<br>
   <b>ArthurLegal now also works in the ChatGPT desktop app.</b> From v3.4.0 the ArthurLegal desk, research tools and workflows also run in the ChatGPT desktop app (Windows and macOS). During setup you choose your app: Claude Desktop, ChatGPT or both (<a href="#download">installation</a>, <a href="#setup-340">what's new</a>). Use in ChatGPT on the web and on phones is in preparation.<br>
   <sub>ChatGPT ve OpenAI, OpenAI'ın markalarıdır · ChatGPT and OpenAI are trademarks of OpenAI.</sub>
