@@ -49,6 +49,13 @@ if ortak.arayuz() != "yeni":
 
 PROTOKOLLER = ("2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05")
 AZAMI = 60000
+# Araç önbelleği yokken (ilk açılış) tools/list uzak araç listesini en çok bu kadar bekler (sn). Ev sahibi, sunucunun
+# açılışına (initialize + tools/list) sınırlı süre tanır: ChatGPT'de startup_timeout_sec (kurulum 30 yazar, elle eklenen
+# sunucuda varsayılan 10). Uzak uca ulaşılamayan bilgisayarda liste 40 sn bekletiyordu; ChatGPT sunucuyu kapatıyor,
+# önbellek hiç yazılmıyor, masa hiçbir denemede açılmıyordu (18.11.2026).
+ILK_LISTE_BEKLEME = 6.0
+# Uzak liste hiç alınamadıysa arka plandaki yeniden deneme aralıkları (sn); sonuncusu yinelenir.
+YENIDEN_DENEME = (15, 30, 60, 120, 300)
 UZANTILAR = (".md", ".json", ".txt", ".csv")
 _KATLAMA = str.maketrans("İIıŞşĞğÜüÖöÇçÂâÎîÛû", "iiissgguuooccaaiiuu")
 _BECERI = re.compile(r"^#{1,2}\s+/[\w-]+:[\w-]+")
@@ -869,7 +876,9 @@ class Sunucu:
         self._gorunum_onbellek = None
         self.ev = ev_ayari()   # "chatgpt" ya da None (Claude); initialize'daki clientInfo da belirler
         self.canli = al_arayuz.CanliMasa() if al_arayuz is not None and hasattr(al_arayuz, "CanliMasa") else None
-        self._yaz_kilit, self._yenile_kilit = threading.Lock(), threading.Lock()
+        self._yaz_kilit, self._yenile_kilit, self._liste_kilit = threading.Lock(), threading.Lock(), threading.Lock()
+        self._yenileme_isi = None   # süren uzak liste yenilemesi (aynı anda tek tane: _yenileme)
+        self._eksik_liste = False   # istemciye uzak araçlar olmadan liste verildi: liste gelince haber verilir
         self.havuz = concurrent.futures.ThreadPoolExecutor(8)
 
     def yaz(self, mesaj):
@@ -902,7 +911,7 @@ class Sunucu:
                     self.havuz.submit(self._istek, m)
                 elif m["method"] == "notifications/initialized":
                     self.baslatildi = True
-                    threading.Thread(target=self._uzak_yenile, daemon=True).start()
+                    threading.Thread(target=self._uzak_baglan, daemon=True).start()
                     threading.Thread(target=self._guncelleme_dongusu, daemon=True).start()
         self.havuz.shutdown(wait=True)
 
@@ -936,11 +945,16 @@ class Sunucu:
             return {}
         if metod == "tools/list":
             if self.uzak_araclar is None:
-                self._uzak_yenile(zaman_asimi=True)
+                # İlk açılış: liste sınırlı süre beklenir. Yetişmezse yerel araçlar ve masa hemen verilir; uzak araçlar
+                # gelince istemciye tools/list_changed gider (_uzak_yenile).
+                self._yenileme().join(ILK_LISTE_BEKLEME)
+            with self._liste_kilit:
+                uzak = self.uzak_araclar or []
+                self._eksik_liste = not uzak
             profiller = self.bilgi.profiller()
             return {"tools": isaretleri_tamamla(
                 gorunum_meta(yerel_araclar(profiller, self.bilgi.varsayilan(profiller)), self.ev) + masa_araclari(self.ev))
-                    + gorunum_meta(kopru_araclari(self.uzak_araclar), self.ev)}
+                    + gorunum_meta(kopru_araclari(uzak), self.ev)}
         if metod == "tools/call":
             return self._arac(p.get("name", ""), p.get("arguments") or {})
         if metod == "prompts/list":
@@ -1137,26 +1151,46 @@ class Sunucu:
             return {"content": [{"type": "text", "text": f"ArthurLegal araştırma sunucusuna ulaşılamadı ({e}). "
                                  "İnternet bağlantısını denetleyin; sonuç doğrulanmadan cevap vermeyin."}], "isError": True}
 
-    def _uzak_yenile(self, zaman_asimi=False):
-        if not self._yenile_kilit.acquire(blocking=not zaman_asimi or self.uzak_araclar is None):
-            return
+    def _yenileme(self) -> threading.Thread:
+        """Süren uzak liste yenilemesini döndürür, yoksa başlatır: aynı anda tek yenileme çalışır. Çağıran dilediği
+        kadar bekler (join); iş arka plan ipliğidir, sunucu kapanırken bekletmez."""
+        with self._yenile_kilit:
+            if self._yenileme_isi is None or not self._yenileme_isi.is_alive():
+                self._yenileme_isi = threading.Thread(target=self._uzak_yenile, daemon=True)
+                self._yenileme_isi.start()
+            return self._yenileme_isi
+
+    def _uzak_baglan(self):
+        """Açılışta uzak araç listesini tazeler. Liste hiç alınamadıysa (ilk kurulum; ağ yok, yavaş ya da engelli)
+        arka planda aralıklarla yeniden dener: ağ gelince araçlar önbelleğe yazılır ve istemciye haber verilir."""
+        aralik, bekle = iter(YENIDEN_DENEME), 0
+        while True:
+            self._yenileme().join()
+            if self.uzak_araclar is not None:
+                return
+            bekle = next(aralik, bekle)
+            time.sleep(bekle)
+
+    def _uzak_yenile(self):
+        """Uzak araç listesini çeker (yalnız _yenileme üzerinden çağrılır). Alınamazsa eldeki liste (önbellek) kalır;
+        hiç liste yoksa uzak_araclar None kalır ve tools/list yerel araçlarla cevap verir."""
         try:
             araclar = salt_okunur_isaretle([t for t in self.uzak.araclar() if not t.get("name", "").startswith("tkgm_")])
-            self.uzak_hata = None
         except Exception as e:  # noqa: BLE001
             self.uzak_hata = str(e)
             ortak.gunluk("sunucu", f"uzak araç listesi alınamadı: {e!r}")
-            if self.uzak_araclar is None:
-                self.uzak_araclar = []
             return
-        finally:
-            self._yenile_kilit.release()
-        if araclar != self.uzak_araclar:
-            onceki = self.uzak_araclar
-            self.uzak_araclar = araclar
-            ortak.json_yaz(self.onbellek, {"zaman": time.time(), "araclar": araclar})
-            if self.baslatildi and onceki:
-                self.yaz({"jsonrpc": "2.0", "method": "notifications/tools/list_changed"})
+        self.uzak_hata = None
+        if araclar == self.uzak_araclar:
+            return
+        with self._liste_kilit:
+            onceki, self.uzak_araclar = self.uzak_araclar, araclar
+            # Liste değiştiyse ya da istemci açılışta uzak araçlar olmadan liste aldıysa yeniden istemesi söylenir.
+            bildir = self.baslatildi and bool(onceki or self._eksik_liste)
+            self._eksik_liste = False
+        ortak.json_yaz(self.onbellek, {"zaman": time.time(), "araclar": araclar})
+        if bildir:
+            self.yaz({"jsonrpc": "2.0", "method": "notifications/tools/list_changed"})
 
     def _guncelleme_dongusu(self):
         if os.environ.get("ARTHURLEGAL_GUNCELLEME") == "0":
