@@ -519,9 +519,9 @@ uygulamanın kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, ara�
 - **Soru, her adım ve cevap masada canlı.** Claude'un yazma kutusuna yazdığınız soru hemen masanın Sohbet ekranına
   gelir; Claude'un baktığı her kaynak canlı bir satırdır (ne arandı, kaç sonuç; madde ya da karar listesi satırın
   altında açılır). Cevap aynı yerde, Claude yazdıkça açılır: biçimli cevap ve dayandığı kaynaklar. Cevaptaki madde atıfları resmî metinden kendiliğinden
-  teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalar, devam sorusunu
-  masadan sorarsınız; cevaplar ve aramalar Geçmiş'te 90 gün durur: bu bilgisayarın diskinde, yeni sohbette ve güncellemede de (bilgisayarda ArthurLegal kuruluysa masa hep oradan açılır; web ve telefonda geçmiş yalnız açık sohbet boyunca durur). Masa her açılışta Sohbet'le başlar; öneri
-  kartları cevabın altında durur.
+  teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalarsınız; her adım
+  ekranda bir kez görünür; cevaplar ve aramalar Geçmiş'te 90 gün durur: bu bilgisayarın diskinde, yeni sohbette ve güncellemede de (bilgisayarda ArthurLegal kuruluysa masa hep oradan açılır; web ve telefonda geçmiş yalnız açık sohbet boyunca durur). Masa her açılışta Sohbet'le başlar;
+  Sohbet yalnız sorunuzun akışını gösterir, hızlı işler sol panelde.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
   kanun" yazın; masa isteği çözer (kurum, kaç tane, piyasa ya da karar türü, yıl, konu) ve ilk satırda ne aradığını
@@ -806,6 +806,55 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+<a id="setup-343"></a>
+
+## Setup 3.4.3 — A simpler Chat screen; the desk opens reliably in ChatGPT (2026-11-21)
+
+- **A simpler Chat screen.** The desk's Chat screen now shows only the flow of your question: the question, the
+  research steps, the answer, the citation check and the sources. Quick-task cards and "Recent work" left the screen
+  (the tasks are in the left panel, your earlier work in History); the model reminder shows only when the chosen model
+  fell short in our measurement.
+- **Each step appears once.** The desk no longer repeats the same research steps one under another while an answer is
+  coming or when you are asked multiple-choice questions: Claude's own summary of a step is not shown again next to the
+  step the desk recorded, and older desk windows in the Claude chat shrink to their own single line.
+- **ChatGPT: the desk opens with the most capable models.** The icon's message now names the ArthurLegal server on your
+  computer (*ArthurLegal Masası'nı aç: … arthurlegal-yerel … al_masasi …*, in the installation language); with the
+  plain message some models told users to check their MCP settings instead. The ArthurLegal rules in ChatGPT point to
+  the local server first (ChatGPT skills 1.12.11). The model recommendation stays on the start page and on the desk.
+- **ChatGPT: a message box on the desk.** The Chat screen has its own box at the bottom in ChatGPT, so you no longer
+  have to look for ChatGPT's own box; the answer still opens on the desk. In Claude Desktop the desk keeps using
+  Claude's box right below it.
+- Server side, live since 21.11 without an update: the remote desk (web, phone, the remote connector) already has the
+  simpler Chat screen.
+- Packages unchanged: Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7. Desk 3.4.3. How it
+  arrives: the updater installs 3.4.3 on Windows and on a Mac by itself.
+
+**Türkçe:** Masanın Sohbet ekranı sadeleşti: yalnız sorunuzun akışı görünür (soru, araştırma adımları, cevap, atıf
+teyidi ve kaynaklar). Hızlı iş kartları ve "Son işler" ekrandan kalktı (işler sol panelde, eski işleriniz Geçmiş'te);
+model hatırlatması yalnız ölçümde yetersiz kalan modelde çıkar. Aynı iş bir kez görünür: cevap beklenirken ya da
+seçenekli sorularda araştırma adımları alt alta tekrarlanmaz; Claude sohbetinde eski masa pencereleri tek satıra iner.
+ChatGPT'de simgenin mesajı artık bilgisayarınızdaki ArthurLegal sunucusunu adıyla söyler (*ArthurLegal Masası'nı aç:
+bu bilgisayardaki arthurlegal-yerel MCP sunucusunun al_masasi aracını çağır.*); düz mesajla bazı modeller masayı
+açmak yerine "MCP'leri kontrol edin" diyordu. ChatGPT'deki ArthurLegal kuralları önce yerel sunucuyu gösterir (ChatGPT
+becerileri 1.12.11); model önerisi başlangıç sayfasında ve masada durur. ChatGPT'de Sohbet ekranının altında masanın
+kendi yazma kutusu var; Claude Desktop'ta masanın hemen altındaki Claude kutusu kullanılır. Uzak masa (web, telefon,
+uzak bağlayıcı) 21.11'den beri güncelleme gerekmeden sade Sohbet'le açılır. Paketler değişmedi (Hukuk Bürosu ve
+Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7); masa 3.4.3. Güncelleyici 3.4.3'ü Windows'ta ve Mac'te kendisi
+kurar.
+
+**Azərbaycan dili:** Masanın Söhbət ekranı sadələşdi: yalnız sualınızın axını görünür (sual, araşdırma addımları,
+cavab, istinad yoxlaması və mənbələr). Sürətli iş kartları və "Son işlər" ekrandan çıxdı (işlər sol paneldə, köhnə
+işləriniz Tarixçədədir); model xatırlatması yalnız ölçmədə yetərsiz qalan modeldə çıxır. Eyni iş bir dəfə görünür:
+cavab gözlənilərkən və ya seçimli suallarda araşdırma addımları alt-alta təkrarlanmır; Claude söhbətində köhnə masa
+pəncərələri bir sətrə enir. ChatGPT-də nişanın mesajı artıq kompüterinizdəki ArthurLegal serverini adı ilə deyir
+(*ArthurLegal Masasını aç: bu kompüterdəki arthurlegal-yerel MCP serverinin al_masasi alətini çağır.*); sadə mesajla
+bəzi modellər masanı açmaq əvəzinə "MCP-ləri yoxlayın" deyirdi. ChatGPT-dəki ArthurLegal qaydaları əvvəlcə yerli
+serveri göstərir (ChatGPT bacarıqları 1.12.11); model tövsiyəsi başlanğıc səhifəsində və masada qalır. ChatGPT-də
+Söhbət ekranının altında masanın öz yazı qutusu var; Claude Desktop-da masanın düz altındakı Claude qutusu istifadə
+olunur. Uzaq masa (veb, telefon, uzaq bağlayıcı) 21.11-dən bəri yeniləmə tələb etmədən sadə Söhbətlə açılır.
+Paketlər dəyişmədi (Hüquq Bürosu və Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7); masa 3.4.3. Yeniləyici
+3.4.3-ü Windows-da və Mac-də özü quraşdırır.
 
 <a id="setup-342"></a>
 
