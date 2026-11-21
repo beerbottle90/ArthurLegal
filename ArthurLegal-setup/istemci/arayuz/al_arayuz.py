@@ -33,7 +33,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.4.3"
+SURUM = "3.4.4"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))

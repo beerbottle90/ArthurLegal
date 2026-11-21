@@ -1,4 +1,18 @@
 {
+ "3.4.4": {
+  "tr": [
+   "Masanın yazma kutusu Claude Desktop'ta da var: masa tam ekranken sorunuzu Sohbet ekranının altındaki kutuya yazarsınız.",
+   "Masa bilgisayarınızdaki kurulumdan açılır: simgenin Claude'a yazdığı mesaj yerel ArthurLegal sunucusunu adıyla söyler; geçmiş, Beyin, ArthurMask ve UYAP Dashboard bu masada çalışır."
+  ],
+  "az": [
+   "Masanın yazı qutusu Claude Desktop-da da var: masa tam ekranda olarkən sualınızı Söhbət ekranının altındakı qutuya yazırsınız.",
+   "Masa kompüterinizdəki quraşdırmadan açılır: nişanın Claude-a yazdığı mesaj yerli ArthurLegal serverini adı ilə deyir; tarixçə, Beyin, ArthurMask və UYAP Dashboard bu masada işləyir."
+  ],
+  "en": [
+   "The desk's message box is in Claude Desktop too: while the desk is full screen you type your question in the box at the bottom of the Chat screen.",
+   "The desk opens from the installation on your computer: the icon's message to Claude names the local ArthurLegal server; history, Beyin, ArthurMask and the UYAP Dashboard work on this desk."
+  ]
+ },
  "3.4.3": {
   "tr": [
    "Sohbet ekranı sadeleşti: yalnız sorunuz, araştırma adımları, cevap, atıf teyidi ve kaynaklar. Hızlı işler sol panelde, eski işleriniz Geçmiş'te.",
