@@ -106,7 +106,7 @@ const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
   const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";   // Claude'a giden metinlerde aynen (Türkçe)
   const uyari = (adres) => cev("UYARI: veri çekilemedi, teyidiniz gerekli: {0}", adres);   // ekrandaki satır, seçili dilde
-  const SURUM = "3.4.2";
+  const SURUM = "3.4.3";
   const NS = "http://www.w3.org/2000/svg";
 
   // 16x16 çizgi simgeleri; tek kalınlık, tek köşe biçimi.

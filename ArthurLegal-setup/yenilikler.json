@@ -1,4 +1,24 @@
 {
+ "3.4.3": {
+  "tr": [
+   "Sohbet ekranı sadeleşti: yalnız sorunuz, araştırma adımları, cevap, atıf teyidi ve kaynaklar. Hızlı işler sol panelde, eski işleriniz Geçmiş'te.",
+   "Aynı iş bir kez görünür: araştırma adımları cevap beklenirken ya da seçenekli sorularda alt alta tekrarlanmaz.",
+   "ChatGPT'de Sohbet ekranının altında masanın kendi yazma kutusu var: sorunuzu doğrudan masadan gönderirsiniz.",
+   "ChatGPT'de masayı açan mesaj bilgisayarınızdaki ArthurLegal sunucusunu adıyla söyler; masa en yetenekli modellerde de açılır."
+  ],
+  "az": [
+   "Söhbət ekranı sadələşdi: yalnız sualınız, araşdırma addımları, cavab, istinad yoxlaması və mənbələr. Sürətli işlər sol paneldə, köhnə işləriniz Tarixçədədir.",
+   "Eyni iş bir dəfə görünür: araşdırma addımları cavab gözlənilərkən və ya seçimli suallarda alt-alta təkrarlanmır.",
+   "ChatGPT-də Söhbət ekranının altında masanın öz yazı qutusu var: sualınızı birbaşa masadan göndərirsiniz.",
+   "ChatGPT-də masanı açan mesaj kompüterinizdəki ArthurLegal serverini adı ilə deyir; masa ən bacarıqlı modellərdə də açılır."
+  ],
+  "en": [
+   "A simpler Chat screen: only your question, the research steps, the answer, the citation check and the sources. Quick tasks are in the left panel, your earlier work is in History.",
+   "Each step appears once: research steps no longer repeat while an answer is coming or when you are asked multiple-choice questions.",
+   "In ChatGPT the desk has its own message box at the bottom of the Chat screen: you send your question straight from the desk.",
+   "In ChatGPT the message that opens the desk names the ArthurLegal server on your computer, so the desk also opens with the most capable models."
+  ]
+ },
  "3.4.2": {
   "tr": [
    "Paket yüklenemezse masa her ekranın başında bir uyarı ve onarım adımı gösterir; paket yeniden yüklenince uyarı kendiliğinden kalkar.",
