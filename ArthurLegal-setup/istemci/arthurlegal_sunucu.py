@@ -1113,7 +1113,13 @@ class Sunucu:
         if kimlik:
             canli.adim_bitti(kimlik, sonuc_verisi(sonuc), sonuc_hatasi(sonuc))
         elif not (isinstance(sonuc, dict) and sonuc.get("isError")):
-            if ad == "al_masada_basla":
+            if ad == "al_masasi" and hasattr(canli, "masa_acildi") and isinstance(sonuc.get("structuredContent"), dict):
+                # Masa aynı sohbette yeniden açılırsa eski masa yeni numarayı yoklamada görüp tek satıra iner
+                # (iki masa aynı akışı alt alta göstermez, 21.11.2026).
+                veri = dict(sonuc["structuredContent"], canli_masa=canli.masa_acildi())
+                sonuc = {**sonuc, "structuredContent": veri,
+                         "content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}]}
+            elif ad == "al_masada_basla":
                 canli.basla(a)
             elif ad == "al_masaya_yaz":
                 teslim = (sonuc.get("structuredContent") or {}).get("teslim") or {}

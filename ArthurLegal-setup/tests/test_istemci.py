@@ -3009,6 +3009,23 @@ class ChatGPTKipiTesti(unittest.TestCase):
                       "print(json.dumps(u._arac('al_masa_durumu', {}).get('isError')))")
             self.assertTrue(self.calistir(t, claude), "Claude'da canlı masa yok")
 
+    def test_yeniden_acilan_masa_numarasi(self):
+        """21.11.2026: model masayı aynı sohbette yeniden açarsa iki masa aynı akışı alt alta göstermesin; her açılış bir
+        numara alır, yoklama güncel numarayı (değişmedi cevabında da) söyler, eski masa tek satıra iner."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; u = s.Sunucu(); u.ev = 'chatgpt'; "
+                   "a = u._arac('al_masasi', {}); b = u._arac('al_masasi', {}); "
+                   "d = u._arac('al_masa_durumu', {})['structuredContent']; "
+                   "e = u._arac('al_masa_durumu', {'surum': d['surum']})['structuredContent']; "
+                   "print(json.dumps([a['structuredContent']['canli_masa'], json.loads(b['content'][0]['text'])['canli_masa'], "
+                   "d['masa'], e['masa'], e.get('degismedi')]))")
+            self.assertEqual(self.calistir(t, kod), [1, 2, 2, 2, True])
+            claude = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
+                      "print(json.dumps('canli_masa' in u._arac('al_masasi', {})['structuredContent']))")
+            self.assertFalse(self.calistir(t, claude), "Claude'da numara yok")
+
 
 if __name__ == "__main__":
     unittest.main()
