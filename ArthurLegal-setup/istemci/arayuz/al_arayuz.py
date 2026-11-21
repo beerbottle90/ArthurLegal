@@ -311,7 +311,7 @@ YONLENDIRME_NOTU = (
     "bir şey sormadan, arthurlegal-yerel sunucusunun al_masasi aracını aynı bolum, baglayicilar ve model ile çağırın; bu "
     "sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için de arthurlegal-yerel sunucusunu kullanın. "
     "Sorgu geçmişi, Beyin, ArthurMask ve UYAP Dashboard yalnız oradaki masada çalışır. arthurlegal-yerel'in "
-    "al_masasi aracı araç listenizde YOKSA (sunucu bağlı olsa da araçları kapalı olabilir) beklemeyin ve kullanıcıya "
+    "al_masasi aracı araç listenizde YOKSA (sunucu bağlı olsa da araçları kapalı olabilir; araçlarınız bir araç arama aracıyla sonradan yükleniyorsa, yokluğuna karar vermeden önce 'arthurlegal-yerel al_masasi' diye arayın) beklemeyin ve kullanıcıya "
     "sormayın: hemen bu aracı uzakta_kal=true ile yeniden çağırın, sonra kullanıcıya tek cümleyle şunu söyleyin: "
     "Claude'un araç menüsünde arthurlegal-yerel'in araçları kapalı olabilir; açınca masa bu bilgisayardan açılır ve geçmiş kalıcı olur.")
 # 15.11.2026 (üçüncü tur): devir artık Claude'un bağlantı listesine bağlı değil. Claude listeye arthurlegal-yerel'i
@@ -323,7 +323,7 @@ YOKLAMA_NOTU = (
     "arthurlegal-yerel sunucusunun al_masasi aracı VARSA şimdi, kullanıcıya bir şey sormadan, onu aynı bolum, "
     "baglayicilar ve model ile çağırın; bu sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için de "
     "arthurlegal-yerel sunucusunu kullanın (sorgu geçmişi yalnız orada kalıcıdır). O araç araç listenizde YOKSA (web, "
-    "telefon, ArthurLegal kurulu değil ya da araçları kapalı) beklemeyin ve kullanıcıya bir şey söylemeyin: hemen bu "
+    "telefon, ArthurLegal kurulu değil ya da araçları kapalı; araçlarınız bir araç arama aracıyla sonradan yükleniyorsa, yokluğuna karar vermeden önce 'arthurlegal-yerel al_masasi' diye arayın) beklemeyin ve kullanıcıya bir şey söylemeyin: hemen bu "
     "aracı aynı girdilerle ve uzakta_kal=true ile yeniden çağırın.")
 YEREL_KAPALI_NOTU = (
     " arthurlegal-yerel bağlı ama masa bu uzak bağlantıdan açıldı. Oradaki al_masasi aracı araç listenizde olmadığı "
@@ -433,8 +433,9 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
             "type": "boolean", "default": False,
             "description": ("Yalnız şu iki durumda true: arthurlegal-yerel sunucusunun al_masasi aracı araç "
                             "listenizde yoksa (web, telefon, ArthurLegal kurulu değil ya da sunucu bağlı olsa da "
-                            "araçları kapalı) ya da kullanıcı masayı açıkça bu uzak bağlantıdan istiyorsa. Verilmezse "
-                            "masa önce bilgisayardaki kurulumdan açılmayı dener.")}
+                            "araçları kapalı; araçlar bir arama aracıyla sonradan yükleniyorsa önce arayın) ya da "
+                            "kullanıcı masayı açıkça bu uzak bağlantıdan istiyorsa. Verilmezse masa önce "
+                            "bilgisayardaki kurulumdan açılmayı dener.")}
         sema["required"] = ["baglayicilar"]
     return tanim
 
