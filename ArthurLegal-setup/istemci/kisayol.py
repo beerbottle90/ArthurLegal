@@ -35,6 +35,10 @@ import proje
 # Claude Desktop'ın resmî bağlantısı yeni sohbeti mesajı yazılmış olarak açar; kullanıcı Enter'a basar
 # (bağlantı mesajı kendiliğinden göndermez). Claude mesajı yerel sunucudaki al_masasi aracına götürür.
 MASA_ISTEMI = "ArthurLegal Masası'nı aç"
+# 21.11.2026: düz mesajla Claude Desktop masayı uzak bağlayıcıdan açıyordu (yerel sunucuya hiç çağrı gitmedi): uzak
+# masada geçmiş kalıcı değil, Beyin, ArthurMask ve UYAP Dashboard çalışmaz. Mesaj yerel sunucuyu ve aracı adıyla söyler
+# (ChatGPT'deki gibi). Sohbete yazılan ifade çevrilmez (kurulum dilinden bağımsız aynı kalır).
+CLAUDE_MASA_ISTEMI = MASA_ISTEMI + ": bu bilgisayardaki arthurlegal-yerel sunucusunun al_masasi aracını çağır."
 # Bağlantı modeli ya da effort'u seçemez (claude://claude.ai/new yalnız metin taşır). Mesajın ikinci satırı kullanıcıya,
 # Enter'a basmadan önce, tam model menüsünün yanında hatırlatır; Claude son seçimi hatırladığı için bir kez seçmek yeter.
 MODEL_ONERISI = Path(__file__).resolve().parent / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json"
@@ -172,7 +176,7 @@ def model_notu() -> str:
 
 def masa_adresi() -> str:
     hatirlatma = model_notu()
-    return "claude://claude.ai/new?q=" + urllib.parse.quote(MASA_ISTEMI + ("\n\n" + hatirlatma if hatirlatma else ""),
+    return "claude://claude.ai/new?q=" + urllib.parse.quote(CLAUDE_MASA_ISTEMI + ("\n\n" + hatirlatma if hatirlatma else ""),
                                                             safe="")
 
 

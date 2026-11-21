@@ -410,9 +410,9 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 .md table { border-collapse: collapse; font-size: 14px; min-width: 100%; }
 .md th, .md td { padding: 8px 10px; border-bottom: 0.5px solid var(--cizgi); text-align: left; vertical-align: top; }
 .md th { font-weight: 600; background: var(--grup); }
-/* ChatGPT'de masanın kendi yazma kutusu (21.11.2026): masa yan panelde, ChatGPT'nin kutusu sohbet sütununda kalır ve
-   kullanıcı onu kolay görmez. Kutu Sohbet ekranının altında hep görünür; Claude'da çizilmez (Claude'un kutusu masanın
-   hemen altındadır, iki kutu üst üste durmaz). */
+/* Masanın kendi yazma kutusu (21.11.2026): ChatGPT'de masa yan panelde, ChatGPT'nin kutusu sohbet sütununda kalır;
+   Claude Desktop'ta masa tam ekranken Claude'un kutusu hiç görünmüyor (kullanıcının ekran görüntüsü). Kutu Sohbet
+   ekranının altında hep görünür, mesajı ev sahibine gönderir. */
 .yazma-kutusu { position: sticky; bottom: 0; z-index: 2; display: flex; flex-direction: column; gap: 6px;
   margin-top: auto; padding: 12px 0 calc(var(--guvenli-alt) + 16px); background: var(--zemin); }
 .yazma-kutusu .kutu { display: flex; align-items: flex-end; gap: 8px; padding: 6px 6px 6px 14px; border-radius: var(--k-grup);
@@ -1439,8 +1439,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // Sohbet (21.11.2026, kullanıcı: "sade, temiz, yalnız akışın gözleneceği, sohbet kutusunun olduğu bir sayfa"):
   // yalnız bu sorunun akışı (soru, plan, canlı adımlar, cevap, atıf teyidi, kaynaklar) ve yazma kutusu. Hızlı iş
   // kartları sol panelde, eski işler Geçmiş'te durur; Sohbet onları yinelemez. Model hatırlatması yalnız ölçümde yetersiz
-  // kalan modelde (kırmızı satır) çıkar; öneri cümlesi sol alttaki göstergede ve Model ekranında. Yazma kutusu yalnız
-  // ChatGPT'de: Claude'un kutusu masanın hemen altındadır.
+  // kalan modelde (kırmızı satır) çıkar; öneri cümlesi sol alttaki göstergede ve Model ekranında. Yazma kutusu her ev
+  // sahibinde: Claude Desktop masa tam ekranken kendi kutusunu göstermiyor (kullanıcının ekran görüntüsü, 21.11.2026).
   CIZIM.sohbet = (ekran) => {
     const yerelNot = yerelMasaNotu("sohbet");
     if (yerelNot) ekran.append(yerelNot);
@@ -1451,7 +1451,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (c) cevapIcerik(kok, c);
     else kok.append(ogesi("div", "bos", cev("Henüz bir soru yok. Sorduğunuzda Claude'un araştırma adımları ve cevabı burada sırayla görünür; eski işleriniz Geçmiş'te.")));
     ekran.append(kok);
-    if (EV.chatgpt) ekran.append(yazmaKutusu(c));
+    ekran.append(yazmaKutusu(c));
   };
 
   function adimSatiri(tur, metin) {
@@ -2047,7 +2047,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     return satir;
   }
 
-  // ChatGPT'de Sohbet ekranının yazma kutusu: soru ChatGPT'ye kullanıcı mesajı olarak gider (ui/message), cevabı yine
+  // Sohbet ekranının yazma kutusu: soru Claude'a ya da ChatGPT'ye kullanıcı mesajı olarak gider (ui/message), cevabı yine
   // masaya gelir. Yazılan metin ekran yeniden çizilse de kaybolmaz (TASLAK). Enter gönderir, Shift+Enter alt satır.
   let TASLAK = "";
   function yazmaKutusu(c) {

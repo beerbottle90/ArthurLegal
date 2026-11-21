@@ -823,8 +823,9 @@ justify building an MCP server, and which already have a good enough public API.
   plain message some models told users to check their MCP settings instead. The ArthurLegal rules in ChatGPT point to
   the local server first (ChatGPT skills 1.12.11). The model recommendation stays on the start page and on the desk.
 - **ChatGPT: a message box on the desk.** The Chat screen has its own box at the bottom in ChatGPT, so you no longer
-  have to look for ChatGPT's own box; the answer still opens on the desk. In Claude Desktop the desk keeps using
-  Claude's box right below it.
+  have to look for ChatGPT's own box; the answer still opens on the desk. Claude Desktop does not show its own box
+  while the desk is full screen: the remote desk has had the same box there since 21.11, the desk on your computer
+  gets it with the next version.
 - Server side, live since 21.11 without an update: the remote desk (web, phone, the remote connector) already has the
   simpler Chat screen.
 - Packages unchanged: Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7. Desk 3.4.3. How it
@@ -838,7 +839,8 @@ ChatGPT'de simgenin mesajı artık bilgisayarınızdaki ArthurLegal sunucusunu a
 bu bilgisayardaki arthurlegal-yerel MCP sunucusunun al_masasi aracını çağır.*); düz mesajla bazı modeller masayı
 açmak yerine "MCP'leri kontrol edin" diyordu. ChatGPT'deki ArthurLegal kuralları önce yerel sunucuyu gösterir (ChatGPT
 becerileri 1.12.11); model önerisi başlangıç sayfasında ve masada durur. ChatGPT'de Sohbet ekranının altında masanın
-kendi yazma kutusu var; Claude Desktop'ta masanın hemen altındaki Claude kutusu kullanılır. Uzak masa (web, telefon,
+kendi yazma kutusu var. Claude Desktop masa tam ekranken kendi kutusunu göstermiyor: uzak masada aynı kutu 21.11'den
+beri var, bilgisayardaki masaya bir sonraki sürümle gelir. Uzak masa (web, telefon,
 uzak bağlayıcı) 21.11'den beri güncelleme gerekmeden sade Sohbet'le açılır. Paketler değişmedi (Hukuk Bürosu ve
 Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7); masa 3.4.3. Güncelleyici 3.4.3'ü Windows'ta ve Mac'te kendisi
 kurar.
@@ -851,8 +853,8 @@ pəncərələri bir sətrə enir. ChatGPT-də nişanın mesajı artıq kompüter
 (*ArthurLegal Masasını aç: bu kompüterdəki arthurlegal-yerel MCP serverinin al_masasi alətini çağır.*); sadə mesajla
 bəzi modellər masanı açmaq əvəzinə "MCP-ləri yoxlayın" deyirdi. ChatGPT-dəki ArthurLegal qaydaları əvvəlcə yerli
 serveri göstərir (ChatGPT bacarıqları 1.12.11); model tövsiyəsi başlanğıc səhifəsində və masada qalır. ChatGPT-də
-Söhbət ekranının altında masanın öz yazı qutusu var; Claude Desktop-da masanın düz altındakı Claude qutusu istifadə
-olunur. Uzaq masa (veb, telefon, uzaq bağlayıcı) 21.11-dən bəri yeniləmə tələb etmədən sadə Söhbətlə açılır.
+Söhbət ekranının altında masanın öz yazı qutusu var. Claude Desktop masa tam ekranda olarkən öz qutusunu göstərmir:
+uzaq masada eyni qutu 21.11-dən bəri var, kompüterdəki masaya növbəti versiya ilə gəlir. Uzaq masa (veb, telefon, uzaq bağlayıcı) 21.11-dən bəri yeniləmə tələb etmədən sadə Söhbətlə açılır.
 Paketlər dəyişmədi (Hüquq Bürosu və Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7); masa 3.4.3. Yeniləyici
 3.4.3-ü Windows-da və Mac-də özü quraşdırır.
 

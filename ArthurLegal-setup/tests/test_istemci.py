@@ -492,7 +492,9 @@ class KisayolTesti(unittest.TestCase):
             self.assertTrue(adres.startswith("claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7"))
             import urllib.parse
             mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
-            self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç")
+            # 21.11.2026: düz mesajla Claude masayı uzak bağlayıcıdan açıyordu; mesaj yerel sunucuyu adıyla söyler.
+            self.assertEqual(mesaj.splitlines()[0],
+                             "ArthurLegal Masası'nı aç: bu bilgisayardaki arthurlegal-yerel sunucusunun al_masasi aracını çağır.")
             oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json").read_text(encoding="utf-8"))
             self.assertIn(oneri["cumle"], mesaj, "kesin öneri cümlesi aynen yazılır")
             self.assertIn("bağlayıcı değildir", mesaj, "öneri tavsiyedir")
@@ -707,7 +709,9 @@ class KisayolTesti(unittest.TestCase):
             import urllib.parse
             adres = self.calistir(t, "import kisayol; print(json.dumps(kisayol.masa_adresi()))")
             mesaj = urllib.parse.unquote(adres.split("?q=", 1)[1])
-            self.assertEqual(mesaj.splitlines()[0], "ArthurLegal Masası'nı aç", "sohbete yazılan ifade çevrilmez")
+            self.assertEqual(mesaj.splitlines()[0],
+                             "ArthurLegal Masası'nı aç: bu bilgisayardaki arthurlegal-yerel sunucusunun al_masasi aracını çağır.",
+                             "sohbete yazılan ifade çevrilmez; yerel sunucuyu adıyla söyler (21.11.2026)")
             self.assertIn("(Minimum Opus 5.5 · Medium / High effort tövsiyə edirik, məcburi deyil. ", mesaj)
             self.assertIn("Claude yadda saxlayır", mesaj)
             self.assertNotIn("bağlayıcı değildir", mesaj)
