@@ -807,6 +807,41 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-344"></a>
+
+## Setup 3.4.4 — A message box on the desk in Claude Desktop; the desk opens from your computer (2026-11-21)
+
+- **A message box on the desk in Claude Desktop.** Claude Desktop does not show its own box while the desk is full
+  screen, so 3.4.3 left Claude users without a place to type on the Chat screen. The desk now has its own box at the
+  bottom of the Chat screen in Claude Desktop as well as in ChatGPT; the answer still opens on the desk.
+- **The desk opens from your computer.** With the plain message, Claude sometimes opened the desk from the remote
+  connector, where history lasts only for the chat and Beyin, ArthurMask and the UYAP Dashboard do not run. The icon's
+  message now names the local server (*ArthurLegal Masası'nı aç: bu bilgisayardaki arthurlegal-yerel sunucusunun
+  al_masasi aracını çağır.*), and the remote desk tells Claude to search for the local desk before opening remotely.
+- Server side, live since 21.11 without an update: the remote desk has the same box and looks for the local desk first.
+- Packages unchanged: Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7. Desk 3.4.4. How it
+  arrives: the updater installs 3.4.4 on Windows and on a Mac by itself.
+
+**Türkçe:** Claude Desktop masa tam ekranken kendi yazma kutusunu göstermiyor; 3.4.3'te Claude kullanıcıları Sohbet
+ekranında yazacak yer bulamıyordu. Masanın kendi kutusu artık ChatGPT'de olduğu gibi Claude Desktop'ta da Sohbet
+ekranının altında; cevap yine masada açılır. Masa bilgisayarınızdan açılır: düz mesajla Claude masayı bazen uzak
+bağlayıcıdan açıyordu (orada geçmiş yalnız sohbet boyunca durur; Beyin, ArthurMask ve UYAP Dashboard çalışmaz).
+Simgenin mesajı artık yerel sunucuyu adıyla söyler (*ArthurLegal Masası'nı aç: bu bilgisayardaki arthurlegal-yerel
+sunucusunun al_masasi aracını çağır.*); uzak masa da uzakta açılmadan önce Claude'a yerel masayı aratır. Sunucu
+tarafında (21.11'den beri, güncelleme gerekmeden): uzak masada aynı kutu var ve önce yerel masa aranır. Paketler
+değişmedi (Hukuk Bürosu ve Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7); masa 3.4.4. Güncelleyici 3.4.4'ü
+Windows'ta ve Mac'te kendisi kurar.
+
+**Azərbaycan dili:** Claude Desktop masa tam ekranda olarkən öz yazı qutusunu göstərmir; 3.4.3-də Claude
+istifadəçiləri Söhbət ekranında yazmağa yer tapmırdı. Masanın öz qutusu artıq ChatGPT-də olduğu kimi Claude
+Desktop-da da Söhbət ekranının altındadır; cavab yenə masada açılır. Masa kompüterinizdən açılır: sadə mesajla Claude
+masanı bəzən uzaq bağlayıcıdan açırdı (orada tarixçə yalnız söhbət boyu qalır; Beyin, ArthurMask və UYAP Dashboard
+işləmir). Nişanın mesajı artıq yerli serveri adı ilə deyir (*ArthurLegal Masası'nı aç: bu bilgisayardaki
+arthurlegal-yerel sunucusunun al_masasi aracını çağır.*); uzaq masa da uzaqda açılmazdan əvvəl Claude-a yerli masanı
+axtartdırır. Server tərəfində (21.11-dən bəri, yeniləmə tələb etmədən): uzaq masada eyni qutu var və əvvəlcə yerli
+masa axtarılır. Paketlər dəyişmədi (Hüquq Bürosu və Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7); masa 3.4.4.
+Yeniləyici 3.4.4-ü Windows-da və Mac-də özü quraşdırır.
+
 <a id="setup-343"></a>
 
 ## Setup 3.4.3 — A simpler Chat screen; the desk opens reliably in ChatGPT (2026-11-21)
