@@ -176,23 +176,21 @@ def masa_adresi() -> str:
                                                             safe="")
 
 
-def chatgpt_model_notu() -> str:
-    """ChatGPT için model cümlesi (K14): ChatGPT modelleriyle ölçüm yapılmadı, en yetenekli güncel model tavsiye
-    edilir. Dosyada yoksa not eklenmez."""
-    try:
-        o = json.loads(MODEL_ONERISI.read_text(encoding="utf-8"))
-        cumle, cumle_en = str(o["cumle_chatgpt"]), str(o["cumle_chatgpt_en"])
-        cumle_az = str(o.get("cumle_chatgpt_az") or "")
-    except (OSError, ValueError, KeyError, TypeError):
-        return ""
-    return "(" + ortak.metin(cumle, cumle_en, cumle_az or None) + ")"
+def chatgpt_masa_istemi() -> str:
+    """ChatGPT'deki açılış mesajı (21.11.2026). Düz "ArthurLegal Masası'nı aç" ChatGPT'de (özellikle Astra modelinde)
+    masayı açmıyordu: model aracı aramadan "MCP'leri kontrol edin" diyordu; yerel sunucu ve araç adıyla söylenince açıldı
+    (kullanıcı denemesi). Model cümlesi (K14) mesajda yok: model onu talimat sanabiliyordu; cümle başlangıç sayfasında
+    ve masanın Model ekranında durur. Claude'un mesajı değişmez (orada sorun yok)."""
+    return ortak.metin(
+        "ArthurLegal Masası'nı aç: bu bilgisayardaki arthurlegal-yerel MCP sunucusunun al_masasi aracını çağır.",
+        "Open the ArthurLegal Desk: call the al_masasi tool of the arthurlegal-yerel MCP server on this computer.",
+        "ArthurLegal Masasını aç: bu kompüterdəki arthurlegal-yerel MCP serverinin al_masasi alətini çağır.")
 
 
 def chatgpt_masa_adresi() -> str:
     """ChatGPT masaüstünün resmî bağlantısı (codex://new?prompt=…) yeni sohbeti mesajı yazılmış olarak açar; kullanıcı
-    Enter'a basar. ChatGPT mesajı ArthurLegal kural becerisi ve yerel sunucudaki al_masasi aracına götürür (K24)."""
-    hatirlatma = chatgpt_model_notu()
-    return "codex://new?prompt=" + urllib.parse.quote(MASA_ISTEMI + ("\n\n" + hatirlatma if hatirlatma else ""), safe="")
+    Enter'a basar. ChatGPT mesajı yerel sunucudaki al_masasi aracına götürür; kural becerisi de önce yereli gösterir."""
+    return "codex://new?prompt=" + urllib.parse.quote(chatgpt_masa_istemi(), safe="")
 
 
 def _ac(adres: str) -> int:

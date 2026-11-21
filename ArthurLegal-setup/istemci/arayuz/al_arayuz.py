@@ -835,6 +835,9 @@ class CanliMasa:
         self._sayac = 0
         self._calisma: Optional[Dict[str, Any]] = None
         self._cevap: Optional[Dict[str, Any]] = None
+        # Masanın kaçıncı kez açıldığı: model aynı sohbette al_masasi'yi yeniden çağırırsa eski masa bunu görüp tek
+        # satıra iner (iki masa aynı akışı alt alta göstermez, 21.11.2026).
+        self._masa = 0
 
     @staticmethod
     def _simdi() -> int:
@@ -856,6 +859,12 @@ class CanliMasa:
         self._sayac += 1
         return {"id": "%x-%d" % (self._simdi(), self._sayac), "soru": soru, "plan": plan or [], "sorular": sorular or [],
                 "basla": self._simdi(), "bitti": 0, "adimlar": []}
+
+    def masa_acildi(self) -> int:
+        """al_masasi her çağrıldığında: yeni masanın numarası (canli_masa)."""
+        with self._kilit:
+            self._masa += 1
+            return self._masa
 
     def basla(self, girdi: Dict[str, Any]) -> None:
         plan, sorular = plan_ve_sorular(girdi or {})
@@ -918,8 +927,9 @@ class CanliMasa:
         bilinen = (girdi or {}).get("surum")
         with self._kilit:
             if isinstance(bilinen, int) and bilinen == self._surum:
-                return {"surum": self._surum, "degismedi": True}
-            return {"surum": self._surum, "calisma": json.loads(json.dumps(self._calisma)) if self._calisma else None,
+                return {"surum": self._surum, "degismedi": True, "masa": self._masa}
+            return {"surum": self._surum, "masa": self._masa,
+                    "calisma": json.loads(json.dumps(self._calisma)) if self._calisma else None,
                     "cevap": json.loads(json.dumps(self._cevap)) if self._cevap else None}
 
 

@@ -256,11 +256,19 @@ class ChatGPTSimgesiTesti(_Ortam, unittest.TestCase):
             adres = self.calistir(t, "import kisayol; print(json.dumps(kisayol.chatgpt_masa_adresi()))")
             self.assertTrue(adres.startswith("codex://new?prompt=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7"))
             mesaj = urllib.parse.unquote(adres.split("?prompt=", 1)[1])
+            # 21.11.2026: düz mesaj ChatGPT'de masayı açmıyordu; yerel sunucu ve araç adıyla açılıyor. Model cümlesi
+            # mesajda yok (model onu talimat sanabiliyordu); başlangıç sayfasında ve masanın Model ekranında.
+            self.assertIn("arthurlegal-yerel", mesaj)
+            self.assertIn("al_masasi", mesaj)
             oneri = json.loads((BURASI / "istemci" / "arayuz" / "ortak" / "tasarim" / "model-onerisi.json")
                                .read_text(encoding="utf-8"))
-            self.assertIn(oneri["cumle_chatgpt"], mesaj, "K14 cümlesi aynen")
+            self.assertNotIn(oneri["cumle_chatgpt"], mesaj)
             self.assertNotIn("Opus", mesaj)
             self.assertLess(len(adres), 2000)
+            for dil, bas in (("en", "Open the ArthurLegal Desk"), ("az", "ArthurLegal Masasını aç")):
+                m = self.calistir(t, "import kisayol, ortak; ortak.dil = lambda: '%s'; "
+                                     "print(json.dumps(kisayol.chatgpt_masa_istemi()))" % dil)
+                self.assertTrue(m.startswith(bas) and "arthurlegal-yerel" in m and "al_masasi" in m, (dil, m))
 
     def test_secime_gore_acilis(self):
         with tempfile.TemporaryDirectory() as t:
