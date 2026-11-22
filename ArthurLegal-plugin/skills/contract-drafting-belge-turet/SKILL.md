@@ -14,7 +14,7 @@ user-invocable: true
 
 ## ADIM 0 — Girdi
 
-1. **Şablon/emsal belge** — kullanıcı yapıştırsın/yüklesin (yoksa: hangi belge tipini istediğini sor, standart iskeletle başla).
+1. **Şablon/emsal belge:** kullanıcı yapıştırsın/yüklesin (yoksa: hangi belge tipini istediğini sor, `${CLAUDE_PLUGIN_ROOT}/references/redline-konvansiyonlari-rehberi.md` bölüm 8'deki iskeletle başla).
 2. **Yeni işin parametreleri** — taraflar, konu, tutar/süre, özel şartlar, fark eden noktalar.
 3. **Hangi tip?** EPC · PPA/elektrik satış · vendor/tedarik · NDA · hissedar/JV · kredi/finansman · **süre uzatım/ek protokol** · diğer.
 
@@ -27,7 +27,7 @@ user-invocable: true
 ## ADIM 2 — Yeni belgeyi üret
 
 - Yapıyı koru; değişken alanları yeni parametrelerle doldur; bilinmeyenleri **`[DOLDUR — ...]`** bırak.
-- **Standart klozları** ekle/teyit et (mücbir sebep TBK m.136/138, sınırlı sorumluluk, yaptırım/uyum, KVKK, EPDK lisans/devir, uyuşmazlık, damga vergisi).
+- **Standart klozları** `${CLAUDE_PLUGIN_ROOT}/references/redline-konvansiyonlari-rehberi.md` bölüm 5'teki sete göre ekle ve teyit et. Şablon verilmediyse aynı rehberin 7 ile 11. bölümlerini (iskelet, karar listesi, sık hatalar, Word düzeni) örnek al; oradaki ifadeyi birebir aktarma, işe göre yeniden kur.
 - **Emredici hüküm kontrolü:** şablondaki bir kloz emredici kurala aykırıysa düzelt + flag (`[ArthurLegal TR — kanun m. X — GG.AA.YYYY]`, madde çekildikten sonra). (Örn. tüketici/iş sözleşmesinde aleyhe kloz, fahiş cezai şart TBK m.182, çalışan buluşu klozunda SMK m. 117 emredici sınırı.)
 - **Madde doğrulama kapısı (teslim öncesi, zorunlu):** Belge gövdesine yazılan her kanun maddesi (şablondan gelen, bu kitapçıktaki örneklerden gelen veya yeni eklenen) `tr_mevzuat_madde_getir` ile çekilir; kloz maddeye ne yüklüyorsa (hakkın sahibi, şart, süre, sonuç) başlık ve metinle eşleştirilir. Eşleşmiyorsa numara korunup açıklama uydurulmaz. Çekilemiyorsa madde numarası gövdeden çıkarılır, kloz numarasız kurulur ("ilgili mevzuatın emredici hükümleri saklıdır") ve eksik İnceleyen notuna yazılır. Bu kitapçıktaki örnek madde numaraları (TBK m.13, 136, 138, 182 gibi) doğrulama değildir. Yol: `${CLAUDE_PLUGIN_ROOT}/references/mevzuat-mcp-rehberi.md` bölüm 9.
 - Şablon eski tarihliyse: **mevzuat değişikliği** kontrolü (atıflar güncel mi?).
