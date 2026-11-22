@@ -50,9 +50,9 @@ class OpenAIEklentisi(unittest.TestCase):
         self.assertLess(toplam, 8000)
 
     def test_her_beceri_bir_alanda_eksiksiz(self):
-        """146 beceri: kural becerisi + 112 iş akışı ve 33 yardımcı, hepsi bir alanın references/ klasöründe."""
+        """156 beceri: kural becerisi + 122 iş akışı ve 33 yardımcı, hepsi bir alanın references/ klasöründe."""
         dosyalar = [y for y in self.metin if re.fullmatch(r"skills/(?!arthurlegal/)[^/]+/references/[^/]+\.md", y)]
-        self.assertEqual(len(dosyalar), 145)
+        self.assertEqual(len(dosyalar), 155)
         for a in self.veri["akislar"]:
             yol = "skills/%s/references/%s.md" % (oe.KATEGORI_ADI[a["k"]], a["id"])
             self.assertIn(yol, self.metin, a["id"])
@@ -111,7 +111,7 @@ class OpenAIEklentisi(unittest.TestCase):
             self.assertTrue(ad.startswith("arthurlegal-"), ad)
 
     def test_claude_eklentisi_degismez(self):
-        """K6: Claude eklentisi 146 beceriyle kalır; ChatGPT üreticisi onun klasörüne yazmaz."""
+        """K6: Claude eklentisi 156 beceriyle kalır; ChatGPT üreticisi onun klasörüne yazmaz."""
         self.assertFalse(any(y.startswith("ArthurLegal-plugin/") for y in self.dosyalar))
         self.assertEqual(oe.CIKTI, "ArthurLegal-openai-plugin")
 

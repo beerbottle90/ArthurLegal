@@ -1,7 +1,7 @@
 # ArthurLegal plugin (ChatGPT)
 
 ArthurLegal is a Turkish-law-first legal assistant for lawyers in Türkiye. This plugin brings its working rules,
-112 law-firm workflows and 33 setup helpers to ChatGPT as 12 skills (one rule skill and 11 practice
+122 law-firm workflows and 33 setup helpers to ChatGPT as 12 skills (one rule skill and 11 practice
 areas), connected to ArthurLegal MCP at `https://arthurlegal-mcp.fly.dev/openai/mcp`.
 
 **Status:** the ArthurLegal installer (v3.4.0 and later) installs these 12 skills in the ChatGPT desktop app, together
@@ -9,7 +9,7 @@ with the local ArthurLegal servers, when ChatGPT is chosen during setup. The plu
 plugin directory, and ChatGPT on the web and on a phone is in preparation. It is generated from the same package as
 ArthurLegal's other plugin, so the two stay in step.
 
-Version 1.12.12, generated from the ArthurLegal Law Firm package 1.12.7 by
+Version 1.12.13, generated from the ArthurLegal Law Firm package 1.12.7 by
 `ArthurLegal-setup/yayin/openai_eklenti_uret.py`. Do not edit this folder by hand.
 
 ChatGPT and OpenAI are trademarks of OpenAI.

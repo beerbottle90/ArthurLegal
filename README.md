@@ -807,6 +807,52 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-345"></a>
+
+## Setup 3.4.5: Contract types in Workflows; a broader contract drafting guide (2026-11-22)
+
+- **Contract types in Workflows.** The desk's Workflows screen has ten new contract types under Contracts: goods
+  purchase and framework agreement; services, consultancy and training; works and construction; road haulage;
+  sponsorship; cooperation agreement and MoU; broker cooperation; purchase terms and order conditions; data transfer
+  protocol; general terms in English for foreign suppliers. Start drafts from that type's skeleton: ArthurLegal asks
+  multiple choice questions for anything missing, marks open values `[DOLDUR]` and checks every statute it cites
+  against the official text before writing it. 122 workflows in 11 areas.
+- **A broader contract drafting guide.** `redline-konvansiyonlari-rehberi.md` now covers drafting as well as review: a
+  19 item clause set checked in every commercial contract, how to learn from examples without copying them, skeletons
+  for long form contracts and purchase terms, type specific clauses, a list of commercial decisions, common mistakes
+  and Word layout. The examples are not templates.
+- Packages: version numbers unchanged (Law Firm and Corporate Assistant 1.12.7, Courthouse 1.2.6, Academician 1.1.7).
+  In Law Firm and Corporate Assistant the contract guide and the `contract-drafting` skill book changed; the system
+  prompt did not. If you use a claude.ai Project, upload those two files again. Claude plugin 1.12.23, ChatGPT skills
+  1.12.13, desk 3.4.5. How it arrives: the updater installs 3.4.5 on Windows and on a Mac by itself.
+
+**Türkçe:** Masanın İş akışları ekranında Sözleşme alanına on sözleşme türü eklendi: mal alımı ve çerçeve sözleşme;
+hizmet, danışmanlık ve eğitim; eser ve inşaat; karayolu taşıma; sponsorluk; iş birliği ve mutabakat zaptı; aracılar
+arası iş birliği; satınalma şartnamesi ve sipariş koşulları; veri aktarım protokolü; yabancı tedarikçi için İngilizce
+genel koşullar. Başlat, o türün iskeletiyle taslak kurar: ArthurLegal eksik bilgiyi seçenekli sorar, açık değerleri
+`[DOLDUR]` ile işaretler ve atıf yaptığı her kanun maddesini yazmadan önce resmî metinden kontrol eder. 11 alanda 122
+iş akışı. Sözleşme yazım rehberi (`redline-konvansiyonlari-rehberi.md`) incelemenin yanında yazımı da kapsar: her ticari
+sözleşmede kontrol edilen 19 maddelik kloz seti, örneklerden kopyalamadan yararlanma, uzun form ve şartname
+iskeletleri, türe özgü maddeler, ticari karar listesi, sık yapılan hatalar ve Word düzeni. Örnekler kalıp değildir.
+Paketlerin sürüm numaraları aynı (Hukuk Bürosu ve Kurumsal 1.12.7, Courthouse 1.2.6, Akademisyen 1.1.7); Hukuk Bürosu
+ve Kurumsal paketlerinde sözleşme rehberi ve `contract-drafting` kitapçığı değişti, sistem talimatı değişmedi.
+claude.ai Project kullanıyorsanız bu iki dosyayı yeniden yükleyin. Claude eklentisi 1.12.23, ChatGPT becerileri
+1.12.13, masa 3.4.5. Güncelleyici 3.4.5'i Windows'ta ve Mac'te kendisi kurar.
+
+**Azərbaycan dili:** Masanın İş axınları ekranında Müqavilə sahəsinə on müqavilə növü əlavə olundu: mal alışı və
+çərçivə müqaviləsi; xidmət, məsləhət və təlim; podrat və tikinti; avtomobil daşıması; sponsorluq; əməkdaşlıq və
+anlaşma memorandumu; vasitəçilər arasında əməkdaşlıq; satınalma şərtnaməsi və sifariş şərtləri; məlumat ötürmə
+protokolu; xarici təchizatçı üçün ingilis dilində ümumi şərtlər. Başlat həmin növün skeleti ilə layihə qurur:
+ArthurLegal çatışmayan məlumatı seçimli suallarla soruşur, açıq dəyərləri `[DOLDUR]` ilə işarələyir və istinad etdiyi
+hər qanun maddəsini yazmazdan əvvəl rəsmi mətnlə yoxlayır. 11 sahədə 122 iş axını. Müqavilə yazma bələdçisi
+(`redline-konvansiyonlari-rehberi.md`) yoxlama ilə yanaşı yazmanı da əhatə edir: hər kommersiya müqaviləsində yoxlanan
+19 maddəlik müddəa dəsti, nümunələrdən köçürmədən faydalanma, uzun forma və şərtnamə skeletləri, növə xas maddələr,
+kommersiya qərarları siyahısı, tez tez edilən səhvlər və Word tərtibatı. Nümunələr qəlib deyil. Paketlərin versiya
+nömrələri dəyişmədi (Hüquq Bürosu və Korporativ 1.12.7, Courthouse 1.2.6, Akademik 1.1.7); Hüquq Bürosu və
+Korporativ paketlərində müqavilə bələdçisi və `contract-drafting` kitabçası dəyişdi, sistem təlimatı dəyişmədi.
+claude.ai Project istifadə edirsinizsə, bu iki faylı yenidən yükləyin. Claude plagini 1.12.23, ChatGPT bacarıqları
+1.12.13, masa 3.4.5. Yeniləyici 3.4.5-i Windows-da və Mac-də özü quraşdırır.
+
 <a id="setup-344"></a>
 
 ## Setup 3.4.4 — A message box on the desk in Claude Desktop; the desk opens from your computer (2026-11-21)
