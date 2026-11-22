@@ -1,7 +1,7 @@
 ---
 name: arthurlegal-sozlesme
 description: >-
-  ArthurLegal Sözleşme (Contracts): Ticari sözleşme incelemesi, Gizlilik sözleşmesi elemesi, Tedarikçi sözleşmesi incelemesi, SaaS ve abonelik sözleşmesi, Yabancı unsurlu sözleşme, Sözleşme değişiklik geçmişi, Fesih bildirimi takibi, İş birimine özet, Türk hukuku playbook incelemesi, Emsalden sözleşme türet, Sözleşmeyi redline'la, Ek ve tadil protokolü, İki sürümü karşılaştır. Bu alanda bir iş istendiğinde kullanılır; adımlar references/ dosyalarındadır.
+  ArthurLegal Sözleşme (Contracts): Ticari sözleşme incelemesi, Gizlilik sözleşmesi elemesi, Tedarikçi sözleşmesi incelemesi, SaaS ve abonelik sözleşmesi, Yabancı unsurlu sözleşme, Sözleşme değişiklik geçmişi, Fesih bildirimi takibi, İş birimine özet, Türk hukuku playbook incelemesi, Emsalden sözleşme türet, Sözleşmeyi redline'la, Ek ve tadil protokolü, İki sürümü karşılaştır, Mal alımı ve çerçeve sözleşme, Hizmet, danışmanlık ve eğitim sözleşmesi, Eser ve inşaat sözleşmesi, Karayolu taşıma sözleşmesi, Sponsorluk sözleşmesi, İş birliği ve mutabakat zaptı, Aracılar arası iş birliği, Satınalma…
 ---
 
 # Sözleşme (Contracts)
@@ -25,6 +25,16 @@ Kullanıcının açık talimatı iş akışından önce gelir.
 | Sözleşmeyi redline'la | İnceleme bulgularını belgeye ekleme, silme ve yorum olarak işler. | `references/contract-drafting-redline-contract.md` |
 | Ek ve tadil protokolü | Ana sözleşmeye bağlı değişiklik ya da süre uzatımı metni. | `references/contract-drafting-tadil-protokol.md` |
 | İki sürümü karşılaştır | Madde madde fark, her değişikliğin etkisi ve risk işareti. | `references/contract-drafting-versiyon-karsilastir.md` |
+| Mal alımı ve çerçeve sözleşme | Çerçeve ve sipariş emri, Incoterms 2020, muayene, ayıp ihbarı ve hasarın geçişi. | `references/contract-drafting-mal-alim-sozlesmesi.md` |
+| Hizmet, danışmanlık ve eğitim sözleşmesi | Hizmet planı, personel ve alt işveren ayrımı, tamamlama tutanağı, çıktıların mülkiyeti. | `references/contract-drafting-hizmet-sozlesmesi.md` |
+| Eser ve inşaat sözleşmesi | İş programı, geçici ve kesin kabul, ayıp, iş sağlığı ve güvenliği, tüm riskler sigortası. | `references/contract-drafting-eser-sozlesmesi.md` |
+| Karayolu taşıma sözleşmesi | Araç tahsisi, yükleme ve teslim süreleri, taşıyıcının sorumluluğu ve sınırları, ceza tablosu. | `references/contract-drafting-tasima-sozlesmesi.md` |
+| Sponsorluk sözleşmesi | Aşamalı bedel, görünürlük ve logo kullanımı, iptal ve erteleme, itibar zararında fesih. | `references/contract-drafting-sponsorluk-sozlesmesi.md` |
+| İş birliği ve mutabakat zaptı | Bağlayıcı ve bağlayıcı olmayan hükümlerin ayrımı, ön sözleşme riski, devir yasağı. | `references/contract-drafting-mutabakat-zapti.md` |
+| Aracılar arası iş birliği | Portföy ve müşteri paylaşımı, komisyonun bölüşülmesi, doğrudan temas yasağı. | `references/contract-drafting-araci-is-birligi.md` |
+| Satınalma şartnamesi ve sipariş koşulları | Sipariş emriyle kurulan kısa form, mal ya da hizmet; genel işlem koşulu kurallarına uygun. | `references/contract-drafting-satinalma-sartnamesi.md` |
+| Veri aktarım protokolü | Sözleşme eki: sıfatlar, veri kategorileri, saklama ve imha, ihlal bildirimi, yurt dışı aktarım. | `references/contract-drafting-veri-aktarim-protokolu.md` |
+| İngilizce genel koşullar | Yabancı tedarikçi için Türk hukukuna bağlı satınalma koşulları, Incoterms ve döviz faizi. | `references/contract-drafting-ingilizce-genel-kosullar.md` |
 
 ## Kurulum ve çalışma alanı
 

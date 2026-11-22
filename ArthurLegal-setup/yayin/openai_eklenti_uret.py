@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """ChatGPT (OpenAI) eklentisi: Law Firm paketinden `ArthurLegal-openai-plugin/` klasörünü üretir.
 
-Claude eklentisiyle (eklenti_uret.py, `ArthurLegal-plugin/`, 146 beceri) aynı kaynaktan üretilir, onu değiştirmez
+Claude eklentisiyle (eklenti_uret.py, `ArthurLegal-plugin/`, 156 beceri) aynı kaynaktan üretilir, onu değiştirmez
 (16.11.2026, K3/K6). ChatGPT'nin beceri listesi bütçesi dardır (bağlamın %2'si ya da 8.000 karakter), bu yüzden paket:
 
   - 1 kural becerisi (`skills/arthurlegal/`): SYSTEM_PROMPT, sağlayıcıdan bağımsız dille; rehberler, pratik profilleri
     ve büro profili onun `references/` klasöründe. Masayı açma cümlesi açıklamadadır (K24).
-  - 11 alan becerisi (masadaki İş akışları kategorileri, `tasarim/is-akislari.json`): 112 iş akışı ve 34 yardımcı
+  - 11 alan becerisi (masadaki İş akışları kategorileri, `tasarim/is-akislari.json`): 122 iş akışı ve 34 yardımcı
     beceri, kendi alanının `references/` klasöründe tam metin.
 
 Bağlantı OpenAI profilidir (`/openai/mcp`, K11/K12). Claude'a özgü yollar ve adlar çevrilir (OpenAI kuralı: "Replace

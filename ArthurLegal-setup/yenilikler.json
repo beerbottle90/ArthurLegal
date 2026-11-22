@@ -1,4 +1,18 @@
 {
+ "3.4.5": {
+  "tr": [
+   "İş akışlarında sözleşme türleri: mal alımı ve çerçeve, hizmet ve danışmanlık, eser ve inşaat, karayolu taşıma, sponsorluk, iş birliği ve mutabakat zaptı, aracılar arası iş birliği, satınalma şartnamesi, veri aktarım protokolü ve İngilizce genel koşullar. Başlat'a bastığınızda ArthurLegal o türün iskeletiyle taslak kurar, eksik bilgiyi seçenekli sorar.",
+   "Sözleşme yazım rehberi genişledi: her ticari sözleşmede kontrol edilen 19 maddelik kloz seti, iskeletler, ticari karar listesi, sık yapılan hatalar ve Word düzeni. Örnekler kalıp değildir; ArthurLegal onlardan yararlanır, birebir kopyalamaz."
+  ],
+  "az": [
+   "İş axınlarında müqavilə növləri: mal alışı və çərçivə, xidmət və məsləhət, podrat və tikinti, avtomobil daşıması, sponsorluq, əməkdaşlıq və anlaşma memorandumu, vasitəçilər arasında əməkdaşlıq, satınalma şərtnaməsi, məlumat ötürmə protokolu və ingilis dilində ümumi şərtlər. Başlat düyməsini basdığınızda ArthurLegal həmin növün skeleti ilə layihə qurur, çatışmayan məlumatı seçimli suallarla soruşur.",
+   "Müqavilə yazma bələdçisi genişləndi: hər kommersiya müqaviləsində yoxlanan 19 maddəlik müddəa dəsti, skeletlər, kommersiya qərarları siyahısı, tez tez edilən səhvlər və Word tərtibatı. Nümunələr qəlib deyil; ArthurLegal onlardan faydalanır, olduğu kimi köçürmür."
+  ],
+  "en": [
+   "Contract types in Workflows: goods purchase and framework, services and consultancy, works and construction, road haulage, sponsorship, cooperation agreement and MoU, broker cooperation, purchase terms, data transfer protocol and general terms in English. When you press Start, ArthurLegal drafts from that type's skeleton and asks multiple choice questions for anything missing.",
+   "A broader contract drafting guide: a 19 item clause set checked in every commercial contract, skeletons, a list of commercial decisions, common mistakes and Word layout. The examples are not templates; ArthurLegal learns from them and does not copy them."
+  ]
+ },
  "3.4.4": {
   "tr": [
    "Masanın yazma kutusu Claude Desktop'ta da var: masa tam ekranken sorunuzu Sohbet ekranının altındaki kutuya yazarsınız.",

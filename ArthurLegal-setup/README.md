@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.4.4
+# ArthurLegal Setup v3.4.5
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
