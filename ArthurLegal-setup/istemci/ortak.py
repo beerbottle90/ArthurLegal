@@ -144,6 +144,36 @@ def ayar() -> dict:
     return {**VARSAYILAN_AYAR, **json_oku(KOK / "ayar.json")}
 
 
+# Kurulum dosyasının yazdığı yayıncı anahtarları (derle.py, derle_macos.py). Kurulum ayar.json'u doğrudan yazmaz,
+# ayar.yeni.json olarak bırakır; kur.py onu ayar_birlestir ile işler. Böylece yeniden kurulum kullanıcının eklediği
+# anahtarları (hafiza_dizini, hafiza_butce, bildirim ...) silmez.
+YAYINCI_AYARLARI = ("manifest_url", "yedek_depo", "kanal", "uzak_mcp", "yayin_anahtari", "dagitim_deposu", "jeton",
+                    "api_tabani", "simge")
+YENI_AYAR = "ayar.yeni.json"
+
+
+def ayar_birlestir(kok: Path | None = None) -> bool:
+    """Kurulumun bıraktığı ayar.yeni.json'u ayar.json'a işler ve siler. Yayıncı anahtarları bütünüyle yeni dosyadan
+    gelir: yeni dosyada olmayan yayıncı anahtarı kalkar (ör. private dağıtımdan genel dağıtıma geçişte jeton). Öteki
+    anahtarlar kullanıcınındır ve korunur. Yeni dosya yoksa ya da okunamıyorsa ayar.json'a dokunulmaz."""
+    kok = Path(kok or KOK)
+    yeni_yol = kok / YENI_AYAR
+    if not yeni_yol.exists():
+        return False
+    yeni = json_oku(yeni_yol)
+    if not isinstance(yeni, dict) or not yeni:
+        yeni_yol.unlink(missing_ok=True)  # bozuk dosya her çalışmada yeniden denenmesin; eski ayar çalışır kalır
+        return False
+    eski = json_oku(kok / "ayar.json")
+    birlesik = {a: d for a, d in yeni.items() if a in YAYINCI_AYARLARI}
+    if isinstance(eski, dict):
+        birlesik.update((a, d) for a, d in eski.items() if a not in YAYINCI_AYARLARI)
+    birlesik.update((a, d) for a, d in yeni.items() if a not in birlesik)
+    json_yaz(kok / "ayar.json", birlesik)
+    yeni_yol.unlink(missing_ok=True)
+    return True
+
+
 def moduller() -> list:
     """Bu bilgisayarda seçilen modüller, MODULLER sırasıyla. Seçim dosyası yoksa ya da bozuksa 2.5.0'dan önceki
     kurulumun modülleri (ESKI_SECIM)."""

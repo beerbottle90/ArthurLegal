@@ -381,7 +381,9 @@ def main(argv=None) -> int:
     derle.rehber_yaz(kok, "", icerik)
     shutil.copy2(BURASI / "varlik" / "rehber-masa.png", kok / "rehber" / "masa.png")
     derle.lisans_yaz(k, kok)
-    ortak.json_yaz(kok / "ayar.json", {
+    # Paket ayar.json'u doğrudan yazmaz (yeniden kurulum kullanıcının anahtarlarını silerdi): postinstall'daki
+    # kur --kurulum ayar.yeni.json'u ayar.json'a işler (ortak.ayar_birlestir).
+    ortak.json_yaz(kok / ortak.YENI_AYAR, {
         "manifest_url": f"https://github.com/{k['yayin_deposu']}/releases/latest/download/arthurlegal-manifest.json",
         "yedek_depo": k["yayin_deposu"], "kanal": k.get("kanal", "kararli"),
         "uzak_mcp": k["uzak_mcp"], "yayin_anahtari": k["yayin_anahtari"]})
