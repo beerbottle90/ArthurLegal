@@ -1,4 +1,21 @@
 {
+ "3.4.7": {
+  "tr": [
+   "Masa artık akan bir sohbet: yeni soru sorduğunuzda önceki soru ve cevaplar ekrandan kalkmaz, yukarıda kalır; yeni iş altta akar.",
+   "Cevap yazılırken masada akar ve cevaplanmış soru bir daha \"Claude çalışıyor\"da takılmaz. Masa, Claude'un açtığı öteki pencereler görünmese de işi bilgisayarınızdaki kurulumdan okur.",
+   "Cevap masaya gelince bilgisayarınız bildirim gösterir. Geçmiş ilk açılışta boş görünmez; masanın kutusundan gönderdiğiniz soru hemen akışa girer ve Claude Desktop onay isterse bunu söyler."
+  ],
+  "az": [
+   "Masa artıq axan söhbətdir: yeni sual verəndə əvvəlki suallar və cavablar ekrandan getmir, yuxarıda qalır; yeni iş aşağıda axır.",
+   "Cavab yazılarkən masada axır və cavablanmış sual bir daha \"Claude işləyir\"də ilişib qalmır. Masa Claude-un açdığı digər pəncərələr görünməsə də işi kompüterinizdəki quraşdırmadan oxuyur.",
+   "Cavab masaya gələndə kompüteriniz bildiriş göstərir. Tarixçə ilk açılışda boş görünmür; masanın qutusundan göndərdiyiniz sual dərhal axına düşür və Claude Desktop təsdiq istəsə, bunu deyir."
+  ],
+  "en": [
+   "The desk is now a flowing conversation: when you ask a new question, earlier questions and answers stay on screen above it; the new work flows in below.",
+   "The answer flows onto the desk while it is being written, and an answered question no longer gets stuck on \"Claude is working\". The desk reads the work from the installation on your computer even when the other windows Claude opens are not visible.",
+   "Your computer shows a notification when the answer reaches the desk. History is no longer empty on first open; a question sent from the desk's box enters the flow at once and the desk tells you if Claude Desktop asks for confirmation."
+  ]
+ },
  "3.4.6": {
   "tr": [
    "ArthurLegal işe başlamadan önce sorunun alanını belirler, o alanın büro profilini okur ve işe uyan iş akışını sizin komut yazmanızı beklemeden kendisi uygular. Profil ya da iş akışı açılamazsa bunu cevabın inceleme notunda söyler.",

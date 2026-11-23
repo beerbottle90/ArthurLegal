@@ -27,7 +27,7 @@ import ed25519  # noqa: E402
 TEST_TOHUM = bytes(range(32))
 KASA_TOHUM = bytes(range(32, 64))
 YABANCI_TOHUM = bytes(range(64, 96))
-ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "ARTHURLEGAL_GUNCELLEME": "0"}
+ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "ARTHURLEGAL_GUNCELLEME": "0", "AL_BILDIRIM": "0"}
 ENV.pop("ARTHURLEGAL_KOK", None)
 MACOS = sys.platform == "darwin"
 # Windows kısayolları (.lnk), Başlat menüsü ve %APPDATA% yapılandırmaları; macOS karşılıkları MacKurulumTesti'nde.
@@ -2372,8 +2372,8 @@ class ArayuzTesti(unittest.TestCase):
                       "'resources' in b['capabilities'], 'al_masasi' in b['instructions'], "
                       "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
             self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
-                                                               "al_modul_ac", "al_gecmis", "al_dogrulama_kaydi",
-                                                               "al_dil", "al_guncelleme"],
+                                                               "al_modul_ac", "al_masa_durumu", "al_gecmis",
+                                                               "al_dogrulama_kaydi", "al_dil", "al_guncelleme"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
@@ -2944,7 +2944,8 @@ print(json.dumps({'sure': sure, 'ilk': ilk, 'sonra': sonra, 'yazilan': yazilan, 
 
 class ChatGPTKipiTesti(unittest.TestCase):
     """16.11.2026 (K25): ChatGPT'de görünümü yalnız al_masasi taşır; soru, adımlar ve cevap bu süreçte bellekte
-    tutulur, açık masa al_masa_durumu ile yoklar. Claude'da düzen değişmez."""
+    tutulur, açık masa al_masa_durumu ile yoklar. 23.11.2026'dan beri Claude Desktop'taki ekrandaki masa da aynı
+    yoklamayı yapar (pencereler kendiliğinden tam ekrana geçemiyor); Claude'da araçlar yine masayı açar."""
 
     calistir = ModulTesti.calistir
     UZAK = ("u.uzak_araclar = s.salt_okunur_isaretle([{'name': 'tr_ictihat_ara', 'annotations': {'readOnlyHint': True}, "
@@ -2968,7 +2969,7 @@ class ChatGPTKipiTesti(unittest.TestCase):
                       "b = u.isle('initialize', {'clientInfo': {'name': 'claude-ai'}}); " + self.UZAK + self.LISTE +
                       "print(json.dumps([u.ev, 'MODEL.' in b['instructions'], 'al_masaya_yaz' in gor, "
                       "'tr_ictihat_ara' in gor, 'al_masa_durumu' in [a['name'] for a in l], isaret]))")
-            self.assertEqual(self.calistir(t, claude), [None, True, True, True, False, True])
+            self.assertEqual(self.calistir(t, claude), [None, True, True, True, True, True])
 
     def test_kurulum_ayari_ev_sahibini_belirler(self):
         with tempfile.TemporaryDirectory() as t:
@@ -3010,8 +3011,11 @@ class ChatGPTKipiTesti(unittest.TestCase):
                              ["TBK m. 49?", ["tr_mevzuat_madde_getir"], {"items": [{"ok": True}]}, True, "## C", True])
             self.assertTrue(ayni["degismedi"])
             claude = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
-                      "print(json.dumps(u._arac('al_masa_durumu', {}).get('isError')))")
-            self.assertTrue(self.calistir(t, claude), "Claude'da canlı masa yok")
+                      "u._arac('al_masada_basla', {'soru': 'S', 'masa': 2}); "
+                      "d = u._arac('al_masa_durumu', {})['structuredContent']; "
+                      "print(json.dumps([d['calisma']['soru'], d['calisma']['masa'], 'al_masa_durumu' in u._masa_verisi({})['yetenekler'], "
+                      "u._masa_verisi({}).get('ev')]))")
+            self.assertEqual(self.calistir(t, claude), ["S", 2, True, None], "Claude'da da canlı masa; ev ChatGPT değil")
 
     def test_yeniden_acilan_masa_numarasi(self):
         """21.11.2026: model masayı aynı sohbette yeniden açarsa iki masa aynı akışı alt alta göstermesin; her açılış bir
@@ -3027,8 +3031,57 @@ class ChatGPTKipiTesti(unittest.TestCase):
                    "d['masa'], e['masa'], e.get('degismedi')]))")
             self.assertEqual(self.calistir(t, kod), [1, 2, 2, 2, True])
             claude = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
-                      "print(json.dumps('canli_masa' in u._arac('al_masasi', {})['structuredContent']))")
-            self.assertFalse(self.calistir(t, claude), "Claude'da numara yok")
+                      "print(json.dumps(u._arac('al_masasi', {})['structuredContent'].get('canli_masa')))")
+            self.assertEqual(self.calistir(t, claude), 1, "Claude'da numara masanın sohbetini tanıtır")
+
+
+class CevapBildirimiTesti(unittest.TestCase):
+    """23.11.2026 kullanıcı isteği: "her cevap geldiğinde kullanıcı notification ile bilgilendirilmeli". Teslim bu
+    bilgisayardaki kurulumdan geçer; bildirim buradan gider. Bildirimde soru ve cevap metni yoktur (müvekkil bilgisi
+    kilit ekranına ve bildirim geçmişine yazılmaz); ayarla kapanır; aynı cevap iki kez teslim edilirse tek bildirim."""
+
+    calistir = ModulTesti.calistir
+
+    def test_metin_icerik_tasimaz_ve_xml_kacirilir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import bildirim as b; "
+                   "m = [b.metin(d, e) for d in ('tr', 'az', 'en', 'xx') for e in ('claude', 'chatgpt')]; "
+                   "x = b.windows_betigi(\"A'nın <b>&\", 'g', 'claude://'); "
+                   "print(json.dumps([m, x]))")
+            metinler, betik = self.calistir(t, kod)
+        self.assertEqual({b for b, _ in metinler}, {"ArthurLegal"})
+        self.assertIn("Claude'daki", metinler[0][1])
+        self.assertIn("ChatGPT'deki", metinler[1][1])
+        self.assertIn("in Claude", metinler[4][1])
+        self.assertEqual(metinler[6], metinler[0], "bilinmeyen dil Türkçe")
+        self.assertIn("A''nın &lt;b&gt;&amp;", betik, "metin XML'e ve PowerShell dizgisine kaçırılır")
+        self.assertIn('launch="claude://"', betik)
+        self.assertIn("CreateToastNotifier('ArthurLegal.Masa')", betik)
+
+    def test_ayar_kapatir_ve_tek_bildirim(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import os; import bildirim as b; gosterilen = []; b._goster = lambda d, e: gosterilen.append(d); "
+                   "os.environ['AL_BILDIRIM'] = '1'; ilk = b.cevap_geldi('tr', None); ikinci = b.cevap_geldi('tr', None); "
+                   "os.environ['AL_BILDIRIM'] = '0'; b._son = 0.0; kapali = b.cevap_geldi('tr', None); "
+                   "import time; time.sleep(0.2); print(json.dumps([ilk, ikinci, kapali, gosterilen]))")
+            self.assertEqual(self.calistir(t, kod), [True, False, False, ["tr"]])
+            (t / "kok" / "ayar.json").write_text(json.dumps({"bildirim": False}), encoding="utf-8")
+            kod = "import os; os.environ['AL_BILDIRIM'] = '1'; import bildirim as b; print(json.dumps(b.acik()))"
+            self.assertFalse(self.calistir(t, kod), "ayar.json'da bildirim false kapatır")
+
+    def test_sunucu_yalniz_gercek_oturumda_ve_basarili_teslimde_bildirir(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s, bildirim; giden = []; bildirim.cevap_geldi = lambda d, e: giden.append([d, e]); "
+                   "u = s.Sunucu(); u._arac('al_masaya_yaz', {'soru': 's', 'cevap': 'c'}); a = len(giden); "
+                   "u.baslatildi = True; u._arac('al_masaya_yaz', {'soru': 's', 'cevap': ''}); b = len(giden); "
+                   "u._arac('al_masaya_yaz', {'soru': 's', 'cevap': 'c'}); print(json.dumps([a, b, len(giden)]))")
+            self.assertEqual(self.calistir(t, kod), [0, 0, 1], "deneme ve hatalı teslim bildirmez")
 
 
 if __name__ == "__main__":

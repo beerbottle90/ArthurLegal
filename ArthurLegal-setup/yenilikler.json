@@ -1,4 +1,18 @@
 {
+ "3.4.7": {
+  "tr": [
+   "Masa artık akan bir sohbet: yeni soru sorduğunuzda önceki soru ve cevaplar ekranda kalır, cevap yazılırken masada akar ve cevaplanmış soru bir daha \"Claude çalışıyor\"da takılmaz. Masa, Claude'un açtığı öteki pencereler görünmese de işi bilgisayarınızdaki kurulumdan okur.",
+   "Cevap masaya gelince bilgisayarınız bildirim gösterir (Windows ve macOS). Bildirimde sorunuzun ve cevabın metni yoktur. Geçmiş ilk açılışta boş görünmez."
+  ],
+  "az": [
+   "Masa artıq axan söhbətdir: yeni sual verəndə əvvəlki suallar və cavablar ekranda qalır, cavab yazılarkən masada axır və cavablanmış sual bir daha \"Claude işləyir\"də ilişib qalmır. Masa Claude-un açdığı digər pəncərələr görünməsə də işi kompüterinizdəki quraşdırmadan oxuyur.",
+   "Cavab masaya gələndə kompüteriniz bildiriş göstərir (Windows və macOS). Bildirişdə sualınızın və cavabın mətni yoxdur. Tarixçə ilk açılışda boş görünmür."
+  ],
+  "en": [
+   "The desk is now a flowing conversation: earlier questions and answers stay on screen when you ask a new one, the answer flows onto the desk while it is being written, and an answered question no longer gets stuck on \"Claude is working\". The desk reads the work from the installation on your computer even when the other windows Claude opens are not visible.",
+   "Your computer shows a notification when the answer reaches the desk (Windows and macOS). The notification contains neither your question nor the answer. History is no longer empty on first open."
+  ]
+ },
  "3.4.6": {
   "tr": [
    "ArthurLegal işe başlamadan önce sorunun alanını belirler, o alanın büro profilini okur ve işe uyan iş akışını sizin komut yazmanızı beklemeden kendisi uygular. Profil ya da iş akışı açılamazsa bunu cevabın inceleme notunda söyler.",

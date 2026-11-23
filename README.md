@@ -807,6 +807,64 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-347"></a>
+
+## Setup 3.4.7: The desk as a flowing conversation; a notification for every answer (2026-11-23)
+
+**A flowing conversation.** A user's screen recording (Claude Desktop, Windows) showed three problems: when a new
+question was asked, the previous question and answer disappeared from the desk; while Claude was writing a long answer
+(1 min 42 s in the recording) the desk only said "Claude is working" and the whole answer arrived at once; and an
+answered question sometimes showed "Claude is working" again. Two measured causes: since 14 November 2026 Claude
+Desktop refuses to let a window switch to full screen by itself, so the window the user opened stays on screen and the
+windows of later tool calls open late or not at all; and when a chat is drawn again (returning to it, minimising the
+desk, restarting) every old window opens again within a second and replays its call. Now the Sohbet screen draws the
+whole conversation (earlier turns above, the current work below), the answer flows onto the desk while it is being
+written, a window that opens again only draws its own part, and on a computer with ArthurLegal installed the desk on
+screen also reads the work from the installation (Claude writes the desk number into the question and the answer, so
+the work of another chat never reaches this desk). History no longer shows an empty list while the installation is
+starting. A question sent from the desk's own box enters the flow at once, and the desk says so when Claude Desktop
+asks you to confirm it.
+
+**A notification for every answer.** When the answer reaches the desk, your computer shows a notification (Windows
+notification centre, macOS Notification Centre). It contains neither your question nor the answer, so no client
+information reaches the lock screen or the notification history. To turn it off, set `"bildirim": false` in
+`ayar.json`.
+
+Packages, Claude plugin 1.12.24 and ChatGPT skills 1.12.15 unchanged; desk 3.4.7. How it arrives: the updater
+installs 3.4.7 on Windows and on a Mac by itself; the new desk opens after Claude Desktop is restarted.
+
+**Türkçe:** Masa artık akan bir sohbet. Bir kullanıcının ekran kaydı (Claude Desktop, Windows) üç sorun gösterdi: yeni
+soru sorulunca önceki soru ve cevap masadan kalkıyordu; Claude uzun bir cevabı yazarken (kayıtta 1 dk 42 sn) masa
+yalnız "Claude çalışıyor" diyordu ve cevap bir anda düşüyordu; cevaplanmış soru bazen yeniden "Claude çalışıyor"a
+dönüyordu. Ölçülen iki neden: Claude Desktop 14 Kasım 2026'dan beri pencerelerin kendiliğinden tam ekrana geçmesine
+izin vermiyor, ekranda kullanıcının açtığı pencere kalıyor ve sonraki araçların pencereleri geç açılıyor ya da hiç
+açılmıyor; sohbet yeniden çizilince (sohbete dönüş, masayı küçültme, yeniden başlatma) bütün eski pencereler bir
+saniye içinde yeniden açılıp çağrılarını yineliyor. Şimdi Sohbet ekranı konuşmanın tamamını çizer (eski turlar üstte,
+süren iş altta), cevap yazılırken masada akar, yeniden açılan pencere yalnız kendi payını çizer ve ArthurLegal kurulu
+bilgisayarda ekrandaki masa işi kurulumdan da okur (Claude soruya ve cevaba masa numarasını yazar; başka sohbetin işi
+bu masaya düşmez). Geçmiş, kurulum açılırken boş liste göstermez. Masanın kendi kutusundan gönderilen soru hemen akışa
+girer; Claude Desktop onay isterse masa bunu söyler. Her cevapta bildirim: cevap masaya gelince bilgisayarınız
+bildirim gösterir (Windows bildirim merkezi, macOS Bildirim Merkezi). Bildirimde sorunuzun ve cevabın metni yoktur;
+müvekkil bilgisi kilit ekranına ve bildirim geçmişine yazılmaz. Kapatmak için `ayar.json`'da `"bildirim": false`.
+Paketler, Claude eklentisi 1.12.24 ve ChatGPT becerileri 1.12.15 aynı; masa 3.4.7. Güncelleyici 3.4.7'yi Windows'ta
+ve Mac'te kendisi kurar; yeni masa Claude Desktop yeniden açılınca gelir.
+
+**Azərbaycan dili:** Masa artıq axan söhbətdir. Bir istifadəçinin ekran yazısı (Claude Desktop, Windows) üç problem
+göstərdi: yeni sual veriləndə əvvəlki sual və cavab masadan gedirdi; Claude uzun cavab yazarkən (yazıda 1 dəq 42 san)
+masa yalnız "Claude işləyir" deyirdi və cavab birdən gəlirdi; cavablanmış sual bəzən yenidən "Claude işləyir"ə
+qayıdırdı. Ölçülmüş iki səbəb: Claude Desktop 14 noyabr 2026-dan bəri pəncərələrin özbaşına tam ekrana keçməsinə icazə
+vermir, ekranda istifadəçinin açdığı pəncərə qalır və sonrakı alətlərin pəncərələri gec açılır və ya heç açılmır;
+söhbət yenidən çəkiləndə (söhbətə qayıdış, masanı kiçiltmə, yenidən başlatma) bütün köhnə pəncərələr bir saniyə
+ərzində yenidən açılıb çağırışlarını təkrarlayır. İndi Söhbət ekranı söhbətin tamamını çəkir (köhnə turlar yuxarıda,
+davam edən iş aşağıda), cavab yazılarkən masada axır, yenidən açılan pəncərə yalnız öz payını çəkir və ArthurLegal
+quraşdırılmış kompüterdə ekrandakı masa işi quraşdırmadan da oxuyur (Claude suala və cavaba masa nömrəsini yazır;
+başqa söhbətin işi bu masaya düşmür). Tarixçə quraşdırma açılarkən boş siyahı göstərmir. Masanın öz qutusundan
+göndərilən sual dərhal axına düşür; Claude Desktop təsdiq istəsə, masa bunu deyir. Hər cavabda bildiriş: cavab masaya
+gələndə kompüteriniz bildiriş göstərir (Windows bildiriş mərkəzi, macOS Bildiriş Mərkəzi). Bildirişdə sualınızın və
+cavabın mətni yoxdur; müştəri məlumatı kilid ekranına və bildiriş tarixçəsinə yazılmır. Söndürmək üçün `ayar.json`-da
+`"bildirim": false`. Paketlər, Claude plagini 1.12.24 və ChatGPT bacarıqları 1.12.15 dəyişmədi; masa 3.4.7.
+Yeniləyici 3.4.7-ni Windows-da və Mac-də özü quraşdırır; yeni masa Claude Desktop yenidən açılanda gəlir.
+
 <a id="setup-346"></a>
 
 ## Setup 3.4.6: Profile and workflow before work starts (2026-11-23)

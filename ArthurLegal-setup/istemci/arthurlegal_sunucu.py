@@ -25,6 +25,7 @@ import time
 import traceback
 import urllib.error
 
+import bildirim
 import dogrulama_kaydi
 import hafiza
 import ortak
@@ -704,8 +705,9 @@ def masa_araclari(ev=None):
             if meta:
                 basla["_meta"] = meta
             araclar.insert(1, basla)
-    # ChatGPT'de açık masa soruyu, adımları ve cevabı bu araçla yoklar (yalnız masa çağırır).
-    if ev == "chatgpt" and hasattr(al_arayuz, "canli_araci"):
+    # Açık masa soruyu, adımları ve cevabı bu araçla yoklar (yalnız masa çağırır). ChatGPT'de görünümü yalnız
+    # al_masasi taşır; Claude Desktop'ta (23.11.2026) tam ekrandaki masa öteki pencereler görünmese de işi buradan okur.
+    if hasattr(al_arayuz, "canli_araci"):
         araclar.append(al_arayuz.canli_araci())
     # Masa geçmişi (al_gecmis): yalnız bu bilgisayarda, veri/masa-gecmisi; eski arayüz kopyasında yoksa eklenmez.
     if hasattr(al_arayuz, "gecmis_araci"):
@@ -1039,9 +1041,10 @@ class Sunucu:
         if hasattr(al_arayuz, "dil_araci"):
             yetenekler.append("al_dil")
         yetenekler.append("al_guncelleme")
-        if self.ev == "chatgpt" and self.canli is not None:
+        if self.canli is not None:
             yetenekler.append("al_masa_durumu")
-            ek["ev"] = al_arayuz.CHATGPT_MASAUSTU
+            if self.ev == "chatgpt":
+                ek["ev"] = al_arayuz.CHATGPT_MASAUSTU
         # Kurulum sağlığı (kalite süreci 4): paket yüklenemiyorsa masa her ekranda uyarır ve onarım adımlarını
         # gösterir. 18.11.2026 olayında paket hiç yüklenmemişti ve kimse fark etmemişti.
         if hasattr(al_arayuz, "paket_uyarisi"):
@@ -1072,6 +1075,13 @@ class Sunucu:
                 veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
         except ValueError as e:  # TeslimHatasi
             return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+        # Cevap masaya geldi: bilgisayar bildirimi (23.11.2026, kullanıcı isteği). Yalnız gerçek oturumda (istemci
+        # bağlandıktan sonra); bildirimde sorunun ve cevabın metni yoktur.
+        if self.baslatildi:
+            try:
+                bildirim.cevap_geldi(veri.get("dil") or ortak.dil(), self.ev)
+            except Exception as e:  # noqa: BLE001 — bildirim teslimi bozmaz
+                ortak.gunluk("bildirim", f"bildirim başlatılamadı: {e!r}")
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
     def _basla(self, a):
@@ -1095,9 +1105,10 @@ class Sunucu:
                 "structuredContent": {"mesaj": mesaj[modul]}}
 
     def _arac(self, ad, a):
-        """ChatGPT'de (K25) açık masa soruyu, adımları ve cevabı bu süreçten okur: her çağrı canlı masaya işlenir.
-        Claude'da hiçbir şey tutulmaz (her araç kendi penceresinde masayı açar)."""
-        canli = self.canli if self.ev == "chatgpt" else None
+        """Açık masa soruyu, adımları ve cevabı bu süreçten de okur: her çağrı canlı masaya işlenir (yalnız bellekte).
+        ChatGPT'de (K25) görünümü yalnız al_masasi taşır. Claude Desktop'ta (23.11.2026) her araç kendi penceresinde masayı
+        açar, ama tam ekrandaki masa öteki pencereler görünmese de işi buradan okur; masa yalnız kendi sohbetininkini alır."""
+        canli = self.canli
         if canli is None:
             return self._arac_calistir(ad, a)
         if ad == "al_masa_durumu":
