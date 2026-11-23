@@ -1,4 +1,18 @@
 {
+ "3.4.6": {
+  "tr": [
+   "ArthurLegal işe başlamadan önce sorunun alanını belirler, o alanın büro profilini okur ve işe uyan iş akışını sizin komut yazmanızı beklemeden kendisi uygular. Profil ya da iş akışı açılamazsa bunu cevabın inceleme notunda söyler.",
+   "Cevap artık kaybolmaz: ArthurLegal cevabın tamamını masaya teslim eder ve sohbete iki üç cümlelik özetini de yazar. Masa hangi pencerede açık kaldıysa cevap orada da görünür; Geçmiş ekranı bilgisayarınızdaki kaydı her pencerede gösterir."
+  ],
+  "az": [
+   "ArthurLegal işə başlamazdan əvvəl sualın sahəsini müəyyən edir, həmin sahənin büro profilini oxuyur və işə uyğun iş axınını sizin əmr yazmağınızı gözləmədən özü tətbiq edir. Profil və ya iş axını açıla bilməsə, bunu cavabın yoxlama qeydində bildirir.",
+   "Cavab artıq itmir: ArthurLegal cavabın tamamını masaya təhvil verir və söhbətə iki üç cümləlik xülasəsini də yazır. Masa hansı pəncərədə açıq qalıbsa, cavab orada da görünür; Tarixçə ekranı kompüterinizdəki qeydi hər pəncərədə göstərir."
+  ],
+  "en": [
+   "Before it starts, ArthurLegal identifies the practice area of the question, reads that area's firm profile and applies the matching workflow without waiting for you to type a command. If a profile or workflow cannot be opened, it says so in the review note of the answer.",
+   "Answers are no longer lost: ArthurLegal delivers the full answer to the desk and also writes a two or three sentence summary in the chat. Whichever window the desk stayed open in, the answer appears there too; the History screen shows the record on your computer in every window."
+  ]
+ },
  "3.4.5": {
   "tr": [
    "İş akışlarında sözleşme türleri: mal alımı ve çerçeve, hizmet ve danışmanlık, eser ve inşaat, karayolu taşıma, sponsorluk, iş birliği ve mutabakat zaptı, aracılar arası iş birliği, satınalma şartnamesi, veri aktarım protokolü ve İngilizce genel koşullar. Başlat'a bastığınızda ArthurLegal o türün iskeletiyle taslak kurar, eksik bilgiyi seçenekli sorar.",

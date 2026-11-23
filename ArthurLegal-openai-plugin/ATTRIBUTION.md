@@ -1,4 +1,4 @@
-# Atıf — ArthurLegal Claude Law Firm Assistant v1.12.7
+# Atıf: ArthurLegal Claude Law Firm Assistant v1.12.8
 
 ## Yapı
 

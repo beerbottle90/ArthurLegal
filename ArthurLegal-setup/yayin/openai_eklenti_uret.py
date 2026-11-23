@@ -206,7 +206,8 @@ farklar şunlardır:
    `mcp__arthurlegal_yerel__al_masasi`): önce onu çağır; kurulum yoksa ArthurLegal bağlantısının `al_masasi`'sini.
    Aracı araç listende aramadan kullanıcıya bağlantıları ya da MCP'leri kontrol etmesini söyleme; kabuk komutu ya da
    tarayıcı kullanma. Masa açıldıktan sonra her soruda: önce `al_masada_basla`, sonra araştırma, en son cevabın
-   tamamıyla `al_masaya_yaz`; sohbete yalnız "Cevap masada." yaz.
+   tamamıyla `al_masaya_yaz`; sonra sohbete cevabın iki üç cümlelik özetini yaz ve tamamının masada olduğunu söyle
+   (`al_masaya_yaz` hata verirse cevabın tamamını sohbete yaz).
 2. **İş alanları.** Metinde "knowledge" diye geçen birleşik skill dosyalarının her bölümü bu pakette bir iş akışıdır ve
    kendi alan becerisinin `references/<iş-akışı>.md` dosyasındadır:
 {alanlar}
