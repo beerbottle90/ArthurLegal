@@ -1,4 +1,18 @@
 {
+ "3.4.8": {
+  "tr": [
+   "Hafıza klasörünüz ve bildirim gibi ayarlarınız, kurulumu yeniden çalıştırdığınızda da korunur.",
+   "Hafıza büyüdüğünde sohbet başında en yeni düzeltmeleriniz önce yüklenir; son oturum kartı ve açık konular da her zaman gelir, kalanını asistan gerektiğinde açar."
+  ],
+  "az": [
+   "Yaddaş qovluğunuz və bildiriş kimi ayarlarınız quraşdırmanı yenidən işə saldıqda da qorunur.",
+   "Yaddaş böyüdükdə söhbətin əvvəlində ən yeni düzəlişləriniz birinci yüklənir; son sessiya kartı və açıq mövzular da həmişə gəlir, qalanını köməkçi lazım olanda açır."
+  ],
+  "en": [
+   "Your memory folder and settings such as notifications now survive running the installer again.",
+   "When your memory grows, your newest corrections load first at the start of a conversation; the last session card and open threads always come along, and the assistant opens the rest when needed."
+  ]
+ },
  "3.4.7": {
   "tr": [
    "Masa artık akan bir sohbet: yeni soru sorduğunuzda önceki soru ve cevaplar ekrandan kalkmaz, yukarıda kalır; yeni iş altta akar.",
