@@ -807,6 +807,53 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-348"></a>
+
+## Setup 3.4.8: Running the installer again keeps your settings; memory loads your newest rules first (2026-11-23)
+
+**Settings survive a reinstall.** The installer used to write `ayar.json` from scratch, so running it again deleted
+the keys you had added yourself: `hafiza_dizini` (the memory folder, for example an existing Beyin vault) silently
+went back to the default folder, and `"bildirim": false` was lost. Now the Windows installer, the macOS package and the
+zip route leave the new settings as `ayar.yeni.json`, and the installation step that follows takes only ArthurLegal's
+own keys from it (update address, signing key, distribution); every key you added stays.
+
+**Memory loads your newest rules first.** At the start of a conversation ArthurLegal Memory loads a fixed amount of
+text. It used to spend it file by file, so in a large vault the corrections file filled it alone: its newest lines
+(at the end of the file) were cut, and the last session card and the open threads arrived empty. Now the amount is
+shared between the files (the corrections get two shares), the corrections are read from the end so the newest ones
+stay, nothing is cut in the middle of a line, and whatever is left out comes with a pointer for `hafiza_getir`. You can
+raise the amount with `"hafiza_butce"` in `ayar.json` (3,000 to 60,000 characters; default 9,000).
+
+Packages, Claude plugin 1.12.24 and ChatGPT skills 1.12.15 unchanged; desk 3.4.8. How it arrives: the updater installs
+3.4.8 on Windows and on a Mac by itself; the memory change applies after Claude Desktop is restarted.
+
+**Türkçe:** Kurulumu yeniden çalıştırmak ayarlarınızı silmez. Kurulum `ayar.json` dosyasını baştan yazıyordu; yeniden
+çalıştırınca sizin eklediğiniz anahtarlar siliniyordu: `hafiza_dizini` (hafıza klasörü, örneğin var olan bir Beyin
+kasası) sessizce varsayılan klasöre dönüyor, `"bildirim": false` kayboluyordu. Artık Windows kurulumu, macOS paketi ve
+zip yolu yeni ayarları `ayar.yeni.json` olarak bırakır; ardından çalışan kurulum adımı oradan yalnız ArthurLegal'in
+kendi anahtarlarını (güncelleme adresi, imza anahtarı, dağıtım) alır, sizin eklediğiniz her anahtar kalır. Hafıza en
+yeni kurallarınızı önce yükler: sohbet başında ArthurLegal Hafıza belirli miktarda metin yükler. Bu miktar dosya dosya
+harcanıyordu; büyük bir kasada düzeltmeler dosyası tek başına dolduruyor, dosyanın sonundaki en yeni satırlar
+kesiliyor, son oturum kartı ve açık konular boş geliyordu. Şimdi miktar dosyalar arasında paylaşılır (düzeltmeler iki
+pay alır), düzeltmeler sondan okunur ve en yeniler kalır, hiçbir satır ortasından kesilmez, kalan kısım için
+`hafiza_getir` yolu yazılır. Miktarı `ayar.json` içinde `"hafiza_butce"` ile büyütebilirsiniz (3.000 ile 60.000
+karakter arası; varsayılan 9.000). Paketler, Claude eklentisi 1.12.24 ve ChatGPT becerileri 1.12.15 aynı; masa 3.4.8.
+Güncelleyici 3.4.8'i Windows'ta ve Mac'te kendisi kurar; hafıza değişikliği Claude Desktop yeniden açılınca geçerli
+olur.
+
+**Azərbaycanca:** Quraşdırmanı yenidən işə salmaq ayarlarınızı silmir. Quraşdırma `ayar.json` faylını sıfırdan
+yazırdı; yenidən işə salanda sizin əlavə etdiyiniz açarlar silinirdi: `hafiza_dizini` (yaddaş qovluğu, məsələn mövcud
+Beyin anbarı) səssizcə standart qovluğa qayıdırdı, `"bildirim": false` itirdi. İndi Windows quraşdırması, macOS paketi
+və zip yolu yeni ayarları `ayar.yeni.json` kimi saxlayır; sonra işləyən quraşdırma addımı oradan yalnız ArthurLegal-ın
+öz açarlarını (yeniləmə ünvanı, imza açarı, paylama) götürür, sizin əlavə etdiyiniz hər açar qalır. Yaddaş ən yeni
+qaydalarınızı birinci yükləyir: söhbətin əvvəlində ArthurLegal Yaddaş müəyyən həcmdə mətn yükləyir. Bu həcm fayl-fayl
+xərclənirdi; böyük anbarda düzəlişlər faylı onu tək doldururdu, faylın sonundakı ən yeni sətirlər kəsilirdi, son
+sessiya kartı və açıq mövzular boş gəlirdi. İndi həcm fayllar arasında bölüşdürülür (düzəlişlər iki pay alır),
+düzəlişlər sondan oxunur və ən yeniləri qalır, heç bir sətir ortasından kəsilmir, qalan hissə üçün `hafiza_getir` yolu
+yazılır. Həcmi `ayar.json`-da `"hafiza_butce"` ilə artıra bilərsiniz (3.000 ilə 60.000 simvol arası; standart 9.000).
+Paketlər, Claude plagini 1.12.24 və ChatGPT bacarıqları 1.12.15 dəyişmədi; masa 3.4.8. Yeniləyici 3.4.8-i Windows-da
+və Mac-də özü quraşdırır; yaddaş dəyişikliyi Claude Desktop yenidən açılanda qüvvəyə minir.
+
 <a id="setup-347"></a>
 
 ## Setup 3.4.7: The desk as a flowing conversation; a notification for every answer (2026-11-23)
