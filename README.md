@@ -826,7 +826,7 @@ justify building an MCP server, and which already have a good enough public API.
   `arthurlegal-yerel`.
 - Packages: Law Firm 1.12.8 (system prompt changed: section 4 item 12, sections 5 and 12 point to it; 1.12.7 is in
   `arsiv/`). Corporate Assistant 1.12.7, Courthouse 1.2.6 and Academician 1.1.7 unchanged. If you use a claude.ai
-  Project with the Law Firm package, paste the system prompt again. Claude plugin 1.12.24, ChatGPT skills 1.12.14,
+  Project with the Law Firm package, paste the system prompt again. Claude plugin 1.12.24, ChatGPT skills 1.12.15,
   desk 3.4.6. How it arrives: the updater installs 3.4.6 on Windows and on a Mac by itself.
 
 **Türkçe:** Hazırlık kapısı: ArthurLegal ilk araştırma, araç çağrısı ya da taslak adımından önce işin alanını belirler,
@@ -842,7 +842,7 @@ Geçmiş ekranı her pencerede bu bilgisayardaki kaydı okur ve yerel masada Cla
 sunucusundan çağırması söylenir. Paketler: Hukuk Bürosu 1.12.8 (sistem talimatı
 değişti: bölüm 4 madde 12, bölüm 5 ve 12 buna bağlandı; 1.12.7 `arsiv/` klasöründe); Kurumsal 1.12.7, Courthouse
 1.2.6 ve Akademisyen 1.1.7 aynı. Hukuk Bürosu paketini claude.ai Project'te kullanıyorsanız sistem talimatını yeniden
-yapıştırın. Claude eklentisi 1.12.24, ChatGPT becerileri 1.12.14, masa 3.4.6. Güncelleyici 3.4.6'yı Windows'ta ve
+yapıştırın. Claude eklentisi 1.12.24, ChatGPT becerileri 1.12.15, masa 3.4.6. Güncelleyici 3.4.6'yı Windows'ta ve
 Mac'te kendisi kurar.
 
 **Azərbaycan dili:** Hazırlıq qapısı: ArthurLegal ilk araşdırma, alət çağırışı və ya layihə addımından əvvəl işin
@@ -858,7 +858,7 @@ təhvil verilən cavabı da göstərir (söhbətlər qarışmır), Tarixçə ekr
 yerli masada Claude-a masa alətlərini `arthurlegal-yerel` serverindən çağırması deyilir. Paketlər: Hüquq Bürosu 1.12.8 (sistem təlimatı dəyişdi: bölmə 4 bənd 12, bölmə 5 və 12 ona bağlandı; 1.12.7
 `arsiv/` qovluğundadır); Korporativ 1.12.7, Courthouse 1.2.6 və Akademik 1.1.7 dəyişmədi. Hüquq Bürosu paketini
 claude.ai Project-də istifadə edirsinizsə, sistem təlimatını yenidən yapışdırın. Claude plagini 1.12.24, ChatGPT
-bacarıqları 1.12.14, masa 3.4.6. Yeniləyici 3.4.6-nı Windows-da və Mac-də özü quraşdırır.
+bacarıqları 1.12.15, masa 3.4.6. Yeniləyici 3.4.6-nı Windows-da və Mac-də özü quraşdırır.
 
 <a id="setup-345"></a>
 
