@@ -350,7 +350,10 @@ Source: "{#Kaynak}\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion re
 Source: "{#Kaynak}\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#Kaynak}\surumler\{#Surum}\*"; DestDir: "{app}\surumler\{#Surum}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#Kaynak}\rehber\*"; DestDir: "{app}\rehber"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#Kaynak}\ayar.json"; DestDir: "{app}"; Flags: ignoreversion
+; ayar.json doğrudan yazılmaz: yeniden kurulum kullanıcının eklediği anahtarları (hafiza_dizini, bildirim ...)
+; silerdi. Dosya ayar.yeni.json adıyla iner, kur --kurulum yayıncı anahtarlarını ayar.json'a işler
+; (ortak.ayar_birlestir).
+Source: "{#Kaynak}\ayar.json"; DestDir: "{app}"; DestName: "ayar.yeni.json"; Flags: ignoreversion
 Source: "{#Kaynak}\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#Kaynak}\LISANS.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#Kaynak}\LISENZIYA.txt"; DestDir: "{app}"; Flags: ignoreversion

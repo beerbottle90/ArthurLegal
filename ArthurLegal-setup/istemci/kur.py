@@ -744,6 +744,8 @@ def zip_kurulum() -> int:
         if goreli.parts and goreli.parts[0] == "veri":
             continue
         hedef = VARSAYILAN_KOK / goreli
+        if goreli == Path("ayar.json"):  # kullanıcının ayarları ezilmez: kur --kurulum birleştirir (ortak.ayar_birlestir)
+            hedef = VARSAYILAN_KOK / ortak.YENI_AYAR
         if y.is_dir():
             hedef.mkdir(parents=True, exist_ok=True)
         else:
@@ -775,6 +777,12 @@ def main(argv=None) -> int:
     ap.add_argument("--asistan", choices=ortak.ASISTAN_SECIMLERI,
                     help="kurulumda seçilen yapay zekâ uygulaması: claude, chatgpt ya da ikisi")
     args = ap.parse_args(argv)
+    if not args.zip_kurulum:  # kurulum dosyası ayar.json'u ayar.yeni.json olarak bırakır; yayıncı anahtarları işlenir
+        try:
+            if ortak.ayar_birlestir():
+                ortak.gunluk("kurulum", "ayar.json: kurulumun yayıncı ayarları işlendi, kullanıcı ayarları korundu")
+        except OSError as e:
+            ortak.gunluk("kurulum", f"ayar.json birleştirilemedi: {e!r}")
     if args.dil and not args.zip_kurulum:
         ortak.durum_guncelle(dil=args.dil)
     if args.arayuz and not args.zip_kurulum:

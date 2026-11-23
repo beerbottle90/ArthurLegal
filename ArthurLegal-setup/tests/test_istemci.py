@@ -5,6 +5,7 @@ ve güncelleyici (sahte GitHub yayınıyla). Ağa çıkmaz; her şey 127.0.0.1'd
 """
 import contextlib
 import http.server
+import inspect
 import io
 import json
 import os
@@ -265,6 +266,50 @@ class BuroSimgesiTesti(unittest.TestCase):
 
 class KurulumBetigiTesti(unittest.TestCase):
     """Üzerine kurulum: kısayollar kurulan sürümün koduyla yazılır, Başlat menüsü klasörü ürün adından gelir."""
+
+    def test_kurulum_ayar_json_u_ezmez(self):
+        """23.11.2026: yeniden kurulum ayar.json'u ezip kullanıcının anahtarlarını (hafiza_dizini, bildirim) siliyordu.
+        Windows kurulumu, macOS paketi ve zip yolu dosyayı ayar.yeni.json olarak bırakır; kur --kurulum birleştirir."""
+        import kur
+        import ortak
+        iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
+        self.assertIn(r'Source: "{#Kaynak}\ayar.json"; DestDir: "{app}"; DestName: "ayar.yeni.json"', iss)
+        self.assertNotRegex(iss, r'(?m)^Source: "\{#Kaynak\}\\ayar\.json"; DestDir: "\{app\}"; Flags')
+        self.assertEqual(ortak.YENI_AYAR, "ayar.yeni.json")
+        mac = (BURASI / "yayin" / "derle_macos.py").read_text(encoding="utf-8")
+        self.assertIn('ortak.json_yaz(kok / ortak.YENI_AYAR, {', mac)
+        self.assertNotIn('ortak.json_yaz(kok / "ayar.json"', mac)
+        self.assertIn("ortak.YENI_AYAR", inspect.getsource(kur.zip_kurulum))
+        for anahtar in ("manifest_url", "yedek_depo", "kanal", "uzak_mcp", "yayin_anahtari", "dagitim_deposu", "jeton", "simge"):
+            self.assertIn(anahtar, ortak.YAYINCI_AYARLARI, "derle.py'nin yazdığı her anahtar yayıncınındır")
+        for anahtar in ("hafiza_dizini", "hafiza_butce", "bildirim"):
+            self.assertNotIn(anahtar, ortak.YAYINCI_AYARLARI, "kullanıcının anahtarı korunur")
+
+    def test_ayar_birlestirme(self):
+        import ortak
+        with tempfile.TemporaryDirectory() as t:
+            kok = Path(t)
+            oku = lambda: json.loads((kok / "ayar.json").read_text(encoding="utf-8"))  # noqa: E731
+            yeni = lambda veri: (kok / "ayar.yeni.json").write_text(  # noqa: E731
+                veri if isinstance(veri, str) else json.dumps(veri), encoding="utf-8")
+            self.assertFalse(ortak.ayar_birlestir(kok), "yeni dosya yoksa bir şey yapılmaz")
+            self.assertFalse((kok / "ayar.json").exists())
+            yeni({"uzak_mcp": "https://u/mcp", "simge": "buro-1.ico", "jeton": "j"})
+            self.assertTrue(ortak.ayar_birlestir(kok))
+            self.assertEqual(oku(), {"uzak_mcp": "https://u/mcp", "simge": "buro-1.ico", "jeton": "j"}, "ilk kurulum")
+            self.assertFalse((kok / "ayar.yeni.json").exists())
+            (kok / "ayar.json").write_text(json.dumps({**oku(), "hafiza_dizini": "C:/Beyin", "bildirim": False}),
+                                           encoding="utf-8")
+            once = oku()
+            yeni("bozuk")
+            self.assertFalse(ortak.ayar_birlestir(kok))
+            self.assertEqual(oku(), once, "okunamayan yeni dosya ayara dokunmaz")
+            self.assertFalse((kok / "ayar.yeni.json").exists(), "bozuk dosya her çalışmada yeniden denenmez")
+            yeni({"uzak_mcp": "https://u2/mcp", "manifest_url": "https://m"})
+            self.assertTrue(ortak.ayar_birlestir(kok))
+            self.assertEqual(oku(), {"uzak_mcp": "https://u2/mcp", "manifest_url": "https://m", "hafiza_dizini": "C:/Beyin",
+                                     "bildirim": False},
+                             "yayıncı anahtarları yeni dosyadan (eski jeton ve büro simgesi kalkar), kullanıcınınkiler korunur")
 
     def test_uzerine_kurulum_yeni_kodla_ve_yeni_klasorle(self):
         iss = (BURASI / "kurulum" / "ArthurLegal.iss").read_text(encoding="utf-8-sig")
@@ -1597,6 +1642,23 @@ class ModulTesti(unittest.TestCase):
             r = self.calistir(t, "import kur; print(kur.main(['--kaydet', '--moduller', 'tapu']))")
             self.assertEqual(r, 2, "paket seçilmemiş: kurulum durur")
             self.assertEqual(self.calistir(t, kod), ["adliye", "mask"], "geçersiz seçim öncekini bozmaz")
+
+    def test_yeniden_kurulum_kullanici_ayarlarini_korur(self):
+        """Kurulumdan sonra çalışan kur, kurulumun bıraktığı ayar.yeni.json'u işler: hafıza kasası, bildirim ve
+        bütçe gibi kullanıcı anahtarları yeniden kurulumdan sağ çıkar."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            self.kok(t, "hukuk-burosu")
+            kok = t / "kok"
+            kullanici = {"hafiza_dizini": str(t / "Beyin"), "bildirim": False, "hafiza_butce": 30000}
+            (kok / "ayar.json").write_text(json.dumps({"manifest_url": "https://eski/m.json", "jeton": "eski",
+                                                       "dagitim_deposu": "buro/ozel", **kullanici}), encoding="utf-8")
+            yeni = {"manifest_url": "https://yeni/m.json", "yedek_depo": "beerbottle90/ArthurLegal", "kanal": "kararli",
+                    "uzak_mcp": "http://127.0.0.1:9/mcp", "yayin_anahtari": "ab" * 32}
+            (kok / "ayar.yeni.json").write_text(json.dumps(yeni), encoding="utf-8")
+            self.assertEqual(self.calistir(t, "import kur; print(kur.main(['--kaydet', '--moduller', 'hukuk-burosu']))"), 0)
+            self.assertEqual(json.loads((kok / "ayar.json").read_text(encoding="utf-8")), {**yeni, **kullanici})
+            self.assertFalse((kok / "ayar.yeni.json").exists())
 
     @SADECE_WINDOWS
     def test_courthouse_tapu_mask_simgeleri(self):
