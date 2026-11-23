@@ -522,6 +522,10 @@ uygulamanın kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, ara�
   teyit edilir; doğrulanamayan atıf işaretlenir ve Claude'a bildirilir. Cevabı tek tuşla kopyalarsınız; her adım
   ekranda bir kez görünür; cevaplar ve aramalar Geçmiş'te 90 gün durur: bu bilgisayarın diskinde, yeni sohbette ve güncellemede de (bilgisayarda ArthurLegal kuruluysa masa hep oradan açılır; web ve telefonda geçmiş yalnız açık sohbet boyunca durur). Masa her açılışta Sohbet'le başlar;
   Sohbet yalnız sorunuzun akışını gösterir, hızlı işler sol panelde.
+- **Hazırlanan dosyalar da masada.** Claude'dan Word taslağı, Excel tablosu ya da CSV isterseniz dosya cevabın hemen
+  altında **Aç**, **Klasörde göster** ve **İndir** düğmeleriyle gelir; sohbete geçmeniz gerekmez. Dosya bu bilgisayarda
+  Belgeler içindeki ArthurLegal klasörüne kaydedilir ve Geçmiş'ten de açılır. Word belgesi Times New Roman 11 punto,
+  başlık, liste ve tablolarıyla gelir; PDF için Word'de PDF olarak kaydedin.
 - **İsteğinizi yazın: mevzuat ve kurul kararları.** Mevzuat ve kararlar ekranında tek kutu var. "son 5 EPDK elektrik
   piyasası kurul kararı", "Rekabet Kurulu son 10 birleşme ve devralma kararı", "SPK son 3 bülten" ya da "6446 sayılı
   kanun" yazın; masa isteği çözer (kurum, kaç tane, piyasa ya da karar türü, yıl, konu) ve ilk satırda ne aradığını
@@ -573,7 +577,8 @@ official text. Paste a draft to check every article citation in it against the o
 (only the law and article numbers leave the page); the fee cards work out the minimum attorney fee, court fees and
 the advance on costs, interest (statutory, commercial default, fixed rate) and severance and notice pay (gross) in
 code, with the legal basis and official source on every line and a daily Official Gazette check behind the data;
-article and case-law results appear as ArthurLegal cards; Donna
+article and case-law results appear as ArthurLegal cards; files Claude prepares for you (Word, Excel, CSV) appear
+below the answer with Open, Show in folder and Download, saved in the ArthurLegal folder inside Documents; Donna
 summarises your day through the apps you have connected to Claude (their status comes from the same list as the MCP
 screen) and asks before creating or sending anything. On the web and in the Claude mobile app the desk comes from the
 research connector; the desktop-only modules say what they do and link to the download, and in Claude Desktop a desk
@@ -806,6 +811,58 @@ same as a working source.
 
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
+
+<a id="setup-350"></a>
+
+## Setup 3.5.0: Files Claude prepares open on the desk (2026-11-23)
+
+**Files on the desk.** When Claude prepared a file for you (a Word draft, an Excel table), it appeared only as a
+download card in the chat behind the desk, and you had to leave the desk to get it. Now Claude writes the file's
+content together with the answer (`al_masaya_yaz`, new `dosyalar` field) and the file appears right below the answer
+with **Open**, **Show in folder** and **Download**. Word (.docx), Excel (.xlsx), CSV, Markdown, text and HTML are
+supported. Word documents are built from Markdown in Times New Roman 11 pt with headings, numbered and bulleted lists,
+tables, quotes and links; in Excel every table becomes a sheet and Turkish amounts such as 25.000,00 become numbers.
+For a PDF, save the Word document as PDF in Word.
+
+**Where the files go.** On the desk on your computer, files are saved in the ArthurLegal folder inside Documents (an
+existing file is never overwritten; the new one gets "(2)") and they also open from History; choose another folder with
+`"dosya_dizini"` in `ayar.json`. The remote desk (web, phone) stores nothing on any server: the desk builds the file
+again when you press Download. If Claude still prepares a file in the chat, the desk says so and **Back to chat** makes
+the desk smaller so the chat's download card is visible.
+
+Also: small primary buttons (Open, Update now, OK) are visible in both themes again. Packages and Claude plugin 1.12.24
+unchanged; ChatGPT skills 1.12.16 (the same file rule); desk 3.5.0. How it arrives: the updater installs 3.5.0 on
+Windows and on a Mac by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Claude'un hazırladığı dosyalar artık masada. Claude bir dosya hazırladığında (Word taslağı, Excel tablosu)
+dosya yalnız masanın arkasındaki sohbette indirme kartı olarak görünüyordu; almak için masadan çıkmak gerekiyordu.
+Artık Claude dosyanın içeriğini cevapla birlikte yazar (`al_masaya_yaz`, yeni `dosyalar` alanı), dosya cevabın hemen
+altında **Aç**, **Klasörde göster** ve **İndir** düğmeleriyle görünür. Word (.docx), Excel (.xlsx), CSV, Markdown,
+metin ve HTML desteklenir. Word belgesi Markdown'dan Times New Roman 11 punto, başlık, numaralı ve madde işaretli
+liste, tablo, alıntı ve bağlantılarla kurulur; Excel'de her tablo bir sayfa olur, 25.000,00 gibi tutarlar sayı olur.
+PDF için Word belgesini Word'de PDF olarak kaydedin. Bilgisayarınızdaki masada dosyalar Belgeler içindeki ArthurLegal
+klasörüne kaydedilir (var olan dosyanın üzerine yazılmaz, yenisi "(2)" alır) ve Geçmiş'ten de açılır; başka klasör
+için `ayar.json` içinde `"dosya_dizini"`. Uzak masa (web, telefon) hiçbir sunucuda bir şey saklamaz: İndir'e basınca
+masa dosyayı yeniden kurar. Claude bir dosyayı yine de sohbette hazırladıysa masa bunu söyler; **Sohbete dön** masayı
+küçültür ve sohbetteki indirme kartı görünür. Ayrıca küçük birincil düğmeler (Aç, Şimdi güncelle, Tamam) iki temada da
+yeniden görünür. Paketler ve Claude eklentisi 1.12.24 aynı; ChatGPT becerileri 1.12.16 (aynı dosya kuralı); masa
+3.5.0. Güncelleyici 3.5.0'ı Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli
+olur.
+
+**Azərbaycanca:** Claude-un hazırladığı fayllar artıq masadadır. Claude fayl hazırlayanda (Word layihəsi, Excel
+cədvəli) fayl yalnız masanın arxasındakı söhbətdə yükləmə kartı kimi görünürdü; onu almaq üçün masadan çıxmaq lazım
+idi. İndi Claude faylın məzmununu cavabla birlikdə yazır (`al_masaya_yaz`, yeni `dosyalar` sahəsi), fayl cavabın dərhal
+altında **Aç**, **Qovluqda göstər** və **Yüklə** düymələri ilə görünür. Word (.docx), Excel (.xlsx), CSV, Markdown,
+mətn və HTML dəstəklənir. Word sənədi Markdown-dan Times New Roman 11 punkt, başlıq, nömrəli və markerli siyahı,
+cədvəl, sitat və keçidlərlə qurulur; Excel-də hər cədvəl bir vərəq olur, 25.000,00 kimi məbləğlər rəqəm olur. PDF
+üçün Word sənədini Word-də PDF kimi yadda saxlayın. Kompüterinizdəki masada fayllar Sənədlər içindəki ArthurLegal
+qovluğuna yazılır (mövcud faylın üzərinə yazılmır, yenisi "(2)" alır) və Tarixçədən də açılır; başqa qovluq üçün
+`ayar.json`-da `"dosya_dizini"`. Uzaq masa (veb, telefon) heç bir serverdə heç nə saxlamır: Yüklə düyməsini basanda
+masa faylı yenidən qurur. Claude faylı yenə də söhbətdə hazırlayıbsa, masa bunu deyir; **Söhbətə qayıt** masanı
+kiçildir və söhbətdəki yükləmə kartı görünür. Həmçinin kiçik əsas düymələr (Aç, İndi yenilə, Oldu) hər iki temada
+yenidən görünür. Paketlər və Claude plagini 1.12.24 dəyişmədi; ChatGPT bacarıqları 1.12.16 (eyni fayl qaydası); masa
+3.5.0. Yeniləyici 3.5.0-ı Windows-da və Mac-də özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda qüvvəyə
+minir.
 
 <a id="setup-348"></a>
 

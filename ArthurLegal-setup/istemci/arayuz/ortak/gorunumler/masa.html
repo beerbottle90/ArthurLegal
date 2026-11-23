@@ -628,7 +628,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // sohbete cevabın kısa özeti de yazılır. Masa hangi nedenle görünmezse görünsün cevabın özü sohbettedir; tamamı masada.
   const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabın tamamını " +
     "al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu " +
-    "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın.";
+    "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) " +
+    "içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
   // Masa bu bilgisayardaki kurulumdan açıksa masa araçları da oradan çağrılır: cevap bu bilgisayarın geçmişine yazılır.
   const YEREL_NOTU = " Masa bu bilgisayardaki kurulumdan açık: al_masada_basla ve al_masaya_yaz araçlarını " +
     "arthurlegal-yerel sunucusundan çağırın, uzak ArthurLegal bağlayıcısındaki aynı adlı araçları kullanmayın.";
@@ -1774,6 +1775,146 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   const dizgi = (x) => (typeof x === "string" ? x : "");
 
+  // ---- Dosyalar (3.5.0) ----
+  // Kullanıcı: "Claude herhangi bir dosya üretir ve indirmem için bana getirirse bu dosyalar AL masasında gözükmüyor,
+  // chat'e geçmek gerekiyor." Claude dosyanın içeriğini al_masaya_yaz'ın dosyalar alanına yazar. Bilgisayardaki
+  // kurulum dosyayı Belgeler içindeki ArthurLegal klasörüne kaydeder ve bilgisini (kayit, yol, boyut) teslimin sonucunda
+  // verir: masa Aç, Klasörde göster ve İndir düğmelerini çizer. Uzak uç hiçbir şey saklamaz: masa indirirken içeriği
+  // al_dosya ile yeniden kurdurur. İçeriği yazılmayan dosya Claude'un sohbetindedir: masa bunu söyler ve sohbete döndürür.
+  const DOSYA = "al_dosya";
+  const BICIM_ADI = { docx: "Word", xlsx: "Excel", csv: "CSV", md: "Markdown", txt: cevN("Metin"), html: "HTML" };
+  const DOSYA_ICERIK_SINIRI = 200000;   // karakter: kaydedilmemiş dosyanın içeriği sohbet deposunda en çok bu kadar tutulur
+  function dosyalarDuzenle(liste) {
+    return (Array.isArray(liste) ? liste : []).filter((d) => d && typeof d === "object" && dizgi(d.ad).trim()).slice(0, 5)
+      .map((d) => {
+        const o = { ad: dizgi(d.ad).trim().slice(0, 140), bicim: dizgi(d.bicim).trim().toLowerCase().replace(/^\./, "") };
+        if (!o.bicim) { const m = /\.([a-z0-9]{1,5})$/i.exec(o.ad); o.bicim = m ? m[1].toLowerCase() : ""; }
+        if (typeof d.icerik === "string" && d.icerik.trim()) o.icerik = d.icerik;
+        if (typeof d.kayit === "string" && d.kayit) o.kayit = d.kayit;
+        if (typeof d.yol === "string" && d.yol) o.yol = d.yol;
+        if (Number.isFinite(d.boyut) && d.boyut >= 0) o.boyut = d.boyut;
+        if (typeof d.hata === "string" && d.hata) o.hata = d.hata;
+        if (d.sohbette === true) o.sohbette = true;
+        return o;
+      });
+  }
+  // Sunucunun teslim sonucundaki bilgi (kayıtlı ad, yol, boyut) Claude'un yazdığı girdiyle sırayla birleşir.
+  function dosyaBilgisiAl(c, bilgi) {
+    const gelen = dosyalarDuzenle(bilgi);
+    if (!c || !gelen.length) return;
+    const eski = c.dosyalar || [];
+    c.dosyalar = gelen.map((g, i) => ({ ...(eski[i] || {}), ...g }));
+  }
+  // Depolara (sohbet akışı, paylaşılan cevap, geçmiş) giden biçim: kaydedilmiş dosyanın içeriği tutulmaz (dosya
+  // bilgisayarda); kaydedilmemişinki yalnız toplamı sınırın altındaysa tutulur.
+  function dosyaKaydi(liste) {
+    let kalan = DOSYA_ICERIK_SINIRI;
+    return (liste || []).map(({ icerik, ...d }) => {
+      if (icerik && !d.kayit && icerik.length <= kalan) { kalan -= icerik.length; return { ...d, icerik }; }
+      return d;
+    });
+  }
+  const dosyaAdi = (d) => (d.bicim && !d.ad.toLowerCase().endsWith("." + d.bicim) ? d.ad + "." + d.bicim : d.ad);
+  const boyutYaz = (n) => (n < 1024 ? cev("{0} bayt", n) : n < 1048576 ? cev("{0} KB", Math.max(1, Math.round(n / 1024)))
+    : cev("{0} MB", (n / 1048576).toFixed(1).replace(".", DIL.secili === "en" ? "." : ",")));
+  const klasorAdi = (yol) => { const p = dizgi(yol).split(/[\\/]/); p.pop(); return p.slice(-2).join(yol.includes("\\") ? "\\" : "/"); };
+  const indirmeVar = () => { try { const h = app.getHostCapabilities && app.getHostCapabilities(); return !!(h && h.downloadFile); } catch { return false; } };
+  const dosyaAraci = () => DURUM.yetenekler.has(DOSYA);
+  const yerelDosya = (d) => !!d.kayit && dosyaAraci() && DURUM.ortam === "masaustu";
+
+  async function dosyaIslemi(d, islem, dg) {
+    if (dg) dg.disabled = true;
+    try {
+      const { hata } = await AL.cagir(app, DOSYA, { islem, ad: d.kayit });
+      ortam.duyuru.textContent = hata
+        ? (islem === "ac" ? cev("Dosya açılamadı; taşınmış ya da silinmiş olabilir.") : cev("Klasör açılamadı; dosya taşınmış ya da silinmiş olabilir."))
+        : (islem === "ac" ? cev("{0} açılıyor.", dosyaAdi(d)) : cev("Klasör açılıyor."));
+    } catch {
+      ortam.duyuru.textContent = cev("Dosya açılamadı; taşınmış ya da silinmiş olabilir.");
+    } finally { if (dg) dg.disabled = false; }
+  }
+  async function dosyaIndir(d, dg) {
+    if (dg) dg.disabled = true;
+    try {
+      const girdi = yerelDosya(d) ? { islem: "indir", ad: d.kayit } : { islem: "uret", ad: d.ad, bicim: d.bicim, icerik: d.icerik };
+      const { veri, hata } = await AL.cagir(app, DOSYA, girdi);
+      if (hata || !veri || typeof veri.veri !== "string") throw new Error(hata || "");
+      const r = await app.downloadFile({ contents: [{ type: "resource", resource: {
+        uri: "file:///" + (dizgi(veri.indirme_adi) || "ArthurLegal-belge"), mimeType: dizgi(veri.mime) || "application/octet-stream",
+        blob: veri.veri } }] });
+      ortam.duyuru.textContent = r && r.isError ? cev("İndirme iptal edildi.") : cev("{0} indiriliyor.", dosyaAdi(d));
+    } catch {
+      ortam.duyuru.textContent = cev("Dosya indirilemedi.");
+    } finally { if (dg) dg.disabled = false; }
+  }
+  // Dosya Claude'un sohbetinde: masa sohbetin içine küçülür, kullanıcı indirme kartını görür (masa yeniden büyütülür).
+  async function sohbeteDon() {
+    DURUM.tamEkranIste = false;
+    try {
+      await app.requestDisplayMode({ mode: "inline" });
+      ortam.duyuru.textContent = cev("Masa küçüldü: dosyanın indirme kartı sohbette.");
+    } catch {
+      ortam.duyuru.textContent = cev("Masa küçültülemedi: dosyanın indirme kartı sohbette.");
+    }
+  }
+  function dosyaSatiri(d, c) {
+    const o = ogesi("div", "liste-ogesi dosya sarar");   // dar ekranda düğmeler alta iner
+    const sim = ogesi("span", "simge");
+    sim.append(ikon("belge"));
+    const mt = ogesi("div", "metinler");
+    mt.append(ogesi("span", "ad", dosyaAdi(d)));
+    const yaziliyor = !c.tamam && !c.kesildi;
+    const bicim = BICIM_ADI[d.bicim] || dizgi(d.bicim).toUpperCase();
+    const bilgi = [bicim, Number.isFinite(d.boyut) ? boyutYaz(d.boyut) : ""].filter(Boolean).join(" · ");
+    const sohbette = !yaziliyor && !d.kayit && !d.icerik;
+    let ne = bilgi;
+    if (yaziliyor) ne = cev("Hazırlanıyor…");
+    else if (sohbette) ne = d.sohbette ? cev("Bu dosya Claude'un sohbetinde; indirme kartı sohbette.") : cev("Dosyanın içeriği bu kayıtta yok.");
+    else if (d.hata) ne = cev("{0} · bilgisayara kaydedilemedi, masadan indirebilirsiniz", bilgi);
+    else if (d.yol) ne = cev("{0} · {1} klasöründe", bilgi, klasorAdi(d.yol));
+    mt.append(ogesi("span", "ne", ne));
+    const ey = ogesi("div", "eylemler");
+    if (!yaziliyor) {
+      if (yerelDosya(d)) {
+        const ac = dugme(cev("Aç"), { sinif: "kucuk birincil", simge: "dis" });
+        ac.onclick = () => dosyaIslemi(d, "ac", ac);
+        const gs = dugme(cev("Klasörde göster"), { sinif: "kucuk", simge: "klasor" });
+        gs.onclick = () => dosyaIslemi(d, "goster", gs);
+        ey.append(ac, gs);
+        if (indirmeVar()) {
+          const ind = dugme(cev("İndir"), { sinif: "kucuk", simge: "indir" });
+          ind.onclick = () => dosyaIndir(d, ind);
+          ey.append(ind);
+        }
+      } else if (d.icerik && dosyaAraci() && indirmeVar()) {
+        const ind = dugme(cev("İndir"), { sinif: "kucuk birincil", simge: "indir" });
+        ind.onclick = () => dosyaIndir(d, ind);
+        ey.append(ind);
+      } else if (d.icerik) {
+        const kp = dugme(cev("İçeriği kopyala"), { sinif: "kucuk", simge: "kopya" });
+        kp.onclick = () => kopyala(d.icerik, kp, null, ortam.duyuru);
+        ey.append(kp);
+        mt.append(ogesi("span", "ne", cev("Bu uygulama masadan indirmeye izin vermiyor; içeriği kopyalayabilir ya da masayı bilgisayardaki kurulumdan açabilirsiniz.")));
+      } else if (d.sohbette && masaKuruldu) {
+        const sd = dugme(cev("Sohbete dön"), { sinif: "kucuk", simge: "sohbet" });
+        sd.onclick = sohbeteDon;
+        ey.append(sd);
+      }
+    }
+    o.append(sim, mt, ey);
+    return o;
+  }
+  function dosyaKesiti(c) {
+    const liste = c.dosyalar || [];
+    if (!liste.length) return null;
+    const ks = ogesi("div", "kesit dosyalar");
+    ks.append(ogesi("h3", null, cev("Hazırlanan dosyalar")));
+    const l = ogesi("div", "liste");
+    for (const d of liste) l.append(dosyaSatiri(d, c));
+    ks.append(l);
+    return ks;
+  }
+
   // Yazılırken gelen girdi eksik olabilir: yarım öğe atlanmaz, boş alan boş kalır.
   function cevapDuzenle(arg) {
     const adimlar = (Array.isArray(arg.adimlar) ? arg.adimlar : []).filter((a) => a && typeof a === "object")
@@ -1782,7 +1923,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       .map((k) => ({ baslik: dizgi(k.baslik).trim(), atif: dizgi(k.atif).trim(),
         url: /^https?:\/\/\S+$/i.test(dizgi(k.url).trim()) ? dizgi(k.url).trim() : "" }))
       .filter((k) => k.baslik || k.atif);
-    return { soru: dizgi(arg.soru).trim(), cevap: dizgi(arg.cevap), adimlar, kaynaklar };
+    return { soru: dizgi(arg.soru).trim(), cevap: dizgi(arg.cevap), adimlar, kaynaklar, dosyalar: dosyalarDuzenle(arg.dosyalar) };
   }
 
   // kaynak "canli": cevap bu pencerenin kendi araç çağrısından değil, bilgisayardaki kurulumdan (al_masa_durumu) geldi.
@@ -1801,6 +1942,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       gosterim: tekrar ? 0 : (onceki && onceki.gosterim) || Date.now(),
       paylasimZamani: onceki ? onceki.paylasimZamani : 0, gecmisId: gecmisId || (onceki && onceki.gecmisId) || "" };
     if (!CEVAP.soru && calisma) CEVAP.soru = calisma.soru;
+    if (onceki && (onceki.dosyalar || []).some((d) => d.kayit)) dosyaBilgisiAl(CEVAP, onceki.dosyalar);
+    if (tamam) for (const d of CEVAP.dosyalar) if (!d.icerik && !d.kayit) d.sohbette = true;
     if (tamam) {
       // Bu tur sohbette zaten varsa (eski pencere yeniden açıldı ya da kurulum aynı cevabı bildirdi) teyit yeniden yapılmaz.
       const kayitli = turBul(CEVAP);
@@ -1842,7 +1985,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       localStorage.setItem(PAYLASILAN_CEVAP, JSON.stringify({ zaman: c.paylasimZamani || (c.paylasimZamani = Date.now()),
         tamam: !!c.tamam, calisma: c.calismaId || "", soru: c.soru, cevap: c.cevap, adimlar: c.adimlar,
         araclar: (c.araclar || []).map(({ sonuc, ...a }) => a), kaynaklar: c.kaynaklar, plan: c.plan || [],
-        teyit: c.teyit || null }));
+        dosyalar: dosyaKaydi(c.dosyalar), teyit: c.teyit || null }));
     } catch { /* depo kapalı ya da dolu: cevap kendi penceresinde ve sohbetteki özette */ }
   }
   function paylasilanCevap() {
@@ -1851,7 +1994,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (!p || typeof p.cevap !== "string" || !p.cevap.trim() || !(Date.now() - p.zaman < PAYLASIM_OMRU)) return null;
       const liste = (x) => (Array.isArray(x) ? x : []);
       return { soru: dizgi(p.soru), cevap: p.cevap, adimlar: liste(p.adimlar), araclar: liste(p.araclar),
-        kaynaklar: liste(p.kaynaklar), plan: liste(p.plan), tamam: p.tamam !== false, kesildi: false,
+        kaynaklar: liste(p.kaynaklar), plan: liste(p.plan), dosyalar: dosyalarDuzenle(p.dosyalar), tamam: p.tamam !== false, kesildi: false,
         teyit: p.teyit && typeof p.teyit === "object" ? p.teyit : null, paylasimZamani: p.zaman,
         calismaId: dizgi(p.calisma) };
     } catch { return null; }
@@ -1866,7 +2009,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const t = a.teyit || {};
     return { soru: k.soru || k.baslik || "", cevap: dizgi(a.cevap), adimlar: Array.isArray(a.adimlar) ? a.adimlar : [],
       araclar: Array.isArray(a.araclar) ? a.araclar : [],
-      kaynaklar: Array.isArray(a.kaynaklar) ? a.kaynaklar : [], tamam: true, kesildi: false,
+      kaynaklar: Array.isArray(a.kaynaklar) ? a.kaynaklar : [], dosyalar: dosyalarDuzenle(a.dosyalar), tamam: true, kesildi: false,
       zaman: k.zaman || (k.saat && k.saat.toISOString()),
       // teyit null: kaydı teslim anında sunucu yazmış, masanın penceresi teyidi bitiremeden kapanmış.
       teyit: { durum: a.teyit === null ? "yapilmadi" : t.toplam ? "bitti" : "yok", satirlar: t.satirlar || [],
@@ -1955,19 +2098,22 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const i = turlar.findIndex((t) => t.k === k);
     if (i >= 0) {
       const e = turlar[i];
+      const dosyalar = dosyaKaydi(c.dosyalar);
       const yeni = { ...e, teyit: teyit || e.teyit || null, gecmisId: c.gecmisId || e.gecmisId || "",
-        araclar: araclar.length > (e.araclar || []).length ? araclar : e.araclar || [] };
+        araclar: araclar.length > (e.araclar || []).length ? araclar : e.araclar || [],
+        dosyalar: dosyalar.some((d) => d.kayit) || !(e.dosyalar || []).length ? dosyalar : e.dosyalar };
       if (JSON.stringify(yeni) === JSON.stringify(e)) return;
       turlar[i] = yeni;
     } else {
       turlar.push({ k, soru: dizgi(c.soru).slice(0, 2000), cevap: c.cevap, adimlar: c.adimlar || [], araclar,
-        kaynaklar: c.kaynaklar || [], teyit, gecmisId: c.gecmisId || "", zaman: turZamani(c) });
+        kaynaklar: c.kaynaklar || [], dosyalar: dosyaKaydi(c.dosyalar), teyit, gecmisId: c.gecmisId || "", zaman: turZamani(c) });
       turlar.sort((a, b) => (a.zaman || 0) - (b.zaman || 0));
     }
     turlariYaz(turlar);
   }
   const turdanCevap = (t) => ({ soru: t.soru, cevap: t.cevap, adimlar: Array.isArray(t.adimlar) ? t.adimlar : [],
     araclar: Array.isArray(t.araclar) ? t.araclar : [], kaynaklar: Array.isArray(t.kaynaklar) ? t.kaynaklar : [],
+    dosyalar: dosyalarDuzenle(t.dosyalar),
     tamam: true, kesildi: false, zaman: new Date(t.zaman || Date.now()).toISOString(), gecmisId: t.gecmisId || "",
     teyit: t.teyit ? { ...t.teyit } : { durum: "yapilmadi", satirlar: [], dogru: 0, toplam: 0 } });
   function sonTur() {
@@ -1982,7 +2128,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const i = turlar.findIndex((t) => t.k === k);
     return i >= 0 ? turlar.slice(0, i).concat(turlar.slice(i + 1)) : turlar;
   }
-  const turImzasi = (turlar) => turlar.map((t) => t.k + (t.teyit ? "+" : "")).join(",");
+  const turImzasi = (turlar) => turlar.map((t) => t.k + (t.teyit ? "+" : "") + ((t.dosyalar || []).some((d) => d.kayit) ? "d" : "")).join(",");
   function oncekiTurlariCiz(kap, c) {
     const turlar = oncekiTurlar(c);
     kap.dataset.imza = turImzasi(turlar);
@@ -2006,6 +2152,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     alt.append(ey);
     kart.append(govde, alt);
     kap.append(kart);
+    const dk = dosyaKesiti({ ...turdanCevap(t), tamam: true });
+    if (dk) kap.append(dk);
     return kap;
   }
 
@@ -2108,6 +2256,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       ...(c.gecmisId ? { id: c.gecmisId } : {}),
       ekran: "sohbet", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null,
       anlik: { cevap: c.cevap, adimlar: c.adimlar, araclar, kaynaklar: c.kaynaklar,
+        ...((c.dosyalar || []).length ? { dosyalar: dosyaKaydi(c.dosyalar) } : {}),
         teyit: { satirlar: t.satirlar, dogru: t.dogru, toplam: t.toplam } } });
   }
 
@@ -2160,6 +2309,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       kart.append(govde, alt);
       kap.append(kart);
     }
+    const dk = dosyaKesiti(c);
+    if (dk) kap.append(dk);
     if (!c.tamam || c.kesildi) return;
     const bc = buCevapta(c);
     if (bc) kap.append(bc);
@@ -5159,6 +5310,12 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         masaKuruldu = false;
       }
       if (CEVAP && veri.teslim && typeof veri.teslim.gecmis_id === "string") CEVAP.gecmisId = veri.teslim.gecmis_id;
+      if (CEVAP && veri.teslim && Array.isArray(veri.teslim.dosyalar)) {
+        dosyaBilgisiAl(CEVAP, veri.teslim.dosyalar);
+        cevabiPaylas(CEVAP);
+        turEkle(CEVAP);
+        cevapYenile();
+      }
       // Masa numarası bu sohbetin deposuna yazılır: ekrandaki pencere hangisi olursa olsun bu sohbetin işini tanır.
       if (ROL === "masa" && Number.isInteger(veri.canli_masa)) { canliMasaNo = veri.canli_masa; masaNumarasiYaz(canliMasaNo); }
       if (ROL === "masa" && veri.yonlendir && !DURUM.uzaktaKal) {

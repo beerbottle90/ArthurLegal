@@ -200,6 +200,9 @@ button.duz {
 button.duz:hover { background: transparent; text-decoration: underline; text-underline-offset: 3px; }
 button.kucuk { min-height: 30px; padding: 0 12px; font-size: 13px; background: var(--yuzey); }
 button.kucuk:hover { opacity: 0.85; }
+/* Küçük birincil düğme (Aç, Şimdi güncelle, Tamam): kucuk'un yüzey zemini birincil'in zeminini ezmesin; yoksa yazı
+   rengi zeminle aynı kalır ve düğme görünmez (3.5.0'da dosya satırında görüldü). */
+button.kucuk.birincil { background: var(--birincil); color: var(--birincil-yazi); }
 button:disabled { opacity: 0.5; cursor: default; transform: none; }
 
 /* ---- Form alanları ---- */

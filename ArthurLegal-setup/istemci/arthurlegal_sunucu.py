@@ -714,6 +714,10 @@ def masa_araclari(ev=None):
         araclar.append(al_arayuz.gecmis_araci())
         # Doğrulama kaydı (al_dogrulama_kaydi): geçmişteki atıf teyitlerini dosyaya döker; görünüm açmaz.
         araclar.append(dogrulama_kaydi.arac_tanimi())
+    # Masada dosya (al_dosya, 3.5.0): teslim edilen dosyayı masa açar, klasörde gösterir ya da indirir; yalnız masa
+    # çağırır. Eski arayüz kopyasında yoksa eklenmez.
+    if hasattr(al_arayuz, "dosya_araci"):
+        araclar.append(al_arayuz.dosya_araci("masaustu"))
     # Masanın dili (al_dil): kullanıcının bayraklardan seçtiği dil bu bilgisayarda kalır (veri/durum.json, masa_dili).
     if hasattr(al_arayuz, "dil_araci"):
         araclar.append(al_arayuz.dil_araci())
@@ -808,6 +812,62 @@ def dogrulama_kaydi_yaz(a):
     except (ValueError, OSError) as e:  # KayitHatasi da ValueError'dır
         return {"content": [{"type": "text", "text": str(e)}], "isError": True}
     return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
+
+
+def belgeler_klasoru():
+    """Kullanıcının Belgeler klasörü. Windows'ta gerçek yeri sorulur (OneDrive'a taşınmış olabilir); bulunamazsa
+    kullanıcı klasörü."""
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            tampon = ctypes.create_unicode_buffer(260)
+            if ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, tampon) == 0 and tampon.value:   # CSIDL_PERSONAL
+                return Path(tampon.value)
+        except (OSError, AttributeError, ValueError):
+            pass
+    belgeler = Path.home() / "Documents"
+    return belgeler if belgeler.is_dir() else Path.home()
+
+
+def dosya_dizini():
+    """Masaya teslim edilen dosyaların klasörü (3.5.0): ayardaki `dosya_dizini`, yoksa Belgeler içindeki ArthurLegal.
+    Claude klasör seçemez; masa yalnız bu klasördeki dosyayı açar ve indirir."""
+    ozel = str(ortak.ayar().get("dosya_dizini") or "").strip()
+    return Path(os.path.expanduser(ozel)) if ozel else belgeler_klasoru() / "ArthurLegal"
+
+
+def _dosya_baslat(yol, goster=False):
+    """Dosyayı varsayılan uygulamasıyla açar ya da klasörde seçili gösterir. Windows'ta explorer dosyayı kabuğun kendi
+    sürecinde açar: Word ya da Excel Claude Desktop'un iş nesnesine (job) girmez, Claude kapanınca kapanmaz. Yolda
+    tırnak olamaz (Windows yasaklar)."""
+    if sys.platform == "win32":
+        komut = 'explorer /select,"%s"' % yol if goster else 'explorer "%s"' % yol
+        subprocess.Popen(komut, creationflags=0x00000008 | 0x00000200, close_fds=True,   # DETACHED|NEW_GROUP
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    elif sys.platform == "darwin":
+        ortak.arka_planda(["open", "-R", yol] if goster else ["open", yol])
+    else:
+        ortak.arka_planda(["xdg-open", os.path.dirname(yol) if goster else yol])
+
+
+def dosya_islemi(a, baslat=_dosya_baslat):
+    """al_dosya: masanın dosya düğmeleri. uret içerikten dosya kurar (kaydetmez); indir, ac ve goster yalnız dosya
+    klasöründeki, bilinen uzantılı dosyayla çalışır (al_dosya.klasordeki). Dosyanın adı ve içeriği günlüğe yazılmaz."""
+    import al_dosya
+    islem = a.get("islem")
+    if islem == "uret":
+        return al_arayuz.dosya_uret(a)
+    if islem not in ("indir", "ac", "goster"):
+        raise ValueError("islem: uret, indir, ac ya da goster olmalı")
+    yol = al_dosya.klasordeki(str(dosya_dizini()), a.get("ad"))
+    ad = os.path.basename(yol)
+    if islem == "indir":
+        if os.path.getsize(yol) > al_dosya.BOYUT_SINIRI:
+            raise ValueError("Dosya masadan indirilemeyecek kadar büyük; Klasörde göster ile açın.")
+        with open(yol, "rb") as fh:
+            return al_dosya.indirme(ad, al_dosya.bicim_bul(ad), fh.read())
+    baslat(yol, goster=islem == "goster")
+    return {"ad": ad, "acildi" if islem == "ac" else "gosterildi": True}
 
 
 def gorunum_meta(araclar, ev=None):
@@ -1040,6 +1100,8 @@ class Sunucu:
                          or ortak.dil())
         if hasattr(al_arayuz, "dil_araci"):
             yetenekler.append("al_dil")
+        if hasattr(al_arayuz, "dosya_araci"):
+            yetenekler.append("al_dosya")
         yetenekler.append("al_guncelleme")
         if self.canli is not None:
             yetenekler.append("al_masa_durumu")
@@ -1062,14 +1124,17 @@ class Sunucu:
         return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
 
     def _teslim(self, a):
-        """al_masaya_yaz: cevap masada açılır ve o anda bu bilgisayardaki geçmişe yazılır (veri/masa-gecmisi).
+        """al_masaya_yaz: cevap masada açılır ve o anda bu bilgisayardaki geçmişe yazılır (veri/masa-gecmisi). Cevapla
+        gelen dosyalar (3.5.0) Belgeler içindeki ArthurLegal klasörüne kaydedilir; masa açar ve indirir.
 
         Kayıt masanın penceresine bağlı değildir: pencere atıf teyidi bitmeden kapansa da cevap geçmiştedir; masa
         teyidi bitirince aynı kaydı tamamlar. Cevap geri yazılmaz, masanın durumu döner. Geçmiş yazılamazsa teslim
         yine tamamlanır (kayıt kimliği dönmez, masa kaydı kendisi açar).
         """
         try:
-            if hasattr(al_arayuz.Gecmis, "cevap_kaydet"):
+            if hasattr(al_arayuz, "teslim_dosyalari"):   # 3.5.0: dosyalar Belgeler içindeki ArthurLegal klasörüne
+                veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}), masa_gecmisi(), str(dosya_dizini()))
+            elif hasattr(al_arayuz.Gecmis, "cevap_kaydet"):
                 veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}), masa_gecmisi())
             else:  # eski arayüz kopyası: geçmişi yalnız masa yazar
                 veri = al_arayuz.teslim_cevabi(a, self._masa_verisi({}))
@@ -1134,7 +1199,10 @@ class Sunucu:
                 canli.basla(a)
             elif ad == "al_masaya_yaz":
                 teslim = (sonuc.get("structuredContent") or {}).get("teslim") or {}
-                canli.teslim(a, teslim.get("gecmis_id"))
+                if teslim.get("dosyalar"):
+                    canli.teslim(a, teslim.get("gecmis_id"), teslim["dosyalar"])
+                else:
+                    canli.teslim(a, teslim.get("gecmis_id"))
         return sonuc
 
     def _arac_calistir(self, ad, a):
@@ -1168,6 +1236,14 @@ class Sunucu:
             return {"content": [{"type": "text", "text": json.dumps(veri, ensure_ascii=False)}], "structuredContent": veri}
         if al_arayuz is not None and ad == "al_dogrulama_kaydi" and hasattr(al_arayuz, "Gecmis"):
             return dogrulama_kaydi_yaz(a)
+        if al_arayuz is not None and ad == "al_dosya" and hasattr(al_arayuz, "dosya_araci"):
+            try:
+                veri = dosya_islemi(a)
+            except (ValueError, OSError) as e:   # DosyaHatasi da ValueError'dır; ad ve içerik günlüğe yazılmaz
+                return {"content": [{"type": "text", "text": str(e)}], "isError": True}
+            # İndirmenin baytları yalnız masaya gider (yapılandırılmış veri); metin bloğu kısa kalır.
+            ozet = {k: v for k, v in veri.items() if k != "veri"}
+            return {"content": [{"type": "text", "text": json.dumps(ozet, ensure_ascii=False)}], "structuredContent": veri}
         if ad.startswith("al_"):  # uzak ucun masa araçları köprülenmez (kopru_araclari)
             metin = ("ArthurLegal Masası bu kurulumda kapalı (klasik arayüz). Kurulumu yeniden çalıştırıp "
                      "'ArthurLegal yeni arayüz'ü seçebilirsiniz." if al_arayuz is None else f"Bilinmeyen masa aracı: {ad}")

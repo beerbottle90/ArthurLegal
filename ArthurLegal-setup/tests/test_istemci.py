@@ -1038,12 +1038,68 @@ class SunucuTesti(unittest.TestCase):
         self.assertTrue(self.arac("al_masada_basla", soru=" ")["isError"])
         bagli = self.arac("al_masasi", baglayicilar=[{"ad": "Gmail"}])["structuredContent"]["baglayicilar"]
         self.assertEqual(bagli, [{"ad": "Gmail", "durum": "bagli"}])
+        # Masada dosya (3.5.0): masa dosya düğmelerini al_dosya ile çağırır; araç yalnız masaya görünür.
+        self.assertIn("al_dosya", masa["yetenekler"])
+        self.assertEqual(araclar["al_dosya"]["_meta"], {"ui": {"visibility": ["app"]}})
+        self.assertIn("dosyalar", araclar["al_masaya_yaz"]["inputSchema"]["properties"])
+        self.assertIn("dosyalar alanına", r["instructions"])
+        dosya = lambda g: self.iste("tools/call", {"name": "al_dosya", "arguments": g})["result"]  # noqa: E731
+        uret = dosya({"islem": "uret", "ad": "Not", "bicim": "md", "icerik": "# Not"})
+        self.assertEqual(uret["structuredContent"]["ad"], "Not.md")
+        self.assertNotIn("veri", json.loads(uret["content"][0]["text"]), "baytlar metin bloğuna yazılmaz")
+        self.assertTrue(dosya({"islem": "ac", "ad": "../ayar.json"})["isError"])
 
 
     def test_8_goruntu_blogu_kopruden_gecer(self):
         """Uzak aracın görüntü bloğu (taranmış RG eki) Claude'a olduğu gibi gider; metin bloğu ve özet de."""
         r = self.arac("tr_resmi_gazete_ek_sayfa", url="https://www.resmigazete.gov.tr/eskiler/a.pdf", sayfa=2)
         self.assertEqual(r, GORUNTULU_SONUC)
+
+
+class MasadaDosyaTesti(unittest.TestCase):
+    """3.5.0: Claude'un hazırladığı dosya Belgeler içindeki ArthurLegal klasörüne yazılır; masa yalnız o klasördeki,
+    bilinen uzantılı dosyayı açar, klasörde gösterir ve indirir."""
+
+    def setUp(self):
+        import arthurlegal_sunucu as s
+        sys.path.insert(0, str(BURASI / "istemci" / "arayuz"))
+        import al_arayuz
+        self.s, self.al = s, al_arayuz
+
+    def test_teslim_kaydeder_masa_acar_gosterir_indirir(self):
+        from unittest import mock
+        s, al = self.s, self.al
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(s, "al_arayuz", al), \
+                mock.patch.object(s, "dosya_dizini", lambda: Path(t) / "ArthurLegal"):
+            masa = al.masa_cevabi("masaustu", ["al_masaya_yaz", "al_dosya"], {})
+            veri = al.teslim_cevabi({"soru": "s", "cevap": "c", "dosyalar": [
+                {"ad": "Kira ihtarı", "bicim": "docx", "icerik": "# İhtarname"}]}, masa, None, str(s.dosya_dizini()))
+            d = veri["teslim"]["dosyalar"][0]
+            self.assertEqual((d["ad"], d["kayit"]), ("Kira ihtarı.docx", "Kira ihtarı.docx"))
+            self.assertTrue((Path(t) / "ArthurLegal" / "Kira ihtarı.docx").is_file())
+            acilan = []
+            baslat = lambda yol, goster=False: acilan.append((Path(yol).name, goster))  # noqa: E731
+            self.assertEqual(s.dosya_islemi({"islem": "ac", "ad": d["kayit"]}, baslat), {"ad": d["kayit"], "acildi": True})
+            self.assertEqual(s.dosya_islemi({"islem": "goster", "ad": d["kayit"]}, baslat)["gosterildi"], True)
+            self.assertEqual(acilan, [("Kira ihtarı.docx", False), ("Kira ihtarı.docx", True)])
+            indir = s.dosya_islemi({"islem": "indir", "ad": d["kayit"]})
+            self.assertEqual((indir["indirme_adi"], indir["boyut"]), ("Kira-ihtari.docx", d["boyut"]))
+            (Path(t) / "ArthurLegal" / "kotu.exe").write_bytes(b"MZ")
+            for ad in ("../ArthurLegal/Kira ihtarı.docx", "kotu.exe", "yok.docx", ""):
+                with self.subTest(ad=ad), self.assertRaises(ValueError):
+                    s.dosya_islemi({"islem": "ac", "ad": ad}, baslat)
+            with self.assertRaises(ValueError):
+                s.dosya_islemi({"islem": "sil", "ad": d["kayit"]}, baslat)
+            self.assertEqual(len(acilan), 2, "reddedilen istek hiçbir şey açmaz")
+
+    def test_klasor_ayardan_ya_da_belgelerden(self):
+        from unittest import mock
+        s = self.s
+        with mock.patch.object(s.ortak, "ayar", return_value={"dosya_dizini": "~/AL-dosyalar"}):
+            self.assertEqual(s.dosya_dizini(), Path(os.path.expanduser("~/AL-dosyalar")))
+        with mock.patch.object(s.ortak, "ayar", return_value={}):
+            self.assertEqual(s.dosya_dizini(), s.belgeler_klasoru() / "ArthurLegal")
+        self.assertTrue(s.belgeler_klasoru().is_dir())
 
 
 class SaltOkunurTesti(unittest.TestCase):
@@ -2435,7 +2491,7 @@ class ArayuzTesti(unittest.TestCase):
                       "'_meta' in s.gorunum_meta([{'name': 'tr_ictihat_ara'}])[0]]))")
             self.assertEqual(self.calistir(t, sunucu), [True, ["al_masasi", "al_masada_basla", "al_masaya_yaz",
                                                                "al_modul_ac", "al_masa_durumu", "al_gecmis",
-                                                               "al_dogrulama_kaydi", "al_dil", "al_guncelleme"],
+                                                               "al_dogrulama_kaydi", "al_dosya", "al_dil", "al_guncelleme"],
                                                         True, True, True])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertEqual(self.calistir(t, sunucu), [False, [], False, False, False])
