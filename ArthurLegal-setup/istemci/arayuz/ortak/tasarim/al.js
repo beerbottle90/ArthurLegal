@@ -106,7 +106,7 @@ const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
   const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";   // Claude'a giden metinlerde aynen (Türkçe)
   const uyari = (adres) => cev("UYARI: veri çekilemedi, teyidiniz gerekli: {0}", adres);   // ekrandaki satır, seçili dilde
-  const SURUM = "3.4.8";
+  const SURUM = "3.5.0";
   const NS = "http://www.w3.org/2000/svg";
 
   // 16x16 çizgi simgeleri; tek kalınlık, tek köşe biçimi.
@@ -147,6 +147,10 @@ const AL = (() => {
     ayar: [["path", { d: "M2.5 4.5h4M9.5 4.5h4M2.5 11.5h7M12.5 11.5h1" }], ["circle", { cx: 8, cy: 4.5, r: 1.5 }],
            ["circle", { cx: 11, cy: 11.5, r: 1.5 }]],
     hesap: [["rect", { x: 3, y: 1.5, width: 10, height: 13, rx: 2 }], ["path", { d: "M5.5 4.5h5M5.5 8h.1M8 8h.1M10.5 8h.1M5.5 11h.1M8 11h.1M10.5 11h.1" }]],
+    belge: [["path", { d: "M4.5 1.75h4.75L12.5 5v8.25a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1V2.75a1 1 0 0 1 1-1z" }],
+            ["path", { d: "M9.25 1.75V5h3.25M5.75 8.25h4.5M5.75 10.75h4.5" }]],
+    indir: [["path", { d: "M8 2.5v7.5M4.75 7 8 10.25 11.25 7M3 13.5h10" }]],
+    klasor: [["path", { d: "M1.75 4.25a1 1 0 0 1 1-1h3.25l1.5 1.5h5.75a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1h-10.5a1 1 0 0 1-1-1z" }]],
   };
 
   function ikon(ad) {

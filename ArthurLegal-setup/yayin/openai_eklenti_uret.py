@@ -207,7 +207,9 @@ farklar şunlardır:
    Aracı araç listende aramadan kullanıcıya bağlantıları ya da MCP'leri kontrol etmesini söyleme; kabuk komutu ya da
    tarayıcı kullanma. Masa açıldıktan sonra her soruda: önce `al_masada_basla`, sonra araştırma, en son cevabın
    tamamıyla `al_masaya_yaz`; sonra sohbete cevabın iki üç cümlelik özetini yaz ve tamamının masada olduğunu söyle
-   (`al_masaya_yaz` hata verirse cevabın tamamını sohbete yaz).
+   (`al_masaya_yaz` hata verirse cevabın tamamını sohbete yaz). Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini
+   `al_masaya_yaz`'ın `dosyalar` alanına yaz: dosya bu bilgisayara kaydedilir, masada açılır ve indirilir; kod
+   çalıştırarak ayrıca dosya üretme.
 2. **İş alanları.** Metinde "knowledge" diye geçen birleşik skill dosyalarının her bölümü bu pakette bir iş akışıdır ve
    kendi alan becerisinin `references/<iş-akışı>.md` dosyasındadır:
 {alanlar}

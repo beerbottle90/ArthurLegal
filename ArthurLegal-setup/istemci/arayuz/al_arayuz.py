@@ -13,6 +13,8 @@ yalnız standart kütüphaneyle çalışır.
 - ``baslangic_araci()``: ``al_masada_basla``; Claude soruyu alır almaz masaya yazar, masa çalışmayı başlatır.
 - ``teslim_araci()``: ``al_masaya_yaz``; Claude sohbet kutusuna yazılan sorunun cevabını masaya teslim eder.
   Cevabı ``teslim_cevabi(girdi, masa)`` kurar; masa cevabı araç girdisinden (yazıldıkça) okur, sunucu saklamaz.
+  Cevapla birlikte dosya da gelebilir (``dosyalar``, 3.5.0): bilgisayardaki kurulum kaydeder, masa açar ve indirir;
+  dosyayı ``al_dosya`` modülü kurar, masa ``dosya_araci()`` (``al_dosya``) ile açtırır ve indirir.
 - ``model_onerisi()``, ``model_degerlendir(ad)``, ``model_kurali()``: ölçüme dayalı model ve effort önerisi
   (``ortak/tasarim/model-onerisi.json``). Claude model adını ``al_masasi`` ve ``al_masada_basla`` girdisinde bildirir.
 - ``gecmis_araci()`` ve ``Gecmis(klasor)``: masa geçmişi (``al_gecmis``). Yalnız yerel AL sunucusu klasör
@@ -33,7 +35,12 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.4.8"
+try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada yoksa dosya alanı kapalı
+    import al_dosya
+except ImportError:   # pragma: no cover
+    al_dosya = None
+
+SURUM = "3.5.0"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -62,7 +69,7 @@ MASA_URI = "ui://arthurlegal/masa.html"
 # kendi kartı masanın yerine geçebilirdi). 14.11.2026'dan beri Claude Desktop pencerelerin kendiliğinden tam ekrana
 # geçmesini reddediyor: tam ekranda kullanıcının açtığı pencere kalır. O pencere işi sohbetin ortak deposundan ve
 # bilgisayardaki kurulumdan (CanliMasa, al_masa_durumu) okur. Masanın kendi çağırdığı iç araçlar görünüm açmaz.
-GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme", "al_masa_durumu"})
+GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme", "al_masa_durumu", "al_dosya"})
 
 # Ev sahibi (16.11.2026, K3/K25). ChatGPT arayüzlü her araç çağrısını yeni bir sekmede (masaüstü) ya da yeni bir kartta
 # (web) açar; OpenAI de görünümün yalnız onu gösterecek araca bağlanmasını ister. Bu yüzden:
@@ -538,10 +545,16 @@ SOHBET_OZETI = ("sonra sohbete cevabın iki üç cümlelik özetini yazın ve ta
 
 # Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı soruyu, çalışmayı ve cevabı masada görür. Kural
 # masanın bir notuna bağlı değildir (Claude Desktop o notu modele iletmeyebiliyor): masa bir kez açıldıysa geçerlidir.
+# Masada dosya (3.5.0, 23.11.2026, kullanıcı: "Claude herhangi bir dosya üretir ve indirmem için bana getirirse bu
+# dosyalar AL masasında gözükmüyor, chat'e geçmek gerekiyor"). Claude'un kod ortamında ürettiği dosya yalnız sohbetin
+# indirme kartında durur; masa açıkken dosya teslimle gelir ve masada açılır, indirilir.
+DOSYA_KURALI = ("Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya "
+                "masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.")
+
 TESLIM_KURALI = (
     "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) bundan sonraki her soruda şu sırayı izleyin: "
     "1) hemen al_masada_basla ile soruyu masaya yazın; 2) araştırın (her aracın adımı masada canlı görünür); "
-    "3) cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI)
+    "3) cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " " + DOSYA_KURALI)
 
 
 # Kurulum sağlığı (kalite süreci 4, 18.11.2026). Bilgisayardaki kurulumun paketi (sistem talimatı ve bilgi dosyaları)
@@ -786,6 +799,15 @@ def _teslim_tanimi() -> Dict[str, Any]:
         "atif": {"type": "string", "description": "Araç yanıtındaki citation, birebir."},
         "url": {"type": "string", "description": "Araç yanıtındaki source_url, birebir; yoksa boş."}},
         "required": ["baslik"]}
+    bicimler = list(al_dosya.BICIMLER) if al_dosya else ["docx", "xlsx", "csv", "md", "txt", "html"]
+    dosya = {"type": "object", "properties": {
+        "ad": {"type": "string", "description": "Dosyanın adı (ör. 'Kira ihtarnamesi taslağı'); uzantı biçimden gelir."},
+        "bicim": {"type": "string", "enum": bicimler, "description": (
+            "docx (Word), xlsx (Excel), csv, md (Markdown), txt, html. PDF yok: Word'de PDF olarak kaydedilir.")},
+        "icerik": {"type": "string", "description": (
+            "Dosyanın tamamı. docx, html, md ve txt için Markdown (# başlık, paragraf, liste, **kalın**, tablo, "
+            "> alıntı); xlsx ve csv için Markdown tablo (her tablo ayrı sayfa) ya da noktalı virgüllü satırlar.")}},
+        "required": ["ad", "bicim"]}
     return {
         "name": "al_masaya_yaz",
         "title": "Cevabı ArthurLegal Masası'na yaz",
@@ -808,6 +830,12 @@ def _teslim_tanimi() -> Dict[str, Any]:
                     "Atıfları araç yanıtındaki citation ile birebir yazın; veri çekilemediyse UYARI satırını koyun.")},
                 "kaynaklar": {"type": "array", "items": kaynak, "maxItems": 40, "description": (
                     "Dayandığınız mevzuat ve kararlar. Bağlantı uydurmayın.")},
+                "dosyalar": {"type": "array", "items": dosya, "maxItems": 5, "description": (
+                    "Kullanıcı dosya istediyse (Word, Excel, CSV, Markdown, metin, HTML) dosyanın içeriği. Masa dosyayı "
+                    "cevabın altında gösterir: bilgisayardaki kurulum Belgeler içindeki ArthurLegal klasörüne kaydeder, kullanıcı "
+                    "masadan açar ya da indirir. Dosyayı kod ortamında ayrıca üretmeyin. Dosyayı zaten sohbette "
+                    "ürettiyseniz ve içeriğini yazamıyorsanız yalnız ad ve biçim verin: masa dosyanın sohbette "
+                    "olduğunu söyler. cevap alanına dosyanın kısa tanıtımını yazın.")},
                 "masa": dict(MASA_NO_GIRDISI),
             },
             "required": ["soru", "cevap"],
@@ -817,13 +845,59 @@ def _teslim_tanimi() -> Dict[str, Any]:
     }
 
 
-def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional["Gecmis"] = None) -> Dict[str, Any]:
+def teslim_dosyalari(girdi: Dict[str, Any], klasor: Optional[str] = None) -> "tuple[List[Dict[str, Any]], str]":
+    """Teslimdeki dosyalar: (masanın ve geçmişin tutacağı bilgi, Claude'a not). Biçim ya da içerik bozuksa TeslimHatasi.
+
+    klasor: bilgisayardaki kurulumun dosya klasörü. Verilirse dosyalar oraya yazılır ({ad, bicim, boyut, kayit, yol});
+        yazılamazsa cevap yine teslim edilir, dosya masada indirilebilir kalır ("hata"). Uzak uç vermez: dosya hiçbir
+        sunucuda saklanmaz, masa indirirken içeriği al_dosya ile yeniden kurdurur.
+    """
+    if girdi.get("dosyalar") is None:
+        return [], ""
+    if al_dosya is None:
+        raise TeslimHatasi("Bu masa dosya teslimini bilmiyor: dosyayı sohbette verin.")
+    try:
+        dosyalar = al_dosya.dosyalari_duzenle(girdi.get("dosyalar"))
+        if klasor:
+            try:
+                bilgi = al_dosya.kaydet(dosyalar, klasor)
+            except OSError as e:
+                bilgi = [dict(al_dosya.ozet(d, al_dosya.uret(d["bicim"], d["icerik"]) if d.get("icerik") else None),
+                              hata=_kisalt(str(e), 160)) for d in dosyalar]
+        else:   # uzak uç: yalnız doğrular ve boyutu söyler, saklamaz
+            bilgi = [al_dosya.ozet(d, al_dosya.uret(d["bicim"], d["icerik"], os.path.splitext(d["ad"])[0])
+                                   if d.get("icerik") else None) for d in dosyalar]
+    except al_dosya.DosyaHatasi as e:
+        raise TeslimHatasi("dosyalar: %s" % e) from None
+    if not bilgi:
+        return [], ""
+    kayitli = [b for b in bilgi if b.get("yol")]
+    sohbette = [b["ad"] for b in bilgi if b.get("sohbette")]
+    if kayitli:
+        not_ = (" Dosyalar bu bilgisayara kaydedildi ve masada açılıp indirilebilir: %s. Sohbetteki özette dosyanın "
+                "adını ve klasörünü söyleyin." % "; ".join(b["yol"] for b in kayitli))
+    elif any(b.get("hata") for b in bilgi):
+        not_ = " Dosyalar bilgisayara kaydedilemedi, masadan indirilebilir: %s." % bilgi[0]["hata"]
+    elif len(sohbette) < len(bilgi):
+        not_ = " Dosyalar masada indirilebilir."
+    else:
+        not_ = ""
+    if sohbette:
+        not_ += (" İçeriği yazılmayan dosya (%s) yalnız sohbette: masa kullanıcıya sohbete dönmesini söyler."
+                 % ", ".join(sohbette))
+    return bilgi, not_
+
+
+def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional["Gecmis"] = None,
+                  dosya_klasoru: Optional[str] = None) -> Dict[str, Any]:
     """al_masaya_yaz'ın cevabı: masanın durumu (masa_cevabi, Sohbet ekranında) ve kısa teslim özeti.
 
     Cevap metni geri yazılmaz: masa onu araç girdisinden okur, Claude'un bağlamı ikinci kez dolmaz.
     gecmis: yerel sunucunun geçmiş deposu. Verilirse cevap teslim anında (girdi doğrulandıktan sonra) diske yazılır
         ve kaydın kimliği teslim.gecmis_id ile döner; masa atıf teyidini bitirince aynı kaydı tamamlar, ikinci kayıt
         açmaz. Uzak uç vermez: orada hiçbir sorgu saklanmaz.
+    dosya_klasoru: dosyaların kaydedileceği klasör (teslim_dosyalari); teslim.dosyalar dosyaların bilgisini taşır,
+        içeriğini değil.
     """
     soru, cevap = girdi.get("soru"), girdi.get("cevap")
     if not isinstance(cevap, str) or not cevap.strip():
@@ -833,18 +907,54 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional[
     for alan in ("adimlar", "kaynaklar"):
         if girdi.get(alan) is not None and not isinstance(girdi.get(alan), list):
             raise TeslimHatasi("%s bir liste olmalı." % alan)
+    dosyalar, dosya_notu = teslim_dosyalari(girdi, dosya_klasoru)
     out = dict(masa)
     out["bolum"] = "sohbet"
     out["teslim"] = {"soru": _kisalt(soru, 200), "karakter": len(cevap),
                      "adim": len(girdi.get("adimlar") or []), "kaynak": len(girdi.get("kaynaklar") or [])}
-    kimlik = gecmis.cevap_kaydet(girdi) if gecmis is not None else None
+    if dosyalar:
+        out["teslim"]["dosyalar"] = dosyalar
+    kimlik = gecmis.cevap_kaydet(girdi, dosyalar) if gecmis is not None else None
     if kimlik:
         out["teslim"]["gecmis_id"] = kimlik
     out["not"] = ("Cevap masaya teslim edildi. Şimdi sohbete cevabın iki üç cümlelik özetini yazın ve tamamının "
                   "masada olduğunu söyleyin; cevabın tamamını sohbete ikinci kez yazmayın. Masa cevaptaki madde "
                   "atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa notuyla "
-                  "bildirir.")
+                  "bildirir." + dosya_notu)
     return out
+
+
+# Masanın dosya düğmeleri (Aç, Klasörde göster, İndir). Yalnız masa çağırır (görünürlük "app"): Claude'un listesinde
+# yoktur. uret: içerikten dosya kurar ve verir (uzak uç; hiçbir şey saklanmaz); indir, ac, goster: bilgisayardaki
+# kurulumun dosya klasöründeki bir dosya (yalnız o klasör, yalnız bilinen uzantı).
+def dosya_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
+    islemler = ["uret"] if ortam == "uzak" else ["uret", "indir", "ac", "goster"]
+    return {
+        "name": "al_dosya",
+        "title": "ArthurLegal Masası dosyaları",
+        "description": ("Yalnız ArthurLegal Masası kendisi çağırır: teslim edilen dosyayı açar, klasörde gösterir ya da "
+                        "indirir. Siz çağırmayın; dosyayı al_masaya_yaz'ın dosyalar alanıyla teslim edin."),
+        "inputSchema": {"type": "object", "properties": {
+            "islem": {"type": "string", "enum": islemler},
+            "ad": {"type": "string", "description": "Dosyanın adı (indir, ac, goster: kayıtlı adı)."},
+            "bicim": {"type": "string", "description": "uret: dosyanın biçimi."},
+            "icerik": {"type": "string", "description": "uret: dosyanın içeriği."}},
+            "required": ["islem"]},
+        "annotations": {"readOnlyHint": ortam == "uzak", "destructiveHint": False, "idempotentHint": True,
+                        "openWorldHint": False},
+        "_meta": {"ui": {"visibility": ["app"]}},
+    }
+
+
+def dosya_uret(girdi: Dict[str, Any]) -> Dict[str, Any]:
+    """al_dosya islem=uret: içerikten dosya (base64) ve indirme adı; hiçbir şey saklanmaz. Bozuk istek DosyaHatasi."""
+    if al_dosya is None:
+        raise ValueError("Bu masa dosya kurmayı bilmiyor.")
+    d = al_dosya.dosyalari_duzenle([{"ad": girdi.get("ad"), "bicim": girdi.get("bicim"),
+                                     "icerik": girdi.get("icerik")}])[0]
+    if d.get("sohbette"):
+        raise al_dosya.DosyaHatasi("icerik boş: bu dosya yalnız sohbette.")
+    return al_dosya.indirme(d["ad"], d["bicim"], al_dosya.uret(d["bicim"], d["icerik"], os.path.splitext(d["ad"])[0]))
 
 
 # --------------------------------------------------------------------------- kurulumdan canlı masa
@@ -945,7 +1055,9 @@ class CanliMasa:
                     self._surum += 1
                     return
 
-    def teslim(self, girdi: Dict[str, Any], gecmis_id: Optional[str] = None) -> None:
+    def teslim(self, girdi: Dict[str, Any], gecmis_id: Optional[str] = None,
+               dosyalar: Optional[List[Dict[str, Any]]] = None) -> None:
+        """dosyalar: teslimin kaydettiği dosyaların bilgisi (teslim.dosyalar); içerik bellekte tutulmaz."""
         g = girdi or {}
         masa = masa_no(g)
         with self._kilit:
@@ -959,6 +1071,8 @@ class CanliMasa:
             self._cevap = {"id": "c%d" % self._sayac, "gecmis_id": gecmis_id, "calisma": self._calisma["id"],
                            "masa": self._calisma.get("masa") or 0,
                            "girdi": {k: g.get(k) for k in ("soru", "adimlar", "cevap", "kaynaklar") if g.get(k) is not None}}
+            if dosyalar:
+                self._cevap["girdi"]["dosyalar"] = [{k: v for k, v in d.items() if k != "icerik"} for d in dosyalar]
             self._surum += 1
 
     def durum(self, girdi: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -1224,12 +1338,13 @@ class Gecmis:
         self._yaz("dizin.json", {"surum": 1, "kayitlar": dizin})
         return {"id": kimlik, "zaman": tam["zaman"], "anlik": tam["anlik"] is not None, "saklama_gun": self.gun}
 
-    def cevap_kaydet(self, girdi: Dict[str, Any]) -> Optional[str]:
+    def cevap_kaydet(self, girdi: Dict[str, Any], dosyalar: Optional[List[Dict[str, Any]]] = None) -> Optional[str]:
         """al_masaya_yaz'ın girdisi teslim anında geçmişe yazılır; kaydın kimliği döner, yazılamadıysa None.
 
         Kalıcılık masanın penceresine bağlı kalmaz: pencere atıf teyidi bitmeden kapansa da cevap geçmiştedir.
         Masa teyidi bitirince aynı kimlikle kaydet çağırır ve kaydı araç adımları ve teyit sonucuyla tamamlar.
-        Biçim masanın yazdığıyla aynıdır; teyit henüz yapılmadığı için "teyit" yoktur (None).
+        Biçim masanın yazdığıyla aynıdır; teyit henüz yapılmadığı için "teyit" yoktur (None). Dosyaların yalnız bilgisi
+        (ad, biçim, boyut, kayıtlı ad) yazılır, içeriği değil: dosya bilgisayardaki ArthurLegal klasöründedir.
         """
         cevap = girdi.get("cevap")
         if not isinstance(cevap, str) or not cevap.strip():
@@ -1251,6 +1366,8 @@ class Gecmis:
                  "adimlar": adimlar[:10] or [["tamam", "Cevap masaya geldi"]],
                  "sorgu": {"metin": soru} if soru else None,
                  "anlik": {"cevap": cevap, "adimlar": adimlar, "araclar": [], "kaynaklar": kaynaklar, "teyit": None}}
+        if dosyalar:
+            kayit["anlik"]["dosyalar"] = [{k: v for k, v in d.items() if k != "icerik"} for d in dosyalar]
         try:
             with self._kilit:
                 return self.kaydet(kayit)["id"]

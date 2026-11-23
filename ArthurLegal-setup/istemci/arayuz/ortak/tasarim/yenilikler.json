@@ -1,4 +1,21 @@
 {
+ "3.5.0": {
+  "tr": [
+   "Claude'un hazırladığı dosyalar artık masada: Word, Excel, CSV, Markdown, metin ve HTML dosyası cevabın altında görünür; Aç, Klasörde göster ve İndir düğmeleriyle sohbete geçmeden alırsınız.",
+   "Bilgisayarınızdaki masada dosyalar Belgeler içindeki ArthurLegal klasörüne kaydedilir ve Geçmiş'ten de açılır; web ve telefonda masadan indirilir. Word belgesi Times New Roman 11 punto, başlık, liste ve tablolarıyla gelir; PDF için Word'de PDF olarak kaydedin.",
+   "Claude bir dosyayı yine de sohbette hazırladıysa masa bunu söyler ve tek tıkla sohbete döndürür."
+  ],
+  "az": [
+   "Claude-un hazırladığı fayllar artıq masadadır: Word, Excel, CSV, Markdown, mətn və HTML faylı cavabın altında görünür; Aç, Qovluqda göstər və Yüklə düymələri ilə söhbətə keçmədən alırsınız.",
+   "Kompüterinizdəki masada fayllar Sənədlər içindəki ArthurLegal qovluğuna yazılır və Tarixçədən də açılır; veb və telefonda masadan yüklənir. Word sənədi Times New Roman 11 punkt, başlıq, siyahı və cədvəlləri ilə gəlir; PDF üçün Word-də PDF kimi yadda saxlayın.",
+   "Claude faylı yenə də söhbətdə hazırlayıbsa, masa bunu deyir və bir kliklə söhbətə qaytarır."
+  ],
+  "en": [
+   "Files Claude prepares now appear on the desk: Word, Excel, CSV, Markdown, text and HTML files show up below the answer; get them with Open, Show in folder and Download without switching to the chat.",
+   "On the desk on your computer, files are saved in the ArthurLegal folder inside Documents and also open from History; on the web and on a phone you download them from the desk. Word documents come in Times New Roman 11 pt with headings, lists and tables; for PDF, save as PDF in Word.",
+   "If Claude still prepares a file in the chat, the desk tells you and takes you back to the chat in one click."
+  ]
+ },
  "3.4.8": {
   "tr": [
    "Hafıza klasörünüz ve bildirim gibi ayarlarınız, kurulumu yeniden çalıştırdığınızda da korunur.",
