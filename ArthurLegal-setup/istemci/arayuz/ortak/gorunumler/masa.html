@@ -616,8 +616,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     az: " Masanın dili Azerbaycanca: kullanıcı başka bir dilde yazmadıkça cevabı Azerbaycanca yazın.",
     en: " Masanın dili İngilizce: kullanıcı başka bir dilde yazmadıkça cevabı İngilizce yazın.",
   };
-  const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabı al_masaya_yaz ile " +
-    "teslim edin; sohbete yalnız 'Cevap masada.' yazın.";
+  // Cevap asla kaybolmaz (23.11.2026, kullanıcı bildirimi: cevap masaya gelmedi, sohbette yalnız "Cevap masada." vardı):
+  // sohbete cevabın kısa özeti de yazılır. Masa hangi nedenle görünmezse görünsün cevabın özü sohbettedir; tamamı masada.
+  const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabın tamamını " +
+    "al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu " +
+    "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın.";
+  // Masa bu bilgisayardaki kurulumdan açıksa masa araçları da oradan çağrılır: cevap bu bilgisayarın geçmişine yazılır.
+  const YEREL_NOTU = " Masa bu bilgisayardaki kurulumdan açık: al_masada_basla ve al_masaya_yaz araçlarını " +
+    "arthurlegal-yerel sunucusundan çağırın, uzak ArthurLegal bağlayıcısındaki aynı adlı araçları kullanmayın.";
   // Devir aynı sohbette bir kez denenir. Kayıt bu sohbetin pencereleri arasında ortaktır (tarayıcı deposu); depo
   // kapalıysa kayıt tutulamaz ve kart her çağrıda çizilir, kullanıcı "Bu masayla devam et" ile çıkar.
   const DEVIR_KAYDI = "al.masa.devir";
@@ -643,7 +649,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   }
   async function bildir(metin) {
     if (DURUM.yonlendir) return;
-    const not = MASA_ACIK + (DURUM.yetenekler.has("al_masaya_yaz") ? TESLIM_NOTU : "") + (DIL_NOTU[DIL.secili] || "") +
+    const teslim = DURUM.yetenekler.has("al_masaya_yaz");
+    const not = MASA_ACIK + (teslim ? TESLIM_NOTU : "") + (teslim && DURUM.ortam === "masaustu" && !EV.chatgpt ? YEREL_NOTU : "") +
+      (DIL_NOTU[DIL.secili] || "") +
       (metin ? " Şu an: " + metin : "");
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
@@ -1765,13 +1773,40 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     CEVAP = { ...cevapDuzenle(arg), araclar: calisma ? calisma.adimlar : [], plan: (calisma && calisma.plan) || [],
       tamam, kesildi: false, teyit: null };
     if (!CEVAP.soru && calisma) CEVAP.soru = calisma.soru;
-    if (tamam) calismaBitir();
+    if (tamam) { calismaBitir(); cevabiPaylas(CEVAP); }
     acikCevap = null;
     DURUM.acilis = "sohbet";
     if (masaKuruldu && aktif !== "sohbet" && !cevapAcildi) { cevapAcildi = true; git("sohbet"); }
     else cevapYenile();
     if (tamam) cevapTeyidi();
   }
+
+  // Açık masa, cevap başka bir pencereye teslim edilse de onu gösterir (23.11.2026: kullanıcı ilk masa penceresinde
+  // kaldı, cevap yeni pencereye gitti ve hiçbir yerde görünmedi; yerel kurulumda geçmiş diske yazıldığı için masa
+  // penceresi haberdar olmuyordu). Aynı sohbetin pencereleri tarayıcı deposunu paylaşır; Claude her sohbete ayrı köken
+  // verdiği için başka bir sohbetin (başka bir işin) cevabı bu masaya düşmez. Sunucu cevabı saklamaz.
+  const PAYLASILAN_CEVAP = "al.masa.cevap";
+  const PAYLASIM_OMRU = 30 * 60 * 1000;
+  let paylasilanGorulen = 0;   // masa penceresi: Sohbet ekranına kendiliğinden geçtiği son cevabın zamanı
+  function cevabiPaylas(c) {
+    if (ROL !== "teslim" || !c || !c.tamam || c.kesildi || !dizgi(c.cevap).trim()) return;
+    try {
+      localStorage.setItem(PAYLASILAN_CEVAP, JSON.stringify({ zaman: c.paylasimZamani || (c.paylasimZamani = Date.now()),
+        soru: c.soru, cevap: c.cevap, adimlar: c.adimlar, araclar: (c.araclar || []).map(({ sonuc, ...a }) => a),
+        kaynaklar: c.kaynaklar, plan: c.plan || [], teyit: c.teyit || null }));
+    } catch { /* depo kapalı ya da dolu: cevap kendi penceresinde ve sohbetteki özette */ }
+  }
+  function paylasilanCevap() {
+    try {
+      const p = JSON.parse(localStorage.getItem(PAYLASILAN_CEVAP) || "null");
+      if (!p || typeof p.cevap !== "string" || !p.cevap.trim() || !(Date.now() - p.zaman < PAYLASIM_OMRU)) return null;
+      const liste = (x) => (Array.isArray(x) ? x : []);
+      return { soru: dizgi(p.soru), cevap: p.cevap, adimlar: liste(p.adimlar), araclar: liste(p.araclar),
+        kaynaklar: liste(p.kaynaklar), plan: liste(p.plan), tamam: true, kesildi: false,
+        teyit: p.teyit && typeof p.teyit === "object" ? p.teyit : null, paylasimZamani: p.zaman };
+    } catch { return null; }
+  }
+  const masaPenceresi = () => ROL === "masa" && !canliTakip();
 
   // Kayıttan (oturum listesi ya da kalıcı geçmiş) gösterilecek cevap.
   function cevapKaydindan(k) {
@@ -1789,11 +1824,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function gosterilenCevap() {
     if (acikCevap) return acikCevap;
     if (CEVAP) return CEVAP;
-    if (ROL === "basla" || ROL === "adim" || canliTakip()) {   // soru masada, cevap gelmedi: çalışma sürüyor
+    const paylasilan = masaPenceresi() ? paylasilanCevap() : null;
+    if (ROL === "basla" || ROL === "adim" || canliTakip() || masaPenceresi()) {   // soru masada, cevap gelmedi: çalışma sürüyor
       const c = canliTakip() ? (canliCalisma && !canliCalisma.bitti ? canliCalisma : null) : acikCalisma();
-      if (c) return { soru: c.soru, araclar: c.adimlar, adimlar: [], kaynaklar: [], cevap: "", tamam: false,
+      if (c && !(paylasilan && paylasilan.paylasimZamani >= (c.basla || 0))) return { soru: c.soru, araclar: c.adimlar, adimlar: [], kaynaklar: [], cevap: "", tamam: false,
         kesildi: false, teyit: null, calisiyor: true, plan: c.plan || [], sorular: c.sorular || [], calismaId: c.id };
     }
+    if (paylasilan) return paylasilan;
     const g = GECMIS.find((x) => x.tur === "cevap" && x.anlik);
     return g ? cevapKaydindan(g) : null;
   }
@@ -1823,6 +1860,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (atiflar.length) {
       const { satirlar, dogru } = await atiflariDogrula(atiflar, AL.adimlar(ogesi("div")));
       c.teyit = { durum: "bitti", satirlar, dogru, toplam: atiflar.length };
+      cevabiPaylas(c);
       cevapYenile();
       const yanlis = satirlar.filter((s) => !s.ok).map((s) => `${kisaAd(s.kanun)} m. ${s.madde}`);
       bildir(`Sohbet ekranında. Cevaptaki ${atiflar.length} madde atfından ${sayiEki(dogru)} resmî metinde bulundu` +
@@ -2168,7 +2206,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   }
   addEventListener("storage", (e) => {
     if (e.key === CIHAZ_GECMISI && masaKuruldu && (aktif === "sohbet" || (aktif === "gecmis" && !gecmisAcik))) git(aktif);
-    if (e.key === CALISMA && (ROL === "basla" || (ROL === "adim" && masaModu()) || (ROL === "teslim" && CEVAP && !CEVAP.tamam))) {
+    if (e.key === PAYLASILAN_CEVAP && masaPenceresi()) {
+      const p = paylasilanCevap();
+      if (p && p.paylasimZamani !== paylasilanGorulen && masaKuruldu && aktif !== "sohbet") { paylasilanGorulen = p.paylasimZamani; git("sohbet"); }
+      else { if (p) paylasilanGorulen = p.paylasimZamani; cevapYenile(); }
+    }
+    if (e.key === CALISMA && (ROL === "basla" || (ROL === "adim" && masaModu()) || (ROL === "teslim" && CEVAP && !CEVAP.tamam) ||
+        masaPenceresi())) {
       if (CEVAP && !CEVAP.tamam) { const c = acikCalisma(); if (c) CEVAP.araclar = c.adimlar; }
       cevapYenile();
     }
@@ -3682,10 +3726,24 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     gecmisListesi(liste);
   };
 
+  // 23.11.2026: yerel kurulumda "geçmiş kayboldu" bildirimi. Pencere sunucunun al_gecmis verdiğini öğrenmemişse
+  // (masanın durum kaydı bu pencereye ulaşmadıysa) liste tarayıcı deposundan okunuyor ve boş görünüyordu. Disk geçmişi
+  // olmayan pencere bir kez yoklar: araç varsa (yerel kurulum) geçmiş diskten gelir, yoksa (uzak uç) eskisi gibi.
+  let gecmisYoklandi = false;
+  async function gecmisYetenegiYokla() {
+    if (gecmisKalici() || gecmisYoklandi) return;
+    gecmisYoklandi = true;
+    try {
+      const { veri } = await cagir(app, "al_gecmis", { islem: "listele", en_fazla: 1 });
+      if (veri && Array.isArray(veri.kayitlar)) { DURUM.yetenekler.add("al_gecmis"); if (ROL === "masa") durumuSakla(); }
+    } catch { /* uzak uç: araç yok */ }
+  }
+
   async function gecmisListesi(kap) {
     kap.replaceChildren();
     const s = gecmisSuzgec;
     let kayitlar = [];
+    await gecmisYetenegiYokla();
     const depo = gecmisDeposu();
     if (depo === "disk") {
       const adim = AL.adimlar(kap).ekle(cev("Geçmiş okunuyor…"));

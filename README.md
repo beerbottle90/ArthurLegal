@@ -551,7 +551,7 @@ uygulamanın kendi yazma kutusu; oraya yalnız sorunuzu yazarsınız, soru, ara�
   Masası'nı aç* yazılı açar; Enter'a basınca masa ChatGPT'nin yan panelinde açılır (ChatGPT masaüstünde tam ekran
   görünümü yan paneldir). Sorunuzu ChatGPT'nin yazma kutusuna yazın: soru masanın Sohbet ekranına gelir, her araç
   adımı canlı satır olarak görünür, cevap kaynakları ve madde atıflarının resmî metinden teyidiyle aynı masada açılır;
-  sohbete yalnız "Cevap masada." yazılır. Modüller, hesap kartları, MCP'ler ekranı, Hafıza, ArthurMask, UYAP Dashboard
+  sohbete cevabın iki üç cümlelik özeti yazılır, tamamı masadadır. Modüller, hesap kartları, MCP'ler ekranı, Hafıza, ArthurMask, UYAP Dashboard
   ve Tapu ChatGPT'de de aynı masadadır; yerel modüller bu bilgisayarda çalışır. Kurulum ArthurLegal'in kural becerisini
   ve 11 iş alanı becerisini ChatGPT'ye kurar, her güncellemede yeniler. Masa ChatGPT'de model sormaz ve göstermez
   ([model](#model)). ChatGPT'nin web ve telefon sürümünde kullanım hazırlanıyor.
@@ -583,8 +583,8 @@ opened from the connector offers to reopen itself from your installation, where 
 aç* typed in the message box; press Enter and the desk opens in ChatGPT's side panel (in the ChatGPT desktop app the
 full-screen view is the side panel). Type your question in ChatGPT's message box: it appears on the desk's Chat
 screen, every tool step shows as a live line, and the answer opens on the same desk with its sources and every
-article citation checked against the official text; the chat itself only says "Cevap masada." (the answer is on the
-desk). Modules, fee cards, the MCP screen, Memory, ArthurMask, the UYAP Dashboard and Tapu are on the same desk in
+article citation checked against the official text; the chat gets a two or three sentence summary (the full answer
+is on the desk). Modules, fee cards, the MCP screen, Memory, ArthurMask, the UYAP Dashboard and Tapu are on the same desk in
 ChatGPT; the local modules run on this computer. Setup installs ArthurLegal's rules skill and its 11 practice-area
 skills in ChatGPT and refreshes them with every update. In ChatGPT the desk does not ask for or show the model
 ([model](#model-en)). Use in ChatGPT on the web and on phones is in preparation. Prefer the app's plain chat? Choose
@@ -817,6 +817,13 @@ justify building an MCP server, and which already have a good enough public API.
   without waiting for you to type a command. If a profile or workflow cannot be opened, the review note says so.
   Until now the prompt only said "read the profile for the area the question falls into", and in a benchmark run the
   assistant worked without opening either.
+- **An answer is never lost.** A user reported (Claude Desktop, Windows) that an answer never reached the desk while
+  the chat only said "Cevap masada.", and that the history was gone. The desk drew the answer only in the window of
+  the hand over call; a user who stayed on the first desk window never saw it. Now the chat gets a two or three
+  sentence summary of every answer (the full answer stays on the desk; if the hand over fails, the full answer goes to
+  the chat), the open desk shows an answer delivered to another window of the same chat (chats never mix), the History
+  screen reads this computer's record in every window, and on a local desk Claude is told to use the desk tools of
+  `arthurlegal-yerel`.
 - Packages: Law Firm 1.12.8 (system prompt changed: section 4 item 12, sections 5 and 12 point to it; 1.12.7 is in
   `arsiv/`). Corporate Assistant 1.12.7, Courthouse 1.2.6 and Academician 1.1.7 unchanged. If you use a claude.ai
   Project with the Law Firm package, paste the system prompt again. Claude plugin 1.12.24, ChatGPT skills 1.12.14,
@@ -826,7 +833,13 @@ justify building an MCP server, and which already have a good enough public API.
 o alanın büro profilini okur (sistem talimatı on profilin hangi alana ait olduğunu artık tek tek yazar; araştırma
 işinde hukuki araştırma profili de okunur) ve işe uyan iş akışını sizin komut yazmanızı beklemeden uygular. Profil ya
 da iş akışı açılamazsa inceleme notunda yazar. Talimat önceden yalnız "soru hangi alana giriyorsa o profili oku"
-diyordu ve bir ölçüm koşusunda asistan ikisini de açmadan çalıştı. Paketler: Hukuk Bürosu 1.12.8 (sistem talimatı
+diyordu ve bir ölçüm koşusunda asistan ikisini de açmadan çalıştı. Cevap artık kaybolmaz: bir kullanıcı (Claude
+Desktop, Windows) cevabın masaya gelmediğini, sohbette yalnız "Cevap masada." yazdığını ve geçmişin kaybolduğunu
+bildirdi. Masa cevabı yalnız teslim çağrısının penceresinde çiziyordu; ilk masa penceresinde kalan kullanıcı onu hiç
+görmedi. Şimdi sohbete her cevabın iki üç cümlelik özeti yazılır (tamamı masada; teslim başarısız olursa cevabın
+tamamı sohbete), açık masa aynı sohbetin başka penceresine teslim edilen cevabı da gösterir (sohbetler karışmaz),
+Geçmiş ekranı her pencerede bu bilgisayardaki kaydı okur ve yerel masada Claude'a masa araçlarını `arthurlegal-yerel`
+sunucusundan çağırması söylenir. Paketler: Hukuk Bürosu 1.12.8 (sistem talimatı
 değişti: bölüm 4 madde 12, bölüm 5 ve 12 buna bağlandı; 1.12.7 `arsiv/` klasöründe); Kurumsal 1.12.7, Courthouse
 1.2.6 ve Akademisyen 1.1.7 aynı. Hukuk Bürosu paketini claude.ai Project'te kullanıyorsanız sistem talimatını yeniden
 yapıştırın. Claude eklentisi 1.12.24, ChatGPT becerileri 1.12.14, masa 3.4.6. Güncelleyici 3.4.6'yı Windows'ta ve
@@ -837,7 +850,12 @@ sahəsini müəyyən edir, həmin sahənin büro profilini oxuyur (sistem təlim
 artıq bir bir yazır; araşdırma işində hüquqi araşdırma profili də oxunur) və işə uyğun iş axınını sizin əmr
 yazmağınızı gözləmədən tətbiq edir. Profil və ya iş axını açıla bilməsə, yoxlama qeydində yazır. Təlimat əvvəllər
 yalnız "sual hansı sahəyə aiddirsə, həmin profili oxu" deyirdi və bir ölçmə qaçışında köməkçi ikisini də açmadan
-işlədi. Paketlər: Hüquq Bürosu 1.12.8 (sistem təlimatı dəyişdi: bölmə 4 bənd 12, bölmə 5 və 12 ona bağlandı; 1.12.7
+işlədi. Cavab artıq itmir: bir istifadəçi (Claude Desktop, Windows) cavabın masaya gəlmədiyini, söhbətdə yalnız
+"Cevap masada." yazıldığını və tarixçənin itdiyini bildirdi. Masa cavabı yalnız təhvil çağırışının pəncərəsində
+çəkirdi; ilk masa pəncərəsində qalan istifadəçi onu heç görmədi. İndi söhbətə hər cavabın iki üç cümləlik xülasəsi
+yazılır (tamamı masadadır; təhvil uğursuz olarsa cavabın tamamı söhbətə), açıq masa eyni söhbətin başqa pəncərəsinə
+təhvil verilən cavabı da göstərir (söhbətlər qarışmır), Tarixçə ekranı hər pəncərədə bu kompüterdəki qeydi oxuyur və
+yerli masada Claude-a masa alətlərini `arthurlegal-yerel` serverindən çağırması deyilir. Paketlər: Hüquq Bürosu 1.12.8 (sistem təlimatı dəyişdi: bölmə 4 bənd 12, bölmə 5 və 12 ona bağlandı; 1.12.7
 `arsiv/` qovluğundadır); Korporativ 1.12.7, Courthouse 1.2.6 və Akademik 1.1.7 dəyişmədi. Hüquq Bürosu paketini
 claude.ai Project-də istifadə edirsinizsə, sistem təlimatını yenidən yapışdırın. Claude plagini 1.12.24, ChatGPT
 bacarıqları 1.12.14, masa 3.4.6. Yeniləyici 3.4.6-nı Windows-da və Mac-də özü quraşdırır.

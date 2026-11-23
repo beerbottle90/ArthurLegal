@@ -2960,7 +2960,7 @@ class ChatGPTKipiTesti(unittest.TestCase):
             sahte_kok(t / "kok")
             kod = ("import arthurlegal_sunucu as s; u = s.Sunucu(); "
                    "b = u.isle('initialize', {'clientInfo': {'name': 'codex-mcp-client'}}); " + self.UZAK + self.LISTE +
-                   "print(json.dumps([u.ev, 'MODEL.' in b['instructions'], 'Cevap masada' in b['instructions'], gor, "
+                   "print(json.dumps([u.ev, 'MODEL.' in b['instructions'], 'iki üç cümlelik özetini' in b['instructions'], gor, "
                    "'al_masa_durumu' in [a['name'] for a in l], isaret, "
                    "next(a for a in l if a['name'] == 'tr_ictihat_ara')['annotations']['openWorldHint']]))")
             self.assertEqual(self.calistir(t, kod), ["chatgpt", False, True, ["al_masasi"], True, True, True])

@@ -528,12 +528,19 @@ def baglayicilari_duzenle(liste: Any) -> List[Dict[str, str]]:
     return out
 
 
-# Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı soruyu, çalışmayı ve cevabı ancak masada görür. Kural
+# Cevap asla kaybolmaz (23.11.2026). Önceki kural sohbete yalnız "Cevap masada." yazdırıyordu; bir kullanıcı ilk masa
+# penceresinde kaldı, cevap yeni pencereye gitti ve hiçbir yerde görünmedi. Sunucu cevabın ekranda göründüğünü bilemez:
+# sohbete cevabın kısa özeti de yazılır, tamamı masada ve geçmiştedir. Teslim aracının tanımı, notu ve masanın notu
+# bu cümleyi kullanır.
+SOHBET_OZETI = ("sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu söyleyin; cevabın "
+                "tamamını sohbete ikinci kez yazmayın. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın.")
+
+# Masa açıkken sohbet kaydı masanın arkasında kalır: kullanıcı soruyu, çalışmayı ve cevabı masada görür. Kural
 # masanın bir notuna bağlı değildir (Claude Desktop o notu modele iletmeyebiliyor): masa bir kez açıldıysa geçerlidir.
 TESLIM_KURALI = (
     "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) bundan sonraki her soruda şu sırayı izleyin: "
     "1) hemen al_masada_basla ile soruyu masaya yazın; 2) araştırın (her aracın adımı masada canlı görünür); "
-    "3) cevabı al_masaya_yaz ile teslim edin. Cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' yazın.")
+    "3) cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI)
 
 
 # Kurulum sağlığı (kalite süreci 4, 18.11.2026). Bilgisayardaki kurulumun paketi (sistem talimatı ve bilgi dosyaları)
@@ -706,12 +713,13 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     if isinstance(girdi.get("model"), str) and masa.get("ev") != "chatgpt":
         out["model"] = model_degerlendir(girdi["model"])
     if sorular:
-        out["not"] = ("Sorular masada. Araştırmaya başlamayın; sohbete yalnız 'Sorular masada.' yazıp turu bitirin. "
+        out["not"] = ("Sorular masada. Araştırmaya başlamayın; sohbete soruları seçenekleriyle kısaca yazıp (masada da "
+                      "seçilebilir) turu bitirin. "
                       "Kullanıcının seçimi sonraki mesajla gelir; o zaman al_masada_basla'yı özgün soru ve planla yeniden "
                       "çağırıp araştırın, cevabı al_masaya_yaz ile teslim edin.")
     else:
-        out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabı "
-                      "al_masaya_yaz ile teslim edin ve sohbete yalnız 'Cevap masada.' yazın.")
+        out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabın "
+                      "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI)
     return out
 
 
@@ -770,8 +778,8 @@ def _teslim_tanimi() -> Dict[str, Any]:
             "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının sorusuna verdiğiniz cevabı "
             "masaya teslim eder. Masa cevabı Sohbet ekranında, yaptığınız adımlar ve kaynaklarla gösterir; cevaptaki "
             "kanun maddesi atıflarını resmî metinden kendisi teyit eder. Soruyu önce al_masada_basla ile yazın, "
-            "araştırmayı bitirince bunu bir kez çağırın; cevabı sohbete ayrıca yazmayın, sohbete yalnız 'Cevap masada.' "
-            "yazın. Masa açılmadıysa çağırmayın, cevabı sohbette verin."),
+            "araştırmayı bitirince bunu bir kez çağırın; " + SOHBET_OZETI + " Masa açılmadıysa çağırmayın, cevabı "
+            "sohbette verin."),
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -816,9 +824,10 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional[
     kimlik = gecmis.cevap_kaydet(girdi) if gecmis is not None else None
     if kimlik:
         out["teslim"]["gecmis_id"] = kimlik
-    out["not"] = ("Cevap masada gösterildi. Sohbete yalnız 'Cevap masada.' yazın, cevabı yinelemeyin. Masa cevaptaki "
-                  "madde atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa "
-                  "notuyla bildirir.")
+    out["not"] = ("Cevap masaya teslim edildi. Şimdi sohbete cevabın iki üç cümlelik özetini yazın ve tamamının "
+                  "masada olduğunu söyleyin; cevabın tamamını sohbete ikinci kez yazmayın. Masa cevaptaki madde "
+                  "atıflarını resmî metinden teyit eder; doğrulanamayan atıf olursa bir sonraki mesajda masa notuyla "
+                  "bildirir.")
     return out
 
 
