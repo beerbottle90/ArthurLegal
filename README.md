@@ -807,6 +807,41 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-346"></a>
+
+## Setup 3.4.6: Profile and workflow before work starts (2026-11-23)
+
+- **Preparation gate.** Before its first research step, tool call or draft, ArthurLegal identifies the practice area
+  from the plugin map, reads that area's practice profile (the system prompt now lists which of the ten profiles
+  belongs to which area; research work also reads the legal research profile) and applies the matching workflow
+  without waiting for you to type a command. If a profile or workflow cannot be opened, the review note says so.
+  Until now the prompt only said "read the profile for the area the question falls into", and in a benchmark run the
+  assistant worked without opening either.
+- Packages: Law Firm 1.12.8 (system prompt changed: section 4 item 12, sections 5 and 12 point to it; 1.12.7 is in
+  `arsiv/`). Corporate Assistant 1.12.7, Courthouse 1.2.6 and Academician 1.1.7 unchanged. If you use a claude.ai
+  Project with the Law Firm package, paste the system prompt again. Claude plugin 1.12.24, ChatGPT skills 1.12.14,
+  desk 3.4.6. How it arrives: the updater installs 3.4.6 on Windows and on a Mac by itself.
+
+**Türkçe:** Hazırlık kapısı: ArthurLegal ilk araştırma, araç çağrısı ya da taslak adımından önce işin alanını belirler,
+o alanın büro profilini okur (sistem talimatı on profilin hangi alana ait olduğunu artık tek tek yazar; araştırma
+işinde hukuki araştırma profili de okunur) ve işe uyan iş akışını sizin komut yazmanızı beklemeden uygular. Profil ya
+da iş akışı açılamazsa inceleme notunda yazar. Talimat önceden yalnız "soru hangi alana giriyorsa o profili oku"
+diyordu ve bir ölçüm koşusunda asistan ikisini de açmadan çalıştı. Paketler: Hukuk Bürosu 1.12.8 (sistem talimatı
+değişti: bölüm 4 madde 12, bölüm 5 ve 12 buna bağlandı; 1.12.7 `arsiv/` klasöründe); Kurumsal 1.12.7, Courthouse
+1.2.6 ve Akademisyen 1.1.7 aynı. Hukuk Bürosu paketini claude.ai Project'te kullanıyorsanız sistem talimatını yeniden
+yapıştırın. Claude eklentisi 1.12.24, ChatGPT becerileri 1.12.14, masa 3.4.6. Güncelleyici 3.4.6'yı Windows'ta ve
+Mac'te kendisi kurar.
+
+**Azərbaycan dili:** Hazırlıq qapısı: ArthurLegal ilk araşdırma, alət çağırışı və ya layihə addımından əvvəl işin
+sahəsini müəyyən edir, həmin sahənin büro profilini oxuyur (sistem təlimatı on profilin hansı sahəyə aid olduğunu
+artıq bir bir yazır; araşdırma işində hüquqi araşdırma profili də oxunur) və işə uyğun iş axınını sizin əmr
+yazmağınızı gözləmədən tətbiq edir. Profil və ya iş axını açıla bilməsə, yoxlama qeydində yazır. Təlimat əvvəllər
+yalnız "sual hansı sahəyə aiddirsə, həmin profili oxu" deyirdi və bir ölçmə qaçışında köməkçi ikisini də açmadan
+işlədi. Paketlər: Hüquq Bürosu 1.12.8 (sistem təlimatı dəyişdi: bölmə 4 bənd 12, bölmə 5 və 12 ona bağlandı; 1.12.7
+`arsiv/` qovluğundadır); Korporativ 1.12.7, Courthouse 1.2.6 və Akademik 1.1.7 dəyişmədi. Hüquq Bürosu paketini
+claude.ai Project-də istifadə edirsinizsə, sistem təlimatını yenidən yapışdırın. Claude plagini 1.12.24, ChatGPT
+bacarıqları 1.12.14, masa 3.4.6. Yeniləyici 3.4.6-nı Windows-da və Mac-də özü quraşdırır.
+
 <a id="setup-345"></a>
 
 ## Setup 3.4.5: Contract types in Workflows; a broader contract drafting guide (2026-11-22)
