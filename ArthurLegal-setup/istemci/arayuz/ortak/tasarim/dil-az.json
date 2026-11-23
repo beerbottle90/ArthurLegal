@@ -314,7 +314,6 @@
  "Sorunuzu yazın": "Sualınızı yazın",
  "Soru": "Sual",
  "Sor": "Soruş",
- "Gönderildi. Claude'un cevabı masada açılacak.": "Göndərildi. Claude-un cavabı masada açılacaq.",
  "Gönderilemedi; sorunuz kutuda duruyor. Kopyalayıp Claude'un yazma kutusuna yapıştırabilirsiniz.": "Göndərilmədi; sualınız qutuda qalır. Onu kopyalayıb Claude-un yazı qutusuna yapışdıra bilərsiniz.",
  "Türkiye": "Türkiyə",
  "Almanya": "Almaniya",
@@ -840,5 +839,9 @@
  "Zor vaka sorularında Medium ile aynı sonucu verdi (aynı tek ağır hata); soru başına kota yaklaşık yüzde 30 arttı. Tavsiye Medium ya da High; dilekçe ve zor dosyada High seçilebilir.": "Çətin kazus suallarında Medium ilə eyni nəticəni verdi (eyni tək ciddi səhv); sual başına limit təxminən 30 faiz artdı. Tövsiyə Medium və ya High; ərizə və çətin işdə High seçilə bilər.",
  "vaka 92/100, 23 soruda 1 ağır hata; madde 19/19, bozuk künye 10/10, gereksiz alarm yok": "kazus 92/100, 23 sualda 1 ciddi səhv; maddə 19/19, səhv rekvizit 10/10, yersiz siqnal yoxdur",
  "Ölçümün en yüksek puanı, ağır hata yok. Opus 5.5'ten farkı yanılma payının içinde; soru başına Opus'un iki katından fazla kota harcar. En zor dosyada seçin.": "Ölçmənin ən yüksək balı, ciddi səhv yoxdur. Opus 5.5-dən fərqi xəta payı daxilindədir; sual başına Opus-dan iki dəfədən çox limit sərf edir. Ən çətin işdə seçin.",
- "vaka 96/100, 23 soruda ağır hata yok; madde 19/19, bozuk künye 10/10, 1 gereksiz alarm": "kazus 96/100, 23 sualda ciddi səhv yoxdur; maddə 19/19, səhv rekvizit 10/10, 1 yersiz siqnal"
+ "vaka 96/100, 23 soruda ağır hata yok; madde 19/19, bozuk künye 10/10, 1 gereksiz alarm": "kazus 96/100, 23 sualda ciddi səhv yoxdur; maddə 19/19, səhv rekvizit 10/10, 1 yersiz siqnal",
+ "Soru gönderildi; araştırma başlayınca adımlar burada görünür.": "Sual göndərildi; araşdırma başlayanda addımlar burada görünəcək.",
+ "Soru Claude'a iletildi. Claude Desktop onay isterse Claude'un yazma kutusunda gönderin; araştırma başlayınca adımlar burada görünür.": "Sual Claude-a ötürüldü. Claude Desktop təsdiq istəsə, Claude-un yazı qutusunda göndərin; araşdırma başlayanda addımlar burada görünəcək.",
+ "Gönderildi. Cevap burada akar.": "Göndərildi. Cavab burada axacaq.",
+ "Claude'a iletildi. Claude Desktop onay isterse Claude'un yazma kutusunda gönderin; cevap burada akar.": "Claude-a ötürüldü. Claude Desktop təsdiq istəsə, Claude-un yazı qutusunda göndərin; cavab burada axacaq."
 }

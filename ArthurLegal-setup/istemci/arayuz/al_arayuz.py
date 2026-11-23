@@ -33,7 +33,7 @@ import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-SURUM = "3.4.6"
+SURUM = "3.4.7"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -58,9 +58,10 @@ GORUNUMLER = {
 }
 
 MASA_URI = "ui://arthurlegal/masa.html"
-# Claude Desktop'ın tam ekran bölmesi her zaman en son açılan görünümü gösterir. Bir aracın kendi kartı olsaydı masanın
-# yerine geçerdi; bu yüzden bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer.
-# Masanın kendi çağırdığı iç araçlar görünüm açmaz.
+# Claude Desktop'ta bütün araçlar masayı açar ve masa her çağrıyı Sohbet ekranında bir adım olarak çizer (bir aracın
+# kendi kartı masanın yerine geçebilirdi). 14.11.2026'dan beri Claude Desktop pencerelerin kendiliğinden tam ekrana
+# geçmesini reddediyor: tam ekranda kullanıcının açtığı pencere kalır. O pencere işi sohbetin ortak deposundan ve
+# bilgisayardaki kurulumdan (CanliMasa, al_masa_durumu) okur. Masanın kendi çağırdığı iç araçlar görünüm açmaz.
 GORUNUMSUZ = frozenset({"al_gecmis", "al_modul_ac", "al_dil", "al_guncelleme", "al_masa_durumu"})
 
 # Ev sahibi (16.11.2026, K3/K25). ChatGPT arayüzlü her araç çağrısını yeni bir sekmede (masaüstü) ya da yeni bir kartta
@@ -688,7 +689,8 @@ def _baslangic_tanimi() -> Dict[str, Any]:
                         "onerilen": {"type": "integer", "minimum": 0,
                                      "description": "Önerdiğiniz seçeneğin sırası (0'dan); öneriniz yoksa vermeyin."}},
                         "required": ["soru", "secenekler"]}},
-                "model": dict(MODEL_GIRDISI)},
+                "model": dict(MODEL_GIRDISI),
+                "masa": dict(MASA_NO_GIRDISI)},
             "required": ["soru"],
         },
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True,
@@ -725,6 +727,19 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
 
 PLAN_AZAMI = 6
 SORU_AZAMI = 3
+
+# Masa numarası (23.11.2026). Bilgisayardaki kurulum Claude Desktop'taki bütün sohbetlerin araç çağrılarını görür; açık
+# masa işi kurulumdan okur (CanliMasa) ve yalnız kendi sohbetininkini alır. Kurulum her masa açılışına bir numara verir
+# (al_masasi cevabında canli_masa); masa notunda Claude'a söyler, Claude soruyu ve cevabı o numarayla yazar.
+MASA_NO_GIRDISI = {"type": "integer", "minimum": 1, "description": (
+    "ArthurLegal Masası'nın numarası: masanın notunda (\"Bu masanın numarası N\") ya da al_masasi cevabında "
+    "(canli_masa) yazıyorsa aynen yazın; yoksa vermeyin.")}
+
+
+def masa_no(girdi: Any) -> int:
+    """Girdideki geçerli masa numarası; yoksa ya da bozuksa 0."""
+    m = (girdi or {}).get("masa") if isinstance(girdi, dict) else None
+    return m if isinstance(m, int) and not isinstance(m, bool) and 0 < m < 1_000_000 else 0
 
 
 def plan_ve_sorular(girdi: Dict[str, Any]) -> "tuple[List[str], List[Dict[str, Any]]]":
@@ -793,6 +808,7 @@ def _teslim_tanimi() -> Dict[str, Any]:
                     "Atıfları araç yanıtındaki citation ile birebir yazın; veri çekilemediyse UYARI satırını koyun.")},
                 "kaynaklar": {"type": "array", "items": kaynak, "maxItems": 40, "description": (
                     "Dayandığınız mevzuat ve kararlar. Bağlantı uydurmayın.")},
+                "masa": dict(MASA_NO_GIRDISI),
             },
             "required": ["soru", "cevap"],
         },
@@ -831,10 +847,12 @@ def teslim_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any], gecmis: Optional[
     return out
 
 
-# --------------------------------------------------------------------------- ChatGPT masaüstünde tek masa (K25)
-# ChatGPT'de arayüzü yalnız al_masasi taşır (arac_meta, CHATGPT_MASAUSTU). Açık masa soruyu, araştırma adımlarını ve
-# cevabı göremez; bilgisayardaki kurulum bunları bu süreçte bellekte tutar, masa al_masa_durumu ile yoklar. Hiçbiri
-# diske yazılmaz (cevap zaten teslim anında yerel geçmişe yazılıyor) ve hiçbir sunucuya gitmez. Uzak uç bunu kullanmaz.
+# --------------------------------------------------------------------------- kurulumdan canlı masa
+# ChatGPT masaüstünde (K25) arayüzü yalnız al_masasi taşır; Claude Desktop'ta (23.11.2026) tam ekrandaki masa öteki
+# araçların pencereleri açılmasa da işi buradan okur. Bilgisayardaki kurulum soruyu, araştırma adımlarını ve cevabı bu
+# süreçte bellekte tutar, masa al_masa_durumu ile yoklar. Hiçbiri diske yazılmaz (cevap zaten teslim anında yerel
+# geçmişe yazılıyor) ve hiçbir sunucuya gitmez. Uzak uç bunu kullanmaz. Kurulum bütün sohbetlerin işini görür: çalışma
+# ve cevap masa numarasını (masa_no) taşır, masa yalnız kendi sohbetinin işini alır.
 class CanliMasa:
     ADIM_AZAMI = 40
     SONUC_SINIRI = 30000   # karakter: kartlı adımın sonucu bundan büyükse masaya gitmez, satır özetsiz kalır
@@ -861,14 +879,16 @@ class CanliMasa:
                 out[k] = _kisalt(v, 200)
             elif isinstance(v, (int, float)) and not isinstance(v, bool):
                 out[k] = v
+            elif isinstance(v, list) and v and all(isinstance(x, (str, int)) and not isinstance(x, bool) for x in v):
+                out[k] = [_kisalt(x, 40) if isinstance(x, str) else x for x in v[:10]]   # madde_no: ["344", "345"]
             if len(out) >= 8:
                 break
         return out
 
-    def _yeni_calisma(self, soru: str = "", plan: Any = None, sorular: Any = None) -> Dict[str, Any]:
+    def _yeni_calisma(self, soru: str = "", plan: Any = None, sorular: Any = None, masa: int = 0) -> Dict[str, Any]:
         self._sayac += 1
         return {"id": "%x-%d" % (self._simdi(), self._sayac), "soru": soru, "plan": plan or [], "sorular": sorular or [],
-                "basla": self._simdi(), "bitti": 0, "adimlar": []}
+                "basla": self._simdi(), "bitti": 0, "adimlar": [], "masa": masa}
 
     def masa_acildi(self) -> int:
         """al_masasi her çağrıldığında: yeni masanın numarası (canli_masa)."""
@@ -879,13 +899,16 @@ class CanliMasa:
     def basla(self, girdi: Dict[str, Any]) -> None:
         plan, sorular = plan_ve_sorular(girdi or {})
         soru = _kisalt((girdi or {}).get("soru"), 200)
+        masa = masa_no(girdi)
         with self._kilit:
             c = self._calisma
             # Netleştirme sorusundan sonra aynı soru yeniden başlatılırsa (kullanıcı seçimi geldi) aynı çalışma sürer.
             if c and not c["bitti"] and c["soru"] == soru and soru:
                 c.update(plan=plan, sorular=sorular)
+                if masa:
+                    c["masa"] = masa
             else:
-                self._calisma = self._yeni_calisma(soru, plan, sorular)
+                self._calisma = self._yeni_calisma(soru, plan, sorular, masa)
             self._cevap = None
             self._surum += 1
 
@@ -924,12 +947,17 @@ class CanliMasa:
 
     def teslim(self, girdi: Dict[str, Any], gecmis_id: Optional[str] = None) -> None:
         g = girdi or {}
+        masa = masa_no(g)
         with self._kilit:
-            if self._calisma is None:
-                self._calisma = self._yeni_calisma(_kisalt(g.get("soru"), 200))
+            # Soru masaya yazılmadan teslim edildiyse (ya da bitmiş bir işin ardından) cevap kendi çalışmasını açar.
+            if self._calisma is None or (self._calisma["bitti"] and not _ayni_soru(self._calisma["soru"], g.get("soru"))):
+                self._calisma = self._yeni_calisma(_kisalt(g.get("soru"), 200), masa=masa)
             self._calisma["bitti"] = self._simdi()
+            if masa:
+                self._calisma["masa"] = masa
             self._sayac += 1
-            self._cevap = {"id": "c%d" % self._sayac, "gecmis_id": gecmis_id,
+            self._cevap = {"id": "c%d" % self._sayac, "gecmis_id": gecmis_id, "calisma": self._calisma["id"],
+                           "masa": self._calisma.get("masa") or 0,
                            "girdi": {k: g.get(k) for k in ("soru", "adimlar", "cevap", "kaynaklar") if g.get(k) is not None}}
             self._surum += 1
 
@@ -948,8 +976,8 @@ def canli_araci() -> Dict[str, Any]:
     return {
         "name": "al_masa_durumu",
         "title": "ArthurLegal Masası durumu",
-        "description": ("Yalnız ArthurLegal Masası kendisi çağırır: ChatGPT masaüstünde açık masa soruyu, araştırma "
-                        "adımlarını ve cevabı bununla gösterir. Siz çağırmayın."),
+        "description": ("Yalnız ArthurLegal Masası kendisi çağırır: açık masa soruyu, araştırma adımlarını ve cevabı "
+                        "bununla gösterir. Siz çağırmayın."),
         "inputSchema": {"type": "object", "properties": {
             "surum": {"type": "integer", "description": "Masanın bildiği son durum sürümü; aynıysa yalnız sürüm döner."}}},
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False},
@@ -1017,6 +1045,12 @@ def _katla(s: Any) -> str:
 def _kisalt(s: Any, n: int) -> str:
     s = re.sub(r"\s+", " ", str(s or "")).strip()
     return s if len(s) <= n else s[: n - 1] + "…"
+
+
+def _ayni_soru(a: Any, b: Any) -> bool:
+    """İki soru aynı mı (kısaltılmış biçimiyle de): baştan 150 karakter, büyük-küçük harf ve boşluk farkı sayılmaz."""
+    x, y = (_kisalt(v, 200).rstrip("…").lower()[:150] for v in (a, b))
+    return bool(x) and x == y
 
 
 class Gecmis:

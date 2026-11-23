@@ -795,6 +795,9 @@ def main(argv=None) -> int:
         silinen = asistan_kayitlari(kaldir=True)
         kisayollar_sil()
         run_anahtari(False)
+        if sys.platform == "win32":   # cevap bildiriminin uygulama kimliği (bildirim.py)
+            import bildirim
+            bildirim.windows_kimligini_sil()
         proje.kaldir()
         ortak.gunluk("kurulum", f"kaldırma: {sum(silinen.values())} yapılandırmadan silindi")
         return 0

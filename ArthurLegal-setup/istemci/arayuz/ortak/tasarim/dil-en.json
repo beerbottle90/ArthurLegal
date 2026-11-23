@@ -314,7 +314,6 @@
  "Sorunuzu yazın": "Type your question",
  "Soru": "Question",
  "Sor": "Ask",
- "Gönderildi. Claude'un cevabı masada açılacak.": "Sent. Claude's answer will open on the desk.",
  "Gönderilemedi; sorunuz kutuda duruyor. Kopyalayıp Claude'un yazma kutusuna yapıştırabilirsiniz.": "Could not send; your question is still in the box. You can copy it into Claude's message box.",
  "Türkiye": "Türkiye",
  "Almanya": "Germany",
@@ -840,5 +839,9 @@
  "Zor vaka sorularında Medium ile aynı sonucu verdi (aynı tek ağır hata); soru başına kota yaklaşık yüzde 30 arttı. Tavsiye Medium ya da High; dilekçe ve zor dosyada High seçilebilir.": "On hard scenario questions it gave the same result as Medium (the same single critical error); usage per question rose by about 30 percent. The recommendation is Medium or High; High can be selected for petitions and hard case files.",
  "vaka 92/100, 23 soruda 1 ağır hata; madde 19/19, bozuk künye 10/10, gereksiz alarm yok": "scenario 92/100, 1 critical error in 23 questions; article 19/19, broken case citation 10/10, no false alarms",
  "Ölçümün en yüksek puanı, ağır hata yok. Opus 5.5'ten farkı yanılma payının içinde; soru başına Opus'un iki katından fazla kota harcar. En zor dosyada seçin.": "The highest score in the measurement, no critical errors. Its difference from Opus 5.5 is within the margin of error; it consumes more than twice Opus's usage per question. Select it for the hardest case file.",
- "vaka 96/100, 23 soruda ağır hata yok; madde 19/19, bozuk künye 10/10, 1 gereksiz alarm": "scenario 96/100, no critical errors in 23 questions; article 19/19, broken case citation 10/10, 1 false alarm"
+ "vaka 96/100, 23 soruda ağır hata yok; madde 19/19, bozuk künye 10/10, 1 gereksiz alarm": "scenario 96/100, no critical errors in 23 questions; article 19/19, broken case citation 10/10, 1 false alarm",
+ "Soru gönderildi; araştırma başlayınca adımlar burada görünür.": "Question sent; the steps will appear here once the research starts.",
+ "Soru Claude'a iletildi. Claude Desktop onay isterse Claude'un yazma kutusunda gönderin; araştırma başlayınca adımlar burada görünür.": "Question passed to Claude. If Claude Desktop asks for confirmation, send it from Claude's message box; the steps will appear here once the research starts.",
+ "Gönderildi. Cevap burada akar.": "Sent. The answer will flow in here.",
+ "Claude'a iletildi. Claude Desktop onay isterse Claude'un yazma kutusunda gönderin; cevap burada akar.": "Passed to Claude. If Claude Desktop asks for confirmation, send it from Claude's message box; the answer will flow in here."
 }
