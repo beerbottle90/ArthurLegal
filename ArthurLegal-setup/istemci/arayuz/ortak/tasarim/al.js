@@ -89,10 +89,13 @@ const EV = (() => {
     uyarla,
   };
 })();
+// Ekran başlıkları ve alt yazılar (cevN ile işaretli veri) da ChatGPT karşılığına bakar (24.11.2026: Sohbet alt yazısı
+// ChatGPT'de "Yanıtla kutusuna" diyordu).
 function cevVeri(x) {
   if (typeof x !== "string") return x;
-  const k = DIL.veriMi(x) ? DIL.karsilik(x) : undefined;
-  return EV.uyarla(k == null ? x : k, DIL.secili);
+  const y = EV.anahtar(x);
+  const k = DIL.veriMi(y) ? DIL.karsilik(y) : undefined;
+  return EV.uyarla(k == null ? y : k, DIL.secili);
 }
 function cev(anahtar, ...deger) {
   const a = EV.anahtar(anahtar);

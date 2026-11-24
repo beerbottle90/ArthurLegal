@@ -824,7 +824,9 @@ answer was delivered), it was left out. Now, while the desk says "Claude is work
 History every few seconds and shows the answer written for this question after the work began (the same or a similar
 question; otherwise the single new answer when the newest desk belongs to this conversation). Another conversation's
 answer does not come to this desk. **Copy system info** now also gives the state of the desk's live flow, without any
-question or answer text, so a report can be traced.
+question or answer text, so a report can be traced. **One question box.** The desk's own question box in Chat is
+gone (it did not work well and sat under Claude's own box): type your question in Claude's full screen **Reply** box,
+in ChatGPT in the chat's own box; the answer still flows on the desk.
 
 Packages, plugins and skills unchanged; desk 3.5.2. How it arrives: the updater installs 3.5.2 on Windows and on a Mac
 by itself; the change applies after Claude Desktop is restarted.
@@ -836,7 +838,9 @@ kurulumun canlı akışından gelir ve masa yalnız kendi sohbetinin işini alı
 saniyede bir bu bilgisayarın Geçmiş'ine bakar ve iş başladıktan sonra bu soru için yazılmış cevabı gösterir (aynı ya
 da benzer soru; yoksa en son açılan masa bu sohbetinse tek yeni cevap). Başka bir sohbetin cevabı bu masaya gelmez.
 **Sistem bilgisini kopyala** artık masanın canlı akışının durumunu da verir; soru ya da cevap metni içermez, bildirim
-izlenebilir. Paketler, eklentiler ve beceriler aynı; masa 3.5.2. Güncelleyici 3.5.2 sürümünü Windows'ta ve Mac'te
+izlenebilir. Sohbet'teki ayrı soru kutusu kalktı (düzgün çalışmıyordu ve Claude'un kendi kutusunun altında
+duruyordu): sorunuzu Claude'un tam ekrandaki **Yanıtla** kutusuna, ChatGPT'de sohbetin kendi kutusuna yazın; cevap yine
+masada akar. Paketler, eklentiler ve beceriler aynı; masa 3.5.2. Güncelleyici 3.5.2 sürümünü Windows'ta ve Mac'te
 kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
 
 **Azərbaycanca:** Cavab masaya həmişə gəlir. Masa bəzən, ən çox ilk sualda, cavab bu kompüterin Tarixçəsinə yazılmış
@@ -846,7 +850,9 @@ quraşdırmanın canlı axınından gəlir və masa yalnız öz söhbətinin iş
 saniyədən bir bu kompüterin Tarixçəsinə baxır və iş başlayandan sonra bu sual üçün yazılmış cavabı göstərir (eyni və
 ya oxşar sual; yoxdursa, ən son açılan masa bu söhbətindirsə, yeganə yeni cavab). Başqa söhbətin cavabı bu masaya
 gəlmir. **Sistem məlumatını kopyala** artıq masanın canlı axınının vəziyyətini də verir; sual və ya cavab mətni
-olmadan, bildiriş izlənə bilir. Paketlər, plaginlər və bacarıqlar dəyişmədi; masa 3.5.2. Yeniləyici 3.5.2 versiyasını
+olmadan, bildiriş izlənə bilir. Söhbətdəki ayrıca sual qutusu çıxarıldı (düzgün işləmirdi və Claude
+tətbiqinin öz qutusunun altında dururdu): sualınızı Claude tətbiqinin tam ekrandakı **Yanıtla (Reply)** qutusuna,
+ChatGPT tətbiqində söhbətin öz qutusuna yazın; cavab yenə masada axır. Paketlər, plaginlər və bacarıqlar dəyişmədi; masa 3.5.2. Yeniləyici 3.5.2 versiyasını
 Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda qüvvəyə minir.
 
 <a id="setup-351"></a>

@@ -418,19 +418,6 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 .md table { border-collapse: collapse; font-size: 14px; min-width: 100%; }
 .md th, .md td { padding: 8px 10px; border-bottom: 0.5px solid var(--cizgi); text-align: left; vertical-align: top; }
 .md th { font-weight: 600; background: var(--grup); }
-/* Masanın kendi yazma kutusu (21.11.2026): ChatGPT'de masa yan panelde, ChatGPT'nin kutusu sohbet sütununda kalır;
-   Claude Desktop'ta masa tam ekranken Claude'un kutusu hiç görünmüyor (kullanıcının ekran görüntüsü). Kutu Sohbet
-   ekranının altında hep görünür, mesajı ev sahibine gönderir. */
-.yazma-kutusu { position: sticky; bottom: 0; z-index: 2; display: flex; flex-direction: column; gap: 6px;
-  margin-top: auto; padding: 12px 0 calc(var(--guvenli-alt) + 16px); background: var(--zemin); }
-.yazma-kutusu .kutu { display: flex; align-items: flex-end; gap: 8px; padding: 6px 6px 6px 14px; border-radius: var(--k-grup);
-  background: var(--yuzey); border: 0.5px solid var(--cizgi-guclu); box-shadow: var(--golge); }
-.yazma-kutusu .kutu:focus-within { border-color: var(--birincil); box-shadow: 0 0 0 3px var(--halka); }
-.yazma-kutusu textarea { flex: 1; min-width: 0; min-height: 24px; max-height: 180px; margin: 0; padding: 8px 0; border: 0;
-  background: transparent; box-shadow: none; resize: none; font: inherit; font-size: 15px; line-height: 1.45; color: var(--metin); outline: none; }
-.yazma-kutusu .birincil { flex: none; }
-.yazma-kutusu .zaman { padding: 0 6px; }
-#ekran:has(> .yazma-kutusu) { padding-bottom: 0; min-height: calc(100vh - 110px); }
 /* MCP'ler: sunucu satırları (araç listesi yok) */
 .sunucu .simge svg { width: 18px; height: 18px; }
 .sunucu .simge .arma { width: 22px; height: 22px; }
@@ -536,6 +523,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     cevN("Uygulamaları ve MCP sunucularını ChatGPT'de Ayarlar › Plugins bölümünden (Apps ve MCPs sekmeleri) bir kez bağlarsınız. Masa sunucuları ve durumlarını gösterir, araçlarını göstermez."));
   EV.ozel(cevN("ArthurLegal hangi Claude modeli ve effort ile en güvenilir sonucu verir, bu sohbet hangisiyle çalışıyor, nasıl değiştirilir."),
     cevN("ArthurLegal'in model tavsiyesi ve ChatGPT'de modelin nasıl seçildiği."));
+  // 24.11.2026: masanın kendi soru kutusu kalktı; soru ev sahibinin kutusuna yazılır (Claude Desktop tam ekranda
+  // "Yanıtla", ChatGPT'de sohbetin kendi kutusu).
+  EV.ozel(cevN("Sorunuzu aşağıdaki Yanıtla kutusuna yazın; Claude'un adımları ve cevabı burada akar."),
+    cevN("Sorunuzu ChatGPT'nin yazma kutusuna yazın; ChatGPT'nin adımları ve cevabı burada akar."));
   DIL.sabitler();
 
   const { ogesi, ikon, dugme, cagir, sor, baglantiAc, kopyala, sayiEki } = AL;
@@ -569,7 +560,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
 
   const EKRANLAR = [
     { id: "sohbet", ad: cevN("Sohbet"), simge: "sohbet", bolum: cevN("Çalışma"),
-      baslik: cevN("Sohbet"), alt: cevN("Sorunuzu aşağıdaki kutuya yazın; Claude'un adımları ve cevabı burada akar.") },
+      baslik: cevN("Sohbet"), alt: cevN("Sorunuzu aşağıdaki Yanıtla kutusuna yazın; Claude'un adımları ve cevabı burada akar.") },
     { id: "mevzuat", ad: cevN("Mevzuat ve kararlar"), simge: "kitap", bolum: cevN("Çalışma"),
       baslik: cevN("Mevzuat ve kurul kararları"), alt: cevN("İsteğinizi yazın: mevzuatın tamamı ve EPDK, SPK, Rekabet gibi kurumların kararları gelir. Maddeyi resmî metinden getirin, taslağınızdaki atıfları teyit edin.") },
     { id: "ictihat", ad: cevN("İçtihat"), simge: "terazi", bolum: cevN("Çalışma"),
@@ -1485,8 +1476,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // Sohbet (21.11.2026, kullanıcı: "sade, temiz, yalnız akışın gözleneceği, sohbet kutusunun olduğu bir sayfa"):
   // yalnız bu sorunun akışı (soru, plan, canlı adımlar, cevap, atıf teyidi, kaynaklar) ve yazma kutusu. Hızlı iş
   // kartları sol panelde, eski işler Geçmiş'te durur; Sohbet onları yinelemez. Model hatırlatması yalnız ölçümde yetersiz
-  // kalan modelde (kırmızı satır) çıkar; öneri cümlesi sol alttaki göstergede ve Model ekranında. Yazma kutusu her ev
-  // sahibinde: Claude Desktop masa tam ekranken kendi kutusunu göstermiyor (kullanıcının ekran görüntüsü, 21.11.2026).
+  // kalan modelde (kırmızı satır) çıkar; öneri cümlesi sol alttaki göstergede ve Model ekranında. Soru ev sahibinin
+  // kutusuna yazılır: masanın kendi kutusu 24.11.2026'da kalktı (Claude Desktop tam ekranda "Yanıtla" kutusunu
+  // gösteriyor; iki kutu alt alta duruyordu ve masanınki düzgün çalışmıyordu, kullanıcı kararı).
   CIZIM.sohbet = (ekran) => {
     const yerelNot = yerelMasaNotu("sohbet");
     if (yerelNot) ekran.append(yerelNot);
@@ -1502,7 +1494,6 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     else kok.append(ogesi("div", "bos", cev("Henüz bir soru yok. Sorduğunuzda Claude'un araştırma adımları ve cevabı burada sırayla görünür; eski işleriniz Geçmiş'te.")));
     akis.append(onceki, kok);
     ekran.append(akis);
-    ekran.append(yazmaKutusu(c));
     gosterilenTur = c ? soruKatla(c.soru) || "-" : null;
     if (onceki.childElementCount) requestAnimationFrame(() => turaKaydir(kok));
   };
@@ -2194,10 +2185,6 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       return (Array.isArray(d) ? d : []).filter((g) => g && typeof g.metin === "string" && typeof g.zaman === "number");
     } catch { return []; }
   }
-  function gonderileniYaz(metin) {
-    try { localStorage.setItem(GONDERILEN, JSON.stringify([...gonderilenler(), { metin: metin.slice(0, 2000), zaman: Date.now() }].slice(-10))); }
-    catch { /* depo kapalı: soru yine gider, akışa çalışma başlayınca girer */ }
-  }
   function bekleyenSoru() {
     const g = gonderilenler().at(-1);
     if (!g || Date.now() - g.zaman > BEKLEME_OMRU) return null;
@@ -2486,52 +2473,6 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     for (const k of kaynaklar) satir.append(ogesi("span", "hap", cevVeri(k)));
     if (model) satir.append(ogesi("span", "hap", cev("Model: {0}", model)));
     return satir;
-  }
-
-  // Sohbet ekranının yazma kutusu: soru Claude'a ya da ChatGPT'ye kullanıcı mesajı olarak gider (ui/message), cevabı yine
-  // masaya gelir. Yazılan metin ekran yeniden çizilse de kaybolmaz (TASLAK). Enter gönderir, Shift+Enter alt satır.
-  let TASLAK = "";
-  function yazmaKutusu(c) {
-    const form = ogesi("form", "yazma-kutusu");
-    const kutu = ogesi("div", "kutu");
-    const soru = document.createElement("textarea");
-    soru.rows = 1;
-    soru.placeholder = c ? cev("Devam sorunuzu yazın") : cev("Sorunuzu yazın");
-    soru.setAttribute("aria-label", cev("Soru"));
-    soru.value = TASLAK;
-    const boy = () => { soru.style.height = "auto"; soru.style.height = Math.min(soru.scrollHeight, 180) + "px"; };
-    soru.oninput = () => { TASLAK = soru.value; boy(); };
-    const gonder = dugme(cev("Sor"), { sinif: "birincil", simge: "sohbet" });
-    gonder.type = "submit";
-    kutu.append(soru, gonder);
-    const durum = ogesi("span", "zaman", "");
-    durum.setAttribute("role", "status");
-    form.append(kutu, durum);
-    soru.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } };
-    form.onsubmit = async (e) => {
-      e.preventDefault();
-      const m = soru.value.trim();
-      if (!m) return;
-      gonder.disabled = true;
-      const gitti = await claudeaSor(m, null);
-      gonder.disabled = false;
-      if (gitti) {
-        soru.value = TASLAK = "";
-        boy();
-        // Soru hemen akışa girer. Claude Desktop uygulamadan gelen mesajı göndermeden önce onaylatabilir (23.11.2026
-        // videosu: "Bu istemi çalıştırmadan önce dikkatli olun"); "gönderildi" sanılıp beklenmesin diye söylenir.
-        gonderileniYaz(m);
-        durum.textContent = EV.chatgpt ? cev("Gönderildi. Cevap burada akar.")
-          : cev("Claude'a iletildi. Claude Desktop onay isterse Claude'un yazma kutusunda gönderin; cevap burada akar.");
-        cevapYenile();
-      } else {
-        // Gönderim başarısızsa soru silinmez ve başarı yazılmaz: avukat metni kopyalayıp Claude'a yazabilir.
-        durum.textContent = cev("Gönderilemedi; sorunuz kutuda duruyor. Kopyalayıp Claude'un yazma kutusuna yapıştırabilirsiniz.");
-        soru.focus();
-      }
-    };
-    requestAnimationFrame(boy);
-    return form;
   }
 
   // ---- Çalışma akışı ----
