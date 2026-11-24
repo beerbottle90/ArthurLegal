@@ -1,4 +1,21 @@
 {
+ "3.5.3": {
+  "tr": [
+   "Devam sorusu aynı masada akar: siz yeni sohbet başlatmadıkça her devam sorusu ve cevabı bu masada, en altta görünür. Önceki sorular tek satırlık kart olur, tıklayınca cevabı açılır; uzun bir cevap artık yeni soruyu ekranın altına itmez.",
+   "Sol panelde Yeni sohbet ve Sohbetler: önceki sohbetlerinize tıklayıp oradan devam edin; masa o sohbetin soru ve cevaplarını Claude'a bağlam olarak verir. Tümü Geçmiş'te durur.",
+   "Sohbet yeniden çizilince geç açılan eski pencereler artık eski cevabı son cevap diye göstermez; masaya gelen her cevabın atıf teyidi Geçmiş'e de yazılır."
+  ],
+  "az": [
+   "Davam sualı eyni masada axır: siz yeni söhbət başlatmadıqca hər davam sualı və cavabı bu masada, ən aşağıda görünür. Əvvəlki suallar bir sətirlik kart olur, klikləyəndə cavabı açılır; uzun cavab artıq yeni sualı ekranın aşağısına itələmir.",
+   "Sol paneldə Yeni söhbət və Söhbətlər: əvvəlki söhbətlərinizə klikləyib oradan davam edin; masa həmin söhbətin sual və cavablarını Claude-a kontekst kimi verir. Hamısı Tarixçədədir.",
+   "Söhbət yenidən çəkiləndə gec açılan köhnə pəncərələr artıq köhnə cavabı son cavab kimi göstərmir; masaya gələn hər cavabın istinad yoxlaması Tarixçəyə də yazılır."
+  ],
+  "en": [
+   "Follow up questions stay on the same desk: unless you start a new chat, every follow up question and its answer appears on this desk, at the bottom. Earlier questions become one line cards that open their answer on click; a long answer no longer pushes the new question off screen.",
+   "New chat and Chats in the left panel: click an earlier chat to continue from there; the desk gives Claude that chat's questions and answers as context. Everything is in History.",
+   "When the chat is redrawn, late opening old windows no longer show an old answer as the latest one; the citation check of every answer that reaches the desk is also written to History."
+  ]
+ },
  "3.5.2": {
   "tr": [
    "Cevap masada her zaman görünür: masa \"Claude çalışıyor\" derken cevap bu bilgisayarın Geçmiş'ine yazılmışsa birkaç saniye içinde Sohbet'e gelir.",

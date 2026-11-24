@@ -812,6 +812,53 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-353"></a>
+
+## Setup 3.5.3: Follow up questions stay on the same desk, chats in the left panel (2026-11-24)
+
+**Follow up questions stay on the same desk.** A report from this computer: the first answer reached the desk, the
+follow up question appeared only in the chat. The follow up answer had reached the installation, but the first answer
+was 11,551 characters long and pushed the new question far below the screen; when the chat was later redrawn, an old
+window that opened for the first time showed the first answer as the latest one again. Now, unless you start a new
+chat, every follow up question and its answer appears on this desk, at the bottom: earlier questions become one line
+cards ("Answer · N citations") that open their answer on click. Work without a desk number belongs to the newest desk
+on this computer when that desk belongs to this conversation. Late opening old windows no longer share or restart old
+work, and the citation check of every answer is written to History.
+
+**New chat and Chats.** The left panel starts with New chat and the list of your chats; click an earlier chat to
+continue from there. The desk gives Claude that chat's questions and answers as context with your next question.
+Everything stays in History on this computer. ArthurMask 1.4.1 (overflow in narrow windows, copying, colour contrast)
+is part of this release.
+
+Packages, plugins and skills unchanged; desk 3.5.3. How it arrives: the updater installs 3.5.3 on Windows and on a Mac
+by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Devam sorusu aynı masada akar. Bu bilgisayardan bildirim: ilk cevap masaya geldi, devam sorusu yalnız
+sohbette göründü. Devam sorusunun cevabı kuruluma ulaşmıştı, ama ilk cevap 11.551 karakterdi ve yeni soruyu ekranın
+çok altına itiyordu; sohbet sonradan yeniden çizilince ilk kez açılan eski bir pencere ilk cevabı yeniden son cevap
+diye gösterdi. Artık siz yeni sohbet başlatmadıkça her devam sorusu ve cevabı bu masada, en altta görünür: önceki
+sorular tek satırlık kart olur ("Cevap · N atıf"), tıklayınca cevabı açılır. Masa numarası taşımayan iş, bu
+bilgisayarda en son açılan masa bu sohbetinse o masaya gelir. Geç açılan eski pencereler eski işi paylaşmaz ya da
+yeniden başlatmaz; her cevabın atıf teyidi Geçmiş'e yazılır. **Yeni sohbet ve Sohbetler:** sol panel Yeni sohbet ve
+sohbetlerinizin listesiyle başlar; önceki bir sohbete tıklayıp oradan devam edersiniz. Masa o sohbetin soru ve
+cevaplarını bir sonraki sorunuzla Claude'a bağlam olarak verir. Hepsi bu bilgisayardaki Geçmiş'te durur. ArthurMask
+1.4.1 (dar pencerede taşma, kopyalama, renk karşıtlığı) bu sürümle gelir. Paketler, eklentiler ve beceriler aynı;
+masa 3.5.3. Güncelleyici 3.5.3 sürümünü Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden
+açılınca geçerli olur.
+
+**Azərbaycanca:** Davam sualı eyni masada axır. Bu kompüterdən bildiriş: ilk cavab masaya gəldi, davam sualı yalnız
+söhbətdə göründü. Davam sualının cavabı quraşdırmaya çatmışdı, amma ilk cavab 11.551 simvol idi və yeni sualı
+ekranın çox aşağısına itələyirdi; söhbət sonradan yenidən çəkiləndə ilk dəfə açılan köhnə pəncərə ilk cavabı yenidən
+son cavab kimi göstərdi. İndi siz yeni söhbət başlatmadıqca hər davam sualı və cavabı bu masada, ən aşağıda görünür:
+əvvəlki suallar bir sətirlik kart olur ("Cavab · N istinad"), klikləyəndə cavabı açılır. Masa nömrəsi daşımayan iş,
+bu kompüterdə ən son açılan masa bu söhbətindirsə, həmin masaya gəlir. Gec açılan köhnə pəncərələr köhnə işi paylaşmır
+və yenidən başlatmır; hər cavabın istinad yoxlaması Tarixçəyə yazılır. **Yeni söhbət və Söhbətlər:** sol panel Yeni
+söhbət və söhbətlərinizin siyahısı ilə başlayır; əvvəlki söhbətə klikləyib oradan davam edirsiniz. Masa həmin
+söhbətin sual və cavablarını növbəti sualınızla Claude tətbiqinə kontekst kimi verir. Hamısı bu kompüterdəki Tarixçədə qalır.
+ArthurMask 1.4.1 (dar pəncərədə daşma, kopyalama, rəng kontrastı) bu versiya ilə gəlir. Paketlər, plaginlər və
+bacarıqlar dəyişmədi; masa 3.5.3. Yeniləyici 3.5.3 versiyasını Windows və Mac üzərində özü quraşdırır; dəyişiklik
+Claude Desktop yenidən açılanda qüvvəyə minir.
+
 <a id="setup-352"></a>
 
 ## Setup 3.5.2: The answer always reaches the desk (2026-11-24)
