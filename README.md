@@ -816,7 +816,7 @@ justify building an MCP server, and which already have a good enough public API.
 
 ## Setup 3.5.2: The answer always reaches the desk (2026-11-24)
 
-**The answer always reaches the desk.** On the second question of a conversation the desk could stay at "Claude is
+**The answer always reaches the desk.** Sometimes, most often on the first question, the desk stayed at "Claude is
 working" although the answer had already been written to this computer's History. In full screen the other windows do
 not open, so the answer reaches the desk only through the installation's live flow, and the desk takes only the work of
 its own conversation: when the answer could not be matched (no desk number, the question written differently when the
@@ -829,7 +829,7 @@ question or answer text, so a report can be traced.
 Packages, plugins and skills unchanged; desk 3.5.2. How it arrives: the updater installs 3.5.2 on Windows and on a Mac
 by itself; the change applies after Claude Desktop is restarted.
 
-**Türkçe:** Cevap masaya her zaman gelir. Bir sohbetin ikinci sorusunda masa, cevap bu bilgisayarın Geçmiş'ine
+**Türkçe:** Cevap masaya her zaman gelir. Masa bazen, en çok ilk soruda, cevap bu bilgisayarın Geçmiş'ine
 yazılmış olduğu halde "Claude çalışıyor"da kalabiliyordu. Tam ekranda öteki pencereler açılmaz; cevap masaya yalnız
 kurulumun canlı akışından gelir ve masa yalnız kendi sohbetinin işini alır. Cevap bu sohbetle eşleştirilemediğinde
 (masa numarası yok, soru teslimde farklı yazılmış) dışarıda kalıyordu. Artık masa "Claude çalışıyor" derken birkaç
@@ -839,7 +839,7 @@ da benzer soru; yoksa en son açılan masa bu sohbetinse tek yeni cevap). Başka
 izlenebilir. Paketler, eklentiler ve beceriler aynı; masa 3.5.2. Güncelleyici 3.5.2 sürümünü Windows'ta ve Mac'te
 kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
 
-**Azərbaycanca:** Cavab masaya həmişə gəlir. Söhbətin ikinci sualında masa, cavab bu kompüterin Tarixçəsinə yazılmış
+**Azərbaycanca:** Cavab masaya həmişə gəlir. Masa bəzən, ən çox ilk sualda, cavab bu kompüterin Tarixçəsinə yazılmış
 olsa da, "Claude işləyir" vəziyyətində qala bilirdi. Tam ekranda digər pəncərələr açılmır; cavab masaya yalnız
 quraşdırmanın canlı axınından gəlir və masa yalnız öz söhbətinin işini götürür. Cavab bu söhbətlə uyğunlaşdırılmadıqda
 (masa nömrəsi yoxdur, sual təslimdə fərqli yazılıb) kənarda qalırdı. İndi masa "Claude işləyir" deyərkən bir neçə
