@@ -630,6 +630,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     "al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu " +
     "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) " +
     "içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
+  // Claude Desktop açılırken bilgisayardaki sunucular araç listesine birkaç saniye geç girer (24.11.2026 ölçümü: masa
+  // açılıştan 18 sn sonra istendi, Claude'un listesinde arthurlegal-yerel yoktu, masa uzaktan açıldı ve geçmiş gelmedi).
+  // Masaüstündeki uzak masa her notta sonraki sorunun bilgisayardaki masaya geçmesini söyler.
+  const UZAK_MASAUSTU_NOTU = " Masa uzak ArthurLegal bağlantısından açık. Araç listenizde arthurlegal-yerel " +
+    "sunucusunun al_masada_basla aracı varsa (uygulama yeni açıldığında birkaç saniye geç gelir) sonraki soruda onu " +
+    "çağırın ve bu sohbette al_masada_basla, araştırma araçları ve al_masaya_yaz için arthurlegal-yerel sunucusunu " +
+    "kullanın: sorgu geçmişi, Beyin ve dosyalar yalnız oradaki masada kalıcıdır.";
   // Masa bu bilgisayardaki kurulumdan açıksa masa araçları da oradan çağrılır: cevap bu bilgisayarın geçmişine yazılır.
   const YEREL_NOTU = " Masa bu bilgisayardaki kurulumdan açık: al_masada_basla ve al_masaya_yaz araçlarını " +
     "arthurlegal-yerel sunucusundan çağırın, uzak ArthurLegal bağlayıcısındaki aynı adlı araçları kullanmayın.";
@@ -662,6 +669,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     // Bilgisayardaki kurulum bütün sohbetlerin araç çağrılarını görür; masa numarası işi bu sohbetin masasına bağlar.
     const no = teslim && DURUM.yetenekler.has(CANLI) && !EV.chatgpt ? buMasaNo() : 0;
     const not = MASA_ACIK + (teslim ? TESLIM_NOTU : "") + (teslim && DURUM.ortam === "masaustu" && !EV.chatgpt ? YEREL_NOTU : "") +
+      (teslim && DURUM.ortam === "uzak" && !EV.chatgpt && masaustuEvi() ? UZAK_MASAUSTU_NOTU : "") +
       (no ? ` Bu masanın numarası ${no}: al_masada_basla ve al_masaya_yaz çağrılarına masa=${no} yazın.` : "") +
       (DIL_NOTU[DIL.secili] || "") +
       (metin ? " Şu an: " + metin : "");
@@ -1348,11 +1356,19 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   };
   const YEREL_SUNUCU = /arthur\s*legal[\s_()-]*yerel/;
 
+  // Ev sahibi masaüstü uygulaması mı (Claude Desktop): bilgisayardaki kurulum yalnız orada olabilir.
+  function masaustuEvi() {
+    try { return ((app && app.getHostContext && app.getHostContext()) || {}).platform === "desktop"; } catch { return false; }
+  }
+
   // Bu sohbette bilgisayardaki kurulum bağlı mı: true / false, Claude listeyi bildirmediyse null (bilinmiyor).
+  // Masaüstünde listede olmaması kesin değildir: liste uygulama açılırken, yerel sunucular gelmeden yazılmış olabilir
+  // (24.11.2026); o zaman Geçmiş "Masayı bu bilgisayarda aç" düğmesini de gösterir.
   function yerelBagli() {
     const b = DURUM.baglayicilar;
     if (!b) return null;
-    return b.liste.some((x) => x.durum === "bagli" && YEREL_SUNUCU.test(x.ad.toLowerCase()));
+    if (b.liste.some((x) => x.durum === "bagli" && YEREL_SUNUCU.test(x.ad.toLowerCase()))) return true;
+    return masaustuEvi() ? null : false;
   }
 
   // Yerelde masa aracı Claude'a kapalı olabilir (araç menüsü) ya da hiç olmayabilir (klasik arayüz): istek çıkmaza

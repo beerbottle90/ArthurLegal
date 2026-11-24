@@ -812,6 +812,40 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-351"></a>
+
+## Setup 3.5.1: The desk opens on your computer even right after Claude Desktop starts (2026-11-24)
+
+**The desk stays on your computer.** When Claude Desktop starts, the ArthurLegal server on your computer joins
+Claude's tool list a few seconds late. A desk asked for in those seconds opened over the remote connection and stayed
+there for the whole conversation, so your query history did not show. Now, as soon as the installation on your
+computer is in Claude's tool list, the next question moves to the desk on your computer, with your history
+(`al_masada_basla` and `al_masaya_yaz` on the remote connection point Claude to the same tools of `arthurlegal-yerel`,
+and the remote desk repeats this in every note). In Claude Desktop, the History screen of the remote desk always shows
+**Open the desk on this computer**.
+
+Packages, plugins and skills unchanged; desk 3.5.1. How it arrives: the updater installs 3.5.1 on Windows and on a Mac
+by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Masa, Claude Desktop yeni açıldığında da bilgisayarınızdan açılır. Claude Desktop açılırken
+bilgisayarınızdaki ArthurLegal sunucusu Claude'un araç listesine birkaç saniye geç girer. O saniyelerde istenen masa
+uzak bağlantıdan açılıyor ve sohbet boyunca orada kalıyordu; sorgu geçmişiniz görünmüyordu. Artık bilgisayarınızdaki
+kurulum Claude'un araç listesine girer girmez sonraki soru geçmişinizle birlikte bilgisayardaki masaya geçer (uzak
+bağlantıdaki `al_masada_basla` ve `al_masaya_yaz` Claude'u `arthurlegal-yerel` sunucusunun aynı araçlarına
+yönlendirir, uzak masa bunu her notunda yineler). Claude Desktop'ta uzak masanın Geçmiş ekranı **Masayı bu
+bilgisayarda aç** düğmesini her zaman gösterir. Paketler, eklentiler ve beceriler aynı; masa 3.5.1. Güncelleyici
+3.5.1 sürümünü Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
+
+**Azərbaycanca:** Masa Claude Desktop yenicə açılanda da kompüterinizdən açılır. Claude Desktop açılarkən
+kompüterinizdəki ArthurLegal serveri Claude tətbiqinin alət siyahısına bir neçə saniyə gec daxil olur. Həmin
+saniyələrdə istənən masa uzaq bağlantıdan açılır və söhbət boyu orada qalırdı; sorğu tarixçəniz görünmürdü. İndi
+kompüterinizdəki quraşdırma alət siyahısına daxil olan kimi növbəti sual tarixçənizlə birlikdə kompüterdəki masaya
+keçir (uzaq bağlantıdakı `al_masada_basla` və `al_masaya_yaz` Claude tətbiqini `arthurlegal-yerel` serverinin eyni
+alətlərinə yönləndirir, uzaq masa bunu hər qeydində təkrarlayır). Claude Desktop tətbiqində uzaq masanın Tarixçə ekranı
+**Masanı bu kompüterdə aç** düyməsini həmişə göstərir. Paketlər, plaginlər və bacarıqlar dəyişmədi; masa 3.5.1.
+Yeniləyici 3.5.1 versiyasını Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda
+qüvvəyə minir.
+
 <a id="setup-350"></a>
 
 ## Setup 3.5.0: Files Claude prepares open on the desk (2026-11-23)

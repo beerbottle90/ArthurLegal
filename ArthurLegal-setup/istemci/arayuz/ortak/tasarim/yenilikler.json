@@ -1,4 +1,18 @@
 {
+ "3.5.1": {
+  "tr": [
+   "Masa her zaman bu bilgisayardaki kurulumdan açılır: Claude Desktop yeni açıldığında masa birkaç saniyeliğine uzak bağlantıdan açılsa bile sonraki soru geçmişinizle birlikte bilgisayardaki masaya geçer.",
+   "Uzak masanın Geçmiş ekranı Claude Desktop'ta \"Masayı bu bilgisayarda aç\" düğmesini her zaman gösterir; geçmişiniz tek tıkla gelir."
+  ],
+  "az": [
+   "Masa həmişə bu kompüterdəki quraşdırmadan açılır: Claude Desktop yenicə açılanda masa bir neçə saniyəlik uzaq bağlantıdan açılsa belə, növbəti sual tarixçənizlə birlikdə kompüterdəki masaya keçir.",
+   "Uzaq masanın Tarixçə ekranı Claude Desktop tətbiqində \"Masanı bu kompüterdə aç\" düyməsini həmişə göstərir; tarixçəniz bir kliklə gəlir."
+  ],
+  "en": [
+   "The desk always opens from the installation on this computer: if it opens over the remote connection for a few seconds right after Claude Desktop starts, the next question moves to the desk on your computer, with your history.",
+   "In Claude Desktop, the History screen of the remote desk always shows \"Open the desk on this computer\"; your history is one click away."
+  ]
+ },
  "3.5.0": {
   "tr": [
    "Claude'un hazırladığı dosyalar artık masada: Word, Excel, CSV, Markdown, metin ve HTML dosyası cevabın altında görünür; Aç, Klasörde göster ve İndir düğmeleriyle sohbete geçmeden alırsınız.",
