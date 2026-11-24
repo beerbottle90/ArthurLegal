@@ -25,16 +25,16 @@
     "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3"
   },
   "mask": {
-    "surum": "1.4.0",
-    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.4.0.exe",
-    "sha256": "6be91ce74fe3adc5037541a6001f03d3b5f940c78cebe85b6a4df584fc261fb6",
-    "boyut": 1059555822
+    "surum": "1.4.1",
+    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.4.1.exe",
+    "sha256": "9314628b4259ca00f9646503e9b6775a12cc3eca5f9ed9b6d3198a1c887a72b9",
+    "boyut": 1059572539
   },
   "mask_macos": {
-    "surum": "1.4.0",
-    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.4.0.dmg",
-    "sha256": "73a0709ef65b65df613bd0396300933be93735edd99dfbca9bd28390a48695b2",
-    "boyut": 1278271258
+    "surum": "1.4.1",
+    "url": "https://github.com/beerbottle90/ArthurLegal/releases/download/arthur-mask/ArthurMask-Kurulum-1.4.1.dmg",
+    "sha256": "409b2f61e482c4e1d8ef71ffbb9f864923d35b376c09c7fc86c83afcde0e19f6",
+    "boyut": 1278173602
   },
   "python_macos": {
     "surum": "3.12.10",
