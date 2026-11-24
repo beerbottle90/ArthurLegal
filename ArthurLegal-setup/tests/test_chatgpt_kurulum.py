@@ -284,7 +284,8 @@ class ChatGPTSimgesiTesti(_Ortam, unittest.TestCase):
             self.assertEqual((acilan, secim, mc, mg), (["rehber"], ["claude", "chatgpt"], True, True),
                              "ikisi seçildiyse yalnız panel; masa düğmeleri orada")
             acilan, secim, durum, mc, mg = self.calistir(t, self.BASLAT.format(secim="claude"))
-            self.assertEqual((acilan, durum, mc, mg), (["claude", "rehber"], "", True, False))
+            # Claude'da panel önce açılır, masa mesajı araçlar Claude'a ulaşınca gelir (24.11.2026, yerel_sunucuyu_bekle).
+            self.assertEqual((acilan, durum, mc, mg), (["rehber", "claude"], "", True, False))
 
     def test_kisayol_aciklamasi_ve_proje_klasoru(self):
         with tempfile.TemporaryDirectory() as t:

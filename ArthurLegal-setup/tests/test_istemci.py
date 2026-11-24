@@ -500,7 +500,7 @@ class KisayolTesti(unittest.TestCase):
         return json.loads(cikti.strip().splitlines()[-1])       # işleyicinin uyarı satırından sonra
 
     BASLAT = ("import kisayol, webbrowser; acilan = []; webbrowser.open = lambda u: acilan.append('rehber'); "
-              "kisayol.masa = lambda: acilan.append('masa') or 0; kisayol.claude_ac = lambda: 'açık'; "
+              "kisayol.masa = lambda *a: acilan.append('masa') or 0; kisayol.claude_ac = lambda: 'açık'; "
               "kisayol.baslat(); kisayol.baslat(); print(json.dumps([acilan, kisayol.masa_adresi()]))")
 
     def test_uyap_ozeti_yalniz_saat_ve_sayi(self):
@@ -532,7 +532,8 @@ class KisayolTesti(unittest.TestCase):
             t = Path(t)
             sahte_kok(t / "kok")
             acilan, adres = self.calistir(t, self.BASLAT)
-            self.assertEqual(acilan, ["masa", "rehber", "masa", "rehber"], "başlangıç sayfası her tıklamada açılır")
+            # Başlangıç sayfası önce: masa mesajı araçlar Claude'a ulaşınca gelir ve Claude öne çıkar (24.11.2026).
+            self.assertEqual(acilan, ["rehber", "masa", "rehber", "masa"], "başlangıç sayfası her tıklamada açılır")
             # İlk satır hep aynı mesaj; ikinci satır model ve effort hatırlatması (bağlantı model seçemez).
             self.assertTrue(adres.startswith("claude://claude.ai/new?q=ArthurLegal%20Masas%C4%B1%27n%C4%B1%20a%C3%A7"))
             import urllib.parse
@@ -545,6 +546,44 @@ class KisayolTesti(unittest.TestCase):
             self.assertIn("bağlayıcı değildir", mesaj, "öneri tavsiyedir")
             self.assertIn("Claude hatırlar", mesaj)
             self.assertLess(len(adres), 2000, "bağlantı kısa kalır")
+
+    def test_masa_mesaji_yerel_araclar_claudea_ulasinca_acilir(self):
+        """24.11.2026: Claude Desktop'un penceresi hemen açılır, bilgisayardaki sunucuların araçları Claude'a 15 sn sonra
+        duyurulur; o arada gönderilen masa mesajında Claude yerel al_masasi'yi göremez, masa uzaktan açılır. Simge,
+        Claude Desktop yeni açıldıysa mesajı Claude Desktop'un günlüğünde arthurlegal-yerel duyurulunca açar."""
+        import kisayol
+        saat = lambda z: time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(z))  # noqa: E731
+        with tempfile.TemporaryDirectory() as t:
+            gunluk = Path(t) / "main.log"
+            simdi = time.time()
+            eski = (f"{saat(simdi - 3600)} [info] Starting app {{\n"
+                    f"{saat(simdi - 3590)} [info] [localMcpBridge] announcing arthurlegal-yerel: 129 tool(s)\n")
+            bekle = lambda **k: kisayol.yerel_sunucuyu_bekle(gunluk=gunluk, aralik=0.02, **k)  # noqa: E731
+            # Uzun süredir açık ve araçlar duyurulmuş: beklemez.
+            gunluk.write_text(eski, encoding="utf-8")
+            self.assertEqual(bekle(), "hazır")
+            # Yeni açılmış, araçlar henüz duyurulmamış: duyuru gelene kadar bekler.
+            gunluk.write_text(eski + f"{saat(simdi - 2)} [info] Starting app {{\n", encoding="utf-8")
+            yaz = threading.Timer(0.3, lambda: gunluk.open("a", encoding="utf-8").write(
+                f"{saat(time.time())} [info] [localMcpBridge] announcing arthurlegal-yerel: 129 tool(s)\n"))
+            yaz.start()
+            t0 = time.monotonic()
+            self.assertEqual(bekle(), "hazır")
+            self.assertGreaterEqual(time.monotonic() - t0, 0.25)
+            yaz.join()
+            # Bu süreç başlattıysa eski oturumun duyurusu sayılmaz: yeni açılış ve duyuru beklenir.
+            gunluk.write_text(eski, encoding="utf-8")
+            self.assertEqual(bekle(baslatildi=time.time(), sure=0.3), "zaman aşımı")
+            # Açılıştan beri süre doldu (arthurlegal-yerel kapalı olabilir): mesaj yine açılır.
+            gunluk.write_text(f"{saat(simdi - 60)} [info] Starting app {{\n", encoding="utf-8")
+            self.assertEqual(bekle(), "zaman aşımı")
+            # Açılış satırı yok ya da günlük yok: beklenmez (önceki davranış).
+            gunluk.write_text("başka bir satır\n", encoding="utf-8")
+            self.assertEqual(bekle(), "bilinmiyor")
+            self.assertEqual(kisayol.yerel_sunucuyu_bekle(gunluk=Path(t) / "yok.log", aralik=0.02), "bilinmiyor")
+        # Gerçek Claude Desktop günlüğünün satırları (24.11.2026, Windows MSIX).
+        self.assertEqual(kisayol.CLAUDE_ACILIS, "] Starting app")
+        self.assertEqual(kisayol.YEREL_DUYURU, "[localMcpBridge] announcing arthurlegal-yerel")
 
     def test_ekran_kisayolu_ve_acilisi(self):
         with tempfile.TemporaryDirectory() as t:

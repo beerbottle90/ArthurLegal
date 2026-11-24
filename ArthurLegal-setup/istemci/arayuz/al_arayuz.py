@@ -40,7 +40,7 @@ try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada y
 except ImportError:   # pragma: no cover
     al_dosya = None
 
-SURUM = "3.5.0"
+SURUM = "3.5.1"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -312,8 +312,12 @@ MASA_ORTAM_NOTU = {
 # devretmez (masa.html DEVIR_KAYDI) ve kullanıcıya araç menüsünü gösterir.
 YEREL_SUNUCU = "arthurlegal-yerel"
 _YEREL_SUNUCU = re.compile(r"arthur\s*legal[\s_()-]*yerel")
-UZAK_ARAC_NOTU = (" Masa bu sohbette arthurlegal-yerel sunucusundan açıldıysa bu aracı değil, o sunucudaki aynı adlı "
-                  "aracı çağırın.")
+# 24.11.2026: Claude Desktop açılırken bilgisayardaki sunucular araç listesine birkaç saniye geç girer; o arada istenen
+# masa uzaktan açıldı ve sohbet sonuna kadar orada kaldı (geçmiş görünmedi). Yerel araç listeye girince sonraki soru
+# oraya geçer: not, masanın bu sohbette nereden açıldığına değil yerel aracın listede olup olmadığına bakar.
+UZAK_ARAC_NOTU = (" Araç listenizde arthurlegal-yerel sunucusunun aynı adlı aracı varsa bu aracı değil onu çağırın; "
+                  "masa bu sohbette uzak bağlantıdan açılmış olsa bile (uygulama yeni açıldığında bilgisayardaki "
+                  "sunucu birkaç saniye geç gelir). Sorgu geçmişi, Beyin ve dosyalar yalnız oradaki masada kalıcıdır.")
 YONLENDIRME_NOTU = (
     "Masa bu bağlantıdan AÇILMADI: bu bilgisayarda ArthurLegal kurulu (arthurlegal-yerel bağlı). Şimdi, kullanıcıya "
     "bir şey sormadan, arthurlegal-yerel sunucusunun al_masasi aracını aynı bolum, baglayicilar ve model ile çağırın; bu "

@@ -45,6 +45,15 @@ MODEL_ONERISI = Path(__file__).resolve().parent / "arayuz" / "ortak" / "tasarim"
 
 TAPU_ADRES = ("127.0.0.1", 8765)
 
+# 24.11.2026: Claude Desktop'un penceresi açılıştan yarım saniye sonra görünür, ama bilgisayardaki sunucuların araçları
+# Claude'a ancak hepsi açılışa cevap verince (Claude Desktop en çok 10 sn bekler) duyurulur; ölçümde 15 sn sonra. O arada
+# gönderilen masa mesajında Claude arthurlegal-yerel'in al_masasi aracını göremez ve masayı uzak bağlantıdan açar (sorgu
+# geçmişi görünmez). Mesaj bu yüzden Claude Desktop yeni açıldıysa ArthurLegal'in araçları Claude'a duyurulunca açılır.
+# Hazır olduğu Claude Desktop'un kendi günlüğünden okunur; günlük yoksa ya da okunamıyorsa beklenmez (önceki davranış).
+CLAUDE_ACILIS = "] Starting app"
+YEREL_DUYURU = "[localMcpBridge] announcing arthurlegal-yerel"
+HAZIR_BEKLEME_SN = 20.0  # Claude Desktop'un açılışından sayılır: sunucular ~5 sn'de başlar, köprü en geç 10 sn bekler
+
 
 def claude_ac() -> str:
     """Claude Desktop'ı başlatır. Zaten açıksa öne getirmeye çalışmaz, sadece durumu döndürür."""
@@ -207,8 +216,76 @@ def _ac(adres: str) -> int:
         return 1
 
 
-def masa() -> int:
-    """Claude Desktop'ı ArthurLegal Masası mesajıyla açar. Açılamazsa 1 (Claude Desktop yok ya da eski)."""
+def claude_gunlugu() -> Path | None:
+    """Claude Desktop'un ana günlüğü (main.log); birden çoksa en son yazılanı. Bulunamazsa None."""
+    if ortak.MAC:
+        adaylar = [Path.home() / "Library" / "Logs" / "Claude" / "main.log"]
+    else:
+        adaylar = []
+        yerel, dolasan = os.environ.get("LOCALAPPDATA"), os.environ.get("APPDATA")
+        if yerel:  # MSIX (Microsoft Store) kurulumu Local'e, sanallaştırılmışsa paket klasörüne yazar
+            adaylar.append(Path(yerel) / "Claude" / "Logs" / "main.log")
+            paketler = Path(yerel) / "Packages"
+            if paketler.is_dir():
+                adaylar += sorted(paketler.glob("Claude_*/LocalCache/Local/Claude/Logs/main.log"))
+                adaylar += sorted(paketler.glob("Claude_*/LocalCache/Roaming/Claude/logs/main.log"))
+        if dolasan:  # klasik kurulum
+            adaylar.append(Path(dolasan) / "Claude" / "logs" / "main.log")
+    var = [p for p in adaylar if p.is_file()]
+    return max(var, key=lambda p: p.stat().st_mtime) if var else None
+
+
+def _satir_zamani(metin: str, konum: int) -> float | None:
+    """Günlük satırının başındaki yerel saat ("2026-11-24 07:59:05") Unix zamanı olarak."""
+    bas = metin.rfind("\n", 0, konum) + 1
+    try:
+        return time.mktime(time.strptime(metin[bas:bas + 19], "%Y-%m-%d %H:%M:%S"))
+    except ValueError:
+        return None
+
+
+def hazirlik(metin: str) -> tuple[float | None, bool]:
+    """Günlükteki son Claude Desktop açılışının zamanı ve o açılıştan sonra arthurlegal-yerel'in araçlarının Claude'a
+    duyurulup duyurulmadığı. Açılış satırı yoksa (None, False)."""
+    acilis = metin.rfind(CLAUDE_ACILIS)
+    if acilis < 0:
+        return None, False
+    return _satir_zamani(metin, acilis), metin.rfind(YEREL_DUYURU) > acilis
+
+
+def yerel_sunucuyu_bekle(baslatildi: float | None = None, *, sure: float = HAZIR_BEKLEME_SN, aralik: float = 0.5,
+                         gunluk: Path | None = None) -> str:
+    """Claude Desktop yeni açıldıysa arthurlegal-yerel'in araçları Claude'a duyurulana kadar bekler; en çok açılıştan
+    ``sure`` saniye. ``baslatildi``: Claude Desktop'u bu süreç başlattıysa başlatma anı (günlüğe yeni açılış satırı
+    yazılana kadar eski oturumun satırları sayılmaz). Dönüş: "hazır", "zaman aşımı", "bilinmiyor", "günlük yok"."""
+    yol = gunluk or claude_gunlugu()
+    if yol is None:
+        return "günlük yok"
+    while True:
+        try:
+            with open(yol, "rb") as f:
+                f.seek(max(0, f.seek(0, 2) - 2_000_000))
+                metin = f.read().decode("utf-8", "replace")
+        except OSError:
+            return "bilinmiyor"
+        acilis, duyuruldu = hazirlik(metin)
+        simdi = time.time()
+        if baslatildi is not None and (acilis is None or acilis < baslatildi - 5):
+            if simdi >= baslatildi + sure:  # başlatılan Claude Desktop günlüğe henüz yazmadı
+                return "zaman aşımı"
+        elif acilis is None:
+            return "bilinmiyor"
+        elif duyuruldu:
+            return "hazır"
+        elif simdi >= acilis + sure:  # uzun süredir açık; arthurlegal-yerel kapalı ya da günlük biçimi değişmiş
+            return "zaman aşımı"
+        time.sleep(aralik)
+
+
+def masa(baslatildi: float | None = None) -> int:
+    """Claude Desktop'ı ArthurLegal Masası mesajıyla açar. Claude Desktop yeni açıldıysa mesaj, ArthurLegal'in araçları
+    Claude'a ulaşınca açılır (yerel_sunucuyu_bekle). Açılamazsa 1 (Claude Desktop yok ya da eski)."""
+    yerel_sunucuyu_bekle(baslatildi)
     return _ac(masa_adresi())
 
 
@@ -222,16 +299,22 @@ def chatgpt_masa() -> int:
 
 def baslat(profil: str = "") -> int:
     """Setup → Çalıştır → AL Masası. Başlat paneli (başlangıç sayfası) simgeye her tıklamada tarayıcıda açılır;
-    yeni arayüzde önce masa bağlantısı açılır. Kurulumda "Claude Desktop klasik" seçildiyse 2.6'daki gibi yalnız
+    yeni arayüzde ardından masa bağlantısı açılır (Claude Desktop yeni açıldıysa araçlar hazır olunca). Kurulumda "Claude Desktop klasik" seçildiyse 2.6'daki gibi yalnız
     uygulamayı ve başlat panelini açar. Kurulumda seçilen uygulamada açılır (ortak.asistanlar): Claude ya da ChatGPT;
     ikisi seçildiyse yalnız panel açılır, masa orada iki düğmeyle seçilen uygulamada açılır (K29, 16.11.2026).
     ChatGPT seçilip kurulu değilse resmî indirme sayfası da açılır (K28)."""
     secim = ortak.asistan_anahtari()
     klasik = ortak.arayuz() == "klasik"
     if secim == "claude":
-        durum_yaz(claude_ac(), profil)
+        baslangic = time.time()
+        durum = claude_ac()
+        durum_yaz(durum, profil)
         if not klasik:
-            masa()
+            # Başlangıç sayfası hemen açılır; masa mesajı ArthurLegal'in araçları Claude'a ulaşınca gelir ve Claude öne
+            # çıkar (24.11.2026, yerel_sunucuyu_bekle).
+            webbrowser.open(ortak.rehber_dosyasi().as_uri())
+            masa(baslangic if durum == "başlatıldı" else None)
+            return 0
     elif secim == "chatgpt":
         if not ortak.chatgpt_kurulu():
             durum_yaz(odak=profil, chatgpt="bulunamadı")

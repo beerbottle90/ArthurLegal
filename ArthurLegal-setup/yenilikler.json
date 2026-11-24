@@ -1,4 +1,24 @@
 {
+ "3.5.1": {
+  "tr": [
+   "Claude Desktop yeni açıldığında ArthurLegal'in araçları Claude'a çok daha erken ulaşır: UYAP bağlantısı açılışı 25 saniye bekletiyordu, şimdi bir saniyenin altında hazır.",
+   "Masaüstü simgesi önce başlangıç sayfasını açar, masa mesajını ArthurLegal'in araçları Claude'a ulaşınca getirir; masa ilk mesajda da bu bilgisayardan açılır.",
+   "Masa her zaman bu bilgisayardaki kurulumdan açılır: Claude Desktop yeni açıldığında masa birkaç saniyeliğine uzak bağlantıdan açılsa bile sonraki soru geçmişinizle birlikte bilgisayardaki masaya geçer.",
+   "Uzak masanın Geçmiş ekranı Claude Desktop'ta \"Masayı bu bilgisayarda aç\" düğmesini her zaman gösterir; geçmişiniz tek tıkla gelir."
+  ],
+  "az": [
+   "Claude Desktop yenicə açılanda ArthurLegal alətləri Claude tətbiqinə xeyli tez çatır: UYAP bağlantısı açılışı 25 saniyə gözlədirdi, indi bir saniyədən az müddətdə hazırdır.",
+   "Masaüstü nişanı əvvəlcə başlanğıc səhifəsini açır, masa mesajını ArthurLegal alətləri Claude tətbiqinə çatanda gətirir; masa ilk mesajda da bu kompüterdən açılır.",
+   "Masa həmişə bu kompüterdəki quraşdırmadan açılır: Claude Desktop yenicə açılanda masa bir neçə saniyəlik uzaq bağlantıdan açılsa belə, növbəti sual tarixçənizlə birlikdə kompüterdəki masaya keçir.",
+   "Uzaq masanın Tarixçə ekranı Claude Desktop tətbiqində \"Masanı bu kompüterdə aç\" düyməsini həmişə göstərir; tarixçəniz bir kliklə gəlir."
+  ],
+  "en": [
+   "Right after Claude Desktop starts, ArthurLegal's tools reach Claude much sooner: the UYAP connection held startup for 25 seconds, it is now ready in under a second.",
+   "The desktop icon opens the start page first and brings the desk message once ArthurLegal's tools have reached Claude, so the desk opens from this computer from the very first message.",
+   "The desk always opens from the installation on this computer: if it opens over the remote connection for a few seconds right after Claude Desktop starts, the next question moves to the desk on your computer, with your history.",
+   "In Claude Desktop, the History screen of the remote desk always shows \"Open the desk on this computer\"; your history is one click away."
+  ]
+ },
  "3.5.0": {
   "tr": [
    "Claude'un hazırladığı dosyalar artık masada: Word, Excel, CSV, Markdown, metin ve HTML dosyası cevabın altında görünür; Aç, Klasörde göster ve İndir düğmeleriyle sohbete geçmeden alırsınız.",
