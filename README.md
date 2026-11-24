@@ -812,6 +812,43 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-352"></a>
+
+## Setup 3.5.2: The answer always reaches the desk (2026-11-24)
+
+**The answer always reaches the desk.** On the second question of a conversation the desk could stay at "Claude is
+working" although the answer had already been written to this computer's History. In full screen the other windows do
+not open, so the answer reaches the desk only through the installation's live flow, and the desk takes only the work of
+its own conversation: when the answer could not be matched (no desk number, the question written differently when the
+answer was delivered), it was left out. Now, while the desk says "Claude is working", it looks in this computer's
+History every few seconds and shows the answer written for this question after the work began (the same or a similar
+question; otherwise the single new answer when the newest desk belongs to this conversation). Another conversation's
+answer does not come to this desk. **Copy system info** now also gives the state of the desk's live flow, without any
+question or answer text, so a report can be traced.
+
+Packages, plugins and skills unchanged; desk 3.5.2. How it arrives: the updater installs 3.5.2 on Windows and on a Mac
+by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Cevap masaya her zaman gelir. Bir sohbetin ikinci sorusunda masa, cevap bu bilgisayarın Geçmiş'ine
+yazılmış olduğu halde "Claude çalışıyor"da kalabiliyordu. Tam ekranda öteki pencereler açılmaz; cevap masaya yalnız
+kurulumun canlı akışından gelir ve masa yalnız kendi sohbetinin işini alır. Cevap bu sohbetle eşleştirilemediğinde
+(masa numarası yok, soru teslimde farklı yazılmış) dışarıda kalıyordu. Artık masa "Claude çalışıyor" derken birkaç
+saniyede bir bu bilgisayarın Geçmiş'ine bakar ve iş başladıktan sonra bu soru için yazılmış cevabı gösterir (aynı ya
+da benzer soru; yoksa en son açılan masa bu sohbetinse tek yeni cevap). Başka bir sohbetin cevabı bu masaya gelmez.
+**Sistem bilgisini kopyala** artık masanın canlı akışının durumunu da verir; soru ya da cevap metni içermez, bildirim
+izlenebilir. Paketler, eklentiler ve beceriler aynı; masa 3.5.2. Güncelleyici 3.5.2 sürümünü Windows'ta ve Mac'te
+kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
+
+**Azərbaycanca:** Cavab masaya həmişə gəlir. Söhbətin ikinci sualında masa, cavab bu kompüterin Tarixçəsinə yazılmış
+olsa da, "Claude işləyir" vəziyyətində qala bilirdi. Tam ekranda digər pəncərələr açılmır; cavab masaya yalnız
+quraşdırmanın canlı axınından gəlir və masa yalnız öz söhbətinin işini götürür. Cavab bu söhbətlə uyğunlaşdırılmadıqda
+(masa nömrəsi yoxdur, sual təslimdə fərqli yazılıb) kənarda qalırdı. İndi masa "Claude işləyir" deyərkən bir neçə
+saniyədən bir bu kompüterin Tarixçəsinə baxır və iş başlayandan sonra bu sual üçün yazılmış cavabı göstərir (eyni və
+ya oxşar sual; yoxdursa, ən son açılan masa bu söhbətindirsə, yeganə yeni cavab). Başqa söhbətin cavabı bu masaya
+gəlmir. **Sistem məlumatını kopyala** artıq masanın canlı axınının vəziyyətini də verir; sual və ya cavab mətni
+olmadan, bildiriş izlənə bilir. Paketlər, plaginlər və bacarıqlar dəyişmədi; masa 3.5.2. Yeniləyici 3.5.2 versiyasını
+Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda qüvvəyə minir.
+
 <a id="setup-351"></a>
 
 ## Setup 3.5.1: The desk opens on your computer even right after Claude Desktop starts (2026-11-24)

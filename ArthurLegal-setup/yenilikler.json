@@ -1,4 +1,18 @@
 {
+ "3.5.2": {
+  "tr": [
+   "Cevap masada her zaman görünür: masa \"Claude çalışıyor\" derken cevap bu bilgisayarın Geçmiş'ine yazılmışsa birkaç saniye içinde Sohbet'e gelir.",
+   "Sistem bilgisini kopyala artık masanın canlı akışının durumunu da verir (soru ve cevap metni olmadan); cevap masaya gelmezse bu bilgiyi bize iletmeniz yeterli."
+  ],
+  "az": [
+   "Cavab masada həmişə görünür: masa \"Claude işləyir\" deyərkən cavab bu kompüterin Tarixçəsinə yazılıbsa, bir neçə saniyə ərzində Söhbətə gəlir.",
+   "Sistem məlumatını kopyala artıq masanın canlı axınının vəziyyətini də verir (sual və cavab mətni olmadan); cavab masaya gəlməsə, bu məlumatı bizə göndərməyiniz kifayətdir."
+  ],
+  "en": [
+   "The answer always reaches the desk: if the desk still says \"Claude is working\" while the answer has been written to this computer's History, it appears in Chat within seconds.",
+   "Copy system info now also gives the state of the desk's live flow (without the question or answer text); if an answer does not reach the desk, sending us this is enough."
+  ]
+ },
  "3.5.1": {
   "tr": [
    "Claude Desktop yeni açıldığında ArthurLegal'in araçları Claude'a çok daha erken ulaşır: UYAP bağlantısı açılışı 25 saniye bekletiyordu, şimdi bir saniyenin altında hazır.",
