@@ -1,6 +1,6 @@
 <img src="varlik/banner.png" alt="ArthurLegal — açık kaynak hukuk yapay zekâsı" width="900">
 
-# ArthurLegal Setup v3.5.2
+# ArthurLegal Setup v3.5.3
 
 **Tek dosyalık kurulum, Windows ve macOS.** Kullanıcı indirir (Windows'ta `ArthurLegal-Kurulum.exe`, Mac'te
 `ArthurLegal-Kurulum.pkg`), çift tıklar, modül ekranında işine yarayan paketleri (Hukuk Bürosu, Kurumsal Asistan,
@@ -34,7 +34,7 @@ macOS'ta simgeler Uygulamalar klasöründe (`~/Applications`, Launchpad'de) kü�
 sürüm numarası yoktur: **ArthurLegal**, **ArthurLegal Courthouse**,
 **ArthurLegal Akademisyen**, **ArthurLegal Tapu**. Masaüstündeki takma adlar Windows kısayolları gibi sürümü taşır
 (ör. "ArthurLegal 3.4.1"). ArthurMask'in masaüstü simgesi de bu düzendedir: adı bitişik yazılır ve
-ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.4.0"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
+ArthurMask'in kendi sürümünü taşır ("ArthurMask 1.4.1"). Mac'te takma adı kurulum koyar; Windows'ta ArthurMask'in
 kendi kısayolunun adı düzeltilir (eski "Arthur Mask" adı ve sürümsüz ad gider), içeriğine dokunulmaz.
 
 Bileşenler:

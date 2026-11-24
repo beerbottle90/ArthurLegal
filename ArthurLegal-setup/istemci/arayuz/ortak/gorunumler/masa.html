@@ -86,6 +86,39 @@ body { background: var(--zemin); }
 .segment button[aria-pressed="true"] { background: var(--yuzey); box-shadow: var(--golge); font-weight: 600; }
 .surum { font-size: 12px; color: var(--soluk); padding: 0 6px; }
 
+/* ---- Sohbetler (3.5.3): Yeni sohbet ve önceki sohbetler sol panelin başında. Geniş ekranda "Sohbet" düğmesinin
+   yerini alır; dar ekranda ve telefonda panel yatay şerittir, orada liste yerine "Sohbet" düğmesi durur. ---- */
+.sohbetler { display: flex; flex-direction: column; gap: 2px; padding-bottom: 10px; margin-bottom: 2px; border-bottom: 0.5px solid var(--cizgi); }
+.sohbetler .bolum-adi { padding-top: 12px; }
+.yeni-sohbet {
+  justify-content: flex-start; width: 100%; min-height: 40px; padding: 0 12px; gap: 10px;
+  border-radius: 12px; border: 0.5px solid var(--cizgi); background: var(--yuzey); color: var(--metin); font-weight: 600;
+}
+.yeni-sohbet:hover { background: var(--dolgu); }
+.sohbet-listesi { display: flex; flex-direction: column; gap: 2px; }
+.sohbet-ogesi {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; width: 100%;
+  min-height: 0; padding: 7px 10px; border-radius: 12px; background: transparent; color: var(--metin);
+  font-weight: 500; text-align: left;
+}
+.sohbet-ogesi:hover { background: var(--dolgu); }
+.sohbet-ogesi[aria-current="true"] { background: var(--secili); }
+.sohbet-ogesi .ad { display: block; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.3; }
+.sohbet-ogesi .ne { font-size: 12px; font-weight: 400; color: var(--ikincil); }
+.sohbet-notu { font-size: 12px; line-height: 1.4; color: var(--soluk); padding: 4px 10px; }
+.tumu-gecmiste {
+  justify-content: flex-start; width: 100%; min-height: 32px; padding: 0 10px; gap: 8px; border-radius: 10px;
+  background: transparent; color: var(--ikincil); font-weight: 500; font-size: 13px;
+}
+.tumu-gecmiste:hover { background: var(--dolgu); color: var(--metin); }
+.panel nav .git[data-ekran="sohbet"] { display: none; }
+.masa.telefon .sohbetler { display: none; }
+.masa.telefon .panel nav .git[data-ekran="sohbet"] { display: flex; }
+@media (max-width: 760px) {
+  .sohbetler { display: none; }
+  .panel nav .git[data-ekran="sohbet"] { display: flex; }
+}
+
 /* ---- İçerik ---- */
 .icerik { display: flex; flex-direction: column; min-width: 0; }
 .icerik-ust { display: flex; align-items: flex-start; gap: 12px; padding: 24px 32px 8px; }
@@ -391,7 +424,32 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 .cevap-kok { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 16px; }
 /* Akan sohbet (23.11.2026): bu sohbetin önceki soru ve cevapları üstte, süren iş altta. */
 .sohbet-akisi { display: flex; flex-direction: column; gap: 22px; }
-.onceki-turlar { display: flex; flex-direction: column; gap: 22px; }
+.onceki-turlar { display: flex; flex-direction: column; gap: 12px; }
+/* Önceki tur kart (3.5.3): numara, soru, tek satır "Cevap · N atıf doğrulandı"; tıklayınca cevap kartın içinde açılır. */
+.tur.tur-kart { gap: 6px; padding: 14px 18px; border: 0.5px solid var(--cizgi); border-radius: 16px; background: var(--yuzey); }
+.tur-no { font-size: 12.5px; color: var(--ikincil); }
+.tur-soru {
+  font-weight: 500; line-height: 1.45; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tur-kart.acik .tur-soru { display: block; -webkit-line-clamp: unset; }
+.tur-ac {
+  align-self: flex-start; min-height: 30px; padding: 0 10px 0 6px; margin-left: -6px; gap: 6px;
+  border-radius: var(--k-hap); background: transparent; color: var(--ikincil); font-weight: 500; font-size: 13.5px;
+}
+.tur-ac:hover { background: var(--dolgu); color: var(--metin); }
+.tur-ac svg:last-child { transition: transform 0.15s; }
+.tur-kart.acik .tur-ac svg:last-child { transform: rotate(180deg); }
+.tur-govde:empty { display: none; }
+.tur-govde { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.cevap-kok > .tur-no { margin-bottom: -4px; }
+.devam-notu {
+  display: flex; gap: 8px; align-items: flex-start; padding: 12px 16px; border-radius: 14px;
+  background: var(--dolgu); color: var(--ikincil); font-size: 14px; line-height: 1.45;
+}
+.devam-notu svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+.devam-notu[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .tur-ac svg:last-child { transition: none; } }
 .onceki-turlar:empty { display: none; }
 .tur { display: flex; flex-direction: column; gap: 12px; padding-bottom: 22px; border-bottom: 0.5px solid var(--cizgi); }
 .tur .alt-satir .zaman { color: var(--soluk); }
@@ -527,6 +585,17 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // "Yanıtla", ChatGPT'de sohbetin kendi kutusu).
   EV.ozel(cevN("Sorunuzu aşağıdaki Yanıtla kutusuna yazın; Claude'un adımları ve cevabı burada akar."),
     cevN("Sorunuzu ChatGPT'nin yazma kutusuna yazın; ChatGPT'nin adımları ve cevabı burada akar."));
+  // 3.5.3 sohbetler: Yanıtla kutusunun ChatGPT karşılığı.
+  EV.ozel(cevN("Yeni sohbet açık; sorunuzu Claude'un Yanıtla kutusuna yazın."),
+    cevN("Yeni sohbet açık; sorunuzu ChatGPT'nin yazma kutusuna yazın."));
+  EV.ozel(cevN("Yeni sohbet başladı; sorunuzu Claude'un Yanıtla kutusuna yazın."),
+    cevN("Yeni sohbet başladı; sorunuzu ChatGPT'nin yazma kutusuna yazın."));
+  EV.ozel(cevN("Sohbet açıldı; devam sorunuzu Claude'un Yanıtla kutusuna yazın."),
+    cevN("Sohbet açıldı; devam sorunuzu ChatGPT'nin yazma kutusuna yazın."));
+  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir."),
+    cevN("Devam sorunuzu ChatGPT'nin yazma kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını ChatGPT'ye bağlam olarak verir."));
+  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; cevap bu sohbette, en altta akar."),
+    cevN("Devam sorunuzu ChatGPT'nin yazma kutusuna yazın; cevap bu sohbette, en altta akar."));
   DIL.sabitler();
 
   const { ogesi, ikon, dugme, cagir, sor, baglantiAc, kopyala, sayiEki } = AL;
@@ -663,7 +732,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       (teslim && DURUM.ortam === "uzak" && !EV.chatgpt && masaustuEvi() ? UZAK_MASAUSTU_NOTU : "") +
       (no ? ` Bu masanın numarası ${no}: al_masada_basla ve al_masaya_yaz çağrılarına masa=${no} yazın.` : "") +
       (DIL_NOTU[DIL.secili] || "") +
-      (metin ? " Şu an: " + metin : "");
+      (metin ? " Şu an: " + metin : "") + sohbetNotu();
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
   }
 
@@ -750,7 +819,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const tam = { id: gecmisKimligi(saat), zaman: saat.toISOString(), ekran, kategori: geri.kategori || "claude",
       tur: geri.tur || "claude", baslik: String(soru || "").slice(0, 300),
       adimlar: (adimlar || []).slice(0, 10).map(([t, m]) => [t, String(m || "").slice(0, 300)]),
-      sorgu: geri.sorgu ?? null, anlik: geri.anlik ?? null };
+      sorgu: geri.sorgu ?? null, anlik: geri.anlik ?? null, ...(geri.sohbet ? { sohbet: geri.sohbet } : {}) };
     if (JSON.stringify(tam.anlik).length > ANLIK_SINIRI) { tam.anlik = null; tam.anlik_kesildi = true; }
     if (cihazaYaz([tam, ...onceki])) g.id = tam.id;
   }
@@ -807,7 +876,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     mg.id = "model-gosterge";
     mg.onclick = () => git("model");
     alt.append(mg, seg, ogesi("div", "surum", `ArthurLegal ${DURUM.surum}`));
-    panel.append(ust, nav, alt);
+    panel.append(ust, sohbetlerKur(), nav, alt);
 
     const icerik = ogesi("main", "icerik");
     const iust = ogesi("header", "icerik-ust");
@@ -826,6 +895,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     temaDugmeleri();
     modelGostergesi();
     panelYenile();
+    sohbetListesiYenile();
   }
 
   // Dil seçici: bayrak ve dil kodu. Seçim bu sohbette saklanır; masa seçilen dilde yeniden çizilir. Mevzuat, karar
@@ -1300,6 +1370,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const e = EKRANLAR.find((x) => x.id === id) || EKRANLAR[0];
     document.querySelector(".icerik-ust h1").textContent = cevVeri(e.baslik);
     document.querySelector(".icerik-ust .alt-yazi").textContent = cevVeri(e.alt);
+    if (id === "sohbet") sohbetUstunuYenile();
     const gb = document.querySelector(".gecmis-bag");
     if (gb) gb.hidden = ["gecmis", "uyap", "mcp", "hesap", "model", "akislar", "izleme"].includes(id);
     if (id !== "gecmis") gecmisAcik = null;
@@ -1485,15 +1556,18 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const ms = DURUM.model && DURUM.model.duzey === "dusuk" ? modelSeridi() : null;
     if (ms) ekran.append(ms);
     const c = gosterilenCevap();
-    // Akan sohbet: bu sohbetin önceki turları üstte, süren iş ya da son cevap altta (23.11.2026).
+    // Akan sohbet: bu sohbetin önceki turları üstte (kart), süren iş ya da son cevap altta (23.11.2026, 3.5.3).
     const akis = ogesi("div", "sohbet-akisi");
     const onceki = ogesi("div", "onceki-turlar");
     oncekiTurlariCiz(onceki, c);
     const kok = ogesi("div", "cevap-kok");
-    if (c) cevapIcerik(kok, c);
+    if (c) altTuruCiz(kok, c);
     else kok.append(ogesi("div", "bos", cev("Henüz bir soru yok. Sorduğunuzda Claude'un araştırma adımları ve cevabı burada sırayla görünür; eski işleriniz Geçmiş'te.")));
-    akis.append(onceki, kok);
+    const not = ogesi("div", "devam-notu");
+    not.id = "devam-notu";
+    akis.append(onceki, kok, not);
     ekran.append(akis);
+    devamNotuYenile();
     gosterilenTur = c ? soruKatla(c.soru) || "-" : null;
     if (onceki.childElementCount) requestAnimationFrame(() => turaKaydir(kok));
   };
@@ -1787,7 +1861,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const TESLIM = "al_masaya_yaz";
   let CEVAP = null;          // bu pencereye teslim edilen: { soru, adimlar, cevap, kaynaklar, tamam, kesildi, teyit }
   let acikCevap = null;      // "Son işler"den ya da geçmişten açılan eski cevap
-  let cevapKaydedildi = false;
+  // Geçmişe yazıldı mı, cevabın kendisinde tutulur (CEVAP.kaydedildi). 24.11.2026 ölçümü (bu bilgisayar, 3.5.2): pencere
+  // genelindeki işaret birinci cevapta kalkıyor, ikinci cevap kurulumdan gelince inmiyordu; ikinci cevabın kaydı atıf
+  // teyidi olmadan kaldı.
   let cevapAcildi = false;   // teslim penceresi Sohbet ekranına bir kez kendiliğinden geçer
 
   const dizgi = (x) => (typeof x === "string" ? x : "");
@@ -1947,7 +2023,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function cevapAl(arg, tamam, { kaynak = "", gecmisId = "" } = {}) {
     if (CEVAP && CEVAP.tamam) return;   // tam girdiden sonra gelen geç parça cevabı bozmasın
     const kendi = kaynak !== "canli";
-    const tekrar = kendi && tekrarMi();
+    // Geç açılan eski pencere yeniden çizilen pencere gibidir: kendi payını çizer, ortak akışa yazmaz.
+    const gec = kendi && tamam && !tekrarMi() && gecAcilanMi(cevapDuzenle(arg));
+    if (gec) islendi();
+    const tekrar = kendi && (gec || tekrarMi());
     // Kurulumdan gelen cevabın çalışması kurulumda bitmiş görünür: adımları yine o çalışmadan.
     const calisma = guncelCalisma() || (!kendi && canliCalisma && canliCalisma.soru ? canliCalisma : null);
     const onceki = CEVAP;
@@ -1957,7 +2036,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       // Gösterim zamanı: bu cevaptan sonra başlayan yeni iş Sohbet'te öne geçer. Sohbet yeniden çizilince açılan eski
       // pencerenin cevabı hiçbir işin önüne geçmez.
       gosterim: tekrar ? 0 : (onceki && onceki.gosterim) || Date.now(),
-      paylasimZamani: onceki ? onceki.paylasimZamani : 0, gecmisId: gecmisId || (onceki && onceki.gecmisId) || "" };
+      paylasimZamani: onceki ? onceki.paylasimZamani : 0, gecmisId: gecmisId || (onceki && onceki.gecmisId) || "",
+      gecAcilan: gec || !!(onceki && onceki.gecAcilan), kaydedildi: false };
+    if (onceki && onceki.kaydedildi && turAnahtari(onceki) === turAnahtari(CEVAP)) CEVAP.kaydedildi = true;
     if (!CEVAP.soru && calisma) CEVAP.soru = calisma.soru;
     if (onceki && (onceki.dosyalar || []).some((d) => d.kayit)) dosyaBilgisiAl(CEVAP, onceki.dosyalar);
     if (tamam) for (const d of CEVAP.dosyalar) if (!d.icerik && !d.kayit) d.sohbette = true;
@@ -1989,7 +2070,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   let paylasimSon = 0;
   let paylasimBekleyen = 0;
   function cevabiPaylas(c) {
-    if (ROL !== "teslim" || !c || c.kaynak !== "kendi" || c.kesildi || !dizgi(c.cevap).trim() || tekrarMi()) return;
+    if (ROL !== "teslim" || !c || c.kaynak !== "kendi" || c.kesildi || !dizgi(c.cevap).trim() || tekrarMi() || c.gecAcilan) return;
     if (!c.tamam) {
       const kalan = PAYLASIM_ARALIGI - (Date.now() - paylasimSon);
       if (kalan > 0) {
@@ -2017,8 +2098,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     } catch { return null; }
   }
   // Paylaşılan cevap bu çalışmanın mı: aynı çalışma, aynı soru ya da çalışma başladıktan sonra yazılmış.
+  // Zaman yalnız soru tanınmazsa (Claude teslimde soruyu farklı yazdı) bakılır; paylaşılan cevabın sorusu akıştaki bitmiş
+  // bir turunsa o turun cevabıdır (geç açılan eski pencere, 24.11.2026), süren işin değil.
+  const eskiTurunSorusu = (s, simdiki) => !!soruKatla(s) && !ayniSoru(s, simdiki) && turlarOku().some((t) => ayniSoru(t.soru, s));
   const ayniIs = (p, c) => (!!p.calismaId && p.calismaId === String(c.id)) || ayniSoru(p.soru, c.soru) ||
-    p.paylasimZamani >= (c.basla || 0);
+    (p.paylasimZamani >= (c.basla || 0) && !eskiTurunSorusu(p.soru, c.soru));
 
   // Kayıttan (oturum listesi ya da kalıcı geçmiş) gösterilecek cevap.
   function cevapKaydindan(k) {
@@ -2041,7 +2125,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function gosterilenCevap() {
     if (acikCevap) return acikCevap;
     const calisma = guncelCalisma();
-    if (CEVAP && !(CEVAP.tamam && calisma && (calisma.basla || 0) > (CEVAP.gosterim || 0))) return CEVAP;
+    // Bu pencerenin cevabı, akışta ondan sonra bir tur varsa altta durmaz (eski pencere ekrana geldi): son tur durur.
+    if (CEVAP && !(CEVAP.tamam && calisma && (calisma.basla || 0) > (CEVAP.gosterim || 0)) && !sonrakiTurVar(CEVAP)) return CEVAP;
     const paylasilan = ROL !== "teslim" ? paylasilanCevap() : null;
     if (calisma) {
       if (paylasilan && ayniIs(paylasilan, calisma)) {
@@ -2057,8 +2142,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     if (paylasilan && !paylasilan.tamam) return paylasilan;   // yazılıyor; çalışma kaydı bu pencereye ulaşmadı
     const son = sonTur();
     if (son) return son;
-    if (paylasilan) return paylasilan;
-    const g = GECMIS.find((x) => x.tur === "cevap" && x.anlik);
+    // Yeni ya da açılan sohbetten önceki cevap bu sohbetin altında durmaz.
+    const s = seciliSohbet();
+    if (paylasilan && (paylasilan.paylasimZamani || 0) >= (s.basi || 0)) return paylasilan;
+    const g = GECMIS.find((x) => x.tur === "cevap" && x.anlik && (x.sohbet ? x.sohbet.id === s.id : !s.basi));
     return g ? cevapKaydindan(g) : null;
   }
 
@@ -2142,20 +2229,67 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const turlar = turlarOku();
     if (!c || !c.tamam || c.kesildi) return turlar;
     const k = turAnahtari(c);
-    const i = turlar.findIndex((t) => t.k === k);
+    const i = turlar.findLastIndex((t) => t.k === k);
     return i >= 0 ? turlar.slice(0, i).concat(turlar.slice(i + 1)) : turlar;
+  }
+  function sonrakiTurVar(c) {
+    if (!c || !c.tamam) return false;
+    const turlar = turlarOku();
+    const i = turlar.findLastIndex((t) => t.k === turAnahtari(c));
+    return i >= 0 && i < turlar.length - 1;
+  }
+  // Geç açılan eski cevap penceresi (24.11.2026 ölçümü, bu bilgisayar, 3.5.2): masa tam ekrandayken sohbetin içindeki
+  // pencereler çoğu zaman hiç açılmaz; sohbet sonradan yeniden çizilince o ana kadarki pencereler bir anda İLK kez açılır
+  // ve her biri kendini yeni sanırdı. Birinci cevabın penceresi ikinci cevaptan sonra birinci cevabı "son cevap" diye
+  // yeniden paylaştı. Cevap akışta zaten varsa ve ondan sonra yeni bir tur ya da başka bir iş başlamışsa pencere geç açılmıştır.
+  function gecAcilanMi(c) {
+    const turlar = turlarOku();
+    const i = turlar.findIndex((t) => t.k === turAnahtari(c));
+    if (i < 0) return false;
+    if (i < turlar.length - 1) return true;
+    const y = calismaOku();
+    return !!y && !ayniSoru(y.soru, c.soru) && (y.basla || 0) > (turlar[i].zaman || 0);
   }
   const turImzasi = (turlar) => turlar.map((t) => t.k + (t.teyit ? "+" : "") + ((t.dosyalar || []).some((d) => d.kayit) ? "d" : "")).join(",");
   function oncekiTurlariCiz(kap, c) {
     const turlar = oncekiTurlar(c);
     kap.dataset.imza = turImzasi(turlar);
-    kap.replaceChildren(...turlar.map(oncekiTur));
+    kap.replaceChildren(...turlar.map((t, i) => oncekiTur(t, i + 1)));
   }
-  // Önceki tur sade çizilir: soru, cevap, saati ve atıf teyidinin özeti, Kopyala. Adımlar, teyit tablosu ve kaynaklar
-  // Geçmiş'te; alttaki (son) tur hepsini gösterir.
-  function oncekiTur(t) {
-    const kap = ogesi("div", "tur");
-    if (t.soru) kap.append(ogesi("div", "balon", t.soru));
+  // Önceki tur kart olarak çizilir (24.11.2026 taslağı, kullanıcı onayı: "Lütfen bu görsel değişikliği de implemente
+  // et"): numarası, sorusu ve tek satır "Cevap · N atıf doğrulandı". Tıklayınca cevap kartın içinde açılır. Neden: uzun
+  // bir cevap (bu bilgisayarda 11.551 karakter) devam sorusunu ekranın çok altına itiyordu; kullanıcı devam sorusunun
+  // masaya gelmediğini sandı. Son tur (altta) her zaman açık ve tamdır.
+  const ACIK_TURLAR = new Set();
+  function turNumarasi(c) {
+    const turlar = turlarOku();
+    const i = c && c.tamam ? turlar.findLastIndex((t) => t.k === turAnahtari(c)) : -1;
+    return i >= 0 ? i + 1 : turlar.length + 1;
+  }
+  function oncekiTur(t, no) {
+    const kap = ogesi("div", "tur tur-kart");
+    kap.dataset.k = t.k;
+    kap.append(ogesi("div", "tur-no", cev("{0}. soru", no)));
+    if (t.soru) kap.append(ogesi("div", "tur-soru", t.soru));
+    const ozet = t.teyit && t.teyit.toplam ? cev("{0} atıf · {1} doğrulandı", t.teyit.toplam, t.teyit.dogru) : "";
+    const ac = ogesi("button", "tur-ac");
+    ac.type = "button";
+    ac.append(ikon("cevap"), ogesi("span", null, [cev("Cevap"), ozet, t.zaman && AL.zaman(new Date(t.zaman).toISOString())].filter(Boolean).join(" · ")), ikon("asagi"));
+    const govdeKabi = ogesi("div", "tur-govde");
+    const ciz = () => {
+      const acik = ACIK_TURLAR.has(t.k);
+      kap.classList.toggle("acik", acik);
+      ac.setAttribute("aria-expanded", String(acik));
+      ac.setAttribute("aria-label", acik ? cev("Cevabı gizle") : cev("Cevabı göster"));
+      govdeKabi.replaceChildren(...(acik ? oncekiTurGovdesi(t) : []));
+    };
+    ac.onclick = () => { if (!ACIK_TURLAR.delete(t.k)) ACIK_TURLAR.add(t.k); ciz(); };
+    kap.append(ac, govdeKabi);
+    ciz();
+    return kap;
+  }
+  function oncekiTurGovdesi(t) {
+    const out = [];
     const kart = ogesi("div", "sonuc-kabi");
     const govde = MD.ciz(t.cevap, { baglanti: (url) => baglantiAc(app, url, ortam.duyuru) });
     govde.classList.add("cevap-govde");
@@ -2168,10 +2302,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     ey.append(kp);
     alt.append(ey);
     kart.append(govde, alt);
-    kap.append(kart);
+    out.push(kart);
     const dk = dosyaKesiti({ ...turdanCevap(t), tamam: true });
-    if (dk) kap.append(dk);
-    return kap;
+    if (dk) out.push(dk);
+    return out;
   }
 
   // Masanın kutusundan gönderilen soru: Claude Desktop uygulamadan gelen mesajı göndermeden önce kullanıcıya onaylatır
@@ -2197,8 +2331,217 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       calisiyor: true, bekliyor: true, plan: [] };
   }
 
+  // ---- Sohbetler (3.5.3) ----
+  // 24.11.2026 (bildiren kullanıcı: "Yeni sohbet" düğmesi ve yanda önceki sohbetlerin başlıkları, birine tıklayıp oradan
+  // devam; kullanıcı taslağı onayladı). Masanın sohbeti Claude'daki sohbetle başlar ve kullanıcı "Yeni sohbet" demedikçe
+  // sürer (kullanıcı: "Aynı kartta devam ettir sohbeti aksi belirtilmedikçe"). Masa her cevabı geçmişe sohbetiyle yazar
+  // (kayıttaki sohbet alanı); sol panel sohbetleri listeler. Seçili sohbet bu Claude sohbetinin deposunda (al.masa.secili),
+  // turları Sohbet ekranının deposunda (al.masa.sohbet). Önceki bir sohbet açılınca turları geçmişten gelir ve masa o
+  // sohbetin soru ve cevaplarını Claude'a bağlam olarak verir (ev sahibi notu kullanıcının bir sonraki mesajıyla gider).
+  const SECILI_SOHBET = "al.masa.secili";
+  const SOHBET_KIMLIGI = /^s\d{8}-\d{6}-[0-9a-f]{6}$/;
+  const ESKI_SOHBET = /^k-\d{8}-\d{6}-[0-9a-f]{6}$/;   // sohbeti yazılmamış eski cevap: kendi başına bir sohbet
+  const PANEL_SOHBET = 6;         // sol panelde en çok
+  const BAGLAM_SINIRI = 6000;     // karakter: açılan sohbetten Claude'a verilen soru ve cevaplar
+  let pencereSohbeti = null;      // depo kapalıysa bu pencerenin sohbeti
+  function seciliYaz(s) {
+    pencereSohbeti = s;
+    try { localStorage.setItem(SECILI_SOHBET, JSON.stringify(s)); } catch { /* depo kapalı: yalnız bu pencerede */ }
+  }
+  function seciliSohbet() {
+    let s = pencereSohbeti;
+    try { s = JSON.parse(localStorage.getItem(SECILI_SOHBET) || "null") || s; } catch { /* depo kapalı */ }
+    if (!s || !SOHBET_KIMLIGI.test(String(s.id))) {
+      s = { id: "s" + gecmisKimligi(new Date()), baslik: "", devam: false, yeni: false, basi: 0 };
+      seciliYaz(s);
+    }
+    return s;
+  }
+  const kisaBaslik = (x) => kisalt(dizgi(x).replace(/…\s*$/, ""), 120);
+  const sohbetBasligi = (s = seciliSohbet(), turlar = turlarOku()) => s.baslik || (turlar[0] ? kisaBaslik(turlar[0].soru) : "");
+  // Geçmişe yazılan cevabın sohbeti; başlık sohbetin ilk sorusu.
+  function kayitSohbeti(c) {
+    const s = seciliSohbet();
+    if (!s.baslik) {
+      s.baslik = sohbetBasligi(s) || kisaBaslik(c && c.soru);
+      if (s.baslik) seciliYaz(s);
+    }
+    return { id: s.id, baslik: s.baslik };
+  }
+  // Masa işi sürerken sohbet değişmez: Claude'un cevabı yarıda başka sohbete düşmesin.
+  const isSuruyor = () => { const c = gosterilenCevap(); return !!c && !c.tamam && !c.kesildi; };
+
+  // Sohbetin kayıtları (cihaz deposu ya da diskin "sohbetler" cevabıyla aynı biçim): en yeni önce.
+  function sohbetleriGrupla(kayitlar) {
+    const gruplar = new Map();
+    for (const k of kayitlar) {
+      if (!k || k.kategori !== "claude" || k.tur !== "cevap") continue;
+      const s = k.sohbet && SOHBET_KIMLIGI.test(String(k.sohbet.id)) ? k.sohbet : null;
+      const id = s ? s.id : "k-" + k.id;
+      const g = gruplar.get(id) || { id, baslik: "", son: k.zaman, ilk: k.zaman, soru_sayisi: 0, ad: "" };
+      g.soru_sayisi += 1;
+      g.ilk = k.zaman;
+      if (s && s.baslik) g.ad = s.baslik;
+      g.baslik = g.ad || k.baslik;   // en yeni önce dolaşılır: sohbetin adı yoksa en eski sorusu kalır
+      gruplar.set(id, g);
+    }
+    return [...gruplar.values()];
+  }
+  function sohbetZamani(z) {
+    const g = new Date(z);
+    if (Number.isNaN(g.getTime())) return "";
+    const bugun = new Date(); bugun.setHours(0, 0, 0, 0);
+    const gun = new Date(g); gun.setHours(0, 0, 0, 0);
+    const fark = Math.round((bugun - gun) / 86400000);
+    if (fark === 0) return cev("bugün");
+    if (fark === 1) return cev("dün");
+    return g.toLocaleDateString(DIL.yerel(), { day: "2-digit", month: "2-digit" });
+  }
+
+  function sohbetlerKur() {
+    const kap = ogesi("div", "sohbetler");
+    const yeni = dugme(cev("Yeni sohbet"), { sinif: "yeni-sohbet", simge: "yeni" });
+    yeni.id = "yeni-sohbet";
+    yeni.onclick = yeniSohbet;
+    const liste = ogesi("div", "sohbet-listesi");
+    liste.id = "sohbet-listesi";
+    liste.setAttribute("aria-label", cev("Sohbetler"));
+    const tumu = dugme(cev("Tümü Geçmiş'te"), { sinif: "tumu-gecmiste", simge: "saat" });
+    tumu.onclick = () => { gecmisSifirla({ kategori: "claude" }); git("gecmis"); };
+    kap.append(yeni, ogesi("div", "bolum-adi", cev("Sohbetler")), liste, tumu);
+    return kap;
+  }
+
+  let sohbetListesiSirasi = 0;
+  async function sohbetListesiYenile() {
+    const kap = $("sohbet-listesi");
+    if (!kap) return;
+    const sira = ++sohbetListesiSirasi;
+    const s = seciliSohbet();
+    const turlar = turlarOku();
+    let liste = [];
+    const depo = gecmisDeposu();
+    if (depo === "disk") {
+      try {
+        const { veri } = await cagir(app, "al_gecmis", { islem: "sohbetler", en_fazla: PANEL_SOHBET + 2 });
+        liste = veri && Array.isArray(veri.sohbetler) ? veri.sohbetler : [];
+      } catch { liste = []; }
+    } else if (depo === "cihaz") liste = sohbetleriGrupla(cihazGecmisi() || []);
+    if (sira !== sohbetListesiSirasi || !kap.isConnected) return;
+    // Seçili sohbet her zaman başta: cevabı henüz geçmişe yazılmamış olsa da.
+    const kayitli = liste.find((x) => x.id === s.id);
+    const son = turlar.at(-1);
+    const secili = { id: s.id, baslik: sohbetBasligi(s, turlar), son: son ? new Date(son.zaman || Date.now()).toISOString() : (kayitli && kayitli.son) || "",
+      soru_sayisi: Math.max(turlar.length, (kayitli && kayitli.soru_sayisi) || 0) };
+    const gorunen = [secili, ...liste.filter((x) => x.id !== s.id && x.id !== s.kaynak)].slice(0, PANEL_SOHBET);
+    const ogeler = gorunen.map((x) => sohbetOgesi(x, x.id === s.id));
+    if (DURUM.ortam === "uzak" && depo !== "disk") ogeler.push(ogesi("div", "sohbet-notu", cev("Uzak masada yalnız bu Claude sohbetinin sohbetleri görünür; öncekiler bilgisayardaki masada.")));
+    kap.replaceChildren(...ogeler);
+  }
+  function sohbetOgesi(x, secili) {
+    const b = ogesi("button", "sohbet-ogesi");
+    b.type = "button";
+    if (secili) b.setAttribute("aria-current", "true");
+    const ad = x.baslik || cev("Yeni sohbet");
+    b.title = ad;
+    const ne = x.soru_sayisi ? [sohbetZamani(x.son), cev("{0} soru", x.soru_sayisi)].filter(Boolean).join(" · ") : cev("henüz soru yok");
+    // Başlık kullanıcının kendi sorusudur: çevrilmez (ogesi verisi sözlükten geçerdi).
+    const adEl = document.createElement("span");
+    adEl.className = "ad";
+    adEl.textContent = ad;
+    b.append(adEl, ogesi("span", "ne", ne));
+    b.onclick = () => (secili ? git("sohbet") : sohbetAc(x.id, x.baslik));
+    return b;
+  }
+
+  // Sohbet değişince bu pencerenin ekranındaki cevap ve paylaşılan cevap bırakılır; akış yeni sohbetin turlarıdır.
+  function sohbetiDegistir(s, turlar) {
+    seciliYaz(s);
+    turlariYaz(turlar);
+    CEVAP = null;
+    acikCevap = null;
+    gosterilenTur = null;
+    ACIK_TURLAR.clear();
+    try { localStorage.removeItem(PAYLASILAN_CEVAP); } catch { /* depo kapalı */ }
+    git("sohbet");
+    sohbetListesiYenile();
+  }
+  function yeniSohbet() {
+    if (isSuruyor()) { ortam.duyuru.textContent = cev("Claude'un cevabı bitince yeni sohbet başlatabilirsiniz."); return; }
+    const s = seciliSohbet();
+    if (!turlarOku().length && !s.devam) {
+      git("sohbet");
+      ortam.duyuru.textContent = cev("Yeni sohbet açık; sorunuzu Claude'un Yanıtla kutusuna yazın.");
+      return;
+    }
+    sohbetiDegistir({ id: "s" + gecmisKimligi(new Date()), baslik: "", devam: false, yeni: true, basi: Date.now() }, []);
+    ortam.duyuru.textContent = cev("Yeni sohbet başladı; sorunuzu Claude'un Yanıtla kutusuna yazın.");
+  }
+  // Geçmişteki kayıt Sohbet'in turuna çevrilir (teslim edilen cevapla aynı biçim).
+  function kayittanTur(k) {
+    const c = { ...cevapKaydindan({ ...k, soru: (k.sorgu && k.sorgu.metin) || k.baslik }), gecmisId: k.id };
+    return { k: turAnahtari(c), soru: dizgi(c.soru).slice(0, 2000), cevap: c.cevap, adimlar: c.adimlar, araclar: c.araclar,
+      kaynaklar: c.kaynaklar, dosyalar: dosyaKaydi(c.dosyalar), teyit: teyitOzeti(c.teyit), gecmisId: k.id, zaman: turZamani(c) };
+  }
+  async function sohbetAc(id, baslik) {
+    if (isSuruyor()) { ortam.duyuru.textContent = cev("Claude'un cevabı bitince başka bir sohbete geçebilirsiniz."); return; }
+    let kayitlar = [];
+    if (gecmisDeposu() === "disk") {
+      try {
+        const { veri, hata } = await cagir(app, "al_gecmis", { islem: "sohbet", sohbet: id });
+        if (!veri) throw new Error(hata);
+        kayitlar = Array.isArray(veri.kayitlar) ? veri.kayitlar : [];
+      } catch { ortam.duyuru.textContent = cev("Sohbet açılamadı; Geçmiş'ten açabilirsiniz."); return; }
+    } else {
+      kayitlar = (cihazGecmisi() || []).filter((k) => k.kategori === "claude" && k.tur === "cevap" &&
+        (ESKI_SOHBET.test(id) ? "k-" + k.id === id : k.sohbet && k.sohbet.id === id)).reverse();
+    }
+    if (!kayitlar.length) { ortam.duyuru.textContent = cev("Bu sohbetin kayıtları silinmiş ya da süresi dolmuş."); return; }
+    // Sohbeti yazılmamış eski cevap yeni bir sohbet kimliği alır; kaydı o sohbete bağlanır (devamı aynı sohbette birikir).
+    let sid = id;
+    const ad = kisaBaslik(baslik || kayitlar[0].baslik);
+    if (ESKI_SOHBET.test(id)) {
+      sid = "s" + gecmisKimligi(new Date());
+      const k = kayitlar[0];
+      if (gecmisDeposu() === "disk") {
+        cagir(app, "al_gecmis", { islem: "kaydet", kayit: { id: k.id, ekran: k.ekran, kategori: k.kategori, tur: k.tur,
+          baslik: k.baslik, adimlar: k.adimlar, sorgu: k.sorgu, anlik: k.anlik, sohbet: { id: sid, baslik: ad } } }).catch(() => {});
+      } else {
+        const hepsi = cihazGecmisi() || [];
+        const i = hepsi.findIndex((x) => x.id === k.id);
+        if (i >= 0) { hepsi[i] = { ...hepsi[i], sohbet: { id: sid, baslik: ad } }; cihazaYaz(hepsi); }
+      }
+    }
+    sohbetiDegistir({ id: sid, baslik: ad, devam: true, yeni: false, basi: Date.now(), kaynak: id }, kayitlar.map(kayittanTur));
+    ortam.duyuru.textContent = cev("Sohbet açıldı; devam sorunuzu Claude'un Yanıtla kutusuna yazın.");
+  }
+
+  // Claude'a giden sohbet notu (bildir her notta ekler; ev sahibi her notu öncekinin yerine koyar).
+  //  - Yeni sohbet: bu Claude sohbetindeki önceki sorular yeni konunun bağlamı değildir.
+  //  - Açılan önceki sohbet: o sohbetin soru ve cevapları (en yenileri, sınırlı), kullanıcının sorusu onun devamıdır.
+  function sohbetNotu() {
+    const s = seciliSohbet();
+    const turlar = turlarOku();
+    if (s.yeni && !turlar.length) {
+      return " Kullanıcı masada yeni bir sohbet başlattı: bir sonraki soru yeni bir konudur; kullanıcı açıkça istemedikçe bu sohbetteki önceki soru ve cevaplara dayanmayın.";
+    }
+    if (!s.devam) return "";
+    const onceki = turlar.filter((t) => (t.zaman || 0) <= (s.basi || 0));
+    if (!onceki.length) return "";
+    const parcalar = [];
+    let kalan = BAGLAM_SINIRI;
+    for (const t of onceki.slice().reverse()) {
+      const p = `Soru: ${kisalt(t.soru, 400)}\nCevap: ${kisalt(MD.duzMetin(t.cevap), 1500)}`;
+      if (p.length > kalan) break;
+      parcalar.unshift(p);
+      kalan -= p.length;
+    }
+    return ` Kullanıcı masada önceki bir sohbete döndü ("${kisalt(s.baslik, 120)}"). Kullanıcının bir sonraki sorusu bu sohbetin devamıdır; aşağıdaki soru ve cevapları bağlam olarak kullanın, bu Claude sohbetindeki başka konulara dayanmayın. ${onceki.length > parcalar.length ? `Sohbetin ${onceki.length} turundan son ${parcalar.length} tanesi:` : "Sohbetin turları:"}\n` + parcalar.join("\n\n");
+  }
+
   // Yazılırken çok sık gelen parçalar birleşir; ekran en çok 60 ms'de bir yeniden çizilir.
   let cevapZamanlayici = 0;
+  let sohbetImzasi = null;
   function cevapYenile() {
     if (cevapZamanlayici) return;
     cevapZamanlayici = setTimeout(() => {
@@ -2212,10 +2555,41 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       if (!kok || !onceki || !c) { git("sohbet"); return; }   // çalışma yeni başladı: Sohbet yeniden kurulur
       const altta = sondaMi();
       if (onceki.dataset.imza !== turImzasi(oncekiTurlar(c))) oncekiTurlariCiz(onceki, c);
+      // Sohbetin turları değişti (alttaki tur da dahil): başlık ve sol paneldeki soru sayısı yenilenir.
+      const tumu = turImzasi(turlarOku());
+      if (tumu !== sohbetImzasi) { sohbetImzasi = tumu; sohbetUstunuYenile(); sohbetListesiYenile(); }
       kok.replaceChildren();
-      cevapIcerik(kok, c);
+      altTuruCiz(kok, c);
+      devamNotuYenile();
       akisKaydir(kok, c, altta);
     }, 60);
+  }
+  // Alttaki tur: numarası (önceki tur varsa) ve tam içeriği.
+  function altTuruCiz(kok, c) {
+    cevapIcerik(kok, c);
+    const n = turNumarasi(c);
+    if (n > 1) kok.prepend(ogesi("div", "tur-no", cev("{0}. soru", n)));
+  }
+  // Sohbet ekranının başlığı sohbetin adıdır (ilk sorusu); alt yazı soruyu nereye yazacağını söyler.
+  function sohbetUstunuYenile() {
+    if (aktif !== "sohbet" || !masaKuruldu) return;
+    const h = document.querySelector(".icerik-ust h1");
+    const a = document.querySelector(".icerik-ust .alt-yazi");
+    const turlar = turlarOku();
+    const ad = turlar.length ? sohbetBasligi(seciliSohbet(), turlar) : "";
+    if (h) { h.textContent = ad || cev("Sohbet"); h.title = ad; }
+    if (a && turlar.length) a.textContent = cev("Bu sohbetin soruları ve cevapları sırayla; yenisi en altta.");
+  }
+  function devamNotuYenile() {
+    const n = $("devam-notu");
+    if (!n) return;
+    const s = seciliSohbet();
+    const var_ = turlarOku().length > 0;
+    n.hidden = !var_;
+    if (!var_) return;
+    n.replaceChildren(ikon("bilgi"), ogesi("span", null, s.devam
+      ? cev("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir.")
+      : cev("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; cevap bu sohbette, en altta akar.")));
   }
 
   // Yeni soru başlayınca ekran o sorunun başına kayar (önceki turlar yukarıda kalır). Aynı iş sürerken kullanıcı en
@@ -2254,11 +2628,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // Cevap bitince ve teyidi tamamlanınca bir kez; masa durumu (al_gecmis var mı) sunucunun cevabıyla gelir.
   function cevapKaydet() {
     const c = CEVAP;
-    if (!c || !c.tamam || c.kesildi || cevapKaydedildi || !DURUM.hazir || !c.cevap.trim()) return;
+    if (!c || !c.tamam || c.kesildi || c.kaydedildi || !DURUM.hazir || !c.cevap.trim()) return;
     if (!c.teyit || c.teyit.durum === "suruyor" || c.teyit.durum === "yapilmadi") return;
     // Sohbet yeniden çizilince açılan eski cevap penceresi işi ikinci kez geçmişe yazmaz.
-    if (c.kaynak === "kendi" && tekrarMi()) return;
-    cevapKaydedildi = true;
+    if (c.kaynak === "kendi" && (tekrarMi() || c.gecAcilan)) return;
+    c.kaydedildi = true;
     const t = c.teyit;
     const araclar = (c.araclar || []).map(({ sonuc, ...a }) => a);   // geçmişe adımın ham sonucu yazılmaz
     const satirlar = araclar.map((a) => [a.durum === "suruyor" ? "tamam" : a.durum, [a.baslik, a.ozet].filter(Boolean).join(" · ")]);
@@ -2267,7 +2641,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     // gecmisId: yerel sunucu cevabı teslim anında diske yazdıysa aynı kayıt tamamlanır, ikincisi açılmaz.
     gecmiseEkle(c.soru || cev("Claude'un cevabı"), adimlar.length ? adimlar : [["tamam", cev("Cevap masaya geldi")]], {
       ...(c.gecmisId ? { id: c.gecmisId } : {}),
-      ekran: "sohbet", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null,
+      ekran: "sohbet", kategori: "claude", tur: "cevap", sorgu: c.soru ? { metin: c.soru } : null, sohbet: kayitSohbeti(c),
       anlik: { cevap: c.cevap, adimlar: c.adimlar, araclar, kaynaklar: c.kaynaklar,
         ...((c.dosyalar || []).length ? { dosyalar: dosyaKaydi(c.dosyalar) } : {}),
         teyit: { satirlar: t.satirlar, dogru: t.dogru, toplam: t.toplam } } });
@@ -2589,7 +2963,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // tutar (satır içinde gösterir), ortak çalışmaya dokunmaz.
   function soruyuAl(g) {
     const soru = g && g.soru;
-    if (tekrarMi()) return { soru: dizgi(soru).trim(), plan: [], sorular: [], adimlar: [] };
+    // Sorusu akışta cevaplanmış soru penceresi geç açılmıştır (24.11.2026: sohbet yeniden çizilince birinci sorunun
+    // penceresi ikinci cevaptan sonra ilk kez açıldı): işi yeniden başlatmaz.
+    const cevaplandi = !!soruKatla(soru) && turlarOku().some((t) => ayniSoru(t.soru, soru));
+    if (cevaplandi) islendi();
+    if (tekrarMi() || cevaplandi) return { soru: dizgi(soru).trim(), plan: [], sorular: [], adimlar: [] };
     const c = calismaBaslat(soru, g);
     islendi();
     return c;
@@ -2650,6 +3028,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   let canliCevapId = "";
   let canliZamanlayici = 0;
   let sonKurulumMasasi = 0;   // kurulumun en son açtığı masanın numarası (al_masa_durumu)
+  let sonKurulumZamani = 0;   // ve açıldığı an (kurulumun saati; bu bilgisayarın saatiyle aynı)
   // Sistem bilgisi için canlı akışın izi (soru ve cevap metni yok): bir sonraki bildirimde kök neden buradan okunur.
   const TANI = { reddedilen: "", reddedilenMasa: 0, kurtarilan: "" };
   // ChatGPT'de model masayı aynı sohbette yeniden açarsa (al_masasi ikinci kez) iki masa aynı akışı alt alta gösterir.
@@ -2664,8 +3043,22 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       return (Array.isArray(d) ? d : []).filter((n) => Number.isInteger(n) && n > 0);
     } catch { return []; }
   }
+  // Her masanın bu sohbette ilk açıldığı an (numarasız devam sorusunun bu masanın olup olmadığı buna göre).
+  const MASA_ACILISLARI = "al.masa.acilislar";
+  let pencereAcilislari = {};
+  function masaAcilislari() {
+    try { const d = JSON.parse(localStorage.getItem(MASA_ACILISLARI) || "{}"); return d && typeof d === "object" ? d : {}; }
+    catch { return pencereAcilislari; }
+  }
+  const masaAcilisi = (n) => Number(masaAcilislari()[n]) || 0;
   function masaNumarasiYaz(n) {
     if (!Number.isInteger(n) || n < 1) return;
+    const a = masaAcilislari();
+    if (!a[n]) {
+      a[n] = Date.now();
+      pencereAcilislari = a;
+      try { localStorage.setItem(MASA_ACILISLARI, JSON.stringify(Object.fromEntries(Object.entries(a).slice(-20)))); } catch { /* depo kapalı */ }
+    }
     const liste = masaNumaralari();
     if (liste.includes(n)) return;
     try { localStorage.setItem(MASA_NUMARALARI, JSON.stringify([...liste, n].slice(-20))); } catch { /* depo kapalı */ }
@@ -2676,7 +3069,18 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function buSohbetinIsi(c) {
     if (EV.chatgpt) return true;
     if (!c) return false;
-    if (Number.isInteger(c.masa) && c.masa > 0 && (c.masa === canliMasaNo || masaNumaralari().includes(c.masa))) return true;
+    const numarali = Number.isInteger(c.masa) && c.masa > 0;
+    if (numarali && (c.masa === canliMasaNo || masaNumaralari().includes(c.masa))) return true;
+    // Aksi belirtilmedikçe devam sorusu aynı masada akar (24.11.2026, kullanıcı: "Aynı kartta devam ettir sohbeti aksi
+    // belirtilmedikçe"; bu bilgisayarda devam sorusu masaya düşmedi): numarasız iş, kurulumun en son açtığı masa bu
+    // sohbetinse bu sohbetindir. Başka bir masanın numarasını taşıyan iş yine sorusundan tanınmazsa alınmaz.
+    // İş, o masa açıldıktan sonra başlamış olmalı: kurulumun belleğinde kalan önceki sohbetin işi yeni masaya taşınmaz.
+    // Numaralar kurulum yeniden başlayınca 1'den başlar: o numaranın bu sohbetteki açılışı kurulumun bildirdiği açılışla
+    // aynı an olmalı (dünkü sohbetin 1 numaralı masası bugünkü 1 numaralı masanın işini almaz).
+    const acilis = masaAcilisi(sonKurulumMasasi);
+    const ayniAcilis = acilis > 0 && sonKurulumZamani > 0 && Math.abs(acilis - sonKurulumZamani) < 120000;
+    if (!numarali && sonKurulumMasasi > 0 && ayniAcilis && (c.basla || 0) >= acilis - 2000 &&
+        (sonKurulumMasasi === canliMasaNo || masaNumaralari().includes(sonKurulumMasasi))) return true;
     const s = soruKatla(c.soru);
     if (!s) return false;
     const bilinen = [calismaOku(), BENIM_CALISMA, CEVAP].filter(Boolean).map((x) => x.soru)
@@ -2693,6 +3097,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     try {
       const { veri } = await cagir(app, CANLI, { surum: canliSurum });
       if (veri && Number.isInteger(veri.masa)) sonKurulumMasasi = veri.masa;
+      if (veri && Number.isFinite(veri.masa_zaman)) sonKurulumZamani = veri.masa_zaman;
       if (EV.chatgpt && veri && canliMasaNo && typeof veri.masa === "number" && veri.masa > canliMasaNo) {
         eskiMasa = true;
         eskiMasaCiz();
@@ -2718,6 +3123,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   function canliUygula(d, ilk) {
     let c = d.calisma;
     let cv = d.cevap;
+    // Kullanıcı masada yeni bir sohbet başlattıysa ya da önceki bir sohbeti açtıysa, ondan önce başlamış iş ve cevabı
+    // bu sohbete taşınmaz (kurulumun belleğinde son iş durur).
+    const basi = seciliSohbet().basi || 0;
+    if (basi && c && (c.basla || 0) < basi - 2000) { if (cv && cv.calisma === c.id) cv = null; c = null; }
+    if (basi && cv && !(c && cv.calisma === c.id)) cv = null;
     if (!EV.chatgpt) {
       if (c && !buSohbetinIsi(c)) c = null;
       if (cv && !(c && cv.calisma === c.id) &&
@@ -2740,7 +3150,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       // Yeni soru: önceki cevap ekranın altından kalkar (akışta yukarıda kalır). Bu pencerenin kendi cevabı bu işinse kalır.
       // İlk yoklamada bulunan iş zaten vardı: kullanıcının açtığı ekran (Geçmiş gibi) değiştirilmez.
       if (yeni && !(CEVAP && ayniSoru(CEVAP.soru, canliCalisma.soru))) {
-        CEVAP = null; acikCevap = null; cevapKaydedildi = false; cevapAcildi = ilk;
+        CEVAP = null; acikCevap = null; cevapAcildi = ilk;
         if (!ilk) {
           DURUM.acilis = "sohbet";
           if (masaKuruldu && aktif !== "sohbet") git("sohbet");
@@ -2816,8 +3226,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         // Adaylar: iş başladıktan sonra yazılmış, akışta henüz olmayan cevaplar. Önce aynı soru; soru Claude'un teslimde
         // farklı yazdığı biçimdeyse yalnız tek aday varsa ve kurulumun en son açtığı masa bu sohbetinse.
         const akista = new Set(turlarOku().map((t) => t.gecmisId).filter(Boolean));
+        // Başka bir masa sohbetine yazılmış kayıt (3.5.3'ten beri kayıt sohbetini taşır) aday değildir.
+        const sid = seciliSohbet().id;
         const adaylar = ((veri && veri.kayitlar) || []).filter((x) => x && x.tur === "cevap" && !kurtarilan.has(x.id) &&
-          !akista.has(x.id) && ilkBasla && kayitZamani(x) >= ilkBasla - 120000);
+          !akista.has(x.id) && ilkBasla && kayitZamani(x) >= ilkBasla - 120000 && !(x.sohbet && x.sohbet.id !== sid));
         const benim = sonKurulumMasasi > 0 && (sonKurulumMasasi === canliMasaNo || masaNumaralari().includes(sonKurulumMasasi));
         const k = adaylar.find((x) => ayniSoru(x.baslik, c.soru)) || adaylar.find((x) => benzerSoru(x.baslik, c.soru)) ||
           (benim && adaylar.length === 1 ? adaylar[0] : null);
@@ -2827,13 +3239,14 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
           const simdi = gosterilenCevap();
           if (tam && tam.kayit && simdi && simdi.calisiyor && ayniSoru(simdi.soru, c.soru)) {
             const gelen = cevapKaydindan({ ...tam.kayit, soru: tam.kayit.baslik });
-            CEVAP = { ...gelen, gecmisId: k.id, gosterim: Date.now(), kaynak: "gecmis" };
-            cevapKaydedildi = true;   // kayıt zaten diskte; teyit varsa kayıttan gelir
+            // Kayıt zaten diskte. Teyidi yoksa (masanın penceresi teyidi bitirememiş) masa teyit eder ve aynı kaydı tamamlar.
+            CEVAP = { ...gelen, gecmisId: k.id, gosterim: Date.now(), kaynak: "gecmis", kaydedildi: gelen.teyit.durum !== "yapilmadi" };
             TANI.kurtarilan = k.id;
             const y = acikCalisma();
             if (y && (ayniSoru(y.soru, gelen.soru) || ayniSoru(y.soru, c.soru))) calismaBitir();
             turEkle(CEVAP);
             cevapYenile();
+            if (!CEVAP.kaydedildi) cevapTeyidi();
           }
         }
       } catch { /* geçmiş okunamadı: bir sonraki denemede */ }
@@ -4284,6 +4697,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       gecmisYoklandi = true;
       gecmisYoklaniyor = null;
       if (gecmisKalici() && masaKuruldu && aktif === "gecmis" && !gecmisAcik) git("gecmis");
+      if (masaKuruldu) sohbetListesiYenile();
     })();
     return gecmisYoklaniyor;
   }
@@ -5380,7 +5794,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     DURUM.hazir = true;
     // Ev sahibi baştan tam ekransa masa sunucunun cevabından önce, varsayımlarla kurulmuştur: istenen bölüm ve
     // modül durumları (yerel/uzak) şimdi uygulanır, açık ekran yeniden çizilir.
-    if (masaKuruldu) { git(acilisUygulandi ? aktif : acilisEkrani()); acilisUygulandi = true; }
+    if (masaKuruldu) { git(acilisUygulandi ? aktif : acilisEkrani()); acilisUygulandi = true; sohbetListesiYenile(); }
     else { ciz(); bildir(CEVAP ? "Sohbet ekranında, cevap açık." : "masa açıldı."); }   // yetenekler artık belli: not kuralla yinelenir
     cevapKaydet();   // teslim: geçmiş, sunucunun bildirdiği yerde (bu bilgisayar ya da oturum) tutulur
     if (ROL === "masa") modelPenceresi();

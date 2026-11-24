@@ -109,7 +109,7 @@ const AL = (() => {
   const RESMI_GIRIS = "https://www.mevzuat.gov.tr/";
   const UYARI = "UYARI: veri çekilemedi, teyidiniz gerekli: ";   // Claude'a giden metinlerde aynen (Türkçe)
   const uyari = (adres) => cev("UYARI: veri çekilemedi, teyidiniz gerekli: {0}", adres);   // ekrandaki satır, seçili dilde
-  const SURUM = "3.5.2";
+  const SURUM = "3.5.3";
   const NS = "http://www.w3.org/2000/svg";
 
   // 16x16 çizgi simgeleri; tek kalınlık, tek köşe biçimi.
@@ -133,6 +133,8 @@ const AL = (() => {
     zil: [["path", { d: "M4 11V7a4 4 0 0 1 8 0v4l1.5 1.5h-11zM6.5 14a1.5 1.5 0 0 0 3 0" }]],
     arama: [["circle", { cx: 7, cy: 7, r: 4.5 }], ["path", { d: "M10.5 10.5 14 14" }]],
     genislet: [["path", { d: "M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" }]],
+    yeni: [["path", { d: "M8 3v10M3 8h10" }]],
+    asagi: [["path", { d: "M4 6l4 4 4-4" }]],
     gunes: [["circle", { cx: 8, cy: 8, r: 3 }], ["path", { d: "M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1" }]],
     ay: [["path", { d: "M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z" }]],
     otomatik: [["circle", { cx: 8, cy: 8, r: 5.5 }], ["path", { d: "M8 2.5a5.5 5.5 0 0 0 0 11z", fill: "currentColor" }]],

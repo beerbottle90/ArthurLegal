@@ -1,4 +1,21 @@
 {
+ "3.5.3": {
+  "tr": [
+   "Devam sorusu aynı masada akar: siz yeni sohbet başlatmadıkça her devam sorusu ve cevabı masada, en altta görünür. Önceki sorular tek satırlık kart olur, tıklayınca cevabı açılır.",
+   "Sol panelde Yeni sohbet ve Sohbetler: önceki sohbetinize tıklayıp oradan devam edin; masa o sohbetin soru ve cevaplarını Claude'a bağlam olarak verir.",
+   "ArthurMask 1.4.1: dar pencerede taşma, kopyalama ve renk karşıtlığı düzeltmeleri."
+  ],
+  "az": [
+   "Davam sualı eyni masada axır: siz yeni söhbət başlatmadıqca hər davam sualı və cavabı masada, ən aşağıda görünür. Əvvəlki suallar bir sətirlik kart olur, klikləyəndə cavabı açılır.",
+   "Sol paneldə Yeni söhbət və Söhbətlər: əvvəlki söhbətinizə klikləyib oradan davam edin; masa həmin söhbətin sual və cavablarını Claude tətbiqinə kontekst kimi verir.",
+   "ArthurMask 1.4.1: dar pəncərədə daşma, kopyalama və rəng kontrastı düzəlişləri."
+  ],
+  "en": [
+   "Follow up questions stay on the same desk: unless you start a new chat, every follow up question and its answer appears on the desk, at the bottom. Earlier questions become one line cards that open their answer on click.",
+   "New chat and Chats in the left panel: click an earlier chat to continue from there; the desk gives Claude that chat's questions and answers as context.",
+   "ArthurMask 1.4.1: fixes for overflow in narrow windows, copying and colour contrast."
+  ]
+ },
  "3.5.2": {
   "tr": [
    "Cevap masada her zaman görünür: masa \"Claude çalışıyor\" derken cevap bu bilgisayarın Geçmiş'ine yazılmışsa birkaç saniye içinde Sohbet'e gelir.",

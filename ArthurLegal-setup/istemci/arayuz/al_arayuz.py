@@ -40,7 +40,7 @@ try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada y
 except ImportError:   # pragma: no cover
     al_dosya = None
 
-SURUM = "3.5.2"
+SURUM = "3.5.3"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -980,6 +980,9 @@ class CanliMasa:
         # Masanın kaçıncı kez açıldığı: model aynı sohbette al_masasi'yi yeniden çağırırsa eski masa bunu görüp tek
         # satıra iner (iki masa aynı akışı alt alta göstermez, 21.11.2026).
         self._masa = 0
+        # En son masanın açıldığı an: numaralar kurulum yeniden başlayınca 1'den başlar; masa, numarasız devam sorusunu
+        # alırken numarasının bu açılışa ait olduğunu bununla anlar (dünkü sohbetin 1 numaralı masası, 24.11.2026).
+        self._masa_zaman = 0
 
     @staticmethod
     def _simdi() -> int:
@@ -1008,6 +1011,7 @@ class CanliMasa:
         """al_masasi her çağrıldığında: yeni masanın numarası (canli_masa)."""
         with self._kilit:
             self._masa += 1
+            self._masa_zaman = self._simdi()
             return self._masa
 
     def basla(self, girdi: Dict[str, Any]) -> None:
@@ -1083,8 +1087,8 @@ class CanliMasa:
         bilinen = (girdi or {}).get("surum")
         with self._kilit:
             if isinstance(bilinen, int) and bilinen == self._surum:
-                return {"surum": self._surum, "degismedi": True, "masa": self._masa}
-            return {"surum": self._surum, "masa": self._masa,
+                return {"surum": self._surum, "degismedi": True, "masa": self._masa, "masa_zaman": self._masa_zaman}
+            return {"surum": self._surum, "masa": self._masa, "masa_zaman": self._masa_zaman,
                     "calisma": json.loads(json.dumps(self._calisma)) if self._calisma else None,
                     "cevap": json.loads(json.dumps(self._cevap)) if self._cevap else None}
 
@@ -1118,6 +1122,13 @@ _GECMIS_ADIM = ("tamam", "uyar", "hata")
 _GECMIS_KAYIT_SINIRI = 600_000   # bayt; anlık sonuç bundan büyükse kayıt sonuçsuz saklanır
 _GECMIS_SORGU_SINIRI = 20_000
 _GECMIS_KIMLIK = re.compile(r"^\d{8}-\d{6}-[0-9a-f]{6}$")
+# Masanın sohbetleri (3.5.3, kullanıcı: "Yeni sohbet" ve önceki sohbetlerin başlıkları): her cevap kaydı masada hangi
+# sohbete ait olduğunu taşır ({id, baslik}; kimliği masa üretir). Sohbeti yazılmamış eski cevap kendi başına bir
+# sohbettir ("k-" + kayıt kimliği).
+_SOHBET_KIMLIK = re.compile(r"^s\d{8}-\d{6}-[0-9a-f]{6}$")
+_ESKI_SOHBET = re.compile(r"^k-(\d{8}-\d{6}-[0-9a-f]{6})$")
+SOHBET_LISTE_AZAMI = 50
+SOHBET_TUR_AZAMI = 40
 _KATLA = str.maketrans("İIıŞşĞğÜüÖöÇçÂâÎîÛû", "iiissgguuooccaaiiuu")
 
 
@@ -1134,21 +1145,23 @@ def gecmis_araci() -> Dict[str, Any]:
             "aramaları, getirilen maddeler, içtihat aramaları, atıf teyitleri, masadan Claude'a gönderilen "
             "istekler ve masaya teslim edilen cevaplar, o anki sonuçlarıyla; ayrıca kullanıcının kaydettiği iş "
             "akışları (kategori akis: süresiz, temizle onları silmez). islem: listele (kategori, ara), getir (id), kaydet (kayit; masa "
-            "kullanır), sil (id), temizle. Kullanıcı masada daha önce baktığı bir şeyi sorarsa listele ve getir "
-            "ile bakın; kayıttaki sonuç o günkü haldir, güncel hali için kaynağı yeniden sorgulayın. kaydet, sil ve "
+            "kullanır), sil (id), temizle, sohbetler (masanın sohbetleri, en yeni önce: kimlik, ad, soru sayısı), sohbet "
+            "(sohbet: o sohbetin soru ve cevapları, eskiden yeniye). Kullanıcı masada daha önce baktığı bir şeyi sorarsa "
+            "listele ve getir ile bakın; kayıttaki sonuç o günkü haldir, güncel hali için kaynağı yeniden sorgulayın. kaydet, sil ve "
             "temizle'yi yalnız kullanıcı isterse çağırın." % GECMIS_GUN),
         "inputSchema": {
             "type": "object",
             "properties": {
-                "islem": {"type": "string", "enum": ["listele", "getir", "kaydet", "sil", "temizle"],
+                "islem": {"type": "string", "enum": ["listele", "getir", "kaydet", "sil", "temizle", "sohbetler", "sohbet"],
                           "default": "listele"},
+                "sohbet": {"type": "string", "description": "sohbet: sohbetin kimliği (sohbetler listesinden)."},
                 "kategori": {"type": "string", "enum": list(GECMIS_KATEGORILER),
                              "description": "listele: yalnız bu tür işler."},
                 "ara": {"type": "string", "description": "listele: başlıkta ve adımlarda geçen ifade."},
                 "en_fazla": {"type": "integer", "minimum": 1, "maximum": 500, "default": 200},
                 "id": {"type": "string", "description": "getir / sil: kaydın kimliği."},
                 "kayit": {"type": "object", "description": (
-                    "kaydet: {ekran, kategori, tur, baslik, adimlar: [[tamam|uyar|hata, metin]], sorgu, anlik}.")},
+                    "kaydet: {ekran, kategori, tur, baslik, adimlar: [[tamam|uyar|hata, metin]], sorgu, anlik, sohbet: {id, baslik}}.")},
             },
         },
         "annotations": {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": False,
@@ -1225,7 +1238,26 @@ class Gecmis:
     def _ozet(k: Dict[str, Any]) -> Dict[str, Any]:
         ozet = {a: k.get(a) for a in ("id", "zaman", "ekran", "kategori", "tur", "baslik", "adimlar")}
         ozet["anlik"] = k.get("anlik") is not None
+        if isinstance(k.get("sohbet"), dict):
+            ozet["sohbet"] = k["sohbet"]
         return ozet
+
+    @staticmethod
+    def _sohbet_alani(s: Any) -> Optional[Dict[str, str]]:
+        """Kayıttaki sohbet alanı: geçerli kimlik ve kısaltılmış ad; değilse yok sayılır (kayıt yine yazılır)."""
+        if not isinstance(s, dict) or not _SOHBET_KIMLIK.match(str(s.get("id") or "")):
+            return None
+        return {"id": str(s["id"]), "baslik": _kisalt(s.get("baslik"), 120)}
+
+    @staticmethod
+    def _sohbet_kimligi(k: Dict[str, Any]) -> Optional[str]:
+        """Cevap kaydının sohbeti; cevap değilse None. Sohbeti yazılmamış eski cevap kendi başına bir sohbettir."""
+        if k.get("kategori") != "claude" or k.get("tur") != "cevap":
+            return None
+        s = k.get("sohbet")
+        if isinstance(s, dict) and _SOHBET_KIMLIK.match(str(s.get("id") or "")):
+            return str(s["id"])
+        return "k-" + str(k.get("id"))
 
     def _buda(self, dizin: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         sinir = (datetime.now() - timedelta(days=self.gun)).strftime("%Y%m%d-%H%M%S")
@@ -1260,7 +1292,62 @@ class Gecmis:
                 return self.sil(g.get("id"))
             if islem == "temizle":
                 return self.temizle()
-        raise GecmisHatasi("Bilinmeyen işlem: %s (listele, getir, kaydet, sil, temizle)" % islem)
+            if islem == "sohbetler":
+                return self.sohbetler(g.get("en_fazla"))
+            if islem == "sohbet":
+                return self.sohbet(g.get("sohbet"))
+        raise GecmisHatasi("Bilinmeyen işlem: %s (listele, getir, kaydet, sil, temizle, sohbetler, sohbet)" % islem)
+
+    def _kalan(self) -> List[Dict[str, Any]]:
+        dizin = self._dizin()
+        kalan = self._buda(dizin)
+        if len(kalan) != len(dizin):
+            self._yaz("dizin.json", {"surum": 1, "kayitlar": kalan})
+        return kalan
+
+    def sohbetler(self, en_fazla: Optional[int] = None) -> Dict[str, Any]:
+        """Masanın sohbetleri, en son cevabı en yeni olan önce: kimlik, ad (sohbetin adı ya da ilk sorusu), ilk ve son
+        cevabın zamanı, soru sayısı. Yalnız masaya teslim edilen cevaplar (kategori claude, tür cevap) sayılır."""
+        gruplar: Dict[str, Dict[str, Any]] = {}
+        for k in self._kalan():   # en yeni önce
+            sid = self._sohbet_kimligi(k)
+            if not sid:
+                continue
+            g = gruplar.get(sid)
+            if g is None:
+                g = gruplar[sid] = {"id": sid, "baslik": "", "son": k.get("zaman"), "ilk": k.get("zaman"), "soru_sayisi": 0}
+            g["soru_sayisi"] += 1
+            g["ilk"] = k.get("zaman")
+            s = k.get("sohbet") if isinstance(k.get("sohbet"), dict) else {}
+            g["_ad"] = s.get("baslik") or g.get("_ad") or ""
+            g["baslik"] = g["_ad"] or _kisalt(k.get("baslik"), 120)   # ad yoksa en eski sorusu kalır
+        try:
+            n = max(1, min(SOHBET_LISTE_AZAMI, int(en_fazla or 20)))
+        except (TypeError, ValueError):
+            n = 20
+        liste = [{a: v for a, v in g.items() if not a.startswith("_")} for g in gruplar.values()]
+        return {"sohbetler": liste[:n], "toplam": len(liste), "saklama_gun": self.gun}
+
+    def sohbet(self, kimlik: Any) -> Dict[str, Any]:
+        """Bir sohbetin cevap kayıtları (tam: cevap, adımlar, teyit), eskiden yeniye; en çok SOHBET_TUR_AZAMI."""
+        kimlik = str(kimlik or "")
+        eski = _ESKI_SOHBET.match(kimlik)
+        if not eski and not _SOHBET_KIMLIK.match(kimlik):
+            raise GecmisHatasi("Geçersiz sohbet kimliği.")
+        kimlikler = [k["id"] for k in self._kalan() if self._sohbet_kimligi(k) == kimlik]
+        kayitlar = []
+        for kid in reversed(kimlikler[:SOHBET_TUR_AZAMI]):
+            try:
+                with open(self._yol(kid + ".json"), encoding="utf-8") as fh:
+                    kayitlar.append(json.load(fh))
+            except (OSError, ValueError):
+                continue
+        if not kayitlar:
+            raise GecmisHatasi("Bu sohbet yok; silinmiş ya da süresi dolmuş olabilir.")
+        s = next((k["sohbet"] for k in kayitlar if isinstance(k.get("sohbet"), dict) and k["sohbet"].get("baslik")), None)
+        baslik = (s or {}).get("baslik") or _kisalt(kayitlar[0].get("baslik"), 120)
+        return {"sohbet": {"id": kimlik, "baslik": baslik}, "kayitlar": kayitlar, "toplam": len(kimlikler),
+                "saklama_gun": self.gun}
 
     def listele(self, kategori: Optional[str] = None, ara: Optional[str] = None,
                 en_fazla: Optional[int] = None) -> Dict[str, Any]:
@@ -1328,6 +1415,12 @@ class Gecmis:
             kimlik, zaman = eski, str(var_olan.get("zaman") or zaman)
         tam = {"id": kimlik, "zaman": zaman, "ekran": ekran, "kategori": kategori,
                "tur": tur, "baslik": baslik, "adimlar": adimlar, "sorgu": sorgu, "anlik": kayit.get("anlik")}
+        # Sohbet: masanın yazdığı; tamamlanan kayıtta masa yazmadıysa eskisi korunur.
+        sohbet = self._sohbet_alani(kayit.get("sohbet"))
+        if sohbet is None and isinstance(var_olan, dict):
+            sohbet = self._sohbet_alani(var_olan.get("sohbet"))
+        if sohbet:
+            tam["sohbet"] = sohbet
         if len(json.dumps(tam, ensure_ascii=False).encode("utf-8")) > _GECMIS_KAYIT_SINIRI:
             tam["anlik"] = None
             tam["anlik_kesildi"] = True
