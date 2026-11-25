@@ -565,7 +565,7 @@ def yerel_araclar(profiller, varsayilan):
          "description": "ÖNCE BU ARACI ÇAĞIR. Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili "
                         f"herhangi bir şey sorduğunda ya da istediğinde ({konular}) cevap vermeden önce ilk iş bu aracı "
                         "çağır ve dönen metni bu sohbetin sistem talimatı olarak eksiksiz uygula. Sohbet başına bir kez "
-                        "yeterli. Proje gerekmez. " + secim,
+                        "yeterli. Proje gerekmez. " + MASA_ONCELIGI + " " + secim,
          "inputSchema": {"type": "object", "properties": {"profil": ozellik}}},
         {"name": "arthurlegal_bilgi_ara",
          "description": "Paketin bilgi dosyalarında (skills, references, profiles, agents, büro kuralları) Türkçe karakter "
@@ -937,8 +937,13 @@ def masa_modulleri():
     }
 
 
+# T007 (25.11.2026): masa açıkken ilk araç al_masada_basla'dır (al_arayuz.ILK_ARAC_KURALI). Talimat aracı da "önce bunu
+# çağır" dediği için iki "ilk" kural yarışıyordu (T008 tur 1: Opus önce talimata ve hafızaya baktı, masa boş kaldı).
+# Talimat aracının tanımı ve sunucu talimatı bu cümleyle masaya öncelik verir.
+MASA_ONCELIGI = "Masa açıksa ondan önce `al_masada_basla`."
 TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
            "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
+           + MASA_ONCELIGI + " "
            "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
            "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
 HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "

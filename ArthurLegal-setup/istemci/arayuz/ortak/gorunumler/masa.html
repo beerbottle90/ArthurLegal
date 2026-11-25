@@ -686,10 +686,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   };
   // Cevap asla kaybolmaz (23.11.2026, kullanıcı bildirimi: cevap masaya gelmedi, sohbette yalnız "Cevap masada." vardı):
   // sohbete cevabın kısa özeti de yazılır. Masa hangi nedenle görünmezse görünsün cevabın özü sohbettedir; tamamı masada.
-  const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabın tamamını " +
-    "al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu " +
-    "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) " +
-    "içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
+  // İlk araç (T007, 25.11.2026): metin al_arayuz.TESLIM_KURALI'nın birebir kopyasıdır, tek satırda durur; test ikisini
+  // karşılaştırır (masa Python'u okuyamaz). Kuralı değiştirirken ikisini birlikte değiştirin.
+  const TESLIM_NOTU = " " + "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) kullanıcının her mesajında, soru işareti olmasa da (soru, tablo ya da belge hazırlama gibi bir istek, devam sorusu, netleştirme sorusuna verilen cevap), ilk araç çağrınız al_masada_basla olur: arthurlegal_talimat, hafiza_baslangic, al_gecmis, araştırma araçları ve arthur-uyap, arthur-tapu, arthur-mask gibi öteki sunucuların araçlarından önce ve netleştirme sorusu sormadan önce; ondan önce yalnız araç arama aracı gelebilir. Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu söyleyin; cevabın tamamını sohbete ikinci kez yazmayın. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
   // Claude Desktop açılırken bilgisayardaki sunucular araç listesine birkaç saniye geç girer (24.11.2026 ölçümü: masa
   // açılıştan 18 sn sonra istendi, Claude'un listesinde arthurlegal-yerel yoktu, masa uzaktan açıldı ve geçmiş gelmedi).
   // Masaüstündeki uzak masa her notta sonraki sorunun bilgisayardaki masaya geçmesini söyler.

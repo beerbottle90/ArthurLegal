@@ -434,7 +434,7 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
     aracı yok, yönlendirme yok) ya da "openai" (OpenAI dizini profili: teslim var, yönlendirme ve model alanı yok;
     ChatGPT modelleri ölçülmedi, K7). Verilmezse ortam notu eklenmez."""
     teslim = "" if ortam == "dizin" else (
-        " Masa açıldıktan sonra bu sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz.")
+        " " + ILK_ARAC_KURALI + " Sonra araştırma, en son al_masaya_yaz.")
     tanim = _masa_tanimi(ortam, teslim)
     if ortam == "uzak":
         # Yönlendirme kararı listeye bakar: uzak uçta liste zorunludur (bilinmiyorsa boş liste).
@@ -555,10 +555,34 @@ SOHBET_OZETI = ("sonra sohbete cevabın iki üç cümlelik özetini yazın ve ta
 DOSYA_KURALI = ("Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya "
                 "masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.")
 
+# İlk araç (T007, 25.11.2026). Masa sohbeti okuyamaz; soruyu yalnız al_masada_basla'dan öğrenir ve ondan önce yapılan
+# adımları göstermez. Bir kullanıcı soru işaretsiz bir istekte ("tablo hazırla") netleştirme sorularını yalnız sohbette
+# gördü, masa boş kaldı; ölçümde (T008 tur 1) Opus önce hafızaya ve geçmişe baktı. Kural her yerde bu cümledir:
+# sunucu talimatları, al_masasi tanımı ve notu, al_masada_basla tanımı ve iki notu, masa.html'in notu (TESLIM_NOTU).
+ILK_ARAC_KURALI = (
+    "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) kullanıcının her mesajında, soru işareti olmasa da "
+    "(soru, tablo ya da belge hazırlama gibi bir istek, devam sorusu, netleştirme sorusuna verilen cevap), ilk araç "
+    "çağrınız al_masada_basla olur: arthurlegal_talimat, hafiza_baslangic, al_gecmis, araştırma araçları ve arthur-uyap, "
+    "arthur-tapu, arthur-mask gibi öteki sunucuların araçlarından önce ve netleştirme sorusu sormadan önce; ondan önce "
+    "yalnız araç arama aracı gelebilir.")
+# /openai/mcp profilinin İngilizce talimatı için (arthurlegal-mcp server.py). O profilde yerel araçlar yoktur, adları
+# bu yüzden geçmez.
+ILK_ARAC_KURALI_EN = (
+    "Once al_masasi has opened the desk in this chat, al_masada_basla is your first tool call on every user message, "
+    "with or without a question mark (a question, a request such as preparing a table or a document, a follow up, an "
+    "answer to a clarifying question): before any other tool, including the tools of other servers, and before any "
+    "clarifying question; only a tool search that loads your tools may come before it.")
+# Netleştirme sorusu (T007): sorular masaya al_masada_basla'nın sorular alanıyla gider, sohbette de kısaca yazılır
+# (cevap asla kaybolmaz, 23.11.2026); eski "sohbete yalnız 'Sorular masada.'" ile not arasındaki çelişki kalktı.
+NETLESTIRME_KURALI = (
+    "Cevabı değiştiren bir olgu belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) soruları "
+    "al_masada_basla'nın sorular alanına yazın (en çok 3 soru, her birine 2 ile 4 seçenek): masa onları kart olarak "
+    "gösterir. Sonra araştırmaya başlamadan sohbete aynı soruları seçenekleriyle kısaca yazıp turu bitirin; soruyu "
+    "yalnız sohbete yazmayın.")
+
 TESLIM_KURALI = (
-    "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) bundan sonraki her soruda şu sırayı izleyin: "
-    "1) hemen al_masada_basla ile soruyu masaya yazın; 2) araştırın (her aracın adımı masada canlı görünür); "
-    "3) cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " " + DOSYA_KURALI)
+    ILK_ARAC_KURALI + " Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " "
+    + DOSYA_KURALI)
 
 
 # Kurulum sağlığı (kalite süreci 4, 18.11.2026). Bilgisayardaki kurulumun paketi (sistem talimatı ve bilgi dosyaları)
@@ -683,14 +707,12 @@ def _baslangic_tanimi() -> Dict[str, Any]:
         "name": "al_masada_basla",
         "title": "Soruyu ArthurLegal Masası'na yaz",
         "description": (
-            "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının her yeni sorusunda İLK iş "
-            "bunu çağırın: masa soruyu ve 'çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
-            "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. "
-            "Birden çok adımlı işte plan'ı yazın (masada planlanan adımlar olarak görünür). Cevabı değiştiren bir olgu "
-            "belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) araştırmadan ÖNCE sorular ile en çok "
-            "3 seçenekli soru sorun: masa bunları kart olarak gösterir. Soru sorduysanız araştırmaya başlamayın; sohbete "
-            "yalnız 'Sorular masada.' yazıp turu bitirin. Kullanıcının seçimi sonraki mesajla gelir; o zaman bunu özgün "
-            "soru ve planla yeniden çağırıp araştırın. Gereksiz soru sormayın: olgular yeterliyse doğrudan araştırın."),
+            ILK_ARAC_KURALI + " Masa soruyu ve 'çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı "
+            "masada canlı bir adım olur; bundan önce yapılan adım masada görünmez. Araştırmayı bitirince cevabı "
+            "al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. Birden çok adımlı işte plan'ı yazın (masada "
+            "planlanan adımlar olarak görünür). " + NETLESTIRME_KURALI + " Kullanıcının seçimi sonraki mesajla gelir; "
+            "o zaman bunu özgün soru ve planla yeniden çağırıp araştırın. Gereksiz soru sormayın: olgular yeterliyse "
+            "doğrudan araştırın."),
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -739,6 +761,8 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     else:
         out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabın "
                       "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI)
+    # Kural bir sonraki mesaj için de hatırlatılır (T007): seçim cevabı ve devam sorusu da önce masaya yazılır.
+    out["not"] += " Sonraki mesajda da: " + ILK_ARAC_KURALI
     return out
 
 

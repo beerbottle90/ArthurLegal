@@ -1072,6 +1072,15 @@ class SunucuTesti(unittest.TestCase):
         # Soru araştırmadan önce masada; kural koşulsuz (masanın notuna bağlı değil).
         self.assertIn("al_masada_basla", r["instructions"])
         self.assertIn("al_masada_basla", masa["yetenekler"])
+        # T007: masa açıkken her mesajda ilk araç al_masada_basla; talimat aracı ve sunucu talimatı masaya öncelik verir.
+        import arthurlegal_sunucu as s
+        kopya = (Path(s.__file__).resolve().parent / "arayuz" / "al_arayuz.py").read_text(encoding="utf-8")
+        ilk = re.search(r"ILK_ARAC_KURALI = \((.*?)\)\n", kopya, re.S)
+        self.assertIsNotNone(ilk, "arayuz/ kopyası T007 kuralını taşımalı")
+        self.assertIn("ilk araç çağrınız al_masada_basla olur", r["instructions"])
+        self.assertIn(s.MASA_ONCELIGI, r["instructions"])
+        self.assertIn(s.MASA_ONCELIGI, araclar["arthurlegal_talimat"]["description"])
+        self.assertNotIn("yalnız 'Sorular masada.'", araclar["al_masada_basla"]["description"])
         basla = self.arac("al_masada_basla", soru="Kira artışı?")["structuredContent"]
         self.assertEqual((basla["bolum"], basla["basla"]), ("sohbet", {"soru": "Kira artışı?"}))
         self.assertTrue(self.arac("al_masada_basla", soru=" ")["isError"])
