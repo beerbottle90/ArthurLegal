@@ -1,19 +1,19 @@
 {
  "3.5.4": {
   "tr": [
-   "Masa açıkken yazdığınız her mesaj, soru işareti olmasa da (ör. \"Proje için bir tablo hazırla\"), önce masaya düşer; Claude ondan sonra talimatı, hafızayı ve kaynakları okur, her adım masada canlı görünür.",
-   "Netleştirme soruları masada kart olarak çıkar: Claude soruyu talimatı ve hafızayı okuduktan sonra sorsa da kart görünür, \"Claude çalışıyor\" ekranında kalmaz. Sorular sohbette de kısaca yazılır.",
-   "Claude soruyu ancak talimatta ve hafızada bulamadığı, cevabı değiştiren bir bilgi için sorar; bilgi yeterliyse doğrudan işi teslim eder."
+   "Masa açıkken her mesaj önce masaya gelir: ister soru ister \"Proje için bir tablo hazırla\" gibi bir istek olsun, başka bir adımdan önce masada görünür.",
+   "Netleştirme soruları masada: Claude önce ArthurLegal talimatını ve hafızanızı okur, yalnız orada bulamadığını sorar. Sorular masada seçenekli kart olarak çıkar; Seçimleri gönder ya da Soruları geç ile devam edersiniz.",
+   "Aynı kural uzak bağlantıda da geçerli: claude.ai (web ve telefon) ve ChatGPT."
   ],
   "az": [
-   "Masa açıq olanda yazdığınız hər mesaj, sual işarəsi olmasa da (məs. \"Layihə üçün cədvəl hazırla\"), əvvəlcə masaya düşür; Claude bundan sonra təlimatı, yaddaşı və mənbələri oxuyur, hər addım masada canlı görünür.",
-   "Dəqiqləşdirmə sualları masada kart kimi çıxır: Claude sualı təlimatı və yaddaşı oxuduqdan sonra versə də kart görünür, \"Claude işləyir\" ekranında qalmır. Suallar söhbətdə də qısaca yazılır.",
-   "Claude sualı yalnız təlimatda və yaddaşda tapa bilmədiyi, cavabı dəyişən məlumat üçün verir; məlumat kifayətdirsə işi birbaşa təhvil verir."
+   "Masa açıq olanda hər mesaj əvvəlcə masaya gəlir: istər sual, istər \"Proje için bir tablo hazırla\" kimi istək olsun, başqa addımdan əvvəl masada görünür.",
+   "Dəqiqləşdirmə sualları masada: Claude əvvəlcə ArthurLegal təlimatını və yaddaşınızı oxuyur, yalnız orada tapmadığını soruşur. Suallar masada seçimli kart kimi çıxır; Seçimləri göndər və ya Sualları keç ilə davam edirsiniz.",
+   "Eyni qayda uzaq bağlantıda da qüvvədədir: claude.ai (veb və telefon) və ChatGPT."
   ],
   "en": [
-   "With the desk open, every message you write lands on the desk first, even without a question mark (for example \"Prepare a table for the project\"); Claude then reads the instruction, memory and sources, and every step shows live on the desk.",
-   "Clarifying questions appear on the desk as cards: the card shows even when Claude asks after reading the instruction and memory, and the desk no longer stays on \"Claude is working\". The questions are also written briefly in the chat.",
-   "Claude asks only for a fact it could not find in the instruction and memory and that changes the answer; with enough facts it delivers the work directly."
+   "With the desk open, every message reaches the desk first: a question or a request such as \"Proje için bir tablo hazırla\" appears on the desk before any other step.",
+   "Clarifying questions on the desk: Claude first reads the ArthurLegal instruction and your memory and asks only for what it could not find there. The questions appear on the desk as cards with options; continue with Send choices or Skip questions.",
+   "The same rule applies on the remote connection: claude.ai (web and phone) and ChatGPT."
   ]
  },
  "3.5.3": {
