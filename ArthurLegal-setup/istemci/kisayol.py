@@ -229,6 +229,12 @@ def claude_gunlugu() -> Path | None:
             if paketler.is_dir():
                 adaylar += sorted(paketler.glob("Claude_*/LocalCache/Local/Claude/Logs/main.log"))
                 adaylar += sorted(paketler.glob("Claude_*/LocalCache/Roaming/Claude/logs/main.log"))
+            # Claude Desktop 6.x ayarı %LOCALAPPDATA%\Claude-Data\claude_<yayıncı kimliği> altında tutar (claude_ayari);
+            # günlüğün bu klasörde de olabileceği yerler. Yalnız var olan dosya seçildiği için fazladan aday zararsızdır.
+            veri = Path(yerel) / "Claude-Data"
+            if veri.is_dir():
+                for desen in ("[Cc]laude_*/logs/main.log", "[Cc]laude_*/Logs/main.log", "[Cc]laude_*/*/logs/main.log"):
+                    adaylar += sorted(veri.glob(desen))
         if dolasan:  # klasik kurulum
             adaylar.append(Path(dolasan) / "Claude" / "logs" / "main.log")
     var = [p for p in adaylar if p.is_file()]

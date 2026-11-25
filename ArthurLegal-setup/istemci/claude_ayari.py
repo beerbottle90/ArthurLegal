@@ -1,7 +1,8 @@
 """Claude Desktop yapılandırmasına ArthurLegal sunucularını ekler ve kaldırır.
 
-ArthurMask'in claude_ayari.py'si örnek alındı: Windows'ta klasik (%APPDATA%\\Claude) ve Microsoft
-Store/MSIX (Packages\\Claude_*\\LocalCache\\Roaming\\Claude) yapılandırmalarının hepsine, macOS'ta
+ArthurMask'in claude_ayari.py'si örnek alındı: Windows'ta klasik (%APPDATA%\\Claude), Microsoft
+Store/MSIX (Packages\\Claude_*\\LocalCache\\Roaming\\Claude) ve Claude-Data
+(%LOCALAPPDATA%\\Claude-Data\\claude_*) yapılandırmalarının hepsine, macOS'ta
 ~/Library/Application Support/Claude'a yazar; Claude'un kendi alanlarına (preferences vb.) dokunmaz,
 değiştirmeden önce yedek alır.
 `arthur-mask` girdisini ArthurMask'in kendi kurulumu yönetir; burada ona dokunulmaz.
@@ -28,8 +29,14 @@ def yapilandirma_yollari() -> list:
     if os.environ.get("APPDATA"):
         yollar.append(Path(os.environ["APPDATA"]) / "Claude" / "claude_desktop_config.json")
     if os.environ.get("LOCALAPPDATA"):
-        for paket in sorted((Path(os.environ["LOCALAPPDATA"]) / "Packages").glob("Claude_*")):
+        yerel = Path(os.environ["LOCALAPPDATA"])
+        for paket in sorted((yerel / "Packages").glob("Claude_*")):
             yollar.append(paket / "LocalCache" / "Roaming" / "Claude" / "claude_desktop_config.json")
+        # Claude Desktop'ın yeni Windows sürümleri (6.x) ayarı %LOCALAPPDATA%\Claude-Data\claude_<yayıncı kimliği>
+        # altında tutar ve %APPDATA%\Claude'u okumaz; bu klasör listede olmazsa sunucular Claude'a hiç görünmez.
+        for veri in sorted((yerel / "Claude-Data").glob("[Cc]laude_*")):
+            if veri.is_dir():
+                yollar.append(veri / "claude_desktop_config.json")
     return yollar
 
 

@@ -482,6 +482,24 @@ class ClaudeAyariTesti(unittest.TestCase):
             self.assertEqual(set(veri["mcpServers"]), {"arthur-mask"})
             self.assertEqual(veri["preferences"], {"x": 1})
 
+    def test_claude_data_yolunu_bulur(self):
+        """Claude Desktop 6.x (Windows) ayarı %LOCALAPPDATA%\\Claude-Data\\claude_<kimlik> altında tutar; kayıt oraya gitmeli."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            appdata, yerel = t / "Roaming", t / "Local"
+            veri_klasoru = yerel / "Claude-Data" / "claude_pzs8sxrjxfjjc"
+            veri_klasoru.mkdir(parents=True)
+            yapi = veri_klasoru / "claude_desktop_config.json"
+            yapi.write_text(json.dumps({"preferences": {"x": 1}}), encoding="utf-8")
+            self.assertEqual(self.calistir("kaydet", t / "kok", appdata, yerel), [str(yapi)])
+            veri = json.loads(yapi.read_text(encoding="utf-8"))
+            self.assertEqual(veri["preferences"], {"x": 1})
+            self.assertIn("arthurlegal-yerel", veri["mcpServers"])
+            self.assertFalse((appdata / "Claude").exists(), "Claude-Data varken klasik yol oluşturulmamalı")
+            self.calistir("sil", t / "kok", appdata, yerel)
+            self.assertNotIn("arthurlegal-yerel", json.loads(yapi.read_text(encoding="utf-8"))["mcpServers"])
+
 
 @SADECE_WINDOWS
 class KisayolTesti(unittest.TestCase):
