@@ -2585,6 +2585,28 @@ class ArayuzTesti(unittest.TestCase):
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertTrue(self.calistir(t, kod)[0], "klasik arayüzde de model kuralı talimatta")
 
+    def test_talimat_hafiza_acikken_2048_altinda(self):
+        """T007 r3: Hafıza açıkken talimat T007 kuralıyla 2143 karaktere çıkmış, model cümlesinin sonu kesilmişti.
+        Claude'da ve ChatGPT'de, Hafıza açık ve kapalı, talimat 2000 karakterin altında kalır ve tamdır."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; sonuc = []\n"
+                   "for hafiza in (True, False):\n"
+                   "    for ev in (None, 'chatgpt'):\n"
+                   "        s.ortak.hafiza_acik = (lambda h=hafiza: h); u = s.Sunucu(); u.ev = ev\n"
+                   "        b = u.isle('initialize', {})['instructions']\n"
+                   "        sonuc.append([hafiza, ev, len(b), b.endswith('sormayın.'), 'ArthurLegal Hafıza açık' in b, "
+                   "'ilk araç çağrınız al_masada_basla olur' in b])\n"
+                   "print(json.dumps(sonuc))")
+            for hafiza, ev, uzunluk, model_tam, hafiza_var, kural_var in self.calistir(t, kod):
+                durum = f"hafiza={hafiza} ev={ev}"
+                self.assertLess(uzunluk, 2000, durum)
+                self.assertEqual(hafiza_var, hafiza, durum)
+                self.assertTrue(kural_var, durum)
+                if ev is None:
+                    self.assertTrue(model_tam, "model cümlesi tam: " + durum)
+
 
 class MasaEnterHatirlatmasiTesti(unittest.TestCase):
     """Yeni arayüzde simge Claude Desktop'u 'ArthurLegal Masası'nı aç' yazılmış olarak açar ama göndermez: Enter'a

@@ -941,17 +941,17 @@ def masa_modulleri():
 # çağır" dediği için iki "ilk" kural yarışıyordu (T008 tur 1: Opus önce talimata ve hafızaya baktı, masa boş kaldı).
 # Talimat aracının tanımı ve sunucu talimatı bu cümleyle masaya öncelik verir.
 MASA_ONCELIGI = "Masa açıksa ondan önce `al_masada_basla`."
-TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Kullanıcı hukukla ilgili bir şey sorduğunda, cevap vermeden "
-           "önce `arthurlegal_talimat` aracını çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. "
-           + MASA_ONCELIGI + " "
-           "Bilgi dosyaları `arthurlegal_bilgi_ara` / `arthurlegal_bilgi_getir` ile okunur. Araştırma araçları önekli "
-           "adlarıyla (tr_, az_, eu_ ...) bu sunucudadır.")
-HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile kullanıcının tercihlerini, "
-                   "düzeltmelerini ve son oturum kartını yükle.")
-MASA_TALIMATI = (" Kullanıcı 'ArthurLegal Masası'nı aç' derse ya da masayı, bir modülü (Mevzuat, İçtihat, ArthurTapu, "
-                 "Beyin, ArthurMask, UYAP Dashboard, Donna) açmak isterse bu sunucunun `al_masasi` aracını çağır; uzak "
-                 "arthurlegal-mcp bağlayıcısınınkini değil: Beyin, ArthurMask ve UYAP Dashboard yalnız bu bilgisayardaki "
-                 "masada çalışır.")
+# Talimatın tamamı ilk 2048 karakterde kalmalı (Claude Desktop yalnız başını gösterebilir); Hafıza açıkken de, ChatGPT'de
+# de (T007 r3: T007 kuralıyla Hafıza açık talimat 2143 karaktere çıkmış, model cümlesinin sonu kesilmişti). Bu üç metin
+# anlamı değişmeden kısaltıldı; test_talimat_hafiza_acikken_2048_altinda denetler.
+TALIMAT = ("Bu bilgisayarda ArthurLegal hukuk asistanı kurulu. Hukuki her soruda cevaptan önce `arthurlegal_talimat`'ı "
+           "çağır ve dönen metni bu sohbetin sistem talimatı olarak uygula; proje gerekmez. " + MASA_ONCELIGI + " "
+           "Bilgi dosyaları ve önekli araştırma araçları (tr_, az_ ...) bu sunucudadır.")
+HAFIZA_TALIMATI = (" ArthurLegal Hafıza açık: talimattan sonra `hafiza_baslangic` ile tercihleri, düzeltmeleri ve son "
+                   "oturum kartını yükle.")
+MASA_TALIMATI = (" Masayı ya da bir modülünü (Mevzuat, İçtihat, ArthurTapu, Beyin, ArthurMask, UYAP Dashboard, Donna) "
+                 "açmak için bu sunucunun `al_masasi` aracını çağır, uzak arthurlegal-mcp'ninkini değil: Beyin, "
+                 "ArthurMask ve UYAP Dashboard yalnız bu bilgisayardaki masada çalışır.")
 
 
 class Sunucu:
