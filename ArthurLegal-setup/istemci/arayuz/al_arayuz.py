@@ -574,11 +574,16 @@ ILK_ARAC_KURALI_EN = (
     "clarifying question; only a tool search that loads your tools may come before it.")
 # Netleştirme sorusu (T007): sorular masaya al_masada_basla'nın sorular alanıyla gider, sohbette de kısaca yazılır
 # (cevap asla kaybolmaz, 23.11.2026); eski "sohbete yalnız 'Sorular masada.'" ile not arasındaki çelişki kalktı.
+# r2 (T008 tur 2): Opus Medium yeterli istekte ilk çağrıda soru sordu, talimatı ve hafızayı hiç okumadan turu bitirdi.
+# Soru kararı okumadan sonradır: ikinci al_masada_basla aynı soruyla aynı çalışmayı sürdürür (masa.html calismaBaslat,
+# CanliMasa.basla), adımlar kalır, sorular kart olur.
 NETLESTIRME_KURALI = (
-    "Cevabı değiştiren bir olgu belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) soruları "
-    "al_masada_basla'nın sorular alanına yazın (en çok 3 soru, her birine 2 ile 4 seçenek): masa onları kart olarak "
-    "gösterir. Sonra araştırmaya başlamadan sohbete aynı soruları seçenekleriyle kısaca yazıp turu bitirin; soruyu "
-    "yalnız sohbete yazmayın.")
+    "İlk çağrıda sorular alanını boş bırakın. Netleştirme sorusuna ancak arthurlegal_talimat'ı, hafızayı ve istekte "
+    "adı geçen kaynağı (ör. UYAP) okuduktan sonra karar verin; yalnız orada bulamadığınız ve cevabı değiştiren bir "
+    "olgu için sorun (ör. hangi proje, taahhüdün tarihi, tarafın sıfatı). Soracaksanız al_masada_basla'yı aynı soru ve "
+    "planla yeniden, bu kez sorular alanıyla çağırın (en çok 3 soru, her birine 2 ile 4 seçenek): masa aynı işi sürdürür "
+    "ve soruları kart olarak gösterir. Sonra araştırmaya başlamadan sohbete aynı soruları seçenekleriyle kısaca yazıp "
+    "turu bitirin; soruyu yalnız sohbete yazmayın. Olgular yeterliyse soru sormadan işi teslim edin.")
 
 TESLIM_KURALI = (
     ILK_ARAC_KURALI + " Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " "
@@ -721,7 +726,8 @@ def _baslangic_tanimi() -> Dict[str, Any]:
                          "description": "Yapacağınız araştırmanın adımları, kısa ve sırayla (ör. 'TBK m. 352'yi getir')."},
                 "sorular": {
                     "type": "array", "maxItems": SORU_AZAMI,
-                    "description": "Araştırmadan önce sorulacak netleştirme soruları; yalnız cevabı değiştiren olgu için.",
+                    "description": ("Netleştirme soruları; ilk çağrıda boş, talimat ve hafıza okunduktan sonra "
+                                    "ikinci çağrıda ve yalnız orada bulunamayan, cevabı değiştiren olgu için."),
                     "items": {"type": "object", "properties": {
                         "soru": {"type": "string"},
                         "secenekler": {"type": "array", "minItems": 2, "maxItems": 4, "items": {"type": "string"}},
@@ -760,7 +766,7 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
                       "çağırıp araştırın, cevabı al_masaya_yaz ile teslim edin.")
     else:
         out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabın "
-                      "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI)
+                      "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI + " " + NETLESTIRME_KURALI)
     # Kural bir sonraki mesaj için de hatırlatılır (T007): seçim cevabı ve devam sorusu da önce masaya yazılır.
     out["not"] += " Sonraki mesajda da: " + ILK_ARAC_KURALI
     return out
