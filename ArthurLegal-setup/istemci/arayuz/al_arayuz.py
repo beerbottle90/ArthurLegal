@@ -40,7 +40,7 @@ try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada y
 except ImportError:   # pragma: no cover
     al_dosya = None
 
-SURUM = "3.5.3"
+SURUM = "3.5.4"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
