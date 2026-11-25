@@ -1,4 +1,21 @@
 {
+ "3.5.4": {
+  "tr": [
+   "Masa açıkken her mesaj önce masaya gelir: ister soru ister \"Proje için bir tablo hazırla\" gibi bir istek olsun, başka bir adımdan önce masada görünür.",
+   "Netleştirme soruları masada: Claude önce ArthurLegal talimatını ve hafızanızı okur, yalnız orada bulamadığını sorar. Sorular masada seçenekli kart olarak çıkar; Seçimleri gönder ya da Soruları geç ile devam edersiniz.",
+   "Aynı kural uzak bağlantıda da geçerli: claude.ai (web ve telefon) ve ChatGPT."
+  ],
+  "az": [
+   "Masa açıq olanda hər mesaj əvvəlcə masaya gəlir: istər sual, istər \"Proje için bir tablo hazırla\" kimi istək olsun, başqa addımdan əvvəl masada görünür.",
+   "Dəqiqləşdirmə sualları masada: Claude əvvəlcə ArthurLegal təlimatını və yaddaşınızı oxuyur, yalnız orada tapmadığını soruşur. Suallar masada seçimli kart kimi çıxır; Seçimləri göndər və ya Sualları keç ilə davam edirsiniz.",
+   "Eyni qayda uzaq bağlantıda da qüvvədədir: claude.ai (veb və telefon) və ChatGPT."
+  ],
+  "en": [
+   "With the desk open, every message reaches the desk first: a question or a request such as \"Proje için bir tablo hazırla\" appears on the desk before any other step.",
+   "Clarifying questions on the desk: Claude first reads the ArthurLegal instruction and your memory and asks only for what it could not find there. The questions appear on the desk as cards with options; continue with Send choices or Skip questions.",
+   "The same rule applies on the remote connection: claude.ai (web and phone) and ChatGPT."
+  ]
+ },
  "3.5.3": {
   "tr": [
    "Devam sorusu aynı masada akar: siz yeni sohbet başlatmadıkça her devam sorusu ve cevabı bu masada, en altta görünür. Önceki sorular tek satırlık kart olur, tıklayınca cevabı açılır; uzun bir cevap artık yeni soruyu ekranın altına itmez.",

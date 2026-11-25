@@ -1072,6 +1072,15 @@ class SunucuTesti(unittest.TestCase):
         # Soru araştırmadan önce masada; kural koşulsuz (masanın notuna bağlı değil).
         self.assertIn("al_masada_basla", r["instructions"])
         self.assertIn("al_masada_basla", masa["yetenekler"])
+        # T007: masa açıkken her mesajda ilk araç al_masada_basla; talimat aracı ve sunucu talimatı masaya öncelik verir.
+        import arthurlegal_sunucu as s
+        kopya = (Path(s.__file__).resolve().parent / "arayuz" / "al_arayuz.py").read_text(encoding="utf-8")
+        ilk = re.search(r"ILK_ARAC_KURALI = \((.*?)\)\n", kopya, re.S)
+        self.assertIsNotNone(ilk, "arayuz/ kopyası T007 kuralını taşımalı")
+        self.assertIn("ilk araç çağrınız al_masada_basla olur", r["instructions"])
+        self.assertIn(s.MASA_ONCELIGI, r["instructions"])
+        self.assertIn(s.MASA_ONCELIGI, araclar["arthurlegal_talimat"]["description"])
+        self.assertNotIn("yalnız 'Sorular masada.'", araclar["al_masada_basla"]["description"])
         basla = self.arac("al_masada_basla", soru="Kira artışı?")["structuredContent"]
         self.assertEqual((basla["bolum"], basla["basla"]), ("sohbet", {"soru": "Kira artışı?"}))
         self.assertTrue(self.arac("al_masada_basla", soru=" ")["isError"])
@@ -2575,6 +2584,28 @@ class ArayuzTesti(unittest.TestCase):
             self.assertEqual(self.calistir(t, masa), ["dusuk", True, "onerilen", False, False])
             self.calistir(t, "import kur; print(kur.main(['--kaydet', '--arayuz', 'klasik']))")
             self.assertTrue(self.calistir(t, kod)[0], "klasik arayüzde de model kuralı talimatta")
+
+    def test_talimat_hafiza_acikken_2048_altinda(self):
+        """T007 r3: Hafıza açıkken talimat T007 kuralıyla 2143 karaktere çıkmış, model cümlesinin sonu kesilmişti.
+        Claude'da ve ChatGPT'de, Hafıza açık ve kapalı, talimat 2000 karakterin altında kalır ve tamdır."""
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            sahte_kok(t / "kok")
+            kod = ("import arthurlegal_sunucu as s; sonuc = []\n"
+                   "for hafiza in (True, False):\n"
+                   "    for ev in (None, 'chatgpt'):\n"
+                   "        s.ortak.hafiza_acik = (lambda h=hafiza: h); u = s.Sunucu(); u.ev = ev\n"
+                   "        b = u.isle('initialize', {})['instructions']\n"
+                   "        sonuc.append([hafiza, ev, len(b), b.endswith('sormayın.'), 'ArthurLegal Hafıza açık' in b, "
+                   "'ilk araç çağrınız al_masada_basla olur' in b])\n"
+                   "print(json.dumps(sonuc))")
+            for hafiza, ev, uzunluk, model_tam, hafiza_var, kural_var in self.calistir(t, kod):
+                durum = f"hafiza={hafiza} ev={ev}"
+                self.assertLess(uzunluk, 2000, durum)
+                self.assertEqual(hafiza_var, hafiza, durum)
+                self.assertTrue(kural_var, durum)
+                if ev is None:
+                    self.assertTrue(model_tam, "model cümlesi tam: " + durum)
 
 
 class MasaEnterHatirlatmasiTesti(unittest.TestCase):

@@ -686,10 +686,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   };
   // Cevap asla kaybolmaz (23.11.2026, kullanıcı bildirimi: cevap masaya gelmedi, sohbette yalnız "Cevap masada." vardı):
   // sohbete cevabın kısa özeti de yazılır. Masa hangi nedenle görünmezse görünsün cevabın özü sohbettedir; tamamı masada.
-  const TESLIM_NOTU = " Her soruda: önce al_masada_basla ile soruyu masaya yazın, araştırın, cevabın tamamını " +
-    "al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu " +
-    "söyleyin. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) " +
-    "içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
+  // İlk araç (T007, 25.11.2026): metin al_arayuz.TESLIM_KURALI'nın birebir kopyasıdır, tek satırda durur; test ikisini
+  // karşılaştırır (masa Python'u okuyamaz). Kuralı değiştirirken ikisini birlikte değiştirin.
+  const TESLIM_NOTU = " " + "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) kullanıcının her mesajında, soru işareti olmasa da (soru, tablo ya da belge hazırlama gibi bir istek, devam sorusu, netleştirme sorusuna verilen cevap), ilk araç çağrınız al_masada_basla olur: arthurlegal_talimat, hafiza_baslangic, al_gecmis, araştırma araçları ve arthur-uyap, arthur-tapu, arthur-mask gibi öteki sunucuların araçlarından önce ve netleştirme sorusu sormadan önce; ondan önce yalnız araç arama aracı gelebilir. Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu söyleyin; cevabın tamamını sohbete ikinci kez yazmayın. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
+  // Uzak uçta (web, telefon, ChatGPT /openai/mcp) talimat, hafıza ve geçmiş araçları yoktur: al_arayuz.TESLIM_KURALI_UZAK.
+  const TESLIM_NOTU_UZAK = " " + "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) kullanıcının her mesajında, soru işareti olmasa da (soru, tablo ya da belge hazırlama gibi bir istek, devam sorusu, netleştirme sorusuna verilen cevap), ilk araç çağrınız al_masada_basla olur: araştırma araçları ve öteki sunucuların araçlarından önce ve netleştirme sorusu sormadan önce; ondan önce yalnız araç arama aracı gelebilir. Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; sonra sohbete cevabın iki üç cümlelik özetini yazın ve tamamının masada olduğunu söyleyin; cevabın tamamını sohbete ikinci kez yazmayın. al_masaya_yaz hata verirse cevabın tamamını sohbete yazın. Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.";
   // Claude Desktop açılırken bilgisayardaki sunucular araç listesine birkaç saniye geç girer (24.11.2026 ölçümü: masa
   // açılıştan 18 sn sonra istendi, Claude'un listesinde arthurlegal-yerel yoktu, masa uzaktan açıldı ve geçmiş gelmedi).
   // Masaüstündeki uzak masa her notta sonraki sorunun bilgisayardaki masaya geçmesini söyler.
@@ -728,7 +729,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const teslim = DURUM.yetenekler.has("al_masaya_yaz");
     // Bilgisayardaki kurulum bütün sohbetlerin araç çağrılarını görür; masa numarası işi bu sohbetin masasına bağlar.
     const no = teslim && DURUM.yetenekler.has(CANLI) && !EV.chatgpt ? buMasaNo() : 0;
-    const not = MASA_ACIK + (teslim ? TESLIM_NOTU : "") + (teslim && DURUM.ortam === "masaustu" && !EV.chatgpt ? YEREL_NOTU : "") +
+    const not = MASA_ACIK + (teslim ? (DURUM.ortam === "uzak" ? TESLIM_NOTU_UZAK : TESLIM_NOTU) : "") + (teslim && DURUM.ortam === "masaustu" && !EV.chatgpt ? YEREL_NOTU : "") +
       (teslim && DURUM.ortam === "uzak" && !EV.chatgpt && masaustuEvi() ? UZAK_MASAUSTU_NOTU : "") +
       (no ? ` Bu masanın numarası ${no}: al_masada_basla ve al_masaya_yaz çağrılarına masa=${no} yazın.` : "") +
       (DIL_NOTU[DIL.secili] || "") +
@@ -2653,6 +2654,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // resmî metinden getirildi"), yalnız kayıtlı adım yoksa (uzak uç, eski kayıt) gösterilir. Plan araştırmanın niyetidir:
   // ilk araç başlayınca yerini canlı adımlara bırakır, cevap gelince görünmez.
   const gorunenAdimlar = (c) => ((c.araclar || []).length ? [] : c.adimlar || []);
+  // Netleştirme kartı (T007 r4, 25.11.2026): soru kartı ve "seçiminizi bekliyor" satırı iş sorular taşıdığı, cevap
+  // gelmediği ve iş bitmediği sürece görünür; adım olup olmamasına bakılmaz. Kural soruları talimat ve hafıza
+  // okunduktan sonra ikinci al_masada_basla ile getirir; eski "adım yoksa" koşulu bu yüzden kartı hiç çizmiyordu.
+  // tests/test_masa_soru.mjs bu işlevi masa.html'den okuyup sınar.
+  function soruBekliyorMu(c) {
+    return !!c && !c.tamam && !c.kesildi && !c.bitti && !c.cevap && Array.isArray(c.sorular) && c.sorular.length > 0;
+  }
 
   function cevapIcerik(kap, c, { soruYok = false, adimYok = false } = {}) {
     if (!soruYok && c.soru) kap.append(ogesi("div", "balon", c.soru));
@@ -2660,7 +2668,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const araclar = c.araclar || [];
     const anlatim = gorunenAdimlar(c);
     if (!adimYok && yaziliyor && !c.cevap && !araclar.length && Array.isArray(c.plan) && c.plan.length) kap.append(planListesi(c));
-    const soruBekliyor = yaziliyor && !c.cevap && Array.isArray(c.sorular) && c.sorular.length > 0 && !araclar.length;
+    const soruBekliyor = soruBekliyorMu(c);
     if (soruBekliyor) kap.append(netlestirmeKarti(c));
     if (!adimYok && (araclar.length || anlatim.length || (yaziliyor && !c.cevap))) {
       const ad = ogesi("div", "adimlar");
@@ -5600,7 +5608,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         const guncel = acik && b && acik.id === b.id ? acik : null;
         kok.append(ogesi("div", "balon", soru));
         // Netleştirme sorusu yalnız kendi çalışması sürüyor ve araştırma başlamadıysa burada da cevaplanabilir.
-        if (c && guncel && (guncel.sorular || []).length && !guncel.adimlar.length) {
+        // T007 r4: sorular araştırma adımlarından sonra da gelir (ikinci al_masada_basla); kart adım olsa da çizilir.
+        if (c && guncel && soruBekliyorMu(guncel)) {
           kok.append(netlestirmeKarti({ ...c, soru: guncel.soru, sorular: guncel.sorular, calismaId: guncel.id }));
         }
       } else cevapIcerik(kok, c, { adimYok: true });

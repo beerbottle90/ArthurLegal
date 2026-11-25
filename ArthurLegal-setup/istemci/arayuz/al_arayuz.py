@@ -40,7 +40,7 @@ try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada y
 except ImportError:   # pragma: no cover
     al_dosya = None
 
-SURUM = "3.5.3"
+SURUM = "3.5.4"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -434,7 +434,7 @@ def masa_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
     aracı yok, yönlendirme yok) ya da "openai" (OpenAI dizini profili: teslim var, yönlendirme ve model alanı yok;
     ChatGPT modelleri ölçülmedi, K7). Verilmezse ortam notu eklenmez."""
     teslim = "" if ortam == "dizin" else (
-        " Masa açıldıktan sonra bu sohbetteki her soruda: önce al_masada_basla, sonra araştırma, en son al_masaya_yaz.")
+        " " + kurallar(ortam)["ilk"] + " Sonra araştırma, en son al_masaya_yaz.")
     tanim = _masa_tanimi(ortam, teslim)
     if ortam == "uzak":
         # Yönlendirme kararı listeye bakar: uzak uçta liste zorunludur (bilinmiyorsa boş liste).
@@ -555,10 +555,62 @@ SOHBET_OZETI = ("sonra sohbete cevabın iki üç cümlelik özetini yazın ve ta
 DOSYA_KURALI = ("Kullanıcı dosya isterse (Word, Excel, CSV) içeriğini al_masaya_yaz'ın dosyalar alanına yazın: dosya "
                 "masada açılır ve indirilir; kod ortamında ayrıca üretmeyin.")
 
+# İlk araç (T007, 25.11.2026). Masa sohbeti okuyamaz; soruyu yalnız al_masada_basla'dan öğrenir ve ondan önce yapılan
+# adımları göstermez. Bir kullanıcı soru işaretsiz bir istekte ("tablo hazırla") netleştirme sorularını yalnız sohbette
+# gördü, masa boş kaldı; ölçümde (T008 tur 1) Opus önce hafızaya ve geçmişe baktı. Kural her yerde bu cümledir:
+# sunucu talimatları, al_masasi tanımı ve notu, al_masada_basla tanımı ve iki notu, masa.html'in notu (TESLIM_NOTU).
+ILK_ARAC_KURALI = (
+    "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) kullanıcının her mesajında, soru işareti olmasa da "
+    "(soru, tablo ya da belge hazırlama gibi bir istek, devam sorusu, netleştirme sorusuna verilen cevap), ilk araç "
+    "çağrınız al_masada_basla olur: arthurlegal_talimat, hafiza_baslangic, al_gecmis, araştırma araçları ve arthur-uyap, "
+    "arthur-tapu, arthur-mask gibi öteki sunucuların araçlarından önce ve netleştirme sorusu sormadan önce; ondan önce "
+    "yalnız araç arama aracı gelebilir.")
+# /openai/mcp profilinin İngilizce talimatı için (arthurlegal-mcp server.py). O profilde yerel araçlar yoktur, adları
+# bu yüzden geçmez.
+ILK_ARAC_KURALI_EN = (
+    "Once al_masasi has opened the desk in this chat, al_masada_basla is your first tool call on every user message, "
+    "with or without a question mark (a question, a request such as preparing a table or a document, a follow up, an "
+    "answer to a clarifying question): before any other tool, including the tools of other servers, and before any "
+    "clarifying question; only a tool search that loads your tools may come before it.")
+# Netleştirme sorusu (T007): sorular masaya al_masada_basla'nın sorular alanıyla gider, sohbette de kısaca yazılır
+# (cevap asla kaybolmaz, 23.11.2026); eski "sohbete yalnız 'Sorular masada.'" ile not arasındaki çelişki kalktı.
+# r2 (T008 tur 2): Opus Medium yeterli istekte ilk çağrıda soru sordu, talimatı ve hafızayı hiç okumadan turu bitirdi.
+# Soru kararı okumadan sonradır: ikinci al_masada_basla aynı soruyla aynı çalışmayı sürdürür (masa.html calismaBaslat,
+# CanliMasa.basla), adımlar kalır, sorular kart olur.
+NETLESTIRME_KURALI = (
+    "İlk çağrıda sorular alanını boş bırakın. Netleştirme sorusuna ancak arthurlegal_talimat'ı, hafızayı ve istekte "
+    "adı geçen kaynağı (ör. UYAP) okuduktan sonra karar verin; yalnız orada bulamadığınız ve cevabı değiştiren bir "
+    "olgu için sorun (ör. hangi proje, taahhüdün tarihi, tarafın sıfatı). Soracaksanız al_masada_basla'yı aynı soru ve "
+    "planla yeniden, bu kez sorular alanıyla çağırın (en çok 3 soru, her birine 2 ile 4 seçenek): masa aynı işi sürdürür "
+    "ve soruları kart olarak gösterir. Sonra araştırmaya başlamadan sohbete aynı soruları seçenekleriyle kısaca yazıp "
+    "turu bitirin; soruyu yalnız sohbete yazmayın. Olgular yeterliyse soru sormadan işi teslim edin.")
+
 TESLIM_KURALI = (
-    "Bu sohbette ArthurLegal Masası açıldıysa (al_masasi çağrıldıysa) bundan sonraki her soruda şu sırayı izleyin: "
-    "1) hemen al_masada_basla ile soruyu masaya yazın; 2) araştırın (her aracın adımı masada canlı görünür); "
-    "3) cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " " + DOSYA_KURALI)
+    ILK_ARAC_KURALI + " Sonra araştırın, cevabın tamamını al_masaya_yaz ile teslim edin; " + SOHBET_OZETI + " "
+    + DOSYA_KURALI)
+
+# Uzak uç (/mcp, /openai/mcp; T007 r3, kod QA r1). Uzak uçta arthurlegal_talimat, hafiza_baslangic ve al_gecmis yoktur:
+# uzak metinler yalnız uzak uçta olan araçları adlandırır. Anlam yerel kuralla aynıdır; ortam "uzak" ya da "openai".
+ILK_ARAC_KURALI_UZAK = ILK_ARAC_KURALI.replace(
+    "arthurlegal_talimat, hafiza_baslangic, al_gecmis, araştırma araçları ve arthur-uyap, arthur-tapu, arthur-mask gibi "
+    "öteki sunucuların", "araştırma araçları ve öteki sunucuların")
+NETLESTIRME_KURALI_UZAK = NETLESTIRME_KURALI.replace(
+    "arthurlegal_talimat'ı, hafızayı ve istekte adı geçen kaynağı (ör. UYAP)",
+    "sohbette verilen bilgiyi ve istekte adı geçen kaynağı")
+TESLIM_KURALI_UZAK = TESLIM_KURALI.replace(ILK_ARAC_KURALI, ILK_ARAC_KURALI_UZAK)
+SORULAR_ALANI = ("Netleştirme soruları; ilk çağrıda boş, talimat ve hafıza okunduktan sonra ikinci çağrıda ve yalnız "
+                 "orada bulunamayan, cevabı değiştiren olgu için.")
+SORULAR_ALANI_UZAK = SORULAR_ALANI.replace("talimat ve hafıza", "istekte adı geçen kaynak")
+UZAK_ORTAMLAR = ("uzak", "openai")
+
+
+def kurallar(ortam: Optional[str] = None) -> Dict[str, str]:
+    """Ortama göre kural metinleri: yerel (masaüstü, varsayılan) ya da uzak uç."""
+    if ortam in UZAK_ORTAMLAR:
+        return {"ilk": ILK_ARAC_KURALI_UZAK, "netlestirme": NETLESTIRME_KURALI_UZAK, "teslim": TESLIM_KURALI_UZAK,
+                "sorular": SORULAR_ALANI_UZAK}
+    return {"ilk": ILK_ARAC_KURALI, "netlestirme": NETLESTIRME_KURALI, "teslim": TESLIM_KURALI,
+            "sorular": SORULAR_ALANI}
 
 
 # Kurulum sağlığı (kalite süreci 4, 18.11.2026). Bilgisayardaki kurulumun paketi (sistem talimatı ve bilgi dosyaları)
@@ -628,7 +680,7 @@ def masa_cevabi(ortam: str, yetenekler: List[str], moduller: Dict[str, Dict[str,
         out["ev"] = "chatgpt"
     # Teslim aracı olmayan uçta (Claude dizini profili) kural söylenmez; cevap sohbette kalır.
     if "al_masaya_yaz" in out["yetenekler"]:
-        out["not"] = "Masa açıldı. " + TESLIM_KURALI + out["not"][len("Masa açıldı."):]
+        out["not"] = "Masa açıldı. " + kurallar(ortam)["teslim"] + out["not"][len("Masa açıldı."):]
     if baglayicilar is not None:
         out["baglayicilar"] = baglayicilari_duzenle(baglayicilar)
     if "al_gecmis" in out["yetenekler"]:
@@ -672,25 +724,24 @@ class TeslimHatasi(ValueError):
 
 
 def baslangic_araci(ortam: Optional[str] = None) -> Dict[str, Any]:
-    tanim = _baslangic_tanimi()
+    tanim = _baslangic_tanimi(ortam)
     if ortam == "uzak":
         tanim["description"] += UZAK_ARAC_NOTU
     return tanim
 
 
-def _baslangic_tanimi() -> Dict[str, Any]:
+def _baslangic_tanimi(ortam: Optional[str] = None) -> Dict[str, Any]:
+    k = kurallar(ortam)
     return {
         "name": "al_masada_basla",
         "title": "Soruyu ArthurLegal Masası'na yaz",
         "description": (
-            "ArthurLegal Masası bu sohbette açıldıysa (al_masasi çağrıldıysa) kullanıcının her yeni sorusunda İLK iş "
-            "bunu çağırın: masa soruyu ve 'çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı masada "
-            "canlı bir adım olur. Araştırmayı bitirince cevabı al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. "
-            "Birden çok adımlı işte plan'ı yazın (masada planlanan adımlar olarak görünür). Cevabı değiştiren bir olgu "
-            "belirsizse (ör. taahhüdün tarihi, tarafın sıfatı, sürenin başlangıcı) araştırmadan ÖNCE sorular ile en çok "
-            "3 seçenekli soru sorun: masa bunları kart olarak gösterir. Soru sorduysanız araştırmaya başlamayın; sohbete "
-            "yalnız 'Sorular masada.' yazıp turu bitirin. Kullanıcının seçimi sonraki mesajla gelir; o zaman bunu özgün "
-            "soru ve planla yeniden çağırıp araştırın. Gereksiz soru sormayın: olgular yeterliyse doğrudan araştırın."),
+            k["ilk"] + " Masa soruyu ve 'çalışıyor'u hemen gösterir, ardından yaptığınız her araç çağrısı "
+            "masada canlı bir adım olur; bundan önce yapılan adım masada görünmez. Araştırmayı bitirince cevabı "
+            "al_masaya_yaz ile teslim edin. Masa açılmadıysa çağırmayın. Birden çok adımlı işte plan'ı yazın (masada "
+            "planlanan adımlar olarak görünür). " + k["netlestirme"] + " Kullanıcının seçimi sonraki mesajla gelir; "
+            "o zaman bunu özgün soru ve planla yeniden çağırıp araştırın. Gereksiz soru sormayın: olgular yeterliyse "
+            "doğrudan araştırın."),
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -699,7 +750,7 @@ def _baslangic_tanimi() -> Dict[str, Any]:
                          "description": "Yapacağınız araştırmanın adımları, kısa ve sırayla (ör. 'TBK m. 352'yi getir')."},
                 "sorular": {
                     "type": "array", "maxItems": SORU_AZAMI,
-                    "description": "Araştırmadan önce sorulacak netleştirme soruları; yalnız cevabı değiştiren olgu için.",
+                    "description": k["sorular"],
                     "items": {"type": "object", "properties": {
                         "soru": {"type": "string"},
                         "secenekler": {"type": "array", "minItems": 2, "maxItems": 4, "items": {"type": "string"}},
@@ -720,6 +771,7 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
     soru = girdi.get("soru")
     if not isinstance(soru, str) or not soru.strip():
         raise TeslimHatasi("soru boş olamaz: kullanıcının sorusunu yazın.")
+    k = kurallar(masa.get("ortam"))
     out = dict(masa)
     out["bolum"] = "sohbet"
     out["basla"] = {"soru": _kisalt(soru, 200)}
@@ -738,7 +790,9 @@ def baslangic_cevabi(girdi: Dict[str, Any], masa: Dict[str, Any]) -> Dict[str, A
                       "çağırıp araştırın, cevabı al_masaya_yaz ile teslim edin.")
     else:
         out["not"] = ("Soru masada. Şimdi araştırın (her araç çağrısı masada adım olarak görünür); bitince cevabın "
-                      "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI)
+                      "tamamını al_masaya_yaz ile teslim edin, " + SOHBET_OZETI + " " + k["netlestirme"])
+    # Kural bir sonraki mesaj için de hatırlatılır (T007): seçim cevabı ve devam sorusu da önce masaya yazılır.
+    out["not"] += " Sonraki mesajda da: " + k["ilk"]
     return out
 
 

@@ -812,6 +812,39 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-354"></a>
+
+## Setup 3.5.4: Every message reaches the desk first, clarifying questions as cards on the desk (2026-11-25)
+
+**Every message reaches the desk first.** With the desk open, every message, whether a question or a request such as
+"Proje için bir tablo hazırla", reaches the desk before any other step. Before, Claude sometimes skipped the desk on
+vague requests.
+
+**Clarifying questions on the desk.** When Claude needs to clarify something, it first reads the ArthurLegal
+instruction and your memory and asks only for what it could not find there. The questions always appear on the desk as
+cards with options (Send choices, Skip questions) and briefly in the chat. Before, questions asked after research steps
+never reached the desk. The same rule applies on the remote connection (claude.ai web and phone, ChatGPT).
+
+Packages, plugins and skills unchanged; desk 3.5.4. How it arrives: the updater installs 3.5.4 on Windows and on a Mac
+by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Her mesaj önce masaya gelir. Masa açıkken her mesaj, ister soru ister "Proje için bir tablo hazırla" gibi
+bir istek olsun, başka bir adımdan önce masaya gelir; önceden Claude belirsiz isteklerde masayı bazen atlıyordu.
+**Netleştirme soruları masada:** Claude netleştirmek isterse önce ArthurLegal talimatını ve hafızanızı okur, yalnız
+orada bulamadığını sorar. Sorular her zaman masada seçenekli kart olarak (Seçimleri gönder, Soruları geç), sohbette de
+kısaca çıkar; önceden araştırma adımlarından sonra sorulan sorular masaya ulaşmıyordu. Aynı kural uzak bağlantıda da
+(claude.ai web ve telefon, ChatGPT) geçerlidir. Paketler, eklentiler ve beceriler aynı; masa 3.5.4. Güncelleyici
+3.5.4 sürümünü Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
+
+**Azərbaycanca:** Hər mesaj əvvəlcə masaya gəlir. Masa açıq olanda hər mesaj, istər sual, istər "Proje için bir tablo
+hazırla" kimi istək olsun, başqa addımdan əvvəl masaya gəlir; əvvəllər Claude qeyri müəyyən istəklərdə masanı bəzən
+keçirdi. **Dəqiqləşdirmə sualları masada:** Claude dəqiqləşdirmək istəsə, əvvəlcə ArthurLegal təlimatını və
+yaddaşınızı oxuyur, yalnız orada tapmadığını soruşur. Suallar həmişə masada seçimli kart kimi (Seçimləri göndər,
+Sualları keç), söhbətdə də qısaca çıxır; əvvəllər araşdırma addımlarından sonra verilən suallar masaya çatmırdı. Eyni
+qayda uzaq bağlantıda da (claude.ai veb və telefon, ChatGPT) qüvvədədir. Paketlər, plaginlər və bacarıqlar dəyişmədi;
+masa 3.5.4. Yeniləyici 3.5.4 versiyasını Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən
+açılanda qüvvəyə minir.
+
 <a id="setup-353"></a>
 
 ## Setup 3.5.3: Follow up questions stay on the same desk, chats in the left panel (2026-11-24)
