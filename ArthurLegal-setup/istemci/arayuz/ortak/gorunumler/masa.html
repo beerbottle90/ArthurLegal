@@ -2654,6 +2654,13 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   // resmî metinden getirildi"), yalnız kayıtlı adım yoksa (uzak uç, eski kayıt) gösterilir. Plan araştırmanın niyetidir:
   // ilk araç başlayınca yerini canlı adımlara bırakır, cevap gelince görünmez.
   const gorunenAdimlar = (c) => ((c.araclar || []).length ? [] : c.adimlar || []);
+  // Netleştirme kartı (T007 r4, 25.11.2026): soru kartı ve "seçiminizi bekliyor" satırı iş sorular taşıdığı, cevap
+  // gelmediği ve iş bitmediği sürece görünür; adım olup olmamasına bakılmaz. Kural soruları talimat ve hafıza
+  // okunduktan sonra ikinci al_masada_basla ile getirir; eski "adım yoksa" koşulu bu yüzden kartı hiç çizmiyordu.
+  // tests/test_masa_soru.mjs bu işlevi masa.html'den okuyup sınar.
+  function soruBekliyorMu(c) {
+    return !!c && !c.tamam && !c.kesildi && !c.bitti && !c.cevap && Array.isArray(c.sorular) && c.sorular.length > 0;
+  }
 
   function cevapIcerik(kap, c, { soruYok = false, adimYok = false } = {}) {
     if (!soruYok && c.soru) kap.append(ogesi("div", "balon", c.soru));
@@ -2661,7 +2668,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     const araclar = c.araclar || [];
     const anlatim = gorunenAdimlar(c);
     if (!adimYok && yaziliyor && !c.cevap && !araclar.length && Array.isArray(c.plan) && c.plan.length) kap.append(planListesi(c));
-    const soruBekliyor = yaziliyor && !c.cevap && Array.isArray(c.sorular) && c.sorular.length > 0 && !araclar.length;
+    const soruBekliyor = soruBekliyorMu(c);
     if (soruBekliyor) kap.append(netlestirmeKarti(c));
     if (!adimYok && (araclar.length || anlatim.length || (yaziliyor && !c.cevap))) {
       const ad = ogesi("div", "adimlar");
@@ -5601,7 +5608,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         const guncel = acik && b && acik.id === b.id ? acik : null;
         kok.append(ogesi("div", "balon", soru));
         // Netleştirme sorusu yalnız kendi çalışması sürüyor ve araştırma başlamadıysa burada da cevaplanabilir.
-        if (c && guncel && (guncel.sorular || []).length && !guncel.adimlar.length) {
+        // T007 r4: sorular araştırma adımlarından sonra da gelir (ikinci al_masada_basla); kart adım olsa da çizilir.
+        if (c && guncel && soruBekliyorMu(guncel)) {
           kok.append(netlestirmeKarti({ ...c, soru: guncel.soru, sorular: guncel.sorular, calismaId: guncel.id }));
         }
       } else cevapIcerik(kok, c, { adimYok: true });
