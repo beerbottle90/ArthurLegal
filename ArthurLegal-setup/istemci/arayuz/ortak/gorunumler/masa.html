@@ -406,6 +406,16 @@ button.simge-dugme { min-width: 32px; padding: 0 8px; }
 .ust-menu .eylemler { display: flex; flex-wrap: wrap; gap: 8px; }
 .ust-menu button.menu-satiri { width: 100%; justify-content: flex-start; gap: 8px; }
 .ust-menu .segment button { flex: 1 1 auto; }
+/* Hata bildir (T011) */
+.hata-paneli textarea { width: 100%; box-sizing: border-box; font-size: 14px; }
+.hata-secim { display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+.hata-onizleme { display: block; width: 100%; max-height: 180px; object-fit: contain; background: var(--dolgu);
+  border: 1px solid var(--cizgi-guclu); border-radius: var(--k-alan); }
+.hata-onizleme[hidden] { display: none; }
+.ust-menu .uyari { font-size: 13px; padding: 8px 12px; }
+.hata-yedek { display: flex; flex-direction: column; gap: 6px; }
+.hata-yedek[hidden] { display: none; }
+.hata-kaydet { font-size: 13.5px; color: var(--birincil); }
 .yenilik-listesi { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; }
 @media (max-width: 760px) { .guncelleme-dugme span, .durum-nokta span, .ust-surum { display: none; } }
 /* Yüksek karşıtlık: ikincil yazı ve çizgiler koyulaşır, odak halkası belirginleşir; lacivert maviye kaymaz. */
@@ -1248,9 +1258,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       y.onclick = () => yenilikleriGoster(false);
       const s = dugme(cev("Sistem bilgisini kopyala"), { sinif: "kucuk menu-satiri", simge: "kopya" });
       s.onclick = () => sistemBilgisiKopyala(s);
+      const h = dugme(cev("Hata bildir"), { sinif: "kucuk menu-satiri", simge: "posta" });
+      h.onclick = () => hataBildir();
       const r = dugme(cev("Kullanıcı rehberi"), { sinif: "kucuk menu-satiri", simge: "kitap" });
       r.onclick = () => { menuKapat(false); guvenliAc(REHBER_SAYFASI); };
-      m.append(y, s, r);
+      m.append(y, s, h, r);
     });
     return b;
   }
@@ -1283,6 +1295,10 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
   }
   async function sistemBilgisiKopyala(dugmeEl) {
+    await kopyala(await sistemBilgisiMetni(), dugmeEl, null, ortam.duyuru);
+  }
+  // Sistem bilgisinin metni: "Sistem bilgisini kopyala" ile "Hata bildir" aynı metni kullanır.
+  async function sistemBilgisiMetni() {
     let t = {};
     if (yerelGuncelleme()) {
       try { t = (await cagir(app, "al_guncelleme", { islem: "tani" })).veri || {}; } catch { /* yalnız masanın bildikleri */ }
@@ -1317,7 +1333,201 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     }
     if (t.son_denetim) satirlar.push(cev("Son denetim: {0}", t.son_denetim + (t.son_sonuc ? " · " + t.son_sonuc : "")));
     satirlar.push(cev("Son hatalar: {0}", Array.isArray(t.son_hatalar) && t.son_hatalar.length ? "\n  " + t.son_hatalar.join("\n  ") : cev("(yok)")));
-    await kopyala(satirlar.join("\n"), dugmeEl, null, ortam.duyuru);
+    return satirlar.join("\n");
+  }
+
+  // -- Hata bildir (T011): rapor masada hazırlanır, kullanıcının kendi posta uygulamasıyla gider. Masa hiçbir şeyi
+  // kendisi göndermez: sunucu, anahtar ve yeni ağ çağrısı yok. Ekran görüntüsü yalnız masanın kendi sayfasıdır. --
+  const HATA_ADRESI = "ertug@datsproject.io";
+  const HATA_KONUSU = "ArthurLegal hata bildirimi v";   // ekip aramada bulsun diye her dilde aynı
+  const MAILTO_SINIRI = 1900;   // Windows'ta çok uzun mailto bağlantısı posta uygulamasına ulaşmayabilir
+  function mailtoAdresi(konu, govde, kisaltmaNotu) {
+    const bas = "mailto:" + HATA_ADRESI + "?subject=" + encodeURIComponent(konu) + "&body=";
+    if (bas.length + encodeURIComponent(govde).length <= MAILTO_SINIRI) return bas + encodeURIComponent(govde);
+    const not = "\n" + kisaltmaNotu;
+    let g = govde;
+    while (g && bas.length + encodeURIComponent(g + not).length > MAILTO_SINIRI) g = g.slice(0, Math.floor(g.length * 0.9));
+    return bas + encodeURIComponent(g + not);
+  }
+  // Öğe ağacını hesaplanmış stilleriyle kopyalar. Görüntüde masanın stil sayfası yoktur, yalnız tarayıcının
+  // varsayılanları vardır: değer, boş bir çerçevedeki (stil sayfasız) aynı etiketin değerinden farklıysa yazılır.
+  // Boş çerçeve kurulamazsa bütün değerler yazılır.
+  function goruntuStilleri(kaynak, kopya) {
+    const varsayilan = new Map();
+    const cerceve = document.createElement("iframe");
+    cerceve.setAttribute("aria-hidden", "true");
+    cerceve.tabIndex = -1;
+    cerceve.style.cssText = "position:fixed;left:-99999px;top:0;width:10px;height:10px;border:0;visibility:hidden";
+    document.documentElement.append(cerceve);   // body'nin dışında: kopyalanan ağaçla eş kalır
+    const bos = cerceve.contentDocument && cerceve.contentDocument.body ? cerceve.contentDocument : null;
+    const temel = (el) => {
+      if (!bos) return {};
+      const ad = el.namespaceURI + el.localName;
+      if (!varsayilan.has(ad)) {
+        const o = bos.createElementNS(el.namespaceURI, el.localName);
+        bos.body.append(o);
+        const cs = cerceve.contentWindow.getComputedStyle(o), d = {};
+        for (let i = 0; i < cs.length; i++) d[cs[i]] = cs.getPropertyValue(cs[i]);
+        varsayilan.set(ad, d);
+        o.remove();
+      }
+      return varsayilan.get(ad);
+    };
+    const yuru = (a, b) => {
+      if (!b || a.nodeType !== 1) return;
+      const cs = getComputedStyle(a), d = temel(a);
+      let css = "";
+      for (let i = 0; i < cs.length; i++) {
+        const p = cs[i], v = cs.getPropertyValue(p);
+        if (v !== d[p]) css += p + ":" + v + ";";
+      }
+      b.setAttribute("style", css);
+      if (a.scrollTop || a.scrollLeft) {   // kaydırılmış alan: içerik kaydırıldığı yerde görünsün
+        for (const c of b.children) c.style.translate = -a.scrollLeft + "px " + -a.scrollTop + "px";
+      }
+      if (a.localName === "textarea") b.textContent = a.value;
+      else if (a.localName === "input") b.setAttribute("value", a.value);
+      for (let i = 0; i < a.children.length; i++) yuru(a.children[i], b.children[i]);
+    };
+    try { yuru(kaynak, kopya); } finally { cerceve.remove(); }
+  }
+  // Masanın görünen alanı PNG olarak; sayfanın içinde çizilir (SVG foreignObject, kütüphane yok, ağa çıkmaz).
+  async function masaGoruntusu() {
+    const gen = document.documentElement.clientWidth, yuk = window.innerHeight;
+    const kopya = document.body.cloneNode(true);
+    goruntuStilleri(document.body, kopya);
+    kopya.querySelectorAll("script, template, .ust-menu").forEach((e) => e.remove());
+    kopya.style.translate = -window.scrollX + "px " + -window.scrollY + "px";
+    const zemin = [document.body, document.documentElement].map((e) => getComputedStyle(e).backgroundColor)
+      .find((c) => c && c !== "transparent" && c !== "rgba(0, 0, 0, 0)") || "#ffffff";
+    const sar = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+    sar.setAttribute("style", `width:${gen}px;height:${yuk}px;overflow:hidden;background:${zemin}`);
+    sar.append(kopya);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${gen}" height="${yuk}"><foreignObject x="0" y="0" width="100%" height="100%">`
+      + new XMLSerializer().serializeToString(sar) + "</foreignObject></svg>";
+    const img = new Image();
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    await img.decode();
+    const olcek = Math.min(2, window.devicePixelRatio || 1);
+    const tuval = document.createElement("canvas");
+    tuval.width = Math.round(gen * olcek);
+    tuval.height = Math.round(yuk * olcek);
+    const c = tuval.getContext("2d");
+    c.scale(olcek, olcek);
+    c.drawImage(img, 0, 0);
+    const url = tuval.toDataURL("image/png");   // tuval kirlenirse hata verir: panel görüntüsüz devam eder
+    const blob = await new Promise((ok, red) => tuval.toBlob((b) => (b ? ok(b) : red(new Error("png"))), "image/png"));
+    return { url, blob, base64: url.slice(url.indexOf(",") + 1) };
+  }
+  // PNG kullanıcıya: pano (tarayıcı izin verirse) ve ev sahibinin indirmesi; ikisi de yoksa kaydetme bağlantısı.
+  async function goruntuVer(g, ad) {
+    let pano = false, indi = false;
+    try {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": g.blob })]);
+        pano = true;
+      }
+    } catch { /* pano izni yok */ }
+    if (indirmeVar()) {
+      try {
+        const r = await app.downloadFile({ contents: [{ type: "resource", resource: {
+          uri: "file:///" + ad, mimeType: "image/png", blob: g.base64 } }] });
+        indi = !(r && r.isError);
+      } catch { /* ev sahibi indirmeyi reddetti */ }
+    }
+    return { pano, indi };
+  }
+  async function hataBildir() {
+    const b = $("yardim-dugme");
+    if (!b) return;
+    menuKapat(false);
+    // Görüntü panel açılmadan alınır: menü ve panel görüntüde yer almaz.
+    let goruntu = null;
+    try { goruntu = await masaGoruntusu(); } catch { goruntu = null; }
+    let bilgi = "";
+    try { bilgi = await sistemBilgisiMetni(); } catch { bilgi = ""; }
+    const ad = "ArthurLegal-hata-" + new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-") + ".png";
+    menuAc(b, (m) => {
+      m.setAttribute("aria-label", cev("Hata bildir"));
+      m.classList.add("hata-paneli");
+      m.append(ogesi("h3", null, cev("Hata bildir")));
+      const etiket = ogesi("label", "menu-baslik", cev("Ne oldu?"));
+      const alan = document.createElement("textarea");
+      alan.id = "hata-metni";
+      alan.rows = 4;
+      alan.placeholder = cev("Ne yaptınız, ne bekliyordunuz, ne oldu?");
+      etiket.htmlFor = alan.id;
+      m.append(etiket, alan);
+      let ekle = false;
+      if (goruntu) {
+        ekle = true;
+        const secim = ogesi("label", "hata-secim");
+        const kutu = document.createElement("input");
+        kutu.type = "checkbox";
+        kutu.checked = true;
+        const onizleme = document.createElement("img");
+        onizleme.className = "hata-onizleme";
+        onizleme.src = goruntu.url;
+        onizleme.alt = cev("Masanın ekran görüntüsü");
+        kutu.onchange = () => { ekle = kutu.checked; onizleme.hidden = !ekle; };
+        secim.append(kutu, ogesi("span", null, cev("Masanın ekran görüntüsünü ekle")));
+        m.append(secim, onizleme, ogesi("p", "uyari", cev("Ekran görüntüsü müvekkil bilgisi gösterebilir; göndermeden önce bakın.")));
+      } else {
+        m.append(ogesi("p", "not", cev("Ekran görüntüsü alınamadı; bildirim görüntüsüz de gönderilebilir.")));
+      }
+      const durum = ogesi("p", "not");
+      durum.setAttribute("aria-live", "polite");
+      durum.hidden = true;
+      const yedek = ogesi("div", "hata-yedek");
+      yedek.hidden = true;
+      const hazirla = dugme(cev("E-postayı hazırla"), { sinif: "kucuk birincil", simge: "posta" });
+      const vazgec = dugme(cev("Vazgeç"), { sinif: "kucuk" });
+      vazgec.onclick = () => menuKapat();
+      hazirla.onclick = async () => {
+        hazirla.disabled = true;
+        const konu = HATA_KONUSU + DURUM.surum;
+        const rapor = [alan.value.trim() || cev("(açıklama yazılmadı)"), "", bilgi].join("\n");
+        let pg = null;
+        if (goruntu && ekle) pg = await goruntuVer(goruntu, ad);
+        let acildi = false;
+        if (typeof app.openLink === "function") {
+          try {
+            const r = await app.openLink({ url: mailtoAdresi(konu, rapor, cev("(kısaltıldı; tam metin panelde Kopyala ile alınır)")) });
+            acildi = !(r && r.isError);
+          } catch { acildi = false; }
+        }
+        const parca = [acildi ? cev("Posta uygulamanızda taslak açıldı.")
+          : cev("Posta uygulaması açılamadı; raporu kopyalayıp aşağıdaki adrese kendi postanızdan gönderin.")];
+        if (pg) {
+          parca.push(pg.indi && pg.pano ? cev("Görüntü indirildi ({0}) ve panoya kopyalandı: e-postaya ekleyin ya da yapıştırın.", ad)
+            : pg.indi ? cev("Görüntü indirildi ({0}): e-postaya ekleyin.", ad)
+              : pg.pano ? cev("Görüntü panoya kopyalandı: e-postaya yapıştırın.")
+                : cev("Görüntüyü aşağıdaki bağlantıyla kaydedip e-postaya ekleyin."));
+        }
+        parca.push(cev("Sonra posta uygulamasında Gönder'e basın."));
+        durum.textContent = parca.join(" ");
+        durum.hidden = false;
+        // Elle gönderme yolu her zaman: adres ve tam rapor (ev sahibi açtı dese de posta açılmamış olabilir).
+        const tam = cev("Kime: {0}", HATA_ADRESI) + "\n" + cev("Konu: {0}", konu) + "\n\n" + rapor;
+        const kop = dugme(cev("Kopyala"), { sinif: "kucuk", simge: "kopya" });
+        kop.onclick = () => kopyala(tam, kop, null, ortam.duyuru);
+        const adres = ogesi("p", "not", cev("Adres: {0}", HATA_ADRESI));
+        adres.style.userSelect = "all";
+        const ogeler = [adres, eylemler(kop)];
+        if (pg && !pg.indi) {
+          const kaydet = ogesi("a", "hata-kaydet", cev("Görüntüyü kaydet"));
+          kaydet.href = goruntu.url;
+          kaydet.download = ad;
+          ogeler.push(kaydet);
+        }
+        yedek.replaceChildren(...ogeler);
+        yedek.hidden = false;
+        hazirla.disabled = false;
+      };
+      m.append(durum, yedek, eylemler(hazirla, vazgec));
+    });
+    const alan = $("hata-metni");
+    if (alan) alan.focus();
   }
   // Masa açılınca bir kez: kayıtlı görünüm, ağa çıkmadan son denetim ve güncellemeden sonraki ilk açılışta Yenilikler.
   async function ustSeritBaslat() {
