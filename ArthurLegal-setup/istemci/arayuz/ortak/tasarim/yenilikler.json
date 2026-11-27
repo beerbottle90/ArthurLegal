@@ -1,4 +1,21 @@
 {
+ "3.5.5": {
+  "tr": [
+   "Yeni Windows Claude Desktop'ta yerel araçlar yeniden görünür: kurulum, Claude'un ayar dosyasını yeni klasöründe (Claude-Data) bulur; ArthurMask, UYAP Dashboard ve bilgisayardaki masa yeniden çalışır.",
+   "ArthurMask 1.4.2 aynı yeni klasörü tanır.",
+   "Klasik Windows, Microsoft Store ve Mac kurulumlarında değişiklik yok."
+  ],
+  "az": [
+   "Windows üçün yeni Claude Desktop tətbiqində yerli alətlər yenidən görünür: quraşdırma Claude tətbiqinin ayar faylını yeni qovluğunda (Claude-Data) tapır; ArthurMask, UYAP Dashboard və kompüterdəki masa yenidən işləyir.",
+   "ArthurMask 1.4.2 eyni yeni qovluğu tanıyır.",
+   "Klassik Windows, Microsoft Store və Mac quraşdırmalarında dəyişiklik yoxdur."
+  ],
+  "en": [
+   "Local tools show up again on the new Claude Desktop for Windows: setup finds Claude's settings file in its new folder (Claude-Data); ArthurMask, UYAP Dashboard and the desk on your computer work again.",
+   "ArthurMask 1.4.2 recognises the same new folder.",
+   "No change for classic Windows, Microsoft Store and Mac installs."
+  ]
+ },
  "3.5.4": {
   "tr": [
    "Masa açıkken her mesaj önce masaya gelir: ister soru ister \"Proje için bir tablo hazırla\" gibi bir istek olsun, başka bir adımdan önce masada görünür.",
