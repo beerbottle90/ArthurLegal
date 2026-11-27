@@ -812,6 +812,38 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-355"></a>
+
+## Setup 3.5.5: Local tools show up again on the new Claude Desktop for Windows (2026-11-27)
+
+**The new settings folder.** New Windows builds of Claude Desktop keep their settings file under
+`%LOCALAPPDATA%\Claude-Data\claude_<publisher id>\`. Setup wrote the local servers into the old file, which Claude no
+longer reads: Settings → Developer stayed empty, ArthurMask and UYAP Dashboard did not work and the desk opened only
+through the remote connection. v3.5.5 finds the new folder for both registering and removing; classic, Microsoft Store
+and Mac installs are unchanged. ArthurMask 1.4.2 recognises the same folder. The UYAP connection's documentation now
+also covers the log location in Microsoft Store installs and the new folder.
+
+Packages, plugins and skills unchanged; desk 3.5.5, ArthurMask 1.4.2. How it arrives: the updater installs 3.5.5 on
+Windows and on a Mac by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Yeni ayar klasörü. Claude Desktop'ın yeni Windows sürümleri ayar dosyasını
+`%LOCALAPPDATA%\Claude-Data\claude_<yayıncı kimliği>\` altında tutuyor. Kurulum yerel sunucuları Claude'un artık
+okumadığı eski dosyaya yazıyordu: Settings → Developer boş kalıyor, ArthurMask ve UYAP Dashboard çalışmıyor, masa
+yalnız uzak bağlantıdan açılıyordu. v3.5.5 yeni klasörü kayıtta da silmede de bulur; klasik, Microsoft Store ve Mac
+kurulumları değişmedi. ArthurMask 1.4.2 aynı klasörü tanır. UYAP bağlantısının belgesi günlüklerin Microsoft Store
+ve yeni klasördeki yerini de anlatır. Paketler, eklentiler ve beceriler aynı; masa 3.5.5, ArthurMask 1.4.2.
+Güncelleyici 3.5.5 sürümünü Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden açılınca geçerli
+olur.
+
+**Azərbaycanca:** Yeni ayar qovluğu. Claude Desktop tətbiqinin yeni Windows versiyaları ayar faylını
+`%LOCALAPPDATA%\Claude-Data\claude_<nəşriyyatçı kimliyi>\` altında saxlayır. Quraşdırma yerli serverləri Claude tətbiqinin
+artıq oxumadığı köhnə fayla yazırdı: Settings → Developer boş qalırdı, ArthurMask və UYAP Dashboard işləmirdi, masa
+yalnız uzaq bağlantıdan açılırdı. v3.5.5 yeni qovluğu həm qeydiyyatda, həm silmədə tapır; klassik, Microsoft Store və
+Mac quraşdırmaları dəyişmədi. ArthurMask 1.4.2 eyni qovluğu tanıyır. UYAP bağlantısının sənədi jurnalların Microsoft
+Store və yeni qovluqdakı yerini də izah edir. Paketlər, plaginlər və bacarıqlar dəyişmədi; masa 3.5.5, ArthurMask
+1.4.2. Yeniləyici 3.5.5 versiyasını Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən
+açılanda qüvvəyə minir.
+
 <a id="setup-354"></a>
 
 ## Setup 3.5.4: Every message reaches the desk first, clarifying questions as cards on the desk (2026-11-25)
