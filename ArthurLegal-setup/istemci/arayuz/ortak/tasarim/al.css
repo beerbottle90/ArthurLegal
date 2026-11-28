@@ -297,3 +297,6 @@ h3 { font-size: 15px; line-height: 1.35; font-weight: 600; }
 }
 
 .gizli { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ⓘ menüsünde TBB rehberi satırı (T022) */
+.menu-notu { margin: 8px 12px 0; font-size: 12px; color: var(--ikincil); line-height: 1.4; }

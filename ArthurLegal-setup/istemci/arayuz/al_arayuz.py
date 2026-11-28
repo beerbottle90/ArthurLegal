@@ -40,7 +40,7 @@ try:   # masada dosya (3.5.0): kopyada al_arayuz.py'nin yanında; eski kopyada y
 except ImportError:   # pragma: no cover
     al_dosya = None
 
-SURUM = "3.5.5"
+SURUM = "3.5.6"
 
 # ortak/ bu dosyanın bir üstünde (depo) ya da yanında (dağıtım paketi).
 _BURASI = os.path.dirname(os.path.abspath(__file__))
@@ -1297,11 +1297,14 @@ class Gecmis:
         return ozet
 
     @staticmethod
-    def _sohbet_alani(s: Any) -> Optional[Dict[str, str]]:
+    def _sohbet_alani(s: Any) -> Optional[Dict[str, Any]]:
         """Kayıttaki sohbet alanı: geçerli kimlik ve kısaltılmış ad; değilse yok sayılır (kayıt yine yazılır)."""
         if not isinstance(s, dict) or not _SOHBET_KIMLIK.match(str(s.get("id") or "")):
             return None
-        return {"id": str(s["id"]), "baslik": _kisalt(s.get("baslik"), 120)}
+        alan = {"id": str(s["id"]), "baslik": _kisalt(s.get("baslik"), 120)}
+        if s.get("web") is True:   # masanın kaynak anahtarı (T016): Geçmiş'ten açılan sohbet anahtarı korur
+            alan["web"] = True
+        return alan
 
     @staticmethod
     def _sohbet_kimligi(k: Dict[str, Any]) -> Optional[str]:

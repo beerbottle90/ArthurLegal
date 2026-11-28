@@ -449,6 +449,23 @@ button.liste-ogesi:hover { background: var(--dolgu); }
 }
 .devam-notu svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
 .devam-notu[hidden] { display: none; }
+/* Sohbet'in alt satırı (T015): yol gösteren Dosya ekle ve salt okunur model satırı; düşük ağırlık, tek satır. */
+.sohbet-alt-kap { display: flex; flex-direction: column; gap: 8px; }
+.sohbet-alt { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; color: var(--ikincil); font-size: 12.5px; }
+.model-satiri { flex: 1 1 260px; min-width: 0; line-height: 1.45; }
+.metin-bag { border: 0; background: none; box-shadow: none; padding: 0; min-height: 0; font: inherit; color: var(--birincil);
+  text-decoration: underline; cursor: pointer; }
+.dosya-paneli { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px;
+  background: var(--dolgu); font-size: 13.5px; line-height: 1.45; }
+.dosya-paneli[hidden] { display: none; }
+.dosya-satiri { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.dosya-satiri .metinler { flex: 1 1 240px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dosya-paneli p.not { margin: 0; color: var(--ikincil); font-size: 12.5px; }
+/* Okunamayanlar ve kaynak anahtarı (T016) */
+.okunamayanlar .uyari { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.okunamayanlar .uyari-satiri { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; }
+.kaynak-anahtari { gap: 6px; }
+.kaynak-anahtari svg { width: 14px; height: 14px; }
 @media (prefers-reduced-motion: reduce) { .tur-ac svg:last-child { transition: none; } }
 .onceki-turlar:empty { display: none; }
 .tur { display: flex; flex-direction: column; gap: 12px; padding-bottom: 22px; border-bottom: 0.5px solid var(--cizgi); }
@@ -583,6 +600,11 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     cevN("ArthurLegal'in model tavsiyesi ve ChatGPT'de modelin nasıl seçildiği."));
   // 24.11.2026: masanın kendi soru kutusu kalktı; soru ev sahibinin kutusuna yazılır (Claude Desktop tam ekranda
   // "Yanıtla", ChatGPT'de sohbetin kendi kutusu).
+  // T015 Dosya ekle: ChatGPT'de ev sahibinin + düğmesi dosyayı OpenAI'ye gönderir.
+  EV.ozel(cevN("Karar ya da mevzuat PDF'i gibi müvekkil bilgisi taşımayan dosyaları Claude'un Yanıtla (Reply) kutusundaki + ile ya da sürükleyerek ekleyin; bu dosyalar Claude'a gönderilir."),
+    cevN("Karar ya da mevzuat PDF'i gibi müvekkil bilgisi taşımayan dosyaları ChatGPT'nin yazma kutusundaki + ile ya da sürükleyerek ekleyin; bu dosyalar OpenAI'ye gönderilir."));
+  EV.ozel(cevN("ArthurMask'e bırakın; bilgisayarınızda maskelenir, Claude yalnız maskeli metni görür."),
+    cevN("ArthurMask'e bırakın; bilgisayarınızda maskelenir, ChatGPT yalnız maskeli metni görür."));
   EV.ozel(cevN("Sorunuzu aşağıdaki Yanıtla kutusuna yazın; Claude'un adımları ve cevabı burada akar."),
     cevN("Sorunuzu ChatGPT'nin yazma kutusuna yazın; ChatGPT'nin adımları ve cevabı burada akar."));
   // 3.5.3 sohbetler: Yanıtla kutusunun ChatGPT karşılığı.
@@ -592,9 +614,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     cevN("Yeni sohbet başladı; sorunuzu ChatGPT'nin yazma kutusuna yazın."));
   EV.ozel(cevN("Sohbet açıldı; devam sorunuzu Claude'un Yanıtla kutusuna yazın."),
     cevN("Sohbet açıldı; devam sorunuzu ChatGPT'nin yazma kutusuna yazın."));
-  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir."),
+  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla (Reply) kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir."),
     cevN("Devam sorunuzu ChatGPT'nin yazma kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını ChatGPT'ye bağlam olarak verir."));
-  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; cevap bu sohbette, en altta akar."),
+  EV.ozel(cevN("Devam sorunuzu Claude'un Yanıtla (Reply) kutusuna yazın; cevap bu sohbette, en altta akar."),
     cevN("Devam sorunuzu ChatGPT'nin yazma kutusuna yazın; cevap bu sohbette, en altta akar."));
   DIL.sabitler();
 
@@ -733,8 +755,68 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       (teslim && DURUM.ortam === "uzak" && !EV.chatgpt && masaustuEvi() ? UZAK_MASAUSTU_NOTU : "") +
       (no ? ` Bu masanın numarası ${no}: al_masada_basla ve al_masaya_yaz çağrılarına masa=${no} yazın.` : "") +
       (DIL_NOTU[DIL.secili] || "") +
-      (metin ? " Şu an: " + metin : "") + sohbetNotu();
+      (metin ? " Şu an: " + metin : "") + sohbetNotu() + kaynakNotu();
     try { await app.updateModelContext({ content: [{ type: "text", text: not }] }); } catch { /* ev sahibi desteklemiyor */ }
+  }
+  // Kaynak anahtarı (T016): sohbet başına; varsayılan yalnız resmî kaynaklar, genel web kapalı. Claude'a giden not Türkçe.
+  const KAYNAK_NOTU_KAPALI = " Kaynak anahtarı: bu sohbette yalnız resmî kaynaklar (ArthurLegal araçları ve resmî siteler) kullanılır; genel web araması yapılmaz.";
+  const KAYNAK_NOTU_ACIK = " Kaynak anahtarı: bu sohbette genel web de açık; web kaynaklarını cevapta resmî kaynaklardan ayrı, \"Web kaynakları\" başlığı altında verin.";
+  const kaynakNotu = () => (seciliSohbet().web ? KAYNAK_NOTU_ACIK : KAYNAK_NOTU_KAPALI);
+  // Anahtar sohbetle saklanır: bu cihazda sohbet kimliğine göre, ayrıca her cevap kaydının sohbet alanında (Geçmiş'ten
+  // açılan sohbet anahtarını korur; yeni sohbet kapalı başlar).
+  const KAYNAK_KAYDI = "al.masa.kaynak";
+  function kaynakKaydiOku() {
+    try { const d = JSON.parse(localStorage.getItem(KAYNAK_KAYDI) || "{}"); return d && typeof d === "object" ? d : {}; } catch { return {}; }
+  }
+  function kaynakKaydiYaz(sid, acik) {
+    const d = kaynakKaydiOku();
+    d[sid] = !!acik;   // kapatma da yazılır: kayıttaki eski "açık" onu ezmesin
+    try { localStorage.setItem(KAYNAK_KAYDI, JSON.stringify(d)); } catch { /* depo kapalı: kayıttaki alan yeter */ }
+  }
+  // Geçmiş'te sohbetin kaydı silinince anahtarı da silinir (TBB rehberi, kontrol listesi 10); kimlik yoksa hepsi (temizle).
+  function kaynakKaydiSil(sid) {
+    try {
+      if (sid === undefined) { localStorage.removeItem(KAYNAK_KAYDI); return; }
+      const d = kaynakKaydiOku();
+      if (sid in d) { delete d[sid]; localStorage.setItem(KAYNAK_KAYDI, JSON.stringify(d)); }
+    } catch { /* depo kapalı: silinecek bir şey yok */ }
+  }
+  let kaynakAnahtariCiz = () => {};   // Sohbet alt satırı çizilince anahtarı yeniden çizer
+  // Anahtar her depodan düşer: sohbet haritası ve seçili sohbet (al.masa.secili); kimlik yoksa hepsi (temizle).
+  function kaynakAnahtariniDusur(sid) {
+    kaynakKaydiSil(sid);
+    const s = seciliSohbet();
+    if (s.web && (sid === undefined || s.id === sid)) { delete s.web; seciliYaz(s); }
+    kaynakAnahtariCiz();
+  }
+  // Silinen kayıt sohbetin son kaydıysa anahtar da düşer; kalan kayıt varsa sohbet sürer, anahtar kalır.
+  async function sohbetKalmadiysaAnahtariSil(sid) {
+    if (!sid) return;
+    let kalan = 0;
+    if (gecmisDeposu() === "disk") {
+      const { veri } = await cagir(app, "al_gecmis", { islem: "sohbet", sohbet: sid }).catch(() => ({}));
+      kalan = veri && Array.isArray(veri.kayitlar) ? veri.kayitlar.length : 0;
+    } else {
+      kalan = (gecmisDeposu() === "cihaz" ? cihazGecmisi() || [] : GECMIS).filter((g) => g && g.sohbet && g.sohbet.id === sid).length;
+    }
+    if (!kalan) kaynakAnahtariniDusur(sid);
+  }
+  // AL araçlarının kaynak verdiği alan adları (arthurlegal-mcp kaynaklarından; test, mcp'deki her alan adının burada ya da
+  // test dosyasındaki kaynak olmayan adresler listesinde olduğunu denetler). Adressiz atıf da araç atfıdır.
+  const RESMI_KOKLER = ["gov.tr", "gov.uk", "europa.eu", "e-qanun.az", "gesetze-im-internet.de", "boe.es", "finlex.fi",
+    "rechtspraak.nl", "overheid.nl", "officielebekendmakingen.nl", "bka.gv.at", "e-gov.go.jp", "sejm.gov.pl",
+    "irishstatutebook.ie", "bddk.org.tr", "btk.tr", "sigortatahkim.org", "sigortatahkim.org.tr", "gleif.org",
+    "resourcecontracts.org", "openlandcontracts.org", "doi.org", "dergipark.org.tr", "doaj.org", "scielo.br",
+    "scielo.org", "unirioja.es", "lawreviewcommons.com", "archives-ouvertes.fr", "openalex.org", "crossref.org",
+    "openaire.eu", "unpaywall.org",
+    // de_ araçları vekil de-eli sunucusundan gelir (beerbottle90/de-eli-mcp); test onun kaynaklarını da okur.
+    "rechtsinformationen.bund.de", "rechtsprechung-im-internet.de", "bundestag.de", "de.openlegaldata.io"];
+  function resmiKaynak(k) {
+    if (!k.url) return true;
+    try {
+      const h = new URL(k.url).hostname.toLowerCase();
+      return RESMI_KOKLER.some((d) => h === d || h.endsWith("." + d));
+    } catch { return false; }
   }
 
   // metinSaklanmaz: mesaj kullanıcının taslağından cümle taşıyorsa geçmişe yalnız başlığı yazılır.
@@ -929,6 +1011,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
   const GUVENLI_ONEK = "https://github.com/beerbottle90/";
   const KURULUM_SAYFASI = GUVENLI_ONEK + "ArthurLegal#indir";
   const REHBER_SAYFASI = GUVENLI_ONEK + "ArthurLegal/tree/main/docs/rehber";
+  // TBB "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi" (2026): AL'nin genel kuralı; resmî duyuru sayfası (T022).
+  const TBB_REHBERI = "https://www.barobirlik.org.tr/Haberler/tbb-avukatlikta-yapay-zeka-kullanimina-liskin-tavsiye-rehberini-yayimladi-86648";
   const GUNCELLEME = { durum: "bos", veri: null, zamanlayici: null, baslangic: 0, yapildi: false };
   const GORUNUM_KAYDI = "al.masa.gorunum";
   const YAZI_OLCEGI = { normal: 1, buyuk: 1.15, "cok-buyuk": 1.3 };
@@ -1250,7 +1334,9 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       s.onclick = () => sistemBilgisiKopyala(s);
       const r = dugme(cev("Kullanıcı rehberi"), { sinif: "kucuk menu-satiri", simge: "kitap" });
       r.onclick = () => { menuKapat(false); guvenliAc(REHBER_SAYFASI); };
-      m.append(y, s, r);
+      const tbb = dugme(cev("TBB: Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi"), { sinif: "kucuk menu-satiri", simge: "dis" });
+      tbb.onclick = () => { menuKapat(false); baglantiAc(app, TBB_REHBERI, ortam.duyuru); };
+      m.append(y, s, r, ogesi("p", "menu-notu", cev("Yapay zekâ kullanımında Türkiye Barolar Birliği'nin rehberini izliyoruz:")), tbb);
     });
     return b;
   }
@@ -1566,12 +1652,93 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     else kok.append(ogesi("div", "bos", cev("Henüz bir soru yok. Sorduğunuzda Claude'un araştırma adımları ve cevabı burada sırayla görünür; eski işleriniz Geçmiş'te.")));
     const not = ogesi("div", "devam-notu");
     not.id = "devam-notu";
-    akis.append(onceki, kok, not);
+    akis.append(onceki, kok, not, sohbetAltSatiri());
     ekran.append(akis);
     devamNotuYenile();
     gosterilenTur = c ? soruKatla(c.soru) || "-" : null;
     if (onceki.childElementCount) requestAnimationFrame(() => turaKaydir(kok));
   };
+
+  // Sohbet'in alt satırı (T015, 28.11.2026; kullanıcı: "nasıl dosya ekliyor anlamadım ... "+" işareti masada da
+  // görülmeli. hatta AI modeli ve efor ekranı da"): yol gösteren "Dosya ekle" ve salt okunur model satırı. Masa dosya
+  // yüklemez: müvekkil belgesi ArthurMask'e (bilgisayarda maskelenir), öteki dosyalar ev sahibinin kendi "+"sına.
+  function sohbetAltSatiri() {
+    const alt = ogesi("div", "sohbet-alt");
+    const panel = ogesi("div", "dosya-paneli");
+    panel.id = "dosya-paneli";
+    panel.hidden = true;
+    const ekle = dugme(cev("Dosya ekle"), { sinif: "kucuk", simge: "yeni" });
+    ekle.setAttribute("aria-expanded", "false");
+    ekle.setAttribute("aria-controls", panel.id);
+    ekle.onclick = () => {
+      panel.hidden = !panel.hidden;
+      ekle.setAttribute("aria-expanded", String(!panel.hidden));
+      if (!panel.hidden) dosyaPaneliCiz(panel);
+    };
+    const model = ogesi("span", "model-satiri");
+    model.id = "model-satiri";
+    // Kaynak anahtarı (T016): sohbet başına; varsayılan kapalı (yalnız resmî kaynaklar).
+    const web = ogesi("button", "kucuk kaynak-anahtari");
+    web.type = "button";
+    const webCiz = () => {
+      const acik = !!seciliSohbet().web;
+      web.setAttribute("aria-pressed", String(acik));
+      web.replaceChildren(ikon(acik ? "onay" : "carpi"), ogesi("span", null, acik ? cev("Genel web: açık") : cev("Genel web: kapalı")));
+      web.title = acik ? cev("Bu sohbette web kaynakları da kullanılır; cevapta ayrı grupta görünür.")
+        : cev("Bu sohbette yalnız ArthurLegal araçlarının kaynakları ve resmî siteler kullanılır; genel web kapalı. Açmak için tıklayın.");
+    };
+    web.onclick = () => {
+      const s = seciliSohbet();
+      s.web = !s.web;
+      seciliYaz(s);
+      kaynakKaydiYaz(s.id, s.web);
+      webCiz();
+      bildir(s.web ? "kullanıcı bu sohbette genel web kaynaklarını açtı." : "kullanıcı bu sohbette genel web kaynaklarını kapattı.");
+    };
+    webCiz();
+    kaynakAnahtariCiz = () => { if (web.isConnected) webCiz(); };
+    alt.append(ekle, web, model);
+    const kap = ogesi("div", "sohbet-alt-kap");
+    kap.append(alt, panel);
+    requestAnimationFrame(modelSatiriYenile);
+    return kap;
+  }
+  function dosyaPaneliCiz(panel) {
+    const mask = ogesi("div", "dosya-satiri");
+    const maskYazi = ogesi("div", "metinler");
+    maskYazi.append(ogesi("b", null, cev("Müvekkil belgesi")),
+      ogesi("span", null, cev("ArthurMask'e bırakın; bilgisayarınızda maskelenir, Claude yalnız maskeli metni görür.")));
+    const d = modulDurumu("mask");
+    const ac = dugme(cev("ArthurMask'i aç"), { sinif: "kucuk birincil", simge: "maske" });
+    // Uzak masada ve kurulumda seçilmemişse ArthurMask ekranı mevcut kuralla ne yapılacağını söyler.
+    ac.onclick = () => (d === "masaustu" || d === "kurulu-degil" ? git("mask") : modulAc("mask", ac));
+    mask.append(maskYazi, ac);
+    const oteki = ogesi("div", "dosya-satiri");
+    const otekiYazi = ogesi("div", "metinler");
+    // Claude Desktop tam ekranda Yanıtla (Reply) kutusunda + yok, sağ üstte "Show chat" var (Ertuğ'un ekranı, 28.11.2026).
+    const tamEkranda = !EV.chatgpt && ((app.getHostContext && app.getHostContext()) || {}).displayMode === "fullscreen";
+    otekiYazi.append(ogesi("b", null, cev("Öteki dosyalar")), ogesi("span", null, tamEkranda
+      ? cev("Tam ekranda Yanıtla (Reply) kutusunda + yok: karar ya da mevzuat PDF'i gibi müvekkil bilgisi taşımayan dosyalar için önce sağ üstteki Sohbeti göster (Show chat) düğmesine basın, sonra sohbetin yazma kutusundaki + ile ekleyin; bu dosyalar Claude'a gönderilir.")
+      : cev("Karar ya da mevzuat PDF'i gibi müvekkil bilgisi taşımayan dosyaları Claude'un Yanıtla (Reply) kutusundaki + ile ya da sürükleyerek ekleyin; bu dosyalar Claude'a gönderilir.")));
+    oteki.append(otekiYazi);
+    panel.replaceChildren(mask, oteki);
+    if (d === "masaustu") panel.append(ogesi("p", "not", cev("ArthurMask yalnız ArthurLegal'in kurulu olduğu bilgisayardaki masada açılır; düğme ne yapacağınızı gösterir.")));
+  }
+  // Salt okunur: Claude'un bildirdiği model (DURUM.model), effort'u masa göremez; tahmin yok.
+  function modelSatiriYenile() {
+    const el = $("model-satiri");
+    if (!el) return;
+    const m = EV.chatgpt ? null : DURUM.model;
+    const yazi = EV.chatgpt ? cev("Model ChatGPT'nin model seçicisinde seçilir; effort'u masa göremez.")
+      : !m || !m.ad ? cev("Model: Claude bu sohbette henüz bildirmedi · effort: masa göremez · değiştirmek için yazma kutusundaki model menüsü.")
+        : m.duzey === "bilinmiyor" ? cev("Model: {0} (Claude'un bildirdiği, doğrulanmadı) · effort: masa göremez · değiştirmek için yazma kutusundaki model menüsü.", m.ad)
+          : cev("Model: {0} (Claude'un bildirdiği) · effort: masa göremez · değiştirmek için yazma kutusundaki model menüsü.", modelKisaAdi(m));
+    const bag = ogesi("button", "metin-bag", cev("Model ve effort"));
+    bag.type = "button";
+    bag.onclick = () => git("model");
+    el.replaceChildren(ogesi("span", null, yazi), document.createTextNode(" "), bag);
+    el.title = oneriCumlesi();
+  }
 
   function adimSatiri(tur, metin) {
     const s = ogesi("div", "adim " + tur);
@@ -2367,7 +2534,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       s.baslik = sohbetBasligi(s) || kisaBaslik(c && c.soru);
       if (s.baslik) seciliYaz(s);
     }
-    return { id: s.id, baslik: s.baslik };
+    return s.web ? { id: s.id, baslik: s.baslik, web: true } : { id: s.id, baslik: s.baslik };
   }
   // Masa işi sürerken sohbet değişmez: Claude'un cevabı yarıda başka sohbete düşmesin.
   const isSuruyor = () => { const c = gosterilenCevap(); return !!c && !c.tamam && !c.kesildi; };
@@ -2513,7 +2680,12 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         if (i >= 0) { hepsi[i] = { ...hepsi[i], sohbet: { id: sid, baslik: ad } }; cihazaYaz(hepsi); }
       }
     }
-    sohbetiDegistir({ id: sid, baslik: ad, devam: true, yeni: false, basi: Date.now(), kaynak: id }, kayitlar.map(kayittanTur));
+    // Kaynak anahtarı sohbetle gelir: bu cihazdaki kayıt, yoksa en yeni cevap kaydının sohbet alanı.
+    const enYeni = [...kayitlar].sort((a, b) => String(b.id).localeCompare(String(a.id)))[0];
+    const kayit_ = kaynakKaydiOku();
+    const web = sid in kayit_ ? kayit_[sid] === true : !!(enYeni && enYeni.sohbet && enYeni.sohbet.web);
+    sohbetiDegistir({ id: sid, baslik: ad, devam: true, yeni: false, basi: Date.now(), kaynak: id, ...(web ? { web: true } : {}) },
+      kayitlar.map(kayittanTur));
     ortam.duyuru.textContent = cev("Sohbet açıldı; devam sorunuzu Claude'un Yanıtla kutusuna yazın.");
   }
 
@@ -2589,8 +2761,8 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     n.hidden = !var_;
     if (!var_) return;
     n.replaceChildren(ikon("bilgi"), ogesi("span", null, s.devam
-      ? cev("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir.")
-      : cev("Devam sorunuzu Claude'un Yanıtla kutusuna yazın; cevap bu sohbette, en altta akar.")));
+      ? cev("Devam sorunuzu Claude'un Yanıtla (Reply) kutusuna yazın; masa bu sohbetin önceki soru ve cevaplarını Claude'a bağlam olarak verir.")
+      : cev("Devam sorunuzu Claude'un Yanıtla (Reply) kutusuna yazın; cevap bu sohbette, en altta akar.")));
   }
 
   // Yeni soru başlayınca ekran o sorunun başına kayar (önceki turlar yukarıda kalır). Aynı iş sürerken kullanıcı en
@@ -2729,15 +2901,18 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       const tablo = ogesi("div", "teyit");
       const cumleler = new Map(atiflariBul(MD.duzMetin(c.cevap)).map((x) => [x.kanun + "/" + x.madde, x.cumle]));
       for (const s of t.satirlar) tablo.append(teyitSatiri(s, cumleler.get(s.kanun + "/" + s.madde) || ""));
-      teyit.append(ust, tablo, bilgi(cev("Bu kontrol, madde numarasının resmî metinde var olduğunu ve başlığını gösterir. Maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini ayrıca okuyun.")));
+      teyit.append(ust, tablo, bilgi(cev("“Doğrulandı”, madde ya da kararın resmî kaynakta var olduğunu ve metninin okunduğunu gösterir; cevaptaki iddiayı desteklediğini göstermez: maddeye yüklenen içeriğin (hakkın sahibi, şart, süre) metinle örtüşmesini ayrıca okuyun.")));
     }
     kap.append(teyit);
 
-    if (c.kaynaklar.length) {
+    // Kaynaklar: resmî kaynaklar önce; web kaynakları (kaynak anahtarı açıkken gelir) ayrı grupta (T016).
+    const gruplar = [[cev("Kaynaklar"), c.kaynaklar.filter(resmiKaynak)], [cev("Web kaynakları"), c.kaynaklar.filter((k) => !resmiKaynak(k))]];
+    for (const [baslik, liste_] of gruplar) {
+      if (!liste_.length) continue;
       const ks = ogesi("div", "kesit");
-      ks.append(ogesi("h3", null, cev("Kaynaklar")));
+      ks.append(ogesi("h3", null, baslik));
       const liste = ogesi("div", "liste");
-      for (const k of c.kaynaklar) {
+      for (const k of liste_) {
         const o = ogesi("div", "liste-ogesi");
         const sim = ogesi("span", "simge");
         sim.append(ikon("kitap"));
@@ -2761,6 +2936,66 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       ks.append(liste);
       kap.append(ks);
     }
+    const okunamayan = okunamayanlar(c.cevap);
+    if (okunamayan.length) {
+      // Okunamayanlar (T016): cevaptaki her UYARI satırı tek yerde, cevabın sonunda; satır aynen kalır, çevrilmez.
+      const ok = ogesi("div", "kesit okunamayanlar");
+      ok.append(ogesi("h3", null, cev("Okunamayanlar")));
+      for (const u of okunamayan) {
+        const s = ogesi("div", "uyari");
+        s.append(ogesi("span", "uyari-satiri", u.satir));
+        if (u.adres) {
+          const ac = dugme(cev("Kaynağı aç"), { sinif: "kucuk", simge: "dis" });
+          ac.onclick = () => baglantiAc(app, u.adres, ortam.duyuru);
+          s.append(ac);
+        }
+        ok.append(s);
+      }
+      kap.append(ok);
+    }
+  }
+  // Cevaptaki UYARI satırları, cevabın yazdığı gibi satır sonuna kadar; yalnız Markdown işaretleri (kalın, bağlantı,
+  // <adres>, kod) ayıklanır. Satıra bölünmüş uyarı birleştirilir; yinelenmez; sıra korunur. Adres yerine not varsa not
+  // aynen kalır, bağlantı yalnız http(s) adresine verilir.
+  function mdAyikla(s) {
+    return s.replace(/\[([^\]]*)\]\(([^)\s]*(?:\([^)\s]*\)[^)\s]*)*)\)/g, (m, yazi, adres) => (yazi.trim() === adres ? adres : yazi))
+      .replace(/<(https?:\/\/[^>\s]+)>/g, "$1").replace(/`([^`]*)`/g, "$1")
+      .replace(/(\*\*|__)(.*?)\1/g, "$2").replace(/(^|[\s(])[*_](\S(?:.*?\S)?)[*_](?=[\s).,;:]|$)/g, "$1$2")
+      .replace(/^\s*(?:>\s*)*(?:[-*+]\s+|\d+[.)]\s+)?/, "").replace(/\s+/g, " ").trim();
+  }
+  function okunamayanlar(metin) {
+    // Paragraf ya da liste maddesi tek birim: satıra bölünmüş uyarı tek satır olur.
+    const birimler = [];
+    for (const par of dizgi(metin).replace(/\r\n?/g, "\n").split(/\n\s*\n/)) {
+      let cari = "";
+      for (const satir of par.split("\n")) {
+        if (/^\s*(?:[-*+]\s+|\d+[.)]\s+|#{1,6}\s|>\s?|\|)/.test(satir) && cari) { birimler.push(cari); cari = ""; }
+        cari = cari ? cari + " " + satir : satir;
+      }
+      if (cari) birimler.push(cari);
+    }
+    const bas = AL.UYARI.trim().split(" ")[0];   // "UYARI:"
+    const gorulen = new Set();
+    const out = [];
+    for (const birim of birimler) {
+      const temiz = mdAyikla(birim);
+      let i = temiz.indexOf(AL.UYARI.trim());
+      while (i >= 0) {
+        const sonraki = temiz.indexOf(AL.UYARI.trim(), i + 1);
+        const satir = temiz.slice(i, sonraki >= 0 ? sonraki : undefined).trim();
+        i = sonraki;
+        if (!satir.startsWith(bas) || gorulen.has(satir)) continue;
+        gorulen.add(satir);
+        const kalan = satir.slice(AL.UYARI.trim().length).trim();
+        let adres = (kalan.match(/^https?:\/\/\S+/) || [""])[0];
+        // Sondaki noktalama adrese ait değildir; kapanan parantez yalnız açılanı varsa adrese aittir.
+        while (/[.,;:!?]$/.test(adres) || (adres.endsWith(")") && (adres.match(/\(/g) || []).length < (adres.match(/\)/g) || []).length)) {
+          adres = adres.slice(0, -1);
+        }
+        out.push({ satir, adres });
+      }
+    }
+    return out;
   }
 
   // Planlanan adımlar: Claude al_masada_basla ile yazar. Adım adım ilerleme izlenmez (araçlar plana bağlı değildir);
@@ -4626,6 +4861,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
       cihaz: cev("Bu masa uzak bağlantıdan açıldı: burada yalnız bu sohbette yaptığınız işler görünür, yeni sohbette liste boş başlar. Hiçbir sunucuya gönderilmez.{0}", ORTAK),
       pencere: cev("Bu pencerede tarayıcı deposu kapalı: geçmiş yalnız pencere açıkken durur ve hiçbir yere yazılmaz."),
     }[depo]));
+    ekran.append(ogesi("p", "kapsam-notu", cev("“Genel web” ayarı bu bilgisayarda, sohbetin kayıtlarında ve tarayıcı deposunda yalnız açık ya da kapalı olarak tutulur, müvekkil verisi içermez; sohbetin bütün kayıtları silinince ya da geçmiş temizlenince o da silinir.")));
     if (depo !== "disk") ekran.append(kaliciGecmisYolu());
     const seg = ogesi("div", "segment");
     for (const [id, yazi] of Object.entries(KATEGORI_ADI)) {
@@ -4652,6 +4888,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
           if (hata) throw new Error(hata);
         }
         if (depo === "cihaz") localStorage.removeItem(CIHAZ_GECMISI);
+        kaynakAnahtariniDusur();
         GECMIS.length = 0;
         ortam.duyuru.textContent = cev("Geçmiş temizlendi.");
       } catch (e) {
@@ -4816,6 +5053,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
         }
         const i = GECMIS.findIndex((g) => g === k.oturum || (k.id && g.id === k.id));
         if (i >= 0) GECMIS.splice(i, 1);
+        if (k.sohbet && k.sohbet.id) await sohbetKalmadiysaAnahtariSil(k.sohbet.id);
         gecmisAcik = null;
         ortam.duyuru.textContent = cev("Kayıt silindi.");
         git("gecmis");
@@ -5243,6 +5481,7 @@ body.kart-modu #kok { padding: calc(var(--guvenli-ust) + 4px) calc(var(--guvenli
     el.replaceChildren(ogesi("span", "nokta"), ogesi("span", "yazi", yazi));
     el.setAttribute("aria-label", cev("Model ve effort. {0}. {1}", yazi, oneriCumlesi()));
     el.title = oneriCumlesi();
+    modelSatiriYenile();
   }
 
   function modelCumlesi(m) {

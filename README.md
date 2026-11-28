@@ -812,6 +812,46 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-356"></a>
+
+## Setup 3.5.6: Honest verification, a General web switch, Add a file and alignment with the TBB guide (2026-11-28)
+
+**On the desk.** The note next to the citation check says "Verified" means the article or decision exists in the
+official source and its text was read, not that it supports the claim. UYARI lines are collected at the end of the
+answer under "Could not be read". A per chat "General web" switch under the Chat screen is off by default: only the sources of ArthurLegal's tools and official sites unless you turn it on, and web sources are then listed apart from the other sources. "Add a file" shows the two ways (client documents
+through ArthurMask, other files with the + in the message box; the desk uploads nothing) and the model Claude reports.
+The ⓘ menu links to the TBB guide's official page.
+
+**In the packages.** The AI use policy follows the TBB "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi" and the
+two KVKK guides; "Where your data goes" shows retention and manual deletion for every local record; the research
+guide has the general web rule; the start page says ArthurLegal is a tool for lawyers and legal professionals. UYAP
+bridge 2.1.3 shows a TBB notice on the first ordinary document read of the day (Windows).
+
+System prompt unchanged; desk 3.5.6, UYAP bridge 2.1.3, ArthurMask 1.4.2. How it arrives: the updater installs 3.5.6
+on Windows and on a Mac by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** Masada: atıf teyidinin notu "Doğrulandı"nın kaynağın var olduğunu ve metnin okunduğunu gösterdiğini,
+iddiayı desteklediğini göstermediğini söyler. UYARI satırları cevabın sonunda "Okunamayanlar" altında toplanır.
+Sohbet başına "Genel web" anahtarı varsayılan kapalıdır: açmadıkça yalnız ArthurLegal araçlarının kaynakları ve resmî siteler, açınca web kaynakları öteki kaynaklardan ayrı listelenir. "Dosya ekle" iki yolu (müvekkil belgesi ArthurMask'le, öteki dosyalar yazma kutusundaki + ile; masa
+dosya yüklemez) ve Claude'un bildirdiği modeli gösterir. ⓘ menüsünde TBB rehberinin resmî sayfasına bağlantı var.
+Paketlerde: yapay zekâ kullanım politikası TBB rehberine ve iki KVKK rehberine göre tamamlandı; "Verileriniz nereye
+gider" bilgisayarda kalan her kaydın süresini ve elle silme yolunu gösterir; araştırma rehberinde genel web kuralı;
+başlangıç sayfası ArthurLegal'in avukatın ve hukukçunun aracı olduğunu söyler. UYAP köprüsü 2.1.3 Windows'ta günün
+ilk sıradan evrak okumasında TBB uyarısı gösterir. Sistem istemi aynı; masa 3.5.6, UYAP köprüsü 2.1.3, ArthurMask
+1.4.2. Güncelleyici 3.5.6 sürümünü Windows'ta ve Mac'te kendisi kurar; değişiklik Claude Desktop yeniden açılınca
+geçerli olur.
+
+**Azərbaycanca:** Masada: istinad yoxlamasının qeydi "Təsdiqləndi" sözünün mənbənin mövcud olduğunu və mətnin
+oxunduğunu göstərdiyini, iddianı dəstəklədiyini göstərmədiyini deyir. UYARI sətirləri cavabın sonunda "Oxuna bilməyənlər"
+altında toplanır. Hər söhbət üçün "Ümumi veb" açarı əvvəlcədən bağlıdır: açmasanız yalnız ArthurLegal alətlərinin mənbələri və rəsmi saytlar, açanda veb mənbələri digər mənbələrdən ayrı sıralanır. "Fayl əlavə et" iki yolu (müştəri sənədi ArthurMask ilə, digər fayllar yazı qutusundakı +
+ilə; masa fayl yükləmir) və Claude tətbiqinin bildirdiyi modeli göstərir. ⓘ menyusunda TBB bələdçisinin rəsmi
+səhifəsinə keçid var. Paketlərdə: süni intellekt istifadə siyasəti TBB bələdçisinə və iki KVKK bələdçisinə görə
+tamamlandı; "Məlumatlarınız hara gedir" kompüterdə qalan hər qeydin müddətini və əllə silmə yolunu göstərir;
+araşdırma bələdçisində ümumi veb qaydası; başlanğıc səhifəsi ArthurLegal quraşdırmasının vəkilin və hüquqşünasın
+aləti olduğunu deyir. UYAP körpüsü 2.1.3 Windows üzərində günün ilk adi sənəd oxunuşunda TBB xəbərdarlığı göstərir.
+Sistem təlimatı dəyişmədi; masa 3.5.6, UYAP körpüsü 2.1.3, ArthurMask 1.4.2. Yeniləyici 3.5.6 versiyasını Windows
+və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda qüvvəyə minir.
+
 <a id="setup-355"></a>
 
 ## Setup 3.5.5: Local tools show up again on the new Claude Desktop for Windows (2026-11-27)
