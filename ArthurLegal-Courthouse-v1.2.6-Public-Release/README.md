@@ -215,7 +215,8 @@ Bu sayfayı paylaşmak için bağlantı: **https://github.com/beerbottle90/Arthu
 
 **Temel ilke:** asistan karar vermez. İki tarafın iddia ve savunmasını dengeli inceler, gerekçe iskeleti ve usul
 kontrolü üretir; nihai değerlendirme hâkime ya da heyete aittir. Her madde ve içtihat atfı bu sohbette resmî
-kaynaktan çekilir; çekilemeyen bilgi uydurulmaz, yerine açık bir satır yazılır:
+kaynaktan çekilir; çekilemeyen bilgi uydurulmak yerine açık bir satırla
+işaretlenir (model yine de hata yapabilir):
 `UYARI: veri çekilemedi, teyidiniz gerekli: <resmî giriş sayfası>`.
 
 | | Hukuk Bürosu ve Kurumsal paketler | **Courthouse** |
@@ -247,7 +248,7 @@ eklentileri, istinaf dairesi ve kalemi, iki ortak alan.
 - **İzleyiciler (7):** tutukluluk incelemesi, duruşma hazırlığı, kanun yolu ve kesinleşme, bilirkişi raporları,
   mevzuat değişikliği, içtihat ve AYM kararları, makul süre. Kullanıcı tetikler; zamanlanmış çalışma yoktur ve
   asistan UYAP'a bağlanmaz. Girdi, kullanıcının verdiği ya da kalemin UYAP'tan dışa aktardığı listedir; liste
-  yoksa izleyici liste uydurmaz. Gösterilen her gün bir hatırlatmadır; son günü hâkim ve kalem teyit eder.
+  yoksa izleyici liste uydurmak yerine UYARI satırı yazar; model yine de hata yapabilir. Gösterilen her gün bir hatırlatmadır; son günü hâkim ve kalem teyit eder.
 - **36 referans:** usul madde haritaları, kanun yolu ve süreler, adli tatil, dava şartı arabuluculuk, makul süre,
   gerekçeli karar hakkı, içtihat doğrulama, karşı görüş, anonimleştirme, sade dil, yargıda yapay zekâ kullanımının
   sınırları, tebligat ve e-tebligat, harç ve giderler, bilirkişilik, tapu-kadastro.

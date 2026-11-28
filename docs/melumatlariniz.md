@@ -22,6 +22,27 @@ və ya hər ikisi. Cədvəl hər ikisini əhatə edir; yalnız ChatGPT-yə aid o
 | Torpaq reyestri (TKGM) parsel sorğusu | Parsel identifikatoru və məlumatı serverin yaddaşında ən çox 24 saat; diskə və ya jurnala yazılmır. | Serverdən TKGM Parsel Sorğusuna. |
 | Masanın dili və mövzusu | Cihazınızda. | Heç yerə. |
 
+## Bu kompüterdə qalan qeydlər və onların silinməsi
+
+TBB-nin süni intellekt bələdçisi prompt, çıxış və yüklənən sənədlərin saxlama müddəti bitəndə silinməsini tövsiyə
+edir (s. 22). ArthurLegal-ın kompüterinizdə qoyduğu hər qeyd, nə qədər qaldığı və əl ilə necə silindiyi:
+
+| Qeyd | Harada | Nə qədər qalır | Əl ilə silmə |
+|---|---|---|---|
+| Masanın tarixçəsi (suallar, cavablar, araşdırmalar) | Quraşdırmanın `veri\masa-gecmisi` qovluğu (Windows: `%LOCALAPPDATA%\Programs\ArthurLegal`, macOS: `~/Library/Application Support/ArthurLegal`); quraşdırma yoxdursa masanın brauzer yaddaşı | 90 gün və ya ən çox 2.000 qeyd; köhnələri avtomatik silinir | Masanın Tarixçə ekranında qeydin yanındakı Sil düyməsi və ya Tarixçəni təmizlə |
+| İş axınlarım (yadda saxladığınız iş axınları) | Eyni qovluq | Müddətsiz (ən çox 200); Tarixçəni təmizlə onları silmir | Masanın İş axınları ekranında bir bir Sil |
+| Claude-un hazırladığı fayllar | Sənədlər içindəki ArthurLegal qovluğu | Siz silənə qədər | Qovluqdakı faylı silin |
+| ArthurLegal Yaddaş | Ev qovluğunuzdakı `ArthurLegal-Hafiza` (və ya quraşdırmada seçdiyiniz qovluq) | Siz silənə qədər; ArthurLegal-ı silmək onu silmir | Qovluqdakı Markdown fayllarını silin |
+| ArthurMask: maskalanmış aralıq nüsxələr | Sənədlər içindəki ArthurMask qovluğunda hər işin `maskeli` qovluğu (macOS: `~/ArthurMask`) | 30 gün; ArthurMask körpüsü hər başlayanda müddəti bitənlər avtomatik silinir | Qovluqdakı faylı silin |
+| ArthurMask: real adlar cədvəli (kasa), açılmış cavablar, `claude-giden.jsonl` (Claude-a göndərilən maskalanmış alət cavabları) və `kirmizi-hat.jsonl` (qırmızı xətt təsdiqləri) | Həmin işin qovluğu | Siz silənə qədər | İşin qovluğunu silin; ArthurMask-da ayrıca silmə düyməsi yoxdur |
+| Masanın "Ümumi veb" ayarı (hər söhbət üçün açıq və ya bağlı) | Söhbətin qeydləri və masanın brauzer yaddaşı; müştəri məlumatı yoxdur | Söhbətin qeydləri qədər | Söhbətin bütün qeydlərini silin və ya Tarixçəni təmizlə düyməsindən istifadə edin; ayar onlarla silinir |
+| UYAP körpüsünün şifrələnmiş arxivi (iş siyahıları, iş gedişatı, sənədlər və daxil etdiyiniz son gün qeydləri; son gün qeydləri işlə birlikdə silinir) | Ev qovluğunuzdakı `.arthurlegal\uyap\arsiv` (`arsiv.sqlite` və şifrələnmiş `bloblar`) | İş UYAP siyahılarında sonuncu dəfə görüldükdən sonra mülki, icra və inzibati işlərdə 1.095 gün, cinayət işlərində 730 gün; körpü hər başlayanda müddəti bitənlər silinir | Claude Desktop-u və ChatGPT masaüstü tətbiqini bağlayıb `arsiv` qovluğunu silin; körpü növbəti açılışda boş arxivlə başlayır |
+| UYAP təqvim faylı (`.ics`) | Ev qovluğunuzdakı `.arthurlegal\uyap\takvim`; yalnız "Təqvimə əlavə et" düyməsini basanda yazılır | Bir gündən köhnə fayllar növbəti yazılışda silinir; təqvim proqramında saxladığınız hadisə o proqramda qalır | Qovluqdakı `.ics` fayllarını silin; hadisəni təqvim proqramından silin |
+| UYAP körpüsünün TBB xəbərdarlığı tarixi (`tbb-uyari.json`) | Ev qovluğunuzdakı `.arthurlegal\uyap`; yalnız xəbərdarlığın sonuncu dəfə göstərildiyi tarix, iş və ya şəxs məlumatı yoxdur | Hər gün üzərinə yazılır | Faylı silin; xəbərdarlıq növbəti sənəd oxunuşunda yenidən göstərilir |
+
+ArthurLegal bu qeydləri sizin əvəzinizə başqa müddətlə silmir; büronuzun saxlama və məhvetmə qaydası daha uzun və ya
+daha qısa müddət nəzərdə tutursa, silməni o qaydaya görə özünüz edirsiniz.
+
 ## Claude ayarınız
 
 ArthurLegal sizin Claude hesabınızla işləyir və bu hesabın ayarlarını görə və dəyişə bilmir. Claude-dan **Free, Pro

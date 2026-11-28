@@ -229,5 +229,5 @@ Kullanıcı avukat değilse: "Bu adım lisanslı mesleki muhakeme ister (Av.K. m
 - **Göndermez** — kullanıcı platform, KEP, noter ya da savcılık kanalından gönderir.
 - **İstisnaya karar vermez** — kanuni istisnaları yürütür, işaretler; avukat karar verir.
 - **Kapıyı atlamaz** — `--send` ve `--counter`'da her seferinde çalışır.
-- **Atıf uydurmaz** — etiketli ve doğrulanmış; sessiz tamamlama yok.
+- **Atıf:** etiketli ve doğrulanmış; sessiz tamamlama yok; model yine de hata yapabilir, atıf teyit edilir.
 - **Yabancı rejimi Türk hukuku gibi uygulamaz** — DMCA, DSA ve diğerleri için işaretler ve araca/yerel hukukçuya yönlendirir.

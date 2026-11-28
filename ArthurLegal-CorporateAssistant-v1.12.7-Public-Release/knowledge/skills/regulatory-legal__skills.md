@@ -18,7 +18,7 @@
 - /regulatory-legal:policy-diff (226 satir)
 - /regulatory-legal:policy-redraft (188 satir)
 - /regulatory-legal:reg-feed-watcher (251 satir)
-- /regulatory-legal:yz-kullanim-politikasi (393 satir)
+- /regulatory-legal:yz-kullanim-politikasi (411 satir)
 
 ---
 
@@ -1891,7 +1891,7 @@ Profildeki `## Outputs` karar ağacıyla bitir. Seçenekleri bu çıktıya uyarl
 name: yz-kullanim-politikasi
 description: >
   Şirket hukuk biriminin yazılı yapay zekâ kullanım politikası taslağı; TBB'nin "Avukatlar İçin Yapay Zekâ
-  Kullanımı Tavsiye Rehberi" (Ağustos 2026) esas alınır. Şirket profilini ve bu bilgisayardaki ArthurLegal
+  Kullanımı Tavsiye Rehberi" (2026) esas alınır. Şirket profilini ve bu bilgisayardaki ArthurLegal
   kurulumunu okur, her ArthurLegal aracını rehberin dört kullanım kategorisine yerleştirir; şirket ve ilgili kişi
   verisi kurallarını (ArthurMask, Hafıza, UYAP Dashboard, Claude planı), doğrulama yükümlülüğünü, avukat onayını,
   KVKK m. 9 ve m. 12 yönünü, eğitim ve gözden geçirme takvimini yazar. Ayrıca kısa iş birimi bilgilendirme notu,
@@ -1919,7 +1919,8 @@ bilgi güvenliği kurallarına uyumlu yazılır.
 
 ## Kaynaklar (07.11.2026'da okundu)
 
-1. TBB Bilişim ve Teknoloji Hukuku Komisyonu, "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi", 2026, 44 sayfa.
+1. TBB Bilişim ve Teknoloji Hukuku Komisyonu, "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi", 2026, 44 sayfa;
+   14 ve 15 Şubat 2026 tarihli "Yapay Zekâ ve Avukatlık Çalıştayı"nın ürünü (s. 8).
    TBB duyurusu 28.08.2026: https://www.barobirlik.org.tr/Haberler/tbb-avukatlikta-yapay-zeka-kullanimina-iliskin-tavsiye-rehberini-yayimladi-86648
    Rehber: https://d.barobirlik.org.tr/2026/yapayzekatavsiyerehberi.pdf
 2. KVKK Kurumu, "Üretken Yapay Zekâ ve Kişisel Verilerin Korunması Rehberi (15 Soruda)", Kasım 2025:
@@ -1988,11 +1989,12 @@ pakette doğrulanmadı.
   4. *Yasak kullanım.* Örnekler: anonimleştirilmemiş kişi verisini, dava dosyası içeriğini ya da ticari sırrı
      güvencesi yetersiz araca girmek; UYAP ve dosya içeriğini yetkisiz ve anonimleştirmeden aktarmak; çıktıyı avukat
      denetlemeden iş birimine, mahkemeye ya da idareye vermek; uydurma ya da teyitsiz içtihat, madde veya vakıa
-     sunmak; "garantili sonuç" gibi yanıltıcı ifadeler; hâkimlerin kararlarını kimlikleri üzerinden profillemek;
+     sunmak; "garantili sonuç" gibi yanıltıcı ifadeler; yargı mensuplarının kararlarını kimlik verileri üzerinden profillemek (rehber bunu sakıncalı sayar, s. 18);
      şirket dosyalarını onaysız model eğitimi ya da veri seti için paylaşmak.
 - **Kapalı sistem** rehberde şu demektir: veri üçüncü tarafın eğitim setine girmez ve üçüncü kişilerle paylaşılmaz,
   erişim ve kayıtlar denetlenebilir, sözleşmesel ve teknik güvence vardır.
-- **Yüksek hassasiyetli alanlar:** ceza, çocuk, aile, sağlık, sığınma ve göç, ticari sır, sermaye piyasası. Bu
+- **Yüksek hassasiyetli alanlar:** ceza, çocuk, aile, sağlık, sığınma ve göç, vergi, finans, ticari sır, sermaye
+  piyasası (s. 16, 1.5). Bu
   alanlarda kapalı ve denetlenebilir sistem şartı karşılanmıyorsa kullanım genel araştırma ve anonim konu planıyla
   sınırlı kalır. Şirket için tipik örnekler: içeriden öğrenilen bilgi, birleşme ve devralma müzakeresi, iç
   soruşturma, çalışanın sağlık ya da disiplin dosyası.
@@ -2000,11 +2002,14 @@ pakette doğrulanmadı.
   özgü ayrıntılar da kişiyi belirlenebilir kılabilir.
 - **Bilgilendirme.** Veri, strateji ya da sonuç etkileniyorsa bilgilendirme yapılır ve kayda geçer.
 - **Politika** rehberin önerdiği unsurlarla yazılır: onaylı araç listesi, yasak veri listesi, yetki matrisi, kritik
-  kullanım kaydı, olay müdahalesi, bilgilendirme usulü, veri ihlali bildirimi.
+  kullanım kaydı, olay müdahalesi, bilgilendirme usulü, veri ihlali bildirimi, doğrulama adımları, birim içi
+  disiplin süreçleri (s. 34).
 - **Eğitim.** Eğitim almamış kişi kritik kullanıma yönlendirilmez; stajyer ve uzmanlar avukatın açık talimatı ve
   denetimi olmadan kişi verili dosyada yapay zekâ kullanmaz.
 - **Sigorta.** Şirket avukatının ya da şirketin poliçesinin yapay zekâ kaynaklı hatalı çıktı, uydurma atıf ve veri
   ihlali zararlarını kapsayıp kapsamadığı sigortacıdan yazılı olarak sorulur.
+  Poliçe sessizse sigortacıdan iki yönde de (açık teminat ya da açık dışlama) yazılı netlik istenir; abartılı yapay
+  zekâ iddiaları teminat dışı kalabilir (s. 40).
 
 ## Girdi (önce oku, eksik kalanı sor, uydurma)
 
@@ -2092,6 +2097,9 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
   yöneticisi ve bilgi güvenliği onayı olmadan kullanılmaz.
   Hukuka aykırı toplanmış verilerle kimlik ya da iletişim bilgisi sorgulayan uygulamalar kullanılmaz. Yapay zekâ
   araçlarına erişim görev ve ihtiyaca göre verilir; kişi verili iş yalnız şirketin belirlediği cihazlarda yapılır.
+  Her yeni kullanımda rehberin beş sorusu sorulur (TBB rehberi s. 37): kişi verisi, şirket sırrı ya da mesleki sır var mı; araç veriyi nerede saklıyor ve model eğitiminde kullanıyor
+  mu; yurt dışına aktarım ihtimali var mı; çıktı hukuki sonuca etki ediyor mu; ilgili kişinin ya da iş biriminin
+  bilgilendirilmesi gerekiyor mu.
 - **Madde 5: Şirket ve kişi verisi.**
   - Yasak veri listesi: maskesiz çalışan, müşteri ya da karşı taraf kimliği; dosya numarası; sağlık, adli sicil ve
     disiplin bilgisi; içeriden öğrenilen bilgi; müzakere stratejisi; ticari sır. Güvence yoksa hiçbir araca
@@ -2103,6 +2111,8 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
   - UYAP Dashboard UYAP'a yazmaz ve listeleri bu bilgisayarda tutar; Claude'a giden bilgi etiketlidir.
   - Claude planına göre kural: 2. adımdaki not.
   - Şirket avukatının sır saklama yükümlülüğü yapay zekâ kullanımıyla daralmaz (Av. K. m. 36).
+  - Lisanslı veri tabanı içeriği ve telifli metinler lisans koşullarına aykırı biçimde yapay zekâ aracına verilmez;
+    iş birimine ya da mahkemeye giden metinde yapay zekâ çıktısının kullanıldığı birim içi kayda yazılır (TBB rehberi s. 33).
 - **Madde 6: Doğrulama yükümlülüğü.**
   - Her mevzuat atfı resmî kaynaktan teyit edilir: madde numarası, yürürlük ve maddeye yüklenen içerik.
   - ArthurLegal'in madde atfı kuralı: madde yazılmadan önce resmî metinden çekilir, dönen künye birebir kullanılır
@@ -2113,6 +2123,8 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
     tarih ve tutar belgeyle karşılaştırılır.
   - Yüksek riskli işte ikinci bir avukat kontrol eder.
   - Dayanak: Av. K. m. 34 özen ve doğruluk yükümlülüğü.
+  - Ceza, aile, iş ve göç dosyalarında çıktı önyargı ve ayrımcı sonuç yönünden ayrıca denetlenir; puanlama ya da
+    profilleme niteliğindeki çıktılara bu denetim olmadan dayanılmaz (TBB rehberi s. 12 ile 13, s. 18).
 - **Madde 7: Avukat onayı ve sorumluluk.** Yapay zekâ çıktısı, sorumlu avukat okuyup onaylamadan iş birimine,
   yönetime, mahkemeye, idareye, hakeme, arabulucuya ya da karşı tarafa gitmez. Onay iç kayda yazılır (Madde 10).
   Merci yapay zekâ kullanımının beyan edilmesini isterse beyan yapılır. Hatalı çıktı dışarı çıktıysa Madde 11 işler.
@@ -2161,9 +2173,15 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
 - **Madde 9: İş birimine bilgilendirme.** Hukuk biriminin yapay zekâ kullandığı ve çıktının avukat onayından
   geçtiği iş birimlerine Ek 3'teki notla bildirilir. Bir iş birimi kendi dosyasında yapay zekâ kullanılmamasını
   isteyebilir; isteği ve sonucu kayda yazılır.
+  İstek işin gereği gibi yapılmasını imkânsız kılıyorsa şirket avukatı, rehberin avukat için öngördüğü gibi işi
+  kabul etmemeyi ya da vekâleti mevzuata uygun sona erdirmeyi değerlendirebilir (TBB rehberi s. 27). Karar birim
+  yöneticisine yazılı bildirilir.
 - **Madde 10: Kayıt.** Kritik kullanım kaydı: dosya kodu (kişi adı değil), amaç, araç, veri türü, verinin gittiği sağlayıcı ve ülke, doğrulama sonucu,
   onaylayan avukat, tarih. Böylece ilgili kişi m. 11 kapsamında verisinin
   aktarıldığı kişileri sorduğunda cevap kayıttan verilir. Atıf teyitleri için masanın doğrulama kaydı kullanılır (aşağıda).
+  Prompt, çıktı ve yüklenen belgeler şirketin belirlediği saklama süresi sonunda silinir; kullanım kaydı kalır (TBB
+  rehberi s. 22). Bu bilgisayardaki ArthurLegal kayıtlarının süresi ve elle silme yolu "Verileriniz nereye gider"
+  sayfasındadır.
 - **Madde 11: Olay müdahalesi.** Yanlış ya da uydurma çıktı dışarı çıktıysa sorumlu avukata ve birim yöneticisine
   hemen bildirilir, işe etkisi değerlendirilir, mümkünse düzeltilir, gerekiyorsa ilgili merci bilgilendirilir.
   Veri yanlış yere gittiyse şirketin veri ihlali süreci başlatılır ve m. 12/5 değerlendirmesi yapılır.

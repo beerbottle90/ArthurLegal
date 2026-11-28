@@ -21,7 +21,7 @@ name: atif-dogrulama
 description: >
   Kullanıcının dipnot veya kaynakça listesini alır; her kalemi birincil kaynaktan
   (MCP / DOI / resmî yayın) doğrulamaya çalışır. Doğrulanamayanı AÇIKÇA işaretler.
-  Asla uydurmaz, asla "muhtemelen doğru" demez.
+  Doğrulayamadığını uydurmak yerine UYARI satırıyla işaretler, "muhtemelen doğru" demez; model yine de hata yapabilir.
 user-invocable: true
 ---
 

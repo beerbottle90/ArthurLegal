@@ -22,6 +22,27 @@ table covers both; what applies only to ChatGPT is written separately.
 | Land registry (TKGM) parcel lookups | Parcel identifier and data in the server's memory for up to 24 hours; never written to disk or logs. | TKGM Parcel Query, from the server. |
 | The desk's language and theme | On your device. | Nobody. |
 
+## Records kept on this computer and how to delete them
+
+The TBB's AI guide recommends deleting prompts, outputs and uploaded documents at the end of the retention period
+(p. 22). Every record ArthurLegal leaves on your computer, how long it stays and how to delete it by hand:
+
+| Record | Where | How long it stays | Deleting by hand |
+|---|---|---|---|
+| The desk's history (questions, answers, research) | The installation's `veri\masa-gecmisi` folder (Windows: `%LOCALAPPDATA%\Programs\ArthurLegal`, macOS: `~/Library/Application Support/ArthurLegal`); without an installation, the desk's browser store | 90 days or at most 2,000 records; older ones are deleted automatically | The Delete button next to the record on the desk's History screen, or Clear history |
+| My workflows (workflows you saved) | The same folder | No time limit (at most 200); Clear history does not delete them | Delete them one by one on the desk's Workflows screen |
+| Files Claude prepares | The ArthurLegal folder inside Documents | Until you delete them | Delete the file in the folder |
+| ArthurLegal Memory | `ArthurLegal-Hafiza` in your home folder (or the folder chosen at setup) | Until you delete it; uninstalling ArthurLegal does not delete it | Delete the Markdown files in the folder |
+| ArthurMask: masked working copies | The `maskeli` folder of each matter in the ArthurMask folder inside Documents (macOS: `~/ArthurMask`) | 30 days; expired copies are deleted automatically each time the ArthurMask bridge starts | Delete the file in the folder |
+| ArthurMask: table of real names (vault), decoded answers, `claude-giden.jsonl` (masked tool replies sent to Claude) and `kirmizi-hat.jsonl` (red line approvals) | The same matter's folder | Until you delete it | Delete the matter's folder; ArthurMask has no separate delete button |
+| The desk's "General web" setting (on or off per chat) | The chat's records and the desk's browser store; no client data | As long as the chat's records | Delete all of the chat's records or use Clear history; the setting goes with them |
+| The UYAP bridge's encrypted archive (case lists, case history, documents and the deadline entries you made; the deadline entries are deleted together with the case) | `.arthurlegal\uyap\arsiv` in your home folder (`arsiv.sqlite` and the encrypted `bloblar`) | After a case was last seen in the UYAP lists: 1,095 days for civil, enforcement and administrative cases, 730 days for criminal cases; expired ones are deleted each time the bridge starts | Close Claude Desktop and the ChatGPT desktop app and delete the `arsiv` folder; the bridge starts with an empty archive next time |
+| UYAP calendar file (`.ics`) | `.arthurlegal\uyap\takvim` in your home folder; written only when you press "Add to calendar" | Files older than one day are deleted at the next write; an event you saved in your calendar program stays there | Delete the `.ics` files in the folder; delete the event in your calendar program |
+| The UYAP bridge's TBB notice date (`tbb-uyari.json`) | `.arthurlegal\uyap` in your home folder; only the date the notice was last shown, no case or personal data | Overwritten each day | Delete the file; the notice shows again at the next document read |
+
+ArthurLegal does not delete these records for you on another schedule; if your office's retention and destruction
+policy sets a longer or shorter period, you delete them according to that policy.
+
 ## Your Claude setting
 
 ArthurLegal works with your own Claude account and can neither see nor change its settings. If you use Claude on a

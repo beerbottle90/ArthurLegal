@@ -79,7 +79,7 @@ Claude.ai → **Settings → Connectors** üzerinden ekleyin:
 
 Bağlayıcı yoksa asistan çalışır ama **atıf yapamaz** — her dayanağı
 `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` etiketiyle işaretler ve sizden manuel doğrulama ister.
-Bu, sıfır-halüsinasyon kuralının gereğidir.
+Bu, kuralın gereğidir: çekilemeyen bilgi uydurulmak yerine işaretlenir; model yine de hata yapabilir.
 
 > **API anahtarı gerekmez.** Crossref, OpenAlex, Semantic Scholar, DOAJ, ORCID, EUR-Lex ve
 > HUDOC, WebFetch üzerinden anahtarsız kullanılır. Bu paket hiçbir anahtar gömmez.
@@ -108,7 +108,7 @@ Sonra şunu dene:
 ## Sık karşılaşılanlar
 
 **Asistan atıf yapmıyor, "UYARI: veri çekilemedi" diyor.**
-Beklenen davranış. MCP bağlayıcısı yoksa veya kaynak çekilemediyse asistan **uydurmaz**.
+Beklenen davranış. MCP bağlayıcısı yoksa veya kaynak çekilemediyse asistan çekemediğini uydurmak yerine UYARI satırıyla işaretler; model yine de hata yapabilir.
 Bağlayıcıyı ekleyin veya kaynağı kendiniz doğrulayın.
 
 **Hakemlik yaptığım makaleyi yapıştırdım, reddetti.**

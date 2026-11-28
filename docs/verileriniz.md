@@ -22,6 +22,27 @@ uygulaması ya da ikisi. Tablo ikisini de kapsar; ChatGPT'ye özgü olanlar ayr�
 | Tapu (TKGM) parsel sorgusu | Parsel kimliği ve verisi sunucunun belleğinde en çok 24 saat; diske ya da kayda yazılmaz. | TKGM Parsel Sorgu'ya, sunucudan. |
 | Masanın dili ve teması | Cihazınızda. | Hiçbir yere. |
 
+## Bu bilgisayarda kalan kayıtlar ve nasıl silinir
+
+TBB'nin yapay zekâ rehberi, prompt, çıktı ve yüklenen belgelerin saklama süresi sonunda silinmesini önerir (s. 22).
+ArthurLegal'in bilgisayarınızda bıraktığı her kayıt, ne kadar kaldığı ve elle nasıl silineceği:
+
+| Kayıt | Nerede | Ne kadar kalır | Elle silme |
+|---|---|---|---|
+| Masanın geçmişi (sorular, cevaplar, araştırmalar) | Kurulumun `veri\masa-gecmisi` klasörü (Windows: `%LOCALAPPDATA%\Programs\ArthurLegal`, macOS: `~/Library/Application Support/ArthurLegal`); kurulum yoksa masanın tarayıcı deposu | 90 gün ya da en çok 2.000 kayıt; eskisi kendiliğinden silinir | Masanın Geçmiş ekranında kaydın yanındaki Sil düğmesi ya da Geçmişi temizle |
+| İş akışlarım (kaydettiğiniz iş akışları) | Aynı klasör | Süresiz (en çok 200); Geçmişi temizle bunları silmez | Masanın İş akışları ekranında tek tek Sil |
+| Claude'un hazırladığı dosyalar | Belgeler içindeki ArthurLegal klasörü | Siz silene kadar | Klasördeki dosyayı silin |
+| ArthurLegal Hafıza | Ev klasörünüzdeki `ArthurLegal-Hafiza` (ya da kurulumda seçtiğiniz klasör) | Siz silene kadar; ArthurLegal'i kaldırmak silmez | Klasördeki Markdown dosyalarını silin |
+| ArthurMask: maskeli ara kopyalar | Belgeler içindeki ArthurMask klasöründe her dosyanın `maskeli` klasörü (macOS: `~/ArthurMask`) | 30 gün; ArthurMask köprüsü her başladığında süresi dolanlar kendiliğinden silinir | Klasördeki dosyayı silin |
+| ArthurMask: gerçek adlar tablosu (kasa), çözülmüş cevaplar, `claude-giden.jsonl` (Claude'a gönderilen maskeli araç yanıtları) ve `kirmizi-hat.jsonl` (kırmızı hat onayları) | Aynı dosyanın klasörü | Siz silene kadar | Dosyanın (davanın) klasörünü silin; ArthurMask'te ayrıca silme düğmesi yok |
+| Masanın "Genel web" ayarı (sohbet başına açık ya da kapalı) | Sohbetin kayıtları ve masanın tarayıcı deposu; müvekkil verisi içermez | Sohbetin kayıtları kadar | Sohbetin bütün kayıtlarını silin ya da Geçmişi temizle'yi kullanın; ayar onlarla silinir |
+| UYAP köprüsünün şifreli arşivi (dosya listeleri, safahat, evrak ve sizin girdiğiniz son gün kayıtları; son gün kayıtları dosyayla birlikte silinir) | Ev klasörünüzdeki `.arthurlegal\uyap\arsiv` (`arsiv.sqlite` ve şifreli `bloblar`) | Dosya UYAP listelerinde son görüldükten sonra hukuk, icra ve idari dosyada 1.095 gün, ceza dosyasında 730 gün; köprü her başladığında süresi dolanlar silinir | Claude Desktop'u ve ChatGPT masaüstü uygulamasını kapatıp `arsiv` klasörünü silin; köprü bir sonraki açılışta boş arşivle başlar |
+| UYAP takvim dosyası (`.ics`) | Ev klasörünüzdeki `.arthurlegal\uyap\takvim`; yalnız "Takvime ekle"ye bastığınızda yazılır | Bir günden eski dosyalar bir sonraki yazımda silinir; takvim programına kaydettiğiniz etkinlik o programda kalır | Klasördeki `.ics` dosyalarını silin; etkinliği takvim programından silin |
+| UYAP köprüsünün TBB uyarısı günü (`tbb-uyari.json`) | Ev klasörünüzdeki `.arthurlegal\uyap`; yalnız uyarının son gösterildiği tarih, dosya ya da kişi bilgisi yok | Her gün üzerine yazılır | Dosyayı silin; uyarı bir sonraki evrak okumasında yeniden gösterilir |
+
+ArthurLegal bu kayıtları sizin yerinize başka bir sürede silmez; büronuzun saklama ve imha düzeni uzun ya da kısa bir
+süre öngörüyorsa silmeyi o düzene göre siz yaparsınız.
+
 ## Claude ayarınız
 
 ArthurLegal sizin Claude hesabınızla çalışır ve bu hesabın ayarlarını göremez, değiştiremez. Claude'u **Free, Pro

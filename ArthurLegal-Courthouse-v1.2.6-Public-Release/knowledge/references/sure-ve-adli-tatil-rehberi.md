@@ -1,7 +1,7 @@
 # Süre ve Adli Tatil Rehberi — HMK, CMK, İYUK, İİK Yan Yana
 
 > Kullanan: `kanun-yolu-kesinlesme-izleyici`, `durusma-hazirlik`, `hukuk-kalem:tebligat`, `ceza-kalem:ceza-tebligat`, `idari-kalem:idari-tebligat`, `vergi-kalem:vergi-sure-takip`.
-> Madde içerikleri 27.09.2026'da ArthurLegal MCP ile çekilen metne dayanır. Süre hesabı hatırlatmadır; son günü hâkim veya yazı işleri müdürü teyit eder. Tebliğ tarihi bilinmiyorsa en erken olası tarih esas alınır ve uyarı yazılır. Resmî tatil takvimi mahkemece teyit edilir; asistan tatil günü uydurmaz.
+> Madde içerikleri 27.09.2026'da ArthurLegal MCP ile çekilen metne dayanır. Süre hesabı hatırlatmadır; son günü hâkim veya yazı işleri müdürü teyit eder. Tebliğ tarihi bilinmiyorsa en erken olası tarih esas alınır ve uyarı yazılır. Resmî tatil takvimi mahkemece teyit edilir; asistan tatil günü uydurmak yerine teyidi mahkemeye bırakır; model yine de hata yapabilir.
 
 ## 1. Hesap kuralları
 
