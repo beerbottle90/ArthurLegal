@@ -1,4 +1,21 @@
 {
+ "3.5.6": {
+  "tr": [
+   "Masa 3.5.6: Dosya ekle adım adım; “Doğrulandı” sözünün dürüst tanımı ve cevabın sonunda “Okunamayanlar”; sohbet başına “Genel web” anahtarı (varsayılan kapalı); Yardım (ⓘ) menüsünde TBB yapay zekâ rehberine bağlantı.",
+   "Paketler Türkiye Barolar Birliği'nin yapay zekâ rehberini ve KVKK'nın avukatlar için rehberini izler; “Verileriniz” sayfası verinin nereye gittiğini tek tabloda gösterir.",
+   "UYAP köprüsü 2.1.3: günün ilk olağan belge okumasında TBB rehberi hatırlatması (Windows)."
+  ],
+  "az": [
+   "Masa 3.5.6: Fayl əlavə et addım addım; “Təsdiqləndi” sözünün dürüst izahı və cavabın sonunda “Oxuna bilməyənlər”; hər söhbət üçün “Ümumi veb” açarı (standart olaraq bağlı); Kömək (ⓘ) menyusunda TBB süni intellekt bələdçisinə keçid.",
+   "Paketlər Türkiyə Barolar Birliyinin süni intellekt bələdçisini və KVKK-nın vəkillər üçün bələdçisini izləyir; “Məlumatlarınız” səhifəsi məlumatın hara getdiyini bir cədvəldə göstərir.",
+   "UYAP körpüsü 2.1.3: günün ilk adi sənəd oxunuşunda TBB bələdçisi xatırlatması (Windows)."
+  ],
+  "en": [
+   "Desk 3.5.6: Add a file step by step; an honest definition of “Verified” and “Could not be read” at the end of the answer; a per chat “General web” switch (off by default); a link to the TBB AI guide in the Help (ⓘ) menu.",
+   "The packages follow the Union of Turkish Bar Associations' AI guide and the KVKK guide for lawyers; the “Your data” page shows in one table where data goes.",
+   "UYAP bridge 2.1.3: a TBB guide reminder on the first ordinary document read of the day (Windows)."
+  ]
+ },
  "3.5.5": {
   "tr": [
    "Yeni Windows Claude Desktop'ta yerel araçlar yeniden görünür: kurulum, Claude'un ayar dosyasını yeni klasöründe (Claude-Data) bulur; ArthurMask, UYAP Dashboard ve bilgisayardaki masa yeniden çalışır.",

@@ -1,4 +1,24 @@
 {
+ "3.5.6": {
+  "tr": [
+   "Dosya ekle: sohbete belge eklemenin yolu masada adım adım gösterilir.",
+   "Dürüst teyit: “Doğrulandı” sözü ne anlama geldiğini söyler; okunamayan kaynaklar cevabın sonunda “Okunamayanlar” altında toplanır.",
+   "Genel web anahtarı: sohbet başına, varsayılan kapalı; açıkken web kaynakları ayrı grupta görünür.",
+   "Yardım (ⓘ) menüsünde Türkiye Barolar Birliği'nin yapay zekâ rehberine bağlantı."
+  ],
+  "az": [
+   "Fayl əlavə et: söhbətə sənəd əlavə etmənin yolu masada addım addım göstərilir.",
+   "Dürüst təsdiq: “Təsdiqləndi” sözü nə demək olduğunu bildirir; oxuna bilməyən mənbələr cavabın sonunda “Oxuna bilməyənlər” altında toplanır.",
+   "Ümumi veb açarı: hər söhbət üçün, standart olaraq bağlı; açıq olanda veb mənbələri ayrıca qrupda görünür.",
+   "Kömək (ⓘ) menyusunda Türkiyə Barolar Birliyinin süni intellekt bələdçisinə keçid."
+  ],
+  "en": [
+   "Add a file: the Desk shows step by step how to add a document to the chat.",
+   "Honest verification: “Verified” says what it means; sources that could not be read are gathered at the end of the answer under “Could not be read”.",
+   "General web switch: per chat, off by default; when on, web sources appear in a separate group.",
+   "A link to the Union of Turkish Bar Associations' AI guide in the Help (ⓘ) menu."
+  ]
+ },
  "3.5.5": {
   "tr": [
    "Yeni Windows Claude Desktop'ta yerel araçlar yeniden görünür: kurulum, Claude'un ayar dosyasını yeni klasöründe (Claude-Data) bulur; ArthurMask, UYAP Dashboard ve bilgisayardaki masa yeniden çalışır.",

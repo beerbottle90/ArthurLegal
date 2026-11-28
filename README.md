@@ -812,6 +812,36 @@ same as a working source.
 Plus `references/MCP-ROADMAP.md` — an evidence-based ranking of which jurisdictions
 justify building an MCP server, and which already have a good enough public API.
 
+<a id="setup-356"></a>
+
+## Setup 3.5.6: The bar's AI guide, honest verification and the General web switch (2026-11-28)
+
+**What changes.** ArthurLegal now follows the Union of Turkish Bar Associations' "Avukatlar İçin Yapay Zekâ Kullanımı
+Tavsiye Rehberi" (2026) and the KVKK guide for lawyers; the "Your data" page shows in one table where data goes. On
+the desk: Add a file step by step; "Verified" says exactly what it means and sources that could not be read are
+gathered at the end of the answer; a per chat "General web" switch, off by default, keeps web sources apart; the Help
+(ⓘ) menu links the TBB guide. UYAP bridge 2.1.3 shows a TBB guide reminder on the first ordinary document read of the
+day (Windows).
+
+Desk 3.5.6, UYAP bridge 2.1.3, ArthurMask 1.4.2. How it arrives: the updater installs 3.5.6 on Windows and on a Mac
+by itself; the change applies after Claude Desktop is restarted.
+
+**Türkçe:** ArthurLegal artık Türkiye Barolar Birliği'nin "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi"ni
+(2026) ve KVKK'nın avukatlar için rehberini izler; "Verileriniz" sayfası verinin nereye gittiğini tek tabloda gösterir.
+Masada: Dosya ekle adım adım; "Doğrulandı" sözü tam olarak ne anlama geldiğini söyler, okunamayan kaynaklar cevabın
+sonunda toplanır; sohbet başına "Genel web" anahtarı (varsayılan kapalı) web kaynaklarını ayrı tutar; Yardım (ⓘ)
+menüsü TBB rehberine bağlanır. UYAP köprüsü 2.1.3 günün ilk olağan belge okumasında TBB rehberini hatırlatır
+(Windows). Masa 3.5.6, UYAP köprüsü 2.1.3, ArthurMask 1.4.2. Güncelleyici 3.5.6 sürümünü Windows'ta ve Mac'te kendisi
+kurar; değişiklik Claude Desktop yeniden açılınca geçerli olur.
+
+**Azərbaycanca:** ArthurLegal artıq Türkiyə Barolar Birliyinin "Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye
+Rehberi" (2026) bələdçisini və KVKK-nın vəkillər üçün bələdçisini izləyir; "Məlumatlarınız" səhifəsi məlumatın hara
+getdiyini bir cədvəldə göstərir. Masada: Fayl əlavə et addım addım; "Təsdiqləndi" sözü nə demək olduğunu dəqiq
+bildirir, oxuna bilməyən mənbələr cavabın sonunda toplanır; hər söhbət üçün "Ümumi veb" açarı (standart olaraq bağlı)
+veb mənbələrini ayrı saxlayır; Kömək (ⓘ) menyusu TBB bələdçisinə keçid verir. UYAP körpüsü 2.1.3 günün ilk adi sənəd
+oxunuşunda TBB bələdçisini xatırladır (Windows). Masa 3.5.6, UYAP körpüsü 2.1.3, ArthurMask 1.4.2. Yeniləyici 3.5.6
+versiyasını Windows və Mac üzərində özü quraşdırır; dəyişiklik Claude Desktop yenidən açılanda qüvvəyə minir.
+
 <a id="setup-355"></a>
 
 ## Setup 3.5.5: Local tools show up again on the new Claude Desktop for Windows (2026-11-27)
