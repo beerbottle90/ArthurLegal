@@ -18,7 +18,7 @@
 - /regulatory-legal:policy-diff (226 satir)
 - /regulatory-legal:policy-redraft (188 satir)
 - /regulatory-legal:reg-feed-watcher (251 satir)
-- /regulatory-legal:yz-kullanim-politikasi (382 satir)
+- /regulatory-legal:yz-kullanim-politikasi (393 satir)
 
 ---
 
@@ -2144,10 +2144,17 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
     24.01.2019 tarihli ve 2019/10 sayılı kararı). Özel nitelikli veride Kurulun 31.01.2018 tarihli ve 2018/10
     sayılı kararındaki yeterli önlemler alınır; teknik ve idari tedbirler için KVKK Kişisel Veri Güvenliği
     Rehberi esas alınır.
+    Veri güvenliği avukatlık sözleşmesinden doğan bir yan yükümlülüktür (KVKK avukat rehberi, s. 144); şirketin
+    dış avukatlarla yaptığı sözleşmeleri inceleyen ve yöneten şirket avukatı bu yükümlülüğü sözleşmelere
+    yazdırır ve kendi işinde aynı özeni gösterir.
   - Saklama ve silme: Yapay zekâ araçlarında ve bu bilgisayarda biriken kişi verisi (sohbetler, masa geçmişi,
     Belgeler içindeki ArthurLegal klasörü, ArthurMask kasası, Hafıza) şirketin saklama ve imha düzenine girer.
+    Şirket avukatı da kendisine tevdi edilen evrak için şirkete karşı sorumludur: evrakı vekâletin bitiminden
+    itibaren üç yıl saklar; geri alma şirkete yazıyla bildirilmişse süre bildirimden üç ay sonra biter (Av. K.
+    m. 39).
     İşleme sebebi kalkınca veri silinir, yok edilir ya da anonim hâle getirilir (KVKK m. 7). İlgili kişinin
     talebi en geç otuz gün içinde sonuçlandırılır; ret gerekçeli bildirilir (KVKK m. 13).
+    Şirketin alacağı varsa daha uzun saklama somut olaya göre değerlendirilir (KVKK avukat rehberi, s. 128).
   - Aydınlatma (m. 10): şirketin aydınlatma metinlerine yapay zekâ eki (Ek 3). Açık rıza gerekiyorsa aydınlatmadan
     ayrı alınır.
   - Yüksek riskli işleme için önce `/privacy-legal:use-case-triage`, gerekiyorsa `/privacy-legal:pia-generation`.
