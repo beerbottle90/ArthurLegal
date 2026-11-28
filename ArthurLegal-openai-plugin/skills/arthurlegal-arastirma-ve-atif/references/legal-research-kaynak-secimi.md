@@ -72,7 +72,10 @@ döndürmez.**
   ve bu limite rutin olarak takılır. Ölçüm (25.07.2026): üç yargı çevresini
   kapsayan bir karşılaştırmalı soru özel araçtan **1 saniyenin altında** isabetli
   sonuç verdi; aynı soru genel web-arama sohbetinde **iki kez 100 saniyede iptal
-  edildi**. Genel web aramasına yalnız hiçbir özel araç o kaynağı kapsamıyorsa git.
+  edildi**. Genel web aramasına yalnız hiçbir özel araç o kaynağı kapsamıyorsa git;
+  o durumda da genel web araması yalnız avukat bunu istediğinde ya da ArthurLegal
+  Masası'ndaki “Genel web” anahtarı açıkken yapılır (anahtar varsayılan kapalıdır).
+  Web kaynakları cevapta resmî kaynaklardan ayrı, “Web kaynakları” başlığı altında listelenir.
 
 ## 4. Araçların NE TUTMADIĞI — kapsam dürüstlüğü
 
