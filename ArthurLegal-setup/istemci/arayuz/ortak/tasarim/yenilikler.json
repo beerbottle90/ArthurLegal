@@ -1,22 +1,19 @@
 {
  "3.5.6": {
   "tr": [
-   "Dosya ekle: sohbete belge eklemenin yolu masada adım adım gösterilir.",
-   "Dürüst teyit: “Doğrulandı” sözü ne anlama geldiğini söyler; okunamayan kaynaklar cevabın sonunda “Okunamayanlar” altında toplanır.",
-   "Genel web anahtarı: sohbet başına, varsayılan kapalı; açıkken web kaynakları ayrı grupta görünür.",
-   "Yardım (ⓘ) menüsünde Türkiye Barolar Birliği'nin yapay zekâ rehberine bağlantı."
+   "\"Doğrulandı\" artık açıkça tanımlı: kaynağın var olduğunu ve metnin okunduğunu gösterir, iddiayı desteklediğini değil. Okunamayan kaynaklar cevabın sonunda \"Okunamayanlar\" altında toplanır.",
+   "Sohbet'in altında \"Genel web\" anahtarı (varsayılan kapalı) ve \"Dosya ekle\": müvekkil belgesi ArthurMask'le, öteki dosyalar yazma kutusundaki + ile.",
+   "ⓘ menüsünde TBB'nin \"Avukatlar İçin Yapay Zekâ Kullanımı Tavsiye Rehberi\"ne bağlantı; paketler bu rehbere ve KVKK rehberlerine göre güncellendi, UYAP köprüsü 2.1.3 günün ilk evrak okumasında TBB uyarısı gösterir."
   ],
   "az": [
-   "Fayl əlavə et: söhbətə sənəd əlavə etmənin yolu masada addım addım göstərilir.",
-   "Dürüst təsdiq: “Təsdiqləndi” sözü nə demək olduğunu bildirir; oxuna bilməyən mənbələr cavabın sonunda “Oxuna bilməyənlər” altında toplanır.",
-   "Ümumi veb açarı: hər söhbət üçün, standart olaraq bağlı; açıq olanda veb mənbələri ayrıca qrupda görünür.",
-   "Kömək (ⓘ) menyusunda Türkiyə Barolar Birliyinin süni intellekt bələdçisinə keçid."
+   "\"Təsdiqləndi\" indi açıq tərif olunub: mənbənin mövcud olduğunu və mətnin oxunduğunu göstərir, iddianı dəstəklədiyini yox. Oxunmayan mənbələr cavabın sonunda \"Oxuna bilməyənlər\" altında toplanır.",
+   "Söhbətin altında \"Ümumi veb\" açarı (əvvəlcədən bağlı) və \"Fayl əlavə et\": müştəri sənədi ArthurMask ilə, digər fayllar yazı qutusundakı + ilə.",
+   "ⓘ menyusunda TBB bələdçisinə keçid; paketlər bu bələdçiyə və KVKK bələdçilərinə görə yeniləndi, UYAP körpüsü 2.1.3 günün ilk sənəd oxunuşunda TBB xəbərdarlığı göstərir."
   ],
   "en": [
-   "Add a file: the Desk shows step by step how to add a document to the chat.",
-   "Honest verification: “Verified” says what it means; sources that could not be read are gathered at the end of the answer under “Could not be read”.",
-   "General web switch: per chat, off by default; when on, web sources appear in a separate group.",
-   "A link to the Union of Turkish Bar Associations' AI guide in the Help (ⓘ) menu."
+   "\"Verified\" is now defined plainly: the source exists and its text was read, not that it supports the claim. Sources that could not be read are collected at the end of the answer under \"Could not be read\".",
+   "Under Chat: a \"General web\" switch (off by default) and \"Add a file\": client documents through ArthurMask, other files with the + in the message box.",
+   "The ⓘ menu links to the TBB guide on AI use for lawyers; the packages follow it and the KVKK guides, and UYAP bridge 2.1.3 shows a TBB notice on the first document read of the day."
   ]
  },
  "3.5.5": {
