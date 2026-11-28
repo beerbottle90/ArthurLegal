@@ -33,9 +33,10 @@ The TBB's AI guide recommends deleting prompts, outputs and uploaded documents a
 | My workflows (workflows you saved) | The same folder | No time limit (at most 200); Clear history does not delete them | Delete them one by one on the desk's Workflows screen |
 | Files Claude prepares | The ArthurLegal folder inside Documents | Until you delete them | Delete the file in the folder |
 | ArthurLegal Memory | `ArthurLegal-Hafiza` in your home folder (or the folder chosen at setup) | Until you delete it; uninstalling ArthurLegal does not delete it | Delete the Markdown files in the folder |
-| ArthurMask: masked working copies | The `maskeli` folder of each matter in the ArthurMask folder inside Documents (macOS: `~/ArthurMask`) | 30 days; deleted automatically when ArthurMask starts | Delete the file in the folder |
-| ArthurMask: table of real names (vault) and decoded answers | The same matter's folder | Until you delete it | Delete the matter's folder; ArthurMask has no separate delete button |
-| The desk's "General web" setting (on or off per chat) | The chat's record and the desk's browser store; no client data | As long as the chat's record | Delete the chat's record; the setting goes with it |
+| ArthurMask: masked working copies | The `maskeli` folder of each matter in the ArthurMask folder inside Documents (macOS: `~/ArthurMask`) | 30 days; expired copies are deleted automatically each time the ArthurMask bridge starts | Delete the file in the folder |
+| ArthurMask: table of real names (vault), decoded answers, `claude-giden.jsonl` (masked tool replies sent to Claude) and `kirmizi-hat.jsonl` (red line approvals) | The same matter's folder | Until you delete it | Delete the matter's folder; ArthurMask has no separate delete button |
+| The desk's "General web" setting (on or off per chat) | The chat's records and the desk's browser store; no client data | As long as the chat's records | Delete the chat's records; the setting goes with them |
+| The UYAP bridge's encrypted archive (case lists, case history, documents) | `.arthurlegal\uyap\arsiv` in your home folder (`arsiv.sqlite` and the encrypted `bloblar`) | After a case was last seen in the UYAP lists: 1,095 days for civil, enforcement and administrative cases, 730 days for criminal cases; expired ones are deleted each time the bridge starts | Close Claude Desktop and delete the `arsiv` folder; the bridge starts with an empty archive next time |
 
 ArthurLegal does not delete these records for you on another schedule; if your office's retention and destruction
 policy sets a longer or shorter period, you delete them according to that policy.

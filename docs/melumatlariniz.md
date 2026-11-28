@@ -33,9 +33,10 @@ edir (s. 22). ArthurLegal-ın kompüterinizdə qoyduğu hər qeyd, nə qədər q
 | İş axınlarım (yadda saxladığınız iş axınları) | Eyni qovluq | Müddətsiz (ən çox 200); Tarixçəni təmizlə onları silmir | Masanın İş axınları ekranında bir bir Sil |
 | Claude-un hazırladığı fayllar | Sənədlər içindəki ArthurLegal qovluğu | Siz silənə qədər | Qovluqdakı faylı silin |
 | ArthurLegal Yaddaş | Ev qovluğunuzdakı `ArthurLegal-Hafiza` (və ya quraşdırmada seçdiyiniz qovluq) | Siz silənə qədər; ArthurLegal-ı silmək onu silmir | Qovluqdakı Markdown fayllarını silin |
-| ArthurMask: maskalanmış aralıq nüsxələr | Sənədlər içindəki ArthurMask qovluğunda hər işin `maskeli` qovluğu (macOS: `~/ArthurMask`) | 30 gün; ArthurMask açılanda avtomatik silinir | Qovluqdakı faylı silin |
-| ArthurMask: real adlar cədvəli (kasa) və açılmış cavablar | Həmin işin qovluğu | Siz silənə qədər | İşin qovluğunu silin; ArthurMask-da ayrıca silmə düyməsi yoxdur |
-| Masanın "Ümumi veb" ayarı (hər söhbət üçün açıq və ya bağlı) | Söhbətin qeydi və masanın brauzer yaddaşı; müştəri məlumatı yoxdur | Söhbətin qeydi qədər | Söhbətin qeydini silin; ayar onunla silinir |
+| ArthurMask: maskalanmış aralıq nüsxələr | Sənədlər içindəki ArthurMask qovluğunda hər işin `maskeli` qovluğu (macOS: `~/ArthurMask`) | 30 gün; ArthurMask körpüsü hər başlayanda müddəti bitənlər avtomatik silinir | Qovluqdakı faylı silin |
+| ArthurMask: real adlar cədvəli (kasa), açılmış cavablar, `claude-giden.jsonl` (Claude-a göndərilən maskalanmış alət cavabları) və `kirmizi-hat.jsonl` (qırmızı xətt təsdiqləri) | Həmin işin qovluğu | Siz silənə qədər | İşin qovluğunu silin; ArthurMask-da ayrıca silmə düyməsi yoxdur |
+| Masanın "Ümumi veb" ayarı (hər söhbət üçün açıq və ya bağlı) | Söhbətin qeydləri və masanın brauzer yaddaşı; müştəri məlumatı yoxdur | Söhbətin qeydləri qədər | Söhbətin qeydlərini silin; ayar onlarla silinir |
+| UYAP körpüsünün şifrələnmiş arxivi (iş siyahıları, iş gedişatı, sənədlər) | Ev qovluğunuzdakı `.arthurlegal\uyap\arsiv` (`arsiv.sqlite` və şifrələnmiş `bloblar`) | İş UYAP siyahılarında sonuncu dəfə görüldükdən sonra mülki, icra və inzibati işlərdə 1.095 gün, cinayət işlərində 730 gün; körpü hər başlayanda müddəti bitənlər silinir | Claude Desktop-u bağlayıb `arsiv` qovluğunu silin; körpü növbəti açılışda boş arxivlə başlayır |
 
 ArthurLegal bu qeydləri sizin əvəzinizə başqa müddətlə silmir; büronuzun saxlama və məhvetmə qaydası daha uzun və ya
 daha qısa müddət nəzərdə tutursa, silməni o qaydaya görə özünüz edirsiniz.

@@ -79,7 +79,7 @@ Claude.ai → **Settings → Connectors** üzerinden ekleyin:
 
 Bağlayıcı yoksa asistan çalışır ama **atıf yapamaz** — her dayanağı
 `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` etiketiyle işaretler ve sizden manuel doğrulama ister.
-Bu, sıfır-halüsinasyon kuralının gereğidir.
+Bu, kuralın gereğidir: çekilemeyen bilgi uydurulmak yerine işaretlenir; model yine de hata yapabilir.
 
 > **API anahtarı gerekmez.** Crossref, OpenAlex, Semantic Scholar, DOAJ, ORCID, EUR-Lex ve
 > HUDOC, WebFetch üzerinden anahtarsız kullanılır. Bu paket hiçbir anahtar gömmez.

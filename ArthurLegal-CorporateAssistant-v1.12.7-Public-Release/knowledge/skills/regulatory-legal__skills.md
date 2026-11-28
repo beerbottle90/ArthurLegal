@@ -2174,8 +2174,8 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
   geçtiği iş birimlerine Ek 3'teki notla bildirilir. Bir iş birimi kendi dosyasında yapay zekâ kullanılmamasını
   isteyebilir; isteği ve sonucu kayda yazılır.
   İstek işin gereği gibi yapılmasını imkânsız kılıyorsa şirket avukatı, rehberin avukat için öngördüğü gibi işi
-  kabul etmemeyi ya da vekâleti mevzuata uygun sona erdirmeyi değerlendirebilir; karar birim yöneticisine yazılı
-  bildirilir (TBB rehberi s. 27).
+  kabul etmemeyi ya da vekâleti mevzuata uygun sona erdirmeyi değerlendirebilir (TBB rehberi s. 27). Karar birim
+  yöneticisine yazılı bildirilir.
 - **Madde 10: Kayıt.** Kritik kullanım kaydı: dosya kodu (kişi adı değil), amaç, araç, veri türü, verinin gittiği sağlayıcı ve ülke, doğrulama sonucu,
   onaylayan avukat, tarih. Böylece ilgili kişi m. 11 kapsamında verisinin
   aktarıldığı kişileri sorduğunda cevap kayıttan verilir. Atıf teyitleri için masanın doğrulama kaydı kullanılır (aşağıda).

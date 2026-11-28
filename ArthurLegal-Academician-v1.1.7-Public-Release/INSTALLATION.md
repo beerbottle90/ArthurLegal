@@ -81,7 +81,8 @@ Add via Claude.ai → **Settings → Connectors**:
 
 Without connectors the assistant still runs, but it **will not cite**. Every proposition is
 tagged `UYARI: veri çekilemedi, teyidiniz gerekli: <bağlantı>` (*warning: data could not be retrieved, please verify at the link*) and you are asked to
-verify manually. This is the zero-hallucination rule working as intended, not a bug.
+verify manually. This is the rule working as intended: what cannot be retrieved is marked
+instead of made up. The model can still make mistakes.
 
 > **No API key needed.** Crossref, OpenAlex, Semantic Scholar, DOAJ, ORCID, EUR-Lex and
 > HUDOC are reached over WebFetch without keys. This package embeds no API keys.
@@ -112,7 +113,7 @@ It should determine, by questioning, whether your study requires ethics-committe
 
 **The assistant refuses to cite and says "UYARI: veri çekilemedi".**
 Expected. If no connector is present, or the source could not be retrieved, the assistant
-does **not** invent one. Add the connector, or verify the source yourself.
+marks it with the UYARI line instead of making one up; the model can still make mistakes. Add the connector, or verify the source yourself.
 
 **I pasted a manuscript I'm peer-reviewing and it refused.**
 Correct behaviour. Entering a manuscript under evaluation into a generative AI tool

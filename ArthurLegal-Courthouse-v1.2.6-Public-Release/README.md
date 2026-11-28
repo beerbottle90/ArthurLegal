@@ -215,7 +215,8 @@ Bu sayfayı paylaşmak için bağlantı: **https://github.com/beerbottle90/Arthu
 
 **Temel ilke:** asistan karar vermez. İki tarafın iddia ve savunmasını dengeli inceler, gerekçe iskeleti ve usul
 kontrolü üretir; nihai değerlendirme hâkime ya da heyete aittir. Her madde ve içtihat atfı bu sohbette resmî
-kaynaktan çekilir; çekilemeyen bilgi uydurulmaz, yerine açık bir satır yazılır:
+kaynaktan çekilir; çekilemeyen bilgi uydurulmak yerine açık bir satırla
+işaretlenir (model yine de hata yapabilir):
 `UYARI: veri çekilemedi, teyidiniz gerekli: <resmî giriş sayfası>`.
 
 | | Hukuk Bürosu ve Kurumsal paketler | **Courthouse** |

@@ -37,7 +37,8 @@ uyumu ürünün merkezine koyar.
    önerisi veya tez metni asistana **girilmez** — gizlilik ihlalidir.
    *(TÜBİTAK ÜYZ Rehberi § 2.2.1 · NIH NOT-OD-23-149 · NSF · Elsevier · Springer Nature · Wiley · ICMJE)*
    → `hakemlik-editorluk` plugin'i **metin okumaz, süreç yürütür.**
-4. **Sıfır-halüsinasyon atıf.** Çekilmemiş hiçbir kaynak dipnota giremez. Uydurma dipnot,
+4. **Çekilen kaynakla atıf.** Çekilemeyen kaynak dipnota yazılmaz, UYARI satırıyla işaretlenir; model
+   yine de hata yapabilir, dipnotlar teyit edilir. Uydurma dipnot,
    yayın etiği yönergeleri kapsamında **intihal/sahtecilik riskidir**.
 
 ---
@@ -143,8 +144,9 @@ compliance with that regime at the centre of the product.
    confidentiality.
    *(TÜBİTAK GenAI Guide § 2.2.1 · NIH NOT-OD-23-149 · NSF · Elsevier · Springer Nature · Wiley · ICMJE)*
    → the `hakemlik-editorluk` plugin **does not read text; it runs process.**
-4. **Zero-hallucination citation.** No source enters a footnote unless it was actually
-   retrieved. A fabricated citation is a **plagiarism/falsification risk** under publication
+4. **Citations from retrieved sources.** A source that could not be retrieved is not written into a
+   footnote; it is marked with the UYARI line instead. The model can still make mistakes, so footnotes are
+   verified. A fabricated citation is a **plagiarism/falsification risk** under publication
    ethics codes.
 
 ---

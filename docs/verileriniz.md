@@ -33,9 +33,10 @@ ArthurLegal'in bilgisayarınızda bıraktığı her kayıt, ne kadar kaldığı 
 | İş akışlarım (kaydettiğiniz iş akışları) | Aynı klasör | Süresiz (en çok 200); Geçmişi temizle bunları silmez | Masanın İş akışları ekranında tek tek Sil |
 | Claude'un hazırladığı dosyalar | Belgeler içindeki ArthurLegal klasörü | Siz silene kadar | Klasördeki dosyayı silin |
 | ArthurLegal Hafıza | Ev klasörünüzdeki `ArthurLegal-Hafiza` (ya da kurulumda seçtiğiniz klasör) | Siz silene kadar; ArthurLegal'i kaldırmak silmez | Klasördeki Markdown dosyalarını silin |
-| ArthurMask: maskeli ara kopyalar | Belgeler içindeki ArthurMask klasöründe her dosyanın `maskeli` klasörü (macOS: `~/ArthurMask`) | 30 gün; ArthurMask açılınca kendiliğinden silinir | Klasördeki dosyayı silin |
-| ArthurMask: gerçek adlar tablosu (kasa) ve çözülmüş cevaplar | Aynı dosyanın klasörü | Siz silene kadar | Dosyanın (davanın) klasörünü silin; ArthurMask'te ayrıca silme düğmesi yok |
-| Masanın "Genel web" ayarı (sohbet başına açık ya da kapalı) | Sohbetin kaydı ve masanın tarayıcı deposu; müvekkil verisi içermez | Sohbetin kaydı kadar | Sohbetin kaydını silin; ayar onunla silinir |
+| ArthurMask: maskeli ara kopyalar | Belgeler içindeki ArthurMask klasöründe her dosyanın `maskeli` klasörü (macOS: `~/ArthurMask`) | 30 gün; ArthurMask köprüsü her başladığında süresi dolanlar kendiliğinden silinir | Klasördeki dosyayı silin |
+| ArthurMask: gerçek adlar tablosu (kasa), çözülmüş cevaplar, `claude-giden.jsonl` (Claude'a gönderilen maskeli araç yanıtları) ve `kirmizi-hat.jsonl` (kırmızı hat onayları) | Aynı dosyanın klasörü | Siz silene kadar | Dosyanın (davanın) klasörünü silin; ArthurMask'te ayrıca silme düğmesi yok |
+| Masanın "Genel web" ayarı (sohbet başına açık ya da kapalı) | Sohbetin kayıtları ve masanın tarayıcı deposu; müvekkil verisi içermez | Sohbetin kayıtları kadar | Sohbetin kayıtlarını silin; ayar onlarla silinir |
+| UYAP köprüsünün şifreli arşivi (dosya listeleri, safahat, evrak) | Ev klasörünüzdeki `.arthurlegal\uyap\arsiv` (`arsiv.sqlite` ve şifreli `bloblar`) | Dosya UYAP listelerinde son görüldükten sonra hukuk, icra ve idari dosyada 1.095 gün, ceza dosyasında 730 gün; köprü her başladığında süresi dolanlar silinir | Claude Desktop'u kapatıp `arsiv` klasörünü silin; köprü bir sonraki açılışta boş arşivle başlar |
 
 ArthurLegal bu kayıtları sizin yerinize başka bir sürede silmez; büronuzun saklama ve imha düzeni uzun ya da kısa bir
 süre öngörüyorsa silmeyi o düzene göre siz yaparsınız.
