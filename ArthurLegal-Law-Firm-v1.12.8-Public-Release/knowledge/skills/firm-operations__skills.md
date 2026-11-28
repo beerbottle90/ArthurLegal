@@ -1296,7 +1296,7 @@ sürümü çıktıysa ya da sohbette bağlantı açılmıyorsa özeti kullan ve 
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 4: amaçla bağlantılı, sınırlı ve ölçülü işleme (m. 4/2-ç)
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 5 ve m. 6: işleme şartları; özel nitelikli veri
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 7: silme, yok etme ya da anonim hâle getirme
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 8: kişisel verilerin aktarılması (yurt içi)
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 8: kişisel verilerin aktarılması (her aktarım; yurt dışı için ayrıca m. 9)
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 9: yurt dışına aktarım
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 10 ve m. 11: aydınlatma; ilgili kişinin hakları
 - KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 12: veri güvenliği

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "arthurlegal",
-  "version": "1.12.17",
+  "version": "1.12.18",
   "description": "Turkish-law-first legal assistant for lawyers in Türkiye: 122 workflows in 11 practice areas, with citations checked against the official text through ArthurLegal MCP (12 jurisdictions).",
   "author": {
     "name": "ArthurLegal",
