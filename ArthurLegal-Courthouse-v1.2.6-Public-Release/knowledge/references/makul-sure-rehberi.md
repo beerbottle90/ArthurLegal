@@ -1,7 +1,7 @@
 # Makul Süre Rehberi
 
 > Kullanan: `makul-sure-izleyici`, `durusma-hazirlik`, `yargi-arastirma:aym-aihm-standart-kontrolu`, bütün hâkim plugin'lerinin ara karar skill'leri.
-> Madde içerikleri 27.09.2026'da ArthurLegal MCP ile çekilen metne, AYM kararı `tr_aym_getir` ile okunan metne dayanır. Asistan "ihlal" tespiti yapmaz; yalnız risk işareti ve kanuni süre karşılaştırması üretir. Mahkemenin kendi hedef süreleri `[DOLDUR]` alanıdır; asistan istatistik veya ortalama süre uydurmaz.
+> Madde içerikleri 27.09.2026'da ArthurLegal MCP ile çekilen metne, AYM kararı `tr_aym_getir` ile okunan metne dayanır. Asistan "ihlal" tespiti yapmaz; yalnız risk işareti ve kanuni süre karşılaştırması üretir. Mahkemenin kendi hedef süreleri `[DOLDUR]` alanıdır; asistan istatistik veya ortalama süre uydurmak yerine alanı boş bırakır; model yine de hata yapabilir.
 
 ## 1. Dayanak
 

@@ -108,7 +108,7 @@ Sonra şunu dene:
 ## Sık karşılaşılanlar
 
 **Asistan atıf yapmıyor, "UYARI: veri çekilemedi" diyor.**
-Beklenen davranış. MCP bağlayıcısı yoksa veya kaynak çekilemediyse asistan **uydurmaz**.
+Beklenen davranış. MCP bağlayıcısı yoksa veya kaynak çekilemediyse asistan çekemediğini uydurmak yerine UYARI satırıyla işaretler; model yine de hata yapabilir.
 Bağlayıcıyı ekleyin veya kaynağı kendiniz doğrulayın.
 
 **Hakemlik yaptığım makaleyi yapıştırdım, reddetti.**

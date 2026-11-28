@@ -247,7 +247,7 @@ eklentileri, istinaf dairesi ve kalemi, iki ortak alan.
 - **İzleyiciler (7):** tutukluluk incelemesi, duruşma hazırlığı, kanun yolu ve kesinleşme, bilirkişi raporları,
   mevzuat değişikliği, içtihat ve AYM kararları, makul süre. Kullanıcı tetikler; zamanlanmış çalışma yoktur ve
   asistan UYAP'a bağlanmaz. Girdi, kullanıcının verdiği ya da kalemin UYAP'tan dışa aktardığı listedir; liste
-  yoksa izleyici liste uydurmaz. Gösterilen her gün bir hatırlatmadır; son günü hâkim ve kalem teyit eder.
+  yoksa izleyici liste uydurmak yerine UYARI satırı yazar; model yine de hata yapabilir. Gösterilen her gün bir hatırlatmadır; son günü hâkim ve kalem teyit eder.
 - **36 referans:** usul madde haritaları, kanun yolu ve süreler, adli tatil, dava şartı arabuluculuk, makul süre,
   gerekçeli karar hakkı, içtihat doğrulama, karşı görüş, anonimleştirme, sade dil, yargıda yapay zekâ kullanımının
   sınırları, tebligat ve e-tebligat, harç ve giderler, bilirkişilik, tapu-kadastro.

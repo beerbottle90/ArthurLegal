@@ -260,7 +260,7 @@ Kesin cevap → `--send` (kapı yeniden çalışır) · müzakere → matter'da 
 ## Bu skill ne yapmaz
 
 - **Göndermez** — yalnız taslak; onaydan sonra kullanıcı gönderir.
-- **Atıf uydurmaz** — doğrulanmamış dayanak yer tutucu kalır.
+- **Atıf:** doğrulanmamış dayanak uydurulmak yerine yer tutucu kalır; model yine de hata yapabilir, atıf teyit edilir.
 - **Kapıyı atlamaz** — her gönderme modunda çalışır.
 - **Alma tarafında esası kesin karara bağlamaz** — derece yönlendirme içindir.
 - **Gönderenin dayanağını kendiliğinden geçerli/geçersiz saymaz** — işaretler.
