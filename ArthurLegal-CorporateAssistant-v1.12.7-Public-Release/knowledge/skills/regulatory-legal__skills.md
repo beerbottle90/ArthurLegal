@@ -18,7 +18,7 @@
 - /regulatory-legal:policy-diff (226 satir)
 - /regulatory-legal:policy-redraft (188 satir)
 - /regulatory-legal:reg-feed-watcher (251 satir)
-- /regulatory-legal:yz-kullanim-politikasi (352 satir)
+- /regulatory-legal:yz-kullanim-politikasi (393 satir)
 
 ---
 
@@ -1902,7 +1902,7 @@ argument-hint: "[şirket ve hukuk birimi, kadro, şirketin Claude planı, kurulu
 user-invocable: true
 ---
 
-# Hukuk Birimi Yapay Zekâ Kullanım Politikası — TBB Rehberine Uyum
+# Hukuk Birimi Yapay Zekâ Kullanım Politikası: TBB Rehberine Uyum
 
 ## Tetikleyici
 
@@ -1924,12 +1924,20 @@ bilgi güvenliği kurallarına uyumlu yazılır.
    Rehber: https://d.barobirlik.org.tr/2026/yapayzekatavsiyerehberi.pdf
 2. KVKK Kurumu, "Üretken Yapay Zekâ ve Kişisel Verilerin Korunması Rehberi (15 Soruda)", Kasım 2025:
    https://www.kvkk.gov.tr/Icerik/8547/uretken-yapay-zeka-ve-kisisel-verilerin-korunmasi-rehberi-15-soruda
-3. Anthropic şartları: Tüketici Şartları https://www.anthropic.com/legal/consumer-terms · Ticari Şartlar
+3. KVKK Kurumu, "Avukatların Mesleki Faaliyetlerinde Kişisel Verilerin Korunmasına İlişkin Uygulama
+   Rehberi", Temmuz 2026 (duyuru 22.09.2026; 28.11.2026'da okundu; aşağıda "KVKK avukat rehberi"):
+   https://www.kvkk.gov.tr/Icerik/8990/avukatlarin-mesleki-faaliyetlerinde-kisisel-verilerin-korunmasina-iliskin-uygulama-rehberi-yayimlandi
+4. KVKK Kurumu, "İş Yerlerinde Üretken Yapay Zekâ Araçlarının Kullanımı", 05.03.2026 (28.11.2026'da okundu):
+   https://www.kvkk.gov.tr/Icerik/8674/is-yerlerinde-uretken-yapay-zeka-araclarinin-kullanimi
+5. Kişisel Verileri Koruma Kurulu kararları (28.11.2026'da okundu): 24.01.2019 tarihli ve 2019/10 sayılı karar
+   (veri ihlali bildirimi) https://www.kvkk.gov.tr/Icerik/5362/Veri-Ihlali-Bildirimi · 31.01.2018 tarihli ve
+   2018/10 sayılı karar (özel nitelikli veride yeterli önlemler) https://www.kvkk.gov.tr/Icerik/4110/2018-10
+6. Anthropic şartları: Tüketici Şartları https://www.anthropic.com/legal/consumer-terms · Ticari Şartlar
    https://www.anthropic.com/legal/commercial-terms · Gizlilik Merkezi, eğitimde kullanım
    https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training · rol (veri işleyen / veri
    sorumlusu) https://privacy.claude.com/en/articles/9267385-does-anthropic-act-as-a-data-processor-or-controller
 
-İki rehber de bağlayıcı mevzuat değildir. TBB rehberi kendini tavsiye niteliğinde tanımlar ve avukatlara, stajyer
+Bu rehberlerin hiçbiri bağlayıcı mevzuat değildir. TBB rehberi kendini tavsiye niteliğinde tanımlar ve avukatlara, stajyer
 avukatlara ve büro çalışanlarına seslenir: baroya kayıtlı şirket avukatının mesleki yükümlülükleri bakımından
 doğrudan, baroya kayıtlı olmayan hukuk birimi çalışanı bakımından şirket kuralı olarak uygulanır. Politikada
 rehbere dayanan cümle "TBB rehberi önerir" diye yazılır, kanun hükmü gibi sunulmaz. Aşağıdaki özet 07.11.2026
@@ -1937,18 +1945,24 @@ tarihli metne göredir. Rehberin daha yeni bir sürümü çıktıysa ya da sohbe
 İnceleme notuna şunu yaz:
 `UYARI: veri çekilemedi, teyidiniz gerekli: https://d.barobirlik.org.tr/2026/yapayzekatavsiyerehberi.pdf`
 
-## Dayanak (tr_mevzuat_madde_getir ile doğrulandı — 07.11.2026)
+## Dayanak (tr_mevzuat_madde_getir ile doğrulandı: 07.11.2026, eklenen maddeler 28.11.2026)
 
-- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 34 — özen, doğruluk ve TBB meslek kurallarına uyma
-- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 35 — mütalaa vermek, dava etmek ve evrak düzenlemek baroda yazılı avukatlara aittir
-- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 36 — sır saklama
-- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 55 — reklam yasağı
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 3 — veri sorumlusu (ı) ve veri işleyen (ğ) tanımı
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 4 — amaçla bağlantılı, sınırlı ve ölçülü işleme (m. 4/2-ç)
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 5 ve m. 6 — işleme şartları; özel nitelikli veri
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 9 — yurt dışına aktarım
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 10 ve m. 11 — aydınlatma; ilgili kişinin hakları
-- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 12 — veri güvenliği
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 34: özen, doğruluk ve TBB meslek kurallarına uyma
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 35: mütalaa vermek, dava etmek ve evrak düzenlemek baroda yazılı avukatlara aittir
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 36: sır saklama
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 39: evrakı saklama (vekâletin sona ermesinden itibaren üç yıl;
+  geri alma müvekkile yazıyla bildirilmişse bildirimden itibaren üç ay)
+- AVUKATLIK KANUNU (Kanun No. 1136, RG sayı 13168) m. 55: reklam yasağı
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 3: veri sorumlusu (ı) ve veri işleyen (ğ) tanımı
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 4: amaçla bağlantılı, sınırlı ve ölçülü işleme (m. 4/2-ç)
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 5 ve m. 6: işleme şartları; özel nitelikli veri
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 7: silme, yok etme ya da anonim hâle getirme
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 8: kişisel verilerin aktarılması (her aktarım; yurt dışı için ayrıca m. 9)
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 9: yurt dışına aktarım
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 10 ve m. 11: aydınlatma; ilgili kişinin hakları
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 12: veri güvenliği
+- KİŞİSEL VERİLERİN KORUNMASI KANUNU (Kanun No. 6698, RG 07.04.2016/29677) m. 13: veri sorumlusuna başvuru (en geç otuz gün;
+  ret gerekçeli bildirilir)
 
 Bu liste yalnız hangi maddenin çekileceğini gösterir. Taslağa yazmadan önce her maddeyi o sohbette yeniden çek ve
 sistem talimatındaki madde doğrulama kapısından geçir. TBB Meslek Kurallarına madde numarasıyla atıf yapma; bu
@@ -2066,27 +2080,30 @@ Birim içi belge "Madde 1, Madde 2…" düzeninde, sade dille yazılır. Model a
 gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiyle doldur; bilinmeyen yeri
 `[DOLDUR — ...]` diye bırak.
 
-- **Madde 1 — Amaç ve kapsam.** Hukuk biriminde yapay zekâ araçlarının meslek kurallarına, sır saklamaya, KVKK'ya ve
+- **Madde 1: Amaç ve kapsam.** Hukuk biriminde yapay zekâ araçlarının meslek kurallarına, sır saklamaya, KVKK'ya ve
   şirket politikalarına uygun kullanılması. Kapsam: şirket avukatları, hukuk müşavirleri, stajyerler, uzmanlar ve
   birim adına çalışan dış hizmet sağlayıcılar; dış hukuk büroları Madde 12'deki kurala tabidir.
-- **Madde 2 — Tanımlar.** Yapay zekâ aracı, şirket verisi, kişi verisi, maskeleme, kapalı sistem, kritik kullanım
+- **Madde 2: Tanımlar.** Yapay zekâ aracı, şirket verisi, kişi verisi, maskeleme, kapalı sistem, kritik kullanım
   (iş birimine, yönetime, mahkemeye ya da idareye gidecek işte yapay zekâ çıktısının kullanılması).
-- **Madde 3 — Temel ilke.** Son hukuki değerlendirme ve sorumluluk avukattadır, araca devredilmez. Mütalaa vermek,
+- **Madde 3: Temel ilke.** Son hukuki değerlendirme ve sorumluluk avukattadır, araca devredilmez. Mütalaa vermek,
   dava etmek ve evrak düzenlemek baroda yazılı avukatların işidir (Av. K. m. 35); yapay zekâ çıktısı iş birimine
   bağımsız hukuki görüş gibi sunulmaz.
-- **Madde 4 — Onaylı araçlar ve kullanım kategorileri.** Ek 1'deki araç haritası. Haritada olmayan araç birim
+- **Madde 4: Onaylı araçlar ve kullanım kategorileri.** Ek 1'deki araç haritası. Haritada olmayan araç birim
   yöneticisi ve bilgi güvenliği onayı olmadan kullanılmaz.
-- **Madde 5 — Şirket ve kişi verisi.**
+  Hukuka aykırı toplanmış verilerle kimlik ya da iletişim bilgisi sorgulayan uygulamalar kullanılmaz. Yapay zekâ
+  araçlarına erişim görev ve ihtiyaca göre verilir; kişi verili iş yalnız şirketin belirlediği cihazlarda yapılır.
+- **Madde 5: Şirket ve kişi verisi.**
   - Yasak veri listesi: maskesiz çalışan, müşteri ya da karşı taraf kimliği; dosya numarası; sağlık, adli sicil ve
     disiplin bilgisi; içeriden öğrenilen bilgi; müzakere stratejisi; ticari sır. Güvence yoksa hiçbir araca
     girilmez.
+  - Özel nitelikli veri mümkünse hiç yüklenmez; zorunluysa maskelenir ve Madde 8'deki önlemlerle işlenir.
   - Kişi verisi içeren belge Claude'a ArthurMask'ten geçerek verilir (varsayılan). ArthurMask kurulu değilse böyle
     bir belge Claude'a verilmez; yalnız soyut soru sorulur.
   - Hafıza kasası bu bilgisayardadır; içine kişi verisi ve ticari sır yazılmaz.
   - UYAP Dashboard UYAP'a yazmaz ve listeleri bu bilgisayarda tutar; Claude'a giden bilgi etiketlidir.
   - Claude planına göre kural: 2. adımdaki not.
   - Şirket avukatının sır saklama yükümlülüğü yapay zekâ kullanımıyla daralmaz (Av. K. m. 36).
-- **Madde 6 — Doğrulama yükümlülüğü.**
+- **Madde 6: Doğrulama yükümlülüğü.**
   - Her mevzuat atfı resmî kaynaktan teyit edilir: madde numarası, yürürlük ve maddeye yüklenen içerik.
   - ArthurLegal'in madde atfı kuralı: madde yazılmadan önce resmî metinden çekilir, dönen künye birebir kullanılır
     ve içerik metinle karşılaştırılır; çekilemeyen madde "UYARI: veri çekilemedi, teyidiniz gerekli" satırıyla
@@ -2096,14 +2113,18 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
     tarih ve tutar belgeyle karşılaştırılır.
   - Yüksek riskli işte ikinci bir avukat kontrol eder.
   - Dayanak: Av. K. m. 34 özen ve doğruluk yükümlülüğü.
-- **Madde 7 — Avukat onayı ve sorumluluk.** Yapay zekâ çıktısı, sorumlu avukat okuyup onaylamadan iş birimine,
+- **Madde 7: Avukat onayı ve sorumluluk.** Yapay zekâ çıktısı, sorumlu avukat okuyup onaylamadan iş birimine,
   yönetime, mahkemeye, idareye, hakeme, arabulucuya ya da karşı tarafa gitmez. Onay iç kayda yazılır (Madde 10).
   Merci yapay zekâ kullanımının beyan edilmesini isterse beyan yapılır. Hatalı çıktı dışarı çıktıysa Madde 11 işler.
-- **Madde 8 — KVKK.**
+- **Madde 8: KVKK.**
   - Rol: şirket veri sorumlusudur; hizmet sağlayıcının veri işleyen mi veri sorumlusu mu olduğu somut kullanıma göre
     belirlenir (m. 3/1-ğ ve ı). Hukuk birimi bu değerlendirmeyi KVKK irtibat kişisiyle birlikte yapar.
-  - Ölçülülük: araca yalnız iş için gerekli veri girilir (m. 4/2-ç). Özel nitelikli veri ancak m. 6/3'teki
+  - Ölçülülük: araca yalnız iş için gerekli veri girilir (m. 4/2-ç). Avukat, işlediği
+    verinin iş için gerekli olduğunu ispat edebilmelidir (KVKK avukat rehberi, s. 127). Özel nitelikli veri ancak m. 6/3'teki
     şartlardan biriyle ve Kurulun belirlediği yeterli önlemlerle işlenir (m. 6/4).
+  - Yurt içi aktarım (m. 8): Sağlayıcı Türkiye'de yerleşik olsa da kişi verisinin bir yapay zekâ aracına verilmesi
+    aktarım sayılabilir. Hukuki sebep, amaç, veri türü ve ölçülülük politikaya yazılır (KVKK avukat rehberi,
+    s. 121).
   - Yurt dışına aktarım (m. 9) sırası:
     1. Aktarım yapılan ülke ya da sektör için yeterlilik kararı varsa ve m. 5 ya da m. 6'daki şartlardan biri
        mevcutsa aktarım yapılabilir.
@@ -2118,24 +2139,43 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
   - Veri güvenliği (m. 12): hukuka aykırı işleme ve erişimi önleyen teknik ve idari tedbirler (m. 12/1); şirket
     adına veri işleyenle müşterek sorumluluk (m. 12/2); şirket içi denetim (m. 12/3); veri kanuni olmayan yollarla
     başkalarınca elde edilirse en kısa sürede ilgiliye ve Kurula bildirim (m. 12/5).
+    KVKK avukat rehberine göre Kurul, "en kısa sürede" ifadesini öğrenme tarihinden itibaren en geç 72 saat
+    olarak yorumlar; etkilenen kişilere de makul en kısa sürede bildirim yapılır (rehber s. 140; Kurulun
+    24.01.2019 tarihli ve 2019/10 sayılı kararı). Özel nitelikli veride Kurulun 31.01.2018 tarihli ve 2018/10
+    sayılı kararındaki yeterli önlemler alınır; teknik ve idari tedbirler için KVKK Kişisel Veri Güvenliği
+    Rehberi esas alınır.
+    Veri güvenliği avukatlık sözleşmesinden doğan bir yan yükümlülüktür (KVKK avukat rehberi, s. 144); şirketin
+    dış avukatlarla yaptığı sözleşmeleri inceleyen ve yöneten şirket avukatı bu yükümlülüğü sözleşmelere
+    yazdırır ve kendi işinde aynı özeni gösterir.
+  - Saklama ve silme: Yapay zekâ araçlarında ve bu bilgisayarda biriken kişi verisi (sohbetler, masa geçmişi,
+    Belgeler içindeki ArthurLegal klasörü, ArthurMask kasası, Hafıza) şirketin saklama ve imha düzenine girer.
+    Şirket avukatı da kendisine tevdi edilen evrak için şirkete karşı sorumludur: evrakı vekâletin bitiminden
+    itibaren üç yıl saklar; geri alma şirkete yazıyla bildirilmişse süre bildirimden üç ay sonra biter (Av. K.
+    m. 39).
+    İşleme sebebi kalkınca veri silinir, yok edilir ya da anonim hâle getirilir (KVKK m. 7). İlgili kişinin
+    talebi en geç otuz gün içinde sonuçlandırılır; ret gerekçeli bildirilir (KVKK m. 13).
+    Şirketin alacağı varsa daha uzun saklama somut olaya göre değerlendirilir (KVKK avukat rehberi, s. 128).
   - Aydınlatma (m. 10): şirketin aydınlatma metinlerine yapay zekâ eki (Ek 3). Açık rıza gerekiyorsa aydınlatmadan
     ayrı alınır.
   - Yüksek riskli işleme için önce `/privacy-legal:use-case-triage`, gerekiyorsa `/privacy-legal:pia-generation`.
-- **Madde 9 — İş birimine bilgilendirme.** Hukuk biriminin yapay zekâ kullandığı ve çıktının avukat onayından
+- **Madde 9: İş birimine bilgilendirme.** Hukuk biriminin yapay zekâ kullandığı ve çıktının avukat onayından
   geçtiği iş birimlerine Ek 3'teki notla bildirilir. Bir iş birimi kendi dosyasında yapay zekâ kullanılmamasını
   isteyebilir; isteği ve sonucu kayda yazılır.
-- **Madde 10 — Kayıt.** Kritik kullanım kaydı: dosya kodu (kişi adı değil), amaç, araç, veri türü, doğrulama sonucu,
-  onaylayan avukat, tarih. Atıf teyitleri için masanın doğrulama kaydı kullanılır (aşağıda).
-- **Madde 11 — Olay müdahalesi.** Yanlış ya da uydurma çıktı dışarı çıktıysa sorumlu avukata ve birim yöneticisine
+- **Madde 10: Kayıt.** Kritik kullanım kaydı: dosya kodu (kişi adı değil), amaç, araç, veri türü, verinin gittiği sağlayıcı ve ülke, doğrulama sonucu,
+  onaylayan avukat, tarih. Böylece ilgili kişi m. 11 kapsamında verisinin
+  aktarıldığı kişileri sorduğunda cevap kayıttan verilir. Atıf teyitleri için masanın doğrulama kaydı kullanılır (aşağıda).
+- **Madde 11: Olay müdahalesi.** Yanlış ya da uydurma çıktı dışarı çıktıysa sorumlu avukata ve birim yöneticisine
   hemen bildirilir, işe etkisi değerlendirilir, mümkünse düzeltilir, gerekiyorsa ilgili merci bilgilendirilir.
   Veri yanlış yere gittiyse şirketin veri ihlali süreci başlatılır ve m. 12/5 değerlendirmesi yapılır.
-- **Madde 12 — Dış hukuk büroları ve tanıtım.** Dış büroya iş verilirken yapay zekâ kullanımı, şirket verisini nasıl
+  Kurula bildirim ihlalin öğrenildiği tarihten itibaren en geç 72 saat içinde, etkilenen kişilere makul en kısa
+  sürede yapılır (Kurulun 24.01.2019 tarihli ve 2019/10 sayılı kararı).
+- **Madde 12: Dış hukuk büroları ve tanıtım.** Dış büroya iş verilirken yapay zekâ kullanımı, şirket verisini nasıl
   işlediği ve yapay zekânın kazandırdığı sürenin avukat süresi gibi faturalanmayacağı sorulur ve ücret
   sözleşmesine yazılır. Şirket avukatı da reklam yasağına tabidir (Av. K. m. 55); hukuk biriminin yapay zekâ
   destekli çalışması "garantili sonuç" gibi ifadelerle sunulmaz.
-- **Madde 13 — Eğitim.** Eğitim almayan kişi kritik kullanım yapmaz. Stajyer ve uzmanlar avukatın açık talimatı ve
+- **Madde 13: Eğitim.** Eğitim almayan kişi kritik kullanım yapmaz. Stajyer ve uzmanlar avukatın açık talimatı ve
   denetimi olmadan kişi verili dosyada yapay zekâ kullanmaz.
-- **Madde 14 — Gözden geçirme takvimi.** Aşağıdaki öneri; birimin ölçeğine göre değiştirilir. Süreler ArthurLegal'in
+- **Madde 14: Gözden geçirme takvimi.** Aşağıdaki öneri; birimin ölçeğine göre değiştirilir. Süreler ArthurLegal'in
   önerisidir, TBB rehberi süre belirlemez.
   - Başlangıçta ve işe girişte: kısa temel eğitim (onaylı araçlar, ArthurMask akışı, atıf teyidi, olay bildirimi).
   - İlk 30 gün: birim yöneticisi kritik kullanım kayıtlarından örnek seçip gözden geçirir (pilot).
@@ -2144,12 +2184,13 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
   - Yılda bir: politikanın tamamı, TBB rehberinin güncel sürümü, şirketin genel yapay zekâ ve bilgi güvenliği
     politikalarıyla uyum, sigorta poliçesi, eğitim tazeleme.
   - Ara gözden geçirme: yeni araç, modül ya da plan değişikliğinde ve her olaydan sonra.
-- **Madde 15 — Yürürlük ve sahip.** Yürürlük tarihi, politikanın sahibi (hukuk birimi yöneticisi), KVKK irtibat
+- **Madde 15: Yürürlük ve sahip.** Yürürlük tarihi, politikanın sahibi (hukuk birimi yöneticisi), KVKK irtibat
   kişisi, bilgi güvenliği sorumlusu.
-- **Ek 1 — Araç haritası** (1. adım). **Ek 2 — Tedarikçi soruları:** veri hangi ülkede işleniyor ve saklanıyor;
-  girdi ve çıktı model eğitiminde kullanılıyor mu; alt işleyenler kim, değişince bildiriliyor mu; silme, dışa
+- **Ek 1: Araç haritası** (1. adım). **Ek 2: Tedarikçi soruları.** Veri hangi ülkede işleniyor ve saklanıyor;
+  girdi ve çıktı model eğitiminde kullanılıyor mu; girdiler sağlayıcının çalışanlarınca incelenebiliyor mu (insan
+  incelemesi); alt işleyenler kim, değişince bildiriliyor mu; silme, dışa
   aktarma ve kayıt imkânı; ihlal bildirim süresi ve sorumluluk; yurt dışı aktarımın güvencesi; hukuki veri
-  kaynaklarının güncelliği; hatalı çıktı ve kesintide düzeltme yolu. **Ek 3 — Bilgilendirme notları** (4. adım).
+  kaynaklarının güncelliği; hatalı çıktı ve kesintide düzeltme yolu. **Ek 3: Bilgilendirme notları** (4. adım).
 
 ### 4. Bilgilendirme notları (kısa şablon)
 
@@ -2157,7 +2198,7 @@ gerekli tek terimi ofis karşılığıyla tanımla. Her maddeyi şirket bilgisiy
 cümleyi çıkar, uydurma güvence yazma.
 
 ```markdown
-[ŞİRKET ADI] Hukuk Birimi — Yapay Zekâ Kullanımına İlişkin Bilgilendirme (iş birimlerine)
+[ŞİRKET ADI] Hukuk Birimi: Yapay Zekâ Kullanımına İlişkin Bilgilendirme (iş birimlerine)
 
 Hukuk birimi araştırma, sınıflandırma, özetleme ve ilk metin hazırlığı gibi işlerde yapay zekâ destekli
 araçlardan yararlanabilir.
@@ -2209,9 +2250,9 @@ masanın geçmişi o cihazda kalır. Araç yoksa masanın Geçmiş ekranındaki 
 
 Üç belge, tercihen Word dosyası olarak:
 
-1. **Birim içi politika taslağı.** Üst başlık: `TASLAK — HUKUK BİRİMİ YÖNETİCİSİ ONAYI BEKLİYOR`. İlk paragraf: "Bu
-   taslak şirketin kendi değerlendirmesine yardımcı olmak için hazırlanmıştır; hukuki görüş değildir." Madde 1–15,
-   Ek 1–3.
+1. **Birim içi politika taslağı.** Üst başlık: `TASLAK: HUKUK BİRİMİ YÖNETİCİSİ ONAYI BEKLİYOR`. İlk paragraf: "Bu
+   taslak şirketin kendi değerlendirmesine yardımcı olmak için hazırlanmıştır; hukuki görüş değildir." Madde 1 ile 15,
+   Ek 1 ile 3.
 2. **Bilgilendirme notları** (4. adım).
 3. **Birim yöneticisinin karar sayfası** (5. adım).
 

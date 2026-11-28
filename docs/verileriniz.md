@@ -15,9 +15,10 @@ uygulaması ya da ikisi. Tablo ikisini de kapsar; ChatGPT'ye özgü olanlar ayr�
 | Sorunuz ve Claude'un cevabı | Claude'da (Anthropic). Masanın geçmişi ayrıca kendi cihazınızda: bilgisayarınızda ArthurLegal kuruluysa kurulumun klasöründe, değilse masanın tarayıcı deposunda; 90 gün sonra silinir. | Anthropic'e, Claude kullanımınızın kendi koşullarıyla (aşağıda "Claude ayarınız"). |
 | Sorunuz ve ChatGPT'nin cevabı (ChatGPT'yi seçtiyseniz) | ChatGPT'de (OpenAI). Masanın geçmişi ayrıca bilgisayarınızda, kurulumun klasöründe; 90 gün sonra silinir. | OpenAI'a, ChatGPT kullanımınızın kendi koşullarıyla (aşağıda "ChatGPT ayarınız"). Sorunuzla birlikte ChatGPT'nin araçlardan aldığı sonuçlar da (mevzuat, içtihat, kararlar gibi resmî kaynaklardan gelen metinler) ChatGPT'ye gider. |
 | Araştırma isteği (arama sözcükleri, kanun ve madde numarası, karar künyesi) | ArthurLegal sunucusu arama metnini saklamaz ve istek kaydı tutmaz. İstisnalar (Alman ve Azerbaycan araçlarının kısa önbelleği) [sunucunun gizlilik belgesinde](https://github.com/beerbottle90/arthurlegal-mcp/blob/master/PRIVACY.md). | ArthurLegal MCP sunucusuna (Fly.io, Amsterdam), oradan yalnız gerekli parametrelerle resmî kaynağa: mevzuat.gov.tr, Resmî Gazete, Yargıtay, Danıştay, AYM ve kurumlar. Anlamsal aramada arama metni anlam hesabı için Voyage AI'a gider. |
-| Müvekkil belgesi (ArthurMask ile) | Asıl belge ve gerçek adlar, numaralar (ArthurMask'in gerçek adlar tablosu) yalnız bilgisayarınızda. | Claude'a ya da ChatGPT'ye yalnız etiketli metin gider (ör. `{{KİŞİ-01}}`). Etiketin gerçek karşılığı yapay zekâya gönderilmez. |
+| Müvekkil belgesi (ArthurMask ile) | Asıl belge ve gerçek adlar, numaralar (ArthurMask'in gerçek adlar tablosu) yalnız bilgisayarınızda. Gerçek adlar tablosu siz silene kadar durur; maskeli ara kopyalar 30 gün sonra kendiliğinden silinir. | Claude'a ya da ChatGPT'ye yalnız etiketli metin gider (ör. `{{KİŞİ-01}}`). Etiketin gerçek karşılığı yapay zekâya gönderilmez. |
 | UYAP | ArthurLegal UYAP'a hiçbir şey yazmaz; UYAP'ta açtığınız listeleri bilgisayarınızda okur. | Claude'a ya da ChatGPT'ye dosya numaraları etiketli gider; gerçek değerler yalnız sizin ekranınızda görünür. |
-| ArthurLegal Hafıza (Beyin) | Bilgisayarınızda. | Claude'a ya da ChatGPT'ye, sohbet açılırken yalnız tercihleriniz, düzeltmeleriniz ve son oturum özeti. |
+| ArthurLegal Hafıza (Beyin) | Bilgisayarınızda; siz silene kadar durur (ArthurLegal'i kaldırmak da silmez). | Claude'a ya da ChatGPT'ye, sohbet açılırken yalnız tercihleriniz, düzeltmeleriniz ve son oturum özeti. |
+| Claude'un hazırladığı dosyalar (Word, Excel ve benzeri) | Bilgisayarınızda, Belgeler içindeki ArthurLegal klasöründe; siz silene kadar durur. | Hiçbir yere. |
 | Tapu (TKGM) parsel sorgusu | Parsel kimliği ve verisi sunucunun belleğinde en çok 24 saat; diske ya da kayda yazılmaz. | TKGM Parsel Sorgu'ya, sunucudan. |
 | Masanın dili ve teması | Cihazınızda. | Hiçbir yere. |
 
@@ -41,6 +42,10 @@ ekler. Müvekkil bilgisi girmeden önce ChatGPT'nin veri ve gizlilik ayarların�
 
 Kişisel verilerin yurt dışına aktarılması (6698 sayılı Kişisel Verilerin Korunması Kanunu m. 9) yönünden
 değerlendirme, Claude'da olduğu gibi ChatGPT'de de kullanıcıya aittir; müvekkil belgesini ArthurMask'ten geçirin.
+
+KVKK'nın avukat rehberine göre sağlayıcı Türkiye'de olsa da kişisel veri içeren belgeyi bir yapay zekâ aracına
+vermek yurt içi aktarım (m. 8) sayılabilir. Arama kutusuna ve araştırma isteğine de müvekkil adı ya da dosya
+ayrıntısı yazmayın: ArthurLegal'in araştırma sunucusu Amsterdam'dadır ve anlamsal arama metni Voyage AI'a gider.
 
 ## Çıktı hakkında
 
